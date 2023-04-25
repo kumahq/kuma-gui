@@ -1,50 +1,47 @@
 
 <template>
-  <LabelList
+  <StatusInfo
     :has-error="hasError"
     :is-loading="isLoading"
     :is-empty="!hasDataplanes"
   >
-    <ul>
-      <li>
-        <h4>Dataplanes</h4>
+    <h2>Dataplanes</h2>
 
-        <input
-          id="dataplane-search"
-          v-model="searchInput"
-          type="text"
-          class="k-input mb-4"
-          placeholder="Filter by name"
-          required
-          data-testid="dataplane-search-input"
-        >
-        <p
-          v-for="(dataplane, key) in filteredDataplanes"
-          :key="key"
-          class="my-1"
-          data-testid="dataplane-name"
-        >
-          <router-link
-            :to="{
-              name: 'data-plane-detail-view',
-              params: {
-                mesh: dataplane.dataplane.mesh,
-                dataPlane: dataplane.dataplane.name,
-              },
-            }"
-          >
-            {{ dataplane.dataplane.name }}
-          </router-link>
-        </p>
-      </li>
-    </ul>
-  </LabelList>
+    <input
+      id="dataplane-search"
+      v-model="searchInput"
+      type="text"
+      class="k-input mt-4"
+      placeholder="Filter by name"
+      required
+      data-testid="dataplane-search-input"
+    >
+
+    <p
+      v-for="(dataplane, key) in filteredDataplanes"
+      :key="key"
+      class="mt-2"
+      data-testid="dataplane-name"
+    >
+      <router-link
+        :to="{
+          name: 'data-plane-detail-view',
+          params: {
+            mesh: dataplane.dataplane.mesh,
+            dataPlane: dataplane.dataplane.name,
+          },
+        }"
+      >
+        {{ dataplane.dataplane.name }}
+      </router-link>
+    </p>
+  </StatusInfo>
 </template>
 
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue'
 
-import LabelList from '@/app/common/LabelList.vue'
+import StatusInfo from '@/app/common/StatusInfo.vue'
 import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()

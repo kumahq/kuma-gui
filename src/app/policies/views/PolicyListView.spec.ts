@@ -47,7 +47,7 @@ describe('PolicyListView', () => {
     const singleEntity = wrapper.find('[data-testid="policy-single-entity"]')
     expect(singleEntity.html()).toContain('CircuitBreaker: cb1')
 
-    const policyOverview = wrapper.find('[data-testid="policy-overview-tab"]')
+    const policyOverview = wrapper.find('[data-testid="policy-detail-label-list"]')
     expect(policyOverview.html()).toContain('CircuitBreaker')
   })
 })

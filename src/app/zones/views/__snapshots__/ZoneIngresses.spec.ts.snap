@@ -315,38 +315,46 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                   >
                     
                     
-                    <div
-                      class="label-list"
+                    <dl
+                      class="definition-list"
                     >
+                      
+                      
                       <div
-                        class="label-list__content"
+                        class="definition-list-item"
                       >
-                        
-                        <div>
-                          <ul>
-                            
-                            <li>
-                              <h4>
-                                type
-                              </h4>
-                              <p>
-                                ZoneIngressOverview
-                              </p>
-                            </li>
-                            <li>
-                              <h4>
-                                name
-                              </h4>
-                              <p>
-                                zone-ingress-1
-                              </p>
-                            </li>
-                            
-                          </ul>
-                        </div>
-                        
+                        <dt
+                          class="definition-list-item__term"
+                        >
+                          Type
+                        </dt>
+                        <dd
+                          class="definition-list-item__details"
+                        >
+                          
+                          ZoneIngressOverview
+                          
+                        </dd>
                       </div>
-                    </div>
+                      <div
+                        class="definition-list-item"
+                      >
+                        <dt
+                          class="definition-list-item__term"
+                        >
+                          Name
+                        </dt>
+                        <dd
+                          class="definition-list-item__details"
+                        >
+                          
+                          zone-ingress-1
+                          
+                        </dd>
+                      </div>
+                      
+                      
+                    </dl>
                     
                     
                   </div>
@@ -682,123 +690,203 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                           >
                              General Information: 
                           </h5>
-                          <ul>
-                            <!--v-if-->
-                            <li>
-                              <strong>
-                                Control Plane Instance ID:
-                              </strong>
-                              <span>
-                                kuma-control-plane-84f5589874-nmspq-0867
-                              </span>
-                            </li>
-                            <li>
-                              <strong>
-                                Last Connected:
-                              </strong>
-                               July 13, 2021
-                            </li>
-                            <!--v-if-->
-                          </ul>
-                        </div>
-                        <div>
-                          <ul
-                            class="columns"
-                            style="--columns: 4;"
+                          <dl
+                            class="definition-list"
                           >
                             
-                            
-                            <li>
-                              <h6
-                                class="overview-tertiary-title"
+                            <!--v-if-->
+                            <div
+                              class="definition-list-item"
+                            >
+                              <dt
+                                class="definition-list-item__term"
                               >
-                                cds: 
-                              </h6>
-                              <ul>
-                                
-                                <li>
-                                  <strong>
-                                    Responses Sent:
-                                  </strong>
-                                  <span>
-                                    3
-                                  </span>
-                                </li>
-                                <li>
-                                  <strong>
-                                    Responses Acknowledged:
-                                  </strong>
-                                  <span>
-                                    3
-                                  </span>
-                                </li>
-                                
-                              </ul>
-                            </li>
-                            
-                            
-                            <li>
-                              <h6
-                                class="overview-tertiary-title"
+                                CP instance ID
+                              </dt>
+                              <dd
+                                class="definition-list-item__details"
                               >
-                                eds: 
-                              </h6>
-                              <ul>
                                 
-                                <li>
-                                  <strong>
-                                    Responses Sent:
-                                  </strong>
-                                  <span>
-                                    2
-                                  </span>
-                                </li>
-                                <li>
-                                  <strong>
-                                    Responses Acknowledged:
-                                  </strong>
-                                  <span>
-                                    3
-                                  </span>
-                                </li>
+                                kuma-control-plane-84f5589874-nmspq-0867
                                 
-                              </ul>
-                            </li>
-                            
-                            
-                            <li>
-                              <h6
-                                class="overview-tertiary-title"
+                              </dd>
+                            </div>
+                            <div
+                              class="definition-list-item"
+                            >
+                              <dt
+                                class="definition-list-item__term"
                               >
-                                lds: 
-                              </h6>
-                              <ul>
+                                Last connected
+                              </dt>
+                              <dd
+                                class="definition-list-item__details"
+                              >
                                 
-                                <li>
-                                  <strong>
-                                    Responses Sent:
-                                  </strong>
-                                  <span>
-                                    3
-                                  </span>
-                                </li>
-                                <li>
-                                  <strong>
-                                    Responses Acknowledged:
-                                  </strong>
-                                  <span>
-                                    3
-                                  </span>
-                                </li>
+                                July 13, 2021
                                 
-                              </ul>
-                            </li>
-                            
-                            
+                              </dd>
+                            </div>
                             <!--v-if-->
                             
-                            
-                          </ul>
+                          </dl>
+                        </div>
+                        <div
+                          class="columns mt-4"
+                          style="--columns: 4;"
+                        >
+                          
+                          
+                          <div>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              cds: 
+                            </h6>
+                            <dl
+                              class="definition-list"
+                            >
+                              
+                              
+                              <div
+                                class="definition-list-item"
+                              >
+                                <dt
+                                  class="definition-list-item__term"
+                                >
+                                  Responses sent
+                                </dt>
+                                <dd
+                                  class="definition-list-item__details"
+                                >
+                                  
+                                  3
+                                  
+                                </dd>
+                              </div>
+                              <div
+                                class="definition-list-item"
+                              >
+                                <dt
+                                  class="definition-list-item__term"
+                                >
+                                  Responses acknowledged
+                                </dt>
+                                <dd
+                                  class="definition-list-item__details"
+                                >
+                                  
+                                  3
+                                  
+                                </dd>
+                              </div>
+                              
+                              
+                            </dl>
+                          </div>
+                          
+                          
+                          <div>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              eds: 
+                            </h6>
+                            <dl
+                              class="definition-list"
+                            >
+                              
+                              
+                              <div
+                                class="definition-list-item"
+                              >
+                                <dt
+                                  class="definition-list-item__term"
+                                >
+                                  Responses sent
+                                </dt>
+                                <dd
+                                  class="definition-list-item__details"
+                                >
+                                  
+                                  2
+                                  
+                                </dd>
+                              </div>
+                              <div
+                                class="definition-list-item"
+                              >
+                                <dt
+                                  class="definition-list-item__term"
+                                >
+                                  Responses acknowledged
+                                </dt>
+                                <dd
+                                  class="definition-list-item__details"
+                                >
+                                  
+                                  3
+                                  
+                                </dd>
+                              </div>
+                              
+                              
+                            </dl>
+                          </div>
+                          
+                          
+                          <div>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              lds: 
+                            </h6>
+                            <dl
+                              class="definition-list"
+                            >
+                              
+                              
+                              <div
+                                class="definition-list-item"
+                              >
+                                <dt
+                                  class="definition-list-item__term"
+                                >
+                                  Responses sent
+                                </dt>
+                                <dd
+                                  class="definition-list-item__details"
+                                >
+                                  
+                                  3
+                                  
+                                </dd>
+                              </div>
+                              <div
+                                class="definition-list-item"
+                              >
+                                <dt
+                                  class="definition-list-item__term"
+                                >
+                                  Responses acknowledged
+                                </dt>
+                                <dd
+                                  class="definition-list-item__details"
+                                >
+                                  
+                                  3
+                                  
+                                </dd>
+                              </div>
+                              
+                              
+                            </dl>
+                          </div>
+                          
+                          
+                          <!--v-if-->
+                          
+                          
                         </div>
                       </div>
                       

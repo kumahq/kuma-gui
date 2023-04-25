@@ -3,54 +3,53 @@
     <template #body>
       <div class="entity-section-list">
         <section>
-          <div class="block-list">
-            <div>
-              <h3
-                class="entity-title"
-                data-testid="data-plane-proxy-title"
+          <h3
+            class="entity-title"
+            data-testid="data-plane-proxy-title"
+          >
+            <span>
+              DPP:
+
+              <router-link
+                :to="{
+                  name: 'data-plane-detail-view',
+                  params: {
+                    mesh: dataPlaneOverview.mesh,
+                    dataPlane: dataPlaneOverview.name,
+                  },
+                }"
               >
-                <span>
-                  DPP:
+                {{ dataPlaneOverview.name }}
+              </router-link>
+            </span>
 
-                  <router-link
-                    :to="{
-                      name: 'data-plane-detail-view',
-                      params: {
-                        mesh: dataPlaneOverview.mesh,
-                        dataPlane: dataPlaneOverview.name,
-                      },
-                    }"
-                  >
-                    {{ dataPlaneOverview.name }}
-                  </router-link>
-                </span>
+            <StatusBadge :status="status" />
+          </h3>
 
-                <StatusBadge :status="status" />
-              </h3>
+          <DefinitionList class="mt-4">
+            <DefinitionListItem term="Mesh">
+              {{ dataPlaneOverview.mesh }}
+            </DefinitionListItem>
 
-              <div class="definition">
-                <span>Mesh:</span>
-                <span>{{ dataPlaneOverview.mesh }}</span>
-              </div>
-            </div>
-
-            <div v-if="dataPlaneTags.length > 0">
-              <h4>Tags</h4>
-
+            <DefinitionListItem
+              v-if="dataPlaneTags !== null"
+              term="Tags"
+            >
               <TagList :tags="dataPlaneTags" />
-            </div>
+            </DefinitionListItem>
 
-            <div v-if="dependencies.length > 0">
-              <h4>Dependencies</h4>
-
-              <div
-                v-for="(dependency, index) in dependencies"
-                :key="index"
-                class="definition"
-              >
-                <span>{{ dependency.name }}:</span>
-                <span>{{ dependency.version }}</span>
-              </div>
+            <DefinitionListItem
+              v-if="dependencies.length > 0"
+              term="Dependencies"
+            >
+              <ul>
+                <li
+                  v-for="(dependency, index) in dependencies"
+                  :key="index"
+                >
+                  {{ dependency.name }}: {{ dependency.version }}
+                </li>
+              </ul>
 
               <template v-if="warnings.length > 0">
                 <h5 class="mt-2 heading-with-icon">
@@ -72,8 +71,8 @@
                   {{ warning }}
                 </p>
               </template>
-            </div>
-          </div>
+            </DefinitionListItem>
+          </DefinitionList>
         </section>
 
         <section v-if="subscriptionWrappers.length > 0">
@@ -84,41 +83,44 @@
               v-for="(subscriptionWrapper, index) in subscriptionWrappers"
               :key="index"
             >
-              <div
-                class="definition"
-                :data-testid="`data-plane-connect-time-${index}`"
+              <DefinitionList>
+                <DefinitionListItem
+                  term="Connect time"
+                  :data-testid="`data-plane-connect-time-${index}`"
+                >
+                  {{ subscriptionWrapper.formattedConnectDate }}
+                </DefinitionListItem>
+
+                <DefinitionListItem
+                  term="Disconnect time"
+                  :data-testid="`data-plane-disconnect-time-${index}`"
+                >
+                  {{ subscriptionWrapper.formattedDisconnectDate }}
+                </DefinitionListItem>
+
+                <DefinitionListItem term="CP instance ID">
+                  {{ subscriptionWrapper.subscription.controlPlaneInstanceId }}
+                </DefinitionListItem>
+              </DefinitionList>
+
+              <details
+                v-if="subscriptionWrapper.statuses.length > 0"
+                class="mt-2"
               >
-                <span>Connect time:</span>
-                <span>{{ subscriptionWrapper.formattedConnectDate }}</span>
-              </div>
-
-              <div
-                class="definition"
-                :data-testid="`data-plane-disconnect-time-${index}`"
-              >
-                <span>Disconnect time:</span>
-                <span>{{ subscriptionWrapper.formattedDisconnectDate }}</span>
-              </div>
-
-              <div class="definition">
-                <span>CP instance ID:</span>
-                <span>{{ subscriptionWrapper.subscription.controlPlaneInstanceId }}</span>
-              </div>
-
-              <details v-if="subscriptionWrapper.statuses.length > 0">
                 <summary>
                   Responses (acknowledged / sent)
                 </summary>
 
-                <div
-                  v-for="(subscriptionStatus, subscriptionStatusIndex) in subscriptionWrapper.statuses"
-                  :key="`${index}-${subscriptionStatusIndex}`"
-                  class="definition"
-                  :data-testid="`data-plane-subscription-status-${index}-${subscriptionStatusIndex}`"
-                >
-                  <span>{{ subscriptionStatus.type }}:</span>
-                  <span>{{ subscriptionStatus.ratio }}</span>
-                </div>
+                <DefinitionList>
+                  <DefinitionListItem
+                    v-for="(subscriptionStatus, subscriptionStatusIndex) in subscriptionWrapper.statuses"
+                    :key="`${index}-${subscriptionStatusIndex}`"
+                    :term="subscriptionStatus.type"
+                    :data-testid="`data-plane-subscription-status-${index}-${subscriptionStatusIndex}`"
+                  >
+                    {{ subscriptionStatus.ratio }}
+                  </DefinitionListItem>
+                </DefinitionList>
               </details>
             </div>
           </div>
@@ -140,6 +142,8 @@
 import { KCard, KIcon } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
@@ -264,7 +268,7 @@ h3, h4, h5 {
 }
 
 .entity-section-list > * {
-  flex-basis: max(40ch, 33.333%);
+  flex-basis: max(60ch, 33.333%);
   min-inline-size: 0;
 }
 
@@ -283,11 +287,5 @@ h3, h4, h5 {
 
 .block-list > :not(:first-child) {
   margin-top: var(--spacing-xs);
-}
-
-.definition {
-  display: grid;
-  grid-template-columns: 16ch 1fr;
-  grid-gap: var(--spacing-md);
 }
 </style>

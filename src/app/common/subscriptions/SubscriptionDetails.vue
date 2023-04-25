@@ -1,59 +1,66 @@
 <template>
   <div>
-    <div v-if="details.globalInstanceId || details.connectTime || details.disconnectTime">
+    <div v-if="details.globalInstanceId || details.controlPlaneInstanceId || details.connectTime || details.disconnectTime">
       <h5 class="overview-tertiary-title">
         General Information:
       </h5>
 
-      <ul>
-        <li v-if="details.globalInstanceId">
-          <strong>Global Instance ID:</strong>
-          <span>{{ details.globalInstanceId }}</span>
-        </li>
+      <DefinitionList>
+        <DefinitionListItem
+          v-if="details.globalInstanceId"
+          term="Global instance ID"
+        >
+          {{ details.globalInstanceId }}
+        </DefinitionListItem>
 
-        <li v-if="details.controlPlaneInstanceId">
-          <strong>Control Plane Instance ID:</strong>
-          <span>{{ details.controlPlaneInstanceId }}</span>
-        </li>
+        <DefinitionListItem
+          v-if="details.controlPlaneInstanceId"
+          term="CP instance ID"
+        >
+          {{ details.controlPlaneInstanceId }}
+        </DefinitionListItem>
 
-        <li v-if="details.connectTime">
-          <strong>Last Connected:</strong>
+        <DefinitionListItem
+          v-if="details.connectTime"
+          term="Last connected"
+        >
           {{ humanReadableDate(details.connectTime) }}
-        </li>
+        </DefinitionListItem>
 
-        <li v-if="details.disconnectTime">
-          <strong>Last Disconnected:</strong>
+        <DefinitionListItem
+          v-if="details.disconnectTime"
+          term="Last disconnected"
+        >
           {{ humanReadableDate(details.disconnectTime) }}
-        </li>
-      </ul>
+        </DefinitionListItem>
+      </DefinitionList>
     </div>
 
-    <div v-if="detailsIterator">
-      <ul
-        class="columns"
-        style="--columns: 4;"
+    <div
+      v-if="detailsIterator"
+      class="columns mt-4"
+      style="--columns: 4"
+    >
+      <template
+        v-for="(item, label) in detailsIterator"
+        :key="label"
       >
-        <template
-          v-for="(item, label) in detailsIterator"
-          :key="label"
-        >
-          <li v-if="Object.keys(item).length > 0">
-            <h6 class="overview-tertiary-title">
-              {{ label }}:
-            </h6>
+        <div v-if="Object.keys(item).length > 0">
+          <h6 class="overview-tertiary-title">
+            {{ label }}:
+          </h6>
 
-            <ul>
-              <li
-                v-for="(k, v) in item"
-                :key="v"
-              >
-                <strong>{{ v }}:</strong>
-                <span>{{ formatError(formatValue(k)) }}</span>
-              </li>
-            </ul>
-          </li>
-        </template>
-      </ul>
+          <DefinitionList>
+            <DefinitionListItem
+              v-for="(value, property) in item"
+              :key="property"
+              :term="property"
+            >
+              {{ formatError(formatValue(value)) }}
+            </DefinitionListItem>
+          </DefinitionList>
+        </div>
+      </template>
     </div>
 
     <KAlert
@@ -76,12 +83,14 @@
 import { KAlert, KIcon } from '@kong/kongponents'
 import { computed } from 'vue'
 
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import { humanReadableDate } from '@/utilities/helpers'
 
 const map: Record<string, string> = {
-  responsesSent: 'Responses Sent',
-  responsesAcknowledged: 'Responses Acknowledged',
-  responsesRejected: 'Responses Rejected',
+  responsesSent: 'Responses sent',
+  responsesAcknowledged: 'Responses acknowledged',
+  responsesRejected: 'Responses rejected',
 }
 
 const props = defineProps({

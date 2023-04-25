@@ -3,62 +3,57 @@
     <template #body>
       <div class="entity-section-list">
         <section>
-          <div class="block-list">
-            <div>
-              <h1 class="entity-title">
-                <span>
-                  Service:
+          <h1 class="entity-title">
+            <span>
+              Service:
 
-                  <router-link :to="serviceRoute">
-                    {{ props.service.name }}
-                  </router-link>
-                </span>
+              <router-link :to="serviceRoute">
+                {{ props.service.name }}
+              </router-link>
+            </span>
 
-                <StatusBadge
-                  v-if="status"
-                  :status="status"
-                />
-              </h1>
+            <StatusBadge
+              v-if="status"
+              :status="status"
+            />
+          </h1>
 
-              <div class="definition">
-                <span>Mesh:</span>
-                <span>{{ props.service.mesh }}</span>
-              </div>
+          <DefinitionList class="mt-4">
+            <DefinitionListItem term="Mesh">
+              {{ props.service.mesh }}
+            </DefinitionListItem>
 
-              <div class="definition">
-                <span>Address:</span>
-                <span>
-                  <template v-if="address !== null">
-                    {{ address }}
-                  </template>
+            <DefinitionListItem term="Address">
+              <template v-if="address !== null">
+                {{ address }}
+              </template>
 
-                  <template v-else>—</template>
-                </span>
-              </div>
+              <template v-else>
+                —
+              </template>
+            </DefinitionListItem>
 
-              <div
-                v-if="tls !== null"
-                class="definition"
-              >
-                <span>TLS:</span>
-                <span>{{ tls }}</span>
-              </div>
+            <DefinitionListItem
+              v-if="tls !== null"
+              term="TLS"
+            >
+              {{ tls }}
+            </DefinitionListItem>
 
-              <div
-                v-if="numberOfDataPlaneProxies !== null"
-                class="definition"
-              >
-                <span>Data plane proxies:</span>
-                <span>{{ numberOfDataPlaneProxies }}</span>
-              </div>
-            </div>
+            <DefinitionListItem
+              v-if="numberOfDataPlaneProxies !== null"
+              term="Data Plane Proxies"
+            >
+              {{ numberOfDataPlaneProxies }}
+            </DefinitionListItem>
 
-            <div v-if="tags !== null">
-              <h2>Tags</h2>
-
+            <DefinitionListItem
+              v-if="tags !== null"
+              term="Tags"
+            >
               <TagList :tags="tags" />
-            </div>
-          </div>
+            </DefinitionListItem>
+          </DefinitionList>
         </section>
 
         <section
@@ -82,6 +77,8 @@ import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
@@ -175,18 +172,8 @@ const rawService = computed(() => stripTimes(props.externalService ?? props.serv
   max-width: 80ch;
 }
 
-.block-list > :not(:first-child) {
-  margin-top: var(--spacing-xs);
-}
-
 .entity-title {
   display: flex;
   gap: var(--spacing-md);
-}
-
-.definition {
-  display: grid;
-  grid-template-columns: 16ch 1fr;
-  grid-gap: var(--spacing-md);
 }
 </style>

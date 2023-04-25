@@ -28,7 +28,7 @@
         </KCard>
 
         <DataOverview
-          :selected-entity-name="entity.name"
+          :selected-entity-name="entity?.name"
           :page-size="PAGE_SIZE_DEFAULT"
           :error="error"
           :is-loading="isLoading"
@@ -84,7 +84,7 @@
 
       <div class="kcard-border">
         <TabsWidget
-          v-if="isEmpty === false"
+          v-if="isEmpty === false && entity !== null"
           :has-error="error !== null"
           :error="error"
           :is-loading="isLoading"
@@ -100,25 +100,20 @@
           </template>
 
           <template #overview>
-            <LabelList
+            <DefinitionList
               :has-error="entityHasError"
               :is-loading="entityIsLoading"
               :is-empty="entityIsEmpty"
+              data-testid="policy-detail-label-list"
             >
-              <div data-testid="policy-overview-tab">
-                <ul>
-                  <li
-                    v-for="(val, key) in entity"
-                    :key="key"
-                  >
-                    <h4>{{ key }}</h4>
-                    <p>
-                      {{ val }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </LabelList>
+              <DefinitionListItem
+                v-for="(value, property) in entity"
+                :key="property"
+                :term="property"
+              >
+                {{ value }}
+              </DefinitionListItem>
+            </DefinitionList>
 
             <YamlView
               v-if="rawEntity !== null"
@@ -158,8 +153,9 @@ import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
-import LabelList from '@/app/common/LabelList.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
@@ -214,7 +210,7 @@ const entityIsLoading = ref(true)
 const entityIsEmpty = ref(false)
 const entityHasError = ref(false)
 const tableDataIsEmpty = ref(false)
-const entity = ref<any>({})
+const entity = ref<Pick<PolicyEntity, 'type' | 'name' | 'mesh'> | null>(null)
 const rawEntity = ref<Omit<PolicyEntity, 'creationTime' | 'modificationTime'> | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
@@ -370,10 +366,10 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
       const selected = ['type', 'name', 'mesh']
 
       entity.value = getSome(item, selected)
-      QueryParameter.set('policy', entity.value.name)
+      QueryParameter.set('policy', selectedEntity.name)
       rawEntity.value = stripTimes(item)
     } else {
-      entity.value = {}
+      entity.value = null
       entityIsEmpty.value = true
     }
   } catch (err) {

@@ -10,7 +10,7 @@
     <EmptyBlock v-else-if="policy === null" />
 
     <TabsWidget
-      v-if="policy !== null"
+      v-else
       :tabs="tabs"
     >
       <template #tabHeader>
@@ -23,30 +23,21 @@
       </template>
 
       <template #overview>
-        <LabelList>
-          <div data-testid="policy-overview-tab">
-            <ul>
-              <template
-                v-for="(val, key) in policy"
-                :key="key"
-              >
-                <li
-                  v-if="['type', 'mesh', 'name'].includes(key)"
-                >
-                  <h4>{{ key }}</h4>
-                  <p>
-                    {{ val }}
-                  </p>
-                </li>
-              </template>
-            </ul>
-          </div>
-        </LabelList>
+        <DefinitionList>
+          <DefinitionListItem
+            v-for="(value, property) in policy"
+            :key="property"
+            :term="property"
+          >
+            {{ value }}
+          </DefinitionListItem>
+        </DefinitionList>
 
         <YamlView
+          v-if="policyConfig !== null"
           id="code-block-policy"
           class="mt-4"
-          :content="stripTimes(policy)"
+          :content="policyConfig"
           is-searchable
         />
       </template>
@@ -63,12 +54,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LabelList from '@/app/common/LabelList.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
@@ -96,17 +88,30 @@ const tabs = [
   },
 ]
 
-const policy = ref<PolicyEntity | null>(null)
+const rawPolicy = ref<PolicyEntity | null>(null)
 const isLoading = ref<Boolean>(true)
 const error = ref<Error | null>(null)
+
+const policy = computed(() => {
+  if (rawPolicy.value === null) {
+    return null
+  }
+
+  const { type, name, mesh } = rawPolicy.value
+
+  return { type, name, mesh }
+})
+const policyConfig = computed(() => rawPolicy.value !== null ? stripTimes(rawPolicy.value) : null)
+
+loadData(props)
 
 async function loadData({ mesh, policyPath, policyName }: { mesh: string, policyPath: string, policyName: string }) {
   isLoading.value = true
   error.value = null
-  policy.value = null
+  rawPolicy.value = null
 
   try {
-    policy.value = await kumaApi.getSinglePolicyEntity({
+    rawPolicy.value = await kumaApi.getSinglePolicyEntity({
       mesh,
       path: policyPath,
       name: policyName,
@@ -121,5 +126,4 @@ async function loadData({ mesh, policyPath, policyName }: { mesh: string, policy
     isLoading.value = false
   }
 }
-loadData(props)
 </script>
