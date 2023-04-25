@@ -17,6 +17,7 @@ describe('WelcomeView.vue', () => {
       return merge({
         body: {
           environment: 'universal',
+          mode: 'standalone',
         },
       })
     })

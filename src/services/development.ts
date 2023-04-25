@@ -48,7 +48,7 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
   [token<Decorator<typeof app.bootstrap>>('bootstrap.with.mockServer'), {
     service: (bootstrap: ReturnDecorated<typeof app.bootstrap>) => {
       const env = get(app.env)
-      if (env('KUMA_MOCK_API_ENABLED') === 'true') {
+      if (env('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
         get($.msw)
       }
       return bootstrap()
