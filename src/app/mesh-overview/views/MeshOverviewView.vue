@@ -9,28 +9,30 @@
     <KCard v-if="mesh !== null">
       <template #body>
         <div class="columns">
-          <DefinitionList
-            :has-error="hasError"
+          <StatusInfo
             :is-loading="isLoading"
+            :has-error="hasError"
             :is-empty="mesh === null || meshInsights === null"
           >
-            <DefinitionListItem
-              v-for="(value, property) in basicMesh"
-              :key="property"
-              :term="property"
-            >
-              <KBadge
-                v-if="typeof value === 'boolean'"
-                :appearance="value ? 'success' : 'danger'"
+            <DefinitionList>
+              <DefinitionListItem
+                v-for="(value, property) in basicMesh"
+                :key="property"
+                :term="property"
               >
-                {{ value ? 'Enabled' : 'Disabled' }}
-              </KBadge>
+                <KBadge
+                  v-if="typeof value === 'boolean'"
+                  :appearance="value ? 'success' : 'danger'"
+                >
+                  {{ value ? 'Enabled' : 'Disabled' }}
+                </KBadge>
 
-              <template v-else>
-                {{ value }}
-              </template>
-            </DefinitionListItem>
-          </DefinitionList>
+                <template v-else>
+                  {{ value }}
+                </template>
+              </DefinitionListItem>
+            </DefinitionList>
+          </StatusInfo>
 
           <DefinitionList>
             <DefinitionListItem
@@ -100,6 +102,7 @@ import MeshCharts from '../components/MeshCharts.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
+import StatusInfo from '@/app/common/StatusInfo.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { useStore } from '@/store/store'
 import { Mesh, MeshInsight } from '@/types/index.d'
