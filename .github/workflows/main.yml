@@ -84,5 +84,5 @@ jobs:
       - run: |
           yarn build
           yarn build:gui
-          vite preview -c ./vite.config.preview.ts &
+          npx vite preview -c ./vite.config.preview.ts &
           yarn run test:browser
