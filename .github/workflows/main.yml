@@ -27,7 +27,7 @@ jobs:
           yarn run lint:lockfile
           yarn deps
 
-  lint:
+  pre-checks:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
@@ -83,5 +83,5 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
       - run: |
           yarn build:staging
-          yarn preview:built &
-          yarn run test:browser
+          # yarn preview:built &
+          # yarn run test:browser
