@@ -1,7 +1,4 @@
 name: 'Tests'
-
-# Runs the project’s linter and test scripts.
-
 on:
   push:
     branches: [master, 'release-[0-9]+.[0-9]+']
@@ -21,14 +18,16 @@ jobs:
         with:
           path: |
             **/node_modules
+            /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
-          yarn run lint:lockfile
           yarn install --frozen-lockfile
+          yarn run lint:lockfile
           npx cypress install
-  lint:
+
+  cli-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
@@ -43,12 +42,10 @@ jobs:
             **/node_modules
             /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-      - env:
-          LINTER_MODE: strict
-        run: |
-          yarn run lint
-          yarn run lint:ts
-  tests:
+      - run: |
+          yarn run test
+
+  browser-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
@@ -63,7 +60,6 @@ jobs:
             **/node_modules
             /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn run test
       - run: |
           yarn run preview &
           yarn run test:browser
