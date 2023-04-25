@@ -22,11 +22,12 @@
 </template>
 
 <script lang="ts" setup>
-import { KIcon, KPop } from '@kong/kongponents'
+import { KIcon, KPop, PopPlacements } from '@kong/kongponents'
+import { PropType } from 'vue'
 
 const props = defineProps({
   placement: {
-    type: String,
+    type: String as PropType<PopPlacements>,
     required: false,
     default: undefined,
   },

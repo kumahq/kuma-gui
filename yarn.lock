@@ -1668,10 +1668,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kong/kongponents@^8.51.0":
-  version "8.51.0"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.51.0.tgz#141012ab9c5bebb6dd8a63fd077f45f7e25667c6"
-  integrity sha512-JK5jQlvOQBow8qthsGO6VfUirf+Zep7JOq2b8VZqOlq/RDEbe1sGjnQk+jtYd+C6idkq4uaJXFrUrNKal+ohqQ==
+"@kong/kongponents@^8.55.1":
+  version "8.55.1"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.55.1.tgz#88794e3515ec98e0c8bd86bcd16b16cf1d87406b"
+  integrity sha512-dk55BWr70hg+7Nvvwx5jH/1XalpgW2Esc6iTowRQelUBz+GcduHRSvenP926Y/YnL6S5fATaTqaa+9X/oXNqOA==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
