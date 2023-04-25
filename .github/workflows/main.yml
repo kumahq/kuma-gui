@@ -83,6 +83,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
       - run: |
           yarn build:staging
+      - run: |
           yarn preview:built &
           yarn run test:browser
 
