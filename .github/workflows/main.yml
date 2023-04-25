@@ -85,8 +85,12 @@ jobs:
           yarn build:staging
           yarn preview:built &
           yarn run test:browser
+
   post-checks:
+    # There is a branch protection rule on the repo that requires "Tests" to
+    # be successful
     name: Tests
+    #
     needs:
       - pre-checks
       - cli-tests
