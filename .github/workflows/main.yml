@@ -27,6 +27,27 @@ jobs:
           yarn run lint:lockfile
           npx cypress install
 
+  lint:
+    needs: [install-dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/cache@v3
+        id: node-modules-cache
+        with:
+          path: |
+            **/node_modules
+            /home/runner/.cache
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+      - env:
+          LINTER_MODE: strict
+        run: |
+          yarn run lint
+          yarn run lint:ts
+
   cli-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
@@ -61,5 +82,7 @@ jobs:
             /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
       - run: |
-          yarn run preview &
+          yarn build
+          yarn build:gui
+          vite preview -c ./vite.config.preview.ts &
           yarn run test:browser
