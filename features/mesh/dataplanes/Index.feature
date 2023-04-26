@@ -43,13 +43,12 @@ Feature: mesh / dataplanes / index
     Then the "$table-header" elements contain
       | Value           |
       | Status          |
-      | DPP             |
+      | Name            |
       | Service         |
       | Protocol        |
       | Zone            |
       | Last Updated    |
       | Kuma DP version |
-      | Details         |
 
   Scenario: The Proxy listing has the expected content and UI elements
     Then the "$button-back" element doesn't exist
