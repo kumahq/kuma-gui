@@ -1,20 +1,7 @@
 import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 import YAML from 'js-yaml'
 
-import { useServer, useMock, TOKENS, services as e2e } from '../services'
-import { TOKENS as DEV_TOKENS, services as development } from '@/services/development'
-import { build } from '@/services/utils'
-
-(async () => {
-  const $ = {
-    ...DEV_TOKENS,
-    ...TOKENS,
-  }
-  build(
-    development($),
-    e2e($),
-  )
-})()
+import { useServer, useMock } from '../services'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
