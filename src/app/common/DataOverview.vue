@@ -341,7 +341,7 @@ function tableDataFetcher(): { data: object[], total: number } {
 }
 
 function tableRowHandler(_e: any, row: any): void {
-  emit('table-action', row.entity)
+  emit('table-action', row.entity ?? row)
 }
 
 function onRefreshButtonClick(): void {
