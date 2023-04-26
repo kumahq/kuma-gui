@@ -101,9 +101,7 @@ jobs:
       always()
     steps:
       - if: |
-          contains(needs.*.result, 'failure') ||
-          contains(needs.*.result, 'skipped') ||
-          contains(needs.*.result, 'cancelled')
+          needs.*.result != 'success'
         run: exit 1
 
       - run: exit 0
