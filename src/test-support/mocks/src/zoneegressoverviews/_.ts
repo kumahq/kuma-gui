@@ -1,21 +1,22 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (req) => {
-  const params = req.params
+export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+  const zoneEgressName = req.params.name
+  const zoneName = fake.hacker.noun()
 
   return {
     headers: {},
     body: {
       type: 'ZoneEgressOverview',
-      name: params.name,
+      name: zoneEgressName,
       creationTime: '2021-07-13T08:40:59Z',
       modificationTime: '2021-07-13T08:40:59Z',
       zoneEgress: {
-        zone: 'zone-1',
+        zone: zoneName,
         networking: {
-          address: '10.60.0.16',
-          port: 10001,
+          address: fake.internet.ip(),
+          port: fake.internet.port(),
           admin: {
-            port: 9901,
+            port: fake.internet.port(),
           },
         },
       },

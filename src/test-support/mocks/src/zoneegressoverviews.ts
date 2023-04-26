@@ -11,19 +11,21 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const zoneEgressName = `${fake.hacker.noun()}-${id}`
+        const zoneName = `${fake.hacker.noun()}-${id}`
+
         return {
           type: 'ZoneEgressOverview',
-          name,
+          name: zoneEgressName,
           creationTime: '2021-07-13T08:40:59Z',
           modificationTime: '2021-07-13T08:40:59Z',
           zoneEgress: {
-            zone: 'zone-1',
+            zone: zoneName,
             networking: {
-              address: '10.60.0.16',
-              port: 10001,
+              address: fake.internet.ip(),
+              port: fake.internet.port(),
               admin: {
-                port: 9901,
+                port: fake.internet.port(),
               },
             },
           },
