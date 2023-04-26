@@ -48,7 +48,9 @@ import _47 from './src/meshes/_/virtual-outbounds'
 import _2 from './src/policies'
 import _7 from './src/service-insights'
 import _10 from './src/zoneegressoverviews'
+import _49 from './src/zoneegressoverviews/_'
 import _9 from './src/zoneingresses+insights'
+import _48 from './src/zoneingresses+insights/_'
 import _8 from './src/zones'
 import _11 from './src/zones+insights'
 import _12 from './src/zones+insights/_'
@@ -66,7 +68,9 @@ export const fs: FS = {
   '/service-insights': _7,
   '/zones': _8,
   '/zoneingresses+insights': _9,
+  '/zoneingresses+insights/:name': _48,
   '/zoneegressoverviews': _10,
+  '/zoneegressoverviews/:name': _49,
   '/zones+insights': _11,
   '/zones+insights/:name': _12,
   '/mesh-insights': _13,

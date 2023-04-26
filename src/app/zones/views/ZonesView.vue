@@ -27,7 +27,7 @@
               class="back-button"
               appearance="primary"
               icon="arrowLeft"
-              :to="{ name: 'zones' }"
+              :to="{ name: 'zone-list-view' }"
             >
               View all
             </KButton>
@@ -35,103 +35,30 @@
         </DataOverview>
       </div>
 
-      <div class="kcard-border">
-        <TabsWidget
-          v-if="isEmpty === false && entity !== null"
-          :has-error="error !== null"
-          :is-loading="isLoading"
-          :tabs="filterTabs()"
-        >
-          <template #tabHeader>
-            <h1 class="entity-heading">
-              Zone: {{ entity.name }}
-            </h1>
-          </template>
-
-          <template #overview>
-            <DefinitionList
-              :has-error="entityHasError"
-              :is-loading="entityIsLoading"
-              :is-empty="entityIsEmpty"
-            >
-              <DefinitionListItem
-                v-for="(value, property) in entity"
-                :key="property"
-                :term="property"
-              >
-                <KBadge
-                  v-if="property === 'status'"
-                  :appearance="value === 'Offline' ? 'danger' : 'success'"
-                >
-                  {{ value }}
-                </KBadge>
-
-                <template v-else>
-                  {{ value }}
-                </template>
-              </DefinitionListItem>
-            </DefinitionList>
-          </template>
-
-          <template #insights>
-            <AccordionList :initially-open="0">
-              <AccordionItem
-                v-for="(value, key) in subscriptionsReversed"
-                :key="key"
-              >
-                <template #accordion-header>
-                  <SubscriptionHeader :details="value" />
-                </template>
-
-                <template #accordion-content>
-                  <SubscriptionDetails :details="value" />
-                </template>
-              </AccordionItem>
-            </AccordionList>
-          </template>
-
-          <template #config>
-            <CodeBlock
-              v-if="codeOutput"
-              id="code-block-zone-config"
-              language="json"
-              :code="codeOutput"
-              is-searchable
-              query-key="zone-config"
-            />
-          </template>
-
-          <template #warnings>
-            <WarningsWidget :warnings="warnings" />
-          </template>
-        </TabsWidget>
+      <div
+        v-if="entity !== null"
+        class="kcard-border"
+      >
+        <ZoneDetails :zone-overview="entity" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { KBadge, KButton } from '@kong/kongponents'
+import { KButton } from '@kong/kongponents'
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import ZoneDetails from '../components/ZoneDetails.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
-import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
-import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
-import TabsWidget from '@/app/common/TabsWidget.vue'
-import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
-import { KDSSubscription, TableHeader, ZoneCompatibility, ZoneOverview } from '@/types/index.d'
+import { TableHeader, ZoneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
-import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
-import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { fetchAllResources } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
@@ -140,25 +67,6 @@ const EMPTY_STATE = {
   title: 'No Data',
   message: 'There are no Zones present.',
 }
-
-const TABS = [
-  {
-    hash: '#overview',
-    title: 'Overview',
-  },
-  {
-    hash: '#insights',
-    title: 'Zone Insights',
-  },
-  {
-    hash: '#config',
-    title: 'Config',
-  },
-  {
-    hash: '#warnings',
-    title: 'Warnings',
-  },
-]
 
 const route = useRoute()
 const store = useStore()
@@ -196,18 +104,15 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   ],
   data: [],
 })
-const entity = ref<{ type: string, name: string, status: string, 'Authentication Type': string } | null>(null)
+const entity = ref<ZoneOverview | null>(null)
 const nextUrl = ref<string | null>(null)
-const warnings = ref<ZoneCompatibility[]>([])
-const subscriptionsReversed = ref<KDSSubscription[]>([])
-const codeOutput = ref<string | null>(null)
 const pageOffset = ref(props.offset)
 const zonesWithIngress = ref(new Set())
 const zonesWithEgress = ref(new Set())
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'zones') {
+  if (route.name !== 'zone-list-view') {
     return
   }
 
@@ -231,14 +136,6 @@ function init(offset: number): void {
   if (store.getters['config/getMulticlusterStatus']) {
     loadData(offset)
   }
-}
-
-function filterTabs() {
-  if (warnings.value.length === 0) {
-    return TABS.filter((tab) => tab.hash !== '#warnings')
-  }
-
-  return TABS
 }
 
 function parseData(zoneOverview: ZoneOverview): any {
@@ -346,41 +243,11 @@ async function getEntity({ name }: { name: string }): Promise<void> {
   entityHasError.value = false
   entityIsLoading.value = true
   entityIsEmpty.value = false
-  warnings.value = []
 
   try {
     // get the Zone details from the Zone Insights endpoint
-    const zoneOverview = await kumaApi.getZoneOverview({ name })
-    const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
-    const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
-
-    entity.value = {
-      ...getSome(zoneOverview, ['type', 'name']),
-      status,
-      'Authentication Type': getZoneDpServerAuthType(zoneOverview),
-    }
+    entity.value = await kumaApi.getZoneOverview({ name })
     QueryParameter.set('zone', name)
-    subscriptionsReversed.value = Array.from(subscriptions).reverse()
-
-    if (subscriptions.length > 0) {
-      const lastSubscription = subscriptions[subscriptions.length - 1]
-      const kumaCpVersion = lastSubscription.version.kumaCp.version || '-'
-      const { kumaCpGlobalCompatible = true } = lastSubscription.version.kumaCp
-
-      if (!kumaCpGlobalCompatible) {
-        warnings.value.push({
-          kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
-          payload: {
-            zoneCpVersion: kumaCpVersion,
-            globalCpVersion: store.getters['config/getVersion'],
-          },
-        })
-      }
-
-      if (lastSubscription.config) {
-        codeOutput.value = JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
-      }
-    }
   } catch (err) {
     console.error(err)
 

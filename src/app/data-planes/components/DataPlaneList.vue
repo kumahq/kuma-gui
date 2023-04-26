@@ -3,7 +3,7 @@
     <template #content>
       <DataOverview
         :selected-entity-name="dataPlaneOverview?.name"
-        :page-size="PAGE_SIZE"
+        :page-size="PAGE_SIZE_DEFAULT"
         :is-loading="props.isLoading"
         :error="error"
         :empty-state="EMPTY_STATE"
@@ -126,7 +126,7 @@ import DataOverview from '@/app/common/DataOverview.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
 import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
-import { KUMA_ZONE_TAG_NAME } from '@/constants'
+import { KUMA_ZONE_TAG_NAME, PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { DataPlaneOverview, TableHeader } from '@/types/index.d'
@@ -144,8 +144,6 @@ import {
 import { humanReadableDate } from '@/utilities/helpers'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 import { QueryParameter } from '@/utilities/QueryParameter'
-
-const PAGE_SIZE = 50
 
 const GATEWAY_TYPES = {
   true: 'All',
@@ -407,7 +405,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
   let zoneRoute: RouteLocationNamedRaw | undefined
   if (zone !== undefined) {
     zoneRoute = {
-      name: 'zones',
+      name: 'zone-list-view',
       query: {
         ns: zone,
       },

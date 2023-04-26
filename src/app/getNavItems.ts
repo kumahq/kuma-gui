@@ -18,17 +18,17 @@ export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavIt
       },
       {
         name: 'Zone CPs',
-        routeName: 'zones',
+        routeName: 'zone-list-view',
         insightsFieldAccessor: 'global.Zone',
       },
       {
         name: 'Zone Ingresses',
-        routeName: 'zoneingresses',
+        routeName: 'zone-ingress-list-view',
         insightsFieldAccessor: 'global.ZoneIngress',
       },
       {
         name: 'Zone Egresses',
-        routeName: 'zoneegresses',
+        routeName: 'zone-egress-list-view',
         insightsFieldAccessor: 'global.ZoneEgress',
       },
     ]

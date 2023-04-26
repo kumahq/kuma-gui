@@ -12,27 +12,29 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const zoneIngressName = `${fake.hacker.noun()}-${id}`
+        const zoneName = `${fake.hacker.noun()}-${id}`
+
         return {
           type: 'ZoneIngressOverview',
-          name,
+          name: zoneIngressName,
           creationTime: '2021-07-13T08:40:59Z',
           modificationTime: '2021-07-13T08:40:59Z',
           zoneIngress: {
-            zone: 'zone-1',
+            zone: zoneName,
             networking: {
-              address: '10.60.0.16',
-              advertisedAddress: '35.239.169.183',
-              port: 10001,
-              advertisedPort: 10001,
+              address: fake.internet.ip(),
+              advertisedAddress: fake.internet.ip(),
+              port: fake.internet.port(),
+              advertisedPort: fake.internet.port(),
             },
             availableServices: [
               {
                 tags: {
                   app: 'demo-app',
-                  'kuma.io/protocol': 'http',
+                  'kuma.io/protocol': fake.kuma.protocol(),
                   'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
-                  'kuma.io/zone': 'zone-1',
+                  'kuma.io/zone': zoneName,
                   'pod-template-hash': '5845d6447b',
                 },
                 instances: 1,
@@ -41,9 +43,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               {
                 tags: {
                   app: 'redis',
-                  'kuma.io/protocol': 'tcp',
+                  'kuma.io/protocol': fake.kuma.protocol(),
                   'kuma.io/service': 'redis_kuma-demo_svc_6379',
-                  'kuma.io/zone': 'zone-1',
+                  'kuma.io/zone': zoneName,
                   'pod-template-hash': '59c9d56fc',
                 },
                 instances: 1,

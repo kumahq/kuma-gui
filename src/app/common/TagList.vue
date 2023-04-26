@@ -59,8 +59,10 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
     switch (tag.label) {
       case 'kuma.io/zone': {
         return router.resolve({
-          name: 'zones',
-          query: { ns: tag.value },
+          name: 'zone-detail-view',
+          params: {
+            zone: tag.value,
+          },
         })
       }
       case 'kuma.io/service': {
