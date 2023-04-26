@@ -56,7 +56,7 @@ Feature: mesh / gateways / index
   Scenario: The Gateway listing shows information of selected gateway when clicked
     Then the "$item-title" element contains "fake-alarm-gateway-0"
     Then the URL contains "gateway=fake-alarm-gateway-0"
-    Then the "$table-row:nth-child(2)" element contains "fake-transmitter-gateway-0-break-something"
+    Then the "$table-row:nth-child(2)" element contains "fake-transmitter-gateway-0-skip-something"
     Then the "$table-row:nth-child(2):not(.is-selected)" element exists
     When I "click" on the "$table-row:nth-child(2) td:first-child" element
     Then the "$table-row:nth-child(2).is-selected" element exists
