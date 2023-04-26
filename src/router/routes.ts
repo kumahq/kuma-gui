@@ -43,7 +43,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           path: '',
           name: 'zone-list-view',
           meta: {
-            title: 'Zone',
+            title: 'Zones',
           },
           props: (route) => ({
             selectedZoneName: route.query.zone,
