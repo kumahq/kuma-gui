@@ -389,14 +389,14 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        Yes
+                        No
                         
                       </td>
                       <td
                         class=""
                       >
                         
-                        Yes
+                        No
                         
                       </td>
                       <td
