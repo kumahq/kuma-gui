@@ -1,6 +1,6 @@
 import { PathConfig } from './types/index'
 
-export function getPathConfigDefault(apiUrlDefault: string): PathConfig {
+export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
   return {
     baseGuiPath: '/gui',
     apiUrl: apiUrlDefault,

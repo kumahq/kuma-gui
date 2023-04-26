@@ -66,13 +66,14 @@ export default class Env {
     if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       try {
         config = JSON.parse(pathConfigNode.textContent.trim())
-      } catch {
+      } catch (e) {
         // Handled by falling back to a default value.
+        console.error(e)
       }
     }
     if (!config) {
-      config = getPathConfigDefault(import.meta.env.PROD ? '' : import.meta.env.VITE_KUMA_API_SERVER_URL)
-    // console.error('Unable to parse kuma config. Falling back to defaults')
+      config = getPathConfigDefault()
+      console.error('Unable to parse kuma config. Falling back to defaults')
     }
     // Ensures the API baseUrl always has an absolute, non-trailing slash URL,
     // i.e. a base.

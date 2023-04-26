@@ -2,10 +2,17 @@ import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber
 import YAML from 'js-yaml'
 
 import { useServer, useMock, TOKENS, services as e2e } from '../services'
+import { TOKENS as DEV_TOKENS, services as development } from '@/services/development'
 import { build } from '@/services/utils'
+
 (async () => {
+  const $ = {
+    ...DEV_TOKENS,
+    ...TOKENS,
+  }
   build(
-    e2e(TOKENS),
+    development($),
+    e2e($),
   )
 })()
 

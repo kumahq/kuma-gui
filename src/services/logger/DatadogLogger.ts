@@ -17,7 +17,7 @@ export default class DatadogLogger {
         forwardErrorsToLogs: true,
         service: this.env.var('KUMA_PRODUCT_NAME'),
         sampleRate: 100,
-        env: import.meta.env.MODE,
+        env: 'production', // logging is currently disabled in anything other than production
       })
     }
   }
