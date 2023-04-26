@@ -1,4 +1,6 @@
+# create-gui-pr.yaml is dependant on this name being "Tests"
 name: 'Tests'
+#
 on:
   push:
     branches: [master, 'release-[0-9]+.[0-9]+']
@@ -100,9 +102,10 @@ jobs:
     if: |
       always()
     steps:
-      - if: |
+      - name: Check for failures
+        if: |
           contains(needs.*.result, 'failure') ||
           contains(needs.*.result, 'cancelled')
         run: echo '${{toJSON(needs)}}' && exit 1
 
-      - run: exit 0
+      - run: echo "Successful"
