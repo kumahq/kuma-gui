@@ -1,33 +1,42 @@
-import { readFile as read } from 'fs/promises'
+import { readFile as read, stat } from 'fs/promises'
 import { fileURLToPath, URL } from 'url'
-import { defineConfig } from 'vite'
+import { defineConfig, createLogger } from 'vite'
 
-const url = process.env.KUMA_GUI_BASE_URL || '/gui'
+const root = fileURLToPath(new URL(process.env.KUMA_GUI_DIST_ROOT || './dist', import.meta.url))
+const base = process.env.KUMA_GUI_BASE_URL || '/gui'
 const api = process.env.KUMA_API_URL || 'http://localhost:5681'
-const path = process.env.KUMA_GUI_INDEX || 'dist/gui/index.html'
 const port = parseInt(process.env.KUMA_GUI_PORT || '5681')
-const index = fileURLToPath(new URL(`./${path}`, import.meta.url))
 const pakage = fileURLToPath(new URL('./package.json', import.meta.url))
 
 // https://vitejs.dev/config/
+const exists = async (path: string) => {
+  try {
+    return (await stat(path)).isFile()
+  } catch (e) {
+    return false
+  }
+}
+const logger = createLogger('info', {})
 export default defineConfig({
   plugins: [
     {
       name: 'renderIndexHTML',
       configurePreviewServer: async (server) => {
-        const template = (await read(index)).toString()
         const version = JSON.parse((await read(pakage)).toString()).version
+        const index = `${root}${base}/index.html`
+        logger.info(`Serving: ${index} as index.html`)
+        const template = (await read(index)).toString()
         const body = template
-          .replace('{{.BaseGuiPath}}', url)
+          .replace('{{.BaseGuiPath}}', base)
           .replace('{{.}}', JSON.stringify(
             {
-              baseGuiPath: url,
+              baseGuiPath: base,
               apiUrl: api,
               version,
             },
           ))
-        server.middlewares.use('/', (req, res, next) => {
-          if (req.originalUrl === `${url}/`) {
+        server.middlewares.use('/', async (req, res, next) => {
+          if ((req.originalUrl || '').startsWith(base) && !await exists(`${root}${req.originalUrl}`)) {
             res.end(body)
           } else {
             next()
