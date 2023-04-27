@@ -2,11 +2,7 @@ import { readFile as read, stat } from 'fs/promises'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig, createLogger } from 'vite'
 
-const root = fileURLToPath(new URL(process.env.KUMA_GUI_DIST_ROOT || './dist', import.meta.url))
-const base = process.env.KUMA_GUI_BASE_URL || '/gui'
-const api = process.env.KUMA_API_URL || 'http://localhost:5681'
-const port = parseInt(process.env.KUMA_GUI_PORT || '5681')
-const pakage = fileURLToPath(new URL('./package.json', import.meta.url))
+import type { UserConfigFn } from 'vite'
 
 // https://vitejs.dev/config/
 const exists = async (path: string) => {
@@ -17,35 +13,54 @@ const exists = async (path: string) => {
   }
 }
 const logger = createLogger('info', {})
-export default defineConfig({
-  plugins: [
-    {
-      name: 'renderIndexHTML',
-      configurePreviewServer: async (server) => {
-        const version = JSON.parse((await read(pakage)).toString()).version
-        const index = `${root}${base}/index.html`
-        logger.info(`Serving: ${index} as index.html`)
-        const template = (await read(index)).toString()
-        const body = template
-          .replace('{{.BaseGuiPath}}', base)
-          .replace('{{.}}', JSON.stringify(
-            {
-              baseGuiPath: base,
-              apiUrl: api,
-              version,
-            },
-          ))
-        server.middlewares.use('/', async (req, res, next) => {
-          if ((req.originalUrl || '').startsWith(base) && !await exists(`${root}${req.originalUrl}`)) {
-            res.end(body)
-          } else {
-            next()
-          }
-        })
-      },
-    },
-  ],
-  preview: {
-    port,
-  },
+
+export const context = (url: string) => ({
+  root: fileURLToPath(new URL(process.env.KUMA_GUI_DIST_ROOT || './dist', url)),
+  base: process.env.KUMA_GUI_BASE_URL || '/gui',
+  api: process.env.KUMA_API_URL || 'http://localhost:5681',
+  port: parseInt(process.env.KUMA_GUI_PORT || '5681'),
+  module: fileURLToPath(new URL('./package.json', url)),
 })
+export type PreviewConfigContext = ReturnType<typeof context>
+
+export const config: (context: PreviewConfigContext) => UserConfigFn = ({
+  root,
+  base,
+  api,
+  port,
+  module,
+}) => () => {
+  return {
+    plugins: [
+      {
+        name: 'renderIndexHTML',
+        configurePreviewServer: async (server) => {
+          const version = JSON.parse((await read(module)).toString()).version
+          const index = `${root}${base}/index.html`
+          logger.info(`Serving: ${index} as index.html`)
+          const template = (await read(index)).toString()
+          const body = template
+            .replace('{{.BaseGuiPath}}', base)
+            .replace('{{.}}', JSON.stringify(
+              {
+                baseGuiPath: base,
+                apiUrl: api,
+                version,
+              },
+            ))
+          server.middlewares.use('/', async (req, res, next) => {
+            if ((req.originalUrl || '').startsWith(base) && !await exists(`${root}${req.originalUrl}`)) {
+              res.end(body)
+            } else {
+              next()
+            }
+          })
+        },
+      },
+    ],
+    preview: {
+      port,
+    },
+  }
+}
+export default defineConfig(config(context(import.meta.url)))

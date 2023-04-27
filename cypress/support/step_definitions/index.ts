@@ -19,6 +19,9 @@ type Cy = typeof cy;
 const $ = (selector: string): ReturnType<Cy['get']> => {
   if (selector.startsWith('$')) {
     const alias = selector.split(/[: .[#]/).shift()!.substring(1)
+    if (typeof selectors[alias] === 'undefined') {
+      throw new Error(`Could not find alias $${alias}. Make sure you have defined the alias in a CSS selectors step`)
+    }
     selector = selector.replace(`$${alias}`, selectors[alias])
     return $(selector)
   }
@@ -36,7 +39,7 @@ Given('the CSS selectors', (table: DataTable) => {
 })
 Given('the environment', (yaml: string) => {
   env = {
-    env,
+    ...env,
     ...YAML.load(yaml) as object,
   }
 })
@@ -45,7 +48,8 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
   const mock = useMock()
   urls.set(url, `spy-${now}`)
   mock(url, env, (respond) => {
-    return respond(YAML.load(yaml) as { headers?: Record<string, string>, body?: Record<string, unknown> })
+    const response = respond(YAML.load(yaml) as { headers?: Record<string, string>, body?: Record<string, unknown> })
+    return response
   }).as(urls.get(url))
 })
 
