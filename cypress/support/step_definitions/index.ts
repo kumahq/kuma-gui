@@ -91,9 +91,7 @@ Then(/^the "(.*)" element[s]? exist[s]? ([0-9]*) time[s]?$/, async (selector: st
 Then(/^the "(.*)" element(s)? contain[s]?$/, async (selector: string, multiple = '', table: DataTable) => {
   const rows = table.rows()
   if (multiple === 's') {
-    const tableHeads = $(selector).should('have.length', rows.length)
-
-    tableHeads.each((el, i) => {
+    $(selector).each((el, i) => {
       const item = rows[i]
       if (item) {
         cy.wrap(el).contains(item[0])

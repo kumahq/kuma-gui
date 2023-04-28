@@ -40,6 +40,7 @@ Feature: mesh / dataplanes / index
     When I visit the "/mesh/default/data-planes" URL
 
   Scenario: The Proxy listing table has the correct columns
+    Then the "$table-header" element exists 8 times
     Then the "$table-header" elements contain
       | Value           |
       | Status          |
