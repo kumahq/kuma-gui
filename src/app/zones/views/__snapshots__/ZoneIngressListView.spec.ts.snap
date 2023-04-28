@@ -67,7 +67,6 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >

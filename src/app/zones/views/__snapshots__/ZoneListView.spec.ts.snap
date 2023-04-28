@@ -65,7 +65,6 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
@@ -344,7 +343,6 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       
                     </tr>
                     <tr
-                      class=""
                       role="link"
                       tabindex="0"
                     >
@@ -481,7 +479,6 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       
                     </tr>
                     <tr
-                      class=""
                       role="link"
                       tabindex="0"
                     >
@@ -618,7 +615,6 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       
                     </tr>
                     <tr
-                      class=""
                       role="link"
                       tabindex="0"
                     >

@@ -65,7 +65,6 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
@@ -475,7 +474,6 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
