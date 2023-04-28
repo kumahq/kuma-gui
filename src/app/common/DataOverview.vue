@@ -303,7 +303,6 @@ const props = defineProps({
 
 const emit = defineEmits(['table-action', 'refresh', 'load-data'])
 
-const selectedEntityName = ref(props.selectedEntityName)
 const internalPageOffset = ref(props.pageOffset)
 const tableRecomputationKey = ref(0)
 
@@ -315,14 +314,13 @@ const tableHeaders = computed(() => {
   }
 })
 const customSlots = computed(() => props.tableData.headers.map((header) => header.key).filter((key) => slots[key]))
-
-watch(() => props.selectedEntityName, function () {
+const selectedEntityName = computed(() => {
   if (props.selectedEntityName !== '') {
-    selectedEntityName.value = props.selectedEntityName
+    return props.selectedEntityName
   } else if (props.tableData.data.length > 0) {
-    selectedEntityName.value = props.tableData.data[0].name
+    return props.tableData.data[0].name
   } else {
-    selectedEntityName.value = ''
+    return ''
   }
 })
 
@@ -367,13 +365,18 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 }
 
 function getRowAttributes(row: any): Record<string, string> {
-  if (!row || !row.entity) {
+  if (!row) {
     return {}
   }
 
-  const className = row.entity.name === selectedEntityName.value ? 'is-selected' : ''
+  const attributes: Record<string, string> = {}
 
-  return { class: className }
+  const name = row.entity?.name ?? row.name
+  if (name === selectedEntityName.value) {
+    attributes.class = 'is-selected'
+  }
+
+  return attributes
 }
 </script>
 

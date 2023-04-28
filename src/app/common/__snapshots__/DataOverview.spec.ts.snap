@@ -57,6 +57,7 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
   <tbody>
     
     <tr
+      class="is-selected"
       role="link"
       tabindex="0"
     >

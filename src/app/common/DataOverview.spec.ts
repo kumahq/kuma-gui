@@ -43,6 +43,7 @@ describe('DataOverview.vue', () => {
         ],
         data: [
           {
+            name: 'test',
             custom: ['custom', 'values', 'in', 'an', 'array'],
           },
         ],
