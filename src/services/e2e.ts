@@ -1,9 +1,8 @@
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
-import type { FS, Callback, Options } from '@/test-support'
+import type { Callback, Options } from '@/test-support'
 import { mocker } from '@/test-support/intercept'
-import { fs } from '@/test-support/mocks/fs'
 
-// this needs to come from production
+// this needs to come from testing
 const env = () => (key: string, d = '') => {
   switch (key) {
     case 'KUMA_API_URL':
@@ -17,12 +16,15 @@ type Server = typeof cy
 type Mocker = (route: string, opts?: Options, cb?: Callback) => ReturnType<typeof cy['intercept']>
 const $ = {
   env: token<AEnv>('env'),
-  fakeFS: token<FS>('fake.fs'),
-  kumaFS: token<FS>('fake.fs.kuma'),
 
   cy: token<Server>('cy'),
   mockServer: token('mockServer'),
   mock: token<Mocker>('mocker'),
+  Env: token('Env'),
+
+  logger: token('logger'),
+  EnvVars: token('EnvVars'),
+  bootstrap: token('bootstrap'),
 }
 type Token = ReturnType<typeof token>
 export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [
@@ -45,16 +47,9 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
       app.fakeFS,
     ],
   }],
-  // this will eventually come from production
+  // this will eventually come from testing
   [app.env, {
     service: env,
-  }],
-  // this will eventually come from development
-  [app.kumaFS, {
-    constant: fs,
-    labels: [
-      app.fakeFS,
-    ],
   }],
 
 ]

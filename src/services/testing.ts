@@ -1,6 +1,7 @@
 import { setupServer } from 'msw/node'
 
 import { ServiceConfigurator, token } from './utils'
+import CliEnv from '@/services/env/CliEnv'
 import { mocker } from '@/test-support'
 import type { Mocker } from '@/test-support'
 import type { RestHandler } from 'msw'
@@ -24,6 +25,12 @@ export const services: ServiceConfigurator = (app) => [
       app.env,
       app.msw,
       app.fakeFS,
+    ],
+  }],
+  [app.Env, {
+    service: CliEnv,
+    arguments: [
+      app.EnvVars,
     ],
   }],
 ]

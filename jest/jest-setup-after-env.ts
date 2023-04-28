@@ -7,7 +7,7 @@ import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-sn
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { TOKENS as TEST, services as testing } from '../src/services/testing'
 import { TOKENS as DEV, services as development } from '@/services/development'
-import Env from '@/services/env/Env'
+import CliEnv from '@/services/env/CliEnv'
 import { TOKENS as PROD, services as production } from '@/services/production'
 import { get, container, build, createInjections } from '@/services/utils'
 
@@ -73,8 +73,8 @@ const $ = {
 })()
 
 export const withVersion = (v: string) => {
-  class TestEnv extends Env {
-    var(...rest: Parameters<Env['var']>) {
+  class TestEnv extends CliEnv {
+    var(...rest: Parameters<CliEnv['var']>) {
       const key = rest[0]
       if (key === 'KUMA_VERSION') {
         return v

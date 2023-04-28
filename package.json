@@ -103,5 +103,11 @@
   ],
   "msw": {
     "workerDirectory": "public"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": [
+      "./cypress/main.ts",
+      "./cypress/support/step_definitions/*.ts"
+    ]
   }
 }
