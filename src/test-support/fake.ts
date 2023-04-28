@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { RestRequest } from 'msw'
 
 import FakeKuma from './FakeKuma'
-import type Env from '@/services/env/Env'
+import type AppEnv from '@/services/env/Env'
 import type { Alias } from '@/services/utils'
 import type { rest } from 'msw'
 
@@ -31,7 +31,7 @@ const pager: Pager = (_total: string | number, req: RestRequest, self) => {
   }
 }
 
-export type AEnv = Alias<Env['var']>
+export type AEnv = Alias<AppEnv['var']>
 export type MockEnvKeys = keyof {
   FAKE_SEED: string
   KUMA_DATAPLANE_COUNT: string
@@ -43,12 +43,14 @@ export type MockEnvKeys = keyof {
   KUMA_MESH_COUNT: string
   KUMA_GLOBALSECRET_COUNT: string
   KUMA_MODE: string
+  KUMA_LATENCY: string
 }
 export type AppEnvKeys = Parameters<AEnv>[0]
+export type Env = (key: AppEnvKeys | MockEnvKeys, d: string) => string
 export type EndpointDependencies = {
   fake: FakeKuma
-  pager: Pager,
-  env: (key: AppEnvKeys | MockEnvKeys, d: string) => string
+  pager: Pager
+  env: Env
 }
 export type MockResponse = {
   headers: Record<string, string>
@@ -62,14 +64,14 @@ type Server = typeof rest
 export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
-export const dependencies = {
+export const dependencies: EndpointDependencies = {
   fake: new FakeKuma(faker),
   pager,
-  env: (_key: AppEnvKeys | MockEnvKeys, d = '') => d,
+  env: (key, d = '') => d,
 }
 export const fakeApi = (env: AEnv, server: Server, fs: FS) => {
   const baseUrl = env('KUMA_API_URL')
-  const mockEnv: EndpointDependencies['env'] = (key, d = '') => env(key as AppEnvKeys, d)
+  const mockEnv: Env = (key, d = '') => env(key as AppEnvKeys, d)
 
   return Object.entries(fs).map(([route, endpoint]) => {
     return server.all(`${route.startsWith('https://') ? '' : baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {

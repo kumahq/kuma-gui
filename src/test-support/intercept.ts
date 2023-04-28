@@ -1,7 +1,7 @@
 import { URLPattern } from 'urlpattern-polyfill'
 
 import { FS, Callback, createMerge, Mocker } from '@/test-support'
-import { dependencies, MockEnvKeys, AppEnvKeys } from '@/test-support/fake'
+import { dependencies, MockEnvKeys, AppEnvKeys, Env } from '@/test-support/fake'
 class Router<T> {
   routes: Map<URLPattern, T> = new Map()
   constructor(routes: Record<string, T>) {
@@ -43,25 +43,28 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
       },
       (req) => {
         try {
+          const mockEnv: Env = (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d)
           const url = new URL(req.url)
           const { route, params } = router.match(url.pathname)
           const endpoint = route
           const fetch = endpoint({
             ...dependencies,
-            env: (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d),
+            env: mockEnv,
           })
           const request = {
             params,
-            url: {
-              searchParams: new URLSearchParams(url.search),
-            },
+            url,
           }
           // @ts-ignore
-          const response = fetch(request)
+          const _response = fetch(request)
           // @ts-ignore
-          req.reply(cb(createMerge(response), request, response).body)
+          const response = cb(createMerge(_response), request, _response)
+          req.reply({
+            statusCode: parseInt(response.headers['Status-Code'] ?? '200'),
+            delay: parseInt(mockEnv('KUMA_LATENCY', '0')),
+            body: response.body,
+          })
         } catch (e) {
-          Cypress.log({ displayName: 'ERROR', message: (e as Error).message })
           req.continue()
         }
       },
