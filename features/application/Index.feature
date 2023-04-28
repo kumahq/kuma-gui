@@ -15,7 +15,7 @@ Feature: index
     And the URL "/meshes" responds with
       """
       """
-    When I visit the "/" URL
+    When I load the "/" URL
     Then the "$loading" element exists
     And I wait for 2000 milliseconds
     Then the "$loading" element doesn't exist
@@ -95,25 +95,25 @@ Feature: index
     Then the "$main-nav .nav-item-<RouteName>" element contains "<Text>"
     Examples:
       | RouteName            | Count  | Text |
-      | zones                | 0      | 0    |
-      | zoneegresses         | 0      | 0    |
-      | zoneingresses        | 0      | 0    |
-      | service-list-view    | 0      | 0    |
-      | data-plane-list-view | 0      | 0    |
-      | gateway-list-view    | 0      | 0    |
-      | policies             | 0      | 0    |
-      | zones                | 50     | 50   |
-      | zoneegresses         | 122    | 99+  |
-      | zoneingresses        | 1      | 1    |
-      | service-list-view    | 11     | 11   |
-      | data-plane-list-view | 100000 | 99+  |
-      | gateway-list-view    | 1001   | 99+  |
-      | policies             | 1      | 14   |
-      | zones                | 100    | 99+  |
-      | zoneegresses         | 100    | 99+  |
-      | zoneingresses        | 100    | 99+  |
-      | service-list-view    | 100    | 99+  |
-      | data-plane-list-view | 100    | 99+  |
-      | gateway-list-view    | 100    | 99+  |
-      | policies             | 100    | 99+  |
+      | zone-list-view         | 0      | 0   |
+      | zone-egress-list-view  | 0      | 0   |
+      | zone-ingress-list-view | 0      | 0   |
+      | service-list-view      | 0      | 0   |
+      | data-plane-list-view   | 0      | 0   |
+      | gateway-list-view      | 0      | 0   |
+      | policies               | 0      | 0   |
+      | zone-list-view         | 50     | 50  |
+      | zone-egress-list-view  | 122    | 99+ |
+      | zone-ingress-list-view | 1      | 1   |
+      | service-list-view      | 11     | 11  |
+      | data-plane-list-view   | 100000 | 99+ |
+      | gateway-list-view      | 1001   | 99+ |
+      | policies               | 1      | 14  |
+      | zone-list-view         | 100    | 99+ |
+      | zone-egress-list-view  | 100    | 99+ |
+      | zone-ingress-list-view | 100    | 99+ |
+      | service-list-view      | 100    | 99+ |
+      | data-plane-list-view   | 100    | 99+ |
+      | gateway-list-view      | 100    | 99+ |
+      | policies               | 100    | 99+ |
 
