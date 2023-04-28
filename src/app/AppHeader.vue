@@ -75,6 +75,7 @@
         :to="{ name: 'diagnostics' }"
         icon="gearFilled"
         button-appearance="btn-link"
+        data-testid="nav-item-diagnostics"
       >
         <template #icon>
           <KIcon

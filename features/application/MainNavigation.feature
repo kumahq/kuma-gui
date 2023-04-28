@@ -84,18 +84,19 @@ Feature: index
 
   Scenario Outline: Visiting the "<Title>" page
     When I visit the "/" URL
-    When I "click" on the "$main-nav .nav-item-<RouteName> a" element
+    When I "click" on the "<Selector>" element
     Then the page title contains "<Title>"
 
     Examples:
-      | RouteName              | Title              |
-      | home                   | Overview           |
-      | zone-list-view         | Zones              |
-      | zone-egress-list-view  | Zone Egresses      |
-      | zone-ingress-list-view | Zone Ingresses     |
-      | service-list-view      | Services           |
-      | gateway-list-view      | Gateways           |
-      | data-plane-list-view   | Data plane proxies |
+      | Selector                                     | Title              |
+      | $main-nav .nav-item-home a                   | Overview           |
+      | $main-nav .nav-item-zone-list-view a         | Zones              |
+      | $main-nav .nav-item-zone-egress-list-view a  | Zone Egresses      |
+      | $main-nav .nav-item-zone-ingress-list-view a | Zone Ingresses     |
+      | $main-nav .nav-item-service-list-view a      | Services           |
+      | $main-nav .nav-item-gateway-list-view a      | Gateways           |
+      | $main-nav .nav-item-data-plane-list-view a   | Data plane proxies |
       # TODO: This should say Circuit Breakers
-      | policies               | Manager            |
-      # | policies               | Circuit Breakers |
+      | $main-nav .nav-item-policies a               | Manager            |
+      # | $main-nav .nav-item-policies               | Circuit Breakers |
+      | [data-testid="nav-item-diagnostics"]         | Diagnostics        |
