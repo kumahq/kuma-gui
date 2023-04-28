@@ -31,7 +31,6 @@
       v-else
       class="data-overview-content"
     >
-      <!-- data -->
       <div
         v-if="!tableDataIsEmpty && tableData"
         class="data-overview-table"
@@ -49,7 +48,6 @@
           data-testid="data-overview-table"
           @row:click="tableRowHandler"
         >
-          <!-- Custom slots provided by parent -->
           <template
             v-for="slot in customSlots"
             #[slot]="{ rowValue, row }"
@@ -61,7 +59,6 @@
             />
           </template>
 
-          <!-- status -->
           <template #status="{ rowValue }">
             <StatusBadge
               v-if="rowValue"
@@ -73,7 +70,6 @@
             </template>
           </template>
 
-          <!-- tags -->
           <template #tags="{ rowValue }">
             <TagList :tags="rowValue" />
           </template>
@@ -130,14 +126,12 @@
             </template>
           </template>
 
-          <!--- total Updates --->
           <template #totalUpdates="{ row }">
             <span>
               {{ row.totalUpdates }}
             </span>
           </template>
 
-          <!--- dp Version --->
           <template #dpVersion="{ row, rowValue }">
             <div
               :class="{
@@ -148,7 +142,6 @@
             </div>
           </template>
 
-          <!--- envoy Version --->
           <template #envoyVersion="{ row, rowValue }">
             <div
               :class="{
@@ -159,7 +152,6 @@
             </div>
           </template>
 
-          <!--- warnings --->
           <template
             v-if="showWarnings"
             #warnings="{ row }"
