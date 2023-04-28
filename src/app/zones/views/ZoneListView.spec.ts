@@ -1,15 +1,15 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
-import ZonesView from './ZonesView.vue'
+import ZoneListView from './ZoneListView.vue'
 import { useMock } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
 function renderComponent() {
-  return mount(ZonesView)
+  return mount(ZoneListView)
 }
 
-describe('ZonesView.vue', () => {
+describe('ZoneListView', () => {
   const mock = useMock()
   const store = useStore()
   test('renders snapshot when no multizone', async () => {

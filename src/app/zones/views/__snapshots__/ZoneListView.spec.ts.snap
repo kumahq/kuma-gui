@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ZonesView.vue renders snapshot when multizone 1`] = `
+exports[`ZoneListView renders snapshot when multizone 1`] = `
 <div
   class="zones"
 >
@@ -65,7 +65,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
@@ -232,9 +231,12 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        cluster-1
-                        
+                        <a
+                          class=""
+                          href="/zones/cluster-1"
+                        >
+                          cluster-1
+                        </a>
                         
                       </td>
                       <td
@@ -341,7 +343,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       
                     </tr>
                     <tr
-                      class=""
                       role="link"
                       tabindex="0"
                     >
@@ -366,9 +367,12 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zone-1
-                        
+                        <a
+                          class=""
+                          href="/zones/zone-1"
+                        >
+                          zone-1
+                        </a>
                         
                       </td>
                       <td
@@ -475,7 +479,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       
                     </tr>
                     <tr
-                      class=""
                       role="link"
                       tabindex="0"
                     >
@@ -500,9 +503,12 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zone-2
-                        
+                        <a
+                          class=""
+                          href="/zones/zone-2"
+                        >
+                          zone-2
+                        </a>
                         
                       </td>
                       <td
@@ -609,7 +615,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       
                     </tr>
                     <tr
-                      class=""
                       role="link"
                       tabindex="0"
                     >
@@ -634,9 +639,12 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zone-3
-                        
+                        <a
+                          class=""
+                          href="/zones/zone-3"
+                        >
+                          zone-3
+                        </a>
                         
                       </td>
                       <td
@@ -1092,7 +1100,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
 </div>
 `;
 
-exports[`ZonesView.vue renders snapshot when no multizone 1`] = `
+exports[`ZoneListView renders snapshot when no multizone 1`] = `
 <div
   class="zones"
 >
@@ -1184,7 +1192,7 @@ exports[`ZonesView.vue renders snapshot when no multizone 1`] = `
 </div>
 `;
 
-exports[`ZonesView.vue renders zone insights 1`] = `
+exports[`ZoneListView renders zone insights 1`] = `
 <div
   class="tab-container"
   data-testid="tab-container"

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
+exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
 <div
   class="zoneegresses"
 >
@@ -65,7 +65,6 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
@@ -152,9 +151,12 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zoneegress-1
-                        
+                        <a
+                          class=""
+                          href="/zone-egresses/zoneegress-1"
+                        >
+                          zoneegress-1
+                        </a>
                         
                       </td>
                       
@@ -407,7 +409,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
 </div>
 `;
 
-exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
+exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
 <div
   class="zoneegresses"
 >
@@ -472,7 +474,6 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
@@ -559,9 +560,12 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zoneegress-1
-                        
+                        <a
+                          class=""
+                          href="/zone-egresses/zoneegress-1"
+                        >
+                          zoneegress-1
+                        </a>
                         
                       </td>
                       
@@ -814,7 +818,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
 </div>
 `;
 
-exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
+exports[`ZoneEgressListView renders zoneegress insights 1`] = `
 <div
   class="tab-container"
   data-testid="tab-container"

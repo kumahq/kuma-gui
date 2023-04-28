@@ -114,13 +114,8 @@ async function loadData(offset: number, dppParams: DataPlaneOverviewParameters =
   try {
     const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, params)
 
-    if (Array.isArray(items) && items.length > 0) {
-      dataPlaneOverviews.value = items
-      nextUrl.value = next
-    } else {
-      dataPlaneOverviews.value = []
-      nextUrl.value = null
-    }
+    nextUrl.value = next
+    dataPlaneOverviews.value = items ?? []
   } catch (err) {
     if (err instanceof Error) {
       error.value = err

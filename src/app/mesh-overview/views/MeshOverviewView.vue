@@ -9,28 +9,30 @@
     <KCard v-if="mesh !== null">
       <template #body>
         <div class="columns">
-          <DefinitionList
-            :has-error="hasError"
+          <StatusInfo
             :is-loading="isLoading"
-            :is-empty="isEmpty"
+            :has-error="hasError"
+            :is-empty="mesh === null || meshInsights === null"
           >
-            <DefinitionListItem
-              v-for="(value, property) in basicMesh"
-              :key="property"
-              :term="property"
-            >
-              <KBadge
-                v-if="typeof value === 'boolean'"
-                :appearance="value ? 'success' : 'danger'"
+            <DefinitionList>
+              <DefinitionListItem
+                v-for="(value, property) in basicMesh"
+                :key="property"
+                :term="property"
               >
-                {{ value ? 'Enabled' : 'Disabled' }}
-              </KBadge>
+                <KBadge
+                  v-if="typeof value === 'boolean'"
+                  :appearance="value ? 'success' : 'danger'"
+                >
+                  {{ value ? 'Enabled' : 'Disabled' }}
+                </KBadge>
 
-              <template v-else>
-                {{ value }}
-              </template>
-            </DefinitionListItem>
-          </DefinitionList>
+                <template v-else>
+                  {{ value }}
+                </template>
+              </DefinitionListItem>
+            </DefinitionList>
+          </StatusInfo>
 
           <DefinitionList>
             <DefinitionListItem
@@ -100,6 +102,7 @@ import MeshCharts from '../components/MeshCharts.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
+import StatusInfo from '@/app/common/StatusInfo.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { useStore } from '@/store/store'
 import { Mesh, MeshInsight } from '@/types/index.d'
@@ -112,7 +115,6 @@ const store = useStore()
 
 const isLoading = ref(true)
 const hasError = ref(false)
-const isEmpty = ref(false)
 const mesh = ref<Mesh | null>(null)
 const meshInsights = ref<MeshInsight | null>(null)
 const rawMesh = computed(() => mesh.value !== null ? stripTimes(mesh.value) : null)
@@ -166,10 +168,6 @@ watch(() => route.params.mesh, function () {
   if (route.name !== 'single-mesh-overview') {
     return
   }
-  // Ensures basic state is reset when switching meshes using the mesh selector.
-  isLoading.value = true
-  isEmpty.value = false
-  hasError.value = false
 
   loadMesh()
 })
@@ -178,7 +176,7 @@ loadMesh()
 
 async function loadMesh(): Promise<void> {
   isLoading.value = true
-  isEmpty.value = false
+  hasError.value = false
 
   const name = route.params.mesh as string
 
@@ -187,7 +185,8 @@ async function loadMesh(): Promise<void> {
     meshInsights.value = await kumaApi.getMeshInsights({ name })
   } catch (error) {
     hasError.value = true
-    isEmpty.value = true
+    mesh.value = null
+    meshInsights.value = null
 
     console.error(error)
   } finally {

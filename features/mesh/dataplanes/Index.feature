@@ -40,16 +40,16 @@ Feature: mesh / dataplanes / index
     When I visit the "/mesh/default/data-planes" URL
 
   Scenario: The Proxy listing table has the correct columns
+    Then the "$table-header" element exists 7 times
     Then the "$table-header" elements contain
       | Value           |
       | Status          |
-      | DPP             |
+      | Name            |
       | Service         |
       | Protocol        |
       | Zone            |
       | Last Updated    |
       | Kuma DP version |
-      | Details         |
 
   Scenario: The Proxy listing has the expected content and UI elements
     Then the "$button-back" element doesn't exist

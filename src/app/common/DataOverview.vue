@@ -31,7 +31,6 @@
       v-else
       class="data-overview-content"
     >
-      <!-- data -->
       <div
         v-if="!tableDataIsEmpty && tableData"
         class="data-overview-table"
@@ -49,7 +48,6 @@
           data-testid="data-overview-table"
           @row:click="tableRowHandler"
         >
-          <!-- Custom slots provided by parent -->
           <template
             v-for="slot in customSlots"
             #[slot]="{ rowValue, row }"
@@ -61,7 +59,6 @@
             />
           </template>
 
-          <!-- status -->
           <template #status="{ rowValue }">
             <StatusBadge
               v-if="rowValue"
@@ -73,71 +70,68 @@
             </template>
           </template>
 
-          <!-- tags -->
           <template #tags="{ rowValue }">
             <TagList :tags="rowValue" />
           </template>
 
-          <template #name="{ row, rowValue }">
+          <template #entity="{ rowValue, row }">
             <router-link
-              v-if="row.nameRoute"
-              :to="row.nameRoute"
+              v-if="row.detailViewRoute"
+              :to="row.detailViewRoute"
             >
-              {{ rowValue }}
+              {{ rowValue.name }}
             </router-link>
 
             <template v-else>
-              {{ rowValue }}
+              {{ rowValue.name }}
             </template>
           </template>
 
-          <template #mesh="{ row, rowValue }">
+          <template #mesh="{ rowValue }">
             <router-link
-              v-if="row.meshRoute"
-              :to="row.meshRoute"
+              v-if="rowValue.route"
+              :to="rowValue.route"
             >
-              {{ rowValue }}
+              {{ rowValue.title }}
             </router-link>
 
             <template v-else>
-              {{ rowValue }}
+              {{ rowValue.title }}
             </template>
           </template>
 
-          <template #service="{ row, rowValue }">
+          <template #service="{ rowValue }">
             <router-link
-              v-if="row.serviceInsightRoute"
-              :to="row.serviceInsightRoute"
+              v-if="rowValue.route"
+              :to="rowValue.route"
             >
-              {{ rowValue }}
+              {{ rowValue.title }}
             </router-link>
 
             <template v-else>
-              {{ rowValue }}
+              {{ rowValue.title }}
             </template>
           </template>
 
-          <template #zone="{ row, rowValue }">
+          <template #zone="{ rowValue }">
             <router-link
-              v-if="row.zoneRoute"
-              :to="row.zoneRoute"
+              v-if="rowValue.route"
+              :to="rowValue.route"
             >
-              {{ rowValue }}
+              {{ rowValue.title }}
             </router-link>
 
             <template v-else>
-              {{ rowValue }}
+              {{ rowValue.title }}
             </template>
           </template>
 
-          <!--- total Updates --->
           <template #totalUpdates="{ row }">
             <span>
               {{ row.totalUpdates }}
             </span>
           </template>
 
-          <!--- dp Version --->
           <template #dpVersion="{ row, rowValue }">
             <div
               :class="{
@@ -148,7 +142,6 @@
             </div>
           </template>
 
-          <!--- envoy Version --->
           <template #envoyVersion="{ row, rowValue }">
             <div
               :class="{
@@ -159,7 +152,6 @@
             </div>
           </template>
 
-          <!--- warnings --->
           <template
             v-if="showWarnings"
             #warnings="{ row }"
@@ -172,28 +164,6 @@
               secondary-color="var(--yellow-300)"
               size="20"
             />
-          </template>
-
-          <template
-            v-if="showDetails"
-            #details="{ row }"
-          >
-            <KButton
-              class="detail-link"
-              appearance="btn-link"
-              :to="row.nameRoute"
-            >
-              <template #icon>
-                <KIcon
-                  :icon="row.warnings.length > 0 ? 'warning' : 'info'"
-                  :color="row.warnings.length > 0 ? 'var(--black-500)' : 'var(--blue-500)'"
-                  :secondary-color="row.warnings.length > 0 ? 'var(--yellow-300)' : undefined"
-                  size="16"
-                  hide-title
-                />
-              </template>
-              Details
-            </KButton>
           </template>
         </KTable>
 
@@ -310,12 +280,6 @@ const props = defineProps({
     default: false,
   },
 
-  showDetails: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
   next: {
     type: [String, Boolean, null] as PropType<string | boolean | null>,
     required: false,
@@ -331,8 +295,8 @@ const props = defineProps({
 
 const emit = defineEmits(['table-action', 'refresh', 'load-data'])
 
-const selectedRow = ref('')
 const internalPageOffset = ref(props.pageOffset)
+const tableRecomputationKey = ref(0)
 
 const tableHeaders = computed(() => {
   if (!props.showWarnings) {
@@ -342,11 +306,13 @@ const tableHeaders = computed(() => {
   }
 })
 const customSlots = computed(() => props.tableData.headers.map((header) => header.key).filter((key) => slots[key]))
-const tableRecomputationKey = ref(0)
-
-watch(() => props.isLoading, function () {
-  if (!props.isLoading && props.tableData.data.length > 0) {
-    selectedRow.value = props.selectedEntityName || props.tableData.data[0].name
+const selectedEntityName = computed(() => {
+  if (props.selectedEntityName !== '') {
+    return props.selectedEntityName
+  } else if (props.tableData.data.length > 0) {
+    return props.tableData.data[0].name
+  } else {
+    return ''
   }
 })
 
@@ -365,8 +331,7 @@ function tableDataFetcher(): { data: object[], total: number } {
 }
 
 function tableRowHandler(_e: any, row: any): void {
-  selectedRow.value = row.name
-  emit('table-action', row)
+  emit('table-action', row.entity ?? row)
 }
 
 function onRefreshButtonClick(): void {
@@ -391,11 +356,19 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   return { class: className }
 }
 
-function getRowAttributes({ name }: any): Record<string, string> {
-  const entityName = props.selectedEntityName || props.tableData.data[0].name
-  const className = name === entityName ? 'is-selected' : ''
+function getRowAttributes(row: any): Record<string, string> {
+  if (!row) {
+    return {}
+  }
 
-  return { class: className }
+  const attributes: Record<string, string> = {}
+
+  const name = row.entity?.name ?? row.name
+  if (name === selectedEntityName.value) {
+    attributes.class = 'is-selected'
+  }
+
+  return attributes
 }
 </script>
 

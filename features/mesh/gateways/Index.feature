@@ -33,13 +33,12 @@ Feature: mesh / gateways / index
     Then the "$table-header" elements contain
       | Value           |
       | Status          |
-      | DPP             |
+      | Name            |
       | Type            |
       | Service         |
       | Zone            |
       | Last Updated    |
       | Kuma DP version |
-      | Details         |
 
   Scenario: The Gateway listing has the expected content and UI elements
     Then the "$select-type option" element exists 3 times
@@ -126,4 +125,3 @@ Feature: mesh / gateways / index
         | Value                |
         | fake-alarm-gateway-0 |
         | DELEGATED            |
-

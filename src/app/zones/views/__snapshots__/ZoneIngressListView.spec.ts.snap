@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
+exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
 <div
   class="zoneingresses"
 >
@@ -67,7 +67,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
         <div
           class="data-overview-content"
         >
-          <!-- data -->
           <div
             class="data-overview-table"
           >
@@ -154,9 +153,12 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zone-ingress-1
-                        
+                        <a
+                          class=""
+                          href="/zone-ingresses/zone-ingress-1"
+                        >
+                          zone-ingress-1
+                        </a>
                         
                       </td>
                       
@@ -410,7 +412,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
 </div>
 `;
 
-exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
+exports[`ZoneIngressListView renders snapshot when no multizone 1`] = `
 <div
   class="zoneingresses"
 >
@@ -502,7 +504,7 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
 </div>
 `;
 
-exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
+exports[`ZoneIngressListView renders zoneingress insights 1`] = `
 <div
   class="tab-container"
   data-testid="tab-container"

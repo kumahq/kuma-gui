@@ -49,7 +49,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
             selectedZoneName: route.query.zone,
             offset: getLastNumberParameter(route.query.offset),
           }),
-          component: () => import('@/app/zones/views/ZonesView.vue'),
+          component: () => import('@/app/zones/views/ZoneListView.vue'),
         },
         {
           path: ':zone',
@@ -76,7 +76,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
             selectedZoneIngressName: route.query.zoneIngress,
             offset: getLastNumberParameter(route.query.offset),
           }),
-          component: () => import('@/app/zones/views/ZoneIngresses.vue'),
+          component: () => import('@/app/zones/views/ZoneIngressListView.vue'),
         },
         {
           path: ':zoneIngress',
@@ -103,7 +103,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
             selectedZoneEgressName: route.query.zoneEgress,
             offset: getLastNumberParameter(route.query.offset),
           }),
-          component: () => import('@/app/zones/views/ZoneEgresses.vue'),
+          component: () => import('@/app/zones/views/ZoneEgressListView.vue'),
         },
         {
           path: ':zoneEgress',

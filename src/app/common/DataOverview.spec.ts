@@ -43,6 +43,7 @@ describe('DataOverview.vue', () => {
         ],
         data: [
           {
+            name: 'test',
             custom: ['custom', 'values', 'in', 'an', 'array'],
           },
         ],
@@ -103,6 +104,7 @@ describe('DataOverview.vue', () => {
 
   test('renders all custom templates for data', async () => {
     const wrapper = renderComponent({
+      selectedEntityName: 'bandwidth-49',
       showWarnings: true,
       tableData: {
         headers: [
@@ -115,6 +117,24 @@ describe('DataOverview.vue', () => {
         ],
         data: [
           {
+            entity: {
+              type: 'ZoneOverview',
+              name: 'bandwidth-49',
+              creationTime: '2021-02-19T08:06:15.380674+01:00',
+              modificationTime: '2021-02-19T08:06:15.380674+01:00',
+              zone: {
+                enabled: true,
+              },
+              zoneInsight: {
+                subscriptions: [],
+              },
+            },
+            detailViewRoute: {
+              name: 'zone-detail-view',
+              params: {
+                zone: 'bandwidth-49',
+              },
+            },
             status: 'offline',
             totalUpdates: 1,
             dpVersion: 'foo',
