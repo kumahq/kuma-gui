@@ -2,7 +2,9 @@
   <header class="app-header">
     <div class="horizontal-list">
       <router-link :to="{ name: 'home' }">
-        <KumaLogo />
+        <KumaLogo
+          data-testid="logo"
+        />
       </router-link>
 
       <GithubButton
