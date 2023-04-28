@@ -11,7 +11,18 @@ function renderComponent() {
 }
 
 describe('AddNewServicesCode.vue', () => {
+  beforeEach(() => {
+    jest.restoreAllMocks()
+  })
+
   test('renders snapshot', async () => {
+    jest
+      .spyOn(kumaApi, 'getAllDataplanes')
+      .mockResolvedValue({
+        items: [],
+        total: 1,
+        next: null,
+      })
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -20,6 +31,13 @@ describe('AddNewServicesCode.vue', () => {
   })
 
   test('detects resources on call and allow to proceed', async () => {
+    jest
+      .spyOn(kumaApi, 'getAllDataplanes')
+      .mockResolvedValue({
+        items: [],
+        total: 1,
+        next: null,
+      })
     const wrapper = renderComponent()
 
     await flushPromises()
