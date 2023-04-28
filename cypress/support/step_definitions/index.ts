@@ -47,13 +47,17 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
   const now = new Date().getTime()
   const mock = useMock()
   urls.set(url, `spy-${now}`)
-  mock(url, env, (respond) => {
-    const response = respond(YAML.load(yaml) as { headers?: Record<string, string>, body?: Record<string, unknown> })
+  mock(url, env, (respond, req) => {
+    const response = respond((YAML.load(yaml) || {}) as { headers?: Record<string, string>, body?: Record<string, unknown> })
     return response
   }).as(urls.get(url))
 })
 
 // act
+When('I wait for {int} milliseconds/ms', function (ms: number) {
+  cy.wait(ms)
+})
+
 When(/^I "(.*)"(.*)? on the "(.*)" element$/, (event: string, object: string | number | undefined, selector: string) => {
   switch (event) {
     case 'select':
