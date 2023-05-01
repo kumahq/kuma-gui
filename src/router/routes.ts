@@ -20,7 +20,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
       name: 'home',
       meta: {
         title: 'Overview',
-        shouldShowBreadcrumbs: false,
       },
       component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
     },
@@ -29,11 +28,16 @@ export default (store: Store<State>): RouteRecordRaw[] => {
       name: 'diagnostics',
       meta: {
         title: 'Diagnostics',
+        isBreadcrumb: true,
       },
       component: () => import('@/app/diagnostics/views/DiagnosticsView.vue'),
     },
     {
       path: '/zones',
+      meta: {
+        title: 'Zones',
+        isBreadcrumb: true,
+      },
       children: [
         {
           path: '',
@@ -52,7 +56,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'zone-detail-view',
           meta: {
             title: 'Zone',
-            parent: 'zone-list-view',
+            isBreadcrumb: true,
             breadcrumbTitleParam: 'zone',
           },
           component: () => import('@/app/zones/views/ZoneDetailView.vue'),
@@ -61,6 +65,10 @@ export default (store: Store<State>): RouteRecordRaw[] => {
     },
     {
       path: '/zone-ingresses',
+      meta: {
+        title: 'Zone Ingresses',
+        isBreadcrumb: true,
+      },
       children: [
         {
           path: '',
@@ -79,7 +87,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'zone-ingress-detail-view',
           meta: {
             title: 'Zone Ingress',
-            parent: 'zone-ingress-list-view',
+            isBreadcrumb: true,
             breadcrumbTitleParam: 'zoneIngress',
           },
           component: () => import('@/app/zones/views/ZoneIngressDetailView.vue'),
@@ -88,6 +96,10 @@ export default (store: Store<State>): RouteRecordRaw[] => {
     },
     {
       path: '/zone-egresses',
+      meta: {
+        title: 'Zone Egresses',
+        isBreadcrumb: true,
+      },
       children: [
         {
           path: '',
@@ -106,7 +118,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'zone-egress-detail-view',
           meta: {
             title: 'Zone Egress',
-            parent: 'zone-egress-list-view',
+            isBreadcrumb: true,
             breadcrumbTitleParam: 'zoneEgress',
           },
           component: () => import('@/app/zones/views/ZoneEgressDetailView.vue'),
@@ -121,12 +133,15 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'mesh-detail-view',
           meta: {
             title: 'Mesh overview',
-            shouldShowBreadcrumbs: false,
           },
           component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
         },
         {
           path: 'gateways',
+          meta: {
+            title: 'Gateways',
+            isBreadcrumb: true,
+          },
           children: [
             {
               path: '',
@@ -147,7 +162,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
               name: 'gateway-detail-view',
               meta: {
                 title: 'Gateway',
-                parent: 'gateway-list-view',
+                isBreadcrumb: true,
                 breadcrumbTitleParam: 'dataPlane',
               },
               component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
@@ -156,6 +171,10 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'data-planes',
+          meta: {
+            title: 'Data plane proxies',
+            isBreadcrumb: true,
+          },
           children: [
             {
               path: '',
@@ -174,7 +193,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
               name: 'data-plane-detail-view',
               meta: {
                 title: 'Data plane proxy',
-                parent: 'data-plane-list-view',
+                isBreadcrumb: true,
                 breadcrumbTitleParam: 'dataPlane',
               },
               component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
@@ -183,6 +202,10 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'services',
+          meta: {
+            title: 'Services',
+            isBreadcrumb: true,
+          },
           children: [
             {
               path: '',
@@ -201,7 +224,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
               name: 'service-detail-view',
               meta: {
                 title: 'Internal service',
-                parent: 'service-list-view',
+                isBreadcrumb: true,
                 breadcrumbTitleParam: 'service',
               },
               props: (route) => ({
@@ -213,6 +236,10 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'policies',
+          meta: {
+            title: 'Policies',
+            isBreadcrumb: true,
+          },
           children: [
             {
               path: '',
@@ -238,18 +265,18 @@ export default (store: Store<State>): RouteRecordRaw[] => {
             },
             {
               path: ':policyPath',
+              meta: {
+                isBreadcrumb: true,
+                getBreadcrumbTitle: (route, store) => {
+                  const policyType = store.state.policyTypesByPath[route.params.policyPath as string]
+
+                  return policyType.name
+                },
+              },
               children: [
                 {
                   path: '',
                   name: 'policy-list-view',
-                  meta: {
-                    parent: 'policies',
-                    getBreadcrumbTitle: (route, store) => {
-                      const policyType = store.state.policyTypesByPath[route.params.policyPath as string]
-
-                      return policyType.name
-                    },
-                  },
                   component: () => import('@/app/policies/views/PolicyListView.vue'),
                   props: (route) => ({
                     policyPath: route.params.policyPath,
@@ -261,7 +288,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
                   path: ':policy',
                   name: 'policy-detail-view',
                   meta: {
-                    parent: 'policy-list-view',
+                    isBreadcrumb: true,
                     breadcrumbTitleParam: 'policy',
                   },
                   props: (route) => ({

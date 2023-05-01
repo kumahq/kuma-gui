@@ -87,7 +87,7 @@ const routeKey = computed(() => route.path)
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
-const shouldShowBreadcrumbs = computed(() => store.getters.getShouldShowBreadcrumbs(route.meta))
+const shouldShowBreadcrumbs = computed(() => store.getters.shouldShowBreadcrumbs)
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   isLoading.value = globalLoading
