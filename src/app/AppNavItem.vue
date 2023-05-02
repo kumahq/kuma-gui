@@ -128,7 +128,8 @@ const isActive = computed(() => {
 
       return props.routeName === resolvedRoute.name
     })
-  } catch {
+  } catch (err) {
+    console.error(err)
     return false
   }
 })
