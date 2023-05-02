@@ -8,6 +8,7 @@ export default defineConfig({
   e2e: {
     specPattern: '**/*.feature',
     supportFile: false,
+    experimentalRunAllSpecs: true,
     // TODO Env var
     video: false,
     async setupNodeEvents(

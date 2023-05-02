@@ -15,7 +15,10 @@
       <AppSidebar />
 
       <main class="app-main-content">
-        <AppErrorMessage v-if="shouldShowAppError" />
+        <AppErrorMessage
+          v-if="shouldShowAppError"
+          data-testid="app-error"
+        />
 
         <NotificationManager v-if="shouldShowNotificationManager" />
 
