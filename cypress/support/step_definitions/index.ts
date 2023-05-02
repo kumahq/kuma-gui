@@ -54,7 +54,7 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
 })
 
 // act
-When(/^I "(.*)"(.*)? on the "(.*)" element$/, async (event: string, object: string | number | undefined, selector: string) => {
+When(/^I "(.*)"(.*)? on the "(.*)" element$/, (event: string, object: string | number | undefined, selector: string) => {
   switch (event) {
     case 'select':
       if (typeof object === 'undefined') {
@@ -83,10 +83,10 @@ Then('the URL {string} was requested with', (url: string, yaml: string) => {
 Then(/^the "(.*)" element( does| doesn't| don't)? exist[s]?$/, function (selector: string, assertion: string) {
   $(selector).should(`${(assertion || 'does').trim() !== 'does' ? 'not.' : ''}exist`)
 })
-Then(/^the "(.*)" element[s]? exist[s]? ([0-9]*) time[s]?$/, async (selector: string, count: string) => {
+Then(/^the "(.*)" element[s]? exist[s]? ([0-9]*) time[s]?$/, (selector: string, count: string) => {
   $(selector).should('have.length', count)
 })
-Then(/^the "(.*)" element(s)? contain[s]?$/, async (selector: string, multiple = '', table: DataTable) => {
+Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', table: DataTable) => {
   const rows = table.rows()
   if (multiple === 's') {
     $(selector).each((el, i) => {
@@ -101,7 +101,7 @@ Then(/^the "(.*)" element(s)? contain[s]?$/, async (selector: string, multiple =
     })
   }
 })
-Then(/^the "(.*)" element contains "(.*)"$/, async (selector: string, value: string) => {
+Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) => {
   $(selector).contains(value)
 })
 
