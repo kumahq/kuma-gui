@@ -178,7 +178,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     class="k-popover"
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
-                    style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                    style="width: 200px; max-width: auto; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
@@ -242,7 +242,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     class="k-popover"
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
-                    style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                    style="width: 200px; max-width: auto; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
