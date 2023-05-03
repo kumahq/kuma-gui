@@ -52,7 +52,7 @@ const props = defineProps({
     required: true,
   },
 
-  policyType: {
+  policyPath: {
     type: String,
     required: true,
   },
@@ -90,7 +90,7 @@ async function fetchPolicyConnections(): Promise<void> {
   try {
     const { items, total } = await kumaApi.getPolicyConnections({
       mesh: props.mesh,
-      policyType: props.policyType,
+      policyPath: props.policyPath,
       policyName: props.policyName,
     })
 

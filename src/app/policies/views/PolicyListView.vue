@@ -114,7 +114,7 @@
               v-if="rawEntity !== null"
               :mesh="rawEntity.mesh"
               :policy-name="rawEntity.name"
-              :policy-type="policyType.path"
+              :policy-path="policyType.path"
             />
           </template>
         </TabsWidget>

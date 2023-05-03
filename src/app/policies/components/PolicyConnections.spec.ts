@@ -20,9 +20,8 @@ async function renderComponent() {
   return mount(PolicyConnections, {
     props: {
       mesh: 'foo',
-      policyType: 'circuit-breakers',
+      policyPath: 'circuit-breakers',
       policyName: 'foo',
-      ...props,
     },
   })
 }
@@ -86,7 +85,7 @@ describe('PolicyConnections.vue', () => {
   test('renders error', async () => {
     const server = useServer()
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyPath/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
@@ -101,7 +100,7 @@ describe('PolicyConnections.vue', () => {
   test('renders no item', async () => {
     const server = useServer()
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyPath/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )
