@@ -4,8 +4,19 @@ import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
 import { useServer, useMock } from '@/../jest/jest-setup-after-env'
+import { useRouter } from '@/utilities'
 
-function renderComponent(props = {}) {
+async function renderComponent() {
+  const router = useRouter()
+  await router.push({
+    name: 'policy-detail-view',
+    params: {
+      mesh: 'default',
+      policyPath: 'circuit-breakers',
+      policy: 'foo',
+    },
+  })
+
   return mount(PolicyConnections, {
     props: {
       mesh: 'foo',
@@ -19,7 +30,7 @@ function renderComponent(props = {}) {
 describe('PolicyConnections.vue', () => {
   const mock = useMock()
   test('renders snapshot', async () => {
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -52,7 +63,7 @@ describe('PolicyConnections.vue', () => {
         ],
       },
     }))
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -66,8 +77,8 @@ describe('PolicyConnections.vue', () => {
     expect(wrapper.findAll('[data-testid="dataplane-name"]').length).toBe(2)
   })
 
-  test('renders loading', () => {
-    const wrapper = renderComponent()
+  test('renders loading', async () => {
+    const wrapper = await renderComponent()
 
     expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
@@ -80,7 +91,7 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -95,7 +106,7 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 

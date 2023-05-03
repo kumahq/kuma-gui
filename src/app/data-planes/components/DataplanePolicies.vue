@@ -178,7 +178,7 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
   const policyRoutes: MeshGatewayRoutePolicy[] = []
 
   for (const policy of Object.values(policies)) {
-    const policyType = store.state.policyTypesByName[policy.type]
+    const policyType = store.state.policyTypesByName[policy.type] as PolicyType
 
     policyRoutes.push({
       type: policy.type,
@@ -220,7 +220,7 @@ function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyType
       }
 
       const policyTypeEntry = policyTypeEntriesByType.get(policyTypeName) as PolicyTypeEntry
-      const policyType = store.state.policyTypesByName[policyTypeName]
+      const policyType = store.state.policyTypesByName[policyTypeName] as PolicyType
 
       for (const policy of policies) {
         const connections = getPolicyTypeEntryConnections(policy, policyType, sidecarDataplane, destinationTags, name)
@@ -287,7 +287,7 @@ function getRuleEntries(rules: DataplaneRule[]): RuleEntry[] {
     }
 
     const policyTypeEntry = policyTypeEntriesByType.get(rule.policyType) as RuleEntry
-    const policyType = store.state.policyTypesByName[rule.policyType]
+    const policyType = store.state.policyTypesByName[rule.policyType] as PolicyType
     const connections = getRuleEntryConnections(rule, policyType)
 
     policyTypeEntry.connections.push(...connections)

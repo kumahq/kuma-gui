@@ -141,7 +141,7 @@ import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
-import { PolicyEntity, TableHeader } from '@/types/index.d'
+import { PolicyEntity, PolicyType, TableHeader } from '@/types/index.d'
 import { useEnv, useKumaApi } from '@/utilities'
 import { getSome, stripTimes } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -231,8 +231,10 @@ watch(() => route.params.mesh, function () {
 start()
 
 function start() {
-  if (policyType.value !== undefined) {
-    store.dispatch('updatePageTitle', policyType.value.name)
+  const policyType = store.state.policyTypesByPath[props.policyPath]
+
+  if (policyType !== undefined) {
+    store.dispatch('updatePageTitle', policyType.name)
   }
 
   loadData(props.offset)
@@ -247,7 +249,7 @@ async function loadData(offset: number) {
   error.value = null
 
   const mesh = route.params.mesh as string
-  const path = policyType.value.path
+  const path = route.params.policyPath as string
   const size = PAGE_SIZE_DEFAULT
 
   try {
@@ -273,12 +275,11 @@ async function loadData(offset: number) {
 function transformToTableData(policies: PolicyEntity[]): PolicyEntityTableRow[] {
   return policies.map((entity) => {
     const { type, name } = entity
-    const policyType = store.state.policyTypesByName[type]
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'policy-detail-view',
       params: {
         mesh: entity.mesh,
-        policyPath: policyType.path,
+        policyPath: route.params.policyPath as string,
         policy: name,
       },
     }
@@ -292,8 +293,9 @@ function transformToTableData(policies: PolicyEntity[]): PolicyEntityTableRow[] 
 }
 
 async function handleTableAction(entity: PolicyEntity) {
-  const { name, mesh } = entity
-  const path = policyType.value.path
+  const { name, mesh, type } = entity
+  const policyType = store.state.policyTypesByName[type] as PolicyType
+  const path = policyType.path
 
   await loadEntity({ name, mesh, path })
 }
