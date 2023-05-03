@@ -248,11 +248,22 @@ export default (store: Store<State>): RouteRecordRaw[] => {
                 title: 'Policies',
               },
               redirect: (to) => {
-                let item = store.state.policyTypes
-                  .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
+                let item = store.state.policyTypes.find((item) => {
+                  if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
+                    return false
+                  }
+
+                  return store.state.sidebar.insights.mesh.policies[item.name] !== 0
+                })
+
                 if (item === undefined) {
                   item = store.state.policyTypes[0]
                 }
+
+                if (item === undefined) {
+                  return { name: 'home' }
+                }
+
                 return {
                   ...to,
                   params: {
@@ -403,7 +414,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'create-mesh',
           meta: {
             title: 'Create a new mesh',
-            isWizard: true,
           },
           component: () => import('@/app/wizard/views/MeshWizard.vue'),
         },
@@ -412,7 +422,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'kubernetes-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Kubernetes',
-            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneKubernetes.vue'),
         },
@@ -421,7 +430,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'universal-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Universal',
-            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneUniversal.vue'),
         },
