@@ -403,7 +403,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'create-mesh',
           meta: {
             title: 'Create a new mesh',
-            isWizard: true,
           },
           component: () => import('@/app/wizard/views/MeshWizard.vue'),
         },
@@ -412,7 +411,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'kubernetes-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Kubernetes',
-            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneKubernetes.vue'),
         },
@@ -421,7 +419,6 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'universal-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Universal',
-            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneUniversal.vue'),
         },
