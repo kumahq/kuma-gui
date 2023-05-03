@@ -1,5 +1,4 @@
 import semverCompare from 'semver/functions/compare'
-import { RouteMeta } from 'vue-router'
 import { StoreOptions } from 'vuex'
 
 import { ConfigInterface } from './modules/config/config.types'
@@ -200,9 +199,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
         return state.defaultVisibility.onboardingNotification && state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
       },
-      getShouldShowBreadcrumbs: (state) => {
-        return (routeMeta: RouteMeta) => state.defaultVisibility.breadcrumbs && routeMeta.shouldShowBreadcrumbs !== false
-      },
+      shouldShowBreadcrumbs: (state) => state.defaultVisibility.breadcrumbs,
 
       getMeshList: state => state.meshes,
       getItemQueryNamespace: state => state.itemQueryNamespace,

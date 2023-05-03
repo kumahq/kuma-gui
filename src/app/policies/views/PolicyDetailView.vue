@@ -55,6 +55,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
@@ -64,6 +65,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
+import { useStore } from '@/store/store'
 import type {
   PolicyEntity,
 } from '@/types/index.d'
@@ -71,6 +73,8 @@ import { useKumaApi } from '@/utilities'
 import { stripTimes } from '@/utilities/helpers'
 
 const kumaApi = useKumaApi()
+const route = useRoute()
+const store = useStore()
 
 const props = defineProps<{
   mesh: string,
@@ -103,7 +107,13 @@ const policy = computed(() => {
 })
 const policyConfig = computed(() => rawPolicy.value !== null ? stripTimes(rawPolicy.value) : null)
 
-loadData(props)
+start()
+
+function start() {
+  store.dispatch('updatePageTitle', route.params.policy)
+
+  loadData(props)
+}
 
 async function loadData({ mesh, policyPath, policyName }: { mesh: string, policyPath: string, policyName: string }) {
   isLoading.value = true

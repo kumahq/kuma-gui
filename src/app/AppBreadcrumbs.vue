@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KBreadcrumbs } from '@kong/kongponents'
+import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
 import { computed } from 'vue'
-import { useRoute, useRouter, RouteLocation, RouteRecordName } from 'vue-router'
+import { useRoute, useRouter, RouteLocationNormalizedLoaded, RouteLocationMatched, RouteLocationNamedRaw } from 'vue-router'
 
 import { useStore } from '@/store/store'
 
@@ -16,58 +16,51 @@ const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
-type BreadcrumbItem = {
-  to: RouteLocation | string
-  text?: string
-  title?: string
-  icon?: string
-  key?: string
-  maxWidth?: string
+const breadcrumbItems = computed(() => {
+  return route.matched
+    .filter((matchedRoute) => matchedRoute.meta.isBreadcrumb === true)
+    .map((matchedRoute) => {
+      try {
+        // In order to link to routes using KBreadcrumbs, we need to resolve the objects in `route.matched`: This is necessary because we can’t pass matched route objects as-is to KBreadcrumbs and have it create correct links. Matched route objects are more akin to route records. Their `path` is unresolved (e.g. `/mesh/:mesh/policies` instead of `/mesh/default/policies`) and they don’t have `params`. Furthermore, while they might be a named route, they are *not* necessarily the correct one: a nested named route with an empty string path will actually be the resolved route and the one we want to navigate to.
+        const resolvedRoute = router.resolve(matchedRoute)
+        if (typeof resolvedRoute.name === 'string') {
+          const to: RouteLocationNamedRaw = { name: resolvedRoute.name }
+
+          return { matchedRoute, to }
+        } else {
+          return null
+        }
+      } catch {
+        return null
+      }
+    })
+    // Filters out `null` objects with a type predicate so the subsequent `map` call knows the item can’t be `null`.
+    .filter(notNull)
+    .map(({ matchedRoute, to }) => {
+      const title = getRouteTitle(matchedRoute, route)
+      const text = title
+
+      const breadcrumbItem: BreadcrumbItem = {
+        to,
+        title,
+        text,
+      }
+
+      return breadcrumbItem
+    })
+})
+
+function notNull<TValue>(value: TValue | null): value is TValue {
+  return value !== null
 }
 
-const breadcrumbItems = computed(() => {
-  const items: Map<RouteRecordName, BreadcrumbItem> = new Map()
-
-  for (const matchedRoute of route.matched) {
-    // Ignores the de-facto home page.
-    if (matchedRoute.name === 'home' || matchedRoute.meta.parent === 'home') {
-      continue
-    }
-
-    // Adds any explicit parent routes of the matched chain.
-    if (matchedRoute.meta.parent !== undefined) {
-      const parentRoute = router.resolve({ name: matchedRoute.meta.parent })
-
-      if (parentRoute.name) {
-        items.set(parentRoute.name, {
-          to: parentRoute,
-          key: parentRoute.name as string,
-          title: parentRoute.meta.title,
-          text: parentRoute.meta.title,
-        })
-      }
-    }
-
-    // Adds current route.
-    const isCurrentRoute = matchedRoute.name === route.name || matchedRoute.redirect === route.name
-    if (isCurrentRoute && matchedRoute.meta.breadcrumbExclude !== true && route.name) {
-      let title = route.meta.title as string
-
-      if (typeof route.meta.getBreadcrumbTitle === 'function') {
-        title = route.meta.getBreadcrumbTitle(route, store)
-      } else if (route.meta.breadcrumbTitleParam && route.params[route.meta.breadcrumbTitleParam]) {
-        title = route.params[route.meta.breadcrumbTitleParam] as string
-      }
-
-      items.set(route.name, {
-        to: route,
-        key: route.name as string,
-        title,
-        text: title,
-      })
-    }
+function getRouteTitle(matchedRoute: RouteLocationMatched, currentRoute: RouteLocationNormalizedLoaded): string {
+  if (typeof matchedRoute.meta.getBreadcrumbTitle === 'function') {
+    return matchedRoute.meta.getBreadcrumbTitle(currentRoute, store)
+  } else if (matchedRoute.meta.breadcrumbTitleParam && currentRoute.params[matchedRoute.meta.breadcrumbTitleParam]) {
+    return currentRoute.params[matchedRoute.meta.breadcrumbTitleParam] as string
+  } else {
+    return matchedRoute.meta.title as string
   }
-
-  return Array.from(items.values())
-})
+}
 </script>

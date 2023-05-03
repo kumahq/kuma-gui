@@ -44,7 +44,7 @@ import { useStore } from '@/store/store'
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import { get } from '@/utilities/get'
 
-const currentRoute = useRoute()
+const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
@@ -113,33 +113,25 @@ const isActive = computed(() => {
     return false
   }
 
-  if (props.routeName === currentRoute.name) {
+  if (props.routeName === route.name) {
     return true
   }
 
-  const currentRouteSubpath = currentRoute.path.split('/')[2]
+  const currentRouteSubpath = route.path.split('/')[2]
   if (currentRouteSubpath === targetRoute.value.name) {
     return true
   }
 
-  if (currentRoute.meta.parent) {
-    try {
-      const parentRoute = router.resolve({ name: currentRoute.meta.parent })
+  try {
+    return props.routeName && route.matched.some((matchedRoute) => {
+      const resolvedRoute = router.resolve(matchedRoute)
 
-      if (parentRoute.name === props.routeName) {
-        return true
-      }
-    } catch (error) {
-      if (error instanceof Error && error.message.includes('No match for')) {
-        // Unfortunately, `router.resolve` throws instead of returning `null` when a route can’t be resolved so we ignore this particular error because we don’t care about non-existing routes here.
-        console.warn(error)
-      } else {
-        throw error
-      }
-    }
+      return props.routeName === resolvedRoute.name
+    })
+  } catch (err) {
+    console.error(err)
+    return false
   }
-
-  return props.routeName && currentRoute.matched.some((route) => props.routeName === route.name || props.routeName === route.redirect)
 })
 
 function onNavItemClick() {

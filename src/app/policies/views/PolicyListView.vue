@@ -228,7 +228,15 @@ watch(() => route.params.mesh, function () {
   loadData(0)
 })
 
-loadData(props.offset)
+start()
+
+function start() {
+  if (policyType.value !== undefined) {
+    store.dispatch('updatePageTitle', policyType.value.name)
+  }
+
+  loadData(props.offset)
+}
 
 async function loadData(offset: number) {
   pageOffset.value = offset
@@ -311,7 +319,7 @@ async function loadEntity({ name, mesh, path }: { name?: string | undefined, mes
 
 function changePolicyType(item: {value: string}) {
   router.push({
-    name: 'policy',
+    name: 'policy-list-view',
     params: {
       ...route.params,
       policyPath: item.value,
