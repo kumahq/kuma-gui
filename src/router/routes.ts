@@ -248,11 +248,22 @@ export default (store: Store<State>): RouteRecordRaw[] => {
                 title: 'Policies',
               },
               redirect: (to) => {
-                let item = store.state.policyTypes
-                  .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
+                let item = store.state.policyTypes.find((item) => {
+                  if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
+                    return false
+                  }
+
+                  return store.state.sidebar.insights.mesh.policies[item.name] !== 0
+                })
+
                 if (item === undefined) {
                   item = store.state.policyTypes[0]
                 }
+
+                if (item === undefined) {
+                  return { name: 'home' }
+                }
+
                 return {
                   ...to,
                   params: {
