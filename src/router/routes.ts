@@ -34,6 +34,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
     },
     {
       path: '/zones',
+      name: 'zone-abstract-view',
       meta: {
         title: 'Zones',
         isBreadcrumb: true,
@@ -65,6 +66,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
     },
     {
       path: '/zone-ingresses',
+      name: 'zone-ingress-abstract-view',
       meta: {
         title: 'Zone Ingresses',
         isBreadcrumb: true,
@@ -96,6 +98,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
     },
     {
       path: '/zone-egresses',
+      name: 'zone-egress-abstract-view',
       meta: {
         title: 'Zone Egresses',
         isBreadcrumb: true,
@@ -138,6 +141,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'gateways',
+          name: 'gateway-abstract-view',
           meta: {
             title: 'Gateways',
             isBreadcrumb: true,
@@ -171,6 +175,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'data-planes',
+          name: 'data-plane-abstract-view',
           meta: {
             title: 'Data plane proxies',
             isBreadcrumb: true,
@@ -202,6 +207,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'services',
+          name: 'service-abstract-view',
           meta: {
             title: 'Services',
             isBreadcrumb: true,
@@ -236,6 +242,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'policies',
+          name: 'policy-type-abstract-view',
           meta: {
             title: 'Policies',
             isBreadcrumb: true,
@@ -276,6 +283,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
             },
             {
               path: ':policyPath',
+              name: 'policy-abstract-view',
               meta: {
                 isBreadcrumb: true,
                 getBreadcrumbTitle: (route, store) => {

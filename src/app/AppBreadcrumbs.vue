@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
 import { computed } from 'vue'
-import { useRoute, useRouter, RouteLocationNormalizedLoaded, RouteLocationMatched, RouteLocationNamedRaw } from 'vue-router'
+import { useRoute, useRouter, RouteLocationNormalizedLoaded, RouteLocationMatched, RouteLocationRaw } from 'vue-router'
 
 import { useStore } from '@/store/store'
 
@@ -23,8 +23,8 @@ const breadcrumbItems = computed(() => {
       try {
         // In order to link to routes using KBreadcrumbs, we need to resolve the objects in `route.matched`: This is necessary because we can’t pass matched route objects as-is to KBreadcrumbs and have it create correct links. Matched route objects are more akin to route records. Their `path` is unresolved (e.g. `/mesh/:mesh/policies` instead of `/mesh/default/policies`) and they don’t have `params`. Furthermore, while they might be a named route, they are *not* necessarily the correct one: a nested named route with an empty string path will actually be the resolved route and the one we want to navigate to.
         const resolvedRoute = router.resolve(matchedRoute)
-        if (typeof resolvedRoute.name === 'string') {
-          const to: RouteLocationNamedRaw = { name: resolvedRoute.name }
+        if (typeof resolvedRoute.path === 'string' && resolvedRoute.path !== '') {
+          const to: RouteLocationRaw = { path: resolvedRoute.path }
 
           return { matchedRoute, to }
         } else {
