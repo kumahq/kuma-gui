@@ -75,7 +75,7 @@ export const fakeApi = (env: AEnv, server: Server, fs: FS) => {
   const mockEnv: Env = (key, d = '') => env(key as AppEnvKeys, d)
 
   return Object.entries(fs).map(([route, endpoint]) => {
-    return server.all(`${route.startsWith('https://') ? '' : baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {
+    return server.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {
       const fetch = endpoint({
         ...dependencies,
         env: mockEnv,
