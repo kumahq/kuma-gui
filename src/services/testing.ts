@@ -1,10 +1,9 @@
 import { setupServer } from 'msw/node'
 
-import { ServiceConfigurator, token } from './utils'
+import { Alias, ServiceConfigurator, token } from './utils'
 import CliEnv from '@/services/env/CliEnv'
-import { mocker } from '@/test-support'
+import { mocker, fakeApi, FS } from '@/test-support'
 import type { Mocker } from '@/test-support'
-import type { RestHandler } from 'msw'
 
 const $ = {
   mock: token<Mocker>('mocker'),
@@ -12,11 +11,13 @@ const $ = {
 
 export const services: ServiceConfigurator = (app) => [
   [app.msw, {
-    service: (handlers: RestHandler[]) => {
-      return setupServer(...handlers)
+    service: (env: Alias<CliEnv['var']>, fs: FS) => {
+      const mock = fakeApi(env, fs)
+      return setupServer(...mock('*'))
     },
     arguments: [
-      app.mswHandlers,
+      app.env,
+      app.fakeFS,
     ],
   }],
   [$.mock, {

@@ -20,7 +20,14 @@ class Router<T> {
       const _url = `data:${path}`
       if (pattern.test(_url)) {
         const args = pattern.exec(_url)
-        return { route, params: args?.pathname.groups }
+        const params = args?.pathname.groups || {}
+        return {
+          route,
+          params: Object.entries(params).reduce((prev: Record<string, string>, [key, value]) => {
+            prev[key] = value || ''
+            return prev
+          }, {}),
+        }
       }
     }
     throw new Error(`Matching route for '${path}' not found`)
@@ -56,9 +63,7 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
             params,
             url,
           }
-          // @ts-ignore
           const _response = fetch(request)
-          // @ts-ignore
           const response = cb(createMerge(_response), request, _response)
           req.reply({
             statusCode: parseInt(response.headers['Status-Code'] ?? '200'),

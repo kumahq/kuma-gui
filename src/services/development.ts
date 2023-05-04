@@ -1,10 +1,10 @@
-import { setupWorker, RestHandler, MockedRequest, rest } from 'msw'
+import { setupWorker, MockedRequest, rest } from 'msw'
 
 import CookiedEnv from '@/services/env/CookiedEnv'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
 import { token, get } from '@/services/utils'
-import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, Token } from '@/services/utils'
+import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, Token, TokenType } from '@/services/utils'
 import type { FS } from '@/test-support'
 import { fakeApi } from '@/test-support'
 import { fs } from '@/test-support/mocks/fs'
@@ -19,19 +19,7 @@ type Msw = {
 
 const $ = {
   msw: token<Msw>('msw'),
-  /**
-   * @description
-   * Service Label for labeling MSW handlers for consumption via setupWorker
-   */
-  mswHandlers: token<RestHandler[]>('msw.handlers'),
-
-  /**
-   * @description
-   * Service Label for labeling fake FSs for consumption via MSW
-   */
   fakeFS: token<FS>('fake.fs'),
-
-  mswFakeApiHandlers: token<RestHandler[]>('msw.fake.handlers'),
   kumaFS: token<FS>('fake.fs.kuma'),
 }
 type SupportedTokens = {
@@ -72,8 +60,9 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
 
   // Mock Service Worker
   [$.msw, {
-    service: (handlers: RestHandler[]) => {
-      const worker = setupWorker(...handlers)
+    service: (env: TokenType<typeof app.env>, fs: FS) => {
+      const handlers = fakeApi(env, fs)
+      const worker = setupWorker(...handlers('*'))
 
       console.warn(
         '%c ✨You are mocking api requests.',
@@ -99,17 +88,8 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
       return rest
     },
     arguments: [
-      $.mswHandlers,
-    ],
-  }],
-  [$.mswFakeApiHandlers, {
-    service: (env: Alias<CookiedEnv['var']>, fs: FS) => fakeApi(env, rest, fs),
-    arguments: [
       app.env,
       $.fakeFS,
-    ],
-    labels: [
-      $.mswHandlers,
     ],
   }],
 
