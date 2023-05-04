@@ -89,12 +89,16 @@ function showItem(): void {
   }
 }
 
-function start(el: HTMLElement): void {
-  el.style.height = `${el.scrollHeight}px`
+function start(element: Element) {
+  if (element instanceof HTMLElement) {
+    element.style.height = `${element.scrollHeight}px`
+  }
 }
 
-function end(el: HTMLElement): void {
-  el.style.height = 'auto'
+function end(element: Element) {
+  if (element instanceof HTMLElement) {
+    element.style.height = 'auto'
+  }
 }
 </script>
 
