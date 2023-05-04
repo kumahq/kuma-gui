@@ -3,6 +3,8 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
+import dotenv from 'dotenv'
+const env = dotenv.config().parsed as {[key: string]: string}
 
 export default defineConfig({
   e2e: {
@@ -15,6 +17,11 @@ export default defineConfig({
       on: Cypress.PluginEvents,
       config: Cypress.PluginConfigOptions,
     ) {
+      // propagate env to Cypress.env
+      Object.entries(env).forEach(([prop, value]) => {
+        config.env[prop] = value
+      })
+
       // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
       await addCucumberPreprocessorPlugin(on, config)
 

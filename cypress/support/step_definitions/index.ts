@@ -71,16 +71,42 @@ When(/^I "(.*)"(.*)? on the "(.*)" element$/, (event: string, object: string | n
   }
 })
 
+When('I {string} {string} into the {string} element', (event: string, text: string, selector: string) => {
+  switch (event) {
+    case 'input':
+    case 'type':
+      $(selector).type(text)
+      break
+  }
+})
+
 // assert
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
 })
+
 Then('the URL {string} was requested with', (url: string, yaml: string) => {
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.load(yaml) as {searchParams: Record<string, string>}
-    Object.entries(data.searchParams).forEach(([key, value]) => {
-      expect(xhr.request.query[key]).to.equal(value)
-    })
+    const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
+    Object.entries(data).forEach(
+      ([key, value]) => {
+        switch (key) {
+          case 'method':
+            expect(xhr.request[key]).to.equal(value)
+            break
+          case 'body':
+            Object.entries(data[key]).forEach(([prop, value]) => {
+              expect(xhr.request[key][prop]).to.equal(value)
+            })
+            break
+          case 'searchParams':
+            Object.entries(data[key]).forEach(([key, value]) => {
+              expect(xhr.request.query[key]).to.equal(value)
+            })
+            break
+        }
+      },
+    )
   })
 })
 
