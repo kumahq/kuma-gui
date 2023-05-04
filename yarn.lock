@@ -1701,10 +1701,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kong/kongponents@^8.56.4":
-  version "8.56.4"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.56.4.tgz#57dcff6a3122dfcc773257d29a05a3b0afa4ac14"
-  integrity sha512-esND+fgHaBH/DaL79x3Qe5nk063/zqFiKHlOSvuowEHqHlGJz/pfOwQf206ub6OqVD1pTliPJ0ONa/+QNckB6A==
+"@kong/kongponents@^8.56.5":
+  version "8.56.5"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.56.5.tgz#137ede56cf62f36be7862787725a724e4c070a83"
+  integrity sha512-ZNOxUW3bTN2qASGn7ifchLm0Q+WC7kCylvTzNeZBArgxmIOxGALDMwwaa0S3ho5mGpRW0JOlFNAF+CxKNh3a1w==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
@@ -8354,6 +8354,7 @@ word-wrap@^1.2.3, word-wrap@~1.2.3:
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
