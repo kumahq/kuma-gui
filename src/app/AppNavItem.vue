@@ -38,14 +38,13 @@
 <script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
 import { computed, PropType } from 'vue'
-import { useRoute, useRouter, RouteLocationNamedRaw } from 'vue-router'
+import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 
 import { useStore } from '@/store/store'
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import { get } from '@/utilities/get'
 
 const route = useRoute()
-const router = useRouter()
 const store = useStore()
 
 const props = defineProps({
@@ -55,6 +54,12 @@ const props = defineProps({
   },
 
   routeName: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  anchorRouteName: {
     type: String,
     required: false,
     default: '',
@@ -117,21 +122,13 @@ const isActive = computed(() => {
     return true
   }
 
-  const currentRouteSubpath = route.path.split('/')[2]
-  if (currentRouteSubpath === targetRoute.value.name) {
+  const hasAnchorRoute = props.anchorRouteName !== '' && route.matched.some((matchedRoute) => matchedRoute.name === props.anchorRouteName)
+
+  if (hasAnchorRoute) {
     return true
   }
 
-  try {
-    return props.routeName && route.matched.some((matchedRoute) => {
-      const resolvedRoute = router.resolve(matchedRoute)
-
-      return props.routeName === resolvedRoute.name
-    })
-  } catch (err) {
-    console.error(err)
-    return false
-  }
+  return false
 })
 
 function onNavItemClick() {
