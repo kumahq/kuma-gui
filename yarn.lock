@@ -1250,17 +1250,17 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@datadog/browser-core@4.41.0":
-  version "4.41.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.41.0.tgz#c441b46dd2fbb69eb06ab19dc7bcdc617be3e91b"
-  integrity sha512-7QwALfXt9vEr68xcEmv1XvvpypIH3+WyiVKGPBrmViOQajILMGuDqdKpxRcQAnh6HeWEIjhgtkZkMG7vJcr0oA==
+"@datadog/browser-core@4.42.0":
+  version "4.42.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.42.0.tgz#102d5838eae7aa46aa74081043eac5ea084c5fd2"
+  integrity sha512-/yrShMoq0XEpyFQLbYq+gxwVF71nlZq1QbCYMlKQwIE9MppsBMaJDbNklGaZTBA4y0MhAh7PH9cjCYf7jtZJmQ==
 
-"@datadog/browser-logs@^4.41.0":
-  version "4.41.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.41.0.tgz#925bdbcdb245e75ca8671072d1f6902cdabe126f"
-  integrity sha512-k+iISetsdSe1uEWOOZHSgQLf28/1CPfgI+QC4a9KnBX6SpqoHg0/PX7BiqAWi5qQy5KHkVHq631W9j6JWgXpNg==
+"@datadog/browser-logs@^4.42.0":
+  version "4.42.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.42.0.tgz#93d0d20eb19a8075e9e7c51cde82ef5e77b54b46"
+  integrity sha512-umMEWzHqo9fpIjXWyv2VEjeY5bYQ6YCV/QZAtCI6xQiyGg9F6QQPxLEL8tnHcXp7I7LFu0E5OsIBVwNz/l2Png==
   dependencies:
-    "@datadog/browser-core" "4.41.0"
+    "@datadog/browser-core" "4.42.0"
 
 "@esbuild/android-arm64@0.17.18":
   version "0.17.18"
