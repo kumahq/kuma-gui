@@ -8,7 +8,14 @@ import { useStore, useRouter } from '@/utilities'
 const store = useStore()
 async function createWrapper(props = {}) {
   const router = useRouter()
-  await router.push({ name: 'mesh-detail-view', params: { mesh: 'default' } })
+  await router.push({
+    name: 'policy-detail-view',
+    params: {
+      mesh: 'default',
+      policyPath: 'circuit-breakers',
+      policy: 'foo',
+    },
+  })
   await store.dispatch('fetchPolicyTypes')
 
   return mount(PolicyListView, {

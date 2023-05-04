@@ -46,7 +46,7 @@
         <PolicyConnections
           :mesh="policy.mesh"
           :policy-name="policy.name"
-          :policy-type="props.policyPath"
+          :policy-path="props.policyPath"
         />
       </template>
     </TabsWidget>

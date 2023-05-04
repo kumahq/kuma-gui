@@ -15,6 +15,4 @@ Feature: The HTML title is correct on each page
       | /mesh/default/services                  | Services           |
       | /mesh/default/gateways                  | Gateways           |
       | /mesh/default/data-planes               | Data plane proxies |
-      # TODO: This should say Circuit Breakers
-      | /mesh/default/policies/circuit-breakers | Manager            |
-      # | /mesh/default/policies/circuit-breakers | Circuit Breakers   |
+      | /mesh/default/policies/circuit-breakers | CircuitBreaker     |

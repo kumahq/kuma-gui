@@ -4,14 +4,24 @@ import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
 import { useServer, useMock } from '@/../jest/jest-setup-after-env'
+import { useRouter } from '@/utilities'
 
-function renderComponent(props = {}) {
+async function renderComponent() {
+  const router = useRouter()
+  await router.push({
+    name: 'policy-detail-view',
+    params: {
+      mesh: 'default',
+      policyPath: 'circuit-breakers',
+      policy: 'foo',
+    },
+  })
+
   return mount(PolicyConnections, {
     props: {
       mesh: 'foo',
-      policyType: 'circuit-breakers',
+      policyPath: 'circuit-breakers',
       policyName: 'foo',
-      ...props,
     },
   })
 }
@@ -19,7 +29,7 @@ function renderComponent(props = {}) {
 describe('PolicyConnections.vue', () => {
   const mock = useMock()
   test('renders snapshot', async () => {
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -52,7 +62,7 @@ describe('PolicyConnections.vue', () => {
         ],
       },
     }))
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -66,8 +76,8 @@ describe('PolicyConnections.vue', () => {
     expect(wrapper.findAll('[data-testid="dataplane-name"]').length).toBe(2)
   })
 
-  test('renders loading', () => {
-    const wrapper = renderComponent()
+  test('renders loading', async () => {
+    const wrapper = await renderComponent()
 
     expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
@@ -75,12 +85,12 @@ describe('PolicyConnections.vue', () => {
   test('renders error', async () => {
     const server = useServer()
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyPath/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
 
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -90,12 +100,12 @@ describe('PolicyConnections.vue', () => {
   test('renders no item', async () => {
     const server = useServer()
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyPath/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )
 
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 

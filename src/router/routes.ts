@@ -281,7 +281,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
                 getBreadcrumbTitle: (route, store) => {
                   const policyType = store.state.policyTypesByPath[route.params.policyPath as string]
 
-                  return policyType.name
+                  return policyType?.name ?? route.params.policyPath
                 },
               },
               children: [

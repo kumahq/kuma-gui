@@ -89,8 +89,8 @@ interface BareRootState {
   externalServicesFetching: boolean
   zonesInsightsFetching: boolean
   policyTypes: PolicyType[]
-  policyTypesByPath: Record<string, PolicyType>
-  policyTypesByName: Record<string, PolicyType>
+  policyTypesByPath: Record<string, PolicyType | undefined>
+  policyTypesByName: Record<string, PolicyType | undefined>
 }
 
 const initialState: BareRootState = {
