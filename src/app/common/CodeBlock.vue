@@ -69,7 +69,11 @@ const isProcessing = ref(false)
 async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
   isProcessing.value = true
 
-  highlightElement(preElement, codeElement, code, language as AvailableLanguages)
+  const escapedCode = code
+    // Replaces all “<” and “>” characters with their HTML entities because PrismJS needs that.
+    .replaceAll(/</g, '&lt;')
+    .replaceAll(/>/g, '&gt;')
+  highlightElement(preElement, codeElement, escapedCode, language as AvailableLanguages)
 
   isProcessing.value = false
 }
