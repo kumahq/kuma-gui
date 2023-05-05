@@ -1,10 +1,15 @@
 import { faker } from '@faker-js/faker'
-import { RestRequest } from 'msw'
 
 import FakeKuma from './FakeKuma'
 import type AppEnv from '@/services/env/Env'
 import type { Alias } from '@/services/utils'
-import type { rest } from 'msw'
+export type RestRequest = {
+  method: string
+  params: Record<string, string | readonly string[]>
+  url: {
+    searchParams: URLSearchParams
+  }
+}
 
 type Pager = (total: string | number, req: RestRequest, self: string) => {
   next: string | null,
@@ -61,30 +66,11 @@ export type MockResponder = (req: RestRequest) => MockResponse
 export type FakeEndpoint = (deps: EndpointDependencies) => MockResponder
 
 export type FS = Record<string, FakeEndpoint>
-type Server = typeof rest
 export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
 export const dependencies: EndpointDependencies = {
   fake: new FakeKuma(faker),
   pager,
-  env: (key, d = '') => d,
-}
-export const fakeApi = (env: AEnv, server: Server, fs: FS) => {
-  const baseUrl = env('KUMA_API_URL')
-  const mockEnv: Env = (key, d = '') => env(key as AppEnvKeys, d)
-
-  return Object.entries(fs).map(([route, endpoint]) => {
-    return server.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {
-      const fetch = endpoint({
-        ...dependencies,
-        env: mockEnv,
-      })
-      const response = fetch(req)
-      return res(
-        ctx.status(parseInt(response.headers['Status-Code'] ?? '200')),
-        ctx.json(response.body),
-      )
-    })
-  })
+  env: (_key, d = '') => d,
 }
