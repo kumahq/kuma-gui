@@ -1,28 +1,29 @@
 <template>
-  <div
-    v-if="shouldStart"
-    class="scanner"
-  >
+  <div class="scanner">
     <div class="scanner-content">
-      <!-- loading state -->
       <KEmptyState cta-is-hidden>
         <template #title>
-          <div
-            v-if="isRunning"
-            class="mb-3"
-          >
+          <div class="mb-2">
             <KIcon
+              v-if="isRunning"
               icon="spinner"
-              color="rgba(0, 0, 0, 0.1)"
+              color="var(--grey-300)"
               size="42"
             />
-          </div>
 
-          <div
-            v-if="isComplete && hasError === false && isRunning === false"
-            class="mb-3"
-          >
-            <IconSuccess />
+            <KIcon
+              v-else-if="hasError"
+              icon="errorFilled"
+              color="var(--red-500)"
+              size="42"
+            />
+
+            <KIcon
+              v-else
+              icon="circleCheck"
+              color="var(--green-500)"
+              size="42"
+            />
           </div>
 
           <slot
@@ -30,17 +31,15 @@
             name="loading-title"
           />
 
-          <div v-if="isRunning === false">
-            <slot
-              v-if="hasError"
-              name="error-title"
-            />
+          <slot
+            v-else-if="hasError"
+            name="error-title"
+          />
 
-            <slot
-              v-if="isComplete && hasError === false"
-              name="complete-title"
-            />
-          </div>
+          <slot
+            v-else
+            name="complete-title"
+          />
         </template>
 
         <template #message>
@@ -49,17 +48,15 @@
             name="loading-content"
           />
 
-          <div v-if="isRunning === false">
-            <slot
-              v-if="hasError"
-              name="error-content"
-            />
+          <slot
+            v-else-if="hasError"
+            name="error-content"
+          />
 
-            <slot
-              v-if="isComplete && hasError === false"
-              name="complete-content"
-            />
-          </div>
+          <slot
+            v-else
+            name="complete-content"
+          />
         </template>
       </KEmptyState>
     </div>
@@ -68,9 +65,7 @@
 
 <script lang="ts" setup>
 import { KEmptyState, KIcon } from '@kong/kongponents'
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-
-import IconSuccess from '@/app/common/IconSuccess.vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps({
   interval: {
@@ -83,11 +78,6 @@ const props = defineProps({
     type: Number,
     required: false,
     default: 3600, // 3600s = 1h
-  },
-
-  shouldStart: {
-    type: Boolean,
-    default: false,
   },
 
   hasError: {
@@ -110,22 +100,13 @@ const emit = defineEmits<{
   (event: 'hide-siblings', shouldHideSiblings: boolean): void
 }>()
 
-const i = ref(0)
+const numberOfCalls = ref(0)
 const isRunning = ref(false)
 const isComplete = ref(false)
 const intervalId = ref<number | null>(null)
 
-watch(() => props.shouldStart, function (val, oldVal) {
-  if (val !== oldVal && val === true) {
-    runScanner()
-  }
-})
-
 onMounted(function () {
-  // only run the function when instructed to
-  if (props.shouldStart === true) {
-    runScanner()
-  }
+  runScanner()
 })
 
 onBeforeUnmount(function () {
@@ -136,17 +117,13 @@ function runScanner() {
   isRunning.value = true
   isComplete.value = false
 
-  // setup the interval function
   clearScannerInterval()
-  intervalId.value = window.setInterval(() => {
-    i.value++
 
-    // run our function
+  intervalId.value = window.setInterval(() => {
+    numberOfCalls.value++
     props.loaderFunction()
 
-    // complete the cycle if the scanner has reached the max
-    // amount of retries, or if the process has been marked complete
-    if (i.value === props.retries || props.canComplete === true) {
+    if (numberOfCalls.value === props.retries || props.canComplete === true) {
       clearScannerInterval()
 
       isRunning.value = false
@@ -163,10 +140,3 @@ function clearScannerInterval() {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.scanner-content p {
-  border: 1px solid red;
-  margin: 0;
-}
-</style>
