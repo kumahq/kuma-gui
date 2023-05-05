@@ -20,6 +20,12 @@ export default defineConfig({
       // propagate env to Cypress.env
       Object.entries(env).forEach(([prop, value]) => {
         config.env[prop] = value
+      });
+      // additional non-dotenv environment vars
+      [
+        'KUMA_BASE_URL',
+      ].forEach(item => {
+        config.env[item] = process.env[item]
       })
 
       // This is required for the preprocessor to be able to generate JSON reports after each run, and more,

@@ -6,6 +6,9 @@ const config = {
 
 When('I visit the {string} URL', function (path: string) {
   cy.viewport(1366, 768)
+  // turn off MSW in dev environments so we can use cy.intercept
+  cy.setCookie('KUMA_MOCK_API_ENABLED', 'false')
+  //
   cy.visit(`${config.BASE_URL}${path}`)
   // currently use this to denote "the page has initially rendered"
   cy.get('.app-main-content').should('be.visible')
