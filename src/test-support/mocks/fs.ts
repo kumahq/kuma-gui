@@ -52,6 +52,7 @@ import _49 from './src/zoneegressoverviews/_'
 import _9 from './src/zoneingresses+insights'
 import _48 from './src/zoneingresses+insights/_'
 import _8 from './src/zones'
+import _50 from './src/zones/_'
 import _11 from './src/zones+insights'
 import _12 from './src/zones+insights/_'
 import type { FS } from '@/test-support'
@@ -67,6 +68,7 @@ export const fs: FS = {
   '/external-services': _6,
   '/service-insights': _7,
   '/zones': _8,
+  '/zones/:name': _50,
   '/zoneingresses+insights': _9,
   '/zoneingresses+insights/:name': _48,
   '/zoneegressoverviews': _10,

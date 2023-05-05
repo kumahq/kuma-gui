@@ -58,9 +58,12 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
             env: mockEnv,
           })
           const url = new URL(req.url)
+          const body = req.body
+
           const request = {
             method: req.method,
             params,
+            body,
             url,
           }
           const _response = fetch(request)
