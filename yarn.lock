@@ -312,12 +312,7 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.18.8", "@babel/parser@^7.20.7", "@babel/parser@^7.21.5", "@babel/parser@^7.21.8":
-  version "7.21.8"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.8.tgz#642af7d0333eab9c0ad70b14ac5e76dbde7bfdf8"
-  integrity sha512-6zavDGdzG3gUqAdWvlLFfk+36RilI+Pwyuuh7HItyeScCWP3k6i8vKclAQ0bM/0y/Kz/xiwvxhMv9MgTJP5gmA==
-
-"@babel/parser@^7.20.15", "@babel/parser@^7.21.3":
+"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.18.8", "@babel/parser@^7.20.15", "@babel/parser@^7.20.7", "@babel/parser@^7.21.3", "@babel/parser@^7.21.5", "@babel/parser@^7.21.8":
   version "7.21.8"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.8.tgz#642af7d0333eab9c0ad70b14ac5e76dbde7bfdf8"
   integrity sha512-6zavDGdzG3gUqAdWvlLFfk+36RilI+Pwyuuh7HItyeScCWP3k6i8vKclAQ0bM/0y/Kz/xiwvxhMv9MgTJP5gmA==
@@ -1711,10 +1706,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kong/kongponents@^8.56.5":
-  version "8.56.5"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.56.5.tgz#137ede56cf62f36be7862787725a724e4c070a83"
-  integrity sha512-ZNOxUW3bTN2qASGn7ifchLm0Q+WC7kCylvTzNeZBArgxmIOxGALDMwwaa0S3ho5mGpRW0JOlFNAF+CxKNh3a1w==
+"@kong/kongponents@^8.58.0":
+  version "8.58.0"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.58.0.tgz#d971ec93a24ed64dc1b45ade0a5f0a044abcff21"
+  integrity sha512-cA78whrY45cf5qK6ph+n/RUerzAua5eUQAa/TXf6AathwNF515zAtT6emGkGZDb7NCnkWOQnQeFIcrTG7aiF7w==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
