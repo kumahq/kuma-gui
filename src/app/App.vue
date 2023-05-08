@@ -1,5 +1,5 @@
 <template>
-  <AppLoadingBar v-if="isLoading" />
+  <AppLoadingBar v-if="isLoading || route.name === undefined" />
 
   <template v-else>
     <AppHeader v-if="!isWizard" />
