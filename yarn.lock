@@ -312,12 +312,7 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.18.8", "@babel/parser@^7.20.7", "@babel/parser@^7.21.5", "@babel/parser@^7.21.8":
-  version "7.21.8"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.8.tgz#642af7d0333eab9c0ad70b14ac5e76dbde7bfdf8"
-  integrity sha512-6zavDGdzG3gUqAdWvlLFfk+36RilI+Pwyuuh7HItyeScCWP3k6i8vKclAQ0bM/0y/Kz/xiwvxhMv9MgTJP5gmA==
-
-"@babel/parser@^7.20.15", "@babel/parser@^7.21.3":
+"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.18.8", "@babel/parser@^7.20.15", "@babel/parser@^7.20.7", "@babel/parser@^7.21.3", "@babel/parser@^7.21.5", "@babel/parser@^7.21.8":
   version "7.21.8"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.8.tgz#642af7d0333eab9c0ad70b14ac5e76dbde7bfdf8"
   integrity sha512-6zavDGdzG3gUqAdWvlLFfk+36RilI+Pwyuuh7HItyeScCWP3k6i8vKclAQ0bM/0y/Kz/xiwvxhMv9MgTJP5gmA==
@@ -8237,10 +8232,10 @@ vite-svg-loader@^4.0.0:
     "@vue/compiler-sfc" "^3.2.20"
     svgo "^3.0.2"
 
-vite@^4.3.4:
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-4.3.4.tgz#1c518d763d5a700d890c3a19ab59220f06e7a7d5"
-  integrity sha512-f90aqGBoxSFxWph2b39ae2uHAxm5jFBBdnfueNxZAT1FTpM13ccFQExCaKbR2xFW5atowjleRniQ7onjJ22QEg==
+vite@^4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-4.3.5.tgz#3871fe0f4b582ea7f49a85386ac80e84826367d9"
+  integrity sha512-0gEnL9wiRFxgz40o/i/eTBwm+NEbpUeTWhzKrZDSdKm6nplj+z4lKz8ANDgildxHm47Vg8EUia0aicKbawUVVA==
   dependencies:
     esbuild "^0.17.5"
     postcss "^8.4.23"
