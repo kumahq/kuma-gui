@@ -4,8 +4,10 @@ export default {
   metadata: {
     name: null,
     namespace: null,
-    annotations: {
+    labels: {
       'kuma.io/sidecar-injection': 'enabled',
+    },
+    annotations: {
       'kuma.io/mesh': null,
     },
   },
