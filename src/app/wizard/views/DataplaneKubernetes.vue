@@ -337,7 +337,6 @@
 
             <EntityScanner
               :loader-function="scanForEntity"
-              :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
               @hide-siblings="hideSiblings"

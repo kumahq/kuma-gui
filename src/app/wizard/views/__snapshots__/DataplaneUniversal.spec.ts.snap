@@ -593,7 +593,6 @@ networking:
                   <div
                     class="scanner-content"
                   >
-                    <!-- loading state -->
                     <section
                       class="empty-state-wrapper"
                     >
@@ -606,13 +605,13 @@ networking:
                         >
                           
                           <div
-                            class="mb-3"
+                            class="mb-2"
                           >
                             <span
                               class="kong-icon kong-icon-spinner"
                             >
                               <svg
-                                fill="rgba(0, 0, 0, 0.1)"
+                                fill="var(--grey-300)"
                                 height="42"
                                 role="img"
                                 viewBox="0 0 20 20"
@@ -632,7 +631,7 @@ networking:
                                   <path
                                     d="M5 10a5 5 0 1 0 5-5"
                                     fill="none"
-                                    stroke="rgba(0, 0, 0, 0.1)"
+                                    stroke="var(--grey-300)"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
@@ -647,13 +646,11 @@ networking:
 
                             </span>
                           </div>
-                          <!--v-if-->
                           
                           <h3>
                             Searching…
                           </h3>
                           
-                          <!--v-if-->
                           
                         </div>
                       </div>
@@ -669,7 +666,6 @@ networking:
                             We are looking for your dataplane.
                           </p>
                           
-                          <!--v-if-->
                           
                         </div>
                         <div
