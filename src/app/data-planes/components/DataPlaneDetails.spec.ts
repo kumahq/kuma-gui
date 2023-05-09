@@ -56,6 +56,7 @@ describe('DataPlaneDetails', () => {
     await flushPromises()
 
     await wrapper.find('[data-testid="accordion-item-button"]').trigger('click')
+    await flushPromises()
 
     html = wrapper.html()
     for (const string of expectedPoliciesStrings) {
