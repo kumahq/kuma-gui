@@ -15,18 +15,27 @@ Before(() => {
   urls = new Map()
   useServer()
 })
-type Cy = typeof cy;
-const $ = (selector: string): ReturnType<Cy['get']> => {
+
+const $ = (selector: string) => {
+  const resolvedSelector = resolveCustomAlias(selector)
+
+  return cy.get(resolvedSelector)
+}
+
+function resolveCustomAlias(selector: string): string {
   if (selector.startsWith('$')) {
     const alias = selector.split(/[: .[#]/).shift()!.substring(1)
+
     if (typeof selectors[alias] === 'undefined') {
       throw new Error(`Could not find alias $${alias}. Make sure you have defined the alias in a CSS selectors step`)
     }
+
     selector = selector.replace(`$${alias}`, selectors[alias])
-    return $(selector)
+
+    return resolveCustomAlias(selector)
   }
-  // @ts-ignore
-  return cy.get(selector)
+
+  return selector
 }
 
 // arrange
