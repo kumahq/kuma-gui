@@ -1,7 +1,6 @@
 import type { EnvVars } from '@/services/env/Env'
-import type { Callback, Options } from '@/test-support'
-
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
+import type { Callback, Options } from '@/test-support'
 import { mocker } from '@/test-support/intercept'
 
 // this needs to come from testing
