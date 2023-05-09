@@ -38,6 +38,7 @@ describe('DataplanePolicies.vue', () => {
     await flushPromises()
 
     await wrapper.find('[data-testid="accordion-item-button"]').trigger('click')
+    await flushPromises()
 
     expect(wrapper.element).toMatchSnapshot()
   })

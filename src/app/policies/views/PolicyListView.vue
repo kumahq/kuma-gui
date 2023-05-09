@@ -128,6 +128,7 @@ import {
   KAlert,
   KCard,
   KSelect,
+  SelectItem,
 } from '@kong/kongponents'
 import { computed, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
@@ -145,7 +146,6 @@ import { PolicyEntity, PolicyType, TableHeader } from '@/types/index.d'
 import { useEnv, useKumaApi } from '@/utilities'
 import { getSome, stripTimes } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
-import type { SelectItem } from '@kong/kongponents/dist/types/components/KSelect/KSelect.vue.d'
 
 type PolicyEntityTableRow = {
   entity: PolicyEntity
@@ -319,7 +319,7 @@ async function loadEntity({ name, mesh, path }: { name?: string | undefined, mes
   }
 }
 
-function changePolicyType(item: {value: string}) {
+function changePolicyType(item: SelectItem) {
   router.push({
     name: 'policy-list-view',
     params: {
