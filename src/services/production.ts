@@ -12,6 +12,7 @@ import Logger from '@/services/logger/DatadogLogger'
 import { token, get } from '@/services/utils'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { storeConfig, State } from '@/store/storeConfig'
+import { I18nMessages, getI18nMessages, useI18n } from '@/utilities/useI18n'
 import type {
   Router,
 } from 'vue-router'
@@ -34,6 +35,9 @@ const $ = {
 
   app: token<ReturnType<typeof useApp>>('app'),
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
+
+  i18n: token<ReturnType<typeof useI18n>>('i18n'),
+  i18nMessages: token<I18nMessages>('i18nMessages'),
 }
 type SupportedTokens = typeof $
 export const services: ServiceConfigurator<SupportedTokens> = ($) => [
@@ -128,6 +132,15 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     ],
   }],
 
+  [$.i18nMessages, {
+    service: getI18nMessages,
+  }],
+  [$.i18n, {
+    service: useI18n,
+    arguments: [
+      $.i18nMessages,
+    ],
+  }],
 ]
 
 export const TOKENS = $

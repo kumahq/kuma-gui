@@ -13,8 +13,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
+import { useI18n } from '@/utilities'
 import { getTermLabel } from '@/utilities/getTermLabel'
-import { useI18n } from '@/utilities/useI18n'
 
 const i18n = useI18n()
 
