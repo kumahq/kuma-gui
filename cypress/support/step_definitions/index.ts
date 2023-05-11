@@ -67,23 +67,16 @@ When('I wait for {int} milliseconds/ms', function (ms: number) {
   cy.wait(ms)
 })
 
-When(/^I "(.*)" the "(.*)" element(?: and select "(.*)".*)?$/, (event: string, selector: string, value?: string) => {
-  switch (event) {
-    case 'check':
-    case 'click': {
-      if (value !== undefined) {
-        $(selector).select(value)
-      } else {
-        $(selector).then(($el) => {
-          const el = $el[0]
-          const label = getLabel(el)
+When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
+  if (value !== undefined) {
+    $(selector).select(value)
+  } else {
+    $(selector).then(($el) => {
+      const el = $el[0]
+      const label = getLabel(el)
 
-          cy.wrap(label ?? el).click()
-        })
-      }
-
-      break
-    }
+      cy.wrap(label ?? el).click()
+    })
   }
 })
 

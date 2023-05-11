@@ -93,7 +93,7 @@ Feature: index
             total: 1
       """
     When I visit the "/" URL
-    When I "click" the "<Selector>" element
+    When I click the "<Selector>" element
     Then the page title contains "<Title>"
 
     Examples:

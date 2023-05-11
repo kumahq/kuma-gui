@@ -25,20 +25,20 @@ Feature: The create Zone flow works
     When I "type" "test" into the "$name-input" element
     Then the "$create-zone-button" element isn't disabled
 
-    When I "click" the "$create-zone-button" element
+    When I click the "$create-zone-button" element
     Then the "$environment-universal-radio-button" element isn't checked
     Then the "$environment-kubernetes-radio-button" element is checked
     Then the "$ingress-input-switch" element is checked
     Then the "$egress-input-switch" element is checked
 
-    When I "click" the "$ingress-input-switch" element
+    When I click the "$ingress-input-switch" element
     Then the "$ingress-input-switch" element isn't checked
     Then the "$egress-input-switch" element is checked
 
-    When I "click" the "$egress-input-switch" element
+    When I click the "$egress-input-switch" element
     Then the "$ingress-input-switch" element isn't checked
     Then the "$egress-input-switch" element isn't checked
 
-    When I "check" the "$environment-universal-radio-button" element
+    When I click the "$environment-universal-radio-button" element
     Then the "$ingress-input-switch" element doesn't exist
     Then the "$egress-input-switch" element doesn't exist

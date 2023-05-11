@@ -57,7 +57,7 @@ Feature: mesh / gateways / index
     Then the URL contains "gateway=fake-alarm-gateway-0"
     Then the "$table-row:nth-child(2)" element contains "fake-transmitter-gateway-0"
     Then the "$table-row:nth-child(2):not(.is-selected)" element exists
-    When I "click" the "$table-row:nth-child(2) td:first-child" element
+    When I click the "$table-row:nth-child(2) td:first-child" element
     Then the "$table-row:nth-child(2).is-selected" element exists
     Then the "$item-title" element contains "fake-transmitter-gateway-0"
     Then the URL contains "gateway=fake-transmitter-gateway-0"
@@ -87,7 +87,7 @@ Feature: mesh / gateways / index
                   type: 'BUILTIN'
         """
       Then the "$select-type option" element exists 3 times
-      When I "click" the "$select-type" element and select "Builtin"
+      When I click the "$select-type" element and select "Builtin"
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
@@ -114,7 +114,7 @@ Feature: mesh / gateways / index
                 gateway:
                   type: 'DELEGATED'
         """
-      When I "click" the "$select-type" element and select "Delegated"
+      When I click the "$select-type" element and select "Delegated"
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:

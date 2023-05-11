@@ -33,5 +33,5 @@ Feature: mesh / index
       """
     When I visit the "/" URL
     Then the "$main-nav .nav-item-gateway-list-view" element contains "1"
-    When I "click" the "$mesh-selector" element and select "aalphabetically-second-because-of-default"
+    When I click the "$mesh-selector" element and select "aalphabetically-second-because-of-default"
     Then the "$main-nav .nav-item-gateway-list-view" element contains "10"
