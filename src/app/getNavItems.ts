@@ -16,32 +16,34 @@ interface NavItem {
 }
 
 export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavItem[] {
-  const zoneItems: NavItem[] = !isMultizoneMode
-    ? []
-    : [
-      {
-        name: 'Zones',
-        categoryTier: 'primary',
-      },
-      {
-        name: 'Zone CPs',
-        routeName: 'zone-list-view',
-        anchorRouteName: 'zone-abstract-view',
-        insightsFieldAccessor: 'global.Zone',
-      },
-      {
-        name: 'Zone Ingresses',
-        routeName: 'zone-ingress-list-view',
-        anchorRouteName: 'zone-ingress-abstract-view',
-        insightsFieldAccessor: 'global.ZoneIngress',
-      },
-      {
-        name: 'Zone Egresses',
-        routeName: 'zone-egress-list-view',
-        anchorRouteName: 'zone-egress-abstract-view',
-        insightsFieldAccessor: 'global.ZoneEgress',
-      },
-    ]
+  const zoneItems: NavItem[] = [
+    {
+      name: 'Zones',
+      categoryTier: 'primary',
+    },
+    ...(isMultizoneMode
+      ? [
+        {
+          name: 'Zone CPs',
+          routeName: 'zone-list-view',
+          anchorRouteName: 'zone-abstract-view',
+          insightsFieldAccessor: 'global.Zone',
+        },
+        {
+          name: 'Zone Ingresses',
+          routeName: 'zone-ingress-list-view',
+          anchorRouteName: 'zone-ingress-abstract-view',
+          insightsFieldAccessor: 'global.ZoneIngress',
+        },
+      ]
+      : []),
+    {
+      name: 'Zone Egresses',
+      routeName: 'zone-egress-list-view',
+      anchorRouteName: 'zone-egress-abstract-view',
+      insightsFieldAccessor: 'global.ZoneEgress',
+    },
+  ]
 
   const meshItems: NavItem[] = !hasMeshes
     ? []
