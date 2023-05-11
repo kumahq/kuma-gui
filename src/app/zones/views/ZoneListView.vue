@@ -18,9 +18,24 @@
           :show-warnings="tableData.data.some((item) => item.withWarnings)"
           :next="nextUrl"
           :page-offset="pageOffset"
+          :show-delete-action="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+          @delete-resource="toggleDeleteModal"
           @table-action="loadEntity"
           @load-data="loadData"
-        />
+        >
+          <template
+            v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+            #additionalControls
+          >
+            <KButton
+              appearance="creation"
+              icon="plus"
+              :to="{ name: 'zone-create-view' }"
+            >
+              Create Zone
+            </KButton>
+          </template>
+        </DataOverview>
       </div>
 
       <div
@@ -30,20 +45,44 @@
         <ZoneDetails :zone-overview="entity" />
       </div>
     </div>
+
+    <DeleteResourceModal
+      v-if="isDeleteModalVisible"
+      :confirmation-text="deleteZoneName"
+      :delete-function="deleteZone"
+      :is-visible="isDeleteModalVisible"
+      modal-id="delete-zone-modal"
+      :action-button-text="i18n.t('zones.delete.confirmModal.proceedText')"
+      :title="i18n.t('zones.delete.confirmModal.title')"
+      @cancel="toggleDeleteModal"
+      @delete="handleDelete"
+    >
+      <template #body-content>
+        <p>{{ i18n.t('zones.delete.confirmModal.text1') }}</p>
+
+        <p>{{ i18n.t('zones.delete.confirmModal.text2') }}</p>
+      </template>
+
+      <template #error>
+        {{ i18n.t('zones.delete.confirmModal.errorText') }}
+      </template>
+    </DeleteResourceModal>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { KButton } from '@kong/kongponents'
 import { onBeforeMount, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
 import ZoneDetails from '../components/ZoneDetails.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
+import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { StatusKeyword, TableHeader, ZoneOverview } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { fetchAllResources } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -59,6 +98,8 @@ type ZoneOverviewTableRow = {
   withWarnings: boolean
 }
 
+const env = useEnv()
+const i18n = useI18n()
 const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {
@@ -84,6 +125,8 @@ const props = defineProps({
 })
 
 const isLoading = ref(true)
+const isDeleteModalVisible = ref(false)
+const deleteZoneName = ref('')
 const error = ref<Error | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: ZoneOverviewTableRow[] }>({
   headers: [
@@ -94,6 +137,7 @@ const tableData = ref<{ headers: TableHeader[], data: ZoneOverviewTableRow[] }>(
     { label: 'Ingress', key: 'hasIngress' },
     { label: 'Egress', key: 'hasEgress' },
     { label: 'Warnings', key: 'warnings', hideLabel: true },
+    { label: 'Actions', key: 'actions', hideLabel: true },
   ],
   data: [],
 })
@@ -215,5 +259,21 @@ async function loadEntity({ name }: { name?: string | undefined }) {
   } catch (err) {
     console.error(err)
   }
+}
+
+async function deleteZone() {
+  // Intentionally not wrapped in a try-catch block so that the DeleteResourceModal can discover when the operation failed.
+  await kumaApi.deleteZone({ name: deleteZoneName.value })
+}
+
+function toggleDeleteModal(row?: Record<string, any>) {
+  const zoneName = row?.entity?.name ?? row?.name ?? ''
+  isDeleteModalVisible.value = !isDeleteModalVisible.value
+
+  deleteZoneName.value = zoneName
+}
+
+function handleDelete() {
+  toggleDeleteModal()
 }
 </script>

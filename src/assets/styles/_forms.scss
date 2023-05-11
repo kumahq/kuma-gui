@@ -1,0 +1,17 @@
+.form-content {
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.form-wrapper>*+* {
+  margin-block-start: var(--spacing-md);
+}
+
+.radio-button-group>* {
+  display: flex;
+}
+
+.radio-button-group>*+* {
+  margin-block-start: var(--spacing-xs);
+}
