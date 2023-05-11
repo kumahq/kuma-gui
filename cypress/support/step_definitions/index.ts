@@ -67,18 +67,44 @@ When('I wait for {int} milliseconds/ms', function (ms: number) {
   cy.wait(ms)
 })
 
-When(/^I "(.*)"(.*)? on the "(.*)" element$/, (event: string, object: string | number | undefined, selector: string) => {
+When(/^I "(.*)" the "(.*)" element(?: and select "(.*)".*)?$/, (event: string, selector: string, value?: string) => {
   switch (event) {
-    case 'select':
-      if (typeof object === 'undefined') {
-        throw new Error()
+    case 'check':
+    case 'click': {
+      if (value !== undefined) {
+        $(selector).select(value)
+      } else {
+        $(selector).then(($el) => {
+          const el = $el[0]
+          const label = getLabel(el)
+
+          cy.wrap(label ?? el).click()
+        })
       }
-      $(selector).select(parseInt(object.toString()), { force: true })
+
       break
-    default:
-      $(selector).trigger(event, { force: true })
+    }
   }
 })
+
+/**
+ * Finds the `label` element associated with an form control.
+ */
+function getLabel(element: HTMLElement) {
+  if (element.id) {
+    const label = document.querySelector(`label[for="${element.id}"]`)
+    if (label !== null) {
+      return label
+    }
+  }
+
+  const label = element.closest('label')
+  if (label !== null) {
+    return label
+  }
+
+  return null
+}
 
 When('I {string} {string} into the {string} element', (event: string, text: string, selector: string) => {
   switch (event) {
@@ -119,12 +145,24 @@ Then('the URL {string} was requested with', (url: string, yaml: string) => {
   })
 })
 
-Then(/^the "(.*)" element( does| doesn't| don't)? exist[s]?$/, function (selector: string, assertion: string) {
-  $(selector).should(`${(assertion || 'does').trim() !== 'does' ? 'not.' : ''}exist`)
+Then(/^the "(.*)" element[s]?( don't | doesn't | do | does | )exist[s]?$/, function (selector: string, assertion: string) {
+  const prefix = ['', 'do', 'does'].includes(assertion.trim()) ? '' : 'not.'
+  const chainer = `${prefix}exist`
+
+  $(selector).should(chainer)
 })
+
 Then(/^the "(.*)" element[s]? exist[s]? ([0-9]*) time[s]?$/, (selector: string, count: string) => {
   $(selector).should('have.length', count)
 })
+
+Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(.*)$/, (selector: string, assertion: string, booleanAttribute: string) => {
+  const prefix = ['is', 'are'].includes(assertion.trim()) ? '' : 'not.'
+  const chainer = `${prefix}be.${booleanAttribute}`
+
+  $(selector).should(chainer)
+})
+
 Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', table: DataTable) => {
   const rows = table.rows()
   if (multiple === 's') {

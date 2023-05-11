@@ -83,8 +83,17 @@ Feature: index
       | policies               | 100    | 99+ |
 
   Scenario Outline: Visiting the "<Title>" page
+    Given the URL "/mesh-insights/default" responds with
+      """
+      body:
+        policies:
+          CircuitBreaker:
+            total: 0
+          FaultInjection:
+            total: 1
+      """
     When I visit the "/" URL
-    When I "click" on the "<Selector>" element
+    When I "click" the "<Selector>" element
     Then the page title contains "<Title>"
 
     Examples:
@@ -96,7 +105,5 @@ Feature: index
       | $main-nav .nav-item-service-list-view a      | Services           |
       | $main-nav .nav-item-gateway-list-view a      | Gateways           |
       | $main-nav .nav-item-data-plane-list-view a   | Data plane proxies |
-      # TODO: This should say Circuit Breakers
-      | $main-nav .nav-item-policies a               | Manager            |
-      # | $main-nav .nav-item-policies               | Circuit Breakers |
-      | [data-testid="nav-item-diagnostics"]         | Diagnostics        |
+      | $main-nav .nav-item-policies a               | FaultInjection     |
+      | [data-testid='nav-item-diagnostics']         | Diagnostics        |
