@@ -119,9 +119,9 @@ function runScanner() {
 
   clearScannerInterval()
 
-  intervalId.value = window.setInterval(() => {
+  intervalId.value = window.setInterval(async () => {
     numberOfCalls.value++
-    props.loaderFunction()
+    await props.loaderFunction()
 
     if (numberOfCalls.value === props.retries || props.canComplete === true) {
       clearScannerInterval()
