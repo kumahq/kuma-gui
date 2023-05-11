@@ -45,7 +45,10 @@ const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
     })
     return async (req: T): Promise<MockResponse> => {
       const _response = fetch(req)
-      await new Promise(resolve => setTimeout(resolve, parseInt(mockEnv('KUMA_LATENCY', '0'))))
+      const latency = parseInt(mockEnv('KUMA_LATENCY', '0'))
+      if (latency !== 0) {
+        await new Promise(resolve => setTimeout(resolve, latency))
+      }
       return cb(createMerge(_response), req, _response)
     }
   }
