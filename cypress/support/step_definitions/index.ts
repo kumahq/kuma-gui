@@ -145,8 +145,8 @@ Then('the URL {string} was requested with', (url: string, yaml: string) => {
   })
 })
 
-Then(/^the "(.*)" element[s]?( don't | doesn't | do | does | )exist[s]?$/, function (selector: string, assertion: string) {
-  const prefix = ['', 'do', 'does'].includes(assertion.trim()) ? '' : 'not.'
+Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {
+  const prefix = assertion === ' ' ? '' : 'not.'
   const chainer = `${prefix}exist`
 
   $(selector).should(chainer)
