@@ -4,6 +4,23 @@ Feature: index
       | Alias         | Selector                         |
       | main-nav      | .app-sidebar                     |
 
+  Scenario Outline: The navigation shows Zone items depending on mode
+    Given the URL "/config" responds with
+      """
+      body:
+        mode: <Mode>
+      """
+    When I visit the "/" URL
+    Then the "$main-nav .nav-item-<RouteName>" element <ExistsAssertion>
+    Examples:
+      | RouteName              | Mode       | ExistsAssertion |
+      | zone-list-view         | global     | exists          |
+      | zone-ingress-list-view | global     | exists          |
+      | zone-egress-list-view  | global     | exists          |
+      | zone-list-view         | standalone | doesn't exist   |
+      | zone-ingress-list-view | standalone | doesn't exist   |
+      | zone-egress-list-view  | standalone | exists          |
+
   Scenario Outline: The navigation shows numbers correctly
     Given the URL "/global-insights" responds with
       """
@@ -59,28 +76,28 @@ Feature: index
     When I visit the "/" URL
     Then the "$main-nav .nav-item-<RouteName>" element contains "<Text>"
     Examples:
-      | RouteName            | Count  | Text |
-      | zone-list-view         | 0      | 0   |
-      | zone-egress-list-view  | 0      | 0   |
-      | zone-ingress-list-view | 0      | 0   |
-      | service-list-view      | 0      | 0   |
-      | data-plane-list-view   | 0      | 0   |
-      | gateway-list-view      | 0      | 0   |
-      | policies               | 0      | 0   |
-      | zone-list-view         | 50     | 50  |
-      | zone-egress-list-view  | 122    | 99+ |
-      | zone-ingress-list-view | 1      | 1   |
-      | service-list-view      | 11     | 11  |
-      | data-plane-list-view   | 100000 | 99+ |
-      | gateway-list-view      | 1001   | 99+ |
-      | policies               | 1      | 14  |
-      | zone-list-view         | 100    | 99+ |
-      | zone-egress-list-view  | 100    | 99+ |
-      | zone-ingress-list-view | 100    | 99+ |
-      | service-list-view      | 100    | 99+ |
-      | data-plane-list-view   | 100    | 99+ |
-      | gateway-list-view      | 100    | 99+ |
-      | policies               | 100    | 99+ |
+      | RouteName              | Count  | Text |
+      | zone-list-view         | 0      | 0    |
+      | zone-egress-list-view  | 0      | 0    |
+      | zone-ingress-list-view | 0      | 0    |
+      | service-list-view      | 0      | 0    |
+      | data-plane-list-view   | 0      | 0    |
+      | gateway-list-view      | 0      | 0    |
+      | policies               | 0      | 0    |
+      | zone-list-view         | 50     | 50   |
+      | zone-egress-list-view  | 122    | 99+  |
+      | zone-ingress-list-view | 1      | 1    |
+      | service-list-view      | 11     | 11   |
+      | data-plane-list-view   | 100000 | 99+  |
+      | gateway-list-view      | 1001   | 99+  |
+      | policies               | 1      | 14   |
+      | zone-list-view         | 100    | 99+  |
+      | zone-egress-list-view  | 100    | 99+  |
+      | zone-ingress-list-view | 100    | 99+  |
+      | service-list-view      | 100    | 99+  |
+      | data-plane-list-view   | 100    | 99+  |
+      | gateway-list-view      | 100    | 99+  |
+      | policies               | 100    | 99+  |
 
   Scenario Outline: Visiting the "<Title>" page
     When I visit the "/" URL
