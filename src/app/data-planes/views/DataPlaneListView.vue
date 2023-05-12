@@ -82,7 +82,7 @@ const dppFilterFields = computed(() => {
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'data-plane-list-view' && route.name !== 'gateway-list-view') {
+  if (route.name !== 'data-planes-list-view' && route.name !== 'gateways-list-view') {
     return
   }
 

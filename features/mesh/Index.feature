@@ -1,9 +1,10 @@
 Feature: mesh / index
   Background:
     Given the CSS selectors
-      | Alias         | Selector                         |
-      | main-nav      | .app-sidebar                     |
-      | mesh-selector | [data-testid='mesh-selector']    |
+      | Alias           | Selector                      |
+      | main-nav        | .app-sidebar                  |
+      | mesh-selector   | [data-testid='mesh-selector'] |
+      | mesh-breadcrumb | .k-breadcrumbs:nth-child(2)   |
 
   Scenario: Mesh Selection
     Given the environment
@@ -32,6 +33,7 @@ Feature: mesh / index
             total: 10
       """
     When I visit the "/" URL
-    Then the "$main-nav .nav-item-gateway-list-view" element contains "1"
     When I click the "$mesh-selector" element and select "aalphabetically-second-because-of-default"
-    Then the "$main-nav .nav-item-gateway-list-view" element contains "10"
+    Then the "$mesh-breadcrumb" element contains "aalphabetically-second-because-of-default"
+    When I click the "$mesh-selector" element and select "default"
+    Then the "$mesh-breadcrumb" element contains "default"

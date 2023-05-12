@@ -7,7 +7,7 @@ Feature: The HTML title is correct on each page
       | URL                                     | Title              |
       | /                                       | Overview           |
       | /diagnostics                            | Diagnostics        |
-      | /zones                                  | Zones              |
+      | /zones                                  | Zone CPs           |
       | /zone-ingresses                         | Zone Ingresses     |
       | /zone-egresses                          | Zone Egresses      |
 

@@ -554,7 +554,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             title: 'Internal',
             data: internal.total,
             route: {
-              name: 'service-list-view',
+              name: 'services-list-view',
               params: {
                 mesh: state.selectedMesh,
               },
@@ -567,7 +567,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             title: 'External',
             data: external.total,
             route: {
-              name: 'service-list-view',
+              name: 'services-list-view',
               params: {
                 mesh: state.selectedMesh,
               },

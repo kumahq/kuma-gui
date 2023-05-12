@@ -281,7 +281,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               
                               <a
                                 class=""
-                                href="/mesh/default/services/backend"
+                                href="/mesh/default/service/backend"
                               >
                                 kuma.io/service:
                                 <b>

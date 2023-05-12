@@ -27,12 +27,11 @@
 
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { useStore } from '@/store/store'
 import { Mesh } from '@/types/index.d'
 
-const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
@@ -51,9 +50,14 @@ function changeMesh(event: Event): void {
 
   store.dispatch('updateSelectedMesh', mesh)
 
-  const name = 'mesh' in route.params ? route.name as string : 'mesh-detail-view'
-
-  router.push({ name, params: { mesh } })
+  router.push(
+    {
+      name: 'mesh-overview-view',
+      params: {
+        mesh,
+      },
+    },
+  )
 }
 </script>
 
