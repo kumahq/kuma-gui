@@ -63,7 +63,7 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
     >
       
       <td
-        class=""
+        class="custom-column"
       >
         
         
@@ -269,14 +269,136 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
               >
                 
                 <td
-                  class=""
+                  class="actions-column"
                 >
                   
-                  
+                  <div
+                    class="k-dropdown k-dropdown-menu actions-dropdown"
+                  >
+                    
+                    <div
+                      aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      data-testid="k-dropdown-menu-popover"
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="button"
+                    >
+                      
+                      <div
+                        class="k-dropdown-trigger dropdown-trigger"
+                        data-testid="k-dropdown-trigger"
+                        label=""
+                      >
+                        
+                        <button
+                          class="k-button small icon-btn rounded secondary non-visual-button"
+                          type="button"
+                        >
+                          
+                          <span
+                            class="kong-icon kong-icon-more"
+                          >
+                            <svg
+                              fill="var(--black-400)"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 16 15"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                More Actions
+                              </title>
+                              
+  
+                              <circle
+                                cx="8.25"
+                                cy="3.25"
+                                fill="var(--black-400)"
+                                r="1.25"
+                              />
+                              
+  
+                              <circle
+                                cx="8.25"
+                                cy="7.75"
+                                fill="var(--black-400)"
+                                r="1.25"
+                              />
+                              
+  
+                              <circle
+                                cx="8.25"
+                                cy="12.25"
+                                fill="var(--black-400)"
+                                r="1.25"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          
+                          
+                          <!---->
+                        </button>
+                        
+                      </div>
+                      
+                      <transition-stub
+                        appear="false"
+                        css="true"
+                        name="fade"
+                        persisted="false"
+                      >
+                        <div
+                          class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="region"
+                          style="width: 150px; max-width: auto; max-height: auto; display: none;"
+                        >
+                          <!---->
+                          <div
+                            class="k-popover-content"
+                          >
+                            
+                            <ul
+                              class="k-dropdown-list dropdown-list"
+                              data-testid="k-dropdown-list"
+                            >
+                              
+                              <li
+                                class="k-dropdown-item w-100"
+                                data-testid="k-dropdown-item-View-details"
+                              >
+                                <a
+                                  class="k-dropdown-item-trigger"
+                                  data-testid="k-dropdown-item-trigger"
+                                  href="/zones/bandwidth-49"
+                                >
+                                  
+                                  View details
+                                  
+                                </a>
+                              </li>
+                              <!--v-if-->
+                              
+                            </ul>
+                            
+                          </div>
+                          <!---->
+                        </div>
+                      </transition-stub>
+                    </div>
+                    
+                  </div>
                   
                 </td>
                 <td
-                  class=""
+                  class="status-column"
                 >
                   
                   <span
@@ -292,7 +414,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   
                 </td>
                 <td
-                  class=""
+                  class="totalUpdates-column"
                 >
                   
                   <span>
@@ -301,7 +423,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   
                 </td>
                 <td
-                  class=""
+                  class="dpVersion-column"
                 >
                   
                   <div
@@ -312,7 +434,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   
                 </td>
                 <td
-                  class=""
+                  class="envoyVersion-column"
                 >
                   
                   <div
@@ -323,7 +445,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   
                 </td>
                 <td
-                  class="text-center"
+                  class="warnings-column text-center"
                 >
                   
                   <span

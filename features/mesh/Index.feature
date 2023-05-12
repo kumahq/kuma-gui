@@ -3,7 +3,7 @@ Feature: mesh / index
     Given the CSS selectors
       | Alias         | Selector                         |
       | main-nav      | .app-sidebar                     |
-      | mesh-selector | [data-testid="mesh-selector"]    |
+      | mesh-selector | [data-testid='mesh-selector']    |
 
   Scenario: Mesh Selection
     Given the environment
@@ -33,6 +33,5 @@ Feature: mesh / index
       """
     When I visit the "/" URL
     Then the "$main-nav .nav-item-gateway-list-view" element contains "1"
-    When I "select" 1 on the "$mesh-selector" element
+    When I click the "$mesh-selector" element and select "aalphabetically-second-because-of-default"
     Then the "$main-nav .nav-item-gateway-list-view" element contains "10"
-

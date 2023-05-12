@@ -1,5 +1,10 @@
 import { RouteLocationNamedRaw } from 'vue-router'
 
+/**
+ * Creates an “unsaved” variant of a resource type which is missing the fields that are only present on an object once its saved in the database.
+ */
+export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
+
 export type ChartDataPoint = {
   title: string
   data: number
@@ -428,13 +433,17 @@ export interface ExternalService extends MeshEntity {
   tags: Record<string, string>
 }
 
-/**
- * Entity as returned via the `/zones/:zone` endpoint.
- */
-export interface Zone extends Entity {
-  type: 'Zone'
+export interface Zone {
+  name: string
   enabled: boolean
+
+  /**
+   * Base64-encoded token.
+   */
+  token?: string
 }
+
+export interface UnsavedZone extends Omit<Unsaved<Zone>, 'enabled'> {}
 
 /**
  * Overview entity as returned via the `/zones+insights/:zone` endpoint.

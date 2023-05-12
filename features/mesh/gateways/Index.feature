@@ -2,7 +2,7 @@ Feature: mesh / gateways / index
   Background:
     Given the CSS selectors
       | Alias        | Selector                                |
-      | select-type  | [data-testid="data-planes-type-filter"] |
+      | select-type  | [data-testid='data-planes-type-filter'] |
       | table        | [data-testid='data-overview-table']     |
       | table-header | $table th                               |
       | table-row    | $table tbody tr                         |
@@ -57,7 +57,7 @@ Feature: mesh / gateways / index
     Then the URL contains "gateway=fake-alarm-gateway-0"
     Then the "$table-row:nth-child(2)" element contains "fake-transmitter-gateway-0"
     Then the "$table-row:nth-child(2):not(.is-selected)" element exists
-    When I "click" on the "$table-row:nth-child(2) td:first-child" element
+    When I click the "$table-row:nth-child(2) td:first-child" element
     Then the "$table-row:nth-child(2).is-selected" element exists
     Then the "$item-title" element contains "fake-transmitter-gateway-0"
     Then the URL contains "gateway=fake-transmitter-gateway-0"
@@ -87,7 +87,7 @@ Feature: mesh / gateways / index
                   type: 'BUILTIN'
         """
       Then the "$select-type option" element exists 3 times
-      Then I "select" 1 on the "$select-type" element
+      When I click the "$select-type" element and select "Builtin"
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
@@ -114,7 +114,7 @@ Feature: mesh / gateways / index
                 gateway:
                   type: 'DELEGATED'
         """
-      Then I "select" 2 on the "$select-type" element
+      When I click the "$select-type" element and select "Delegated"
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:

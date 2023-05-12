@@ -68,7 +68,7 @@ Feature: mesh / dataplanes / index
     Then the URL contains "dpp=fake-backend"
     Then the "$table-row:nth-child(2)" element contains "fake-frontend"
     Then the "$table-row:nth-child(2):not(.is-selected)" element exists
-    When I "click" on the "$table-row:nth-child(2) td:first-child" element
+    When I click the "$table-row:nth-child(2) td:first-child" element
     Then the "$table-row:nth-child(2).is-selected" element exists
     Then the "$dataplane-title" element contains "fake-frontend"
     Then the URL contains "dpp=fake-frontend"

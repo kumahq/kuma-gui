@@ -7,7 +7,7 @@ import DataOverview from './DataOverview.vue'
 jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
-  return mount(DataOverview, {
+  return mount(DataOverview as any, {
     props,
     slots: {
       custom: `

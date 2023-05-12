@@ -12,6 +12,8 @@ import Logger from '@/services/logger/DatadogLogger'
 import { token, get } from '@/services/utils'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { storeConfig, State } from '@/store/storeConfig'
+import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
+import { I18nMessages, getI18nMessages, useI18n } from '@/utilities/useI18n'
 import type {
   Router,
 } from 'vue-router'
@@ -34,6 +36,11 @@ const $ = {
 
   app: token<ReturnType<typeof useApp>>('app'),
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
+
+  i18n: token<ReturnType<typeof useI18n>>('i18n'),
+  i18nMessages: token<I18nMessages>('i18nMessages'),
+
+  getGlobalKdsAddress: token<ReturnType<typeof useGetGlobalKdsAddress>>('getGlobalKdsAddress'),
 }
 type SupportedTokens = typeof $
 export const services: ServiceConfigurator<SupportedTokens> = ($) => [
@@ -47,6 +54,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
       KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
       KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
+      KUMA_ZONE_CREATION_FLOW: import.meta.env.VITE_ZONE_CREATION_FLOW,
     } as EnvArgs,
   }],
   [$.Env, {
@@ -103,6 +111,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: routes,
     arguments: [
       $.store,
+      $.Env,
     ],
   }],
   // Nav
@@ -128,6 +137,19 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     ],
   }],
 
+  [$.i18nMessages, {
+    service: getI18nMessages,
+  }],
+  [$.i18n, {
+    service: useI18n,
+    arguments: [
+      $.i18nMessages,
+    ],
+  }],
+
+  [$.getGlobalKdsAddress, {
+    service: useGetGlobalKdsAddress,
+  }],
 ]
 
 export const TOKENS = $

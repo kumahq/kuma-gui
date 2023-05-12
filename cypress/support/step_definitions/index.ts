@@ -15,18 +15,27 @@ Before(() => {
   urls = new Map()
   useServer()
 })
-type Cy = typeof cy;
-const $ = (selector: string): ReturnType<Cy['get']> => {
+
+const $ = (selector: string) => {
+  const resolvedSelector = resolveCustomAlias(selector)
+
+  return cy.get(resolvedSelector)
+}
+
+function resolveCustomAlias(selector: string): string {
   if (selector.startsWith('$')) {
     const alias = selector.split(/[: .[#]/).shift()!.substring(1)
+
     if (typeof selectors[alias] === 'undefined') {
       throw new Error(`Could not find alias $${alias}. Make sure you have defined the alias in a CSS selectors step`)
     }
+
     selector = selector.replace(`$${alias}`, selectors[alias])
-    return $(selector)
+
+    return resolveCustomAlias(selector)
   }
-  // @ts-ignore
-  return cy.get(selector)
+
+  return selector
 }
 
 // arrange
@@ -58,18 +67,37 @@ When('I wait for {int} milliseconds/ms', function (ms: number) {
   cy.wait(ms)
 })
 
-When(/^I "(.*)"(.*)? on the "(.*)" element$/, (event: string, object: string | number | undefined, selector: string) => {
-  switch (event) {
-    case 'select':
-      if (typeof object === 'undefined') {
-        throw new Error()
-      }
-      $(selector).select(parseInt(object.toString()), { force: true })
-      break
-    default:
-      $(selector).trigger(event, { force: true })
+When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
+  if (value !== undefined) {
+    $(selector).select(value)
+  } else {
+    $(selector).then(($el) => {
+      const el = $el[0]
+      const label = getLabel(el)
+
+      cy.wrap(label ?? el).click()
+    })
   }
 })
+
+/**
+ * Finds the `label` element associated with an form control.
+ */
+function getLabel(element: HTMLElement) {
+  if (element.id) {
+    const label = document.querySelector(`label[for="${element.id}"]`)
+    if (label !== null) {
+      return label
+    }
+  }
+
+  const label = element.closest('label')
+  if (label !== null) {
+    return label
+  }
+
+  return null
+}
 
 When('I {string} {string} into the {string} element', (event: string, text: string, selector: string) => {
   switch (event) {
@@ -110,12 +138,24 @@ Then('the URL {string} was requested with', (url: string, yaml: string) => {
   })
 })
 
-Then(/^the "(.*)" element( does| doesn't| don't)? exist[s]?$/, function (selector: string, assertion: string) {
-  $(selector).should(`${(assertion || 'does').trim() !== 'does' ? 'not.' : ''}exist`)
+Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {
+  const prefix = assertion === ' ' ? '' : 'not.'
+  const chainer = `${prefix}exist`
+
+  $(selector).should(chainer)
 })
+
 Then(/^the "(.*)" element[s]? exist[s]? ([0-9]*) time[s]?$/, (selector: string, count: string) => {
   $(selector).should('have.length', count)
 })
+
+Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(.*)$/, (selector: string, assertion: string, booleanAttribute: string) => {
+  const prefix = ['is', 'are'].includes(assertion.trim()) ? '' : 'not.'
+  const chainer = `${prefix}be.${booleanAttribute}`
+
+  $(selector).should(chainer)
+})
+
 Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', table: DataTable) => {
   const rows = table.rows()
   if (multiple === 's') {

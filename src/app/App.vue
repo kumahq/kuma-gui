@@ -1,8 +1,8 @@
 <template>
-  <AppLoadingBar v-if="isLoading" />
+  <AppLoadingBar v-if="isLoading || route.name === undefined" />
 
   <template v-else>
-    <AppHeader />
+    <AppHeader v-if="!isWizard" />
 
     <div v-if="route.meta.onboardingProcess">
       <router-view />
@@ -11,8 +11,11 @@
     <div
       v-else
       class="app-content-container"
+      :class="{
+        'is-wizard': isWizard,
+      }"
     >
-      <AppSidebar />
+      <AppSidebar v-if="!isWizard" />
 
       <main class="app-main-content">
         <AppErrorMessage
@@ -20,11 +23,11 @@
           data-testid="app-error"
         />
 
-        <NotificationManager v-if="shouldShowNotificationManager" />
+        <NotificationManager v-if="!isWizard && shouldShowNotificationManager" />
 
-        <AppOnboardingNotification v-if="shouldShowOnboardingNotification" />
+        <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
 
-        <AppBreadcrumbs v-if="shouldShowBreadcrumbs" />
+        <AppBreadcrumbs v-if="!isWizard && shouldShowBreadcrumbs" />
 
         <router-view
           :key="routeKey"
@@ -87,6 +90,7 @@ const isLoading = ref(store.state.globalLoading)
  * Both routes resolve to the same route definition and the router’s default behavior is to not re-render the component in such navigations.
  */
 const routeKey = computed(() => route.path)
+const isWizard = computed(() => route.meta.isWizard === true)
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
@@ -112,12 +116,13 @@ function setDocumentTitle(title: string | undefined): void {
 </script>
 
 <style lang="scss" scoped>
-.app-content-container {
+.app-content-container:not(.is-wizard) {
+  padding-top: var(--AppHeaderHeight, initial);
   display: grid;
   grid-template-columns: var(--AppSidebarWidth) 1fr;
 }
 
-.app-main-content {
+.app-content-container:not(.is-wizard) .app-main-content {
   padding: var(--AppGap);
 }
 </style>

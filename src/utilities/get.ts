@@ -1,19 +1,22 @@
 /**
  * Retrieves the value of an object’s property by traversing a dot-separated path like `'prop1.prop2.prop3'`.
  */
-export function get(obj: any, path: string, defaultValue: any = undefined): any {
-  if (!(typeof obj === 'object') || Array.isArray(obj)) {
+export function get(obj: any, pathOrProps: string | string[], defaultValue: any = undefined): any {
+  if (
+    !(typeof obj === 'object') ||
+    Array.isArray(obj) ||
+    (Array.isArray(pathOrProps) && pathOrProps.length === 0)
+  ) {
     return defaultValue
   }
 
-  const dotPosition = path.indexOf('.')
+  const props = Array.isArray(pathOrProps) ? pathOrProps : pathOrProps.split('.')
 
-  if (dotPosition === -1) {
-    return obj[path] === undefined ? defaultValue : obj[path]
+  if (props.length === 1) {
+    const value = obj[props[0]]
+
+    return value === undefined ? defaultValue : value
   }
 
-  const prop = path.substring(0, dotPosition)
-  const newPath = path.substring(dotPosition + 1)
-
-  return get(obj[prop], newPath, defaultValue)
+  return get(obj[props[0]], props.slice(1), defaultValue)
 }

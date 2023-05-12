@@ -1,10 +1,11 @@
 import { RouteRecordRaw } from 'vue-router'
 
 import { getLastNumberParameter } from '@/router/getLastParameter'
+import type Env from '@/services/env/Env'
 import type { State } from '@/store/storeConfig'
 import type { Store } from 'vuex'
 
-export default (store: Store<State>): RouteRecordRaw[] => {
+export default (store: Store<State>, env: Env): RouteRecordRaw[] => {
   return [
     {
       path: '/404',
@@ -53,14 +54,35 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           component: () => import('@/app/zones/views/ZoneListView.vue'),
         },
         {
-          path: ':zone',
-          name: 'zone-detail-view',
+          path: 'create-zone',
+          name: 'zone-create-view',
           meta: {
-            title: 'Zone',
-            isBreadcrumb: true,
-            breadcrumbTitleParam: 'zone',
+            title: 'Create & connect Zone',
+            isWizard: true,
           },
-          component: () => import('@/app/zones/views/ZoneDetailView.vue'),
+          component: () => import('@/app/zones/views/ZoneCreateView.vue'),
+          beforeEnter: () => {
+            if (env.var('KUMA_ZONE_CREATION_FLOW') === 'enabled') {
+              return true
+            }
+
+            return { name: 'home' }
+          },
+        },
+        {
+          path: ':zone',
+          children: [
+            {
+              path: '',
+              name: 'zone-detail-view',
+              meta: {
+                title: 'Zone',
+                isBreadcrumb: true,
+                breadcrumbTitleParam: 'zone',
+              },
+              component: () => import('@/app/zones/views/ZoneDetailView.vue'),
+            },
+          ],
         },
       ],
     },

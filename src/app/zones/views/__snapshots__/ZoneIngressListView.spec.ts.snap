@@ -134,7 +134,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                     >
                       
                       <td
-                        class=""
+                        class="status-column"
                       >
                         
                         <span
@@ -150,7 +150,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                         
                       </td>
                       <td
-                        class=""
+                        class="entity-column"
                       >
                         
                         <a

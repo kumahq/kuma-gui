@@ -9,6 +9,7 @@ export type EnvArgs = {
   KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
   KUMA_MOCK_API_ENABLED: string
+  KUMA_ZONE_CREATION_FLOW: 'disabled' | 'enabled' | undefined
 }
 type EnvProps = {
   KUMA_VERSION: string

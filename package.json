@@ -16,13 +16,13 @@
     "build:ci": "yarn run build --mode preview -c ./vite.config.development.ts",
     "build:gui": "mkdir gui && mv dist/* gui && mv gui dist/gui && mv dist/gui/mockServiceWorker.js dist/",
     "build:preview": "yarn run build:ci && yarn build:gui && cp _redirects dist/_redirects",
-    "build:staging": "yarn build && yarn build:gui",
+    "build:staging": "cross-env VITE_ZONE_CREATION_FLOW=enabled yarn build && yarn build:gui",
     "lint": "eslint --ext .js,.ts,.vue --fix .",
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn --validate-https",
     "lint:ts": "vue-tsc --noEmit",
     "test": "cross-env TZ=UTC jest",
     "test:browser": "cypress run",
-    "test:browser:view": "KUMA_BASE_URL=http://localhost:8080/gui cypress open",
+    "test:browser:view": "cross-env KUMA_BASE_URL=http://localhost:8080/gui cypress open",
     "test:watch": "yarn run test --watch"
   },
   "engines": {

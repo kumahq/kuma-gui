@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_FEEDBACK_URL: string
   readonly VITE_CHAT_URL: string
   readonly VITE_UTM: string
+  readonly VITE_ZONE_CREATION_FLOW?: 'disabled' | 'enabled'
 }
 
 interface ImportMeta {

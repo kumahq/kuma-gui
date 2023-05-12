@@ -21,6 +21,7 @@ import type {
   PolicyType,
   ServiceInsight,
   SidecarDataplane,
+  UnsavedZone,
   Zone,
   ZoneEgressOverview,
   ZoneIngressOverview,
@@ -65,8 +66,20 @@ export default class KumaApi extends Api {
     return this.client.get('/zones', { params })
   }
 
-  getZone({ name }: { name: string }, params?: any): Promise<Zone> {
-    return this.client.get(`/zones/${name}`, { params })
+  getZone({ name }: { name: string }): Promise<Zone> {
+    return this.client.get(`/zones/${name}`)
+  }
+
+  createZone(zone: UnsavedZone): Promise<Zone> {
+    return this.client.post('/zones', zone)
+  }
+
+  updateZone(zone: Zone): Promise<Zone> {
+    return this.client.put(`/zones/${zone.name}`, zone)
+  }
+
+  deleteZone({ name }: { name: string }): Promise<void> {
+    return this.client.delete(`/zones/${name}`)
   }
 
   getAllZoneOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneOverview>> {

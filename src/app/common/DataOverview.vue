@@ -165,6 +165,53 @@
               size="20"
             />
           </template>
+
+          <template #actions="{ row }">
+            <KDropdownMenu
+              v-if="row.detailViewRoute || props.showDeleteAction"
+              class="actions-dropdown"
+              :kpop-attributes="{
+                placement: 'bottomEnd',
+                popoverClasses: 'mt-5 more-actions-popover',
+              }"
+              width="150"
+            >
+              <template #default>
+                <KButton
+                  class="non-visual-button"
+                  appearance="secondary"
+                  size="small"
+                >
+                  <template #icon>
+                    <KIcon
+                      color="var(--black-400)"
+                      icon="more"
+                      size="16"
+                    />
+                  </template>
+                </KButton>
+              </template>
+
+              <template #items>
+                <KDropdownItem
+                  v-if="row.detailViewRoute"
+                  :item="{
+                    to: row.detailViewRoute,
+                    label: 'View details'
+                  }"
+                />
+
+                <KDropdownItem
+                  v-if="props.showDeleteAction"
+                  has-divider
+                  is-dangerous
+                  @click="emitDeleteResourceEvent(row)"
+                >
+                  Delete
+                </KDropdownItem>
+              </template>
+            </KDropdownMenu>
+          </template>
         </KTable>
 
         <PaginationWidget
@@ -211,7 +258,7 @@
 
 <script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
-import { KButton, KIcon, KTable } from '@kong/kongponents'
+import { KButton, KDropdownItem, KDropdownMenu, KIcon, KTable } from '@kong/kongponents'
 import { computed, PropType, ref, useSlots, watch } from 'vue'
 
 import EmptyBlock from './EmptyBlock.vue'
@@ -291,9 +338,20 @@ const props = defineProps({
     required: false,
     default: 0,
   },
+
+  showDeleteAction: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 
-const emit = defineEmits(['table-action', 'refresh', 'load-data'])
+const emit = defineEmits<{
+  (event: 'delete-resource', row: any): void
+  (event: 'load-data', offset: number): void
+  (event: 'refresh'): void
+  (event: 'table-action', data: any): void
+}>()
 
 const internalPageOffset = ref(props.pageOffset)
 const tableRecomputationKey = ref(0)
@@ -350,10 +408,14 @@ function goToNextPage(): void {
   emit('load-data', props.pageOffset + props.pageSize)
 }
 
-function getCellAttributes({ headerKey }: any): Record<string, string> {
-  const className = ['warnings'].includes(headerKey) ? 'text-center' : ['details'].includes(headerKey) ? 'text-right' : ''
-
-  return { class: className }
+function getCellAttributes({ headerKey }: any) {
+  return {
+    class: {
+      [`${headerKey}-column`]: true,
+      'text-center': ['warnings'].includes(headerKey),
+      'text-right': ['details'].includes(headerKey),
+    },
+  }
 }
 
 function getRowAttributes(row: any): Record<string, string> {
@@ -369,6 +431,10 @@ function getRowAttributes(row: any): Record<string, string> {
   }
 
   return attributes
+}
+
+function emitDeleteResourceEvent(row: any) {
+  emit('delete-resource', row)
 }
 </script>
 
@@ -406,5 +472,19 @@ function getRowAttributes(row: any): Record<string, string> {
 <style lang="scss">
 .data-overview-table .is-selected {
   background-color: var(--grey-100);
+}
+
+.warnings-column,
+.actions-column {
+  width: 5%;
+  min-width: 80px;
+}
+
+.actions-column {
+  text-align: end;
+}
+
+.actions-dropdown {
+  display: inline-block;
 }
 </style>
