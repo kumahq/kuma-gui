@@ -40,6 +40,7 @@ describe('sidebar utils', () => {
               partiallyDegraded: 5,
             },
             dataplanesByType: {
+              standard: {},
               gateway: {
                 total: 5,
                 online: 1,
@@ -143,7 +144,10 @@ describe('sidebar utils', () => {
                 total: 1,
               },
             },
-            dpVersions: {},
+            dpVersions: {
+              kumaDp: {},
+              envoy: {},
+            },
             mTLS: {},
             services: {
               total: 2,

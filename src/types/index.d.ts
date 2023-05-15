@@ -81,11 +81,17 @@ export interface ZoneInsight {
   subscriptions: KDSSubscription[]
 }
 
-export interface UnitStatus {
+export interface DataPlaneProxyStatus {
   total?: number
   online?: number
   offline?: number
   partiallyDegraded?: number
+}
+
+export interface ServiceStatus {
+  total?: number
+  internal?: number
+  external?: number
 }
 
 export interface ResourceStat {
@@ -484,15 +490,21 @@ export interface Mesh extends Entity {
 export interface MeshInsight extends Entity {
   type: 'MeshInsight'
   lastSync: string
-  dataplanes: UnitStatus
-  dataplanesByType: Record<string, UnitStatus>
-  policies: Record<string, ResourceStat>
-  dpVersions: Record<string, Record<string, UnitStatus>>
-  mTLS: {
-    issuedBackends?: Record<string, UnitStatus>
-    supportedBackends?: Record<string, UnitStatus>
+  dataplanes: DataPlaneProxyStatus
+  dataplanesByType: {
+    standard: DataPlaneProxyStatus
+    gateway: DataPlaneProxyStatus
   }
-  services: Record<string, number>
+  policies: Record<string, ResourceStat>
+  dpVersions: {
+    kumaDp: Record<string, DataPlaneProxyStatus>
+    envoy: Record<string, DataPlaneProxyStatus>
+  }
+  mTLS: {
+    issuedBackends?: Record<string, DataPlaneProxyStatus>
+    supportedBackends?: Record<string, DataPlaneProxyStatus>
+  }
+  services: ServiceStatus
 }
 
 export interface PolicyEntity extends MeshEntity {}
