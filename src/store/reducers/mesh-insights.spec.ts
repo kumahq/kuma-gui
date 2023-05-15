@@ -101,7 +101,14 @@ describe('mesh-insights', () => {
             },
           },
         },
-        { policies: {}, dataplanes: {}, dpVersions: {} },
+        {
+          policies: {},
+          dataplanes: {},
+          dpVersions: {
+            kumaDp: {},
+            envoy: {},
+          },
+        },
       ]),
     ).toMatchSnapshot()
   })

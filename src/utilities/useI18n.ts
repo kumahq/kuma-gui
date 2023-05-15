@@ -126,6 +126,14 @@ egress:
         },
       },
     },
+    meshes: {
+      list: {
+        emptyState: {
+          title: 'No data',
+          message: 'There are no Meshes present.',
+        },
+      },
+    },
   }
 }
 

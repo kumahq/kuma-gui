@@ -11,6 +11,7 @@ Feature: The HTML title is correct on each page
       | /zone-ingresses                         | Zone Ingresses     |
       | /zone-egresses                          | Zone Egresses      |
 
+      | /mesh                                   | Meshes             |
       | /mesh/default                           | Mesh overview      |
       | /mesh/default/services                  | Services           |
       | /mesh/default/gateways                  | Gateways           |
