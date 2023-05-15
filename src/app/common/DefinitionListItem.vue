@@ -14,9 +14,8 @@
 import { computed } from 'vue'
 
 import { useI18n } from '@/utilities'
-import { getTermLabel } from '@/utilities/getTermLabel'
 
-const i18n = useI18n()
+const { t } = useI18n()
 
 const props = defineProps({
   term: {
@@ -25,7 +24,7 @@ const props = defineProps({
   },
 })
 
-const term = computed(() => getTermLabel(props.term, i18n))
+const term = computed(() => t(`http.api.property.${props.term}`))
 </script>
 
 <style lang="scss" scoped>
