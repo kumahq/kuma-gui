@@ -41,13 +41,14 @@ export function getI18nMessages(): I18nMessages {
             description1: 'Copy and paste the following configuration into the config.yaml on your local machine.',
             fileName: 'config.yaml',
             config: `environment: universal
-    mode: zone
-    multizone:
+mode: zone
+multizone:
+  zone:
+    name: {zoneName}
+    globalAddress: {globalKdsAddress}
+kuma:
+  multizone:
     zone:
-      name: {zoneName}
-      globalAddress: {globalKdsAddress}
-    kuma:
-    multizone:
       kds:
         auth:
           cpTokenInline: {token}`,
@@ -81,32 +82,32 @@ export function getI18nMessages(): I18nMessages {
             description1: 'This is your token.',
             description2: 'Add it as a Kubernetes secret.',
             command: `echo "
-    apiVersion: v1
-    kind: Secret
-    metadata:
-    name: cp-token
-    namespace: kuma-system
-    type: Opaque
-    data:
-    token: {token}
-    " | kubectl apply -f -`,
+apiVersion: v1
+kind: Secret
+metadata:
+name: cp-token
+namespace: kuma-system
+type: Opaque
+data:
+  token: {token}
+" | kubectl apply -f -`,
           },
           connectZone: {
             title: 'Connect Zone',
             description1: 'Copy and paste the following configuration into the Helm chart values.yaml on your local machine.',
             fileName: 'values.yaml',
             config: `controlPlane:
-    mode: zone
-    zone: {zoneName}
-    kdsGlobalAddress: {globalKdsAddress}
-    secrets:
-      - Env: KUMA_MULTIZONE_ZONE_KDS_AUTH_CP_TOKEN_INLINE
-        Secret: cp-token
-        Key: token
-    ingress:
-    enabled: {zoneIngressEnabled}
-    egress:
-    enabled: {zoneEgressEnabled}`,
+mode: zone
+zone: {zoneName}
+kdsGlobalAddress: {globalKdsAddress}
+secrets:
+  - Env: KUMA_MULTIZONE_ZONE_KDS_AUTH_CP_TOKEN_INLINE
+    Secret: cp-token
+    Key: token
+ingress:
+  enabled: {zoneIngressEnabled}
+egress:
+  enabled: {zoneEgressEnabled}`,
             description2: 'Next, run the following command to connect the Zone.',
             command: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma',
           },
