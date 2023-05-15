@@ -125,6 +125,14 @@ export function getI18nMessages(): I18nMessages {
         },
       },
     },
+    meshes: {
+      list: {
+        emptyState: {
+          title: 'No data',
+          message: 'There are no Meshes present.',
+        },
+      },
+    },
   }
 }
 

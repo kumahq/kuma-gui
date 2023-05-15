@@ -158,6 +158,18 @@ export default (store: Store<State>, env: Env): RouteRecordRaw[] => {
       },
       children: [
         {
+          path: '',
+          name: 'mesh-list-view',
+          meta: {
+            title: 'Meshes',
+          },
+          props: (route) => ({
+            page: getLastNumberParameter(route.query.page),
+            selectedMeshName: route.query.mesh,
+          }),
+          component: () => import('@/app/meshes/views/MeshListView.vue'),
+        },
+        {
           path: ':mesh',
           name: 'mesh-abstract-view',
           meta: {
