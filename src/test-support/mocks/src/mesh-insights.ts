@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  // TODO: Setting different values here doesn’t seem to work. The mock always returns 14 objects.
   const { total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.datatype.number({ min: 1, max: 20 })}`),
     req,
@@ -12,75 +13,37 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const mesh = `${fake.hacker.noun()}-${i}`
+        const dataPlaneProxyStatus = fake.kuma.dataPlaneProxyStatus()
+        const standardDataPlaneProxies = fake.kuma.dataPlaneProxyStatus(dataPlaneProxyStatus.total)
+        const gateways = fake.kuma.dataPlaneProxyStatus(standardDataPlaneProxies.total)
+
         return {
           type: 'MeshInsight',
           name: mesh,
           creationTime: '2021-01-29T07:10:02.339031+01:00',
           modificationTime: '2021-01-29T07:29:02.314448+01:00',
           lastSync: '2021-01-29T06:29:02.314447Z',
-          dataplanes: {
-            total: 10,
-            online: 9,
-            partiallyDegraded: 1,
-          },
+          dataplanes: dataPlaneProxyStatus,
           dataplanesByType: {
-            standard: {
-              total: 9,
-              online: 8,
-              partiallyDegraded: 1,
-            },
-            gateway: {
-              total: 1,
-              online: 1,
-              partiallyDegraded: 0,
-            },
+            standard: standardDataPlaneProxies,
+            gateway: gateways,
           },
           policies: {
-            CircuitBreaker: {
-              total: 2,
-            },
-            FaultInjection: {
-              total: 2,
-            },
-            HealthCheck: {
-              total: 4,
-            },
-            MeshGatewayRoute: {
-              total: 1,
-            },
-            MeshGateway: {
-              total: 1,
-            },
-            ProxyTemplate: {
-              total: 1,
-            },
-            RateLimit: {
-              total: 0,
-            },
-            Retry: {
-              total: 1,
-            },
-            Timeout: {
-              total: 1,
-            },
-            TrafficLog: {
-              total: 1,
-            },
-            TrafficPermission: {
-              total: 3,
-            },
-            TrafficRoute: {
-              total: 1,
-            },
-            TrafficTrace: {
-              total: 3,
-            },
-            VirtualOutbound: {
-              total: 0,
-            },
-            Secret: {
-              total: 6,
-            },
+            CircuitBreaker: fake.kuma.policyTypeStatus(),
+            FaultInjection: fake.kuma.policyTypeStatus(),
+            HealthCheck: fake.kuma.policyTypeStatus(),
+            MeshGatewayRoute: fake.kuma.policyTypeStatus(),
+            MeshGateway: fake.kuma.policyTypeStatus(),
+            ProxyTemplate: fake.kuma.policyTypeStatus(),
+            RateLimit: fake.kuma.policyTypeStatus(),
+            Retry: fake.kuma.policyTypeStatus(),
+            Timeout: fake.kuma.policyTypeStatus(),
+            TrafficLog: fake.kuma.policyTypeStatus(),
+            TrafficPermission: fake.kuma.policyTypeStatus(),
+            TrafficRoute: fake.kuma.policyTypeStatus(),
+            TrafficTrace: fake.kuma.policyTypeStatus(),
+            VirtualOutbound: fake.kuma.policyTypeStatus(),
+            Secret: fake.kuma.policyTypeStatus(),
           },
           dpVersions: {
             kumaDp: {
@@ -134,15 +97,10 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               },
             },
           },
-          services: {
-            total: 5,
-            internal: 3,
-            external: 2,
-          },
+          services: fake.kuma.serviceStatus(),
         }
       }),
       next,
-
     },
   }
 }

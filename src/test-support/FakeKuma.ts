@@ -63,6 +63,55 @@ export class KumaModule {
       ],
     )
   }
+
+  /**
+   * Returns a random DPP (or gateway) status object with self-consistent values (i.e. total = online + partiallyDegraded + offline).
+   */
+  dataPlaneProxyStatus(maxTotal: number = 30) {
+    const total = this.faker.datatype.number({ min: 1, max: maxTotal })
+    const online = this.faker.datatype.number({ min: 0, max: total })
+    const partiallyDegraded = this.faker.datatype.number({ min: 0, max: total - online })
+    const offline = total - online - partiallyDegraded
+
+    const values = [
+      ['total', total],
+      ['online', online],
+      ['partiallyDegraded', partiallyDegraded],
+      ['offline', offline],
+    ].filter(([_key, value]) => value !== 0)
+
+    return Object.fromEntries(values)
+  }
+
+  /**
+   * Returns a random service status object with self-consistent values (i.e. total = internal + external).
+   */
+  serviceStatus(maxTotal: number = 30) {
+    const total = this.faker.datatype.number({ min: 1, max: maxTotal })
+    const internal = this.faker.datatype.number({ min: 0, max: total })
+    const external = total - internal
+
+    const values = [
+      ['total', total],
+      ['internal', internal],
+      ['external', external],
+    ].filter(([_key, value]) => value !== 0)
+
+    return Object.fromEntries(values)
+  }
+
+  /**
+   * Returns a random policy type status object.
+   */
+  policyTypeStatus(maxTotal: number = 10) {
+    const total = this.faker.datatype.number({ min: 0, max: maxTotal })
+
+    const values = [
+      ['total', total],
+    ]
+
+    return Object.fromEntries(values)
+  }
 }
 export default class FakeKuma extends Faker {
   kuma = new KumaModule(this)
