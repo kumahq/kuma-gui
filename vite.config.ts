@@ -1,5 +1,8 @@
+import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
 import dotenv from 'dotenv'
+import { DEFAULT_SCHEMA, Type } from 'js-yaml'
+import { marked } from 'marked'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig, UserConfigFn } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
@@ -11,6 +14,7 @@ import { getPathConfigDefault } from './src/pathConfigDefault'
 dotenv.config()
 
 // https://vitejs.dev/config/
+
 export const config: UserConfigFn = ({ mode }) => {
   const pathConfigDefault = getPathConfigDefault(process.env.VITE_KUMA_API_SERVER_URL as string)
 
@@ -34,6 +38,18 @@ export const config: UserConfigFn = ({ mode }) => {
         },
       }),
       svgLoader(),
+      yamlLoader(
+        {
+          schema: DEFAULT_SCHEMA.extend(
+            new Type('tag:yaml.org,2002:text/markdown', {
+              kind: 'scalar',
+              construct: (data) => {
+                return marked(data)
+              },
+            }),
+          ),
+        },
+      ),
       createHtmlPlugin({
         inject: {
           data: {
