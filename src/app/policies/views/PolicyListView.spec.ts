@@ -51,8 +51,9 @@ describe('PolicyListView', () => {
     const documentationLink = wrapper.find('[data-testid="policy-documentation-link"]')
     expect(documentationLink.exists()).toBe(true)
 
-    const singleEntity = wrapper.find('[data-testid="policy-single-entity"]')
-    expect(singleEntity.html()).toContain('CircuitBreaker: cb1')
+    const singleEntity = wrapper.find('[data-testid="policy-single-entity"]').html()
+    expect(singleEntity).toContain('CircuitBreaker')
+    expect(singleEntity).toContain('cb1')
 
     const policyOverview = wrapper.find('[data-testid="policy-detail-label-list"]')
     expect(policyOverview.html()).toContain('CircuitBreaker')

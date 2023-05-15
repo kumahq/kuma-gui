@@ -10,17 +10,7 @@
             <span>
               DPP:
 
-              <router-link
-                :to="{
-                  name: 'data-plane-detail-view',
-                  params: {
-                    mesh: dataPlaneOverview.mesh,
-                    dataPlane: dataPlaneOverview.name,
-                  },
-                }"
-              >
-                {{ dataPlaneOverview.name }}
-              </router-link>
+              <TextWithCopyButton :text="dataPlaneOverview.name" />
             </span>
 
             <StatusBadge :status="status" />
@@ -146,6 +136,7 @@ import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { DataPlaneOverview } from '@/types/index.d'
 import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'

@@ -2,7 +2,9 @@
   <TabsWidget :tabs="filteredTabs">
     <template #tabHeader>
       <h1 class="entity-heading">
-        DPP: {{ dataPlane.name }}
+        DPP:
+
+        <TextWithCopyButton :text="dataPlane.name" />
       </h1>
     </template>
 
@@ -177,6 +179,7 @@ import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'

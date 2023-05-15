@@ -7,9 +7,7 @@
             <span>
               Service:
 
-              <router-link :to="serviceRoute">
-                {{ props.service.name }}
-              </router-link>
+              <TextWithCopyButton :text="props.service.name" />
             </span>
 
             <StatusBadge
@@ -75,12 +73,12 @@
 <script lang="ts" setup>
 import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
-import { RouteLocationNamedRaw } from 'vue-router'
 
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { ExternalService, ServiceInsight } from '@/types/index.d'
 import { stripTimes } from '@/utilities/helpers'
@@ -97,14 +95,6 @@ const props = defineProps({
     default: null,
   },
 })
-
-const serviceRoute = computed<RouteLocationNamedRaw>(() => ({
-  name: 'service-detail-view',
-  params: {
-    service: props.service.name,
-    mesh: props.service.mesh,
-  },
-}))
 
 const address = computed(() => {
   if (props.service.serviceType === 'external' && props.externalService !== null) {

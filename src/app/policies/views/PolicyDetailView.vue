@@ -18,7 +18,7 @@
           class="entity-heading"
           data-testid="policy-single-entity"
         >
-          {{ policy.name }}
+          <TextWithCopyButton :text="policy.name" />
         </h1>
       </template>
 
@@ -64,6 +64,7 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { useStore } from '@/store/store'
 import type {

@@ -2,7 +2,9 @@
   <TabsWidget :tabs="filteredTabs">
     <template #tabHeader>
       <h1 class="entity-heading">
-        Zone: {{ processedZoneOverview.name }}
+        Zone:
+
+        <TextWithCopyButton :text="processedZoneOverview.name" />
       </h1>
     </template>
 
@@ -19,6 +21,10 @@
           >
             {{ value }}
           </KBadge>
+
+          <template v-else-if="property === 'name'">
+            <TextWithCopyButton :text="value" />
+          </template>
 
           <template v-else>
             {{ value }}
@@ -73,6 +79,7 @@ import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { useStore } from '@/store/store'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'

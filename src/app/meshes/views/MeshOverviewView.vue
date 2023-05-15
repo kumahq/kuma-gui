@@ -27,6 +27,10 @@
                   {{ value ? 'Enabled' : 'Disabled' }}
                 </KBadge>
 
+                <template v-else-if="property === 'name' && typeof value === 'string'">
+                  <TextWithCopyButton :text="value" />
+                </template>
+
                 <template v-else>
                   {{ value }}
                 </template>
@@ -103,6 +107,7 @@ import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { useStore } from '@/store/store'
 import { Mesh, MeshInsight } from '@/types/index.d'
