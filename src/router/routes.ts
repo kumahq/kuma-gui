@@ -151,193 +151,208 @@ export default (store: Store<State>, env: Env): RouteRecordRaw[] => {
       ],
     },
     {
-      path: '/mesh/:mesh',
+      path: '/mesh',
+      meta: {
+        title: 'Meshes',
+        isBreadcrumb: true,
+      },
       children: [
         {
-          path: '',
-          name: 'mesh-detail-view',
+          path: ':mesh',
+          name: 'mesh-abstract-view',
           meta: {
             title: 'Mesh overview',
-          },
-          component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
-        },
-        {
-          path: 'gateways',
-          name: 'gateway-abstract-view',
-          meta: {
-            title: 'Gateways',
             isBreadcrumb: true,
+            breadcrumbTitleParam: 'mesh',
           },
           children: [
             {
               path: '',
-              name: 'gateway-list-view',
+              name: 'mesh-detail-view',
+              meta: {
+                title: 'Mesh overview',
+              },
+              component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
+            },
+            {
+              path: 'gateways',
+              name: 'gateway-abstract-view',
               meta: {
                 title: 'Gateways',
-              },
-              props: (route) => ({
-                selectedDppName: route.query.gateway,
-                gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,
-                offset: getLastNumberParameter(route.query.offset),
-                isGatewayView: true,
-              }),
-              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-            },
-            {
-              path: ':dataPlane',
-              name: 'gateway-detail-view',
-              meta: {
-                title: 'Gateway',
                 isBreadcrumb: true,
-                breadcrumbTitleParam: 'dataPlane',
-              },
-              component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
-            },
-          ],
-        },
-        {
-          path: 'data-planes',
-          name: 'data-plane-abstract-view',
-          meta: {
-            title: 'Data plane proxies',
-            isBreadcrumb: true,
-          },
-          children: [
-            {
-              path: '',
-              name: 'data-plane-list-view',
-              meta: {
-                title: 'Data plane proxies',
-              },
-              props: (route) => ({
-                selectedDppName: route.query.dpp,
-                offset: getLastNumberParameter(route.query.offset),
-              }),
-              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-            },
-            {
-              path: ':dataPlane',
-              name: 'data-plane-detail-view',
-              meta: {
-                title: 'Data plane proxy',
-                isBreadcrumb: true,
-                breadcrumbTitleParam: 'dataPlane',
-              },
-              component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
-            },
-          ],
-        },
-        {
-          path: 'services',
-          name: 'service-abstract-view',
-          meta: {
-            title: 'Services',
-            isBreadcrumb: true,
-          },
-          children: [
-            {
-              path: '',
-              name: 'service-list-view',
-              meta: {
-                title: 'Services',
-              },
-              props: (route) => ({
-                selectedServiceName: route.query.service,
-                offset: getLastNumberParameter(route.query.offset),
-              }),
-              component: () => import('@/app/services/views/ServiceListView.vue'),
-            },
-            {
-              path: ':service',
-              name: 'service-detail-view',
-              meta: {
-                title: 'Internal service',
-                isBreadcrumb: true,
-                breadcrumbTitleParam: 'service',
-              },
-              props: (route) => ({
-                selectedDppName: route.query.dpp,
-              }),
-              component: () => import('@/app/services/views/ServiceDetailView.vue'),
-            },
-          ],
-        },
-        {
-          path: 'policies',
-          name: 'policy-type-abstract-view',
-          meta: {
-            title: 'Policies',
-            isBreadcrumb: true,
-          },
-          children: [
-            {
-              path: '',
-              name: 'policies',
-              meta: {
-                title: 'Policies',
-              },
-              redirect: (to) => {
-                let item = store.state.policyTypes.find((item) => {
-                  if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
-                    return false
-                  }
-
-                  return store.state.sidebar.insights.mesh.policies[item.name] !== 0
-                })
-
-                if (item === undefined) {
-                  item = store.state.policyTypes[0]
-                }
-
-                if (item === undefined) {
-                  return { name: 'home' }
-                }
-
-                return {
-                  ...to,
-                  params: {
-                    ...to.params,
-                    policyPath: item.path,
-                  },
-                  name: 'policy-list-view',
-                }
-              },
-            },
-            {
-              path: ':policyPath',
-              name: 'policy-abstract-view',
-              meta: {
-                isBreadcrumb: true,
-                getBreadcrumbTitle: (route, store) => {
-                  const policyType = store.state.policyTypesByPath[route.params.policyPath as string]
-
-                  return policyType?.name ?? route.params.policyPath
-                },
               },
               children: [
                 {
                   path: '',
-                  name: 'policy-list-view',
-                  component: () => import('@/app/policies/views/PolicyListView.vue'),
-                  props: (route) => ({
-                    policyPath: route.params.policyPath,
-                    selectedPolicyName: route.query.policy,
-                    offset: getLastNumberParameter(route.query.offset),
-                  }),
-                },
-                {
-                  path: ':policy',
-                  name: 'policy-detail-view',
+                  name: 'gateway-list-view',
                   meta: {
-                    isBreadcrumb: true,
-                    breadcrumbTitleParam: 'policy',
+                    title: 'Gateways',
                   },
                   props: (route) => ({
-                    mesh: route.params.mesh,
-                    policyPath: route.params.policyPath,
-                    policyName: route.params.policy,
+                    selectedDppName: route.query.gateway,
+                    gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,
+                    offset: getLastNumberParameter(route.query.offset),
+                    isGatewayView: true,
                   }),
-                  component: () => import('@/app/policies/views/PolicyDetailView.vue'),
+                  component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+                },
+                {
+                  path: ':dataPlane',
+                  name: 'gateway-detail-view',
+                  meta: {
+                    title: 'Gateway',
+                    isBreadcrumb: true,
+                    breadcrumbTitleParam: 'dataPlane',
+                  },
+                  component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+                },
+              ],
+            },
+            {
+              path: 'data-planes',
+              name: 'data-plane-abstract-view',
+              meta: {
+                title: 'Data plane proxies',
+                isBreadcrumb: true,
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'data-plane-list-view',
+                  meta: {
+                    title: 'Data plane proxies',
+                  },
+                  props: (route) => ({
+                    selectedDppName: route.query.dpp,
+                    offset: getLastNumberParameter(route.query.offset),
+                  }),
+                  component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+                },
+                {
+                  path: ':dataPlane',
+                  name: 'data-plane-detail-view',
+                  meta: {
+                    title: 'Data plane proxy',
+                    isBreadcrumb: true,
+                    breadcrumbTitleParam: 'dataPlane',
+                  },
+                  component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+                },
+              ],
+            },
+            {
+              path: 'services',
+              name: 'service-abstract-view',
+              meta: {
+                title: 'Services',
+                isBreadcrumb: true,
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'service-list-view',
+                  meta: {
+                    title: 'Services',
+                  },
+                  props: (route) => ({
+                    selectedServiceName: route.query.service,
+                    offset: getLastNumberParameter(route.query.offset),
+                  }),
+                  component: () => import('@/app/services/views/ServiceListView.vue'),
+                },
+                {
+                  path: ':service',
+                  name: 'service-detail-view',
+                  meta: {
+                    title: 'Internal service',
+                    isBreadcrumb: true,
+                    breadcrumbTitleParam: 'service',
+                  },
+                  props: (route) => ({
+                    selectedDppName: route.query.dpp,
+                  }),
+                  component: () => import('@/app/services/views/ServiceDetailView.vue'),
+                },
+              ],
+            },
+            {
+              path: 'policies',
+              name: 'policy-type-abstract-view',
+              meta: {
+                title: 'Policies',
+                isBreadcrumb: true,
+              },
+              children: [
+                {
+                  path: '',
+                  name: 'policies',
+                  meta: {
+                    title: 'Policies',
+                  },
+                  redirect: (to) => {
+                    let item = store.state.policyTypes.find((item) => {
+                      if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
+                        return false
+                      }
+
+                      return store.state.sidebar.insights.mesh.policies[item.name] !== 0
+                    })
+
+                    if (item === undefined) {
+                      item = store.state.policyTypes[0]
+                    }
+
+                    if (item === undefined) {
+                      return { name: 'home' }
+                    }
+
+                    return {
+                      ...to,
+                      params: {
+                        ...to.params,
+                        policyPath: item.path,
+                      },
+                      name: 'policy-list-view',
+                    }
+                  },
+                },
+                {
+                  path: ':policyPath',
+                  name: 'policy-abstract-view',
+                  meta: {
+                    isBreadcrumb: true,
+                    getBreadcrumbTitle: (route, store) => {
+                      const policyType = store.state.policyTypesByPath[route.params.policyPath as string]
+
+                      return policyType?.name ?? route.params.policyPath
+                    },
+                  },
+                  children: [
+                    {
+                      path: '',
+                      name: 'policy-list-view',
+                      component: () => import('@/app/policies/views/PolicyListView.vue'),
+                      props: (route) => ({
+                        policyPath: route.params.policyPath,
+                        selectedPolicyName: route.query.policy,
+                        offset: getLastNumberParameter(route.query.offset),
+                      }),
+                    },
+                    {
+                      path: ':policy',
+                      name: 'policy-detail-view',
+                      meta: {
+                        isBreadcrumb: true,
+                        breadcrumbTitleParam: 'policy',
+                      },
+                      props: (route) => ({
+                        mesh: route.params.mesh,
+                        policyPath: route.params.policyPath,
+                        policyName: route.params.policy,
+                      }),
+                      component: () => import('@/app/policies/views/PolicyDetailView.vue'),
+                    },
+                  ],
                 },
               ],
             },
