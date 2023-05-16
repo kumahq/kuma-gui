@@ -4,9 +4,10 @@
       {{ props.text }}
     </component>
 
+    <!-- Prevents the event’s default action which avoids unintentionally activating links _containing_ `TextWithCopyButton` by clicking the copy button. -->
     <CopyButton
       :text="props.text"
-      @click="suppressDefaultAction"
+      click.prevent
     />
   </div>
 </template>
@@ -26,13 +27,6 @@ const props = defineProps({
     default: 'span',
   },
 })
-
-/**
- * Prevents the event’s default action which avoids unintentionally activating links _containing_ `TextWithCopyButton` by clicking the copy button.
- */
-function suppressDefaultAction(event: Event) {
-  event.preventDefault()
-}
 </script>
 
 <style lang="scss" scoped>
