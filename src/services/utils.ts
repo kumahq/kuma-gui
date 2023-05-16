@@ -8,6 +8,7 @@ import {
   OptionalToken,
   injected,
 } from 'brandi'
+import deepmerge from 'deepmerge'
 
 export {
   token,
@@ -128,7 +129,7 @@ export const service = (t: Token, config: DependencyDefinition): void => {
               if (Array.isArray(service)) {
                 return prev.concat(service)
               } else if (service instanceof Object) {
-                return { ...prev, ...service }
+                return deepmerge(prev, service)
               } else {
                 return prev
               }

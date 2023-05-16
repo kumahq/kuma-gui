@@ -1,19 +1,19 @@
-
 import { RouteRecordRaw } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
 import { useApp, useBootstrap } from '../index'
 import { getNavItems } from '@/app/getNavItems'
+import i18nEnUs from '@/locales/en-us'
 import { createRouter } from '@/router/router'
 import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
+import I18n from '@/services/i18n/I18n'
 import KumaApi from '@/services/kuma-api/KumaApi'
 import Logger from '@/services/logger/DatadogLogger'
 import { token, get } from '@/services/utils'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { storeConfig, State } from '@/store/storeConfig'
 import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
-import { I18nMessages, getI18nMessages, useI18n } from '@/utilities/useI18n'
 import type {
   Router,
 } from 'vue-router'
@@ -22,6 +22,10 @@ const $ = {
   EnvVars: token<EnvVars>('EnvVars'),
   Env: token<Env>('Env'),
   env: token<Alias<Env['var']>>('env'),
+
+  i18n: token<ReturnType<typeof I18n>>('i18n'),
+  enUs: token('i18n.locale.enUs'),
+  kumaEnUs: token('kuma.locale.enUs'),
 
   api: token<KumaApi>('KumaApi'),
 
@@ -36,9 +40,6 @@ const $ = {
 
   app: token<ReturnType<typeof useApp>>('app'),
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
-
-  i18n: token<ReturnType<typeof useI18n>>('i18n'),
-  i18nMessages: token<I18nMessages>('i18nMessages'),
 
   getGlobalKdsAddress: token<ReturnType<typeof useGetGlobalKdsAddress>>('getGlobalKdsAddress'),
 }
@@ -65,6 +66,19 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
   [$.env, {
     service: (): Alias<Env['var']> => (...rest) => get($.Env).var(...rest),
+  }],
+
+  [$.i18n, {
+    service: I18n,
+    arguments: [
+      $.enUs,
+    ],
+  }],
+  [$.kumaEnUs, {
+    constant: i18nEnUs,
+    labels: [
+      $.enUs,
+    ],
   }],
 
   // KumaAPI
@@ -134,16 +148,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.logger,
       $.api,
       $.store,
-    ],
-  }],
-
-  [$.i18nMessages, {
-    service: getI18nMessages,
-  }],
-  [$.i18n, {
-    service: useI18n,
-    arguments: [
-      $.i18nMessages,
     ],
   }],
 

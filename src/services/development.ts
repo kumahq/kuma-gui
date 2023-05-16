@@ -1,6 +1,7 @@
 import { setupWorker, MockedRequest, rest } from 'msw'
 
 import CookiedEnv from '@/services/env/CookiedEnv'
+import debugI18n from '@/services/i18n/DebugI18n'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
 import { token, get } from '@/services/utils'
@@ -22,9 +23,11 @@ const $ = {
   fakeFS: token<FS>('fake.fs'),
   kumaFS: token<FS>('fake.fs.kuma'),
 }
+type I18n = ReturnType<typeof debugI18n>
 type SupportedTokens = {
   Env: Token
   EnvVars: Token
+  i18n: Token
   logger: Token
   msw: Token
   bootstrap: Token
@@ -42,6 +45,19 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
       return bootstrap()
     },
     decorates: app.bootstrap,
+  }],
+
+  [token<I18n>('i18n.debug'), {
+    service: (i18n: () => I18n) => {
+      const env = get(app.env)
+      // @ts-ignore We don't want TS to show this elsewhere in the application
+      // and this is the most straight-forwards way to achieve that right now
+      if (env('KUMA_I18N_DEBUG_ENABLED', '').length > 0) {
+        return debugI18n(i18n())
+      }
+      return i18n()
+    },
+    decorates: app.i18n,
   }],
 
   [app.Env, {
