@@ -5,7 +5,7 @@
     data-testid="copy-button"
     :is-rounded="false"
     size="small"
-    title="Copy"
+    :title="props.copyText"
     type="button"
     @click="copyText"
   >
@@ -13,10 +13,10 @@
       color="var(--black-45)"
       icon="copy"
       size="18"
-      title="Copy"
+      :title="props.copyText"
     />
 
-    <span class="visually-hidden">Copy</span>
+    <span class="visually-hidden">{{ props.copyText }}</span>
   </KButton>
 </template>
 
@@ -29,6 +29,12 @@ const props = defineProps({
   text: {
     type: String,
     required: true,
+  },
+
+  copyText: {
+    type: String,
+    required: false,
+    default: 'Copy',
   },
 
   tooltipSuccessText: {
