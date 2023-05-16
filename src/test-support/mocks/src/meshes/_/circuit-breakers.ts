@@ -3,7 +3,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const params = req.params
 
   const { offset, total, next, pageTotal } = pager(
-    env('KUMA_CIRCUITBREAKER_COUNT', `${fake.datatype.number({ min: 1, max: 1000 })}`),
+    env('KUMA_CIRCUITBREAKER_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
     `/meshes/${params.mesh}/circuit-breakers`,
   )

@@ -1,8 +1,8 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
-  const online = fake.datatype.number(100)
-  const offline = fake.datatype.number(100)
+  const online = fake.number.int(100)
+  const offline = fake.number.int(100)
   return {
     headers: {},
     body: {

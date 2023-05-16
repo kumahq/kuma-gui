@@ -2,7 +2,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   // TODO: Setting different values here doesn’t seem to work. The mock always returns 14 objects.
   const { total, next, pageTotal } = pager(
-    env('KUMA_MESH_COUNT', `${fake.datatype.number({ min: 1, max: 20 })}`),
+    env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 20 })}`),
     req,
     '/mesh-insights',
   )

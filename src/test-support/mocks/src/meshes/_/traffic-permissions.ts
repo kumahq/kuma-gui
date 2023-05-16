@@ -1,6 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager }: EndpointDependencies): MockResponder => (req) => {
-  const { offset, total, next, pageTotal } = pager(fake.datatype.number({ min: 1, max: 200 }), req, `http://localhost:5681/meshes/${req.params.mesh}/traffic-permissions`)
+  const { offset, total, next, pageTotal } = pager(fake.number.int({ min: 1, max: 200 }), req, `http://localhost:5681/meshes/${req.params.mesh}/traffic-permissions`)
 
   return {
     headers: {},
