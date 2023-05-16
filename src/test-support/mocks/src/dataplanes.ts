@@ -1,6 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
-  const total = fake.datatype.number(20)
+  const total = fake.number.int(20)
   return {
     headers: {},
     body: {

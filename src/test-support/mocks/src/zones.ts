@@ -14,7 +14,7 @@ export default (deps: EndpointDependencies): MockResponder => (req) => {
 }
 
 function getZones(_req: RestRequest, { fake }: EndpointDependencies) {
-  const total = fake.datatype.number(10)
+  const total = fake.number.int(10)
 
   return {
     headers: {},

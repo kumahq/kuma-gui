@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const { offset, total, next, pageTotal } = pager(
-    env('KUMA_ZONEEGRESS_COUNT', `${fake.datatype.number({ min: 1, max: 1000 })}`),
+    env('KUMA_ZONEEGRESS_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
     '/zoneegressoverviews',
   )

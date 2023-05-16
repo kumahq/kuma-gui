@@ -19,12 +19,12 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   ]
 
   const gateways = {
-    online: fake.datatype.number(10),
-    partiallyDegraded: fake.datatype.number(10),
+    online: fake.number.int(10),
+    partiallyDegraded: fake.number.int(10),
   }
   const sidecars = {
-    online: fake.datatype.number(10),
-    partiallyDegraded: fake.datatype.number(10),
+    online: fake.number.int(10),
+    partiallyDegraded: fake.number.int(10),
   }
   const dataPlanes = {
     online: gateways.online + sidecars.online,
@@ -64,7 +64,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         ...policyTypes.reduce((prev: Record<string, { total: number }>, item) => {
           if (fake.datatype.boolean()) {
             prev[item] = {
-              total: fake.datatype.number(20),
+              total: fake.number.int(20),
             }
           }
           return prev
@@ -75,7 +75,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           ...fake.helpers.uniqueArray(fake.system.semver, dataPlanes.totalVersions.length).reduce((prev: Record<string, { total: number, online: number }>, item, i) => {
             prev[item] = {
               total: dataPlanes.totalVersions[i],
-              online: fake.datatype.number(dataPlanes.totalVersions[i]),
+              online: fake.number.int(dataPlanes.totalVersions[i]),
             }
             return prev
           }, {}),
@@ -84,7 +84,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           ...fake.helpers.uniqueArray(fake.system.semver, dataPlanes.totalVersions.length).reduce((prev: Record<string, { total: number, online: number }>, item, i) => {
             prev[item] = {
               total: dataPlanes.totalVersions[i],
-              online: fake.datatype.number(dataPlanes.totalVersions[i]),
+              online: fake.number.int(dataPlanes.totalVersions[i]),
             }
             return prev
           }, {}),
@@ -94,18 +94,18 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         issuedBackends: {
           ...['ca-2', 'ca-1'].reduce((prev: Record<string, { total: number, online?: number }>, item) => {
             prev[item] = {
-              total: fake.datatype.number(10),
+              total: fake.number.int(10),
             }
-            prev[item].online = fake.datatype.number(prev[item].total)
+            prev[item].online = fake.number.int(prev[item].total)
             return prev
           }, {}),
         },
         supportedBackends: {
           ...['ca-2', 'ca-1'].reduce((prev: Record<string, { total: number, online?: number }>, item) => {
             prev[item] = {
-              total: fake.datatype.number(10),
+              total: fake.number.int(10),
             }
-            prev[item].online = fake.datatype.number(prev[item].total)
+            prev[item].online = fake.number.int(prev[item].total)
             return prev
           }, {}),
         },
