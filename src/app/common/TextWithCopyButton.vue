@@ -9,7 +9,7 @@
       :text="props.text"
       :copy-text="i18n.t('common.copyText')"
       :tooltip-success-text="i18n.t('common.copySuccessText')"
-      click.prevent
+      @click.prevent
     />
   </div>
 </template>
