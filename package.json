@@ -30,7 +30,7 @@
     "yarn": "^1.22.0"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^4.42.0",
+    "@datadog/browser-logs": "^4.42.2",
     "@kong/kongponents": "^8.62.0",
     "brandi": "^5.0.0",
     "chart.js": "^4.3.0",
