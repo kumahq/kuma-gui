@@ -24,6 +24,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           <span>
             backend
           </span>
+          <!-- Prevents the event’s default action which avoids unintentionally activating links _containing_ \`TextWithCopyButton\` by clicking the copy button. -->
           <button
             class="k-button small outline copy-button non-visual-button"
             data-testid="copy-button"

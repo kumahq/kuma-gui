@@ -207,6 +207,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                 <span>
                   zone-ingress-1
                 </span>
+                <!-- Prevents the event’s default action which avoids unintentionally activating links _containing_ \`TextWithCopyButton\` by clicking the copy button. -->
                 <button
                   class="k-button small outline copy-button non-visual-button"
                   data-testid="copy-button"
@@ -415,6 +416,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                             <span>
                               zone-ingress-1
                             </span>
+                            <!-- Prevents the event’s default action which avoids unintentionally activating links _containing_ \`TextWithCopyButton\` by clicking the copy button. -->
                             <button
                               class="k-button small outline copy-button non-visual-button"
                               data-testid="copy-button"
@@ -638,6 +640,7 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
           <span>
             zone-ingress-1
           </span>
+          <!-- Prevents the event’s default action which avoids unintentionally activating links _containing_ \`TextWithCopyButton\` by clicking the copy button. -->
           <button
             class="k-button small outline copy-button non-visual-button"
             data-testid="copy-button"
