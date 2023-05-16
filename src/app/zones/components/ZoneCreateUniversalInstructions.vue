@@ -79,7 +79,7 @@ const universalConfig = computed(() => i18n.t('zones.form.universal.connectZone.
   zoneName: props.zone.name,
   globalKdsAddress: getGlobalKdsAddress(),
   token: props.base64EncodedToken,
-}))
+}).trim())
 </script>
 
 <style lang="scss" scoped>
