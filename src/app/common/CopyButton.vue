@@ -30,6 +30,12 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  tooltipSuccessText: {
+    type: String,
+    required: false,
+    default: 'Copied!',
+  },
 })
 
 async function copyText(event: Event) {
@@ -37,7 +43,7 @@ async function copyText(event: Event) {
   const hasCopiedCodeSuccessfully = await copyTextToClipboard(props.text)
 
   if (button instanceof HTMLButtonElement && hasCopiedCodeSuccessfully) {
-    button.setAttribute('data-tooltip-text', 'Copied!')
+    button.setAttribute('data-tooltip-text', props.tooltipSuccessText)
 
     window.setTimeout(function () {
       if (button instanceof HTMLButtonElement) {
