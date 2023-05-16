@@ -12,6 +12,7 @@
     "sourceMap": true,
     "types": [
       "jest",
+      "marked",
       "vite/client"
     ],
     "baseUrl": ".",

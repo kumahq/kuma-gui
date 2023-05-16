@@ -145,13 +145,13 @@ const props = defineProps({
 
 const kubernetesCreateSecretCommand = computed(() => i18n.t('zones.form.kubernetes.secret.command', {
   token: props.base64EncodedToken,
-}))
+}).trim())
 const kubernetesConfig = computed(() => i18n.t('zones.form.kubernetes.connectZone.config', {
   zoneName: props.zone.name,
   globalKdsAddress: getGlobalKdsAddress(),
   zoneIngressEnabled: String(props.zoneIngressEnabled),
   zoneEgressEnabled: String(props.zoneEgressEnabled),
-}))
+}).trim())
 
 </script>
 

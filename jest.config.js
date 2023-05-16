@@ -9,6 +9,7 @@
   },
   moduleFileExtensions: [
     'js',
+    'yaml',
     'json',
     'vue',
     'ts',
@@ -23,6 +24,7 @@
         babelConfig: true,
       },
     ],
+    '^.+\\.yaml$': '<rootDir>/jest/yaml-transformer.js',
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svg(\\?(url|raw))?$': 'jest-transform-stub',
     '^.+\\.(css|png|gif|jpg)?$': 'jest-transform-stub',
