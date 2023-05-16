@@ -97,13 +97,13 @@ data:
             description1: 'Copy and paste the following configuration into the Helm chart values.yaml on your local machine.',
             fileName: 'values.yaml',
             config: `controlPlane:
-mode: zone
-zone: {zoneName}
-kdsGlobalAddress: {globalKdsAddress}
-secrets:
-  - Env: KUMA_MULTIZONE_ZONE_KDS_AUTH_CP_TOKEN_INLINE
-    Secret: cp-token
-    Key: token
+  mode: zone
+  zone: {zoneName}
+  kdsGlobalAddress: {globalKdsAddress}
+  secrets:
+    - Env: KUMA_MULTIZONE_ZONE_KDS_AUTH_CP_TOKEN_INLINE
+      Secret: cp-token
+      Key: token
 ingress:
   enabled: {zoneIngressEnabled}
 egress:
