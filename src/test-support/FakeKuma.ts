@@ -68,9 +68,9 @@ export class KumaModule {
    * Returns a random DPP (or gateway) status object with self-consistent values (i.e. total = online + partiallyDegraded + offline).
    */
   dataPlaneProxyStatus(maxTotal: number = 30) {
-    const total = this.faker.datatype.number({ min: 1, max: maxTotal })
-    const online = this.faker.datatype.number({ min: 0, max: total })
-    const partiallyDegraded = this.faker.datatype.number({ min: 0, max: total - online })
+    const total = this.faker.number.int({ min: 1, max: maxTotal })
+    const online = this.faker.number.int({ min: 0, max: total })
+    const partiallyDegraded = this.faker.number.int({ min: 0, max: total - online })
     const offline = total - online - partiallyDegraded
 
     const values = [
@@ -87,8 +87,8 @@ export class KumaModule {
    * Returns a random service status object with self-consistent values (i.e. total = internal + external).
    */
   serviceStatus(maxTotal: number = 30) {
-    const total = this.faker.datatype.number({ min: 1, max: maxTotal })
-    const internal = this.faker.datatype.number({ min: 0, max: total })
+    const total = this.faker.number.int({ min: 1, max: maxTotal })
+    const internal = this.faker.number.int({ min: 0, max: total })
     const external = total - internal
 
     const values = [
@@ -104,7 +104,7 @@ export class KumaModule {
    * Returns a random policy type status object.
    */
   policyTypeStatus(maxTotal: number = 10) {
-    const total = this.faker.datatype.number({ min: 0, max: maxTotal })
+    const total = this.faker.number.int({ min: 0, max: maxTotal })
 
     const values = [
       ['total', total],
