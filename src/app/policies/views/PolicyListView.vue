@@ -87,7 +87,12 @@
             >
               {{ policyType.name }}:
 
-              <TextWithCopyButton :text="entity.name" />
+              <router-link
+                v-if="detailViewRoute!== null"
+                :to="detailViewRoute"
+              >
+                <TextWithCopyButton :text="entity.name" />
+              </router-link>
             </h1>
           </template>
 
@@ -212,6 +217,21 @@ const tableData = ref<{ headers: TableHeader[], data: PolicyEntityTableRow[] }>(
     { label: 'Type', key: 'type' },
   ],
   data: [],
+})
+
+const detailViewRoute = computed(() => {
+  if (entity.value === null) {
+    return null
+  }
+
+  return {
+    name: 'policy-detail-view',
+    params: {
+      mesh: entity.value.mesh,
+      policy: entity.value.name,
+      policyPath: props.policyPath,
+    },
+  }
 })
 
 const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])

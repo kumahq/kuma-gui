@@ -18,7 +18,11 @@
           class="entity-heading"
           data-testid="policy-single-entity"
         >
-          <TextWithCopyButton :text="policy.name" />
+          {{ policy.type }}:
+
+          <router-link :to="detailViewRoute">
+            <TextWithCopyButton :text="policy.name" />
+          </router-link>
         </h1>
       </template>
 
@@ -96,6 +100,15 @@ const tabs = [
 const rawPolicy = ref<PolicyEntity | null>(null)
 const isLoading = ref<Boolean>(true)
 const error = ref<Error | null>(null)
+
+const detailViewRoute = computed(() => ({
+  name: 'policy-detail-view',
+  params: {
+    mesh: props.mesh,
+    policy: props.policyName,
+    policyPath: props.policyPath,
+  },
+}))
 
 const policy = computed(() => {
   if (rawPolicy.value === null) {

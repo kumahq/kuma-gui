@@ -4,7 +4,9 @@
       <h1 class="entity-heading">
         Zone Ingress:
 
-        <TextWithCopyButton :text="processedZoneIngressOverview.name" />
+        <router-link :to="detailViewRoute">
+          <TextWithCopyButton :text="processedZoneIngressOverview.name" />
+        </router-link>
       </h1>
     </template>
 
@@ -115,6 +117,13 @@ const props = defineProps({
     required: true,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'zone-ingress-detail-view',
+  params: {
+    zoneIngress: props.zoneIngressOverview.name,
+  },
+}))
 
 const processedZoneIngressOverview = computed(() => {
   const { type, name } = props.zoneIngressOverview

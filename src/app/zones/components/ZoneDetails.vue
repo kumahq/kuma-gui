@@ -4,7 +4,9 @@
       <h1 class="entity-heading">
         Zone:
 
-        <TextWithCopyButton :text="processedZoneOverview.name" />
+        <router-link :to="detailViewRoute">
+          <TextWithCopyButton :text="processedZoneOverview.name" />
+        </router-link>
       </h1>
     </template>
 
@@ -113,6 +115,13 @@ const props = defineProps({
     required: true,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'zone-detail-view',
+  params: {
+    zone: props.zoneOverview.name,
+  },
+}))
 
 const processedZoneOverview = computed(() => {
   const { type, name } = props.zoneOverview

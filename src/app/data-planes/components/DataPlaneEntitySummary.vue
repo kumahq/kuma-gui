@@ -10,7 +10,9 @@
             <span>
               DPP:
 
-              <TextWithCopyButton :text="dataPlaneOverview.name" />
+              <router-link :to="detailViewRoute">
+                <TextWithCopyButton :text="dataPlaneOverview.name" />
+              </router-link>
             </span>
 
             <StatusBadge :status="status" />
@@ -148,6 +150,14 @@ const props = defineProps({
     required: true,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'data-plane-detail-view',
+  params: {
+    mesh: props.dataPlaneOverview.mesh,
+    dataPlane: props.dataPlaneOverview.name,
+  },
+}))
 
 const dataPlane = computed(() => {
   const { name, mesh, dataplane } = props.dataPlaneOverview

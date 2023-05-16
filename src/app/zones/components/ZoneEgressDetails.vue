@@ -4,7 +4,9 @@
       <h1 class="entity-heading">
         Zone Egress:
 
-        <TextWithCopyButton :text="processedZoneEgressOverview.name" />
+        <router-link :to="detailViewRoute">
+          <TextWithCopyButton :text="processedZoneEgressOverview.name" />
+        </router-link>
       </h1>
     </template>
 
@@ -115,6 +117,13 @@ const props = defineProps({
     required: true,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'zone-egress-detail-view',
+  params: {
+    zoneEgress: props.zoneEgressOverview.name,
+  },
+}))
 
 const processedZoneEgressOverview = computed(() => {
   const { type, name } = props.zoneEgressOverview

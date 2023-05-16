@@ -4,7 +4,9 @@
       <h1 class="entity-heading">
         DPP:
 
-        <TextWithCopyButton :text="dataPlane.name" />
+        <router-link :to="detailViewRoute">
+          <TextWithCopyButton :text="dataPlane.name" />
+        </router-link>
       </h1>
     </template>
 
@@ -254,6 +256,14 @@ const tabs = [
 ]
 
 const warnings = ref<Compatibility[]>([])
+
+const detailViewRoute = computed(() => ({
+  name: 'data-plane-detail-view',
+  params: {
+    mesh: props.dataPlane.mesh,
+    dataPlane: props.dataPlane.name,
+  },
+}))
 
 const processedDataPlane = computed(() => {
   const { type, name, mesh } = props.dataPlane

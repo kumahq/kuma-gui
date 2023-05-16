@@ -7,7 +7,9 @@
             <span>
               Service:
 
-              <TextWithCopyButton :text="props.service.name" />
+              <router-link :to="detailViewRoute">
+                <TextWithCopyButton :text="props.service.name" />
+              </router-link>
             </span>
 
             <StatusBadge
@@ -95,6 +97,14 @@ const props = defineProps({
     default: null,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'service-detail-view',
+  params: {
+    service: props.service.name,
+    mesh: props.service.mesh,
+  },
+}))
 
 const address = computed(() => {
   if (props.service.serviceType === 'external' && props.externalService !== null) {

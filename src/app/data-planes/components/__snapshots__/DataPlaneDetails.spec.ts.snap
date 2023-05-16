@@ -14,58 +14,63 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       class="entity-heading"
     >
        DPP: 
-      <div
-        class="copy-button-wrapper"
+      <a
+        class=""
+        href="/mesh/test-mesh/data-planes/backend"
       >
-        <span>
-          backend
-        </span>
-        <button
-          class="k-button small outline copy-button non-visual-button"
-          data-testid="copy-button"
-          title="Copy"
-          type="button"
+        <div
+          class="copy-button-wrapper"
         >
-          
-          <!---->
-          
-          
-          <span
-            class="kong-icon kong-icon-copy"
+          <span>
+            backend
+          </span>
+          <button
+            class="k-button small outline copy-button non-visual-button"
+            data-testid="copy-button"
+            title="Copy"
+            type="button"
           >
-            <svg
-              height="18"
-              role="img"
-              viewBox="0 0 32 32"
-              width="18"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              
-  
-              <title>
-                Copy
-              </title>
-              
-  
-              <path
-                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                fill="var(--black-45)"
-              />
-              
-
-            </svg>
             
+            <!---->
+            
+            
+            <span
+              class="kong-icon kong-icon-copy"
+            >
+              <svg
+                height="18"
+                role="img"
+                viewBox="0 0 32 32"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <title>
+                  Copy
+                </title>
+                
+  
+                <path
+                  d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                  fill="var(--black-45)"
+                />
+                
 
-          </span>
-          <span
-            class="visually-hidden"
-          >
-            Copy
-          </span>
-          
-          <!---->
-        </button>
-      </div>
+              </svg>
+              
+
+            </span>
+            <span
+              class="visually-hidden"
+            >
+              Copy
+            </span>
+            
+            <!---->
+          </button>
+        </div>
+      </a>
     </h1>
     
   </header>
