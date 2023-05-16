@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { en } from '@faker-js/faker'
 
 import FakeKuma from './FakeKuma'
 import type AppEnv from '@/services/env/Env'
@@ -71,7 +71,7 @@ export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
 export const dependencies: EndpointDependencies = {
-  fake: new FakeKuma(faker),
+  fake: new FakeKuma({ locale: en }),
   pager,
   env: (_key, d = '') => d,
 }
