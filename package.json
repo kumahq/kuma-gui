@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@datadog/browser-logs": "^4.42.0",
-    "@kong/kongponents": "^8.60.1",
+    "@kong/kongponents": "^8.62.0",
     "brandi": "^5.0.0",
     "chart.js": "^4.3.0",
     "js-yaml": "^4.1.0",
