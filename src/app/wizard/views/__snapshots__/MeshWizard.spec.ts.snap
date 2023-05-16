@@ -770,51 +770,57 @@ metrics:
                                       
       
                                     </pre>
-                                    <button
-                                      class="k-button small outline k-code-block-copy-button"
-                                      data-testid="k-code-block-copy-button"
-                                      title="Copy (Alt+C)"
-                                      type="button"
+                                    <div
+                                      class="k-code-block-secondary-actions"
                                     >
-                                      
-                                      <!---->
-                                      
-                                      
-                                      <span
-                                        class="kong-icon kong-icon-copy"
+                                      <button
+                                        class="k-button small outline k-code-block-copy-button"
+                                        data-testid="k-code-block-copy-button"
+                                        title="Copy (Alt+C)"
+                                        type="button"
                                       >
-                                        <svg
-                                          height="18"
-                                          role="img"
-                                          viewBox="0 0 32 32"
-                                          width="18"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          
-  
-                                          <title>
-                                            Copy (Alt+C)
-                                          </title>
-                                          
-  
-                                          <path
-                                            d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                            fill="currentColor"
-                                          />
-                                          
-
-                                        </svg>
                                         
+                                        <!---->
+                                        
+                                        
+                                        <span
+                                          class="kong-icon kong-icon-copy"
+                                        >
+                                          <svg
+                                            height="18"
+                                            role="img"
+                                            viewBox="0 0 32 32"
+                                            width="18"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            
+  
+                                            <title>
+                                              Copy (Alt+C)
+                                            </title>
+                                            
+  
+                                            <path
+                                              d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                              fill="currentColor"
+                                            />
+                                            
 
-                                      </span>
-                                      <span
-                                        class="k-visually-hidden"
-                                      >
-                                        Copy
-                                      </span>
+                                          </svg>
+                                          
+
+                                        </span>
+                                        <span
+                                          class="k-visually-hidden"
+                                        >
+                                          Copy
+                                        </span>
+                                        
+                                        <!---->
+                                      </button>
                                       
-                                      <!---->
-                                    </button>
+                                      
+                                    </div>
                                   </div>
                                 </div>
                                 
