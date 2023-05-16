@@ -30,15 +30,15 @@ zones:
           environment: universal
           mode: zone
           multizone:
-          zone:
-            name: {zoneName}
-            globalAddress: {globalKdsAddress}
-          kuma:
-          multizone:
             zone:
-              kds:
-                auth:
-          cpTokenInline: {token}
+              name: {zoneName}
+              globalAddress: {globalKdsAddress}
+          kuma:
+            multizone:
+              zone:
+                kds:
+                  auth:
+                    cpTokenInline: {token}
         command: 'kuma-cp run -c config.yaml'
         description2: 'Next, run the following command to connect the Zone.'
     kubernetes:
