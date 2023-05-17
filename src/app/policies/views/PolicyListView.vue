@@ -72,65 +72,14 @@
         </DataOverview>
       </div>
 
-      <div class="kcard-border">
-        <TabsWidget
-          v-if="entity !== null && detailViewRoute !== null"
-          :has-error="error !== null"
-          :error="error"
-          :is-loading="isLoading"
-          :tabs="tabs"
-        >
-          <template #tabHeader>
-            <h1
-              class="entity-heading"
-              data-testid="policy-single-entity"
-            >
-              {{ policyType.name }}:
-
-              <TextWithCopyButton :text="entity.name">
-                <router-link :to="detailViewRoute">
-                  {{ entity.name }}
-                </router-link>
-              </TextWithCopyButton>
-            </h1>
-          </template>
-
-          <template #overview>
-            <DefinitionList data-testid="policy-detail-label-list">
-              <DefinitionListItem
-                v-for="(value, property) in entity"
-                :key="property"
-                :term="property"
-              >
-                <template v-if="property === 'name'">
-                  <TextWithCopyButton :text="value" />
-                </template>
-
-                <template v-else>
-                  {{ value }}
-                </template>
-              </DefinitionListItem>
-            </DefinitionList>
-
-            <YamlView
-              v-if="rawEntity !== null"
-              id="code-block-policy"
-              class="mt-4"
-              :content="rawEntity"
-              is-searchable
-            />
-          </template>
-
-          <template #affected-dpps>
-            <PolicyConnections
-              v-if="rawEntity !== null"
-              :mesh="rawEntity.mesh"
-              :policy-name="rawEntity.name"
-              :policy-path="policyType.path"
-            />
-          </template>
-        </TabsWidget>
-      </div>
+      <PolicyDetails
+        v-if="entity !== null && rawEntity !== null"
+        :name="entity.name"
+        :mesh="entity.mesh"
+        :path="policyType.path"
+        :type="policyType.name"
+        :raw-entity="rawEntity"
+      />
     </div>
   </div>
 </template>
@@ -145,14 +94,9 @@ import {
 import { computed, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
-import PolicyConnections from '../components/PolicyConnections.vue'
+import PolicyDetails from '../components/PolicyDetails.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
-import TabsWidget from '@/app/common/TabsWidget.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import YamlView from '@/app/common/YamlView.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { PolicyEntity, PolicyType, TableHeader } from '@/types/index.d'
@@ -168,17 +112,6 @@ type PolicyEntityTableRow = {
 
 const kumaApi = useKumaApi()
 const env = useEnv()
-
-const tabs = [
-  {
-    hash: '#overview',
-    title: 'Overview',
-  },
-  {
-    hash: '#affected-dpps',
-    title: 'Affected DPPs',
-  },
-]
 
 const router = useRouter()
 const route = useRoute()
@@ -216,21 +149,6 @@ const tableData = ref<{ headers: TableHeader[], data: PolicyEntityTableRow[] }>(
     { label: 'Type', key: 'type' },
   ],
   data: [],
-})
-
-const detailViewRoute = computed(() => {
-  if (entity.value === null) {
-    return null
-  }
-
-  return {
-    name: 'policy-detail-view',
-    params: {
-      mesh: entity.value.mesh,
-      policy: entity.value.name,
-      policyPath: props.policyPath,
-    },
-  }
 })
 
 const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])
