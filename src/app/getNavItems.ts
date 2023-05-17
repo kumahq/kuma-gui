@@ -59,6 +59,7 @@ export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavIt
       {
         name: 'Overview',
         routeName: 'mesh-overview-view',
+        anchorRouteName: 'mesh-detail-view',
         usesMeshParam: true,
       },
     ]
