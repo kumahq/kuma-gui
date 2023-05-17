@@ -4,92 +4,24 @@
     :model-value="(items.find(item => (router.currentRoute?.value.name ?? '').toString().startsWith(item.hash)) ?? items[0]).hash"
     @click="change"
   >
-    <template #mesh-detail-view-anchor>
+    <template
+      v-for="item in items"
+      :key="`${item.hash}-anchor`"
+      #[`${item.hash}-anchor`]
+    >
       <router-link
         :to="{
-          name: items[0].hash,
+          name: item.hash,
         }"
       >
-        {{ items[0].title }}
+        {{ item.title }}
       </router-link>
     </template>
-    <template #mesh-detail-view>
-      <RouterView
-        v-slot="routerView"
-      >
-        <component
-          :is="routerView.Component"
-          :key="routerView.route.path"
-        />
-      </RouterView>
-    </template>
-    <template #services-list-view-anchor>
-      <router-link
-        :to="{
-          name: items[1].hash,
-        }"
-      >
-        {{ items[1].title }}
-      </router-link>
-    </template>
-    <template #services-list-view>
-      <RouterView
-        v-slot="routerView"
-      >
-        <component
-          :is="routerView.Component"
-          :key="routerView.route.path"
-        />
-      </RouterView>
-    </template>
-    <template #gateways-list-view-anchor>
-      <router-link
-        :to="{
-          name: items[2].hash,
-        }"
-      >
-        {{ items[2].title }}
-      </router-link>
-    </template>
-    <template #gateways-list-view>
-      <RouterView
-        v-slot="routerView"
-      >
-        <component
-          :is="routerView.Component"
-          :key="routerView.route.path"
-        />
-      </RouterView>
-    </template>
-    <template #data-planes-list-view-anchor>
-      <router-link
-        :to="{
-          name: items[3].hash,
-        }"
-      >
-        {{ items[3].title }}
-      </router-link>
-    </template>
-    <template #data-planes-list-view>
-      <RouterView
-        v-slot="routerView"
-      >
-        <component
-          :is="routerView.Component"
-          :key="routerView.route.path"
-        />
-      </RouterView>
-    </template>
-    <template #policies-anchor>
-      <router-link
-        :to="{
-          name: items[4].hash,
-        }"
-      >
-        {{ items[4].title }}
-      </router-link>
-    </template>
-    <template #policies>
+    <template
+      v-for="item in items"
+      :key="item.hash"
+      #[item.hash]
+    >
       <RouterView
         v-slot="routerView"
       >
@@ -104,6 +36,7 @@
 <script lang="ts" setup>
 import { KTabs } from '@kong/kongponents'
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
 const items = [
   {
@@ -136,9 +69,6 @@ const change = (e: MouseEvent) => {
 }
 </script>
 <style scoped>
-.tab-link {
-  height: 100%;
-}
 .tab-link a {
   text-decoration: none;
   color: var(--KTabsColor)
