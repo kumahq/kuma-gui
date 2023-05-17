@@ -37,46 +37,37 @@ export const routes = (
       children: [
         {
           path: ':mesh',
+          name: 'mesh-detail-view',
+          meta: {
+            title: 'Mesh',
+            isBreadcrumb: true,
+            breadcrumbTitleParam: 'mesh',
+          },
+          redirect: () => ({ name: 'mesh-overview-view' }),
           children: [
             {
               path: '',
+              redirect: () => ({ name: 'mesh-overview-view' }),
+              component: () => import('@/app/meshes/views/MeshView.vue'),
               children: [
                 {
-                  path: '',
+                  path: 'overview',
+                  name: 'mesh-overview-view',
                   meta: {
-                    title: 'Mesh',
-                    isBreadcrumb: true,
-                    breadcrumbTitleParam: 'mesh',
+                    title: 'Mesh overview',
                   },
-                  name: 'mesh-detail-view',
-                  redirect: () => ({ name: 'mesh-overview-view' }),
-                  component: () => import('@/app/meshes/views/MeshView.vue'),
-                  children: [
-                    {
-                      path: 'overview',
-                      name: 'mesh-overview-view',
-                      meta: {
-                        title: 'Mesh overview',
-                      },
-                      component: () => import('@/app/meshes/views/MeshOverviewView.vue'),
-                    },
-                    ...services.items('services'),
-                    ...gateways.items('gateways'),
-                    ...dataplanes.items('data-planes'),
-                    ...policies.items('policies'),
-                  ],
+                  component: () => import('@/app/meshes/views/MeshOverviewView.vue'),
                 },
+                ...services.items('services'),
+                ...gateways.items('gateways'),
+                ...dataplanes.items('data-planes'),
+                ...policies.items('policies'),
               ],
             },
-            {
-              path: '',
-              children: [
-                ...services.item('service'),
-                ...gateways.item('gateway'),
-                ...dataplanes.item('data-plane'),
-                ...policies.item('policy'),
-              ],
-            },
+            ...services.item('service'),
+            ...gateways.item('gateway'),
+            ...dataplanes.item('data-plane'),
+            ...policies.item('policy'),
           ],
         },
       ],

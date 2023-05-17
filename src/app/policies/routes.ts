@@ -8,13 +8,15 @@ export const routes = (store: Store<State>) => {
     return [
       {
         path: `${prefix}`,
+        name: `${prefix}-abstract-view`,
         meta: {
           title: 'Policies',
           isBreadcrumb: true,
         },
+        redirect: () => ({ name: 'policies-list-view' }),
         children: [
           {
-            path: ':policyPath/:policy',
+            path: `${prefix === 'policy' ? ':policyPath/' : ''}:policy`,
             name: `${prefix}-detail-view`,
             props: (route) => ({
               mesh: route.params.mesh,
@@ -80,8 +82,10 @@ export const routes = (store: Store<State>) => {
                         selectedPolicyName: route.query.policy,
                         offset: getLastNumberParameter(route.query.offset),
                       }),
+                      // children: [
+                      //   ...(item(prefix)[0]).children ?? [],
+                      // ],
                     },
-                    // ...item(prefix),
                   ],
                 },
 

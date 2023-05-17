@@ -6,10 +6,12 @@ export const routes = () => {
     return [
       {
         path: `${prefix}`,
+        name: `${prefix}-abstract-view`,
         meta: {
           title: 'Services',
           isBreadcrumb: true,
         },
+        redirect: () => ({ name: 'services-list-view' }),
         children: [
           {
             path: ':service',
@@ -45,7 +47,7 @@ export const routes = () => {
                   }),
                   component: () => import('@/app/services/views/ServiceListView.vue'),
                   // children: [
-                  //   ...item(prefix),
+                  //   ...(item(prefix)[0]).children ?? [],
                   // ],
                 },
               ],

@@ -5,10 +5,12 @@ export const routes = () => {
     return [
       {
         path: `${prefix}`,
+        name: `${prefix}-abstract-view`,
         meta: {
           title: 'Data Plane Proxies',
           isBreadcrumb: true,
         },
+        redirect: () => ({ name: 'data-planes-list-view' }),
         children: [
           {
             path: ':dataPlane',
@@ -44,7 +46,7 @@ export const routes = () => {
                   }),
                   component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
                   // children: [
-                  //   ...item(prefix),
+                  //   ...(item(prefix)[0]).children ?? [],
                   // ],
                 },
               ],

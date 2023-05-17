@@ -5,10 +5,12 @@ export const routes = () => {
     return [
       {
         path: `${prefix}`,
+        name: `${prefix}-abstract-view`,
         meta: {
           title: 'Gateways',
           isBreadcrumb: true,
         },
+        redirect: () => ({ name: 'gateways-list-view' }),
         children: [
           {
             path: ':dataPlane',
@@ -37,7 +39,6 @@ export const routes = () => {
                   name: `${prefix}-list-view`,
                   meta: {
                     title: 'Gateways',
-                    isBreadcrumb: true,
                   },
                   props: (route) => ({
                     selectedDppName: route.query.gateway,
@@ -47,7 +48,7 @@ export const routes = () => {
                   }),
                   component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
                   // children: [
-                  //   ...item(prefix),
+                  //   ...(item(prefix)[0]).children ?? [],
                   // ],
                 },
               ],
