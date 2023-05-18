@@ -3,8 +3,8 @@ import { setupWorker, MockedRequest, rest } from 'msw'
 import cookied from '@/services/env/CookiedEnv'
 import type Env from '@/services/env/Env'
 import debugI18n from '@/services/i18n/DebugI18n'
-import Logger from '@/services/logger/DatadogLogger'
-import { disabledLogger } from '@/services/logger/DisabledLogger'
+import type Logger from '@/services/logger/DatadogLogger'
+import disabled from '@/services/logger/DisabledLogger'
 import { token, get } from '@/services/utils'
 import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, Token, TokenType } from '@/services/utils'
 import type { FS } from '@/test-support'
@@ -61,18 +61,18 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
     decorates: app.i18n,
   }],
 
-  [token<Alias<Env['var']>>('env.debug'), {
+  [token<ReturnType<typeof cookied>>('env.debug'), {
     service: (env: () => Alias<Env['var']>) => {
       return cookied(env())
     },
     decorates: app.env,
   }],
 
-  [app.logger, {
-    service: disabledLogger(Logger),
-    arguments: [
-      app.Env,
-    ],
+  [token<ReturnType<typeof disabled>>('logger.disabled'), {
+    service: (logger: () => Logger) => {
+      return disabled(logger())
+    },
+    decorates: app.logger,
   }],
 
   // Mock Service Worker
