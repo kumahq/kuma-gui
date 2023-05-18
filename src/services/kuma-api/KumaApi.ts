@@ -44,7 +44,7 @@ export default class KumaApi extends Api {
   }
 
   async getLatestVersion(): Promise<string> {
-    return this.client.get(this.env.var('KUMA_VERSION_URL'))
+    return this.client.get(this.env('KUMA_VERSION_URL'))
   }
 
   getConfig(): Promise<ClientConfigInterface> {
