@@ -1,6 +1,7 @@
 import { setupWorker, MockedRequest, rest } from 'msw'
 
-import CookiedEnv from '@/services/env/CookiedEnv'
+import cookied from '@/services/env/CookiedEnv'
+import type Env from '@/services/env/Env'
 import debugI18n from '@/services/i18n/DebugI18n'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
@@ -31,7 +32,7 @@ type SupportedTokens = {
   logger: Token
   msw: Token
   bootstrap: Token
-  env: Token<Alias<CookiedEnv['var']>>
+  env: Token<Alias<Env['var']>>
 }
 
 export const services: ServiceConfigurator<SupportedTokens> = (app) => [
@@ -60,11 +61,11 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
     decorates: app.i18n,
   }],
 
-  [app.Env, {
-    service: CookiedEnv,
-    arguments: [
-      app.EnvVars,
-    ],
+  [token<Alias<Env['var']>>('env.debug'), {
+    service: (env: () => Alias<Env['var']>) => {
+      return cookied(env())
+    },
+    decorates: app.env,
   }],
 
   [app.logger, {
