@@ -71,7 +71,7 @@ export default class KumaApi extends Api {
   }
 
   createZone(zone: UnsavedZone): Promise<Zone> {
-    return this.client.post('/zones', zone)
+    return this.client.post('/provision-zone', zone)
   }
 
   updateZone(zone: Zone): Promise<Zone> {
