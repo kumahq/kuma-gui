@@ -61,8 +61,6 @@ export default class Env {
     // payload or non-replaced template, or during CLI tests when there is no
     // HTML file.
 
-    // TODO: Uncomment noisy console errors (we don't want them during testing
-    // but we do want them for our users)
     let config!: PathConfig
     if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       try {
