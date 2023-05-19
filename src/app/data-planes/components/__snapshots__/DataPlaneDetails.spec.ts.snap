@@ -20,7 +20,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
         
         <a
           class=""
-          href="/mesh/test-mesh/data-planes/backend"
+          href="/mesh/test-mesh/data-plane/backend"
         >
           backend
         </a>
