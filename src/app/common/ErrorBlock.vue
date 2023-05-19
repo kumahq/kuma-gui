@@ -10,7 +10,9 @@
           size="42"
         />
 
-        <p>An error has occurred while trying to load this data.</p>
+        <slot>
+          <p>An error has occurred while trying to load this data.</p>
+        </slot>
       </template>
 
       <template

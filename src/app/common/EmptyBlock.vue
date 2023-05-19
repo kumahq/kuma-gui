@@ -10,7 +10,9 @@
           size="42"
         />
 
-        <p>There is no data to display.</p>
+        <slot>
+          <p>There is no data to display.</p>
+        </slot>
       </slot>
     </template>
 
