@@ -74,7 +74,7 @@
 
       <div class="kcard-border">
         <TabsWidget
-          v-if="entity !== null"
+          v-if="entity !== null && detailViewRoute !== null"
           :has-error="error !== null"
           :error="error"
           :is-loading="isLoading"
@@ -87,12 +87,11 @@
             >
               {{ policyType.name }}:
 
-              <router-link
-                v-if="detailViewRoute!== null"
-                :to="detailViewRoute"
-              >
-                <TextWithCopyButton :text="entity.name" />
-              </router-link>
+              <TextWithCopyButton :text="entity.name">
+                <router-link :to="detailViewRoute">
+                  {{ entity.name }}
+                </router-link>
+              </TextWithCopyButton>
             </h1>
           </template>
 

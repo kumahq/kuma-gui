@@ -4,9 +4,11 @@
       <h1 class="entity-heading">
         Zone:
 
-        <router-link :to="detailViewRoute">
-          <TextWithCopyButton :text="processedZoneOverview.name" />
-        </router-link>
+        <TextWithCopyButton :text="processedZoneOverview.name">
+          <router-link :to="detailViewRoute">
+            {{ processedZoneOverview.name }}
+          </router-link>
+        </TextWithCopyButton>
       </h1>
     </template>
 

@@ -10,9 +10,11 @@
             <span>
               DPP:
 
-              <router-link :to="detailViewRoute">
-                <TextWithCopyButton :text="dataPlaneOverview.name" />
-              </router-link>
+              <TextWithCopyButton :text="dataPlaneOverview.name">
+                <router-link :to="detailViewRoute">
+                  {{ dataPlaneOverview.name }}
+                </router-link>
+              </TextWithCopyButton>
             </span>
 
             <StatusBadge :status="status" />

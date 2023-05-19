@@ -4,9 +4,11 @@
       <h1 class="entity-heading">
         DPP:
 
-        <router-link :to="detailViewRoute">
-          <TextWithCopyButton :text="dataPlane.name" />
-        </router-link>
+        <TextWithCopyButton :text="dataPlane.name">
+          <router-link :to="detailViewRoute">
+            {{ dataPlane.name }}
+          </router-link>
+        </TextWithCopyButton>
       </h1>
     </template>
 

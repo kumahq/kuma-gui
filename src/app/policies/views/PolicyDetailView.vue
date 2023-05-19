@@ -20,9 +20,11 @@
         >
           {{ policy.type }}:
 
-          <router-link :to="detailViewRoute">
-            <TextWithCopyButton :text="policy.name" />
-          </router-link>
+          <TextWithCopyButton :text="policy.name">
+            <router-link :to="detailViewRoute">
+              {{ policy.name }}
+            </router-link>
+          </TextWithCopyButton>
         </h1>
       </template>
 

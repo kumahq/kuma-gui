@@ -4,9 +4,11 @@
       <h1 class="entity-heading">
         Zone Egress:
 
-        <router-link :to="detailViewRoute">
-          <TextWithCopyButton :text="processedZoneEgressOverview.name" />
-        </router-link>
+        <TextWithCopyButton :text="processedZoneEgressOverview.name">
+          <router-link :to="detailViewRoute">
+            {{ processedZoneEgressOverview.name }}
+          </router-link>
+        </TextWithCopyButton>
       </h1>
     </template>
 

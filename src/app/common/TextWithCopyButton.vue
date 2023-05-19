@@ -1,15 +1,15 @@
 <template>
   <div class="copy-button-wrapper">
-    <component :is="props.tag">
-      {{ props.text }}
-    </component>
+    <slot>
+      <component :is="props.tag">
+        {{ props.text }}
+      </component>
+    </slot>
 
-    <!-- Prevents the event’s default action which avoids unintentionally activating links _containing_ `TextWithCopyButton` by clicking the copy button. -->
     <CopyButton
       :text="props.text"
       :copy-text="i18n.t('common.copyText')"
       :tooltip-success-text="i18n.t('common.copySuccessText')"
-      @click.prevent
     />
   </div>
 </template>
