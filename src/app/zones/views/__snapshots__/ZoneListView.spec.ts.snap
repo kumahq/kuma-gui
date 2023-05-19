@@ -2203,7 +2203,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              CircuitBreaker: 
+                              Circuit Breaker: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2350,7 +2350,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              ExternalService: 
+                              External Service: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2399,7 +2399,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              FaultInjection: 
+                              Fault Injection: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2448,7 +2448,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              HealthCheck: 
+                              Health Check: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2546,7 +2546,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              ProxyTemplate: 
+                              Proxy Template: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2693,7 +2693,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              TrafficLog: 
+                              Traffic Log: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2742,7 +2742,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              TrafficPermission: 
+                              Traffic Permission: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2791,7 +2791,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              TrafficRoute: 
+                              Traffic Route: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -2840,7 +2840,7 @@ exports[`ZoneListView renders zone insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              TrafficTrace: 
+                              Traffic Trace: 
                             </h6>
                             <dl
                               class="definition-list"
