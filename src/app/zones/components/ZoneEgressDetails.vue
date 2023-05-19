@@ -17,7 +17,7 @@
         <DefinitionListItem
           v-for="(value, property) in processedZoneEgressOverview"
           :key="property"
-          :term="property"
+          :term="t(`http.api.property.${property}`)"
         >
           <template v-if="property === 'name'">
             <TextWithCopyButton :text="value" />
@@ -89,6 +89,9 @@ import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vu
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { ZoneEgressOverview } from '@/types/index.d'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 
 const TABS = [
   {

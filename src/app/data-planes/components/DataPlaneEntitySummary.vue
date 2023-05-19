@@ -92,7 +92,9 @@
                   {{ subscriptionWrapper.formattedDisconnectDate }}
                 </DefinitionListItem>
 
-                <DefinitionListItem term="CP instance ID">
+                <DefinitionListItem
+                  :term="t('http.api.property.controlPlaneInstanceId')"
+                >
                   {{ subscriptionWrapper.subscription.controlPlaneInstanceId }}
                 </DefinitionListItem>
               </DefinitionList>
@@ -143,11 +145,13 @@ import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { DataPlaneOverview } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'
 import { rawReadableDate } from '@/utilities/helpers'
 
 const kumaApi = useKumaApi()
+
+const { t } = useI18n()
 
 const props = defineProps({
   dataPlaneOverview: {
@@ -187,7 +191,6 @@ const subscriptionWrappers = computed(() => {
           responsesRejected: stats.responsesRejected ?? 0,
         }
       })
-
     return {
       subscription,
       formattedConnectDate,

@@ -21,7 +21,7 @@
           <DefinitionListItem
             v-for="(value, property) in processedDataPlane"
             :key="property"
-            :term="property"
+            :term="t(`http.api.property.${property}`)"
           >
             {{ value }}
           </DefinitionListItem>
@@ -150,12 +150,11 @@
           </a>
         </template>
       </KAlert>
-
       <DefinitionList v-else>
         <DefinitionListItem
           v-for="(value, property) in mtlsData"
           :key="property"
-          :term="property"
+          :term="t(`http.api.property.${property}`)"
         >
           {{ value }}
         </DefinitionListItem>
@@ -195,7 +194,7 @@ import {
   DataPlane,
   DataPlaneOverview,
 } from '@/types/index.d'
-import { useEnv, useKumaApi } from '@/utilities'
+import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -206,6 +205,8 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/utilities/dataplane'
+
+const { t } = useI18n()
 
 const env = useEnv()
 const kumaApi = useKumaApi()
