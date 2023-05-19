@@ -3,8 +3,8 @@ http:
     property:
       mtls: mTLS
       mTLS: mTLS
-      globalInstanceId: Global Instance ID
-      controlPlaneInstanceId: Control Plane Instance ID
+      globalInstanceId: Global instance ID
+      controlPlaneInstanceId: CP instance ID
       connectTime: Last connected
       disconnectTime: Disconnect time
       cds: CDS
