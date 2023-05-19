@@ -13,7 +13,6 @@
     </div>
 
     <StatusInfo
-      :has-error="error !== null"
       :is-loading="isLoading"
       :error="error"
     >

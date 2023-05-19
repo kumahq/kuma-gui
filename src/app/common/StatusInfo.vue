@@ -3,7 +3,7 @@
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock
-      v-else-if="hasError"
+      v-else-if="hasError || error !== null"
       :error="error"
     />
 
