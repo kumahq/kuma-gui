@@ -3,6 +3,3 @@ http:
     property:
       mtls: mTLS
       mTLS: mTLS
-common:
-  copyText: 'Copy'
-  copySuccessText: 'Copied!'
