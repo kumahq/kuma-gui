@@ -3,3 +3,13 @@ http:
     property:
       mtls: mTLS
       mTLS: mTLS
+      globalInstanceId: Global Instance ID
+      controlPlaneInstanceId: Control Plane Instance ID
+      connectTime: Last connected
+      disconnectTime: Disconnect time
+      cds: CDS
+      eds: EDS
+      lds: LDS
+      responsesSent: Responses sent
+      responsesAcknowledged: Responses acknowledged
+      responsesRejected: Responses rejected
