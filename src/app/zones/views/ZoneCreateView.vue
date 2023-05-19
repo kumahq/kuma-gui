@@ -189,6 +189,7 @@ import WizardTitleBar from '@/app/common/WizardTitleBar.vue'
 import EntityScanner from '@/app/wizard/components/EntityScanner.vue'
 import type { Zone } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const i18n = useI18n()
 const kumaApi = useKumaApi()
@@ -238,9 +239,10 @@ async function scanForEnabledZone() {
   scanError.value = null
 
   try {
-    await kumaApi.getZoneOverview({ name: name.value })
-    // The presence of a `ZoneOverview` object implies that the Zone was connected.
-    isScanComplete.value = true
+    // The presence of a `ZoneOverview` object’s subscriptions with a connect time and without a disconnect time indicate a Zone to be online.
+    const zoneOverview = await kumaApi.getZoneOverview({ name: name.value })
+    const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
+    isScanComplete.value = status === 'online'
   } catch (err) {
     if (err instanceof Error) {
       scanError.value = err
