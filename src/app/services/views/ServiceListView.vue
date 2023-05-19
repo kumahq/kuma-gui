@@ -87,7 +87,7 @@ const tableData = ref<{ headers: TableHeader[], data: ServiceInsightTableRow[] }
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'service-list-view') {
+  if (route.name !== 'services-list-view') {
     return
   }
 

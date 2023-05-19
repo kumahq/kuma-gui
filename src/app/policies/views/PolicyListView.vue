@@ -321,7 +321,7 @@ async function loadEntity({ name, mesh, path }: { name?: string | undefined, mes
 
 function changePolicyType(item: SelectItem) {
   router.push({
-    name: 'policy-list-view',
+    name: 'policies-list-view',
     params: {
       ...route.params,
       policyPath: item.value,

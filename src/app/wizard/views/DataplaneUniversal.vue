@@ -701,7 +701,7 @@ function completeDataPlaneSetup(): void {
   store.dispatch('updateSelectedMesh', validate.value.meshName)
 
   router.push({
-    name: 'data-plane-list-view',
+    name: 'data-planes-list-view',
     params: {
       mesh: validate.value.meshName,
     },

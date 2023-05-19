@@ -58,36 +58,9 @@ export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavIt
       },
       {
         name: 'Overview',
-        routeName: 'mesh-detail-view',
+        routeName: 'mesh-overview-view',
+        anchorRouteName: 'mesh-detail-view',
         usesMeshParam: true,
-      },
-      {
-        name: 'Services',
-        routeName: 'service-list-view',
-        anchorRouteName: 'service-abstract-view',
-        insightsFieldAccessor: 'mesh.services.total',
-        usesMeshParam: true,
-      },
-      {
-        name: 'Gateways',
-        routeName: 'gateway-list-view',
-        anchorRouteName: 'gateway-abstract-view',
-        usesMeshParam: true,
-        insightsFieldAccessor: 'mesh.dataplanes.gateway',
-      },
-      {
-        name: 'Data Plane Proxies',
-        routeName: 'data-plane-list-view',
-        anchorRouteName: 'data-plane-abstract-view',
-        usesMeshParam: true,
-        insightsFieldAccessor: 'mesh.dataplanes.standard',
-      },
-      {
-        name: 'Policies',
-        routeName: 'policies',
-        anchorRouteName: 'policy-type-abstract-view',
-        usesMeshParam: true,
-        insightsFieldAccessor: 'mesh.policies.total',
       },
     ]
 
