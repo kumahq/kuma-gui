@@ -35,6 +35,8 @@ export function useBootstrap(
   store: Store<State>,
 ) {
   return async (isAllowedToMakeApiCalls: boolean = true) => {
+    await store.dispatch('updateGlobalLoading', true)
+
     if (isAllowedToMakeApiCalls) {
       if (import.meta.env.PROD) {
         kumaApi.getConfig().then((config) => {
@@ -52,5 +54,7 @@ export function useBootstrap(
     } else {
       store.state.defaultVisibility.appError = false
     }
+
+    await store.dispatch('updateGlobalLoading', false)
   }
 }
