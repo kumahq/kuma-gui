@@ -1471,7 +1471,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl@^2.7.1":
+"@formatjs/intl@^2.7.2":
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-2.7.2.tgz#83dc77080a984d4883195bed39eedd947ebfd3d7"
   integrity sha512-ziiQfnXwY0/rXhtohSAmYMqDjRsihoMKdl8H2aA+FvxG9638E0XrvfBFCb+1HhimNiuqRz5fTY7F/bZtsJxsjA==
@@ -1776,14 +1776,14 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kong-ui-public/i18n@^0.4.6":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.4.6.tgz#af4f722d2f67e5e88a941ed021ebf72cbf0427be"
-  integrity sha512-sarKV1fUwJ67Y2bOkcFPKDLJAsgse+E90IzrcCyc08K6EuPLvl19DrBpxiHqlOAbxCzt2Sc1KqDng9nctloIwg==
+"@kong-ui-public/i18n@^0.4.7":
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.4.7.tgz#8e621956e551ae8c0211e4155b6b2af9a215158e"
+  integrity sha512-9BWkrae2MPAaiksgzF4iii32VP+5O2POswSNa+5ZfUK8x7raBAK+euTmRs6t7sLladlqFRAxrdz5PDIwogwoWw==
   dependencies:
-    "@formatjs/intl" "^2.7.1"
+    "@formatjs/intl" "^2.7.2"
     flat "^5.0.2"
-    intl-messageformat "^10.3.4"
+    intl-messageformat "^10.3.5"
 
 "@kong/kongponents@^8.64.0":
   version "8.64.0"
@@ -5187,7 +5187,7 @@ internal-slot@^1.0.3, internal-slot@^1.0.4:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-intl-messageformat@10.3.5, intl-messageformat@^10.3.4:
+intl-messageformat@10.3.5, intl-messageformat@^10.3.5:
   version "10.3.5"
   resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-10.3.5.tgz#f55684fc663e62616ad59d3a504ea0cac3f267b7"
   integrity sha512-6kPkftF8Jg3XJCkGKa5OD+nYQ+qcSxF4ZkuDdXZ6KGG0VXn+iblJqRFyDdm9VvKcMyC0Km2+JlVQffFM52D0YA==
