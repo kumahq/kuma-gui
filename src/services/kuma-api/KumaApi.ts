@@ -21,7 +21,6 @@ import type {
   PolicyType,
   ServiceInsight,
   SidecarDataplane,
-  UnsavedZone,
   Zone,
   ZoneEgressOverview,
   ZoneIngressOverview,
@@ -70,7 +69,7 @@ export default class KumaApi extends Api {
     return this.client.get(`/zones/${name}`)
   }
 
-  createZone(zone: UnsavedZone): Promise<Zone> {
+  createZone(zone: { name: string }): Promise<{ token: string }> {
     return this.client.post('/provision-zone', zone)
   }
 

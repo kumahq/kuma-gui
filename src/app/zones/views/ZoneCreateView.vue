@@ -120,14 +120,14 @@
 
       <ZoneCreateUniversalInstructions
         v-if="environment === 'universal'"
-        :zone="zone"
+        :zone-name="name"
         :token="token"
         :base64-encoded-token="base64EncodedToken"
       />
 
       <ZoneCreateKubernetesInstructions
         v-else
-        :zone="zone"
+        :zone-name="name"
         :zone-ingress-enabled="zoneIngressEnabled"
         :zone-egress-enabled="zoneEgressEnabled"
         :token="token"
@@ -187,14 +187,13 @@ import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetes
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
 import WizardTitleBar from '@/app/common/WizardTitleBar.vue'
 import EntityScanner from '@/app/wizard/components/EntityScanner.vue'
-import type { Zone } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const i18n = useI18n()
 const kumaApi = useKumaApi()
 
-const zone = ref<Zone | null>(null)
+const zone = ref<{ token: string } | null>(null)
 const isCreatingZone = ref(false)
 const error = ref<Error | null>(null)
 

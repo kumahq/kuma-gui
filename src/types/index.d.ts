@@ -442,14 +442,7 @@ export interface ExternalService extends MeshEntity {
 export interface Zone {
   name: string
   enabled: boolean
-
-  /**
-   * Base64-encoded token.
-   */
-  token?: string
 }
-
-export interface UnsavedZone extends Omit<Unsaved<Zone>, 'enabled'> {}
 
 /**
  * Overview entity as returned via the `/zones+insights/:zone` endpoint.
