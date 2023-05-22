@@ -1020,10 +1020,10 @@
     minimatch "^3.0.4"
     node-hook "^1.0.0"
 
-"@badeball/cypress-cucumber-preprocessor@^17.1.0":
-  version "17.1.0"
-  resolved "https://registry.yarnpkg.com/@badeball/cypress-cucumber-preprocessor/-/cypress-cucumber-preprocessor-17.1.0.tgz#5f97e59a231d5259ad96dbfd15980094fb9dce11"
-  integrity sha512-68RhMZFQHEHiiUZT7VjJKNQ8OdP16SsVnpPfi3QI96LJ+m0R4nt51JFkqOeXo9Vd/5/hRq29EEYR5pBa1YAMug==
+"@badeball/cypress-cucumber-preprocessor@^17.1.1":
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/@badeball/cypress-cucumber-preprocessor/-/cypress-cucumber-preprocessor-17.1.1.tgz#49e30318231e3e38cccba53c6c2b71e4fbfae2c8"
+  integrity sha512-I+aMg73B8tjiHA6pq3dM/wyieGwuZ+GPHU5tq9LrTJUR2NVmXzO8HTTshS6eqrMbM2Mm6H2djv1Twtp7/EJVtg==
   dependencies:
     "@badeball/cypress-configuration" "^6.0.0"
     "@cucumber/cucumber" "^9.1.0"
@@ -1043,6 +1043,7 @@
     esbuild "^0.17.18"
     glob "^10.2.2"
     is-path-inside "^3.0.3"
+    seedrandom "^3.0.5"
     source-map "^0.7.4"
     uuid "^9.0.0"
 
@@ -7386,6 +7387,11 @@ seed-random@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/seed-random/-/seed-random-2.2.0.tgz#2a9b19e250a817099231a5b99a4daf80b7fbed54"
   integrity sha512-34EQV6AAHQGhoc0tn/96a9Fsi6v2xdqe/dMUwljGRaFOzR3EgRmECvD0O8vi8X+/uQ50LGHfkNu/Eue5TPKZkQ==
+
+seedrandom@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-3.0.5.tgz#54edc85c95222525b0c7a6f6b3543d8e0b3aa0a7"
+  integrity sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==
 
 semver@7.3.8:
   version "7.3.8"
