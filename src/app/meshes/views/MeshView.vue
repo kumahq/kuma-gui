@@ -17,21 +17,16 @@
         {{ item.title }}
       </router-link>
     </template>
-    <template
-      v-for="item in items"
-      :key="item.hash"
-      #[item.hash]
-    >
-      <RouterView
-        v-slot="routerView"
-      >
-        <component
-          :is="routerView.Component"
-          :key="routerView.route.path"
-        />
-      </RouterView>
-    </template>
   </KTabs>
+
+  <RouterView
+    v-slot="{Component, route}"
+  >
+    <component
+      :is="Component"
+      :key="route.path"
+    />
+  </RouterView>
 </template>
 <script lang="ts" setup>
 import { KTabs } from '@kong/kongponents'
