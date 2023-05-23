@@ -599,46 +599,56 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
         <div
           class="radio-button-group"
         >
-          <label
+          <div
             checked="true"
-            class="k-radio k-radio-default"
+            class="k-radio d-inline-block k-radio-default"
           >
             <input
               class="k-input"
               data-testid="onboarding-standalone-radio-button"
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               name="mode"
               type="radio"
             />
-            <span
-              class="k-radio-label"
+            <label
+              class="k-input-label k-radio-label"
+              for="122d7b21-4357-44da-988f-de31f90b741f"
             >
+              
               
                Standalone deployment 
               
-            </span>
-            <!---->
-            <!---->
-          </label>
-          <label
+              <!---->
+              
+              <!---->
+              <!---->
+            </label>
+          </div>
+          <div
             checked="false"
-            class="k-radio k-radio-default"
+            class="k-radio d-inline-block k-radio-default"
           >
             <input
               class="k-input"
               data-testid="onboarding-multi-zone-radio-button"
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               name="mode"
               type="radio"
             />
-            <span
-              class="k-radio-label"
+            <label
+              class="k-input-label k-radio-label"
+              for="31c97e9e-b3df-48ba-b4b2-30d716d5a3fc"
             >
+              
               
                Multi-zone deployment 
               
-            </span>
-            <!---->
-            <!---->
-          </label>
+              <!---->
+              
+              <!---->
+              <!---->
+            </label>
+          </div>
         </div>
         
       </div>

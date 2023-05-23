@@ -888,63 +888,78 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
         <div
           class="radio-button-group"
         >
-          <label
+          <div
             checked="true"
-            class="k-radio k-radio-default"
+            class="k-radio d-inline-block k-radio-default"
           >
             <input
               class="k-input"
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               name="deployment"
               type="radio"
             />
-            <span
-              class="k-radio-label"
+            <label
+              class="k-input-label k-radio-label"
+              for="94dedc29-317d-4279-a3d0-47abfcbb91d2"
             >
+              
               
                Kubernetes 
               
-            </span>
-            <!---->
-            <!---->
-          </label>
-          <label
+              <!---->
+              
+              <!---->
+              <!---->
+            </label>
+          </div>
+          <div
             checked="false"
-            class="k-radio k-radio-default"
+            class="k-radio d-inline-block k-radio-default"
           >
             <input
               class="k-input"
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               name="deployment"
               type="radio"
             />
-            <span
-              class="k-radio-label"
+            <label
+              class="k-input-label k-radio-label"
+              for="4a4a967f-d6c2-40f7-a7cb-937135246808"
             >
+              
               
                Postgres 
               
-            </span>
-            <!---->
-            <!---->
-          </label>
-          <label
+              <!---->
+              
+              <!---->
+              <!---->
+            </label>
+          </div>
+          <div
             checked="false"
-            class="k-radio k-radio-default"
+            class="k-radio d-inline-block k-radio-default"
           >
             <input
               class="k-input"
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               name="deployment"
               type="radio"
             />
-            <span
-              class="k-radio-label"
+            <label
+              class="k-input-label k-radio-label"
+              for="4d9e6e87-035a-433c-b7ef-c211cb851637"
             >
+              
               
                Memory 
               
-            </span>
-            <!---->
-            <!---->
-          </label>
+              <!---->
+              
+              <!---->
+              <!---->
+            </label>
+          </div>
         </div>
         
       </div>
