@@ -16,13 +16,6 @@ Feature: mesh / index
           - name: default
           - name: aalphabetically-second-because-of-default
       """
-    And the URL "/mesh-insights" responds with
-      """
-      body:
-        items:
-          - name: default
-          - name: aalphabetically-second-because-of-default
-      """
     And the URL "/mesh-insights/default" responds with
       """
       body:
