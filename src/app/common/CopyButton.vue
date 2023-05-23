@@ -7,7 +7,7 @@
     size="small"
     :title="props.copyText"
     type="button"
-    @click="copyText"
+    @click="copy"
   >
     <KIcon
       color="var(--black-45)"
@@ -44,7 +44,7 @@ const props = defineProps({
   },
 })
 
-async function copyText(event: Event) {
+async function copy(event: Event) {
   const button = event.currentTarget
   const hasCopiedCodeSuccessfully = await copyTextToClipboard(props.text)
 
