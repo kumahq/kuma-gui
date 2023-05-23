@@ -2,7 +2,6 @@
   <div class="kcard-stack">
     <div class="kcard-border">
       <DataOverview
-        :selected-entity-name="entity?.name"
         :page-size="PAGE_SIZE_DEFAULT"
         :is-loading="isLoading"
         :error="error"
@@ -11,7 +10,6 @@
         :table-data-is-empty="tableData.data.length === 0"
         :next="nextUrl"
         :page-offset="pageOffset"
-        @table-action="loadEntity"
         @load-data="loadData"
       />
     </div>
@@ -65,7 +63,6 @@ const tableData = ref<{ headers: TableHeader[], data: MeshTableRow[] }>({
   ],
   data: [],
 })
-const entity = ref<Mesh | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
 
@@ -99,10 +96,8 @@ async function loadData(offset: number) {
 
     nextUrl.value = next
     tableData.value.data = transformToTableData(items ?? [])
-    await loadEntity({ name: props.selectedMeshName ?? tableData.value.data[0]?.entity.name })
   } catch (err) {
     tableData.value.data = []
-    entity.value = null
 
     if (err instanceof Error) {
       error.value = err
@@ -129,20 +124,5 @@ function transformToTableData(meshInsights: Mesh[]): MeshTableRow[] {
       detailViewRoute,
     }
   })
-}
-
-async function loadEntity({ name }: { name?: string | undefined }) {
-  if (name === undefined) {
-    entity.value = null
-    QueryParameter.set('mesh', null)
-    return
-  }
-
-  try {
-    entity.value = await kumaApi.getMesh({ name })
-    QueryParameter.set('mesh', name)
-  } catch (err) {
-    console.error(err)
-  }
 }
 </script>
