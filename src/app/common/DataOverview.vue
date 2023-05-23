@@ -78,6 +78,7 @@
             <router-link
               v-if="row.detailViewRoute"
               :to="row.detailViewRoute"
+              data-testid="detail-view-link"
             >
               {{ rowValue.name }}
             </router-link>

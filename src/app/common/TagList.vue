@@ -18,14 +18,13 @@
 <script lang="ts" setup>
 import { KBadge } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
-import { RouteLocation, useRouter } from 'vue-router'
+import { RouteLocation, useRoute, useRouter } from 'vue-router'
 
-import { useStore } from '@/store/store'
 import { LabelValue } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
 
+const route = useRoute()
 const router = useRouter()
-const store = useStore()
 
 interface LabelValueWithRoute extends LabelValue {
   route: RouteLocation | undefined
@@ -66,10 +65,15 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
         })
       }
       case 'kuma.io/service': {
+        // Annotations by themselves don’t have information about a service’s associated mesh. The easiest solution is to read this information from the current route. A better approach could be to provide the current mesh as an optional prop to `TagList`.
+        if (!('mesh' in route.params)) {
+          return undefined
+        }
+
         return router.resolve({
           name: 'service-detail-view',
           params: {
-            mesh: store.state.selectedMesh,
+            mesh: route.params.mesh,
             service: tag.value,
           },
         })

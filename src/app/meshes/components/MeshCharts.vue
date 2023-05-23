@@ -12,10 +12,12 @@
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
 import { useStore } from '@/store/store'
 
+const route = useRoute()
 const store = useStore()
 
 const servicesChartData = computed(() => store.getters.getChart('services', {
@@ -36,15 +38,15 @@ const envoyVersionsChartData = computed(() => store.getters.getChart('envoyVersi
   subtitle: 'versions',
 }))
 
-watch(() => store.state.selectedMesh, function () {
-  loadData()
-})
+watch(() => route.params.mesh, function (newMesh) {
+  if (typeof newMesh === 'string') {
+    loadData(newMesh)
+  }
+}, { immediate: true })
 
-loadData()
-
-function loadData() {
-  store.dispatch('fetchMeshInsights', store.state.selectedMesh)
-  store.dispatch('fetchServices', store.state.selectedMesh)
+function loadData(mesh: string) {
+  store.dispatch('fetchMeshInsights', mesh)
+  store.dispatch('fetchServices', mesh)
 }
 </script>
 

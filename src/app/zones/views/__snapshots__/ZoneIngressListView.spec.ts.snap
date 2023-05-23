@@ -155,6 +155,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                         
                         <a
                           class=""
+                          data-testid="detail-view-link"
                           href="/zone-ingresses/zone-ingress-1"
                         >
                           zone-ingress-1

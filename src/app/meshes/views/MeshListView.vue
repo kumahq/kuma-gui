@@ -142,13 +142,13 @@ function transformToTableData(meshInsights: MeshInsight[]): MeshTableRow[] {
 async function loadEntity({ name }: { name?: string | undefined }) {
   if (name === undefined) {
     entity.value = null
-    QueryParameter.set('zone', null)
+    QueryParameter.set('mesh', null)
     return
   }
 
   try {
     entity.value = await kumaApi.getMeshInsights({ name })
-    QueryParameter.set('zone', name)
+    QueryParameter.set('mesh', name)
   } catch (err) {
     console.error(err)
   }

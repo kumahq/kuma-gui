@@ -1,30 +1,22 @@
 <template>
   <div class="app-sidebar-wrapper">
     <aside class="app-sidebar">
-      <template
+      <AppNavItem
         v-for="(item, index) in navItems"
         :key="index"
-      >
-        <template v-if="item.isMeshSelector">
-          <AppMeshSelector
-            v-if="meshes.length > 0"
-            :meshes="meshes"
-          />
-        </template>
-
-        <AppNavItem
-          v-else
-          v-bind="item"
-        />
-      </template>
+        :name="item.name"
+        :route-name="item.routeName"
+        :anchor-route-name="item.anchorRouteName"
+        :insights-field-accessor="item.insightsFieldAccessor"
+      />
     </aside>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
-import AppMeshSelector from './AppMeshSelector.vue'
 import AppNavItem from './AppNavItem.vue'
 import { useStore } from '@/store/store'
 import { useNav } from '@/utilities'
@@ -32,14 +24,16 @@ import { poll } from '@/utilities/poll'
 
 const POLLING_INTERVAL_IN_SECONDS = 10
 
-const store = useStore()
 const getNavItems = useNav()
+const route = useRoute()
+const store = useStore()
 
-const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus'], store.state.meshes.items.length > 0))
-const meshes = computed(() => store.state.meshes.items)
+const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus']))
 
-watch(() => store.state.selectedMesh, () => {
-  store.dispatch('sidebar/getMeshInsights')
+watch(() => route.params.mesh, (newMesh, oldMesh) => {
+  if (newMesh !== oldMesh && newMesh) {
+    store.dispatch('sidebar/getMeshInsights', newMesh)
+  }
 })
 
 let shouldStopPolling = false
