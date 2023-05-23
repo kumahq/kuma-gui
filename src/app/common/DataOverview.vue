@@ -364,7 +364,7 @@ const tableHeaders = computed(() => {
   }
 })
 const customSlots = computed(() => props.tableData.headers.map((header) => header.key).filter((key) => slots[key]))
-const selectedEntityName = computed(() => {
+const currentSelectedEntityName = computed(() => {
   if (props.selectedEntityName !== '') {
     return props.selectedEntityName
   } else if (props.tableData.data.length > 0) {
@@ -426,7 +426,7 @@ function getRowAttributes(row: any): Record<string, string> {
   const attributes: Record<string, string> = {}
 
   const name = row.entity?.name ?? row.name
-  if (name === selectedEntityName.value) {
+  if (name === currentSelectedEntityName.value) {
     attributes.class = 'is-selected'
   }
 
