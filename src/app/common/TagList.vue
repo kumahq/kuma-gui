@@ -66,6 +66,7 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
       }
       case 'kuma.io/service': {
         // Annotations by themselves don’t have information about a service’s associated mesh. The easiest solution is to read this information from the current route. A better approach could be to provide the current mesh as an optional prop to `TagList`.
+        // TODO: Consider adding an optional `props.mesh` to this component and provide it whenever passing tags from a mesh resource. That would make this unambiguous.
         if (!('mesh' in route.params)) {
           return undefined
         }
