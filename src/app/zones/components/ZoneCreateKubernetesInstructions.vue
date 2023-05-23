@@ -105,10 +105,9 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import type { Zone } from '@/types/index.d'
 import { useEnv, useI18n } from '@/utilities'
 import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
 
@@ -117,8 +116,8 @@ const getGlobalKdsAddress = useGetGlobalKdsAddress()
 const i18n = useI18n()
 
 const props = defineProps({
-  zone: {
-    type: Object as PropType<Zone>,
+  zoneName: {
+    type: String,
     required: true,
   },
 
@@ -147,7 +146,7 @@ const kubernetesCreateSecretCommand = computed(() => i18n.t('zones.form.kubernet
   token: props.base64EncodedToken,
 }).trim())
 const kubernetesConfig = computed(() => i18n.t('zones.form.kubernetes.connectZone.config', {
-  zoneName: props.zone.name,
+  zoneName: props.zoneName,
   globalKdsAddress: getGlobalKdsAddress(),
   zoneIngressEnabled: String(props.zoneIngressEnabled),
   zoneEgressEnabled: String(props.zoneEgressEnabled),

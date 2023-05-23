@@ -48,10 +48,9 @@
 
 <script lang="ts" setup>
 import { KAlert } from '@kong/kongponents'
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import type { Zone } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
 
@@ -59,8 +58,8 @@ const getGlobalKdsAddress = useGetGlobalKdsAddress()
 const i18n = useI18n()
 
 const props = defineProps({
-  zone: {
-    type: Object as PropType<Zone>,
+  zoneName: {
+    type: String,
     required: true,
   },
 
@@ -76,7 +75,7 @@ const props = defineProps({
 })
 
 const universalConfig = computed(() => i18n.t('zones.form.universal.connectZone.config', {
-  zoneName: props.zone.name,
+  zoneName: props.zoneName,
   globalKdsAddress: getGlobalKdsAddress(),
   token: props.base64EncodedToken,
 }).trim())
