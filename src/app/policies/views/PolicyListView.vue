@@ -230,11 +230,13 @@ watch(() => route.params.mesh, function () {
 
 start()
 
-function start() {
+async function start() {
   const policyType = store.state.policyTypesByPath[props.policyPath]
 
   if (policyType !== undefined) {
-    store.dispatch('updatePageTitle', policyType.name)
+    // Makes sure to reset the title before setting it again so we’re sure it is applied.
+    await store.dispatch('updatePageTitle', '')
+    await store.dispatch('updatePageTitle', policyType.name)
   }
 
   loadData(props.offset)
