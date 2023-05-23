@@ -900,7 +900,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             />
             <label
               class="k-input-label k-radio-label"
-              for="94dedc29-317d-4279-a3d0-47abfcbb91d2"
+              for="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
               
@@ -924,7 +924,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             />
             <label
               class="k-input-label k-radio-label"
-              for="4a4a967f-d6c2-40f7-a7cb-937135246808"
+              for="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
               
@@ -948,7 +948,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             />
             <label
               class="k-input-label k-radio-label"
-              for="4d9e6e87-035a-433c-b7ef-c211cb851637"
+              for="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
               
