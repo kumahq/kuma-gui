@@ -14,7 +14,7 @@ Feature: mesh / index
       body:
         items:
           - name: default
-          - name: aalphabetically-second-because-of-default
+          - name: another-mesh
       """
     And the URL "/mesh-insights/default" responds with
       """
@@ -23,7 +23,7 @@ Feature: mesh / index
           gateway:
             total: 1
       """
-    And the URL "/mesh-insights/aalphabetically-second-because-of-default" responds with
+    And the URL "/mesh-insights/another-mesh" responds with
       """
       body:
         dataplanesByType:
@@ -38,6 +38,6 @@ Feature: mesh / index
     And the "$mesh-breadcrumb" element contains "<Mesh>"
 
     Examples:
-      | Mesh                                      | Selector                                         |
-      | aalphabetically-second-because-of-default | [data-testid='data-overview-table'] tbody tr:nth-child(2) [data-testid='detail-view-link'] |
-      | default                                   | [data-testid='data-overview-table'] tbody tr:nth-child(1) [data-testid='detail-view-link'] |
+      | Mesh         | Selector |
+      | another-mesh | [data-testid='data-overview-table'] tbody tr:nth-child(2) [data-testid='detail-view-link'] |
+      | default      | [data-testid='data-overview-table'] tbody tr:nth-child(1) [data-testid='detail-view-link'] |
