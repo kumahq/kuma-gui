@@ -24,15 +24,13 @@ import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
 import DataOverview from '@/app/common/DataOverview.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { MeshInsight, TableHeader } from '@/types/index.d'
+import { Mesh, TableHeader } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 type MeshTableRow = {
-  entity: MeshInsight
+  entity: Mesh
   detailViewRoute: RouteLocationNamedRaw
-  services: number
-  dataPlaneProxies: number
 }
 
 const i18n = useI18n()
@@ -64,12 +62,10 @@ const error = ref<Error | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: MeshTableRow[] }>({
   headers: [
     { label: 'Name', key: 'entity' },
-    { label: 'Services', key: 'services' },
-    { label: 'Data Plane Proxies', key: 'dataPlaneProxies' },
   ],
   data: [],
 })
-const entity = ref<MeshInsight | null>(null)
+const entity = ref<Mesh | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
 
@@ -99,7 +95,7 @@ async function loadData(offset: number) {
   const size = PAGE_SIZE_DEFAULT
 
   try {
-    const { items, next } = await kumaApi.getAllMeshInsights({ size, offset })
+    const { items, next } = await kumaApi.getAllMeshes({ size, offset })
 
     nextUrl.value = next
     tableData.value.data = transformToTableData(items ?? [])
@@ -118,23 +114,19 @@ async function loadData(offset: number) {
   }
 }
 
-function transformToTableData(meshInsights: MeshInsight[]): MeshTableRow[] {
+function transformToTableData(meshInsights: Mesh[]): MeshTableRow[] {
   return meshInsights.map((entity) => {
-    const { name, services: serviceTotals, dataplanes: dataPlaneProxyTotals } = entity
+    const { name } = entity
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'mesh-detail-view',
       params: {
         mesh: name,
       },
     }
-    const services = serviceTotals.total ?? 0
-    const dataPlaneProxies = dataPlaneProxyTotals.total ?? 0
 
     return {
       entity,
       detailViewRoute,
-      services,
-      dataPlaneProxies,
     }
   })
 }
@@ -147,7 +139,7 @@ async function loadEntity({ name }: { name?: string | undefined }) {
   }
 
   try {
-    entity.value = await kumaApi.getMeshInsights({ name })
+    entity.value = await kumaApi.getMesh({ name })
     QueryParameter.set('mesh', name)
   } catch (err) {
     console.error(err)
