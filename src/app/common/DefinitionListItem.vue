@@ -1,7 +1,7 @@
 <template>
   <div class="definition-list-item">
     <dt class="definition-list-item__term">
-      {{ term }}
+      {{ currentTerm }}
     </dt>
 
     <dd class="definition-list-item__details">
@@ -24,7 +24,7 @@ const props = defineProps({
   },
 })
 
-const term = computed(() => t(`http.api.property.${props.term}`))
+const currentTerm = computed(() => t(`http.api.property.${props.term}`))
 </script>
 
 <style lang="scss" scoped>

@@ -36,10 +36,10 @@
     <input
       :id="`${props.id}-filter-bar-input`"
       ref="filterInput"
-      v-model="query"
+      v-model="currentQuery"
       class="k-filter-bar-input"
       type="text"
-      :placeholder="placeholder"
+      :placeholder="currentPlaceholder"
       data-testid="k-filter-bar-filter-input"
       @focus="isShowingSuggestionBox = true"
       @blur="closeSuggestionBoxIfCondition"
@@ -68,7 +68,7 @@
           data-testid="k-filter-bar-submit-query-button"
           @click="submitQuery"
         >
-          Submit {{ query }}
+          Submit {{ currentQuery }}
         </button>
 
         <div
@@ -102,7 +102,7 @@
     </div>
 
     <button
-      v-if="query !== ''"
+      v-if="currentQuery !== ''"
       class="k-clear-query-button"
       title="Clear query"
       type="button"
@@ -188,8 +188,8 @@ const emit = defineEmits<{
 
 const filterBar = ref<HTMLElement | null>(null)
 const filterInput = ref<HTMLInputElement | null>(null)
-const query = ref(props.query)
-const fields = ref<Fields>([])
+const currentQuery = ref(props.query)
+const currentFields = ref<Fields>([])
 const tokenizerError = ref<Error | null>(null)
 const isShowingSuggestionBox = ref(false)
 /**
@@ -213,19 +213,19 @@ const placeholderAndLabelFallback = computed(() => {
   }
 })
 
-const placeholder = computed(() => props.placeholder ?? placeholderAndLabelFallback.value)
+const currentPlaceholder = computed(() => props.placeholder ?? placeholderAndLabelFallback.value)
 
-watch(() => fields.value, function (newFields, oldFields) {
+watch(() => currentFields.value, function (newFields, oldFields) {
   // Only emits the event if the fields have changed.
   if (!areFieldsSemanticallyIdentical(newFields, oldFields)) {
     tokenizerError.value = null
 
-    emit('fields-change', { fields: newFields, query: query.value })
+    emit('fields-change', { fields: newFields, query: currentQuery.value })
   }
 })
 
-watch(() => query.value, function () {
-  if (query.value === '') {
+watch(() => currentQuery.value, function () {
+  if (currentQuery.value === '') {
     tokenizerError.value = null
   }
 
@@ -291,7 +291,7 @@ function start() {
     shortcutManager.unRegisterListener()
   })
 
-  recomputeFields(query.value)
+  recomputeFields(currentQuery.value)
 }
 
 start()
@@ -346,14 +346,14 @@ function applySuggestion(event: Event): void {
 }
 
 function appendFieldSuggestionToFilterInput(input: HTMLInputElement, fieldName: string) {
-  const delimitingSpace = query.value === '' || query.value.endsWith(' ') ? '' : ' '
-  query.value += delimitingSpace + fieldName + ':'
+  const delimitingSpace = currentQuery.value === '' || currentQuery.value.endsWith(' ') ? '' : ' '
+  currentQuery.value += delimitingSpace + fieldName + ':'
   input.focus()
   selectedSuggestionItemIndex.value = -1
 }
 
 function clearQuery(): void {
-  query.value = ''
+  currentQuery.value = ''
 
   if (filterInput.value instanceof HTMLInputElement) {
     filterInput.value.value = ''
@@ -393,7 +393,7 @@ function recomputeFields(query: string): void {
     // For example, the fields `[['a', 'a'], ['b', 'b']]` and `[['b', 'b'], ['a', 'a']]` should be considered semantically identical.
     newFields.sort((newFieldsA, newFieldsB) => newFieldsA[0].localeCompare(newFieldsB[0]))
 
-    fields.value = newFields
+    currentFields.value = newFields
   } catch (error) {
     if (error instanceof Error) {
       tokenizerError.value = error
