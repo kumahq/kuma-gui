@@ -74,7 +74,7 @@
 
       <div class="kcard-border">
         <TabsWidget
-          v-if="entity !== null"
+          v-if="entity !== null && detailViewRoute !== null"
           :has-error="error !== null"
           :error="error"
           :is-loading="isLoading"
@@ -85,7 +85,13 @@
               class="entity-heading"
               data-testid="policy-single-entity"
             >
-              {{ policyType.name }}: {{ entity.name }}
+              {{ policyType.name }}:
+
+              <TextWithCopyButton :text="entity.name">
+                <router-link :to="detailViewRoute">
+                  {{ entity.name }}
+                </router-link>
+              </TextWithCopyButton>
             </h1>
           </template>
 
@@ -96,7 +102,13 @@
                 :key="property"
                 :term="property"
               >
-                {{ value }}
+                <template v-if="property === 'name'">
+                  <TextWithCopyButton :text="value" />
+                </template>
+
+                <template v-else>
+                  {{ value }}
+                </template>
               </DefinitionListItem>
             </DefinitionList>
 
@@ -139,6 +151,7 @@ import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
@@ -203,6 +216,21 @@ const tableData = ref<{ headers: TableHeader[], data: PolicyEntityTableRow[] }>(
     { label: 'Type', key: 'type' },
   ],
   data: [],
+})
+
+const detailViewRoute = computed(() => {
+  if (entity.value === null) {
+    return null
+  }
+
+  return {
+    name: 'policy-detail-view',
+    params: {
+      mesh: entity.value.mesh,
+      policy: entity.value.name,
+      policyPath: props.policyPath,
+    },
+  }
 })
 
 const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])

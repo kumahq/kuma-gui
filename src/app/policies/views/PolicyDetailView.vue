@@ -18,7 +18,13 @@
           class="entity-heading"
           data-testid="policy-single-entity"
         >
-          {{ policy.name }}
+          {{ policy.type }}:
+
+          <TextWithCopyButton :text="policy.name">
+            <router-link :to="detailViewRoute">
+              {{ policy.name }}
+            </router-link>
+          </TextWithCopyButton>
         </h1>
       </template>
 
@@ -64,6 +70,7 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { useStore } from '@/store/store'
 import type {
@@ -95,6 +102,15 @@ const tabs = [
 const rawPolicy = ref<PolicyEntity | null>(null)
 const isLoading = ref<Boolean>(true)
 const error = ref<Error | null>(null)
+
+const detailViewRoute = computed(() => ({
+  name: 'policy-detail-view',
+  params: {
+    mesh: props.mesh,
+    policy: props.policyName,
+    policyPath: props.policyPath,
+  },
+}))
 
 const policy = computed(() => {
   if (rawPolicy.value === null) {

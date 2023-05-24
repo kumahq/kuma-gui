@@ -2,7 +2,13 @@
   <TabsWidget :tabs="filteredTabs">
     <template #tabHeader>
       <h1 class="entity-heading">
-        DPP: {{ dataPlane.name }}
+        DPP:
+
+        <TextWithCopyButton :text="dataPlane.name">
+          <router-link :to="detailViewRoute">
+            {{ dataPlane.name }}
+          </router-link>
+        </TextWithCopyButton>
       </h1>
     </template>
 
@@ -177,6 +183,7 @@ import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
@@ -251,6 +258,14 @@ const tabs = [
 ]
 
 const warnings = ref<Compatibility[]>([])
+
+const detailViewRoute = computed(() => ({
+  name: 'data-plane-detail-view',
+  params: {
+    mesh: props.dataPlane.mesh,
+    dataPlane: props.dataPlane.name,
+  },
+}))
 
 const processedDataPlane = computed(() => {
   const { type, name, mesh } = props.dataPlane

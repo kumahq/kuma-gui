@@ -1,0 +1,3 @@
+common:
+  copyText: 'Copy'
+  copySuccessText: 'Copied!'

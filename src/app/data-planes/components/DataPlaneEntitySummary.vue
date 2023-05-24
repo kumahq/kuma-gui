@@ -10,17 +10,11 @@
             <span>
               DPP:
 
-              <router-link
-                :to="{
-                  name: 'data-plane-detail-view',
-                  params: {
-                    mesh: dataPlaneOverview.mesh,
-                    dataPlane: dataPlaneOverview.name,
-                  },
-                }"
-              >
-                {{ dataPlaneOverview.name }}
-              </router-link>
+              <TextWithCopyButton :text="dataPlaneOverview.name">
+                <router-link :to="detailViewRoute">
+                  {{ dataPlaneOverview.name }}
+                </router-link>
+              </TextWithCopyButton>
             </span>
 
             <StatusBadge :status="status" />
@@ -146,6 +140,7 @@ import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { DataPlaneOverview } from '@/types/index.d'
 import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'
@@ -157,6 +152,14 @@ const props = defineProps({
     required: true,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'data-plane-detail-view',
+  params: {
+    mesh: props.dataPlaneOverview.mesh,
+    dataPlane: props.dataPlaneOverview.name,
+  },
+}))
 
 const dataPlane = computed(() => {
   const { name, mesh, dataplane } = props.dataPlaneOverview

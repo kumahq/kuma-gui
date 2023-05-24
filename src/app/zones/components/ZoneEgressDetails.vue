@@ -2,7 +2,13 @@
   <TabsWidget :tabs="TABS">
     <template #tabHeader>
       <h1 class="entity-heading">
-        Zone Egress: {{ processedZoneEgressOverview.name }}
+        Zone Egress:
+
+        <TextWithCopyButton :text="processedZoneEgressOverview.name">
+          <router-link :to="detailViewRoute">
+            {{ processedZoneEgressOverview.name }}
+          </router-link>
+        </TextWithCopyButton>
       </h1>
     </template>
 
@@ -13,7 +19,13 @@
           :key="property"
           :term="property"
         >
-          {{ value }}
+          <template v-if="property === 'name'">
+            <TextWithCopyButton :text="value" />
+          </template>
+
+          <template v-else>
+            {{ value }}
+          </template>
         </DefinitionListItem>
       </DefinitionList>
     </template>
@@ -75,6 +87,7 @@ import EnvoyData from '@/app/common/EnvoyData.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { ZoneEgressOverview } from '@/types/index.d'
 
 const TABS = [
@@ -106,6 +119,13 @@ const props = defineProps({
     required: true,
   },
 })
+
+const detailViewRoute = computed(() => ({
+  name: 'zone-egress-detail-view',
+  params: {
+    zoneEgress: props.zoneEgressOverview.name,
+  },
+}))
 
 const processedZoneEgressOverview = computed(() => {
   const { type, name } = props.zoneEgressOverview
