@@ -423,889 +423,914 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                 </dl>
               </div>
               <div
-                class="yaml-view mt-4"
+                class="mt-4"
               >
-                <div
-                  class="yaml-view-content"
-                >
+                <div>
+                  
                   <div
-                    class="k-tabs"
+                    class="k-code-block theme-light code-block"
+                    data-testid="k-code-block"
+                    id="code-block-data-plane"
+                    style="--maxLineNumberWidth: 2ch;"
+                    tabindex="0"
                   >
-                    <ul
-                      aria-label="Tabs"
-                      role="tablist"
-                    >
-                      
-                      <li
-                        aria-controls="panel-0"
-                        aria-selected="true"
-                        class="tab-item active"
-                        id="universal-tab"
-                        role="tab"
-                        tabindex="0"
-                      >
-                        <div
-                          class="tab-link"
-                        >
-                          
-                          Universal
-                          
-                        </div>
-                      </li>
-                      <li
-                        aria-controls="panel-1"
-                        aria-selected="false"
-                        class="tab-item"
-                        id="kubernetes-tab"
-                        role="tab"
-                        tabindex="0"
-                      >
-                        <div
-                          class="tab-link"
-                        >
-                          
-                          Kubernetes
-                          
-                        </div>
-                      </li>
-                      
-                    </ul>
-                    
                     <div
-                      aria-labelledby="universal-tab"
-                      class="tab-container"
-                      id="panel-0"
-                      role="tabpanel"
-                      tabindex="0"
+                      class="k-code-block-actions"
                     >
-                      
+                      <p
+                        class="k-code-block-search-results"
+                      >
+                        
+                           
+                        
+                      </p>
                       <div
-                        class="k-code-block theme-light code-block"
-                        data-testid="k-code-block"
-                        id="code-block-data-plane"
-                        style="--maxLineNumberWidth: 2ch;"
-                        tabindex="0"
+                        class="k-search-container"
                       >
-                        <div
-                          class="k-code-block-actions"
+                        <span
+                          class="k-search-icon kong-icon kong-icon-search"
+                          data-testid="k-code-block-search-icon"
                         >
-                          <p
-                            class="k-code-block-search-results"
+                          <svg
+                            data-testid="k-code-block-search-icon"
+                            fill="var(--steel-500)"
+                            height="20"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
                             
-                               
+  
+                            <title>
+                              Search
+                            </title>
                             
-                          </p>
-                          <div
-                            class="k-search-container"
-                          >
-                            <span
-                              class="k-search-icon kong-icon kong-icon-search"
-                              data-testid="k-code-block-search-icon"
-                            >
-                              <svg
-                                data-testid="k-code-block-search-icon"
-                                fill="var(--steel-500)"
-                                height="20"
-                                role="img"
-                                viewBox="0 0 24 24"
-                                width="20"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                
   
-                                <title>
-                                  Search
-                                </title>
-                                
-  
-                                <path
-                                  d="M10.88 18.75a7.88 7.88 0 1 0 0-15.75 7.88 7.88 0 0 0 0 15.75ZM16.44 16.44 21 21"
-                                  fill="none"
-                                  stroke="var(--steel-500)"
-                                  stroke-width="3"
-                                />
-                                
-
-                              </svg>
-                              
-
-                            </span>
-                            <label
-                              class="k-code-block-search-label"
-                              for="code-block-data-plane-search-input"
-                            >
-                              <span
-                                class="k-visually-hidden"
-                              >
-                                Search
-                              </span>
-                            </label>
-                            <input
-                              class="k-code-block-search-input"
-                              data-testid="k-code-block-search-input"
-                              id="code-block-data-plane-search-input"
-                              type="text"
+                            <path
+                              d="M10.88 18.75a7.88 7.88 0 1 0 0-15.75 7.88 7.88 0 0 0 0 15.75ZM16.44 16.44 21 21"
+                              fill="none"
+                              stroke="var(--steel-500)"
+                              stroke-width="3"
                             />
-                            <!---->
-                            <span
-                              class="k-is-processing-icon kong-icon kong-icon-spinner"
-                              data-testid="k-code-block-is-processing-icon"
-                            >
-                              <svg
-                                data-testid="k-code-block-is-processing-icon"
-                                fill="var(--steel-500)"
-                                height="24"
-                                role="img"
-                                viewBox="0 0 20 20"
-                                width="24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                
-  
-                                <title>
-                                  Loading
-                                </title>
-                                
-  
-                                <g>
-                                  
-    
-                                  <path
-                                    d="M5 10a5 5 0 1 0 5-5"
-                                    fill="none"
-                                    stroke="var(--steel-500)"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                  />
-                                  
-  
-                                </g>
-                                
+                            
 
-                              </svg>
-                              
+                          </svg>
+                          
 
-                            </span>
-                            <!---->
-                          </div>
-                          <div
-                            class="k-search-actions"
-                          >
-                            <button
-                              aria-pressed="false"
-                              class="k-button small outline k-regexp-mode-button"
-                              data-testid="k-code-block-regexp-mode-button"
-                              title="Use regular expression (Alt+R)"
-                              type="button"
-                            >
-                              
-                              <!---->
-                              
-                              
-                              <span
-                                class="k-visually-hidden"
-                              >
-                                RegExp mode enabled
-                              </span>
-                               .* 
-                              
-                              <!---->
-                            </button>
-                            <button
-                              aria-pressed="false"
-                              class="k-button small outline k-filter-mode-button"
-                              data-testid="k-code-block-filter-mode-button"
-                              title="Filter results (Alt+F)"
-                              type="button"
-                            >
-                              
-                              <span
-                                class="k-button-icon kong-icon kong-icon-filter"
-                              >
-                                <svg
-                                  height="16"
-                                  role="img"
-                                  viewBox="0 0 14 11"
-                                  width="16"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  
-  
-                                  <title>
-                                    Filter results (Alt+F)
-                                  </title>
-                                  
-  
-                                  <path
-                                    d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
-                                    fill="currentColor"
-                                    fill-rule="evenodd"
-                                  />
-                                  
-
-                                </svg>
-                                
-
-                              </span>
-                              
-                              
-                              <span
-                                class="k-visually-hidden"
-                              >
-                                Filter mode enabled
-                              </span>
-                              
-                              <!---->
-                            </button>
-                            <button
-                              class="k-button small outline k-previous-match-button"
-                              data-testid="k-code-block-previous-match-button"
-                              disabled=""
-                              title="Previous match (Shift+F3)"
-                              type="button"
-                            >
-                              
-                              <span
-                                class="k-button-icon kong-icon kong-icon-chevronUp"
-                              >
-                                <svg
-                                  fill="currentColor"
-                                  height="16"
-                                  role="img"
-                                  viewBox="0 0 20 20"
-                                  width="16"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  
-  
-                                  <title>
-                                    Previous match (Shift+F3)
-                                  </title>
-                                  
-  
-                                  <path
-                                    d="M15 12 9.8 7l-5.2 5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                  />
-                                  
-
-                                </svg>
-                                
-
-                              </span>
-                              
-                              
-                              <span
-                                class="k-visually-hidden"
-                              >
-                                Previous match
-                              </span>
-                              
-                              <!---->
-                            </button>
-                            <button
-                              class="k-button small outline k-next-match-button"
-                              data-testid="k-code-block-next-match-button"
-                              disabled=""
-                              title="Next match (F3)"
-                              type="button"
-                            >
-                              
-                              <span
-                                class="k-button-icon kong-icon kong-icon-chevronDown"
-                              >
-                                <svg
-                                  fill="currentColor"
-                                  height="16"
-                                  role="img"
-                                  viewBox="0 0 20 20"
-                                  width="16"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  
-  
-                                  <title>
-                                    Next match (F3)
-                                  </title>
-                                  
-  
-                                  <path
-                                    d="m4.6 7 5.2 5L15 7"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                  />
-                                  
-
-                                </svg>
-                                
-
-                              </span>
-                              
-                              
-                              <span
-                                class="k-visually-hidden"
-                              >
-                                Next match
-                              </span>
-                              
-                              <!---->
-                            </button>
-                          </div>
-                        </div>
-                        <div
-                          class="k-code-block-content"
+                        </span>
+                        <label
+                          class="k-code-block-search-label"
+                          for="code-block-data-plane-search-input"
                         >
-                          <pre
-                            class="k-highlighted-code-block show-copy-button language-yaml"
-                            data-testid="k-code-block-highlighted-code-block"
-                            tabindex="0"
+                          <span
+                            class="k-visually-hidden"
                           >
-                                    
-                            <span
-                              class="k-line-number-rows"
-                            >
-                              
-          
-                              
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L1"
-                                >
-                                  1
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L2"
-                                >
-                                  2
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L3"
-                                >
-                                  3
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L4"
-                                >
-                                  4
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L5"
-                                >
-                                  5
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L6"
-                                >
-                                  6
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L7"
-                                >
-                                  7
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L8"
-                                >
-                                  8
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L9"
-                                >
-                                  9
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L10"
-                                >
-                                  10
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L11"
-                                >
-                                  11
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L12"
-                                >
-                                  12
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L13"
-                                >
-                                  13
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L14"
-                                >
-                                  14
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L15"
-                                >
-                                  15
-                                </a>
-                                
-          
-                              </span>
-                              <span
-                                class="k-line"
-                              >
-                                
-            
-                                <a
-                                  class="k-line-anchor"
-                                  id="code-block-data-plane-L16"
-                                >
-                                  16
-                                </a>
-                                
-          
-                              </span>
-                              
-                              
-        
-                            </span>
+                            Search
+                          </span>
+                        </label>
+                        <input
+                          class="k-code-block-search-input"
+                          data-testid="k-code-block-search-input"
+                          id="code-block-data-plane-search-input"
+                          type="text"
+                        />
+                        <!---->
+                        <span
+                          class="k-is-processing-icon kong-icon kong-icon-spinner"
+                          data-testid="k-code-block-is-processing-icon"
+                        >
+                          <svg
+                            data-testid="k-code-block-is-processing-icon"
+                            fill="var(--steel-500)"
+                            height="24"
+                            role="img"
+                            viewBox="0 0 20 20"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
                             
-        
-                            <code
-                              class="language-yaml"
-                            >
-                              <span
-                                class="token key atrule"
-                              >
-                                type
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               Dataplane
-
-                              <span
-                                class="token key atrule"
-                              >
-                                mesh
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               test
-                              <span
-                                class="token punctuation"
-                              >
-                                -
-                              </span>
-                              mesh
-
-                              <span
-                                class="token key atrule"
-                              >
-                                name
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               backend
-
-                              <span
-                                class="token key atrule"
-                              >
-                                networking
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                              
   
-                              <span
-                                class="token key atrule"
-                              >
-                                address
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               127.0.0.1
+                            <title>
+                              Loading
+                            </title>
+                            
   
-                              <span
-                                class="token key atrule"
-                              >
-                                inbound
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
+                            <g>
                               
     
-                              <span
-                                class="token punctuation"
-                              >
-                                -
-                              </span>
-                               
-                              <span
-                                class="token key atrule"
-                              >
-                                port
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               
-                              <span
-                                class="token number"
-                              >
-                                7776
-                              </span>
+                              <path
+                                d="M5 10a5 5 0 1 0 5-5"
+                                fill="none"
+                                stroke="var(--steel-500)"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
                               
-      
-                              <span
-                                class="token key atrule"
-                              >
-                                servicePort
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               
-                              <span
-                                class="token number"
-                              >
-                                7777
-                              </span>
-                              
-      
-                              <span
-                                class="token key atrule"
-                              >
-                                serviceAddress
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               127.0.0.1
-      
-                              <span
-                                class="token key atrule"
-                              >
-                                tags
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                              
-        
-                              <span
-                                class="token key atrule"
-                              >
-                                kuma.io/protocol
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               http
-        
-                              <span
-                                class="token key atrule"
-                              >
-                                kuma.io/service
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               backend
   
-                              <span
-                                class="token key atrule"
-                              >
-                                outbound
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                              
-    
-                              <span
-                                class="token punctuation"
-                              >
-                                -
-                              </span>
-                               
-                              <span
-                                class="token key atrule"
-                              >
-                                port
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               
-                              <span
-                                class="token number"
-                              >
-                                10001
-                              </span>
-                              
-      
-                              <span
-                                class="token key atrule"
-                              >
-                                tags
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                              
-        
-                              <span
-                                class="token key atrule"
-                              >
-                                kuma.io/service
-                              </span>
-                              <span
-                                class="token punctuation"
-                              >
-                                :
-                              </span>
-                               frontend
-                            </code>
+                            </g>
                             
-      
-                          </pre>
-                          <div
-                            class="k-code-block-secondary-actions"
-                          >
-                            <button
-                              class="k-button small outline k-code-block-copy-button"
-                              data-testid="k-code-block-copy-button"
-                              title="Copy (Alt+C)"
-                              type="button"
-                            >
-                              
-                              <!---->
-                              
-                              
-                              <span
-                                class="kong-icon kong-icon-copy"
-                              >
-                                <svg
-                                  height="18"
-                                  role="img"
-                                  viewBox="0 0 32 32"
-                                  width="18"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  
-  
-                                  <title>
-                                    Copy (Alt+C)
-                                  </title>
-                                  
-  
-                                  <path
-                                    d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                    fill="currentColor"
-                                  />
-                                  
 
-                                </svg>
-                                
+                          </svg>
+                          
 
-                              </span>
-                              <span
-                                class="k-visually-hidden"
-                              >
-                                Copy
-                              </span>
-                              
-                              <!---->
-                            </button>
-                            
-                            
-                          </div>
-                        </div>
+                        </span>
+                        <!---->
                       </div>
-                      
+                      <div
+                        class="k-search-actions"
+                      >
+                        <button
+                          aria-pressed="false"
+                          class="k-button small outline k-regexp-mode-button"
+                          data-testid="k-code-block-regexp-mode-button"
+                          title="Use regular expression (Alt+R)"
+                          type="button"
+                        >
+                          
+                          <!---->
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                          >
+                            RegExp mode enabled
+                          </span>
+                           .* 
+                          
+                          <!---->
+                        </button>
+                        <button
+                          aria-pressed="false"
+                          class="k-button small outline k-filter-mode-button"
+                          data-testid="k-code-block-filter-mode-button"
+                          title="Filter results (Alt+F)"
+                          type="button"
+                        >
+                          
+                          <span
+                            class="k-button-icon kong-icon kong-icon-filter"
+                          >
+                            <svg
+                              height="16"
+                              role="img"
+                              viewBox="0 0 14 11"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Filter results (Alt+F)
+                              </title>
+                              
+  
+                              <path
+                                d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                          >
+                            Filter mode enabled
+                          </span>
+                          
+                          <!---->
+                        </button>
+                        <button
+                          class="k-button small outline k-previous-match-button"
+                          data-testid="k-code-block-previous-match-button"
+                          disabled=""
+                          title="Previous match (Shift+F3)"
+                          type="button"
+                        >
+                          
+                          <span
+                            class="k-button-icon kong-icon kong-icon-chevronUp"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 20 20"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Previous match (Shift+F3)
+                              </title>
+                              
+  
+                              <path
+                                d="M15 12 9.8 7l-5.2 5"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                          >
+                            Previous match
+                          </span>
+                          
+                          <!---->
+                        </button>
+                        <button
+                          class="k-button small outline k-next-match-button"
+                          data-testid="k-code-block-next-match-button"
+                          disabled=""
+                          title="Next match (F3)"
+                          type="button"
+                        >
+                          
+                          <span
+                            class="k-button-icon kong-icon kong-icon-chevronDown"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 20 20"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Next match (F3)
+                              </title>
+                              
+  
+                              <path
+                                d="m4.6 7 5.2 5L15 7"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                          >
+                            Next match
+                          </span>
+                          
+                          <!---->
+                        </button>
+                      </div>
                     </div>
                     <div
-                      aria-labelledby="kubernetes-tab"
-                      class="tab-container"
-                      id="panel-1"
-                      role="tabpanel"
-                      tabindex="0"
+                      class="k-code-block-content"
                     >
-                      <!---->
+                      <pre
+                        class="k-highlighted-code-block show-copy-button language-yaml"
+                        data-testid="k-code-block-highlighted-code-block"
+                        tabindex="0"
+                      >
+                                
+                        <span
+                          class="k-line-number-rows"
+                        >
+                          
+          
+                          
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L1"
+                            >
+                              1
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L2"
+                            >
+                              2
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L3"
+                            >
+                              3
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L4"
+                            >
+                              4
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L5"
+                            >
+                              5
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L6"
+                            >
+                              6
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L7"
+                            >
+                              7
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L8"
+                            >
+                              8
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L9"
+                            >
+                              9
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L10"
+                            >
+                              10
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L11"
+                            >
+                              11
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L12"
+                            >
+                              12
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L13"
+                            >
+                              13
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L14"
+                            >
+                              14
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L15"
+                            >
+                              15
+                            </a>
+                            
+          
+                          </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L16"
+                            >
+                              16
+                            </a>
+                            
+          
+                          </span>
+                          
+                          
+        
+                        </span>
+                        
+        
+                        <code
+                          class="language-yaml"
+                        >
+                          <span
+                            class="token key atrule"
+                          >
+                            type
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           Dataplane
+
+                          <span
+                            class="token key atrule"
+                          >
+                            mesh
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           test
+                          <span
+                            class="token punctuation"
+                          >
+                            -
+                          </span>
+                          mesh
+
+                          <span
+                            class="token key atrule"
+                          >
+                            name
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           backend
+
+                          <span
+                            class="token key atrule"
+                          >
+                            networking
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          
+  
+                          <span
+                            class="token key atrule"
+                          >
+                            address
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           026f
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          3528
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          487e
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          8ebc
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          96fb
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          49d5
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          0bee
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          9ac9
+  
+                          <span
+                            class="token key atrule"
+                          >
+                            inbound
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          
+    
+                          <span
+                            class="token punctuation"
+                          >
+                            -
+                          </span>
+                           
+                          <span
+                            class="token key atrule"
+                          >
+                            port
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           
+                          <span
+                            class="token number"
+                          >
+                            9200
+                          </span>
+                          
+      
+                          <span
+                            class="token key atrule"
+                          >
+                            servicePort
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           
+                          <span
+                            class="token number"
+                          >
+                            61546
+                          </span>
+                          
+      
+                          <span
+                            class="token key atrule"
+                          >
+                            serviceAddress
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           199.204.183.247
+      
+                          <span
+                            class="token key atrule"
+                          >
+                            tags
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          
+        
+                          <span
+                            class="token key atrule"
+                          >
+                            kuma.io/protocol
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           kafka
+        
+                          <span
+                            class="token key atrule"
+                          >
+                            kuma.io/service
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           system
+  
+                          <span
+                            class="token key atrule"
+                          >
+                            outbound
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          
+    
+                          <span
+                            class="token punctuation"
+                          >
+                            -
+                          </span>
+                           
+                          <span
+                            class="token key atrule"
+                          >
+                            port
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           
+                          <span
+                            class="token number"
+                          >
+                            20540
+                          </span>
+                          
+      
+                          <span
+                            class="token key atrule"
+                          >
+                            tags
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          
+        
+                          <span
+                            class="token key atrule"
+                          >
+                            kuma.io/service
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           bandwidth
+                        </code>
+                        
+      
+                      </pre>
+                      <div
+                        class="k-code-block-secondary-actions"
+                      >
+                        <button
+                          class="k-button small outline k-code-block-copy-button"
+                          data-testid="k-code-block-copy-button"
+                          title="Copy (Alt+C)"
+                          type="button"
+                        >
+                          
+                          <!---->
+                          
+                          
+                          <span
+                            class="kong-icon kong-icon-copy"
+                          >
+                            <svg
+                              height="18"
+                              role="img"
+                              viewBox="0 0 32 32"
+                              width="18"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Copy (Alt+C)
+                              </title>
+                              
+  
+                              <path
+                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                fill="currentColor"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <span
+                            class="k-visually-hidden"
+                          >
+                            Copy
+                          </span>
+                          
+                          <!---->
+                        </button>
+                        
+                        
+                        
+                        <button
+                          class="k-button small outline copy-button non-visual-button"
+                          data-testid="copy-button"
+                          title="Copy as Kubernetes"
+                          type="button"
+                        >
+                          
+                          <!---->
+                          
+                          
+                          <span
+                            class="kong-icon kong-icon-copy"
+                          >
+                            <svg
+                              height="18"
+                              role="img"
+                              viewBox="0 0 32 32"
+                              width="18"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Copy as Kubernetes
+                              </title>
+                              
+  
+                              <path
+                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                fill="currentColor"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          as k8s
+                          
+                          
+                          <!---->
+                        </button>
+                        
+                        
+                        
+                      </div>
                     </div>
-                    
                   </div>
+                  
                 </div>
               </div>
               

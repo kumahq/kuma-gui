@@ -6,6 +6,7 @@ import type {
   DataPlaneOverviewParameters,
   PaginatedApiListResponse,
   PaginationParameters,
+  SingleResourceParameters,
 } from '@/types/api.d'
 import type {
   DataPlane,
@@ -65,8 +66,8 @@ export default class KumaApi extends Api {
     return this.client.get('/zones', { params })
   }
 
-  getZone({ name }: { name: string }): Promise<Zone> {
-    return this.client.get(`/zones/${name}`)
+  getZone({ name }: { name: string }, params?: SingleResourceParameters): Promise<Zone> {
+    return this.client.get(`/zones/${name}`, { params })
   }
 
   createZone(zone: { name: string }): Promise<{ token: string }> {
@@ -85,7 +86,7 @@ export default class KumaApi extends Api {
     return this.client.get('/zones+insights', { params })
   }
 
-  getZoneOverview({ name }: { name: string }, params?: PaginationParameters): Promise<ZoneOverview> {
+  getZoneOverview({ name }: { name: string }, params?: any): Promise<ZoneOverview> {
     return this.client.get(`/zones+insights/${name}`, { params })
   }
 
@@ -100,7 +101,7 @@ export default class KumaApi extends Api {
     return this.client.get('/zoneingresses+insights', { params })
   }
 
-  getZoneIngressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<ZoneIngressOverview> {
+  getZoneIngressOverview({ name }: { name: string }, params?: any): Promise<ZoneIngressOverview> {
     return this.client.get(`/zoneingresses+insights/${name}`, { params })
   }
 
@@ -115,7 +116,7 @@ export default class KumaApi extends Api {
     return this.client.get('/zoneegressoverviews', { params })
   }
 
-  getZoneEgressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<ZoneEgressOverview> {
+  getZoneEgressOverview({ name }: { name: string }, params?: any): Promise<ZoneEgressOverview> {
     return this.client.get(`/zoneegressoverviews/${name}`, { params })
   }
 
@@ -123,7 +124,7 @@ export default class KumaApi extends Api {
     return this.client.get('/meshes', { params })
   }
 
-  getMesh({ name }: { name: string }, params?: any): Promise<Mesh> {
+  getMesh({ name }: { name: string }, params?: SingleResourceParameters): Promise<Mesh> {
     return this.client.get(`/meshes/${name}`, { params })
   }
 
@@ -139,7 +140,7 @@ export default class KumaApi extends Api {
     return this.client.get('/dataplanes', { params })
   }
 
-  getDataplaneFromMesh({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<DataPlane> {
+  getDataplaneFromMesh({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<DataPlane> {
     return this.client.get(`/meshes/${mesh}/dataplanes/${name}`, { params })
   }
 
@@ -194,7 +195,7 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/external-services`, { params })
   }
 
-  getExternalService({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ExternalService> {
+  getExternalService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<ExternalService> {
     return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
@@ -219,7 +220,7 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/${path}`, { params })
   }
 
-  getSinglePolicyEntity({ mesh, path, name }: { mesh: string, path: string, name: string }, params?: any): Promise<PolicyEntity> {
+  getSinglePolicyEntity({ mesh, path, name }: { mesh: string, path: string, name: string }, params?: SingleResourceParameters): Promise<PolicyEntity> {
     return this.client.get(`/meshes/${mesh}/${path}/${name}`, { params })
   }
 }

@@ -28,7 +28,7 @@
         </KCard>
 
         <DataOverview
-          :selected-entity-name="entity?.name"
+          :selected-entity-name="currentEntityName ?? undefined"
           :page-size="PAGE_SIZE_DEFAULT"
           :error="error"
           :is-loading="isLoading"
@@ -72,65 +72,13 @@
         </DataOverview>
       </div>
 
-      <div class="kcard-border">
-        <TabsWidget
-          v-if="entity !== null && detailViewRoute !== null"
-          :has-error="error !== null"
-          :error="error"
-          :is-loading="isLoading"
-          :tabs="tabs"
-        >
-          <template #tabHeader>
-            <h1
-              class="entity-heading"
-              data-testid="policy-single-entity"
-            >
-              {{ policyType.name }}:
-
-              <TextWithCopyButton :text="entity.name">
-                <router-link :to="detailViewRoute">
-                  {{ entity.name }}
-                </router-link>
-              </TextWithCopyButton>
-            </h1>
-          </template>
-
-          <template #overview>
-            <DefinitionList data-testid="policy-detail-label-list">
-              <DefinitionListItem
-                v-for="(value, property) in entity"
-                :key="property"
-                :term="property"
-              >
-                <template v-if="property === 'name'">
-                  <TextWithCopyButton :text="value" />
-                </template>
-
-                <template v-else>
-                  {{ value }}
-                </template>
-              </DefinitionListItem>
-            </DefinitionList>
-
-            <YamlView
-              v-if="rawEntity !== null"
-              id="code-block-policy"
-              class="mt-4"
-              :content="rawEntity"
-              is-searchable
-            />
-          </template>
-
-          <template #affected-dpps>
-            <PolicyConnections
-              v-if="rawEntity !== null"
-              :mesh="rawEntity.mesh"
-              :policy-name="rawEntity.name"
-              :policy-path="policyType.path"
-            />
-          </template>
-        </TabsWidget>
-      </div>
+      <PolicyDetails
+        v-if="currentEntityName !== null"
+        :name="currentEntityName"
+        :mesh="currentMeshName"
+        :path="policyType.path"
+        :type="policyType.name"
+      />
     </div>
   </div>
 </template>
@@ -145,19 +93,13 @@ import {
 import { computed, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
-import PolicyConnections from '../components/PolicyConnections.vue'
+import PolicyDetails from '../components/PolicyDetails.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
-import TabsWidget from '@/app/common/TabsWidget.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import YamlView from '@/app/common/YamlView.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
-import { PolicyEntity, PolicyType, TableHeader } from '@/types/index.d'
+import { PolicyEntity, TableHeader } from '@/types/index.d'
 import { useEnv, useKumaApi } from '@/utilities'
-import { getSome, stripTimes } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 type PolicyEntityTableRow = {
@@ -166,22 +108,10 @@ type PolicyEntityTableRow = {
   type: string
 }
 
-const kumaApi = useKumaApi()
 const env = useEnv()
-
-const tabs = [
-  {
-    hash: '#overview',
-    title: 'Overview',
-  },
-  {
-    hash: '#affected-dpps',
-    title: 'Affected DPPs',
-  },
-]
-
-const router = useRouter()
+const kumaApi = useKumaApi()
 const route = useRoute()
+const router = useRouter()
 const store = useStore()
 
 const props = defineProps({
@@ -205,10 +135,9 @@ const props = defineProps({
 
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
-const entity = ref<PolicyEntity | null>(null)
-const rawEntity = ref<Omit<PolicyEntity, 'creationTime' | 'modificationTime'> | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
+const currentEntityName = ref<string | null>(props.selectedPolicyName)
 
 const tableData = ref<{ headers: TableHeader[], data: PolicyEntityTableRow[] }>({
   headers: [
@@ -218,21 +147,7 @@ const tableData = ref<{ headers: TableHeader[], data: PolicyEntityTableRow[] }>(
   data: [],
 })
 
-const detailViewRoute = computed(() => {
-  if (entity.value === null) {
-    return null
-  }
-
-  return {
-    name: 'policy-detail-view',
-    params: {
-      mesh: entity.value.mesh,
-      policy: entity.value.name,
-      policyPath: props.policyPath,
-    },
-  }
-})
-
+const currentMeshName = computed(() => route.params.mesh as string)
 const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])
 const policySelectItems = computed<SelectItem[]>(() => {
   return store.state.policyTypes.map((policyType) => ({
@@ -287,10 +202,9 @@ async function loadData(offset: number) {
 
     nextUrl.value = next
     tableData.value.data = transformToTableData(items ?? [])
-    await loadEntity({ name: props.selectedPolicyName ?? tableData.value.data[0]?.entity.name, mesh, path })
+    loadEntity({ name: props.selectedPolicyName ?? tableData.value.data[0]?.entity.name })
   } catch (err) {
     tableData.value.data = []
-    entity.value = null
 
     if (err instanceof Error) {
       error.value = err
@@ -322,31 +236,13 @@ function transformToTableData(policies: PolicyEntity[]): PolicyEntityTableRow[] 
   })
 }
 
-async function handleTableAction(entity: PolicyEntity) {
-  const { name, mesh, type } = entity
-  const policyType = store.state.policyTypesByName[type] as PolicyType
-  const path = policyType.path
-
-  await loadEntity({ name, mesh, path })
+function handleTableAction(entity: PolicyEntity) {
+  loadEntity({ name: entity.name })
 }
 
-async function loadEntity({ name, mesh, path }: { name?: string | undefined, mesh: string, path: string }) {
-  if (name === undefined) {
-    entity.value = null
-    rawEntity.value = null
-    QueryParameter.set('policy', null)
-    return
-  }
-
-  try {
-    const policy = await kumaApi.getSinglePolicyEntity({ mesh, path, name })
-
-    entity.value = getSome(policy, ['type', 'name', 'mesh'])
-    QueryParameter.set('policy', policy.name)
-    rawEntity.value = stripTimes(policy)
-  } catch (err) {
-    console.error(err)
-  }
+function loadEntity({ name }: { name?: string | undefined }) {
+  currentEntityName.value = name ?? null
+  QueryParameter.set('policy', name ?? null)
 }
 
 function changePolicyType(item: SelectItem) {

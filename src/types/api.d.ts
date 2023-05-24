@@ -25,6 +25,18 @@ export interface PaginationParameters {
   offset?: number
 }
 
+export interface SingleResourceParameters {
+  /**
+   * Returns a resource in the requested format
+   */
+  format?: 'universal' | 'k8s' | 'kubernetes'
+
+  /**
+   * Overrides the namespace of a resource.
+   */
+  namespace?: string
+}
+
 export interface DataPlaneOverviewParameters extends PaginationParameters {
   /**
    * **Example**: `?gateway=delegated`

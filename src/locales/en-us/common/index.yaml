@@ -1,3 +1,5 @@
 common:
   copyText: 'Copy'
   copySuccessText: 'Copied!'
+  copyKubernetesText: 'Copy as Kubernetes'
+  copyKubernetesShortText: 'as k8s'

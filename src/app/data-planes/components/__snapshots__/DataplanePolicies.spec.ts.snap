@@ -369,7 +369,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               
       
                             </pre>
-                            <!---->
+                            <div
+                              class="k-code-block-secondary-actions"
+                            >
+                              <!---->
+                              
+                              
+                            </div>
                           </div>
                         </div>
                         
@@ -604,7 +610,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               
       
                             </pre>
-                            <!---->
+                            <div
+                              class="k-code-block-secondary-actions"
+                            >
+                              <!---->
+                              
+                              
+                            </div>
                           </div>
                         </div>
                         
@@ -841,7 +853,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               
       
                             </pre>
-                            <!---->
+                            <div
+                              class="k-code-block-secondary-actions"
+                            >
+                              <!---->
+                              
+                              
+                            </div>
                           </div>
                         </div>
                         

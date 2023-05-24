@@ -86,21 +86,6 @@ export function getSome(original: TODO, desired: TODO) {
 }
 
 /**
- * stripTimes
- *
- * Strips the time values from the objects returned from
- * various endpoints, in a non-destructive manner.
- *
- * @param object The Object you want to remove the
- * date/time strings from.
- */
-export function stripTimes<T extends { creationTime?: any, modificationTime?: any, [key: string]: any }>(object: T): Omit<T, 'creationTime' | 'modificationTime'> {
-  const { creationTime, modificationTime, ...noTimes } = object
-
-  return noTimes
-}
-
-/**
  * kebabCase
  *
  * @param {*} value
