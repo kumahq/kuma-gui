@@ -4,14 +4,13 @@ import { rest } from 'msw'
 
 import DataplanePolicies from './DataplanePolicies.vue'
 import { useServer } from '@/../jest/jest-setup-after-env'
-import {
-  DataPlane,
-} from '@/types/index.d'
-import { useStore } from '@/utilities'
+import { DataPlane } from '@/types/index.d'
+import { useStore, useRouter } from '@/utilities'
 
 const store = useStore()
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicyTypes')
+
   const dataPlane: DataPlane = {
     type: 'Dataplane',
     mesh: 'foo',
@@ -22,6 +21,15 @@ async function renderComponent(props = {}) {
       address: '',
     },
   }
+
+  const router = useRouter()
+  await router.push({
+    name: 'data-plane-detail-view',
+    params: {
+      mesh: 'default',
+      dataPlane: dataPlane.name,
+    },
+  })
 
   return mount(DataplanePolicies, {
     props: {

@@ -3,13 +3,10 @@
     class="nav-item"
     :class="{
       [`nav-item-${props.routeName}`]: props.routeName !== '',
-      'nav-item--is-category': targetRoute === null,
-      [`nav-item--is-${props.categoryTier}-category`]: props.categoryTier !== null,
     }"
     :data-testid="props.routeName || undefined"
   >
     <router-link
-      v-if="targetRoute !== null"
       class="nav-link"
       :class="{ 'nav-link--is-active': isActive }"
       :to="targetRoute"
@@ -25,19 +22,12 @@
         {{ amount }}
       </span>
     </router-link>
-
-    <div
-      v-else
-      class="nav-category"
-    >
-      {{ name }}
-    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
-import { computed, PropType } from 'vue'
+import { computed } from 'vue'
 import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 
 import { useStore } from '@/store/store'
@@ -55,26 +45,13 @@ const props = defineProps({
 
   routeName: {
     type: String,
-    required: false,
-    default: '',
+    required: true,
   },
 
   anchorRouteName: {
     type: String,
     required: false,
     default: '',
-  },
-
-  usesMeshParam: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  categoryTier: {
-    type: String as PropType<'primary' | 'secondary'>,
-    required: false,
-    default: null,
   },
 
   insightsFieldAccessor: {
@@ -93,31 +70,9 @@ const amount = computed(() => {
   }
 })
 
-const targetRoute = computed<RouteLocationNamedRaw | null>(() => {
-  if (props.routeName === '') {
-    return null
-  }
-
-  const targetRoute: RouteLocationNamedRaw = {
-    name: props.routeName,
-  }
-
-  // Sets `mesh` params only if route actually has `mesh` param defined.
-  // See: https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
-  if (props.usesMeshParam) {
-    targetRoute.params = {
-      mesh: store.state.selectedMesh,
-    }
-  }
-
-  return targetRoute
-})
+const targetRoute = computed<RouteLocationNamedRaw>(() => ({ name: props.routeName }))
 
 const isActive = computed(() => {
-  if (targetRoute.value === null) {
-    return false
-  }
-
   if (props.routeName === route.name) {
     return true
   }
@@ -146,19 +101,6 @@ function onNavItemClick() {
   margin-top: var(--spacing-xxs);
 }
 
-.nav-item--is-primary-category {
-  font-size: var(--type-md);
-  text-transform: uppercase;
-}
-
-.nav-item--is-primary-category:not(:first-child) {
-  margin-top: var(--spacing-lg);
-}
-
-.nav-item--is-secondary-category {
-  margin-left: var(--spacing-md);
-}
-
 .nav-link {
   width: 100%;
   display: flex;
@@ -173,12 +115,6 @@ function onNavItemClick() {
 .nav-link:hover,
 .nav-link--is-active {
   background-color: var(--grey-300);
-}
-
-.nav-category {
-  padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
-  font-weight: 600;
 }
 
 .amount {

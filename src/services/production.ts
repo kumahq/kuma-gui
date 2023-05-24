@@ -207,7 +207,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
 
   // Nav
   [$.nav, {
-    service: () => (multizone: boolean, hasMeshes: boolean) => getNavItems(multizone, hasMeshes),
+    service: () => (multizone: boolean) => getNavItems(multizone),
   }],
 
   // App

@@ -49,7 +49,7 @@ const getters: GetterTree<NotificationsInterface, State> = {
   },
 
   singleMeshNotificationItems(_state, getters, rootState, rootGetters): NotificationItem[] {
-    if (rootState.selectedMesh === null) {
+    if (rootState.selectedMesh === null || !(rootState.selectedMesh in getters.meshNotificationItemMap)) {
       return []
     }
 

@@ -4,7 +4,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import DataPlaneDetails from './DataPlaneDetails.vue'
 import { createDataPlane } from '@/test-data/createDataPlane'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
-import { useStore } from '@/utilities'
+import { useStore, useRouter } from '@/utilities'
 
 const dataPlane = createDataPlane()
 const dataPlaneOverview = createDataPlaneOverview()
@@ -12,6 +12,14 @@ const dataPlaneOverview = createDataPlaneOverview()
 const store = useStore()
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicyTypes')
+  const router = useRouter()
+  await router.push({
+    name: 'data-plane-detail-view',
+    params: {
+      mesh: 'default',
+      dataPlane: dataPlane.name,
+    },
+  })
 
   return mount(DataPlaneDetails, {
     props: {

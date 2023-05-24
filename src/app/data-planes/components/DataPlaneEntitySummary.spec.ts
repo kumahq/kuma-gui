@@ -3,10 +3,20 @@ import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
+import { useRouter } from '@/utilities'
 
 const dataPlaneOverview = createDataPlaneOverview()
 
-function renderComponent(props = {}) {
+async function renderComponent(props = {}) {
+  const router = useRouter()
+  await router.push({
+    name: 'data-plane-detail-view',
+    params: {
+      mesh: 'default',
+      dataPlane: dataPlaneOverview.name,
+    },
+  })
+
   return mount(DataPlaneEntitySummary, {
     props: {
       dataPlaneOverview,
@@ -17,15 +27,15 @@ function renderComponent(props = {}) {
 
 describe('DataPlaneEntitySummary', () => {
   test('matches snapshot', async () => {
-    const wrapper = renderComponent()
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('shows correct content', () => {
-    const wrapper = renderComponent()
+  test('shows correct content', async () => {
+    const wrapper = await renderComponent()
 
     const statusBadge = wrapper.find('[data-testid="status-badge"]')
     expect(statusBadge.html()).toContain('online')

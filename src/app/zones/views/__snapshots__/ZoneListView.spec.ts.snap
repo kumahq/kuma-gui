@@ -249,6 +249,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         
                         <a
                           class=""
+                          data-testid="detail-view-link"
                           href="/zones/cluster-1"
                         >
                           cluster-1
@@ -514,6 +515,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         
                         <a
                           class=""
+                          data-testid="detail-view-link"
                           href="/zones/zone-1"
                         >
                           zone-1
@@ -779,6 +781,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         
                         <a
                           class=""
+                          data-testid="detail-view-link"
                           href="/zones/zone-2"
                         >
                           zone-2
@@ -1044,6 +1047,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         
                         <a
                           class=""
+                          data-testid="detail-view-link"
                           href="/zones/zone-3"
                         >
                           zone-3

@@ -1,10 +1,8 @@
 Feature: mesh / index
   Background:
     Given the CSS selectors
-      | Alias           | Selector                      |
-      | main-nav        | .app-sidebar                  |
-      | mesh-selector   | [data-testid='mesh-selector'] |
-      | mesh-breadcrumb | .k-breadcrumbs:nth-child(2)   |
+      | Alias           | Selector                    |
+      | mesh-breadcrumb | .k-breadcrumbs:nth-child(2) |
 
   Scenario: Mesh Selection
     Given the environment
@@ -16,7 +14,7 @@ Feature: mesh / index
       body:
         items:
           - name: default
-          - name: aalphabetically-second-because-of-default
+          - name: another-mesh
       """
     And the URL "/mesh-insights/default" responds with
       """
@@ -25,15 +23,21 @@ Feature: mesh / index
           gateway:
             total: 1
       """
-    And the URL "/mesh-insights/aalphabetically-second-because-of-default" responds with
+    And the URL "/mesh-insights/another-mesh" responds with
       """
       body:
         dataplanesByType:
           gateway:
             total: 10
       """
-    When I visit the "/" URL
-    When I click the "$mesh-selector" element and select "aalphabetically-second-because-of-default"
-    Then the "$mesh-breadcrumb" element contains "aalphabetically-second-because-of-default"
-    When I click the "$mesh-selector" element and select "default"
-    Then the "$mesh-breadcrumb" element contains "default"
+
+    When I visit the "/meshes" URL
+
+    When I click the "<Selector>" element
+    Then the URL contains "/mesh/<Mesh>"
+    And the "$mesh-breadcrumb" element contains "<Mesh>"
+
+    Examples:
+      | Mesh         | Selector |
+      | another-mesh | [data-testid='data-overview-table'] tbody tr:nth-child(2) [data-testid='detail-view-link'] |
+      | default      | [data-testid='data-overview-table'] tbody tr:nth-child(1) [data-testid='detail-view-link'] |
