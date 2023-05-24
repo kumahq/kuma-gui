@@ -17,21 +17,14 @@ Before(() => {
 })
 
 const $ = (selector: string) => {
-  const resolvedSelector = resolveCustomAliases(selector)
+  const resolvedSelector = resolveCustomAlias(selector)
 
   return cy.get(resolvedSelector)
 }
 
-function resolveCustomAliases(selector: string): string {
-  if (selector.includes('$')) {
-    const bits = selector.split(/[: .[#]/)
-    const originalAlias = bits.find((bit) => bit.startsWith('$'))
-
-    if (originalAlias === undefined) {
-      throw new Error(`Invalid alias in selector ${selector}`)
-    }
-
-    const alias = originalAlias.substring(1)
+function resolveCustomAlias(selector: string): string {
+  if (selector.startsWith('$')) {
+    const alias = selector.split(/[: .[#]/).shift()!.substring(1)
 
     if (typeof selectors[alias] === 'undefined') {
       throw new Error(`Could not find alias $${alias}. Make sure you have defined the alias in a CSS selectors step`)
@@ -39,7 +32,7 @@ function resolveCustomAliases(selector: string): string {
 
     selector = selector.replace(`$${alias}`, selectors[alias])
 
-    return resolveCustomAliases(selector)
+    return resolveCustomAlias(selector)
   }
 
   return selector
