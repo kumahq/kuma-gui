@@ -890,7 +890,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
         >
           <div
             checked="true"
-            class="k-radio d-inline-block k-radio-default"
+            class="k-radio k-radio-default"
           >
             <input
               class="k-input"
@@ -914,7 +914,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           </div>
           <div
             checked="false"
-            class="k-radio d-inline-block k-radio-default"
+            class="k-radio k-radio-default"
           >
             <input
               class="k-input"
@@ -938,7 +938,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           </div>
           <div
             checked="false"
-            class="k-radio d-inline-block k-radio-default"
+            class="k-radio k-radio-default"
           >
             <input
               class="k-input"
