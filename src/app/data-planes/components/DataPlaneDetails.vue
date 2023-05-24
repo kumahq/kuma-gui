@@ -72,10 +72,11 @@
         </DefinitionList>
       </div>
 
-      <YamlView
+      <ResourceCodeBlock
         id="code-block-data-plane"
         class="mt-4"
-        :content="rawDataPlane"
+        :resource-fetcher="fetchDataPlaneProxy"
+        :resource-fetcher-watch-key="props.dataPlane.name"
         is-searchable
       />
     </template>
@@ -177,6 +178,7 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
@@ -185,15 +187,15 @@ import TabsWidget from '@/app/common/TabsWidget.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
-import YamlView from '@/app/common/YamlView.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
+import type { SingleResourceParameters } from '@/types/api.d'
 import {
   Compatibility,
   DataPlane,
   DataPlaneOverview,
 } from '@/types/index.d'
-import { useEnv } from '@/utilities'
+import { useEnv, useKumaApi } from '@/utilities'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -204,10 +206,9 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/utilities/dataplane'
-import { stripTimes } from '@/utilities/helpers'
 
 const env = useEnv()
-
+const kumaApi = useKumaApi()
 const store = useStore()
 
 const props = defineProps({
@@ -280,7 +281,6 @@ const processedDataPlane = computed(() => {
 const statusWithReason = computed(() => getStatusAndReason(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataPlane))
 const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dataplaneInsight))
-const rawDataPlane = computed(() => stripTimes(props.dataPlane))
 const mtlsData = computed(() => parseMTLSData(props.dataPlaneOverview))
 const insightSubscriptions = computed(() => {
   const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? [])
@@ -327,6 +327,11 @@ function setWarnings() {
 }
 
 setWarnings()
+
+async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
+  const { mesh, name } = props.dataPlane
+  return await kumaApi.getDataplaneFromMesh({ mesh, name }, params)
+}
 </script>
 
 <style lang="scss" scoped>

@@ -120,13 +120,12 @@
           </div>
         </section>
 
-        <section class="config-section">
-          <YamlView
-            id="code-block-data-plane-summary"
-            :content="dataPlane"
-            code-max-height="250px"
-          />
-        </section>
+        <ResourceCodeBlock
+          id="code-block-data-plane-summary"
+          :resource-fetcher="fetchDataPlaneProxy"
+          :resource-fetcher-watch-key="props.dataPlaneOverview.name"
+          code-max-height="250px"
+        />
       </div>
     </template>
   </KCard>
@@ -138,13 +137,17 @@ import { computed, PropType } from 'vue'
 
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import YamlView from '@/app/common/YamlView.vue'
+import type { SingleResourceParameters } from '@/types/api.d'
 import { DataPlaneOverview } from '@/types/index.d'
+import { useKumaApi } from '@/utilities'
 import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'
 import { rawReadableDate } from '@/utilities/helpers'
+
+const kumaApi = useKumaApi()
 
 const props = defineProps({
   dataPlaneOverview: {
@@ -160,17 +163,6 @@ const detailViewRoute = computed(() => ({
     dataPlane: props.dataPlaneOverview.name,
   },
 }))
-
-const dataPlane = computed(() => {
-  const { name, mesh, dataplane } = props.dataPlaneOverview
-
-  return {
-    type: 'Dataplane',
-    name,
-    mesh,
-    networking: dataplane.networking,
-  }
-})
 
 const dataPlaneTags = computed(() => dpTags(props.dataPlaneOverview.dataplane))
 
@@ -252,6 +244,11 @@ const warnings = computed(() => {
 
   return warnings
 })
+
+async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
+  const { mesh, name } = props.dataPlaneOverview
+  return await kumaApi.getDataplaneFromMesh({ mesh, name }, params)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -277,10 +274,6 @@ h3, h4, h5 {
 
 .entity-section-list > :not(:last-child) {
   padding-right: var(--spacing-md);
-}
-
-.config-section {
-  max-width: 80ch;
 }
 
 .entity-title {

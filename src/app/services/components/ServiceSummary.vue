@@ -56,17 +56,13 @@
           </DefinitionList>
         </section>
 
-        <section
-          v-if="props.service.serviceType === 'external'"
-          class="config-section"
-        >
-          <YamlView
-            id="code-block-service"
-            :content="rawService"
-            is-searchable
-            code-max-height="250px"
-          />
-        </section>
+        <ResourceCodeBlock
+          id="code-block-service"
+          :resource-fetcher="fetchService"
+          :resource-fetcher-watch-key="props.service.name"
+          is-searchable
+          code-max-height="250px"
+        />
       </div>
     </template>
   </KCard>
@@ -78,12 +74,15 @@ import { computed, PropType } from 'vue'
 
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import YamlView from '@/app/common/YamlView.vue'
+import type { SingleResourceParameters } from '@/types/api.d'
 import { ExternalService, ServiceInsight } from '@/types/index.d'
-import { stripTimes } from '@/utilities/helpers'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const props = defineProps({
   service: {
@@ -149,7 +148,15 @@ const tags = computed(() => {
   }
 })
 
-const rawService = computed(() => stripTimes(props.externalService ?? props.service))
+async function fetchService(params?: SingleResourceParameters) {
+  if (props.service.serviceType === 'external' && props.externalService !== null) {
+    const { mesh, name } = props.externalService
+    return await kumaApi.getExternalService({ mesh, name }, params)
+  } else {
+    const { mesh, name } = props.service
+    return await kumaApi.getServiceInsight({ mesh, name }, params)
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -166,10 +173,6 @@ const rawService = computed(() => stripTimes(props.externalService ?? props.serv
 
 .entity-section-list > :not(:last-child) {
   padding-right: var(--spacing-md);
-}
-
-.config-section {
-  max-width: 80ch;
 }
 
 .entity-title {

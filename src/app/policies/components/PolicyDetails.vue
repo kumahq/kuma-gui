@@ -17,10 +17,10 @@
       </template>
 
       <template #overview>
-        <YamlView
+        <ResourceCodeBlock
           id="code-block-policy"
-          class="mt-4"
-          :content="rawEntity"
+          :resource-fetcher="fetchPolicy"
+          :resource-fetcher-watch-key="props.name"
           is-searchable
         />
       </template>
@@ -40,9 +40,13 @@
 import { computed } from 'vue'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import YamlView from '@/app/common/YamlView.vue'
+import type { SingleResourceParameters } from '@/types/api.d'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const props = defineProps({
   mesh: {
@@ -62,11 +66,6 @@ const props = defineProps({
 
   type: {
     type: String,
-    required: true,
-  },
-
-  rawEntity: {
-    type: Object,
     required: true,
   },
 })
@@ -89,4 +88,9 @@ const detailViewRoute = computed(() => ({
     policyPath: props.path,
   },
 }))
+
+async function fetchPolicy(params?: SingleResourceParameters) {
+  const { name, mesh, path } = props
+  return await kumaApi.getSinglePolicyEntity({ name, mesh, path }, params)
+}
 </script>

@@ -84,11 +84,12 @@
       </template>
     </KCard>
 
-    <KCard v-if="rawMesh !== null">
+    <KCard>
       <template #body>
-        <YamlView
+        <ResourceCodeBlock
           id="code-block-mesh"
-          :content="rawMesh"
+          :resource-fetcher="fetchMesh"
+          :resource-fetcher-watch-key="mesh?.name || null"
         />
       </template>
     </KCard>
@@ -106,13 +107,14 @@ import MeshCharts from '../components/MeshCharts.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import YamlView from '@/app/common/YamlView.vue'
 import { useStore } from '@/store/store'
+import type { SingleResourceParameters } from '@/types/api.d'
 import { Mesh, MeshInsight } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
-import { humanReadableDate, stripTimes } from '@/utilities/helpers'
+import { humanReadableDate } from '@/utilities/helpers'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
@@ -122,7 +124,6 @@ const isLoading = ref(true)
 const hasError = ref(false)
 const mesh = ref<Mesh | null>(null)
 const meshInsights = ref<MeshInsight | null>(null)
-const rawMesh = computed(() => mesh.value !== null ? stripTimes(mesh.value) : null)
 
 const basicMesh = computed(() => {
   if (mesh.value === null) {
@@ -208,6 +209,11 @@ function getBackendData(mesh: Mesh, field: 'mtls' | 'logging' | 'metrics' | 'tra
   const enabledBackend = mesh[field].backends.find((backend: any) => backend.name === enabledBackendName)
 
   return `${enabledBackend.type} / ${enabledBackend.name}`
+}
+
+async function fetchMesh(params?: SingleResourceParameters) {
+  const name = route.params.mesh as string
+  return await kumaApi.getMesh({ name }, params)
 }
 </script>
 <style scoped>

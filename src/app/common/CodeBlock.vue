@@ -11,7 +11,11 @@
     :query="query"
     @code-block-render="handleCodeBlockRenderEvent"
     @query-change="updateStoredQuery"
-  />
+  >
+    <template #secondary-actions>
+      <slot name="secondary-actions" />
+    </template>
+  </KCodeBlock>
 </template>
 
 <script lang="ts" setup>
