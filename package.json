@@ -88,7 +88,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "jest-serializer-vue": "^3.1.0",
     "jest-transform-stub": "^2.0.0",
-    "lockfile-lint": "^4.10.1",
+    "lockfile-lint": "^4.10.4",
     "marked": "^5.0.2",
     "msw": "~1.2.1",
     "postcss": "^8.4.23",
