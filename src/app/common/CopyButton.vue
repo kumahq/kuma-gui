@@ -1,34 +1,45 @@
 <template>
-  <KButton
-    appearance="outline"
-    class="copy-button non-visual-button"
-    data-testid="copy-button"
-    :is-rounded="false"
-    size="small"
-    :title="props.copyText"
-    type="button"
-    @click="copy"
-  >
-    <KIcon
-      color="var(--black-45)"
-      icon="copy"
-      size="18"
+  <KClipboardProvider v-slot="{ copyToClipboard }">
+    <KButton
+      appearance="outline"
+      class="copy-button non-visual-button"
+      data-testid="copy-button"
+      :is-rounded="false"
+      size="small"
       :title="props.copyText"
-    />
+      type="button"
+      @click="copy($event, copyToClipboard)"
+    >
+      <KIcon
+        color="currentColor"
+        icon="copy"
+        size="18"
+        :title="props.copyText"
+      />
 
-    <span class="visually-hidden">{{ props.copyText }}</span>
-  </KButton>
+      <slot>
+        <span class="visually-hidden">{{ props.copyText }}</span>
+      </slot>
+    </KButton>
+  </KClipboardProvider>
 </template>
 
 <script lang="ts" setup>
-import { KButton, KIcon } from '@kong/kongponents'
+import { KButton, KClipboardProvider, KIcon } from '@kong/kongponents'
 
-import { copyTextToClipboard } from '@/utilities/copyTextToClipboard'
+import type { PropType } from 'vue'
 
 const props = defineProps({
   text: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
+  },
+
+  getText: {
+    type: Function as PropType<() => string | Promise<string>>,
+    required: false,
+    default: null,
   },
 
   copyText: {
@@ -40,22 +51,39 @@ const props = defineProps({
   tooltipSuccessText: {
     type: String,
     required: false,
-    default: 'Copied!',
+    default: 'Copied code!',
+  },
+
+  tooltipFailText: {
+    type: String,
+    required: false,
+    default: 'Failed to copy!',
   },
 })
 
-async function copy(event: Event) {
+async function copy(event: Event, copyToClipboard: (text: string) => Promise<boolean>) {
   const button = event.currentTarget
-  const hasCopiedCodeSuccessfully = await copyTextToClipboard(props.text)
+  let hasCopiedCodeSuccessfully = false
 
-  if (button instanceof HTMLButtonElement && hasCopiedCodeSuccessfully) {
-    button.setAttribute('data-tooltip-text', props.tooltipSuccessText)
+  try {
+    const text = props.getText ? await props.getText() : props.text
+    hasCopiedCodeSuccessfully = await copyToClipboard(text)
+  } catch (err) {
+    hasCopiedCodeSuccessfully = false
+    console.error(err)
+  } finally {
+    const text = hasCopiedCodeSuccessfully ? props.tooltipSuccessText : props.tooltipFailText
 
-    window.setTimeout(function () {
-      if (button instanceof HTMLButtonElement) {
-        button.removeAttribute('data-tooltip-text')
-      }
-    }, 1500)
+    if (button instanceof HTMLButtonElement) {
+      button.setAttribute('data-tooltip-copy-success', String(hasCopiedCodeSuccessfully))
+      button.setAttribute('data-tooltip-text', text)
+
+      window.setTimeout(function () {
+        if (button instanceof HTMLButtonElement) {
+          button.removeAttribute('data-tooltip-text')
+        }
+      }, 1500)
+    }
   }
 }
 </script>
@@ -66,10 +94,19 @@ async function copy(event: Event) {
   padding: 0;
 }
 
+.copy-button {
+  --tooltip-text-color: var(--white);
+  --tooltip-background-color: var(--grey-600);
+}
+
+.copy-button[data-tooltip-copy-success="false"] {
+  --tooltip-background-color: var(--red-700);
+}
+
 .copy-button[data-tooltip-text]::after {
-  background-color: var(--grey-600);
+  background-color: var(--tooltip-background-color);
   border-radius: 3px;
-  color: var(--white);
+  color: var(--tooltip-text-color);
   content: attr(data-tooltip-text);
   font-weight: normal;
   padding: var(--spacing-xs);
