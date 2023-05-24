@@ -44,6 +44,7 @@ const $ = {
   */
   expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
     'id',
+    'for',
     'aria-describedby',
     'aria-labelledby',
     'aria-controls',
