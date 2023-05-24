@@ -10,6 +10,7 @@ http:
       cds: CDS
       eds: EDS
       lds: LDS
+      rds: RDS
       responsesSent: Responses sent
       responsesAcknowledged: Responses acknowledged
       responsesRejected: Responses rejected
