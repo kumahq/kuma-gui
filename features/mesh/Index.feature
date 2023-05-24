@@ -1,10 +1,8 @@
 Feature: mesh / index
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                     |
-      | mesh-breadcrumb  | .k-breadcrumbs:nth-child(2)                  |
-      | table-row        | [data-testid='data-overview-table'] tbody tr |
-      | detail-view-link | [data-testid='detail-view-link']             |
+      | Alias           | Selector                    |
+      | mesh-breadcrumb | .k-breadcrumbs:nth-child(2) |
 
   Scenario: Mesh Selection
     Given the environment
@@ -40,6 +38,6 @@ Feature: mesh / index
     And the "$mesh-breadcrumb" element contains "<Mesh>"
 
     Examples:
-      | Mesh         | Selector                                  |
-      | another-mesh | $table-row:nth-child(2) $detail-view-link |
-      | default      | $table-row:nth-child(1) $detail-view-link |
+      | Mesh         | Selector |
+      | another-mesh | [data-testid='data-overview-table'] tbody tr:nth-child(2) [data-testid='detail-view-link'] |
+      | default      | [data-testid='data-overview-table'] tbody tr:nth-child(1) [data-testid='detail-view-link'] |
