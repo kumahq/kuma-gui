@@ -1,4 +1,6 @@
 common:
+  product:
+    name: Kuma
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'

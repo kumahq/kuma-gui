@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, jest, test } from '@jest/globals'
-import { flushPromises, shallowMount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import ServiceDetailView from './ServiceDetailView.vue'
 import { createExternalService } from '@/test-data/createExternalService'
@@ -12,7 +12,7 @@ const externalService = createExternalService()
 const serviceInsight = createServiceInsight()
 
 function renderComponent(props = {}) {
-  return shallowMount(ServiceDetailView, {
+  return mount(ServiceDetailView, {
     props,
   })
 }

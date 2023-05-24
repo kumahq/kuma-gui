@@ -1,38 +1,45 @@
 <template>
-  <KTabs
-    :tabs="items"
-    :model-value="(items.find(item => (router.currentRoute?.value.name ?? '').toString().startsWith(item.hash)) ?? items[0]).hash"
-    :has-panels="false"
-  >
-    <template
-      v-for="item in items"
-      :key="`${item.hash}-anchor`"
-      #[`${item.hash}-anchor`]
-    >
-      <router-link
-        :to="{
-          name: item.hash,
-        }"
+  <RouteView>
+    <AppView>
+      <KTabs
+        class="route-mesh-view-tabs"
+        :tabs="items"
+        :has-panels="false"
+        :model-value="(items.find(item => (router.currentRoute?.value.name ?? '').toString().startsWith(item.hash)) ?? items[0]).hash"
       >
-        {{ item.title }}
-      </router-link>
-    </template>
-  </KTabs>
+        <template
+          v-for="item in items"
+          :key="`${item.hash}-anchor`"
+          #[`${item.hash}-anchor`]
+        >
+          <router-link
+            :to="{
+              name: item.hash,
+            }"
+          >
+            {{ item.title }}
+          </router-link>
+        </template>
+      </KTabs>
 
-  <RouterView
-    v-slot="{Component, route}"
-  >
-    <component
-      :is="Component"
-      :key="route.path"
-    />
-  </RouterView>
+      <RouterView
+        v-slot="child"
+      >
+        <component
+          :is="child.Component"
+          :key="child.route.path"
+        />
+      </RouterView>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
 import { KTabs } from '@kong/kongponents'
 import { useRouter } from 'vue-router'
 
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

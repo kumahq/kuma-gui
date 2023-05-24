@@ -16,10 +16,6 @@ export const routes = (
     {
       path: '/meshes',
       name: 'mesh-list-view',
-      meta: {
-        title: 'Meshes',
-        isBreadcrumb: true,
-      },
       props: (route) => ({
         page: getLastNumberParameter(route.query.page),
         selectedMeshName: route.query.mesh,
@@ -29,21 +25,13 @@ export const routes = (
     {
       path: '/mesh',
       name: 'mesh-index-view',
-      meta: {
-        title: 'Meshes',
-        isBreadcrumb: true,
-      },
       redirect: () => ({ name: 'mesh-list-view' }),
       children: [
         {
           path: ':mesh',
           name: 'mesh-detail-view',
-          meta: {
-            title: 'Mesh',
-            isBreadcrumb: true,
-            breadcrumbTitleParam: 'mesh',
-          },
           redirect: () => ({ name: 'mesh-overview-view' }),
+          component: () => import('@/app/meshes/views/MeshItemView.vue'),
           children: [
             {
               name: 'mesh-abstract-view',

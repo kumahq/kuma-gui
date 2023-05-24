@@ -1,24 +1,43 @@
 <template>
-  <div class="service-details">
-    <LoadingBlock v-if="isLoading" />
-
-    <ErrorBlock
-      v-else-if="error !== null"
-      :error="error"
+  <RouteView
+    v-slot="{route: _route}"
+  >
+    <RouteTitle
+      :title="`${_route.params.service}`"
     />
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'service-detail-view',
+            params: _route.params
+          },
+          text: _route.params.service
+        },
+      ]"
+    >
+      <div class="service-details">
+        <LoadingBlock v-if="isLoading" />
 
-    <EmptyBlock v-else-if="service === null" />
+        <ErrorBlock
+          v-else-if="error !== null"
+          :error="error"
+        />
 
-    <ServiceDetails
-      v-else
-      :service="service"
-      :data-plane-overviews="dataPlaneOverviews"
-      :external-service="externalService"
-      :dpp-filter-fields="DPP_FILTER_FIELDS"
-      :selected-dpp-name="props.selectedDppName"
-      @load-dataplane-overviews="loadDataplaneOverviews"
-    />
-  </div>
+        <EmptyBlock v-else-if="service === null" />
+
+        <ServiceDetails
+          v-else
+          :service="service"
+          :data-plane-overviews="dataPlaneOverviews"
+          :external-service="externalService"
+          :dpp-filter-fields="DPP_FILTER_FIELDS"
+          :selected-dpp-name="props.selectedDppName"
+          @load-dataplane-overviews="loadDataplaneOverviews"
+        />
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -26,6 +45,9 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import ServiceDetails from '../components/ServiceDetails.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
