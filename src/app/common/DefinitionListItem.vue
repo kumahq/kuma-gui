@@ -1,7 +1,7 @@
 <template>
   <div class="definition-list-item">
     <dt class="definition-list-item__term">
-      {{ currentTerm }}
+      {{ props.term }}
     </dt>
 
     <dd class="definition-list-item__details">
@@ -11,11 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 const props = defineProps({
   term: {
@@ -24,7 +19,6 @@ const props = defineProps({
   },
 })
 
-const currentTerm = computed(() => t(`http.api.property.${props.term}`))
 </script>
 
 <style lang="scss" scoped>

@@ -18,7 +18,7 @@
               <DefinitionListItem
                 v-for="(value, property) in basicMesh"
                 :key="property"
-                :term="property"
+                :term="t(`http.api.property.${property}`)"
               >
                 <KBadge
                   v-if="typeof value === 'boolean'"
@@ -42,7 +42,7 @@
             <DefinitionListItem
               v-for="(value, property) in extendedMesh"
               :key="property"
-              :term="property"
+              :term="t(`http.api.property.${property}`)"
             >
               <KBadge
                 v-if="typeof value === 'boolean'"
@@ -113,8 +113,10 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { Mesh, MeshInsight } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { humanReadableDate } from '@/utilities/helpers'
+
+const { t } = useI18n()
 
 const kumaApi = useKumaApi()
 const route = useRoute()

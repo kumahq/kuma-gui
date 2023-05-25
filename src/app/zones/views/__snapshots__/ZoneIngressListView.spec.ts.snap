@@ -925,7 +925,7 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              cds: 
+                              CDS: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -974,7 +974,7 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              eds: 
+                              EDS: 
                             </h6>
                             <dl
                               class="definition-list"
@@ -1023,7 +1023,7 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
                             <h6
                               class="overview-tertiary-title"
                             >
-                              lds: 
+                              LDS: 
                             </h6>
                             <dl
                               class="definition-list"

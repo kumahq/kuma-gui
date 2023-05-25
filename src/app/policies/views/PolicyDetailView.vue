@@ -14,7 +14,6 @@ import { useRoute } from 'vue-router'
 
 import PolicyDetails from '../components/PolicyDetails.vue'
 import { useStore } from '@/store/store'
-
 const route = useRoute()
 const store = useStore()
 

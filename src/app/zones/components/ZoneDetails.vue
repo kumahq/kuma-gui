@@ -17,7 +17,7 @@
         <DefinitionListItem
           v-for="(value, property) in processedZoneOverview"
           :key="property"
-          :term="property"
+          :term="t(`http.api.property.${property}`)"
         >
           <KBadge
             v-if="property === 'status'"
@@ -87,9 +87,11 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { useStore } from '@/store/store'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'
+import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
 import { getZoneDpServerAuthType } from '@/utilities/helpers'
 
+const { t } = useI18n()
 const store = useStore()
 
 const TABS = [

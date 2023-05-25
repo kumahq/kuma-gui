@@ -8,28 +8,28 @@
       <DefinitionList>
         <DefinitionListItem
           v-if="details.globalInstanceId"
-          term="Global instance ID"
+          :term="t('http.api.property.globalInstanceId')"
         >
           {{ details.globalInstanceId }}
         </DefinitionListItem>
 
         <DefinitionListItem
           v-if="details.controlPlaneInstanceId"
-          term="CP instance ID"
+          :term="t('http.api.property.controlPlaneInstanceId')"
         >
           {{ details.controlPlaneInstanceId }}
         </DefinitionListItem>
 
         <DefinitionListItem
           v-if="details.connectTime"
-          term="Last connected"
+          :term="t('http.api.property.connectTime')"
         >
           {{ humanReadableDate(details.connectTime) }}
         </DefinitionListItem>
 
         <DefinitionListItem
           v-if="details.disconnectTime"
-          term="Last disconnected"
+          :term="t('http.api.property.disconnectTime')"
         >
           {{ humanReadableDate(details.disconnectTime) }}
         </DefinitionListItem>
@@ -47,14 +47,14 @@
       >
         <div v-if="Object.keys(item).length > 0">
           <h6 class="overview-tertiary-title">
-            {{ label }}:
+            {{ t(`http.api.property.${label}`) }}:
           </h6>
 
           <DefinitionList>
             <DefinitionListItem
               v-for="(value, property) in item"
               :key="property"
-              :term="property"
+              :term="t(`http.api.property.${property}`)"
             >
               {{ formatError(formatValue(value)) }}
             </DefinitionListItem>
@@ -85,13 +85,10 @@ import { computed } from 'vue'
 
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import { useI18n } from '@/utilities'
 import { humanReadableDate } from '@/utilities/helpers'
 
-const map: Record<string, string> = {
-  responsesSent: 'Responses sent',
-  responsesAcknowledged: 'Responses acknowledged',
-  responsesRejected: 'Responses rejected',
-}
+const { t } = useI18n()
 
 const props = defineProps({
   details: {
@@ -115,17 +112,6 @@ const detailsIterator = computed<Record<string, Record<string, any>>>(() => {
 
   if (props.details.status?.stat) {
     details = props.details.status?.stat
-  }
-
-  for (const detailProperty in details) {
-    const detail: any = details[detailProperty]
-
-    for (const prop in detail) {
-      if (prop in map) {
-        detail[map[prop]] = detail[prop]
-        delete detail[prop]
-      }
-    }
   }
 
   return details
