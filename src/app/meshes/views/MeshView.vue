@@ -56,7 +56,7 @@ const items = [
   },
 ]
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .tab-link a {
   display: block;
   padding: var(--spacing-md);
@@ -68,6 +68,10 @@ li.active .tab-link a {
 }
 </style>
 <style lang="scss">
+.route-mesh-view-tabs ul:not(.increase-specificity) {
+  border-bottom: none;
+}
+
 .route-mesh-view-tabs > ul .tab-item {
   padding: 0 !important;
 }
