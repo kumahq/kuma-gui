@@ -1,13 +1,14 @@
-import type { ClientConfigInterface } from '@/store/modules/config/config.types'
-const c = class {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(..._args: any[]) {
-  }
-}
-export const disabledLogger = function (parent: typeof c) {
-  return class DisabledLogger extends parent {
-    setup(_config: ClientConfigInterface) {
-      console.log('Logging disabled')
+import type Logger from '@/services/logger/DatadogLogger'
+// eslint-disable-next-line no-useless-constructor
+const c = class {constructor(..._args: any[]) {}}
+type Parent = typeof c;
+export default (
+  logger: Logger,
+) => {
+  class DisabledLogger extends (logger.constructor as Parent) {
+    setup() {
+      console.warn('Logging is disabled')
     }
   }
+  return new DisabledLogger(logger.env)
 }

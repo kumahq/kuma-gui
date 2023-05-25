@@ -1,12 +1,18 @@
 import { RestClient } from './RestClient'
-import type Env from '@/services/env/Env'
+import type { EnvVars } from '@/services/env/Env'
 
+type Env = (
+  key: keyof Pick<EnvVars,
+  'KUMA_API_URL' |
+  'KUMA_VERSION_URL'
+  >
+) => string
 export class Api {
   client: RestClient
   env: Env
 
   constructor(env: Env) {
-    this.client = new RestClient(env.var('KUMA_API_URL'))
+    this.client = new RestClient(env('KUMA_API_URL'))
     this.env = env
   }
 

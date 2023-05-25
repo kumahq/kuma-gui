@@ -109,7 +109,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.api, {
     service: KumaApi,
     arguments: [
-      $.Env,
+      $.env,
     ],
   }],
 
@@ -117,7 +117,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.logger, {
     service: Logger,
     arguments: [
-      $.Env,
+      $.env,
     ],
   }],
 

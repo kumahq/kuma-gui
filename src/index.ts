@@ -36,11 +36,9 @@ export function useBootstrap(
 ) {
   return async (isAllowedToMakeApiCalls: boolean = true) => {
     if (isAllowedToMakeApiCalls) {
-      if (import.meta.env.PROD) {
-        kumaApi.getConfig().then((config) => {
-          logger.setup(config)
-        })
-      }
+      kumaApi.getConfig().then((config) => {
+        logger.setup(config)
+      })
       await Promise.all([
         // Fetches basic resources before setting up the router and mounting the
         // application. This is mainly needed to properly redirect users to the
