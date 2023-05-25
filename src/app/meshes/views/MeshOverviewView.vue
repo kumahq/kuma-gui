@@ -132,10 +132,9 @@ const basicMesh = computed(() => {
     return null
   }
 
-  const { name, type, creationTime, modificationTime } = mesh.value
+  const { name, creationTime, modificationTime } = mesh.value
   return {
     name,
-    type,
     created: humanReadableDate(creationTime),
     modified: humanReadableDate(modificationTime),
     'Data Plane Proxies': store.state.meshInsight.dataplanes.total,

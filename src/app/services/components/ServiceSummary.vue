@@ -19,10 +19,6 @@
           </h1>
 
           <DefinitionList class="mt-4">
-            <DefinitionListItem term="Mesh">
-              {{ props.service.mesh }}
-            </DefinitionListItem>
-
             <DefinitionListItem term="Address">
               <template v-if="address !== null">
                 {{ address }}
