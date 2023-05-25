@@ -419,7 +419,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
           commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(endpoint))
         } catch {
-          commit('SET_INTERNAL_SERVICE_SUMMARY')
+          commit('SET_INTERNAL_SERVICE_SUMMARY', {})
         }
 
         commit('SET_SERVICE_INSIGHTS_FETCHING', false)
@@ -435,7 +435,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
           commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(endpoint))
         } catch {
-          commit('SET_EXTERNAL_SERVICE_SUMMARY')
+          commit('SET_EXTERNAL_SERVICE_SUMMARY', {})
         }
 
         commit('SET_EXTERNAL_SERVICES_FETCHING', false)
