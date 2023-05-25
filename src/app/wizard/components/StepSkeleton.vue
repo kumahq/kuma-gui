@@ -172,7 +172,7 @@ function setStepSlug(stepIndex: number): void {
 
   h4 {
     font-size: inherit !important;
-    font-weight: 600;
+    font-weight: var(--font-weight-semi-bold);
     text-align: center;
     text-transform: uppercase;
     margin: 0 0 5px 0 !important;
@@ -197,7 +197,7 @@ function setStepSlug(stepIndex: number): void {
 
   .not-set {
     color: red;
-    font-weight: 600;
+    font-weight: var(--font-weight-semi-bold);
     font-style: italic;
   }
 }

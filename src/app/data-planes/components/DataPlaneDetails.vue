@@ -337,7 +337,7 @@ async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
 <style lang="scss" scoped>
 .entity-heading {
   font-size: inherit;
-  font-weight: normal;
+  font-weight: var(--font-weight-regular);
 }
 
 .reason {
@@ -357,7 +357,7 @@ async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
   }
 
   span:first-of-type {
-    font-weight: 600;
+    font-weight: var(--font-weight-semi-bold);
   }
 }
 </style>

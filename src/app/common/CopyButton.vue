@@ -108,7 +108,7 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
   border-radius: 3px;
   color: var(--tooltip-text-color);
   content: attr(data-tooltip-text);
-  font-weight: normal;
+  font-weight: var(--font-weight-regular);
   padding: var(--spacing-xs);
   position: absolute;
   right: calc(100% + var(--spacing-xs));

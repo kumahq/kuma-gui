@@ -75,7 +75,7 @@ const props = defineProps({
   --step-orb-border-color: var(--teal-300);
   --step-text-color: currentColor;
 
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
 }
 
 .step__icon {
