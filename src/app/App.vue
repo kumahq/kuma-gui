@@ -1,5 +1,5 @@
 <template>
-  <AppLoadingBar v-if="isLoading || route.name === undefined" />
+  <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
 
   <template v-else>
     <AppHeader v-if="!isWizard" />
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppBreadcrumbs from './AppBreadcrumbs.vue'
@@ -72,8 +72,6 @@ const [
 const store = useStore()
 const route = useRoute()
 
-const isLoading = ref(store.state.globalLoading)
-
 /**
  * The `router-view`’s `key` attribute value.
  *
@@ -94,9 +92,6 @@ const shouldShowOnboardingNotification = computed(() => store.getters.shouldShow
 const shouldShowBreadcrumbs = computed(() => store.getters.shouldShowBreadcrumbs)
 
 watch(() => isWizard.value, setIsWizardPageClass, { immediate: true })
-watch(() => store.state.globalLoading, function (globalLoading) {
-  isLoading.value = globalLoading
-})
 
 watch(() => route.meta.title, function (pageTitle) {
   setDocumentTitle(pageTitle)
