@@ -48,7 +48,6 @@ export const routes = (
             {
               name: 'mesh-abstract-view',
               path: '',
-              name: '-mesh',
               redirect: () => ({ name: 'mesh-overview-view' }),
               component: () => import('@/app/meshes/views/MeshView.vue'),
               children: [
