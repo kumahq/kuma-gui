@@ -49,13 +49,17 @@
 <script lang="ts" setup>
 import { KAlert } from '@kong/kongponents'
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import { useI18n } from '@/utilities'
-import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
+import {
+  useI18n,
+  useGetGlobalKdsAddress,
+} from '@/utilities'
 
 const getGlobalKdsAddress = useGetGlobalKdsAddress()
 const i18n = useI18n()
+const route = useRoute()
 
 const props = defineProps({
   zoneName: {
@@ -74,11 +78,19 @@ const props = defineProps({
   },
 })
 
-const universalConfig = computed(() => i18n.t('zones.form.universal.connectZone.config', {
-  zoneName: props.zoneName,
-  globalKdsAddress: getGlobalKdsAddress(),
-  token: props.base64EncodedToken,
-}).trim())
+const universalConfig = computed(() => {
+  const placeholders: Record<string, string> = {
+    zoneName: props.zoneName,
+    globalKdsAddress: getGlobalKdsAddress(),
+    token: props.base64EncodedToken,
+  }
+
+  if (typeof route.params.virtualControlPlaneId === 'string') {
+    placeholders.controlPlaneId = route.params.virtualControlPlaneId
+  }
+
+  return i18n.t('zones.form.universal.connectZone.config', placeholders).trim()
+})
 </script>
 
 <style lang="scss" scoped>

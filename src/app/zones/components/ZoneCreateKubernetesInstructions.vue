@@ -106,14 +106,19 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import { useEnv, useI18n } from '@/utilities'
-import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
+import {
+  useEnv,
+  useI18n,
+  useGetGlobalKdsAddress,
+} from '@/utilities'
 
 const env = useEnv()
 const getGlobalKdsAddress = useGetGlobalKdsAddress()
 const i18n = useI18n()
+const route = useRoute()
 
 const props = defineProps({
   zoneName: {
@@ -145,12 +150,20 @@ const props = defineProps({
 const kubernetesCreateSecretCommand = computed(() => i18n.t('zones.form.kubernetes.secret.command', {
   token: props.base64EncodedToken,
 }).trim())
-const kubernetesConfig = computed(() => i18n.t('zones.form.kubernetes.connectZone.config', {
-  zoneName: props.zoneName,
-  globalKdsAddress: getGlobalKdsAddress(),
-  zoneIngressEnabled: String(props.zoneIngressEnabled),
-  zoneEgressEnabled: String(props.zoneEgressEnabled),
-}).trim())
+const kubernetesConfig = computed(() => {
+  const placeholders: Record<string, string> = {
+    zoneName: props.zoneName,
+    globalKdsAddress: getGlobalKdsAddress(),
+    zoneIngressEnabled: String(props.zoneIngressEnabled),
+    zoneEgressEnabled: String(props.zoneEgressEnabled),
+  }
+
+  if (typeof route.params.virtualControlPlaneId === 'string') {
+    placeholders.controlPlaneId = route.params.virtualControlPlaneId
+  }
+
+  return i18n.t('zones.form.kubernetes.connectZone.config', placeholders).trim()
+})
 
 </script>
 
