@@ -140,7 +140,7 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 <style lang="scss" scoped>
 .policy-type-heading {
   font-size: inherit;
-  font-weight: normal;
+  font-weight: var(--font-weight-regular);
 }
 
 .policy-list {

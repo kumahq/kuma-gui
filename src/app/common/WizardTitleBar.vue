@@ -37,7 +37,7 @@ import { KIcon } from '@kong/kongponents'
   margin-left: var(--spacing-xs);
   padding-left: var(--spacing-xs);
   border-left: 1px solid var(--grey-300);
-  font-weight: bold;
+  font-weight: var(--font-weight-semi-bold);
   font-size: 20px;
 }
 

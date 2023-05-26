@@ -32,7 +32,7 @@ const props = defineProps({
   flex-shrink: 0;
   flex-basis: var(--dl-term-width);
   margin-right: var(--spacing-sm);
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
 }
 
 .definition-list-item__details {

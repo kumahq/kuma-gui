@@ -263,6 +263,6 @@ function changePolicyType(item: SelectItem) {
 
 .entity-heading {
   font-size: inherit;
-  font-weight: normal;
+  font-weight: var(--font-weight-regular);
 }
 </style>

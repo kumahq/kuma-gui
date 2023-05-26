@@ -207,7 +207,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
 .chart-title__total {
   display: block;
   font-size: 1.2em;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
 }
 
 .chart-title__subtitle {

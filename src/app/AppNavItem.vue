@@ -126,7 +126,7 @@ function onNavItemClick() {
   border: 1px solid var(--white);
   border-radius: 0.25rem;
   font-size: 0.75rem;
-  font-weight: normal;
+  font-weight: var(--font-weight-regular);
   background-color: var(--purple-100);
 }
 
