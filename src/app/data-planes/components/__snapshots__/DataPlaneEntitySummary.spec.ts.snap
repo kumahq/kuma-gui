@@ -108,22 +108,6 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
               <dt
                 class="definition-list-item__term"
               >
-                Mesh
-              </dt>
-              <dd
-                class="definition-list-item__details"
-              >
-                
-                test-mesh
-                
-              </dd>
-            </div>
-            <div
-              class="definition-list-item"
-            >
-              <dt
-                class="definition-list-item__term"
-              >
                 Tags
               </dt>
               <dd

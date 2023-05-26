@@ -13,64 +13,49 @@
     </template>
 
     <template #overview>
-      <div
-        class="columns"
-        style="--columns: 2;"
-      >
-        <DefinitionList>
-          <DefinitionListItem
-            v-for="(value, property) in processedDataPlane"
-            :key="property"
-            :term="t(`http.api.property.${property}`)"
-          >
-            {{ value }}
-          </DefinitionListItem>
-        </DefinitionList>
+      <DefinitionList>
+        <DefinitionListItem
+          v-if="dataPlaneTags.length > 0"
+          term="Tags"
+        >
+          <TagList :tags="dataPlaneTags" />
+        </DefinitionListItem>
 
-        <DefinitionList>
-          <DefinitionListItem
-            v-if="dataPlaneTags.length > 0"
-            term="Tags"
-          >
-            <TagList :tags="dataPlaneTags" />
-          </DefinitionListItem>
+        <DefinitionListItem
+          v-if="statusWithReason.status"
+          term="Status"
+        >
+          <StatusBadge :status="statusWithReason.status" />
+        </DefinitionListItem>
 
-          <DefinitionListItem
-            v-if="statusWithReason.status"
-            term="Status"
+        <DefinitionListItem
+          v-if="statusWithReason.reason.length > 0"
+          term="Reason"
+        >
+          <div
+            v-for="(reason, index) in statusWithReason.reason"
+            :key="index"
+            class="reason"
           >
-            <StatusBadge :status="statusWithReason.status" />
-          </DefinitionListItem>
+            {{ reason }}
+          </div>
+        </DefinitionListItem>
 
-          <DefinitionListItem
-            v-if="statusWithReason.reason.length > 0"
-            term="Reason"
-          >
-            <div
-              v-for="(reason, index) in statusWithReason.reason"
-              :key="index"
-              class="reason"
+        <DefinitionListItem
+          v-if="dataPlaneVersions !== null"
+          term="Dependencies"
+        >
+          <ul>
+            <li
+              v-for="(version, dependency) in dataPlaneVersions"
+              :key="dependency"
+              class="tag-cols"
             >
-              {{ reason }}
-            </div>
-          </DefinitionListItem>
-
-          <DefinitionListItem
-            v-if="dataPlaneVersions !== null"
-            term="Dependencies"
-          >
-            <ul>
-              <li
-                v-for="(version, dependency) in dataPlaneVersions"
-                :key="dependency"
-                class="tag-cols"
-              >
-                {{ dependency }}: {{ version }}
-              </li>
-            </ul>
-          </DefinitionListItem>
-        </DefinitionList>
-      </div>
+              {{ dependency }}: {{ version }}
+            </li>
+          </ul>
+        </DefinitionListItem>
+      </DefinitionList>
 
       <ResourceCodeBlock
         id="code-block-data-plane"
@@ -268,16 +253,6 @@ const detailViewRoute = computed(() => ({
     dataPlane: props.dataPlane.name,
   },
 }))
-
-const processedDataPlane = computed(() => {
-  const { type, name, mesh } = props.dataPlane
-
-  return {
-    type,
-    name,
-    mesh,
-  }
-})
 
 const statusWithReason = computed(() => getStatusAndReason(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataPlane))

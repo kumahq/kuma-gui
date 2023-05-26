@@ -21,10 +21,6 @@
           </h3>
 
           <DefinitionList class="mt-4">
-            <DefinitionListItem term="Mesh">
-              {{ dataPlaneOverview.mesh }}
-            </DefinitionListItem>
-
             <DefinitionListItem
               v-if="dataPlaneTags !== null"
               term="Tags"
