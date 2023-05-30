@@ -335,7 +335,7 @@ export interface MeshGatewayDataplane {
     mesh: string
     name: string
   }
-  listeners: MeshGatewayDataplaneListener[]
+  listeners: MeshGatewayDataplaneListener[] | null
   policies?: Record<string, MatchedPolicyType>
 }
 
