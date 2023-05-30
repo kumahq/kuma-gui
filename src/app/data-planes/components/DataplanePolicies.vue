@@ -132,7 +132,8 @@ async function fetchPolicies(): Promise<void> {
 function getMeshGatewayListenerEntries(meshGatewayDataplane: MeshGatewayDataplane): MeshGatewayListenerEntry[] {
   const meshGatewayListenerEntries: MeshGatewayListenerEntry[] = []
 
-  for (const listener of meshGatewayDataplane.listeners) {
+  const listeners = meshGatewayDataplane.listeners ?? []
+  for (const listener of listeners) {
     for (const host of listener.hosts) {
       for (const route of host.routes) {
         const routeEntries: MeshGatewayRouteEntry[] = []
