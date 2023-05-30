@@ -1,5 +1,5 @@
 <template>
-  <AppLoadingBar v-if="isLoading || route.name === undefined" />
+  <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
 
   <template v-else>
     <AppHeader v-if="!isWizard" />
@@ -11,9 +11,6 @@
     <div
       v-else
       class="app-content-container"
-      :class="{
-        'is-wizard': isWizard,
-      }"
     >
       <AppSidebar v-if="!isWizard" />
 
@@ -51,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppBreadcrumbs from './AppBreadcrumbs.vue'
@@ -75,8 +72,6 @@ const [
 const store = useStore()
 const route = useRoute()
 
-const isLoading = ref(store.state.globalLoading)
-
 /**
  * The `router-view`’s `key` attribute value.
  *
@@ -96,9 +91,7 @@ const shouldShowNotificationManager = computed(() => store.getters.shouldShowNot
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
 const shouldShowBreadcrumbs = computed(() => store.getters.shouldShowBreadcrumbs)
 
-watch(() => store.state.globalLoading, function (globalLoading) {
-  isLoading.value = globalLoading
-})
+watch(() => isWizard.value, setIsWizardPageClass, { immediate: true })
 
 watch(() => route.meta.title, function (pageTitle) {
   setDocumentTitle(pageTitle)
@@ -113,16 +106,29 @@ function setDocumentTitle(title: string | undefined): void {
 
   document.title = title ? `${title} | ${siteTitle}` : siteTitle
 }
+
+/**
+ * Adds a class for wizard pages to the body element. This is used to control certain layout aspects of the app.
+ */
+function setIsWizardPageClass(isWizard: boolean) {
+  const hasClass = document.body.classList.contains('is-wizard-page')
+
+  if (isWizard && !hasClass) {
+    document.body.classList.add('is-wizard-page')
+  } else if (!isWizard && hasClass) {
+    document.body.classList.remove('is-wizard-page')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.app-content-container:not(.is-wizard) {
+body:not(.is-wizard-page) .app-content-container {
   padding-top: var(--AppHeaderHeight, initial);
   display: grid;
   grid-template-columns: var(--AppSidebarWidth) 1fr;
 }
 
-.app-content-container:not(.is-wizard) .app-main-content {
+body:not(.is-wizard-page) .app-main-content {
   padding: var(--AppGap);
 }
 </style>
