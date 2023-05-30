@@ -85,9 +85,9 @@ zones:
                 Secret: cp-token
                 Key: token
           ingress:
-              enabled: {zoneIngressEnabled}
+            enabled: {zoneIngressEnabled}
           egress:
-              enabled: {zoneEgressEnabled}
+            enabled: {zoneEgressEnabled}
           experimental:
             deltaKds: true
         description2: 'Next, run the following command to connect the Zone.'
