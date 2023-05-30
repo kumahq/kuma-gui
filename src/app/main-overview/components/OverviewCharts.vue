@@ -91,7 +91,8 @@ watch(() => isMultizoneMode.value, function () {
 
 loadData()
 
-function loadData() {
+async function loadData() {
+  await store.dispatch('fetchGlobalInsights')
   store.dispatch('fetchMeshInsights')
   store.dispatch('fetchServices')
   store.dispatch('fetchZonesInsights', isMultizoneMode.value)
