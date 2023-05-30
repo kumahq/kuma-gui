@@ -81,7 +81,7 @@ import DataOverview from '@/app/common/DataOverview.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
-import { StatusKeyword, TableHeader, ZoneOverview } from '@/types/index.d'
+import { StatusKeyword, TableHeader, ZoneEgressOverview, ZoneIngressOverview, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { fetchAllResources } from '@/utilities/helpers'
@@ -144,8 +144,6 @@ const tableData = ref<{ headers: TableHeader[], data: ZoneOverviewTableRow[] }>(
 const entity = ref<ZoneOverview | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
-const zonesWithIngress = ref(new Set())
-const zonesWithEgress = ref(new Set())
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
@@ -184,15 +182,15 @@ async function loadData(offset: number) {
     ])
 
     nextUrl.value = next
-    tableData.value.data = transformToTableData(items ?? [])
-    zonesWithIngress.value = new Set(zoneIngressOverviews.map((zoneIngressOverview) => zoneIngressOverview.zoneIngress.zone))
-    zonesWithEgress.value = new Set(zoneEgressOverviews.map((zoneEgressOverview) => zoneEgressOverview.zoneEgress.zone))
+    tableData.value.data = transformToTableData(
+      items ?? [],
+      zoneIngressOverviews ?? [],
+      zoneEgressOverviews ?? [],
+    )
     await loadEntity({ name: props.selectedZoneName ?? tableData.value.data[0]?.entity.name })
   } catch (err) {
-    tableData.value.data = []
     entity.value = null
-    zonesWithIngress.value = new Set()
-    zonesWithEgress.value = new Set()
+    tableData.value.data = []
 
     if (err instanceof Error) {
       error.value = err
@@ -204,7 +202,10 @@ async function loadData(offset: number) {
   }
 }
 
-function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
+function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverviews: ZoneIngressOverview[], zoneEgressOverviews: ZoneEgressOverview[]): ZoneOverviewTableRow[] {
+  const zonesWithIngress = new Set(zoneIngressOverviews.map((zoneIngressOverview) => zoneIngressOverview.zoneIngress.zone))
+  const zonesWithEgress = new Set(zoneEgressOverviews.map((zoneEgressOverview) => zoneEgressOverview.zoneEgress.zone))
+
   return zoneOverviews.map((entity) => {
     const { name } = entity
     const detailViewRoute: RouteLocationNamedRaw = {
@@ -239,8 +240,8 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       status,
       zoneCpVersion,
       storeType,
-      hasIngress: zonesWithIngress.value.has(entity.name) ? 'Yes' : 'No',
-      hasEgress: zonesWithEgress.value.has(entity.name) ? 'Yes' : 'No',
+      hasIngress: zonesWithIngress.has(entity.name) ? 'Yes' : 'No',
+      hasEgress: zonesWithEgress.has(entity.name) ? 'Yes' : 'No',
       withWarnings: !cpCompat,
     }
   })
