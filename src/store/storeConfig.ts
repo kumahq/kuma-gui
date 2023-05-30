@@ -379,23 +379,51 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         }
       },
 
+      async fetchGlobalInsights({ commit }) {
+        try {
+          const globalInsights = await kumaApi.getGlobalInsights()
+
+          const meshesDataPoints: ChartDataPoint[] = [
+            {
+              title: 'Mesh',
+              data: globalInsights.resources.Mesh?.total ?? 0,
+            },
+          ]
+          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: meshesDataPoints })
+
+          const zonesDataPoints: ChartDataPoint[] = [
+            {
+              title: ONLINE,
+              data: globalInsights.resources.Zone?.total ?? 0,
+              route: {
+                name: 'zone-list-view',
+              },
+            },
+          ]
+          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: zonesDataPoints })
+        } catch (err) {
+          console.error(err)
+        }
+      },
+
       async fetchMeshInsights({ commit, dispatch }, mesh: string | undefined) {
         commit('SET_MESH_INSIGHTS_FETCHING', true)
 
         try {
           if (mesh === undefined) {
             const response = await fetchAllResources(kumaApi.getAllMeshInsights.bind(kumaApi))
-            const data: ChartDataPoint[] = []
 
             if (response.items.length > 0) {
+              const data: ChartDataPoint[] = []
+
               data.push({
                 title: 'Mesh',
                 data: response.items.length,
               })
-            }
 
-            commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data })
-            commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', response)
+              commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data })
+              commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', response)
+            }
           } else {
             commit('SET_MESH_INSIGHT', await kumaApi.getMeshInsights({ name: mesh }))
           }
@@ -456,8 +484,10 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
           if (multicluster) {
             const data = await fetchAllResources(kumaApi.getAllZoneOverviews.bind(kumaApi))
 
-            dispatch('setOverviewZonesChartData', data)
-            dispatch('setOverviewZonesCPVersionsChartData', data)
+            if (data.items.length > 0) {
+              dispatch('setOverviewZonesChartData', data)
+              dispatch('setOverviewZonesCPVersionsChartData', data)
+            }
           } else {
             const zonesData: ChartDataPoint[] = [
               {
