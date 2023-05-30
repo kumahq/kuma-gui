@@ -184,15 +184,15 @@ async function loadData(offset: number) {
     ])
 
     nextUrl.value = next
-    tableData.value.data = transformToTableData(items ?? [])
     zonesWithIngress.value = new Set(zoneIngressOverviews.map((zoneIngressOverview) => zoneIngressOverview.zoneIngress.zone))
     zonesWithEgress.value = new Set(zoneEgressOverviews.map((zoneEgressOverview) => zoneEgressOverview.zoneEgress.zone))
+    tableData.value.data = transformToTableData(items ?? [])
     await loadEntity({ name: props.selectedZoneName ?? tableData.value.data[0]?.entity.name })
   } catch (err) {
-    tableData.value.data = []
     entity.value = null
     zonesWithIngress.value = new Set()
     zonesWithEgress.value = new Set()
+    tableData.value.data = []
 
     if (err instanceof Error) {
       error.value = err
