@@ -33,12 +33,8 @@ zones:
             zone:
               name: {zoneName}
               globalAddress: {globalKdsAddress}
-          kuma:
-            multizone:
-              zone:
-                kds:
-                  auth:
-                    cpTokenInline: {token}
+          experimental:
+            kdsDeltaEnabled: true
         command: 'kuma-cp run -c config.yaml'
         description2: 'Next, run the following command to connect the Zone.'
     kubernetes:
@@ -69,8 +65,8 @@ zones:
             apiVersion: v1
             kind: Secret
             metadata:
-            name: cp-token
-            namespace: kuma-system
+              name: cp-token
+              namespace: kuma-system
             type: Opaque
             data:
               token: {token}
@@ -89,9 +85,11 @@ zones:
                 Secret: cp-token
                 Key: token
           ingress:
-              enabled: {zoneIngressEnabled}
+            enabled: {zoneIngressEnabled}
           egress:
-              enabled: {zoneEgressEnabled}
+            enabled: {zoneEgressEnabled}
+          experimental:
+            deltaKds: true
         description2: 'Next, run the following command to connect the Zone.'
         command: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
