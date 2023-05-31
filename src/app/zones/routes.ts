@@ -42,12 +42,11 @@ export const routes = (
               component: () => import('@/app/zones/views/ZoneListView.vue'),
             },
             ...actions,
-
             {
               path: ':zone',
               name: 'zone-detail-view',
               meta: {
-                title: 'Zone',
+                getTitle: (route) => route.params.zone as string,
                 isBreadcrumb: true,
                 breadcrumbTitleParam: 'zone',
               },
@@ -86,7 +85,7 @@ export const routes = (
               path: ':zoneIngress',
               name: 'zone-ingress-detail-view',
               meta: {
-                title: 'Zone Ingress',
+                getTitle: (route) => route.params.zoneIngress as string,
                 isBreadcrumb: true,
                 breadcrumbTitleParam: 'zoneIngress',
               },
@@ -124,7 +123,7 @@ export const routes = (
             {
               path: ':zoneEgress',
               meta: {
-                title: 'Zone Egress',
+                getTitle: (route) => route.params.zoneEgress as string,
                 isBreadcrumb: true,
                 breadcrumbTitleParam: 'zoneEgress',
               },

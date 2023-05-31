@@ -17,7 +17,7 @@ export const routes = () => {
             path: ':service',
             name: `${prefix}-detail-view`,
             meta: {
-              title: 'Internal service',
+              getTitle: (route) => route.params.service as string,
             },
             component: () => import('@/app/services/views/ServiceDetailView.vue'),
           },

@@ -23,6 +23,9 @@ export const routes = (store: Store<State>) => {
               policyPath: route.params.policyPath,
               policyName: route.params.policy,
             }),
+            meta: {
+              getTitle: (route) => route.params.policy as string,
+            },
             component: () => import('@/app/policies/views/PolicyDetailView.vue'),
           },
         ],
@@ -74,8 +77,15 @@ export const routes = (store: Store<State>) => {
                   children: [
                     {
                       path: ':policyPath',
-
                       name: `${prefix}-list-view`,
+                      meta: {
+                        getTitle: (route, store) => {
+                          const policyPath = route.params.policyPath as string
+                          const policyType = store.state.policyTypesByPath[policyPath]
+
+                          return policyType?.name ?? policyPath
+                        },
+                      },
                       component: () => import('@/app/policies/views/PolicyListView.vue'),
                       props: (route) => ({
                         policyPath: route.params.policyPath,

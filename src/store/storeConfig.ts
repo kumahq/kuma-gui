@@ -47,7 +47,6 @@ interface BareRootState {
     onboardingNotification: boolean
     breadcrumbs: boolean
   }
-  pageTitle: string
   meshes: {
     items: Mesh[]
     total: number
@@ -102,7 +101,6 @@ const initialState: BareRootState = {
     onboardingNotification: true,
     breadcrumbs: true,
   },
-  pageTitle: '',
   meshes: {
     total: 0,
     items: [],
@@ -227,7 +225,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
     mutations: {
       SET_GLOBAL_LOADING: (state, globalLoading: typeof state.globalLoading) => (state.globalLoading = globalLoading),
-      SET_PAGE_TITLE: (state, pageTitle: typeof state.pageTitle) => (state.pageTitle = pageTitle),
       SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
       SET_SELECTED_MESH: (state, mesh: typeof state.selectedMesh) => (state.selectedMesh = mesh),
       SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
@@ -321,10 +318,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             await dispatch('updateSelectedMesh', null)
           }
         }
-      },
-
-      updatePageTitle({ commit }, pageTitle: string) {
-        commit('SET_PAGE_TITLE', pageTitle)
       },
 
       async fetchMeshList({ commit, state }) {

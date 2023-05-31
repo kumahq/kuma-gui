@@ -92,16 +92,28 @@ const shouldShowOnboardingNotification = computed(() => store.getters.shouldShow
 const shouldShowBreadcrumbs = computed(() => store.getters.shouldShowBreadcrumbs)
 
 watch(() => isWizard.value, setIsWizardPageClass, { immediate: true })
+watch(() => [route.meta.title, route.meta.getTitle, store.state.policyTypesByPath], setDocumentTitle, { immediate: true })
 
-watch(() => route.meta.title, function (pageTitle) {
-  setDocumentTitle(pageTitle)
-})
+// Fetches policy types as they’re used to set document titles.
+fetchPolicyTypes()
 
-watch(() => store.state.pageTitle, function (pageTitle) {
-  setDocumentTitle(pageTitle)
-})
+async function fetchPolicyTypes() {
+  try {
+    await store.dispatch('fetchPolicyTypes')
+  } catch (err) {
+    console.error(err)
+  }
+}
 
-function setDocumentTitle(title: string | undefined): void {
+function setDocumentTitle() {
+  let title
+
+  if (route.meta.getTitle) {
+    title = route.meta.getTitle(route, store)
+  } else {
+    title = route.meta.title
+  }
+
   const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
 
   document.title = title ? `${title} | ${siteTitle}` : siteTitle

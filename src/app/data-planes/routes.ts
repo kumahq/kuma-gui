@@ -16,7 +16,7 @@ export const routes = () => {
             path: ':dataPlane',
             name: `${prefix}-detail-view`,
             meta: {
-              title: 'Data plane proxy',
+              getTitle: (route) => route.params.dataPlane as string,
             },
             component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
           },

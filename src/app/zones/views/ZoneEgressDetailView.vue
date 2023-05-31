@@ -26,13 +26,11 @@ import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useStore } from '@/store/store'
 import type { ZoneEgressOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
-const store = useStore()
 
 const zoneEgressOverview = ref<ZoneEgressOverview | null>(null)
 const isLoading = ref(true)
@@ -55,8 +53,6 @@ watch(() => route.params.name, function () {
 start()
 
 function start() {
-  store.dispatch('updatePageTitle', route.params.zoneEgress)
-
   loadData()
 }
 

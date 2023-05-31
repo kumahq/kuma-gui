@@ -8,6 +8,11 @@ declare module 'vue-router' {
     title?: string
 
     /**
+     * Allows setting the page title dynamically (e.g. using route parameters). Takes precedence of `meta.title`.
+     */
+    getTitle?: (route: RouteLocationNormalizedLoaded, store: Store<State>) => string
+
+    /**
      * Defines a route record as participating in breadcrumb creation. Defaults to `false`.
      */
     isBreadcrumb?: boolean
