@@ -15,14 +15,6 @@
   </WizardTitleBar>
 
   <div class="form-content">
-    <ErrorBlock
-      v-if="changingError !== null"
-      class="mb-4"
-      :error="changingError"
-    >
-      {{ i18n.t('zones.create.errorTitle') }}
-    </ErrorBlock>
-
     <h1>{{ i18n.t('zones.create.pageTitle') }}</h1>
 
     <div class="form-wrapper mt-4">
@@ -51,6 +43,14 @@
         {{ i18n.t('zones.form.createZoneButtonLabel') }}
       </KButton>
     </div>
+
+    <ErrorBlock
+      v-if="changingError !== null"
+      class="mt-4"
+      :error="changingError"
+    >
+      {{ i18n.t('zones.create.errorTitle') }}
+    </ErrorBlock>
 
     <div
       v-if="zone !== null"
