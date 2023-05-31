@@ -1,7 +1,6 @@
+# create-gui-pr.yaml is dependant on this name being "Tests"
 name: 'Tests'
-
-# Runs the project’s linter and test scripts.
-
+#
 on:
   push:
     branches: [master, 'release-[0-9]+.[0-9]+']
@@ -10,73 +9,80 @@ on:
 
 jobs:
   install-dependencies:
-    # Skip this job if the head commit’s message contains the string “[skip ci]”.
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    name: 'Install dependencies'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        # https://github.com/actions/checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        # https://github.com/actions/setup-node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-
-      - name: Cache node_modules
-        # https://github.com/actions/cache
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         id: node-modules-cache
         with:
           path: |
             **/node_modules
+            /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+      - if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: |
+          yarn install --frozen-lockfile
+          yarn run lint:lockfile
 
-      - name: Lint lock file
-        run: yarn run lint:lockfile
-
-  tests:
+  lint-tests:
     needs: [install-dependencies]
-    # Skip this job if the head commit’s message contains the string “[skip ci]”.
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    name: 'Tests'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        # https://github.com/actions/checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        # https://github.com/actions/setup-node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-
-      - name: Cache node_modules
-        # https://github.com/actions/cache
-        uses: actions/cache@v3
+      - uses: actions/cache/restore@v3
         id: node-modules-cache
         with:
           path: |
             **/node_modules
+            /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Lint
-        run: yarn run lint
-        env:
+      - env:
           LINTER_MODE: strict
+        run: |
+          yarn run lint
+          yarn run lint:ts
 
-      - name: Lint TS
-        run: yarn run lint:ts
+  cli-tests:
+    needs: [install-dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/cache/restore@v3
+        id: node-modules-cache
+        with:
+          path: |
+            **/node_modules
+            /home/runner/.cache
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+      - run: |
+          yarn run test
 
-      - name: Test
-        run: yarn run test
+  post-checks:
+    # There is a branch protection rule on the repo that requires "Tests" to
+    # be successful
+    name: Tests
+    #
+    needs:
+      - lint-tests
+      - cli-tests
+    runs-on: ubuntu-latest
+    if: |
+      always()
+    steps:
+      - name: Check for failures
+        if: |
+          contains(needs.*.result, 'failure') ||
+          contains(needs.*.result, 'cancelled')
+        run: echo '${{toJSON(needs)}}' && exit 1
 
-      - name: Build
-        run: yarn run build
+      - run: echo "Successful"
