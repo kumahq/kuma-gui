@@ -94,6 +94,7 @@ zones:
         command: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
     pageTitle: 'Create & connect Zone'
+    errorTitle: 'Could not create the Zone'
   delete:
     confirmModal:
       text1: 'Are you sure you want to delete the Zone {zoneName}?'

@@ -15,6 +15,14 @@
   </WizardTitleBar>
 
   <div class="form-content">
+    <ErrorBlock
+      v-if="changingError !== null"
+      class="mb-4"
+      :error="changingError"
+    >
+      {{ i18n.t('zones.create.errorTitle') }}
+    </ErrorBlock>
+
     <h1>{{ i18n.t('zones.create.pageTitle') }}</h1>
 
     <div class="form-wrapper mt-4">
@@ -35,8 +43,8 @@
 
       <KButton
         appearance="creation"
-        :icon="isCreatingZone ? 'spinner' : 'plus'"
-        :disabled="!canBeSaved || isCreatingZone || zone !== null"
+        :icon="isChangingZone ? 'spinner' : 'plus'"
+        :disabled="!canBeSaved || isChangingZone || zone !== null"
         data-testid="create-zone-button"
         @click="createZone"
       >
@@ -185,6 +193,7 @@ import { computed, ref } from 'vue'
 
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import WizardTitleBar from '@/app/common/WizardTitleBar.vue'
 import EntityScanner from '@/app/wizard/components/EntityScanner.vue'
 import { useI18n, useKumaApi } from '@/utilities'
@@ -194,8 +203,8 @@ const i18n = useI18n()
 const kumaApi = useKumaApi()
 
 const zone = ref<{ token: string } | null>(null)
-const isCreatingZone = ref(false)
-const error = ref<Error | null>(null)
+const isChangingZone = ref(false)
+const changingError = ref<Error | null>(null)
 
 const isScanComplete = ref(false)
 const scanError = ref<Error | null>(null)
@@ -214,19 +223,19 @@ const canBeSaved = computed(() => name.value !== '')
  * Creates a Zone via request to the appropriate endpoint. Importantly, this returns a Zone object including a base64-encoded token which is needed for enabling the Zone in the subsequent steps of the Zone creation flow.
  */
 async function createZone() {
-  isCreatingZone.value = true
-  error.value = null
+  isChangingZone.value = true
+  changingError.value = null
 
   try {
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
     if (err instanceof Error) {
-      error.value = err
+      changingError.value = err
     } else {
       console.error(err)
     }
   } finally {
-    isCreatingZone.value = false
+    isChangingZone.value = false
   }
 }
 
