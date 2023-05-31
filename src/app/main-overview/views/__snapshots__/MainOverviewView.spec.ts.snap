@@ -253,7 +253,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             >
               
               <span
-                class="k-button-icon kong-icon kong-icon-plus"
+                class="k-button-icon kong-icon kong-icon-plus k-button-icon"
               >
                 <svg
                   fill="none"
