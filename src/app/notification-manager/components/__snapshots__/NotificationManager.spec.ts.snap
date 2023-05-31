@@ -63,7 +63,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon kong-icon-warning"
+                    class="mr-4 kong-icon kong-icon-warning mr-4"
                   >
                     <svg
                       height="20"
@@ -158,7 +158,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon kong-icon-warning"
+                    class="mr-4 kong-icon kong-icon-warning mr-4"
                   >
                     <svg
                       height="20"
@@ -253,7 +253,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon kong-icon-warning"
+                    class="mr-4 kong-icon kong-icon-warning mr-4"
                   >
                     <svg
                       height="20"
@@ -348,7 +348,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon kong-icon-warning"
+                    class="mr-4 kong-icon kong-icon-warning mr-4"
                   >
                     <svg
                       height="20"
@@ -511,7 +511,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
       type="button"
     >
       <span
-        class="info kong-icon kong-icon-close"
+        class="info kong-icon kong-icon-close info"
       >
         <svg
           fill="none"

@@ -28,7 +28,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
           >
             
             <span
-              class="k-button-icon kong-icon kong-icon-redo"
+              class="k-button-icon kong-icon kong-icon-redo k-button-icon"
             >
               <svg
                 fill="white"
@@ -549,7 +549,7 @@ exports[`ZoneIngressListView renders snapshot when no multizone 1`] = `
       >
         
         <span
-          class="mb-3 kong-icon kong-icon-dangerCircleOutline"
+          class="mb-3 kong-icon kong-icon-dangerCircleOutline mb-3"
         >
           <svg
             fill="none"
