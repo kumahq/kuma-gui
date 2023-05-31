@@ -1865,10 +1865,10 @@
     flat "^5.0.2"
     intl-messageformat "^10.3.5"
 
-"@kong/kongponents@^8.67.1":
-  version "8.67.1"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.67.1.tgz#6a3f1a5a21e9398453b84b127bb1add7e34eb808"
-  integrity sha512-oINbThkNVkUQ+uswEpo6nF7kbjogmsgxi/eLYe3zUI1u9FoICLU/jNutmT1FvejOvinOPPikcaKlZetbg/x6rA==
+"@kong/kongponents@^8.72.0":
+  version "8.72.0"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.72.0.tgz#5f9bcc27a2976987536d3be399669b943273db7b"
+  integrity sha512-RqSbHt6MFet453QVU8kpyzdrLDpYi2SgjZ+ggSxSjn0dG4TM9VMhXUP/9Lko4CaKhOmCUIXvf2Z9IfNLc51t8g==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
