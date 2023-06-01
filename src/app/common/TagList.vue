@@ -58,7 +58,7 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
     switch (tag.label) {
       case 'kuma.io/zone': {
         return router.resolve({
-          name: 'zone-detail-view',
+          name: 'zone-cp-detail-view',
           params: {
             zone: tag.value,
           },

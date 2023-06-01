@@ -147,7 +147,7 @@ const pageOffset = ref(props.offset)
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'zone-list-view') {
+  if (route.name !== 'zone-cp-list-view') {
     return
   }
 
@@ -209,7 +209,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverview
   return zoneOverviews.map((entity) => {
     const { name } = entity
     const detailViewRoute: RouteLocationNamedRaw = {
-      name: 'zone-detail-view',
+      name: 'zone-cp-detail-view',
       params: {
         zone: name,
       },

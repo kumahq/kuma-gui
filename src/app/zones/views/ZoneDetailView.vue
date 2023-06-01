@@ -40,14 +40,14 @@ const error = ref<Error | null>(null)
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name === 'zone-detail-view') {
+  if (route.name === 'zone-cp-detail-view') {
     loadData()
   }
 })
 
 watch(() => route.params.name, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name === 'zone-detail-view') {
+  if (route.name === 'zone-cp-detail-view') {
     loadData()
   }
 })

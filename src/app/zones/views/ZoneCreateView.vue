@@ -7,7 +7,7 @@
     <template #actions>
       <KButton
         appearance="outline"
-        :to="{ name: 'zone-list-view' }"
+        :to="{ name: 'zone-cp-list-view' }"
       >
         {{ i18n.t('zones.form.exit') }}
       </KButton>
@@ -164,7 +164,7 @@
             <KButton
               appearance="primary"
               :to="{
-                name: 'zone-detail-view',
+                name: 'zone-cp-detail-view',
                 params: {
                   zone: name
                 },

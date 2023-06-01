@@ -8,7 +8,7 @@ Feature: The create Zone flow works
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
       | ingress-input-switch                | [data-testid='ingress-input-switch']                |
       | egress-input-switch                 | [data-testid='egress-input-switch']                 |
-    When I visit the "/zones/-create" URL
+    When I visit the "/zone-cps/-create" URL
 
   Scenario: The form shows only the initial elements
     Then the "$name-input" element exists

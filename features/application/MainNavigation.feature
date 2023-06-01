@@ -14,10 +14,10 @@ Feature: index
     Then the "$main-nav .nav-item-<RouteName>" element <ExistsAssertion>
     Examples:
       | RouteName              | Mode       | ExistsAssertion |
-      | zone-list-view         | global     | exists          |
-      | zone-ingress-list-view | global     | exists          |
-      | zone-egress-list-view  | global     | exists          |
-      | zone-list-view         | standalone | doesn't exist   |
+      | zone-cp-list-view      | global     | exists          |
+      | zone-ingress-list-view | global     | doesn't exists  |
+      | zone-egress-list-view  | global     | doesn't exists  |
+      | zone-cp-list-view      | standalone | doesn't exist   |
       | zone-ingress-list-view | standalone | doesn't exist   |
       | zone-egress-list-view  | standalone | exists          |
 
@@ -64,7 +64,5 @@ Feature: index
     Examples:
       | Selector                                     | Title              |
       | $main-nav .nav-item-home a                   | Overview           |
-      | $main-nav .nav-item-zone-list-view a         | Zone CPs           |
-      | $main-nav .nav-item-zone-egress-list-view a  | Zone Egresses      |
-      | $main-nav .nav-item-zone-ingress-list-view a | Zone Ingresses     |
+      | $main-nav .nav-item-zone-cp-list-view a      | Zone CPs           |
       | [data-testid='nav-item-diagnostics']         | Diagnostics        |

@@ -412,7 +412,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     let zoneRoute: RouteLocationNamedRaw | undefined
     if (zone !== undefined) {
       zoneRoute = {
-        name: 'zone-detail-view',
+        name: 'zone-cp-detail-view',
         params: {
           zone,
         },

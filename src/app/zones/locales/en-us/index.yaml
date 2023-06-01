@@ -1,4 +1,8 @@
 zones:
+  navigation:
+    zone-cp-list-view: Zone CPs
+    zone-ingress-list-view: Zone Ingresses
+    zone-egress-list-view: Zone Egresses
   form:
     exit: 'Exit'
     nameLabel: 'Name'

@@ -28,13 +28,14 @@
     />
   </RouterView>
 </template>
+
 <script lang="ts" setup>
 import { KTabs } from '@kong/kongponents'
 import { useRouter } from 'vue-router'
 
 import { useI18n } from '@/utilities'
-const { t } = useI18n()
 
+const { t } = useI18n()
 const router = useRouter()
 
 const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-abstract-view')?.children ?? []
@@ -54,8 +55,8 @@ const items = meshRoutes.map((item) => {
     hash: name,
   }
 })
-//
 </script>
+
 <style scoped>
 .tab-link a {
   display: block;
@@ -63,10 +64,12 @@ const items = meshRoutes.map((item) => {
   text-decoration: none;
   color: var(--KTabsColor)
 }
+
 li.active .tab-link a {
   color: var(--KTabsActiveColor)
 }
 </style>
+
 <style lang="scss">
 .route-mesh-view-tabs > ul .tab-item {
   padding: 0 !important;
