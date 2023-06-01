@@ -12,14 +12,17 @@ export default class DatadogLogger {
 
   setup(config: ClientConfigInterface) {
     if (config.reports.enabled) {
+      const service = this.env('KUMA_PRODUCT_NAME').toLowerCase().replaceAll(' ', '-') + '-ui'
+
       datadogLogs.init({
-        // This token is called “kuma-gui” in Datadog
-        clientToken: 'pub94a0029259f79f29a5d881a06d1e9653',
+        // The current client token is called “kuma-ui” in the Datadog UI.
+        // Previous versions of the application used a different client token attached to a different Datadog instance. This client token was called “kuma-gui” in the Datadog UI.
+        clientToken: 'pub1aadd2cab84c05bf9959e00a35b213a1',
         site: 'datadoghq.com',
         forwardErrorsToLogs: true,
-        service: this.env('KUMA_PRODUCT_NAME'),
         sampleRate: 100,
-        env: 'production', // logging is currently disabled in anything other than production
+        service,
+        env: import.meta.env.MODE,
       })
     }
   }
