@@ -7,7 +7,8 @@ export const [
   useKumaApi,
   useStore,
   useRouter,
+  useMeshRoutes,
   useBootstrap,
   useI18n,
   useGetGlobalKdsAddress,
-] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router, TOKENS.bootstrap, TOKENS.i18n, TOKENS.getGlobalKdsAddress)
+] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router, TOKENS.meshRoutes, TOKENS.bootstrap, TOKENS.i18n, TOKENS.getGlobalKdsAddress)

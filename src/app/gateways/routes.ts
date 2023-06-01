@@ -33,25 +33,20 @@ export const routes = () => {
           children: [
             {
               path: '',
-              children: [
-                {
-                  path: '',
-                  name: `${prefix}-list-view`,
-                  meta: {
-                    title: 'Gateways',
-                  },
-                  props: (route) => ({
-                    selectedDppName: route.query.gateway,
-                    gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,
-                    offset: getLastNumberParameter(route.query.offset),
-                    isGatewayView: true,
-                  }),
-                  component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-                  // children: [
-                  //   ...(item(prefix)[0]).children ?? [],
-                  // ],
-                },
-              ],
+              name: `${prefix}-list-view`,
+              meta: {
+                title: 'Gateways',
+              },
+              props: (route) => ({
+                selectedDppName: route.query.gateway,
+                gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,
+                offset: getLastNumberParameter(route.query.offset),
+                isGatewayView: true,
+              }),
+              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+              // children: [
+              //   ...(item(prefix)[0]).children ?? [],
+              // ],
             },
           ],
         },

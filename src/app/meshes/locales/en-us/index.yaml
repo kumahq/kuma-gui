@@ -1,4 +1,10 @@
 meshes:
+  navigation:
+    mesh-overview-view: Overview
+    services-list-view: Services
+    data-planes-list-view: Data Plane Proxies
+    gateways-list-view: Gateways
+    policies: Policies
   list:
     emptyState:
       title: 'No data'
