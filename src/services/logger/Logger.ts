@@ -7,30 +7,30 @@ export const logEvents: Record<string, string> = {
   CREATE_DATA_PLANE_PROXY_CLICKED: 'create-data-plane-proxy-clicked',
 }
 
-type LogArgs = [string] | [string, object | undefined] | [string, object | undefined, Error | undefined]
+type LogFunction = (message: string, messageContext?: object | undefined, error?: Error | undefined) => void
 
 export default class Logger {
   setup() {
     // Currently, there is no setup code here. This could contain Datadog Logs setup code, for example.
   }
 
-  log(...args: LogArgs) {
+  log(...args: Parameters<LogFunction>) {
     this._log('log', ...args)
   }
 
-  info(...args: LogArgs) {
+  info(...args: Parameters<LogFunction>) {
     this._log('info', ...args)
   }
 
-  warn(...args: LogArgs) {
+  warn(...args: Parameters<LogFunction>) {
     this._log('warn', ...args)
   }
 
-  error(...args: LogArgs) {
+  error(...args: Parameters<LogFunction>) {
     this._log('error', ...args)
   }
 
-  protected _log(type: 'log' | 'info' | 'warn' | 'error', ...args: LogArgs) {
+  protected _log(type: 'log' | 'info' | 'warn' | 'error', ...args: Parameters<LogFunction>) {
     console[type](...args)
   }
 }
