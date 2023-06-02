@@ -32,18 +32,12 @@
 import { KTabs } from '@kong/kongponents'
 import { useRouter } from 'vue-router'
 
-import { useMeshRoutes, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 const { t } = useI18n()
 
 const router = useRouter()
 
-// dig down into where our mesh tabs are and automatically
-// convert the routes to tabs
-const meshRoutes = useMeshRoutes()
-  .find(item => item.name === 'mesh-index-view')?.children
-  ?.find(item => item.name === 'mesh-detail-view')?.children
-  ?.find(item => item.name === 'mesh-abstract-view')?.children ?? []
-
+const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-abstract-view')?.children ?? []
 const items = meshRoutes.map((item) => {
   if (typeof item.name === 'undefined') {
     const route = item.children?.[0]
