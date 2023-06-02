@@ -14,11 +14,23 @@ export default class Logger {
     // Currently, there is no setup code here. This could contain Datadog Logs setup code, for example.
   }
 
+  log(...args: LogArgs) {
+    this._log('log', ...args)
+  }
+
   info(...args: LogArgs) {
     this._log('info', ...args)
   }
 
-  protected _log(type: 'info', ...args: LogArgs) {
+  warn(...args: LogArgs) {
+    this._log('warn', ...args)
+  }
+
+  error(...args: LogArgs) {
+    this._log('error', ...args)
+  }
+
+  protected _log(type: 'log' | 'info' | 'warn' | 'error', ...args: LogArgs) {
     console[type](...args)
   }
 }
