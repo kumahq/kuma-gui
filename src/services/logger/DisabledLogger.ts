@@ -7,7 +7,7 @@ export default () => {
       console.warn('Logging is disabled')
     }
 
-    _log() {
+    protected _log() {
       // Overrides primary log method.
     }
   }

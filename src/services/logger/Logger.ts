@@ -18,7 +18,7 @@ export default class Logger {
     this._log('info', ...args)
   }
 
-  _log(type: 'info', ...args: LogArgs) {
+  protected _log(type: 'info', ...args: LogArgs) {
     console[type](...args)
   }
 }
