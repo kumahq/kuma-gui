@@ -10,8 +10,6 @@ export const logEvents: Record<string, string> = {
 type LogArgs = [string] | [string, object | undefined] | [string, object | undefined, Error | undefined]
 
 export default class Logger {
-  isEnabled: boolean = true
-
   setup() {
     // Currently, there is no setup code here. This could contain Datadog Logs setup code, for example.
   }
@@ -21,8 +19,6 @@ export default class Logger {
   }
 
   _log(type: 'info', ...args: LogArgs) {
-    if (this.isEnabled) {
-      console[type](...args)
-    }
+    console[type](...args)
   }
 }
