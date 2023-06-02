@@ -258,7 +258,6 @@
 </template>
 
 <script lang="ts" setup>
-import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu, KIcon, KTable } from '@kong/kongponents'
 import { computed, PropType, ref, useSlots, watch } from 'vue'
 
@@ -268,9 +267,11 @@ import LoadingBlock from './LoadingBlock.vue'
 import PaginationWidget from './PaginationWidget.vue'
 import TagList from './TagList.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import { logEvents } from '@/services/logger/Logger'
 import { TableData } from '@/types/index.d'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { useLogger } from '@/utilities'
 
+const logger = useLogger()
 const slots = useSlots()
 
 const props = defineProps({
@@ -396,7 +397,7 @@ function tableRowHandler(_e: any, row: any): void {
 function onRefreshButtonClick(): void {
   emit('refresh')
   emit('load-data', internalPageOffset.value)
-  datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
+  logger.info(logEvents.TABLE_REFRESH_BUTTON_CLICKED)
 }
 
 function goToPreviousPage(): void {

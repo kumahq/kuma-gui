@@ -30,7 +30,6 @@
     "yarn": "^1.22.0"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^4.42.2",
     "@kong-ui-public/i18n": "^0.5.0",
     "@kong/kongponents": "^8.73.1",
     "brandi": "^5.0.0",

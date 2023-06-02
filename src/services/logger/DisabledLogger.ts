@@ -1,14 +1,16 @@
-import type Logger from '@/services/logger/DatadogLogger'
-// eslint-disable-next-line no-useless-constructor
-const c = class {constructor(..._args: any[]) {}}
-type Parent = typeof c;
-export default (
-  logger: Logger,
-) => {
-  class DisabledLogger extends (logger.constructor as Parent) {
+import Logger from '@/services/logger/Logger'
+
+export default () => {
+  class DisabledLogger extends Logger {
     setup() {
+      // Overrides the base loggers setup class to prevent any initialization code to run.
       console.warn('Logging is disabled')
     }
+
+    protected _log() {
+      // Overrides primary log method.
+    }
   }
-  return new DisabledLogger(logger.env)
+
+  return new DisabledLogger()
 }

@@ -1330,18 +1330,6 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@datadog/browser-core@4.42.2":
-  version "4.42.2"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.42.2.tgz#834312b53c3d466666f892e76e766b50b4db021b"
-  integrity sha512-LnkcdFyNRpMEuvV1ePfKdgRvYh+VqqAiVRoAmgObcuzdYdIwQSfcJp4GFbBgr5v7uF2uhAp/b96MIyKlqi0Ixg==
-
-"@datadog/browser-logs@^4.42.2":
-  version "4.42.2"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.42.2.tgz#da946410b8d8eee3e26835bece59fe4671e23994"
-  integrity sha512-idl9DilUGmWbmYb1D6VPmkpnhqaIdsQ08qjOw1c0QbtGUAFlFYyFCrugf2qwMt8QbJ8DqvEiwULTVAZOV9O4kA==
-  dependencies:
-    "@datadog/browser-core" "4.42.2"
-
 "@esbuild/android-arm64@0.17.19":
   version "0.17.19"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.17.19.tgz#bafb75234a5d3d1b690e7c2956a599345e84a2fd"

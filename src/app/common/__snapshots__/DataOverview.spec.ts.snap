@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DataOverview.vue refresh page on second page 1`] = `
-[MockFunction] {
-  "calls": [
-    [
-      "pagination-next-button-clicked",
-    ],
-    [
-      "table-refresh-button-clicked",
-    ],
-  ],
-  "results": [
-    {
-      "type": "return",
-      "value": undefined,
-    },
-    {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
-`;
-
 exports[`DataOverview.vue renders additional scoped slot 1`] = `
 <table
   class="k-table has-hover is-clickable"

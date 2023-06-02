@@ -19,7 +19,7 @@ import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
 import I18n from '@/services/i18n/I18n'
 import KumaApi from '@/services/kuma-api/KumaApi'
-import Logger from '@/services/logger/DatadogLogger'
+import Logger from '@/services/logger/Logger'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { token, get, constant } from '@/services/utils'
 import { storeConfig, State } from '@/store/storeConfig'
@@ -116,9 +116,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   // Logger
   [$.logger, {
     service: Logger,
-    arguments: [
-      $.env,
-    ],
   }],
 
   // Store
@@ -223,7 +220,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: useBootstrap,
     arguments: [
       $.logger,
-      $.api,
       $.store,
     ],
   }],

@@ -10,4 +10,5 @@ export const [
   useBootstrap,
   useI18n,
   useGetGlobalKdsAddress,
-] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router, TOKENS.bootstrap, TOKENS.i18n, TOKENS.getGlobalKdsAddress)
+  useLogger,
+] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router, TOKENS.bootstrap, TOKENS.i18n, TOKENS.getGlobalKdsAddress, TOKENS.logger)
