@@ -26,14 +26,15 @@
 </template>
 
 <script lang="ts" setup>
-import { datadogLogs } from '@datadog/browser-logs'
 import { computed } from 'vue'
 import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 
+import { logEvents } from '@/services/logger/Logger'
 import { useStore } from '@/store/store'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { useLogger } from '@/utilities'
 import { get } from '@/utilities/get'
 
+const logger = useLogger()
 const route = useRoute()
 const store = useStore()
 
@@ -87,7 +88,7 @@ const isActive = computed(() => {
 })
 
 function onNavItemClick() {
-  datadogLogs.logger.info(datadogLogEvents.SIDEBAR_ITEM_CLICKED, { data: targetRoute.value })
+  logger.info(logEvents.SIDEBAR_ITEM_CLICKED, { data: targetRoute.value })
 }
 </script>
 

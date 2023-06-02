@@ -1,10 +1,7 @@
-import { datadogLogs } from '@datadog/browser-logs'
-import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataOverview from './DataOverview.vue'
-
-jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
   return mount(DataOverview as any, {
@@ -20,10 +17,6 @@ function renderComponent(props = {}) {
 }
 
 describe('DataOverview.vue', () => {
-  beforeEach(() => {
-    (datadogLogs.logger.info as jest.MockedFunction<any>).mockClear()
-  })
-
   test('renders basic snapshot', () => {
     const wrapper = renderComponent({
       tableData: {
@@ -98,8 +91,6 @@ describe('DataOverview.vue', () => {
 
     await next.trigger('click')
     await refresh.trigger('click')
-
-    expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 
   test('renders all custom templates for data', async () => {

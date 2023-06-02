@@ -56,14 +56,16 @@
 </template>
 
 <script lang="ts" setup>
-import { datadogLogs } from '@datadog/browser-logs'
 import { KCard, KIcon, KTabs } from '@kong/kongponents'
 import { computed, PropType, ref } from 'vue'
 
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { logEvents } from '@/services/logger/Logger'
+import { useLogger } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
+
+const logger = useLogger()
 
 const props = defineProps({
   tabs: {
@@ -131,11 +133,7 @@ start()
 function switchTab(newActiveTabHash: string): void {
   QueryParameter.set('tab', newActiveTabHash.substring(1))
 
-  datadogLogs.logger.info(datadogLogEvents.TABS_TAB_CHANGE, {
-    data: {
-      newActiveTabHash,
-    },
-  })
+  logger.info(logEvents.TABS_TAB_CHANGE, { data: { newActiveTabHash } })
 
   emit('on-tab-change', newActiveTabHash)
 }

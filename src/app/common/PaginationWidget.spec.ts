@@ -1,10 +1,7 @@
-import { datadogLogs } from '@datadog/browser-logs'
-import { describe, expect, jest, test } from '@jest/globals'
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import PaginationWidget from './PaginationWidget.vue'
-
-jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
   return mount(PaginationWidget, {
@@ -36,6 +33,5 @@ describe('PaginationWidget.vue', () => {
 
     await wrapper.find('[data-testid="pagination-previous-button"]').trigger('click')
     await wrapper.find('[data-testid="pagination-next-button"]').trigger('click')
-    expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 })

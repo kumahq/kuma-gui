@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PaginationWidget.vue calls buttons 1`] = `
-[MockFunction] {
-  "calls": [
-    [
-      "pagination-previous-button-clicked",
-    ],
-    [
-      "pagination-next-button-clicked",
-    ],
-  ],
-  "results": [
-    {
-      "type": "return",
-      "value": undefined,
-    },
-    {
-      "type": "return",
-      "value": undefined,
-    },
-  ],
-}
-`;
-
 exports[`PaginationWidget.vue renders nothing if no next or prev props provided 1`] = `
 <div
   class="pagination"

@@ -37,10 +37,12 @@
 </template>
 
 <script lang="ts" setup>
-import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KIcon } from '@kong/kongponents'
 
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { logEvents } from '@/services/logger/Logger'
+import { useLogger } from '@/utilities'
+
+const logger = useLogger()
 
 const props = defineProps({
   hasPrevious: {
@@ -58,12 +60,12 @@ const emit = defineEmits(['next', 'previous'])
 
 function onNextButtonClick() {
   emit('next')
-  datadogLogs.logger.info(datadogLogEvents.PAGINATION_NEXT_BUTTON_CLICKED)
+  logger.info(logEvents.PAGINATION_NEXT_BUTTON_CLICKED)
 }
 
 function onPreviousButtonClick() {
   emit('previous')
-  datadogLogs.logger.info(datadogLogEvents.PAGINATION_PREVIOUS_BUTTON_CLICKED)
+  logger.info(logEvents.PAGINATION_PREVIOUS_BUTTON_CLICKED)
 }
 </script>
 

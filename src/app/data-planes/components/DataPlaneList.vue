@@ -104,7 +104,6 @@
 </template>
 
 <script lang="ts" setup>
-import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 import { computed, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
@@ -116,11 +115,12 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
 import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
 import { KUMA_ZONE_TAG_NAME, PAGE_SIZE_DEFAULT } from '@/constants'
+import { logEvents } from '@/services/logger/Logger'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { DataPlaneOverview, StatusKeyword, TableHeader, Version } from '@/types/index.d'
+import { useLogger } from '@/utilities'
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
   compatibilityKind,
   dpTags,
@@ -133,6 +133,9 @@ import {
 import { humanReadableDate } from '@/utilities/helpers'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 import { QueryParameter } from '@/utilities/QueryParameter'
+
+const logger = useLogger()
+const store = useStore()
 
 type DataPlaneOverviewTableRow = {
   entity: DataPlaneOverview
@@ -174,7 +177,6 @@ const EMPTY_STATE = {
   message: 'There are no data plane proxies present.',
 }
 
-const store = useStore()
 const props = defineProps({
   dataPlaneOverviews: {
     type: Array as PropType<DataPlaneOverview[]>,
@@ -350,7 +352,7 @@ function updateVisibleTableHeaders(event: Event, tableHeaderKey: string): void {
 }
 
 function onCreateClick() {
-  datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
+  logger.info(logEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
 }
 
 function initializeData() {
