@@ -33,23 +33,18 @@ export const routes = () => {
           children: [
             {
               path: '',
-              children: [
-                {
-                  path: '',
-                  name: `${prefix}-list-view`,
-                  meta: {
-                    title: 'Data plane proxies',
-                  },
-                  props: (route) => ({
-                    selectedDppName: route.query.dpp,
-                    offset: getLastNumberParameter(route.query.offset),
-                  }),
-                  component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-                  // children: [
-                  //   ...(item(prefix)[0]).children ?? [],
-                  // ],
-                },
-              ],
+              name: `${prefix}-list-view`,
+              meta: {
+                title: 'Data plane proxies',
+              },
+              props: (route) => ({
+                selectedDppName: route.query.dpp,
+                offset: getLastNumberParameter(route.query.offset),
+              }),
+              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+              // children: [
+              //   ...(item(prefix)[0]).children ?? [],
+              // ],
             },
           ],
         },

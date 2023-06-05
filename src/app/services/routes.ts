@@ -34,23 +34,18 @@ export const routes = () => {
           children: [
             {
               path: '',
-              children: [
-                {
-                  path: '',
-                  name: `${prefix}-list-view`,
-                  meta: {
-                    title: 'Services',
-                  },
-                  props: (route) => ({
-                    selectedServiceName: route.query.service,
-                    offset: getLastNumberParameter(route.query.offset),
-                  }),
-                  component: () => import('@/app/services/views/ServiceListView.vue'),
-                  // children: [
-                  //   ...(item(prefix)[0]).children ?? [],
-                  // ],
-                },
-              ],
+              name: `${prefix}-list-view`,
+              meta: {
+                title: 'Services',
+              },
+              props: (route) => ({
+                selectedServiceName: route.query.service,
+                offset: getLastNumberParameter(route.query.offset),
+              }),
+              component: () => import('@/app/services/views/ServiceListView.vue'),
+              // children: [
+              //   ...(item(prefix)[0]).children ?? [],
+              // ],
             },
           ],
         },

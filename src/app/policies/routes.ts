@@ -38,57 +38,51 @@ export const routes = (store: Store<State>) => {
           children: [
             {
               path: '',
+              name: `${prefix}`,
+              meta: {
+                title: 'Policies',
+              },
+              redirect: (to) => {
+                let item = store.state.policyTypes.find((item) => {
+                  if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
+                    return false
+                  }
+
+                  return store.state.sidebar.insights.mesh.policies[item.name] !== 0
+                })
+
+                if (item === undefined) {
+                  item = store.state.policyTypes[0]
+                }
+
+                if (item === undefined) {
+                  return { name: 'home' }
+                }
+
+                return {
+                  ...to,
+                  params: {
+                    ...to.params,
+                    policyPath: item.path,
+                  },
+                  name: 'policies-list-view',
+                }
+              },
               children: [
                 {
-                  path: '',
-                  name: `${prefix}`,
-                  meta: {
-                    title: 'Policies',
-                  },
-                  redirect: (to) => {
-                    let item = store.state.policyTypes.find((item) => {
-                      if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
-                        return false
-                      }
+                  path: ':policyPath',
 
-                      return store.state.sidebar.insights.mesh.policies[item.name] !== 0
-                    })
-
-                    if (item === undefined) {
-                      item = store.state.policyTypes[0]
-                    }
-
-                    if (item === undefined) {
-                      return { name: 'home' }
-                    }
-
-                    return {
-                      ...to,
-                      params: {
-                        ...to.params,
-                        policyPath: item.path,
-                      },
-                      name: 'policies-list-view',
-                    }
-                  },
-                  children: [
-                    {
-                      path: ':policyPath',
-
-                      name: `${prefix}-list-view`,
-                      component: () => import('@/app/policies/views/PolicyListView.vue'),
-                      props: (route) => ({
-                        policyPath: route.params.policyPath,
-                        selectedPolicyName: route.query.policy,
-                        offset: getLastNumberParameter(route.query.offset),
-                      }),
-                      // children: [
-                      //   ...(item(prefix)[0]).children ?? [],
-                      // ],
-                    },
-                  ],
+                  name: `${prefix}-list-view`,
+                  component: () => import('@/app/policies/views/PolicyListView.vue'),
+                  props: (route) => ({
+                    policyPath: route.params.policyPath,
+                    selectedPolicyName: route.query.policy,
+                    offset: getLastNumberParameter(route.query.offset),
+                  }),
+                  // children: [
+                  //   ...(item(prefix)[0]).children ?? [],
+                  // ],
                 },
-
               ],
             },
           ],

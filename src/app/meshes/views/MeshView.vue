@@ -32,29 +32,29 @@
 import { KTabs } from '@kong/kongponents'
 import { useRouter } from 'vue-router'
 
+import { useI18n } from '@/utilities'
+const { t } = useI18n()
+
 const router = useRouter()
-const items = [
-  {
-    hash: 'mesh-detail-view',
-    title: 'Overview',
-  },
-  {
-    hash: 'services-list-view',
-    title: 'Services',
-  },
-  {
-    hash: 'gateways-list-view',
-    title: 'Gateways',
-  },
-  {
-    hash: 'data-planes-list-view',
-    title: 'Data Plane Proxies',
-  },
-  {
-    hash: 'policies',
-    title: 'Policies',
-  },
-]
+
+const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-abstract-view')?.children ?? []
+const items = meshRoutes.map((item) => {
+  if (typeof item.name === 'undefined') {
+    const route = item.children?.[0]
+    const name = String(route?.name)
+
+    return {
+      title: t(`meshes.navigation.${name}`),
+      hash: name,
+    }
+  }
+  const name = String(item.name)
+  return {
+    title: t(`meshes.navigation.${name}`),
+    hash: name,
+  }
+})
+//
 </script>
 <style scoped>
 .tab-link a {
