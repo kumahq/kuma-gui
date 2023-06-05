@@ -8,8 +8,8 @@ body {
   margin: 0;
   tab-size: 2;
   color: var(--black-500);
-  font-size: 1em;
   font-family: var(--font-family-sans);
+  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -40,7 +40,7 @@ h6 {
 }
 
 a {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:link,
