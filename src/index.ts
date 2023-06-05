@@ -3,7 +3,6 @@ import { RouteRecordRaw } from 'vue-router'
 import { Store, storeKey } from 'vuex'
 
 import { createRouter } from './router/router'
-import type Logger from './services/logger/Logger'
 import type { EnvVars } from '@/services/env/Env'
 import type { State } from '@/store/storeConfig'
 
@@ -28,13 +27,8 @@ export function useApp(
   }
 }
 
-export function useBootstrap(
-  logger: Logger,
-  store: Store<State>,
-) {
+export function useBootstrap(store: Store<State>) {
   return async (isAllowedToMakeApiCalls: boolean = true) => {
-    logger.setup()
-
     if (isAllowedToMakeApiCalls) {
       await Promise.all([
         // Fetches basic resources before setting up the router and mounting the
