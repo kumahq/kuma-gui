@@ -3,7 +3,7 @@
     v-slot="{route}"
   >
     <RouteTitle
-      :title="`${route.params.mesh}`"
+      :title="t('meshes.routes.item.title', {name: route.params.mesh})"
     />
     <AppView
       :breadcrumbs="[
@@ -11,7 +11,7 @@
           to: {
             name: 'mesh-list-view'
           },
-          text: 'Meshes'
+          text: t('meshes.routes.item.breadcrumbs')
         },
         {
           to: {
@@ -37,5 +37,7 @@
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import { useI18n } from '@/utilities'
+const { t } = useI18n()
 
 </script>

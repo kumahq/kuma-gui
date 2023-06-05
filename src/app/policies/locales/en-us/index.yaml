@@ -1,0 +1,7 @@
+policies:
+  routes:
+    item:
+      title: Policy
+      breadcrumbs: Policies
+    items:
+      title: Policies

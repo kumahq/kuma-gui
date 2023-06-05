@@ -16,8 +16,6 @@ export function useApp(
   routes: RouteRecordRaw[],
   store: Store<State>,
 ) {
-  document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
-
   return async (App: Component) => {
     const app = createApp(App)
     const router = await createRouter(routes, store, env('KUMA_BASE_PATH'))

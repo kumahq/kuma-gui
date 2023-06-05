@@ -1,0 +1,12 @@
+wizard-mesh:
+  routes:
+    item:
+      title: Create a new mesh
+wizard-universal:
+  routes:
+    item:
+      title: Create a new data plane proxy on Universal
+wizard-kubernetes:
+  routes:
+    item:
+      title: Create a new data plane proxy on Kubernetes

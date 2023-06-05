@@ -9,10 +9,6 @@ export const routes = (store: Store<State>) => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
-        meta: {
-          title: 'Policies',
-          isBreadcrumb: true,
-        },
         redirect: () => ({ name: 'policies-list-view' }),
         children: [
           {
@@ -39,9 +35,6 @@ export const routes = (store: Store<State>) => {
             {
               path: '',
               name: `${prefix}`,
-              meta: {
-                title: 'Policies',
-              },
               redirect: (to) => {
                 let item = store.state.policyTypes.find((item) => {
                   if (!(item.name in store.state.sidebar.insights.mesh.policies)) {

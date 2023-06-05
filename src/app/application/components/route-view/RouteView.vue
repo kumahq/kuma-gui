@@ -66,6 +66,8 @@ const $: RouteView = {
 
 const hasParent: RouteView | undefined = inject('route-view-parent')
 if (!hasParent) {
+  // use the default title if we are the topmost RouteView
+  setTitle(t('components.route-view.title', { name: t('common.product.name') }))
   provide('route-view-parent', $)
 }
 

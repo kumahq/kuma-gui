@@ -1,7 +1,7 @@
 <template>
   <RouteView>
     <RouteTitle
-      :title="`Meshes`"
+      :title="t('meshes.routes.items.title')"
     />
     <AppView
       :breadcrumbs="[
@@ -9,7 +9,7 @@
           to: {
             name: 'mesh-list-view'
           },
-          text: 'Meshes'
+          text: t('meshes.routes.items.breadcrumbs')
         }
       ]"
     >
@@ -50,12 +50,12 @@ type MeshTableRow = {
   detailViewRoute: RouteLocationNamedRaw
 }
 
-const i18n = useI18n()
+const { t } = useI18n()
 const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {
-  title: i18n.t('meshes.list.emptyState.title'),
-  message: i18n.t('meshes.list.emptyState.message'),
+  title: t('common.emptyState.title'),
+  message: t('common.emptyState.message', { type: 'Meshes' }),
 }
 
 const route = useRoute()

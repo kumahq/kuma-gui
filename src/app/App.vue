@@ -1,51 +1,51 @@
 <template>
   <div>
-    <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
+    <RouteView>
+      <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
 
-    <template v-else>
-      <AppHeader v-if="!isWizard" />
+      <template v-else>
+        <AppHeader v-if="!isWizard" />
 
-      <div v-if="route.meta.onboardingProcess">
-        <router-view />
-      </div>
+        <div v-if="route.meta.onboardingProcess">
+          <router-view />
+        </div>
 
-      <div
-        v-else
-        class="app-content-container"
-      >
-        <AppSidebar v-if="!isWizard" />
+        <div
+          v-else
+          class="app-content-container"
+        >
+          <AppSidebar v-if="!isWizard" />
 
-        <main class="app-main-content">
-          <AppErrorMessage
-            v-if="shouldShowAppError"
-            data-testid="app-error"
-          />
+          <AppView>
+            <AppErrorMessage
+              v-if="shouldShowAppError"
+              data-testid="app-error"
+            />
 
-          <NotificationManager v-if="!isWizard && shouldShowNotificationManager" />
+            <NotificationManager v-if="!isWizard && shouldShowNotificationManager" />
 
-          <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
+            <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
 
-          <AppBreadcrumbs v-if="!isWizard && shouldShowBreadcrumbs" />
-
-          <router-view
-            :key="routeKey"
-            v-slot="{ Component }"
-          >
-            <transition
-              mode="out-in"
-              name="fade"
+            <router-view
+              :key="routeKey"
+              v-slot="{ Component }"
             >
-              <div
-                :key="(route.name as string)"
-                class="transition-root"
+              <transition
+                mode="out-in"
+                name="fade"
               >
-                <component :is="Component" />
-              </div>
-            </transition>
-          </router-view>
-        </main>
-      </div>
-    </template>
+                <div
+                  :key="(route.name as string)"
+                  class="transition-root"
+                >
+                  <component :is="Component" />
+                </div>
+              </transition>
+            </router-view>
+          </AppView>
+        </div>
+      </template>
+    </RouteView>
   </div>
 </template>
 
@@ -53,10 +53,11 @@
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import AppBreadcrumbs from './AppBreadcrumbs.vue'
 import AppErrorMessage from './AppErrorMessage.vue'
 import AppLoadingBar from './AppLoadingBar.vue'
 import AppOnboardingNotification from './AppOnboardingNotification.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import NotificationManager from '@/app/notification-manager/components/NotificationManager.vue'
 import {
   useAppSidebar,
@@ -91,23 +92,8 @@ const isWizard = computed(() => route.meta.isWizard === true)
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
-const shouldShowBreadcrumbs = computed(() => store.getters.shouldShowBreadcrumbs)
 
 watch(() => isWizard.value, setIsWizardPageClass, { immediate: true })
-
-watch(() => route.meta.title, function (pageTitle) {
-  setDocumentTitle(pageTitle)
-})
-
-watch(() => store.state.pageTitle, function (pageTitle) {
-  setDocumentTitle(pageTitle)
-})
-
-function setDocumentTitle(title: string | undefined): void {
-  const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
-
-  document.title = title ? `${title} | ${siteTitle}` : siteTitle
-}
 
 /**
  * Adds a class for wizard pages to the body element. This is used to control certain layout aspects of the app.

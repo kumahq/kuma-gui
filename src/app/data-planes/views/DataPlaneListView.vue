@@ -1,16 +1,23 @@
 <template>
-  <DataPlaneList
-    :data-plane-overviews="dataPlaneOverviews"
-    :is-loading="isLoading"
-    :error="error"
-    :next-url="nextUrl"
-    :page-offset="pageOffset"
-    :selected-dpp-name="props.selectedDppName"
-    :is-gateway-view="props.isGatewayView"
-    :gateway-type="props.gatewayType"
-    :dpp-filter-fields="dppFilterFields"
-    @load-data="loadData"
-  />
+  <RouteView>
+    <RouteTitle
+      :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.items.title`)"
+    />
+    <AppView>
+      <DataPlaneList
+        :data-plane-overviews="dataPlaneOverviews"
+        :is-loading="isLoading"
+        :error="error"
+        :next-url="nextUrl"
+        :page-offset="pageOffset"
+        :selected-dpp-name="props.selectedDppName"
+        :is-gateway-view="props.isGatewayView"
+        :gateway-type="props.gatewayType"
+        :dpp-filter-fields="dppFilterFields"
+        @load-data="loadData"
+      />
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -18,14 +25,18 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import DataPlaneList from '../components/DataPlaneList.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { DataPlaneOverviewParameters } from '@/types/api'
 import { DataPlaneOverview } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
+const { t } = useI18n()
 
 const BASE_FILTER_FIELDS: FilterFields = {
   name: { description: 'filter by name or parts of a name' },

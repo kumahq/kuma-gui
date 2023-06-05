@@ -1,7 +1,5 @@
 <template>
-  <main
-    v-bind="$attrs"
-  >
+  <main>
     <slot name="default" />
   </main>
 </template>

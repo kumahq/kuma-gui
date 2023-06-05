@@ -1,0 +1,7 @@
+gateways:
+  routes:
+    item:
+      title: Gateway
+      breadcrumbs: Gateways
+    items:
+      title: Gateways

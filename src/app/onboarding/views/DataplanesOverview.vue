@@ -1,61 +1,68 @@
 <template>
-  <OnboardingPage>
-    <template #header>
-      <OnboardingHeading>
-        <template #title>
-          <p>{{ title }}</p>
-        </template>
-
-        <template
-          v-if="description !== null"
-          #description
-        >
-          <p>{{ description }}</p>
-        </template>
-      </onboardingheading>
-    </template>
-
-    <template #content>
-      <div
-        v-if="tableData.data.length === 0"
-        class="status-loading-box mb-4"
-      >
-        <LoadingBox />
-      </div>
-
-      <div v-else>
-        <p class="mb-4">
-          <b>Found {{ tableData.data.length }} DPPs:</b>
-        </p>
-
-        <KTable
-          class="mb-4"
-          :fetcher="() => tableData"
-          :headers="TABLE_HEADERS"
-          disable-pagination
-        >
-          <template #status="{ rowValue }">
-            <StatusBadge
-              v-if="rowValue"
-              :status="rowValue"
-            />
-
-            <template v-else>
-              —
+  <RouteView>
+    <RouteTitle
+      :title="t('onboarding.routes.dataplanes-overview.title')"
+    />
+    <AppView>
+      <OnboardingPage>
+        <template #header>
+          <OnboardingHeading>
+            <template #title>
+              <p>{{ title }}</p>
             </template>
-          </template>
-        </KTable>
-      </div>
-    </template>
 
-    <template #navigation>
-      <OnboardingNavigation
-        next-step="onboarding-completed"
-        previous-step="onboarding-add-services-code"
-        :should-allow-next="tableData.data.length > 0"
-      />
-    </template>
-  </OnboardingPage>
+            <template
+              v-if="description !== null"
+              #description
+            >
+              <p>{{ description }}</p>
+            </template>
+          </onboardingheading>
+        </template>
+
+        <template #content>
+          <div
+            v-if="tableData.data.length === 0"
+            class="status-loading-box mb-4"
+          >
+            <LoadingBox />
+          </div>
+
+          <div v-else>
+            <p class="mb-4">
+              <b>Found {{ tableData.data.length }} DPPs:</b>
+            </p>
+
+            <KTable
+              class="mb-4"
+              :fetcher="() => tableData"
+              :headers="TABLE_HEADERS"
+              disable-pagination
+            >
+              <template #status="{ rowValue }">
+                <StatusBadge
+                  v-if="rowValue"
+                  :status="rowValue"
+                />
+
+                <template v-else>
+                  —
+                </template>
+              </template>
+            </KTable>
+          </div>
+        </template>
+
+        <template #navigation>
+          <OnboardingNavigation
+            next-step="onboarding-completed"
+            previous-step="onboarding-add-services-code"
+            :should-allow-next="tableData.data.length > 0"
+          />
+        </template>
+      </OnboardingPage>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -66,11 +73,15 @@ import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const kumaApi = useKumaApi()
+const { t } = useI18n()
 
 const TABLE_HEADERS = [
   { label: 'Mesh', key: 'mesh' },

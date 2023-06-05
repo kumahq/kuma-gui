@@ -52,13 +52,13 @@ const items = meshRoutes.map((item) => {
     const name = String(route?.name)
 
     return {
-      title: t(`meshes.navigation.${name}`),
+      title: t(`meshes.routes.item.navigation.${name}`),
       hash: name,
     }
   }
   const name = String(item.name)
   return {
-    title: t(`meshes.navigation.${name}`),
+    title: t(`meshes.routes.item.navigation.${name}`),
     hash: name,
   }
 })

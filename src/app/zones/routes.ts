@@ -21,20 +21,12 @@ export const routes = (
     {
       path: '/zones',
       name: 'zone-index-view',
-      meta: {
-        title: 'Zones',
-        isBreadcrumb: true,
-      },
       component: () => import('@/app/zones/views/ZoneIndexView.vue'),
       redirect: () => ({ name: 'zone-cp-list-view' }),
       children: [
         {
           path: 'zone-cps',
           name: 'zone-cp-abstract-view',
-          meta: {
-            title: 'Zone CPs',
-            isBreadcrumb: true,
-          },
           children: [
             {
               path: '',
@@ -51,11 +43,6 @@ export const routes = (
             {
               path: ':zone',
               name: 'zone-cp-detail-view',
-              meta: {
-                title: 'Zone',
-                isBreadcrumb: true,
-                breadcrumbTitleParam: 'zone',
-              },
               component: () => import('@/app/zones/views/ZoneDetailView.vue'),
             },
           ],
@@ -63,10 +50,6 @@ export const routes = (
         {
           path: 'zone-ingresses',
           name: 'zone-ingress-abstract-view',
-          meta: {
-            title: 'Zone Ingresses',
-            isBreadcrumb: true,
-          },
           children: [
             {
               path: '',
@@ -83,11 +66,6 @@ export const routes = (
             {
               path: ':zoneIngress',
               name: 'zone-ingress-detail-view',
-              meta: {
-                title: 'Zone Ingress',
-                isBreadcrumb: true,
-                breadcrumbTitleParam: 'zoneIngress',
-              },
               component: () => import('@/app/zones/views/ZoneIngressDetailView.vue'),
             },
           ],
@@ -95,10 +73,6 @@ export const routes = (
         {
           path: 'zone-egresses',
           name: 'zone-egress-abstract-view',
-          meta: {
-            title: 'Zone Egresses',
-            isBreadcrumb: true,
-          },
           children: [
             {
               path: '',
@@ -114,11 +88,6 @@ export const routes = (
             },
             {
               path: ':zoneEgress',
-              meta: {
-                title: 'Zone Egress',
-                isBreadcrumb: true,
-                breadcrumbTitleParam: 'zoneEgress',
-              },
               name: 'zone-egress-detail-view',
               component: () => import('@/app/zones/views/ZoneEgressDetailView.vue'),
             },

@@ -3,16 +3,16 @@
     v-slot="{route: _route}"
   >
     <RouteTitle
-      :title="`${_route.params.service}`"
+      :title="t('services.routes.item.title', {name: _route.params.service})"
     />
     <AppView
       :breadcrumbs="[
         {
           to: {
-            name: 'service-detail-view',
+            name: 'services-list-view',
             params: _route.params
           },
-          text: _route.params.service
+          text: t('services.routes.item.breadcrumbs')
         },
       ]"
     >
@@ -55,12 +55,13 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
 const store = useStore()
+const { t } = useI18n()
 
 const DPP_FILTER_FIELDS: FilterFields = {
   name: { description: 'filter by name or parts of a name' },

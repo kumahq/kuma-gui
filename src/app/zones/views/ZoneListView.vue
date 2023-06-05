@@ -1,7 +1,7 @@
 <template>
   <RouteView>
     <RouteTitle
-      :title="`Zones`"
+      :title="t('zones.routes.items.title')"
     />
     <AppView
       :breadcrumbs="[
@@ -9,7 +9,7 @@
           to: {
             name: 'zone-list-view',
           },
-          text: 'Zones'
+          text: t('zones.routes.items.breadcrumbs')
         },
       ]"
     >
@@ -66,19 +66,19 @@
           :delete-function="deleteZone"
           :is-visible="isDeleteModalVisible"
           modal-id="delete-zone-modal"
-          :action-button-text="i18n.t('zones.delete.confirmModal.proceedText')"
-          :title="i18n.t('zones.delete.confirmModal.title')"
+          :action-button-text="t('zones.delete.confirmModal.proceedText')"
+          :title="t('zones.delete.confirmModal.title')"
           @cancel="toggleDeleteModal"
           @delete="handleDelete"
         >
           <template #body-content>
-            <p>{{ i18n.t('zones.delete.confirmModal.text1') }}</p>
+            <p>{{ t('zones.delete.confirmModal.text1') }}</p>
 
-            <p>{{ i18n.t('zones.delete.confirmModal.text2') }}</p>
+            <p>{{ t('zones.delete.confirmModal.text2') }}</p>
           </template>
 
           <template #error>
-            {{ i18n.t('zones.delete.confirmModal.errorText') }}
+            {{ t('zones.delete.confirmModal.errorText') }}
           </template>
         </DeleteResourceModal>
       </div>
@@ -118,7 +118,7 @@ type ZoneOverviewTableRow = {
 }
 
 const env = useEnv()
-const i18n = useI18n()
+const { t } = useI18n()
 const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {

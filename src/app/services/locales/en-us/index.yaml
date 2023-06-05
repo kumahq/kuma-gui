@@ -1,0 +1,7 @@
+services:
+  routes:
+    item:
+      title: Service
+      breadcrumbs: Services
+    items:
+      title: Services
