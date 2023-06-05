@@ -7,9 +7,11 @@
             <span>
               Service:
 
-              <router-link :to="detailViewRoute">
-                <TextWithCopyButton :text="props.service.name" />
-              </router-link>
+              <TextWithCopyButton :text="props.service.name">
+                <router-link :to="detailViewRoute">
+                  {{ props.service.name }}
+                </router-link>
+              </TextWithCopyButton>
             </span>
 
             <StatusBadge
