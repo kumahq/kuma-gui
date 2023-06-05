@@ -489,4 +489,7 @@ function emitDeleteResourceEvent(row: any) {
 .actions-dropdown {
   display: inline-block;
 }
+td a {
+  color: var(--blue-700)
+}
 </style>

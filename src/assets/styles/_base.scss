@@ -41,17 +41,11 @@ h6 {
 
 a {
   text-decoration: none;
-}
-
-a:link,
-a:visited {
-  color: var(--blue-700);
-}
-
-a:hover,
-a:active,
-a:focus {
   color: var(--blue-500);
+}
+a:hover,
+a:focus {
+  text-decoration: underline
 }
 
 b,
