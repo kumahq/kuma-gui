@@ -8,7 +8,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
     aria-live="assertive"
     class="route-view-title sr-only"
   >
-    Navigated to Zones
+    Navigated to Zone CPs
   </div>
   
   <!--v-if-->
@@ -1782,7 +1782,7 @@ exports[`ZoneListView renders snapshot when no multizone 1`] = `
     aria-live="assertive"
     class="route-view-title sr-only"
   >
-    Navigated to Zones
+    Navigated to Zone CPs
   </div>
   
   <!--v-if-->

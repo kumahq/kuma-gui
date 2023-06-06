@@ -11,6 +11,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     Navigated to 
   </div>
   
+  <!--v-if-->
   <main
     class="app-main-content"
   >
