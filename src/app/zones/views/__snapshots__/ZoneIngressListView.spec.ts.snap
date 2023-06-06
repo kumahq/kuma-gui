@@ -156,7 +156,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-ingresses/zone-ingress-1"
+                          href="/zones/zone-ingresses/zone-ingress-1"
                         >
                           zone-ingress-1
                         </a>
@@ -204,7 +204,7 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
               
               <a
                 class=""
-                href="/zone-ingresses/zone-ingress-1"
+                href="/zones/zone-ingresses/zone-ingress-1"
               >
                 zone-ingress-1
               </a>
@@ -645,7 +645,7 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
         
         <a
           class=""
-          href="/zone-ingresses/zone-ingress-1"
+          href="/zones/zone-ingresses/zone-ingress-1"
         >
           zone-ingress-1
         </a>

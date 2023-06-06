@@ -250,7 +250,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-cps/cluster-1"
+                          href="/zones/zone-cps/cluster-1"
                         >
                           cluster-1
                         </a>
@@ -466,7 +466,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                                       <a
                                         class="k-dropdown-item-trigger"
                                         data-testid="k-dropdown-item-trigger"
-                                        href="/zone-cps/cluster-1"
+                                        href="/zones/zone-cps/cluster-1"
                                       >
                                         
                                         View details
@@ -516,7 +516,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-cps/zone-1"
+                          href="/zones/zone-cps/zone-1"
                         >
                           zone-1
                         </a>
@@ -732,7 +732,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                                       <a
                                         class="k-dropdown-item-trigger"
                                         data-testid="k-dropdown-item-trigger"
-                                        href="/zone-cps/zone-1"
+                                        href="/zones/zone-cps/zone-1"
                                       >
                                         
                                         View details
@@ -782,7 +782,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-cps/zone-2"
+                          href="/zones/zone-cps/zone-2"
                         >
                           zone-2
                         </a>
@@ -998,7 +998,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                                       <a
                                         class="k-dropdown-item-trigger"
                                         data-testid="k-dropdown-item-trigger"
-                                        href="/zone-cps/zone-2"
+                                        href="/zones/zone-cps/zone-2"
                                       >
                                         
                                         View details
@@ -1048,7 +1048,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-cps/zone-3"
+                          href="/zones/zone-cps/zone-3"
                         >
                           zone-3
                         </a>
@@ -1264,7 +1264,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                                       <a
                                         class="k-dropdown-item-trigger"
                                         data-testid="k-dropdown-item-trigger"
-                                        href="/zone-cps/zone-3"
+                                        href="/zones/zone-cps/zone-3"
                                       >
                                         
                                         View details
@@ -1326,7 +1326,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
               
               <a
                 class=""
-                href="/zone-cps/cluster-1"
+                href="/zones/zone-cps/cluster-1"
               >
                 cluster-1
               </a>
@@ -1866,7 +1866,7 @@ exports[`ZoneListView renders zone insights 1`] = `
         
         <a
           class=""
-          href="/zone-cps/cluster-1"
+          href="/zones/zone-cps/cluster-1"
         >
           cluster-1
         </a>

@@ -154,7 +154,7 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-egresses/zoneegress-1"
+                          href="/zones/zone-egresses/zoneegress-1"
                         >
                           zoneegress-1
                         </a>
@@ -202,7 +202,7 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
               
               <a
                 class=""
-                href="/zone-egresses/zoneegress-1"
+                href="/zones/zone-egresses/zoneegress-1"
               >
                 zoneegress-1
               </a>
@@ -684,7 +684,7 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                         <a
                           class=""
                           data-testid="detail-view-link"
-                          href="/zone-egresses/zoneegress-1"
+                          href="/zones/zone-egresses/zoneegress-1"
                         >
                           zoneegress-1
                         </a>
@@ -732,7 +732,7 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
               
               <a
                 class=""
-                href="/zone-egresses/zoneegress-1"
+                href="/zones/zone-egresses/zoneegress-1"
               >
                 zoneegress-1
               </a>
@@ -1080,7 +1080,7 @@ exports[`ZoneEgressListView renders zoneegress insights 1`] = `
         
         <a
           class=""
-          href="/zone-egresses/zoneegress-1"
+          href="/zones/zone-egresses/zoneegress-1"
         >
           zoneegress-1
         </a>

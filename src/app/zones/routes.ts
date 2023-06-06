@@ -29,7 +29,7 @@ export const routes = (
       redirect: () => ({ name: 'zone-cp-list-view' }),
       children: [
         {
-          path: '/zone-cps',
+          path: 'zone-cps',
           name: 'zone-cp-abstract-view',
           meta: {
             title: 'Zone CPs',
@@ -61,7 +61,7 @@ export const routes = (
           ],
         },
         {
-          path: '/zone-ingresses',
+          path: 'zone-ingresses',
           name: 'zone-ingress-abstract-view',
           meta: {
             title: 'Zone Ingresses',
@@ -93,7 +93,7 @@ export const routes = (
           ],
         },
         {
-          path: '/zone-egresses',
+          path: 'zone-egresses',
           name: 'zone-egress-abstract-view',
           meta: {
             title: 'Zone Egresses',
