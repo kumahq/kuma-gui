@@ -1,6 +1,5 @@
 import {
   Compatibility,
-  DataPlaneEntityMtls,
   DataPlaneInsight,
   DataPlaneNetworking,
   DataPlaneOverview,
@@ -142,7 +141,7 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
   return versions
 }
 
-export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {
+export function parseMTLSData(dataPlaneOverview: DataPlaneOverview) {
   if (dataPlaneOverview.dataplaneInsight === undefined || dataPlaneOverview.dataplaneInsight.mTLS === undefined) {
     return null
   }
@@ -155,18 +154,9 @@ export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEn
   const assembledExpDate = `${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}`
 
   return {
-    certificateExpirationTime: {
-      label: 'Expiration Time',
-      value: assembledExpDate,
-    },
-    lastCertificateRegeneration: {
-      label: 'Last Generated',
-      value: humanReadableDate(mTLS.lastCertificateRegeneration),
-    },
-    certificateRegenerations: {
-      label: 'Regenerations',
-      value: mTLS.certificateRegenerations,
-    },
+    certificateExpirationTime: assembledExpDate,
+    lastCertificateRegeneration: humanReadableDate(mTLS.lastCertificateRegeneration),
+    certificateRegenerations: mTLS.certificateRegenerations,
   }
 }
 

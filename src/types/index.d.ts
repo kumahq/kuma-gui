@@ -207,21 +207,6 @@ export type PolicyType = {
 
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
 
-export type DataPlaneEntityMtls = {
-  certificateExpirationTime: {
-    label: 'Expiration Time'
-    value: string
-  }
-  lastCertificateRegeneration: {
-    label: 'Last Generated'
-    value: string
-  }
-  certificateRegenerations: {
-    label: 'Regenerations'
-    value: number
-  }
-}
-
 export type Compatibility = {
   kind: 'COMPATIBLE' | 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP' | 'INCOMPATIBLE_UNSUPPORTED_ENVOY' | 'INCOMPATIBLE_WRONG_FORMAT' | 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'
   payload?: {
