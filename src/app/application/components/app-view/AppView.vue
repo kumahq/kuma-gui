@@ -23,13 +23,14 @@
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
 import { provide, inject, PropType, watch, ref, onUnmounted } from 'vue'
 
-import MainView from './MainView.vue'
+import { useMainView } from '@/components'
 
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: Symbol) => void
   removeBreadcrumbs: (sym: Symbol) => void
 }
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
+const MainView = useMainView()
 
 const props = defineProps({
   breadcrumbs: {

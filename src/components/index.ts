@@ -1,6 +1,7 @@
 import GithubButton from 'vue-github-button'
 
 import AppHeader from '@/app/AppHeader.vue'
+import MainView from '@/app/application/components/app-view/MainView.vue'
 import AppSidebar from '@/app/AppSidebar.vue'
 import KumaLogo from '@/app/common/KumaLogo.vue'
 import OverviewCharts from '@/app/main-overview/components/OverviewCharts.vue'
@@ -22,6 +23,7 @@ export const TOKENS = {
   StandaloneGraph: constant(StandaloneGraph, { description: 'StandaloneGraph' }),
   AppSidebar: constant(AppSidebar, { description: 'AppSidebar' }),
   AppHeader: constant(AppHeader, { description: 'AppHeader' }),
+  MainView: constant(MainView, { description: 'MainView' }),
 }
 export const [
   useKumaLogo,
@@ -34,6 +36,7 @@ export const [
   useStandaloneGraph,
   useAppSidebar,
   useAppHeader,
+  useMainView,
 ] = createInjections(
   TOKENS.KumaLogo,
   TOKENS.GithubButton,
@@ -45,4 +48,5 @@ export const [
   TOKENS.StandaloneGraph,
   TOKENS.AppSidebar,
   TOKENS.AppHeader,
+  TOKENS.MainView,
 )
