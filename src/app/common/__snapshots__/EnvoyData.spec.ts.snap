@@ -13,7 +13,7 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
     >
       
       <span
-        class="k-button-icon kong-icon kong-icon-redo k-button-icon"
+        class="k-button-icon kong-icon kong-icon-redo"
       >
         <svg
           fill="none"
@@ -62,7 +62,7 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
         >
           
           <span
-            class="mb-3 kong-icon kong-icon-spinner mb-3"
+            class="mb-3 kong-icon kong-icon-spinner"
           >
             <svg
               fill="none"

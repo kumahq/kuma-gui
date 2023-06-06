@@ -387,7 +387,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         class="k-search-container"
                       >
                         <span
-                          class="k-search-icon kong-icon kong-icon-search k-search-icon"
+                          class="k-search-icon kong-icon kong-icon-search"
                           data-testid="k-code-block-search-icon"
                         >
                           <svg
@@ -436,7 +436,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         />
                         <!---->
                         <span
-                          class="k-is-processing-icon kong-icon kong-icon-spinner k-is-processing-icon"
+                          class="k-is-processing-icon kong-icon kong-icon-spinner"
                           data-testid="k-code-block-is-processing-icon"
                         >
                           <svg
@@ -509,7 +509,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           
                           <span
-                            class="k-button-icon kong-icon kong-icon-filter k-button-icon"
+                            class="k-button-icon kong-icon kong-icon-filter"
                           >
                             <svg
                               height="16"
@@ -555,7 +555,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           
                           <span
-                            class="k-button-icon kong-icon kong-icon-chevronUp k-button-icon"
+                            class="k-button-icon kong-icon kong-icon-chevronUp"
                           >
                             <svg
                               fill="currentColor"
@@ -605,7 +605,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           
                           <span
-                            class="k-button-icon kong-icon kong-icon-chevronDown k-button-icon"
+                            class="k-button-icon kong-icon kong-icon-chevronDown"
                           >
                             <svg
                               fill="currentColor"

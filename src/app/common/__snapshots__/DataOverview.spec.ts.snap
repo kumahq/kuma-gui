@@ -76,7 +76,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
     >
       
       <span
-        class="k-button-icon kong-icon kong-icon-redo k-button-icon"
+        class="k-button-icon kong-icon kong-icon-redo"
       >
         <svg
           fill="white"
@@ -426,7 +426,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                 >
                   
                   <span
-                    class="mr-1 kong-icon kong-icon-warning mr-1"
+                    class="mr-1 kong-icon kong-icon-warning"
                   >
                     <svg
                       height="20"
@@ -532,7 +532,7 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
     >
       
       <span
-        class="k-button-icon kong-icon kong-icon-redo k-button-icon"
+        class="k-button-icon kong-icon kong-icon-redo"
       >
         <svg
           fill="none"
