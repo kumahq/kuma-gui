@@ -109,16 +109,16 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
+import { useStore } from '@/store/store'
 import {
   useEnv,
   useI18n,
-  useGetGlobalKdsAddress,
 } from '@/utilities'
 
 const env = useEnv()
-const getGlobalKdsAddress = useGetGlobalKdsAddress()
 const i18n = useI18n()
 const route = useRoute()
+const store = useStore()
 
 const props = defineProps({
   zoneName: {
@@ -153,7 +153,7 @@ const kubernetesCreateSecretCommand = computed(() => i18n.t('zones.form.kubernet
 const kubernetesConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
-    globalKdsAddress: getGlobalKdsAddress(),
+    globalKdsAddress: store.state.globalKdsAddress,
     zoneIngressEnabled: String(props.zoneIngressEnabled),
     zoneEgressEnabled: String(props.zoneEgressEnabled),
   }

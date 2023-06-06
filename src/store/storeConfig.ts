@@ -91,6 +91,7 @@ interface BareRootState {
   policyTypes: PolicyType[]
   policyTypesByPath: Record<string, PolicyType | undefined>
   policyTypesByName: Record<string, PolicyType | undefined>
+  globalKdsAddress: string
 }
 
 const initialState: BareRootState = {
@@ -159,6 +160,7 @@ const initialState: BareRootState = {
   policyTypes: [],
   policyTypesByPath: {},
   policyTypesByName: {},
+  globalKdsAddress: 'grpcs://<global-kds-address>:5685',
 }
 
 /**
@@ -277,6 +279,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
       },
       SET_POLICY_TYPES_BY_PATH: (state, policyTypesByPath: typeof state.policyTypesByPath) => (state.policyTypesByPath = policyTypesByPath),
       SET_POLICY_TYPES_BY_NAME: (state, policyTypesByName: typeof state.policyTypesByName) => (state.policyTypesByName = policyTypesByName),
+      SET_GLOBAL_KDS_ADDRESS: (state, globalKdsAddress: typeof state.globalKdsAddress) => (state.globalKdsAddress = globalKdsAddress),
     },
 
     actions: {
@@ -719,6 +722,10 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         })
 
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
+      },
+
+      updateGlobalKdsAddress({ commit }, globalKdsAddress: string) {
+        commit('SET_GLOBAL_KDS_ADDRESS', globalKdsAddress)
       },
     },
   }

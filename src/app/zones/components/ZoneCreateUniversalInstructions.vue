@@ -52,14 +52,12 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import {
-  useI18n,
-  useGetGlobalKdsAddress,
-} from '@/utilities'
+import { useStore } from '@/store/store'
+import { useI18n } from '@/utilities'
 
-const getGlobalKdsAddress = useGetGlobalKdsAddress()
 const i18n = useI18n()
 const route = useRoute()
+const store = useStore()
 
 const props = defineProps({
   zoneName: {
@@ -81,7 +79,7 @@ const props = defineProps({
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
-    globalKdsAddress: getGlobalKdsAddress(),
+    globalKdsAddress: store.state.globalKdsAddress,
     token: props.base64EncodedToken,
   }
 
