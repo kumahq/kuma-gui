@@ -21,32 +21,6 @@ Feature: index
       | zone-ingress-list-view | standalone | doesn't exist   |
       | zone-egress-list-view  | standalone | exists          |
 
-  Scenario Outline: The navigation shows numbers correctly
-    Given the URL "/global-insights" responds with
-      """
-      body:
-        resources:
-          Zone:
-            total: <Count>
-          ZoneEgress:
-            total: <Count>
-          ZoneIngress:
-            total: <Count>
-      """
-    When I visit the "/" URL
-    Then the "$main-nav .nav-item-<RouteName>" element contains "<Text>"
-    Examples:
-      | RouteName              | Count  | Text |
-      | zone-list-view         | 0      | 0    |
-      | zone-egress-list-view  | 0      | 0    |
-      | zone-ingress-list-view | 0      | 0    |
-      | zone-list-view         | 50     | 50   |
-      | zone-egress-list-view  | 122    | 99+  |
-      | zone-ingress-list-view | 1      | 1    |
-      | zone-list-view         | 100    | 99+  |
-      | zone-egress-list-view  | 100    | 99+  |
-      | zone-ingress-list-view | 100    | 99+  |
-
   Scenario Outline: Visiting the "<Title>" page
     Given the URL "/mesh-insights/default" responds with
       """

@@ -7,7 +7,6 @@
         :name="item.name"
         :route-name="item.routeName"
         :anchor-route-name="item.anchorRouteName"
-        :insights-field-accessor="item.insightsFieldAccessor"
       />
     </aside>
   </div>

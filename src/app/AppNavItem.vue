@@ -13,14 +13,6 @@
       @click="onNavItemClick"
     >
       {{ name }}
-
-      <span
-        v-if="amount"
-        class="amount"
-        :class="{ 'amount--empty': amount === '0' }"
-      >
-        {{ amount }}
-      </span>
     </router-link>
   </div>
 </template>
@@ -30,13 +22,10 @@ import { computed } from 'vue'
 import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 
 import { logEvents } from '@/services/logger/Logger'
-import { useStore } from '@/store/store'
 import { useLogger } from '@/utilities'
-import { get } from '@/utilities/get'
 
 const logger = useLogger()
 const route = useRoute()
-const store = useStore()
 
 const props = defineProps({
   name: {
@@ -54,21 +43,6 @@ const props = defineProps({
     required: false,
     default: '',
   },
-
-  insightsFieldAccessor: {
-    type: String,
-    required: false,
-    default: '',
-  },
-})
-
-const amount = computed(() => {
-  if (props.insightsFieldAccessor) {
-    const value = get(store.state.sidebar.insights, props.insightsFieldAccessor, 0)
-    return value > 99 ? '99+' : String(value)
-  } else {
-    return ''
-  }
 })
 
 const targetRoute = computed<RouteLocationNamedRaw>(() => ({ name: props.routeName }))
@@ -116,22 +90,5 @@ function onNavItemClick() {
 .nav-link:hover,
 .nav-link--is-active {
   background-color: var(--grey-300);
-}
-
-.amount {
-  width: 1.5rem;
-  height: 1.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--white);
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: var(--font-weight-regular);
-  background-color: var(--purple-100);
-}
-
-.amount--empty {
-  background-color: var(--grey-200);
 }
 </style>

@@ -8,7 +8,6 @@ interface NavItem {
    * An anchor route represents the route record that holds routes of a module; for example, the route “zone-abstract-view” holds all routes related to zones.
    */
   anchorRouteName?: string
-  insightsFieldAccessor?: string
 }
 
 export function getNavItems(isMultizoneMode: boolean): NavItem[] {
@@ -23,7 +22,6 @@ export function getNavItems(isMultizoneMode: boolean): NavItem[] {
           name: 'Zones',
           routeName: 'zone-cp-list-view',
           anchorRouteName: 'zone-index-view',
-          insightsFieldAccessor: 'global.Zone',
         },
       ]
       : [
@@ -31,7 +29,6 @@ export function getNavItems(isMultizoneMode: boolean): NavItem[] {
           name: 'Zone Egresses',
           routeName: 'zone-egress-list-view',
           anchorRouteName: 'zone-index-view',
-          insightsFieldAccessor: 'global.ZoneEgress',
         },
       ]),
     {
