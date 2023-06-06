@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, PropType, ref, watch } from 'vue'
+import { PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
 import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
@@ -90,9 +90,7 @@ watch(() => route.params.mesh, function () {
   loadData(0)
 })
 
-onBeforeMount(function () {
-  loadData(props.offset)
-})
+loadData(props.offset)
 
 async function loadData(offset: number) {
   pageOffset.value = offset
