@@ -1,8 +1,8 @@
 Feature: mesh / index
   Background:
     Given the CSS selectors
-      | Alias           | Selector                    |
-      | mesh-breadcrumb | .k-breadcrumbs:nth-child(2) |
+      | Alias           | Selector       |
+      | mesh-breadcrumb | .k-breadcrumbs |
 
   Scenario: Mesh Selection
     Given the environment
@@ -16,21 +16,6 @@ Feature: mesh / index
           - name: default
           - name: another-mesh
       """
-    And the URL "/mesh-insights/default" responds with
-      """
-      body:
-        dataplanesByType:
-          gateway:
-            total: 1
-      """
-    And the URL "/mesh-insights/another-mesh" responds with
-      """
-      body:
-        dataplanesByType:
-          gateway:
-            total: 10
-      """
-
     When I visit the "/meshes" URL
 
     When I click the "<Selector>" element
