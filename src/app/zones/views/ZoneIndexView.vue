@@ -1,5 +1,6 @@
 <template>
   <KTabs
+    v-if="store.getters['config/getMulticlusterStatus']"
     class="nav-tabs"
     :tabs="kTabs"
     :model-value="currentTabHash"
@@ -28,10 +29,12 @@ import { KTabs, Tab } from '@kong/kongponents'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
 const i18n = useI18n()
 const currentRoute = useRoute()
+const store = useStore()
 
 const TABS = [
   {
