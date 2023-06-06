@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const actions = (): RouteRecordRaw[] => {
   return [{
-    path: '/zone-cps/-create',
+    path: '/zones/-create',
     name: 'zone-create-view',
     meta: {
       title: 'Create & connect Zone',
