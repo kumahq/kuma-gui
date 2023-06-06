@@ -1,5 +1,8 @@
 <template>
   <RouteView>
+    <RouteTitle
+      :title="t('meshes.routes.overview.title')"
+    />
     <AppView>
       <div class="kcard-stack">
         <KCard>
@@ -109,6 +112,7 @@ import { useRoute } from 'vue-router'
 
 import MeshCharts from '../components/MeshCharts.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'

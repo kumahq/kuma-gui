@@ -4,4 +4,4 @@ policies:
       title: Policy
       breadcrumbs: Policies
     items:
-      title: Policies
+      title: "{name}"

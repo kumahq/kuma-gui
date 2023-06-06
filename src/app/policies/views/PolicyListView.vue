@@ -1,7 +1,7 @@
 <template>
   <RouteView>
     <RouteTitle
-      :title="t('policies.routes.items.title')"
+      :title="t('policies.routes.items.title', {name: policyType?.name})"
     />
     <AppView>
       <div

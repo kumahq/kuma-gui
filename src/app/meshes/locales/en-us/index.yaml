@@ -9,7 +9,10 @@ meshes:
         data-planes-list-view: Data Plane Proxies
         gateways-list-view: Gateways
         policies: Policies
+
     items:
       title: Meshes
       breadcrumbs: Meshes
+    overview:
+      title: Mesh overview
 

@@ -21,10 +21,10 @@ zones:
     zone-egress-list-view: Zone Egresses
   routes:
     item:
-      title: Zone
+      title: Zone CP
       breadcrumbs: Zones
     items:
-      title: Zones
+      title: Zone CPs
       breadcrumbs: Zones
   form:
     exit: 'Exit'
