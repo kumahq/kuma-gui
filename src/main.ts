@@ -17,9 +17,6 @@ async function mountVueApplication() {
       : [],
   )
 
-  const logger = get($.logger)
-  logger.setup()
-
   const app = await get($.app)((await import('./app/App.vue')).default)
   app.mount('#app')
 

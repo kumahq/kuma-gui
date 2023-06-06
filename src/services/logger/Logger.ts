@@ -10,10 +10,6 @@ export const logEvents: Record<string, string> = {
 type LogFunction = (message: string, messageContext?: object | undefined, error?: Error | undefined) => void
 
 export default class Logger {
-  setup() {
-    // Currently, there is no setup code here. This could contain Datadog Logs setup code, for example.
-  }
-
   info(...args: Parameters<LogFunction>) {
     this._log('info', ...args)
   }
