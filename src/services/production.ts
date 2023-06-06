@@ -23,7 +23,6 @@ import Logger from '@/services/logger/Logger'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { token, get, constant } from '@/services/utils'
 import { storeConfig, State } from '@/store/storeConfig'
-import { useGetGlobalKdsAddress } from '@/utilities/useGetGlobalKdsAddress'
 import type {
   Router,
 } from 'vue-router'
@@ -64,8 +63,6 @@ const $ = {
 
   app: token<ReturnType<typeof useApp>>('app'),
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
-
-  getGlobalKdsAddress: token<ReturnType<typeof useGetGlobalKdsAddress>>('getGlobalKdsAddress'),
 }
 type SupportedTokens = typeof $
 export const services: ServiceConfigurator<SupportedTokens> = ($) => [
@@ -221,10 +218,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     arguments: [
       $.store,
     ],
-  }],
-
-  [$.getGlobalKdsAddress, {
-    service: useGetGlobalKdsAddress,
   }],
 ]
 
