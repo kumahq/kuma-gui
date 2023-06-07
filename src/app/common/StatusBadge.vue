@@ -2,12 +2,11 @@
   <span
     class="status"
     :class="{
-      'status--with-title': !props.shouldHideTitle,
       [`status--${props.status}`]: true,
     }"
     data-testid="status-badge"
   >
-    <span :class="{ 'visually-hidden': props.shouldHideTitle }">
+    <span>
       {{ i18n.t(`http.api.value.${props.status}`) }}
     </span>
   </span>
@@ -26,12 +25,6 @@ const props = defineProps({
     type: String as PropType<StatusKeyword>,
     required: true,
   },
-
-  shouldHideTitle: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
 })
 </script>
 
@@ -44,12 +37,9 @@ const props = defineProps({
   content: '';
   display: inline-block;
   vertical-align: middle;
+  margin-right: var(--spacing-xs);
   border: 4px solid currentColor;
   border-radius: 50%;
-}
-
-.status--with-title::before {
-  margin-right: var(--spacing-xs);
 }
 
 .status--not_available {
