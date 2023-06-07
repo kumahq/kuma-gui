@@ -354,7 +354,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                                 <a
                                   class="k-dropdown-item-trigger"
                                   data-testid="k-dropdown-item-trigger"
-                                  href="/zones/bandwidth-49"
+                                  href="/zones/zone-cps/bandwidth-49"
                                 >
                                   
                                   View details

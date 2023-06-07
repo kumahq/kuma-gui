@@ -121,7 +121,7 @@ const props = defineProps({
 })
 
 const detailViewRoute = computed(() => ({
-  name: 'zone-detail-view',
+  name: 'zone-cp-detail-view',
   params: {
     zone: props.zoneOverview.name,
   },

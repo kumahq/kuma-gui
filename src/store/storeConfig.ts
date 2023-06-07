@@ -399,7 +399,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
               title: ONLINE,
               data: globalInsights.resources.Zone?.total ?? 0,
               route: {
-                name: 'zone-list-view',
+                name: 'zone-cp-list-view',
               },
             },
           ]
@@ -497,7 +497,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
                 title: 'Zone',
                 data: 1,
                 route: {
-                  name: 'zone-list-view',
+                  name: 'zone-cp-list-view',
                 },
               },
             ]
@@ -507,7 +507,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
                 title: getters['config/getVersion'],
                 data: 1,
                 route: {
-                  name: 'zone-list-view',
+                  name: 'zone-cp-list-view',
                 },
               },
             ]
@@ -559,7 +559,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             title: ONLINE,
             data: online,
             route: {
-              name: 'zone-list-view',
+              name: 'zone-cp-list-view',
             },
           })
 
@@ -568,7 +568,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
               title: OFFLINE,
               data: total - online,
               route: {
-                name: 'zone-list-view',
+                name: 'zone-cp-list-view',
               },
             })
           }
@@ -659,7 +659,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
               title: lastSubscription.version.kumaCp.version,
               data: 1,
               route: {
-                name: 'zone-list-view',
+                name: 'zone-cp-list-view',
               },
             })
           } else {

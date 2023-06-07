@@ -121,7 +121,7 @@ describe('DataOverview.vue', () => {
               },
             },
             detailViewRoute: {
-              name: 'zone-detail-view',
+              name: 'zone-cp-detail-view',
               params: {
                 zone: 'bandwidth-49',
               },

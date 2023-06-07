@@ -1,8 +1,9 @@
 import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
+
 export const actions = (): RouteRecordRaw[] => {
   return [{
-    path: '-create',
+    path: '/zones/-create',
     name: 'zone-create-view',
     meta: {
       title: 'Create & connect Zone',
@@ -16,22 +17,28 @@ export const routes = (
   actions: RouteRecordRaw[],
 ): RouteRecordRaw[] => {
   return [
+    ...actions,
     {
       path: '/zones',
-      name: 'zone-abstract-view',
+      name: 'zone-index-view',
+      meta: {
+        title: 'Zones',
+        isBreadcrumb: true,
+      },
+      component: () => import('@/app/zones/views/ZoneIndexView.vue'),
+      redirect: () => ({ name: 'zone-cp-list-view' }),
       children: [
         {
-          path: '',
+          path: 'zone-cps',
+          name: 'zone-cp-abstract-view',
           meta: {
-            title: 'Zones',
+            title: 'Zone CPs',
             isBreadcrumb: true,
           },
-          redirect: () => ({ name: 'zone-list-view' }),
-          name: 'zone-view',
           children: [
             {
               path: '',
-              name: 'zone-list-view',
+              name: 'zone-cp-list-view',
               meta: {
                 title: 'Zone CPs',
               },
@@ -41,11 +48,9 @@ export const routes = (
               }),
               component: () => import('@/app/zones/views/ZoneListView.vue'),
             },
-            ...actions,
-
             {
               path: ':zone',
-              name: 'zone-detail-view',
+              name: 'zone-cp-detail-view',
               meta: {
                 title: 'Zone',
                 isBreadcrumb: true,
@@ -55,20 +60,13 @@ export const routes = (
             },
           ],
         },
-      ],
-    },
-    {
-      path: '/zone-ingresses',
-      name: 'zone-ingress-abstract-view',
-      children: [
         {
-          path: '',
+          path: 'zone-ingresses',
+          name: 'zone-ingress-abstract-view',
           meta: {
             title: 'Zone Ingresses',
             isBreadcrumb: true,
           },
-          redirect: () => ({ name: 'zone-ingress-list-view' }),
-          name: 'zone-ingress-view',
           children: [
             {
               path: '',
@@ -94,20 +92,13 @@ export const routes = (
             },
           ],
         },
-      ],
-    },
-    {
-      path: '/zone-egresses',
-      name: 'zone-egress-abstract-view',
-      children: [
         {
-          path: '',
+          path: 'zone-egresses',
+          name: 'zone-egress-abstract-view',
           meta: {
             title: 'Zone Egresses',
             isBreadcrumb: true,
           },
-          redirect: () => ({ name: 'zone-egress-list-view' }),
-          name: 'zone-egress-view',
           children: [
             {
               path: '',

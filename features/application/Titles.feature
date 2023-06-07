@@ -7,9 +7,9 @@ Feature: The HTML title is correct on each page
       | URL                                     | Title              |
       | /                                       | Overview           |
       | /diagnostics                            | Diagnostics        |
-      | /zones                                  | Zone CPs           |
-      | /zone-ingresses                         | Zone Ingresses     |
-      | /zone-egresses                          | Zone Egresses      |
+      | /zones/zone-cps                         | Zone CPs           |
+      | /zones/zone-ingresses                   | Zone Ingresses     |
+      | /zones/zone-egresses                    | Zone Egresses      |
 
       | /mesh                                   | Meshes             |
       | /mesh/default                           | Mesh overview      |
