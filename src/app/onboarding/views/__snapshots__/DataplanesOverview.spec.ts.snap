@@ -134,12 +134,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -162,12 +160,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -190,12 +186,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -218,12 +212,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -246,12 +238,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -274,12 +264,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -302,12 +290,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>
@@ -330,12 +316,10 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     <td>
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--offline"
                         data-testid="status-badge"
                       >
-                        <span
-                          class=""
-                        >
+                        <span>
                           offline
                         </span>
                       </span>

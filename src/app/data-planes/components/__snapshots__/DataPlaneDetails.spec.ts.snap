@@ -312,12 +312,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                   >
                     
                     <span
-                      class="status status--with-title status--success"
+                      class="status status--online"
                       data-testid="status-badge"
                     >
-                      <span
-                        class=""
-                      >
+                      <span>
                         online
                       </span>
                     </span>

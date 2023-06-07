@@ -88,12 +88,10 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
               </div>
             </span>
             <span
-              class="status status--with-title status--success"
+              class="status status--online"
               data-testid="status-badge"
             >
-              <span
-                class=""
-              >
+              <span>
                 online
               </span>
             </span>

@@ -136,12 +136,10 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="status status--with-title status--success"
+                          class="status status--online"
                           data-testid="status-badge"
                         >
-                          <span
-                            class=""
-                          >
+                          <span>
                             online
                           </span>
                         </span>
@@ -666,12 +664,10 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                       >
                         
                         <span
-                          class="status status--with-title status--success"
+                          class="status status--online"
                           data-testid="status-badge"
                         >
-                          <span
-                            class=""
-                          >
+                          <span>
                             online
                           </span>
                         </span>
