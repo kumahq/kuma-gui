@@ -42,7 +42,7 @@ const props = defineProps({
 })
 
 const statusObject = computed(() => ({
-  title: i18n.t(`http.api.property.${props.status}`),
+  title: i18n.t(`http.api.value.${props.status}`),
   appearance: STATUS[props.status],
 }))
 </script>
