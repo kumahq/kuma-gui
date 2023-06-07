@@ -1,15 +1,15 @@
 <template>
   <RouteView>
     <RouteTitle
-      :title="t('zones.routes.items.title')"
+      :title="t('zone-cps.routes.items.title')"
     />
     <AppView
       :breadcrumbs="[
         {
           to: {
-            name: 'zone-list-view',
+            name: 'zone-cp-list-view',
           },
-          text: t('zones.routes.items.breadcrumbs')
+          text: t('zone-cps.routes.items.breadcrumbs')
         },
       ]"
     >

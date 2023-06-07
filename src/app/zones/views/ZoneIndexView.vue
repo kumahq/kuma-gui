@@ -1,27 +1,41 @@
 <template>
-  <KTabs
-    v-if="store.getters['config/getMulticlusterStatus']"
-    :tabs="kTabs"
-    :model-value="currentTabHash"
-    :has-panels="false"
-  >
-    <template
-      v-for="tab in TABS"
-      :key="`${tab.routeName}-anchor`"
-      #[`${tab.routeName}-anchor`]
-    >
-      <router-link :to="{ name: tab.routeName }">
-        {{ tab.title }}
-      </router-link>
-    </template>
-  </KTabs>
+  <RouteView>
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'zone-index-view',
+          },
+          text: t('zones.routes.items.breadcrumbs')
+        },
 
-  <RouterView v-slot="{ Component, route }">
-    <component
-      :is="Component"
-      :key="route.path"
-    />
-  </RouterView>
+      ]"
+    >
+      <KTabs
+        v-if="store.getters['config/getMulticlusterStatus']"
+        :tabs="kTabs"
+        :model-value="currentTabHash"
+        :has-panels="false"
+      >
+        <template
+          v-for="tab in TABS"
+          :key="`${tab.routeName}-anchor`"
+          #[`${tab.routeName}-anchor`]
+        >
+          <router-link :to="{ name: tab.routeName }">
+            {{ tab.title }}
+          </router-link>
+        </template>
+      </KTabs>
+
+      <RouterView v-slot="{ Component, route }">
+        <component
+          :is="Component"
+          :key="route.path"
+        />
+      </RouterView>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -29,10 +43,12 @@ import { KTabs, Tab } from '@kong/kongponents'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
-const i18n = useI18n()
+const { t } = useI18n()
 const currentRoute = useRoute()
 const store = useStore()
 
@@ -49,7 +65,7 @@ const TABS = [
     routeName: 'zone-egress-list-view',
     activeRouteNames: ['zone-egress-detail-view'],
   },
-].map((tab) => ({ ...tab, title: i18n.t(`zones.navigation.${tab.routeName}`) }))
+].map((tab) => ({ ...tab, title: t(`zones.routes.items.navigation.${tab.routeName}`) }))
 
 const kTabs = computed<Tab[]>(() => TABS.map((tab) => {
   const { title, routeName } = tab

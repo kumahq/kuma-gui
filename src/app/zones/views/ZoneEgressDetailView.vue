@@ -3,16 +3,16 @@
     v-slot="{route: _route}"
   >
     <RouteTitle
-      :title="t('zones.routes.item.title')"
+      :title="t('zone-egresses.routes.item.title')"
     />
     <AppView
       :breadcrumbs="[
         {
           to: {
-            name: 'zone-list-view',
+            name: 'zone-cp-list-view',
             params: _route.params
           },
-          text: t('zones.routes.item.breadcrumbs')
+          text: t('zone-egresses.routes.item.breadcrumbs')
         },
       ]"
     >

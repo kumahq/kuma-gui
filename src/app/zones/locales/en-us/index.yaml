@@ -15,17 +15,15 @@ zone-egresses:
       title: Zone Egresses
       breadcrumbs: Zone Egresses
 zones:
-  navigation:
-    zone-cp-list-view: Zone CPs
-    zone-ingress-list-view: Zone Ingresses
-    zone-egress-list-view: Zone Egresses
   routes:
-    item:
-      title: Zone CP
-      breadcrumbs: Zones
+    create:
+      title: 'Create & connect Zone'
     items:
-      title: Zone CPs
       breadcrumbs: Zones
+      navigation:
+        zone-cp-list-view: Zone CPs
+        zone-ingress-list-view: Zone Ingresses
+        zone-egress-list-view: Zone Egresses
   form:
     exit: 'Exit'
     nameLabel: 'Name'
@@ -120,7 +118,6 @@ zones:
         description2: 'Next, run the following command to connect the Zone.'
         command: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
-    pageTitle: 'Create & connect Zone'
     errorTitle: 'Could not create the Zone'
   delete:
     confirmModal:
@@ -129,3 +126,11 @@ zones:
       proceedText: 'Yes, delete'
       title: 'Delete Zone'
       errorText: 'An unexpected error occurred'
+zone-cps:
+  routes:
+    item:
+      title: Zone CP
+      breadcrumbs: Zone CPs
+    items:
+      title: Zone CPs
+      breadcrumbs: Zone CPs
