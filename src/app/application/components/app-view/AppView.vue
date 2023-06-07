@@ -65,7 +65,7 @@ const $: AppView = {
     refresh(map)
   },
 }
-const hasParent: AppView | undefined = inject('app-view-parent')
+const hasParent: AppView | undefined = inject('app-view-parent', undefined)
 if (!hasParent) {
   provide('app-view-parent', $)
 }
