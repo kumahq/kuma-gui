@@ -17,24 +17,15 @@
 import { computed, PropType } from 'vue'
 
 import { StatusKeyword } from '@/types/index.d'
+import { useI18n } from '@/utilities'
 
-const STATUS: Record<StatusKeyword, { title: string, appearance: string }> = {
-  not_available: {
-    title: 'not available',
-    appearance: 'warning',
-  },
-  partially_degraded: {
-    title: 'partially degraded',
-    appearance: 'warning',
-  },
-  offline: {
-    title: 'offline',
-    appearance: 'danger',
-  },
-  online: {
-    title: 'online',
-    appearance: 'success',
-  },
+const i18n = useI18n()
+
+const STATUS: Record<StatusKeyword, string> = {
+  not_available: 'not-available',
+  partially_degraded: 'warning',
+  offline: 'danger',
+  online: 'success',
 }
 
 const props = defineProps({
@@ -50,7 +41,10 @@ const props = defineProps({
   },
 })
 
-const statusObject = computed(() => STATUS[props.status])
+const statusObject = computed(() => ({
+  title: i18n.t(`http.api.property.${props.status}`),
+  appearance: STATUS[props.status],
+}))
 </script>
 
 <style lang="scss" scoped>
@@ -68,6 +62,10 @@ const statusObject = computed(() => STATUS[props.status])
 
 .status--with-title::before {
   margin-right: var(--spacing-xs);
+}
+
+.status--not-available {
+  color: var(--gray-400);
 }
 
 .status--success {
