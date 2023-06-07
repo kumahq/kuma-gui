@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, PropType, ref, watch } from 'vue'
+import { PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
@@ -96,16 +96,11 @@ watch(() => route.params.mesh, function () {
     loadData(0)
   }
 })
-
-onBeforeMount(function () {
-  init(props.offset)
-})
-
-function init(offset: number): void {
-  if (store.getters['config/getMulticlusterStatus']) {
-    loadData(offset)
+watch(() => store.getters['config/getMulticlusterStatus'], function (isMultizoneMode) {
+  if (isMultizoneMode) {
+    loadData(props.offset)
   }
-}
+}, { immediate: true })
 
 async function loadData(offset: number) {
   pageOffset.value = offset
