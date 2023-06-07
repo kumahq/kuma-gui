@@ -1404,10 +1404,12 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Overview
+                  <span>
+                    Overview
+                  </span>
                   
                 </div>
               </li>
@@ -1420,10 +1422,12 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Zone Insights
+                  <span>
+                    Zone Insights
+                  </span>
                   
                 </div>
               </li>
@@ -1436,10 +1440,12 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Config
+                  <span>
+                    Config
+                  </span>
                   
                 </div>
               </li>
@@ -1452,7 +1458,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
                   <span
@@ -1944,10 +1950,12 @@ exports[`ZoneListView renders zone insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Overview
+            <span>
+              Overview
+            </span>
             
           </div>
         </li>
@@ -1960,10 +1968,12 @@ exports[`ZoneListView renders zone insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Zone Insights
+            <span>
+              Zone Insights
+            </span>
             
           </div>
         </li>
@@ -1976,10 +1986,12 @@ exports[`ZoneListView renders zone insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Config
+            <span>
+              Config
+            </span>
             
           </div>
         </li>
@@ -1992,7 +2004,7 @@ exports[`ZoneListView renders zone insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
             <span

@@ -1,8 +1,8 @@
 <template>
   <KTabs
-    class="route-mesh-view-tabs"
     :tabs="items"
     :model-value="(items.find(item => (router.currentRoute?.value.name ?? '').toString().startsWith(item.hash)) ?? items[0]).hash"
+    :has-panels="false"
   >
     <template
       v-for="item in items"
@@ -56,22 +56,3 @@ const items = meshRoutes.map((item) => {
   }
 })
 </script>
-
-<style scoped>
-.tab-link a {
-  display: block;
-  padding: var(--spacing-md);
-  text-decoration: none;
-  color: var(--KTabsColor)
-}
-
-li.active .tab-link a {
-  color: var(--KTabsActiveColor)
-}
-</style>
-
-<style lang="scss">
-.route-mesh-view-tabs > ul .tab-item {
-  padding: 0 !important;
-}
-</style>

@@ -280,10 +280,12 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Overview
+                  <span>
+                    Overview
+                  </span>
                   
                 </div>
               </li>
@@ -296,10 +298,12 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Zone Egress Insights
+                  <span>
+                    Zone Egress Insights
+                  </span>
                   
                 </div>
               </li>
@@ -312,10 +316,12 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  XDS Configuration
+                  <span>
+                    XDS Configuration
+                  </span>
                   
                 </div>
               </li>
@@ -328,10 +334,12 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Stats
+                  <span>
+                    Stats
+                  </span>
                   
                 </div>
               </li>
@@ -344,10 +352,12 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Clusters
+                  <span>
+                    Clusters
+                  </span>
                   
                 </div>
               </li>
@@ -810,10 +820,12 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Overview
+                  <span>
+                    Overview
+                  </span>
                   
                 </div>
               </li>
@@ -826,10 +838,12 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Zone Egress Insights
+                  <span>
+                    Zone Egress Insights
+                  </span>
                   
                 </div>
               </li>
@@ -842,10 +856,12 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  XDS Configuration
+                  <span>
+                    XDS Configuration
+                  </span>
                   
                 </div>
               </li>
@@ -858,10 +874,12 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Stats
+                  <span>
+                    Stats
+                  </span>
                   
                 </div>
               </li>
@@ -874,10 +892,12 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Clusters
+                  <span>
+                    Clusters
+                  </span>
                   
                 </div>
               </li>
@@ -1158,10 +1178,12 @@ exports[`ZoneEgressListView renders zoneegress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Overview
+            <span>
+              Overview
+            </span>
             
           </div>
         </li>
@@ -1174,10 +1196,12 @@ exports[`ZoneEgressListView renders zoneegress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Zone Egress Insights
+            <span>
+              Zone Egress Insights
+            </span>
             
           </div>
         </li>
@@ -1190,10 +1214,12 @@ exports[`ZoneEgressListView renders zoneegress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            XDS Configuration
+            <span>
+              XDS Configuration
+            </span>
             
           </div>
         </li>
@@ -1206,10 +1232,12 @@ exports[`ZoneEgressListView renders zoneegress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Stats
+            <span>
+              Stats
+            </span>
             
           </div>
         </li>
@@ -1222,10 +1250,12 @@ exports[`ZoneEgressListView renders zoneegress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Clusters
+            <span>
+              Clusters
+            </span>
             
           </div>
         </li>
