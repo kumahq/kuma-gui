@@ -379,12 +379,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                 >
                   
                   <span
-                    class="status status--with-title status--danger"
+                    class="status status--offline"
                     data-testid="status-badge"
                   >
-                    <span
-                      class=""
-                    >
+                    <span>
                       offline
                     </span>
                   </span>

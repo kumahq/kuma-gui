@@ -17,3 +17,10 @@ http:
       certificateExpirationTime: Expiration time
       lastCertificateRegeneration: Last generated
       certificateRegenerations: Regenerations
+    value:
+      online: 'online'
+      offline: 'offline'
+      partiallyDegraded: 'partially degraded'
+      partially_degraded: 'partially degraded'
+      notAvailable: 'information not available'
+      not_available: 'information not available'

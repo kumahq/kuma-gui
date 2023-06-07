@@ -38,7 +38,7 @@ import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
-type ServiceInsightTableRow = Pick<ServiceInsight, 'serviceType' | 'addressPort' | 'status'> & {
+type ServiceInsightTableRow = Required<Pick<ServiceInsight, 'serviceType' | 'addressPort' | 'status'>> & {
   entity: ServiceInsight
   detailViewRoute: RouteLocationNamedRaw
   dpProxiesStatus: string
@@ -130,7 +130,7 @@ async function loadData(offset: number) {
 
 function transformToTableData(serviceInsights: ServiceInsight[]): ServiceInsightTableRow[] {
   return serviceInsights.map((serviceInsight) => {
-    const { serviceType = 'internal', addressPort } = serviceInsight
+    const { serviceType = 'internal', addressPort = '', status = 'not_available' } = serviceInsight
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'service-detail-view',
       params: {
@@ -148,6 +148,7 @@ function transformToTableData(serviceInsights: ServiceInsight[]): ServiceInsight
     return {
       entity: serviceInsight,
       detailViewRoute,
+      status,
       serviceType,
       dpProxiesStatus,
       addressPort,

@@ -2,55 +2,30 @@
   <span
     class="status"
     :class="{
-      'status--with-title': !props.shouldHideTitle,
-      [`status--${statusObject.appearance}`]: true,
+      [`status--${props.status}`]: true,
     }"
     data-testid="status-badge"
   >
-    <span :class="{ 'visually-hidden': props.shouldHideTitle }">
-      {{ statusObject.title }}
+    <span>
+      {{ i18n.t(`http.api.value.${props.status}`) }}
     </span>
   </span>
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
+import { PropType } from 'vue'
 
 import { StatusKeyword } from '@/types/index.d'
+import { useI18n } from '@/utilities'
 
-const STATUS: Record<StatusKeyword, { title: string, appearance: string }> = {
-  not_available: {
-    title: 'not available',
-    appearance: 'warning',
-  },
-  partially_degraded: {
-    title: 'partially degraded',
-    appearance: 'warning',
-  },
-  offline: {
-    title: 'offline',
-    appearance: 'danger',
-  },
-  online: {
-    title: 'online',
-    appearance: 'success',
-  },
-}
+const i18n = useI18n()
 
 const props = defineProps({
   status: {
     type: String as PropType<StatusKeyword>,
     required: true,
   },
-
-  shouldHideTitle: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
 })
-
-const statusObject = computed(() => STATUS[props.status])
 </script>
 
 <style lang="scss" scoped>
@@ -62,23 +37,24 @@ const statusObject = computed(() => STATUS[props.status])
   content: '';
   display: inline-block;
   vertical-align: middle;
+  margin-right: var(--spacing-xs);
   border: 4px solid currentColor;
   border-radius: 50%;
 }
 
-.status--with-title::before {
-  margin-right: var(--spacing-xs);
+.status--not_available {
+  color: var(--gray-400);
 }
 
-.status--success {
+.status--online {
   color: var(--green-500);
 }
 
-.status--warning {
+.status--partially_degraded {
   color: var(--yellow-500);
 }
 
-.status--danger {
+.status--offline {
   color:  var(--red-600);
 }
 </style>
