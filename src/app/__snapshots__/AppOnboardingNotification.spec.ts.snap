@@ -53,7 +53,7 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
       type="button"
     >
       <span
-        class="success kong-icon kong-icon-close success"
+        class="success kong-icon kong-icon-close"
       >
         <svg
           fill="none"
