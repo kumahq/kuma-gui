@@ -26,7 +26,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
           >
             
             <span
-              class="k-button-icon kong-icon kong-icon-redo k-button-icon"
+              class="k-button-icon kong-icon kong-icon-redo"
             >
               <svg
                 fill="white"
@@ -289,7 +289,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="mr-1 kong-icon kong-icon-warning mr-1"
+                          class="mr-1 kong-icon kong-icon-warning"
                         >
                           <svg
                             height="20"
@@ -555,7 +555,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="mr-1 kong-icon kong-icon-warning mr-1"
+                          class="mr-1 kong-icon kong-icon-warning"
                         >
                           <svg
                             height="20"
@@ -821,7 +821,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="mr-1 kong-icon kong-icon-warning mr-1"
+                          class="mr-1 kong-icon kong-icon-warning"
                         >
                           <svg
                             height="20"
@@ -1087,7 +1087,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="mr-1 kong-icon kong-icon-warning mr-1"
+                          class="mr-1 kong-icon kong-icon-warning"
                         >
                           <svg
                             height="20"
@@ -1459,7 +1459,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                     class="flex items-center with-warnings"
                   >
                     <span
-                      class="mr-1 kong-icon kong-icon-warning mr-1"
+                      class="mr-1 kong-icon kong-icon-warning"
                     >
                       <svg
                         height="16"
@@ -1769,7 +1769,7 @@ exports[`ZoneListView renders snapshot when no multizone 1`] = `
       >
         
         <span
-          class="mb-3 kong-icon kong-icon-dangerCircleOutline mb-3"
+          class="mb-3 kong-icon kong-icon-dangerCircleOutline"
         >
           <svg
             fill="none"
@@ -1999,7 +1999,7 @@ exports[`ZoneListView renders zone insights 1`] = `
               class="flex items-center with-warnings"
             >
               <span
-                class="mr-1 kong-icon kong-icon-warning mr-1"
+                class="mr-1 kong-icon kong-icon-warning"
               >
                 <svg
                   height="16"
