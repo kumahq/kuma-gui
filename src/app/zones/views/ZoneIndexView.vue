@@ -1,9 +1,9 @@
 <template>
   <KTabs
     v-if="store.getters['config/getMulticlusterStatus']"
-    class="nav-tabs"
     :tabs="kTabs"
     :model-value="currentTabHash"
+    :has-panels="false"
   >
     <template
       v-for="tab in TABS"
@@ -76,23 +76,3 @@ const currentTabHash = computed(() => {
   return '#' + routeName
 })
 </script>
-
-<style scoped>
-.tab-link a {
-  display: block;
-  padding: var(--spacing-md);
-  text-decoration: none;
-  color: var(--KTabsColor)
-}
-
-.tab-item.active .tab-link a {
-  color: var(--KTabsActiveColor)
-}
-</style>
-
-<style lang="scss">
-// Resets the padding on tab items so we can add the padding to the tab item links instead.
-.nav-tabs > ul > .tab-item {
-  padding: 0 !important;
-}
-</style>

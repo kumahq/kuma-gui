@@ -282,10 +282,12 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Overview
+                  <span>
+                    Overview
+                  </span>
                   
                 </div>
               </li>
@@ -298,10 +300,12 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Zone Ingress Insights
+                  <span>
+                    Zone Ingress Insights
+                  </span>
                   
                 </div>
               </li>
@@ -314,10 +318,12 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  XDS Configuration
+                  <span>
+                    XDS Configuration
+                  </span>
                   
                 </div>
               </li>
@@ -330,10 +336,12 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Stats
+                  <span>
+                    Stats
+                  </span>
                   
                 </div>
               </li>
@@ -346,10 +354,12 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
                 tabindex="0"
               >
                 <div
-                  class="tab-link"
+                  class="tab-link has-panels"
                 >
                   
-                  Clusters
+                  <span>
+                    Clusters
+                  </span>
                   
                 </div>
               </li>
@@ -723,10 +733,12 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Overview
+            <span>
+              Overview
+            </span>
             
           </div>
         </li>
@@ -739,10 +751,12 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Zone Ingress Insights
+            <span>
+              Zone Ingress Insights
+            </span>
             
           </div>
         </li>
@@ -755,10 +769,12 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            XDS Configuration
+            <span>
+              XDS Configuration
+            </span>
             
           </div>
         </li>
@@ -771,10 +787,12 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Stats
+            <span>
+              Stats
+            </span>
             
           </div>
         </li>
@@ -787,10 +805,12 @@ exports[`ZoneIngressListView renders zoneingress insights 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Clusters
+            <span>
+              Clusters
+            </span>
             
           </div>
         </li>

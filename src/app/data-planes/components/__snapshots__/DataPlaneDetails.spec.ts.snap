@@ -98,10 +98,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Overview
+            <span>
+              Overview
+            </span>
             
           </div>
         </li>
@@ -114,10 +116,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            DPP Insights
+            <span>
+              DPP Insights
+            </span>
             
           </div>
         </li>
@@ -130,10 +134,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Policies
+            <span>
+              Policies
+            </span>
             
           </div>
         </li>
@@ -146,10 +152,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            XDS Configuration
+            <span>
+              XDS Configuration
+            </span>
             
           </div>
         </li>
@@ -162,10 +170,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Stats
+            <span>
+              Stats
+            </span>
             
           </div>
         </li>
@@ -178,10 +188,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Clusters
+            <span>
+              Clusters
+            </span>
             
           </div>
         </li>
@@ -194,10 +206,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Certificate Insights
+            <span>
+              Certificate Insights
+            </span>
             
           </div>
         </li>

@@ -27,10 +27,12 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Universal
+            <span>
+              Universal
+            </span>
             
           </div>
         </li>
@@ -43,10 +45,12 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
           tabindex="0"
         >
           <div
-            class="tab-link"
+            class="tab-link has-panels"
           >
             
-            Kubernetes
+            <span>
+              Kubernetes
+            </span>
             
           </div>
         </li>
