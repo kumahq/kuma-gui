@@ -42,9 +42,6 @@ export const routes = (
                 {
                   path: 'overview',
                   name: 'mesh-overview-view',
-                  meta: {
-                    title: 'Mesh overview',
-                  },
                   component: () => import('@/app/meshes/views/MeshOverviewView.vue'),
                 },
                 ...services.items('services'),

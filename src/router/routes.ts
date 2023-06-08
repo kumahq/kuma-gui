@@ -19,9 +19,6 @@ export default (
     {
       path: '/',
       name: 'home',
-      meta: {
-        title: 'Overview',
-      },
       component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
     },
     ...zones,
