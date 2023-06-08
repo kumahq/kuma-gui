@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateMesh.vue renders snapshot 1`] = `
-<div>
-  
+<div
+  class="route-view"
+>
   <div
     aria-atomic="true"
     aria-live="assertive"
@@ -225,7 +226,6 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
     
     
   </main>
-  
   
 </div>
 `;

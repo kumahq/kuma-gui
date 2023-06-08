@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
-<div>
-  
+<div
+  class="route-view"
+>
   <div
     aria-atomic="true"
     aria-live="assertive"
@@ -556,14 +557,14 @@ exports[`ZoneEgressListView renders snapshot when multizone 1`] = `
     
     
   </main>
-  
   
 </div>
 `;
 
 exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
-<div>
-  
+<div
+  class="route-view"
+>
   <div
     aria-atomic="true"
     aria-live="assertive"
@@ -1117,7 +1118,6 @@ exports[`ZoneEgressListView renders snapshot when no multizone 1`] = `
     
     
   </main>
-  
   
 </div>
 `;

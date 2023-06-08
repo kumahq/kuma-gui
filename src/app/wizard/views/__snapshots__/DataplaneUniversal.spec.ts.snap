@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
-<div>
-  
+<div
+  class="route-view"
+>
   <div
     aria-atomic="true"
     aria-live="assertive"
@@ -1261,7 +1262,6 @@ networking:
     
     
   </main>
-  
   
 </div>
 `;

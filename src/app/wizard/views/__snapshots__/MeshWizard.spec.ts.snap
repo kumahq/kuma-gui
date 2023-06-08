@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MeshWizard passes whole wizzard and render yaml 1`] = `
-<div>
-  
+<div
+  class="route-view"
+>
   <div
     aria-atomic="true"
     aria-live="assertive"
@@ -1095,7 +1096,6 @@ metrics:
     
     
   </main>
-  
   
 </div>
 `;

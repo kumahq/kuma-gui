@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CompletedView.vue renders snapshot 1`] = `
-<div>
-  
+<div
+  class="route-view"
+>
   <div
     aria-atomic="true"
     aria-live="assertive"
@@ -93,7 +94,6 @@ exports[`CompletedView.vue renders snapshot 1`] = `
     
     
   </main>
-  
   
 </div>
 `;
