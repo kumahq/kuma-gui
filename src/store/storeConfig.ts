@@ -11,7 +11,7 @@ import config from '@/store/modules/config/config'
 import notifications from '@/store/modules/notifications/notifications'
 import onboarding from '@/store/modules/onboarding/onboarding'
 import sidebar from '@/store/modules/sidebar/sidebar'
-import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
+import { MergedMeshInsights, getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import {
   ChartDataPoint,
   DoughnutChartData,
@@ -683,7 +683,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
         const data: ChartDataPoint[] = Object.entries(envoy).map(([version, stats]) => ({
           title: version,
-          data: stats.total,
+          data: stats.total ?? 0,
         }))
 
         data.sort((dataPointA, dataPointB) => {
@@ -704,7 +704,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
         const data: ChartDataPoint[] = Object.entries(kumaDp).map(([version, stats]) => ({
           title: version,
-          data: stats.total,
+          data: stats.total ?? 0,
         }))
 
         data.sort((dataPointA, dataPointB) => {

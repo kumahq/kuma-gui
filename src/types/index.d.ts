@@ -462,6 +462,11 @@ export interface Mesh extends Entity {
   routing?: any
 }
 
+export type DpVersions = {
+  kumaDp: Record<string, DataPlaneProxyStatus>
+  envoy: Record<string, DataPlaneProxyStatus>
+}
+
 /**
  * Overview entity as returned via the `/meshes-insights/:mesh` endpoint.
  */
@@ -474,10 +479,7 @@ export interface MeshInsight extends Entity {
     gateway: DataPlaneProxyStatus
   }
   policies: Record<string, ResourceStat>
-  dpVersions: {
-    kumaDp: Record<string, DataPlaneProxyStatus>
-    envoy: Record<string, DataPlaneProxyStatus>
-  }
+  dpVersions: DpVersions
   mTLS: {
     issuedBackends?: Record<string, DataPlaneProxyStatus>
     supportedBackends?: Record<string, DataPlaneProxyStatus>

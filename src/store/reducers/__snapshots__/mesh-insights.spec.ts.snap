@@ -16,58 +16,7 @@ exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
 }
 `;
 
-exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] = `
-{
-  "dataplanes": {
-    "online": 6,
-    "partiallyDegraded": 10,
-    "total": 26,
-  },
-  "dpVersions": {
-    "envoy": {
-      "1.16.1": {
-        "online": 1,
-        "partiallyDegraded": 0,
-        "total": 8,
-      },
-      "1.16.2": {
-        "online": 1,
-        "partiallyDegraded": 0,
-        "total": 4,
-      },
-    },
-    "kumaDp": {
-      "1.0.4": {
-        "online": 4,
-        "partiallyDegraded": 0,
-        "total": 6,
-      },
-      "1.0.5": {
-        "online": 2,
-        "partiallyDegraded": 0,
-        "total": 2,
-      },
-    },
-  },
-  "meshesTotal": 5,
-  "policies": {
-    "Secret": {
-      "total": 12,
-    },
-    "ServiceInsight": {
-      "total": 22,
-    },
-    "TrafficPermission": {
-      "total": 6,
-    },
-    "TrafficRoute": {
-      "total": 10,
-    },
-  },
-}
-`;
-
-exports[`mesh-insights calls parseInsightReducer with mesh insights 1`] = `
+exports[`mesh-insights calls mergeInsightsReducer with mesh insights 1`] = `
 {
   "dataplanes": {
     "online": 3,
@@ -118,18 +67,53 @@ exports[`mesh-insights calls parseInsightReducer with mesh insights 1`] = `
 }
 `;
 
-exports[`mesh-insights calls parseInsightReducer without any data 1`] = `
+exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] = `
 {
   "dataplanes": {
-    "online": 0,
-    "partiallyDegraded": 0,
-    "total": 0,
+    "online": 12,
+    "partiallyDegraded": 20,
+    "total": 52,
   },
   "dpVersions": {
-    "envoy": {},
-    "kumaDp": {},
+    "envoy": {
+      "1.16.1": {
+        "online": 3,
+        "partiallyDegraded": 0,
+        "total": 24,
+      },
+      "1.16.2": {
+        "online": 3,
+        "partiallyDegraded": 0,
+        "total": 12,
+      },
+    },
+    "kumaDp": {
+      "1.0.4": {
+        "online": 8,
+        "partiallyDegraded": 0,
+        "total": 12,
+      },
+      "1.0.5": {
+        "online": 4,
+        "partiallyDegraded": 0,
+        "total": 4,
+      },
+    },
   },
-  "meshesTotal": 1,
-  "policies": {},
+  "meshesTotal": 5,
+  "policies": {
+    "Secret": {
+      "total": 24,
+    },
+    "ServiceInsight": {
+      "total": 44,
+    },
+    "TrafficPermission": {
+      "total": 12,
+    },
+    "TrafficRoute": {
+      "total": 20,
+    },
+  },
 }
 `;
