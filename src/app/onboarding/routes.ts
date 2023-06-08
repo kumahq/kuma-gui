@@ -12,7 +12,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'welcome',
           name: 'onboarding-welcome',
           meta: {
-            title: `Welcome to ${import.meta.env.VITE_NAMESPACE}!`,
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/WelcomeView.vue'),
@@ -21,7 +20,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'deployment-types',
           name: 'onboarding-deployment-types',
           meta: {
-            title: 'Deployment Types',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/DeploymentTypes.vue'),
@@ -30,7 +28,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'configuration-types',
           name: 'onboarding-configuration-types',
           meta: {
-            title: 'Configuration Types',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/ConfigurationTypes.vue'),
@@ -39,7 +36,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'multi-zone',
           name: 'onboarding-multi-zone',
           meta: {
-            title: 'Multizone',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/MultiZoneView.vue'),
@@ -48,7 +44,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'create-mesh',
           name: 'onboarding-create-mesh',
           meta: {
-            title: 'Create the Mesh',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/CreateMesh.vue'),
@@ -57,7 +52,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'add-services',
           name: 'onboarding-add-services',
           meta: {
-            title: 'Add new services',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/AddNewServices.vue'),
@@ -66,7 +60,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'add-services-code',
           name: 'onboarding-add-services-code',
           meta: {
-            title: 'Add new services',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/AddNewServicesCode.vue'),
@@ -75,7 +68,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'dataplanes-overview',
           name: 'onboarding-dataplanes-overview',
           meta: {
-            title: 'Data plane overview',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/DataplanesOverview.vue'),
@@ -84,7 +76,6 @@ export const routes = (): RouteRecordRaw[] => {
           path: 'completed',
           name: 'onboarding-completed',
           meta: {
-            title: 'Completed',
             onboardingProcess: true,
           },
           component: () => import('@/app/onboarding/views/CompletedView.vue'),

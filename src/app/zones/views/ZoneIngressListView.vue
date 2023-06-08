@@ -1,36 +1,52 @@
 <template>
-  <div class="zoneingresses">
-    <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
-
-    <!-- Zone CPs information for when Multicluster is enabled -->
-    <div
-      v-else
-      class="kcard-stack"
+  <RouteView>
+    <RouteTitle
+      :title="t('zone-ingresses.routes.items.title')"
+    />
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'zone-ingress-list-view',
+          },
+          text: t('zone-ingresses.routes.items.breadcrumbs')
+        },
+      ]"
     >
-      <div class="kcard-border">
-        <DataOverview
-          :selected-entity-name="entity?.name"
-          :page-size="PAGE_SIZE_DEFAULT"
-          :is-loading="isLoading"
-          :error="error"
-          :empty-state="EMPTY_STATE"
-          :table-data="tableData"
-          :table-data-is-empty="tableData.data.length === 0"
-          :next="nextUrl"
-          :page-offset="pageOffset"
-          @table-action="loadEntity"
-          @load-data="loadData"
-        />
-      </div>
+      <div class="zoneingresses">
+        <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
-      <div
-        v-if="entity !== null"
-        class="kcard-border"
-      >
-        <ZoneIngressDetails :zone-ingress-overview="entity" />
+        <!-- Zone CPs information for when Multicluster is enabled -->
+        <div
+          v-else
+          class="kcard-stack"
+        >
+          <div class="kcard-border">
+            <DataOverview
+              :selected-entity-name="entity?.name"
+              :page-size="PAGE_SIZE_DEFAULT"
+              :is-loading="isLoading"
+              :error="error"
+              :empty-state="EMPTY_STATE"
+              :table-data="tableData"
+              :table-data-is-empty="tableData.data.length === 0"
+              :next="nextUrl"
+              :page-offset="pageOffset"
+              @table-action="loadEntity"
+              @load-data="loadData"
+            />
+          </div>
+
+          <div
+            v-if="entity !== null"
+            class="kcard-border"
+          >
+            <ZoneIngressDetails :zone-ingress-overview="entity" />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -39,11 +55,14 @@ import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
 import ZoneIngressDetails from '../components/ZoneIngressDetails.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { StatusKeyword, TableHeader, ZoneIngressOverview } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
@@ -54,6 +73,7 @@ type ZoneIngressOverviewTableRow = {
 }
 
 const kumaApi = useKumaApi()
+const { t } = useI18n()
 
 const EMPTY_STATE = {
   title: 'No Data',

@@ -1,86 +1,93 @@
 <template>
-  <div
-    v-if="policyType"
-    class="relative"
-    :class="policyType.path"
-  >
-    <div class="kcard-stack">
-      <div class="kcard-border">
-        <KCard
-          v-if="policyType.isExperimental"
-          border-variant="noBorder"
-          class="mb-4"
-        >
-          <template #body>
-            <KAlert appearance="warning">
-              <template #alertMessage>
-                <p>
-                  <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
-                  <a
-                    href="https://github.com/kumahq/kuma/issues/new/choose"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >issue</a>
-                </p>
-              </template>
-            </KAlert>
-          </template>
-        </KCard>
-
-        <DataOverview
-          :selected-entity-name="currentEntityName ?? undefined"
-          :page-size="PAGE_SIZE_DEFAULT"
-          :error="error"
-          :is-loading="isLoading"
-          :empty-state="{
-            title: 'No Data',
-            message: `There are no ${policyType.name} policies present.`,
-          }"
-          :table-data="tableData"
-          :table-data-is-empty="tableData.data.length === 0"
-          :next="nextUrl"
-          :page-offset="pageOffset"
-          @table-action="handleTableAction"
-          @load-data="loadData"
-        >
-          >
-          <template #additionalControls>
-            <KSelect
-              label="Policies"
-              :items="policySelectItems"
-              :label-attributes="{ class: 'visually-hidden' }"
-              appearance="select"
-              :enable-filtering="true"
-              @selected="changePolicyType"
+  <RouteView>
+    <RouteTitle
+      :title="t('policies.routes.items.title', {name: policyType?.name})"
+    />
+    <AppView>
+      <div
+        v-if="policyType"
+        class="relative"
+        :class="policyType.path"
+      >
+        <div class="kcard-stack">
+          <div class="kcard-border">
+            <KCard
+              v-if="policyType.isExperimental"
+              border-variant="noBorder"
+              class="mb-4"
             >
-              <template #item-template="{ item }">
-                <span
-                  :class="{
-                    'policy-type-empty': policyTypeNamesWithNoPolicies.includes(item.label)
-                  }"
-                >
-                  {{ item.label }}
-                </span>
+              <template #body>
+                <KAlert appearance="warning">
+                  <template #alertMessage>
+                    <p>
+                      <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
+                      <a
+                        href="https://github.com/kumahq/kuma/issues/new/choose"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >issue</a>
+                    </p>
+                  </template>
+                </KAlert>
               </template>
-            </KSelect>
+            </KCard>
 
-            <DocumentationLink
-              :href="`${env('KUMA_DOCS_URL')}/policies/${policyType.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
-              data-testid="policy-documentation-link"
-            />
-          </template>
-        </DataOverview>
+            <DataOverview
+              :selected-entity-name="currentEntityName ?? undefined"
+              :page-size="PAGE_SIZE_DEFAULT"
+              :error="error"
+              :is-loading="isLoading"
+              :empty-state="{
+                title: 'No Data',
+                message: `There are no ${policyType.name} policies present.`,
+              }"
+              :table-data="tableData"
+              :table-data-is-empty="tableData.data.length === 0"
+              :next="nextUrl"
+              :page-offset="pageOffset"
+              @table-action="handleTableAction"
+              @load-data="loadData"
+            >
+              >
+              <template #additionalControls>
+                <KSelect
+                  label="Policies"
+                  :items="policySelectItems"
+                  :label-attributes="{ class: 'visually-hidden' }"
+                  appearance="select"
+                  :enable-filtering="true"
+                  @selected="changePolicyType"
+                >
+                  <template #item-template="{ item }">
+                    <span
+                      :class="{
+                        'policy-type-empty': policyTypeNamesWithNoPolicies.includes(item.label)
+                      }"
+                    >
+                      {{ item.label }}
+                    </span>
+                  </template>
+                </KSelect>
+
+                <DocumentationLink
+                  :href="`${env('KUMA_DOCS_URL')}/policies/${policyType.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+                  data-testid="policy-documentation-link"
+                />
+              </template>
+            </DataOverview>
+          </div>
+
+          <PolicyDetails
+            v-if="currentEntityName !== null"
+            :name="currentEntityName"
+            :mesh="currentMeshName"
+            :path="policyType.path"
+            :type="policyType.name"
+          />
+        </div>
       </div>
-
-      <PolicyDetails
-        v-if="currentEntityName !== null"
-        :name="currentEntityName"
-        :mesh="currentMeshName"
-        :path="policyType.path"
-        :type="policyType.name"
-      />
-    </div>
-  </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -94,12 +101,15 @@ import { computed, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
 import PolicyDetails from '../components/PolicyDetails.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { PolicyEntity, TableHeader } from '@/types/index.d'
-import { useEnv, useKumaApi } from '@/utilities'
+import { useEnv, useKumaApi, useI18n } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 type PolicyEntityTableRow = {
@@ -113,6 +123,7 @@ const kumaApi = useKumaApi()
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
+const { t } = useI18n()
 
 const props = defineProps({
   selectedPolicyName: {

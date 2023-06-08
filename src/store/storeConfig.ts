@@ -39,13 +39,11 @@ interface BareRootState {
   /**
    * Controls whether related pieces in the UI *may* be shown.
    *
-   * For example, setting `state.defaultVisibility.breadcrumbs` to `false` will prevent breadcrumbs from *ever* showing up. Setting it to `true` will *allow* it to show up in principle; however, further checks might be in place to control this. For breadcrumbs, this would be the fact that they can also be hidden on a per-route level.
    */
   defaultVisibility: {
     appError: boolean
     notificationManager: boolean
     onboardingNotification: boolean
-    breadcrumbs: boolean
   }
   pageTitle: string
   meshes: {
@@ -101,7 +99,6 @@ const initialState: BareRootState = {
     appError: true,
     notificationManager: true,
     onboardingNotification: true,
-    breadcrumbs: true,
   },
   pageTitle: '',
   meshes: {
@@ -201,7 +198,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
         return state.defaultVisibility.onboardingNotification && state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
       },
-      shouldShowBreadcrumbs: (state) => state.defaultVisibility.breadcrumbs,
 
       getMeshList: state => state.meshes,
       getItemQueryNamespace: state => state.itemQueryNamespace,

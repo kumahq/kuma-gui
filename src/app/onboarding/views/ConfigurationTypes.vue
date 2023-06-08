@@ -1,52 +1,59 @@
 <template>
-  <OnboardingPage with-image>
-    <template #header>
-      <OnboardingHeading>
-        <template #title>
-          Learn about configuration storage
+  <RouteView>
+    <RouteTitle
+      :title="t('onboarding.routes.configuration-types.title')"
+    />
+    <AppView>
+      <OnboardingPage with-image>
+        <template #header>
+          <OnboardingHeading>
+            <template #title>
+              Learn about configuration storage
+            </template>
+          </OnboardingHeading>
         </template>
-      </OnboardingHeading>
-    </template>
 
-    <template #content>
-      <div class="graph-list mb-6">
-        <component :is="currentGraphComponent" />
-      </div>
+        <template #content>
+          <div class="graph-list mb-6">
+            <component :is="currentGraphComponent" />
+          </div>
 
-      <div class="radio-button-group">
-        <KRadio
-          v-model="mode"
-          name="deployment"
-          selected-value="kubernetes"
-        >
-          Kubernetes
-        </KRadio>
+          <div class="radio-button-group">
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="kubernetes"
+            >
+              Kubernetes
+            </KRadio>
 
-        <KRadio
-          v-model="mode"
-          name="deployment"
-          selected-value="postgres"
-        >
-          Postgres
-        </KRadio>
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="postgres"
+            >
+              Postgres
+            </KRadio>
 
-        <KRadio
-          v-model="mode"
-          name="deployment"
-          selected-value="memory"
-        >
-          Memory
-        </KRadio>
-      </div>
-    </template>
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="memory"
+            >
+              Memory
+            </KRadio>
+          </div>
+        </template>
 
-    <template #navigation>
-      <OnboardingNavigation
-        :next-step="nextStep"
-        previous-step="onboarding-deployment-types"
-      />
-    </template>
-  </OnboardingPage>
+        <template #navigation>
+          <OnboardingNavigation
+            :next-step="nextStep"
+            previous-step="onboarding-deployment-types"
+          />
+        </template>
+      </OnboardingPage>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -56,12 +63,16 @@ import { computed, onMounted, ref } from 'vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import {
   useKubernetesGraph,
   useMemoryGraph,
   usePostgresGraph,
 } from '@/components'
 import { useStore } from '@/store/store'
+import { useI18n } from '@/utilities'
 
 const KubernetesGraph = useKubernetesGraph()
 const MemoryGraph = useMemoryGraph()
@@ -74,6 +85,7 @@ const componentMap: Record<string, any> = {
 }
 
 const store = useStore()
+const { t } = useI18n()
 
 const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
 

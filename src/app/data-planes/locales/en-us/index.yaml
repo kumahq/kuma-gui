@@ -1,0 +1,8 @@
+data-planes:
+  routes:
+    item:
+      title: Data plane proxy
+      breadcrumbs: Data plane proxies
+    items:
+      title: Data plane proxies
+

@@ -1,636 +1,643 @@
 <template>
-  <div class="wizard">
-    <div class="wizard__content">
-      <StepSkeleton
-        :steps="STEPS"
-        :sidebar-content="SIDEBAR_CONTENT"
-        :footer-enabled="hideScannerSiblings === false"
-        :next-disabled="nextDisabled"
-        @go-to-step="updateStoredData"
-      >
-        <!-- step content -->
-        <template #general>
-          <p>
-            Welcome to the wizard for creating a new Mesh resource in {{ env('KUMA_PRODUCT_NAME') }}.
-            We will be providing you with a few steps that will get you started.
-          </p>
-
-          <p>
-            As you know, the {{ env('KUMA_PRODUCT_NAME') }} GUI is read-only, so at the end of this wizard
-            we will be generating the configuration that you can apply with either
-            <code>kubectl</code> (if you are running in Kubernetes mode) or
-            <code>kumactl</code> / API (if you are running in Universal mode).
-          </p>
-
-          <h3>
-            To get started, please fill in the following information:
-          </h3>
-
-          <KCard
-            class="my-6"
-            title="Mesh Information"
-            has-shadow
+  <RouteView>
+    <RouteTitle
+      :title="t('wizard-mesh.routes.item.title')"
+    />
+    <AppView>
+      <div class="wizard">
+        <div class="wizard__content">
+          <StepSkeleton
+            :steps="STEPS"
+            :sidebar-content="SIDEBAR_CONTENT"
+            :footer-enabled="hideScannerSiblings === false"
+            :next-disabled="nextDisabled"
+            @go-to-step="updateStoredData"
           >
-            <template #body>
-              <KAlert
-                v-if="hasStoredMeshData"
-                class="reset-mesh-data-alert"
-                appearance="info"
-              >
-                <template #alertMessage>
-                  Want to start with an empty slate?
-                </template>
+            <!-- step content -->
+            <template #general>
+              <p>
+                Welcome to the wizard for creating a new Mesh resource in {{ env('KUMA_PRODUCT_NAME') }}.
+                We will be providing you with a few steps that will get you started.
+              </p>
 
-                <template #actionButtons>
-                  <KButton
-                    apperance="outline"
-                    @click="resetMeshData"
-                  >
-                    Reset to defaults
-                  </KButton>
-                </template>
-              </KAlert>
+              <p>
+                As you know, the {{ env('KUMA_PRODUCT_NAME') }} GUI is read-only, so at the end of this wizard
+                we will be generating the configuration that you can apply with either
+                <code>kubectl</code> (if you are running in Kubernetes mode) or
+                <code>kumactl</code> / API (if you are running in Universal mode).
+              </p>
 
-              <FormFragment
-                class="mt-4"
-                title="Mesh name"
-                for-attr="mesh-name"
-              >
-                <input
-                  id="mesh-name"
-                  v-model="validate.meshName"
-                  type="text"
-                  class="k-input w-100"
-                  data-testid="mesh-name"
-                  placeholder="your-mesh-name"
-                  required
-                >
-                <KAlert
-                  v-if="vmsg.meshName"
-                  appearance="danger"
-                  size="small"
-                  :alert-message="vmsg.meshName"
-                />
-              </FormFragment>
-
-              <FormFragment
-                class="mt-4"
-                title="Mutual TLS"
-              >
-                <label class="k-input-label mx-2">
-                  <input
-                    ref="mtlsDisabled"
-                    v-model="validate.mtlsEnabled"
-                    value="disabled"
-                    name="mtls"
-                    type="radio"
-                    class="k-input mr-2"
-                    data-testid="mesh-mtls-disabled"
-                  >
-                  <span>Disabled</span>
-                </label>
-
-                <label class="k-input-label mx-2">
-                  <input
-                    id="mtls-enabled"
-                    v-model="validate.mtlsEnabled"
-                    value="enabled"
-                    name="mtls"
-                    type="radio"
-                    class="k-input mr-2"
-                    data-testid="mesh-mtls-enabled"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.mtlsEnabled === 'enabled'"
-                class="mt-4"
-                title="Certificate name"
-                for-attr="certificate-name"
-              >
-                <input
-                  id="certificate-name"
-                  v-model="validate.meshCAName"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-certificate-name"
-                  data-testid="mesh-certificate-name"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.mtlsEnabled === 'enabled'"
-                class="mt-4"
-                title="Certificate Authority"
-                for-attr="certificate-authority"
-              >
-                <select
-                  id="certificate-authority"
-                  v-model="validate.meshCA"
-                  class="k-input w-100"
-                  name="certificate-authority"
-                >
-                  <option value="builtin">
-                    builtin
-                  </option>
-
-                  <option value="provided">
-                    provided
-                  </option>
-                </select>
-
-                <p class="help">
-                  If you've enabled mTLS, you must select a CA.
-                </p>
-              </FormFragment>
-            </template>
-          </KCard>
-        </template>
-
-        <template #logging>
-          <h3>
-            Setup Logging
-          </h3>
-
-          <p>
-            You can setup as many logging backends as you need that you can later use to log traffic via the “TrafficLog” policy. In this wizard, we allow you to configure one backend, but you can add more manually if you wish.
-          </p>
-
-          <KCard
-            class="my-6"
-            title="Logging Configuration"
-            has-shadow
-          >
-            <template #body>
-              <FormFragment title="Logging">
-                <label class="k-input-label mx-2">
-                  <input
-                    id="logging-disabled"
-                    v-model="validate.loggingEnabled"
-                    value="disabled"
-                    name="logging"
-                    type="radio"
-                    class="k-input mr-2"
-                    data-testid="mesh-logging-disabled"
-                  >
-                  <span>Disabled</span>
-                </label>
-
-                <label class="k-input-label mx-2">
-                  <input
-                    id="logging-enabled"
-                    v-model="validate.loggingEnabled"
-                    value="enabled"
-                    name="logging"
-                    type="radio"
-                    class="k-input mr-2"
-                    data-testid="mesh-logging-enabled"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.loggingEnabled === 'enabled'"
-                class="mt-4"
-                title="Backend name"
-                for-attr="backend-name"
-              >
-                <input
-                  id="backend-name"
-                  v-model="validate.meshLoggingBackend"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-backend-name"
-                  data-testid="mesh-logging-backend-name"
-                >
-              </FormFragment>
-
-              <div v-if="validate.loggingEnabled === 'enabled'">
-                <FormFragment
-                  class="mt-4"
-                  title="Type"
-                >
-                  <select
-                    id="logging-type"
-                    ref="loggingTypeSelect"
-                    v-model="validate.loggingType"
-                    class="k-input w-100"
-                    name="logging-type"
-                  >
-                    <option value="tcp">
-                      TCP
-                    </option>
-
-                    <option value="file">
-                      File
-                    </option>
-                  </select>
-                </FormFragment>
-
-                <!-- if the format type is File -->
-                <FormFragment
-                  v-if="validate.loggingType === 'file'"
-                  class="mt-4"
-                  title="Path"
-                  for-attr="backend-address"
-                >
-                  <input
-                    id="backend-address"
-                    v-model="validate.meshLoggingPath"
-                    type="text"
-                    class="k-input w-100"
-                  >
-                </FormFragment>
-
-                <!-- if the format type is TCP -->
-                <FormFragment
-                  v-if="validate.loggingType === 'tcp'"
-                  class="mt-4"
-                  title="Address"
-                  for-attr="backend-address"
-                >
-                  <input
-                    id="backend-address"
-                    v-model="validate.meshLoggingAddress"
-                    type="text"
-                    class="k-input w-100"
-                  >
-                </FormFragment>
-
-                <FormFragment
-                  class="mt-4"
-                  title="Format"
-                  for-attr="backend-format"
-                >
-                  <textarea
-                    id="backend-format"
-                    v-model="validate.meshLoggingBackendFormat"
-                    class="k-input w-100 code-sample"
-                    rows="12"
-                  />
-                </FormFragment>
-              </div>
-            </template>
-          </KCard>
-        </template>
-
-        <template #tracing>
-          <h3>
-            Setup Tracing
-          </h3>
-
-          <p>
-            You can setup as many tracing backends as you need that you can later use to log traffic via the “TrafficTrace” policy. In this wizard we allow you to configure one backend, but you can add more manually as you wish.
-          </p>
-
-          <KCard
-            class="my-6"
-            title="Tracing Configuration"
-            has-shadow
-          >
-            <template #body>
-              <FormFragment title="Tracing">
-                <label class="k-input-label mx-2">
-                  <input
-                    id="tracing-disabled"
-                    v-model="validate.tracingEnabled"
-                    value="disabled"
-                    name="tracing"
-                    type="radio"
-                    class="k-input mr-2"
-                  >
-                  <span>Disabled</span>
-                </label>
-
-                <label class="k-input-label mx-2">
-                  <input
-                    id="tracing-enabled"
-                    v-model="validate.tracingEnabled"
-                    value="enabled"
-                    name="tracing"
-                    type="radio"
-                    class="k-input mr-2"
-                    data-testid="mesh-tracing-enabled"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.tracingEnabled === 'enabled'"
-                class="mt-4"
-                title="Backend name"
-                for-attr="tracing-backend-name"
-              >
-                <input
-                  id="tracing-backend-name"
-                  v-model="validate.meshTracingBackend"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-tracing-backend-name"
-                  data-testid="mesh-tracing-backend-name"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.tracingEnabled === 'enabled'"
-                class="mt-4"
-                title="Type"
-                for-attr="tracing-type"
-              >
-                <select
-                  id="tracing-type"
-                  v-model="validate.meshTracingType"
-                  class="k-input w-100"
-                  name="tracing-type"
-                >
-                  <option value="zipkin">
-                    Zipkin
-                  </option>
-                </select>
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.tracingEnabled === 'enabled'"
-                class="mt-4"
-                title="Sampling"
-                for-attr="tracing-sampling"
-              >
-                <input
-                  id="tracing-sampling"
-                  v-model="validate.meshTracingSampling"
-                  type="number"
-                  class="k-input w-100"
-                  step="0.1"
-                  min="0"
-                  max="100"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.tracingEnabled === 'enabled'"
-                class="mt-4"
-                title="URL"
-                for-attr="tracing-zipkin-url"
-              >
-                <input
-                  id="tracing-zipkin-url"
-                  v-model="validate.meshTracingZipkinURL"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="http://zipkin.url:1234"
-                  data-testid="mesh-tracing-url"
-                >
-              </FormFragment>
-            </template>
-          </KCard>
-        </template>
-
-        <template #metrics>
-          <h3>
-            Setup Metrics
-          </h3>
-
-          <p>
-            You can expose metrics from every data-plane on a configurable path
-            and port that a metrics service, like Prometheus, can use to fetch them.
-          </p>
-
-          <KCard
-            class="my-6"
-            title="Metrics Configuration"
-            has-shadow
-          >
-            <template #body>
-              <FormFragment title="Metrics">
-                <label class="k-input-label mx-2">
-                  <input
-                    id="metrics-disabled"
-                    v-model="validate.metricsEnabled"
-                    value="disabled"
-                    name="metrics"
-                    type="radio"
-                    class="k-input mr-2"
-                  >
-                  <span>Disabled</span>
-                </label>
-
-                <label class="k-input-label mx-2">
-                  <input
-                    id="metrics-enabled"
-                    v-model="validate.metricsEnabled"
-                    value="enabled"
-                    name="metrics"
-                    type="radio"
-                    class="k-input mr-2"
-                    data-testid="mesh-metrics-enabled"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.metricsEnabled === 'enabled'"
-                class="mt-4"
-                title="Backend name"
-                for-attr="metrics-name"
-              >
-                <input
-                  id="metrics-name"
-                  v-model="validate.meshMetricsName"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-metrics-backend-name"
-                  data-testid="mesh-metrics-backend-name"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.metricsEnabled === 'enabled'"
-                class="mt-4"
-                title="Type"
-                for-attr="metrics-type"
-              >
-                <select
-                  id="metrics-type"
-                  v-model="validate.meshMetricsType"
-                  class="k-input w-100"
-                  name="metrics-type"
-                >
-                  <option value="prometheus">
-                    Prometheus
-                  </option>
-                </select>
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.metricsEnabled === 'enabled'"
-                class="mt-4"
-                title="Dataplane port"
-                for-attr="metrics-dataplane-port"
-              >
-                <input
-                  id="metrics-dataplane-port"
-                  v-model="validate.meshMetricsDataplanePort"
-                  type="number"
-                  class="k-input w-100"
-                  step="1"
-                  min="0"
-                  max="65535"
-                  placeholder="1234"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="validate.metricsEnabled === 'enabled'"
-                class="mt-4"
-                title="Dataplane path"
-                for-attr="metrics-dataplane-path"
-              >
-                <input
-                  id="metrics-dataplane-path"
-                  v-model="validate.meshMetricsDataplanePath"
-                  type="text"
-                  class="k-input w-100"
-                >
-              </FormFragment>
-            </template>
-          </KCard>
-        </template>
-
-        <template #complete>
-          <div v-if="codeOutput">
-            <div v-if="hideScannerSiblings === false">
               <h3>
-                Install a new Mesh
+                To get started, please fill in the following information:
+              </h3>
+
+              <KCard
+                class="my-6"
+                title="Mesh Information"
+                has-shadow
+              >
+                <template #body>
+                  <KAlert
+                    v-if="hasStoredMeshData"
+                    class="reset-mesh-data-alert"
+                    appearance="info"
+                  >
+                    <template #alertMessage>
+                      Want to start with an empty slate?
+                    </template>
+
+                    <template #actionButtons>
+                      <KButton
+                        apperance="outline"
+                        @click="resetMeshData"
+                      >
+                        Reset to defaults
+                      </KButton>
+                    </template>
+                  </KAlert>
+
+                  <FormFragment
+                    class="mt-4"
+                    title="Mesh name"
+                    for-attr="mesh-name"
+                  >
+                    <input
+                      id="mesh-name"
+                      v-model="validate.meshName"
+                      type="text"
+                      class="k-input w-100"
+                      data-testid="mesh-name"
+                      placeholder="your-mesh-name"
+                      required
+                    >
+                    <KAlert
+                      v-if="vmsg.meshName"
+                      appearance="danger"
+                      size="small"
+                      :alert-message="vmsg.meshName"
+                    />
+                  </FormFragment>
+
+                  <FormFragment
+                    class="mt-4"
+                    title="Mutual TLS"
+                  >
+                    <label class="k-input-label mx-2">
+                      <input
+                        ref="mtlsDisabled"
+                        v-model="validate.mtlsEnabled"
+                        value="disabled"
+                        name="mtls"
+                        type="radio"
+                        class="k-input mr-2"
+                        data-testid="mesh-mtls-disabled"
+                      >
+                      <span>Disabled</span>
+                    </label>
+
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="mtls-enabled"
+                        v-model="validate.mtlsEnabled"
+                        value="enabled"
+                        name="mtls"
+                        type="radio"
+                        class="k-input mr-2"
+                        data-testid="mesh-mtls-enabled"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.mtlsEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Certificate name"
+                    for-attr="certificate-name"
+                  >
+                    <input
+                      id="certificate-name"
+                      v-model="validate.meshCAName"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="your-certificate-name"
+                      data-testid="mesh-certificate-name"
+                    >
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.mtlsEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Certificate Authority"
+                    for-attr="certificate-authority"
+                  >
+                    <select
+                      id="certificate-authority"
+                      v-model="validate.meshCA"
+                      class="k-input w-100"
+                      name="certificate-authority"
+                    >
+                      <option value="builtin">
+                        builtin
+                      </option>
+
+                      <option value="provided">
+                        provided
+                      </option>
+                    </select>
+
+                    <p class="help">
+                      If you've enabled mTLS, you must select a CA.
+                    </p>
+                  </FormFragment>
+                </template>
+              </KCard>
+            </template>
+
+            <template #logging>
+              <h3>
+                Setup Logging
               </h3>
 
               <p>
-                Since the {{ env('KUMA_PRODUCT_NAME') }} GUI is read-only mode to follow Ops best practices,
-                please execute the following command in your shell to create the entity.
-                {{ env('KUMA_PRODUCT_NAME') }} will automatically detect when the new entity has been created.
+                You can setup as many logging backends as you need that you can later use to log traffic via the “TrafficLog” policy. In this wizard, we allow you to configure one backend, but you can add more manually if you wish.
               </p>
 
-              <TabsWidget
-                :tabs="TABS"
-                :initial-tab-override="environment"
-                @on-tab-change="onTabChange"
+              <KCard
+                class="my-6"
+                title="Logging Configuration"
+                has-shadow
               >
-                <template #kubernetes>
-                  <CodeBlock
-                    id="code-block-kubernetes-command"
-                    data-testid="kubernetes"
-                    language="bash"
-                    :code="codeOutput"
-                  />
-                </template>
+                <template #body>
+                  <FormFragment title="Logging">
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="logging-disabled"
+                        v-model="validate.loggingEnabled"
+                        value="disabled"
+                        name="logging"
+                        type="radio"
+                        class="k-input mr-2"
+                        data-testid="mesh-logging-disabled"
+                      >
+                      <span>Disabled</span>
+                    </label>
 
-                <template #universal>
-                  <CodeBlock
-                    id="code-block-universal-command"
-                    data-testid="universal"
-                    language="bash"
-                    :code="codeOutput"
-                  />
-                </template>
-              </TabsWidget>
-            </div>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="logging-enabled"
+                        v-model="validate.loggingEnabled"
+                        value="enabled"
+                        name="logging"
+                        type="radio"
+                        class="k-input mr-2"
+                        data-testid="mesh-logging-enabled"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                  </FormFragment>
 
-            <EntityScanner
-              :loader-function="scanForEntity"
-              :has-error="scanError"
-              :can-complete="scanFound"
-              @hide-siblings="hideSiblings"
-            >
-              <!-- loading -->
-              <template #loading-title>
-                <h3>Searching…</h3>
-              </template>
-
-              <template #loading-content>
-                <p>We are looking for your mesh.</p>
-              </template>
-
-              <!-- complete -->
-              <template #complete-title>
-                <h3>Done!</h3>
-              </template>
-
-              <template #complete-content>
-                <p>
-                  Your mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
-                </p>
-
-                <p>
-                  <KButton
-                    appearance="primary"
-                    :to="{ name: 'mesh-detail-view', params: { mesh: validate.meshName } }"
+                  <FormFragment
+                    v-if="validate.loggingEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Backend name"
+                    for-attr="backend-name"
                   >
-                    Go to mesh {{ validate.meshName }}
-                  </KButton>
-                </p>
-              </template>
+                    <input
+                      id="backend-name"
+                      v-model="validate.meshLoggingBackend"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="your-backend-name"
+                      data-testid="mesh-logging-backend-name"
+                    >
+                  </FormFragment>
 
-              <!-- error -->
-              <template #error-title>
-                <h3>Mesh not found</h3>
-              </template>
+                  <div v-if="validate.loggingEnabled === 'enabled'">
+                    <FormFragment
+                      class="mt-4"
+                      title="Type"
+                    >
+                      <select
+                        id="logging-type"
+                        ref="loggingTypeSelect"
+                        v-model="validate.loggingType"
+                        class="k-input w-100"
+                        name="logging-type"
+                      >
+                        <option value="tcp">
+                          TCP
+                        </option>
 
-              <template #error-content>
-                <p>We were unable to find your mesh.</p>
-              </template>
-            </EntityScanner>
-          </div>
+                        <option value="file">
+                          File
+                        </option>
+                      </select>
+                    </FormFragment>
 
-          <KAlert
-            v-else
-            appearance="danger"
-          >
-            <template #alertMessage>
+                    <!-- if the format type is File -->
+                    <FormFragment
+                      v-if="validate.loggingType === 'file'"
+                      class="mt-4"
+                      title="Path"
+                      for-attr="backend-address"
+                    >
+                      <input
+                        id="backend-address"
+                        v-model="validate.meshLoggingPath"
+                        type="text"
+                        class="k-input w-100"
+                      >
+                    </FormFragment>
+
+                    <!-- if the format type is TCP -->
+                    <FormFragment
+                      v-if="validate.loggingType === 'tcp'"
+                      class="mt-4"
+                      title="Address"
+                      for-attr="backend-address"
+                    >
+                      <input
+                        id="backend-address"
+                        v-model="validate.meshLoggingAddress"
+                        type="text"
+                        class="k-input w-100"
+                      >
+                    </FormFragment>
+
+                    <FormFragment
+                      class="mt-4"
+                      title="Format"
+                      for-attr="backend-format"
+                    >
+                      <textarea
+                        id="backend-format"
+                        v-model="validate.meshLoggingBackendFormat"
+                        class="k-input w-100 code-sample"
+                        rows="12"
+                      />
+                    </FormFragment>
+                  </div>
+                </template>
+              </KCard>
+            </template>
+
+            <template #tracing>
+              <h3>
+                Setup Tracing
+              </h3>
+
               <p>
-                You haven't filled any data out yet! Please return to the first
-                step and fill out your information.
+                You can setup as many tracing backends as you need that you can later use to log traffic via the “TrafficTrace” policy. In this wizard we allow you to configure one backend, but you can add more manually as you wish.
+              </p>
+
+              <KCard
+                class="my-6"
+                title="Tracing Configuration"
+                has-shadow
+              >
+                <template #body>
+                  <FormFragment title="Tracing">
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="tracing-disabled"
+                        v-model="validate.tracingEnabled"
+                        value="disabled"
+                        name="tracing"
+                        type="radio"
+                        class="k-input mr-2"
+                      >
+                      <span>Disabled</span>
+                    </label>
+
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="tracing-enabled"
+                        v-model="validate.tracingEnabled"
+                        value="enabled"
+                        name="tracing"
+                        type="radio"
+                        class="k-input mr-2"
+                        data-testid="mesh-tracing-enabled"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.tracingEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Backend name"
+                    for-attr="tracing-backend-name"
+                  >
+                    <input
+                      id="tracing-backend-name"
+                      v-model="validate.meshTracingBackend"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="your-tracing-backend-name"
+                      data-testid="mesh-tracing-backend-name"
+                    >
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.tracingEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Type"
+                    for-attr="tracing-type"
+                  >
+                    <select
+                      id="tracing-type"
+                      v-model="validate.meshTracingType"
+                      class="k-input w-100"
+                      name="tracing-type"
+                    >
+                      <option value="zipkin">
+                        Zipkin
+                      </option>
+                    </select>
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.tracingEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Sampling"
+                    for-attr="tracing-sampling"
+                  >
+                    <input
+                      id="tracing-sampling"
+                      v-model="validate.meshTracingSampling"
+                      type="number"
+                      class="k-input w-100"
+                      step="0.1"
+                      min="0"
+                      max="100"
+                    >
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.tracingEnabled === 'enabled'"
+                    class="mt-4"
+                    title="URL"
+                    for-attr="tracing-zipkin-url"
+                  >
+                    <input
+                      id="tracing-zipkin-url"
+                      v-model="validate.meshTracingZipkinURL"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="http://zipkin.url:1234"
+                      data-testid="mesh-tracing-url"
+                    >
+                  </FormFragment>
+                </template>
+              </KCard>
+            </template>
+
+            <template #metrics>
+              <h3>
+                Setup Metrics
+              </h3>
+
+              <p>
+                You can expose metrics from every data-plane on a configurable path
+                and port that a metrics service, like Prometheus, can use to fetch them.
+              </p>
+
+              <KCard
+                class="my-6"
+                title="Metrics Configuration"
+                has-shadow
+              >
+                <template #body>
+                  <FormFragment title="Metrics">
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="metrics-disabled"
+                        v-model="validate.metricsEnabled"
+                        value="disabled"
+                        name="metrics"
+                        type="radio"
+                        class="k-input mr-2"
+                      >
+                      <span>Disabled</span>
+                    </label>
+
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="metrics-enabled"
+                        v-model="validate.metricsEnabled"
+                        value="enabled"
+                        name="metrics"
+                        type="radio"
+                        class="k-input mr-2"
+                        data-testid="mesh-metrics-enabled"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.metricsEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Backend name"
+                    for-attr="metrics-name"
+                  >
+                    <input
+                      id="metrics-name"
+                      v-model="validate.meshMetricsName"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="your-metrics-backend-name"
+                      data-testid="mesh-metrics-backend-name"
+                    >
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.metricsEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Type"
+                    for-attr="metrics-type"
+                  >
+                    <select
+                      id="metrics-type"
+                      v-model="validate.meshMetricsType"
+                      class="k-input w-100"
+                      name="metrics-type"
+                    >
+                      <option value="prometheus">
+                        Prometheus
+                      </option>
+                    </select>
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.metricsEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Dataplane port"
+                    for-attr="metrics-dataplane-port"
+                  >
+                    <input
+                      id="metrics-dataplane-port"
+                      v-model="validate.meshMetricsDataplanePort"
+                      type="number"
+                      class="k-input w-100"
+                      step="1"
+                      min="0"
+                      max="65535"
+                      placeholder="1234"
+                    >
+                  </FormFragment>
+
+                  <FormFragment
+                    v-if="validate.metricsEnabled === 'enabled'"
+                    class="mt-4"
+                    title="Dataplane path"
+                    for-attr="metrics-dataplane-path"
+                  >
+                    <input
+                      id="metrics-dataplane-path"
+                      v-model="validate.meshMetricsDataplanePath"
+                      type="text"
+                      class="k-input w-100"
+                    >
+                  </FormFragment>
+                </template>
+              </KCard>
+            </template>
+
+            <template #complete>
+              <div v-if="codeOutput">
+                <div v-if="hideScannerSiblings === false">
+                  <h3>
+                    Install a new Mesh
+                  </h3>
+
+                  <p>
+                    Since the {{ env('KUMA_PRODUCT_NAME') }} GUI is read-only mode to follow Ops best practices,
+                    please execute the following command in your shell to create the entity.
+                    {{ env('KUMA_PRODUCT_NAME') }} will automatically detect when the new entity has been created.
+                  </p>
+
+                  <TabsWidget
+                    :tabs="TABS"
+                    :initial-tab-override="environment"
+                    @on-tab-change="onTabChange"
+                  >
+                    <template #kubernetes>
+                      <CodeBlock
+                        id="code-block-kubernetes-command"
+                        data-testid="kubernetes"
+                        language="bash"
+                        :code="codeOutput"
+                      />
+                    </template>
+
+                    <template #universal>
+                      <CodeBlock
+                        id="code-block-universal-command"
+                        data-testid="universal"
+                        language="bash"
+                        :code="codeOutput"
+                      />
+                    </template>
+                  </TabsWidget>
+                </div>
+
+                <EntityScanner
+                  :loader-function="scanForEntity"
+                  :has-error="scanError"
+                  :can-complete="scanFound"
+                  @hide-siblings="hideSiblings"
+                >
+                  <!-- loading -->
+                  <template #loading-title>
+                    <h3>Searching…</h3>
+                  </template>
+
+                  <template #loading-content>
+                    <p>We are looking for your mesh.</p>
+                  </template>
+
+                  <!-- complete -->
+                  <template #complete-title>
+                    <h3>Done!</h3>
+                  </template>
+
+                  <template #complete-content>
+                    <p>
+                      Your mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
+                    </p>
+
+                    <p>
+                      <KButton
+                        appearance="primary"
+                        :to="{ name: 'mesh-detail-view', params: { mesh: validate.meshName } }"
+                      >
+                        Go to mesh {{ validate.meshName }}
+                      </KButton>
+                    </p>
+                  </template>
+
+                  <!-- error -->
+                  <template #error-title>
+                    <h3>Mesh not found</h3>
+                  </template>
+
+                  <template #error-content>
+                    <p>We were unable to find your mesh.</p>
+                  </template>
+                </EntityScanner>
+              </div>
+
+              <KAlert
+                v-else
+                appearance="danger"
+              >
+                <template #alertMessage>
+                  <p>
+                    You haven't filled any data out yet! Please return to the first
+                    step and fill out your information.
+                  </p>
+                </template>
+              </KAlert>
+            </template>
+
+            <!-- sidebar content -->
+            <template #mesh>
+              <h3>Mesh</h3>
+
+              <p>
+                In {{ env('KUMA_PRODUCT_NAME') }}, a Mesh resource allows you to define an isolated environment
+                for your data-planes and policies. It's isolated because the mTLS CA
+                you choose can be different from the one configured for our Meshes.
+                Ideally, you will have either a large Mesh with all the workloads, or
+                one Mesh per application for better isolation.
+              </p>
+
+              <p>
+                <a
+                  :href="`${env('KUMA_DOCS_URL')}/policies/mesh/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+                  target="_blank"
+                >
+                  Learn More
+                </a>
               </p>
             </template>
-          </KAlert>
-        </template>
 
-        <!-- sidebar content -->
-        <template #mesh>
-          <h3>Mesh</h3>
+            <template #did-you-know>
+              <h3>Did You Know?</h3>
 
-          <p>
-            In {{ env('KUMA_PRODUCT_NAME') }}, a Mesh resource allows you to define an isolated environment
-            for your data-planes and policies. It's isolated because the mTLS CA
-            you choose can be different from the one configured for our Meshes.
-            Ideally, you will have either a large Mesh with all the workloads, or
-            one Mesh per application for better isolation.
-          </p>
-
-          <p>
-            <a
-              :href="`${env('KUMA_DOCS_URL')}/policies/mesh/?${env('KUMA_UTM_QUERY_PARAMS')}`"
-              target="_blank"
-            >
-              Learn More
-            </a>
-          </p>
-        </template>
-
-        <template #did-you-know>
-          <h3>Did You Know?</h3>
-
-          <p>
-            As you know, the GUI is read-only, but it will be providing instructions
-            to create a new Mesh and verify everything worked well.
-          </p>
-        </template>
-      </StepSkeleton>
-    </div>
-  </div>
+              <p>
+                As you know, the GUI is read-only, but it will be providing instructions
+                to create a new Mesh and verify everything worked well.
+              </p>
+            </template>
+          </StepSkeleton>
+        </div>
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -642,15 +649,19 @@ import EntityScanner from '../components/EntityScanner.vue'
 import FormFragment from '../components/FormFragment.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
 import { formatForCLI } from '../formatForCLI'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import { useStore } from '@/store/store'
-import { useEnv, useKumaApi } from '@/utilities'
+import { useEnv, useKumaApi, useI18n } from '@/utilities'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import { kebabCase } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
+const { t } = useI18n()
 
 const STEPS = [
   {

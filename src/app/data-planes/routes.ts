@@ -6,10 +6,6 @@ export const routes = () => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
-        meta: {
-          title: 'Data Plane Proxies',
-          isBreadcrumb: true,
-        },
         redirect: () => ({ name: 'data-planes-list-view' }),
         children: [
           {
@@ -34,9 +30,6 @@ export const routes = () => {
             {
               path: '',
               name: `${prefix}-list-view`,
-              meta: {
-                title: 'Data plane proxies',
-              },
               props: (route) => ({
                 selectedDppName: route.query.dpp,
                 offset: getLastNumberParameter(route.query.offset),

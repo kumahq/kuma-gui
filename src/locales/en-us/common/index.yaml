@@ -1,5 +1,10 @@
 common:
+  product:
+    name: Kuma
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
   copyKubernetesShortText: 'as k8s'
+  emptyState:
+    title: 'No data'
+    message: 'There are no {type} present.'

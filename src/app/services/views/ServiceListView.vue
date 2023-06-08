@@ -1,29 +1,36 @@
 <template>
-  <ContentWrapper>
-    <template #content>
-      <DataOverview
-        :selected-entity-name="service?.name"
-        :page-size="PAGE_SIZE_DEFAULT"
-        :error="error"
-        :is-loading="isLoading"
-        :empty-state="EMPTY_STATE"
-        :table-data="tableData"
-        :table-data-is-empty="tableData.data.length === 0"
-        :next="nextUrl"
-        :page-offset="pageOffset"
-        @table-action="loadEntity"
-        @load-data="loadData"
-      />
-    </template>
+  <RouteView>
+    <RouteTitle
+      :title="t('services.routes.items.title')"
+    />
+    <AppView>
+      <ContentWrapper>
+        <template #content>
+          <DataOverview
+            :selected-entity-name="service?.name"
+            :page-size="PAGE_SIZE_DEFAULT"
+            :error="error"
+            :is-loading="isLoading"
+            :empty-state="EMPTY_STATE"
+            :table-data="tableData"
+            :table-data-is-empty="tableData.data.length === 0"
+            :next="nextUrl"
+            :page-offset="pageOffset"
+            @table-action="loadEntity"
+            @load-data="loadData"
+          />
+        </template>
 
-    <template #sidebar>
-      <ServiceSummary
-        v-if="service !== null"
-        :service="service"
-        :external-service="externalService"
-      />
-    </template>
-  </ContentWrapper>
+        <template #sidebar>
+          <ServiceSummary
+            v-if="service !== null"
+            :service="service"
+            :external-service="externalService"
+          />
+        </template>
+      </ContentWrapper>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -31,11 +38,14 @@ import { ref, watch } from 'vue'
 import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 
 import ServiceSummary from '../components/ServiceSummary.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 type ServiceInsightTableRow = Required<Pick<ServiceInsight, 'serviceType' | 'addressPort' | 'status'>> & {
@@ -45,6 +55,7 @@ type ServiceInsightTableRow = Required<Pick<ServiceInsight, 'serviceType' | 'add
 }
 
 const kumaApi = useKumaApi()
+const { t } = useI18n()
 
 const headers: TableHeader[] = [
   { label: 'Name', key: 'entity' },

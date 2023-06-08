@@ -6,18 +6,14 @@ export const routes = () => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
-        meta: {
-          title: 'Gateways',
-          isBreadcrumb: true,
-        },
         redirect: () => ({ name: 'gateways-list-view' }),
         children: [
           {
             path: ':dataPlane',
             name: `${prefix}-detail-view`,
-            meta: {
-              title: 'Gateway',
-            },
+            props: () => ({
+              isGatewayView: true,
+            }),
             component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
           },
         ],
@@ -34,9 +30,6 @@ export const routes = () => {
             {
               path: '',
               name: `${prefix}-list-view`,
-              meta: {
-                title: 'Gateways',
-              },
               props: (route) => ({
                 selectedDppName: route.query.gateway,
                 gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,

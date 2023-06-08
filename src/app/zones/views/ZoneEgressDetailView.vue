@@ -1,21 +1,40 @@
 <template>
-  <div class="zone-details">
-    <LoadingBlock v-if="isLoading" />
-
-    <ErrorBlock
-      v-else-if="error !== null"
-      :error="error"
+  <RouteView
+    v-slot="{route: _route}"
+  >
+    <RouteTitle
+      :title="t('zone-egresses.routes.item.title')"
     />
-
-    <EmptyBlock v-else-if="zoneEgressOverview === null" />
-
-    <div
-      v-else
-      class="kcard-border"
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'zone-cp-list-view',
+            params: _route.params
+          },
+          text: t('zone-egresses.routes.item.breadcrumbs')
+        },
+      ]"
     >
-      <ZoneEgressDetails :zone-egress-overview="zoneEgressOverview" />
-    </div>
-  </div>
+      <div class="zone-details">
+        <LoadingBlock v-if="isLoading" />
+
+        <ErrorBlock
+          v-else-if="error !== null"
+          :error="error"
+        />
+
+        <EmptyBlock v-else-if="zoneEgressOverview === null" />
+
+        <div
+          v-else
+          class="kcard-border"
+        >
+          <ZoneEgressDetails :zone-egress-overview="zoneEgressOverview" />
+        </div>
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -23,16 +42,20 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useStore } from '@/store/store'
 import type { ZoneEgressOverview } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
 const store = useStore()
+const { t } = useI18n()
 
 const zoneEgressOverview = ref<ZoneEgressOverview | null>(null)
 const isLoading = ref(true)

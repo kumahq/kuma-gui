@@ -1,0 +1,20 @@
+onboarding:
+  routes:
+    welcome:
+      title: Welcome to {name}!
+    deployment-types:
+      title: Deployment Types
+    configuration-types:
+      title: Configuration Types
+    multizone:
+      title: Multizone
+    create-mesh:
+      title: Create the Mesh
+    add-services:
+      title: Add new services
+    add-services-code:
+      title: Add new services
+    dataplanes-overview:
+      title: Data plane overview
+    completed:
+      title: Completed

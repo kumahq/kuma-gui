@@ -2,242 +2,72 @@
 
 exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
 <div
-  class="zoneingresses"
+  class="route-view"
 >
-  
-  <!-- Zone CPs information for when Multicluster is enabled -->
   <div
-    class="kcard-stack"
+    aria-atomic="true"
+    aria-live="assertive"
+    class="route-view-title sr-only"
   >
+    Navigated to Zone Ingresses
+  </div>
+  
+  <!--v-if-->
+  <main
+    class="app-main-content"
+  >
+    
+    <!--v-if-->
+    
     <div
-      class="kcard-border"
+      class="zoneingresses"
     >
+      
+      <!-- Zone CPs information for when Multicluster is enabled -->
       <div
-        class="data-overview"
-        data-testid="data-overview"
+        class="kcard-stack"
       >
         <div
-          class="data-table-controls mb-2"
-        >
-          
-          
-          <button
-            class="k-button medium rounded primary refresh-button"
-            data-testid="data-overview-refresh-button"
-            type="button"
-          >
-            
-            <span
-              class="k-button-icon kong-icon kong-icon-redo"
-            >
-              <svg
-                fill="white"
-                height="16"
-                role="img"
-                viewBox="0 0 17 14"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                
-  
-                <title>
-                  Redo
-                </title>
-                
-  
-                <path
-                  clip-rule="evenodd"
-                  d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
-                  fill="white"
-                  fill-rule="evenodd"
-                />
-                
-
-              </svg>
-              
-
-            </span>
-            
-            
-             Refresh 
-            
-            <!---->
-          </button>
-        </div>
-        <div
-          class="data-overview-content"
+          class="kcard-border"
         >
           <div
-            class="data-overview-table"
+            class="data-overview"
+            data-testid="data-overview"
           >
             <div
-              class="k-table-container data-overview-table"
-              data-testid="data-overview-table"
-              is-clickable=""
+              class="data-table-controls mb-2"
             >
-              <!---->
-              <section
-                class="k-table-wrapper"
-              >
-                <table
-                  class="k-table has-hover is-clickable"
-                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                >
-                  <thead
-                    class=""
-                  >
-                    <tr
-                      class=""
-                    >
-                      
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Status
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Name
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-                    <tr
-                      class="is-selected"
-                      role="link"
-                      tabindex="0"
-                    >
-                      
-                      <td
-                        class="status-column"
-                      >
-                        
-                        <span
-                          class="status status--online"
-                          data-testid="status-badge"
-                        >
-                          <span>
-                            online
-                          </span>
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="entity-column"
-                      >
-                        
-                        <a
-                          class=""
-                          data-testid="detail-view-link"
-                          href="/zones/zone-ingresses/zone-ingress-1"
-                        >
-                          zone-ingress-1
-                        </a>
-                        
-                      </td>
-                      
-                    </tr>
-                    
-                  </tbody>
-                </table>
-                <!---->
-              </section>
-            </div>
-            <div
-              class="pagination"
-            >
-              <!--v-if-->
-              <!--v-if-->
-            </div>
-          </div>
-          <!--v-if-->
-          <!--v-if-->
-        </div>
-      </div>
-    </div>
-    <div
-      class="kcard-border"
-    >
-      <div
-        class="tab-container"
-        data-testid="tab-container"
-      >
-        
-        <header
-          class="tab__header"
-        >
-          
-          <h1
-            class="entity-heading"
-          >
-             Zone Ingress: 
-            <div
-              class="copy-button-wrapper"
-            >
-              
-              <a
-                class=""
-                href="/zones/zone-ingresses/zone-ingress-1"
-              >
-                zone-ingress-1
-              </a>
               
               
               <button
-                class="k-button small outline copy-button non-visual-button"
-                data-testid="copy-button"
-                title="Copy"
+                class="k-button medium rounded primary refresh-button"
+                data-testid="data-overview-refresh-button"
                 type="button"
               >
                 
-                <!---->
-                
-                
                 <span
-                  class="kong-icon kong-icon-copy"
+                  class="k-button-icon kong-icon kong-icon-redo"
                 >
                   <svg
-                    height="18"
+                    fill="white"
+                    height="16"
                     role="img"
-                    viewBox="0 0 32 32"
-                    width="18"
+                    viewBox="0 0 17 14"
+                    width="16"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     
   
                     <title>
-                      Copy
+                      Redo
                     </title>
                     
   
                     <path
-                      d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                      fill="currentColor"
+                      clip-rule="evenodd"
+                      d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+                      fill="white"
+                      fill-rule="evenodd"
                     />
                     
 
@@ -246,390 +76,606 @@ exports[`ZoneIngressListView renders snapshot when multizone 1`] = `
 
                 </span>
                 
-                <span
-                  class="visually-hidden"
-                >
-                  Copy
-                </span>
                 
+                 Refresh 
                 
                 <!---->
               </button>
-              
             </div>
-          </h1>
-          
-        </header>
-        <div
-          class="tab__content-container"
-        >
-          <div
-            class="k-tabs"
-          >
-            <ul
-              aria-label="Tabs"
-              role="tablist"
-            >
-              
-              <li
-                aria-controls="panel-0"
-                aria-selected="true"
-                class="tab-item active"
-                id="overview-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    Overview
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-1"
-                aria-selected="false"
-                class="tab-item"
-                id="insights-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    Zone Ingress Insights
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-2"
-                aria-selected="false"
-                class="tab-item"
-                id="xds-configuration-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    XDS Configuration
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-3"
-                aria-selected="false"
-                class="tab-item"
-                id="envoy-stats-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    Stats
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-4"
-                aria-selected="false"
-                class="tab-item"
-                id="envoy-clusters-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    Clusters
-                  </span>
-                  
-                </div>
-              </li>
-              
-            </ul>
-            
             <div
-              aria-labelledby="overview-tab"
-              class="tab-container"
-              id="panel-0"
-              role="tabpanel"
-              tabindex="0"
+              class="data-overview-content"
             >
-              
-              <section
-                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                class="kong-card noBorder"
+              <div
+                class="data-overview-table"
               >
-                <!---->
-                <!---->
                 <div
-                  class="k-card-content d-flex"
+                  class="k-table-container data-overview-table"
+                  data-testid="data-overview-table"
+                  is-clickable=""
                 >
-                  <div
-                    class="k-card-body"
-                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  <!---->
+                  <section
+                    class="k-table-wrapper"
                   >
-                    
-                    
-                    <dl
-                      class="definition-list"
+                    <table
+                      class="k-table has-hover is-clickable"
+                      data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     >
-                      
-                      
-                      <div
-                        class="definition-list-item"
+                      <thead
+                        class=""
                       >
-                        <dt
-                          class="definition-list-item__term"
-                        >
-                          Type
-                        </dt>
-                        <dd
-                          class="definition-list-item__details"
+                        <tr
+                          class=""
                         >
                           
-                          
-                          ZoneIngressOverview
-                          
-                          
-                        </dd>
-                      </div>
-                      <div
-                        class="definition-list-item"
-                      >
-                        <dt
-                          class="definition-list-item__term"
-                        >
-                          Name
-                        </dt>
-                        <dd
-                          class="definition-list-item__details"
-                        >
-                          
-                          <div
-                            class="copy-button-wrapper"
+                          <th
+                            class=""
                           >
-                            
-                            <span>
-                              zone-ingress-1
-                            </span>
-                            
-                            
-                            <button
-                              class="k-button small outline copy-button non-visual-button"
-                              data-testid="copy-button"
-                              title="Copy"
-                              type="button"
+                            <span
+                              class="d-flex align-items-center"
                             >
                               
-                              <!---->
+                              <span
+                                class=""
+                              >
+                                Status
+                              </span>
                               
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
                               
                               <span
-                                class="kong-icon kong-icon-copy"
+                                class=""
                               >
-                                <svg
-                                  height="18"
-                                  role="img"
-                                  viewBox="0 0 32 32"
-                                  width="18"
-                                  xmlns="http://www.w3.org/2000/svg"
+                                Name
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                        <tr
+                          class="is-selected"
+                          role="link"
+                          tabindex="0"
+                        >
+                          
+                          <td
+                            class="status-column"
+                          >
+                            
+                            <span
+                              class="status status--online"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                online
+                              </span>
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="entity-column"
+                          >
+                            
+                            <a
+                              class=""
+                              data-testid="detail-view-link"
+                              href="/zones/zone-ingresses/zone-ingress-1"
+                            >
+                              zone-ingress-1
+                            </a>
+                            
+                          </td>
+                          
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                    <!---->
+                  </section>
+                </div>
+                <div
+                  class="pagination"
+                >
+                  <!--v-if-->
+                  <!--v-if-->
+                </div>
+              </div>
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+          </div>
+        </div>
+        <div
+          class="kcard-border"
+        >
+          <div
+            class="tab-container"
+            data-testid="tab-container"
+          >
+            
+            <header
+              class="tab__header"
+            >
+              
+              <h1
+                class="entity-heading"
+              >
+                 Zone Ingress: 
+                <div
+                  class="copy-button-wrapper"
+                >
+                  
+                  <a
+                    class=""
+                    href="/zones/zone-ingresses/zone-ingress-1"
+                  >
+                    zone-ingress-1
+                  </a>
+                  
+                  
+                  <button
+                    class="k-button small outline copy-button non-visual-button"
+                    data-testid="copy-button"
+                    title="Copy"
+                    type="button"
+                  >
+                    
+                    <!---->
+                    
+                    
+                    <span
+                      class="kong-icon kong-icon-copy"
+                    >
+                      <svg
+                        height="18"
+                        role="img"
+                        viewBox="0 0 32 32"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        
+  
+                        <title>
+                          Copy
+                        </title>
+                        
+  
+                        <path
+                          d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                          fill="currentColor"
+                        />
+                        
+
+                      </svg>
+                      
+
+                    </span>
+                    
+                    <span
+                      class="visually-hidden"
+                    >
+                      Copy
+                    </span>
+                    
+                    
+                    <!---->
+                  </button>
+                  
+                </div>
+              </h1>
+              
+            </header>
+            <div
+              class="tab__content-container"
+            >
+              <div
+                class="k-tabs"
+              >
+                <ul
+                  aria-label="Tabs"
+                  role="tablist"
+                >
+                  
+                  <li
+                    aria-controls="panel-0"
+                    aria-selected="true"
+                    class="tab-item active"
+                    id="overview-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        Overview
+                      </span>
+                      
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-1"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="insights-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        Zone Ingress Insights
+                      </span>
+                      
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-2"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="xds-configuration-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        XDS Configuration
+                      </span>
+                      
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-3"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="envoy-stats-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        Stats
+                      </span>
+                      
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-4"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="envoy-clusters-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        Clusters
+                      </span>
+                      
+                    </div>
+                  </li>
+                  
+                </ul>
+                
+                <div
+                  aria-labelledby="overview-tab"
+                  class="tab-container"
+                  id="panel-0"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  
+                  <section
+                    aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    class="kong-card noBorder"
+                  >
+                    <!---->
+                    <!---->
+                    <div
+                      class="k-card-content d-flex"
+                    >
+                      <div
+                        class="k-card-body"
+                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      >
+                        
+                        
+                        <dl
+                          class="definition-list"
+                        >
+                          
+                          
+                          <div
+                            class="definition-list-item"
+                          >
+                            <dt
+                              class="definition-list-item__term"
+                            >
+                              Type
+                            </dt>
+                            <dd
+                              class="definition-list-item__details"
+                            >
+                              
+                              
+                              ZoneIngressOverview
+                              
+                              
+                            </dd>
+                          </div>
+                          <div
+                            class="definition-list-item"
+                          >
+                            <dt
+                              class="definition-list-item__term"
+                            >
+                              Name
+                            </dt>
+                            <dd
+                              class="definition-list-item__details"
+                            >
+                              
+                              <div
+                                class="copy-button-wrapper"
+                              >
+                                
+                                <span>
+                                  zone-ingress-1
+                                </span>
+                                
+                                
+                                <button
+                                  class="k-button small outline copy-button non-visual-button"
+                                  data-testid="copy-button"
+                                  title="Copy"
+                                  type="button"
                                 >
                                   
+                                  <!---->
+                                  
+                                  
+                                  <span
+                                    class="kong-icon kong-icon-copy"
+                                  >
+                                    <svg
+                                      height="18"
+                                      role="img"
+                                      viewBox="0 0 32 32"
+                                      width="18"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      
   
-                                  <title>
+                                      <title>
+                                        Copy
+                                      </title>
+                                      
+  
+                                      <path
+                                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                        fill="currentColor"
+                                      />
+                                      
+
+                                    </svg>
+                                    
+
+                                  </span>
+                                  
+                                  <span
+                                    class="visually-hidden"
+                                  >
                                     Copy
-                                  </title>
+                                  </span>
                                   
-  
-                                  <path
-                                    d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                    fill="currentColor"
-                                  />
                                   
-
-                                </svg>
+                                  <!---->
+                                </button>
                                 
-
-                              </span>
+                              </div>
                               
-                              <span
-                                class="visually-hidden"
-                              >
-                                Copy
-                              </span>
-                              
-                              
-                              <!---->
-                            </button>
-                            
+                            </dd>
                           </div>
                           
-                        </dd>
+                          
+                        </dl>
+                        
+                        
                       </div>
-                      
-                      
-                    </dl>
-                    
-                    
-                  </div>
+                      <!---->
+                    </div>
+                  </section>
+                  
+                </div>
+                <div
+                  aria-labelledby="insights-tab"
+                  class="tab-container"
+                  id="panel-1"
+                  role="tabpanel"
+                  tabindex="0"
+                >
                   <!---->
                 </div>
-              </section>
-              
-            </div>
-            <div
-              aria-labelledby="insights-tab"
-              class="tab-container"
-              id="panel-1"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-            <div
-              aria-labelledby="xds-configuration-tab"
-              class="tab-container"
-              id="panel-2"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-            <div
-              aria-labelledby="envoy-stats-tab"
-              class="tab-container"
-              id="panel-3"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-            <div
-              aria-labelledby="envoy-clusters-tab"
-              class="tab-container"
-              id="panel-4"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
+                <div
+                  aria-labelledby="xds-configuration-tab"
+                  class="tab-container"
+                  id="panel-2"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  <!---->
+                </div>
+                <div
+                  aria-labelledby="envoy-stats-tab"
+                  class="tab-container"
+                  id="panel-3"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  <!---->
+                </div>
+                <div
+                  aria-labelledby="envoy-clusters-tab"
+                  class="tab-container"
+                  id="panel-4"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  <!---->
+                </div>
+                
+              </div>
             </div>
             
           </div>
         </div>
-        
       </div>
+      
     </div>
-  </div>
+    
+    
+  </main>
   
 </div>
 `;
 
 exports[`ZoneIngressListView renders snapshot when no multizone 1`] = `
 <div
-  class="zoneingresses"
+  class="route-view"
 >
-  <section
-    class="empty-state-wrapper"
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="route-view-title sr-only"
   >
+    Navigated to Zone Ingresses
+  </div>
+  
+  <!--v-if-->
+  <main
+    class="app-main-content"
+  >
+    
+    <!--v-if-->
+    
     <div
-      class="empty-state-title"
+      class="zoneingresses"
     >
-      <!---->
-      <div
-        class="k-empty-state-title-header mt-4 mb-4"
+      <section
+        class="empty-state-wrapper"
       >
-        
-        <span
-          class="mb-3 kong-icon kong-icon-dangerCircleOutline"
+        <div
+          class="empty-state-title"
         >
-          <svg
-            fill="none"
-            height="42"
-            role="img"
-            viewBox="0 0 17 17"
-            width="42"
-            xmlns="http://www.w3.org/2000/svg"
+          <!---->
+          <div
+            class="k-empty-state-title-header mt-4 mb-4"
           >
             
+            <span
+              class="mb-3 kong-icon kong-icon-dangerCircleOutline"
+            >
+              <svg
+                fill="none"
+                height="42"
+                role="img"
+                viewBox="0 0 17 17"
+                width="42"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
   
-            <title>
-              Danger
-            </title>
-            
+                <title>
+                  Danger
+                </title>
+                
   
-            <path
-              clip-rule="evenodd"
-              d="M16.5 8a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0zm-7-3.5A.5.5 0 018 4h1a.5.5 0 01.5.5v4A.5.5 0 019 9H8a.5.5 0 01-.5-.5v-4zM8 10a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1A.5.5 0 009 10H8z"
-              fill="#A3BBCC"
-              fill-rule="evenodd"
-            />
+                <path
+                  clip-rule="evenodd"
+                  d="M16.5 8a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0zm-7-3.5A.5.5 0 018 4h1a.5.5 0 01.5.5v4A.5.5 0 019 9H8a.5.5 0 01-.5-.5v-4zM8 10a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1A.5.5 0 009 10H8z"
+                  fill="#A3BBCC"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+            <p>
+              Kuma is running in Standalone mode.
+            </p>
             
-
-          </svg>
-          
-
-        </span>
-        <p>
-          Kuma is running in Standalone mode.
-        </p>
-        
-      </div>
-    </div>
-    <div
-      class="empty-state-content"
-    >
-      <div
-        class="k-empty-state-message mb-6"
-      >
-        
-        <p>
-           To access this page, you must be running in 
-          <strong>
-            Multi-Zone
-          </strong>
-           mode. 
-        </p>
-        
-      </div>
-      <div
-        class="k-empty-state-cta"
-      >
-        
-        <a
-          class="k-button medium rounded primary"
-          href="https://kuma.io/docs/1.7.x/documentation/deployments/?utm_source=Kuma&utm_medium=Kuma"
-          target="_blank"
-          type="button"
+          </div>
+        </div>
+        <div
+          class="empty-state-content"
         >
-          
-          <!---->
-          
-          
-           Learn More 
-          
-          <!---->
-        </a>
-        
-      </div>
+          <div
+            class="k-empty-state-message mb-6"
+          >
+            
+            <p>
+               To access this page, you must be running in 
+              <strong>
+                Multi-Zone
+              </strong>
+               mode. 
+            </p>
+            
+          </div>
+          <div
+            class="k-empty-state-cta"
+          >
+            
+            <a
+              class="k-button medium rounded primary"
+              href="https://kuma.io/docs/1.7.x/documentation/deployments/?utm_source=Kuma&utm_medium=Kuma"
+              target="_blank"
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Learn More 
+              
+              <!---->
+            </a>
+            
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+    
+    
+  </main>
+  
 </div>
 `;
 

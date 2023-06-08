@@ -1,20 +1,39 @@
 <template>
-  <div class="kcard-border">
-    <LoadingBlock v-if="isLoading" />
-
-    <ErrorBlock
-      v-else-if="error !== null"
-      :error="error"
+  <RouteView
+    v-slot="{route: _route}"
+  >
+    <RouteTitle
+      :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, {name: _route.params.dataPlane})"
     />
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: `${props.isGatewayView ? 'gateways' : 'data-planes'}-list-view`,
+            params: _route.params
+          },
+          text: t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.breadcrumbs`)
+        },
+      ]"
+    >
+      <div class="kcard-border">
+        <LoadingBlock v-if="isLoading" />
 
-    <EmptyBlock v-else-if="dataPlane === null || dataPlaneOverview === null" />
+        <ErrorBlock
+          v-else-if="error !== null"
+          :error="error"
+        />
 
-    <DataPlaneDetails
-      v-else
-      :data-plane="dataPlane"
-      :data-plane-overview="dataPlaneOverview"
-    />
-  </div>
+        <EmptyBlock v-else-if="dataPlane === null || dataPlaneOverview === null" />
+
+        <DataPlaneDetails
+          v-else
+          :data-plane="dataPlane"
+          :data-plane-overview="dataPlaneOverview"
+        />
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -22,22 +41,33 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useStore } from '@/store/store'
 import { DataPlane, DataPlaneOverview } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
 const store = useStore()
+const { t } = useI18n()
 
 const dataPlane = ref<DataPlane | null>(null)
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
 
+const props = defineProps({
+  isGatewayView: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+})
 async function loadData() {
   error.value = null
   isLoading.value = true

@@ -2,1358 +2,70 @@
 
 exports[`ZoneListView renders snapshot when multizone 1`] = `
 <div
-  class="zones"
+  class="route-view"
 >
   <div
-    class="kcard-stack"
+    aria-atomic="true"
+    aria-live="assertive"
+    class="route-view-title sr-only"
   >
+    Navigated to Zone CPs
+  </div>
+  
+  <!--v-if-->
+  <main
+    class="app-main-content"
+  >
+    
+    <!--v-if-->
+    
     <div
-      class="kcard-border"
+      class="zones"
     >
       <div
-        class="data-overview"
-        data-testid="data-overview"
+        class="kcard-stack"
       >
         <div
-          class="data-table-controls mb-2"
-        >
-          
-          
-          <button
-            class="k-button medium rounded primary refresh-button"
-            data-testid="data-overview-refresh-button"
-            type="button"
-          >
-            
-            <span
-              class="k-button-icon kong-icon kong-icon-redo"
-            >
-              <svg
-                fill="white"
-                height="16"
-                role="img"
-                viewBox="0 0 17 14"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                
-  
-                <title>
-                  Redo
-                </title>
-                
-  
-                <path
-                  clip-rule="evenodd"
-                  d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
-                  fill="white"
-                  fill-rule="evenodd"
-                />
-                
-
-              </svg>
-              
-
-            </span>
-            
-            
-             Refresh 
-            
-            <!---->
-          </button>
-        </div>
-        <div
-          class="data-overview-content"
+          class="kcard-border"
         >
           <div
-            class="data-overview-table"
+            class="data-overview"
+            data-testid="data-overview"
           >
             <div
-              class="k-table-container data-overview-table"
-              data-testid="data-overview-table"
-              is-clickable=""
+              class="data-table-controls mb-2"
             >
-              <!---->
-              <section
-                class="k-table-wrapper"
-              >
-                <table
-                  class="k-table has-hover is-clickable"
-                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                >
-                  <thead
-                    class=""
-                  >
-                    <tr
-                      class=""
-                    >
-                      
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Status
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Name
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Zone CP Version
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Storage type
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Ingress
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Egress
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class="sr-only"
-                          >
-                            Warnings
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class="sr-only"
-                          >
-                            Actions
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-                    <tr
-                      class="is-selected"
-                      role="link"
-                      tabindex="0"
-                    >
-                      
-                      <td
-                        class="status-column"
-                      >
-                        
-                        <span
-                          class="status status--online"
-                          data-testid="status-badge"
-                        >
-                          <span>
-                            online
-                          </span>
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="entity-column"
-                      >
-                        
-                        <a
-                          class=""
-                          data-testid="detail-view-link"
-                          href="/zones/zone-cps/cluster-1"
-                        >
-                          cluster-1
-                        </a>
-                        
-                      </td>
-                      <td
-                        class="zoneCpVersion-column"
-                      >
-                        
-                        1.0.0-rc2-211-g823fe8ce
-                        
-                      </td>
-                      <td
-                        class="storeType-column"
-                      >
-                        
-                        memory
-                        
-                      </td>
-                      <td
-                        class="hasIngress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="hasEgress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="warnings-column text-center"
-                      >
-                        
-                        <span
-                          class="mr-1 kong-icon kong-icon-warning"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            version="1.1"
-                            viewBox="0 0 48 42"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                          >
-                            
-  
-                            <title>
-                              Warning
-                            </title>
-                            
-  
-                            <g
-                              fill="var(--black-500)"
-                              fill-rule="evenodd"
-                              id="Page-1"
-                              stroke="none"
-                              stroke-width="1"
-                            >
-                              
-    
-                              <g
-                                id="icn-warning-64x"
-                              >
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                  fill="var(--black-500)"
-                                  fill-rule="nonzero"
-                                  id="Triangle"
-                                />
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                  fill="var(--yellow-300)"
-                                  fill-rule="nonzero"
-                                  id="Path"
-                                  type="secondary"
-                                />
-                                
-      
-                                <path
-                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                  fill="var(--black-500)"
-                                  id="!"
-                                />
-                                
-    
-                              </g>
-                              
-  
-                            </g>
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="actions-column"
-                      >
-                        
-                        <div
-                          class="k-dropdown k-dropdown-menu actions-dropdown"
-                        >
-                          
-                          <div
-                            aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            data-testid="k-dropdown-menu-popover"
-                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            role="button"
-                          >
-                            
-                            <div
-                              class="k-dropdown-trigger dropdown-trigger"
-                              data-testid="k-dropdown-trigger"
-                              label=""
-                            >
-                              
-                              <button
-                                class="k-button small icon-btn rounded secondary non-visual-button"
-                                type="button"
-                              >
-                                
-                                <span
-                                  class="kong-icon kong-icon-more"
-                                >
-                                  <svg
-                                    fill="var(--black-400)"
-                                    height="16"
-                                    role="img"
-                                    viewBox="0 0 16 15"
-                                    width="16"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    
-  
-                                    <title>
-                                      More Actions
-                                    </title>
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="3.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="7.75"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="12.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-
-                                  </svg>
-                                  
-
-                                </span>
-                                
-                                
-                                
-                                <!---->
-                              </button>
-                              
-                            </div>
-                            
-                            <transition-stub
-                              appear="false"
-                              css="true"
-                              name="fade"
-                              persisted="false"
-                            >
-                              <div
-                                class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
-                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                role="region"
-                                style="width: 150px; max-width: auto; max-height: auto; display: none;"
-                              >
-                                <!---->
-                                <div
-                                  class="k-popover-content"
-                                >
-                                  
-                                  <ul
-                                    class="k-dropdown-list dropdown-list"
-                                    data-testid="k-dropdown-list"
-                                  >
-                                    
-                                    <li
-                                      class="k-dropdown-item w-100"
-                                      data-testid="k-dropdown-item-View-details"
-                                    >
-                                      <a
-                                        class="k-dropdown-item-trigger"
-                                        data-testid="k-dropdown-item-trigger"
-                                        href="/zones/zone-cps/cluster-1"
-                                      >
-                                        
-                                        View details
-                                        
-                                      </a>
-                                    </li>
-                                    <!--v-if-->
-                                    
-                                  </ul>
-                                  
-                                </div>
-                                <!---->
-                              </div>
-                            </transition-stub>
-                          </div>
-                          
-                        </div>
-                        
-                      </td>
-                      
-                    </tr>
-                    <tr
-                      role="link"
-                      tabindex="0"
-                    >
-                      
-                      <td
-                        class="status-column"
-                      >
-                        
-                        <span
-                          class="status status--online"
-                          data-testid="status-badge"
-                        >
-                          <span>
-                            online
-                          </span>
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="entity-column"
-                      >
-                        
-                        <a
-                          class=""
-                          data-testid="detail-view-link"
-                          href="/zones/zone-cps/zone-1"
-                        >
-                          zone-1
-                        </a>
-                        
-                      </td>
-                      <td
-                        class="zoneCpVersion-column"
-                      >
-                        
-                        1.0.0-rc2-211-g823fe8ce
-                        
-                      </td>
-                      <td
-                        class="storeType-column"
-                      >
-                        
-                        memory
-                        
-                      </td>
-                      <td
-                        class="hasIngress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="hasEgress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="warnings-column text-center"
-                      >
-                        
-                        <span
-                          class="mr-1 kong-icon kong-icon-warning"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            version="1.1"
-                            viewBox="0 0 48 42"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                          >
-                            
-  
-                            <title>
-                              Warning
-                            </title>
-                            
-  
-                            <g
-                              fill="var(--black-500)"
-                              fill-rule="evenodd"
-                              id="Page-1"
-                              stroke="none"
-                              stroke-width="1"
-                            >
-                              
-    
-                              <g
-                                id="icn-warning-64x"
-                              >
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                  fill="var(--black-500)"
-                                  fill-rule="nonzero"
-                                  id="Triangle"
-                                />
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                  fill="var(--yellow-300)"
-                                  fill-rule="nonzero"
-                                  id="Path"
-                                  type="secondary"
-                                />
-                                
-      
-                                <path
-                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                  fill="var(--black-500)"
-                                  id="!"
-                                />
-                                
-    
-                              </g>
-                              
-  
-                            </g>
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="actions-column"
-                      >
-                        
-                        <div
-                          class="k-dropdown k-dropdown-menu actions-dropdown"
-                        >
-                          
-                          <div
-                            aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            data-testid="k-dropdown-menu-popover"
-                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            role="button"
-                          >
-                            
-                            <div
-                              class="k-dropdown-trigger dropdown-trigger"
-                              data-testid="k-dropdown-trigger"
-                              label=""
-                            >
-                              
-                              <button
-                                class="k-button small icon-btn rounded secondary non-visual-button"
-                                type="button"
-                              >
-                                
-                                <span
-                                  class="kong-icon kong-icon-more"
-                                >
-                                  <svg
-                                    fill="var(--black-400)"
-                                    height="16"
-                                    role="img"
-                                    viewBox="0 0 16 15"
-                                    width="16"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    
-  
-                                    <title>
-                                      More Actions
-                                    </title>
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="3.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="7.75"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="12.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-
-                                  </svg>
-                                  
-
-                                </span>
-                                
-                                
-                                
-                                <!---->
-                              </button>
-                              
-                            </div>
-                            
-                            <transition-stub
-                              appear="false"
-                              css="true"
-                              name="fade"
-                              persisted="false"
-                            >
-                              <div
-                                class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
-                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                role="region"
-                                style="width: 150px; max-width: auto; max-height: auto; display: none;"
-                              >
-                                <!---->
-                                <div
-                                  class="k-popover-content"
-                                >
-                                  
-                                  <ul
-                                    class="k-dropdown-list dropdown-list"
-                                    data-testid="k-dropdown-list"
-                                  >
-                                    
-                                    <li
-                                      class="k-dropdown-item w-100"
-                                      data-testid="k-dropdown-item-View-details"
-                                    >
-                                      <a
-                                        class="k-dropdown-item-trigger"
-                                        data-testid="k-dropdown-item-trigger"
-                                        href="/zones/zone-cps/zone-1"
-                                      >
-                                        
-                                        View details
-                                        
-                                      </a>
-                                    </li>
-                                    <!--v-if-->
-                                    
-                                  </ul>
-                                  
-                                </div>
-                                <!---->
-                              </div>
-                            </transition-stub>
-                          </div>
-                          
-                        </div>
-                        
-                      </td>
-                      
-                    </tr>
-                    <tr
-                      role="link"
-                      tabindex="0"
-                    >
-                      
-                      <td
-                        class="status-column"
-                      >
-                        
-                        <span
-                          class="status status--online"
-                          data-testid="status-badge"
-                        >
-                          <span>
-                            online
-                          </span>
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="entity-column"
-                      >
-                        
-                        <a
-                          class=""
-                          data-testid="detail-view-link"
-                          href="/zones/zone-cps/zone-2"
-                        >
-                          zone-2
-                        </a>
-                        
-                      </td>
-                      <td
-                        class="zoneCpVersion-column"
-                      >
-                        
-                        1.0.0-rc2-211-g823fe8ce
-                        
-                      </td>
-                      <td
-                        class="storeType-column"
-                      >
-                        
-                        memory
-                        
-                      </td>
-                      <td
-                        class="hasIngress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="hasEgress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="warnings-column text-center"
-                      >
-                        
-                        <span
-                          class="mr-1 kong-icon kong-icon-warning"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            version="1.1"
-                            viewBox="0 0 48 42"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                          >
-                            
-  
-                            <title>
-                              Warning
-                            </title>
-                            
-  
-                            <g
-                              fill="var(--black-500)"
-                              fill-rule="evenodd"
-                              id="Page-1"
-                              stroke="none"
-                              stroke-width="1"
-                            >
-                              
-    
-                              <g
-                                id="icn-warning-64x"
-                              >
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                  fill="var(--black-500)"
-                                  fill-rule="nonzero"
-                                  id="Triangle"
-                                />
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                  fill="var(--yellow-300)"
-                                  fill-rule="nonzero"
-                                  id="Path"
-                                  type="secondary"
-                                />
-                                
-      
-                                <path
-                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                  fill="var(--black-500)"
-                                  id="!"
-                                />
-                                
-    
-                              </g>
-                              
-  
-                            </g>
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="actions-column"
-                      >
-                        
-                        <div
-                          class="k-dropdown k-dropdown-menu actions-dropdown"
-                        >
-                          
-                          <div
-                            aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            data-testid="k-dropdown-menu-popover"
-                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            role="button"
-                          >
-                            
-                            <div
-                              class="k-dropdown-trigger dropdown-trigger"
-                              data-testid="k-dropdown-trigger"
-                              label=""
-                            >
-                              
-                              <button
-                                class="k-button small icon-btn rounded secondary non-visual-button"
-                                type="button"
-                              >
-                                
-                                <span
-                                  class="kong-icon kong-icon-more"
-                                >
-                                  <svg
-                                    fill="var(--black-400)"
-                                    height="16"
-                                    role="img"
-                                    viewBox="0 0 16 15"
-                                    width="16"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    
-  
-                                    <title>
-                                      More Actions
-                                    </title>
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="3.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="7.75"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="12.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-
-                                  </svg>
-                                  
-
-                                </span>
-                                
-                                
-                                
-                                <!---->
-                              </button>
-                              
-                            </div>
-                            
-                            <transition-stub
-                              appear="false"
-                              css="true"
-                              name="fade"
-                              persisted="false"
-                            >
-                              <div
-                                class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
-                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                role="region"
-                                style="width: 150px; max-width: auto; max-height: auto; display: none;"
-                              >
-                                <!---->
-                                <div
-                                  class="k-popover-content"
-                                >
-                                  
-                                  <ul
-                                    class="k-dropdown-list dropdown-list"
-                                    data-testid="k-dropdown-list"
-                                  >
-                                    
-                                    <li
-                                      class="k-dropdown-item w-100"
-                                      data-testid="k-dropdown-item-View-details"
-                                    >
-                                      <a
-                                        class="k-dropdown-item-trigger"
-                                        data-testid="k-dropdown-item-trigger"
-                                        href="/zones/zone-cps/zone-2"
-                                      >
-                                        
-                                        View details
-                                        
-                                      </a>
-                                    </li>
-                                    <!--v-if-->
-                                    
-                                  </ul>
-                                  
-                                </div>
-                                <!---->
-                              </div>
-                            </transition-stub>
-                          </div>
-                          
-                        </div>
-                        
-                      </td>
-                      
-                    </tr>
-                    <tr
-                      role="link"
-                      tabindex="0"
-                    >
-                      
-                      <td
-                        class="status-column"
-                      >
-                        
-                        <span
-                          class="status status--online"
-                          data-testid="status-badge"
-                        >
-                          <span>
-                            online
-                          </span>
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="entity-column"
-                      >
-                        
-                        <a
-                          class=""
-                          data-testid="detail-view-link"
-                          href="/zones/zone-cps/zone-3"
-                        >
-                          zone-3
-                        </a>
-                        
-                      </td>
-                      <td
-                        class="zoneCpVersion-column"
-                      >
-                        
-                        1.0.0-rc2-211-g823fe8ce
-                        
-                      </td>
-                      <td
-                        class="storeType-column"
-                      >
-                        
-                        memory
-                        
-                      </td>
-                      <td
-                        class="hasIngress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="hasEgress-column"
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="warnings-column text-center"
-                      >
-                        
-                        <span
-                          class="mr-1 kong-icon kong-icon-warning"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            version="1.1"
-                            viewBox="0 0 48 42"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                          >
-                            
-  
-                            <title>
-                              Warning
-                            </title>
-                            
-  
-                            <g
-                              fill="var(--black-500)"
-                              fill-rule="evenodd"
-                              id="Page-1"
-                              stroke="none"
-                              stroke-width="1"
-                            >
-                              
-    
-                              <g
-                                id="icn-warning-64x"
-                              >
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                  fill="var(--black-500)"
-                                  fill-rule="nonzero"
-                                  id="Triangle"
-                                />
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                  fill="var(--yellow-300)"
-                                  fill-rule="nonzero"
-                                  id="Path"
-                                  type="secondary"
-                                />
-                                
-      
-                                <path
-                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                  fill="var(--black-500)"
-                                  id="!"
-                                />
-                                
-    
-                              </g>
-                              
-  
-                            </g>
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                      </td>
-                      <td
-                        class="actions-column"
-                      >
-                        
-                        <div
-                          class="k-dropdown k-dropdown-menu actions-dropdown"
-                        >
-                          
-                          <div
-                            aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            data-testid="k-dropdown-menu-popover"
-                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            role="button"
-                          >
-                            
-                            <div
-                              class="k-dropdown-trigger dropdown-trigger"
-                              data-testid="k-dropdown-trigger"
-                              label=""
-                            >
-                              
-                              <button
-                                class="k-button small icon-btn rounded secondary non-visual-button"
-                                type="button"
-                              >
-                                
-                                <span
-                                  class="kong-icon kong-icon-more"
-                                >
-                                  <svg
-                                    fill="var(--black-400)"
-                                    height="16"
-                                    role="img"
-                                    viewBox="0 0 16 15"
-                                    width="16"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    
-  
-                                    <title>
-                                      More Actions
-                                    </title>
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="3.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="7.75"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-  
-                                    <circle
-                                      cx="8.25"
-                                      cy="12.25"
-                                      fill="var(--black-400)"
-                                      r="1.25"
-                                    />
-                                    
-
-                                  </svg>
-                                  
-
-                                </span>
-                                
-                                
-                                
-                                <!---->
-                              </button>
-                              
-                            </div>
-                            
-                            <transition-stub
-                              appear="false"
-                              css="true"
-                              name="fade"
-                              persisted="false"
-                            >
-                              <div
-                                class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
-                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                role="region"
-                                style="width: 150px; max-width: auto; max-height: auto; display: none;"
-                              >
-                                <!---->
-                                <div
-                                  class="k-popover-content"
-                                >
-                                  
-                                  <ul
-                                    class="k-dropdown-list dropdown-list"
-                                    data-testid="k-dropdown-list"
-                                  >
-                                    
-                                    <li
-                                      class="k-dropdown-item w-100"
-                                      data-testid="k-dropdown-item-View-details"
-                                    >
-                                      <a
-                                        class="k-dropdown-item-trigger"
-                                        data-testid="k-dropdown-item-trigger"
-                                        href="/zones/zone-cps/zone-3"
-                                      >
-                                        
-                                        View details
-                                        
-                                      </a>
-                                    </li>
-                                    <!--v-if-->
-                                    
-                                  </ul>
-                                  
-                                </div>
-                                <!---->
-                              </div>
-                            </transition-stub>
-                          </div>
-                          
-                        </div>
-                        
-                      </td>
-                      
-                    </tr>
-                    
-                  </tbody>
-                </table>
-                <!---->
-              </section>
-            </div>
-            <div
-              class="pagination"
-            >
-              <!--v-if-->
-              <!--v-if-->
-            </div>
-          </div>
-          <!--v-if-->
-          <!--v-if-->
-        </div>
-      </div>
-    </div>
-    <div
-      class="kcard-border"
-    >
-      <div
-        class="tab-container"
-        data-testid="tab-container"
-      >
-        
-        <header
-          class="tab__header"
-        >
-          
-          <h1
-            class="entity-heading"
-          >
-             Zone: 
-            <div
-              class="copy-button-wrapper"
-            >
-              
-              <a
-                class=""
-                href="/zones/zone-cps/cluster-1"
-              >
-                cluster-1
-              </a>
               
               
               <button
-                class="k-button small outline copy-button non-visual-button"
-                data-testid="copy-button"
-                title="Copy"
+                class="k-button medium rounded primary refresh-button"
+                data-testid="data-overview-refresh-button"
                 type="button"
               >
                 
-                <!---->
-                
-                
                 <span
-                  class="kong-icon kong-icon-copy"
+                  class="k-button-icon kong-icon kong-icon-redo"
                 >
                   <svg
-                    height="18"
+                    fill="white"
+                    height="16"
                     role="img"
-                    viewBox="0 0 32 32"
-                    width="18"
+                    viewBox="0 0 17 14"
+                    width="16"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     
   
                     <title>
-                      Copy
+                      Redo
                     </title>
                     
   
                     <path
-                      d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                      fill="currentColor"
+                      clip-rule="evenodd"
+                      d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+                      fill="white"
+                      fill-rule="evenodd"
                     />
                     
 
@@ -1362,485 +74,1819 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
 
                 </span>
                 
-                <span
-                  class="visually-hidden"
-                >
-                  Copy
-                </span>
                 
+                 Refresh 
                 
                 <!---->
               </button>
-              
             </div>
-          </h1>
-          
-        </header>
+            <div
+              class="data-overview-content"
+            >
+              <div
+                class="data-overview-table"
+              >
+                <div
+                  class="k-table-container data-overview-table"
+                  data-testid="data-overview-table"
+                  is-clickable=""
+                >
+                  <!---->
+                  <section
+                    class="k-table-wrapper"
+                  >
+                    <table
+                      class="k-table has-hover is-clickable"
+                      data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    >
+                      <thead
+                        class=""
+                      >
+                        <tr
+                          class=""
+                        >
+                          
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Status
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Name
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Zone CP Version
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Storage type
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Ingress
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Egress
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class="sr-only"
+                              >
+                                Warnings
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class=""
+                          >
+                            <span
+                              class="d-flex align-items-center"
+                            >
+                              
+                              <span
+                                class="sr-only"
+                              >
+                                Actions
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                        <tr
+                          class="is-selected"
+                          role="link"
+                          tabindex="0"
+                        >
+                          
+                          <td
+                            class="status-column"
+                          >
+                            
+                            <span
+                              class="status status--online"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                online
+                              </span>
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="entity-column"
+                          >
+                            
+                            <a
+                              class=""
+                              data-testid="detail-view-link"
+                              href="/zones/zone-cps/cluster-1"
+                            >
+                              cluster-1
+                            </a>
+                            
+                          </td>
+                          <td
+                            class="zoneCpVersion-column"
+                          >
+                            
+                            1.0.0-rc2-211-g823fe8ce
+                            
+                          </td>
+                          <td
+                            class="storeType-column"
+                          >
+                            
+                            memory
+                            
+                          </td>
+                          <td
+                            class="hasIngress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="hasEgress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="warnings-column text-center"
+                          >
+                            
+                            <span
+                              class="mr-1 kong-icon kong-icon-warning"
+                            >
+                              <svg
+                                height="20"
+                                role="img"
+                                version="1.1"
+                                viewBox="0 0 48 42"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                
+  
+                                <title>
+                                  Warning
+                                </title>
+                                
+  
+                                <g
+                                  fill="var(--black-500)"
+                                  fill-rule="evenodd"
+                                  id="Page-1"
+                                  stroke="none"
+                                  stroke-width="1"
+                                >
+                                  
+    
+                                  <g
+                                    id="icn-warning-64x"
+                                  >
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                      fill="var(--black-500)"
+                                      fill-rule="nonzero"
+                                      id="Triangle"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                      fill="var(--yellow-300)"
+                                      fill-rule="nonzero"
+                                      id="Path"
+                                      type="secondary"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                      fill="var(--black-500)"
+                                      id="!"
+                                    />
+                                    
+    
+                                  </g>
+                                  
+  
+                                </g>
+                                
+
+                              </svg>
+                              
+
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="actions-column"
+                          >
+                            
+                            <div
+                              class="k-dropdown k-dropdown-menu actions-dropdown"
+                            >
+                              
+                              <div
+                                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                data-testid="k-dropdown-menu-popover"
+                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                role="button"
+                              >
+                                
+                                <div
+                                  class="k-dropdown-trigger dropdown-trigger"
+                                  data-testid="k-dropdown-trigger"
+                                  label=""
+                                >
+                                  
+                                  <button
+                                    class="k-button small icon-btn rounded secondary non-visual-button"
+                                    type="button"
+                                  >
+                                    
+                                    <span
+                                      class="kong-icon kong-icon-more"
+                                    >
+                                      <svg
+                                        fill="var(--black-400)"
+                                        height="16"
+                                        role="img"
+                                        viewBox="0 0 16 15"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        
+  
+                                        <title>
+                                          More Actions
+                                        </title>
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="3.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="7.75"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="12.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+
+                                      </svg>
+                                      
+
+                                    </span>
+                                    
+                                    
+                                    
+                                    <!---->
+                                  </button>
+                                  
+                                </div>
+                                
+                                <transition-stub
+                                  appear="false"
+                                  css="true"
+                                  name="fade"
+                                  persisted="false"
+                                >
+                                  <div
+                                    class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
+                                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                    role="region"
+                                    style="width: 150px; max-width: auto; max-height: auto; display: none;"
+                                  >
+                                    <!---->
+                                    <div
+                                      class="k-popover-content"
+                                    >
+                                      
+                                      <ul
+                                        class="k-dropdown-list dropdown-list"
+                                        data-testid="k-dropdown-list"
+                                      >
+                                        
+                                        <li
+                                          class="k-dropdown-item w-100"
+                                          data-testid="k-dropdown-item-View-details"
+                                        >
+                                          <a
+                                            class="k-dropdown-item-trigger"
+                                            data-testid="k-dropdown-item-trigger"
+                                            href="/zones/zone-cps/cluster-1"
+                                          >
+                                            
+                                            View details
+                                            
+                                          </a>
+                                        </li>
+                                        <!--v-if-->
+                                        
+                                      </ul>
+                                      
+                                    </div>
+                                    <!---->
+                                  </div>
+                                </transition-stub>
+                              </div>
+                              
+                            </div>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr
+                          role="link"
+                          tabindex="0"
+                        >
+                          
+                          <td
+                            class="status-column"
+                          >
+                            
+                            <span
+                              class="status status--online"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                online
+                              </span>
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="entity-column"
+                          >
+                            
+                            <a
+                              class=""
+                              data-testid="detail-view-link"
+                              href="/zones/zone-cps/zone-1"
+                            >
+                              zone-1
+                            </a>
+                            
+                          </td>
+                          <td
+                            class="zoneCpVersion-column"
+                          >
+                            
+                            1.0.0-rc2-211-g823fe8ce
+                            
+                          </td>
+                          <td
+                            class="storeType-column"
+                          >
+                            
+                            memory
+                            
+                          </td>
+                          <td
+                            class="hasIngress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="hasEgress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="warnings-column text-center"
+                          >
+                            
+                            <span
+                              class="mr-1 kong-icon kong-icon-warning"
+                            >
+                              <svg
+                                height="20"
+                                role="img"
+                                version="1.1"
+                                viewBox="0 0 48 42"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                
+  
+                                <title>
+                                  Warning
+                                </title>
+                                
+  
+                                <g
+                                  fill="var(--black-500)"
+                                  fill-rule="evenodd"
+                                  id="Page-1"
+                                  stroke="none"
+                                  stroke-width="1"
+                                >
+                                  
+    
+                                  <g
+                                    id="icn-warning-64x"
+                                  >
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                      fill="var(--black-500)"
+                                      fill-rule="nonzero"
+                                      id="Triangle"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                      fill="var(--yellow-300)"
+                                      fill-rule="nonzero"
+                                      id="Path"
+                                      type="secondary"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                      fill="var(--black-500)"
+                                      id="!"
+                                    />
+                                    
+    
+                                  </g>
+                                  
+  
+                                </g>
+                                
+
+                              </svg>
+                              
+
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="actions-column"
+                          >
+                            
+                            <div
+                              class="k-dropdown k-dropdown-menu actions-dropdown"
+                            >
+                              
+                              <div
+                                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                data-testid="k-dropdown-menu-popover"
+                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                role="button"
+                              >
+                                
+                                <div
+                                  class="k-dropdown-trigger dropdown-trigger"
+                                  data-testid="k-dropdown-trigger"
+                                  label=""
+                                >
+                                  
+                                  <button
+                                    class="k-button small icon-btn rounded secondary non-visual-button"
+                                    type="button"
+                                  >
+                                    
+                                    <span
+                                      class="kong-icon kong-icon-more"
+                                    >
+                                      <svg
+                                        fill="var(--black-400)"
+                                        height="16"
+                                        role="img"
+                                        viewBox="0 0 16 15"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        
+  
+                                        <title>
+                                          More Actions
+                                        </title>
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="3.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="7.75"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="12.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+
+                                      </svg>
+                                      
+
+                                    </span>
+                                    
+                                    
+                                    
+                                    <!---->
+                                  </button>
+                                  
+                                </div>
+                                
+                                <transition-stub
+                                  appear="false"
+                                  css="true"
+                                  name="fade"
+                                  persisted="false"
+                                >
+                                  <div
+                                    class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
+                                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                    role="region"
+                                    style="width: 150px; max-width: auto; max-height: auto; display: none;"
+                                  >
+                                    <!---->
+                                    <div
+                                      class="k-popover-content"
+                                    >
+                                      
+                                      <ul
+                                        class="k-dropdown-list dropdown-list"
+                                        data-testid="k-dropdown-list"
+                                      >
+                                        
+                                        <li
+                                          class="k-dropdown-item w-100"
+                                          data-testid="k-dropdown-item-View-details"
+                                        >
+                                          <a
+                                            class="k-dropdown-item-trigger"
+                                            data-testid="k-dropdown-item-trigger"
+                                            href="/zones/zone-cps/zone-1"
+                                          >
+                                            
+                                            View details
+                                            
+                                          </a>
+                                        </li>
+                                        <!--v-if-->
+                                        
+                                      </ul>
+                                      
+                                    </div>
+                                    <!---->
+                                  </div>
+                                </transition-stub>
+                              </div>
+                              
+                            </div>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr
+                          role="link"
+                          tabindex="0"
+                        >
+                          
+                          <td
+                            class="status-column"
+                          >
+                            
+                            <span
+                              class="status status--online"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                online
+                              </span>
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="entity-column"
+                          >
+                            
+                            <a
+                              class=""
+                              data-testid="detail-view-link"
+                              href="/zones/zone-cps/zone-2"
+                            >
+                              zone-2
+                            </a>
+                            
+                          </td>
+                          <td
+                            class="zoneCpVersion-column"
+                          >
+                            
+                            1.0.0-rc2-211-g823fe8ce
+                            
+                          </td>
+                          <td
+                            class="storeType-column"
+                          >
+                            
+                            memory
+                            
+                          </td>
+                          <td
+                            class="hasIngress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="hasEgress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="warnings-column text-center"
+                          >
+                            
+                            <span
+                              class="mr-1 kong-icon kong-icon-warning"
+                            >
+                              <svg
+                                height="20"
+                                role="img"
+                                version="1.1"
+                                viewBox="0 0 48 42"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                
+  
+                                <title>
+                                  Warning
+                                </title>
+                                
+  
+                                <g
+                                  fill="var(--black-500)"
+                                  fill-rule="evenodd"
+                                  id="Page-1"
+                                  stroke="none"
+                                  stroke-width="1"
+                                >
+                                  
+    
+                                  <g
+                                    id="icn-warning-64x"
+                                  >
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                      fill="var(--black-500)"
+                                      fill-rule="nonzero"
+                                      id="Triangle"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                      fill="var(--yellow-300)"
+                                      fill-rule="nonzero"
+                                      id="Path"
+                                      type="secondary"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                      fill="var(--black-500)"
+                                      id="!"
+                                    />
+                                    
+    
+                                  </g>
+                                  
+  
+                                </g>
+                                
+
+                              </svg>
+                              
+
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="actions-column"
+                          >
+                            
+                            <div
+                              class="k-dropdown k-dropdown-menu actions-dropdown"
+                            >
+                              
+                              <div
+                                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                data-testid="k-dropdown-menu-popover"
+                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                role="button"
+                              >
+                                
+                                <div
+                                  class="k-dropdown-trigger dropdown-trigger"
+                                  data-testid="k-dropdown-trigger"
+                                  label=""
+                                >
+                                  
+                                  <button
+                                    class="k-button small icon-btn rounded secondary non-visual-button"
+                                    type="button"
+                                  >
+                                    
+                                    <span
+                                      class="kong-icon kong-icon-more"
+                                    >
+                                      <svg
+                                        fill="var(--black-400)"
+                                        height="16"
+                                        role="img"
+                                        viewBox="0 0 16 15"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        
+  
+                                        <title>
+                                          More Actions
+                                        </title>
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="3.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="7.75"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="12.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+
+                                      </svg>
+                                      
+
+                                    </span>
+                                    
+                                    
+                                    
+                                    <!---->
+                                  </button>
+                                  
+                                </div>
+                                
+                                <transition-stub
+                                  appear="false"
+                                  css="true"
+                                  name="fade"
+                                  persisted="false"
+                                >
+                                  <div
+                                    class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
+                                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                    role="region"
+                                    style="width: 150px; max-width: auto; max-height: auto; display: none;"
+                                  >
+                                    <!---->
+                                    <div
+                                      class="k-popover-content"
+                                    >
+                                      
+                                      <ul
+                                        class="k-dropdown-list dropdown-list"
+                                        data-testid="k-dropdown-list"
+                                      >
+                                        
+                                        <li
+                                          class="k-dropdown-item w-100"
+                                          data-testid="k-dropdown-item-View-details"
+                                        >
+                                          <a
+                                            class="k-dropdown-item-trigger"
+                                            data-testid="k-dropdown-item-trigger"
+                                            href="/zones/zone-cps/zone-2"
+                                          >
+                                            
+                                            View details
+                                            
+                                          </a>
+                                        </li>
+                                        <!--v-if-->
+                                        
+                                      </ul>
+                                      
+                                    </div>
+                                    <!---->
+                                  </div>
+                                </transition-stub>
+                              </div>
+                              
+                            </div>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr
+                          role="link"
+                          tabindex="0"
+                        >
+                          
+                          <td
+                            class="status-column"
+                          >
+                            
+                            <span
+                              class="status status--online"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                online
+                              </span>
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="entity-column"
+                          >
+                            
+                            <a
+                              class=""
+                              data-testid="detail-view-link"
+                              href="/zones/zone-cps/zone-3"
+                            >
+                              zone-3
+                            </a>
+                            
+                          </td>
+                          <td
+                            class="zoneCpVersion-column"
+                          >
+                            
+                            1.0.0-rc2-211-g823fe8ce
+                            
+                          </td>
+                          <td
+                            class="storeType-column"
+                          >
+                            
+                            memory
+                            
+                          </td>
+                          <td
+                            class="hasIngress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="hasEgress-column"
+                          >
+                            
+                            No
+                            
+                          </td>
+                          <td
+                            class="warnings-column text-center"
+                          >
+                            
+                            <span
+                              class="mr-1 kong-icon kong-icon-warning"
+                            >
+                              <svg
+                                height="20"
+                                role="img"
+                                version="1.1"
+                                viewBox="0 0 48 42"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                              >
+                                
+  
+                                <title>
+                                  Warning
+                                </title>
+                                
+  
+                                <g
+                                  fill="var(--black-500)"
+                                  fill-rule="evenodd"
+                                  id="Page-1"
+                                  stroke="none"
+                                  stroke-width="1"
+                                >
+                                  
+    
+                                  <g
+                                    id="icn-warning-64x"
+                                  >
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                      fill="var(--black-500)"
+                                      fill-rule="nonzero"
+                                      id="Triangle"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                      fill="var(--yellow-300)"
+                                      fill-rule="nonzero"
+                                      id="Path"
+                                      type="secondary"
+                                    />
+                                    
+      
+                                    <path
+                                      d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                      fill="var(--black-500)"
+                                      id="!"
+                                    />
+                                    
+    
+                                  </g>
+                                  
+  
+                                </g>
+                                
+
+                              </svg>
+                              
+
+                            </span>
+                            
+                          </td>
+                          <td
+                            class="actions-column"
+                          >
+                            
+                            <div
+                              class="k-dropdown k-dropdown-menu actions-dropdown"
+                            >
+                              
+                              <div
+                                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                data-testid="k-dropdown-menu-popover"
+                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                role="button"
+                              >
+                                
+                                <div
+                                  class="k-dropdown-trigger dropdown-trigger"
+                                  data-testid="k-dropdown-trigger"
+                                  label=""
+                                >
+                                  
+                                  <button
+                                    class="k-button small icon-btn rounded secondary non-visual-button"
+                                    type="button"
+                                  >
+                                    
+                                    <span
+                                      class="kong-icon kong-icon-more"
+                                    >
+                                      <svg
+                                        fill="var(--black-400)"
+                                        height="16"
+                                        role="img"
+                                        viewBox="0 0 16 15"
+                                        width="16"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        
+  
+                                        <title>
+                                          More Actions
+                                        </title>
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="3.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="7.75"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+  
+                                        <circle
+                                          cx="8.25"
+                                          cy="12.25"
+                                          fill="var(--black-400)"
+                                          r="1.25"
+                                        />
+                                        
+
+                                      </svg>
+                                      
+
+                                    </span>
+                                    
+                                    
+                                    
+                                    <!---->
+                                  </button>
+                                  
+                                </div>
+                                
+                                <transition-stub
+                                  appear="false"
+                                  css="true"
+                                  name="fade"
+                                  persisted="false"
+                                >
+                                  <div
+                                    class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
+                                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                    role="region"
+                                    style="width: 150px; max-width: auto; max-height: auto; display: none;"
+                                  >
+                                    <!---->
+                                    <div
+                                      class="k-popover-content"
+                                    >
+                                      
+                                      <ul
+                                        class="k-dropdown-list dropdown-list"
+                                        data-testid="k-dropdown-list"
+                                      >
+                                        
+                                        <li
+                                          class="k-dropdown-item w-100"
+                                          data-testid="k-dropdown-item-View-details"
+                                        >
+                                          <a
+                                            class="k-dropdown-item-trigger"
+                                            data-testid="k-dropdown-item-trigger"
+                                            href="/zones/zone-cps/zone-3"
+                                          >
+                                            
+                                            View details
+                                            
+                                          </a>
+                                        </li>
+                                        <!--v-if-->
+                                        
+                                      </ul>
+                                      
+                                    </div>
+                                    <!---->
+                                  </div>
+                                </transition-stub>
+                              </div>
+                              
+                            </div>
+                            
+                          </td>
+                          
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                    <!---->
+                  </section>
+                </div>
+                <div
+                  class="pagination"
+                >
+                  <!--v-if-->
+                  <!--v-if-->
+                </div>
+              </div>
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+          </div>
+        </div>
         <div
-          class="tab__content-container"
+          class="kcard-border"
         >
           <div
-            class="k-tabs"
+            class="tab-container"
+            data-testid="tab-container"
           >
-            <ul
-              aria-label="Tabs"
-              role="tablist"
+            
+            <header
+              class="tab__header"
             >
               
-              <li
-                aria-controls="panel-0"
-                aria-selected="true"
-                class="tab-item active"
-                id="overview-tab"
-                role="tab"
-                tabindex="0"
+              <h1
+                class="entity-heading"
               >
+                 Zone: 
                 <div
-                  class="tab-link has-panels"
+                  class="copy-button-wrapper"
                 >
                   
-                  <span>
-                    Overview
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-1"
-                aria-selected="false"
-                class="tab-item"
-                id="insights-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    Zone Insights
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-2"
-                aria-selected="false"
-                class="tab-item"
-                id="config-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span>
-                    Config
-                  </span>
-                  
-                </div>
-              </li>
-              <li
-                aria-controls="panel-3"
-                aria-selected="false"
-                class="tab-item"
-                id="warnings-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <div
-                  class="tab-link has-panels"
-                >
-                  
-                  <span
-                    class="flex items-center with-warnings"
+                  <a
+                    class=""
+                    href="/zones/zone-cps/cluster-1"
                   >
+                    cluster-1
+                  </a>
+                  
+                  
+                  <button
+                    class="k-button small outline copy-button non-visual-button"
+                    data-testid="copy-button"
+                    title="Copy"
+                    type="button"
+                  >
+                    
+                    <!---->
+                    
+                    
                     <span
-                      class="mr-1 kong-icon kong-icon-warning"
+                      class="kong-icon kong-icon-copy"
                     >
                       <svg
-                        height="16"
+                        height="18"
                         role="img"
-                        version="1.1"
-                        viewBox="0 0 48 42"
-                        width="16"
+                        viewBox="0 0 32 32"
+                        width="18"
                         xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
                         
   
                         <title>
-                          Warning
+                          Copy
                         </title>
                         
   
-                        <g
-                          fill="var(--black-500)"
-                          fill-rule="evenodd"
-                          id="Page-1"
-                          stroke="none"
-                          stroke-width="1"
-                        >
-                          
-    
-                          <g
-                            id="icn-warning-64x"
-                          >
-                            
-      
-                            <path
-                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                              fill="var(--black-500)"
-                              fill-rule="nonzero"
-                              id="Triangle"
-                            />
-                            
-      
-                            <path
-                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                              fill="var(--yellow-300)"
-                              fill-rule="nonzero"
-                              id="Path"
-                              type="secondary"
-                            />
-                            
-      
-                            <path
-                              d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                              fill="var(--black-500)"
-                              id="!"
-                            />
-                            
-    
-                          </g>
-                          
-  
-                        </g>
+                        <path
+                          d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                          fill="currentColor"
+                        />
                         
 
                       </svg>
                       
 
                     </span>
-                    <span>
-                      Warnings
+                    
+                    <span
+                      class="visually-hidden"
+                    >
+                      Copy
                     </span>
-                  </span>
+                    
+                    
+                    <!---->
+                  </button>
                   
                 </div>
-              </li>
+              </h1>
               
-            </ul>
-            
+            </header>
             <div
-              aria-labelledby="overview-tab"
-              class="tab-container"
-              id="panel-0"
-              role="tabpanel"
-              tabindex="0"
+              class="tab__content-container"
             >
-              
-              <section
-                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                class="kong-card noBorder"
+              <div
+                class="k-tabs"
               >
-                <!---->
-                <!---->
-                <div
-                  class="k-card-content d-flex"
+                <ul
+                  aria-label="Tabs"
+                  role="tablist"
                 >
-                  <div
-                    class="k-card-body"
-                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  
+                  <li
+                    aria-controls="panel-0"
+                    aria-selected="true"
+                    class="tab-item active"
+                    id="overview-tab"
+                    role="tab"
+                    tabindex="0"
                   >
-                    
-                    
-                    <dl
-                      class="definition-list"
+                    <div
+                      class="tab-link has-panels"
                     >
                       
+                      <span>
+                        Overview
+                      </span>
                       
-                      <div
-                        class="definition-list-item"
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-1"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="insights-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        Zone Insights
+                      </span>
+                      
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-2"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="config-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span>
+                        Config
+                      </span>
+                      
+                    </div>
+                  </li>
+                  <li
+                    aria-controls="panel-3"
+                    aria-selected="false"
+                    class="tab-item"
+                    id="warnings-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <div
+                      class="tab-link has-panels"
+                    >
+                      
+                      <span
+                        class="flex items-center with-warnings"
                       >
-                        <dt
-                          class="definition-list-item__term"
+                        <span
+                          class="mr-1 kong-icon kong-icon-warning"
                         >
-                          Type
-                        </dt>
-                        <dd
-                          class="definition-list-item__details"
-                        >
-                          
-                          
-                          ZoneOverview
-                          
-                          
-                        </dd>
-                      </div>
-                      <div
-                        class="definition-list-item"
-                      >
-                        <dt
-                          class="definition-list-item__term"
-                        >
-                          Name
-                        </dt>
-                        <dd
-                          class="definition-list-item__details"
-                        >
-                          
-                          <div
-                            class="copy-button-wrapper"
+                          <svg
+                            height="16"
+                            role="img"
+                            version="1.1"
+                            viewBox="0 0 48 42"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
                           >
                             
-                            <span>
-                              cluster-1
-                            </span>
+  
+                            <title>
+                              Warning
+                            </title>
                             
-                            
-                            <button
-                              class="k-button small outline copy-button non-visual-button"
-                              data-testid="copy-button"
-                              title="Copy"
-                              type="button"
+  
+                            <g
+                              fill="var(--black-500)"
+                              fill-rule="evenodd"
+                              id="Page-1"
+                              stroke="none"
+                              stroke-width="1"
                             >
                               
-                              <!---->
-                              
-                              
-                              <span
-                                class="kong-icon kong-icon-copy"
+    
+                              <g
+                                id="icn-warning-64x"
                               >
-                                <svg
-                                  height="18"
-                                  role="img"
-                                  viewBox="0 0 32 32"
-                                  width="18"
-                                  xmlns="http://www.w3.org/2000/svg"
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                  fill="var(--black-500)"
+                                  fill-rule="nonzero"
+                                  id="Triangle"
+                                />
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                  fill="var(--yellow-300)"
+                                  fill-rule="nonzero"
+                                  id="Path"
+                                  type="secondary"
+                                />
+                                
+      
+                                <path
+                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                  fill="var(--black-500)"
+                                  id="!"
+                                />
+                                
+    
+                              </g>
+                              
+  
+                            </g>
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        <span>
+                          Warnings
+                        </span>
+                      </span>
+                      
+                    </div>
+                  </li>
+                  
+                </ul>
+                
+                <div
+                  aria-labelledby="overview-tab"
+                  class="tab-container"
+                  id="panel-0"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  
+                  <section
+                    aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    class="kong-card noBorder"
+                  >
+                    <!---->
+                    <!---->
+                    <div
+                      class="k-card-content d-flex"
+                    >
+                      <div
+                        class="k-card-body"
+                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      >
+                        
+                        
+                        <dl
+                          class="definition-list"
+                        >
+                          
+                          
+                          <div
+                            class="definition-list-item"
+                          >
+                            <dt
+                              class="definition-list-item__term"
+                            >
+                              Type
+                            </dt>
+                            <dd
+                              class="definition-list-item__details"
+                            >
+                              
+                              
+                              ZoneOverview
+                              
+                              
+                            </dd>
+                          </div>
+                          <div
+                            class="definition-list-item"
+                          >
+                            <dt
+                              class="definition-list-item__term"
+                            >
+                              Name
+                            </dt>
+                            <dd
+                              class="definition-list-item__details"
+                            >
+                              
+                              <div
+                                class="copy-button-wrapper"
+                              >
+                                
+                                <span>
+                                  cluster-1
+                                </span>
+                                
+                                
+                                <button
+                                  class="k-button small outline copy-button non-visual-button"
+                                  data-testid="copy-button"
+                                  title="Copy"
+                                  type="button"
                                 >
                                   
+                                  <!---->
+                                  
+                                  
+                                  <span
+                                    class="kong-icon kong-icon-copy"
+                                  >
+                                    <svg
+                                      height="18"
+                                      role="img"
+                                      viewBox="0 0 32 32"
+                                      width="18"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      
   
-                                  <title>
+                                      <title>
+                                        Copy
+                                      </title>
+                                      
+  
+                                      <path
+                                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                        fill="currentColor"
+                                      />
+                                      
+
+                                    </svg>
+                                    
+
+                                  </span>
+                                  
+                                  <span
+                                    class="visually-hidden"
+                                  >
                                     Copy
-                                  </title>
+                                  </span>
                                   
-  
-                                  <path
-                                    d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                    fill="currentColor"
-                                  />
                                   
-
-                                </svg>
-                                
-
-                              </span>
-                              
-                              <span
-                                class="visually-hidden"
-                              >
-                                Copy
-                              </span>
-                              
-                              
-                              <!---->
-                            </button>
-                            
-                          </div>
-                          
-                        </dd>
-                      </div>
-                      <div
-                        class="definition-list-item"
-                      >
-                        <dt
-                          class="definition-list-item__term"
-                        >
-                          Status
-                        </dt>
-                        <dd
-                          class="definition-list-item__details"
-                        >
-                          
-                          <div
-                            class="k-badge d-inline-flex k-badge-success k-badge-rounded"
-                            tabindex="0"
-                          >
-                            <div
-                              class="k-badge-text truncate"
-                            >
-                              <div
-                                class="k-badge-text truncate"
-                              >
-                                
-                                online
+                                  <!---->
+                                </button>
                                 
                               </div>
-                            </div>
-                            <!---->
+                              
+                            </dd>
+                          </div>
+                          <div
+                            class="definition-list-item"
+                          >
+                            <dt
+                              class="definition-list-item__term"
+                            >
+                              Status
+                            </dt>
+                            <dd
+                              class="definition-list-item__details"
+                            >
+                              
+                              <div
+                                class="k-badge d-inline-flex k-badge-success k-badge-rounded"
+                                tabindex="0"
+                              >
+                                <div
+                                  class="k-badge-text truncate"
+                                >
+                                  <div
+                                    class="k-badge-text truncate"
+                                  >
+                                    
+                                    online
+                                    
+                                  </div>
+                                </div>
+                                <!---->
+                              </div>
+                              
+                            </dd>
+                          </div>
+                          <div
+                            class="definition-list-item"
+                          >
+                            <dt
+                              class="definition-list-item__term"
+                            >
+                              Authentication Type
+                            </dt>
+                            <dd
+                              class="definition-list-item__details"
+                            >
+                              
+                              
+                              dpToken
+                              
+                              
+                            </dd>
                           </div>
                           
-                        </dd>
+                          
+                        </dl>
+                        
+                        
                       </div>
-                      <div
-                        class="definition-list-item"
-                      >
-                        <dt
-                          class="definition-list-item__term"
-                        >
-                          Authentication Type
-                        </dt>
-                        <dd
-                          class="definition-list-item__details"
-                        >
-                          
-                          
-                          dpToken
-                          
-                          
-                        </dd>
-                      </div>
-                      
-                      
-                    </dl>
-                    
-                    
-                  </div>
+                      <!---->
+                    </div>
+                  </section>
+                  
+                </div>
+                <div
+                  aria-labelledby="insights-tab"
+                  class="tab-container"
+                  id="panel-1"
+                  role="tabpanel"
+                  tabindex="0"
+                >
                   <!---->
                 </div>
-              </section>
-              
-            </div>
-            <div
-              aria-labelledby="insights-tab"
-              class="tab-container"
-              id="panel-1"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-            <div
-              aria-labelledby="config-tab"
-              class="tab-container"
-              id="panel-2"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-            <div
-              aria-labelledby="warnings-tab"
-              class="tab-container"
-              id="panel-3"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
+                <div
+                  aria-labelledby="config-tab"
+                  class="tab-container"
+                  id="panel-2"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  <!---->
+                </div>
+                <div
+                  aria-labelledby="warnings-tab"
+                  class="tab-container"
+                  id="panel-3"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  <!---->
+                </div>
+                
+              </div>
             </div>
             
           </div>
         </div>
-        
       </div>
+      <!--v-if-->
     </div>
-  </div>
-  <!--v-if-->
+    
+    
+  </main>
+  
 </div>
 `;
 
 exports[`ZoneListView renders snapshot when no multizone 1`] = `
 <div
-  class="zones"
+  class="route-view"
 >
-  <section
-    class="empty-state-wrapper"
+  <div
+    aria-atomic="true"
+    aria-live="assertive"
+    class="route-view-title sr-only"
   >
+    Navigated to Zone CPs
+  </div>
+  
+  <!--v-if-->
+  <main
+    class="app-main-content"
+  >
+    
+    <!--v-if-->
+    
     <div
-      class="empty-state-title"
+      class="zones"
     >
-      <!---->
-      <div
-        class="k-empty-state-title-header mt-4 mb-4"
+      <section
+        class="empty-state-wrapper"
       >
-        
-        <span
-          class="mb-3 kong-icon kong-icon-dangerCircleOutline"
+        <div
+          class="empty-state-title"
         >
-          <svg
-            fill="none"
-            height="42"
-            role="img"
-            viewBox="0 0 17 17"
-            width="42"
-            xmlns="http://www.w3.org/2000/svg"
+          <!---->
+          <div
+            class="k-empty-state-title-header mt-4 mb-4"
           >
             
+            <span
+              class="mb-3 kong-icon kong-icon-dangerCircleOutline"
+            >
+              <svg
+                fill="none"
+                height="42"
+                role="img"
+                viewBox="0 0 17 17"
+                width="42"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
   
-            <title>
-              Danger
-            </title>
-            
+                <title>
+                  Danger
+                </title>
+                
   
-            <path
-              clip-rule="evenodd"
-              d="M16.5 8a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0zm-7-3.5A.5.5 0 018 4h1a.5.5 0 01.5.5v4A.5.5 0 019 9H8a.5.5 0 01-.5-.5v-4zM8 10a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1A.5.5 0 009 10H8z"
-              fill="#A3BBCC"
-              fill-rule="evenodd"
-            />
+                <path
+                  clip-rule="evenodd"
+                  d="M16.5 8a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0zm-7-3.5A.5.5 0 018 4h1a.5.5 0 01.5.5v4A.5.5 0 019 9H8a.5.5 0 01-.5-.5v-4zM8 10a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1A.5.5 0 009 10H8z"
+                  fill="#A3BBCC"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+            <p>
+              Kuma is running in Standalone mode.
+            </p>
             
-
-          </svg>
-          
-
-        </span>
-        <p>
-          Kuma is running in Standalone mode.
-        </p>
-        
-      </div>
-    </div>
-    <div
-      class="empty-state-content"
-    >
-      <div
-        class="k-empty-state-message mb-6"
-      >
-        
-        <p>
-           To access this page, you must be running in 
-          <strong>
-            Multi-Zone
-          </strong>
-           mode. 
-        </p>
-        
-      </div>
-      <div
-        class="k-empty-state-cta"
-      >
-        
-        <a
-          class="k-button medium rounded primary"
-          href="https://kuma.io/docs/1.7.x/documentation/deployments/?utm_source=Kuma&utm_medium=Kuma"
-          target="_blank"
-          type="button"
+          </div>
+        </div>
+        <div
+          class="empty-state-content"
         >
-          
-          <!---->
-          
-          
-           Learn More 
-          
-          <!---->
-        </a>
-        
-      </div>
+          <div
+            class="k-empty-state-message mb-6"
+          >
+            
+            <p>
+               To access this page, you must be running in 
+              <strong>
+                Multi-Zone
+              </strong>
+               mode. 
+            </p>
+            
+          </div>
+          <div
+            class="k-empty-state-cta"
+          >
+            
+            <a
+              class="k-button medium rounded primary"
+              href="https://kuma.io/docs/1.7.x/documentation/deployments/?utm_source=Kuma&utm_medium=Kuma"
+              target="_blank"
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Learn More 
+              
+              <!---->
+            </a>
+            
+          </div>
+        </div>
+      </section>
+      <!--v-if-->
     </div>
-  </section>
-  <!--v-if-->
+    
+    
+  </main>
+  
 </div>
 `;
 

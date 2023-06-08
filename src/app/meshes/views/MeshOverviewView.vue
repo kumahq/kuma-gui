@@ -1,101 +1,108 @@
 <template>
-  <div class="kcard-stack">
-    <KCard>
-      <template #body>
-        <MeshCharts />
-      </template>
-    </KCard>
+  <RouteView>
+    <RouteTitle
+      :title="t('meshes.routes.overview.title')"
+    />
+    <AppView>
+      <div class="kcard-stack">
+        <KCard>
+          <template #body>
+            <MeshCharts />
+          </template>
+        </KCard>
 
-    <KCard v-if="mesh !== null">
-      <template #body>
-        <div class="columns">
-          <StatusInfo
-            :is-loading="isLoading"
-            :has-error="hasError"
-            :is-empty="mesh === null || meshInsights === null"
-          >
-            <DefinitionList>
-              <DefinitionListItem
-                v-for="(value, property) in basicMesh"
-                :key="property"
-                :term="t(`http.api.property.${property}`)"
+        <KCard v-if="mesh !== null">
+          <template #body>
+            <div class="columns">
+              <StatusInfo
+                :is-loading="isLoading"
+                :has-error="hasError"
+                :is-empty="mesh === null || meshInsights === null"
               >
-                <KBadge
-                  v-if="typeof value === 'boolean'"
-                  :appearance="value ? 'success' : 'danger'"
-                >
-                  {{ value ? 'Enabled' : 'Disabled' }}
-                </KBadge>
-
-                <template v-else-if="property === 'name' && typeof value === 'string'">
-                  <TextWithCopyButton :text="value" />
-                </template>
-
-                <template v-else>
-                  {{ value }}
-                </template>
-              </DefinitionListItem>
-            </DefinitionList>
-          </StatusInfo>
-
-          <DefinitionList>
-            <DefinitionListItem
-              v-for="(value, property) in extendedMesh"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              <KBadge
-                v-if="typeof value === 'boolean'"
-                :appearance="value ? 'success' : 'danger'"
-              >
-                {{ value ? 'Enabled' : 'Disabled' }}
-              </KBadge>
-
-              <template v-else>
-                {{ value }}
-              </template>
-            </DefinitionListItem>
-          </DefinitionList>
-
-          <DefinitionList>
-            <DefinitionListItem :term="`Policies (${totalPolicyCount})`">
-              <ul>
-                <template
-                  v-for="(item, index) in policyCounts"
-                  :key="index"
-                >
-                  <li v-if="item.length !== 0">
-                    <router-link
-                      :to="{
-                        name: 'policies-list-view',
-                        params: {
-                          policyPath: item.path
-                        }
-                      }"
+                <DefinitionList>
+                  <DefinitionListItem
+                    v-for="(value, property) in basicMesh"
+                    :key="property"
+                    :term="t(`http.api.property.${property}`)"
+                  >
+                    <KBadge
+                      v-if="typeof value === 'boolean'"
+                      :appearance="value ? 'success' : 'danger'"
                     >
-                      {{ item.name }}: {{ item.length }}
-                    </router-link>
-                  </li>
-                </template>
-              </ul>
-            </DefinitionListItem>
-          </DefinitionList>
-        </div>
-      </template>
-    </KCard>
+                      {{ value ? 'Enabled' : 'Disabled' }}
+                    </KBadge>
 
-    <KCard>
-      <template #body>
-        <ResourceCodeBlock
-          id="code-block-mesh"
-          :resource-fetcher="fetchMesh"
-          :resource-fetcher-watch-key="mesh?.name || null"
-        />
-      </template>
-    </KCard>
+                    <template v-else-if="property === 'name' && typeof value === 'string'">
+                      <TextWithCopyButton :text="value" />
+                    </template>
 
-    <MeshResources />
-  </div>
+                    <template v-else>
+                      {{ value }}
+                    </template>
+                  </DefinitionListItem>
+                </DefinitionList>
+              </StatusInfo>
+
+              <DefinitionList>
+                <DefinitionListItem
+                  v-for="(value, property) in extendedMesh"
+                  :key="property"
+                  :term="t(`http.api.property.${property}`)"
+                >
+                  <KBadge
+                    v-if="typeof value === 'boolean'"
+                    :appearance="value ? 'success' : 'danger'"
+                  >
+                    {{ value ? 'Enabled' : 'Disabled' }}
+                  </KBadge>
+
+                  <template v-else>
+                    {{ value }}
+                  </template>
+                </DefinitionListItem>
+              </DefinitionList>
+
+              <DefinitionList>
+                <DefinitionListItem :term="`Policies (${totalPolicyCount})`">
+                  <ul>
+                    <template
+                      v-for="(item, index) in policyCounts"
+                      :key="index"
+                    >
+                      <li v-if="item.length !== 0">
+                        <router-link
+                          :to="{
+                            name: 'policies-list-view',
+                            params: {
+                              policyPath: item.path
+                            }
+                          }"
+                        >
+                          {{ item.name }}: {{ item.length }}
+                        </router-link>
+                      </li>
+                    </template>
+                  </ul>
+                </DefinitionListItem>
+              </DefinitionList>
+            </div>
+          </template>
+        </KCard>
+
+        <KCard>
+          <template #body>
+            <ResourceCodeBlock
+              id="code-block-mesh"
+              :resource-fetcher="fetchMesh"
+              :resource-fetcher-watch-key="mesh?.name || null"
+            />
+          </template>
+        </KCard>
+
+        <MeshResources />
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -104,6 +111,9 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import MeshCharts from '../components/MeshCharts.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import MeshResources from '@/app/common/MeshResources.vue'

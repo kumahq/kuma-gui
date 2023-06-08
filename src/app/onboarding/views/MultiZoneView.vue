@@ -1,75 +1,82 @@
 <template>
-  <OnboardingPage>
-    <template #header>
-      <OnboardingHeading>
-        <template #title>
-          Add zones
+  <RouteView>
+    <RouteTitle
+      :title="t('onboarding.routes.multizone.title')"
+    />
+    <AppView>
+      <OnboardingPage>
+        <template #header>
+          <OnboardingHeading>
+            <template #title>
+              Add zones
+            </template>
+          </OnboardingHeading>
         </template>
-      </OnboardingHeading>
-    </template>
 
-    <template #content>
-      <p class="mb-4 text-center">
-        A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
-      </p>
+        <template #content>
+          <p class="mb-4 text-center">
+            A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
+          </p>
 
-      <p class="mb-4 text-center">
-        <b>See <a
-          :href="`${env('KUMA_DOCS_URL')}/deployments/multi-zone/?${env('KUMA_UTM_QUERY_PARAMS')}#zone-control-plane`"
-          target="_blank"
-        >the documentation for options to install</a>.</b>
-      </p>
+          <p class="mb-4 text-center">
+            <b>See <a
+              :href="`${env('KUMA_DOCS_URL')}/deployments/multi-zone/?${env('KUMA_UTM_QUERY_PARAMS')}#zone-control-plane`"
+              target="_blank"
+            >the documentation for options to install</a>.</b>
+          </p>
 
-      <div>
-        <p class="status-box mt-4">
-          Zone status:
+          <div>
+            <p class="status-box mt-4">
+              Zone status:
 
-          <span
-            v-if="hasZones"
-            class="status--is-connected"
-            data-testid="zone-connected"
-          >Connected</span>
+              <span
+                v-if="hasZones"
+                class="status--is-connected"
+                data-testid="zone-connected"
+              >Connected</span>
 
-          <span
-            v-else
-            class="status--is-disconnected"
-            data-testid="zone-disconnected"
-          >Disconnected</span>
-        </p>
+              <span
+                v-else
+                class="status--is-disconnected"
+                data-testid="zone-disconnected"
+              >Disconnected</span>
+            </p>
 
-        <p class="status-box mt-4">
-          Zone ingress status:
+            <p class="status-box mt-4">
+              Zone ingress status:
 
-          <span
-            v-if="hasZoneIngresses"
-            class="status--is-connected"
-            data-testid="zone-ingress-connected"
-          >Connected</span>
+              <span
+                v-if="hasZoneIngresses"
+                class="status--is-connected"
+                data-testid="zone-ingress-connected"
+              >Connected</span>
 
-          <span
-            v-else
-            class="status--is-disconnected"
-            data-testid="zone-ingress-disconnected"
-          >Disconnected</span>
-        </p>
+              <span
+                v-else
+                class="status--is-disconnected"
+                data-testid="zone-ingress-disconnected"
+              >Disconnected</span>
+            </p>
 
-        <div
-          v-if="!hasZoneIngresses || !hasZones"
-          class="status-loading-box mt-4"
-        >
-          <LoadingBox />
-        </div>
-      </div>
-    </template>
+            <div
+              v-if="!hasZoneIngresses || !hasZones"
+              class="status-loading-box mt-4"
+            >
+              <LoadingBox />
+            </div>
+          </div>
+        </template>
 
-    <template #navigation>
-      <OnboardingNavigation
-        next-step="onboarding-create-mesh"
-        previous-step="onboarding-configuration-types"
-        :should-allow-next="hasZones && hasZoneIngresses"
-      />
-    </template>
-  </OnboardingPage>
+        <template #navigation>
+          <OnboardingNavigation
+            next-step="onboarding-create-mesh"
+            previous-step="onboarding-configuration-types"
+            :should-allow-next="hasZones && hasZoneIngresses"
+          />
+        </template>
+      </OnboardingPage>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -79,10 +86,14 @@ import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import { useEnv, useKumaApi } from '@/utilities'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import { useEnv, useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const env = useEnv()
+const { t } = useI18n()
 
 const LONG_POLLING_INTERVAL = 1000
 

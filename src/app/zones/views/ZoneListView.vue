@@ -1,73 +1,89 @@
 <template>
-  <div class="zones">
-    <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
-
-    <div
-      v-else
-      class="kcard-stack"
+  <RouteView>
+    <RouteTitle
+      :title="t('zone-cps.routes.items.title')"
+    />
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'zone-cp-list-view',
+          },
+          text: t('zone-cps.routes.items.breadcrumbs')
+        },
+      ]"
     >
-      <div class="kcard-border">
-        <DataOverview
-          :selected-entity-name="entity?.name"
-          :page-size="PAGE_SIZE_DEFAULT"
-          :is-loading="isLoading"
-          :error="error"
-          :empty-state="EMPTY_STATE"
-          :table-data="tableData"
-          :table-data-is-empty="tableData.data.length === 0"
-          :show-warnings="tableData.data.some((item) => item.withWarnings)"
-          :next="nextUrl"
-          :page-offset="pageOffset"
-          :show-delete-action="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-          @delete-resource="toggleDeleteModal"
-          @table-action="loadEntity"
-          @load-data="loadData"
+      <div class="zones">
+        <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+
+        <div
+          v-else
+          class="kcard-stack"
         >
-          <template
-            v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-            #additionalControls
-          >
-            <KButton
-              appearance="creation"
-              icon="plus"
-              :to="{ name: 'zone-create-view' }"
+          <div class="kcard-border">
+            <DataOverview
+              :selected-entity-name="entity?.name"
+              :page-size="PAGE_SIZE_DEFAULT"
+              :is-loading="isLoading"
+              :error="error"
+              :empty-state="EMPTY_STATE"
+              :table-data="tableData"
+              :table-data-is-empty="tableData.data.length === 0"
+              :show-warnings="tableData.data.some((item) => item.withWarnings)"
+              :next="nextUrl"
+              :page-offset="pageOffset"
+              :show-delete-action="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+              @delete-resource="toggleDeleteModal"
+              @table-action="loadEntity"
+              @load-data="loadData"
             >
-              Create Zone
-            </KButton>
+              <template
+                v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                #additionalControls
+              >
+                <KButton
+                  appearance="creation"
+                  icon="plus"
+                  :to="{ name: 'zone-create-view' }"
+                >
+                  Create Zone
+                </KButton>
+              </template>
+            </DataOverview>
+          </div>
+
+          <div
+            v-if="entity !== null"
+            class="kcard-border"
+          >
+            <ZoneDetails :zone-overview="entity" />
+          </div>
+        </div>
+
+        <DeleteResourceModal
+          v-if="isDeleteModalVisible"
+          :confirmation-text="deleteZoneName"
+          :delete-function="deleteZone"
+          :is-visible="isDeleteModalVisible"
+          modal-id="delete-zone-modal"
+          :action-button-text="t('zones.delete.confirmModal.proceedText')"
+          :title="t('zones.delete.confirmModal.title')"
+          @cancel="toggleDeleteModal"
+          @delete="handleDelete"
+        >
+          <template #body-content>
+            <p>{{ t('zones.delete.confirmModal.text1') }}</p>
+
+            <p>{{ t('zones.delete.confirmModal.text2') }}</p>
           </template>
-        </DataOverview>
+
+          <template #error>
+            {{ t('zones.delete.confirmModal.errorText') }}
+          </template>
+        </DeleteResourceModal>
       </div>
-
-      <div
-        v-if="entity !== null"
-        class="kcard-border"
-      >
-        <ZoneDetails :zone-overview="entity" />
-      </div>
-    </div>
-
-    <DeleteResourceModal
-      v-if="isDeleteModalVisible"
-      :confirmation-text="deleteZoneName"
-      :delete-function="deleteZone"
-      :is-visible="isDeleteModalVisible"
-      modal-id="delete-zone-modal"
-      :action-button-text="i18n.t('zones.delete.confirmModal.proceedText')"
-      :title="i18n.t('zones.delete.confirmModal.title')"
-      @cancel="toggleDeleteModal"
-      @delete="handleDelete"
-    >
-      <template #body-content>
-        <p>{{ i18n.t('zones.delete.confirmModal.text1') }}</p>
-
-        <p>{{ i18n.t('zones.delete.confirmModal.text2') }}</p>
-      </template>
-
-      <template #error>
-        {{ i18n.t('zones.delete.confirmModal.errorText') }}
-      </template>
-    </DeleteResourceModal>
-  </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
@@ -77,6 +93,9 @@ import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
 import ZoneDetails from '../components/ZoneDetails.vue'
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
@@ -99,7 +118,7 @@ type ZoneOverviewTableRow = {
 }
 
 const env = useEnv()
-const i18n = useI18n()
+const { t } = useI18n()
 const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {

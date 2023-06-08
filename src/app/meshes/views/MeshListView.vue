@@ -1,25 +1,44 @@
 <template>
-  <div class="kcard-stack">
-    <div class="kcard-border">
-      <DataOverview
-        :page-size="PAGE_SIZE_DEFAULT"
-        :is-loading="isLoading"
-        :error="error"
-        :empty-state="EMPTY_STATE"
-        :table-data="tableData"
-        :table-data-is-empty="tableData.data.length === 0"
-        :next="nextUrl"
-        :page-offset="pageOffset"
-        @load-data="loadData"
-      />
-    </div>
-  </div>
+  <RouteView>
+    <RouteTitle
+      :title="t('meshes.routes.items.title')"
+    />
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'mesh-list-view'
+          },
+          text: t('meshes.routes.items.breadcrumbs')
+        }
+      ]"
+    >
+      <div class="kcard-stack">
+        <div class="kcard-border">
+          <DataOverview
+            :page-size="PAGE_SIZE_DEFAULT"
+            :is-loading="isLoading"
+            :error="error"
+            :empty-state="EMPTY_STATE"
+            :table-data="tableData"
+            :table-data-is-empty="tableData.data.length === 0"
+            :next="nextUrl"
+            :page-offset="pageOffset"
+            @load-data="loadData"
+          />
+        </div>
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
+import AppView from '@/app/application/components/app-view/AppView.vue'
+import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
+import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { Mesh, TableHeader } from '@/types/index.d'
@@ -31,12 +50,12 @@ type MeshTableRow = {
   detailViewRoute: RouteLocationNamedRaw
 }
 
-const i18n = useI18n()
+const { t } = useI18n()
 const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {
-  title: i18n.t('meshes.list.emptyState.title'),
-  message: i18n.t('meshes.list.emptyState.message'),
+  title: t('common.emptyState.title'),
+  message: t('common.emptyState.message', { type: 'Meshes' }),
 }
 
 const route = useRoute()

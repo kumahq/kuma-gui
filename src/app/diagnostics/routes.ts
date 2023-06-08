@@ -4,10 +4,6 @@ export const routes = (): RouteRecordRaw[] => {
     {
       path: '/diagnostics',
       name: 'diagnostics',
-      meta: {
-        title: 'Diagnostics',
-        isBreadcrumb: true,
-      },
       component: () => import('@/app/diagnostics/views/DiagnosticsView.vue'),
     },
 

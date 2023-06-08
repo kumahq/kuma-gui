@@ -7,18 +7,11 @@ export const routes = () => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
-        meta: {
-          title: 'Services',
-          isBreadcrumb: true,
-        },
         redirect: () => ({ name: 'services-list-view' }),
         children: [
           {
             path: ':service',
             name: `${prefix}-detail-view`,
-            meta: {
-              title: 'Internal service',
-            },
             component: () => import('@/app/services/views/ServiceDetailView.vue'),
           },
         ],
@@ -35,9 +28,6 @@ export const routes = () => {
             {
               path: '',
               name: `${prefix}-list-view`,
-              meta: {
-                title: 'Services',
-              },
               props: (route) => ({
                 selectedServiceName: route.query.service,
                 offset: getLastNumberParameter(route.query.offset),
