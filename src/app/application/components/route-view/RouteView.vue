@@ -51,7 +51,7 @@ const setTitle = beforePaint((title) => {
   document.title = title
 })
 
-const map = new Map<Symbol, string>([])
+const map = new Map<Symbol, string>()
 const $: RouteView = {
   addTitle: (item: string, sym: Symbol) => {
     title.value = item
