@@ -1,52 +1,50 @@
 <template>
-  <div>
-    <RouteView>
-      <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
+  <RouteView>
+    <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
 
-      <template v-else>
-        <AppHeader v-if="!isWizard" />
+    <template v-else>
+      <AppHeader v-if="!isWizard" />
 
-        <div v-if="route.meta.onboardingProcess">
-          <router-view />
-        </div>
+      <div v-if="route.meta.onboardingProcess">
+        <router-view />
+      </div>
 
-        <div
-          v-else
-          class="app-content-container"
-        >
-          <AppSidebar v-if="!isWizard" />
+      <div
+        v-else
+        class="app-content-container"
+      >
+        <AppSidebar v-if="!isWizard" />
 
-          <AppView>
-            <AppErrorMessage
-              v-if="shouldShowAppError"
-              data-testid="app-error"
-            />
+        <AppView>
+          <AppErrorMessage
+            v-if="shouldShowAppError"
+            data-testid="app-error"
+          />
 
-            <NotificationManager v-if="!isWizard && shouldShowNotificationManager" />
+          <NotificationManager v-if="!isWizard && shouldShowNotificationManager" />
 
-            <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
+          <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
 
-            <router-view
-              :key="routeKey"
-              v-slot="{ Component }"
+          <router-view
+            :key="routeKey"
+            v-slot="{ Component }"
+          >
+            <transition
+              mode="out-in"
+              name="fade"
             >
-              <transition
-                mode="out-in"
-                name="fade"
+              <div
+                :key="(route.name as string)"
+                class="transition-root"
               >
-                <div
-                  :key="(route.name as string)"
-                  class="transition-root"
-                >
-                  <component :is="Component" />
-                </div>
-              </transition>
-            </router-view>
-          </AppView>
-        </div>
-      </template>
-    </RouteView>
-  </div>
+                <component :is="Component" />
+              </div>
+            </transition>
+          </router-view>
+        </AppView>
+      </div>
+    </template>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
