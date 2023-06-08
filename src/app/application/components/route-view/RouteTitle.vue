@@ -6,7 +6,7 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { inject, PropType, watch, onUnmounted } from 'vue'
+import { inject, watch, onUnmounted } from 'vue'
 
 import { RouteView } from './RouteView.vue'
 
