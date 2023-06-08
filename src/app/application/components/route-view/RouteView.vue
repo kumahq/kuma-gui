@@ -48,7 +48,7 @@ const setTitle = beforePaint((title) => {
 })
 
 const map = new Map<Symbol, string>()
-const $: RouteView = {
+const routeView: RouteView = {
   addTitle: (item: string, sym: Symbol) => {
     title.value = item
     map.set(sym, item)
@@ -64,7 +64,7 @@ const hasParent: RouteView | undefined = inject('route-view-parent', undefined)
 if (!hasParent) {
   // use the default title if we are the topmost RouteView
   setTitle(t('components.route-view.title', { name: t('common.product.name') }))
-  provide('route-view-parent', $)
+  provide('route-view-parent', routeView)
 }
 
 const route = useRoute()

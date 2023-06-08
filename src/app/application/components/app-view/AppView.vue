@@ -53,7 +53,7 @@ const refresh = (map: Breadcrumbs) => {
   }
 }
 
-const $: AppView = {
+const appView: AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: Symbol) => {
     if (typeof items !== 'undefined') {
       map.set(sym, items)
@@ -67,9 +67,9 @@ const $: AppView = {
 }
 const hasParent: AppView | undefined = inject('app-view-parent', undefined)
 if (!hasParent) {
-  provide('app-view-parent', $)
+  provide('app-view-parent', appView)
 }
-const parent: AppView = hasParent || $
+const parent: AppView = hasParent || appView
 
 watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
   if (items !== null) {
