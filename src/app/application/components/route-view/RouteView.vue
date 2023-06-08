@@ -28,11 +28,7 @@ export interface RouteView {
   addTitle: (title: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
 }
-const [
-  { t },
-] = [
-  useI18n(),
-]
+const { t } = useI18n()
 const title = ref<string>('')
 
 // we use a raf to avoid a flickering title
