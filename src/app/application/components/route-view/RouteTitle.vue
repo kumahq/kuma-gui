@@ -21,7 +21,7 @@ const props = defineProps({
 const symbol = Symbol('route-title')
 const routeView: RouteView | undefined = inject('route-view-parent')
 if (typeof routeView !== 'undefined') {
-  watch(() => props.title, (title: string) => {
+  watch(() => props.title, (title) => {
     if (title.length > 0) {
       routeView.addTitle(title, symbol)
     }
