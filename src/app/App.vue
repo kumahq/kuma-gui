@@ -37,7 +37,10 @@
                 :key="(route.name as string)"
                 class="transition-root"
               >
-                <component :is="Component" />
+                <component
+                  :is="Component"
+                  :data="props.data"
+                />
               </div>
             </transition>
           </router-view>
@@ -62,7 +65,13 @@ import {
   useAppHeader,
 } from '@/components'
 import { useStore } from '@/store/store'
-
+const props = defineProps({
+  data: {
+    type: Object,
+    required: false,
+    default: undefined,
+  },
+})
 const [
   AppSidebar,
   AppHeader,
