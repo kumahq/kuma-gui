@@ -1,23 +1,27 @@
 <template>
   <div
-    v-if="!hasParent"
-    class="route-view-title sr-only"
-    aria-live="assertive"
-    aria-atomic="true"
+    class="route-view"
   >
-    {{ t('components.route-view.route-announcer', {title: title}) }}
+    <div
+      v-if="!hasParent"
+      class="route-view-title sr-only"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      {{ t('components.route-view.route-announcer', {title: title}) }}
+    </div>
+    <slot
+      name="default"
+      :route="{
+        params: Object.fromEntries(Object.entries(route.params).map(([prop, value]) => {
+          return [
+            prop,
+            urlParam(value)
+          ]
+        }))
+      }"
+    />
   </div>
-  <slot
-    name="default"
-    :route="{
-      params: Object.fromEntries(Object.entries(route.params).map(([prop, value]) => {
-        return [
-          prop,
-          urlParam(value)
-        ]
-      }))
-    }"
-  />
 </template>
 <script lang="ts" setup>
 import { provide, inject, ref } from 'vue'
