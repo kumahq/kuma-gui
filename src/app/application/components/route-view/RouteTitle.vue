@@ -12,7 +12,7 @@ import { RouteView } from './RouteView.vue'
 
 const props = defineProps({
   title: {
-    type: String as PropType<string>,
+    type: String,
     required: false,
     default: '',
   },
