@@ -10,7 +10,9 @@
         {
           to: {
             name: 'services-list-view',
-            params: _route.params
+            params: {
+              mesh: _route.params.mesh,
+            },
           },
           text: t('services.routes.item.breadcrumbs')
         },

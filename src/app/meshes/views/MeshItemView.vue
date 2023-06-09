@@ -16,7 +16,9 @@
         {
           to: {
             name: 'mesh-detail-view',
-            params: route.params
+            params: {
+              mesh: route.params.mesh,
+            },
           },
           text: route.params.mesh
         }

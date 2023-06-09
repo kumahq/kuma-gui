@@ -10,7 +10,10 @@
         {
           to: {
             name: 'policies-list-view',
-            params: _route.params
+            params: {
+              mesh: _route.params.mesh,
+              policyPath: _route.params.policyPath,
+            },
           },
           text: t('policies.routes.item.breadcrumbs')
         },

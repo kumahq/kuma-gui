@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    v-slot="{route: _route}"
-  >
+  <RouteView>
     <RouteTitle
       :title="t('zone-cps.routes.item.title')"
     />
@@ -10,9 +8,8 @@
         {
           to: {
             name: 'zone-cp-list-view',
-            params: _route.params
           },
-          text: t('zones.routes.item.breadcrumbs')
+          text: t('zone-cps.routes.item.breadcrumbs')
         },
       ]"
     >

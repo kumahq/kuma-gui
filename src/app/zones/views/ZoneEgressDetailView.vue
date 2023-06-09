@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    v-slot="{route: _route}"
-  >
+  <RouteView>
     <RouteTitle
       :title="t('zone-egresses.routes.item.title')"
     />
@@ -9,8 +7,7 @@
       :breadcrumbs="[
         {
           to: {
-            name: 'zone-cp-list-view',
-            params: _route.params
+            name: 'zone-egress-list-view',
           },
           text: t('zone-egresses.routes.item.breadcrumbs')
         },

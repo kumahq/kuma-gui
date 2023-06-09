@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    v-slot="{route: _route}"
-  >
+  <RouteView>
     <RouteTitle
       :title="t('diagnostics.routes.item.title')"
     />
@@ -10,7 +8,6 @@
         {
           to: {
             name: 'diagnostics',
-            params: _route.params
           },
           text: t('diagnostics.routes.item.breadcrumbs')
         },
