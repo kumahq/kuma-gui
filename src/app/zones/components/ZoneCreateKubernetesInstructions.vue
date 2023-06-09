@@ -59,7 +59,7 @@
 
     <h3>3. {{ i18n.t('zones.form.kubernetes.secret.title') }}</h3>
 
-    <p>{{ i18n.t('zones.form.kubernetes.secret.description1') }}</p>
+    <p>{{ i18n.t('zones.form.kubernetes.secret.tokenDescription') }}</p>
 
     <CodeBlock
       id="zone-kubernetes-token"
@@ -68,7 +68,7 @@
       language="bash"
     />
 
-    <p>{{ i18n.t('zones.form.kubernetes.secret.description2') }}</p>
+    <p>{{ i18n.t('zones.form.kubernetes.secret.createSecretDescription') }}</p>
 
     <CodeBlock
       id="zone-kubernetes-create-secret"
@@ -79,10 +79,10 @@
 
     <h3>4. {{ i18n.t('zones.form.kubernetes.connectZone.title') }}</h3>
 
-    <p>{{ i18n.t('zones.form.kubernetes.connectZone.description1') }}</p>
+    <p>{{ i18n.t('zones.form.kubernetes.connectZone.configDescription') }}</p>
 
     <span class="k-input-label mt-4">
-      {{ i18n.t('zones.form.kubernetes.connectZone.fileName') }}
+      {{ i18n.t('zones.form.kubernetes.connectZone.configFileName') }}
     </span>
 
     <CodeBlock
@@ -92,13 +92,13 @@
     />
 
     <p class="mt-4">
-      {{ i18n.t('zones.form.kubernetes.connectZone.description2') }}
+      {{ i18n.t('zones.form.kubernetes.connectZone.connectDescription') }}
     </p>
 
     <CodeBlock
       id="zone-kubernetes-command-code-block"
       class="mt-4"
-      :code="i18n.t('zones.form.kubernetes.connectZone.command')"
+      :code="i18n.t('zones.form.kubernetes.connectZone.connectCommand').trim()"
       language="bash"
     />
   </div>
@@ -147,7 +147,7 @@ const props = defineProps({
   },
 })
 
-const kubernetesCreateSecretCommand = computed(() => i18n.t('zones.form.kubernetes.secret.command', {
+const kubernetesCreateSecretCommand = computed(() => i18n.t('zones.form.kubernetes.secret.createSecretCommand', {
   token: props.base64EncodedToken,
 }).trim())
 const kubernetesConfig = computed(() => {
