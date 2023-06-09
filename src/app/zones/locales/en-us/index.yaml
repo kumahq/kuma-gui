@@ -60,8 +60,10 @@ zones:
               globalAddress: {globalKdsAddress}
           experimental:
             kdsDeltaEnabled: true
-        connectDescription: 'Next, run the following command to connect the Zone.'
-        connectCommand: 'kuma-cp run -c config.yaml'
+        connectDescription: 'Next, download Kuma and connect the Zone'
+        connectCommand: |
+          (export VERSION=0.0.0-preview.vabf3cdb72; curl -L https://kuma.io/installer.sh | sh - \
+            && kuma-$VERSION/bin/kuma-cp run -c config.yaml)
     kubernetes:
       prerequisites:
         title: 'Prerequisites'
