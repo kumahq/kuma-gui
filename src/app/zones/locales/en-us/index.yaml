@@ -18,9 +18,6 @@ zones:
   routes:
     create:
       title: 'Create & connect Zone'
-    item:
-      title: Zone CPs
-      breadcrumbs: Zone CPs
     items:
       title: Zones
       breadcrumbs: Zones

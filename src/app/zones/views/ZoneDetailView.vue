@@ -9,7 +9,7 @@
           to: {
             name: 'zone-cp-list-view',
           },
-          text: t('zones.routes.item.breadcrumbs')
+          text: t('zone-cps.routes.item.breadcrumbs')
         },
       ]"
     >
