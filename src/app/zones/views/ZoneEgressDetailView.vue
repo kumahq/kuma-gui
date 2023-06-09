@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    v-slot="{route: _route}"
-  >
+  <RouteView>
     <RouteTitle
       :title="t('zone-egresses.routes.item.title')"
     />
@@ -10,7 +8,6 @@
         {
           to: {
             name: 'zone-cp-list-view',
-            params: _route.params
           },
           text: t('zone-egresses.routes.item.breadcrumbs')
         },

@@ -10,7 +10,9 @@
         {
           to: {
             name: `${props.isGatewayView ? 'gateways' : 'data-planes'}-list-view`,
-            params: _route.params
+            params: {
+              mesh: _route.params.mesh,
+            },
           },
           text: t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.breadcrumbs`)
         },
