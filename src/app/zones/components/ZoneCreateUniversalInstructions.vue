@@ -69,18 +69,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
-
-  base64EncodedToken: {
-    type: String,
-    required: true,
-  },
 })
 
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
     globalKdsAddress: store.state.globalKdsAddress,
-    token: props.base64EncodedToken,
+    token: props.token,
   }
 
   if (typeof route.params.virtualControlPlaneId === 'string') {
