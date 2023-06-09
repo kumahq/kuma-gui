@@ -20,10 +20,10 @@
 
     <h3>2. {{ i18n.t('zones.form.universal.connectZone.title') }}</h3>
 
-    <p>{{ i18n.t('zones.form.universal.connectZone.description1') }}</p>
+    <p>{{ i18n.t('zones.form.universal.connectZone.configDescription') }}</p>
 
     <span class="k-input-label mt-4">
-      {{ i18n.t('zones.form.universal.connectZone.fileName') }}
+      {{ i18n.t('zones.form.universal.connectZone.configFileName') }}
     </span>
 
     <CodeBlock
@@ -34,13 +34,13 @@
     />
 
     <p class="mt-4">
-      {{ i18n.t('zones.form.universal.connectZone.description2') }}
+      {{ i18n.t('zones.form.universal.connectZone.connectDescription') }}
     </p>
 
     <CodeBlock
       id="zone-universal-connect-command-code-block"
       class="mt-4"
-      :code="i18n.t('zones.form.universal.connectZone.command')"
+      :code="i18n.t('zones.form.universal.connectZone.connectCommand').trim()"
       language="bash"
     />
   </div>
@@ -69,18 +69,13 @@ const props = defineProps({
     type: String,
     required: true,
   },
-
-  base64EncodedToken: {
-    type: String,
-    required: true,
-  },
 })
 
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
     globalKdsAddress: store.state.globalKdsAddress,
-    token: props.base64EncodedToken,
+    token: props.token,
   }
 
   if (typeof route.params.virtualControlPlaneId === 'string') {

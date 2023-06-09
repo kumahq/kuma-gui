@@ -137,7 +137,6 @@
             v-if="environment === 'universal'"
             :zone-name="name"
             :token="token"
-            :base64-encoded-token="base64EncodedToken"
           />
 
           <ZoneCreateKubernetesInstructions

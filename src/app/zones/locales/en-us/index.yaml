@@ -49,8 +49,8 @@ zones:
         alertMessage: 'You won’t see the token again! Make sure to save it somewhere now.'
       connectZone:
         title: 'Connect Zone'
-        description1: 'Copy and paste the following configuration into the config.yaml on your local machine.'
-        fileName: 'config.yaml'
+        configDescription: 'Copy and paste the following configuration into the config.yaml on your local machine.'
+        configFileName: 'config.yaml'
         config: |
           environment: universal
           mode: zone
@@ -60,8 +60,10 @@ zones:
               globalAddress: {globalKdsAddress}
           experimental:
             kdsDeltaEnabled: true
-        command: 'kuma-cp run -c config.yaml'
-        description2: 'Next, run the following command to connect the Zone.'
+        connectDescription: 'Next, download Kuma and connect the Zone'
+        connectCommand: |
+          (export VERSION=0.0.0-preview.vabf3cdb72; curl -L https://kuma.io/installer.sh | sh - \
+            && kuma-$VERSION/bin/kuma-cp run -c config.yaml)
     kubernetes:
       prerequisites:
         title: 'Prerequisites'
@@ -83,9 +85,9 @@ zones:
         step3Command: 'helm repo update'
       secret:
         title: 'Set-up secret'
-        description1: 'This is your token.'
-        description2: 'Add it as a Kubernetes secret.'
-        command: |
+        tokenDescription: 'This is your token.'
+        createSecretDescription: 'Add it as a Kubernetes secret.'
+        createSecretCommand: |
           echo "
             apiVersion: v1
             kind: Secret
@@ -98,8 +100,8 @@ zones:
           " | kubectl apply -f -
       connectZone:
         title: 'Connect Zone'
-        description1: 'Copy and paste the following configuration into the Helm chart values.yaml on your local machine.'
-        fileName: 'values.yaml'
+        configDescription: 'Copy and paste the following configuration into the Helm chart values.yaml on your local machine.'
+        configFileName: 'values.yaml'
         config: |
           controlPlane:
             mode: zone
@@ -115,8 +117,8 @@ zones:
             enabled: {zoneEgressEnabled}
           experimental:
             deltaKds: true
-        description2: 'Next, run the following command to connect the Zone.'
-        command: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
+        connectDescription: 'Next, run the following command to connect the Zone.'
+        connectCommand: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
     errorTitle: 'Could not create the Zone'
   delete:
