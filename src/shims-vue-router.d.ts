@@ -11,5 +11,10 @@ declare module 'vue-router' {
      * Whether a route is part of a wizard (e.g. “Create mesh” or “Create data plane proxy”).
      */
     isWizard?: boolean
+
+    /**
+     * The module this route belongs to
+     */
+    module?: string
   }
 }
