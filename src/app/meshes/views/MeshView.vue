@@ -4,7 +4,6 @@
       children
     }"
   >
-    {{ children }}
     <AppView>
       <KTabs
         class="route-mesh-view-tabs"
