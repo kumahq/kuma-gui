@@ -72,7 +72,7 @@
           @delete="handleDelete"
         >
           <template #body-content>
-            <p>{{ t('zones.delete.confirmModal.text1') }}</p>
+            <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
 
             <p>{{ t('zones.delete.confirmModal.text2') }}</p>
           </template>
