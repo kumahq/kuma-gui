@@ -6,7 +6,6 @@ export const actions = (): RouteRecordRaw[] => {
     path: '/zones/-create',
     name: 'zone-create-view',
     meta: {
-      title: 'Create & connect Zone',
       isWizard: true,
     },
     component: () => import('@/app/zones/views/ZoneCreateView.vue'),
@@ -31,9 +30,6 @@ export const routes = (
             {
               path: '',
               name: 'zone-cp-list-view',
-              meta: {
-                title: 'Zone CPs',
-              },
               props: (route) => ({
                 selectedZoneName: route.query.zone,
                 offset: getLastNumberParameter(route.query.offset),
@@ -54,9 +50,6 @@ export const routes = (
             {
               path: '',
               name: 'zone-ingress-list-view',
-              meta: {
-                title: 'Zone Ingresses',
-              },
               props: (route) => ({
                 selectedZoneIngressName: route.query.zoneIngress,
                 offset: getLastNumberParameter(route.query.offset),
@@ -77,9 +70,6 @@ export const routes = (
             {
               path: '',
               name: 'zone-egress-list-view',
-              meta: {
-                title: 'Zone Egresses',
-              },
               props: (route) => ({
                 selectedZoneEgressName: route.query.zoneEgress,
                 offset: getLastNumberParameter(route.query.offset),
