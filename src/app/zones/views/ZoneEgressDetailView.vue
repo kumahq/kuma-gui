@@ -7,7 +7,7 @@
       :breadcrumbs="[
         {
           to: {
-            name: 'zone-cp-list-view',
+            name: 'zone-egress-list-view',
           },
           text: t('zone-egresses.routes.item.breadcrumbs')
         },
