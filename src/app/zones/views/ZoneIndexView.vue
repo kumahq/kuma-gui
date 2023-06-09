@@ -6,7 +6,7 @@
           to: {
             name: 'zone-index-view',
           },
-          text: t('zones.routes.items.breadcrumbs')
+          text: t('zone-cps.routes.items.breadcrumbs')
         },
 
       ]"
