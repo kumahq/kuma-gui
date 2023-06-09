@@ -23,6 +23,8 @@ export default <T extends I18nRecord>(strs: T) => {
         if (typeof get(strs, key) === 'undefined') {
           if (key.startsWith('http.api.')) {
             throw new I18nError(key)
+          } else {
+            throw new Error(`Missing message: "${key}" for locale "en-us", using id as fallback`)
           }
         }
         return i18n.t(...rest)
