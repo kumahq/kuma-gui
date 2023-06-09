@@ -21,7 +21,7 @@
         >
           <KBadge
             v-if="property === 'status'"
-            :appearance="value === 'Offline' ? 'danger' : 'success'"
+            :appearance="value === 'offline' ? 'danger' : 'success'"
           >
             {{ value }}
           </KBadge>
