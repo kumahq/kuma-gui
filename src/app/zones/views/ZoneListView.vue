@@ -290,5 +290,7 @@ function toggleDeleteModal(row?: Record<string, any>) {
 
 function handleDelete() {
   toggleDeleteModal()
+
+  loadData(0)
 }
 </script>
