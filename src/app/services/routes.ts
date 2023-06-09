@@ -7,6 +7,9 @@ export const routes = () => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
+        meta: {
+          module: 'services',
+        },
         redirect: () => ({ name: 'services-list-view' }),
         children: [
           {
@@ -24,6 +27,11 @@ export const routes = () => {
       return [
         {
           path: `${prefix}`,
+          name: `${prefix}-abstract-view`,
+          meta: {
+            module: 'services',
+          },
+          redirect: () => ({ name: 'services-list-view' }),
           children: [
             {
               path: '',

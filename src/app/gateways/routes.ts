@@ -26,6 +26,11 @@ export const routes = () => {
       return [
         {
           path: `${prefix}`,
+          name: `${prefix}-abstract-view`,
+          meta: {
+            module: 'gateways',
+          },
+          redirect: () => ({ name: 'gateways-list-view' }),
           children: [
             {
               path: '',

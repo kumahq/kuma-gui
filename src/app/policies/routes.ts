@@ -9,7 +9,7 @@ export const routes = (store: Store<State>) => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
-        redirect: () => ({ name: 'policies-list-view' }),
+        redirect: () => ({ name: 'policies' }),
         children: [
           {
             path: `${prefix === 'policy' ? ':policyPath/' : ''}:policy`,
@@ -31,6 +31,11 @@ export const routes = (store: Store<State>) => {
       return [
         {
           path: `${prefix}`,
+          name: `${prefix}-abstract-view`,
+          meta: {
+            module: 'policies',
+          },
+          redirect: () => ({ name: 'policies' }),
           children: [
             {
               path: '',
