@@ -1,20 +1,25 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{
+      children
+    }"
+  >
+    {{ children }}
     <AppView>
       <KTabs
         class="route-mesh-view-tabs"
         :tabs="items"
         :has-panels="false"
-        :model-value="(items.find(item => (router.currentRoute?.value.name ?? '').toString().startsWith(item.hash)) ?? items[0]).hash"
+        :model-value="(items.find(item => children.includes(data.get(item.hash)?.module as string)) ?? items[0]).hash"
       >
         <template
           v-for="item in items"
           :key="`${item.hash}-anchor`"
-          #[`${item.hash}-anchor`]
+          #[`${item.hash.substr(1)}-anchor`]
         >
           <router-link
             :to="{
-              name: item.hash,
+              name: item.hash.substr(1),
             }"
           >
             {{ item.title }}
@@ -35,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KTabs } from '@kong/kongponents'
+import { KTabs, Tab } from '@kong/kongponents'
 import { useRouter } from 'vue-router'
 
 import AppView from '@/app/application/components/app-view/AppView.vue'
@@ -43,23 +48,20 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
+
 const router = useRouter()
+const c = router.getRoutes().find((route) => route.name === 'mesh-abstract-view')?.children ?? []
 
-const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-abstract-view')?.children ?? []
-const items = meshRoutes.map((item) => {
-  if (typeof item.name === 'undefined') {
-    const route = item.children?.[0]
-    const name = String(route?.name)
-
-    return {
-      title: t(`meshes.routes.item.navigation.${name}`),
-      hash: name,
-    }
-  }
+const meshRoutes = c[0].children ?? []
+const data: Map<string, {module: string | undefined}> = new Map()
+const items: Tab[] = meshRoutes.map((item) => {
   const name = String(item.name)
+  data.set(`#${name}`, {
+    module: item?.meta?.module,
+  })
   return {
     title: t(`meshes.routes.item.navigation.${name}`),
-    hash: name,
+    hash: `#${name}`,
   }
 })
 </script>
