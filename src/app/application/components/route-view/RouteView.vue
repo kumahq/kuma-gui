@@ -20,11 +20,12 @@
           ]
         }))
       }"
+      :children="children"
     />
   </div>
 </template>
 <script lang="ts" setup>
-import { provide, inject, ref } from 'vue'
+import { provide, inject, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useI18n } from '@/utilities'
@@ -32,8 +33,22 @@ export interface RouteView {
   addTitle: (title: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
 }
+export interface ImmediateParent {
+  addChild: (str: string, sym: Symbol) => void
+}
+
 const { t } = useI18n()
+
+const props = defineProps({
+  module: {
+    type: String,
+    required: false,
+    default: '',
+  },
+})
+
 const title = ref<string>('')
+const children = ref<string[]>([])
 
 // we use a raf to avoid a flickering title
 // this can also be achieved by using onMount in AppTitle
@@ -70,6 +85,31 @@ if (!hasParent) {
   setTitle(t('components.route-view.title', { name: t('common.product.name') }))
   provide('route-view-parent', routeView)
 }
+
+const iParent: ImmediateParent | undefined = inject('route-view-immediate-parent', undefined)
+
+const immediateParent: ImmediateParent = {
+  addChild: (module, sym) => {
+    children.value.push(module)
+    if (typeof iParent !== 'undefined') {
+      // @ts-ignore
+      iParent.addChild(module, sym)
+    }
+  },
+
+}
+provide('route-view-immediate-parent', immediateParent)
+const sym = Symbol('route-view')
+
+watch(() => props.module, (module = '') => {
+  if (
+    typeof iParent !== 'undefined' &&
+    module.length > 0
+  ) {
+    // @ts-ignore
+    iParent.addChild(module, sym)
+  }
+}, { immediate: true })
 
 const route = useRoute()
 const urlParam = function <T extends string | null> (param: T | T[]): string {
