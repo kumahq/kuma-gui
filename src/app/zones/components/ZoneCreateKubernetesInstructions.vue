@@ -59,15 +59,6 @@
 
     <h3>3. {{ i18n.t('zones.form.kubernetes.secret.title') }}</h3>
 
-    <p>{{ i18n.t('zones.form.kubernetes.secret.tokenDescription') }}</p>
-
-    <CodeBlock
-      id="zone-kubernetes-token"
-      class="mt-4"
-      :code="props.token"
-      language="bash"
-    />
-
     <p>{{ i18n.t('zones.form.kubernetes.secret.createSecretDescription') }}</p>
 
     <CodeBlock

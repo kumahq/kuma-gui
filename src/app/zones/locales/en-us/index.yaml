@@ -85,8 +85,7 @@ zones:
         step3Command: 'helm repo update'
       secret:
         title: 'Set-up secret'
-        tokenDescription: 'This is your token.'
-        createSecretDescription: 'Add it as a Kubernetes secret.'
+        createSecretDescription: 'Add the token as a Kubernetes secret.'
         createSecretCommand: |
           echo "
             apiVersion: v1
