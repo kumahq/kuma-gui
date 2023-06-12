@@ -54,15 +54,15 @@
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import AppErrorMessage from './AppErrorMessage.vue'
-import AppLoadingBar from './AppLoadingBar.vue'
-import AppOnboardingNotification from './AppOnboardingNotification.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import NotificationManager from '@/app/notification-manager/components/NotificationManager.vue'
 import {
   useAppSidebar,
   useAppHeader,
+  useAppLoadingBar,
+  useAppErrorMessage,
+  useNotificationManager,
+  useAppOnboardingNotification,
 } from '@/components'
 import { useStore } from '@/store/store'
 const props = defineProps({
@@ -75,9 +75,17 @@ const props = defineProps({
 const [
   AppSidebar,
   AppHeader,
+  AppLoadingBar,
+  AppErrorMessage,
+  NotificationManager,
+  AppOnboardingNotification,
 ] = [
   useAppSidebar(),
   useAppHeader(),
+  useAppLoadingBar(),
+  useAppErrorMessage(),
+  useNotificationManager(),
+  useAppOnboardingNotification(),
 ]
 const store = useStore()
 const route = useRoute()
