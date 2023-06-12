@@ -44,9 +44,13 @@ zones:
       errorTitle: 'Could not connect Zone'
       errorDescription: 'We were unable to connect Zone.'
     universal:
-      copySaveToken:
-        title: 'Copy and save token'
-        alertMessage: 'You won’t see the token again! Make sure to save it somewhere now.'
+      saveToken:
+        title: 'Save token'
+        saveTokenDescription: 'Save the token to a file.'
+        saveTokenCommand: |
+          mkdir -p ~/kuma-cp \
+            && echo {token} > ~/kuma-cp/cpTokenFile \
+            && chmod 600 ~/kuma-cp/cpTokenFile
       connectZone:
         title: 'Connect Zone'
         configDescription: 'Copy and paste the following configuration into the config.yaml on your local machine.'
@@ -62,8 +66,8 @@ zones:
             kdsDeltaEnabled: true
         connectDescription: 'Next, download Kuma and connect the Zone'
         connectCommand: |
-          (export VERSION=0.0.0-preview.vabf3cdb72; curl -L https://kuma.io/installer.sh | sh - \
-            && kuma-$VERSION/bin/kuma-cp run -c config.yaml)
+          curl -L https://kuma.io/installer.sh | VERSION=0.0.0-preview.vabf3cdb72 sh - \
+            && kuma-0.0.0-preview.vabf3cdb72/bin/kuma-cp run -c config.yaml
     kubernetes:
       prerequisites:
         title: 'Prerequisites'
