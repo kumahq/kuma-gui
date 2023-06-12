@@ -86,13 +86,12 @@ if (!hasParent) {
   provide('route-view-parent', routeView)
 }
 
-const iParent: ImmediateParent | undefined = inject('route-view-immediate-parent', undefined)
+const iParent = inject<ImmediateParent | undefined>('route-view-immediate-parent', undefined)
 
 const immediateParent: ImmediateParent = {
   addChild: (module, sym) => {
     children.value.push(module)
     if (typeof iParent !== 'undefined') {
-      // @ts-ignore
       iParent.addChild(module, sym)
     }
   },
@@ -106,7 +105,6 @@ watch(() => props.module, (module = '') => {
     typeof iParent !== 'undefined' &&
     module.length > 0
   ) {
-    // @ts-ignore
     iParent.addChild(module, sym)
   }
 }, { immediate: true })
