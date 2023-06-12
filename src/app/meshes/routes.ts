@@ -25,22 +25,26 @@ export const routes = (
     {
       path: '/mesh',
       name: 'mesh-index-view',
+      component: () => import('@/app/meshes/views/MeshView.vue'),
+      // if no mesh is specified redirect to /meshes
       redirect: () => ({ name: 'mesh-list-view' }),
       children: [
         {
           path: ':mesh',
-          name: 'mesh-detail-view',
-          redirect: () => ({ name: 'mesh-overview-view' }),
+          name: 'mesh-abstract-view',
+          redirect: () => ({ name: 'mesh-detail-view' }),
           component: () => import('@/app/meshes/views/MeshItemView.vue'),
           children: [
             {
-              name: 'mesh-abstract-view',
               path: '',
+              name: 'mesh-detail-view',
               redirect: () => ({ name: 'mesh-overview-view' }),
-              component: () => import('@/app/meshes/views/MeshView.vue'),
               children: [
                 {
                   path: 'overview',
+                  meta: {
+                    module: 'meshes',
+                  },
                   name: 'mesh-overview-view',
                   component: () => import('@/app/meshes/views/MeshOverviewView.vue'),
                 },

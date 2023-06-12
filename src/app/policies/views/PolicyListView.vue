@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    module="policies"
+  >
     <RouteTitle
       :title="t('policies.routes.items.title', {name: policyType?.name})"
     />

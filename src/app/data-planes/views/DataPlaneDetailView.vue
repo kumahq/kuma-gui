@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{route: _route}"
+    :module="props.isGatewayView ? 'gateways' : 'data-planes'"
   >
     <RouteTitle
       :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, {name: _route.params.dataPlane})"

@@ -5,10 +5,10 @@ meshes:
       breadcrumbs: Meshes
       navigation:
         mesh-overview-view: Overview
-        services-list-view: Services
-        data-planes-list-view: Data Plane Proxies
-        gateways-list-view: Gateways
-        policies: Policies
+        services-abstract-view: Services
+        data-planes-abstract-view: Data Plane Proxies
+        gateways-abstract-view: Gateways
+        policies-abstract-view: Policies
 
     items:
       title: Meshes
