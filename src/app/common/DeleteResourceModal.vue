@@ -6,6 +6,7 @@
     :modal-id="props.modalId"
     :title="props.title"
     type="danger"
+    data-testid="delete-resource-modal"
     @canceled="emit('cancel')"
     @proceed="deleteResource"
   >
