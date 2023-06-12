@@ -176,6 +176,7 @@
                 popoverClasses: 'mt-5 more-actions-popover',
               }"
               width="150"
+              data-testid="actions-dropdown"
             >
               <template #default>
                 <KButton
@@ -206,6 +207,7 @@
                   v-if="props.showDeleteAction"
                   has-divider
                   is-dangerous
+                  data-testid="dropdown-delete-item"
                   @click="emitDeleteResourceEvent(row)"
                 >
                   Delete
