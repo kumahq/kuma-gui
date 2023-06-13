@@ -89,7 +89,7 @@
     "jest-transform-stub": "^2.0.0",
     "lockfile-lint": "^4.10.5",
     "marked": "^5.0.5",
-    "msw": "~1.2.1",
+    "msw": "~1.2.2",
     "postcss": "^8.4.24",
     "sass": "^1.62.1",
     "standard": "^17.1.0",
