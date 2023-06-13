@@ -31,3 +31,13 @@
   border: none;
   cursor: pointer;
 }
+html:not(.is-fullscreen) .app-content-container {
+  padding-top: var(--AppHeaderHeight, initial);
+  display: grid;
+  grid-template-columns: var(--AppSidebarWidth) 1fr;
+}
+
+html:not(.is-fullscreen) .app-main-content {
+  padding: var(--AppGap);
+}
+

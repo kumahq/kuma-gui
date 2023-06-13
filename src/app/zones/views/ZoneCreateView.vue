@@ -1,5 +1,9 @@
 <template>
-  <RouteView>
+  <RouteView
+    :attrs="{
+      class: 'is-fullscreen'
+    }"
+  >
     <RouteTitle
       :title="t('zones.routes.create.title')"
     />
