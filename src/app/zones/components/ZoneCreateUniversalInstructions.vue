@@ -1,20 +1,13 @@
 <template>
   <div>
-    <h3>1. {{ i18n.t('zones.form.universal.copySaveToken.title') }}</h3>
+    <h3>1. {{ i18n.t('zones.form.universal.saveToken.title') }}</h3>
 
-    <KAlert
-      class="mt-4"
-      appearance="info"
-    >
-      <template #alertMessage>
-        {{ i18n.t('zones.form.universal.copySaveToken.alertMessage') }}
-      </template>
-    </KAlert>
+    <p>{{ i18n.t('zones.form.universal.saveToken.saveTokenDescription') }}</p>
 
     <CodeBlock
       id="zone-kubernetes-token"
       class="mt-4"
-      :code="props.token"
+      :code="saveTokenCommand"
       language="bash"
     />
 
@@ -47,7 +40,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KAlert } from '@kong/kongponents'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -71,11 +63,11 @@ const props = defineProps({
   },
 })
 
+const saveTokenCommand = computed(() => i18n.t('zones.form.universal.saveToken.saveTokenCommand', { token: props.token }).trim())
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
     globalKdsAddress: store.state.globalKdsAddress,
-    token: props.token,
   }
 
   if (typeof route.params.virtualControlPlaneId === 'string') {
