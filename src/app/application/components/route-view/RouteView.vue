@@ -25,7 +25,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { provide, inject, ref, watch, onUnmounted } from 'vue'
+import { provide, inject, ref, watch, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useI18n } from '@/utilities'
@@ -149,7 +149,7 @@ watch(() => props.attrs, (attrs) => {
     parent.addAttrs(attrs, sym)
   }
 }, { immediate: true })
-onUnmounted(() => {
+onBeforeUnmount(() => {
   parent.removeAttrs(sym)
 })
 
