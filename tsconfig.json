@@ -17,8 +17,8 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@badeball/cypress-cucumber-preprocessor/esbuild": [
-        "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/bundler-utils/esbuild"
+      "@badeball/cypress-cucumber-preprocessor/*": [
+        "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
       ],
       "@/*": [
         "src/*"
