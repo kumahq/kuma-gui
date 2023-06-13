@@ -6,6 +6,9 @@ export const routes = () => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
+        meta: {
+          module: 'data-planes',
+        },
         redirect: () => ({ name: 'data-planes-list-view' }),
         children: [
           {
@@ -32,9 +35,6 @@ export const routes = () => {
             {
               path: '',
               name: `${prefix}-list-view`,
-              meta: {
-                module: 'data-planes',
-              },
               props: (route) => ({
                 selectedDppName: route.query.dpp,
                 offset: getLastNumberParameter(route.query.offset),
