@@ -21,7 +21,7 @@
 </template>
 <script lang="ts" setup>
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
-import { provide, inject, PropType, watch, ref, onUnmounted } from 'vue'
+import { provide, inject, PropType, watch, ref, onBeforeUnmount } from 'vue'
 
 import { useMainView } from '@/components'
 
@@ -77,7 +77,7 @@ watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
   }
 }, { immediate: true })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   parent.removeBreadcrumbs(symbol)
 })
 

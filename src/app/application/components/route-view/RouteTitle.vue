@@ -6,7 +6,7 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { inject, watch, onUnmounted } from 'vue'
+import { inject, watch, onBeforeUnmount } from 'vue'
 
 import { RouteView } from './RouteView.vue'
 
@@ -26,7 +26,7 @@ if (typeof routeView !== 'undefined') {
       routeView.addTitle(title, symbol)
     }
   }, { immediate: true })
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     routeView.removeTitle(symbol)
   })
 }
