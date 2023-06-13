@@ -1,4 +1,4 @@
-import type { DataPlaneProxyStatus, DpVersions, MeshInsight, ResourceStat } from '@/types/index.d'
+import type { DataPlaneProxyStatus, DpVersions, MeshInsight, ResourceStat, ServiceStatus } from '@/types/index.d'
 
 export type MergedMeshInsights = {
   meshesTotal: number
@@ -11,6 +11,11 @@ export type MergedMeshInsights = {
   dpVersions: {
     kumaDp: Record<string, DataPlaneProxyStatus>
     envoy: Record<string, DataPlaneProxyStatus>
+  }
+  services: {
+    total: number
+    internal: number
+    external: number
   }
 }
 
@@ -26,6 +31,26 @@ const sumDataplanes = (curr: DataPlaneProxyStatus = {}, next: DataPlaneProxyStat
     online: currOnline + nextOnline,
     partiallyDegraded: currPartiallyDegraded + nextPartiallyDegraded,
     total: currTotal + nextTotal,
+  }
+}
+
+const sumServices = (curr: ServiceStatus = {}, next: ServiceStatus = {}) => {
+  const currTotal = curr.total ?? 0
+  const nextTotal = next.total ?? 0
+  const total = currTotal + nextTotal
+
+  const currInternal = curr.internal ?? 0
+  const nextInternal = next.internal ?? 0
+  const internal = currInternal + nextInternal
+
+  const currExternal = curr.external ?? 0
+  const nextExternal = next.external ?? 0
+  const external = currExternal + nextExternal
+
+  return {
+    total,
+    internal,
+    external,
   }
 }
 
@@ -61,6 +86,7 @@ export function getEmptyInsight(): MergedMeshInsights {
     dataplanes: { online: 0, partiallyDegraded: 0, total: 0 },
     policies: {},
     dpVersions: { kumaDp: {}, envoy: {} },
+    services: { total: 0, internal: 0, external: 0 },
   }
 }
 
@@ -75,6 +101,7 @@ export function mergeInsightsReducer(insights: MeshInsight[]): MergedMeshInsight
       dataplanes: sumDataplanes(acc.dataplanes, insight.dataplanes),
       policies: sumPolicies(acc.policies, insight.policies),
       dpVersions: sumVersions(acc.dpVersions, insight.dpVersions),
+      services: sumServices(acc.services, insight.services),
     }),
     {
       meshesTotal: 0,
@@ -87,6 +114,11 @@ export function mergeInsightsReducer(insights: MeshInsight[]): MergedMeshInsight
       dpVersions: {
         kumaDp: {},
         envoy: {},
+      },
+      services: {
+        total: 0,
+        internal: 0,
+        external: 0,
       },
     },
   )

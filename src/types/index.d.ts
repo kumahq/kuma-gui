@@ -5,10 +5,13 @@ import { RouteLocationNamedRaw } from 'vue-router'
  */
 export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
+export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
+
 export type ChartDataPoint = {
   title: string
   data: number
   route?: RouteLocationNamedRaw
+  statusKeyword?: StatusKeyword
 }
 
 export type DoughnutChartData = {
@@ -54,8 +57,6 @@ export type TableData = {
   headers: TableHeader[]
   data: any
 }
-
-export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
 
 export type Info = {
   hostname: string

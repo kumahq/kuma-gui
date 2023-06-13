@@ -8,3 +8,24 @@ common:
   emptyState:
     title: 'No data'
     message: 'There are no {type} present.'
+  charts:
+    dataPlaneProxies:
+      title: 'DP Proxies'
+    envoy:
+      title: 'Envoy'
+      subtitle: 'versions'
+    kumaDp:
+      title: 'Kuma DP'
+      subtitle: 'versions'
+    meshes:
+      title: 'Meshes'
+      meshLabel: 'Mesh'
+    services:
+      title: 'Services'
+      internalLabel: 'Internal'
+      externalLabel: 'External'
+    zoneCps:
+      title: 'Zone CP'
+      subtitle: 'versions'
+    zones:
+      title: 'Zones'

@@ -13,6 +13,11 @@ exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
   },
   "meshesTotal": 0,
   "policies": {},
+  "services": {
+    "external": 0,
+    "internal": 0,
+    "total": 0,
+  },
 }
 `;
 
@@ -64,6 +69,11 @@ exports[`mesh-insights calls mergeInsightsReducer with mesh insights 1`] = `
       "total": 5,
     },
   },
+  "services": {
+    "external": 0,
+    "internal": 0,
+    "total": 0,
+  },
 }
 `;
 
@@ -114,6 +124,11 @@ exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] =
     "TrafficRoute": {
       "total": 20,
     },
+  },
+  "services": {
+    "external": 0,
+    "internal": 0,
+    "total": 0,
   },
 }
 `;
