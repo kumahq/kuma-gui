@@ -109,3 +109,14 @@ const shouldShowNotificationManager = computed(() => store.getters.shouldShowNot
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
 
 </script>
+<style lang="scss" scoped>
+.app-content-container {
+  padding-top: var(--AppHeaderHeight, initial);
+  display: var(--AppDisplay);
+  grid-template-columns: var(--AppSidebarWidth) 1fr;
+}
+
+.app-main-content {
+  padding: var(--AppGap);
+}
+</style>
