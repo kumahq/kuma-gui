@@ -9,6 +9,9 @@ export const routes = (store: Store<State>) => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
+        meta: {
+          module: 'policies',
+        },
         redirect: () => ({ name: 'policies' }),
         children: [
           {
@@ -69,7 +72,6 @@ export const routes = (store: Store<State>) => {
               children: [
                 {
                   path: ':policyPath',
-
                   name: `${prefix}-list-view`,
                   component: () => import('@/app/policies/views/PolicyListView.vue'),
                   props: (route) => ({

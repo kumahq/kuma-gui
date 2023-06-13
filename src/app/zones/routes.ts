@@ -26,6 +26,9 @@ export const routes = (
         {
           path: 'zone-cps',
           name: 'zone-cp-abstract-view',
+          meta: {
+            module: 'zone-cps',
+          },
           children: [
             {
               path: '',
@@ -46,6 +49,9 @@ export const routes = (
         {
           path: 'zone-ingresses',
           name: 'zone-ingress-abstract-view',
+          meta: {
+            module: 'zone-ingresses',
+          },
           children: [
             {
               path: '',
@@ -66,6 +72,9 @@ export const routes = (
         {
           path: 'zone-egresses',
           name: 'zone-egress-abstract-view',
+          meta: {
+            module: 'zone-egresses',
+          },
           children: [
             {
               path: '',

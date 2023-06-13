@@ -6,6 +6,9 @@ export const routes = () => {
       {
         path: `${prefix}`,
         name: `${prefix}-abstract-view`,
+        meta: {
+          module: 'gateways',
+        },
         redirect: () => ({ name: 'gateways-list-view' }),
         children: [
           {
