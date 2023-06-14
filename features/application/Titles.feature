@@ -22,7 +22,7 @@ Feature: The HTML title is correct on each page
       | /onboarding/dataplanes-overview                     | Data plane overview           |
       | /onboarding/completed                               | Completed                     |
 
-      | /zones/-create                                      | Create & connect Zone         |
+      | /zones/create                                       | Create & connect Zone         |
       | /zones/zone-cps                                     | Zone CPs                      |
       | /zones/zone-cps/zone-cp-name                        | Zone CP                       |
       | /zones/zone-ingresses                               | Zone Ingresses                |
