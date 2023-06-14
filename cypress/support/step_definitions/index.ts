@@ -184,6 +184,9 @@ Then('the page title contains {string}', function (title: string) {
 Then('pause', function () {
   cy.pause()
 })
+Then(/^(everything is )?ok$/, function () {
+  expect(true).to.equal(true)
+})
 Then('log {string}', function (message: string) {
   console.log(message)
 })
