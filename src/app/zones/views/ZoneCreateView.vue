@@ -152,6 +152,7 @@
             :loader-function="scanForEnabledZone"
             :has-error="scanError !== null"
             :can-complete="isScanComplete"
+            data-testid="zone-connected-scanner"
           >
             <template #loading-title>
               {{ t('zones.form.scan.waitTitle') }}
