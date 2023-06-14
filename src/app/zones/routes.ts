@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const actions = (): RouteRecordRaw[] => {
   return [{
-    path: '/zones/-create',
+    path: '/zones/create',
     name: 'zone-create-view',
     meta: {
       isWizard: true,

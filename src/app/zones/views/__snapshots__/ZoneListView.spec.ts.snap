@@ -38,7 +38,7 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
               
               <a
                 class="k-button medium rounded creation"
-                href="/zones/-create"
+                href="/zones/create"
                 type="button"
               >
                 
