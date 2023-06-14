@@ -153,10 +153,13 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
       },
     },
     onClick: function (_event, elements) {
-      const dataPoint = props.data.dataPoints[elements[0].index]
+      const $el = elements[0]
+      if (typeof $el !== 'undefined') {
+        const dataPoint = props.data.dataPoints[$el.index]
 
-      if (dataPoint.route) {
-        router.push(dataPoint.route)
+        if (dataPoint.route) {
+          router.push(dataPoint.route)
+        }
       }
     },
   }

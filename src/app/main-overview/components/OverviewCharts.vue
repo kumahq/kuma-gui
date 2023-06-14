@@ -4,37 +4,44 @@
       <div class="chart-box-list">
         <DoughnutChart
           v-if="isMultizoneMode"
+          data-testid="zones"
           class="chart chart-1/2 chart-offset-left-1/6"
           :data="zonesChartData"
         />
 
         <DoughnutChart
           v-if="isMultizoneMode"
+          data-testid="zone-versions"
           class="chart chart-1/2 chart-offset-right-1/6"
           :data="zonesCPVersionsChartData"
         />
 
         <DoughnutChart
+          data-testid="meshes"
           class="chart chart-1/3"
           :data="meshesChartData"
         />
 
         <DoughnutChart
+          data-testid="services"
           class="chart chart-1/3"
           :data="servicesChartData"
         />
 
         <DoughnutChart
+          data-testid="data-planes"
           class="chart chart-1/3"
           :data="dataplanesChartData"
         />
 
         <DoughnutChart
+          data-testid="data-plane-versions"
           class="chart chart-1/2 chart-offset-left-1/6"
           :data="kumaDPVersionsChartData"
         />
 
         <DoughnutChart
+          data-testid="envoy-versions"
           class="chart chart-1/2 chart-offset-right-1/6"
           :data="envoyVersionsChartData"
         />
