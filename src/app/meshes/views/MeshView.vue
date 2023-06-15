@@ -1,7 +1,10 @@
 <template>
   <RouteView>
     <AppView>
-      <NavTabs :tabs="tabs" />
+      <NavTabs
+        class="route-mesh-view-tabs"
+        :tabs="tabs"
+      />
 
       <RouterView
         v-slot="child"

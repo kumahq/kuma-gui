@@ -6,8 +6,8 @@ Feature: The create Zone flow works
       | create-zone-button                  | [data-testid='create-zone-button']                  |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
-      | ingress-input-switch                | [data-testid='ingress-input-switch']                |
-      | egress-input-switch                 | [data-testid='egress-input-switch']                 |
+      | ingress-input-switch                | [for='zone-ingress-enabled']                |
+      | egress-input-switch                 | [for='zone-egress-enabled']                 |
       | zone-connected-scanner              | [data-testid='zone-connected-scanner']              |
     When I visit the "/zones/create" URL
 
@@ -46,21 +46,21 @@ Feature: The create Zone flow works
       """
     Then the "$environment-universal-radio-button" element isn't checked
     Then the "$environment-kubernetes-radio-button" element is checked
-    Then the "$ingress-input-switch" element is checked
-    Then the "$egress-input-switch" element is checked
+    Then the "$ingress-input-switch input" element is checked
+    Then the "$egress-input-switch input" element is checked
     Then the "$zone-connected-scanner" element contains "Waiting for Zone to be connected"
 
     When I click the "$ingress-input-switch" element
-    Then the "$ingress-input-switch" element isn't checked
-    Then the "$egress-input-switch" element is checked
+    Then the "$ingress-input-switch input" element isn't checked
+    Then the "$egress-input-switch input" element is checked
 
     When I click the "$egress-input-switch" element
-    Then the "$ingress-input-switch" element isn't checked
-    Then the "$egress-input-switch" element isn't checked
+    Then the "$ingress-input-switch input" element isn't checked
+    Then the "$egress-input-switch input" element isn't checked
 
-    When I click the "$environment-universal-radio-button" element
-    Then the "$ingress-input-switch" element doesn't exist
-    Then the "$egress-input-switch" element doesn't exist
+    When I click the "$environment-universal-radio-button + label" element
+    Then the "$ingress-input-switch input" element doesn't exist
+    Then the "$egress-input-switch input" element doesn't exist
 
     When the URL "/zones+insights/test" responds with
       """
