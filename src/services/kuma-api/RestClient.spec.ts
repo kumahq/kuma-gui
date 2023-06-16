@@ -9,7 +9,7 @@ describe('RestClient', () => {
   })
 
   test('has expected initial base URL', () => {
-    const restClient = new RestClient('http://localhost:5681')
+    const restClient = new RestClient(() => 'http://localhost:5681')
 
     expect(restClient.baseUrl).toBe('http://localhost:5681')
   })
@@ -18,7 +18,7 @@ describe('RestClient', () => {
     ['http://localhost:1234/api', 'http://localhost:1234/api'],
     ['http://localhost:1234/test/api', 'http://localhost:1234/test/api'],
   ])('sets expected base URL for “%s”', (newBaseUrl: string, expectedBaseUrl: string) => {
-    const restClient = new RestClient('http://localhost:5681')
+    const restClient = new RestClient(() => 'http://localhost:5681')
 
     restClient.baseUrl = newBaseUrl
 
@@ -30,7 +30,6 @@ describe('RestClient', () => {
       undefined,
       {
         method: 'GET',
-        credentials: 'include',
       },
     ],
     [
@@ -39,7 +38,6 @@ describe('RestClient', () => {
       },
       {
         method: 'GET',
-        credentials: 'include',
         params: [['tag', 'kuma.io/service:backend']],
       },
     ],
@@ -49,7 +47,6 @@ describe('RestClient', () => {
       },
       {
         method: 'GET',
-        credentials: 'include',
         params: [
           ['tag', 'kuma.io/service:backend'],
           ['tag', 'version:v1'],
@@ -63,7 +60,6 @@ describe('RestClient', () => {
       },
       {
         method: 'GET',
-        credentials: 'include',
         params: [
           ['gateway', true],
           ['tag', 'kuma.io/service:backend'],
@@ -79,7 +75,6 @@ describe('RestClient', () => {
       ],
       {
         method: 'GET',
-        credentials: 'include',
         params: [
           ['gateway', true],
           ['tag', 'kuma.io/service:backend'],
@@ -93,55 +88,8 @@ describe('RestClient', () => {
       data: null,
     }))
 
-    const restClient = new RestClient('http://localhost:5681')
+    const restClient = new RestClient(() => 'http://localhost:5681')
     restClient.raw('/path', undefined, { params })
-
-    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions, undefined)
-  })
-
-  test.each([
-    [
-      {
-        credentials: 'include',
-      } as RequestInit,
-      {
-        method: 'GET',
-        credentials: 'include',
-      },
-    ],
-    [
-      {
-        method: 'POST',
-        credentials: 'same-origin',
-      } as RequestInit,
-      {
-        method: 'GET', // Can’t override GET method
-        credentials: 'same-origin',
-      },
-    ],
-    [
-      {
-        headers: {
-          'Content-Type': 'text/html',
-        },
-      } as RequestInit,
-      {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'text/html',
-        },
-      },
-    ],
-  ])('sets fetch default options correctly', (options: RequestInit, expectedOptions) => {
-    jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
-      response: new Response(),
-      data: null,
-    }))
-
-    const restClient = new RestClient('http://localhost:5681')
-    restClient.options = options
-    restClient.get('/path')
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions, undefined)
   })
@@ -160,9 +108,9 @@ describe('RestClient', () => {
       data: null,
     }))
 
-    const restClient = new RestClient(baseUrlOrPath)
+    const restClient = new RestClient(() => baseUrlOrPath)
     restClient.raw(requestPath)
 
-    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith(expectedRequestUrl, { method: 'GET', credentials: 'include' }, undefined)
+    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith(expectedRequestUrl, { method: 'GET' }, undefined)
   })
 })

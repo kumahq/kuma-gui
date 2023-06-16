@@ -1,8 +1,11 @@
 import { makeRequest } from './makeRequest'
+import type { EnvVars } from '@/services/env/Env'
 
-const DEFAULT_OPTIONS: RequestInit = {
-  credentials: 'include',
-}
+type Env = (
+  key: keyof Pick<EnvVars,
+  'KUMA_API_URL'
+  >
+) => string
 
 export class RestClient {
   /**
@@ -11,17 +14,12 @@ export class RestClient {
   _baseUrl: string
 
   /**
-   * The default options to be used for [the fetch API’s `options` parameter][1].
-   *
-   * [1]: https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
-   */
-  _options: RequestInit = DEFAULT_OPTIONS
-
-  /**
    * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
    */
-  constructor(baseUrl: string) {
-    this._baseUrl = baseUrl
+  constructor(
+    protected env: Env,
+  ) {
+    this._baseUrl = env('KUMA_API_URL')
   }
 
   /**
@@ -36,14 +34,6 @@ export class RestClient {
    */
   set baseUrl(baseUrl: string) {
     this._baseUrl = baseUrl
-  }
-
-  get options() {
-    return this._options
-  }
-
-  set options(options: RequestInit) {
-    this._options = options
   }
 
   async get(path: string, options?: RequestInit & { params?: any }): Promise<any> {
@@ -84,7 +74,7 @@ export class RestClient {
     options.method = method
 
     // Merges headers from stored options and override headers.
-    const headers = new Headers(this.options.headers)
+    const headers = new Headers()
 
     if ('headers' in options) {
       // Ensures that we deal with a `Headers` object.
@@ -96,14 +86,11 @@ export class RestClient {
       }
     }
 
-    // Merges initial default options, stored options, and override options. Including the initial default options here insures that the options include default options like `credentials: 'include'` unless they’re explicitly overridden.
-    const mergedOptions = { ...DEFAULT_OPTIONS, ...this.options, ...options }
-
     if (Object.keys(headers).length > 0) {
-      mergedOptions.headers = headers
+      options.headers = headers
     }
 
-    const normalizedOptions = normalizeParameters(mergedOptions)
+    const normalizedOptions = normalizeParameters(options)
 
     return makeRequest(
       `${url.startsWith('http') ? '' : this.baseUrl}${url}`,
