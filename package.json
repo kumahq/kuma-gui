@@ -48,7 +48,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
-    "@babel/preset-typescript": "^7.21.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@badeball/cypress-cucumber-preprocessor": "^18.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@faker-js/faker": "^8.0.2",
