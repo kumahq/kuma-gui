@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppView from '@/app/application/components/app-view/AppView.vue'
@@ -108,30 +108,15 @@ const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
 
-watch(() => isWizard.value, setIsWizardPageClass, { immediate: true })
-
-/**
- * Adds a class for wizard pages to the body element. This is used to control certain layout aspects of the app.
- */
-function setIsWizardPageClass(isWizard: boolean) {
-  const hasClass = document.body.classList.contains('is-wizard-page')
-
-  if (isWizard && !hasClass) {
-    document.body.classList.add('is-wizard-page')
-  } else if (!isWizard && hasClass) {
-    document.body.classList.remove('is-wizard-page')
-  }
-}
 </script>
-
 <style lang="scss" scoped>
-body:not(.is-wizard-page) .app-content-container {
+.app-content-container {
   padding-top: var(--AppHeaderHeight, initial);
-  display: grid;
+  display: var(--AppDisplay);
   grid-template-columns: var(--AppSidebarWidth) 1fr;
 }
 
-body:not(.is-wizard-page) .app-main-content {
-  padding: var(--AppGap);
+.app-main-content {
+  padding: var(--AppContentPadding);
 }
 </style>

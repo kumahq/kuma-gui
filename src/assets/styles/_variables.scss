@@ -10,6 +10,8 @@
   --AppHeaderHeight: 60px;
   --AppSidebarWidth: 280px;
   --AppGap: var(--spacing-lg);
+  --AppContentPadding: var(--spacing-lg);
+  --AppDisplay: grid;
 
   // ONBOARDING
   --onboarding-accent: #822dc5;
@@ -39,3 +41,11 @@
   --KCardBackground: var(--white);
   --KCardBorder: 1px solid var(--grey-300);
 }
+:root.is-fullscreen {
+  --AppHeaderHeight: 0;
+  --AppSidebarWidth: 0;
+  --AppContentPadding: 0;
+  --AppDisplay: block;
+}
+
+
