@@ -72,7 +72,7 @@
     "cross-env": "^7.0.3",
     "cypress": "^12.14.0",
     "dotenv": "^16.3.1",
-    "esbuild": "^0.18.2",
+    "esbuild": "^0.18.5",
     "eslint": "^8.43.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-friendly-formatter": "^4.0.1",
