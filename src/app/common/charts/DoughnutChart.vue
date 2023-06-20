@@ -145,7 +145,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
             const label = context.label
             const data = context.dataset.data[context.dataIndex]
             const total = context.dataset.data.reduce((total, value) => total + value, 0)
-            const percentage = (data / total) * 100
+            const percentage = total > 0 ? (data / total) * 100 : 0
 
             return `${label}: ${percentage.toFixed(1)}% (${data})`
           },
