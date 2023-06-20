@@ -1,10 +1,13 @@
 Feature: mesh / index
   Background:
     Given the CSS selectors
-      | Alias           | Selector       |
-      | mesh-breadcrumb | .k-breadcrumbs |
+      | Alias          | Selector                                     |
+      | items          | [data-testid='data-overview-table']          |
+      | item           | $items tbody tr                              |
+      | breadcrumb     | .k-breadcrumbs                               |
+      | button-refresh | [data-testid='data-overview-refresh-button'] |
+      | navigation | .route-mesh-view-tabs ul > |
 
-  Scenario: Mesh Selection
     Given the environment
       """
       KUMA_MESH_COUNT: 2
@@ -18,11 +21,36 @@ Feature: mesh / index
       """
     When I visit the "/meshes" URL
 
-    When I click the "<Selector>" element
+  Scenario: Clicking a mesh and back again for <Mesh>
+
+    Then the "$item" element exists 2 times
+    Then I click the "<Selector>" element
     Then the URL contains "/mesh/<Mesh>"
-    And the "$mesh-breadcrumb" element contains "<Mesh>"
+    And the "$breadcrumb" element contains "<Mesh>"
+
+
+    Then I click the "$navigation li:nth-child(2) a" element
+    Then I click the "$navigation li:nth-child(3) a" element
+    Then I click the "$navigation li:nth-child(4) a" element
+    Then I click the "$navigation li:nth-child(5) a" element
+    Then I click the "$navigation li:nth-child(1) a" element
+
+    And I click the "$breadcrumb li:nth-child(1) a" element
+    Then the "$item" element exists 2 times
 
     Examples:
       | Mesh         | Selector |
-      | another-mesh | [data-testid='data-overview-table'] tbody tr:nth-child(2) [data-testid='detail-view-link'] |
-      | default      | [data-testid='data-overview-table'] tbody tr:nth-child(1) [data-testid='detail-view-link'] |
+      | another-mesh | $item:nth-child(2) a |
+      | default      | $item:nth-child(1) a |
+
+  Scenario: Refreshing the listing
+    Then the "$item" element exists 2 times
+    Given the environment
+      """
+      KUMA_MESH_COUNT: 10
+      """
+    And the URL "/meshes" responds with
+      """
+      """
+    Then I click the "$button-refresh" element
+    Then the "$item" element exists 10 times

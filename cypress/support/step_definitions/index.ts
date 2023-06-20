@@ -68,36 +68,13 @@ When('I wait for {int} milliseconds/ms', function (ms: number) {
 })
 
 When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
+  const event = 'click'
   if (value !== undefined) {
     $(selector).select(value)
   } else {
-    $(selector).then(($el) => {
-      const el = $el[0]
-      const label = getLabel(el)
-
-      cy.wrap(label ?? el).click()
-    })
+    $(selector)[event]({ force: true })
   }
 })
-
-/**
- * Finds the `label` element associated with an form control.
- */
-function getLabel(element: HTMLElement) {
-  if (element.id) {
-    const label = document.querySelector(`label[for="${element.id}"]`)
-    if (label !== null) {
-      return label
-    }
-  }
-
-  const label = element.closest('label')
-  if (label !== null) {
-    return label
-  }
-
-  return null
-}
 
 When('I {string} {string} into the {string} element', (event: string, text: string, selector: string) => {
   switch (event) {
