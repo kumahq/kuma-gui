@@ -1,16 +1,10 @@
 import { RestClient } from './RestClient'
-import type { EnvVars } from '@/services/env/Env'
+import type Env from '@/services/env/Env'
 
-type Env = (
-  key: keyof Pick<EnvVars,
-  'KUMA_API_URL' |
-  'KUMA_VERSION_URL'
-  >
-) => string
 export class Api {
   constructor(
     protected client: RestClient,
-    protected env: Env,
+    protected env: Env['var'],
   ) {}
 
   get baseUrl() {
