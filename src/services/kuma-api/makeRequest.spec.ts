@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
 import { ApiError } from './ApiError'
-import { makeRequest } from './makeRequest'
+import { MakeRequestConfig, makeRequest } from './makeRequest'
 
 describe('makeRequest', () => {
   beforeEach(() => {
@@ -78,7 +78,7 @@ describe('makeRequest', () => {
   ])('works for requests that succeed and return a success status', async (fetchMock, expectedData, expectedPartialResponse) => {
     jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
 
-    const { data, response } = await makeRequest('/')
+    const { data, response } = await makeRequest({ url: '/' })
 
     expect(data).toEqual(expectedData)
     expect(response).toEqual(expect.objectContaining(expectedPartialResponse))
@@ -102,7 +102,7 @@ describe('makeRequest', () => {
   ])('works for requests that fail with a network error', async (fetchMock, expectedError) => {
     jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
 
-    await expect(() => makeRequest('/')).rejects.toThrow(expectedError)
+    await expect(() => makeRequest({ url: '/' })).rejects.toThrow(expectedError)
   })
 
   test.each([
@@ -215,10 +215,10 @@ describe('makeRequest', () => {
         message: 'Not found!',
       }),
     ],
-  ])('works for requests that succeed but return a failure statuses (%s)', async (title, fetchMock, expectedError) => {
+  ])('works for requests that succeed but return a failure status (%s)', async (_title, fetchMock, expectedError) => {
     jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
 
-    const call = () => makeRequest('/')
+    const call = () => makeRequest({ url: '/' })
 
     // Note: The following assertion will only check if the thrown error is an `ApiError` and if its message is correct. Its further contents **cannot** be checked like this. For this reason, this slightly bit of heretical code below is employed. It will compare the entire error shape with the expected form.
     await expect(call).rejects.toThrowError(expectedError)
@@ -245,9 +245,85 @@ describe('makeRequest', () => {
   ])('correctly sends JSON payloads', async (options, payload, expectedInitObject) => {
     jest.spyOn(global, 'fetch').mockImplementation((_input: RequestInfo | URL, _init?: RequestInit) => Promise.resolve(new Response('OK')))
 
-    await makeRequest('/', options, payload)
+    await makeRequest({ url: '/', options, payload })
 
     expect(global.fetch).toHaveBeenCalledWith('/', expect.objectContaining(expectedInitObject))
+  })
+
+  describe('response interceptors', () => {
+    test.each([
+      [
+        {
+          url: '/',
+          responseInterceptor: {
+            onFulfilled: (responseObj) => {
+              responseObj.data = 'test'
+              return Promise.resolve(responseObj)
+            },
+          },
+        } satisfies MakeRequestConfig,
+        'test',
+      ],
+    ])('onFulfilled handlers produce response', async (config: MakeRequestConfig, expectedData: unknown) => {
+      jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response('OK')))
+
+      const { data } = await makeRequest(config)
+
+      expect(data).toEqual(expectedData)
+    })
+
+    test.each([
+      [
+        {
+          url: '/',
+          responseInterceptor: {
+            onRejected: (error) => {
+              error.code = 'altered-code'
+              return Promise.reject(error)
+            },
+          },
+        } satisfies MakeRequestConfig,
+        new ApiError({
+          statusCode: 401,
+          message: 'Unauthorized',
+          code: 'altered-code',
+        }),
+      ],
+    ])('onRejected handlers produce error', async (config: MakeRequestConfig, expectedError: ApiError) => {
+      jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response('Unauthorized', { status: 401 })))
+
+      const call = () => makeRequest(config)
+
+      // Note: The following assertion will only check if the thrown error is an `ApiError` and if its message is correct. Its further contents **cannot** be checked like this. For this reason, this slightly bit of heretical code below is employed. It will compare the entire error shape with the expected form.
+      await expect(call).rejects.toThrowError(expectedError)
+
+      const thrownError = await getThrownApiError(call)
+      expect(thrownError.toJSON()).toEqual(expectedError.toJSON())
+    })
+
+    test.each([
+      [
+        {
+          url: '/',
+          responseInterceptor: {
+            onRejected: (error) => {
+              if (error.statusCode === 401) {
+                return Promise.resolve(new Response('Yeah'))
+              }
+
+              return Promise.reject(error)
+            },
+          },
+        } satisfies MakeRequestConfig,
+        'Yeah',
+      ],
+    ])('onRejected handlers produce response', async (config: MakeRequestConfig, expectedData: unknown) => {
+      jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response('Unauthorized', { status: 401 })))
+
+      const { data } = await makeRequest(config)
+
+      expect(data).toEqual(expectedData)
+    })
   })
 })
 

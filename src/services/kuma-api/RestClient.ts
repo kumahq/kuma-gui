@@ -1,4 +1,4 @@
-import { makeRequest } from './makeRequest'
+import { ResponseInterceptor, makeRequest } from './makeRequest'
 import type Env from '@/services/env/Env'
 
 export class RestClient {
@@ -6,6 +6,8 @@ export class RestClient {
    * The API base URL.
    */
   _baseUrl: string
+
+  _responseInterceptor: ResponseInterceptor | undefined
 
   /**
    * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
@@ -28,6 +30,16 @@ export class RestClient {
    */
   set baseUrl(baseUrl: string) {
     this._baseUrl = baseUrl
+  }
+
+  get interceptors() {
+    return {
+      response: {
+        use: (responseInterceptor: ResponseInterceptor) => {
+          this._responseInterceptor = responseInterceptor
+        },
+      },
+    }
   }
 
   async get(path: string, options?: RequestInit & { params?: any }): Promise<any> {
@@ -64,6 +76,8 @@ export class RestClient {
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
   async raw(url: string, payload?: any, rawOptions: RequestInit & { params?: any } = {}, method: string = 'GET'): Promise<{ response: Response, data: any }> {
+    const normalizedUrl = `${url.startsWith('http') ? '' : this.baseUrl}${url}`
+
     const options = normalizeParameters(rawOptions)
     options.method = method
 
@@ -86,11 +100,12 @@ export class RestClient {
 
     const normalizedOptions = normalizeParameters(options)
 
-    return makeRequest(
-      `${url.startsWith('http') ? '' : this.baseUrl}${url}`,
-      normalizedOptions,
+    return makeRequest({
+      url: normalizedUrl,
+      options: normalizedOptions,
       payload,
-    )
+      responseInterceptor: this._responseInterceptor,
+    })
   }
 }
 

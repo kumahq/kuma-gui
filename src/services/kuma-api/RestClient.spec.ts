@@ -91,7 +91,10 @@ describe('RestClient', () => {
     const restClient = new RestClient(() => 'http://localhost:5681')
     restClient.raw('/path', undefined, { params })
 
-    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions, undefined)
+    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith({
+      url: 'http://localhost:5681/path',
+      options: expectedOptions,
+    })
   })
 
   test.each([
@@ -111,6 +114,11 @@ describe('RestClient', () => {
     const restClient = new RestClient(() => baseUrlOrPath)
     restClient.raw(requestPath)
 
-    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith(expectedRequestUrl, { method: 'GET' }, undefined)
+    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith({
+      url: expectedRequestUrl,
+      options: {
+        method: 'GET',
+      },
+    })
   })
 })
