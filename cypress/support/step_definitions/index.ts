@@ -90,6 +90,11 @@ Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
 })
 
+Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: string) => {
+  cy.get(`@${urls.get(url)}.all`)
+    .should('have.length', count)
+})
+
 Then('the URL {string} was requested with', (url: string, yaml: string) => {
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
     const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
