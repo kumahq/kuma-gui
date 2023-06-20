@@ -1,11 +1,5 @@
 import { makeRequest } from './makeRequest'
-import type { EnvVars } from '@/services/env/Env'
-
-type Env = (
-  key: keyof Pick<EnvVars,
-  'KUMA_API_URL'
-  >
-) => string
+import type Env from '@/services/env/Env'
 
 export class RestClient {
   /**
@@ -17,7 +11,7 @@ export class RestClient {
    * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
    */
   constructor(
-    protected env: Env,
+    protected env: Env['var'],
   ) {
     this._baseUrl = env('KUMA_API_URL')
   }
