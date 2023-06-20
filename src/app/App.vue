@@ -117,6 +117,6 @@ const shouldShowOnboardingNotification = computed(() => store.getters.shouldShow
 }
 
 .app-main-content {
-  padding: var(--AppGap);
+  padding: var(--AppContentPadding);
 }
 </style>
