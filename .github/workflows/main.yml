@@ -90,9 +90,9 @@ jobs:
           yarn run test:browser
 
   post-checks:
-    # There is a branch protection rule on the repo that requires "Tests" to
+    # There is a branch protection rule on the repo that requires "branch-protection" to
     # be successful
-    name: Tests
+    name: branch-protection
     #
     needs:
       - lint-tests
