@@ -1,8 +1,8 @@
-Feature: index
+Feature: MainNavigation
   Background:
     Given the CSS selectors
-      | Alias         | Selector                         |
-      | main-nav      | .app-sidebar                     |
+      | Alias    | Selector     |
+      | main-nav | .app-sidebar |
 
   Scenario Outline: The navigation shows Zone items depending on mode
     Given the URL "/config" responds with
@@ -36,7 +36,7 @@ Feature: index
     Then the page title contains "<Title>"
 
     Examples:
-      | Selector                                     | Title              |
-      | $main-nav .nav-item-home a                   | Overview           |
-      | $main-nav .nav-item-zone-cp-list-view a      | Zone CPs           |
-      | [data-testid='nav-item-diagnostics']         | Diagnostics        |
+      | Selector                                | Title       |
+      | $main-nav .nav-item-home a              | Overview    |
+      | $main-nav .nav-item-zone-cp-list-view a | Zone CPs    |
+      | [data-testid='nav-item-diagnostics']    | Diagnostics |
