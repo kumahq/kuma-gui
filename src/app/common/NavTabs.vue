@@ -3,6 +3,7 @@
     :tabs="kTabs"
     :model-value="currentTabHash"
     :has-panels="false"
+    data-testid="nav-tabs"
   >
     <template
       v-for="tab in props.tabs"
