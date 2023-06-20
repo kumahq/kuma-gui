@@ -87,6 +87,7 @@ const INLINE_NON_VOID_ELEMENTS = [
         caseInsensitive: true,
       },
     }],
+    'no-useless-constructor': 'off',
   },
   overrides: [
     {

@@ -19,6 +19,7 @@ import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
 import I18n from '@/services/i18n/I18n'
 import KumaApi from '@/services/kuma-api/KumaApi'
+import { RestClient } from '@/services/kuma-api/RestClient'
 import Logger from '@/services/logger/Logger'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { token, get, constant } from '@/services/utils'
@@ -36,6 +37,7 @@ const $ = {
   enUs: token('i18n.locale.enUs'),
   kumaEnUs: token('kuma.locale.enUs'),
 
+  httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
 
   storeConfig: token<StoreOptions<State>>('storeOptions'),
@@ -103,9 +105,16 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
 
   // KumaAPI
+  [$.httpClient, {
+    service: RestClient,
+    arguments: [
+      $.env,
+    ],
+  }],
   [$.api, {
     service: KumaApi,
     arguments: [
+      $.httpClient,
       $.env,
     ],
   }],
