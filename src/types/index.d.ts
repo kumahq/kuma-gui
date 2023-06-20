@@ -18,7 +18,6 @@ export type DoughnutChartData = {
   title: string
   subtitle?: string
   showTotal?: boolean // Default: `false`
-  isStatusChart?: boolean // Default: `false`
   dataPoints: ChartDataPoint[]
 }
 

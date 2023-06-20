@@ -1,4 +1,3 @@
-import semverCompare from 'semver/functions/compare'
 import { StoreOptions } from 'vuex'
 
 import { ConfigInterface } from './modules/config/config.types'
@@ -11,21 +10,8 @@ import config from '@/store/modules/config/config'
 import notifications from '@/store/modules/notifications/notifications'
 import onboarding from '@/store/modules/onboarding/onboarding'
 import sidebar from '@/store/modules/sidebar/sidebar'
-import { MergedMeshInsights, getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
-import {
-  ChartDataPoint,
-  DoughnutChartData,
-  Mesh,
-  PolicyType,
-  ServiceInsight,
-  StatusKeyword,
-} from '@/types/index.d'
+import { Mesh, PolicyType } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { fetchAllResources } from '@/utilities/helpers'
-
-const ONLINE = 'Online'
-const OFFLINE = 'Offline'
-const PARTIALLY_DEGRADED = 'Partially degraded'
 
 /**
  * The root state of the application’s Vuex store minus all module state.
@@ -52,24 +38,11 @@ interface BareRootState {
   totalDataplaneCount: number
   version: string
   itemQueryNamespace: string
-  serviceSummary: {
-    total: number
-    internal: {
-      total: number
-      online: number
-      offline: number
-      partiallyDegraded: number
-    }
-    external: {
-      total: number
-    }
-  }
-  overviewCharts: Record<string, { data: ChartDataPoint[] }>
-  meshInsight: MergedMeshInsights
   policyTypes: PolicyType[]
   policyTypesByPath: Record<string, PolicyType | undefined>
   policyTypesByName: Record<string, PolicyType | undefined>
   globalKdsAddress: string
+  currentMeshPolicies: Record<string, { total: number }>
 }
 
 const initialState: BareRootState = {
@@ -90,49 +63,11 @@ const initialState: BareRootState = {
   totalDataplaneCount: 0,
   version: '',
   itemQueryNamespace: 'item',
-  serviceSummary: {
-    total: 0,
-    internal: {
-      total: 0,
-      online: 0,
-      offline: 0,
-      partiallyDegraded: 0,
-    },
-    external: {
-      total: 0,
-    },
-  },
-  overviewCharts: {
-    dataplanes: {
-      data: [],
-    },
-    meshes: {
-      data: [],
-    },
-    services: {
-      data: [],
-    },
-    policies: {
-      data: [],
-    },
-    zones: {
-      data: [],
-    },
-    zonesCPVersions: {
-      data: [],
-    },
-    kumaDPVersions: {
-      data: [],
-    },
-    envoyVersions: {
-      data: [],
-    },
-  },
-  meshInsight: getEmptyInsight(),
   policyTypes: [],
   policyTypesByPath: {},
   policyTypesByName: {},
   globalKdsAddress: 'grpcs://<global-kds-address>:5685',
+  currentMeshPolicies: {},
 }
 
 /**
@@ -176,18 +111,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
       getMeshList: state => state.meshes,
       getItemQueryNamespace: state => state.itemQueryNamespace,
-      getMeshInsight: state => state.meshInsight,
-      getChart: (state) => {
-        return (chartName: string, { title, subtitle = undefined, showTotal = false, isStatusChart = false }: DoughnutChartData) => {
-          return {
-            title,
-            subtitle,
-            showTotal,
-            isStatusChart,
-            dataPoints: state.overviewCharts[chartName].data,
-          }
-        }
-      },
     },
 
     mutations: {
@@ -196,40 +119,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
       SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
       SET_SELECTED_MESH: (state, mesh: typeof state.selectedMesh) => (state.selectedMesh = mesh),
       SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
-      SET_INTERNAL_SERVICE_SUMMARY: (state, { items = [] }: { items: ServiceInsight[] }) => {
-        const initialItemsState: Record<StatusKeyword, number> = {
-          online: 0,
-          partially_degraded: 0,
-          offline: 0,
-          not_available: 0,
-        }
-
-        const { online, offline, partially_degraded: partiallyDegraded } = items.reduce((acc, { status = 'offline' }) => ({
-          ...acc,
-          [status]: acc[status] + 1,
-        }), initialItemsState)
-
-        const total = online + offline + partiallyDegraded
-
-        state.serviceSummary.internal = {
-          ...state.serviceSummary.internal,
-          total,
-          online,
-          partiallyDegraded,
-          offline,
-        }
-
-        state.serviceSummary.total = state.serviceSummary.external.total + total
-      },
-      SET_EXTERNAL_SERVICE_SUMMARY: (state, { total = 0 }: { total: number }) => {
-        state.serviceSummary.external.total = total
-        state.serviceSummary.total = state.serviceSummary.internal.total + total
-      },
-      SET_MESH_INSIGHT: (state, value) => (state.meshInsight = parseInsightReducer(value)),
-      SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value.items)),
-      SET_OVERVIEW_CHART_DATA: (state, { chartName, data }: { chartName: string, data: ChartDataPoint[] }) => {
-        state.overviewCharts[chartName].data = data
-      },
       SET_POLICY_TYPES: (state, policyTypes: typeof state.policyTypes) => {
         policyTypes.sort((policyTypeA, policyTypeB) => policyTypeA.name.localeCompare(policyTypeB.name))
 
@@ -334,40 +223,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         }
       },
 
-      async fetchMeshInsights({ commit, dispatch }, mesh: string) {
-        try {
-          commit('SET_MESH_INSIGHT', await kumaApi.getMeshInsights({ name: mesh }))
-        } catch {
-          commit('SET_MESH_INSIGHT', getEmptyInsight())
-        } finally {
-          dispatch('setChartsFromMeshInsights')
-        }
-      },
-
-      async fetchServiceInsights({ commit }, mesh: string) {
-        try {
-          commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(kumaApi.getAllServiceInsightsFromMesh.bind(kumaApi, { mesh })))
-        } catch {
-          commit('SET_INTERNAL_SERVICE_SUMMARY', {})
-        }
-      },
-
-      async fetchExternalServices({ commit }, mesh: string) {
-        try {
-          commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(kumaApi.getAllExternalServicesFromMesh.bind(kumaApi, { mesh })))
-        } catch {
-          commit('SET_EXTERNAL_SERVICE_SUMMARY', {})
-        }
-      },
-
-      async fetchServices({ dispatch }, mesh: string) {
-        const externalServices = dispatch('fetchExternalServices', mesh)
-        const serviceInsights = dispatch('fetchServiceInsights', mesh)
-
-        await Promise.all([serviceInsights, externalServices])
-        await dispatch('setOverviewServicesChartData')
-      },
-
       async fetchPolicyTypes({ commit }) {
         const { policies: policyTypes } = await kumaApi.getPolicyTypes()
         const policyTypesByPath = policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.path]: policyType }), {})
@@ -376,119 +231,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         commit('SET_POLICY_TYPES', policyTypes)
         commit('SET_POLICY_TYPES_BY_PATH', policyTypesByPath)
         commit('SET_POLICY_TYPES_BY_NAME', policyTypesByName)
-      },
-
-      setChartsFromMeshInsights({ dispatch }) {
-        dispatch('setOverviewDataplanesChartData')
-        dispatch('setOverviewKumaDPVersionsChartData')
-        dispatch('setOverviewEnvoyVersionsChartData')
-      },
-
-      setOverviewServicesChartData({ state, commit }) {
-        const { internal, external } = state.serviceSummary
-
-        const data: ChartDataPoint[] = []
-
-        if (internal.total && state.selectedMesh !== null) {
-          data.push({
-            title: 'Internal',
-            data: internal.total,
-            route: {
-              name: 'services-list-view',
-              params: {
-                mesh: state.selectedMesh,
-              },
-            },
-          })
-        }
-
-        if (external.total && state.selectedMesh !== null) {
-          data.push({
-            title: 'External',
-            data: external.total,
-            route: {
-              name: 'services-list-view',
-              params: {
-                mesh: state.selectedMesh,
-              },
-            },
-          })
-        }
-
-        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'services', data })
-      },
-
-      setOverviewDataplanesChartData({ state, commit }) {
-        const total = state.meshInsight.dataplanes.total
-        const data: ChartDataPoint[] = []
-
-        if (total > 0) {
-          const online = state.meshInsight.dataplanes.online ?? 0
-          data.push({
-            title: ONLINE,
-            data: online,
-          })
-
-          const partiallyDegraded = state.meshInsight.dataplanes.partiallyDegraded ?? 0
-          if (partiallyDegraded > 0) {
-            data.push({
-              title: PARTIALLY_DEGRADED,
-              data: partiallyDegraded,
-            })
-          }
-
-          const offline = total - partiallyDegraded - online
-          if (offline > 0) {
-            data.push({
-              title: OFFLINE,
-              data: offline,
-            })
-          }
-        }
-
-        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'dataplanes', data })
-      },
-
-      setOverviewEnvoyVersionsChartData({ state, commit }) {
-        const { envoy } = state.meshInsight.dpVersions
-
-        const data: ChartDataPoint[] = Object.entries(envoy).map(([version, stats]) => ({
-          title: version,
-          data: stats.total ?? 0,
-        }))
-
-        data.sort((dataPointA, dataPointB) => {
-          if (dataPointA.title === 'unknown') {
-            return 1
-          } else if (dataPointB.title === 'unknown') {
-            return -1
-          }
-
-          return semverCompare(dataPointA.title, dataPointB.title)
-        })
-
-        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'envoyVersions', data })
-      },
-
-      setOverviewKumaDPVersionsChartData({ state, commit }) {
-        const { kumaDp } = state.meshInsight.dpVersions
-
-        const data: ChartDataPoint[] = Object.entries(kumaDp).map(([version, stats]) => ({
-          title: version,
-          data: stats.total ?? 0,
-        }))
-
-        data.sort((dataPointA, dataPointB) => {
-          if (dataPointA.title === 'unknown') {
-            return 1
-          } else if (dataPointB.title === 'unknown') {
-            return -1
-          }
-
-          return semverCompare(dataPointA.title, dataPointB.title)
-        })
-
-        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
       },
 
       updateGlobalKdsAddress({ commit }, globalKdsAddress: string) {
