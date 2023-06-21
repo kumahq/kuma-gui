@@ -1,9 +1,9 @@
 import type { EnvVars } from './Env'
 export default (
   env: (str: keyof EnvVars, d?: string) => string,
-  cookie: string = document.cookie,
+  doc: { cookie: string } = document,
 ) => (...rest: Parameters<typeof env>) => {
-  const cookies = cookie.split(';')
+  const cookies = doc.cookie.split(';')
     .map((item) => item.trim())
     .filter((item) => item !== '')
     .reduce((prev, item) => {
