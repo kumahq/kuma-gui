@@ -157,7 +157,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
       if (typeof $el !== 'undefined') {
         const dataPoint = props.data.dataPoints[$el.index]
 
-        if (dataPoint.route) {
+        if (dataPoint?.route) {
           router.push(dataPoint.route)
         }
       }
