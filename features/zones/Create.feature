@@ -1,4 +1,4 @@
-Feature: The create Zone flow works
+Feature: Zones: Zone create flow
   Background:
     Given the CSS selectors
       | Alias                               | Selector                                            |
@@ -6,8 +6,8 @@ Feature: The create Zone flow works
       | create-zone-button                  | [data-testid='create-zone-button']                  |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
-      | ingress-input-switch                | [for='zone-ingress-enabled']                |
-      | egress-input-switch                 | [for='zone-egress-enabled']                 |
+      | ingress-input-switch                | [for='zone-ingress-enabled']                        |
+      | egress-input-switch                 | [for='zone-egress-enabled']                         |
       | zone-connected-scanner              | [data-testid='zone-connected-scanner']              |
     When I visit the "/zones/create" URL
 
@@ -68,5 +68,6 @@ Feature: The create Zone flow works
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
+              status: {}
       """
     Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"

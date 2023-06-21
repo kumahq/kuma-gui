@@ -26,6 +26,7 @@
         <div
           v-else
           class="kcard-border"
+          data-testid="detail-view-details"
         >
           <ZoneEgressDetails :zone-egress-overview="zoneEgressOverview" />
         </div>

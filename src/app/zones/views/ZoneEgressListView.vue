@@ -34,6 +34,7 @@
           <div
             v-if="entity !== null"
             class="kcard-border"
+            data-testid="list-view-summary"
           >
             <ZoneEgressDetails :zone-egress-overview="entity" />
           </div>
