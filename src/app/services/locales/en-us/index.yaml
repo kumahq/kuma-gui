@@ -1,7 +1,7 @@
 services:
   routes:
     item:
-      title: Service
+      title: "{name} Service"
       breadcrumbs: Services
     items:
       title: Services

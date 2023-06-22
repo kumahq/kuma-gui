@@ -1,7 +1,9 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{route: _route}"
+  >
     <RouteTitle
-      :title="t('zone-cps.routes.item.title')"
+      :title="t('zone-cps.routes.item.title', {name: _route.params.zone})"
     />
     <AppView
       :breadcrumbs="[
@@ -46,13 +48,11 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useStore } from '@/store/store'
 import type { ZoneOverview } from '@/types/index.d'
 import { useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
-const store = useStore()
 const { t } = useI18n()
 
 const zoneOverview = ref<ZoneOverview | null>(null)
@@ -76,8 +76,6 @@ watch(() => route.params.name, function () {
 start()
 
 function start() {
-  store.dispatch('updatePageTitle', route.params.zone)
-
   loadData()
 }
 

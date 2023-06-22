@@ -1,7 +1,15 @@
+zone-cps:
+  routes:
+    item:
+      title: "{name} Zone CP"
+      breadcrumbs: Zone CPs
+    items:
+      title: Zone CPs
+      breadcrumbs: Zone CPs
 zone-ingresses:
   routes:
     item:
-      title: Zone Ingress
+      title: "{name} Zone Ingress"
       breadcrumbs: Zone Ingresses
     items:
       title: Zone Ingresses
@@ -9,7 +17,7 @@ zone-ingresses:
 zone-egresses:
   routes:
     item:
-      title: Zone Egress
+      title: "{name} Zone Egress"
       breadcrumbs: Zone Egresses
     items:
       title: Zone Egresses
@@ -131,11 +139,3 @@ zones:
       proceedText: 'Yes, delete'
       title: 'Delete Zone'
       errorText: 'An unexpected error occurred'
-zone-cps:
-  routes:
-    item:
-      title: Zone CP
-      breadcrumbs: Zone CPs
-    items:
-      title: Zone CPs
-      breadcrumbs: Zone CPs
