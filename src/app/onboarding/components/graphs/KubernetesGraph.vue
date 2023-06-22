@@ -145,14 +145,14 @@
         />
       </g>
       <template #content>
-        Configuration for all {{ PRODUCT_NAME }} resources is specified in YAML config files. The config files can be stored in an external datastore.
+        Configuration for all {{ t('common.product.name') }} resources is specified in YAML config files. The config files can be stored in an external datastore.
 
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      :title="PRODUCT_NAME"
+      :title="t('common.product.name')"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
@@ -180,7 +180,7 @@
         />
       </g>
       <template #content>
-        In Kubernetes mode, the {{ PRODUCT_NAME }} control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh.
+        In Kubernetes mode, the {{ t('common.product.name') }} control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh.
 
       </template>
     </KPop>
@@ -215,7 +215,7 @@
         />
       </g>
       <template #content>
-        You can store the YAML config files for {{ PRODUCT_NAME }} in etcd, the native datastore for Kubernetes.
+        You can store the YAML config files for {{ t('common.product.name') }} in etcd, the native datastore for Kubernetes.
       </template>
     </KPop>
 
@@ -729,5 +729,7 @@
 <script lang="ts" setup>
 import { KPop } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 </script>

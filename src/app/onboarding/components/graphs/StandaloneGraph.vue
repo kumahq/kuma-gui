@@ -96,7 +96,7 @@
       trigger="hover"
       :is-svg="true"
       tag="g"
-      :title="PRODUCT_NAME"
+      :title="t('common.product.name')"
       placement="rightEnd"
       :popover-timeout="5"
     >
@@ -156,7 +156,7 @@
         />
       </g>
       <template #content>
-        {{ PRODUCT_NAME }} attaches a data plane proxy sidecar to each service in your mesh.
+        {{ t('common.product.name') }} attaches a data plane proxy sidecar to each service in your mesh.
         This sidecar handles the mesh configuration for the service.
       </template>
     </KPop>
@@ -470,5 +470,7 @@
 <script lang="ts" setup>
 import { KPop } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 </script>

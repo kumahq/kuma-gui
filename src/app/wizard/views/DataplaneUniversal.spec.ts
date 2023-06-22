@@ -15,7 +15,6 @@ describe('DataplaneUniversal.vue', () => {
   })
 
   test('passes whole wizzard and render yaml', async () => {
-    store.state.config.tagline = import.meta.env.VITE_NAMESPACE
     store.state.meshes.items = [
       {
         name: 'testMesh',

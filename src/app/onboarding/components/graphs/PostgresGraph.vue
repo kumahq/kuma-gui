@@ -143,13 +143,13 @@
         />
       </g>
       <template #content>
-        Configuration for all {{ PRODUCT_NAME }} resources is specified in YAML config files. The config files can be stored in an external datastore.
+        Configuration for all {{ t('common.product.name') }} resources is specified in YAML config files. The config files can be stored in an external datastore.
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      :title="PRODUCT_NAME"
+      :title="t('common.product.name')"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
@@ -178,7 +178,7 @@
 
       </g>
       <template #content>
-        In Postgres mode, the {{ PRODUCT_NAME }} control plane connects to Postgres to fetch the right resources and configure the service mesh.
+        In Postgres mode, the {{ t('common.product.name') }} control plane connects to Postgres to fetch the right resources and configure the service mesh.
       </template>
     </KPop>
 
@@ -212,7 +212,7 @@
         />
       </g>
       <template #content>
-        You can store the YAML config files for {{ PRODUCT_NAME }} in a Postgres database. You can work with a managed Postgres offering or manage your own.
+        You can store the YAML config files for {{ t('common.product.name') }} in a Postgres database. You can work with a managed Postgres offering or manage your own.
       </template>
     </KPop>
 
@@ -726,5 +726,7 @@
 <script lang="ts" setup>
 import { KPop } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 </script>

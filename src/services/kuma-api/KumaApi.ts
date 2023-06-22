@@ -14,7 +14,6 @@ import type {
   DataplaneRule,
   ExternalService,
   GlobalInsights,
-  Info,
   Mesh,
   MeshGatewayDataplane,
   MeshInsight,
@@ -29,10 +28,6 @@ import type {
 } from '@/types/index.d'
 
 export default class KumaApi extends Api {
-  getInfo(): Promise<Info> {
-    return this.client.get('/')
-  }
-
   async getStatus(): Promise<'OK' | null> {
     try {
       const { response } = await this.client.raw('/')

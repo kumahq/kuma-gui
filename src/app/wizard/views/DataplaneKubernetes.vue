@@ -20,12 +20,12 @@
               </h3>
 
               <p>
-                Welcome to the wizard to create a new Dataplane resource in {{ title }}.
+                Welcome to the wizard to create a new Dataplane resource in {{ t('common.product.name') }}.
                 We will be providing you with a few steps that will get you started.
               </p>
 
               <p>
-                As you know, the {{ PRODUCT_NAME }} GUI is read-only.
+                As you know, the {{ t('common.product.name') }} GUI is read-only.
               </p>
 
               <h3>
@@ -240,7 +240,7 @@
 
               <div v-if="validate.k8sDataplaneType === 'dataplane-type-ingress'">
                 <p>
-                  {{ title }} natively supports the Kong Ingress. Do you want to deploy
+                  {{ t('common.product.name') }} natively supports the Kong Ingress. Do you want to deploy
                   Kong or another Ingress?
                 </p>
 
@@ -409,10 +409,10 @@
             <template #dataplane>
               <h3>Dataplane</h3>
               <p>
-                In {{ title }}, a Dataplane resource represents a data plane proxy running
+                In {{ t('common.product.name') }}, a Dataplane resource represents a data plane proxy running
                 alongside one of your services. Data plane proxies can be added in any Mesh
                 that you may have created, and in Kubernetes, they will be auto-injected
-                by {{ title }}.
+                by {{ t('common.product.name') }}.
               </p>
             </template>
 
@@ -455,7 +455,6 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { useKumaApi, useI18n } from '@/utilities'
 import { kebabCase } from '@/utilities/helpers'
@@ -532,7 +531,6 @@ const validate = ref({
   k8sIngressSelection: '',
 })
 
-const title = computed(() => store.getters['config/getTagline'])
 const codeOutput = computed(() => {
   const schemaCopy: any = Object.assign({}, schema.value)
   const namespace = validate.value.k8sNamespaceSelection

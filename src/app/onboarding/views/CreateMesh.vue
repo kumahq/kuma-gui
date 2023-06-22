@@ -15,7 +15,7 @@
 
         <template #content>
           <p class="mb-4 text-center">
-            When you install, {{ PRODUCT_NAME }} creates a <i>default</i> mesh, but you can add as many meshes as you need.
+            When you install, {{ t('common.product.name') }} creates a <i>default</i> mesh, but you can add as many meshes as you need.
           </p>
 
           <KTable
@@ -51,7 +51,6 @@ import OnboardingPage from '../components/OnboardingPage.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
