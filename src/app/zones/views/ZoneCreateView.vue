@@ -47,7 +47,7 @@
           <KButton
             appearance="creation"
             :icon="isChangingZone ? 'spinner' : 'plus'"
-            :disabled="!canBeSaved || isChangingZone || zone !== null"
+            :disabled="isCreateButtonDisabled"
             data-testid="create-zone-button"
             @click="createZone"
           >
@@ -56,16 +56,27 @@
         </div>
 
         <ErrorBlock
-          v-if="changingError !== null"
+          v-if="errorState.error !== null"
           class="mt-4"
-          :error="changingError"
+          :error="errorState.error"
+          :badge-appearance="errorState.badgeAppearance"
+          :icon="errorState.icon"
+          data-testid="create-zone-error"
         >
-          {{ t('zones.create.errorTitle') }}
+          <p>{{ errorState.title }}</p>
+
+          <template
+            v-if="errorState.description"
+            #message
+          >
+            <p>{{ errorState.description }}</p>
+          </template>
         </ErrorBlock>
 
         <div
           v-if="zone !== null"
           class="form-wrapper mt-4"
+          data-testid="connect-zone-instructions"
         >
           <div>
             <span class="k-input-label">
@@ -201,7 +212,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KInput, KInputSwitch, KLabel, KRadio } from '@kong/kongponents'
+import { type BadgeAppearance, KButton, KInput, KInputSwitch, KLabel, KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
@@ -212,15 +223,32 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import WizardTitleBar from '@/app/common/WizardTitleBar.vue'
 import EntityScanner from '@/app/wizard/components/EntityScanner.vue'
+import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
+
+type ErrorState = {
+  error: Error | null
+  title: string | null
+  description?: string
+  icon: string
+  badgeAppearance: BadgeAppearance
+}
 
 const { t } = useI18n()
 const kumaApi = useKumaApi()
 
+const HANDLED_STATUS_CODES = [400, 409, 500]
+
 const zone = ref<{ token: string } | null>(null)
 const isChangingZone = ref(false)
 const changingError = ref<Error | null>(null)
+const errorState = ref<ErrorState>({
+  error: null,
+  title: null,
+  icon: 'warning',
+  badgeAppearance: 'warning',
+})
 
 const isScanComplete = ref(false)
 const scanError = ref<Error | null>(null)
@@ -233,7 +261,12 @@ const zoneEgressEnabled = ref(true)
 const token = computed(() => zone.value !== null && zone.value.token ? zone.value.token : '')
 const base64EncodedToken = computed(() => token.value !== '' ? window.btoa(token.value) : '')
 
-const canBeSaved = computed(() => name.value !== '')
+const isCreateButtonDisabled = computed(() => {
+  return name.value === '' ||
+    isChangingZone.value ||
+    zone.value !== null ||
+    (errorState.value.error instanceof ApiError && errorState.value.error.statusCode === 409)
+})
 
 /**
  * Creates a Zone via request to the appropriate endpoint. Importantly, this returns a Zone object including a base64-encoded token which is needed for enabling the Zone in the subsequent steps of the Zone creation flow.
@@ -245,8 +278,21 @@ async function createZone() {
   try {
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
-    if (err instanceof Error) {
-      changingError.value = err
+    if (err instanceof ApiError && HANDLED_STATUS_CODES.includes(err.statusCode)) {
+      errorState.value = {
+        error: err,
+        title: t(`zones.create.statusError.${err.statusCode}.title`, { zoneName: name.value }),
+        description: t(`zones.create.statusError.${err.statusCode}.description`).trim(),
+        icon: err.statusCode === 500 ? 'warning' : 'errorFilled',
+        badgeAppearance: err.statusCode === 500 ? 'warning' : 'danger',
+      }
+    } else if (err instanceof Error) {
+      errorState.value = {
+        error: err,
+        title: t('zones.create.generalError.title'),
+        icon: 'warning',
+        badgeAppearance: 'danger',
+      }
     } else {
       console.error(err)
     }

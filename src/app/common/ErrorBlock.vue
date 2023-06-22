@@ -4,9 +4,9 @@
       <template #title>
         <KIcon
           class="mb-3"
-          icon="warning"
-          color="var(--black-500)"
-          secondary-color="var(--yellow-300)"
+          :icon="props.icon"
+          :color="props.icon === 'warning' ? 'var(--black-500)' : undefined"
+          :secondary-color="props.icon === 'warning' ? 'var(--yellow-300)' : undefined"
           size="42"
         />
 
@@ -16,10 +16,17 @@
       </template>
 
       <template
-        v-if="error !== null || causes.length > 0"
+        v-if="slots.message || error !== null || causes.length > 0"
         #message
       >
-        <details class="error-block-details">
+        <template v-if="slots.message">
+          <slot name="message" />
+        </template>
+
+        <details
+          v-else
+          class="error-block-details"
+        >
           <summary>Details</summary>
 
           <p v-if="error !== null">
@@ -39,17 +46,17 @@
     </KEmptyState>
 
     <div
-      v-if="error instanceof ApiError"
+      v-if="(error instanceof ApiError)"
       class="badge-list"
     >
       <KBadge
         v-if="error.code"
-        appearance="warning"
+        :appearance="props.badgeAppearance"
       >
         {{ error.code }}
       </KBadge>
 
-      <KBadge appearance="warning">
+      <KBadge :appearance="props.badgeAppearance">
         {{ error.statusCode }}
       </KBadge>
     </div>
@@ -57,16 +64,30 @@
 </template>
 
 <script lang="ts" setup>
-import { KBadge, KEmptyState, KIcon } from '@kong/kongponents'
-import { computed, PropType } from 'vue'
+import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
+import { computed, PropType, useSlots } from 'vue'
 
 import { ApiError } from '@/services/kuma-api/ApiError'
+
+const slots = useSlots()
 
 const props = defineProps({
   error: {
     type: [Error, null] as PropType<Error | null>,
     required: false,
     default: null,
+  },
+
+  icon: {
+    type: String,
+    required: false,
+    default: 'warning',
+  },
+
+  badgeAppearance: {
+    type: String as PropType<BadgeAppearance>,
+    required: false,
+    default: 'warning',
   },
 })
 

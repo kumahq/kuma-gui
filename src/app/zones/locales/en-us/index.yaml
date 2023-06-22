@@ -131,7 +131,18 @@ zones:
         connectDescription: 'Next, run the following command to connect the Zone.'
         connectCommand: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
-    errorTitle: 'Could not create the Zone'
+    generalError:
+      title: 'Could not create the Zone'
+    statusError:
+      400:
+        title: 'The Zone name {zoneName} is invalid'
+        description: 'Zone names may contain alphanumerical characters, dashes (-), and underscores (_).'
+      409:
+        title: 'A Zone with the name {zoneName} already exists'
+        description: 'If you want to connect a Zone with this name, you can delete the existing one and recreate it.'
+      500:
+        title: 'An error occurred while creating the Zone {zoneName}'
+        description: 'You may retry this operation.'
   delete:
     confirmModal:
       text1: 'Are you sure you want to delete the Zone {zoneName}?'
