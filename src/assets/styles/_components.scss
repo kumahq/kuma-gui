@@ -6,7 +6,7 @@ To be used in places where we solely need KCard’s frame properties.
 
 .kcard-border {
   border: var(--KCardBorder);
-  border-radius: --KCardBorderRadius;
+  border-radius: var(--KCardBorderRadius);
   background-color: var(--KCardBackground);
 }
 
