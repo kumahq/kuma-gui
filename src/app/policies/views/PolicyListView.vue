@@ -50,7 +50,6 @@
               @table-action="handleTableAction"
               @load-data="loadData"
             >
-              >
               <template #additionalControls>
                 <KSelect
                   label="Policies"
