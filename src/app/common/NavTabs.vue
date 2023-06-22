@@ -3,6 +3,7 @@
     :tabs="kTabs"
     :model-value="currentTabHash"
     :has-panels="false"
+    class="nav-tabs"
     data-testid="nav-tabs"
   >
     <template
@@ -63,3 +64,9 @@ const currentTabHash = computed(() => {
   return '#' + routeName
 })
 </script>
+
+<style lang="scss" scoped>
+.nav-tabs {
+  margin-bottom: var(--AppGap);
+}
+</style>
