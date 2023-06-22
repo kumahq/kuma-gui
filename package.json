@@ -21,8 +21,8 @@
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn --validate-https",
     "lint:ts": "vue-tsc --noEmit",
     "test": "cross-env TZ=UTC VITE_ZONE_CREATION_FLOW=enabled jest",
-    "test:browser": "cypress run",
-    "test:browser:view": "cross-env KUMA_BASE_URL=http://localhost:8080/gui cypress open",
+    "test:browser": "cross-env TZ=UTC cypress run",
+    "test:browser:view": "cross-env TZ=UTC KUMA_BASE_URL=http://localhost:8080/gui cypress open",
     "test:watch": "yarn run test --watch"
   },
   "engines": {

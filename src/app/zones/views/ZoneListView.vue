@@ -55,6 +55,7 @@
           <div
             v-if="entity !== null"
             class="kcard-border"
+            data-testid="list-view-summary"
           >
             <ZoneDetails :zone-overview="entity" />
           </div>

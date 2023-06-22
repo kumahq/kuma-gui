@@ -40,6 +40,7 @@
           <div
             v-if="entity !== null"
             class="kcard-border"
+            data-testid="list-view-summary"
           >
             <ZoneIngressDetails :zone-ingress-overview="entity" />
           </div>
