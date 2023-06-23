@@ -99,7 +99,7 @@ Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: st
     .should('have.length', count)
 })
 
-Then('the URL {string} was requested with', (url: string, yaml: string) => {
+Then(/^the URL "(.*)" was requested with(?: only)?$/, (url: string, exact: string, yaml: string) => {
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
     const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
     Object.entries(data).forEach(
@@ -108,16 +108,32 @@ Then('the URL {string} was requested with', (url: string, yaml: string) => {
           case 'method':
             expect(xhr.request[key]).to.equal(value)
             break
-          case 'body':
-            Object.entries(data[key]).forEach(([prop, value]) => {
+          case 'body': {
+            const bodyEntries = Object.entries(data[key])
+
+            bodyEntries.forEach(([prop, value]) => {
               expect(xhr.request[key][prop]).to.equal(value)
             })
+
+            // Asserts that the expected body data and the requested body data have the same amount of keys. If the previous assertion passed, that implies that the request body doesn’t have extraneous properties. This can be useful when utilizing PATCH requests.
+            if (exact) {
+              expect(Object.keys(xhr.request[key]).length).to.equal(bodyEntries.length)
+            }
+
             break
-          case 'searchParams':
-            Object.entries(data[key]).forEach(([key, value]) => {
+          }
+          case 'searchParams': {
+            const searchParamsEntries = Object.entries(data[key])
+            searchParamsEntries.forEach(([key, value]) => {
               expect(xhr.request.query[key]).to.equal(value)
             })
+
+            if (exact) {
+              expect(Object.keys(xhr.request.query[key]).length).to.equal(searchParamsEntries.length)
+            }
+
             break
+          }
         }
       },
     )
