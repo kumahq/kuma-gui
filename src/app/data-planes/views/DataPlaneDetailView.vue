@@ -50,13 +50,11 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useStore } from '@/store/store'
 import { DataPlane, DataPlaneOverview } from '@/types/index.d'
 import { useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const route = useRoute()
-const store = useStore()
 const { t } = useI18n()
 
 const dataPlane = ref<DataPlane | null>(null)
@@ -108,5 +106,4 @@ watch(() => route.params.dataPlane, function () {
 
 loadData()
 
-store.dispatch('updatePageTitle', route.params.dataPlane)
 </script>
