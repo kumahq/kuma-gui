@@ -85,9 +85,18 @@ When('I {string} {string} into the {string} element', (event: string, text: stri
   }
 })
 
+When('I clear the {string} element', (selector: string) => {
+  $(selector).clear()
+})
+
 // assert
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
+})
+
+Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: string) => {
+  cy.get(`@${urls.get(url)}.all`)
+    .should('have.length', count)
 })
 
 Then('the URL {string} was requested with', (url: string, yaml: string) => {
