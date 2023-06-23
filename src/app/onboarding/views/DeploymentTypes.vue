@@ -12,7 +12,7 @@
             </template>
 
             <template #description>
-              <p>{{ PRODUCT_NAME }} can be deployed in standalone or multi-zone mode.</p>
+              <p>{{ t('common.product.name') }} can be deployed in standalone or multi-zone mode.</p>
             </template>
           </onboardingheading>
         </template>
@@ -68,7 +68,6 @@ import {
   useMultizoneGraph,
   useStandaloneGraph,
 } from '@/components'
-import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 

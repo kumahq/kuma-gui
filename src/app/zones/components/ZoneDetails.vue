@@ -85,14 +85,13 @@ import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vu
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
-import { useStore } from '@/store/store'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'
-import { useI18n } from '@/utilities'
+import { useI18n, useEnv } from '@/utilities'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
 import { getZoneDpServerAuthType } from '@/utilities/helpers'
 
 const { t } = useI18n()
-const store = useStore()
+const env = useEnv()
 
 const TABS = [
   {
@@ -158,7 +157,7 @@ const warnings = computed<ZoneCompatibility[]>(() => {
         kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
         payload: {
           zoneCpVersion: kumaCpVersion,
-          globalCpVersion: store.getters['config/getVersion'],
+          globalCpVersion: env('KUMA_VERSION'),
         },
       })
     }

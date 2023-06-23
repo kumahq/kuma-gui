@@ -12,7 +12,7 @@
       <template #alertMessage>
         <div class="alert-content">
           <div>
-            <strong>Welcome to {{ PRODUCT_NAME }}!</strong> We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
+            <strong>Welcome to {{ t('common.product.name') }}!</strong> We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
           </div>
 
           <div>
@@ -35,8 +35,9 @@
 import { KAlert, KButton } from '@kong/kongponents'
 import { ref } from 'vue'
 
-import { PRODUCT_NAME } from '@/constants'
+import { useI18n } from '@/utilities'
 
+const { t } = useI18n()
 const alertClosed = ref(false)
 
 function closeAlert() {

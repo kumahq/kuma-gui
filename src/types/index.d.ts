@@ -57,16 +57,6 @@ export type TableData = {
   data: any
 }
 
-export type Info = {
-  hostname: string
-  tagline: string
-  version: string
-  basedOnKuma?: string
-  instanceId: string
-  clusterId: string
-  gui: string
-}
-
 export interface KDSSubscription {
   config: string
   id: string

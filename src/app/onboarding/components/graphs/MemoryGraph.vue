@@ -89,13 +89,13 @@
 
       </g>
       <template #content>
-        You can store the YAML config files for {{ PRODUCT_NAME }} in memory to skip the complexity of setting up a reliable datastore. For testing only. Not for production.
+        You can store the YAML config files for {{ t('common.product.name') }} in memory to skip the complexity of setting up a reliable datastore. For testing only. Not for production.
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      :title="PRODUCT_NAME"
+      :title="t('common.product.name')"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
@@ -124,7 +124,7 @@
 
       </g>
       <template #content>
-        Since everything is stored in-memory, if {{ PRODUCT_NAME }} restarts the configuration will be lost. This mode is only recommended in development/testing mode.
+        Since everything is stored in-memory, if {{ t('common.product.name') }} restarts the configuration will be lost. This mode is only recommended in development/testing mode.
       </template>
     </KPop>
 
@@ -394,5 +394,7 @@
 <script lang="ts" setup>
 import { KPop } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 </script>

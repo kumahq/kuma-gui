@@ -356,7 +356,4 @@ export interface ClientConfigInterface {
 export interface ConfigInterface {
   clientConfig: ClientConfigInterface | null
   status: string | null
-  tagline: string | null
-  version: string | null
-  kumaDocsVersion: string
 }

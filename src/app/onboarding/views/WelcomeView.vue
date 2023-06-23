@@ -9,12 +9,12 @@
           <template #header>
             <OnboardingHeading>
               <template #title>
-                Welcome to {{ PRODUCT_NAME }}
+                Welcome to {{ t('common.product.name') }}
               </template>
 
               <template #description>
                 <p>
-                  Congratulations on downloading {{ PRODUCT_NAME }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
+                  Congratulations on downloading {{ t('common.product.name') }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
                 </p>
 
                 <p>
@@ -72,7 +72,6 @@ import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
@@ -87,7 +86,7 @@ const enviromentFormatted = computed(() => {
 const isMulticluster = computed(() => store.getters['config/getMulticlusterStatus'])
 const statuses = computed(() => [
   {
-    name: `Run ${PRODUCT_NAME} control plane`,
+    name: `Run ${t('common.product.name')} control plane`,
     status: true,
   },
   {

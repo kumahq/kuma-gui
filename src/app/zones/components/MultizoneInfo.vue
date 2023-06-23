@@ -7,7 +7,7 @@
         size="42"
       />
 
-      <p>{{ PRODUCT_NAME }} is running in Standalone mode.</p>
+      <p>{{ t('common.product.name') }} is running in Standalone mode.</p>
     </template>
 
     <template #message>
@@ -31,8 +31,8 @@
 <script lang="ts" setup>
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
-import { useEnv } from '@/utilities'
+import { useEnv, useI18n } from '@/utilities'
 
 const env = useEnv()
+const { t } = useI18n()
 </script>
