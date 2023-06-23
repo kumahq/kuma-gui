@@ -77,10 +77,12 @@ When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, v
 })
 
 When('I {string} {string} into the {string} element', (event: string, text: string, selector: string) => {
+  const method = text === '' ? 'clear' : 'type'
+
   switch (event) {
     case 'input':
     case 'type':
-      $(selector).type(text)
+      $(selector)[method](text)
       break
   }
 })
