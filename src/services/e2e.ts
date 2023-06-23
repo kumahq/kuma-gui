@@ -1,5 +1,7 @@
-import type { EnvVars } from '@/services/env/Env'
-import { token, ServiceDefinition, createInjections } from '@/services/utils'
+import type { ProductionTokens } from './production'
+import type { DevelopmentTokens } from '@/services/development'
+import Env, { EnvVars } from '@/services/env/Env'
+import { token, createInjections, ServiceConfigurator, Alias } from '@/services/utils'
 import type { Callback, Options } from '@/test-support'
 import { mocker } from '@/test-support/intercept'
 
@@ -9,24 +11,21 @@ const env = (
 ) => (key: keyof EnvVars, d = '') => {
   return env[key] || d
 }
-type AEnv = ReturnType<typeof env>
 type Server = typeof cy
 // temporary intercept returning Mocker
 type Mocker = (route: string, opts?: Options, cb?: Callback) => ReturnType<typeof cy['intercept']>
 const $ = {
   EnvVars: token<EnvVars>('EnvVars'),
-  env: token<AEnv>('env'),
+  env: token<Alias<Env['var']>>('env'),
 
   cy: token<Server>('cy'),
   mockServer: token('mockServer'),
   mock: token<Mocker>('mocker'),
-  Env: token('Env'),
-
-  logger: token('logger'),
-  bootstrap: token('bootstrap'),
 }
-type Token = ReturnType<typeof token>
-export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [
+export type e2eTokens = typeof $
+
+type SupportedTokens = ProductionTokens & DevelopmentTokens & e2eTokens
+export const services: ServiceConfigurator<SupportedTokens> = (app) => [
   [$.EnvVars, {
     constant: {
       KUMA_API_URL: Cypress.env('VITE_KUMA_API_SERVER_URL'),

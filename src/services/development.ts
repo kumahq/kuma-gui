@@ -4,8 +4,9 @@ import Logger from './logger/Logger'
 import cookied from '@/services/env/CookiedEnv'
 import type Env from '@/services/env/Env'
 import debugI18n from '@/services/i18n/DebugI18n'
+import type { ProductionTokens } from '@/services/production'
 import { token, get } from '@/services/utils'
-import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, Token, TokenType } from '@/services/utils'
+import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, TokenType } from '@/services/utils'
 import type { FS } from '@/test-support'
 import { fakeApi } from '@/test-support'
 import { fs } from '@/test-support/mocks/fs'
@@ -23,17 +24,11 @@ const $ = {
   fakeFS: token<FS>('fake.fs'),
   kumaFS: token<FS>('fake.fs.kuma'),
 }
-type I18n = ReturnType<typeof debugI18n>
-type SupportedTokens = {
-  Env: Token
-  EnvVars: Token
-  i18n: Token
-  logger: Token
-  msw: Token
-  bootstrap: Token
-  env: Token<Alias<Env['var']>>
-}
+export type DevelopmentTokens = typeof $
 
+type I18n = ReturnType<typeof debugI18n>
+
+type SupportedTokens = ProductionTokens & DevelopmentTokens
 export const services: ServiceConfigurator<SupportedTokens> = (app) => [
 
   [token<Decorator<typeof app.bootstrap>>('bootstrap.with.mockServer'), {

@@ -67,7 +67,9 @@ const $ = {
   app: token<ReturnType<typeof useApp>>('app'),
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
 }
-type SupportedTokens = typeof $
+export type ProductionTokens = typeof $
+
+type SupportedTokens = ProductionTokens
 export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   // Env
   [$.EnvVars, {
