@@ -80,20 +80,6 @@ const sumVersions = (curr: DpVersions = { kumaDp: {}, envoy: {} }, next: DpVersi
   envoy: sumDependencyVersion(curr.envoy, next.envoy),
 })
 
-export function getEmptyInsight(): MergedMeshInsights {
-  return {
-    meshesTotal: 0,
-    dataplanes: { online: 0, partiallyDegraded: 0, total: 0 },
-    policies: {},
-    dpVersions: { kumaDp: {}, envoy: {} },
-    services: { total: 0, internal: 0, external: 0 },
-  }
-}
-
-export function parseInsightReducer(insight?: MeshInsight) {
-  return mergeInsightsReducer(insight ? [insight] : [])
-}
-
 export function mergeInsightsReducer(insights: MeshInsight[]): MergedMeshInsights {
   return insights.reduce(
     (acc, insight) => ({

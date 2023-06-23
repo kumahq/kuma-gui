@@ -122,6 +122,7 @@ import MeshResources from '@/app/common/MeshResources.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { Mesh, MeshInsight } from '@/types/index.d'
@@ -140,7 +141,7 @@ const mesh = ref<Mesh | null>(null)
 const meshInsights = ref<MeshInsight | null>(null)
 
 const basicMesh = computed(() => {
-  if (mesh.value === null) {
+  if (mesh.value === null || meshInsights.value === null) {
     return null
   }
 
@@ -149,7 +150,7 @@ const basicMesh = computed(() => {
     name,
     created: humanReadableDate(creationTime),
     modified: humanReadableDate(modificationTime),
-    'Data Plane Proxies': store.state.meshInsight.dataplanes.total,
+    'Data Plane Proxies': meshInsights.value.dataplanes.total,
   }
 })
 
@@ -178,7 +179,7 @@ const totalPolicyCount = computed(() => store.state.sidebar.insights.mesh.polici
 const policyCounts = computed(() => {
   return store.state.policyTypes.map((policyType) => ({
     ...policyType,
-    length: store.state.meshInsight.policies[policyType.name]?.total ?? 0,
+    length: meshInsights.value?.policies[policyType.name]?.total ?? 0,
   }))
 })
 
@@ -202,6 +203,8 @@ async function loadMesh(): Promise<void> {
   try {
     mesh.value = await kumaApi.getMesh({ name })
     meshInsights.value = await kumaApi.getMeshInsights({ name })
+    const meshInsight = mergeInsightsReducer([meshInsights.value])
+    store.state.currentMeshPolicies = meshInsight.policies
   } catch (error) {
     hasError.value = true
     mesh.value = null
