@@ -1,13 +1,23 @@
 import { describe, expect, test } from '@jest/globals'
 
-import { mergeInsightsReducer, parseInsightReducer } from './mesh-insights'
+import { mergeInsightsReducer } from './mesh-insights'
+import type { MeshInsight } from '@/types/index.d'
 
-describe('mesh-insights', () => {
-  const meshInsightObject = {
+function getMeshInsight(): MeshInsight {
+  return {
+    type: 'MeshInsight',
+    name: '',
+    creationTime: '',
+    modificationTime: '',
+    lastSync: '',
     dataplanes: {
       total: 13,
       online: 3,
       partiallyDegraded: 5,
+    },
+    dataplanesByType: {
+      standard: {},
+      gateway: {},
     },
     policies: {
       Secret: {
@@ -45,14 +55,14 @@ describe('mesh-insights', () => {
         },
       },
     },
+    mTLS: {},
+    services: {},
   }
+}
 
-  test('calls parseInsightReducer without any data', () => {
-    expect(parseInsightReducer()).toMatchSnapshot()
-  })
-
-  test('calls parseInsightReducer with mesh insights', () => {
-    expect(parseInsightReducer(meshInsightObject)).toMatchSnapshot()
+describe('mesh-insights', () => {
+  test('calls mergeInsightsReducer with mesh insights', () => {
+    expect(mergeInsightsReducer([getMeshInsight()])).toMatchSnapshot()
   })
 
   test('calls mergeInsightsReducer with an empty array', () => {
@@ -62,51 +72,63 @@ describe('mesh-insights', () => {
   test('calls mergeInsightsReducer with mesh insights array', () => {
     expect(
       mergeInsightsReducer([
-        meshInsightObject,
+        getMeshInsight(),
         {
-          policies: {
-            Secret: {
-              total: 6,
-            },
-            ServiceInsight: {
-              total: 11,
-            },
-            TrafficPermission: {
-              total: 3,
-            },
-            TrafficRoute: {
-              total: 5,
-            },
-          },
-        },
-
-        {
-          dataplanes: {
-            total: 13,
-            online: 3,
-            partiallyDegraded: 5,
-          },
-        },
-        {
-          dpVersions: {
-            kumaDp: {
-              '1.0.4': {
+          ...getMeshInsight(),
+          ...{
+            policies: {
+              Secret: {
+                total: 6,
+              },
+              ServiceInsight: {
+                total: 11,
+              },
+              TrafficPermission: {
                 total: 3,
-                online: 2,
               },
-              '1.0.5': {
-                total: 1,
-                online: 1,
+              TrafficRoute: {
+                total: 5,
               },
             },
           },
         },
         {
-          policies: {},
-          dataplanes: {},
-          dpVersions: {
-            kumaDp: {},
-            envoy: {},
+          ...getMeshInsight(),
+          ...{
+            dataplanes: {
+              total: 13,
+              online: 3,
+              partiallyDegraded: 5,
+            },
+          },
+        },
+        {
+          ...getMeshInsight(),
+          ...{
+            dpVersions: {
+              kumaDp: {
+                '1.0.4': {
+                  total: 3,
+                  online: 2,
+                },
+                '1.0.5': {
+                  total: 1,
+                  online: 1,
+                },
+              },
+              envoy: {},
+            },
+          },
+        },
+        {
+          ...getMeshInsight(),
+          ...{
+            policies: {},
+            dataplanes: {},
+            dpVersions: {
+              kumaDp: {},
+              envoy: {},
+            },
           },
         },
       ]),

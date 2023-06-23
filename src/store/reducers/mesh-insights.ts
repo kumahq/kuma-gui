@@ -1,11 +1,25 @@
-type TODO = any
-interface DataPlaneStats {
-  online?: number
-  partiallyDegraded?: number
-  total?: number
+import type { DataPlaneProxyStatus, DpVersions, MeshInsight, ResourceStat, ServiceStatus } from '@/types/index.d'
+
+export type MergedMeshInsights = {
+  meshesTotal: number
+  dataplanes: {
+    online: number
+    partiallyDegraded: number
+    total: number
+  }
+  policies: Record<string, ResourceStat>
+  dpVersions: {
+    kumaDp: Record<string, DataPlaneProxyStatus>
+    envoy: Record<string, DataPlaneProxyStatus>
+  }
+  services: {
+    total: number
+    internal: number
+    external: number
+  }
 }
 
-const sumDataplanes = (curr: DataPlaneStats = {}, next: DataPlaneStats = {}) => {
+const sumDataplanes = (curr: DataPlaneProxyStatus = {}, next: DataPlaneProxyStatus = {}) => {
   const currOnline = curr.online || 0
   const nextOnline = next.online || 0
   const currPartiallyDegraded = curr.partiallyDegraded || 0
@@ -20,52 +34,74 @@ const sumDataplanes = (curr: DataPlaneStats = {}, next: DataPlaneStats = {}) => 
   }
 }
 
-const sumPolicies = (curr: Record<string, {total: string}>, next: any = {}) =>
+const sumServices = (curr: ServiceStatus = {}, next: ServiceStatus = {}) => {
+  const currTotal = curr.total ?? 0
+  const nextTotal = next.total ?? 0
+  const total = currTotal + nextTotal
+
+  const currInternal = curr.internal ?? 0
+  const nextInternal = next.internal ?? 0
+  const internal = currInternal + nextInternal
+
+  const currExternal = curr.external ?? 0
+  const nextExternal = next.external ?? 0
+  const external = currExternal + nextExternal
+
+  return {
+    total,
+    internal,
+    external,
+  }
+}
+
+const sumPolicies = (curr: Record<string, ResourceStat> = {}, next: Record<string, ResourceStat> = {}) =>
   Object.entries(next).reduce((acc, [name, stat]) => {
     const currTotal = acc[name] ? acc[name].total : 0
 
     return {
       ...acc,
       [name]: {
-        total: currTotal + (stat as TODO).total,
+        total: currTotal + stat.total,
       },
     }
   }, curr)
 
-const sumDependencyVersion = (curr: TODO = {}, next: TODO = {}): TODO =>
+const sumDependencyVersion = (curr: Record<string, DataPlaneProxyStatus> = {}, next: Record<string, DataPlaneProxyStatus> = {}) =>
   Object.entries(next).reduce(
-    (acc, [version, stat]) => ({
+    (acc, [version, status]) => ({
       ...acc,
-      [version]: sumDataplanes(acc[version], stat as TODO),
+      [version]: sumDataplanes(acc[version], status),
     }),
     curr,
   )
 
-const sumVersions = (curr: TODO = {}, next: TODO = {}) => ({
+const sumVersions = (curr: DpVersions = { kumaDp: {}, envoy: {} }, next: DpVersions = { kumaDp: {}, envoy: {} }) => ({
   kumaDp: sumDependencyVersion(curr.kumaDp, next.kumaDp),
   envoy: sumDependencyVersion(curr.envoy, next.envoy),
 })
 
-export function getEmptyInsight() {
+export function getEmptyInsight(): MergedMeshInsights {
   return {
     meshesTotal: 0,
     dataplanes: { online: 0, partiallyDegraded: 0, total: 0 },
     policies: {},
     dpVersions: { kumaDp: {}, envoy: {} },
+    services: { total: 0, internal: 0, external: 0 },
   }
 }
 
-export function parseInsightReducer(insight: TODO = {}) {
-  return mergeInsightsReducer([insight])
+export function parseInsightReducer(insight?: MeshInsight) {
+  return mergeInsightsReducer(insight ? [insight] : [])
 }
 
-export function mergeInsightsReducer(insights: TODO = []) {
+export function mergeInsightsReducer(insights: MeshInsight[]): MergedMeshInsights {
   return insights.reduce(
-    (acc: TODO, insight: TODO) => ({
+    (acc, insight) => ({
       meshesTotal: insights.length,
       dataplanes: sumDataplanes(acc.dataplanes, insight.dataplanes),
       policies: sumPolicies(acc.policies, insight.policies),
       dpVersions: sumVersions(acc.dpVersions, insight.dpVersions),
+      services: sumServices(acc.services, insight.services),
     }),
     {
       meshesTotal: 0,
@@ -78,6 +114,11 @@ export function mergeInsightsReducer(insights: TODO = []) {
       dpVersions: {
         kumaDp: {},
         envoy: {},
+      },
+      services: {
+        total: 0,
+        internal: 0,
+        external: 0,
       },
     },
   )

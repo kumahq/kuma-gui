@@ -5,10 +5,13 @@ import { RouteLocationNamedRaw } from 'vue-router'
  */
 export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
+export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
+
 export type ChartDataPoint = {
   title: string
   data: number
   route?: RouteLocationNamedRaw
+  statusKeyword?: StatusKeyword
 }
 
 export type DoughnutChartData = {
@@ -54,8 +57,6 @@ export type TableData = {
   headers: TableHeader[]
   data: any
 }
-
-export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
 
 export type Info = {
   hostname: string
@@ -462,6 +463,11 @@ export interface Mesh extends Entity {
   routing?: any
 }
 
+export type DpVersions = {
+  kumaDp: Record<string, DataPlaneProxyStatus>
+  envoy: Record<string, DataPlaneProxyStatus>
+}
+
 /**
  * Overview entity as returned via the `/meshes-insights/:mesh` endpoint.
  */
@@ -474,10 +480,7 @@ export interface MeshInsight extends Entity {
     gateway: DataPlaneProxyStatus
   }
   policies: Record<string, ResourceStat>
-  dpVersions: {
-    kumaDp: Record<string, DataPlaneProxyStatus>
-    envoy: Record<string, DataPlaneProxyStatus>
-  }
+  dpVersions: DpVersions
   mTLS: {
     issuedBackends?: Record<string, DataPlaneProxyStatus>
     supportedBackends?: Record<string, DataPlaneProxyStatus>

@@ -48,7 +48,7 @@ import { computed, PropType } from 'vue'
 import { Doughnut } from 'vue-chartjs'
 import { useRouter } from 'vue-router'
 
-import { DoughnutChartData } from '@/types/index.d'
+import { DoughnutChartData, StatusKeyword } from '@/types/index.d'
 
 const CHART_COLORS = [
   '#67b7dc',
@@ -62,10 +62,11 @@ const CHART_COLORS = [
   '#67dc75',
 ]
 
-const STATUS_COLORS: Record<string, string> = {
-  Online: '#19a654',
-  Offline: '#bf1330',
-  'Partially degraded': '#f2a230',
+const STATUS_COLORS: Record<StatusKeyword, string> = {
+  online: '#19a654',
+  offline: '#bf1330',
+  partially_degraded: '#f2a230',
+  not_available: '#b6b6bd',
 }
 
 ChartJS.register(
@@ -99,7 +100,7 @@ const chartData = computed<ChartData<'doughnut'>>(function () {
   if (props.data.dataPoints.length > 0) {
     labels = props.data.dataPoints.map((dataPoint) => dataPoint.title)
     data = props.data.dataPoints.map((dataPoint) => dataPoint.data)
-    backgroundColor = props.data.dataPoints.map((dataPoint, index) => props.data.isStatusChart === true ? STATUS_COLORS[dataPoint.title] : CHART_COLORS[index % CHART_COLORS.length])
+    backgroundColor = props.data.dataPoints.map((dataPoint, index) => dataPoint.statusKeyword ? STATUS_COLORS[dataPoint.statusKeyword] : CHART_COLORS[index % CHART_COLORS.length])
   } else {
     labels = []
     data = [1]
