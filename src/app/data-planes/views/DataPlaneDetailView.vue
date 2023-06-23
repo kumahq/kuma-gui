@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
@@ -69,6 +69,9 @@ const props = defineProps({
     default: false,
   },
 })
+
+loadData()
+
 async function loadData() {
   error.value = null
   isLoading.value = true
@@ -91,19 +94,4 @@ async function loadData() {
     isLoading.value = false
   }
 }
-
-watch(() => route.params.mesh, function () {
-  if (route.name === 'data-plane-detail-view') {
-    loadData()
-  }
-})
-
-watch(() => route.params.dataPlane, function () {
-  if (route.name === 'data-plane-detail-view') {
-    loadData()
-  }
-})
-
-loadData()
-
 </script>

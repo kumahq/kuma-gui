@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import semverCompare from 'semver/functions/compare'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
@@ -165,17 +165,15 @@ const envoyVersionsChartData = computed(() => {
   }
 })
 
-watch(() => route.params.mesh, function (newMesh) {
-  if (typeof newMesh === 'string') {
-    loadData(newMesh)
-  }
-}, { immediate: true })
+loadData()
 
-async function loadData(mesh: string) {
+async function loadData() {
   isLoading.value = true
 
+  const name = route.params.mesh as string
+
   try {
-    const originalMeshInsight = await kumaApi.getMeshInsights({ name: mesh })
+    const originalMeshInsight = await kumaApi.getMeshInsights({ name })
     const meshInsight = mergeInsightsReducer([originalMeshInsight])
 
     setDataPlaneProxyStatus(meshInsight)

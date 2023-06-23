@@ -98,7 +98,7 @@ import {
   KSelect,
   SelectItem,
 } from '@kong/kongponents'
-import { computed, PropType, ref, watch } from 'vue'
+import { computed, PropType, ref } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
 import PolicyDetails from '../components/PolicyDetails.vue'
@@ -172,15 +172,6 @@ const policyTypeNamesWithNoPolicies = computed(() => {
   return store.state.policyTypes
     .filter((policyType) => (store.state.sidebar.insights.mesh.policies[policyType.name] ?? 0) === 0)
     .map((policyType) => policyType.name)
-})
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== props.policyPath) {
-    return
-  }
-
-  loadData(0)
 })
 
 start()

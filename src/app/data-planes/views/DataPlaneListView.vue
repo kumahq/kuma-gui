@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import DataPlaneList from '../components/DataPlaneList.vue'
@@ -91,15 +91,6 @@ const dppFilterFields = computed(() => {
     ...BASE_FILTER_FIELDS,
     ...(props.isGatewayView ? GATEWAY_FILTER_FIELDS : DPP_FILTER_FIELDS),
   }
-})
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'data-planes-list-view' && route.name !== 'gateways-list-view') {
-    return
-  }
-
-  loadData(0)
 })
 
 function start() {
