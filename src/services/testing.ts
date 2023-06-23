@@ -1,7 +1,9 @@
 import { setupServer } from 'msw/node'
 
+import createDisabledLogger from './logger/DisabledLogger'
 import { Alias, ServiceConfigurator, token } from './utils'
 import CliEnv from '@/services/env/CliEnv'
+import Logger from '@/services/logger/Logger'
 import { mocker, fakeApi, FS } from '@/test-support'
 import type { Mocker } from '@/test-support'
 
@@ -10,6 +12,11 @@ const $ = {
 }
 
 export const services: ServiceConfigurator = (app) => [
+  [token<Logger>('logger'), {
+    service: createDisabledLogger,
+    decorates: app.logger,
+  }],
+
   [app.msw, {
     service: (env: Alias<CliEnv['var']>, fs: FS) => {
       const mock = fakeApi(env, fs)
