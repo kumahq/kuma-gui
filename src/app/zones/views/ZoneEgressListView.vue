@@ -45,8 +45,8 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
+import { PropType, ref } from 'vue'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
@@ -72,8 +72,6 @@ const EMPTY_STATE = {
   title: 'No Data',
   message: 'There are no Zone Egresses present.',
 }
-
-const route = useRoute()
 
 const props = defineProps({
   selectedZoneEgressName: {
@@ -101,15 +99,6 @@ const tableData = ref<{ headers: TableHeader[], data: ZoneEgressOverviewTableRow
 const entity = ref<ZoneEgressOverview | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'zone-egress-list-view') {
-    return
-  }
-
-  loadData(0)
-})
 
 loadData(props.offset)
 
