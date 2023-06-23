@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
+import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
 import { routes as dataplaneRoutes } from '@/app/data-planes'
 import { routes as diagnosticsRoutes } from '@/app/diagnostics'
@@ -112,7 +113,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
 
   // Logger
   [$.logger, {
-    service: Logger,
+    service: createDisabledLogger,
   }],
 
   // Store
