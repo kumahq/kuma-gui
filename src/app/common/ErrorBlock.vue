@@ -16,10 +16,10 @@
       </template>
 
       <template
-        v-if="slots.message || error !== null || causes.length > 0"
+        v-if="$slots.message || error !== null || invalidParameters.length > 0"
         #message
       >
-        <template v-if="slots.message">
+        <template v-if="$slots.message">
           <slot name="message" />
         </template>
 
@@ -33,12 +33,12 @@
             {{ error.message }}
           </p>
 
-          <ul>
+          <ul v-if="invalidParameters.length > 0">
             <li
-              v-for="(cause, index) in causes"
+              v-for="(parameter, index) in invalidParameters"
               :key="index"
             >
-              <b><code>{{ cause.field }}</code></b>: {{ cause.message }}
+              <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
             </li>
           </ul>
         </details>
@@ -50,14 +50,14 @@
       class="badge-list"
     >
       <KBadge
-        v-if="error.code"
+        v-if="error.type"
         :appearance="props.badgeAppearance"
       >
-        {{ error.code }}
+        {{ error.type }}
       </KBadge>
 
       <KBadge :appearance="props.badgeAppearance">
-        {{ error.statusCode }}
+        {{ error.status }}
       </KBadge>
     </div>
   </div>
@@ -65,11 +65,9 @@
 
 <script lang="ts" setup>
 import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
-import { computed, PropType, useSlots } from 'vue'
+import { computed, PropType } from 'vue'
 
 import { ApiError } from '@/services/kuma-api/ApiError'
-
-const slots = useSlots()
 
 const props = defineProps({
   error: {
@@ -91,7 +89,7 @@ const props = defineProps({
   },
 })
 
-const causes = computed(() => props.error instanceof ApiError ? props.error.causes : [])
+const invalidParameters = computed(() => props.error instanceof ApiError ? props.error.invalidParameters : [])
 </script>
 
 <style scoped>

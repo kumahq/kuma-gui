@@ -1,40 +1,57 @@
-type ApiErrorCause = {
+export interface InvalidParameter {
   field: string
-  message: string
+  reason: string
+  rule?: string
+  choices?: string[]
 }
 
 type ApiErrorConstructorOptions = {
-  title?: string | null,
-  message: string,
-  code?: string | null,
-  statusCode: number,
-  causes?: ApiErrorCause[]
+  status: number
+  type?: string | null
+  title: string
+  detail?: string | null
+  instance?: string | null
+  invalidParameters?: InvalidParameter[]
 }
 
+/**
+ * Standard API error object following https://kong-aip.netlify.app/aip/193/.
+ */
 export class ApiError extends Error {
-  title: string | null
-  code: string | null
-  causes: ApiErrorCause[]
-  statusCode: number
+  status: number
+  type: string | null
+  title: string
+  detail: string | null
+  instance: string | null
+  invalidParameters: InvalidParameter[]
 
-  constructor({ title = null, message, code = null, statusCode, causes = [] }: ApiErrorConstructorOptions) {
-    super(message)
+  constructor({
+    status,
+    type = null,
+    title,
+    detail = null,
+    instance = null,
+    invalidParameters = [],
+  }: ApiErrorConstructorOptions) {
+    super(title)
 
     this.name = 'ApiError'
+    this.status = status
+    this.type = type
     this.title = title
-    this.code = code
-    this.statusCode = statusCode
-    this.causes = causes
+    this.detail = detail
+    this.instance = instance
+    this.invalidParameters = invalidParameters
   }
 
   toJSON() {
     return {
-      name: this.name,
+      status: this.status,
+      type: this.type,
       title: this.title,
-      message: this.message,
-      code: this.code,
-      statusCode: this.statusCode,
-      causes: this.causes,
+      detail: this.detail,
+      instance: this.instance,
+      invalidParameters: this.invalidParameters,
     }
   }
 }
