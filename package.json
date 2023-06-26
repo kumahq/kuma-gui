@@ -70,7 +70,7 @@
     "babel-plugin-transform-vite-meta-env": "^1.0.3",
     "canvas": "^2.11.2",
     "cross-env": "^7.0.3",
-    "cypress": "^12.15.0",
+    "cypress": "^12.16.0",
     "dotenv": "^16.3.1",
     "esbuild": "^0.18.9",
     "eslint": "^8.43.0",
