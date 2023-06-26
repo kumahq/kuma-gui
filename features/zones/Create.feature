@@ -4,6 +4,8 @@ Feature: Zones: Zone create flow
       | Alias                               | Selector                                            |
       | name-input                          | [data-testid='name-input']                          |
       | create-zone-button                  | [data-testid='create-zone-button']                  |
+      | create-zone-error                   | [data-testid='create-zone-error']                   |
+      | connect-zone-instructions           | [data-testid='connect-zone-instructions']           |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
       | ingress-input-switch                | [for='zone-ingress-enabled']                        |
@@ -71,3 +73,22 @@ Feature: Zones: Zone create flow
               status: {}
       """
     Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"
+
+  Scenario: The form shows expected error for <StatusCode> response
+    When the URL "/provision-zone" responds with
+      """
+      headers:
+        Status-Code: '<StatusCode>'
+      """
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$create-zone-button" element is <CreateButtonAssertion>
+    And the "$create-zone-error" element contains "<ErrorTitle>"
+    And the "$connect-zone-instructions" element doesn't exist
+
+    Examples:
+      | StatusCode | CreateButtonAssertion | ErrorTitle                                     |
+      | 400        | enabled               | The Zone name test is invalid                  |
+      | 409        | disabled              | A Zone with the name test already exists       |
+      | 500        | enabled               | An error occurred while creating the Zone test |
