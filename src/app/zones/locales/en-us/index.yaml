@@ -139,7 +139,7 @@ zones:
         description: 'Zone names may contain alphanumerical characters, dashes (-), and underscores (_).'
       409:
         title: 'A Zone with the name {zoneName} already exists'
-        description: 'If you want to connect a Zone with this name, you can delete the existing one and recreate it.'
+        description: 'If you want to connect a Zone with this name, you can delete the existing one and create a new one.'
       500:
         title: 'An error occurred while creating the Zone {zoneName}'
         description: 'You may retry this operation.'
