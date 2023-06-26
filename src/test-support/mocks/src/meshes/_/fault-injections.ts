@@ -1,14 +1,19 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
-  const total = fake.number.int(200)
+  const { offset, total, next, pageTotal } = pager(
+    env('KUMA_FAULTINJECTION_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
+    req,
+    `/meshes/${params.mesh}/circuit-breakers`,
+  )
 
   return {
     headers: {},
     body: {
       total,
-      items: Array.from({ length: total }).map((_, i) => {
-        const name = `${fake.hacker.noun()}-${i}`
+      items: Array.from({ length: pageTotal }).map((_, i) => {
+        const id = offset + i
+        const name = `${fake.hacker.noun()}-${id}`
         return {
           type: 'FaultInjection',
           mesh: params.mesh,
@@ -43,7 +48,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           },
         }
       }),
-      next: null,
+      next,
     },
   }
 }

@@ -3,14 +3,15 @@ import { createStore, StoreOptions, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
+import { DataSource } from '@/app/application/services/data-source/DataSource'
 import { routes as dataplaneRoutes } from '@/app/data-planes'
 import { routes as diagnosticsRoutes } from '@/app/diagnostics'
 import { routes as gatewayRoutes } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
-import { routes as meshRoutes } from '@/app/meshes'
+import { routes as meshRoutes, services as meshes } from '@/app/meshes'
 import { routes as onboardingRoutes } from '@/app/onboarding'
-import { routes as policyRoutes } from '@/app/policies'
+import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes } from '@/app/services'
 import { routes as zoneRoutes, actions as zoneActionRoutes } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
@@ -39,6 +40,8 @@ const $ = {
 
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
+  dataSource: token<DataSource>('DataSource'),
+  sources: token('sources'),
 
   storeConfig: token<StoreOptions<State>>('storeOptions'),
   store: token<Store<State>>('store'),
@@ -109,6 +112,12 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: RestClient,
     arguments: [
       $.env,
+    ],
+  }],
+  [$.dataSource, {
+    service: DataSource,
+    arguments: [
+      $.sources,
     ],
   }],
   [$.api, {
@@ -224,6 +233,8 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.store,
     ],
   }],
+  ...meshes($),
+  ...policies($),
 ]
 
 export const TOKENS = $
