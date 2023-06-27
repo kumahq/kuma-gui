@@ -53,40 +53,46 @@ function createNetworkError(error: unknown): Error {
   return new Error(requestErrorMessage)
 }
 
-/**
- * Creates an appropriate `ApiError` object. It handles the API’s standard error format (e.g. `{ "title": "Error", "code": "error_code" }`).
- */
-function createApiError(response: Response, data: any): ApiError {
-  let title = null
-  let message = 'An error has occurred while trying to load this data.'
-  let code = null
-  let causes = []
+function createApiError(response: Response, data: unknown): ApiError {
+  const status = response.status
+  let type
+  let title
+  let detail
+  let instance
+  let invalidParameters
 
   if (typeof data === 'string' && data.length > 0) {
-    message = data
-  } else if (data) {
-    if (Object.prototype.hasOwnProperty.call(data, 'title')) {
+    title = data
+  } else if (data !== null && typeof data === 'object') {
+    if ('type' in data && typeof data.type === 'string') {
+      type = data.type
+    }
+
+    if ('title' in data && typeof data.title === 'string') {
       title = data.title
     }
 
-    if (Object.prototype.hasOwnProperty.call(data, 'details')) {
-      message = data.details
+    if ('detail' in data && typeof data.detail === 'string') {
+      detail = data.detail
     }
 
-    if (Object.prototype.hasOwnProperty.call(data, 'code')) {
-      code = data.code
+    if ('instance' in data && typeof data.instance === 'string') {
+      instance = data.instance
     }
 
-    if (Object.prototype.hasOwnProperty.call(data, 'causes') && Array.isArray(data.causes)) {
-      causes = data.causes
+    if ('invalid_parameters' in data && Array.isArray(data.invalid_parameters)) {
+      invalidParameters = data.invalid_parameters
     }
   }
 
-  // TODO: Temporarily sets the error message for 403 errors until we implement better errors in the backend.
-  // See: https://github.com/kumahq/kuma-gui/issues/362
-  if (response.status === 403) {
-    message = 'You currently don’t have access to this data.'
+  // TODO: Sets the error message for 403 errors until we implement better errors in the backend.
+  if (status === 403) {
+    title = 'You currently don’t have access to this data.'
   }
 
-  return new ApiError({ title, message, code, causes, statusCode: response.status })
+  if (title === undefined) {
+    title = 'An error has occurred while trying to load this data.'
+  }
+
+  return new ApiError({ status, type, title, detail, instance, invalidParameters })
 }

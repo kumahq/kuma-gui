@@ -109,7 +109,7 @@ describe('makeRequest', () => {
     [
       'minimal error response format',
       function (_input: RequestInfo | URL, _init?: RequestInit) {
-        const response = new Response('{"code":"great_misfortune","details":"A most terrible error"}', {
+        const response = new Response('{"type":"great_misfortune","detail":"A most terrible error"}', {
           status: 400,
           statusText: 'Oh no!',
           headers: {
@@ -120,15 +120,16 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        code: 'great_misfortune',
-        statusCode: 400,
-        message: 'A most terrible error',
+        type: 'great_misfortune',
+        status: 400,
+        title: 'An error has occurred while trying to load this data.',
+        detail: 'A most terrible error',
       }),
     ],
     [
       'complete error response format',
       function (_input: RequestInfo | URL, _init?: RequestInit) {
-        const response = new Response('{"code":"great_misfortune","title":"Validation error","details":"A most terrible error"}', {
+        const response = new Response('{"type":"great_misfortune","title":"Validation error","detail":"A most terrible error"}', {
           status: 400,
           statusText: 'Oh no!',
           headers: {
@@ -139,10 +140,10 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        code: 'great_misfortune',
-        statusCode: 400,
+        type: 'great_misfortune',
+        status: 400,
         title: 'Validation error',
-        message: 'A most terrible error',
+        detail: 'A most terrible error',
       }),
     ],
     [
@@ -151,13 +152,14 @@ describe('makeRequest', () => {
         const response = new Response(
           `
             {
-              "code": "great_misfortune",
+              "type": "great_misfortune",
               "title": "Validation error",
-              "details": "A most terrible error",
-              "causes": [
+              "detail": "A most terrible error",
+              "invalid_parameters": [
                 {
                   "field": "id",
-                  "message": "This field is required."
+                  "rule": "required",
+                  "reason": "is a required field"
                 }
               ]
             }
@@ -174,14 +176,15 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        code: 'great_misfortune',
-        statusCode: 400,
+        type: 'great_misfortune',
+        status: 400,
         title: 'Validation error',
-        message: 'A most terrible error',
-        causes: [
+        detail: 'A most terrible error',
+        invalidParameters: [
           {
             field: 'id',
-            message: 'This field is required.',
+            rule: 'required',
+            reason: 'is a required field',
           },
         ],
       }),
@@ -199,8 +202,8 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        statusCode: 400,
-        message: 'An error has occurred while trying to load this data.',
+        status: 400,
+        title: 'An error has occurred while trying to load this data.',
       }),
     ],
     [
@@ -211,8 +214,8 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        statusCode: 404,
-        message: 'Not found!',
+        status: 404,
+        title: 'Not found!',
       }),
     ],
   ])('works for requests that succeed but return a failure statuses (%s)', async (title, fetchMock, expectedError) => {

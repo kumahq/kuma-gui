@@ -265,7 +265,7 @@ const isCreateButtonDisabled = computed(() => {
   return name.value === '' ||
     isChangingZone.value ||
     zone.value !== null ||
-    (errorState.value.error instanceof ApiError && errorState.value.error.statusCode === 409)
+    (errorState.value.error instanceof ApiError && errorState.value.error.status === 409)
 })
 
 /**
@@ -278,13 +278,13 @@ async function createZone() {
   try {
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
-    if (err instanceof ApiError && HANDLED_STATUS_CODES.includes(err.statusCode)) {
+    if (err instanceof ApiError && HANDLED_STATUS_CODES.includes(err.status)) {
       errorState.value = {
         error: err,
-        title: t(`zones.create.statusError.${err.statusCode}.title`, { zoneName: name.value }),
-        description: t(`zones.create.statusError.${err.statusCode}.description`).trim(),
-        icon: err.statusCode === 500 ? 'warning' : 'errorFilled',
-        badgeAppearance: err.statusCode === 500 ? 'warning' : 'danger',
+        title: t(`zones.create.statusError.${err.status}.title`, { zoneName: name.value }),
+        description: t(`zones.create.statusError.${err.status}.description`).trim(),
+        icon: err.status === 500 ? 'warning' : 'errorFilled',
+        badgeAppearance: err.status === 500 ? 'warning' : 'danger',
       }
     } else if (err instanceof Error) {
       errorState.value = {
