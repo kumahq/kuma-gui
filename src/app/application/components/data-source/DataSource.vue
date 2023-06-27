@@ -36,15 +36,15 @@ const open = async (src: string) => {
   if (typeof source !== 'undefined') {
     source.addEventListener(
       'message',
-      (e: Event) => {
-        message.value = (e as MessageEvent).data
+      (e) => {
+        message.value = e.data
         emit('change', message.value)
       },
       { signal: controller.signal },
     )
     source.addEventListener(
       'error',
-      (e: Event) => {
+      (e) => {
         error.value = (e as ErrorEvent).error as Error
         emit('error', error.value)
       },
