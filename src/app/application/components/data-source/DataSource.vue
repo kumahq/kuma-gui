@@ -13,7 +13,7 @@ const props = defineProps({
   },
 })
 
-const message = ref<unknown | undefined>(undefined)
+const message = ref<unknown>(undefined)
 const error = ref<Error | undefined>(undefined)
 
 const emit = defineEmits<{
