@@ -100,7 +100,7 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-rewrite-all": "^1.0.1",
     "vite-svg-loader": "^4.0.0",
-    "vue-tsc": "^1.8.1",
+    "vue-tsc": "^1.8.2",
     "yaml-jest": "^1.2.0"
   },
   "browserslist": [
