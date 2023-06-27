@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 
 import ServiceSummary from '../components/ServiceSummary.vue'
@@ -96,15 +96,6 @@ const externalService = ref<ExternalService | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: ServiceInsightTableRow[] }>({
   headers,
   data: [],
-})
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'services-list-view') {
-    return
-  }
-
-  loadData(0)
 })
 
 loadData(props.offset)

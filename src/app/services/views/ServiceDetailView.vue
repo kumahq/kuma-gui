@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import ServiceDetails from '../components/ServiceDetails.vue'
@@ -85,23 +85,7 @@ const dataPlaneOverviews = ref<DataPlaneOverview[] | null>(null)
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
 
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'service-detail-view') {
-    return
-  }
-
-  loadData(0)
-})
-
-watch(() => route.params.name, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'service-detail-view') {
-    return
-  }
-
-  loadData(0)
-})
+start()
 
 function start() {
   const filterFields = QueryParameter.get('filterFields')
@@ -109,8 +93,6 @@ function start() {
 
   loadData(0, dppParams)
 }
-
-start()
 
 async function loadData(offset: number, dppParams: DataPlaneOverviewParameters = {}) {
   isLoading.value = true

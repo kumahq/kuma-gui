@@ -109,7 +109,7 @@
 
 <script lang="ts" setup>
 import { KBadge, KCard } from '@kong/kongponents'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import MeshCharts from '../components/MeshCharts.vue'
@@ -181,15 +181,6 @@ const policyCounts = computed(() => {
     ...policyType,
     length: meshInsights.value?.policies[policyType.name]?.total ?? 0,
   }))
-})
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'single-mesh-overview') {
-    return
-  }
-
-  loadMesh()
 })
 
 loadMesh()

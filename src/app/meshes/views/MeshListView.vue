@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
+import { PropType, ref } from 'vue'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
@@ -57,8 +57,6 @@ const EMPTY_STATE = {
   title: t('common.emptyState.title'),
   message: t('common.emptyState.message', { type: 'Meshes' }),
 }
-
-const route = useRoute()
 
 const props = defineProps({
   selectedMeshName: {
@@ -84,15 +82,6 @@ const tableData = ref<{ headers: TableHeader[], data: MeshTableRow[] }>({
 })
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'mesh-list-view') {
-    return
-  }
-
-  loadData(0)
-})
 
 start()
 

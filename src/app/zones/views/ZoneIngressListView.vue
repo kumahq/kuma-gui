@@ -52,7 +52,7 @@
 
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
 import ZoneIngressDetails from '../components/ZoneIngressDetails.vue'
@@ -81,7 +81,6 @@ const EMPTY_STATE = {
   message: 'There are no Zone Ingresses present.',
 }
 
-const route = useRoute()
 const store = useStore()
 
 const props = defineProps({
@@ -111,12 +110,6 @@ const entity = ref<ZoneIngressOverview | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
 
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name === 'zone-ingress-list-view') {
-    loadData(0)
-  }
-})
 watch(() => store.getters['config/getMulticlusterStatus'], function (isMultizoneMode) {
   if (isMultizoneMode) {
     loadData(props.offset)

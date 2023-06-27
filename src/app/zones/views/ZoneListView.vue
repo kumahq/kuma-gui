@@ -90,7 +90,7 @@
 <script lang="ts" setup>
 import { KButton } from '@kong/kongponents'
 import { PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
 import ZoneDetails from '../components/ZoneDetails.vue'
@@ -127,7 +127,6 @@ const EMPTY_STATE = {
   message: 'There are no Zones present.',
 }
 
-const route = useRoute()
 const store = useStore()
 
 const props = defineProps({
@@ -165,14 +164,6 @@ const entity = ref<ZoneOverview | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
 
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'zone-cp-list-view') {
-    return
-  }
-
-  loadData(0)
-})
 watch(() => store.getters['config/getMulticlusterStatus'], function (isMultizoneMode) {
   if (isMultizoneMode) {
     loadData(props.offset)

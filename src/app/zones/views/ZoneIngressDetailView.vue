@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import ZoneIngressDetails from '../components/ZoneIngressDetails.vue'
@@ -58,20 +58,6 @@ const { t } = useI18n()
 const zoneIngressOverview = ref<ZoneIngressOverview | null>(null)
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
-
-watch(() => route.params.mesh, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name === 'zone-ingress-detail-view') {
-    loadData()
-  }
-})
-
-watch(() => route.params.name, function () {
-  // Don’t trigger a load when the user is navigating to another route.
-  if (route.name === 'zone-ingress-detail-view') {
-    loadData()
-  }
-})
 
 start()
 
