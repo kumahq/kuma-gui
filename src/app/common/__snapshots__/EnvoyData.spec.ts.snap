@@ -58,7 +58,7 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
       >
         <!---->
         <div
-          class="k-empty-state-title-header mt-4 mb-4"
+          class="k-empty-state-title-header"
         >
           
           <span
@@ -107,19 +107,8 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
       <div
         class="empty-state-content"
       >
-        <div
-          class="k-empty-state-message mb-6"
-        >
-          
-          
-        </div>
-        <div
-          class="k-empty-state-cta"
-        >
-          
-          <!---->
-          
-        </div>
+        <!---->
+        <!---->
       </div>
     </section>
   </div>
