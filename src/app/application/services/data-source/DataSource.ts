@@ -66,7 +66,7 @@ export class DataSource {
         // always fill the cache on a successful response
         this.cache.set(src, (e as MessageEvent).data)
       })
-      if (this.cache.has(src) && true) {
+      if (this.cache.has(src)) {
         Promise.resolve().then(() => {
           _source?.dispatchEvent(
             new MessageEvent('message', { data: this.cache.get(src) }),
