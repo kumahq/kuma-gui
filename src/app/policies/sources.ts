@@ -1,19 +1,19 @@
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSource'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type {
+  PaginatedApiListResponse as CollectionResponse,
+} from '@/types/api.d'
+import type {
   PolicyEntity as Policy,
   PolicyType,
 } from '@/types/index.d'
-export interface CollectionResponse<T = Record<string, unknown>> {
-  total: number,
-  items: T[]
-  next: string | null
-}
 
 type MeshParams = {
   mesh: string
 }
 type PaginationParams = {
+  // page: number
+  // size: number
   offset: number
 }
 
