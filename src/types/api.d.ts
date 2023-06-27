@@ -8,7 +8,7 @@
  * ```
  */
 export interface ApiListResponse<ResourceType> {
-  items: ResourceType[] | null
+  items: ResourceType[]
   total: number
 }
 
