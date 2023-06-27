@@ -631,7 +631,7 @@ networking:
                           >
                             <!---->
                             <div
-                              class="k-empty-state-title-header mt-4 mb-4"
+                              class="k-empty-state-title-header"
                             >
                               
                               <div
@@ -688,7 +688,7 @@ networking:
                             class="empty-state-content"
                           >
                             <div
-                              class="k-empty-state-message mb-6"
+                              class="k-empty-state-message"
                             >
                               
                               
@@ -698,13 +698,7 @@ networking:
                               
                               
                             </div>
-                            <div
-                              class="k-empty-state-cta"
-                            >
-                              
-                              <!---->
-                              
-                            </div>
+                            <!---->
                           </div>
                         </section>
                       </div>
