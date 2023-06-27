@@ -74,5 +74,5 @@ const refresh = () => {
     :error="error"
     :refresh="refresh"
   />
-  <data />
+  <div />
 </template>
