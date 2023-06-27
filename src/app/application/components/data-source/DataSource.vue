@@ -27,6 +27,9 @@ const sym = Symbol('')
 const open = async (src: string) => {
   close(controller, _src)
   _src = src
+  if (src === '') {
+    return
+  }
   controller = new AbortController()
   // this should emit proper events
   const source = data.source(src, sym)
