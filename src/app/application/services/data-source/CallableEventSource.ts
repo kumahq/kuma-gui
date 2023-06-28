@@ -1,15 +1,18 @@
-export const isClosed = (source: { readyState: number }) => source.readyState === 2
+const CONNECTING = 0
+const OPEN = 1
+const CLOSED = 2
+export const isClosed = (source: { readyState: number }) => source.readyState === CLOSED
 export default class CallableEventSource extends EventTarget {
   url = ''
   withCredentials = false
-  readonly CONNECTING = 0
-  readonly OPEN = 1
-  readonly CLOSED = 2
+  readonly CONNECTING = CONNECTING
+  readonly OPEN = OPEN
+  readonly CLOSED = CLOSED
 
   onerror = null
   onmessage = null
   onopen = null
-  readyState = 2
+  readyState = CLOSED
 
   constructor(
     protected source: () => AsyncGenerator,
@@ -28,11 +31,11 @@ export default class CallableEventSource extends EventTarget {
           self.dispatchEvent(new MessageEvent('message', {
             data: res,
           }))
-          if (self.readyState === 2) {
+          if (self.readyState === CLOSED) {
             break
           }
         }
-        self.readyState = 2
+        self.readyState = CLOSED
       } catch (e) {
         console.error(e)
         self.dispatchEvent(new ErrorEvent('error', {
@@ -43,12 +46,12 @@ export default class CallableEventSource extends EventTarget {
   }
 
   open(): void {
-    if (this.readyState !== 2) {
+    if (this.readyState !== CLOSED) {
       this._open()
     }
   }
 
   close(): void {
-    this.readyState = 2
+    this.readyState = CLOSED
   }
 }
