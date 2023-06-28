@@ -3,6 +3,8 @@ zone-cps:
     item:
       title: "{name} Zone CP"
       breadcrumbs: Zone CPs
+      config:
+        no-subscriptions: This zone has no subscriptions
     items:
       title: Zone CPs
       breadcrumbs: Zone CPs
