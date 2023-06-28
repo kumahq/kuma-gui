@@ -37,7 +37,9 @@ export default class CallableEventSource extends EventTarget {
         }
         self.readyState = CLOSED
       } catch (e) {
-        console.error(e)
+        // temporarily commented until we can avoid console.errors being
+        // reported in environments where we don't want to see them
+        // console.error(e)
         self.dispatchEvent(new ErrorEvent('error', {
           error: e,
         }))

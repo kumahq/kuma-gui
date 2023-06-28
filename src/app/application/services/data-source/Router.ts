@@ -1,3 +1,4 @@
+import { URLPattern } from 'urlpattern-polyfill'
 export default class Router<T> {
   routes: Map<URLPattern, T> = new Map()
   constructor(routes: Record<string, T>) {
