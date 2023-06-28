@@ -1,16 +1,28 @@
-Feature: Zones: Detail view content
+Feature: zones / zone-cps / item
   Background:
     Given the CSS selectors
-      | Alias   | Selector                            |
-      | details | [data-testid='detail-view-details'] |
+      | Alias                    | Selector                                 |
+      | details                  | [data-testid='detail-view-details']      |
+      | nav-insights             | #insights-tab                            |
+      | nav-config               | #config-tab                              |
+      | tab-overview             | #panel-0                                 |
+      | tab-insights             | #panel-1                                 |
+      | tab-config               | #panel-2                                 |
       | warning-no-subscriptions | [data-testid='warning-no-subscriptions'] |
+
     And the URL "/config" responds with
       """
       body:
         mode: global
       """
   Scenario: Zone CP detail view has expected content
-    Given the URL "/zones+insights/zone-cp-1" responds with
+    # We always use the final subscription
+    # If the disconnectTime is empty then we are online
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 2
+      """
+    And the URL "/zones+insights/zone-cp-1" responds with
       """
       body:
         name: zone-cp-1
@@ -18,23 +30,27 @@ Feature: Zones: Detail view content
           subscriptions:
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: 2020-07-28T16:18:09.743141Z
-              status: {}
             - connectTime: 2020-07-28T16:18:09.743141Z
-              status: {}
+              disconnectTime: ~
+              config: |
+                {"dpServer": {"auth": {"type": "dpToken"}}}
       """
 
     When I visit the "/zones/zone-cps/zone-cp-1" URL
     Then the page title contains "Zone CP"
     Then the "$details" element contains "Zone CP: zone-cp-1"
-    Then the "$details" element contains "ZoneOverview"
-    Then the "$details" element contains "online"
-    Then the "$details" element contains "dpToken"
 
-    When I click the "#insights-tab" element
-    Then the "$details" element contains "Connect time: July 28, 2020 at 4:18:09 PM"
+    Then the "$tab-overview" element contains
+      | Value        |
+      | ZoneOverview |
+      | online       |
+      | dpToken      |
 
-    When I click the "#config-tab" element
-    Then the "$details" element contains "adminAccessLogPath"
+    When I click the "$nav-insights" element
+    Then the "$tab-insights" element contains "Connect time: July 28, 2020 at 4:18:09 PM"
+
+    When I click the "$nav-config" element
+    Then the "$tab-config" element contains "dpToken"
 
   Scenario: When subscriptions aren't set a warning is shown
     And the URL "/zones+insights/zone-cp-1" responds with
@@ -45,6 +61,6 @@ Feature: Zones: Detail view content
           subscriptions: ~
       """
     When I visit the "/zones/zone-cps/zone-cp-1" URL
-    And I click the "#config-tab" element
+    And I click the "$nav-config" element
     Then the "$warning-no-subscriptions" element exists
 
