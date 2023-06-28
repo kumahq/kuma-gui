@@ -1,6 +1,6 @@
 import { defineConfig, mergeConfig, UserConfigFn, UserConfig } from 'vite'
 
-import { config as prodConfig } from './vite.config'
+import { config as prodConfig } from './vite.config.production'
 // https://vitejs.dev/config/
 export const config: UserConfigFn = (env) => {
   return mergeConfig(
