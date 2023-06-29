@@ -6,6 +6,7 @@ import { marked } from 'marked'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig, UserConfigFn } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
+import removeConsole from 'vite-plugin-remove-console'
 import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
 
@@ -50,6 +51,14 @@ export const config: UserConfigFn = ({ mode }) => {
           ),
         },
       ),
+      removeConsole({
+        includes: [
+          'log',
+          'info',
+          'warn',
+          'error',
+        ],
+      }),
       createHtmlPlugin({
         inject: {
           data: {
