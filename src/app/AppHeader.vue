@@ -42,8 +42,6 @@
         {{ env('KUMA_PRODUCT_NAME') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
       </p>
 
-      <NotificationIcon v-if="shouldShowNotificationManager" />
-
       <KDropdownMenu
         class="help-menu"
         icon="help"
@@ -102,7 +100,6 @@ import {
 } from '@kong/kongponents'
 import { computed } from 'vue'
 
-import NotificationIcon from './common/NotificationIcon.vue'
 import UpgradeCheck from './common/UpgradeCheck.vue'
 import {
   useKumaLogo,
@@ -123,7 +120,6 @@ const store = useStore()
 const env = useEnv()
 
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
-const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const environmentName = computed(() => {
   const environment = store.getters['config/getEnvironment']
 
