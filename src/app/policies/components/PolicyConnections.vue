@@ -1,4 +1,3 @@
-
 <template>
   <StatusInfo
     :has-error="hasError"

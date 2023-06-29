@@ -8,10 +8,6 @@ Feature: The HTML title is correct on each page
       | /                                                   | Overview                      |
       | /diagnostics                                        | Diagnostics                   |
 
-      | /wizard/mesh                                        | Create a new mesh             |
-      | /wizard/universal-dataplane                         | Create a new data plane proxy |
-      | /wizard/kubernetes-dataplane                        | Create a new data plane proxy |
-
       | /onboarding                                         | Welcome to Kuma!              |
       | /onboarding/deployment-types                        | Deployment Types              |
       | /onboarding/configuration-types                     | Configuration Types           |

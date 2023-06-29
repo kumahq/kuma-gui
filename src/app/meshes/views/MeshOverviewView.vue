@@ -100,8 +100,6 @@
             />
           </template>
         </KCard>
-
-        <MeshResources />
       </div>
     </AppView>
   </RouteView>
@@ -118,7 +116,6 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
-import MeshResources from '@/app/common/MeshResources.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
