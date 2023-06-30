@@ -1,7 +1,6 @@
 <template>
   <RouteView
     v-slot="{route}"
-    module="policies"
   >
     <RouteTitle
       :title="t('policies.routes.item.title', {name: route.params.policy})"

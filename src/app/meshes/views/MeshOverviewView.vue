@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    module="meshes"
-  >
+  <RouteView>
     <RouteTitle
       :title="t('meshes.routes.overview.title')"
     />

@@ -8,7 +8,8 @@
 <script lang="ts" setup>
 import { inject, watch, onBeforeUnmount } from 'vue'
 
-import { RouteView } from './RouteView.vue'
+import { ROUTE_VIEW_PARENT } from '.'
+import type { RouteView } from './RouteView.vue'
 
 const props = defineProps({
   title: {
@@ -19,7 +20,9 @@ const props = defineProps({
 })
 
 const symbol = Symbol('route-title')
-const routeView: RouteView | undefined = inject('route-view-parent')
+// find the top-most RouteView so we can use it to set the title if we can't
+// find the top-most, it means we are the top-most RouteView
+const routeView: RouteView | undefined = inject(ROUTE_VIEW_PARENT)
 if (typeof routeView !== 'undefined') {
   watch(() => props.title, (title) => {
     if (title.length > 0) {

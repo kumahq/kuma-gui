@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    :module="props.isGatewayView ? 'gateways' : 'data-planes'"
-  >
+  <RouteView>
     <RouteTitle
       :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.items.title`)"
     />

@@ -1,7 +1,5 @@
 <template>
-  <RouteView
-    module="services"
-  >
+  <RouteView>
     <RouteTitle
       :title="t('services.routes.items.title')"
     />

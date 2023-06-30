@@ -1,7 +1,6 @@
 <template>
   <RouteView
     v-slot="{route: _route}"
-    module="services"
   >
     <RouteTitle
       :title="t('services.routes.item.title', {name: _route.params.service})"
