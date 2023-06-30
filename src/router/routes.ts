@@ -2,7 +2,6 @@ import { RouteRecordRaw } from 'vue-router'
 export default (
   zones: RouteRecordRaw[],
   meshes: RouteRecordRaw[],
-  wizard: RouteRecordRaw[],
   onboarding: RouteRecordRaw[],
   diagnostics: RouteRecordRaw[],
 ): RouteRecordRaw[] => {
@@ -24,7 +23,6 @@ export default (
     ...zones,
     ...meshes,
     ...onboarding,
-    ...wizard,
     ...diagnostics,
   ]
 }

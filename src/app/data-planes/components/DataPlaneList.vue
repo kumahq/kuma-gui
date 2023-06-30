@@ -78,16 +78,6 @@
               </div>
             </template>
           </KDropdownMenu>
-
-          <KButton
-            appearance="creation"
-            :to="dataplaneWizardRoute"
-            icon="plus"
-            data-testid="data-plane-create-data-plane-button"
-            @click="onCreateClick"
-          >
-            Create data plane proxy
-          </KButton>
         </template>
       </DataOverview>
     </template>
@@ -104,7 +94,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
+import { KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 import { computed, PropType, ref, watch } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
@@ -115,11 +105,9 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
 import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
 import { KUMA_ZONE_TAG_NAME, PAGE_SIZE_DEFAULT } from '@/constants'
-import { logEvents } from '@/services/logger/Logger'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { DataPlaneOverview, StatusKeyword, TableHeader, Version } from '@/types/index.d'
-import { useLogger } from '@/utilities'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import {
   compatibilityKind,
@@ -134,7 +122,6 @@ import { humanReadableDate } from '@/utilities/helpers'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
-const logger = useLogger()
 const store = useStore()
 
 type DataPlaneOverviewTableRow = {
@@ -245,7 +232,6 @@ const filteredGatewayType = ref<GatewayType>(props.gatewayType as GatewayType)
 const dppParams = ref<DataPlaneOverviewParameters>({})
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
-const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
 
 const filterBarPlaceholder = computed(() => {
   if ('tag' in props.dppFilterFields) {
@@ -349,10 +335,6 @@ function updateVisibleTableHeaders(event: Event, tableHeaderKey: string): void {
   }
 
   ClientStorage.set('dpVisibleTableHeaderKeys', Array.from(new Set(visibleTableHeaderKeys.value)))
-}
-
-function onCreateClick() {
-  logger.info(logEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
 }
 
 function initializeData() {

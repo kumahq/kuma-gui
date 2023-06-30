@@ -12,7 +12,6 @@ import { routes as meshRoutes } from '@/app/meshes'
 import { routes as onboardingRoutes } from '@/app/onboarding'
 import { routes as policyRoutes } from '@/app/policies'
 import { routes as serviceRoutes } from '@/app/services'
-import { routes as wizardRoutes } from '@/app/wizard'
 import { routes as zoneRoutes, actions as zoneActionRoutes } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
 import { createRouter } from '@/router/router'
@@ -58,7 +57,6 @@ const $ = {
 
   diagnosticsRoutes: token<RouteRecordRaw[]>('kuma.diagnostics.routes'),
   onboardingRoutes: token<RouteRecordRaw[]>('kuma.onboarding.routes'),
-  wizardRoutes: token<RouteRecordRaw[]>('kuma.wizard.routes'),
 
   nav: token<typeof getNavItems>('nav'),
 
@@ -154,7 +152,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     arguments: [
       $.zoneRoutes,
       $.meshRoutes,
-      $.wizardRoutes,
       $.onboardingRoutes,
       $.diagnosticsRoutes,
     ],
@@ -199,9 +196,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     ],
   }],
 
-  [$.wizardRoutes, {
-    service: wizardRoutes,
-  }],
   [$.onboardingRoutes, {
     service: onboardingRoutes,
   }],

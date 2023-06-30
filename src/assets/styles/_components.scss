@@ -44,24 +44,3 @@ Adapted from https://every-layout.dev/layouts/switcher/.
   // Accounts for the gaps.
   inline-size: calc((100% - ((var(--columns) - 1) * var(--AppGap))) / var(--columns));
 }
-
-/*
-.kcard-switcher
-
-For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, **all** elements will wrap.
-
-Adapted from https://every-layout.dev/layouts/switcher/.
-*/
-
-.kcard-switcher {
-  --threshold: 70rem;
-
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--AppGap);
-}
-
-.kcard-switcher>* {
-  flex-grow: 1;
-  flex-basis: calc((var(--threshold) - 100%) * 999);
-}
