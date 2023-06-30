@@ -21,8 +21,6 @@
             data-testid="app-error"
           />
 
-          <NotificationManager v-if="!isWizard && shouldShowNotificationManager" />
-
           <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
 
           <router-view
@@ -61,7 +59,6 @@ import {
   useAppHeader,
   useAppLoadingBar,
   useAppErrorMessage,
-  useNotificationManager,
   useAppOnboardingNotification,
 } from '@/components'
 import { useStore } from '@/store/store'
@@ -77,14 +74,12 @@ const [
   AppHeader,
   AppLoadingBar,
   AppErrorMessage,
-  NotificationManager,
   AppOnboardingNotification,
 ] = [
   useAppSidebar(),
   useAppHeader(),
   useAppLoadingBar(),
   useAppErrorMessage(),
-  useNotificationManager(),
   useAppOnboardingNotification(),
 ]
 const store = useStore()
@@ -105,7 +100,6 @@ const route = useRoute()
 const routeKey = computed(() => route.path)
 const isWizard = computed(() => route.meta.isWizard === true)
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
-const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
 
 </script>

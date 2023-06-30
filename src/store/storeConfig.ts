@@ -1,13 +1,11 @@
 import { StoreOptions } from 'vuex'
 
 import { ConfigInterface } from './modules/config/config.types'
-import { NotificationsInterface } from './modules/notifications/notifications.types'
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
 import { SidebarInterface } from './modules/sidebar/sidebar.types'
 import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import config from '@/store/modules/config/config'
-import notifications from '@/store/modules/notifications/notifications'
 import onboarding from '@/store/modules/onboarding/onboarding'
 import sidebar from '@/store/modules/sidebar/sidebar'
 import { Mesh, PolicyType } from '@/types/index.d'
@@ -25,7 +23,6 @@ interface BareRootState {
    */
   defaultVisibility: {
     appError: boolean
-    notificationManager: boolean
     onboardingNotification: boolean
   }
   meshes: {
@@ -49,7 +46,6 @@ const initialState: BareRootState = {
   globalLoading: true,
   defaultVisibility: {
     appError: true,
-    notificationManager: true,
     onboardingNotification: true,
   },
   meshes: {
@@ -76,7 +72,6 @@ const initialState: BareRootState = {
 export interface State extends BareRootState {
   config: ConfigInterface
   sidebar: SidebarInterface
-  notifications: NotificationsInterface
   onboarding: OnboardingInterface
 }
 
@@ -85,7 +80,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
     modules: {
       sidebar: sidebar(kumaApi),
       config: config(kumaApi),
-      notifications,
       onboarding,
     },
 
@@ -97,9 +91,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
       shouldShowAppError: (state) => {
         return state.defaultVisibility.appError && state.config.status !== 'OK'
-      },
-      shouldShowNotificationManager: (state, getters) => {
-        return state.defaultVisibility.notificationManager && getters['notifications/amountOfActions'] > 0
       },
       shouldShowOnboardingNotification: (state) => {
         const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
