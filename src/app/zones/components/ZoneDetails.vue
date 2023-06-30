@@ -63,6 +63,15 @@
         is-searchable
         query-key="zone-config"
       />
+      <KAlert
+        v-else
+        data-testid="warning-no-subscriptions"
+        appearance="warning"
+      >
+        <template #alertMessage>
+          {{ t('zone-cps.routes.item.config.no-subscriptions') }}
+        </template>
+      </KAlert>
     </template>
 
     <template #warnings>
@@ -72,7 +81,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KBadge } from '@kong/kongponents'
+import { KBadge, KAlert } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -168,10 +177,12 @@ const warnings = computed<ZoneCompatibility[]>(() => {
 
 const codeOutput = computed(() => {
   const subscriptions = props.zoneOverview.zoneInsight?.subscriptions ?? []
-  const lastSubscription = subscriptions[subscriptions.length - 1]
+  if (subscriptions.length > 0) {
+    const lastSubscription = subscriptions[subscriptions.length - 1]
 
-  if (lastSubscription.config) {
-    return JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
+    if (lastSubscription.config) {
+      return JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
+    }
   }
 
   return null

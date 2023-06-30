@@ -64,12 +64,17 @@ Feature: Zones: Zone create flow
     Then the "$ingress-input-switch input" element doesn't exist
     Then the "$egress-input-switch input" element doesn't exist
 
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
     When the URL "/zones+insights/test" responds with
       """
       body:
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
+              disconnectTime: ~
               status: {}
       """
     Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"
