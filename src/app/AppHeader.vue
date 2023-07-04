@@ -32,14 +32,14 @@
 
           <template #content>
             <p>
-              {{ env('KUMA_PRODUCT_NAME') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
+              {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
             </p>
           </template>
         </KPop>
       </div>
 
       <p class="app-status app-status--desktop">
-        {{ env('KUMA_PRODUCT_NAME') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
+        {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
       </p>
 
       <KDropdownMenu
@@ -51,7 +51,7 @@
         <template #items>
           <KDropdownItem>
             <a
-              :href="`${env('KUMA_DOCS_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              :href="docLink()"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -106,7 +106,8 @@ import {
   useGithubButton,
 } from '@/components'
 import { useStore } from '@/store/store'
-import { useEnv } from '@/utilities'
+import { useEnv, useI18n } from '@/utilities'
+import { docLink } from "@/utilities/docLink";
 
 const [
   KumaLogo,
@@ -118,6 +119,7 @@ const [
 
 const store = useStore()
 const env = useEnv()
+const { t } = useI18n()
 
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const environmentName = computed(() => {

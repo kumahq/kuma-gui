@@ -71,7 +71,7 @@
                 </KSelect>
 
                 <DocumentationLink
-                  :href="`${env('KUMA_DOCS_URL')}/policies/${policyType.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+                  :href="`/policies/${policyType.name}`"
                   data-testid="policy-documentation-link"
                 />
               </template>
@@ -110,7 +110,7 @@ import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { PolicyEntity, TableHeader } from '@/types/index.d'
-import { useEnv, useKumaApi, useI18n } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 type PolicyEntityTableRow = {
@@ -119,7 +119,6 @@ type PolicyEntityTableRow = {
   type: string
 }
 
-const env = useEnv()
 const kumaApi = useKumaApi()
 const route = useRoute()
 const router = useRouter()

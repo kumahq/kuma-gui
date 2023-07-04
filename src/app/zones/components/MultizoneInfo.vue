@@ -18,7 +18,7 @@
 
     <template #cta>
       <KButton
-        :to="`${env('KUMA_DOCS_URL')}/documentation/deployments/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+        :to="docLink('/documentation/deployments/')"
         target="_blank"
         appearance="primary"
       >
@@ -31,8 +31,8 @@
 <script lang="ts" setup>
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
-import { useEnv, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
+import { docLink } from "@/utilities/docLink";
 
-const env = useEnv()
 const { t } = useI18n()
 </script>
