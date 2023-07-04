@@ -220,9 +220,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
   [$.bootstrap, {
     service: useBootstrap,
-    arguments: [
-      $.store,
-    ],
   }],
 ]
 
