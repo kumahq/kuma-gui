@@ -108,7 +108,13 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
         class="empty-state-content"
       >
         <!---->
-        <!---->
+        <div
+          class="k-empty-state-cta"
+        >
+          
+          <!---->
+          
+        </div>
       </div>
     </section>
   </div>
