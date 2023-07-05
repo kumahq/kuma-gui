@@ -20,7 +20,7 @@
 
           <p class="mb-4 text-center">
             <b>See <a
-              :href="`${env('KUMA_DOCS_URL')}/deployments/multi-zone/?${env('KUMA_UTM_QUERY_PARAMS')}#zone-control-plane`"
+              :href="t('onboarding.href.docs.install')"
               target="_blank"
             >the documentation for options to install</a>.</b>
           </p>
@@ -89,10 +89,9 @@ import OnboardingPage from '../components/OnboardingPage.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useEnv, useKumaApi, useI18n } from '@/utilities'
+import { useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
-const env = useEnv()
 const { t } = useI18n()
 
 const LONG_POLLING_INTERVAL = 1000

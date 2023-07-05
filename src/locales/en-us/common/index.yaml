@@ -1,6 +1,9 @@
 common:
   product:
     name: Kuma
+    href:
+      docs:
+        index: '{KUMA_DOCS_URL}/'
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'

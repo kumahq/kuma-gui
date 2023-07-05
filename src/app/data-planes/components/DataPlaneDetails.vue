@@ -127,11 +127,11 @@
         <template #alertMessage>
           This data plane proxy does not yet have mTLS configured —
           <a
-            :href="`${env('KUMA_DOCS_URL')}/policies/mutual-tls/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+            :href="t('data-planes.href.docs.mutual-tls')"
             class="external-link"
             target="_blank"
           >
-            Learn About Certificates in {{ env('KUMA_PRODUCT_NAME') }}
+            Learn About Certificates in {{ t('common.product.name') }}
           </a>
         </template>
       </KAlert>
@@ -179,7 +179,7 @@ import {
   DataPlane,
   DataPlaneOverview,
 } from '@/types/index.d'
-import { useEnv, useI18n, useKumaApi } from '@/utilities'
+import { useI18n, useKumaApi } from '@/utilities'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -193,7 +193,6 @@ import {
 
 const { t } = useI18n()
 
-const env = useEnv()
 const kumaApi = useKumaApi()
 const store = useStore()
 

@@ -25,6 +25,9 @@ zone-egresses:
       title: Zone Egresses
       breadcrumbs: Zone Egresses
 zones:
+  href:
+    docs:
+      cta: '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
   routes:
     create:
       title: 'Create & connect Zone'

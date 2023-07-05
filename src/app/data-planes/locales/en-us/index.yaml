@@ -5,4 +5,6 @@ data-planes:
       breadcrumbs: Data plane proxies
     items:
       title: Data plane proxies
-
+  href:
+    docs:
+      mutual-tls: '{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}'

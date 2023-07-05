@@ -5,3 +5,5 @@ policies:
       breadcrumbs: Policies
     items:
       title: "{name}"
+  href:
+    docs: '{KUMA_DOCS_URL}/policies/{name}?{KUMA_UTM_QUERY_PARAMS}'

@@ -1,4 +1,7 @@
 onboarding:
+  href:
+    docs:
+      install: '{KUMA_DOCS_URL}/deployments/multi-zone?{KUMA_UTM_QUERY_PARAMS}#zone-control-plane'
   routes:
     welcome:
       title: Welcome to {name}!

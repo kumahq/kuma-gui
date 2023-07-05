@@ -94,6 +94,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: I18n,
     arguments: [
       $.enUs,
+      $.env,
     ],
   }],
   [$.kumaEnUs, {
