@@ -18,7 +18,7 @@
 
     <template #cta>
       <KButton
-        :to="docLink('/documentation/deployments/')"
+        :to="t('zones.href.docs.cta')"
         target="_blank"
         appearance="primary"
       >
@@ -32,7 +32,6 @@
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
 import { useI18n } from '@/utilities'
-import { docLink } from "@/utilities/docLink";
 
 const { t } = useI18n()
 </script>

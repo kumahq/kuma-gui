@@ -71,7 +71,7 @@
                 </KSelect>
 
                 <DocumentationLink
-                  :href="`/policies/${policyType.name}`"
+                  :href="t('policies.href.docs', {'name': policyType.name})"
                   data-testid="policy-documentation-link"
                 />
               </template>

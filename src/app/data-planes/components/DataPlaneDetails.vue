@@ -127,7 +127,7 @@
         <template #alertMessage>
           This data plane proxy does not yet have mTLS configured —
           <a
-            :href="docLink('/policies/mutual-tls')"
+            :href="t('data-planes.href.docs.mutual-tls')"
             class="external-link"
             target="_blank"
           >
@@ -190,7 +190,6 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/utilities/dataplane'
-import { docLink } from "@/utilities/docLink";
 
 const { t } = useI18n()
 

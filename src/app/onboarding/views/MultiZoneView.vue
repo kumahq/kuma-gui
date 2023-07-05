@@ -20,7 +20,7 @@
 
           <p class="mb-4 text-center">
             <b>See <a
-              :href="docLink('/deployments/multi-zone')"
+              :href="t('onboarding.href.docs.install')"
               target="_blank"
             >the documentation for options to install</a>.</b>
           </p>
@@ -90,7 +90,6 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useKumaApi, useI18n } from '@/utilities'
-import {docLink} from "@/utilities/docLink";
 
 const kumaApi = useKumaApi()
 const { t } = useI18n()

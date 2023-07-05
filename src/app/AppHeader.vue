@@ -51,7 +51,7 @@
         <template #items>
           <KDropdownItem>
             <a
-              :href="docLink()"
+              :href="t('common.product.href.docs.index')"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -107,7 +107,6 @@ import {
 } from '@/components'
 import { useStore } from '@/store/store'
 import { useEnv, useI18n } from '@/utilities'
-import { docLink } from "@/utilities/docLink";
 
 const [
   KumaLogo,
