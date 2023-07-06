@@ -1,8 +1,9 @@
-import { DataSourceResponse } from '@/app/application/services/data-source/DataSource'
+import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type {
   MeshInsight,
 } from '@/types/index.d'
+
 type MeshParams = {
   mesh: string
 }
