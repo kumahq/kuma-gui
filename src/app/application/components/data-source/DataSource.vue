@@ -67,7 +67,6 @@ onBeforeUnmount(() => {
   state = close(state)
 })
 const refresh = () => {
-  close(state)
   open(props.src)
 }
 </script>
