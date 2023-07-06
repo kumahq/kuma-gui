@@ -11,7 +11,7 @@ export default class SharedPool<K, T> {
   }
 
   // getter, not init
-  acquire(key: K, ref: symbol) {
+  acquire(key: K, ref: symbol): T {
     if (!this.pool.has(key)) {
       this.pool.set(key, this.init(key) as T)
     }
