@@ -6,7 +6,7 @@ export type DataSourceResponse<T> = {data: T | undefined, error: Error | undefin
 export type Source = (params: Record<string, unknown>, source: {close: () => void}) => Promise<unknown>
 export type Sources = Record<string, Source>
 
-const create = (src: string, router: Router<Source>) => {
+const create = (src: string, router: Router<Source>): EventSource => {
   const [path, query] = src.split('?')
   const queryParams = new URLSearchParams(query)
   const route = router.match(path)
