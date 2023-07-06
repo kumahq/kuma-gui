@@ -1,29 +1,31 @@
-type Init<K, T> = (key: K) => T | undefined
-type Del<K, T> = (key: K, item: T) => void
+type Creator<K, T> = (key: K) => T
+type Destroyer<K, T> = (key: K, item: T) => void
+
+type Entry<T> = {
+  value: T,
+  usage: Set<symbol>
+}
 export default class SharedPool<K, T> {
-  pool: Map<K, T> = new Map()
-  usage: Map<T, Set<symbol>> = new Map()
-  init: Init<K, T>
-  del: (key: K, item: T) => void
-  constructor(init: Init<K, T>, del: Del<K, T>) {
-    this.init = init
-    this.del = del
-  }
+  pool: Map<K, Entry<T>> = new Map()
+  constructor(
+    protected create: Creator<K, T>,
+    protected destroy: Destroyer<K, T>,
+  ) {}
 
   // getter, not init
   acquire(key: K, ref: symbol): T {
     // there is no way pool/usage.get(item) can be undefined due to using has hence
     // we use ! to avoid typescript
     if (!this.pool.has(key)) {
-      this.pool.set(key, this.init(key) as T)
+      const usage = {
+        value: this.create(key),
+        usage: new Set<symbol>(),
+      }
+      this.pool.set(key, usage)
     }
     const item = this.pool.get(key)!
-    if (!this.usage.has(item)) {
-      this.usage.set(item, new Set<symbol>())
-    }
-    const refs = this.usage.get(item)!
-    refs.add(ref)
-    return item
+    item.usage.add(ref)
+    return item.value
   }
 
   // deleter
@@ -32,14 +34,10 @@ export default class SharedPool<K, T> {
     // we use ! to avoid typescript
     if (this.pool.has(key)) {
       const item = this.pool.get(key)!
-      if (this.usage.has(item)) {
-        const refs = this.usage.get(item)!
-        refs.delete(ref)
-        if (refs.size === 0) {
-          this.pool.delete(key)
-          this.usage.delete(item)
-          this.del(key, item)
-        }
+      item.usage.delete(ref)
+      if (item.usage.size === 0) {
+        this.pool.delete(key)
+        this.destroy(key, item.value)
       }
     }
   }
