@@ -21,16 +21,19 @@ const emit = defineEmits<{
   (e: 'error', error: Error): void
 }>()
 
-let controller: AbortController
-let _src: string
+type State = {
+  controller?: AbortController
+  src?: string
+}
+let state: State = {}
 const sym = Symbol('')
 const open = async (src: string) => {
-  close(controller, _src)
-  _src = src
+  state = close(state)
+  state.src = src
   if (src === '') {
     return
   }
-  controller = new AbortController()
+  state.controller = new AbortController()
   // this should emit proper events
   const source = data.source(src, sym)
   if (typeof source !== 'undefined') {
@@ -40,7 +43,7 @@ const open = async (src: string) => {
         message.value = e.data
         emit('change', message.value)
       },
-      { signal: controller.signal },
+      { signal: state.controller.signal },
     )
     source.addEventListener(
       'error',
@@ -48,25 +51,25 @@ const open = async (src: string) => {
         error.value = (e as ErrorEvent).error as Error
         emit('error', error.value)
       },
-      { signal: controller.signal },
+      { signal: state.controller.signal },
     )
   }
 }
-const close = (controller: AbortController | undefined, src: string) => {
-  if (typeof controller !== 'undefined') {
-    controller.abort()
+const close = (state: State) => {
+  if (typeof state.controller !== 'undefined') {
+    state.controller.abort()
   }
-  if (typeof src !== 'undefined') {
-    data.close(src, sym)
+  if (typeof state.src !== 'undefined') {
+    data.close(state.src, sym)
   }
-  controller = undefined
+  return {}
 }
 watch(() => props.src, (src) => open(src), { immediate: true })
 onBeforeUnmount(() => {
-  close(controller, _src)
+  close(state)
 })
 const refresh = () => {
-  close(controller, _src)
+  close(state)
   open(props.src)
 }
 </script>
