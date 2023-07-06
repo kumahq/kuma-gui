@@ -10,7 +10,7 @@ export const [
   useBootstrap,
   useI18n,
   useLogger,
-  useDataSource,
+  useDataSourcePool,
 ] = createInjections(
   TOKENS.env,
   TOKENS.nav,
@@ -20,5 +20,5 @@ export const [
   TOKENS.bootstrap,
   TOKENS.i18n,
   TOKENS.logger,
-  TOKENS.dataSource,
+  TOKENS.dataSourcePool,
 )

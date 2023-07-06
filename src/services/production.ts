@@ -3,7 +3,7 @@ import { createStore, StoreOptions, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
-import { DataSource } from '@/app/application/services/data-source/DataSource'
+import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
 import { routes as dataplaneRoutes } from '@/app/data-planes'
 import { routes as diagnosticsRoutes } from '@/app/diagnostics'
 import { routes as gatewayRoutes } from '@/app/gateways'
@@ -40,7 +40,7 @@ const $ = {
 
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
-  dataSource: token<DataSource>('DataSource'),
+  dataSourcePool: token<DataSourcePool>('DataSourcePool'),
   sources: token('sources'),
 
   storeConfig: token<StoreOptions<State>>('storeOptions'),
@@ -114,8 +114,8 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.env,
     ],
   }],
-  [$.dataSource, {
-    service: DataSource,
+  [$.dataSourcePool, {
+    service: DataSourcePool,
     arguments: [
       $.sources,
     ],

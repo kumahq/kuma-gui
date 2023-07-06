@@ -2,9 +2,9 @@
 
 import { watch, ref, onBeforeUnmount } from 'vue'
 
-import { useDataSource } from '@/utilities'
+import { useDataSourcePool } from '@/utilities'
 
-const data = useDataSource()
+const data = useDataSourcePool()
 
 const props = defineProps({
   src: {

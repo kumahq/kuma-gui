@@ -34,7 +34,7 @@ const destroy = (_src: string, source: EventSource) => {
   }
 }
 
-export class DataSource {
+export class DataSourcePool {
   cache: Map<string, unknown> = new Map()
   pool: SharedPool<string, EventSource>
   constructor(requests: Sources) {
