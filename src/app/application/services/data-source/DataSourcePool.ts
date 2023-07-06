@@ -58,21 +58,18 @@ export class DataSourcePool {
     return this.cache.get(src)
   }
 
-  open(src: string, ref: symbol): EventSource | undefined {
+  open(src: string, ref: symbol): EventSource {
     const _source = this.pool.acquire(src, ref)
-    if (typeof _source !== 'undefined') {
-      // _source.open();
-      _source.addEventListener('message', (e: Event) => {
-        // always fill the cache on a successful response
-        this.cache.set(src, (e as MessageEvent).data)
+    _source.addEventListener('message', (e: Event) => {
+      // always fill the cache on a successful response
+      this.cache.set(src, (e as MessageEvent).data)
+    })
+    if (this.cache.has(src)) {
+      Promise.resolve().then(() => {
+        _source?.dispatchEvent(
+          new MessageEvent('message', { data: this.cache.get(src) }),
+        )
       })
-      if (this.cache.has(src)) {
-        Promise.resolve().then(() => {
-          _source?.dispatchEvent(
-            new MessageEvent('message', { data: this.cache.get(src) }),
-          )
-        })
-      }
     }
     return _source
   }

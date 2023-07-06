@@ -36,24 +36,22 @@ const open = async (src: string) => {
   state.controller = new AbortController()
   // this should emit proper events
   const source = data.source(src, sym)
-  if (typeof source !== 'undefined') {
-    source.addEventListener(
-      'message',
-      (e) => {
-        message.value = e.data
-        emit('change', message.value)
-      },
-      { signal: state.controller.signal },
-    )
-    source.addEventListener(
-      'error',
-      (e) => {
-        error.value = (e as ErrorEvent).error as Error
-        emit('error', error.value)
-      },
-      { signal: state.controller.signal },
-    )
-  }
+  source.addEventListener(
+    'message',
+    (e) => {
+      message.value = e.data
+      emit('change', message.value)
+    },
+    { signal: state.controller.signal },
+  )
+  source.addEventListener(
+    'error',
+    (e) => {
+      error.value = (e as ErrorEvent).error as Error
+      emit('error', error.value)
+    },
+    { signal: state.controller.signal },
+  )
 }
 const close = (state: State) => {
   if (typeof state.controller !== 'undefined') {
