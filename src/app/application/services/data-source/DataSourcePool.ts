@@ -6,7 +6,7 @@ export type DataSourceResponse<T> = {data: T | undefined, error: Error | undefin
 export type Source = (params: Record<string, unknown>, source: {close: () => void}) => Promise<unknown>
 export type Sources = Record<string, Source>
 
-const get = (src: string, router: Router<Source>) => {
+const create = (src: string, router: Router<Source>) => {
   const [path, query] = src.split('?')
   const queryParams = new URLSearchParams(query)
   const route = router.match(path)
@@ -42,7 +42,7 @@ export class DataSourcePool {
 
     this.pool = new SharedPool<string, EventSource>(
       (src: string) => {
-        return get(src, requestRouter)
+        return create(src, requestRouter)
       },
       (src: string, source: EventSource) => {
         return destroy(src, source)
