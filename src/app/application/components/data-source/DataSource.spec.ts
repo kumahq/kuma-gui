@@ -16,7 +16,7 @@ describe('DataPlaneDetails', () => {
 
     expect(wrapper.emitted('change')).toBeFalsy()
   })
-  test('cached repsonses and errors work', async () => {
+  test('cached responses and errors work', async () => {
     const err = new Error('error')
     const SUCCESS = 'one'
     const REFRESHED = 'two'
