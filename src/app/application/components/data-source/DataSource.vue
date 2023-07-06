@@ -39,7 +39,7 @@ const open = async (src: string) => {
   source.addEventListener(
     'message',
     (e) => {
-      message.value = e.data
+      message.value = (e as MessageEvent).data
       emit('change', message.value)
     },
     { signal: state.controller.signal },

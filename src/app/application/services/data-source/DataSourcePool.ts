@@ -6,7 +6,7 @@ export type DataSourceResponse<T> = {data: T | undefined, error: Error | undefin
 export type Source = (params: Record<string, unknown>, source: {close: () => void}) => Promise<unknown>
 export type Sources = Record<string, Source>
 
-const create = (src: string, router: Router<Source>): EventSource => {
+const create = (src: string, router: Router<Source>): CallableEventSource => {
   const [path, query] = src.split('?')
   const queryParams = new URLSearchParams(query)
   const route = router.match(path)
@@ -26,9 +26,9 @@ const create = (src: string, router: Router<Source>): EventSource => {
       }
     }
   })
-  return _source as EventSource
+  return _source
 }
-const destroy = (_src: string, source: EventSource) => {
+const destroy = (_src: string, source: CallableEventSource) => {
   if (source) {
     source.close()
   }
@@ -36,15 +36,15 @@ const destroy = (_src: string, source: EventSource) => {
 
 export class DataSourcePool {
   cache: Map<string, unknown> = new Map()
-  pool: SharedPool<string, EventSource>
+  pool: SharedPool<string, CallableEventSource>
   constructor(requests: Sources) {
     const requestRouter: Router<Source> = new Router(requests)
 
-    this.pool = new SharedPool<string, EventSource>(
+    this.pool = new SharedPool<string, CallableEventSource>(
       (src: string) => {
         return create(src, requestRouter)
       },
-      (src: string, source: EventSource) => {
+      (src: string, source: CallableEventSource) => {
         return destroy(src, source)
       },
     )
@@ -58,7 +58,7 @@ export class DataSourcePool {
     return this.cache.get(src)
   }
 
-  open(src: string, ref: symbol): EventSource {
+  open(src: string, ref: symbol): CallableEventSource {
     const _source = this.pool.acquire(src, ref)
     _source.addEventListener('message', (e: Event) => {
       // always fill the cache on a successful response
