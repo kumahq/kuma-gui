@@ -66,7 +66,7 @@ const close = (state: State) => {
 }
 watch(() => props.src, (src) => open(src), { immediate: true })
 onBeforeUnmount(() => {
-  close(state)
+  state = close(state)
 })
 const refresh = () => {
   close(state)
