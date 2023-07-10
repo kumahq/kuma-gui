@@ -14,7 +14,10 @@ export default class Router<T> {
       const _url = `data:${path}`
       if (pattern.test(_url)) {
         const args = pattern.exec(_url)
-        return { route, params: args?.pathname.groups }
+        return {
+          route,
+          params: args?.pathname.groups || {},
+        }
       }
     }
     throw new Error(`Matching route for '${path}' not found`)
