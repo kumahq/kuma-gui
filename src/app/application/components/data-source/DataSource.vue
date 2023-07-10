@@ -77,5 +77,5 @@ const refresh = () => {
     :error="error"
     :refresh="refresh"
   />
-  <div />
+  <span />
 </template>
