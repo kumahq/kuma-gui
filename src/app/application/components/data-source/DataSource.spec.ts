@@ -4,9 +4,9 @@ import { flushPromises, mount } from '@vue/test-utils'
 import DataSource from './DataSource.vue'
 import { withSources } from '@/../jest/jest-setup-after-env'
 
-describe('DataPlaneDetails', () => {
+describe('DataSourcePool', () => {
   test("passing an empty uri doesn't fire change", async () => {
-    const wrapper = await mount(DataSource, {
+    const wrapper = mount(DataSource, {
       props: {
         src: '',
       },
@@ -23,11 +23,11 @@ describe('DataPlaneDetails', () => {
     let res = SUCCESS
     withSources(() => {
       return {
-        '/success': (params: any, source: any) => {
+        '/success': (_params: any, source: any) => {
           source.close()
           return Promise.resolve(res)
         },
-        '/error': (params: any, source: any) => {
+        '/error': (_params: any, source: any) => {
           source.close()
           throw err
         },
@@ -35,7 +35,7 @@ describe('DataPlaneDetails', () => {
     })
 
     // change
-    const wrapper = await mount(DataSource, {
+    const wrapper = mount(DataSource, {
       props: {
         src: '/success',
       },
