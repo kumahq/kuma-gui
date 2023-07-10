@@ -2,6 +2,8 @@ const CONNECTING = 0
 const OPEN = 1
 const CLOSED = 2
 export const isClosed = (source: { readyState: number }) => source.readyState === CLOSED
+// CallableEventSource turns a Promise returning function into an EventTarget,
+// making it act like a standard EventSource.
 export default class CallableEventSource extends EventTarget {
   url = ''
   withCredentials = false
