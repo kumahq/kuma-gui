@@ -1,7 +1,10 @@
 <template>
   <KCard>
     <template #body>
-      <div class="chart-box-list">
+      <div
+        v-if="!isLoading"
+        class="chart-box-list"
+      >
         <DoughnutChart
           v-if="isMultizoneMode"
           data-testid="zones"
@@ -46,6 +49,7 @@
           :data="envoyVersionsChartData"
         />
       </div>
+      <LoadingBlock v-else />
     </template>
   </KCard>
 </template>
@@ -56,6 +60,7 @@ import semverCompare from 'semver/functions/compare'
 import { computed, ref } from 'vue'
 
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { MergedMeshInsights, mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
 import type {
