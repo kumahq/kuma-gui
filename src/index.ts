@@ -25,12 +25,20 @@ export function useApp(
   }
 }
 
-// whilst this is currently looks like an empty function/deadcode, this
-// function gets decorated during development only to add the MSW mocking
-// functionality. We should see if this development MSW code can be moved to
-// decorate createApp instead. At that point we can remove this empty
-// bootstrapping code altogether.
-export function useBootstrap() {
-  return async () => {
+export function useBootstrap(store: Store<State>) {
+  return async (isAllowedToMakeApiCalls: boolean = true) => {
+    if (isAllowedToMakeApiCalls) {
+      await Promise.all([
+        // Fetches basic resources before setting up the router and mounting the
+        // application. This is mainly needed to properly redirect users to the
+        // onboarding flow in the appropriate scenarios.
+        store.dispatch('bootstrap'),
+        // Loads available policy types in order to populate the necessary
+        // information used for and policy lookups in the app.
+        store.dispatch('fetchPolicyTypes'),
+      ])
+    } else {
+      store.state.defaultVisibility.appError = false
+    }
   }
 }

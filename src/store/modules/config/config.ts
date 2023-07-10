@@ -11,9 +11,11 @@ const initialConfigState: ConfigInterface = {
 
 const mutations: MutationTree<ConfigInterface> = {
   SET_CONFIG_DATA: (state, config: ClientConfigInterface) => (state.clientConfig = config),
+  SET_STATUS: (state, status: 'OK' | null) => (state.status = status),
 }
 
 const getters: GetterTree<ConfigInterface, State> = {
+  getStatus: state => state.status,
   getConfig: state => state.clientConfig,
   getEnvironment: state => state.clientConfig?.environment,
   getMode: state => state.clientConfig?.mode,
@@ -32,6 +34,13 @@ const actions = (kumaApi: KumaApi): ActionTree<ConfigInterface, State> => ({
   getConfig({ commit }) {
     return kumaApi.getConfig().then((response) => {
       commit('SET_CONFIG_DATA', response)
+    })
+  },
+
+  // get the status of the API
+  getStatus({ commit }) {
+    return kumaApi.getStatus().then((response) => {
+      commit('SET_STATUS', response)
     })
   },
 
