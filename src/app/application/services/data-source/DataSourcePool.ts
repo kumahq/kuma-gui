@@ -12,13 +12,13 @@ export type Sources = Record<string, Source>
 const create = (src: string, router: Router<Source>): CallableEventSource => {
   const [path, query] = src.split('?')
   const queryParams = new URLSearchParams(query)
-  // use the router to fine which function to call
+  // use the router to find which function to call
   const route = router.match(path)
   const _source = new CallableEventSource(async function * (this: CallableEventSource) {
     while (true) {
       this.readyState = 1
       // `.route` here is the function call to the 'source' i.e. the Promise
-      // returning call that can be polled in our case right now the HTTP
+      // returning call that can be polled, in our case right now the HTTP
       // calls but in the future could also be 'listeners' on localStorage, or
       // 'listeners' on a session
       yield route.route({
