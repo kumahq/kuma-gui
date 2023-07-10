@@ -25,6 +25,11 @@ export function useApp(
   }
 }
 
+// whilst this is currently looks like an empty function/deadcode, this
+// function gets decorated during development only to add the MSW mocking
+// functionality. We should see if this development MSW code can be moved to
+// decorate createApp instead. At that point we can remove this empty
+// bootstrapping code altogether.
 export function useBootstrap() {
   return async () => {
   }
