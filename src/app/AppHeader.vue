@@ -21,6 +21,7 @@
     </div>
 
     <div
+      v-if="!shouldShowAppError"
       class="horizontal-list"
     >
       <div class="app-status app-status--mobile">
@@ -119,6 +120,7 @@ const store = useStore()
 const env = useEnv()
 const { t } = useI18n()
 
+const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const environmentName = computed(() => {
   const environment = store.getters['config/getEnvironment']
 

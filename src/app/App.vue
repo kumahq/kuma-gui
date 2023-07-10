@@ -1,8 +1,6 @@
 <template>
   <RouteView>
-    <AppLoadingBar
-      v-if="loading || route.name === undefined"
-    />
+    <AppLoadingBar v-if="store.state.globalLoading || route.name === undefined" />
 
     <template v-else>
       <AppHeader v-if="!isWizard" />
@@ -19,34 +17,31 @@
 
         <AppView>
           <AppErrorMessage
-            v-if="error"
+            v-if="shouldShowAppError"
             data-testid="app-error"
           />
-          <template
-            v-else
-          >
-            <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
 
-            <router-view
-              :key="routeKey"
-              v-slot="{ Component }"
+          <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
+
+          <router-view
+            :key="routeKey"
+            v-slot="{ Component }"
+          >
+            <transition
+              mode="out-in"
+              name="fade"
             >
-              <transition
-                mode="out-in"
-                name="fade"
+              <div
+                :key="(route.name as string)"
+                class="transition-root"
               >
-                <div
-                  :key="(route.name as string)"
-                  class="transition-root"
-                >
-                  <component
-                    :is="Component"
-                    :data="props.data"
-                  />
-                </div>
-              </transition>
-            </router-view>
-          </template>
+                <component
+                  :is="Component"
+                  :data="props.data"
+                />
+              </div>
+            </transition>
+          </router-view>
         </AppView>
       </div>
     </template>
@@ -54,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppView from '@/app/application/components/app-view/AppView.vue'
@@ -104,28 +99,8 @@ const route = useRoute()
  */
 const routeKey = computed(() => route.path)
 const isWizard = computed(() => route.meta.isWizard === true)
+const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
-const loading = ref<boolean>(true)
-const error = ref<Error | undefined>()
-;(
-  async () => {
-    try {
-      await Promise.all([
-        // Fetches basic resources before setting up the router and mounting the
-        // application. This is mainly needed to properly redirect users to the
-        // onboarding flow in the appropriate scenarios.
-        store.dispatch('bootstrap'),
-        // Loads available policy types in order to populate the necessary
-        // information used for and policy lookups in the app.
-        store.dispatch('fetchPolicyTypes'),
-      ])
-    } catch (e) {
-      error.value = e as Error
-    } finally {
-      loading.value = false
-    }
-  }
-)()
 
 </script>
 <style lang="scss" scoped>

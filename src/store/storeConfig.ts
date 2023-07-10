@@ -22,6 +22,7 @@ interface BareRootState {
    *
    */
   defaultVisibility: {
+    appError: boolean
     onboardingNotification: boolean
   }
   meshes: {
@@ -44,6 +45,7 @@ const initialState: BareRootState = {
   menu: null,
   globalLoading: true,
   defaultVisibility: {
+    appError: true,
     onboardingNotification: true,
   },
   meshes: {
@@ -87,6 +89,9 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
     getters: {
       globalLoading: state => state.globalLoading,
 
+      shouldShowAppError: (state) => {
+        return state.defaultVisibility.appError && state.config.status !== 'OK'
+      },
       shouldShowOnboardingNotification: (state) => {
         const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
 
@@ -117,36 +122,42 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         commit('SET_GLOBAL_LOADING', isLoading)
       },
 
-      async bootstrap({ dispatch, state }) {
-        await Promise.all([
-          dispatch('fetchMeshList'),
-          dispatch('fetchDataplaneTotalCount'),
-          dispatch('config/bootstrapConfig'),
-        ])
+      async bootstrap({ dispatch, getters, state }) {
+        // check the Kuma status before we do anything else
+        await dispatch('config/getStatus')
 
-        // Validates if stored mesh exists and fetches the relevant sidebar data.
-        if (state.meshes.items.length > 0) {
-          const newStoredMesh = ClientStorage.get('selectedMesh')
-          let mesh: Mesh | undefined
+        // only dispatch these actions if the Kuma is online
+        if (getters['config/getStatus'] === 'OK') {
+          await Promise.all([
+            dispatch('fetchMeshList'),
+            dispatch('fetchDataplaneTotalCount'),
+            dispatch('config/bootstrapConfig'),
+          ])
 
-          // If a selected mesh is stored, check if it actually exists and use it only if it does.
-          if (newStoredMesh !== null) {
-            const existingMesh = state.meshes.items.find((mesh) => mesh.name === newStoredMesh)
+          // Validates if stored mesh exists and fetches the relevant sidebar data.
+          if (state.meshes.items.length > 0) {
+            const newStoredMesh = ClientStorage.get('selectedMesh')
+            let mesh: Mesh | undefined
 
-            if (existingMesh !== undefined) {
-              mesh = existingMesh
+            // If a selected mesh is stored, check if it actually exists and use it only if it does.
+            if (newStoredMesh !== null) {
+              const existingMesh = state.meshes.items.find((mesh) => mesh.name === newStoredMesh)
+
+              if (existingMesh !== undefined) {
+                mesh = existingMesh
+              }
             }
-          }
 
-          if (mesh === undefined) {
-            // If the stored mesh doesn’t exist, use the first mesh instead.
-            mesh = state.meshes.items[0]
-          }
+            if (mesh === undefined) {
+              // If the stored mesh doesn’t exist, use the first mesh instead.
+              mesh = state.meshes.items[0]
+            }
 
-          await dispatch('updateSelectedMesh', mesh.name)
-          await dispatch('sidebar/getInsights')
-        } else {
-          await dispatch('updateSelectedMesh', null)
+            await dispatch('updateSelectedMesh', mesh.name)
+            await dispatch('sidebar/getInsights')
+          } else {
+            await dispatch('updateSelectedMesh', null)
+          }
         }
       },
 
