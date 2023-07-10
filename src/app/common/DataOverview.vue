@@ -18,12 +18,11 @@
       </KButton>
     </div>
 
-    <LoadingBlock v-if="isLoading" />
-
     <ErrorBlock
-      v-else-if="error !== null"
+      v-if="error"
       :error="error"
     />
+    <LoadingBlock v-else-if="isLoading" />
 
     <EmptyBlock v-else-if="isEmpty" />
 
