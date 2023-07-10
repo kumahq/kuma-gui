@@ -18,7 +18,6 @@ describe('storeConfig', () => {
     const commit = jest.fn()
     const dispatch = jest.fn()
     const getters = {
-      'config/getStatus': 'OK',
     }
     const state = {
       meshes: {

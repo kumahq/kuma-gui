@@ -18,13 +18,9 @@ async function mountVueApplication() {
   )
 
   const app = await get($.app)((await import('./app/App.vue')).default)
-  app.mount('#app')
 
-  const store = get($.store)
-  await store.dispatch('updateGlobalLoading', true)
-  const bootstrap = get($.bootstrap)
-  await bootstrap()
-  await store.dispatch('updateGlobalLoading', false)
+  await get($.bootstrap)()
+  app.mount('#app')
 }
 
 mountVueApplication()
