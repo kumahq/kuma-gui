@@ -1,5 +1,8 @@
 <template>
-  <KEmptyState cta-is-hidden>
+  <KEmptyState
+    data-testid="empty-state"
+    cta-is-hidden
+  >
     <template #title>
       <slot name="title">
         <KIcon

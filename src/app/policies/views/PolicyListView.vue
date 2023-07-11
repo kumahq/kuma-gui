@@ -1,93 +1,171 @@
 <template>
   <RouteView
+    v-slot="{ route: _route}"
     module="policies"
   >
-    <RouteTitle
-      :title="t('policies.routes.items.title', {name: policyType?.name})"
-    />
-    <AppView>
-      <div
-        v-if="policyType"
-        class="relative"
-        :class="policyType.path"
-      >
-        <div class="kcard-stack">
-          <div class="kcard-border">
-            <KCard
-              v-if="policyType.isExperimental"
-              border-variant="noBorder"
-              class="mb-4"
-            >
-              <template #body>
-                <KAlert appearance="warning">
-                  <template #alertMessage>
-                    <p>
-                      <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
-                      <a
-                        href="https://github.com/kumahq/kuma/issues/new/choose"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >issue</a>
-                    </p>
-                  </template>
-                </KAlert>
-              </template>
-            </KCard>
+    <DataSource
+      v-slot="{data: policies, error: policyError, refresh: policyRefresh}: PolicyTypeCollectionSource"
+      :src="`/*/policy-types`"
+    >
+      <ErrorBlock
+        v-if="policyError"
+        :error="policyError"
+      />
+      <LoadingBlock v-else-if="policies === undefined" />
+      <EmptyBlock v-else-if="policies.policies.length === 0" />
 
-            <DataOverview
-              :selected-entity-name="currentEntityName ?? undefined"
-              :page-size="PAGE_SIZE_DEFAULT"
-              :error="error"
-              :is-loading="isLoading"
-              :empty-state="{
-                title: 'No Data',
-                message: `There are no ${policyType.name} policies present.`,
-              }"
-              :table-data="tableData"
-              :table-data-is-empty="tableData.data.length === 0"
-              :next="nextUrl"
-              :page-offset="pageOffset"
-              @table-action="handleTableAction"
-              @load-data="loadData"
-            >
-              <template #additionalControls>
-                <KSelect
-                  label="Policies"
-                  :items="policySelectItems"
-                  :label-attributes="{ class: 'visually-hidden' }"
-                  appearance="select"
-                  :enable-filtering="true"
-                  @selected="changePolicyType"
-                >
-                  <template #item-template="{ item }">
-                    <span
-                      :class="{
-                        'policy-type-empty': policyTypeNamesWithNoPolicies.includes(item.label)
+      <template
+        v-else
+      >
+        <template
+          v-for="selected in [policies.policies.find(item => item.path === _route.params.policyPath) ?? policies.policies[0]]"
+          :key="selected.path"
+        >
+          <DataSource
+            v-slot="{data, error, refresh}: PolicyCollectionSource"
+            :src="`/${_route.params.mesh}/policy-type/${selected.path}?offset=${route.query.offset || '0'}`"
+            @change="change"
+          >
+            <RouteTitle
+              :title="t('policies.routes.items.title', {name: selected.name})"
+            />
+            <AppView>
+              <div
+                class="relative"
+                :class="selected.path"
+              >
+                <div class="kcard-stack">
+                  <div class="kcard-border">
+                    <KCard
+                      v-if="selected.isExperimental"
+                      border-variant="noBorder"
+                      class="mb-4"
+                    >
+                      <template #body>
+                        <KAlert appearance="warning">
+                          <template #alertMessage>
+                            <p>
+                              <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
+                              <a
+                                href="https://github.com/kumahq/kuma/issues/new/choose"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >issue</a>
+                            </p>
+                          </template>
+                        </KAlert>
+                      </template>
+                    </KCard>
+
+                    <DataOverview
+                      :selected-entity-name="route.query.policy as string ?? undefined"
+                      :page-size="PAGE_SIZE_DEFAULT"
+                      :error="error"
+                      :is-loading="typeof data === 'undefined' && typeof error === 'undefined'"
+                      :empty-state="{
+                        title: 'No Data',
+                        message: `There are no ${selected.name} policies present.`,
+                      }"
+                      :table-data="{
+                        headers: [
+                          { label: 'Name', key: 'entity' },
+                          { label: 'Type', key: 'type' },
+                        ],
+                        data: (data?.items || []).map(item => ({
+                          entity: item,
+                          type: item.type,
+                          detailViewRoute: {
+                            name: 'policy-detail-view',
+                            params: {
+                              mesh: item.mesh,
+                              policyPath: _route.params.policyPath,
+                              policy: item.name
+                            }
+                          }
+                        }))
+                      }"
+                      :table-data-is-empty="data && data.items.length === 0"
+                      :next="data?.next"
+                      :page-offset="route.query.offset ? parseInt(route.query.offset as string) : 0"
+                      @table-action="item => {
+                        router.push(
+                          {
+                            name: 'policies-list-view',
+                            query: {
+                              policy: item.name
+                            }
+                          }
+                        )
+                      }"
+                      @refresh="() => {refresh(); policyRefresh()}"
+                      @load-data="offset => {
+                        router.push(
+                          {
+                            name: 'policies-list-view',
+                            query: {
+                              policy: route.query.policy,
+                              offset: offset
+                            }
+                          }
+                        )
                       }"
                     >
-                      {{ item.label }}
-                    </span>
-                  </template>
-                </KSelect>
+                      <template #additionalControls>
+                        <DataSource
+                          v-slot="{data: insights}: MeshInsightSource"
+                          :src="`/${_route.params.mesh}/insights`"
+                        >
+                          <KSelect
+                            label="Policies"
+                            :items="policies.policies.map(item => ({
+                              label: item.name,
+                              value: item.path,
+                              selected: item.path === _route.params.policyPath,
+                            }))"
+                            :label-attributes="{ class: 'visually-hidden' }"
+                            appearance="select"
+                            :enable-filtering="true"
+                            @selected="(item: SelectItem) => router.push({
+                              name: 'policies-list-view',
+                              params: {
+                                ...route.params,
+                                policyPath: item.value,
+                              },
+                            })"
+                          >
+                            <template #item-template="{ item }">
+                              <span
+                                :class="{
+                                  'policy-type-empty': !insights?.policies[item.label]?.total
+                                }"
+                              >
+                                {{ item.label }} ({{ insights?.policies[item.label]?.total || '0' }})
+                              </span>
+                            </template>
+                          </KSelect>
+                        </DataSource>
 
-                <DocumentationLink
-                  :href="t('policies.href.docs', {'name': policyType.name})"
-                  data-testid="policy-documentation-link"
-                />
-              </template>
-            </DataOverview>
-          </div>
-
-          <PolicyDetails
-            v-if="currentEntityName !== null"
-            :name="currentEntityName"
-            :mesh="currentMeshName"
-            :path="policyType.path"
-            :type="policyType.name"
-          />
-        </div>
-      </div>
-    </AppView>
+                        <DocumentationLink
+                          :href="t('policies.href.docs', {'name': selected.name})"
+                          data-testid="policy-documentation-link"
+                        />
+                      </template>
+                    </DataOverview>
+                  </div>
+                  <PolicyDetails
+                    v-if="route.query.policy"
+                    :name="route.query.policy as string"
+                    :mesh="_route.params.mesh"
+                    :path="selected.path"
+                    :type="selected.name"
+                  />
+                </div>
+              </div>
+            </AppView>
+          </DataSource>
+        </template>
+      </template>
+    </DataSource>
   </RouteView>
 </template>
 
@@ -98,156 +176,43 @@ import {
   KSelect,
   SelectItem,
 } from '@kong/kongponents'
-import { computed, PropType, ref } from 'vue'
-import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import PolicyDetails from '../components/PolicyDetails.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import type { MeshInsightSource } from '@/app/meshes/sources'
+import type {
+  PolicyCollection,
+  PolicyCollectionSource,
+  PolicyTypeCollectionSource,
+} from '@/app/policies/sources'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { useStore } from '@/store/store'
-import { PolicyEntity, TableHeader } from '@/types/index.d'
-import { useKumaApi, useI18n } from '@/utilities'
-import { QueryParameter } from '@/utilities/QueryParameter'
+import { useI18n } from '@/utilities'
 
-type PolicyEntityTableRow = {
-  entity: PolicyEntity
-  detailViewRoute: RouteLocationNamedRaw
-  type: string
-}
-
-const kumaApi = useKumaApi()
 const route = useRoute()
 const router = useRouter()
-const store = useStore()
 const { t } = useI18n()
 
-const props = defineProps({
-  selectedPolicyName: {
-    type: [String, null] as PropType<string | null>,
-    required: false,
-    default: null,
-  },
-
-  policyPath: {
-    type: String,
-    required: true,
-  },
-
-  offset: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
-})
-
-const isLoading = ref(true)
-const error = ref<Error | null>(null)
-const nextUrl = ref<string | null>(null)
-const pageOffset = ref(props.offset)
-const currentEntityName = ref<string | null>(props.selectedPolicyName)
-
-const tableData = ref<{ headers: TableHeader[], data: PolicyEntityTableRow[] }>({
-  headers: [
-    { label: 'Name', key: 'entity' },
-    { label: 'Type', key: 'type' },
-  ],
-  data: [],
-})
-
-const currentMeshName = computed(() => route.params.mesh as string)
-const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])
-const policySelectItems = computed<SelectItem[]>(() => {
-  return store.state.policyTypes.map((policyType) => ({
-    label: policyType.name,
-    value: policyType.path,
-    selected: policyType.path === props.policyPath,
-  }))
-})
-const policyTypeNamesWithNoPolicies = computed(() => {
-  return store.state.policyTypes
-    .filter((policyType) => (store.state.sidebar.insights.mesh.policies[policyType.name] ?? 0) === 0)
-    .map((policyType) => policyType.name)
-})
-
-start()
-
-async function start() {
-  loadData(props.offset)
-}
-
-async function loadData(offset: number) {
-  pageOffset.value = offset
-  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  QueryParameter.set('offset', offset > 0 ? offset : null)
-
-  isLoading.value = true
-  error.value = null
-
-  const mesh = route.params.mesh as string
-  const path = route.params.policyPath as string
-  const size = PAGE_SIZE_DEFAULT
-
-  try {
-    const { items, next } = await kumaApi.getAllPolicyEntitiesFromMesh({ mesh, path }, { size, offset })
-
-    nextUrl.value = next
-    tableData.value.data = transformToTableData(items ?? [])
-    loadEntity({ name: props.selectedPolicyName ?? tableData.value.data[0]?.entity.name })
-  } catch (err) {
-    tableData.value.data = []
-
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
-
-function transformToTableData(policies: PolicyEntity[]): PolicyEntityTableRow[] {
-  return policies.map((entity) => {
-    const { type, name } = entity
-    const detailViewRoute: RouteLocationNamedRaw = {
-      name: 'policy-detail-view',
-      params: {
-        mesh: entity.mesh,
-        policyPath: route.params.policyPath as string,
-        policy: name,
+const change = function (e: PolicyCollection) {
+  e.items.length > 0 && !route.query.policy &&
+    router.push(
+      {
+        name: 'policies-list-view',
+        query: {
+          policy: e.items[0].name,
+        },
       },
-    }
-
-    return {
-      entity,
-      detailViewRoute,
-      type,
-    }
-  })
+    )
 }
 
-function handleTableAction(entity: PolicyEntity) {
-  loadEntity({ name: entity.name })
-}
-
-function loadEntity({ name }: { name?: string | undefined }) {
-  currentEntityName.value = name ?? null
-  QueryParameter.set('policy', name ?? null)
-}
-
-function changePolicyType(item: SelectItem) {
-  router.push({
-    name: 'policies-list-view',
-    params: {
-      ...route.params,
-      policyPath: item.value,
-    },
-  })
-}
 </script>
 
 <style lang="scss" scoped>

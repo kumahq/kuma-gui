@@ -9,7 +9,7 @@ import { TOKENS as TEST, services as testing } from '../src/services/testing'
 import { TOKENS as DEV, services as development } from '@/services/development'
 import CliEnv from '@/services/env/CliEnv'
 import { TOKENS as PROD, services as production } from '@/services/production'
-import { get, container, build, createInjections } from '@/services/utils'
+import { get, container, build, createInjections, token } from '@/services/utils'
 
 // jest can't import this module properly due to transpiling issues
 // mock this out with a blank element
@@ -88,6 +88,19 @@ export const withVersion = (v: string) => {
       [$.Env, {
         service: TestEnv,
         arguments: [$.EnvVars],
+      }],
+    ],
+  )
+}
+export const withSources = (sources: any) => {
+  build(
+    [
+      [token('sources'), {
+        service: sources,
+        arguments: [$.httpClient],
+        labels: [
+          $.sources,
+        ],
       }],
     ],
   )
