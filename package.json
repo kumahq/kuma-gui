@@ -52,7 +52,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^18.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "@faker-js/faker": "^8.0.2",
-    "@jest/globals": "^29.5.0",
+    "@jest/globals": "^29.6.1",
     "@modyfi/vite-plugin-yaml": "^1.0.4",
     "@types/js-yaml": "^4.0.5",
     "@types/marked": "^5.0.0",
