@@ -50,7 +50,12 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
       },
       (req) => {
         try {
-          const mockEnv: Env = (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d)
+          const mockEnv: Env = (key, d = '') => {
+            if (typeof opts[key as MockEnvKeys] !== 'undefined') {
+              return opts[key as MockEnvKeys]
+            }
+            return env(key as AppEnvKeys, d)
+          }
           const { route, params } = router.match(req.url.replace(baseUrl, ''))
           const endpoint = route
           const fetch = endpoint({

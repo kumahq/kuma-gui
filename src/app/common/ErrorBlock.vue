@@ -1,5 +1,8 @@
 <template>
-  <div class="error-block">
+  <div
+    data-testid="error-state"
+    class="error-block"
+  >
     <KEmptyState cta-is-hidden>
       <template #title>
         <KIcon
