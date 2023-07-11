@@ -33,11 +33,7 @@ export class DataSourcePool {
     )
   }
 
-  source(src: string, ref: symbol) {
-    return this.open(src, ref)
-  }
-
-  open(src: string, ref: symbol): CallableEventSource {
+  source(src: string, ref: symbol): CallableEventSource {
     const _source = this.pool.acquire(src, ref)
     _source.addEventListener('message', (e: Event) => {
       // always fill the cache on a successful response
