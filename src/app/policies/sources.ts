@@ -12,8 +12,8 @@ type MeshParams = {
   mesh: string
 }
 type PaginationParams = {
-  // page: number
-  // size: number
+  page: number
+  size: number
   offset: number
 }
 
