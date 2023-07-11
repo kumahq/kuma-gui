@@ -9,6 +9,7 @@
     >
       <ErrorBlock
         v-if="policyError"
+        :error="policyError"
       />
       <LoadingBlock v-else-if="policies === undefined" />
       <EmptyBlock v-else-if="policies.policies.length === 0" />
@@ -60,7 +61,7 @@
                       :selected-entity-name="route.query.policy as string ?? undefined"
                       :page-size="PAGE_SIZE_DEFAULT"
                       :error="error"
-                      :is-loading="typeof data === 'undefined'"
+                      :is-loading="typeof data === 'undefined' && typeof error === 'undefined'"
                       :empty-state="{
                         title: 'No Data',
                         message: `There are no ${selected.name} policies present.`,
