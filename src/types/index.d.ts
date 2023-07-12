@@ -10,7 +10,6 @@ export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_a
 export type ChartDataPoint = {
   title: string
   data: number
-  route?: RouteLocationNamedRaw
   statusKeyword?: StatusKeyword
 }
 

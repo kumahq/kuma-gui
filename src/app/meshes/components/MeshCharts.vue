@@ -17,14 +17,12 @@ import { useRoute } from 'vue-router'
 
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
 import { MergedMeshInsights, mergeInsightsReducer } from '@/store/reducers/mesh-insights'
-import { useStore } from '@/store/store'
 import type { ChartDataPoint, DataPlaneProxyStatus, ServiceStatus } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 
 const i18n = useI18n()
 const kumaApi = useKumaApi()
 const route = useRoute()
-const store = useStore()
 
 const isLoading = ref(false)
 const dataPlaneProxyStatus = ref<Required<DataPlaneProxyStatus>>({
@@ -50,29 +48,17 @@ const servicesChartData = computed(() => {
   const dataPoints: ChartDataPoint[] = []
   const { internal, external } = serviceStatus.value
 
-  if (internal && store.state.selectedMesh !== null) {
+  if (internal) {
     dataPoints.push({
       title: i18n.t('common.charts.services.internalLabel'),
       data: internal,
-      route: {
-        name: 'services-list-view',
-        params: {
-          mesh: store.state.selectedMesh,
-        },
-      },
     })
   }
 
-  if (external && store.state.selectedMesh !== null) {
+  if (external) {
     dataPoints.push({
       title: i18n.t('common.charts.services.externalLabel'),
       data: external,
-      route: {
-        name: 'services-list-view',
-        params: {
-          mesh: store.state.selectedMesh,
-        },
-      },
     })
   }
 
