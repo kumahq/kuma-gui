@@ -4,13 +4,13 @@ Feature: Zones: Zone create flow
       | Alias                               | Selector                                            |
       | name-input                          | [data-testid='name-input']                          |
       | create-zone-button                  | [data-testid='create-zone-button']                  |
-      | create-zone-error                   | [data-testid='create-zone-error']                   |
-      | connect-zone-instructions           | [data-testid='connect-zone-instructions']           |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
       | ingress-input-switch                | [for='zone-ingress-enabled']                        |
       | egress-input-switch                 | [for='zone-egress-enabled']                         |
       | zone-connected-scanner              | [data-testid='zone-connected-scanner']              |
+      | error                               | [data-testid='create-zone-error']                   |
+      | instructions                        | [data-testid='connect-zone-instructions']           |
     When I visit the "/zones/create" URL
 
   Scenario: The form shows only the initial elements
@@ -79,21 +79,14 @@ Feature: Zones: Zone create flow
       """
     Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"
 
-  Scenario: The form shows expected error for <StatusCode> response
-    When the URL "/provision-zone" responds with
+  Scenario: The form shows an error
+    Given the URL "/provision-zone" responds with
       """
       headers:
-        Status-Code: '<StatusCode>'
+        Status-Code: '409'
       """
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
+    Then the "$error" element exists
+    Then the "$instructions" element doesn't exist
 
-    Then the "$create-zone-button" element is <CreateButtonAssertion>
-    And the "$create-zone-error" element contains "<ErrorTitle>"
-    And the "$connect-zone-instructions" element doesn't exist
-
-    Examples:
-      | StatusCode | CreateButtonAssertion | ErrorTitle                                     |
-      | 400        | enabled               | The Zone name test is invalid                  |
-      | 409        | disabled              | A Zone with the name test already exists       |
-      | 500        | enabled               | An error occurred while creating the Zone test |

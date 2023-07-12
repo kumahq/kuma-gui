@@ -264,8 +264,7 @@ const base64EncodedToken = computed(() => token.value !== '' ? window.btoa(token
 const isCreateButtonDisabled = computed(() => {
   return name.value === '' ||
     isChangingZone.value ||
-    zone.value !== null ||
-    (errorState.value.error instanceof ApiError && errorState.value.error.status === 409)
+    zone.value !== null
 })
 
 /**
