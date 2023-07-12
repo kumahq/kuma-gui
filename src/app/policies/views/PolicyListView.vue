@@ -1,7 +1,6 @@
 <template>
   <RouteView
     v-slot="{ route: _route}"
-    module="policies"
   >
     <DataSource
       v-slot="{data: policies, error: policyError, refresh: policyRefresh}: PolicyTypeCollectionSource"
