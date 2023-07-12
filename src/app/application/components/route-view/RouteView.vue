@@ -34,7 +34,7 @@ import { useI18n } from '@/utilities'
 const { t } = useI18n()
 const route = useRoute()
 const setTitle = createTitleSetter(document)
-const setAttrs = createAttrsSetter(document.querySelector('html'))
+const setAttrs = createAttrsSetter(document.documentElement)
 const sym = Symbol('route-view')
 
 const title = ref<string>('')
