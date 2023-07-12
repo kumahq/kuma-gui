@@ -15,7 +15,7 @@ export const createTitleSetter = ($doc = document) => {
     $doc.title = title
   })
 }
-export const createAttrsSetter = ($el = document.querySelector('html')) => {
+export const createAttrsSetter = ($el = document.documentElement) => {
   if (!$el) {
     return () => {}
   }
