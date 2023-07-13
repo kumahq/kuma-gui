@@ -18,6 +18,7 @@ export const create: Creator = (src, router) => {
           offset: parseInt(queryParams.get('offset') || '0'),
           size: parseInt(queryParams.get('size') || '0'),
           page: parseInt(queryParams.get('page') || '0'),
+          search: queryParams.get('search') || '',
         },
         ...route.params,
       }, this)
