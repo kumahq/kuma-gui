@@ -40,6 +40,8 @@ const open = async (src: string) => {
     'message',
     (e) => {
       message.value = (e as MessageEvent).data
+      // if we got a message we are no longer erroneous
+      error.value = undefined
       emit('change', message.value)
     },
     { signal: state.controller.signal },
