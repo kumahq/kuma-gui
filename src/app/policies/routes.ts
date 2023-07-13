@@ -45,11 +45,11 @@ export const routes = (store: Store<State>) => {
               name: `${prefix}`,
               redirect: (to) => {
                 let item = store.state.policyTypes.find((item) => {
-                  if (!(item.name in store.state.sidebar.insights.mesh.policies)) {
+                  if (!(item.name in store.state.policyTypeTotals)) {
                     return false
                   }
 
-                  return store.state.sidebar.insights.mesh.policies[item.name] !== 0
+                  return store.state.policyTypeTotals[item.name].total !== 0
                 })
 
                 if (item === undefined) {

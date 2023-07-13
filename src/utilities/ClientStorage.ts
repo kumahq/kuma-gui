@@ -3,7 +3,6 @@ type StorageKeyValues =
   'onboardingStep' |
   'onboardingIsCompleted' |
   'createMeshData' |
-  'selectedMesh' |
   'codeBlockQueries'
 
 /**

@@ -65,23 +65,21 @@
               <DefinitionList>
                 <DefinitionListItem :term="`Policies (${totalPolicyCount})`">
                   <ul>
-                    <template
-                      v-for="(item, index) in policyCounts"
+                    <li
+                      v-for="(policyType, index) in policyTypes"
                       :key="index"
                     >
-                      <li v-if="item.length !== 0">
-                        <router-link
-                          :to="{
-                            name: 'policies-list-view',
-                            params: {
-                              policyPath: item.path
-                            }
-                          }"
-                        >
-                          {{ item.name }}: {{ item.length }}
-                        </router-link>
-                      </li>
-                    </template>
+                      <router-link
+                        :to="{
+                          name: 'policies-list-view',
+                          params: {
+                            policyPath: policyType.path
+                          }
+                        }"
+                      >
+                        {{ policyType.name }}: {{ policyType.total }}
+                      </router-link>
+                    </li>
                   </ul>
                 </DefinitionListItem>
               </DefinitionList>
@@ -117,12 +115,12 @@ import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { Mesh, MeshInsight } from '@/types/index.d'
 import { useKumaApi, useI18n } from '@/utilities'
 import { humanReadableDate } from '@/utilities/helpers'
+import { notEmpty } from '@/utilities/notEmpty'
 
 const { t } = useI18n()
 
@@ -169,13 +167,33 @@ const extendedMesh = computed(() => {
   }
 })
 
-const totalPolicyCount = computed(() => store.state.sidebar.insights.mesh.policies.total)
+const totalPolicyCount = computed(() => {
+  if (meshInsights.value === null) {
+    return 0
+  }
 
-const policyCounts = computed(() => {
-  return store.state.policyTypes.map((policyType) => ({
-    ...policyType,
-    length: meshInsights.value?.policies[policyType.name]?.total ?? 0,
-  }))
+  return Object.values(meshInsights.value.policies).reduce((total, stat) => total + stat.total, 0)
+})
+const policyTypes = computed(() => {
+  if (meshInsights.value === null) {
+    return []
+  }
+
+  return Object.entries(meshInsights.value.policies)
+    .map(([policyTypeName, stat]) => {
+      const policyType = store.state.policyTypesByName[policyTypeName]
+
+      if (policyType && stat.total !== 0) {
+        return {
+          name: policyType.name,
+          path: policyType.path,
+          total: stat.total,
+        }
+      }
+
+      return null
+    })
+    .filter(notEmpty)
 })
 
 loadMesh()
@@ -189,8 +207,6 @@ async function loadMesh(): Promise<void> {
   try {
     mesh.value = await kumaApi.getMesh({ name })
     meshInsights.value = await kumaApi.getMeshInsights({ name })
-    const meshInsight = mergeInsightsReducer([meshInsights.value])
-    store.state.currentMeshPolicies = meshInsight.policies
   } catch (error) {
     hasError.value = true
     mesh.value = null

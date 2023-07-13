@@ -17,7 +17,6 @@ export function createRouter(routes: RouteRecordRaw[], store: Store<State>, base
   })
 
   router.beforeEach(redirectOldHashHistoryUrlPaths())
-  router.beforeEach(updateSelectedMeshGuard(store))
   router.beforeEach(onboardingRouteGuard(store))
 
   return router
@@ -32,17 +31,6 @@ const redirectOldHashHistoryUrlPaths = (): NavigationGuard => (to, _from, next) 
   } else {
     next()
   }
-}
-
-/**
- * Updates `state.selectedMesh` when navigating to a page associated to a different mesh.
- */
-const updateSelectedMeshGuard = (store: Store<State>): NavigationGuard => (to, _from, next) => {
-  if (to.params.mesh && to.params.mesh !== store.state.selectedMesh) {
-    store.dispatch('updateSelectedMesh', to.params.mesh)
-  }
-
-  next()
 }
 
 /**

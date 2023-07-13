@@ -13,54 +13,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 import AppNavItem from './AppNavItem.vue'
 import { useStore } from '@/store/store'
 import { useNav } from '@/utilities'
-import { poll } from '@/utilities/poll'
-
-const POLLING_INTERVAL_IN_SECONDS = 10
 
 const getNavItems = useNav()
-const route = useRoute()
 const store = useStore()
 
 const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus']))
-
-watch(() => route.params.mesh, (newMesh, oldMesh) => {
-  if (newMesh !== oldMesh && newMesh) {
-    store.dispatch('sidebar/getMeshInsights', newMesh)
-  }
-})
-
-let shouldStopPolling = false
-
-onMounted(function () {
-  window.addEventListener('blur', setShouldStopPolling)
-  window.addEventListener('focus', startPolling)
-})
-
-onUnmounted(function () {
-  window.removeEventListener('blur', setShouldStopPolling)
-  window.removeEventListener('focus', startPolling)
-})
-
-startPolling()
-
-function setShouldStopPolling() {
-  shouldStopPolling = true
-}
-
-function startPolling() {
-  shouldStopPolling = false
-  poll(fetchInsights, POLLING_INTERVAL_IN_SECONDS * 1000, () => shouldStopPolling)
-}
-
-function fetchInsights() {
-  return store.dispatch('sidebar/getInsights')
-}
 </script>
 
 <style lang="scss" scoped>
