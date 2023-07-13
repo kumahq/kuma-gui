@@ -42,7 +42,7 @@ export const cleanQuery = <T extends Record<string, unknown>>(params: Record<str
   const query = {
     ...originalQuery as Record<string, string | undefined>,
   }
-  params = Object.entries(params).reduce((prev, [key, value]) => {
+  const processed = Object.entries(params).reduce((prev, [key, value]) => {
     if (String(value).length > 0) {
       prev[key] = String(value)
     } else {
@@ -52,6 +52,6 @@ export const cleanQuery = <T extends Record<string, unknown>>(params: Record<str
   }, query)
   return {
     ...query,
-    ...params,
+    ...processed,
   }
 }
