@@ -87,7 +87,15 @@ jobs:
           yarn build:staging
       - run: |
           yarn preview:built &
-          yarn run test:browser
+          CYPRESS_video=true yarn run test:browser
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-artifacts
+          retention-days: ${{ github.event_name == 'pull_request' && 3 || 30 }}
+          path: |
+            cypress/screenshots
+            cypress/videos
 
   post-checks:
     # There is a branch protection rule on the repo that requires "branch-protection" to
