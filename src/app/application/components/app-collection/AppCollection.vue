@@ -1,6 +1,9 @@
 <template>
   <KTable
     class="app-collection"
+    :has-error="(typeof props.error !== 'undefined')"
+    :pagination-total-items="props.total"
+    :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
     :fetcher-cache-key="String(cacheKey)"
     :fetcher="({page, pageSize}: FetcherProps) => {
       emit('change', {
@@ -9,7 +12,16 @@
       })
       return {data: items}
     }"
+    :cell-attrs="({ headerKey }: any) => {
+      return {
+        class: {
+          [`${headerKey}-column`]: true,
+        },
+      }
+    }"
+    empty-state-icon-size="96"
     disable-sorting
+    hide-pagination-when-optional
     @row:click="click"
   >
     <template
@@ -39,7 +51,11 @@ type ChangeValue = {
 }
 
 const props = defineProps<{
+  total: number,
+  pageNumber: number,
+  pageSize: number,
   items: unknown[] | undefined,
+  error: Error | undefined,
 }>()
 
 const emit = defineEmits<{
