@@ -123,7 +123,17 @@ header {
   margin-bottom: 1em;
 }
 header :is(h1, h2, h3, h4, h5, h6)  {
-  color: var(--black-500)
+  color: var(--black-500);
+  line-height: 36px;
+  letter-spacing: -1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+header :is(h1) {
+  font-size: var(--type-xxxl, 32px);
+}
+header :is(h2) {
+  font-size: var(--type-xl, 22px);
 }
 
 .actions {
