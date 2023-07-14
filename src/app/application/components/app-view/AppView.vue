@@ -136,7 +136,7 @@ onBeforeUnmount(() => {
 header {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem; /* 20px */
+  margin-bottom: 20px; /* 2rem */
 }
 header > :is(h1, h2, h3, h4, h5, h6)  {
   color: var(--black-500);
