@@ -3,20 +3,18 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
+import cypressFailFast from 'cypress-fail-fast/plugin'
 import dotenv from 'dotenv'
+
 const env = dotenv.config().parsed as {[key: string]: string}
 
 export default defineConfig({
   e2e: {
     specPattern: '**/*.feature',
-    supportFile: false,
     experimentalRunAllSpecs: true,
     // TODO Env var
     video: false,
-    async setupNodeEvents(
-      on: Cypress.PluginEvents,
-      config: Cypress.PluginConfigOptions,
-    ) {
+    async setupNodeEvents(on, config) {
       // propagate env to Cypress.env
       Object.entries(env).forEach(([prop, value]) => {
         config.env[prop] = value
@@ -44,6 +42,8 @@ export default defineConfig({
           plugins: [createEsbuildPlugin(config)],
         }),
       )
+
+      cypressFailFast(on, config)
 
       // Make sure to return the config object as it might have been modified by the plugin.
       return config
