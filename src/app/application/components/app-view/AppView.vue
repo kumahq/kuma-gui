@@ -32,11 +32,19 @@
   <template
     v-else
   >
-    <section>
+    <section
+      :class="{
+        'is-fullscreen': props.fullscreen
+      }"
+    >
       <header
         v-if="slots.title"
         class="title-bar"
       >
+        <KIcon
+          v-if="props.fullscreen"
+          icon="kong"
+        />
         <slot
           name="title"
         />
@@ -52,7 +60,11 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
+import {
+  KBreadcrumbs,
+  BreadcrumbItem,
+  KIcon,
+} from '@kong/kongponents'
 import { provide, inject, PropType, watch, ref, onBeforeUnmount, useSlots } from 'vue'
 
 import { useMainView } from '@/components'
@@ -70,6 +82,11 @@ const props = defineProps({
     type: Array as PropType<BreadcrumbItem[]>,
     required: false,
     default: null,
+  },
+  fullscreen: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 })
 
@@ -118,26 +135,39 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 2rem; /* 20px */
 }
-header :is(h1, h2, h3, h4, h5, h6)  {
+header > :is(h1, h2, h3, h4, h5, h6)  {
   color: var(--black-500);
   line-height: 36px;
-  letter-spacing: -1px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-header :is(h1) {
+header > :is(h1) {
   font-size: var(--type-xxxl, 32px);
 }
-header :is(h2) {
+.is-fullscreen {
+  header {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--grey-300);
+  }
+  header > :is(h1) {
+    margin-left: var(--spacing-xs);
+    padding-left: var(--spacing-xs);
+    border-left: 1px solid var(--grey-300);
+    font-size: 20px;
+  }
+
+}
+header > :is(h2) {
   font-size: var(--type-xl, 22px);
 }
 
 .actions {
+  flex-grow: 1;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: var(--spacing-md);
 }
