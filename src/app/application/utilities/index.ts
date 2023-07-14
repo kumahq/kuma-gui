@@ -37,3 +37,21 @@ export const createAttrsSetter = ($el = document.documentElement) => {
     $el.classList.add(...(flat.class || []))
   })
 }
+// when used with router.push, prevents things like `q=` (i.e. key= but with no value)
+export const cleanQuery = <T extends Record<string, unknown>>(params: Record<string, string | undefined>, originalQuery: T) => {
+  const query = {
+    ...originalQuery as Record<string, string | undefined>,
+  }
+  const processed = Object.entries(params).reduce((prev, [key, value]) => {
+    if (String(value).length > 0) {
+      prev[key] = String(value)
+    } else {
+      prev[key] = undefined
+    }
+    return prev
+  }, query)
+  return {
+    ...query,
+    ...processed,
+  }
+}

@@ -13,6 +13,14 @@
     <slot
       name="default"
       :route="{
+        update: (params: Record<string, string | undefined>) => {
+          router.push(
+            {
+              name: props.name,
+              query: cleanQuery(params, route.query),
+            }
+          )
+        },
         params: Object.fromEntries(Object.entries(route.params).map(([prop, value]) => {
           return [
             prop,
@@ -25,14 +33,20 @@
 </template>
 <script lang="ts" setup>
 import { provide, inject, ref, watch, onBeforeUnmount } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT } from '.'
-import { urlParam, createAttrsSetter, createTitleSetter } from '../../utilities'
+import {
+  urlParam,
+  cleanQuery,
+  createAttrsSetter,
+  createTitleSetter,
+} from '../../utilities'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
 const setTitle = createTitleSetter(document)
 const setAttrs = createAttrsSetter(document.documentElement)
 const sym = Symbol('route-view')
@@ -66,6 +80,12 @@ const routeView = {
 export type RouteView = typeof routeView
 
 const props = defineProps({
+  name: {
+    type: String,
+    // once we have rolled out naming everywhere we can change this to required
+    required: false,
+    default: '',
+  },
   attrs: {
     type: Object,
     required: false,
