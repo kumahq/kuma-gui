@@ -18,212 +18,215 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    
-    <div>
-      <div
-        class="onboarding-container"
-      >
+    <section>
+      <!--v-if-->
+      
+      <div>
         <div
-          class="onboarding-container__header"
-        >
-          
-          <div
-            class="onboarding-heading"
-          >
-            <h1
-              class="onboarding-title"
-            >
-              
-               Create the mesh 
-              
-            </h1>
-            <!--v-if-->
-          </div>
-          
-        </div>
-        <div
-          class="onboarding-container__content"
+          class="onboarding-container"
         >
           <div
-            class="onboarding-container__inner-content"
+            class="onboarding-container__header"
           >
             
-            <p
-              class="mb-4 text-center"
-            >
-               When you install, Kuma creates a 
-              <i>
-                default
-              </i>
-               mesh, but you can add as many meshes as you need. 
-            </p>
             <div
-              class="k-table-container table"
+              class="onboarding-heading"
             >
-              <!---->
-              <section
-                class="k-table-wrapper"
+              <h1
+                class="onboarding-title"
               >
-                <table
-                  class="k-table has-hover"
-                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                
+                 Create the mesh 
+                
+              </h1>
+              <!--v-if-->
+            </div>
+            
+          </div>
+          <div
+            class="onboarding-container__content"
+          >
+            <div
+              class="onboarding-container__inner-content"
+            >
+              
+              <p
+                class="mb-4 text-center"
+              >
+                 When you install, Kuma creates a 
+                <i>
+                  default
+                </i>
+                 mesh, but you can add as many meshes as you need. 
+              </p>
+              <div
+                class="k-table-container table"
+              >
+                <!---->
+                <section
+                  class="k-table-wrapper"
                 >
-                  <thead
-                    class=""
+                  <table
+                    class="k-table has-hover"
+                    data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   >
-                    <tr
+                    <thead
                       class=""
                     >
-                      
-                      <th
-                        class="k-table-headers"
+                      <tr
+                        class=""
                       >
-                        <span
-                          class="k-table-headers-container"
+                        
+                        <th
+                          class=""
                         >
-                          
                           <span
-                            class=""
+                            class="d-flex align-items-center"
                           >
-                            Name
+                            
+                            <span
+                              class=""
+                            >
+                              Name
+                            </span>
+                            
+                            <!---->
                           </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class="k-table-headers"
-                      >
-                        <span
-                          class="k-table-headers-container"
+                        </th>
+                        <th
+                          class=""
                         >
-                          
                           <span
-                            class=""
+                            class="d-flex align-items-center"
                           >
-                            Services
+                            
+                            <span
+                              class=""
+                            >
+                              Services
+                            </span>
+                            
+                            <!---->
                           </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class="k-table-headers"
-                      >
-                        <span
-                          class="k-table-headers-container"
+                        </th>
+                        <th
+                          class=""
                         >
-                          
                           <span
-                            class=""
+                            class="d-flex align-items-center"
                           >
-                            DPPs
+                            
+                            <span
+                              class=""
+                            >
+                              DPPs
+                            </span>
+                            
+                            <!---->
                           </span>
+                        </th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <tr>
+                        
+                        <td>
                           
-                          <!---->
-                        </span>
-                      </th>
+                          default
+                          
+                        </td>
+                        <td>
+                          
+                          0
+                          
+                        </td>
+                        <td>
+                          
+                          0
+                          
+                        </td>
+                        
+                      </tr>
                       
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
-                    <tr>
-                      
-                      <td>
-                        
-                        default
-                        
-                      </td>
-                      <td>
-                        
-                        0
-                        
-                      </td>
-                      <td>
-                        
-                        0
-                        
-                      </td>
-                      
-                    </tr>
-                    
-                  </tbody>
-                </table>
-                <!---->
-              </section>
+                    </tbody>
+                  </table>
+                  <!---->
+                </section>
+              </div>
+              <p
+                class="mt-4 text-center"
+              >
+                 This mesh is empty. Next, you add services and their data plane proxies. 
+              </p>
+              
             </div>
-            <p
-              class="mt-4 text-center"
+          </div>
+          <div
+            class="mt-4"
+          >
+            
+            <div
+              class="onboarding-actions"
             >
-               This mesh is empty. Next, you add services and their data plane proxies. 
-            </p>
+              <a
+                class="k-button medium rounded secondary"
+                data-testid="onboarding-previous-button"
+                href="/onboarding/configuration-types"
+                type="button"
+              >
+                
+                <!---->
+                
+                
+                 Back 
+                
+                <!---->
+              </a>
+              <div
+                class="button-list"
+              >
+                <a
+                  aria-current="page"
+                  class="router-link-active router-link-exact-active k-button medium rounded outline"
+                  data-testid="onboarding-skip-button"
+                  href="/"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                   Skip setup 
+                  
+                  <!---->
+                </a>
+                <a
+                  class="k-button medium rounded primary"
+                  data-testid="onboarding-next-button"
+                  href="/onboarding/add-services"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                  Next
+                  
+                  <!---->
+                </a>
+              </div>
+            </div>
             
           </div>
         </div>
         <div
-          class="mt-4"
-        >
-          
-          <div
-            class="onboarding-actions"
-          >
-            <a
-              class="k-button medium rounded secondary"
-              data-testid="onboarding-previous-button"
-              href="/onboarding/configuration-types"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Back 
-              
-              <!---->
-            </a>
-            <div
-              class="button-list"
-            >
-              <a
-                aria-current="page"
-                class="router-link-active router-link-exact-active k-button medium rounded outline"
-                data-testid="onboarding-skip-button"
-                href="/"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                 Skip setup 
-                
-                <!---->
-              </a>
-              <a
-                class="k-button medium rounded primary"
-                data-testid="onboarding-next-button"
-                href="/onboarding/add-services"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                Next
-                
-                <!---->
-              </a>
-            </div>
-          </div>
-          
-        </div>
+          class="background-image"
+        />
       </div>
-      <div
-        class="background-image"
-      />
-    </div>
-    
+      
+    </section>
     
   </main>
   

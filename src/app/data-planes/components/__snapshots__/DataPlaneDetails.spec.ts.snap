@@ -262,14 +262,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="k-badge k-badge-default k-badge-rounded tag-badge"
+                        class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
                         tabindex="0"
                       >
                         <div
-                          class="k-badge-text"
+                          class="k-badge-text truncate"
                         >
                           <div
-                            class="k-badge-text"
+                            class="k-badge-text truncate"
                           >
                             
                             <span>
@@ -284,14 +284,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         <!---->
                       </div>
                       <div
-                        class="k-badge k-badge-default k-badge-rounded tag-badge"
+                        class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
                         tabindex="0"
                       >
                         <div
-                          class="k-badge-text"
+                          class="k-badge-text truncate"
                         >
                           <div
-                            class="k-badge-text"
+                            class="k-badge-text truncate"
                           >
                             
                             <a

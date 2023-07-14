@@ -13,10 +13,10 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
     >
       
       <th
-        class="k-table-headers"
+        class=""
       >
         <span
-          class="k-table-headers-container"
+          class="d-flex align-items-center"
         >
           
           <span
@@ -139,10 +139,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
               >
                 
                 <th
-                  class="k-table-headers"
+                  class=""
                 >
                   <span
-                    class="k-table-headers-container"
+                    class="d-flex align-items-center"
                   >
                     
                     <span
@@ -155,10 +155,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </span>
                 </th>
                 <th
-                  class="k-table-headers"
+                  class=""
                 >
                   <span
-                    class="k-table-headers-container"
+                    class="d-flex align-items-center"
                   >
                     
                     <span
@@ -171,10 +171,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </span>
                 </th>
                 <th
-                  class="k-table-headers"
+                  class=""
                 >
                   <span
-                    class="k-table-headers-container"
+                    class="d-flex align-items-center"
                   >
                     
                     <span
@@ -187,10 +187,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </span>
                 </th>
                 <th
-                  class="k-table-headers"
+                  class=""
                 >
                   <span
-                    class="k-table-headers-container"
+                    class="d-flex align-items-center"
                   >
                     
                     <span
@@ -203,10 +203,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </span>
                 </th>
                 <th
-                  class="k-table-headers"
+                  class=""
                 >
                   <span
-                    class="k-table-headers-container"
+                    class="d-flex align-items-center"
                   >
                     
                     <span
@@ -219,10 +219,10 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </span>
                 </th>
                 <th
-                  class="k-table-headers"
+                  class=""
                 >
                   <span
-                    class="k-table-headers-container"
+                    class="d-flex align-items-center"
                   >
                     
                     <span

@@ -5,7 +5,7 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
   class="upgrade-check"
 >
   <div
-    class="k-alert warning small none is-alert upgrade-check-alert"
+    class="k-alert warning small none upgrade-check-alert"
     role="alert"
   >
     <!---->

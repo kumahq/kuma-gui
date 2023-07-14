@@ -18,80 +18,83 @@ exports[`CompletedView.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    
-    <div>
-      <div
-        class="onboarding-container"
-      >
+    <section>
+      <!--v-if-->
+      
+      <div>
         <div
-          class="onboarding-container__header"
-        >
-          
-          <div
-            class="onboarding-heading"
-          >
-            <h1
-              class="onboarding-title"
-            >
-              
-               Go to the dashboard 
-              
-            </h1>
-            <!--v-if-->
-          </div>
-          
-        </div>
-        <div
-          class="onboarding-container__content"
+          class="onboarding-container"
         >
           <div
-            class="onboarding-container__inner-content"
+            class="onboarding-container__header"
           >
             
             <div
-              class="gui-preview-image"
+              class="onboarding-heading"
             >
-              <img />
-            </div>
-            
-          </div>
-        </div>
-        <div
-          class="mt-4"
-        >
-          
-          <div
-            class="onboarding-actions"
-          >
-            <!--v-if-->
-            <div
-              class="button-list"
-            >
-              <!--v-if-->
-              <a
-                class="k-button medium rounded creation"
-                data-testid="onboarding-next-button"
-                href="/"
-                type="button"
+              <h1
+                class="onboarding-title"
               >
                 
-                <!---->
+                 Go to the dashboard 
                 
-                
-                Complete
-                
-                <!---->
-              </a>
+              </h1>
+              <!--v-if-->
+            </div>
+            
+          </div>
+          <div
+            class="onboarding-container__content"
+          >
+            <div
+              class="onboarding-container__inner-content"
+            >
+              
+              <div
+                class="gui-preview-image"
+              >
+                <img />
+              </div>
+              
             </div>
           </div>
-          
+          <div
+            class="mt-4"
+          >
+            
+            <div
+              class="onboarding-actions"
+            >
+              <!--v-if-->
+              <div
+                class="button-list"
+              >
+                <!--v-if-->
+                <a
+                  class="k-button medium rounded creation"
+                  data-testid="onboarding-next-button"
+                  href="/"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                  Complete
+                  
+                  <!---->
+                </a>
+              </div>
+            </div>
+            
+          </div>
         </div>
+        <div
+          class="background-image"
+        />
       </div>
-      <div
-        class="background-image"
-      />
-    </div>
-    
+      
+    </section>
     
   </main>
   
