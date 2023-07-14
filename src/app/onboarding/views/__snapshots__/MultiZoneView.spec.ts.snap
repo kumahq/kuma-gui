@@ -18,7 +18,9 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    <section>
+    <section
+      class=""
+    >
       <!--v-if-->
       
       <div>
