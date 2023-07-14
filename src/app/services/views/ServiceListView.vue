@@ -1,9 +1,21 @@
 <template>
   <RouteView>
-    <RouteTitle
-      :title="t('services.routes.items.title')"
-    />
     <AppView>
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('services.routes.items.title')"
+            :render="true"
+          />
+        </h2>
+      </template>
+      <template #actions>
+        <KButton
+          appearance="primary"
+        >
+          An Action
+        </KButton>
+      </template>
       <ContentWrapper>
         <template #content>
           <DataOverview
@@ -34,6 +46,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KButton } from '@kong/kongponents'
 import { ref } from 'vue'
 import { useRoute, RouteLocationNamedRaw } from 'vue-router'
 

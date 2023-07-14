@@ -1,6 +1,6 @@
 <template>
   <template
-    v-if="false"
+    v-if="props.render"
   >
     {{ props.title }}
   </template>
@@ -16,6 +16,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: '',
+  },
+  render: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 })
 

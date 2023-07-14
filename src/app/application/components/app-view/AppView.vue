@@ -11,17 +11,49 @@
         :items="_breadcrumbs"
       />
     </nav>
-
-    <slot name="default" />
+    <section>
+      <header
+        v-if="slots.title"
+        class="title-bar"
+      >
+        <slot
+          name="title"
+        />
+        <div
+          v-if="slots.actions"
+          class="actions"
+        >
+          <slot name="actions" />
+        </div>
+      </header>
+      <slot name="default" />
+    </section>
   </MainView>
-  <slot
+  <template
     v-else
-    name="default"
-  />
+  >
+    <section>
+      <header
+        v-if="slots.title"
+        class="title-bar"
+      >
+        <slot
+          name="title"
+        />
+        <div
+          v-if="slots.actions"
+          class="actions"
+        >
+          <slot name="actions" />
+        </div>
+      </header>
+      <slot name="default" />
+    </section>
+  </template>
 </template>
 <script lang="ts" setup>
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
-import { provide, inject, PropType, watch, ref, onBeforeUnmount } from 'vue'
+import { provide, inject, PropType, watch, ref, onBeforeUnmount, useSlots } from 'vue'
 
 import { useMainView } from '@/components'
 
@@ -31,6 +63,7 @@ type AppView = {
 }
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
 const MainView = useMainView()
+const slots = useSlots()
 
 const props = defineProps({
   breadcrumbs: {
@@ -82,3 +115,21 @@ onBeforeUnmount(() => {
 })
 
 </script>
+<style lang="scss" scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+header :is(h1, h2, h3, h4, h5, h6)  {
+  color: var(--black-500)
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+</style>

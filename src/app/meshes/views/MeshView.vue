@@ -1,6 +1,11 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{route}"
+  >
     <AppView>
+      <template #title>
+        <h1>{{ route.params.mesh }}</h1>
+      </template>
       <NavTabs
         class="route-mesh-view-tabs"
         :tabs="tabs"
