@@ -11,11 +11,19 @@
         :items="_breadcrumbs"
       />
     </nav>
-    <section>
+    <section
+      :class="{
+        'is-fullscreen': props.fullscreen
+      }"
+    >
       <header
         v-if="slots.title"
         class="title-bar"
       >
+        <KIcon
+          v-if="props.fullscreen"
+          icon="kong"
+        />
         <slot
           name="title"
         />
