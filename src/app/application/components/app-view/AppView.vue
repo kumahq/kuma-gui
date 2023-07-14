@@ -155,6 +155,18 @@ header > :is(h1, h2, h3, h4, h5, h6)  {
 header > :is(h1) {
   font-size: var(--type-xxxl, 32px);
 }
+header > :is(h2) {
+  font-size: var(--type-xl, 22px);
+}
+
+.actions {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
 .is-fullscreen {
   header {
     padding: var(--spacing-lg) var(--spacing-xl);
@@ -167,17 +179,6 @@ header > :is(h1) {
     font-size: 20px;
   }
 
-}
-header > :is(h2) {
-  font-size: var(--type-xl, 22px);
-}
-
-.actions {
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-md);
 }
 
 </style>
