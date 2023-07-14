@@ -5,6 +5,7 @@ import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
 import cypressFailFast from 'cypress-fail-fast/plugin'
 import dotenv from 'dotenv'
+import fs from 'node:fs'
 
 const env = dotenv.config().parsed as {[key: string]: string}
 
@@ -12,7 +13,7 @@ export default defineConfig({
   e2e: {
     specPattern: '**/*.feature',
     experimentalRunAllSpecs: true,
-    // TODO Env var
+    // Can be turned on via CLI using `CYPRESS_video=true yarn test:browser`
     video: false,
     async setupNodeEvents(on, config) {
       // propagate env to Cypress.env
@@ -42,6 +43,13 @@ export default defineConfig({
           plugins: [createEsbuildPlugin(config)],
         }),
       )
+
+      // Deletes videos of successful specs to avoid uploading them as GitHub artifacts
+      on('after:spec', (_spec, results) => {
+        if (results && results.video && results.stats.failures === 0) {
+          fs.unlinkSync(results.video)
+        }
+      })
 
       cypressFailFast(on, config)
 
