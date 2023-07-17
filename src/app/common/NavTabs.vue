@@ -67,6 +67,6 @@ const currentTabHash = computed(() => {
 
 <style lang="scss" scoped>
 .nav-tabs {
-  margin-bottom: 1em;
+  margin-bottom: var(--AppGap);
 }
 </style>
