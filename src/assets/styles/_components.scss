@@ -11,6 +11,23 @@ To be used in places where we solely need KCard’s frame properties.
 }
 
 /*
+.kcard-stack
+
+For stacking elements with consistent space between.
+
+Adapted from https://every-layout.dev/layouts/stack/.
+*/
+
+/**
+ * .kcard-stack is not a kongponents utility and should be renamed before using, it
+ * is not currently being used in kuma-gui
+ */
+
+.kcard-stack>*+* {
+  margin-block-start: var(--AppGap);
+}
+
+/*
 .columns
 
 For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will **start** to wrap.
