@@ -1,10 +1,10 @@
 Feature: index
   Background:
     Given the CSS selectors
-      | Alias         | Selector                         |
-      | loading       | [data-testid='app-progress-bar'] |
-      | logo          | [data-testid='logo']             |
-      | error         | [data-testid='app-error']        |
+      | Alias   | Selector                         |
+      | loading | [data-testid='app-progress-bar'] |
+      | logo    | [data-testid='logo']             |
+      | error   | [data-testid='app-error']        |
 
   Scenario: Application loading
     Given the environment
@@ -16,7 +16,6 @@ Feature: index
       """
     When I load the "/" URL
     Then the "$loading" element exists
-    And I wait for 2000 milliseconds
     Then the "$loading" element doesn't exist
     And the "$logo" element exists
 
@@ -34,6 +33,5 @@ Feature: index
       """
     When I visit the "/" URL
     Then the "$loading" element exists
-    And I wait for 2000 milliseconds
     Then the "$loading" element doesn't exist
     Then the "$error" element exists

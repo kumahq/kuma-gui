@@ -18,10 +18,10 @@ Feature: mesh / policies / data
       """
   Scenario: 2 items in the response shows 2 items
     Given the environment
-    """
+      """
       KUMA_CIRCUITBREAKER_COUNT: 2
       KUMA_LATENCY: 1000
-    """
+      """
     And the URL "/meshes/default/circuit-breakers" responds with
       """
       body:
@@ -31,13 +31,12 @@ Feature: mesh / policies / data
       """
     When I visit the "/mesh/default/policies/circuit-breakers" URL
     Then the "$state-loading" element exists
-    And I wait for 1100 milliseconds
     Then the "$item" element exists 2 times
   Scenario: Zero items shows the empty state
     Given the environment
-    """
+      """
       KUMA_CIRCUITBREAKER_COUNT: 0
-    """
+      """
     And the URL "/meshes/default/circuit-breakers" responds with
       """
       """
