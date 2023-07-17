@@ -2,13 +2,14 @@
   <KTable
     class="app-collection"
     :has-error="(typeof props.error !== 'undefined')"
-    :pagination-total-items="props.total || 0"
+    :pagination-total-items="props.total"
     :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
     :fetcher-cache-key="String(cacheKey)"
-    :fetcher="({page, pageSize}: FetcherProps) => {
+    :fetcher="({page, pageSize, query}: FetcherProps) => {
       emit('change', {
         page: page,
-        size: pageSize
+        size: pageSize,
+        s: query
       })
       return {data: items}
     }"
@@ -43,20 +44,24 @@ import { useSlots, ref, watch } from 'vue'
 
 type FetcherProps = {
   page: number,
-  pageSize: number
+  pageSize: number,
+  query: string
 }
 type ChangeValue = {
   page: number,
   size: number
+  s: string
 }
 
-const props = defineProps<{
-  total: number | undefined,
+const props = withDefaults(defineProps<{
+  total: number,
   pageNumber: number,
   pageSize: number,
   items: unknown[] | undefined,
   error: Error | undefined,
-}>()
+}>(), {
+  total: 0,
+})
 
 const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
