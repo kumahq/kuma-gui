@@ -76,10 +76,10 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                     >
                       
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -92,10 +92,10 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                         </span>
                       </th>
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -108,10 +108,10 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                         </span>
                       </th>
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
