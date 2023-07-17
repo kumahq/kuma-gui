@@ -14,7 +14,7 @@
       ]"
     >
       <div class="zoneegresses">
-        <div class="kcard-stack">
+        <div class="stack">
           <div class="kcard-border">
             <DataOverview
               :selected-entity-name="entity?.name"

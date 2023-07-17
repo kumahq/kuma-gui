@@ -13,7 +13,7 @@
         }
       ]"
     >
-      <div class="kcard-stack">
+      <div class="stack">
         <div class="kcard-border">
           <DataOverview
             :page-size="PAGE_SIZE_DEFAULT"

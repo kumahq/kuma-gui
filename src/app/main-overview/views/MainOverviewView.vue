@@ -4,7 +4,7 @@
       :title="t('main-overview.routes.item.title')"
     />
     <AppView>
-      <div class="kcard-stack">
+      <div class="stack">
         <OverviewCharts />
       </div>
     </AppView>

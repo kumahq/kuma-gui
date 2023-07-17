@@ -19,7 +19,7 @@
         <!-- Zone CPs information for when Multicluster is enabled -->
         <div
           v-else
-          class="kcard-stack"
+          class="stack"
         >
           <div class="kcard-border">
             <DataOverview

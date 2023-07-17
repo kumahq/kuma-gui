@@ -18,7 +18,7 @@
 
         <div
           v-else
-          class="kcard-stack"
+          class="stack"
         >
           <div class="kcard-border">
             <DataOverview
