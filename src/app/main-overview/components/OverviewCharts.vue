@@ -115,29 +115,17 @@ const servicesChartData = computed(() => {
 
   const { internal, external } = serviceStatus.value
 
-  if (internal && store.state.selectedMesh !== null) {
+  if (internal) {
     dataPoints.push({
       title: i18n.t('common.charts.services.internalLabel'),
       data: internal,
-      route: {
-        name: 'services-list-view',
-        params: {
-          mesh: store.state.selectedMesh,
-        },
-      },
     })
   }
 
-  if (external && store.state.selectedMesh !== null) {
+  if (external) {
     dataPoints.push({
       title: i18n.t('common.charts.services.externalLabel'),
       data: external,
-      route: {
-        name: 'services-list-view',
-        params: {
-          mesh: store.state.selectedMesh,
-        },
-      },
     })
   }
 
@@ -207,9 +195,6 @@ const zonesChartData = computed<DoughnutChartData>(() => {
       title: i18n.t('http.api.value.online'),
       statusKeyword: 'online',
       data: online,
-      route: {
-        name: 'zone-cp-list-view',
-      },
     })
 
     if (online !== total) {
@@ -217,9 +202,6 @@ const zonesChartData = computed<DoughnutChartData>(() => {
         title: i18n.t('http.api.value.offline'),
         statusKeyword: 'offline',
         data: total - online,
-        route: {
-          name: 'zone-cp-list-view',
-        },
       })
     }
   }
@@ -246,9 +228,6 @@ const zonesCPVersionsChartData = computed(() => {
       dataPoints.push({
         title: lastSubscription.version.kumaCp.version,
         data: 1,
-        route: {
-          name: 'zone-cp-list-view',
-        },
       })
     } else {
       existingDataPoint.data++

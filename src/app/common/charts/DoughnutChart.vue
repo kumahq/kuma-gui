@@ -46,7 +46,6 @@ import {
 } from 'chart.js'
 import { computed, PropType } from 'vue'
 import { Doughnut } from 'vue-chartjs'
-import { useRouter } from 'vue-router'
 
 import { DoughnutChartData, StatusKeyword } from '@/types/index.d'
 
@@ -82,8 +81,6 @@ ChartJS.defaults.font = {
 ChartJS.defaults.plugins.tooltip.bodyFont = {
   size: 12,
 }
-
-const router = useRouter()
 
 const props = defineProps({
   data: {
@@ -152,16 +149,6 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
           },
         },
       },
-    },
-    onClick: function (_event, elements) {
-      const $el = elements[0]
-      if (typeof $el !== 'undefined') {
-        const dataPoint = props.data.dataPoints[$el.index]
-
-        if (dataPoint?.route) {
-          router.push(dataPoint.route)
-        }
-      }
     },
   }
 
