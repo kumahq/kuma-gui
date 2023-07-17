@@ -18,10 +18,6 @@ For stacking elements with consistent space between.
 Adapted from https://every-layout.dev/layouts/stack/.
 */
 
-/**
- * .kcard-stack is not a kongponents utility
- */
-
 .kcard-stack>*+* {
   margin-block-start: var(--AppGap);
 }
