@@ -6,7 +6,7 @@ import SharedPool from './SharedPool'
 export type Source = (params: Record<string, unknown>, source: {close: () => void}) => Promise<unknown>
 export type Sources = Record<string, Source>
 // reusable Type Utility for easy to use Types within Vue templates
-export type DataSourceResponse<T> = {data: T | undefined, error: Error | undefined, refresh: () => void}
+export type DataSourceResponse<T> = {data: T | undefined, cache: T | undefined, error: Error | undefined, refresh: () => void}
 export type Creator = (str: string, router: Router<Source>) => CallableEventSource
 export type Destroyer = (str: string, source: CallableEventSource) => void
 
@@ -33,13 +33,13 @@ export class DataSourcePool {
     )
   }
 
-  source(src: string, ref: symbol): CallableEventSource {
+  source(src: string, cached: boolean, ref: symbol): CallableEventSource {
     const _source = this.pool.acquire(src, ref)
     _source.addEventListener('message', (e: Event) => {
       // always fill the cache on a successful response
       this.cache.set(src, (e as MessageEvent).data)
     })
-    if (this.cache.has(src)) {
+    if (cached && this.cache.has(src)) {
       Promise.resolve().then(() => {
         _source?.dispatchEvent(
           new MessageEvent('message', { data: this.cache.get(src) }),

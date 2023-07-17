@@ -11,9 +11,15 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  cached: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
 })
 
 const message = ref<unknown>(undefined)
+const cache = ref<unknown>(undefined)
 const error = ref<Error | undefined>(undefined)
 
 const emit = defineEmits<{
@@ -28,6 +34,9 @@ type State = {
 let state: State = {}
 const sym = Symbol('')
 const open = async (src: string) => {
+  if (!props.cached) {
+    message.value = undefined
+  }
   state = close(state)
   state.src = src
   if (src === '') {
@@ -35,11 +44,11 @@ const open = async (src: string) => {
   }
   state.controller = new AbortController()
   // this should emit proper events
-  const source = data.source(src, sym)
+  const source = data.source(src, props.cached, sym)
   source.addEventListener(
     'message',
     (e) => {
-      message.value = (e as MessageEvent).data
+      cache.value = message.value = (e as MessageEvent).data
       // if we got a message we are no longer erroneous
       error.value = undefined
       emit('change', message.value)
@@ -76,6 +85,7 @@ const refresh = () => {
 <template>
   <slot
     :data="message as any"
+    :cache="cache as any"
     :error="error"
     :refresh="refresh"
   />
