@@ -77,10 +77,10 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     >
                       
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -93,10 +93,10 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                       </th>
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -109,10 +109,10 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                       </th>
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -125,10 +125,10 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                       </th>
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -141,10 +141,10 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                       </th>
                       <th
-                        class=""
+                        class="k-table-headers"
                       >
                         <span
-                          class="d-flex align-items-center"
+                          class="k-table-headers-container"
                         >
                           
                           <span
@@ -172,14 +172,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         >
                           
                           <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            class="k-badge k-badge-default k-badge-rounded tag-badge"
                             tabindex="0"
                           >
                             <div
-                              class="k-badge-text truncate"
+                              class="k-badge-text"
                             >
                               <div
-                                class="k-badge-text truncate"
+                                class="k-badge-text"
                               >
                                 
                                 <a
@@ -209,14 +209,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         >
                           
                           <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            class="k-badge k-badge-default k-badge-rounded tag-badge"
                             tabindex="0"
                           >
                             <div
-                              class="k-badge-text truncate"
+                              class="k-badge-text"
                             >
                               <div
-                                class="k-badge-text truncate"
+                                class="k-badge-text"
                               >
                                 
                                 <a
@@ -413,14 +413,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         >
                           
                           <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            class="k-badge k-badge-default k-badge-rounded tag-badge"
                             tabindex="0"
                           >
                             <div
-                              class="k-badge-text truncate"
+                              class="k-badge-text"
                             >
                               <div
-                                class="k-badge-text truncate"
+                                class="k-badge-text"
                               >
                                 
                                 <a
@@ -450,14 +450,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         >
                           
                           <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            class="k-badge k-badge-default k-badge-rounded tag-badge"
                             tabindex="0"
                           >
                             <div
-                              class="k-badge-text truncate"
+                              class="k-badge-text"
                             >
                               <div
-                                class="k-badge-text truncate"
+                                class="k-badge-text"
                               >
                                 
                                 <a
@@ -654,14 +654,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         >
                           
                           <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            class="k-badge k-badge-default k-badge-rounded tag-badge"
                             tabindex="0"
                           >
                             <div
-                              class="k-badge-text truncate"
+                              class="k-badge-text"
                             >
                               <div
-                                class="k-badge-text truncate"
+                                class="k-badge-text"
                               >
                                 
                                 <span>
@@ -688,14 +688,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         >
                           
                           <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            class="k-badge k-badge-default k-badge-rounded tag-badge"
                             tabindex="0"
                           >
                             <div
-                              class="k-badge-text truncate"
+                              class="k-badge-text"
                             >
                               <div
-                                class="k-badge-text truncate"
+                                class="k-badge-text"
                               >
                                 
                                 <a
