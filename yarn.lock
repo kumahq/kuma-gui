@@ -1961,10 +1961,10 @@
     flat "^5.0.2"
     intl-messageformat "^10.5.0"
 
-"@kong/kongponents@^8.84.2":
-  version "8.84.2"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.84.2.tgz#e583a4a7aea1ca7e748b996dbc0a57c5cb007096"
-  integrity sha512-kmfkUsARxrl2Jl0TyCAQDgxmm9OFSkOuzhBHHfsQoFYaArPFHyYz04NmJqqW3fEDfiZBpPFuZXxFQ9FPLf0YXg==
+"@kong/kongponents@^8.91.1":
+  version "8.91.1"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.91.1.tgz#d0e2ea0905a7f3a1295909793649d867f9a150ba"
+  integrity sha512-taLg+3CbuVSkdCT17aOTtAReirhxXxOTCgOPiwEScSG7CULhoep20EABAXtMdLcQWgDQ63SGd6kopsDQ+tCOsA==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
