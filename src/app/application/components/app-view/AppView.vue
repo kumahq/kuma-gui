@@ -152,10 +152,10 @@ header > :is(h1, h2, h3, h4, h5, h6)  {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-header > :is(h1) {
+header :is(h1) {
   font-size: var(--type-xxxl, 32px);
 }
-header > :is(h2) {
+header :is(h2) {
   font-size: var(--type-xl, 22px);
 }
 
