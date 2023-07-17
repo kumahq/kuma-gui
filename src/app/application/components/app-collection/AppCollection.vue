@@ -2,7 +2,7 @@
   <KTable
     class="app-collection"
     :has-error="(typeof props.error !== 'undefined')"
-    :pagination-total-items="props.total"
+    :pagination-total-items="props.total || 0"
     :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
     :fetcher-cache-key="String(cacheKey)"
     :fetcher="({page, pageSize}: FetcherProps) => {
@@ -51,7 +51,7 @@ type ChangeValue = {
 }
 
 const props = defineProps<{
-  total: number,
+  total: number | undefined,
   pageNumber: number,
   pageSize: number,
   items: unknown[] | undefined,
