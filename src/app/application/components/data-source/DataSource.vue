@@ -28,6 +28,7 @@ type State = {
 let state: State = {}
 const sym = Symbol('')
 const open = async (src: string) => {
+  message.value = undefined
   state = close(state)
   state.src = src
   if (src === '') {
