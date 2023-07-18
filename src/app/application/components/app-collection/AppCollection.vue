@@ -20,7 +20,16 @@
     @row:click="click"
   >
     <template
-      v-for="key in Object.keys(slots)"
+      v-if="slots.toolbar"
+      #toolbar
+    >
+      <div class="app-collection-toolbar">
+        <slot name="toolbar" />
+      </div>
+    </template>
+
+    <template
+      v-for="key in Object.keys(remainingSlots)"
       #[`${key}`]="{ row }"
     >
       <slot
@@ -30,11 +39,12 @@
     </template>
   </KTable>
 </template>
+
 <script lang="ts" setup>
 import {
   KTable,
 } from '@kong/kongponents'
-import { useSlots, ref, watch } from 'vue'
+import { computed, useSlots, ref, watch } from 'vue'
 
 type FetcherProps = {
   page: number,
@@ -65,6 +75,13 @@ const slots = useSlots()
 
 const items = ref<unknown[] | undefined>(props.items)
 const cacheKey = ref<number>(0)
+
+const remainingSlots = computed(() => {
+  const { toolbar, ...remainingSlots } = slots
+
+  return remainingSlots
+})
+
 watch(() => props.items, () => {
   cacheKey.value++
   items.value = props.items
@@ -92,5 +109,14 @@ function getCellAttributes({ headerKey }: any) {
   color: inherit;
   font-weight: var(--font-weight-semi-bold);
   text-decoration: none;
+}
+
+.app-collection-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 }
 </style>
