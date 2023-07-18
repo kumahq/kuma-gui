@@ -18,7 +18,7 @@
     >
       <header
         v-if="slots.title"
-        class="title-bar"
+        class="app-view-title-bar"
       >
         <KIcon
           v-if="props.fullscreen"
@@ -47,7 +47,7 @@
     >
       <header
         v-if="slots.title"
-        class="title-bar"
+        class="app-view-title-bar"
       >
         <KIcon
           v-if="props.fullscreen"
@@ -140,45 +140,47 @@ onBeforeUnmount(() => {
 })
 
 </script>
-<style lang="scss" scoped>
-header {
+<style lang="scss">
+.app-view-title-bar {
   display: flex;
   align-items: center;
   margin-bottom: 20px; /* 2rem */
 }
-header > :is(h1, h2, h3, h4, h5, h6)  {
-  color: var(--black-500);
-  line-height: 36px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.app-view-title-bar {
+  h1, h2, h3, h4, h5, h6  {
+    color: var(--black-500);
+    line-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
-header :is(h1) {
+.app-view-title-bar h1 {
   font-size: var(--type-xxxl, 32px);
 }
-header :is(h2) {
+.app-view-title-bar h2 {
   font-size: var(--type-xl, 22px);
 }
+.is-fullscreen {
+  .app-view-title-bar {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--grey-300);
+  }
+  .app-view-title-bar h1 {
+    margin-left: var(--spacing-xs);
+    padding-left: var(--spacing-xs);
+    border-left: 1px solid var(--grey-300);
+    font-size: 20px;
+  }
+}
+</style>
 
+<style lang="scss" scoped>
 .actions {
   flex-grow: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: var(--spacing-md);
-}
-
-.is-fullscreen {
-  header {
-    padding: var(--spacing-lg) var(--spacing-xl);
-    border-bottom: 1px solid var(--grey-300);
-  }
-  header > :is(h1) {
-    margin-left: var(--spacing-xs);
-    padding-left: var(--spacing-xs);
-    border-left: 1px solid var(--grey-300);
-    font-size: 20px;
-  }
-
 }
 
 </style>
