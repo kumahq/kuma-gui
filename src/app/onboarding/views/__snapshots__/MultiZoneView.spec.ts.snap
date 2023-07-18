@@ -18,159 +18,164 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    
-    <div>
-      <div
-        class="onboarding-container"
-      >
+    <section
+      class=""
+    >
+      <!--v-if-->
+      
+      <div>
         <div
-          class="onboarding-container__header"
-        >
-          
-          <div
-            class="onboarding-heading"
-          >
-            <h1
-              class="onboarding-title"
-            >
-              
-               Add zones 
-              
-            </h1>
-            <!--v-if-->
-          </div>
-          
-        </div>
-        <div
-          class="onboarding-container__content"
+          class="onboarding-container"
         >
           <div
-            class="onboarding-container__inner-content"
+            class="onboarding-container__header"
           >
             
-            <p
-              class="mb-4 text-center"
+            <div
+              class="onboarding-heading"
             >
-               A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately. 
-            </p>
-            <p
-              class="mb-4 text-center"
-            >
-              <b>
-                See 
-                <a
-                  href="https://kuma.io/docs/1.7.x/deployments/multi-zone?utm_source=Kuma&utm_medium=Kuma#zone-control-plane"
-                  target="_blank"
-                >
-                  the documentation for options to install
-                </a>
-                .
-              </b>
-            </p>
-            <div>
-              <p
-                class="status-box mt-4"
+              <h1
+                class="onboarding-title"
               >
-                 Zone status: 
-                <span
-                  class="status--is-disconnected"
-                  data-testid="zone-disconnected"
-                >
-                  Disconnected
-                </span>
+                
+                 Add zones 
+                
+              </h1>
+              <!--v-if-->
+            </div>
+            
+          </div>
+          <div
+            class="onboarding-container__content"
+          >
+            <div
+              class="onboarding-container__inner-content"
+            >
+              
+              <p
+                class="mb-4 text-center"
+              >
+                 A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately. 
               </p>
               <p
-                class="status-box mt-4"
+                class="mb-4 text-center"
               >
-                 Zone ingress status: 
-                <span
-                  class="status--is-disconnected"
-                  data-testid="zone-ingress-disconnected"
-                >
-                  Disconnected
-                </span>
+                <b>
+                  See 
+                  <a
+                    href="https://kuma.io/docs/1.7.x/deployments/multi-zone?utm_source=Kuma&utm_medium=Kuma#zone-control-plane"
+                    target="_blank"
+                  >
+                    the documentation for options to install
+                  </a>
+                  .
+                </b>
               </p>
-              <div
-                class="status-loading-box mt-4"
-              >
+              <div>
+                <p
+                  class="status-box mt-4"
+                >
+                   Zone status: 
+                  <span
+                    class="status--is-disconnected"
+                    data-testid="zone-disconnected"
+                  >
+                    Disconnected
+                  </span>
+                </p>
+                <p
+                  class="status-box mt-4"
+                >
+                   Zone ingress status: 
+                  <span
+                    class="status--is-disconnected"
+                    data-testid="zone-ingress-disconnected"
+                  >
+                    Disconnected
+                  </span>
+                </p>
                 <div
-                  class="loading"
-                  data-testid="loading"
+                  class="status-loading-box mt-4"
                 >
-                  <div />
-                  <div />
-                  <div />
-                  <div />
-                  <div />
+                  <div
+                    class="loading"
+                    data-testid="loading"
+                  >
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                  </div>
                 </div>
+              </div>
+              
+            </div>
+          </div>
+          <div
+            class="mt-4"
+          >
+            
+            <div
+              class="onboarding-actions"
+            >
+              <a
+                class="k-button medium rounded secondary"
+                data-testid="onboarding-previous-button"
+                href="/onboarding/configuration-types"
+                type="button"
+              >
+                
+                <!---->
+                
+                
+                 Back 
+                
+                <!---->
+              </a>
+              <div
+                class="button-list"
+              >
+                <a
+                  class="k-button medium rounded outline"
+                  data-testid="onboarding-skip-button"
+                  href="/"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                   Skip setup 
+                  
+                  <!---->
+                </a>
+                <a
+                  class="k-button medium rounded primary"
+                  data-testid="onboarding-next-button"
+                  disabled="true"
+                  href="/onboarding/create-mesh"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                  Next
+                  
+                  <!---->
+                </a>
               </div>
             </div>
             
           </div>
         </div>
         <div
-          class="mt-4"
-        >
-          
-          <div
-            class="onboarding-actions"
-          >
-            <a
-              class="k-button medium rounded secondary"
-              data-testid="onboarding-previous-button"
-              href="/onboarding/configuration-types"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Back 
-              
-              <!---->
-            </a>
-            <div
-              class="button-list"
-            >
-              <a
-                class="k-button medium rounded outline"
-                data-testid="onboarding-skip-button"
-                href="/"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                 Skip setup 
-                
-                <!---->
-              </a>
-              <a
-                class="k-button medium rounded primary"
-                data-testid="onboarding-next-button"
-                disabled="true"
-                href="/onboarding/create-mesh"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                Next
-                
-                <!---->
-              </a>
-            </div>
-          </div>
-          
-        </div>
+          class="background-image"
+        />
       </div>
-      <div
-        class="background-image"
-      />
-    </div>
-    
+      
+    </section>
     
   </main>
   

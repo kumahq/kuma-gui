@@ -4,26 +4,27 @@
       class: 'is-fullscreen'
     }"
   >
-    <RouteTitle
-      :title="t('zones.routes.create.title')"
-    />
     <AppView
+      :fullscreen="true"
       :breadcrumbs="[]"
     >
-      <WizardTitleBar class="mb-6">
-        <template #title>
-          {{ t('zones.routes.create.title') }}
-        </template>
+      <template #title>
+        <h1>
+          <RouteTitle
+            :title="t('zones.routes.create.title')"
+            :render="true"
+          />
+        </h1>
+      </template>
 
-        <template #actions>
-          <KButton
-            appearance="outline"
-            :to="{ name: 'zone-cp-list-view' }"
-          >
-            {{ t('zones.form.exit') }}
-          </KButton>
-        </template>
-      </WizardTitleBar>
+      <template #actions>
+        <KButton
+          appearance="outline"
+          :to="{ name: 'zone-cp-list-view' }"
+        >
+          {{ t('zones.form.exit') }}
+        </KButton>
+      </template>
 
       <div class="form-content">
         <h1>{{ t('zones.routes.create.title') }}</h1>
@@ -222,7 +223,6 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import WizardTitleBar from '@/app/common/WizardTitleBar.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'

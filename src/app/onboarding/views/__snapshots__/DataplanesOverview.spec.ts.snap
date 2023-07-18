@@ -18,406 +18,411 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    
-    <div>
-      <div
-        class="onboarding-container"
-      >
+    <section
+      class=""
+    >
+      <!--v-if-->
+      
+      <div>
         <div
-          class="onboarding-container__header"
+          class="onboarding-container"
         >
-          
           <div
-            class="onboarding-heading"
+            class="onboarding-container__header"
           >
-            <h1
-              class="onboarding-title"
-            >
-              
-              <p>
-                Success
-              </p>
-              
-            </h1>
+            
             <div
-              class="onboarding-description"
+              class="onboarding-heading"
+            >
+              <h1
+                class="onboarding-title"
+              >
+                
+                <p>
+                  Success
+                </p>
+                
+              </h1>
+              <div
+                class="onboarding-description"
+              >
+                
+                <p>
+                  The following data plane proxies (DPPs) are connected to the control plane:
+                </p>
+                
+              </div>
+            </div>
+            
+          </div>
+          <div
+            class="onboarding-container__content"
+          >
+            <div
+              class="onboarding-container__inner-content"
             >
               
-              <p>
-                The following data plane proxies (DPPs) are connected to the control plane:
-              </p>
+              <div>
+                <p
+                  class="mb-4"
+                >
+                  <b>
+                    Found 8 DPPs:
+                  </b>
+                </p>
+                <div
+                  class="k-table-container mb-4"
+                >
+                  <!---->
+                  <section
+                    class="k-table-wrapper"
+                  >
+                    <table
+                      class="k-table has-hover"
+                      data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    >
+                      <thead
+                        class=""
+                      >
+                        <tr
+                          class=""
+                        >
+                          
+                          <th
+                            class="k-table-headers"
+                          >
+                            <span
+                              class="k-table-headers-container"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Mesh
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class="k-table-headers"
+                          >
+                            <span
+                              class="k-table-headers-container"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Name
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          <th
+                            class="k-table-headers"
+                          >
+                            <span
+                              class="k-table-headers-container"
+                            >
+                              
+                              <span
+                                class=""
+                              >
+                                Status
+                              </span>
+                              
+                              <!---->
+                            </span>
+                          </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                        <tr>
+                          
+                          <td>
+                            
+                            matrix-0
+                            
+                          </td>
+                          <td>
+                            
+                            dataplane-test-456
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            capacitor-1
+                            
+                          </td>
+                          <td>
+                            
+                            driver-1
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            panel-2
+                            
+                          </td>
+                          <td>
+                            
+                            card-2
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            matrix-3
+                            
+                          </td>
+                          <td>
+                            
+                            panel-3
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            program-4
+                            
+                          </td>
+                          <td>
+                            
+                            bandwidth-4
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            interface-5
+                            
+                          </td>
+                          <td>
+                            
+                            microchip-5
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            interface-6
+                            
+                          </td>
+                          <td>
+                            
+                            array-6
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        <tr>
+                          
+                          <td>
+                            
+                            feed-7
+                            
+                          </td>
+                          <td>
+                            
+                            interface-7
+                            
+                          </td>
+                          <td>
+                            
+                            <span
+                              class="status status--offline"
+                              data-testid="status-badge"
+                            >
+                              <span>
+                                offline
+                              </span>
+                            </span>
+                            
+                          </td>
+                          
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                    <!---->
+                  </section>
+                </div>
+              </div>
               
             </div>
           </div>
-          
-        </div>
-        <div
-          class="onboarding-container__content"
-        >
           <div
-            class="onboarding-container__inner-content"
+            class="mt-4"
           >
             
-            <div>
-              <p
-                class="mb-4"
+            <div
+              class="onboarding-actions"
+            >
+              <a
+                class="k-button medium rounded secondary"
+                data-testid="onboarding-previous-button"
+                href="/onboarding/add-services-code"
+                type="button"
               >
-                <b>
-                  Found 8 DPPs:
-                </b>
-              </p>
-              <div
-                class="k-table-container mb-4"
-              >
+                
                 <!---->
-                <section
-                  class="k-table-wrapper"
+                
+                
+                 Back 
+                
+                <!---->
+              </a>
+              <div
+                class="button-list"
+              >
+                <a
+                  aria-current="page"
+                  class="router-link-active router-link-exact-active k-button medium rounded outline"
+                  data-testid="onboarding-skip-button"
+                  href="/"
+                  type="button"
                 >
-                  <table
-                    class="k-table has-hover"
-                    data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  >
-                    <thead
-                      class=""
-                    >
-                      <tr
-                        class=""
-                      >
-                        
-                        <th
-                          class="k-table-headers"
-                        >
-                          <span
-                            class="k-table-headers-container"
-                          >
-                            
-                            <span
-                              class=""
-                            >
-                              Mesh
-                            </span>
-                            
-                            <!---->
-                          </span>
-                        </th>
-                        <th
-                          class="k-table-headers"
-                        >
-                          <span
-                            class="k-table-headers-container"
-                          >
-                            
-                            <span
-                              class=""
-                            >
-                              Name
-                            </span>
-                            
-                            <!---->
-                          </span>
-                        </th>
-                        <th
-                          class="k-table-headers"
-                        >
-                          <span
-                            class="k-table-headers-container"
-                          >
-                            
-                            <span
-                              class=""
-                            >
-                              Status
-                            </span>
-                            
-                            <!---->
-                          </span>
-                        </th>
-                        
-                      </tr>
-                    </thead>
-                    <tbody>
-                      
-                      <tr>
-                        
-                        <td>
-                          
-                          matrix-0
-                          
-                        </td>
-                        <td>
-                          
-                          dataplane-test-456
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          capacitor-1
-                          
-                        </td>
-                        <td>
-                          
-                          driver-1
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          panel-2
-                          
-                        </td>
-                        <td>
-                          
-                          card-2
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          matrix-3
-                          
-                        </td>
-                        <td>
-                          
-                          panel-3
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          program-4
-                          
-                        </td>
-                        <td>
-                          
-                          bandwidth-4
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          interface-5
-                          
-                        </td>
-                        <td>
-                          
-                          microchip-5
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          interface-6
-                          
-                        </td>
-                        <td>
-                          
-                          array-6
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          feed-7
-                          
-                        </td>
-                        <td>
-                          
-                          interface-7
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--offline"
-                            data-testid="status-badge"
-                          >
-                            <span>
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      
-                    </tbody>
-                  </table>
+                  
                   <!---->
-                </section>
+                  
+                  
+                   Skip setup 
+                  
+                  <!---->
+                </a>
+                <a
+                  class="k-button medium rounded primary"
+                  data-testid="onboarding-next-button"
+                  href="/onboarding/completed"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                  Next
+                  
+                  <!---->
+                </a>
               </div>
             </div>
             
           </div>
         </div>
         <div
-          class="mt-4"
-        >
-          
-          <div
-            class="onboarding-actions"
-          >
-            <a
-              class="k-button medium rounded secondary"
-              data-testid="onboarding-previous-button"
-              href="/onboarding/add-services-code"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Back 
-              
-              <!---->
-            </a>
-            <div
-              class="button-list"
-            >
-              <a
-                aria-current="page"
-                class="router-link-active router-link-exact-active k-button medium rounded outline"
-                data-testid="onboarding-skip-button"
-                href="/"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                 Skip setup 
-                
-                <!---->
-              </a>
-              <a
-                class="k-button medium rounded primary"
-                data-testid="onboarding-next-button"
-                href="/onboarding/completed"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                Next
-                
-                <!---->
-              </a>
-            </div>
-          </div>
-          
-        </div>
+          class="background-image"
+        />
       </div>
-      <div
-        class="background-image"
-      />
-    </div>
-    
+      
+    </section>
     
   </main>
   

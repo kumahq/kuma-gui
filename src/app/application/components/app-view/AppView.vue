@@ -11,17 +11,69 @@
         :items="_breadcrumbs"
       />
     </nav>
-
-    <slot name="default" />
+    <section
+      :class="{
+        'is-fullscreen': props.fullscreen
+      }"
+    >
+      <header
+        v-if="slots.title"
+        class="app-view-title-bar"
+      >
+        <KIcon
+          v-if="props.fullscreen"
+          icon="kong"
+        />
+        <slot
+          name="title"
+        />
+        <div
+          v-if="slots.actions"
+          class="actions"
+        >
+          <slot name="actions" />
+        </div>
+      </header>
+      <slot name="default" />
+    </section>
   </MainView>
-  <slot
+  <template
     v-else
-    name="default"
-  />
+  >
+    <section
+      :class="{
+        'is-fullscreen': props.fullscreen
+      }"
+    >
+      <header
+        v-if="slots.title"
+        class="app-view-title-bar"
+      >
+        <KIcon
+          v-if="props.fullscreen"
+          icon="kong"
+        />
+        <slot
+          name="title"
+        />
+        <div
+          v-if="slots.actions"
+          class="actions"
+        >
+          <slot name="actions" />
+        </div>
+      </header>
+      <slot name="default" />
+    </section>
+  </template>
 </template>
 <script lang="ts" setup>
-import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
-import { provide, inject, PropType, watch, ref, onBeforeUnmount } from 'vue'
+import {
+  KBreadcrumbs,
+  BreadcrumbItem,
+  KIcon,
+} from '@kong/kongponents'
+import { provide, inject, PropType, watch, ref, onBeforeUnmount, useSlots } from 'vue'
 
 import { useMainView } from '@/components'
 
@@ -31,12 +83,18 @@ type AppView = {
 }
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
 const MainView = useMainView()
+const slots = useSlots()
 
 const props = defineProps({
   breadcrumbs: {
     type: Array as PropType<BreadcrumbItem[]>,
     required: false,
     default: null,
+  },
+  fullscreen: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 })
 
@@ -82,3 +140,49 @@ onBeforeUnmount(() => {
 })
 
 </script>
+<style lang="scss">
+.app-view-title-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* 2rem */
+}
+.app-view-title-bar {
+  h1, h2, h3, h4, h5, h6  {
+    color: var(--black-500);
+    line-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.app-view-title-bar h1 {
+  line-height: 1.3;
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--type-xxxl, 32px);
+}
+.app-view-title-bar h2 {
+  font-size: var(--type-xl, 22px);
+}
+.is-fullscreen {
+  .app-view-title-bar {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--grey-300);
+  }
+  .app-view-title-bar h1 {
+    margin-left: var(--spacing-xs);
+    padding-left: var(--spacing-xs);
+    border-left: 1px solid var(--grey-300);
+    font-size: 20px;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.actions {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+</style>

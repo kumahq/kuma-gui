@@ -18,145 +18,150 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    
-    <div>
-      <div
-        class="onboarding-container"
-      >
+    <section
+      class=""
+    >
+      <!--v-if-->
+      
+      <div>
         <div
-          class="onboarding-container__header"
-        >
-          
-          <div
-            class="onboarding-heading"
-          >
-            <h1
-              class="onboarding-title"
-            >
-              
-               Add services 
-              
-            </h1>
-            <!--v-if-->
-          </div>
-          
-        </div>
-        <div
-          class="onboarding-container__content"
+          class="onboarding-container"
         >
           <div
-            class="onboarding-container__inner-content"
+            class="onboarding-container__header"
           >
             
             <div
-              class="service-mode-list"
+              class="onboarding-heading"
             >
-              <div
-                class="box box--active"
-                data-testid="box"
+              <h1
+                class="onboarding-title"
               >
                 
-                <div
-                  class="service-box-content"
-                >
-                  <img />
-                  <p
-                    class="service-mode-title"
-                  >
-                     Demo app 
-                  </p>
-                  <p>
-                    Counter application
-                  </p>
-                </div>
+                 Add services 
                 
-              </div>
-              <div
-                class="box"
-                data-testid="box"
-              >
-                
-                <div
-                  class="service-box-content"
-                >
-                  <img />
-                  <p
-                    class="service-mode-title"
-                  >
-                     Manually 
-                  </p>
-                  <p>
-                    After this wizard
-                  </p>
-                </div>
-                
-              </div>
+              </h1>
+              <!--v-if-->
             </div>
             
           </div>
-        </div>
-        <div
-          class="mt-4"
-        >
-          
           <div
-            class="onboarding-actions"
+            class="onboarding-container__content"
           >
-            <a
-              class="k-button medium rounded secondary"
-              data-testid="onboarding-previous-button"
-              href="/onboarding/create-mesh"
-              type="button"
+            <div
+              class="onboarding-container__inner-content"
             >
               
-              <!---->
+              <div
+                class="service-mode-list"
+              >
+                <div
+                  class="box box--active"
+                  data-testid="box"
+                >
+                  
+                  <div
+                    class="service-box-content"
+                  >
+                    <img />
+                    <p
+                      class="service-mode-title"
+                    >
+                       Demo app 
+                    </p>
+                    <p>
+                      Counter application
+                    </p>
+                  </div>
+                  
+                </div>
+                <div
+                  class="box"
+                  data-testid="box"
+                >
+                  
+                  <div
+                    class="service-box-content"
+                  >
+                    <img />
+                    <p
+                      class="service-mode-title"
+                    >
+                       Manually 
+                    </p>
+                    <p>
+                      After this wizard
+                    </p>
+                  </div>
+                  
+                </div>
+              </div>
               
-              
-               Back 
-              
-              <!---->
-            </a>
+            </div>
+          </div>
+          <div
+            class="mt-4"
+          >
+            
             <div
-              class="button-list"
+              class="onboarding-actions"
             >
               <a
-                class="k-button medium rounded outline"
-                data-testid="onboarding-skip-button"
-                href="/"
+                class="k-button medium rounded secondary"
+                data-testid="onboarding-previous-button"
+                href="/onboarding/create-mesh"
                 type="button"
               >
                 
                 <!---->
                 
                 
-                 Skip setup 
+                 Back 
                 
                 <!---->
               </a>
-              <a
-                class="k-button medium rounded primary"
-                data-testid="onboarding-next-button"
-                href="/onboarding/add-services-code"
-                type="button"
+              <div
+                class="button-list"
               >
-                
-                <!---->
-                
-                
-                Next
-                
-                <!---->
-              </a>
+                <a
+                  class="k-button medium rounded outline"
+                  data-testid="onboarding-skip-button"
+                  href="/"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                   Skip setup 
+                  
+                  <!---->
+                </a>
+                <a
+                  class="k-button medium rounded primary"
+                  data-testid="onboarding-next-button"
+                  href="/onboarding/add-services-code"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                  Next
+                  
+                  <!---->
+                </a>
+              </div>
             </div>
+            
           </div>
-          
         </div>
+        <div
+          class="background-image"
+        />
       </div>
-      <div
-        class="background-image"
-      />
-    </div>
-    
+      
+    </section>
     
   </main>
   

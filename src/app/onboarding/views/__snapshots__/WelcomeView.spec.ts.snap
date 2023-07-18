@@ -18,326 +18,331 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
   >
     
     <!--v-if-->
-    
-    <div>
+    <section
+      class=""
+    >
+      <!--v-if-->
+      
       <div>
-        <div
-          class="onboarding-container"
-        >
+        <div>
           <div
-            class="onboarding-container__header"
-          >
-            
-            <div
-              class="onboarding-heading"
-            >
-              <h1
-                class="onboarding-title"
-              >
-                
-                 Welcome to Kuma
-                
-              </h1>
-              <div
-                class="onboarding-description"
-              >
-                
-                <p>
-                   Congratulations on downloading Kuma! You are just a 
-                  <strong>
-                    few minutes
-                  </strong>
-                   away from getting your service mesh fully online. 
-                </p>
-                <p>
-                   We have automatically detected that you are running on 
-                  <strong>
-                    Universal
-                  </strong>
-                  . 
-                </p>
-                
-              </div>
-            </div>
-            
-          </div>
-          <div
-            class="onboarding-container__content"
+            class="onboarding-container"
           >
             <div
-              class="onboarding-container__inner-content"
+              class="onboarding-container__header"
             >
               
-              <h2
-                class="text-center"
-              >
-                 Let’s get started: 
-              </h2>
               <div
-                class="item-status-list-wrapper"
+                class="onboarding-heading"
               >
-                <ul
-                  class="item-status-list"
+                <h1
+                  class="onboarding-title"
                 >
                   
-                  <li>
-                    <span
-                      class="circle mr-2"
-                    >
+                   Welcome to Kuma
+                  
+                </h1>
+                <div
+                  class="onboarding-description"
+                >
+                  
+                  <p>
+                     Congratulations on downloading Kuma! You are just a 
+                    <strong>
+                      few minutes
+                    </strong>
+                     away from getting your service mesh fully online. 
+                  </p>
+                  <p>
+                     We have automatically detected that you are running on 
+                    <strong>
+                      Universal
+                    </strong>
+                    . 
+                  </p>
+                  
+                </div>
+              </div>
+              
+            </div>
+            <div
+              class="onboarding-container__content"
+            >
+              <div
+                class="onboarding-container__inner-content"
+              >
+                
+                <h2
+                  class="text-center"
+                >
+                   Let’s get started: 
+                </h2>
+                <div
+                  class="item-status-list-wrapper"
+                >
+                  <ul
+                    class="item-status-list"
+                  >
+                    
+                    <li>
                       <span
-                        class="kong-icon kong-icon-check"
+                        class="circle mr-2"
                       >
-                        <svg
-                          fill="none"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <span
+                          class="kong-icon kong-icon-check"
                         >
-                          
-  
-                          <path
-                            d="m14 7-6 6-3-3"
+                          <svg
                             fill="none"
-                            stroke="#A3BBCC"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2.25"
-                          />
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <path
+                              d="m14 7-6 6-3-3"
+                              fill="none"
+                              stroke="#A3BBCC"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2.25"
+                            />
+                            
+
+                          </svg>
                           
 
-                        </svg>
-                        
-
+                        </span>
                       </span>
-                    </span>
-                     Run Kuma control plane
-                  </li>
-                  <li>
-                    <span
-                      class="circle mr-2"
-                    >
-                      <!--v-if-->
-                    </span>
-                     Learn about deployments
-                  </li>
-                  <li>
-                    <span
-                      class="circle mr-2"
-                    >
-                      <!--v-if-->
-                    </span>
-                     Learn about configuration storage
-                  </li>
-                  <li>
-                    <span
-                      class="circle mr-2"
-                    >
-                      <!--v-if-->
-                    </span>
-                     Create the mesh
-                  </li>
-                  <li>
-                    <span
-                      class="circle mr-2"
-                    >
-                      <!--v-if-->
-                    </span>
-                     Add services
-                  </li>
-                  <li>
-                    <span
-                      class="circle mr-2"
-                    >
-                      <!--v-if-->
-                    </span>
-                     Go to the dashboard
-                  </li>
-                  
-                </ul>
+                       Run Kuma control plane
+                    </li>
+                    <li>
+                      <span
+                        class="circle mr-2"
+                      >
+                        <!--v-if-->
+                      </span>
+                       Learn about deployments
+                    </li>
+                    <li>
+                      <span
+                        class="circle mr-2"
+                      >
+                        <!--v-if-->
+                      </span>
+                       Learn about configuration storage
+                    </li>
+                    <li>
+                      <span
+                        class="circle mr-2"
+                      >
+                        <!--v-if-->
+                      </span>
+                       Create the mesh
+                    </li>
+                    <li>
+                      <span
+                        class="circle mr-2"
+                      >
+                        <!--v-if-->
+                      </span>
+                       Add services
+                    </li>
+                    <li>
+                      <span
+                        class="circle mr-2"
+                      >
+                        <!--v-if-->
+                      </span>
+                       Go to the dashboard
+                    </li>
+                    
+                  </ul>
+                </div>
+                
+              </div>
+            </div>
+            <div
+              class="mt-4"
+            >
+              
+              <div
+                class="onboarding-actions"
+              >
+                <!--v-if-->
+                <div
+                  class="button-list"
+                >
+                  <a
+                    class="k-button medium rounded outline"
+                    data-testid="onboarding-skip-button"
+                    href="/"
+                    type="button"
+                  >
+                    
+                    <!---->
+                    
+                    
+                     Skip setup 
+                    
+                    <!---->
+                  </a>
+                  <a
+                    class="k-button medium rounded primary"
+                    data-testid="onboarding-next-button"
+                    href="/onboarding/deployment-types"
+                    type="button"
+                  >
+                    
+                    <!---->
+                    
+                    
+                    Next
+                    
+                    <!---->
+                  </a>
+                </div>
               </div>
               
             </div>
           </div>
           <div
-            class="mt-4"
-          >
-            
-            <div
-              class="onboarding-actions"
-            >
-              <!--v-if-->
-              <div
-                class="button-list"
-              >
-                <a
-                  class="k-button medium rounded outline"
-                  data-testid="onboarding-skip-button"
-                  href="/"
-                  type="button"
-                >
-                  
-                  <!---->
-                  
-                  
-                   Skip setup 
-                  
-                  <!---->
-                </a>
-                <a
-                  class="k-button medium rounded primary"
-                  data-testid="onboarding-next-button"
-                  href="/onboarding/deployment-types"
-                  type="button"
-                >
-                  
-                  <!---->
-                  
-                  
-                  Next
-                  
-                  <!---->
-                </a>
-              </div>
-            </div>
-            
-          </div>
+            class="background-image"
+          />
         </div>
-        <div
-          class="background-image"
-        />
-      </div>
-      <svg
-        class="background svg"
-        longer="false"
-        viewBox="0 0 1920 1080"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs />
-        <defs>
-          <lineargradient
-            id="a"
-            x1="64.8%"
-            x2="34.4%"
-            y1="-12.6%"
-            y2="153.1%"
-          >
-            <stop
-              offset="0%"
-              stop-color="var(--onboarding-accent-dark)"
-            />
-            <stop
-              offset="100%"
-              stop-color="var(--onboarding-accent)"
-            />
-          </lineargradient>
-          <lineargradient
-            id="b"
-            x1="0%"
-            x2="107.4%"
-            y1="41.5%"
-            y2="41.5%"
-          >
-            <stop
-              offset="0%"
-              stop-color="var(--onboarding-accent-dark)"
-            />
-            <stop
-              offset="100%"
-              stop-color="var(--onboarding-accent)"
-            />
-          </lineargradient>
-        </defs>
-        <g
-          fill="none"
-          fill-rule="evenodd"
-          mask="url(#ccard)"
-          transform="translate(-63 -285)"
+        <svg
+          class="background svg"
+          longer="false"
+          viewBox="0 0 1920 1080"
+          xmlns="http://www.w3.org/2000/svg"
         >
+          <defs />
+          <defs>
+            <lineargradient
+              id="a"
+              x1="64.8%"
+              x2="34.4%"
+              y1="-12.6%"
+              y2="153.1%"
+            >
+              <stop
+                offset="0%"
+                stop-color="var(--onboarding-accent-dark)"
+              />
+              <stop
+                offset="100%"
+                stop-color="var(--onboarding-accent)"
+              />
+            </lineargradient>
+            <lineargradient
+              id="b"
+              x1="0%"
+              x2="107.4%"
+              y1="41.5%"
+              y2="41.5%"
+            >
+              <stop
+                offset="0%"
+                stop-color="var(--onboarding-accent-dark)"
+              />
+              <stop
+                offset="100%"
+                stop-color="var(--onboarding-accent)"
+              />
+            </lineargradient>
+          </defs>
           <g
-            stroke="var(--onboarding-accent)"
-            stroke-width="6"
+            fill="none"
+            fill-rule="evenodd"
+            mask="url(#ccard)"
+            transform="translate(-63 -285)"
           >
-            <path
-              d="M1444 893h252"
-            />
-            <path
-              d="M1529 705h232M1452 603h237"
-              stroke-opacity=".4"
-            />
-            <path
-              d="M1754 563l-332 332h-76M1444 935l121 121M263 859l156 156"
-            />
-            <path
-              d="M742 781H556"
-              stroke-opacity=".4"
-            />
-            <path
-              d="M697 736H513"
-            />
-            <path
-              d="M695 783V577"
-              stroke-opacity=".4"
-            />
-            <path
-              d="M261 1026V751M509 573V438M1502 415l291 290"
-            />
-            <path
-              d="M698 912L26 240M1368 411v540l61 61 95-95M1434 3h267l193 192v354"
-              stroke-opacity=".4"
-            />
-            <path
-              d="M517 411h342l138 138M1416 573v242l371 323"
-            />
-            <path
-              d="M1486 817V612l-146-146M839 243h-97l-83 84v348M1698 1063V817l58-57h122M1069 299L558 810M696 1058H585L468 941V570L322 424"
-            />
-            <path
-              d="M277 528l160 160 236-236 121 121M632 979h-45l-67-67v-86H0M106 669h275M70 707h331M207 745h210M85 784h356M1417 558h228M1609 634h203M528 946h76M619 604v131M1359 567l125 125M1332 594l156 156M1594 1070V959M381 632L260 753"
-            />
-            <path
-              d="M605 817V497M1851 959h-518M944 570H390"
-              stroke-opacity=".4"
-            />
-            <path
-              d="M638 912H342M635 1139V912"
-            />
+            <g
+              stroke="var(--onboarding-accent)"
+              stroke-width="6"
+            >
+              <path
+                d="M1444 893h252"
+              />
+              <path
+                d="M1529 705h232M1452 603h237"
+                stroke-opacity=".4"
+              />
+              <path
+                d="M1754 563l-332 332h-76M1444 935l121 121M263 859l156 156"
+              />
+              <path
+                d="M742 781H556"
+                stroke-opacity=".4"
+              />
+              <path
+                d="M697 736H513"
+              />
+              <path
+                d="M695 783V577"
+                stroke-opacity=".4"
+              />
+              <path
+                d="M261 1026V751M509 573V438M1502 415l291 290"
+              />
+              <path
+                d="M698 912L26 240M1368 411v540l61 61 95-95M1434 3h267l193 192v354"
+                stroke-opacity=".4"
+              />
+              <path
+                d="M517 411h342l138 138M1416 573v242l371 323"
+              />
+              <path
+                d="M1486 817V612l-146-146M839 243h-97l-83 84v348M1698 1063V817l58-57h122M1069 299L558 810M696 1058H585L468 941V570L322 424"
+              />
+              <path
+                d="M277 528l160 160 236-236 121 121M632 979h-45l-67-67v-86H0M106 669h275M70 707h331M207 745h210M85 784h356M1417 558h228M1609 634h203M528 946h76M619 604v131M1359 567l125 125M1332 594l156 156M1594 1070V959M381 632L260 753"
+              />
+              <path
+                d="M605 817V497M1851 959h-518M944 570H390"
+                stroke-opacity=".4"
+              />
+              <path
+                d="M638 912H342M635 1139V912"
+              />
+            </g>
+            <foreignobject
+              height="100%"
+              width="100%"
+              x="0"
+              y="0"
+            >
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+            </foreignobject>
           </g>
-          <foreignobject
-            height="100%"
-            width="100%"
-            x="0"
-            y="0"
-          >
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-            <div />
-          </foreignobject>
-        </g>
-      </svg>
-    </div>
-    
+        </svg>
+      </div>
+      
+    </section>
     
   </main>
   
