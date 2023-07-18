@@ -65,6 +65,11 @@
                 >
                   {{ item.dataplanes.online || 0 }} / {{ item.dataplanes.total || 0 }}
                 </template>
+                <template
+                  v-else
+                >
+                  —
+                </template>
               </template>
               <template #actions="{ row: item }">
                 <KDropdownMenu
