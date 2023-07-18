@@ -39,10 +39,35 @@ h6 {
   font-weight: var(--font-weight-semi-bold);
 }
 
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
 a {
   text-decoration: none;
   color: var(--blue-500);
 }
+
 a:hover,
 a:focus {
   text-decoration: underline
