@@ -233,7 +233,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           <!---->
           <!---->
           <div
-            class="k-card-content d-flex"
+            class="k-card-content"
           >
             <div
               class="k-card-body"
