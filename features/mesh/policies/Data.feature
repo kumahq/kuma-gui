@@ -2,12 +2,10 @@ Feature: mesh / policies / data
   Background:
     Given the CSS selectors
       | Alias          | Selector                                     |
-      | button-refresh | [data-testid='data-overview-refresh-button'] |
-      | items          | [data-testid='data-overview-table']          |
+      | items          | [data-testid='policy-collection']            |
       | item           | $items tbody tr                              |
-      | item-title     | [data-testid='policy-single-entity']         |
-      | state-empty    | [data-testid='empty-state']                  |
-      | state-error    | [data-testid='error-state']                  |
+      | state-empty    | [data-testid='k-table-empty-state']          |
+      | state-error    | [data-testid='k-table-error-state']          |
       | state-loading  | [data-testid='loading-block']                |
     And the URL "/mesh-insights/default" responds with
       """

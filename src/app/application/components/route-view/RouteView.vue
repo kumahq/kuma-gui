@@ -21,6 +21,9 @@
             }
           )
         },
+        replace: (...args: Parameters<typeof router['push']>) => {
+          router.push(...args)
+        },
         params: Object.fromEntries(Object.entries(route.params).map(([prop, value]) => {
           return [
             prop,
