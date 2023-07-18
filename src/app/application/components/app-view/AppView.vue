@@ -155,6 +155,8 @@ onBeforeUnmount(() => {
   }
 }
 .app-view-title-bar h1 {
+  line-height: 1.3;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--type-xxxl, 32px);
 }
 .app-view-title-bar h2 {
