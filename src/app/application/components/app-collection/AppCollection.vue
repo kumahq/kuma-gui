@@ -30,11 +30,12 @@
 
     <template
       v-for="key in Object.keys(remainingSlots)"
-      #[`${key}`]="{ row }"
+      #[`${key}`]="{ row, rowValue }"
     >
       <slot
         :name="key"
         :row="row"
+        :row-value="rowValue"
       />
     </template>
   </KTable>
