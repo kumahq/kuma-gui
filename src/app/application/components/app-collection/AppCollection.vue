@@ -13,13 +13,7 @@
       })
       return {data: items}
     }"
-    :cell-attrs="({ headerKey }: any) => {
-      return {
-        class: {
-          [`${headerKey}-column`]: true,
-        },
-      }
-    }"
+    :cell-attrs="getCellAttributes"
     empty-state-icon-size="96"
     disable-sorting
     hide-pagination-when-optional
@@ -82,6 +76,14 @@ const click = (e: MouseEvent) => {
     if ($a !== null) {
       $a.click()
     }
+  }
+}
+
+function getCellAttributes({ headerKey }: any) {
+  return {
+    class: {
+      [`${headerKey}-column`]: true,
+    },
   }
 }
 </script>
