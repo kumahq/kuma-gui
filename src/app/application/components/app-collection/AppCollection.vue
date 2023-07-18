@@ -54,7 +54,7 @@ type ChangeValue = {
 }
 
 const props = withDefaults(defineProps<{
-  total: number,
+  total?: number,
   pageNumber: number,
   pageSize: number,
   items: unknown[] | undefined,
