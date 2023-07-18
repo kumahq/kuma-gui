@@ -153,7 +153,7 @@
                   </div>
                   <PolicyDetails
                     v-if="route.query.policy"
-                    :name="route.query.policy as string"
+                    :name="(route.query.policy as string)"
                     :mesh="_route.params.mesh"
                     :path="selected.path"
                     :type="selected.name"
