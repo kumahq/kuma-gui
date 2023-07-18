@@ -4,7 +4,7 @@
       :title="t('meshes.routes.overview.title')"
     />
     <AppView>
-      <div class="kcard-stack">
+      <div class="stack">
         <KCard>
           <template #body>
             <MeshCharts />

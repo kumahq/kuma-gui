@@ -11,14 +11,14 @@ To be used in places where we solely need KCard’s frame properties.
 }
 
 /*
-.kcard-stack
+.stack
 
 For stacking elements with consistent space between.
 
 Adapted from https://every-layout.dev/layouts/stack/.
 */
 
-.kcard-stack>*+* {
+.stack>*+* {
   margin-block-start: var(--AppGap);
 }
 

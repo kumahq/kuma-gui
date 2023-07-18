@@ -1,9 +1,11 @@
 <template>
-  <ul>
-    <li
+  <div
+    v-if="props.warnings.length > 0"
+    class="stack"
+  >
+    <div
       v-for="(warning, index) in props.warnings"
       :key="`${warning.kind}/${index}`"
-      class="mb-1"
     >
       <KAlert appearance="warning">
         <template #alertMessage>
@@ -13,8 +15,8 @@
           />
         </template>
       </KAlert>
-    </li>
-  </ul>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>

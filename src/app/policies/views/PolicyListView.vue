@@ -33,7 +33,7 @@
                 class="relative"
                 :class="selected.path"
               >
-                <div class="kcard-stack">
+                <div class="stack">
                   <div class="kcard-border">
                     <KCard
                       v-if="selected.isExperimental"
