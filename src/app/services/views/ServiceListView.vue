@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ route }"
+    name="services-list-view"
   >
     <DataSource
       v-slot="{data, error}: ServiceInsightCollectionSource"
@@ -8,12 +9,12 @@
     >
       <AppView>
         <template #title>
-          <h1>
+          <h2>
             <RouteTitle
               :title="t('services.routes.items.title')"
               :render="true"
             />
-          </h1>
+          </h2>
         </template>
         <KCard>
           <template #body>
