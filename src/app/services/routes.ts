@@ -38,6 +38,7 @@ export const routes = () => {
               path: '',
               name: `${prefix}-list-view`,
               props: (route) => ({
+                mesh: route.params.mesh,
                 page: getLastNumberParameter(route.query.page, 1),
                 size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
               }),

@@ -5,7 +5,7 @@
   >
     <DataSource
       v-slot="{data, error}: ServiceInsightCollectionSource"
-      :src="`/default/services?page=${props.page}&size=${props.size}`"
+      :src="`/${props.mesh}/services?page=${props.page}&size=${props.size}`"
     >
       <AppView>
         <template #title>
@@ -139,6 +139,8 @@ const { t } = useI18n()
 const props = defineProps<{
   page: number
   size: number
+  //
+  mesh: string
 }>()
 
 </script>
