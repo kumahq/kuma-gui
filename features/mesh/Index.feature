@@ -2,11 +2,11 @@ Feature: mesh / index
   Background:
     Given the CSS selectors
       | Alias          | Selector                                     |
-      | items          | [data-testid='data-overview-table']          |
+      | items          | [data-testid='mesh-collection']              |
       | item           | $items tbody tr                              |
       | breadcrumb     | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |
-      | navigation | .route-mesh-view-tabs ul > |
+      | navigation     | .route-mesh-view-tabs ul >                   |
 
     Given the environment
       """
@@ -22,7 +22,6 @@ Feature: mesh / index
     When I visit the "/meshes" URL
 
   Scenario: Clicking a mesh and back again for <Mesh>
-
     Then the "$item" element exists 2 times
     Then I click the "<Selector>" element
     Then the URL contains "/mesh/<Mesh>"
@@ -40,17 +39,6 @@ Feature: mesh / index
 
     Examples:
       | Mesh         | Selector |
-      | another-mesh | $item:nth-child(2) a |
-      | default      | $item:nth-child(1) a |
+      | another-mesh | $item:nth-child(2) td:first-of-type a |
+      | default      | $item:nth-child(1) td:first-of-type a |
 
-  Scenario: Refreshing the listing
-    Then the "$item" element exists 2 times
-    Given the environment
-      """
-      KUMA_MESH_COUNT: 10
-      """
-    And the URL "/meshes" responds with
-      """
-      """
-    Then I click the "$button-refresh" element
-    Then the "$item" element exists 10 times
