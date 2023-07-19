@@ -22,144 +22,130 @@
           v-slot="{ data: zoneOverviewData, error, refresh }: ZoneOverviewCollectionSource"
           :src="`/zones/zone-cps?size=${props.size}&page=${props.page}`"
         >
-          <DataSource
-            v-slot="{ data: allZoneIngressOverviewData }: AllZoneIngressOverviewCollectionSource"
-            :src="`/zones/all-zone-ingresses`"
-          >
-            <DataSource
-              v-slot="{ data: allZoneEgressOverviewData }: AllZoneEgressOverviewCollectionSource"
-              :src="`/zones/all-zone-egresses`"
-            >
-              <KCard>
-                <template #body>
-                  <AppCollection
-                    data-testid="zone-cp-table"
-                    :headers="HEADERS"
-                    :page-number="props.page"
-                    :page-size="props.size"
-                    :total="zoneOverviewData?.total"
-                    :items="zoneOverviewData && allZoneIngressOverviewData && allZoneEgressOverviewData ? transformToTableData(
-                      zoneOverviewData.items,
-                      allZoneIngressOverviewData.items,
-                      allZoneEgressOverviewData.items
-                    ) : []"
-                    :error="error"
-                    @change="route.update"
+          <KCard>
+            <template #body>
+              <AppCollection
+                data-testid="zone-cp-table"
+                :headers="HEADERS"
+                :page-number="props.page"
+                :page-size="props.size"
+                :total="zoneOverviewData?.total"
+                :items="zoneOverviewData ? transformToTableData(zoneOverviewData.items) : []"
+                :error="error"
+                @change="route.update"
+              >
+                <template
+                  v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                  #toolbar
+                >
+                  <KButton
+                    appearance="creation"
+                    icon="plus"
+                    :to="{ name: 'zone-create-view' }"
                   >
-                    <template
-                      v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-                      #toolbar
-                    >
+                    Create Zone
+                  </KButton>
+                </template>
+
+                <template #actions="{ row }">
+                  <KDropdownMenu
+                    class="actions-dropdown"
+                    data-testid="actions-dropdown"
+                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                    width="150"
+                  >
+                    <template #default>
                       <KButton
-                        appearance="creation"
-                        icon="plus"
-                        :to="{ name: 'zone-create-view' }"
+                        class="non-visual-button"
+                        appearance="secondary"
+                        size="small"
                       >
-                        Create Zone
+                        <template #icon>
+                          <KIcon
+                            color="var(--black-400)"
+                            icon="more"
+                            size="16"
+                          />
+                        </template>
                       </KButton>
                     </template>
 
-                    <template #actions="{ row }">
-                      <KDropdownMenu
-                        class="actions-dropdown"
-                        data-testid="actions-dropdown"
-                        :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                        width="150"
-                      >
-                        <template #default>
-                          <KButton
-                            class="non-visual-button"
-                            appearance="secondary"
-                            size="small"
-                          >
-                            <template #icon>
-                              <KIcon
-                                color="var(--black-400)"
-                                icon="more"
-                                size="16"
-                              />
-                            </template>
-                          </KButton>
-                        </template>
-
-                        <template #items>
-                          <KDropdownItem
-                            :item="{
-                              to: row.detailViewRoute,
-                              label: t('zones.list.viewDetailsActionText'),
-                            }"
-                          />
-
-                          <KDropdownItem
-                            v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-                            has-divider
-                            is-dangerous
-                            data-testid="dropdown-delete-item"
-                            @click="setDeleteZoneName(row.name)"
-                          >
-                            {{ t('zones.list.deleteActionText') }}
-                          </KDropdownItem>
-                        </template>
-                      </KDropdownMenu>
-                    </template>
-
-                    <template #name="{ row }">
-                      <RouterLink
-                        :to="row.detailViewRoute"
-                        data-testid="detail-view-link"
-                      >
-                        {{ row.name }}
-                      </RouterLink>
-                    </template>
-
-                    <template #status="{ row }">
-                      <StatusBadge
-                        v-if="row.status"
-                        :status="row.status"
+                    <template #items>
+                      <KDropdownItem
+                        :item="{
+                          to: row.detailViewRoute,
+                          label: t('zones.list.viewDetailsActionText'),
+                        }"
                       />
 
-                      <template v-else>
-                        —
-                      </template>
+                      <KDropdownItem
+                        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                        has-divider
+                        is-dangerous
+                        data-testid="dropdown-delete-item"
+                        @click="setDeleteZoneName(row.name)"
+                      >
+                        {{ t('zones.list.deleteActionText') }}
+                      </KDropdownItem>
                     </template>
-
-                    <template #warnings="{ row }">
-                      <KIcon
-                        v-if="row.withWarnings"
-                        class="mr-1"
-                        icon="warning"
-                        color="var(--black-500)"
-                        secondary-color="var(--yellow-300)"
-                        size="20"
-                      />
-                    </template>
-                  </AppCollection>
-                </template>
-              </KCard>
-
-              <DeleteResourceModal
-                v-if="isDeleteModalVisible"
-                :confirmation-text="deleteZoneName"
-                :delete-function="deleteZone"
-                :is-visible="isDeleteModalVisible"
-                modal-id="delete-zone-modal"
-                :action-button-text="t('zones.delete.confirmModal.proceedText')"
-                :title="t('zones.delete.confirmModal.title')"
-                @cancel="toggleDeleteModal"
-                @delete="refresh"
-              >
-                <template #body-content>
-                  <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
-
-                  <p>{{ t('zones.delete.confirmModal.text2') }}</p>
+                  </KDropdownMenu>
                 </template>
 
-                <template #error>
-                  {{ t('zones.delete.confirmModal.errorText') }}
+                <template #name="{ row }">
+                  <RouterLink
+                    :to="row.detailViewRoute"
+                    data-testid="detail-view-link"
+                  >
+                    {{ row.name }}
+                  </RouterLink>
                 </template>
-              </DeleteResourceModal>
-            </DataSource>
-          </DataSource>
+
+                <template #status="{ row }">
+                  <StatusBadge
+                    v-if="row.status"
+                    :status="row.status"
+                  />
+
+                  <template v-else>
+                    —
+                  </template>
+                </template>
+
+                <template #warnings="{ row }">
+                  <KIcon
+                    v-if="row.withWarnings"
+                    class="mr-1"
+                    icon="warning"
+                    color="var(--black-500)"
+                    secondary-color="var(--yellow-300)"
+                    size="20"
+                  />
+                </template>
+              </AppCollection>
+            </template>
+          </KCard>
+
+          <DeleteResourceModal
+            v-if="isDeleteModalVisible"
+            :confirmation-text="deleteZoneName"
+            :delete-function="deleteZone"
+            :is-visible="isDeleteModalVisible"
+            modal-id="delete-zone-modal"
+            :action-button-text="t('zones.delete.confirmModal.proceedText')"
+            :title="t('zones.delete.confirmModal.title')"
+            @cancel="toggleDeleteModal"
+            @delete="refresh"
+          >
+            <template #body-content>
+              <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
+
+              <p>{{ t('zones.delete.confirmModal.text2') }}</p>
+            </template>
+
+            <template #error>
+              {{ t('zones.delete.confirmModal.errorText') }}
+            </template>
+          </DeleteResourceModal>
         </DataSource>
       </template>
     </AppView>
@@ -172,7 +158,7 @@ import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
-import type { ZoneOverviewCollectionSource, AllZoneIngressOverviewCollectionSource, AllZoneEgressOverviewCollectionSource } from '../sources'
+import type { ZoneOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
@@ -181,7 +167,7 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useStore } from '@/store/store'
-import { StatusKeyword, TableHeader, ZoneEgressOverview, ZoneIngressOverview, ZoneOverview } from '@/types/index.d'
+import { StatusKeyword, TableHeader, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
@@ -192,8 +178,6 @@ type ZoneOverviewTableRow = {
   status: StatusKeyword
   zoneCpVersion: string
   storeType: string
-  hasIngress: 'Yes' | 'No'
-  hasEgress: 'Yes' | 'No'
   withWarnings: boolean
 }
 
@@ -207,8 +191,6 @@ const HEADERS: TableHeader[] = [
   { label: 'Status', key: 'status' },
   { label: 'Zone CP Version', key: 'zoneCpVersion' },
   { label: 'Storage type', key: 'storeType' },
-  { label: 'Ingress', key: 'hasIngress' },
-  { label: 'Egress', key: 'hasEgress' },
   { label: 'Warnings', key: 'warnings', hideLabel: true },
   { label: 'Actions', key: 'actions', hideLabel: true },
 ]
@@ -228,10 +210,7 @@ const props = defineProps({
 const isDeleteModalVisible = ref(false)
 const deleteZoneName = ref('')
 
-function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverviews: ZoneIngressOverview[], zoneEgressOverviews: ZoneEgressOverview[]): ZoneOverviewTableRow[] {
-  const zonesWithIngress = new Set(zoneIngressOverviews.map((zoneIngressOverview) => zoneIngressOverview.zoneIngress.zone))
-  const zonesWithEgress = new Set(zoneEgressOverviews.map((zoneEgressOverview) => zoneEgressOverview.zoneEgress.zone))
-
+function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
   return zoneOverviews.map((zoneOverview) => {
     const { name } = zoneOverview
     const id = name
@@ -268,8 +247,6 @@ function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverview
       status,
       zoneCpVersion,
       storeType,
-      hasIngress: zonesWithIngress.has(zoneOverview.name) ? 'Yes' : 'No',
-      hasEgress: zonesWithEgress.has(zoneOverview.name) ? 'Yes' : 'No',
       withWarnings: !cpCompat,
     }
   })
