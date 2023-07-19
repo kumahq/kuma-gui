@@ -13,13 +13,9 @@
       })
       return {data: items}
     }"
-    :cell-attrs="({ headerKey }: any) => {
-      return {
-        class: {
-          [`${headerKey}-column`]: true,
-        },
-      }
-    }"
+    :cell-attrs="({ headerKey }: CellAttrParams) => ({
+      class: `${headerKey}-column`
+    })"
     empty-state-icon-size="96"
     disable-sorting
     hide-pagination-when-optional
@@ -53,6 +49,12 @@ import {
 } from '@kong/kongponents'
 import { computed, useSlots, ref, watch } from 'vue'
 
+type CellAttrParams = {
+  headerKey: string
+  row: any
+  rowIndex: number
+  colIndex: number
+}
 type FetcherParams = {
   page: number,
   pageSize: number,
