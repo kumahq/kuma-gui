@@ -1,8 +1,10 @@
 <template>
-  <RouteView>
-    <RouteTitle
-      :title="t('zone-ingresses.routes.items.title')"
-    />
+  <RouteView
+    v-slot="{ route }"
+    name="zone-ingress-list-view"
+  >
+    <RouteTitle :title="t('zone-ingresses.routes.items.title')" />
+
     <AppView
       :breadcrumbs="[
         {
@@ -13,142 +15,101 @@
         },
       ]"
     >
-      <div class="zoneingresses">
-        <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+      <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
-        <!-- Zone CPs information for when Multicluster is enabled -->
-        <div
-          v-else
-          class="stack"
+      <template v-else>
+        <DataSource
+          v-slot="{ data: zoneIngressOverviewData, error }: ZoneIngressOverviewCollectionSource"
+          :src="`/zones/zone-ingresses?size=${props.size}&page=${props.page}`"
         >
-          <div class="kcard-border">
-            <DataOverview
-              :selected-entity-name="entity?.name"
-              :page-size="PAGE_SIZE_DEFAULT"
-              :is-loading="isLoading"
-              :error="error"
-              :empty-state="EMPTY_STATE"
-              :table-data="tableData"
-              :table-data-is-empty="tableData.data.length === 0"
-              :next="nextUrl"
-              :page-offset="pageOffset"
-              @table-action="loadEntity"
-              @load-data="loadData"
-            />
-          </div>
+          <KCard>
+            <template #body>
+              <AppCollection
+                data-testid="zone-ingress-table"
+                :headers="HEADERS"
+                :page-number="props.page"
+                :page-size="props.size"
+                :total="zoneIngressOverviewData?.total"
+                :items="zoneIngressOverviewData ? transformToTableData(zoneIngressOverviewData.items) : []"
+                :error="error"
+                @change="route.update"
+              >
+                <template #name="{ row }">
+                  <RouterLink
+                    :to="row.detailViewRoute"
+                    data-testid="detail-view-link"
+                  >
+                    {{ row.name }}
+                  </RouterLink>
+                </template>
 
-          <div
-            v-if="entity !== null"
-            class="kcard-border"
-            data-testid="list-view-summary"
-          >
-            <ZoneIngressDetails :zone-ingress-overview="entity" />
-          </div>
-        </div>
-      </div>
+                <template #status="{ row }">
+                  <StatusBadge
+                    v-if="row.status"
+                    :status="row.status"
+                  />
+
+                  <template v-else>
+                    —
+                  </template>
+                </template>
+              </AppCollection>
+            </template>
+          </KCard>
+        </DataSource>
+      </template>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from 'vue'
+import { KCard } from '@kong/kongponents'
 import { RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
-import ZoneIngressDetails from '../components/ZoneIngressDetails.vue'
+import type { ZoneIngressOverviewCollectionSource } from '../sources'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import DataOverview from '@/app/common/DataOverview.vue'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useStore } from '@/store/store'
 import { StatusKeyword, TableHeader, ZoneIngressOverview } from '@/types/index.d'
-import { useKumaApi, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { QueryParameter } from '@/utilities/QueryParameter'
 
 type ZoneIngressOverviewTableRow = {
-  entity: ZoneIngressOverview
+  id: string
   detailViewRoute: RouteLocationNamedRaw
+  name: string
   status: StatusKeyword
 }
 
-const kumaApi = useKumaApi()
 const { t } = useI18n()
-
-const EMPTY_STATE = {
-  title: 'No Data',
-  message: 'There are no Zone Ingresses present.',
-}
-
 const store = useStore()
 
+const HEADERS: TableHeader[] = [
+  { label: 'Name', key: 'name' },
+  { label: 'Status', key: 'status' },
+]
+
 const props = defineProps({
-  selectedZoneIngressName: {
-    type: [String, null] as PropType<string | null>,
-    required: false,
-    default: null,
-  },
-
-  offset: {
+  page: {
     type: Number,
-    required: false,
-    default: 0,
+    required: true,
+  },
+
+  size: {
+    type: Number,
+    required: true,
   },
 })
-
-const isLoading = ref(true)
-const error = ref<Error | null>(null)
-const tableData = ref<{ headers: TableHeader[], data: ZoneIngressOverviewTableRow[] }>({
-  headers: [
-    { label: 'Status', key: 'status' },
-    { label: 'Name', key: 'entity' },
-  ],
-  data: [],
-})
-const entity = ref<ZoneIngressOverview | null>(null)
-const nextUrl = ref<string | null>(null)
-const pageOffset = ref(props.offset)
-
-watch(() => store.getters['config/getMulticlusterStatus'], function (isMultizoneMode) {
-  if (isMultizoneMode) {
-    loadData(props.offset)
-  }
-}, { immediate: true })
-
-async function loadData(offset: number) {
-  pageOffset.value = offset
-  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  QueryParameter.set('offset', offset > 0 ? offset : null)
-
-  isLoading.value = true
-  error.value = null
-
-  const size = PAGE_SIZE_DEFAULT
-
-  try {
-    const { items, next } = await kumaApi.getAllZoneIngressOverviews({ size, offset })
-
-    nextUrl.value = next
-    tableData.value.data = transformToTableData(items ?? [])
-    await loadEntity({ name: props.selectedZoneIngressName ?? tableData.value.data[0]?.entity.name })
-  } catch (err) {
-    tableData.value.data = []
-    entity.value = null
-
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
 
 function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): ZoneIngressOverviewTableRow[] {
   return zoneIngressOverviews.map((entity) => {
     const { name } = entity
+    const id = name
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'zone-ingress-detail-view',
       params: {
@@ -158,25 +119,11 @@ function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): Zone
     const status = getItemStatusFromInsight(entity.zoneIngressInsight ?? {})
 
     return {
-      entity,
+      id,
       detailViewRoute,
+      name,
       status,
     }
   })
-}
-
-async function loadEntity({ name }: { name?: string | undefined }) {
-  if (name === undefined) {
-    entity.value = null
-    QueryParameter.set('zoneIngress', null)
-    return
-  }
-
-  try {
-    entity.value = await kumaApi.getZoneIngressOverview({ name })
-    QueryParameter.set('zoneIngress', name)
-  } catch (err) {
-    console.error(err)
-  }
 }
 </script>

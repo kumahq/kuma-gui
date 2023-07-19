@@ -58,8 +58,8 @@ export const routes = (
               path: '',
               name: 'zone-ingress-list-view',
               props: (route) => ({
-                selectedZoneIngressName: route.query.zoneIngress,
-                offset: getLastNumberParameter(route.query.offset),
+                page: getLastNumberParameter(route.query.page, 1),
+                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
               }),
               component: () => import('@/app/zones/views/ZoneIngressListView.vue'),
             },

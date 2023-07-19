@@ -1,11 +1,12 @@
 Feature: Zones: List view content
   Background:
     Given the CSS selectors
-      | Alias             | Selector                               |
-      | summary           | [data-testid='list-view-summary']      |
-      | table             | [data-testid='data-overview-table']    |
-      | table-row         | $table tbody tr                        |
-      | zone-cp-table-row | [data-testid='zone-cp-table'] tbody tr |
+      | Alias                  | Selector                                    |
+      | summary                | [data-testid='list-view-summary']           |
+      | table                  | [data-testid='data-overview-table']         |
+      | table-row              | $table tbody tr                             |
+      | zone-cp-table-row      | [data-testid='zone-cp-table'] tbody tr      |
+      | zone-ingress-table-row | [data-testid='zone-ingress-table'] tbody tr |
 
   Scenario Outline: Zone CP list view has expected content
     Given the environment
@@ -115,13 +116,11 @@ Feature: Zones: List view content
     When I visit the "/zones/zone-ingresses" URL
     Then the page title contains "Zone Ingresses"
 
-    Then the "$table-row:nth-child(1) .status-column" element contains "online"
-    Then the "$table-row:nth-child(1) .entity-column" element contains "zone-ingress-1"
+    Then the "$zone-ingress-table-row:nth-child(1) .status-column" element contains "online"
+    Then the "$zone-ingress-table-row:nth-child(1) .name-column" element contains "zone-ingress-1"
 
-    Then the "$table-row:nth-child(2) .status-column" element contains "offline"
-    Then the "$table-row:nth-child(2) .entity-column" element contains "zone-ingress-2"
-
-    Then the "$summary" element contains "Zone Ingress: zone-ingress-1"
+    Then the "$zone-ingress-table-row:nth-child(2) .status-column" element contains "offline"
+    Then the "$zone-ingress-table-row:nth-child(2) .name-column" element contains "zone-ingress-2"
 
   Scenario Outline: Zone Egress list view has expected content
     Given the environment
