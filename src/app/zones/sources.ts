@@ -25,6 +25,10 @@ export type ZoneIngressOverviewCollection = CollectionResponse<ZoneIngressOvervi
 export type ZoneIngressOverviewSource = DataSourceResponse<ZoneIngressOverview>
 export type ZoneIngressOverviewCollectionSource = DataSourceResponse<ZoneIngressOverviewCollection>
 
+export type ZoneEgressOverviewCollection = CollectionResponse<ZoneEgressOverview>
+export type ZoneEgressOverviewSource = DataSourceResponse<ZoneEgressOverview>
+export type ZoneEgressOverviewCollectionSource = DataSourceResponse<ZoneEgressOverviewCollection>
+
 export const sources = (api: KumaApi) => {
   return {
     '/zones/zone-cps': async (params: PaginationParams, source: { close: () => void }) => {
@@ -55,6 +59,15 @@ export const sources = (api: KumaApi) => {
       const offset = params.size * (params.page - 1)
 
       return await api.getAllZoneIngressOverviews({ size, offset })
+    },
+
+    '/zones/zone-egresses': async (params: PaginationParams, source: { close: () => void }) => {
+      source.close()
+
+      const size = params.size
+      const offset = params.size * (params.page - 1)
+
+      return await api.getAllZoneEgressOverviews({ size, offset })
     },
   }
 }

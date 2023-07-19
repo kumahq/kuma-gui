@@ -2,11 +2,9 @@ Feature: Zones: List view content
   Background:
     Given the CSS selectors
       | Alias                  | Selector                                    |
-      | summary                | [data-testid='list-view-summary']           |
-      | table                  | [data-testid='data-overview-table']         |
-      | table-row              | $table tbody tr                             |
       | zone-cp-table-row      | [data-testid='zone-cp-table'] tbody tr      |
       | zone-ingress-table-row | [data-testid='zone-ingress-table'] tbody tr |
+      | zone-egress-table-row  | [data-testid='zone-egress-table'] tbody tr  |
 
   Scenario Outline: Zone CP list view has expected content
     Given the environment
@@ -162,10 +160,8 @@ Feature: Zones: List view content
     When I visit the "/zones/zone-egresses" URL
     Then the page title contains "Zone Egresses"
 
-    Then the "$table-row:nth-child(1) .status-column" element contains "online"
-    Then the "$table-row:nth-child(1) .entity-column" element contains "zone-egress-1"
+    Then the "$zone-egress-table-row:nth-child(1) .status-column" element contains "online"
+    Then the "$zone-egress-table-row:nth-child(1) .name-column" element contains "zone-egress-1"
 
-    Then the "$table-row:nth-child(2) .status-column" element contains "offline"
-    Then the "$table-row:nth-child(2) .entity-column" element contains "zone-egress-2"
-
-    Then the "$summary" element contains "Zone Egress: zone-egress-1"
+    Then the "$zone-egress-table-row:nth-child(2) .status-column" element contains "offline"
+    Then the "$zone-egress-table-row:nth-child(2) .name-column" element contains "zone-egress-2"
