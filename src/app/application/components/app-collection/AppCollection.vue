@@ -5,7 +5,7 @@
     :pagination-total-items="props.total"
     :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
     :fetcher-cache-key="String(cacheKey)"
-    :fetcher="({page, pageSize, query}: FetcherProps) => {
+    :fetcher="({ page, pageSize, query }: FetcherParams) => {
       emit('change', {
         page: page,
         size: pageSize,
@@ -53,7 +53,7 @@ import {
 } from '@kong/kongponents'
 import { computed, useSlots, ref, watch } from 'vue'
 
-type FetcherProps = {
+type FetcherParams = {
   page: number,
   pageSize: number,
   query: string
