@@ -22,23 +22,25 @@
     @row:click="click"
   >
     <template
-      v-if="slots.toolbar"
-      #toolbar
+      v-for="key in Object.keys(slots)"
+      :key="key"
+      #[key]="{ row, rowValue }"
     >
-      <div class="app-collection-toolbar">
-        <slot name="toolbar" />
-      </div>
-    </template>
+      <template
+        v-if="key === 'toolbar'"
+      >
+        <div class="app-collection-toolbar">
+          <slot name="toolbar" />
+        </div>
+      </template>
 
-    <template
-      v-for="key in Object.keys(remainingSlots)"
-      #[`${key}`]="{ row, rowValue }"
-    >
-      <slot
-        :name="key"
-        :row="row"
-        :row-value="rowValue"
-      />
+      <template v-else>
+        <slot
+          :name="key"
+          :row="row"
+          :row-value="rowValue"
+        />
+      </template>
     </template>
   </KTable>
 </template>
@@ -47,7 +49,7 @@
 import {
   KTable,
 } from '@kong/kongponents'
-import { computed, useSlots, ref, watch } from 'vue'
+import { useSlots, ref, watch } from 'vue'
 
 type CellAttrParams = {
   headerKey: string
@@ -84,12 +86,6 @@ const slots = useSlots()
 
 const items = ref<unknown[] | undefined>(props.items)
 const cacheKey = ref<number>(0)
-
-const remainingSlots = computed(() => {
-  const { toolbar, ...remainingSlots } = slots
-
-  return remainingSlots
-})
 
 watch(() => props.items, () => {
   cacheKey.value++
