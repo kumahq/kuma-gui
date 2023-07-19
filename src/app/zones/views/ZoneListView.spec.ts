@@ -8,7 +8,12 @@ import { useKumaApi, useStore } from '@/utilities'
 const kumaApi = useKumaApi()
 
 function renderComponent() {
-  return mount(ZoneListView)
+  return mount(ZoneListView, {
+    props: {
+      page: 1,
+      size: 50,
+    },
+  })
 }
 
 describe('ZoneListView', () => {
@@ -54,7 +59,7 @@ describe('ZoneListView', () => {
 
     expect(kumaApi.getAllZoneOverviews).toHaveBeenCalledTimes(1)
 
-    expect(wrapper.findAll('[data-testid="data-overview-table"] tbody tr').length).toBe(3)
+    expect(wrapper.findAll('[data-testid="zone-cp-table"] tbody tr').length).toBe(3)
 
     // Opens the action dropdown
     const actionsDropdown = wrapper.find('[data-testid="actions-dropdown"] [data-testid="k-dropdown-menu-popover"]')

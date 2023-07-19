@@ -155,3 +155,6 @@ zones:
       proceedText: 'Yes, delete'
       title: 'Delete Zone'
       errorText: 'An unexpected error occurred'
+  list:
+    viewDetailsActionText: 'View details'
+    deleteActionText: 'Delete'
