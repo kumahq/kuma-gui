@@ -1,3 +1,4 @@
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
 export const routes = () => {
@@ -39,12 +40,14 @@ export const routes = () => {
               path: '',
               name: `${prefix}-list-view`,
               props: (route) => ({
-                selectedDppName: route.query.gateway,
-                gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,
-                offset: getLastNumberParameter(route.query.offset),
-                isGatewayView: true,
+                mesh: route.params.mesh,
+                page: getLastNumberParameter(route.query.page, 1),
+                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
+                query: decodeURIComponent(String(route.query.query || '')),
+                search: decodeURIComponent(String(route.query.s || '')),
+                gatewayType: route.query.gatewayType || 'all',
               }),
-              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+              component: () => import('@/app/gateways/views/GatewayListView.vue'),
               // children: [
               //   ...(item(prefix)[0]).children ?? [],
               // ],

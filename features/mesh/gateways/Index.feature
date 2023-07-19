@@ -2,7 +2,10 @@ Feature: mesh / gateways / index
   Background:
     Given the CSS selectors
       | Alias        | Selector                                |
-      | select-type  | [data-testid='data-planes-type-filter'] |
+      | select-type  | [data-testid='k-select-input'] |
+      | select-option  | .k-select-item |
+      | select-builtin  | [data-testid='k-select-item-builtin'] |
+      | select-delegated  | [data-testid='k-select-item-delegated'] |
       | table        | [data-testid='data-overview-table']     |
       | table-header | $table th                               |
       | table-row    | $table tbody tr                         |
@@ -32,8 +35,8 @@ Feature: mesh / gateways / index
   Scenario: The Gateway listing table has the correct columns
     Then the "$table-header" elements contain
       | Value           |
-      | Status          |
       | Name            |
+      | Status          |
       | Type            |
       | Service         |
       | Zone            |
@@ -41,7 +44,8 @@ Feature: mesh / gateways / index
       | Kuma DP version |
 
   Scenario: The Gateway listing has the expected content and UI elements
-    Then the "$select-type option" element exists 3 times
+    When I click the "$select-type" element
+    Then the "$select-option" element exists 3 times
     Then the "$table-row" element exists 2 times
     Then the "$table-row:nth-child(1)" element contains
       | Value                |
@@ -52,15 +56,6 @@ Feature: mesh / gateways / index
       | fake-transmitter-gateway-0 |
       | BUILTIN                    |
 
-  Scenario: The Gateway listing shows information of selected gateway when clicked
-    Then the "$item-title" element contains "fake-alarm-gateway-0"
-    Then the URL contains "gateway=fake-alarm-gateway-0"
-    Then the "$table-row:nth-child(2)" element contains "fake-transmitter-gateway-0"
-    Then the "$table-row:nth-child(2):not(.is-selected)" element exists
-    When I click the "$table-row:nth-child(2) td:first-child" element
-    Then the "$table-row:nth-child(2).is-selected" element exists
-    Then the "$item-title" element contains "fake-transmitter-gateway-0"
-    Then the URL contains "gateway=fake-transmitter-gateway-0"
 
   Rule: The Gateway listing can filter gateways by type
 
@@ -70,7 +65,6 @@ Feature: mesh / gateways / index
         searchParams:
           gateway: "true"
         """
-
     Scenario: Filtering by "builtin"
       Given the environment
       """
@@ -86,8 +80,9 @@ Feature: mesh / gateways / index
                 gateway:
                   type: 'BUILTIN'
         """
-      Then the "$select-type option" element exists 3 times
-      When I click the "$select-type" element and select "Builtin"
+      When I click the "$select-type" element
+      Then the "$select-option" element exists 3 times
+      And I click the "$select-builtin" element
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
@@ -114,7 +109,9 @@ Feature: mesh / gateways / index
                 gateway:
                   type: 'DELEGATED'
         """
-      When I click the "$select-type" element and select "Delegated"
+      When I click the "$select-type" element
+      Then the "$select-option" element exists 3 times
+      And I click the "$select-delegated" element
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:

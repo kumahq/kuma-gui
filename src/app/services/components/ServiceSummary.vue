@@ -69,7 +69,7 @@
 
 <script lang="ts" setup>
 import { KCard } from '@kong/kongponents'
-import { computed, PropType } from 'vue'
+import { computed } from 'vue'
 
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
@@ -83,17 +83,11 @@ import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
 
-const props = defineProps({
-  service: {
-    type: Object as PropType<ServiceInsight>,
-    required: true,
-  },
-
-  externalService: {
-    type: Object as PropType<ExternalService | null>,
-    required: false,
-    default: null,
-  },
+const props = withDefaults(defineProps<{
+  service: ServiceInsight
+  externalService: ExternalService | null
+}>(), {
+  externalService: null,
 })
 
 const detailViewRoute = computed(() => ({

@@ -1,114 +1,141 @@
 <template>
-  <ContentWrapper>
-    <template #content>
-      <DataOverview
-        :selected-entity-name="dataPlaneOverview?.name"
-        :page-size="PAGE_SIZE_DEFAULT"
-        :is-loading="props.isLoading"
-        :error="error"
-        :empty-state="EMPTY_STATE"
-        :table-data="filteredTableData"
-        :table-data-is-empty="filteredTableData.data.length === 0"
-        :next="props.nextUrl !== null"
-        :page-offset="props.pageOffset"
-        @table-action="loadEntity"
-        @load-data="loadData"
-      >
-        <template #additionalControls>
-          <KFilterBar
-            id="data-plane-proxy-filter"
-            class="data-plane-proxy-filter"
-            :placeholder="filterBarPlaceholder"
-            :query="filterQuery"
-            :fields="props.dppFilterFields"
-            @fields-change="handleFieldsChange"
-          />
-
-          <div v-if="props.isGatewayView">
-            <label
-              for="data-planes-type-filter"
-              class="mr-2"
-            >
-              Type:
-            </label>
-
-            <select
-              id="data-planes-type-filter"
-              v-model="filteredGatewayType"
-              data-testid="data-planes-type-filter"
-            >
-              <option
-                v-for="(value, key) in GATEWAY_TYPES"
-                :key="key"
-                :value="key"
-              >
-                {{ value }}
-              </option>
-            </select>
-          </div>
-
-          <KDropdownMenu
-            label="Columns"
-            icon="cogwheel"
-            button-appearance="outline"
-          >
-            <template #items>
-              <div @click="stopPropagatingClickEvent">
-                <KDropdownItem
-                  v-for="(item, index) in filteredColumnsDropdownItems"
-                  :key="index"
-                  class="table-header-selector-item"
-                  :item="item"
-                >
-                  <label
-                    :for="`data-plane-table-header-checkbox-${index}`"
-                    class="k-checkbox table-header-selector-item-checkbox"
-                  >
-                    <input
-                      :id="`data-plane-table-header-checkbox-${index}`"
-                      :checked="item.isChecked"
-                      type="checkbox"
-                      class="k-input"
-                      @change="(event: Event) => updateVisibleTableHeaders(event, item.tableHeaderKey)"
-                    >
-
-                    {{ item.label }}
-                  </label>
-                </KDropdownItem>
-              </div>
-            </template>
-          </KDropdownMenu>
-        </template>
-      </DataOverview>
+  <AppCollection
+    data-testid="data-plane-collection"
+    :empty-state-title="t('common.emptyState.title')"
+    :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data plane proxies' })"
+    :headers="[
+      { label: 'Name', key: 'name' },
+      { label: 'Status', key: 'status' },
+      props.gateways ? { label: 'Type', key: 'type' } : undefined,
+      { label: 'Service', key: 'service' },
+      !props.gateways ? { label: 'Protocol', key: 'protocol' } : undefined,
+      isMultiZoneMode ? { label: 'Zone', key: 'zone' } : undefined,
+      { label: 'Last Updated', key: 'lastUpdated' },
+      { label: 'Kuma DP version', key: 'dpVersion' },
+      { label: 'Actions', key: 'actions', hideLabel: true },
+    ].filter(Boolean)"
+    :page-number="props.pageNumber"
+    :page-size="props.pageSize"
+    :total="props.total"
+    :items="props.items ? transformToTableData(props.items) : []"
+    :error="props.error"
+    @change="(val: ChangeValue) => emit('change', val)"
+  >
+    <template #toolbar>
+      <slot name="toolbar" />
     </template>
+    <template #name="{ row: item }">
+      <RouterLink
+        :to="{
+          name: props.gateways ? 'gateway-detail-view' : 'data-plane-detail-view',
+          params: {
+            dataPlane: item.name
+          }
+        }"
+        data-testid="detail-view-link"
+      >
+        {{ item.name }}
+      </RouterLink>
+    </template>
+    <template #service="{ rowValue }">
+      <RouterLink
+        v-if="rowValue.route"
+        :to="rowValue.route"
+      >
+        {{ rowValue.title }}
+      </RouterLink>
 
-    <template #sidebar>
-      <DataPlaneEntitySummary
-        v-if="dataPlaneOverview !== null"
-        :data-plane-overview="dataPlaneOverview"
+      <template v-else>
+        {{ rowValue.title }}
+      </template>
+    </template>
+    <template #dpVersion="{ row, rowValue }">
+      <div
+        :class="{
+          'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
+        }"
+      >
+        {{ rowValue }}
+      </div>
+    </template>
+    <template #zone="{ rowValue }">
+      <RouterLink
+        v-if="rowValue.route"
+        :to="rowValue.route"
+      >
+        {{ rowValue.title }}
+      </RouterLink>
+
+      <template v-else>
+        {{ rowValue.title }}
+      </template>
+    </template>
+    <template #status="{ rowValue }">
+      <StatusBadge
+        v-if="rowValue"
+        :status="rowValue"
       />
 
-      <EmptyBlock v-else />
+      <template v-else>
+        —
+      </template>
     </template>
-  </ContentWrapper>
+    <template #actions="{ row: item }">
+      <KDropdownMenu
+        class="actions-dropdown"
+        :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+        width="150"
+      >
+        <template #default>
+          <KButton
+            class="non-visual-button"
+            appearance="secondary"
+            size="small"
+          >
+            <template #icon>
+              <KIcon
+                color="var(--black-400)"
+                icon="more"
+                size="16"
+              />
+            </template>
+          </KButton>
+        </template>
+        <template #items>
+          <KDropdownItem
+            :item="{
+              to: {
+                name: props.gateways ? 'gateway-detail-view' : 'data-plane-detail-view',
+                params: {
+                  dataPlane: item.name,
+                },
+              },
+              label: 'View',
+            }"
+          />
+        </template>
+      </KDropdownMenu>
+    </template>
+  </AppCollection>
 </template>
 
 <script lang="ts" setup>
-import { KDropdownItem, KDropdownMenu } from '@kong/kongponents'
-import { computed, PropType, ref, watch } from 'vue'
+import {
+  KDropdownItem,
+  KDropdownMenu,
+  KButton,
+  KIcon,
+} from '@kong/kongponents'
+import { computed } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
-import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders, ColumnDropdownItem } from '../constants'
-import ContentWrapper from '@/app/common/ContentWrapper.vue'
-import DataOverview from '@/app/common/DataOverview.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
-import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
-import { KUMA_ZONE_TAG_NAME, PAGE_SIZE_DEFAULT } from '@/constants'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
+import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
-import { DataPlaneOverview, StatusKeyword, TableHeader, Version } from '@/types/index.d'
-import { ClientStorage } from '@/utilities/ClientStorage'
+import { DataPlaneOverview, StatusKeyword, Version } from '@/types/index.d'
+import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
   dpTags,
@@ -119,15 +146,14 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
 import { humanReadableDate } from '@/utilities/helpers'
-import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
-import { QueryParameter } from '@/utilities/QueryParameter'
-
 const store = useStore()
+const { t } = useI18n()
 
 type DataPlaneOverviewTableRow = {
   entity: DataPlaneOverview
   detailViewRoute: RouteLocationNamedRaw
   type: string
+  name: string
   zone: {
     title: string,
     route?: RouteLocationNamedRaw | undefined
@@ -151,210 +177,30 @@ type DataPlaneOverviewTableRow = {
   overview: DataPlaneOverview
 }
 
-const GATEWAY_TYPES = {
-  true: 'All',
-  builtin: 'Builtin',
-  delegated: 'Delegated',
-} as const
-
-type GatewayType = keyof typeof GATEWAY_TYPES
-
-const EMPTY_STATE = {
-  title: 'No Data',
-  message: 'There are no data plane proxies present.',
+type ChangeValue = {
+  page: number
+  size: number
+  s: string
 }
 
-const props = defineProps({
-  dataPlaneOverviews: {
-    type: Array as PropType<DataPlaneOverview[]>,
-    required: true,
-  },
-
-  isLoading: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  error: {
-    type: [Error, null] as PropType<Error | null>,
-    required: false,
-    default: null,
-  },
-
-  nextUrl: {
-    type: String as PropType<String | null>,
-    required: false,
-    default: null,
-  },
-
-  pageOffset: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
-
-  selectedDppName: {
-    type: String,
-    required: false,
-    default: null,
-  },
-
-  isGatewayView: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  gatewayType: {
-    type: String as PropType<String | undefined>,
-    required: false,
-    default: 'true',
-  },
-
-  dppFilterFields: {
-    type: Object as PropType<FilterFields>,
-    required: true,
-  },
+const props = withDefaults(defineProps<{
+  total?: number,
+  pageNumber: number,
+  pageSize: number,
+  items: DataPlaneOverview[] | undefined,
+  error: Error | undefined,
+  gateways: boolean | undefined
+}>(), {
+  total: 0,
+  gateways: false,
 })
 
 const emit = defineEmits<{
   (event: 'load-data', offset: number, params: DataPlaneOverviewParameters): void
+  (e: 'change', value: ChangeValue): void
 }>()
 
-const visibleTableHeaderKeys = ref(defaultVisibleTableHeaderKeys)
-const tableData = ref<{ headers: TableHeader[], data: DataPlaneOverviewTableRow[] }>({
-  headers: [],
-  data: [],
-})
-const filterQuery = ref(QueryParameter.get('filterQuery') ?? '')
-const filteredGatewayType = ref<GatewayType>(props.gatewayType as GatewayType)
-const dppParams = ref<DataPlaneOverviewParameters>({})
-const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
-
-const filterBarPlaceholder = computed(() => {
-  if ('tag' in props.dppFilterFields) {
-    return 'tag: "kuma.io/protocol: http"'
-  } else if ('name' in props.dppFilterFields) {
-    return 'name: cluster'
-  } else {
-    return 'field: value'
-  }
-})
-
-const filteredTableData = computed(() => {
-  let headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
-  if (props.isGatewayView) {
-    headers = headers.filter(item => item.key !== 'protocol')
-  } else {
-    headers = headers.filter(item => item.key !== 'type')
-  }
-
-  return {
-    data: tableData.value.data,
-    headers,
-  }
-})
-
-const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
-  return columnsDropdownItems
-    .filter((item) => {
-      if (props.isGatewayView) {
-        return item.tableHeaderKey !== 'protocol'
-      } else {
-        return item.tableHeaderKey !== 'type'
-      }
-    })
-    .filter((item) => isMultiZoneMode.value ? true : item.tableHeaderKey !== 'zone')
-    .map((item) => {
-      const isChecked = visibleTableHeaderKeys.value.includes(item.tableHeaderKey)
-
-      return {
-        ...item,
-        isChecked,
-      }
-    })
-})
-
-watch(filteredGatewayType, function () {
-  emitLoadDataEvent(0)
-})
-
-watch(dppParams, function () {
-  emitLoadDataEvent(0)
-})
-
-watch(() => props.dataPlaneOverviews, function () {
-  initializeData()
-})
-
-function start() {
-  // Reads the visible table headers from client storage.
-  const storedVisibleTableHeaderKeys = ClientStorage.get('dpVisibleTableHeaderKeys')
-  if (Array.isArray(storedVisibleTableHeaderKeys)) {
-    visibleTableHeaderKeys.value = storedVisibleTableHeaderKeys
-  }
-
-  initializeData()
-}
-
-start()
-
-function loadData(offset: number): void {
-  emitLoadDataEvent(offset)
-}
-
-function emitLoadDataEvent(offset: number): void {
-  const params: DataPlaneOverviewParameters = {
-    ...dppParams.value,
-  }
-
-  if (!('gateway' in params)) {
-    params.gateway = filteredGatewayType.value
-  }
-
-  emit('load-data', offset, params)
-}
-
-/**
- * Ensures that the dropdown menu isn’t toggled whenever a checkbox is checked/unchecked.
- */
-function stopPropagatingClickEvent(event: MouseEvent): void {
-  event.stopPropagation()
-}
-
-function updateVisibleTableHeaders(event: Event, tableHeaderKey: string): void {
-  const input = event.target as HTMLInputElement
-  const index = visibleTableHeaderKeys.value.findIndex((key) => key === tableHeaderKey)
-
-  if (input.checked && index === -1) {
-    visibleTableHeaderKeys.value.push(tableHeaderKey)
-  } else if (!input.checked && index > -1) {
-    visibleTableHeaderKeys.value.splice(index, 1)
-  }
-
-  ClientStorage.set('dpVisibleTableHeaderKeys', Array.from(new Set(visibleTableHeaderKeys.value)))
-}
-
-function initializeData() {
-  try {
-    tableData.value.data = transformToTableData(props.dataPlaneOverviews ?? [])
-    loadEntity({ name: props.selectedDppName ?? props.dataPlaneOverviews[0]?.name })
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-function loadEntity({ name }: { name?: string | undefined }) {
-  if (name && props.dataPlaneOverviews.length > 0) {
-    dataPlaneOverview.value = props.dataPlaneOverviews.find((data) => data.name === name) ?? props.dataPlaneOverviews[0]
-    QueryParameter.set(props.isGatewayView ? 'gateway' : 'dpp', dataPlaneOverview.value.name)
-  } else {
-    dataPlaneOverview.value = null
-    QueryParameter.set(props.isGatewayView ? 'gateway' : 'dpp', null)
-  }
-}
 
 function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlaneOverviewTableRow[] {
   return dataPlaneOverviews.map((dataPlaneOverview) => {
@@ -454,6 +300,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
       entity: dataPlaneOverview,
+      name,
       detailViewRoute,
       type,
       zone: { title: zone ?? '—', route: zoneRoute },
@@ -503,41 +350,10 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
   })
 }
 
-function handleFieldsChange({ fields, query }: FilterBarEventData): void {
-  const filterFields = QueryParameter.get('filterFields')
-  const existingParams = filterFields !== null ? JSON.parse(filterFields) as DataPlaneOverviewParameters : {}
-  const existingParamsStringified = JSON.stringify(existingParams)
-
-  const newParams = Object.fromEntries(normalizeFilterFields(fields)) as DataPlaneOverviewParameters
-  const newParamsStringified = JSON.stringify(newParams)
-
-  // Persists the filter query and fields in the URL.
-  QueryParameter.set('filterQuery', query || null)
-  QueryParameter.set('filterFields', newParamsStringified)
-
-  // Avoids setting the parameters when they haven’t changed. This avoids loading the same data repeatedly.
-  if (existingParamsStringified !== newParamsStringified) {
-    dppParams.value = newParams
-  }
-}
 </script>
 
 <style lang="scss" scoped>
-.data-plane-proxy-filter {
-  flex-basis: 350px;
-  flex-grow: 1;
-  margin-right: auto;
-}
-
-.table-header-selector-item-checkbox {
-  padding: var(--spacing-md) var(--spacing-lg);
-  display: flex;
-  align-items: center;
-}
-</style>
-
-<style lang="scss">
-.table-header-selector-item .k-dropdown-item-trigger {
-  padding: 0 !important;
+.with-warnings {
+  color: var(--yellow-500);
 }
 </style>

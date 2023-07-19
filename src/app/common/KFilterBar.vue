@@ -149,7 +149,8 @@ const props = defineProps({
    */
   id: {
     type: String,
-    required: true,
+    required: false,
+    default: 'data-plane-proxy-filter',
   },
 
   /**
@@ -443,6 +444,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   flex-grow: 1;
   width: 100%;
   border: none;
+  padding: 12px;
 }
 
 .k-filter-bar-input:focus {

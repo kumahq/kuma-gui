@@ -44,7 +44,7 @@ export const cleanQuery = <T extends Record<string, unknown>>(params: Record<str
   }
   const processed = Object.entries(params).reduce((prev, [key, value]) => {
     if (String(value).length > 0) {
-      prev[key] = String(value)
+      prev[key] = encodeURIComponent(String(value))
     } else {
       prev[key] = undefined
     }

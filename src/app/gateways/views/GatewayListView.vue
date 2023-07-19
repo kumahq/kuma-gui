@@ -3,14 +3,14 @@
     v-slot="{ route }"
   >
     <DataSource
-      v-slot="{data, error}: DataPlaneCollectionSource"
-      :src="`/${props.mesh}/dataplanes?page=${props.page}&size=${size}&search=${props.search}`"
+      v-slot="{data, error}: GatewayCollectionSource"
+      :src="`/${route.params.mesh}/gateways/of/${props.gatewayType}?page=${props.page}&size=${size}&search=${props.search}`"
     >
       <AppView>
         <template #title>
           <h2>
             <RouteTitle
-              :title="t('data-planes.routes.items.title')"
+              :title="t('gateways.routes.items.title')"
               :render="true"
             />
           </h2>
@@ -24,6 +24,7 @@
               :total="data?.total"
               :items="data?.items"
               :error="error"
+              :gateways="true"
               @change="({page, size}) => {
                 // @TODO: Should we remove s: undefined?
                 route.update({
@@ -34,6 +35,7 @@
             >
               <template #toolbar>
                 <KFilterBar
+                  data-testid="gateway-type-filter"
                   class="data-plane-proxy-filter"
                   :placeholder="`tag: 'kuma.io/protocol: http'`"
                   :query="props.query"
@@ -48,6 +50,35 @@
                     s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
                   })"
                 />
+                <KSelect
+                  label="Type"
+                  :overlay-label="true"
+                  :items="[
+                    {
+                      label: 'All',
+                      value: 'all'
+                    },
+                    {
+                      label: 'Builtin',
+                      value: 'builtin'
+                    },
+                    {
+                      label: 'Delegated',
+                      value: 'delegated'
+                    }
+                  ].map(item => ({
+                    ...item,
+                    selected: item.value === props.gatewayType
+                  }))"
+                  appearance="select"
+                  @selected="(item: SelectItem) => route.update({
+                    gatewayType: String(item.value),
+                  })"
+                >
+                  <template #item-template="{ item }">
+                    {{ item.label }}
+                  </template>
+                </KSelect>
               </template>
             </DataPlaneList>
           </template>
@@ -58,15 +89,19 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
+import {
+  KCard,
+  KSelect,
+  SelectItem,
+} from '@kong/kongponents'
 
-import DataPlaneList from '../components/DataPlaneList.vue'
-import { DataPlaneCollectionSource } from '../sources'
+import { GatewayCollectionSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
+import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
@@ -78,6 +113,7 @@ const props = defineProps<{
   query: string
   //
   mesh: string
+  gatewayType: string
 }>()
 </script>
 <style lang="scss" scoped>

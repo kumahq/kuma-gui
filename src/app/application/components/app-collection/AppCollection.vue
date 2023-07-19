@@ -102,7 +102,7 @@ const click = (e: MouseEvent) => {
 }
 </script>
 <style type="scss" scoped>
-.app-collection :deep(td:first-of-type > a) {
+.app-collection :is(td) > :is(a) {
   color: inherit;
   font-weight: var(--font-weight-semi-bold);
   text-decoration: none;
@@ -115,5 +115,7 @@ const click = (e: MouseEvent) => {
   flex-wrap: wrap;
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
+  font-size: var(--type-md);
+  color: var(--black-500);
 }
 </style>
