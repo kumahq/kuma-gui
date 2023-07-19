@@ -102,7 +102,7 @@ const click = (e: MouseEvent) => {
 }
 </script>
 <style type="scss" scoped>
-.app-collection :is(td) > :is(a) {
+.app-collection :deep(td:first-of-type > a) {
   color: inherit;
   font-weight: var(--font-weight-semi-bold);
   text-decoration: none;
