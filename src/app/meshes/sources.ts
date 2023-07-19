@@ -26,7 +26,7 @@ export type MeshInsightSource = DataSourceResponse<MeshInsight>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/:mesh/meshes': async (params: MeshParams & PaginationParams, source: Closeable) => {
+    '/meshes': async (params: MeshParams & PaginationParams, source: Closeable) => {
       source.close()
       const offset = params.size * (params.page - 1)
       return api.getAllMeshes({
@@ -40,11 +40,7 @@ export const sources = (api: KumaApi) => {
     },
     '/:mesh/insights': async (params: MeshParams, source: Closeable) => {
       source.close()
-      if (params.mesh === '*') {
-        return api.getAllMeshInsights()
-      } else {
-        return api.getMeshInsights({ name: params.mesh })
-      }
+      return api.getMeshInsights({ name: params.mesh })
     },
 
   }
