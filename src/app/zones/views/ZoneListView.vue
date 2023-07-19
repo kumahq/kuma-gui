@@ -19,18 +19,25 @@
 
       <template v-else>
         <DataSource
-          v-slot="{ data: zoneOverviewData, error, refresh }: ZoneOverviewCollectionSource"
-          :src="`/zones/zone-cps?size=${props.size}&page=${props.page}`"
+          v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
+          :src="`/zone-cps?size=${props.size}&page=${props.page}`"
         >
           <KCard>
             <template #body>
               <AppCollection
                 data-testid="zone-cp-table"
-                :headers="HEADERS"
+                :headers="[
+                  { label: 'Name', key: 'name' },
+                  { label: 'Status', key: 'status' },
+                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                  { label: 'Storage type', key: 'storeType' },
+                  { label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
                 :page-number="props.page"
                 :page-size="props.size"
-                :total="zoneOverviewData?.total"
-                :items="zoneOverviewData ? transformToTableData(zoneOverviewData.items) : []"
+                :total="data?.total"
+                :items="data ? transformToTableData(data.items) : []"
                 :error="error"
                 @change="route.update"
               >
@@ -167,7 +174,7 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useStore } from '@/store/store'
-import { StatusKeyword, TableHeader, ZoneOverview } from '@/types/index.d'
+import { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
@@ -185,15 +192,6 @@ const env = useEnv()
 const { t } = useI18n()
 const kumaApi = useKumaApi()
 const store = useStore()
-
-const HEADERS: TableHeader[] = [
-  { label: 'Name', key: 'name' },
-  { label: 'Status', key: 'status' },
-  { label: 'Zone CP Version', key: 'zoneCpVersion' },
-  { label: 'Storage type', key: 'storeType' },
-  { label: 'Warnings', key: 'warnings', hideLabel: true },
-  { label: 'Actions', key: 'actions', hideLabel: true },
-]
 
 const props = defineProps({
   page: {

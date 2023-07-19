@@ -19,18 +19,21 @@
 
       <template v-else>
         <DataSource
-          v-slot="{ data: zoneIngressOverviewData, error }: ZoneIngressOverviewCollectionSource"
-          :src="`/zones/zone-ingresses?size=${props.size}&page=${props.page}`"
+          v-slot="{ data, error }: ZoneIngressOverviewCollectionSource"
+          :src="`/zone-ingresses?size=${props.size}&page=${props.page}`"
         >
           <KCard>
             <template #body>
               <AppCollection
                 data-testid="zone-ingress-table"
-                :headers="HEADERS"
+                :headers="[
+                  { label: 'Name', key: 'name' },
+                  { label: 'Status', key: 'status' },
+                ]"
                 :page-number="props.page"
                 :page-size="props.size"
-                :total="zoneIngressOverviewData?.total"
-                :items="zoneIngressOverviewData ? transformToTableData(zoneIngressOverviewData.items) : []"
+                :total="data?.total"
+                :items="data ? transformToTableData(data.items) : []"
                 :error="error"
                 @change="route.update"
               >
@@ -75,7 +78,7 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useStore } from '@/store/store'
-import { StatusKeyword, TableHeader, ZoneIngressOverview } from '@/types/index.d'
+import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
@@ -88,11 +91,6 @@ type ZoneIngressOverviewTableRow = {
 
 const { t } = useI18n()
 const store = useStore()
-
-const HEADERS: TableHeader[] = [
-  { label: 'Name', key: 'name' },
-  { label: 'Status', key: 'status' },
-]
 
 const props = defineProps({
   page: {

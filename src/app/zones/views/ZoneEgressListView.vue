@@ -16,18 +16,21 @@
       ]"
     >
       <DataSource
-        v-slot="{ data: zoneEgressOverviewData, error }: ZoneEgressOverviewCollectionSource"
-        :src="`/zones/zone-egresses?size=${props.size}&page=${props.page}`"
+        v-slot="{ data, error }: ZoneEgressOverviewCollectionSource"
+        :src="`/zone-egresses?size=${props.size}&page=${props.page}`"
       >
         <KCard>
           <template #body>
             <AppCollection
               data-testid="zone-egress-table"
-              :headers="HEADERS"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Status', key: 'status' },
+              ]"
               :page-number="props.page"
               :page-size="props.size"
-              :total="zoneEgressOverviewData?.total"
-              :items="zoneEgressOverviewData ? transformToTableData(zoneEgressOverviewData.items) : []"
+              :total="data?.total"
+              :items="data ? transformToTableData(data.items) : []"
               :error="error"
               @change="route.update"
             >
@@ -69,7 +72,7 @@ import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { StatusKeyword, TableHeader, ZoneEgressOverview } from '@/types/index.d'
+import { StatusKeyword, ZoneEgressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
@@ -81,11 +84,6 @@ type ZoneEgressOverviewTableRow = {
 }
 
 const { t } = useI18n()
-
-const HEADERS: TableHeader[] = [
-  { label: 'Name', key: 'name' },
-  { label: 'Status', key: 'status' },
-]
 
 const props = defineProps({
   page: {
