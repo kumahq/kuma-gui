@@ -40,7 +40,7 @@ Feature: Zones: List view content
       """
 
     When I visit the "/zones/zone-cps" URL
-    Then the page title contains "Zone CPs"
+    Then the page title contains "Control Planes"
 
     Then the "$zone-cp-table-row:nth-child(1) .status-column" element contains "online"
     Then the "$zone-cp-table-row:nth-child(1) .name-column" element contains "zone-cp-1"
@@ -90,7 +90,7 @@ Feature: Zones: List view content
       """
 
     When I visit the "/zones/zone-ingresses" URL
-    Then the page title contains "Zone Ingresses"
+    Then the page title contains "Ingresses"
 
     Then the "$zone-ingress-table-row:nth-child(1) .status-column" element contains "online"
     Then the "$zone-ingress-table-row:nth-child(1) .name-column" element contains "zone-ingress-1"
@@ -136,7 +136,7 @@ Feature: Zones: List view content
       """
 
     When I visit the "/zones/zone-egresses" URL
-    Then the page title contains "Zone Egresses"
+    Then the page title contains "Egresses"
 
     Then the "$zone-egress-table-row:nth-child(1) .status-column" element contains "online"
     Then the "$zone-egress-table-row:nth-child(1) .name-column" element contains "zone-egress-1"

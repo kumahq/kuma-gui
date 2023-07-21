@@ -1,7 +1,7 @@
 zone-cps:
   routes:
     item:
-      title: "{name} Zone CP"
+      title: "{name} Control Plane"
       breadcrumbs: Control Planes
       config:
         no-subscriptions: This zone has no subscriptions

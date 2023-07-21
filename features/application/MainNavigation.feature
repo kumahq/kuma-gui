@@ -36,7 +36,7 @@ Feature: MainNavigation
     Then the page title contains "<Title>"
 
     Examples:
-      | Selector                                | Title       |
-      | $main-nav .nav-item-home a              | Overview    |
-      | $main-nav .nav-item-zone-cp-list-view a | Zone CPs    |
-      | [data-testid='nav-item-diagnostics']    | Diagnostics |
+      | Selector                                | Title          |
+      | $main-nav .nav-item-home a              | Overview       |
+      | $main-nav .nav-item-zone-cp-list-view a | Control Planes |
+      | [data-testid='nav-item-diagnostics']    | Diagnostics    |

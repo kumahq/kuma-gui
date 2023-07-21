@@ -36,10 +36,10 @@ Feature: Zones: Page navigation
     Then the "<TableSelector>" element exists
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(1) > a" element
-    Then the page title contains "Zone CPs"
+    Then the page title contains "Control Planes"
 
     Examples:
       | RouteName              | TableSelector                      | DetailViewTitle | ListViewTitle  |
-      | zone-cp-list-view      | [data-testid='zone-cp-table']      | Zone CP         | Zone CPs       |
-      | zone-ingress-list-view | [data-testid='zone-ingress-table'] | Zone Ingress    | Zone Ingresses |
-      | zone-egress-list-view  | [data-testid='zone-egress-table']  | Zone Egress     | Zone Egresses  |
+      | zone-cp-list-view      | [data-testid='zone-cp-table']      | Control Plane   | Control Planes |
+      | zone-ingress-list-view | [data-testid='zone-ingress-table'] | Ingress         | Ingresses      |
+      | zone-egress-list-view  | [data-testid='zone-egress-table']  | Egress          | Egresses       |
