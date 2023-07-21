@@ -32,6 +32,7 @@
           <KCard>
             <template #body>
               <AppCollection
+                class="zone-cp-table"
                 data-testid="zone-cp-table"
                 :headers="[
                   { label: 'Name', key: 'name' },
@@ -279,13 +280,16 @@ function setDeleteZoneName(name: string) {
 </style>
 
 <style lang="scss">
-.warnings-column,
-.actions-column {
-  width: 5%;
-  min-width: 80px;
-}
+.zone-cp-table {
+  .warnings-column,
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
 
-.actions-column {
-  text-align: end;
+  .actions-column {
+    text-align: end;
+  }
 }
 </style>
