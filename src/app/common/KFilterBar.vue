@@ -129,6 +129,7 @@ import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 import { clamp } from '@/utilities/clamp'
 import { Command, ShortcutManager } from '@/utilities/ShortcutManager'
 import { tokenizeFieldFilterQuery } from '@/utilities/tokenizeFieldFilterQuery'
+import uniqueId from '@/utilities/uniqueId'
 
 export type Fields = [string, string][]
 
@@ -150,7 +151,7 @@ const props = defineProps({
   id: {
     type: String,
     required: false,
-    default: 'data-plane-proxy-filter',
+    default: () => uniqueId('k-filter-bar'),
   },
 
   /**
