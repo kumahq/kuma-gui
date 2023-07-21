@@ -99,7 +99,31 @@ Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: st
     .should('have.length', count)
 })
 
-Then(/^the URL "(.*)" was requested with(?: only)?$/, (url: string, exact: string, yaml: string) => {
+Then('the URL {string} was requested with', (url: string, yaml: string) => {
+  cy.wait(`@${urls.get(url)}`).then((xhr) => {
+    const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
+    Object.entries(data).forEach(
+      ([key, value]) => {
+        switch (key) {
+          case 'method':
+            expect(xhr.request[key]).to.equal(String(value))
+            break
+          case 'body':
+            Object.entries(data[key]).forEach(([prop, value]) => {
+              expect(xhr.request[key][prop]).to.equal(String(value))
+            })
+            break
+          case 'searchParams':
+            Object.entries(data[key]).forEach(([key, value]) => {
+              expect(xhr.request.query[key]).to.equal(String(value))
+            })
+            break
+        }
+      },
+    )
+  })
+})
+Then(/^the URL "(.*)" was requested with only$/, (url: string, exact: string, yaml: string) => {
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
     const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
     Object.entries(data).forEach(
