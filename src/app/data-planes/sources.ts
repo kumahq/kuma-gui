@@ -47,13 +47,18 @@ export const sources = (api: KumaApi) => {
       // here 'all' means both proxies/sidecars and gateways this currently fits
       // our usecases but we should probably include `gateway | sidecar` or
       // similar
+      const search = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
+      if (typeof search.tag === 'undefined') {
+        search.tag = []
+      }
+      search.tag = search.tag.filter((item) => !item.startsWith('kuma.io/service:'))
+      search.tag.push(`kuma.io/service:${params.service}`)
 
       return api.getAllDataplaneOverviewsFromMesh({
         mesh: params.mesh,
       }, {
-        ...Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]'))),
         offset,
-        tag: `kuma.io/service:${params.service}`,
+        ...search,
         ...(
           params.type !== 'all' && {
             gateway: params.type,

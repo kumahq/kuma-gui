@@ -99,7 +99,8 @@ Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: st
     .should('have.length', count)
 })
 
-Then('the URL {string} was requested with', (url: string, yaml: string) => {
+Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
+  const bool = not.trim().length === 0
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
     const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
     Object.entries(data).forEach(
@@ -115,7 +116,17 @@ Then('the URL {string} was requested with', (url: string, yaml: string) => {
             break
           case 'searchParams':
             Object.entries(data[key]).forEach(([key, value]) => {
-              expect(xhr.request.query[key]).to.equal(String(value))
+              // convert everything to arrays
+              const params = Array.isArray(xhr.request.query[key])
+                ? (xhr.request.query[key] as unknown as (string | number)[])
+                : [(xhr.request.query[key] as unknown as (string | number))]
+              const values = Array.isArray(value)
+                ? (value as unknown as (string | number)[])
+                : [(value as unknown as (string | number))]
+              //
+              values.forEach((item) => {
+                expect(params.includes(String(item))).to.equal(bool)
+              })
             })
             break
         }
