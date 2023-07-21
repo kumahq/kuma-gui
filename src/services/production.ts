@@ -13,7 +13,7 @@ import type { SplitRouteRecordRaw } from '@/app/meshes'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
 import { routes as onboardingRoutes } from '@/app/onboarding'
 import { routes as policyRoutes, services as policies } from '@/app/policies'
-import { routes as serviceRoutes } from '@/app/services'
+import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import { routes as zoneRoutes, actions as zoneActionRoutes } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
 import { createRouter } from '@/router/router'
@@ -240,6 +240,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     ],
   }],
   ...meshes($),
+  ...servicesModule($),
   ...policies($),
 ]
 

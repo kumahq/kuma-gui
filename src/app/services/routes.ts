@@ -1,3 +1,4 @@
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -37,8 +38,9 @@ export const routes = () => {
               path: '',
               name: `${prefix}-list-view`,
               props: (route) => ({
-                selectedServiceName: route.query.service,
-                offset: getLastNumberParameter(route.query.offset),
+                mesh: route.params.mesh,
+                page: getLastNumberParameter(route.query.page, 1),
+                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
               }),
               component: () => import('@/app/services/views/ServiceListView.vue'),
               // children: [
