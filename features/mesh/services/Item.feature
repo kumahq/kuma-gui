@@ -15,7 +15,6 @@ Feature: mesh / services / item
       """
     When I visit the "/mesh/default/service/firewall-1" URL
     And the "$items" element doesn't exist
-  @only
   Scenario: External services don't display the dataplane list
     And the URL "/meshes/default/service-insights/firewall-1" responds with
       """
