@@ -189,7 +189,7 @@ const props = withDefaults(defineProps<{
   pageSize: number,
   items: DataPlaneOverview[] | undefined,
   error: Error | undefined,
-  gateways: boolean | undefined
+  gateways?: boolean
 }>(), {
   total: 0,
   gateways: false,
