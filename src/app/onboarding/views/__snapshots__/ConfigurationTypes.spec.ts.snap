@@ -224,7 +224,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                           style="width: 200px; max-width: auto; max-height: auto; display: none;"
                         >
                           <div
-                            class="k-popover-header d-flex"
+                            class="k-popover-header"
                           >
                             <div
                               class="k-popover-title"
@@ -288,7 +288,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                           style="width: 200px; max-width: auto; max-height: auto; display: none;"
                         >
                           <div
-                            class="k-popover-header d-flex"
+                            class="k-popover-header"
                           >
                             <div
                               class="k-popover-title"
@@ -352,7 +352,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                           style="width: 200px; max-width: auto; max-height: auto; display: none;"
                         >
                           <div
-                            class="k-popover-header d-flex"
+                            class="k-popover-header"
                           >
                             <div
                               class="k-popover-title"

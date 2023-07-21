@@ -1933,10 +1933,10 @@
     flat "^5.0.2"
     intl-messageformat "^10.5.0"
 
-"@kong/kongponents@^8.93.0":
-  version "8.93.0"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.93.0.tgz#4d12a3f653ef15117627076baa4e7542f759debd"
-  integrity sha512-cBluH6hni8LNZgB6oHGXVJ5xWUGIT+RMtxqPeU4V9PqmGVjsW1oxTOdkhnxoJOjMcywRm8xuH/9kowcSh67hUw==
+"@kong/kongponents@^8.97.0":
+  version "8.97.0"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.97.0.tgz#6a891c21918786928f6b10dff3fa96e7f8d37116"
+  integrity sha512-9ghogeYxAjmvgfjiOot77I9d+3Qt7cCXkpXzZPkiKpiVgHxX9N0U9gteF424Ct8q+cDqNOPQ0hWJGiLl2o+CqA==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
