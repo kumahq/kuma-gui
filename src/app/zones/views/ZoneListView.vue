@@ -36,9 +36,9 @@
                 data-testid="zone-cp-table"
                 :headers="[
                   { label: 'Name', key: 'name' },
-                  { label: 'Status', key: 'status' },
                   { label: 'Zone CP Version', key: 'zoneCpVersion' },
                   { label: 'Storage type', key: 'storeType' },
+                  { label: 'Status', key: 'status' },
                   { label: 'Warnings', key: 'warnings', hideLabel: true },
                   { label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
@@ -288,8 +288,9 @@ function setDeleteZoneName(name: string) {
     text-align: end;
   }
 
-  .actions-column {
-    text-align: end;
+  .status-column {
+    width: 10%;
+    min-width: 200px;
   }
 }
 </style>
