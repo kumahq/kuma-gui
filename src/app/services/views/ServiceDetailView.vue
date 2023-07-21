@@ -42,7 +42,7 @@
               :src="`/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
             >
               <template
-                v-for="gateways in [typeof data?.items[0].dataplane.networking.gateway === 'undefined']"
+                v-for="gateways in [typeof data?.items?.[0].dataplane.networking.gateway === 'undefined']"
                 :key="gateways"
               >
                 <DataPlaneList

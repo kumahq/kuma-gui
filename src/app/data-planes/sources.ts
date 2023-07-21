@@ -47,6 +47,7 @@ export const sources = (api: KumaApi) => {
       // here 'all' means both proxies/sidecars and gateways this currently fits
       // our usecases but we should probably include `gateway | sidecar` or
       // similar
+
       return api.getAllDataplaneOverviewsFromMesh({
         mesh: params.mesh,
       }, {
@@ -55,6 +56,9 @@ export const sources = (api: KumaApi) => {
         ...(
           params.type !== 'all' && {
             gateway: params.type,
+          },
+          params.service !== '' && {
+            tags: `kuma.io/service:${params.service}`,
           }
         ),
         size: params.size,
