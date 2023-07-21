@@ -177,7 +177,7 @@
                                       policy: item.name,
                                     },
                                   },
-                                  label: 'View',
+                                  label: t('common.collection.actions.view'),
                                 }"
                               />
                             </template>
