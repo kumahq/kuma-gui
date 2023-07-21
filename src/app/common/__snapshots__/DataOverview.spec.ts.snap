@@ -384,14 +384,24 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   class="status-column"
                 >
                   
-                  <span
-                    class="status status--offline"
+                  <div
+                    class="k-badge k-badge-danger k-badge-rounded status"
                     data-testid="status-badge"
+                    tabindex="0"
                   >
-                    <span>
-                      offline
-                    </span>
-                  </span>
+                    <div
+                      class="k-badge-text"
+                    >
+                      <div
+                        class="k-badge-text"
+                      >
+                        
+                        offline
+                        
+                      </div>
+                    </div>
+                    <!---->
+                  </div>
                   
                 </td>
                 <td

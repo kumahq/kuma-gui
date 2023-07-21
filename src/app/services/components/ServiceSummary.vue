@@ -176,6 +176,7 @@ async function fetchService(params?: SingleResourceParameters) {
 
 .entity-title {
   display: flex;
+  align-items: center;
   gap: var(--spacing-md);
 }
 </style>

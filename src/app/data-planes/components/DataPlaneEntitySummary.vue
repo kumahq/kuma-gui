@@ -277,6 +277,7 @@ h3, h4, h5 {
 
 .entity-title {
   display: flex;
+  align-items: center;
   gap: var(--spacing-md);
 }
 
