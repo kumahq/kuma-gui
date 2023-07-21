@@ -3,8 +3,6 @@
     v-slot="{ route }"
     name="zone-egress-list-view"
   >
-    <RouteTitle :title="t('zone-egresses.routes.items.title')" />
-
     <AppView
       :breadcrumbs="[
         {
@@ -15,6 +13,15 @@
         },
       ]"
     >
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('zone-egresses.routes.items.title')"
+            :render="true"
+          />
+        </h2>
+      </template>
+
       <DataSource
         v-slot="{ data, error }: ZoneEgressOverviewCollectionSource"
         :src="`/zone-egresses?size=${props.size}&page=${props.page}`"

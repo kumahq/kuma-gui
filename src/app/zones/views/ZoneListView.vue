@@ -3,8 +3,6 @@
     v-slot="{ route }"
     name="zone-cp-list-view"
   >
-    <RouteTitle :title="t('zone-cps.routes.items.title')" />
-
     <AppView
       :breadcrumbs="[
         {
@@ -15,6 +13,15 @@
         },
       ]"
     >
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('zone-cps.routes.items.title')"
+            :render="true"
+          />
+        </h2>
+      </template>
+
       <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
       <template v-else>
