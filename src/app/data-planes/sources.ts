@@ -53,12 +53,10 @@ export const sources = (api: KumaApi) => {
       }, {
         ...Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]'))),
         offset,
+        tag: `kuma.io/service:${params.service}`,
         ...(
           params.type !== 'all' && {
             gateway: params.type,
-          },
-          params.service !== '' && {
-            tags: `kuma.io/service:${params.service}`,
           }
         ),
         size: params.size,

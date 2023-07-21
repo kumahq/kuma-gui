@@ -29,7 +29,7 @@ Feature: mesh / services / item
     And the URL "/meshes/default/dataplanes+insights" was requested with
       """
       searchParams:
-        tags: "kuma.io/service:firewall-1"
+        tag: "kuma.io/service:firewall-1"
         offset: 0
         size: 50
       """
