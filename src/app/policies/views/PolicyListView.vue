@@ -85,51 +85,47 @@
                         @change="route.update"
                       >
                         <template #toolbar>
-                          <div
-                            class="toolbar"
-                          >
-                            <!--
+                          <!--
                               Load in all the totals for the policies so we can show them in the dropdown menu
                             -->
-                            <DataSource
-                              v-slot="{data: insights}: MeshInsightSource"
-                              :src="`/${route.params.mesh}/insights`"
+                          <DataSource
+                            v-slot="{data: insights}: MeshInsightSource"
+                            :src="`/${route.params.mesh}/insights`"
+                          >
+                            <KSelect
+                              label="Policies"
+                              :items="policies.policies.map(item => ({
+                                label: item.name,
+                                value: item.path,
+                                selected: item.path === route.params.policyPath,
+                              }))"
+                              :label-attributes="{ class: 'visually-hidden' }"
+                              appearance="select"
+                              :enable-filtering="true"
+                              @selected="(item: SelectItem) => route.replace({
+                                name: 'policies-list-view',
+                                params: {
+                                  ...route.params,
+                                  policyPath: item.value,
+                                },
+                              })"
                             >
-                              <KSelect
-                                label="Policies"
-                                :items="policies.policies.map(item => ({
-                                  label: item.name,
-                                  value: item.path,
-                                  selected: item.path === route.params.policyPath,
-                                }))"
-                                :label-attributes="{ class: 'visually-hidden' }"
-                                appearance="select"
-                                :enable-filtering="true"
-                                @selected="(item: SelectItem) => route.replace({
-                                  name: 'policies-list-view',
-                                  params: {
-                                    ...route.params,
-                                    policyPath: item.value,
-                                  },
-                                })"
-                              >
-                                <template #item-template="{ item }">
-                                  <span
-                                    :class="{
-                                      'policy-type-empty': !insights?.policies[item.label]?.total
-                                    }"
-                                  >
-                                    {{ item.label }} ({{ insights?.policies[item.label]?.total || '0' }})
-                                  </span>
-                                </template>
-                              </KSelect>
-                            </DataSource>
+                              <template #item-template="{ item }">
+                                <span
+                                  :class="{
+                                    'policy-type-empty': !insights?.policies[item.label]?.total
+                                  }"
+                                >
+                                  {{ item.label }} ({{ insights?.policies[item.label]?.total || '0' }})
+                                </span>
+                              </template>
+                            </KSelect>
+                          </DataSource>
 
-                            <DocumentationLink
-                              :href="t('policies.href.docs', {'name': selected.name})"
-                              data-testid="policy-documentation-link"
-                            />
-                          </div>
+                          <DocumentationLink
+                            :href="t('policies.href.docs', {'name': selected.name})"
+                            data-testid="policy-documentation-link"
+                          />
                         </template>
                         <template #name="{ row: item }">
                           <RouterLink
@@ -235,15 +231,6 @@ const props = defineProps<{
   color: var(--grey-400);
 }
 
-.toolbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-  padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
-
-}
 </style>
 <style lang="scss">
 .name-column {
