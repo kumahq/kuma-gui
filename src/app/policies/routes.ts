@@ -1,3 +1,4 @@
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { State } from '@/store/storeConfig'
 import type { RouteRecordRaw } from 'vue-router'
@@ -76,8 +77,8 @@ export const routes = (store: Store<State>) => {
                   component: () => import('@/app/policies/views/PolicyListView.vue'),
                   props: (route) => ({
                     policyPath: route.params.policyPath,
-                    selectedPolicyName: route.query.policy,
-                    offset: getLastNumberParameter(route.query.offset),
+                    page: getLastNumberParameter(route.query.page, 1),
+                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
                   }),
                   // children: [
                   //   ...(item(prefix)[0]).children ?? [],

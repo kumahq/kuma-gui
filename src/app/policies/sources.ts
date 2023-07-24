@@ -14,7 +14,6 @@ type MeshParams = {
 type PaginationParams = {
   page: number
   size: number
-  offset: number
 }
 
 type PolicyTypeParams = {
@@ -36,7 +35,14 @@ export const sources = (api: KumaApi) => {
     },
     '/:mesh/policy-type/:policyType': async (params: MeshParams & PolicyTypeParams & PaginationParams, source: {close: () => void}) => {
       source.close()
-      return api.getAllPolicyEntitiesFromMesh({ mesh: params.mesh, path: params.policyType }, { offset: params.offset })
+      const offset = params.size * (params.page - 1)
+      return api.getAllPolicyEntitiesFromMesh({
+        mesh: params.mesh,
+        path: params.policyType,
+      }, {
+        offset,
+        size: params.size,
+      })
     },
     // '/:mesh/policy/:policy': async (params: MeshParams & PolicyParams) => {
     // },
