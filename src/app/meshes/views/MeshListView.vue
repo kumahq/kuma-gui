@@ -29,8 +29,8 @@
           <KCard>
             <template #body>
               <AppCollection
-                class="mesh-table"
-                data-testid="mesh-table"
+                class="mesh-collections"
+                data-testid="mesh-collections"
                 :empty-state-title="t('common.emptyState.title')"
                 :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
                 :headers="[
@@ -128,7 +128,7 @@ const props = defineProps<{
 </style>
 
 <style lang="scss">
-.mesh-table {
+.mesh-collection {
   .actions-column {
     width: 5%;
     min-width: 80px;

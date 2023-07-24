@@ -69,8 +69,8 @@
                   <KCard>
                     <template #body>
                       <AppCollection
-                        class="policy-table"
-                        data-testid="policy-table"
+                        class="policy-collection"
+                        data-testid="policy-collection"
                         :empty-state-title="`No Data`"
                         :empty-state-message="`There are no ${selected.name} policies present.`"
                         :headers="[
@@ -237,7 +237,7 @@ const props = defineProps<{
 </style>
 
 <style lang="scss">
-.policy-table {
+.policy-collection {
   .actions-column {
     width: 5%;
     min-width: 80px;

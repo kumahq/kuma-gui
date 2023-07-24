@@ -2,7 +2,7 @@ Feature: mesh / policies / index
   Background:
     Given the CSS selectors
       | Alias               | Selector                                  |
-      | items               | [data-testid='policy-table']              |
+      | items               | [data-testid='policy-collection']         |
       | items-header        | $items th                                 |
       | item                | $items tbody tr                           |
       | button-docs         | [data-testid='policy-documentation-link'] |

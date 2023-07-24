@@ -2,7 +2,7 @@ Feature: mesh / index
   Background:
     Given the CSS selectors
       | Alias          | Selector                                     |
-      | items          | [data-testid='mesh-table']                   |
+      | items          | [data-testid='mesh-collection']              |
       | item           | $items tbody tr                              |
       | breadcrumb     | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |

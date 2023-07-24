@@ -19,8 +19,8 @@
         <KCard>
           <template #body>
             <AppCollection
-              class="service-table"
-              data-testid="service-table"
+              class="service-collection"
+              data-testid="service-collection"
               :empty-state-title="t('common.emptyState.title')"
               :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
               :headers="[
@@ -152,7 +152,7 @@ const props = defineProps<{
 </style>
 
 <style lang="scss">
-.service-table {
+.service-collection {
   .actions-column {
     width: 5%;
     min-width: 80px;

@@ -2,7 +2,7 @@ Feature: mesh / policies / data
   Background:
     Given the CSS selectors
       | Alias         | Selector                            |
-      | items         | [data-testid='policy-table']        |
+      | items         | [data-testid='policy-collection']   |
       | item          | $items tbody tr                     |
       | state-empty   | [data-testid='k-table-empty-state'] |
       | state-error   | [data-testid='k-table-error-state'] |

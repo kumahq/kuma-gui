@@ -2,7 +2,7 @@ Feature: mesh / services / index
   Background:
     Given the CSS selectors
       | Alias               | Selector                            |
-      | items               | [data-testid='service-table']       |
+      | items               | [data-testid='service-collection']  |
       | children            | [data-testid='data-overview-table'] |
       | items-header        | $items th                           |
       | item                | $items tbody tr                     |
