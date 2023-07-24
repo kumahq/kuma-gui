@@ -32,9 +32,10 @@
               class="zone-egress-table"
               data-testid="zone-egress-table"
               :headers="[
-                { label: 'Name', key: 'name' },
-                { label: 'Status', key: 'status' },
-              ]"
+                { key: 'name' },
+                { key: 'status' },
+                { key: 'actions', hideLabel: true },
+              ].map((header) => ({ ...header, label: t(`zone-egresses.list.tableHeaders.${header.key}`) }))"
               :page-number="props.page"
               :page-size="props.size"
               :total="data?.total"
@@ -61,6 +62,40 @@
                   —
                 </template>
               </template>
+
+              <template #actions="{ row }">
+                <KDropdownMenu
+                  class="actions-dropdown"
+                  data-testid="actions-dropdown"
+                  :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                  width="150"
+                >
+                  <template #default>
+                    <KButton
+                      class="non-visual-button"
+                      appearance="secondary"
+                      size="small"
+                    >
+                      <template #icon>
+                        <KIcon
+                          color="var(--black-400)"
+                          icon="more"
+                          size="16"
+                        />
+                      </template>
+                    </KButton>
+                  </template>
+
+                  <template #items>
+                    <KDropdownItem
+                      :item="{
+                        to: row.detailViewRoute,
+                        label: t('common.collection.actions.viewDetails'),
+                      }"
+                    />
+                  </template>
+                </KDropdownMenu>
+              </template>
             </AppCollection>
           </template>
         </KCard>
@@ -70,7 +105,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
 import { RouteLocationNamedRaw } from 'vue-router'
 
 import type { ZoneEgressOverviewCollectionSource } from '../sources'

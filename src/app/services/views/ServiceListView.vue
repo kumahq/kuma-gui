@@ -103,7 +103,7 @@
                             service: item.name,
                           },
                         },
-                        label: t('common.collection.actions.view'),
+                        label: t('common.collection.actions.viewDetails'),
                       }"
                     />
                   </template>

@@ -35,13 +35,13 @@
                 class="zone-cp-table"
                 data-testid="zone-cp-table"
                 :headers="[
-                  { label: 'Name', key: 'name' },
-                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
-                  { label: 'Storage type', key: 'storeType' },
-                  { label: 'Status', key: 'status' },
-                  { label: 'Warnings', key: 'warnings', hideLabel: true },
-                  { label: 'Actions', key: 'actions', hideLabel: true },
-                ]"
+                  { key: 'name' },
+                  { key: 'zoneCpVersion' },
+                  { key: 'storeType' },
+                  { key: 'status' },
+                  { key: 'warnings', hideLabel: true },
+                  { key: 'actions', hideLabel: true },
+                ].map((header) => ({ ...header, label: t(`zone-cps.list.tableHeaders.${header.key}`) }))"
                 :page-number="props.page"
                 :page-size="props.size"
                 :total="data?.total"
@@ -89,7 +89,7 @@
                       <KDropdownItem
                         :item="{
                           to: row.detailViewRoute,
-                          label: t('zones.list.viewDetailsActionText'),
+                          label: t('common.collection.actions.viewDetails'),
                         }"
                       />
 
@@ -100,7 +100,7 @@
                         data-testid="dropdown-delete-item"
                         @click="setDeleteZoneName(row.name)"
                       >
-                        {{ t('zones.list.deleteActionText') }}
+                        {{ t('common.collection.actions.delete') }}
                       </KDropdownItem>
                     </template>
                   </KDropdownMenu>

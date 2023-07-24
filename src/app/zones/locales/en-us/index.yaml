@@ -8,6 +8,15 @@ zone-cps:
     items:
       title: Control Planes
       breadcrumbs: Control Planes
+  list:
+    tableHeaders:
+      name: 'Name'
+      zoneCpVersion: 'Zone CP Version'
+      storeType: 'Storage type'
+      status: 'Status'
+      warnings: 'Warnings'
+      actions: 'Actions'
+
 zone-ingresses:
   routes:
     item:
@@ -16,6 +25,12 @@ zone-ingresses:
     items:
       title: Ingresses
       breadcrumbs: Ingresses
+  list:
+    tableHeaders:
+      name: 'Name'
+      status: 'Status'
+      actions: 'Actions'
+
 zone-egresses:
   routes:
     item:
@@ -24,6 +39,12 @@ zone-egresses:
     items:
       title: Egresses
       breadcrumbs: Egresses
+  list:
+    tableHeaders:
+      name: 'Name'
+      status: 'Status'
+      actions: 'Actions'
+
 zones:
   href:
     docs:
@@ -156,6 +177,3 @@ zones:
       proceedText: 'Yes, delete'
       title: 'Delete Zone'
       errorText: 'An unexpected error occurred'
-  list:
-    viewDetailsActionText: 'View details'
-    deleteActionText: 'Delete'
