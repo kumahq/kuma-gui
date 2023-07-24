@@ -75,7 +75,7 @@ exports[`CompletedView.vue renders snapshot 1`] = `
                 <a
                   class="k-button medium rounded creation"
                   data-testid="onboarding-next-button"
-                  href="/"
+                  href="/gui/"
                   type="button"
                 >
                   

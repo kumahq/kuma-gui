@@ -31,7 +31,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                 
                 <a
                   class=""
-                  href="/mesh/test-mesh/data-plane/backend"
+                  href="/gui/mesh/test-mesh/data-plane/backend"
                 >
                   backend
                 </a>
@@ -161,7 +161,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                         
                         <a
                           class=""
-                          href="/mesh/default/service/backend"
+                          href="/gui/mesh/default/service/backend"
                         >
                           kuma.io/service:
                           <b>

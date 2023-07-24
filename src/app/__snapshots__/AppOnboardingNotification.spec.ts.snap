@@ -30,7 +30,7 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
           <div>
             <a
               class="k-button small rounded primary action-button"
-              href="/onboarding/welcome"
+              href="/gui/onboarding/welcome"
               type="button"
             >
               
