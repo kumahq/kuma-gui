@@ -45,7 +45,7 @@
                 :page-number="props.page"
                 :page-size="props.size"
                 :total="data?.total"
-                :items="data ? transformToTableData(data.items) : []"
+                :items="data ? transformToTableData(data.items) : undefined"
                 :error="error"
                 @change="route.update"
               >
