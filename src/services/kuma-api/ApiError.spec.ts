@@ -6,7 +6,7 @@ describe('ApiError', () => {
   test.each([
     [
       new ApiError({
-        status: 200,
+        response: new Response(undefined, { status: 200 }),
         title: 'Error message',
       }),
       {
@@ -20,7 +20,7 @@ describe('ApiError', () => {
     ],
     [
       new ApiError({
-        status: 400,
+        response: new Response(undefined, { status: 400 }),
         type: 'https://kongapi.info/konnect/invalid-request',
         title: 'Invalid Request',
         detail: 'Some of the fields provided were invalid',

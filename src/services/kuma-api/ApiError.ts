@@ -6,7 +6,7 @@ export interface InvalidParameter {
 }
 
 type ApiErrorConstructorOptions = {
-  status: number
+  response: Response
   type?: string | null
   title: string
   detail?: string | null
@@ -18,7 +18,7 @@ type ApiErrorConstructorOptions = {
  * Standard API error object following https://kong-aip.netlify.app/aip/193/.
  */
 export class ApiError extends Error {
-  status: number
+  response: Response
   type: string | null
   title: string
   detail: string | null
@@ -26,7 +26,7 @@ export class ApiError extends Error {
   invalidParameters: InvalidParameter[]
 
   constructor({
-    status,
+    response,
     type = null,
     title,
     detail = null,
@@ -36,7 +36,7 @@ export class ApiError extends Error {
     super(title)
 
     this.name = 'ApiError'
-    this.status = status
+    this.response = response
     this.type = type
     this.title = title
     this.detail = detail
@@ -46,7 +46,7 @@ export class ApiError extends Error {
 
   toJSON() {
     return {
-      status: this.status,
+      status: this.response.status,
       type: this.type,
       title: this.title,
       detail: this.detail,

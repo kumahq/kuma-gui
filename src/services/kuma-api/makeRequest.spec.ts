@@ -121,7 +121,7 @@ describe('makeRequest', () => {
       },
       new ApiError({
         type: 'great_misfortune',
-        status: 400,
+        response: new Response(undefined, { status: 400 }),
         title: 'An error has occurred while trying to load this data.',
         detail: 'A most terrible error',
       }),
@@ -141,7 +141,7 @@ describe('makeRequest', () => {
       },
       new ApiError({
         type: 'great_misfortune',
-        status: 400,
+        response: new Response(undefined, { status: 400 }),
         title: 'Validation error',
         detail: 'A most terrible error',
       }),
@@ -177,7 +177,7 @@ describe('makeRequest', () => {
       },
       new ApiError({
         type: 'great_misfortune',
-        status: 400,
+        response: new Response(undefined, { status: 400 }),
         title: 'Validation error',
         detail: 'A most terrible error',
         invalidParameters: [
@@ -202,7 +202,7 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        status: 400,
+        response: new Response(undefined, { status: 400 }),
         title: 'An error has occurred while trying to load this data.',
       }),
     ],
@@ -214,7 +214,7 @@ describe('makeRequest', () => {
         return Promise.resolve(response)
       },
       new ApiError({
-        status: 404,
+        response: new Response(undefined, { status: 404 }),
         title: 'Not found!',
       }),
     ],

@@ -60,7 +60,7 @@
       </KBadge>
 
       <KBadge :appearance="props.badgeAppearance">
-        {{ error.status }}
+        {{ error.response.status }}
       </KBadge>
     </div>
   </div>

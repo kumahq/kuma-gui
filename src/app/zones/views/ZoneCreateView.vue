@@ -277,13 +277,13 @@ async function createZone() {
   try {
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
-    if (err instanceof ApiError && HANDLED_STATUS_CODES.includes(err.status)) {
+    if (err instanceof ApiError && HANDLED_STATUS_CODES.includes(err.response.status)) {
       errorState.value = {
         error: err,
-        title: t(`zones.create.statusError.${err.status}.title`, { zoneName: name.value }),
-        description: t(`zones.create.statusError.${err.status}.description`).trim(),
-        icon: err.status === 500 ? 'warning' : 'errorFilled',
-        badgeAppearance: err.status === 500 ? 'warning' : 'danger',
+        title: t(`zones.create.statusError.${err.response.status}.title`, { zoneName: name.value }),
+        description: t(`zones.create.statusError.${err.response.status}.description`).trim(),
+        icon: err.response.status === 500 ? 'warning' : 'errorFilled',
+        badgeAppearance: err.response.status === 500 ? 'warning' : 'danger',
       }
     } else if (err instanceof Error) {
       errorState.value = {

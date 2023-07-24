@@ -54,7 +54,6 @@ function createNetworkError(error: unknown): Error {
 }
 
 function createApiError(response: Response, data: unknown): ApiError {
-  const status = response.status
   let type
   let title
   let detail
@@ -86,7 +85,7 @@ function createApiError(response: Response, data: unknown): ApiError {
   }
 
   // TODO: Sets the error message for 403 errors until we implement better errors in the backend.
-  if (status === 403) {
+  if (response.status === 403) {
     title = 'You currently don’t have access to this data.'
   }
 
@@ -94,5 +93,5 @@ function createApiError(response: Response, data: unknown): ApiError {
     title = 'An error has occurred while trying to load this data.'
   }
 
-  return new ApiError({ status, type, title, detail, instance, invalidParameters })
+  return new ApiError({ response, type, title, detail, instance, invalidParameters })
 }
