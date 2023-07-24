@@ -35,7 +35,7 @@
                 { key: 'name' },
                 { key: 'status' },
                 { key: 'actions', hideLabel: true },
-              ].map((header) => ({ ...header, label: t(`zone-egresses.list.tableHeaders.${header.key}`) }))"
+              ].map((header) => ({ ...header, label: t(`zone-egresses.routes.items.headers.${header.key}`) }))"
               :page-number="props.page"
               :page-size="props.size"
               :total="data?.total"

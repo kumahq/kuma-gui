@@ -8,14 +8,13 @@ zone-cps:
     items:
       title: Control Planes
       breadcrumbs: Control Planes
-  list:
-    tableHeaders:
-      name: 'Name'
-      zoneCpVersion: 'Zone CP Version'
-      storeType: 'Storage type'
-      status: 'Status'
-      warnings: 'Warnings'
-      actions: 'Actions'
+      headers:
+        name: 'Name'
+        zoneCpVersion: 'Zone CP Version'
+        storeType: 'Storage type'
+        status: 'Status'
+        warnings: 'Warnings'
+        actions: 'Actions'
 
 zone-ingresses:
   routes:
@@ -25,11 +24,10 @@ zone-ingresses:
     items:
       title: Ingresses
       breadcrumbs: Ingresses
-  list:
-    tableHeaders:
-      name: 'Name'
-      status: 'Status'
-      actions: 'Actions'
+      headers:
+        name: 'Name'
+        status: 'Status'
+        actions: 'Actions'
 
 zone-egresses:
   routes:
@@ -39,11 +37,10 @@ zone-egresses:
     items:
       title: Egresses
       breadcrumbs: Egresses
-  list:
-    tableHeaders:
-      name: 'Name'
-      status: 'Status'
-      actions: 'Actions'
+      headers:
+        name: 'Name'
+        status: 'Status'
+        actions: 'Actions'
 
 zones:
   href:

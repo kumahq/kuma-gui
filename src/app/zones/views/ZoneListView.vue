@@ -41,7 +41,7 @@
                   { key: 'status' },
                   { key: 'warnings', hideLabel: true },
                   { key: 'actions', hideLabel: true },
-                ].map((header) => ({ ...header, label: t(`zone-cps.list.tableHeaders.${header.key}`) }))"
+                ].map((header) => ({ ...header, label: t(`zone-cps.routes.items.headers.${header.key}`) }))"
                 :page-number="props.page"
                 :page-size="props.size"
                 :total="data?.total"
