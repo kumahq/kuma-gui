@@ -89,7 +89,7 @@
                       <KDropdownItem
                         :item="{
                           to: row.detailViewRoute,
-                          label: t('common.collection.actions.viewDetails'),
+                          label: t('common.collection.actions.view'),
                         }"
                       />
 

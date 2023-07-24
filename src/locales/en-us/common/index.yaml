@@ -15,7 +15,7 @@ common:
     actions:
       delete: 'Delete'
       edit: 'Edit'
-      viewDetails: 'View details'
+      view: 'View details'
   charts:
     dataPlaneProxies:
       title: 'DP Proxies'
