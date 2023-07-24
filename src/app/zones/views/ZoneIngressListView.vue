@@ -126,7 +126,6 @@ import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 type ZoneIngressOverviewTableRow = {
-  id: string
   detailViewRoute: RouteLocationNamedRaw
   name: string
   status: StatusKeyword
@@ -150,7 +149,6 @@ const props = defineProps({
 function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): ZoneIngressOverviewTableRow[] {
   return zoneIngressOverviews.map((entity) => {
     const { name } = entity
-    const id = name
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'zone-ingress-detail-view',
       params: {
@@ -160,7 +158,6 @@ function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): Zone
     const status = getItemStatusFromInsight(entity.zoneIngressInsight ?? {})
 
     return {
-      id,
       detailViewRoute,
       name,
       status,

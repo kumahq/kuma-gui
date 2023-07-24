@@ -187,7 +187,6 @@ import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 type ZoneOverviewTableRow = {
-  id: string
   detailViewRoute: RouteLocationNamedRaw
   name: string
   status: StatusKeyword
@@ -219,7 +218,6 @@ const deleteZoneName = ref('')
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
   return zoneOverviews.map((zoneOverview) => {
     const { name } = zoneOverview
-    const id = name
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'zone-cp-detail-view',
       params: {
@@ -247,7 +245,6 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
     const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
 
     return {
-      id,
       detailViewRoute,
       name,
       status,
