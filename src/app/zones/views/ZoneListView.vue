@@ -191,8 +191,8 @@ type ZoneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
   name: string
   status: StatusKeyword
-  zoneCpVersion: string
-  storeType: string
+  zonecpversion: string
+  storetype: string
   withWarnings: boolean
 }
 
@@ -226,20 +226,20 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
         zone: name,
       },
     }
-    let zoneCpVersion = '-'
-    let storeType = ''
+    let zonecpversion = '-'
+    let storetype = ''
     let cpCompat = true
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
 
     subscriptions.forEach((item: any) => {
       if (item.version && item.version.kumaCp) {
-        zoneCpVersion = item.version.kumaCp.version
+        zonecpversion = item.version.kumaCp.version
         const { kumaCpGlobalCompatible = true } = item.version.kumaCp
 
         cpCompat = kumaCpGlobalCompatible
         if (item.config) {
-          storeType = JSON.parse(item.config).store.type
+          storetype = JSON.parse(item.config).store.type
         }
       }
     })
@@ -251,8 +251,8 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       detailViewRoute,
       name,
       status,
-      zoneCpVersion,
-      storeType,
+      zonecpversion,
+      storetype,
       withWarnings: !cpCompat,
     }
   })
