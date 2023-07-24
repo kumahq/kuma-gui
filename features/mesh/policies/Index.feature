@@ -2,7 +2,7 @@ Feature: mesh / policies / index
   Background:
     Given the CSS selectors
       | Alias               | Selector                                  |
-      | items               | [data-testid='policy-collection']         |
+      | items               | [data-testid='policy-table']              |
       | items-header        | $items th                                 |
       | item                | $items tbody tr                           |
       | button-docs         | [data-testid='policy-documentation-link'] |
@@ -10,9 +10,9 @@ Feature: mesh / policies / index
       | button-tab          | $navigation li:nth-child(5) a             |
       | button-tab-selected | $navigation li:nth-child(5).active        |
     And the environment
-    """
+      """
       KUMA_CIRCUITBREAKER_COUNT: 2
-    """
+      """
     # Makes ure that we only have CircuitBreakers so clicking back on the tabs
     # Always takes us to the CircuitBreaker listing
     And the URL "/mesh-insights/default" responds with
