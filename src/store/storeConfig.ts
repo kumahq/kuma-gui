@@ -2,24 +2,19 @@ import { StoreOptions } from 'vuex'
 
 import { ConfigInterface } from './modules/config/config.types'
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
-import { SidebarInterface } from './modules/sidebar/sidebar.types'
 import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import config from '@/store/modules/config/config'
 import onboarding from '@/store/modules/onboarding/onboarding'
-import sidebar from '@/store/modules/sidebar/sidebar'
-import { Mesh, PolicyType } from '@/types/index.d'
-import { ClientStorage } from '@/utilities/ClientStorage'
+import { Mesh, PolicyType, ResourceStat } from '@/types/index.d'
 
 /**
  * The root state of the application’s Vuex store minus all module state.
  */
 interface BareRootState {
-  menu: null
   globalLoading: boolean
   /**
    * Controls whether related pieces in the UI *may* be shown.
-   *
    */
   defaultVisibility: {
     appError: boolean
@@ -30,19 +25,15 @@ interface BareRootState {
     total: number
     next: string | null
   }
-  selectedMesh: string | null
   totalDataplaneCount: number
-  version: string
-  itemQueryNamespace: string
   policyTypes: PolicyType[]
   policyTypesByPath: Record<string, PolicyType | undefined>
   policyTypesByName: Record<string, PolicyType | undefined>
+  policyTypeTotals: Record<string, ResourceStat>
   globalKdsAddress: string
-  currentMeshPolicies: Record<string, { total: number }>
 }
 
 const initialState: BareRootState = {
-  menu: null,
   globalLoading: true,
   defaultVisibility: {
     appError: true,
@@ -53,15 +44,12 @@ const initialState: BareRootState = {
     items: [],
     next: null,
   },
-  selectedMesh: 'default',
   totalDataplaneCount: 0,
-  version: '',
-  itemQueryNamespace: 'item',
   policyTypes: [],
   policyTypesByPath: {},
   policyTypesByName: {},
+  policyTypeTotals: {},
   globalKdsAddress: 'grpcs://<global-kds-address>:5685',
-  currentMeshPolicies: {},
 }
 
 /**
@@ -71,14 +59,12 @@ const initialState: BareRootState = {
  */
 export interface State extends BareRootState {
   config: ConfigInterface
-  sidebar: SidebarInterface
   onboarding: OnboardingInterface
 }
 
 export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
   return {
     modules: {
-      sidebar: sidebar(kumaApi),
       config: config(kumaApi),
       onboarding,
     },
@@ -87,8 +73,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
     state: () => initialState as State,
 
     getters: {
-      globalLoading: state => state.globalLoading,
-
       shouldShowAppError: (state) => {
         return state.defaultVisibility.appError && state.config.status !== 'OK'
       },
@@ -97,15 +81,11 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
         return state.defaultVisibility.onboardingNotification && state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
       },
-
-      getMeshList: state => state.meshes,
-      getItemQueryNamespace: state => state.itemQueryNamespace,
     },
 
     mutations: {
       SET_GLOBAL_LOADING: (state, globalLoading: typeof state.globalLoading) => (state.globalLoading = globalLoading),
       SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
-      SET_SELECTED_MESH: (state, mesh: typeof state.selectedMesh) => (state.selectedMesh = mesh),
       SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
       SET_POLICY_TYPES: (state, policyTypes: typeof state.policyTypes) => {
         policyTypes.sort((policyTypeA, policyTypeB) => policyTypeA.name.localeCompare(policyTypeB.name))
@@ -114,6 +94,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
       },
       SET_POLICY_TYPES_BY_PATH: (state, policyTypesByPath: typeof state.policyTypesByPath) => (state.policyTypesByPath = policyTypesByPath),
       SET_POLICY_TYPES_BY_NAME: (state, policyTypesByName: typeof state.policyTypesByName) => (state.policyTypesByName = policyTypesByName),
+      SET_POLICY_TYPE_TOTALS: (state, policyTypeTotals: typeof state.policyTypeTotals) => (state.policyTypeTotals = policyTypeTotals),
       SET_GLOBAL_KDS_ADDRESS: (state, globalKdsAddress: typeof state.globalKdsAddress) => (state.globalKdsAddress = globalKdsAddress),
     },
 
@@ -122,7 +103,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         commit('SET_GLOBAL_LOADING', isLoading)
       },
 
-      async bootstrap({ dispatch, getters, state }) {
+      async bootstrap({ dispatch, getters }) {
         // check the Kuma status before we do anything else
         await dispatch('config/getStatus')
 
@@ -133,31 +114,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             dispatch('fetchDataplaneTotalCount'),
             dispatch('config/bootstrapConfig'),
           ])
-
-          // Validates if stored mesh exists and fetches the relevant sidebar data.
-          if (state.meshes.items.length > 0) {
-            const newStoredMesh = ClientStorage.get('selectedMesh')
-            let mesh: Mesh | undefined
-
-            // If a selected mesh is stored, check if it actually exists and use it only if it does.
-            if (newStoredMesh !== null) {
-              const existingMesh = state.meshes.items.find((mesh) => mesh.name === newStoredMesh)
-
-              if (existingMesh !== undefined) {
-                mesh = existingMesh
-              }
-            }
-
-            if (mesh === undefined) {
-              // If the stored mesh doesn’t exist, use the first mesh instead.
-              mesh = state.meshes.items[0]
-            }
-
-            await dispatch('updateSelectedMesh', mesh.name)
-            await dispatch('sidebar/getInsights')
-          } else {
-            await dispatch('updateSelectedMesh', null)
-          }
         }
       },
 
@@ -187,16 +143,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         }
       },
 
-      updateSelectedMesh({ commit }, mesh: string | null) {
-        if (mesh !== null) {
-          ClientStorage.set('selectedMesh', mesh)
-        } else {
-          ClientStorage.remove('selectedMesh')
-        }
-
-        commit('SET_SELECTED_MESH', mesh)
-      },
-
       async fetchDataplaneTotalCount({ commit }) {
         try {
           const response = await kumaApi.getAllDataplanes({ size: 1 })
@@ -219,6 +165,19 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
       updateGlobalKdsAddress({ commit }, globalKdsAddress: string) {
         commit('SET_GLOBAL_KDS_ADDRESS', globalKdsAddress)
+      },
+
+      /**
+       * Used by the policy routes to determine the redirect target based on which policy type a user has policies for.
+       */
+      async fetchPolicyTypeTotals({ commit }, name: string) {
+        try {
+          const meshInsight = await kumaApi.getMeshInsights({ name })
+
+          commit('SET_POLICY_TYPE_TOTALS', meshInsight.policies)
+        } catch {
+          commit('SET_POLICY_TYPE_TOTALS', {})
+        }
       },
     },
   }
