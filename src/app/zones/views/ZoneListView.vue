@@ -36,8 +36,8 @@
                 data-testid="zone-cp-collection"
                 :headers="[
                   { key: 'name' },
-                  { key: 'zoneCpVersion' },
-                  { key: 'storeType' },
+                  { key: 'zonecpversion' },
+                  { key: 'storetype' },
                   { key: 'status' },
                   { key: 'warnings', hideLabel: true },
                   { key: 'actions', hideLabel: true },

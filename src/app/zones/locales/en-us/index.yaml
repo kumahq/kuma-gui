@@ -10,8 +10,8 @@ zone-cps:
       breadcrumbs: Control Planes
       headers:
         name: 'Name'
-        zoneCpVersion: 'Zone CP Version'
-        storeType: 'Storage type'
+        zonecpversion: 'Zone CP Version'
+        storetype: 'Storage type'
         status: 'Status'
         warnings: 'Warnings'
         actions: 'Actions'
