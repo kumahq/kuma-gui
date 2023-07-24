@@ -2,7 +2,7 @@ Feature: mesh / index
   Background:
     Given the CSS selectors
       | Alias          | Selector                                     |
-      | items          | [data-testid='mesh-collection']              |
+      | items          | [data-testid='mesh-table']                   |
       | item           | $items tbody tr                              |
       | breadcrumb     | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |
@@ -38,7 +38,6 @@ Feature: mesh / index
     Then the "$item" element exists 2 times
 
     Examples:
-      | Mesh         | Selector |
+      | Mesh         | Selector                              |
       | another-mesh | $item:nth-child(2) td:first-of-type a |
       | default      | $item:nth-child(1) td:first-of-type a |
-

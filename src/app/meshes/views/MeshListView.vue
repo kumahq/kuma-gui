@@ -29,7 +29,8 @@
           <KCard>
             <template #body>
               <AppCollection
-                data-testid="mesh-collection"
+                class="mesh-table"
+                data-testid="mesh-table"
                 :empty-state-title="t('common.emptyState.title')"
                 :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
                 :headers="[
@@ -118,19 +119,25 @@ const props = defineProps<{
   page: number
   size: number
 }>()
-
 </script>
-<style lang="scss">
-.name-column {
-  width: 90%;
-}
 
-.actions-column {
-  width: 10%;
-  text-align: end;
-}
-
+<style lang="scss" scoped>
 .actions-dropdown {
   display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.mesh-table {
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
+
+  .status-column {
+    width: 10%;
+    min-width: 200px;
+  }
 }
 </style>
