@@ -10,13 +10,4 @@ export class Api {
   get baseUrl() {
     return this.client.baseUrl
   }
-
-  /**
-   * Sets the API base URL for all network requests.
-   *
-   * URLs for requests will be constructed in the form `${baseUrl}/${path}`.
-   */
-  setBaseUrl(baseUrl: string): void {
-    this.client.baseUrl = baseUrl
-  }
 }

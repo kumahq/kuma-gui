@@ -8,23 +8,6 @@ describe('RestClient', () => {
     jest.restoreAllMocks()
   })
 
-  test('has expected initial base URL', () => {
-    const restClient = new RestClient(() => 'http://localhost:5681')
-
-    expect(restClient.baseUrl).toBe('http://localhost:5681')
-  })
-
-  test.each([
-    ['http://localhost:1234/api', 'http://localhost:1234/api'],
-    ['http://localhost:1234/test/api', 'http://localhost:1234/test/api'],
-  ])('sets expected base URL for “%s”', (newBaseUrl: string, expectedBaseUrl: string) => {
-    const restClient = new RestClient(() => 'http://localhost:5681')
-
-    restClient.baseUrl = newBaseUrl
-
-    expect(restClient.baseUrl).toBe(expectedBaseUrl)
-  })
-
   test.each([
     [
       undefined,
