@@ -1,10 +1,10 @@
 Feature: Zones: List view content
   Background:
     Given the CSS selectors
-      | Alias                  | Selector                                    |
-      | zone-cp-table-row      | [data-testid='zone-cp-table'] tbody tr      |
-      | zone-ingress-table-row | [data-testid='zone-ingress-table'] tbody tr |
-      | zone-egress-table-row  | [data-testid='zone-egress-table'] tbody tr  |
+      | Alias                  | Selector                                         |
+      | zone-cp-table-row      | [data-testid='zone-cp-collection'] tbody tr      |
+      | zone-ingress-table-row | [data-testid='zone-ingress-collection'] tbody tr |
+      | zone-egress-table-row  | [data-testid='zone-egress-collection'] tbody tr  |
 
   Scenario Outline: Zone CP list view has expected content
     Given the environment

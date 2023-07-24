@@ -29,8 +29,8 @@
         <KCard>
           <template #body>
             <AppCollection
-              class="zone-egress-table"
-              data-testid="zone-egress-table"
+              class="zone-egress-collection"
+              data-testid="zone-egress-collection"
               :headers="[
                 { key: 'name' },
                 { key: 'status' },
@@ -169,7 +169,7 @@ function transformToTableData(zoneEgressOverviews: ZoneEgressOverview[]): ZoneEg
 </style>
 
 <style lang="scss">
-.zone-egress-table {
+.zone-egress-collection {
   .actions-column {
     width: 5%;
     min-width: 80px;

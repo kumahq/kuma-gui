@@ -33,7 +33,7 @@
             <template #body>
               <AppCollection
                 class="zone-cp-table"
-                data-testid="zone-cp-table"
+                data-testid="zone-cp-collection"
                 :headers="[
                   { key: 'name' },
                   { key: 'zoneCpVersion' },
@@ -280,7 +280,7 @@ function setDeleteZoneName(name: string) {
 </style>
 
 <style lang="scss">
-.zone-cp-table {
+.zone-cp-collection {
   .warnings-column,
   .actions-column {
     width: 5%;

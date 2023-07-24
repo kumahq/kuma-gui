@@ -32,8 +32,8 @@
           <KCard>
             <template #body>
               <AppCollection
-                class="zone-ingress-table"
-                data-testid="zone-ingress-table"
+                class="zone-ingress-collection"
+                data-testid="zone-ingress-collection"
                 :headers="[
                   { label: 'Name', key: 'name' },
                   { label: 'Status', key: 'status' },
@@ -176,7 +176,7 @@ function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): Zone
 </style>
 
 <style lang="scss">
-.zone-ingress-table {
+.zone-ingress-collection {
   .actions-column {
     width: 5%;
     min-width: 80px;

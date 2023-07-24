@@ -59,7 +59,7 @@ describe('ZoneListView', () => {
 
     expect(kumaApi.getAllZoneOverviews).toHaveBeenCalledTimes(1)
 
-    expect(wrapper.findAll('[data-testid="zone-cp-table"] tbody tr').length).toBe(3)
+    expect(wrapper.findAll('[data-testid="zone-cp-collection"] tbody tr').length).toBe(3)
 
     // Opens the action dropdown
     const actionsDropdown = wrapper.find('[data-testid="actions-dropdown"] [data-testid="k-dropdown-menu-popover"]')

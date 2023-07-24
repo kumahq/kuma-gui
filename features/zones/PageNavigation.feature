@@ -39,7 +39,7 @@ Feature: Zones: Page navigation
     Then the page title contains "Control Planes"
 
     Examples:
-      | RouteName              | TableSelector                      | DetailViewTitle | ListViewTitle  |
-      | zone-cp-list-view      | [data-testid='zone-cp-table']      | Control Plane   | Control Planes |
-      | zone-ingress-list-view | [data-testid='zone-ingress-table'] | Ingress         | Ingresses      |
-      | zone-egress-list-view  | [data-testid='zone-egress-table']  | Egress          | Egresses       |
+      | RouteName              | TableSelector                           | DetailViewTitle | ListViewTitle  |
+      | zone-cp-list-view      | [data-testid='zone-cp-collection']      | Control Plane   | Control Planes |
+      | zone-ingress-list-view | [data-testid='zone-ingress-collection'] | Ingress         | Ingresses      |
+      | zone-egress-list-view  | [data-testid='zone-egress-collection']  | Egress          | Egresses       |
