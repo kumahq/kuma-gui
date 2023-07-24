@@ -35,13 +35,13 @@
                 class="zone-cp-table"
                 data-testid="zone-cp-collection"
                 :headers="[
-                  { key: 'name' },
-                  { key: 'zonecpversion' },
-                  { key: 'storetype' },
-                  { key: 'status' },
-                  { key: 'warnings', hideLabel: true },
-                  { key: 'actions', hideLabel: true },
-                ].map((header) => ({ ...header, label: t(`zone-cps.routes.items.headers.${header.key}`) }))"
+                  { label: 'Name', key: 'name' },
+                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                  { label: 'Storage type', key: 'storeType' },
+                  { label: 'Status', key: 'status' },
+                  { label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
                 :page-number="props.page"
                 :page-size="props.size"
                 :total="data?.total"
@@ -191,8 +191,8 @@ type ZoneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
   name: string
   status: StatusKeyword
-  zonecpversion: string
-  storetype: string
+  zoneCpVersion: string
+  storeType: string
   withWarnings: boolean
 }
 
@@ -226,20 +226,20 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
         zone: name,
       },
     }
-    let zonecpversion = '-'
-    let storetype = ''
+    let zoneCpVersion = '-'
+    let storeType = ''
     let cpCompat = true
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
 
     subscriptions.forEach((item: any) => {
       if (item.version && item.version.kumaCp) {
-        zonecpversion = item.version.kumaCp.version
+        zoneCpVersion = item.version.kumaCp.version
         const { kumaCpGlobalCompatible = true } = item.version.kumaCp
 
         cpCompat = kumaCpGlobalCompatible
         if (item.config) {
-          storetype = JSON.parse(item.config).store.type
+          storeType = JSON.parse(item.config).store.type
         }
       }
     })
@@ -251,8 +251,8 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       detailViewRoute,
       name,
       status,
-      zonecpversion,
-      storetype,
+      zoneCpVersion,
+      storeType,
       withWarnings: !cpCompat,
     }
   })

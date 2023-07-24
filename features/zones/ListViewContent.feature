@@ -45,12 +45,12 @@ Feature: Zones: List view content
     Then the "$zone-cp-table-row:nth-child(1) .status-column" element contains "online"
     Then the "$zone-cp-table-row:nth-child(1) .name-column" element contains "zone-cp-1"
     Then the "$zone-cp-table-row:nth-child(1) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
-    Then the "$zone-cp-table-row:nth-child(1) .storetype-column" element contains "memory"
+    Then the "$zone-cp-table-row:nth-child(1) .storeType-column" element contains "memory"
 
     Then the "$zone-cp-table-row:nth-child(2) .status-column" element contains "offline"
     Then the "$zone-cp-table-row:nth-child(2) .name-column" element contains "zone-cp-2"
     Then the "$zone-cp-table-row:nth-child(2) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
-    Then the "$zone-cp-table-row:nth-child(2) .storetype-column" element contains "memory"
+    Then the "$zone-cp-table-row:nth-child(2) .storeType-column" element contains "memory"
 
   Scenario Outline: Zone Ingress list view has expected content
     Given the environment
