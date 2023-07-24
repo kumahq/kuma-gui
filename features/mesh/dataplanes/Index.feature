@@ -1,11 +1,11 @@
 Feature: mesh / dataplanes / index
   Background:
     Given the CSS selectors
-      | Alias           | Selector                                     |
-      | table           | [data-testid='data-overview-table']          |
-      | table-header    | $table th                                    |
-      | table-row       | $table tbody tr                              |
-      | dataplane-title | [data-testid='data-overview-table']          |
+      | Alias           | Selector                              |
+      | table           | [data-testid='data-plane-collection'] |
+      | table-header    | $table th                             |
+      | table-row       | $table tbody tr                       |
+      | dataplane-title | [data-testid='data-plane-collection'] |
     And the environment
     """
       KUMA_DATAPLANE_COUNT: 9

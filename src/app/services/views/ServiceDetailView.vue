@@ -46,7 +46,8 @@
                 :key="gateways"
               >
                 <DataPlaneList
-                  data-testid="data-overview-table"
+                  data-testid="data-plane-collection"
+                  class="data-plane-collection"
                   :page-number="props.page"
                   :page-size="props.size"
                   :total="data?.total"
@@ -195,5 +196,21 @@ async function loadData() {
   flex-basis: 350px;
   flex-grow: 1;
   margin-right: auto;
+}
+.actions-dropdown {
+  display: inline-block;
+}
+</style>
+<style lang="scss">
+.data-plane-collection {
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
+  .status-column {
+    width: 10%;
+    min-width: 200px;
+  }
 }
 </style>

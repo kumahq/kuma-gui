@@ -18,7 +18,8 @@
         <KCard>
           <template #body>
             <DataPlaneList
-              data-testid="data-overview-table"
+              data-testid="gateway-collection"
+              class="gateway-collection"
               :page-number="props.page"
               :page-size="props.size"
               :total="data?.total"
@@ -121,5 +122,18 @@ const props = defineProps<{
   flex-basis: 350px;
   flex-grow: 1;
   margin-right: auto;
+}
+</style>
+<style lang="scss">
+.gateway-collection {
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
+  .status-column {
+    width: 10%;
+    min-width: 200px;
+  }
 }
 </style>

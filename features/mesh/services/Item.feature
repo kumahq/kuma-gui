@@ -1,13 +1,13 @@
 Feature: mesh / services / item
   Background:
     Given the CSS selectors
-      | Alias               | Selector                                                                  |
-      | items               | [data-testid='data-overview-table']                                       |
-      | item                | $items tbody tr                                                           |
-      | input-search        | [data-testid='k-filter-bar-filter-input']                                 |
-      | button-search       | [data-testid='k-filter-bar-submit-query-button']                          |
-      | button-clear-search | [data-testid="k-filter-bar-clear-query-button"]                           |
-      | button-actions      | $item:nth-child(1) .actions-column .dropdown-trigger button               |
+      | Alias               | Selector                                                                          |
+      | items               | [data-testid='data-plane-collection']                                             |
+      | item                | $items tbody tr                                                                   |
+      | input-search        | [data-testid='k-filter-bar-filter-input']                                         |
+      | button-search       | [data-testid='k-filter-bar-submit-query-button']                                  |
+      | button-clear-search | [data-testid="k-filter-bar-clear-query-button"]                                   |
+      | button-actions      | $item:nth-child(1) .actions-column .dropdown-trigger button                       |
       | button-view         | $item:nth-child(1) .actions-column [data-testid="k-dropdown-item-View-details"] a |
 
   Rule: With an external service

@@ -1,15 +1,14 @@
 Feature: mesh / gateways / index
   Background:
     Given the CSS selectors
-      | Alias        | Selector                                |
-      | select-type  | [data-testid='k-select-input'] |
-      | select-option  | .k-select-item |
-      | select-builtin  | [data-testid='k-select-item-builtin'] |
-      | select-delegated  | [data-testid='k-select-item-delegated'] |
-      | table        | [data-testid='data-overview-table']     |
-      | table-header | $table th                               |
-      | table-row    | $table tbody tr                         |
-      | item-title   | [data-testid='data-overview-table']     |
+      | Alias            | Selector                                |
+      | select-type      | [data-testid='k-select-input']          |
+      | select-option    | .k-select-item                          |
+      | select-builtin   | [data-testid='k-select-item-builtin']   |
+      | select-delegated | [data-testid='k-select-item-delegated'] |
+      | items            | [data-testid='gateway-collection']      |
+      | item-header      | $items th                               |
+      | item             | $items tbody tr                         |
 
     Given the environment
       """
@@ -33,7 +32,7 @@ Feature: mesh / gateways / index
     When I visit the "/mesh/default/gateways" URL
 
   Scenario: The Gateway listing table has the correct columns
-    Then the "$table-header" elements contain
+    Then the "$item-header" elements contain
       | Value           |
       | Name            |
       | Status          |
@@ -46,12 +45,12 @@ Feature: mesh / gateways / index
   Scenario: The Gateway listing has the expected content and UI elements
     When I click the "$select-type" element
     Then the "$select-option" element exists 3 times
-    Then the "$table-row" element exists 2 times
-    Then the "$table-row:nth-child(1)" element contains
+    Then the "$item" element exists 2 times
+    Then the "$item:nth-child(1)" element contains
       | Value                |
       | fake-alarm-gateway-0 |
       | DELEGATED            |
-    Then the "$table-row:nth-child(2)" element contains
+    Then the "$item:nth-child(2)" element contains
       | Value                      |
       | fake-transmitter-gateway-0 |
       | BUILTIN                    |
@@ -88,8 +87,8 @@ Feature: mesh / gateways / index
         searchParams:
           gateway: builtin
         """
-      Then the "$table-row" element exists 1 time
-      Then the "$table-row:nth-child(1)" element contains
+      Then the "$item" element exists 1 time
+      Then the "$item:nth-child(1)" element contains
         | Value                      |
         | fake-transmitter-gateway-0 |
         | BUILTIN                    |
@@ -117,8 +116,8 @@ Feature: mesh / gateways / index
         searchParams:
           gateway: delegated
         """
-      Then the "$table-row" element exists 1 time
-      Then the "$table-row:nth-child(1)" element contains
+      Then the "$item" element exists 1 time
+      Then the "$item:nth-child(1)" element contains
         | Value                |
         | fake-alarm-gateway-0 |
         | DELEGATED            |

@@ -1,6 +1,5 @@
 <template>
   <AppCollection
-    data-testid="data-plane-collection"
     :empty-state-title="t('common.emptyState.title')"
     :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data plane proxies' })"
     :headers="[
@@ -17,9 +16,9 @@
     :page-number="props.pageNumber"
     :page-size="props.pageSize"
     :total="props.total"
-    :items="props.items ? transformToTableData(props.items) : []"
+    :items="props.items ? transformToTableData(props.items) : undefined"
     :error="props.error"
-    @change="(val: ChangeValue) => emit('change', val)"
+    @change="emit('change', $event)"
   >
     <template #toolbar>
       <slot name="toolbar" />
@@ -150,7 +149,6 @@ const store = useStore()
 const { t } = useI18n()
 
 type DataPlaneOverviewTableRow = {
-  entity: DataPlaneOverview
   detailViewRoute: RouteLocationNamedRaw
   type: string
   name: string
@@ -299,7 +297,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
-      entity: dataPlaneOverview,
       name,
       detailViewRoute,
       type,
