@@ -2,7 +2,7 @@ Feature: mesh / services / index
   Background:
     Given the CSS selectors
       | Alias               | Selector                            |
-      | items               | [data-testid='service-collection']  |
+      | items               | [data-testid='service-table']       |
       | children            | [data-testid='data-overview-table'] |
       | items-header        | $items th                           |
       | item                | $items tbody tr                     |
@@ -11,9 +11,9 @@ Feature: mesh / services / index
       | button-tab          | $navigation li:nth-child(2) a       |
       | button-tab-selected | $navigation li:nth-child(2).active  |
     And the environment
-    """
+      """
       KUMA_SERVICEINSIGHT_COUNT: 2
-    """
+      """
     And the URL "/meshes/default/service-insights" responds with
       """
       body:
