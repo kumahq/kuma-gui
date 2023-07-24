@@ -35,9 +35,9 @@
                 class="zone-ingress-collection"
                 data-testid="zone-ingress-collection"
                 :headers="[
-                  { label: 'Name', key: 'name' },
-                  { label: 'Status', key: 'status' },
-                  { label: 'Actions', key: 'actions', hideLabel: true },
+                  { key: 'name' },
+                  { key: 'status' },
+                  { key: 'actions', hideLabel: true },
                 ].map((header) => ({ ...header, label: t(`zone-ingresses.routes.items.headers.${header.key}`) }))"
                 :page-number="props.page"
                 :page-size="props.size"
