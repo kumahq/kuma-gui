@@ -70,7 +70,6 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
     hasCopiedCodeSuccessfully = await copyToClipboard(text)
   } catch (err) {
     hasCopiedCodeSuccessfully = false
-    console.error(err)
   } finally {
     const text = hasCopiedCodeSuccessfully ? props.tooltipSuccessText : props.tooltipFailText
 
