@@ -1,12 +1,12 @@
 Feature: mesh / policies / data
   Background:
     Given the CSS selectors
-      | Alias          | Selector                                     |
-      | items          | [data-testid='policy-collection']            |
-      | item           | $items tbody tr                              |
-      | state-empty    | [data-testid='k-table-empty-state']          |
-      | state-error    | [data-testid='k-table-error-state']          |
-      | state-loading  | [data-testid='loading-block']                |
+      | Alias         | Selector                            |
+      | items         | [data-testid='policy-collection']   |
+      | item          | $items tbody tr                     |
+      | state-empty   | [data-testid='k-table-empty-state'] |
+      | state-error   | [data-testid='k-table-error-state'] |
+      | state-loading | [data-testid='loading-block']       |
     And the URL "/mesh-insights/default" responds with
       """
       body:

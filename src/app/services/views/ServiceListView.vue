@@ -19,6 +19,7 @@
         <KCard>
           <template #body>
             <AppCollection
+              class="service-collection"
               data-testid="service-collection"
               :empty-state-title="t('common.emptyState.title')"
               :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
@@ -142,5 +143,25 @@ const props = defineProps<{
   //
   mesh: string
 }>()
-
 </script>
+
+<style lang="scss" scoped>
+.actions-dropdown {
+  display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.service-collection {
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
+
+  .status-column {
+    width: 10%;
+    min-width: 200px;
+  }
+}
+</style>

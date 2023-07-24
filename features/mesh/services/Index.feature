@@ -11,9 +11,9 @@ Feature: mesh / services / index
       | button-tab          | $navigation li:nth-child(2) a       |
       | button-tab-selected | $navigation li:nth-child(2).active  |
     And the environment
-    """
+      """
       KUMA_SERVICEINSIGHT_COUNT: 2
-    """
+      """
     And the URL "/meshes/default/service-insights" responds with
       """
       body:

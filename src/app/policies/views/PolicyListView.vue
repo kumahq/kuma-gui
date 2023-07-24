@@ -69,6 +69,7 @@
                   <KCard>
                     <template #body>
                       <AppCollection
+                        class="policy-collection"
                         data-testid="policy-collection"
                         :empty-state-title="`No Data`"
                         :empty-state-message="`There are no ${selected.name} policies present.`"
@@ -223,7 +224,6 @@ const props = defineProps<{
   page: number
   size: number
 }>()
-
 </script>
 
 <style lang="scss" scoped>
@@ -231,21 +231,17 @@ const props = defineProps<{
   color: var(--grey-400);
 }
 
-</style>
-<style lang="scss">
-.name-column {
-  width: 45%;
-}
-.type-column {
-  width: 45%;
-}
-
-.actions-column {
-  width: 10%;
-  text-align: end;
-}
-
 .actions-dropdown {
   display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.policy-collection {
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
 }
 </style>

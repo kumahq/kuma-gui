@@ -38,7 +38,6 @@ Feature: mesh / index
     Then the "$item" element exists 2 times
 
     Examples:
-      | Mesh         | Selector |
+      | Mesh         | Selector                              |
       | another-mesh | $item:nth-child(2) td:first-of-type a |
       | default      | $item:nth-child(1) td:first-of-type a |
-
