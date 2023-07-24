@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ route }"
+    name="data-planes-list-view"
   >
     <DataSource
       v-slot="{data, error}: DataPlaneCollectionSource"

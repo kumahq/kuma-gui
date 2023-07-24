@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ route }"
+    name="gateways-list-view"
   >
     <DataSource
       v-slot="{data, error}: GatewayCollectionSource"
