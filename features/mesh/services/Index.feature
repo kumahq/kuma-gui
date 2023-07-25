@@ -1,15 +1,15 @@
 Feature: mesh / services / index
   Background:
     Given the CSS selectors
-      | Alias               | Selector                            |
-      | items               | [data-testid='service-collection']  |
-      | children            | [data-testid='data-overview-table'] |
-      | items-header        | $items th                           |
-      | item                | $items tbody tr                     |
-      | item-title          | .entity-title                       |
-      | navigation          | .route-mesh-view-tabs ul >          |
-      | button-tab          | $navigation li:nth-child(2) a       |
-      | button-tab-selected | $navigation li:nth-child(2).active  |
+      | Alias               | Selector                              |
+      | items               | [data-testid='service-collection']    |
+      | children            | [data-testid='data-plane-collection'] |
+      | items-header        | $items th                             |
+      | item                | $items tbody tr                       |
+      | item-title          | .entity-title                         |
+      | navigation          | .route-mesh-view-tabs ul >            |
+      | button-tab          | $navigation li:nth-child(2) a         |
+      | button-tab-selected | $navigation li:nth-child(2).active    |
     And the environment
       """
       KUMA_SERVICEINSIGHT_COUNT: 2

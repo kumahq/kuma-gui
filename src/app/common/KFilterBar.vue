@@ -129,6 +129,7 @@ import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 import { clamp } from '@/utilities/clamp'
 import { Command, ShortcutManager } from '@/utilities/ShortcutManager'
 import { tokenizeFieldFilterQuery } from '@/utilities/tokenizeFieldFilterQuery'
+import uniqueId from '@/utilities/uniqueId'
 
 export type Fields = [string, string][]
 
@@ -149,7 +150,8 @@ const props = defineProps({
    */
   id: {
     type: String,
-    required: true,
+    required: false,
+    default: () => uniqueId('k-filter-bar'),
   },
 
   /**
@@ -443,6 +445,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   flex-grow: 1;
   width: 100%;
   border: none;
+  padding: 12px;
 }
 
 .k-filter-bar-input:focus {

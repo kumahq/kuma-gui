@@ -5,9 +5,9 @@ import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
 import DataSourceLifeCycle from '@/app/application/services/data-source/index'
-import { routes as dataplaneRoutes } from '@/app/data-planes'
+import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-planes'
 import { routes as diagnosticsRoutes } from '@/app/diagnostics'
-import { routes as gatewayRoutes } from '@/app/gateways'
+import { routes as gatewayRoutes, services as gateways } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
@@ -241,6 +241,8 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
   ...meshes($),
   ...servicesModule($),
+  ...dataplanes($),
+  ...gateways($),
   ...policies($),
 ]
 
