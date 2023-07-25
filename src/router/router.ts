@@ -38,7 +38,7 @@ const redirectOldHashHistoryUrlPaths = (): NavigationGuard => (to, _from, next) 
  *
  * Redirects the user to the home view if they’re navigating to an onboarding route while having already completed onboarding. An exception is made when we suggest onboarding for users who don’t have data plane proxies, yet (we show an alert suggesting it and allow going to the onboarding again).
  */
-const onboardingRouteGuard = (store: Store<State>): NavigationGuard => (to, _from, next) => {
+export const onboardingRouteGuard = (store: Store<State>): NavigationGuard => (to, _from, next) => {
   const isOnboardingCompleted = store.state.onboarding.isCompleted
   const isOnboardingRoute = to.meta.onboardingProcess
   const shouldSuggestOnboarding = store.getters.shouldShowOnboardingNotification
