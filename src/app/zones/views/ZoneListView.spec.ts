@@ -81,5 +81,7 @@ describe('ZoneListView', () => {
     await deleteButton.trigger('click')
 
     expect(kumaApi.getAllZoneOverviews).toHaveBeenCalledTimes(2)
+
+    expect(wrapper.find('[data-testid="delete-resource-modal"]').exists()).not.toBe(true)
   })
 })
