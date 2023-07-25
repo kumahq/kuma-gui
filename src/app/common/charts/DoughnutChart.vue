@@ -78,8 +78,10 @@ ChartJS.defaults.font = {
   family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
 }
 
-ChartJS.defaults.plugins.tooltip.bodyFont = {
-  size: 12,
+if (ChartJS.defaults.plugins.tooltip) {
+  ChartJS.defaults.plugins.tooltip.bodyFont = {
+    size: 12,
+  }
 }
 
 const props = defineProps({
