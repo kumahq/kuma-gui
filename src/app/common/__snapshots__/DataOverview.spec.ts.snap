@@ -333,7 +333,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                         persisted="false"
                       >
                         <div
-                          class="k-popover k-dropdown-popover mt-1 mt-5 more-actions-popover hide-caret"
+                          class="k-popover k-dropdown-popover mt-5 more-actions-popover hide-caret"
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="region"
                           style="width: 150px; max-width: auto; max-height: auto; display: none;"
@@ -349,7 +349,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                             >
                               
                               <li
-                                class="k-dropdown-item w-100"
+                                class="k-dropdown-item"
                                 data-testid="k-dropdown-item-View-details"
                               >
                                 <a
@@ -358,7 +358,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                                   href="/zones/zone-cps/bandwidth-49"
                                 >
                                   <span
-                                    class="truncate"
+                                    class="k-dropdown-item-trigger-label"
                                     title="View details"
                                   >
                                     
