@@ -1,7 +1,6 @@
 <template>
   <span>
-    There is mismatch between versions of Zone CP (<strong>{{ payload.zoneCpVersion }}</strong>)
-    and the Global CP (<strong>{{ payload.globalCpVersion }}</strong>)
+    There is mismatch between versions of Zone Control Plane (<strong>{{ payload.zoneCpVersion }}</strong>) and the Global Control Plane (<strong>{{ payload.globalCpVersion }}</strong>)
   </span>
 </template>
 

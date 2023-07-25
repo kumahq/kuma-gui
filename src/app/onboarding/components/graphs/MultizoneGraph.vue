@@ -236,7 +236,7 @@
 
     <KPop
       trigger="hover"
-      title="Zone CP"
+      title="Zone Control Plane"
       :is-svg="true"
       tag="g"
       placement="rightEnd"

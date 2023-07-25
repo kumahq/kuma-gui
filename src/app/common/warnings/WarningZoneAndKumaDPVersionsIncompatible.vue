@@ -1,6 +1,6 @@
 <template>
   <span>
-    There is a mismatch between versions of Kuma DP (<strong>{{ payload.kumaDp }}</strong>) and the Zone CP.
+    There is a mismatch between versions of Kuma DP (<strong>{{ payload.kumaDp }}</strong>) and the Zone Control Plane.
   </span>
 </template>
 

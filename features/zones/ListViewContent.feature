@@ -40,7 +40,7 @@ Feature: Zones: List view content
       """
 
     When I visit the "/zones/zone-cps" URL
-    Then the page title contains "Control Planes"
+    Then the page title contains "Zone Control Planes"
 
     Then the "$zone-cp-table-row:nth-child(1) .status-column" element contains "online"
     Then the "$zone-cp-table-row:nth-child(1) .name-column" element contains "zone-cp-1"
