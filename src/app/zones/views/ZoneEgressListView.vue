@@ -1,8 +1,8 @@
 <template>
-  <RouteView>
-    <RouteTitle
-      :title="t('zone-egresses.routes.items.title')"
-    />
+  <RouteView
+    v-slot="{ route }"
+    name="zone-egress-list-view"
+  >
     <AppView
       :breadcrumbs="[
         {
@@ -13,124 +13,131 @@
         },
       ]"
     >
-      <div class="zoneegresses">
-        <div class="stack">
-          <div class="kcard-border">
-            <DataOverview
-              :selected-entity-name="entity?.name"
-              :page-size="PAGE_SIZE_DEFAULT"
-              :is-loading="isLoading"
-              :error="error"
-              :empty-state="EMPTY_STATE"
-              :table-data="tableData"
-              :table-data-is-empty="tableData.data.length === 0"
-              :next="nextUrl"
-              :page-offset="pageOffset"
-              @table-action="loadEntity"
-              @load-data="loadData"
-            />
-          </div>
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('zone-egresses.routes.items.title')"
+            :render="true"
+          />
+        </h2>
+      </template>
 
-          <div
-            v-if="entity !== null"
-            class="kcard-border"
-            data-testid="list-view-summary"
-          >
-            <ZoneEgressDetails :zone-egress-overview="entity" />
-          </div>
-        </div>
-      </div>
+      <DataSource
+        v-slot="{ data, error }: ZoneEgressOverviewCollectionSource"
+        :src="`/zone-egresses?size=${props.size}&page=${props.page}`"
+      >
+        <KCard>
+          <template #body>
+            <AppCollection
+              class="zone-egress-collection"
+              data-testid="zone-egress-collection"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Status', key: 'status' },
+                { label: 'Actions', key: 'actions', hideLabel: true },
+              ]"
+              :page-number="props.page"
+              :page-size="props.size"
+              :total="data?.total"
+              :items="data ? transformToTableData(data.items) : undefined"
+              :error="error"
+              @change="route.update"
+            >
+              <template #name="{ row, rowValue }">
+                <RouterLink
+                  :to="row.detailViewRoute"
+                  data-testid="detail-view-link"
+                >
+                  {{ rowValue }}
+                </RouterLink>
+              </template>
+
+              <template #status="{ rowValue }">
+                <StatusBadge
+                  v-if="rowValue"
+                  :status="rowValue"
+                />
+
+                <template v-else>
+                  —
+                </template>
+              </template>
+
+              <template #actions="{ row }">
+                <KDropdownMenu
+                  class="actions-dropdown"
+                  data-testid="actions-dropdown"
+                  :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                  width="150"
+                >
+                  <template #default>
+                    <KButton
+                      class="non-visual-button"
+                      appearance="secondary"
+                      size="small"
+                    >
+                      <template #icon>
+                        <KIcon
+                          color="var(--black-400)"
+                          icon="more"
+                          size="16"
+                        />
+                      </template>
+                    </KButton>
+                  </template>
+
+                  <template #items>
+                    <KDropdownItem
+                      :item="{
+                        to: row.detailViewRoute,
+                        label: t('common.collection.actions.view'),
+                      }"
+                    />
+                  </template>
+                </KDropdownMenu>
+              </template>
+            </AppCollection>
+          </template>
+        </KCard>
+      </DataSource>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref } from 'vue'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
 import { RouteLocationNamedRaw } from 'vue-router'
 
-import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
+import type { ZoneEgressOverviewCollectionSource } from '../sources'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import DataOverview from '@/app/common/DataOverview.vue'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { StatusKeyword, TableHeader, ZoneEgressOverview } from '@/types/index.d'
-import { useKumaApi, useI18n } from '@/utilities'
+import StatusBadge from '@/app/common/StatusBadge.vue'
+import { StatusKeyword, ZoneEgressOverview } from '@/types/index.d'
+import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { QueryParameter } from '@/utilities/QueryParameter'
 
 type ZoneEgressOverviewTableRow = {
-  entity: ZoneEgressOverview
   detailViewRoute: RouteLocationNamedRaw
+  name: string
   status: StatusKeyword
 }
 
-const kumaApi = useKumaApi()
 const { t } = useI18n()
 
-const EMPTY_STATE = {
-  title: 'No Data',
-  message: 'There are no Zone Egresses present.',
-}
-
 const props = defineProps({
-  selectedZoneEgressName: {
-    type: [String, null] as PropType<string | null>,
-    required: false,
-    default: null,
-  },
-
-  offset: {
+  page: {
     type: Number,
-    required: false,
-    default: 0,
+    required: true,
+  },
+
+  size: {
+    type: Number,
+    required: true,
   },
 })
-
-const isLoading = ref(true)
-const error = ref<Error | null>(null)
-const tableData = ref<{ headers: TableHeader[], data: ZoneEgressOverviewTableRow[] }>({
-  headers: [
-    { label: 'Status', key: 'status' },
-    { label: 'Name', key: 'entity' },
-  ],
-  data: [],
-})
-const entity = ref<ZoneEgressOverview | null>(null)
-const nextUrl = ref<string | null>(null)
-const pageOffset = ref(props.offset)
-
-loadData(props.offset)
-
-async function loadData(offset: number) {
-  pageOffset.value = offset
-  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  QueryParameter.set('offset', offset > 0 ? offset : null)
-
-  isLoading.value = true
-  error.value = null
-
-  const size = PAGE_SIZE_DEFAULT
-
-  try {
-    const { items, next } = await kumaApi.getAllZoneEgressOverviews({ size, offset })
-
-    nextUrl.value = next
-    tableData.value.data = transformToTableData(items ?? [])
-    await loadEntity({ name: props.selectedZoneEgressName ?? tableData.value.data[0]?.entity.name })
-  } catch (err) {
-    tableData.value.data = []
-    entity.value = null
-
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
 
 function transformToTableData(zoneEgressOverviews: ZoneEgressOverview[]): ZoneEgressOverviewTableRow[] {
   return zoneEgressOverviews.map((entity) => {
@@ -144,25 +151,31 @@ function transformToTableData(zoneEgressOverviews: ZoneEgressOverview[]): ZoneEg
     const status = getItemStatusFromInsight(entity.zoneEgressInsight ?? {})
 
     return {
-      entity,
       detailViewRoute,
+      name,
       status,
     }
   })
 }
+</script>
 
-async function loadEntity({ name }: { name?: string | undefined }) {
-  if (name === undefined) {
-    entity.value = null
-    QueryParameter.set('zoneEgress', null)
-    return
+<style lang="scss" scoped>
+.actions-dropdown {
+  display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.zone-egress-collection {
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
   }
 
-  try {
-    entity.value = await kumaApi.getZoneEgressOverview({ name })
-    QueryParameter.set('zoneEgress', name)
-  } catch (err) {
-    console.error(err)
+  .status-column {
+    width: 10%;
+    min-width: 200px;
   }
 }
-</script>
+</style>

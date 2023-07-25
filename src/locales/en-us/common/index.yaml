@@ -13,7 +13,9 @@ common:
     message: 'There are no {type} present.'
   collection:
     actions:
-      view: View details
+      delete: 'Delete'
+      edit: 'Edit'
+      view: 'View details'
   charts:
     dataPlaneProxies:
       title: 'DP Proxies'

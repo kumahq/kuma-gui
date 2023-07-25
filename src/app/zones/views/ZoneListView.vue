@@ -1,8 +1,8 @@
 <template>
-  <RouteView>
-    <RouteTitle
-      :title="t('zone-cps.routes.items.title')"
-    />
+  <RouteView
+    v-slot="{ route }"
+    name="zone-cp-list-view"
+  >
     <AppView
       :breadcrumbs="[
         {
@@ -13,207 +13,219 @@
         },
       ]"
     >
-      <div class="zones">
-        <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('zone-cps.routes.items.title')"
+            :render="true"
+          />
+        </h2>
+      </template>
 
-        <div
-          v-else
-          class="stack"
+      <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+
+      <template v-else>
+        <DataSource
+          v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
+          :src="`/zone-cps?size=${props.size}&page=${props.page}`"
         >
-          <div class="kcard-border">
-            <DataOverview
-              :selected-entity-name="entity?.name"
-              :page-size="PAGE_SIZE_DEFAULT"
-              :is-loading="isLoading"
-              :error="error"
-              :empty-state="EMPTY_STATE"
-              :table-data="tableData"
-              :table-data-is-empty="tableData.data.length === 0"
-              :show-warnings="tableData.data.some((item) => item.withWarnings)"
-              :next="nextUrl"
-              :page-offset="pageOffset"
-              :show-delete-action="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-              @delete-resource="toggleDeleteModal"
-              @table-action="loadEntity"
-              @load-data="loadData"
-            >
-              <template
-                v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-                #additionalControls
+          <KCard>
+            <template #body>
+              <AppCollection
+                class="zone-cp-collection"
+                data-testid="zone-cp-collection"
+                :headers="[
+                  { label: 'Name', key: 'name' },
+                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                  { label: 'Storage type', key: 'storeType' },
+                  { label: 'Status', key: 'status' },
+                  { label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :page-number="props.page"
+                :page-size="props.size"
+                :total="data?.total"
+                :items="data ? transformToTableData(data.items) : undefined"
+                :error="error"
+                @change="route.update"
               >
-                <KButton
-                  appearance="creation"
-                  icon="plus"
-                  :to="{ name: 'zone-create-view' }"
+                <template
+                  v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                  #toolbar
                 >
-                  Create Zone
-                </KButton>
-              </template>
-            </DataOverview>
-          </div>
+                  <KButton
+                    appearance="creation"
+                    icon="plus"
+                    :to="{ name: 'zone-create-view' }"
+                  >
+                    Create Zone
+                  </KButton>
+                </template>
 
-          <div
-            v-if="entity !== null"
-            class="kcard-border"
-            data-testid="list-view-summary"
+                <template #name="{ row, rowValue }">
+                  <RouterLink
+                    :to="row.detailViewRoute"
+                    data-testid="detail-view-link"
+                  >
+                    {{ rowValue }}
+                  </RouterLink>
+                </template>
+
+                <template #zoneCpVersion="{ rowValue }">
+                  {{ rowValue }}
+                </template>
+
+                <template #storeType="{ rowValue }">
+                  {{ rowValue }}
+                </template>
+
+                <template #status="{ rowValue }">
+                  <StatusBadge
+                    v-if="rowValue"
+                    :status="rowValue"
+                  />
+
+                  <template v-else>
+                    —
+                  </template>
+                </template>
+
+                <template #warnings="{ rowValue }">
+                  <KIcon
+                    v-if="rowValue"
+                    class="mr-1"
+                    icon="warning"
+                    color="var(--black-500)"
+                    secondary-color="var(--yellow-300)"
+                    size="20"
+                  />
+                </template>
+
+                <template #actions="{ row }">
+                  <KDropdownMenu
+                    class="actions-dropdown"
+                    data-testid="actions-dropdown"
+                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                    width="150"
+                  >
+                    <template #default>
+                      <KButton
+                        class="non-visual-button"
+                        appearance="secondary"
+                        size="small"
+                      >
+                        <template #icon>
+                          <KIcon
+                            color="var(--black-400)"
+                            icon="more"
+                            size="16"
+                          />
+                        </template>
+                      </KButton>
+                    </template>
+
+                    <template #items>
+                      <KDropdownItem
+                        :item="{
+                          to: row.detailViewRoute,
+                          label: t('common.collection.actions.view'),
+                        }"
+                      />
+
+                      <KDropdownItem
+                        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                        has-divider
+                        is-dangerous
+                        data-testid="dropdown-delete-item"
+                        @click="setDeleteZoneName(row.name)"
+                      >
+                        {{ t('common.collection.actions.delete') }}
+                      </KDropdownItem>
+                    </template>
+                  </KDropdownMenu>
+                </template>
+              </AppCollection>
+            </template>
+          </KCard>
+
+          <DeleteResourceModal
+            v-if="isDeleteModalVisible"
+            :confirmation-text="deleteZoneName"
+            :delete-function="deleteZone"
+            :is-visible="isDeleteModalVisible"
+            modal-id="delete-zone-modal"
+            :action-button-text="t('zones.delete.confirmModal.proceedText')"
+            :title="t('zones.delete.confirmModal.title')"
+            @cancel="toggleDeleteModal"
+            @delete="() => { toggleDeleteModal(); refresh() }"
           >
-            <ZoneDetails :zone-overview="entity" />
-          </div>
-        </div>
+            <template #body-content>
+              <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
 
-        <DeleteResourceModal
-          v-if="isDeleteModalVisible"
-          :confirmation-text="deleteZoneName"
-          :delete-function="deleteZone"
-          :is-visible="isDeleteModalVisible"
-          modal-id="delete-zone-modal"
-          :action-button-text="t('zones.delete.confirmModal.proceedText')"
-          :title="t('zones.delete.confirmModal.title')"
-          @cancel="toggleDeleteModal"
-          @delete="handleDelete"
-        >
-          <template #body-content>
-            <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
+              <p>{{ t('zones.delete.confirmModal.text2') }}</p>
+            </template>
 
-            <p>{{ t('zones.delete.confirmModal.text2') }}</p>
-          </template>
-
-          <template #error>
-            {{ t('zones.delete.confirmModal.errorText') }}
-          </template>
-        </DeleteResourceModal>
-      </div>
+            <template #error>
+              {{ t('zones.delete.confirmModal.errorText') }}
+            </template>
+          </DeleteResourceModal>
+        </DataSource>
+      </template>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { KButton } from '@kong/kongponents'
-import { PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw } from 'vue-router'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
+import { ref } from 'vue'
+import { type RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
-import ZoneDetails from '../components/ZoneDetails.vue'
+import type { ZoneOverviewCollectionSource } from '../sources'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import DataOverview from '@/app/common/DataOverview.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useStore } from '@/store/store'
-import { StatusKeyword, TableHeader, ZoneEgressOverview, ZoneIngressOverview, ZoneOverview } from '@/types/index.d'
+import { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { fetchAllResources } from '@/utilities/helpers'
-import { QueryParameter } from '@/utilities/QueryParameter'
 
 type ZoneOverviewTableRow = {
-  entity: ZoneOverview
   detailViewRoute: RouteLocationNamedRaw
+  name: string
   status: StatusKeyword
   zoneCpVersion: string
   storeType: string
-  hasIngress: 'Yes' | 'No'
-  hasEgress: 'Yes' | 'No'
-  withWarnings: boolean
+  warnings: boolean
 }
 
 const env = useEnv()
 const { t } = useI18n()
 const kumaApi = useKumaApi()
-
-const EMPTY_STATE = {
-  title: 'No Data',
-  message: 'There are no Zones present.',
-}
-
 const store = useStore()
 
 const props = defineProps({
-  selectedZoneName: {
-    type: [String, null] as PropType<string | null>,
-    required: false,
-    default: null,
+  page: {
+    type: Number,
+    required: true,
   },
 
-  offset: {
+  size: {
     type: Number,
-    required: false,
-    default: 0,
+    required: true,
   },
 })
 
-const isLoading = ref(true)
 const isDeleteModalVisible = ref(false)
 const deleteZoneName = ref('')
-const error = ref<Error | null>(null)
-const tableData = ref<{ headers: TableHeader[], data: ZoneOverviewTableRow[] }>({
-  headers: [
-    { label: 'Status', key: 'status' },
-    { label: 'Name', key: 'entity' },
-    { label: 'Zone CP Version', key: 'zoneCpVersion' },
-    { label: 'Storage type', key: 'storeType' },
-    { label: 'Ingress', key: 'hasIngress' },
-    { label: 'Egress', key: 'hasEgress' },
-    { label: 'Warnings', key: 'warnings', hideLabel: true },
-    { label: 'Actions', key: 'actions', hideLabel: true },
-  ],
-  data: [],
-})
-const entity = ref<ZoneOverview | null>(null)
-const nextUrl = ref<string | null>(null)
-const pageOffset = ref(props.offset)
 
-watch(() => store.getters['config/getMulticlusterStatus'], function (isMultizoneMode) {
-  if (isMultizoneMode) {
-    loadData(props.offset)
-  }
-}, { immediate: true })
-
-async function loadData(offset: number) {
-  pageOffset.value = offset
-  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  QueryParameter.set('offset', offset > 0 ? offset : null)
-
-  isLoading.value = true
-  error.value = null
-
-  const size = PAGE_SIZE_DEFAULT
-
-  try {
-    const [{ items, next }, { items: zoneIngressOverviews }, { items: zoneEgressOverviews }] = await Promise.all([
-      kumaApi.getAllZoneOverviews({ size, offset }),
-      fetchAllResources(kumaApi.getAllZoneIngressOverviews.bind(kumaApi)),
-      fetchAllResources(kumaApi.getAllZoneEgressOverviews.bind(kumaApi)),
-    ])
-
-    nextUrl.value = next
-    tableData.value.data = transformToTableData(
-      items ?? [],
-      zoneIngressOverviews ?? [],
-      zoneEgressOverviews ?? [],
-    )
-    await loadEntity({ name: props.selectedZoneName ?? tableData.value.data[0]?.entity.name })
-  } catch (err) {
-    entity.value = null
-    tableData.value.data = []
-
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
-
-function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverviews: ZoneIngressOverview[], zoneEgressOverviews: ZoneEgressOverview[]): ZoneOverviewTableRow[] {
-  const zonesWithIngress = new Set(zoneIngressOverviews.map((zoneIngressOverview) => zoneIngressOverview.zoneIngress.zone))
-  const zonesWithEgress = new Set(zoneEgressOverviews.map((zoneEgressOverview) => zoneEgressOverview.zoneEgress.zone))
-
-  return zoneOverviews.map((entity) => {
-    const { name } = entity
+function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
+  return zoneOverviews.map((zoneOverview) => {
+    const { name } = zoneOverview
     const detailViewRoute: RouteLocationNamedRaw = {
       name: 'zone-cp-detail-view',
       params: {
@@ -224,7 +236,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverview
     let storeType = ''
     let cpCompat = true
 
-    const subscriptions = entity.zoneInsight?.subscriptions ?? []
+    const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
 
     subscriptions.forEach((item: any) => {
       if (item.version && item.version.kumaCp) {
@@ -238,34 +250,17 @@ function transformToTableData(zoneOverviews: ZoneOverview[], zoneIngressOverview
       }
     })
 
-    const status = getItemStatusFromInsight(entity.zoneInsight)
+    const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
 
     return {
-      entity,
       detailViewRoute,
+      name,
       status,
       zoneCpVersion,
       storeType,
-      hasIngress: zonesWithIngress.has(entity.name) ? 'Yes' : 'No',
-      hasEgress: zonesWithEgress.has(entity.name) ? 'Yes' : 'No',
-      withWarnings: !cpCompat,
+      warnings: !cpCompat,
     }
   })
-}
-
-async function loadEntity({ name }: { name?: string | undefined }) {
-  if (name === undefined) {
-    entity.value = null
-    QueryParameter.set('zone', null)
-    return
-  }
-
-  try {
-    entity.value = await kumaApi.getZoneOverview({ name })
-    QueryParameter.set('zone', name)
-  } catch (err) {
-    console.error(err)
-  }
 }
 
 async function deleteZone() {
@@ -273,16 +268,34 @@ async function deleteZone() {
   await kumaApi.deleteZone({ name: deleteZoneName.value })
 }
 
-function toggleDeleteModal(row?: Record<string, any>) {
-  const zoneName = row?.entity?.name ?? row?.name ?? ''
+function toggleDeleteModal() {
   isDeleteModalVisible.value = !isDeleteModalVisible.value
-
-  deleteZoneName.value = zoneName
 }
 
-function handleDelete() {
+function setDeleteZoneName(name: string) {
   toggleDeleteModal()
-
-  loadData(0)
+  deleteZoneName.value = name
 }
 </script>
+
+<style lang="scss" scoped>
+.actions-dropdown {
+  display: inline-block;
+}
+</style>
+
+<style lang="scss">
+.zone-cp-collection {
+  .warnings-column,
+  .actions-column {
+    width: 5%;
+    min-width: 80px;
+    text-align: end;
+  }
+
+  .status-column {
+    width: 10%;
+    min-width: 200px;
+  }
+}
+</style>

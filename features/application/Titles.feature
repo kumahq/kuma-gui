@@ -19,12 +19,12 @@ Feature: The HTML title is correct on each page
       | /onboarding/completed                               | Completed                     |
 
       | /zones/create                                       | Create & connect Zone         |
-      | /zones/zone-cps                                     | Zone CPs                      |
-      | /zones/zone-cps/zone-cp-name                        | Zone CP                       |
-      | /zones/zone-ingresses                               | Zone Ingresses                |
-      | /zones/zone-ingresses/zone-ingress-name             | Zone Ingress                  |
-      | /zones/zone-egresses                                | Zone Egresses                 |
-      | /zones/zone-egresses/zone-egress-name               | Zone Egress                   |
+      | /zones/zone-cps                                     | Control Planes                |
+      | /zones/zone-cps/zone-cp-name                        | Control Plane                 |
+      | /zones/zone-ingresses                               | Ingresses                     |
+      | /zones/zone-ingresses/zone-ingress-name             | Ingress                       |
+      | /zones/zone-egresses                                | Egresses                      |
+      | /zones/zone-egresses/zone-egress-name               | Egress                        |
 
       | /mesh                                               | Meshes                        |
       | /mesh/default                                       | Mesh overview                 |
@@ -39,4 +39,4 @@ Feature: The HTML title is correct on each page
       | /mesh/default/data-plane/data-plane-name            | Data plane proxy              |
 
       | /mesh/default/policies/circuit-breakers             | CircuitBreaker                |
-      | /mesh/default/policy/circuit-breakers/program-0 | Policy                        |
+      | /mesh/default/policy/circuit-breakers/program-0     | Policy                        |

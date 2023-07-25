@@ -5,7 +5,6 @@ Feature: Zones: Page navigation
       | breadcrumbs | .k-breadcrumbs                      |
       | main-nav    | .app-sidebar                        |
       | nav-tabs    | [data-testid='nav-tabs']            |
-      | summary     | [data-testid='list-view-summary']   |
       | table       | [data-testid='data-overview-table'] |
       | table-row   | $table tbody tr                     |
 
@@ -22,25 +21,25 @@ Feature: Zones: Page navigation
         mode: global
       """
 
-    When I visit the "/" URL
-    And I click the "$main-nav .nav-item-zone-cp-list-view > a" element
+    When I visit the "/zones" URL
+    # This `cy.wait` stabilizes the test significantly. For some reason, it can happen that the subsequent navigation to via nav tab is never triggered.
+    Then I wait for 1000 milliseconds
 
     When I click the "$nav-tabs #<RouteName>-tab a" element
     Then the page title contains "<ListViewTitle>"
 
-    When I click the "$table-row:nth-child(1) [data-testid='detail-view-link']" element
+    When I click the "<TableSelector> tbody tr:nth-child(1) [data-testid='detail-view-link']" element
     Then the page title contains "<DetailViewTitle>"
 
     When I click the "$nav-tabs #<RouteName>-tab a" element
     Then the page title contains "<ListViewTitle>"
-    Then the "$table" element exists
-    And the "$summary" element exists
+    Then the "<TableSelector>" element exists
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(1) > a" element
-    Then the page title contains "Zone CPs"
+    Then the page title contains "Control Planes"
 
     Examples:
-      | RouteName              | DetailViewTitle | ListViewTitle  |
-      | zone-cp-list-view      | Zone CP         | Zone CPs       |
-      | zone-ingress-list-view | Zone Ingress    | Zone Ingresses |
-      | zone-egress-list-view  | Zone Egress     | Zone Egresses  |
+      | RouteName              | TableSelector                           | DetailViewTitle | ListViewTitle  |
+      | zone-cp-list-view      | [data-testid='zone-cp-collection']      | Control Plane   | Control Planes |
+      | zone-ingress-list-view | [data-testid='zone-ingress-collection'] | Ingress         | Ingresses      |
+      | zone-egress-list-view  | [data-testid='zone-egress-collection']  | Egress          | Egresses       |

@@ -213,7 +213,7 @@ Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) =
 })
 
 Then('the page title contains {string}', function (title: string) {
-  $('head title').contains(title)
+  cy.title().should('contain', title)
 })
 
 // debug
