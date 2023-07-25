@@ -27,8 +27,8 @@
                 { label: 'Name', key: 'name' },
                 { label: 'Type', key: 'serviceType' },
                 { label: 'Address', key: 'addressPort' },
-                { label: 'Status', key: 'status' },
                 { label: 'DP proxies (online / total)', key: 'online' },
+                { label: 'Status', key: 'status' },
                 { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :page-number="props.page"
@@ -50,16 +50,6 @@
                   {{ item.name }}
                 </RouterLink>
               </template>
-              <template #status="{ row: item }">
-                <StatusBadge
-                  v-if="item.status"
-                  :status="item.status"
-                />
-
-                <template v-else>
-                  —
-                </template>
-              </template>
 
               <template #online="{ row: item }">
                 <template
@@ -73,6 +63,18 @@
                   —
                 </template>
               </template>
+
+              <template #status="{ row: item }">
+                <StatusBadge
+                  v-if="item.status"
+                  :status="item.status"
+                />
+
+                <template v-else>
+                  —
+                </template>
+              </template>
+
               <template #actions="{ row: item }">
                 <KDropdownMenu
                   class="actions-dropdown"

@@ -4,13 +4,13 @@
     :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data plane proxies' })"
     :headers="[
       { label: 'Name', key: 'name' },
-      { label: 'Status', key: 'status' },
       props.gateways ? { label: 'Type', key: 'type' } : undefined,
       { label: 'Service', key: 'service' },
       !props.gateways ? { label: 'Protocol', key: 'protocol' } : undefined,
       isMultiZoneMode ? { label: 'Zone', key: 'zone' } : undefined,
       { label: 'Last Updated', key: 'lastUpdated' },
       { label: 'Kuma DP version', key: 'dpVersion' },
+      { label: 'Status', key: 'status' },
       { label: 'Actions', key: 'actions', hideLabel: true },
     ].filter(Boolean)"
     :page-number="props.pageNumber"
@@ -352,5 +352,9 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 <style lang="scss" scoped>
 .with-warnings {
   color: var(--yellow-500);
+}
+
+.actions-dropdown {
+  display: inline-block;
 }
 </style>

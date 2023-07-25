@@ -7,9 +7,9 @@ Feature: mesh / dataplanes / index
       | table-row       | $table tbody tr                       |
       | dataplane-title | [data-testid='data-plane-collection'] |
     And the environment
-    """
+      """
       KUMA_DATAPLANE_COUNT: 9
-    """
+      """
     And the URL "/meshes/default/dataplanes+insights" responds with
       """
       body:
@@ -42,12 +42,12 @@ Feature: mesh / dataplanes / index
     Then the "$table-header" elements contain
       | Value           |
       | Name            |
-      | Status          |
       | Service         |
       | Protocol        |
       | Zone            |
       | Last Updated    |
       | Kuma DP version |
+      | Status          |
 
   Scenario: The Proxy listing has the expected content and UI elements
     Then the "$table-row" element exists 9 times
@@ -57,5 +57,3 @@ Feature: mesh / dataplanes / index
       | http              |
       | February 18, 2021 |
       | 1.0.8             |
-
-
