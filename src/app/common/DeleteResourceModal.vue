@@ -85,7 +85,6 @@ async function deleteResource() {
     await props.deleteFunction()
     emit('delete')
   } catch (err) {
-    console.error(err)
     hasError.value = true
   }
 }

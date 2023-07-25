@@ -16,7 +16,7 @@
             <div class="columns">
               <StatusInfo
                 :is-loading="isLoading"
-                :has-error="hasError"
+                :error="error"
                 :is-empty="mesh === null || meshInsights === null"
               >
                 <DefinitionList>
@@ -129,7 +129,7 @@ const route = useRoute()
 const store = useStore()
 
 const isLoading = ref(true)
-const hasError = ref(false)
+const error = ref<Error | null>(null)
 const mesh = ref<Mesh | null>(null)
 const meshInsights = ref<MeshInsight | null>(null)
 
@@ -200,19 +200,21 @@ loadMesh()
 
 async function loadMesh(): Promise<void> {
   isLoading.value = true
-  hasError.value = false
+  error.value = null
 
   const name = route.params.mesh as string
 
   try {
     mesh.value = await kumaApi.getMesh({ name })
     meshInsights.value = await kumaApi.getMeshInsights({ name })
-  } catch (error) {
-    hasError.value = true
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(error)
+    }
     mesh.value = null
     meshInsights.value = null
-
-    console.error(error)
   } finally {
     isLoading.value = false
   }
