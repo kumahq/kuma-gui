@@ -12,6 +12,8 @@
     </div>
     <slot
       name="default"
+      :t="t"
+      :env="env"
       :route="{
         update: (params: Record<string, string | undefined>) => {
           router.push(
@@ -45,8 +47,9 @@ import {
   createAttrsSetter,
   createTitleSetter,
 } from '../../utilities'
-import { useI18n } from '@/utilities'
+import { useI18n, useEnv } from '@/utilities'
 
+const env = useEnv()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()

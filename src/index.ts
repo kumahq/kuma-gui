@@ -1,3 +1,4 @@
+import Kongponents from '@kong/kongponents'
 import { Component, createApp } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 import { Store, storeKey } from 'vuex'
@@ -21,6 +22,7 @@ export function useApp(
     const router = await createRouter(routes, store, env('KUMA_BASE_PATH'))
     app.use(store, storeKey)
     app.use(router)
+    app.use(Kongponents)
     return app
   }
 }
