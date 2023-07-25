@@ -21,14 +21,15 @@ export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCo
 export const sources = (api: KumaApi) => {
   return {
     '/:mesh/services': async (params: MeshParams & PaginationParams, source: Closeable) => {
-      source.close()
       const offset = params.size * (params.page - 1)
-      return api.getAllServiceInsightsFromMesh({
+      const res = await api.getAllServiceInsightsFromMesh({
         mesh: params.mesh,
       }, {
         size: params.size,
         offset,
       })
+      source.close()
+      return res
     },
   }
 }

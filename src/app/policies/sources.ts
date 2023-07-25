@@ -30,19 +30,21 @@ export type PolicyCollectionSource = DataSourceResponse<PolicyCollection>
 export const sources = (api: KumaApi) => {
   return {
     '/*/policy-types': async (_params: {}, source: {close: () => void}) => {
+      const res = await api.getPolicyTypes()
       source.close()
-      return api.getPolicyTypes()
+      return res
     },
     '/:mesh/policy-type/:policyType': async (params: MeshParams & PolicyTypeParams & PaginationParams, source: {close: () => void}) => {
-      source.close()
       const offset = params.size * (params.page - 1)
-      return api.getAllPolicyEntitiesFromMesh({
+      const res = await api.getAllPolicyEntitiesFromMesh({
         mesh: params.mesh,
         path: params.policyType,
       }, {
         offset,
         size: params.size,
       })
+      source.close()
+      return res
     },
     // '/:mesh/policy/:policy': async (params: MeshParams & PolicyParams) => {
     // },
