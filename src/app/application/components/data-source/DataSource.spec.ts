@@ -23,12 +23,12 @@ describe('DataSourcePool', () => {
     let res = SUCCESS
     withSources(() => {
       return {
-        '/success': (_params: any, source: any) => {
+        '/success': async (_params: any, source: any) => {
+          const r = await Promise.resolve(res)
           source.close()
-          return Promise.resolve(res)
+          return r
         },
-        '/error': (_params: any, source: any) => {
-          source.close()
+        '/error': (_params: any, _source: any) => {
           throw err
         },
       }

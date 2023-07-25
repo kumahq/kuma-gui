@@ -18,7 +18,11 @@ export default class CallableEventSource extends EventTarget {
 
   constructor(
     protected source: () => AsyncGenerator,
-    _configuration = {},
+    public configuration = {
+      attempts: 0,
+      maxAttempts: 3,
+      power: 1,
+    },
   ) {
     super()
     this._open()

@@ -45,7 +45,7 @@ Feature: mesh / policies / data
     Given the URL "/meshes/default/circuit-breakers" responds with
       """
       headers:
-        Status-Code: '503'
+        Status-Code: '520'
       """
     When I visit the "/mesh/default/policies/circuit-breakers" URL
     Then the "$state-error" element exists
