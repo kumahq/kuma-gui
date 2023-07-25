@@ -62,6 +62,45 @@
                   </KButton>
                 </template>
 
+                <template #name="{ row, rowValue }">
+                  <RouterLink
+                    :to="row.detailViewRoute"
+                    data-testid="detail-view-link"
+                  >
+                    {{ rowValue }}
+                  </RouterLink>
+                </template>
+
+                <template #zoneCpVersion="{ rowValue }">
+                  {{ rowValue }}
+                </template>
+
+                <template #storeType="{ rowValue }">
+                  {{ rowValue }}
+                </template>
+
+                <template #status="{ rowValue }">
+                  <StatusBadge
+                    v-if="rowValue"
+                    :status="rowValue"
+                  />
+
+                  <template v-else>
+                    —
+                  </template>
+                </template>
+
+                <template #warnings="{ rowValue }">
+                  <KIcon
+                    v-if="rowValue"
+                    class="mr-1"
+                    icon="warning"
+                    color="var(--black-500)"
+                    secondary-color="var(--yellow-300)"
+                    size="20"
+                  />
+                </template>
+
                 <template #actions="{ row }">
                   <KDropdownMenu
                     class="actions-dropdown"
@@ -104,37 +143,6 @@
                       </KDropdownItem>
                     </template>
                   </KDropdownMenu>
-                </template>
-
-                <template #name="{ row }">
-                  <RouterLink
-                    :to="row.detailViewRoute"
-                    data-testid="detail-view-link"
-                  >
-                    {{ row.name }}
-                  </RouterLink>
-                </template>
-
-                <template #status="{ row }">
-                  <StatusBadge
-                    v-if="row.status"
-                    :status="row.status"
-                  />
-
-                  <template v-else>
-                    —
-                  </template>
-                </template>
-
-                <template #warnings="{ row }">
-                  <KIcon
-                    v-if="row.withWarnings"
-                    class="mr-1"
-                    icon="warning"
-                    color="var(--black-500)"
-                    secondary-color="var(--yellow-300)"
-                    size="20"
-                  />
                 </template>
               </AppCollection>
             </template>
@@ -192,7 +200,7 @@ type ZoneOverviewTableRow = {
   status: StatusKeyword
   zoneCpVersion: string
   storeType: string
-  withWarnings: boolean
+  warnings: boolean
 }
 
 const env = useEnv()
@@ -250,7 +258,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       status,
       zoneCpVersion,
       storeType,
-      withWarnings: !cpCompat,
+      warnings: !cpCompat,
     }
   })
 }

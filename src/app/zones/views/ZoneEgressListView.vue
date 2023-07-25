@@ -43,19 +43,19 @@
               :error="error"
               @change="route.update"
             >
-              <template #name="{ row }">
+              <template #name="{ row, rowValue }">
                 <RouterLink
                   :to="row.detailViewRoute"
                   data-testid="detail-view-link"
                 >
-                  {{ row.name }}
+                  {{ rowValue }}
                 </RouterLink>
               </template>
 
-              <template #status="{ row }">
+              <template #status="{ rowValue }">
                 <StatusBadge
-                  v-if="row.status"
-                  :status="row.status"
+                  v-if="rowValue"
+                  :status="rowValue"
                 />
 
                 <template v-else>
