@@ -30,8 +30,8 @@ Feature: mesh / services / index
       | Name                        |
       | Type                        |
       | Address                     |
-      | Status                      |
       | DP proxies (online / total) |
+      | Status                      |
 
   Scenario: The items have the expected content and UI elements
     Then the "$button-tab-selected" element exists

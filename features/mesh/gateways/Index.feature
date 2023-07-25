@@ -35,12 +35,12 @@ Feature: mesh / gateways / index
     Then the "$item-header" elements contain
       | Value           |
       | Name            |
-      | Status          |
       | Type            |
       | Service         |
       | Zone            |
       | Last Updated    |
       | Kuma DP version |
+      | Status          |
 
   Scenario: The Gateway listing has the expected content and UI elements
     When I click the "$select-type" element
@@ -66,9 +66,9 @@ Feature: mesh / gateways / index
         """
     Scenario: Filtering by "builtin"
       Given the environment
-      """
+        """
         KUMA_DATAPLANE_COUNT: 1
-      """
+        """
       And the URL "/meshes/default/dataplanes+insights" responds with
         """
         body:
@@ -95,9 +95,9 @@ Feature: mesh / gateways / index
 
     Scenario: Filtering by "delegated"
       Given the environment
-      """
+        """
         KUMA_DATAPLANE_COUNT: 1
-      """
+        """
       And the URL "/meshes/default/dataplanes+insights" responds with
         """
         body:
