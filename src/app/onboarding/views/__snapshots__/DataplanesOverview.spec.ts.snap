@@ -155,14 +155,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -181,14 +191,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -207,14 +227,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -233,14 +263,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -259,14 +299,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -285,14 +335,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -311,14 +371,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           
@@ -337,14 +407,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </td>
                           <td>
                             
-                            <span
-                              class="status status--offline"
+                            <div
+                              class="k-badge k-badge-danger k-badge-rounded status"
                               data-testid="status-badge"
+                              tabindex="0"
                             >
-                              <span>
-                                offline
-                              </span>
-                            </span>
+                              <div
+                                class="k-badge-text"
+                              >
+                                <div
+                                  class="k-badge-text"
+                                >
+                                  
+                                  offline
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </td>
                           

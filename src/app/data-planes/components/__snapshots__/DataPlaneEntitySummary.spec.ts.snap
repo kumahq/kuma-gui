@@ -87,14 +87,24 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                 
               </div>
             </span>
-            <span
-              class="status status--online"
+            <div
+              class="k-badge k-badge-success k-badge-rounded status"
               data-testid="status-badge"
+              tabindex="0"
             >
-              <span>
-                online
-              </span>
-            </span>
+              <div
+                class="k-badge-text"
+              >
+                <div
+                  class="k-badge-text"
+                >
+                  
+                  online
+                  
+                </div>
+              </div>
+              <!---->
+            </div>
           </h3>
           <dl
             class="definition-list mt-4"

@@ -1,24 +1,28 @@
 <template>
-  <span
+  <KBadge
     class="status"
-    :class="{
-      [`status--${props.status}`]: true,
-    }"
+    :appearance="BADGE_APPEARANCE[props.status]"
     data-testid="status-badge"
   >
-    <span>
-      {{ i18n.t(`http.api.value.${props.status}`) }}
-    </span>
-  </span>
+    {{ i18n.t(`http.api.value.${props.status}`) }}
+  </KBadge>
 </template>
 
 <script lang="ts" setup>
+import { BadgeAppearance, KBadge } from '@kong/kongponents'
 import { PropType } from 'vue'
 
 import { StatusKeyword } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const i18n = useI18n()
+
+const BADGE_APPEARANCE: Record<StatusKeyword, BadgeAppearance> = {
+  online: 'success',
+  offline: 'danger',
+  partially_degraded: 'warning',
+  not_available: 'neutral',
+}
 
 const props = defineProps({
   status: {
@@ -30,31 +34,17 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .status {
+  align-items: center;
   white-space: nowrap;
+  font-weight: var(--font-weight-medium);
 }
 
 .status::before {
   content: '';
   display: inline-block;
   vertical-align: middle;
-  margin-right: var(--spacing-xs);
+  margin-right: var(--spacing-xxs);
   border: 4px solid currentColor;
   border-radius: 50%;
-}
-
-.status--not_available {
-  color: var(--gray-400);
-}
-
-.status--online {
-  color: var(--green-500);
-}
-
-.status--partially_degraded {
-  color: var(--yellow-500);
-}
-
-.status--offline {
-  color:  var(--red-600);
 }
 </style>
