@@ -149,7 +149,7 @@
             :action-button-text="t('zones.delete.confirmModal.proceedText')"
             :title="t('zones.delete.confirmModal.title')"
             @cancel="toggleDeleteModal"
-            @delete="refresh"
+            @delete="() => { toggleDeleteModal(); refresh() }"
           >
             <template #body-content>
               <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
