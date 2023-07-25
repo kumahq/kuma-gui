@@ -32,7 +32,7 @@
           <KCard>
             <template #body>
               <AppCollection
-                class="zone-cp-table"
+                class="zone-cp-collection"
                 data-testid="zone-cp-collection"
                 :headers="[
                   { label: 'Name', key: 'name' },
