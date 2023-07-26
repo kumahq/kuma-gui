@@ -51,6 +51,26 @@
                 </RouterLink>
               </template>
 
+              <template #serviceType="{ rowValue }">
+                <template v-if="rowValue">
+                  {{ rowValue }}
+                </template>
+
+                <template v-else>
+                  —
+                </template>
+              </template>
+
+              <template #addressPort="{ rowValue }">
+                <template v-if="rowValue">
+                  {{ rowValue }}
+                </template>
+
+                <template v-else>
+                  —
+                </template>
+              </template>
+
               <template #online="{ row: item }">
                 <template
                   v-if="item.dataplanes"
@@ -65,14 +85,7 @@
               </template>
 
               <template #status="{ row: item }">
-                <StatusBadge
-                  v-if="item.status"
-                  :status="item.status"
-                />
-
-                <template v-else>
-                  —
-                </template>
+                <StatusBadge :status="item.status || 'not_available'" />
               </template>
 
               <template #actions="{ row: item }">
