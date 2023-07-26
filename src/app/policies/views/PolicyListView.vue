@@ -45,14 +45,13 @@
                 class="relative"
                 :class="selected.path"
               >
-                <div class="stack">
-                  <KCard
-                    v-if="selected.isExperimental"
-                    border-variant="noBorder"
-                    class="mb-4"
-                  >
-                    <template #body>
-                      <KAlert appearance="warning">
+                <KCard>
+                  <template #body>
+                    <div class="stack">
+                      <KAlert
+                        v-if="selected.isExperimental"
+                        appearance="warning"
+                      >
                         <template #alertMessage>
                           <p>
                             <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
@@ -64,10 +63,7 @@
                           </p>
                         </template>
                       </KAlert>
-                    </template>
-                  </KCard>
-                  <KCard>
-                    <template #body>
+
                       <AppCollection
                         class="policy-collection"
                         data-testid="policy-collection"
@@ -181,9 +177,9 @@
                           </KDropdownMenu>
                         </template>
                       </AppCollection>
-                    </template>
-                  </KCard>
-                </div>
+                    </div>
+                  </template>
+                </KCard>
               </div>
             </AppView>
           </DataSource>
