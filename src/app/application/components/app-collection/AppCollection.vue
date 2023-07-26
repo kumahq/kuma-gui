@@ -111,7 +111,7 @@ const click = (e: MouseEvent) => {
 .app-collection-toolbar {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
