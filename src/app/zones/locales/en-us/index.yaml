@@ -77,7 +77,7 @@ zones:
           mode: zone
           multizone:
             zone:
-              name: {zoneName}
+              name: "{zoneName}"
               globalAddress: {globalKdsAddress}
           experimental:
             kdsDeltaEnabled: true
@@ -125,7 +125,7 @@ zones:
         config: |
           controlPlane:
             mode: zone
-            zone: {zoneName}
+            zone: "{zoneName}"
             kdsGlobalAddress: {globalKdsAddress}
             secrets:
               - Env: KUMA_MULTIZONE_ZONE_KDS_AUTH_CP_TOKEN_INLINE
