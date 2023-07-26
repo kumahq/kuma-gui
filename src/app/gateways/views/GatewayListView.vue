@@ -37,7 +37,6 @@
             >
               <template #toolbar>
                 <KFilterBar
-                  data-testid="gateway-type-filter"
                   class="data-plane-proxy-filter"
                   :placeholder="`tag: 'kuma.io/protocol: http'`"
                   :query="props.query"
@@ -122,7 +121,6 @@ const props = defineProps<{
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
-  margin-right: auto;
 }
 </style>
 <style lang="scss">
