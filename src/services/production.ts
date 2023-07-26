@@ -155,9 +155,31 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
 
   // Router
   [$.router, {
-    service: createRouter,
+    service: (routes: RouteRecordRaw[], store: Store<State>, env: Alias<Env['var']>) => {
+      return createRouter(routes, store, env('KUMA_BASE_PATH'))
+    },
     arguments: [
       $.routes,
+      $.store,
+      $.env,
+    ],
+  }],
+  // Nav
+  [$.nav, {
+    service: () => (multizone: boolean) => getNavItems(multizone),
+  }],
+
+  // App
+  [$.app, {
+    service: useApp,
+    arguments: [
+      $.store,
+      $.router,
+    ],
+  }],
+  [$.bootstrap, {
+    service: useBootstrap,
+    arguments: [
       $.store,
     ],
   }],
@@ -218,28 +240,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.diagnosticsRoutes, {
     service: diagnosticsRoutes,
   }],
-
-  // Nav
-  [$.nav, {
-    service: () => (multizone: boolean) => getNavItems(multizone),
-  }],
-
-  // App
-  [$.app, {
-    service: useApp,
-    arguments: [
-      $.env,
-      $.routes,
-      $.store,
-    ],
-  }],
-  [$.bootstrap, {
-    service: useBootstrap,
-    arguments: [
-      $.store,
-    ],
-  }],
-
   // Modules
   ...zonesModule($),
   ...meshes($),

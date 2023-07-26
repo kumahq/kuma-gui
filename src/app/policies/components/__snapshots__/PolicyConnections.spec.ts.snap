@@ -22,7 +22,7 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
     >
       <a
         class=""
-        href="/mesh/default/data-plane/backend"
+        href="/gui/mesh/default/data-plane/backend"
       >
         backend
       </a>
@@ -33,7 +33,7 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
     >
       <a
         class=""
-        href="/mesh/default/data-plane/db"
+        href="/gui/mesh/default/data-plane/db"
       >
         db
       </a>
@@ -44,7 +44,7 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
     >
       <a
         class=""
-        href="/mesh/default/data-plane/frontend"
+        href="/gui/mesh/default/data-plane/frontend"
       >
         frontend
       </a>

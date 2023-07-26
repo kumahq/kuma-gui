@@ -2,32 +2,15 @@ import { makeRequest } from './makeRequest'
 import type Env from '@/services/env/Env'
 
 export class RestClient {
-  /**
-   * The API base URL.
-   */
-  _baseUrl: string
-
-  /**
-   * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
-   */
   constructor(
     protected env: Env['var'],
-  ) {
-    this._baseUrl = env('KUMA_API_URL')
-  }
+  ) {}
 
   /**
    * The absolute API base URL used in all requests. Includes its base path segment if one is set.
    */
   get baseUrl() {
-    return this._baseUrl
-  }
-
-  /**
-   * @param baseUrl the absolute API base URL. **Must not have trailing slashes**.
-   */
-  set baseUrl(baseUrl: string) {
-    this._baseUrl = baseUrl
+    return this.env('KUMA_API_URL')
   }
 
   async get(path: string, options?: RequestInit & { params?: any }): Promise<any> {

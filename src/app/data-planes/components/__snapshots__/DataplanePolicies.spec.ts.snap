@@ -184,7 +184,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 
                                 <a
                                   class=""
-                                  href="/mesh/default/service/service-a"
+                                  href="/gui/mesh/default/service/service-a"
                                 >
                                   kuma.io/service:
                                   <b>
@@ -221,7 +221,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 
                                 <a
                                   class=""
-                                  href="/mesh/default/service/web"
+                                  href="/gui/mesh/default/service/web"
                                 >
                                   kuma.io/service:
                                   <b>
@@ -391,7 +391,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policy/fault-injections/fi1.kuma-system"
+                              href="/gui/mesh/default/policy/fault-injections/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -425,7 +425,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 
                                 <a
                                   class=""
-                                  href="/mesh/default/service/service-b"
+                                  href="/gui/mesh/default/service/service-b"
                                 >
                                   kuma.io/service:
                                   <b>
@@ -462,7 +462,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 
                                 <a
                                   class=""
-                                  href="/mesh/default/service/web"
+                                  href="/gui/mesh/default/service/web"
                                 >
                                   kuma.io/service:
                                   <b>
@@ -632,7 +632,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policy/fault-injections/fi1.kuma-system"
+                              href="/gui/mesh/default/policy/fault-injections/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -700,7 +700,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 
                                 <a
                                   class=""
-                                  href="/mesh/default/service/web"
+                                  href="/gui/mesh/default/service/web"
                                 >
                                   kuma.io/service:
                                   <b>
@@ -875,7 +875,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policy/fault-injections/web-to-backend.kuma-system"
+                              href="/gui/mesh/default/policy/fault-injections/web-to-backend.kuma-system"
                             >
                               web-to-backend.kuma-system
                             </a>

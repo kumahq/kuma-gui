@@ -449,7 +449,7 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
               <a
                 class="k-button medium rounded secondary"
                 data-testid="onboarding-previous-button"
-                href="/onboarding/add-services-code"
+                href="/gui/onboarding/add-services-code"
                 type="button"
               >
                 
@@ -467,7 +467,7 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                   aria-current="page"
                   class="router-link-active router-link-exact-active k-button medium rounded outline"
                   data-testid="onboarding-skip-button"
-                  href="/"
+                  href="/gui/"
                   type="button"
                 >
                   
@@ -481,7 +481,7 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                 <a
                   class="k-button medium rounded primary"
                   data-testid="onboarding-next-button"
-                  href="/onboarding/completed"
+                  href="/gui/onboarding/completed"
                   type="button"
                 >
                   
