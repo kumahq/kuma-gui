@@ -114,7 +114,6 @@ const click = (e: MouseEvent) => {
   align-items: stretch;
   flex-wrap: wrap;
   gap: var(--spacing-md);
-  padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
   font-size: var(--type-md);
   color: var(--black-500);
 }
