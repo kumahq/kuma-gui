@@ -13,6 +13,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
         const name = `${fake.hacker.noun()}-${id}`
+        const shouldHaveZoneInsight = fake.datatype.boolean()
+
         return {
           type: 'ZoneOverview',
           name,
@@ -21,7 +23,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           zone: {
             enabled: true,
           },
-          ...(true && {
+          ...(shouldHaveZoneInsight && {
             zoneInsight: {
               subscriptions: [
                 {
