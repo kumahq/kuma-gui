@@ -2,7 +2,7 @@
   <TabsWidget :tabs="filteredTabs">
     <template #tabHeader>
       <h1 class="entity-heading">
-        Zone CP:
+        Zone Control Plane:
 
         <TextWithCopyButton :text="processedZoneOverview.name">
           <router-link :to="detailViewRoute">
