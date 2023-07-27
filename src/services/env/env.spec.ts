@@ -19,6 +19,10 @@ describe('env', () => {
           baseGuiPath: '/not/gui',
           apiUrl: '/somewhere/else',
           version: '110.127.30',
+          product: 'Kuma',
+          mode: 'standalone',
+          environment: 'universal',
+          apiReadOnly: false,
         }
       }
     }
