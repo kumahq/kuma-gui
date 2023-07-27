@@ -1,3 +1,4 @@
+import Kongponents from '@kong/kongponents'
 import { Component, createApp } from 'vue'
 import { Store, storeKey } from 'vuex'
 
@@ -17,6 +18,7 @@ export function useApp(
     const app = createApp(App)
     app.use(store, storeKey)
     app.use(router)
+    app.use(Kongponents)
     return app
   }
 }
