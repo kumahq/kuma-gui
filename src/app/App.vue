@@ -21,7 +21,7 @@
             data-testid="app-error"
           />
 
-          <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
+          <AppOnboardingNotification v-if="!isWizard" />
 
           <RouterView v-slot="{ Component }">
             <transition
@@ -81,7 +81,6 @@ const route = useRoute()
 
 const isWizard = computed(() => route.meta.isWizard === true)
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
-const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
 
 </script>
 <style lang="scss" scoped>
