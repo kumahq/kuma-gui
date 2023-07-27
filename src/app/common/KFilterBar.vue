@@ -417,7 +417,6 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
 <style lang="scss" scoped>
 .k-filter-bar {
   position: relative;
-  max-width: 700px;
   display: inline-flex;
   align-items: stretch;
   background-color: var(--white);

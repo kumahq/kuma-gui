@@ -195,10 +195,6 @@ async function loadData() {
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
-  margin-right: auto;
-}
-.actions-dropdown {
-  display: inline-block;
 }
 </style>
 <style lang="scss">

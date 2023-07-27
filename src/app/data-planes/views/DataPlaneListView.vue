@@ -86,7 +86,6 @@ const props = defineProps<{
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
-  margin-right: auto;
 }
 </style>
 
