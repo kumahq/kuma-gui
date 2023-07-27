@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw, NavigationGuard } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
@@ -16,7 +16,7 @@ import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import { routes as zoneRoutes, actions as zoneActionRoutes, services as zonesModule } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
-import { createRouter } from '@/router/router'
+import { createRouter, onboardingRouteGuard } from '@/router/router'
 import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
 import I18n from '@/services/i18n/I18n'
@@ -50,6 +50,7 @@ const $ = {
 
   router: token<Router>('router'),
   routes: token<RouteRecordRaw[]>('vue.routes'),
+  navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
 
   meshRoutes: token<RouteRecordRaw[]>('kuma.mesh.routes'),
 
@@ -62,6 +63,7 @@ const $ = {
 
   diagnosticsRoutes: token<RouteRecordRaw[]>('kuma.diagnostics.routes'),
   onboardingRoutes: token<RouteRecordRaw[]>('kuma.onboarding.routes'),
+  onboardingRouteGuards: token<NavigationGuard[]>('kuma.onboarding.routes'),
 
   nav: token<typeof getNavItems>('nav'),
 
@@ -181,6 +183,17 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: useBootstrap,
     arguments: [
       $.store,
+    ],
+  }],
+  [$.onboardingRouteGuards, {
+    service: (store: Store<State>) => {
+      return [onboardingRouteGuard(store)]
+    },
+    arguments: [
+      $.store,
+    ],
+    labels: [
+      $.navigationGuards,
     ],
   }],
 
