@@ -52,23 +52,11 @@
               </template>
 
               <template #serviceType="{ rowValue }">
-                <template v-if="rowValue">
-                  {{ rowValue }}
-                </template>
-
-                <template v-else>
-                  —
-                </template>
+                {{ rowValue || '—' }}
               </template>
 
               <template #addressPort="{ rowValue }">
-                <template v-if="rowValue">
-                  {{ rowValue }}
-                </template>
-
-                <template v-else>
-                  —
-                </template>
+                {{ rowValue || '—' }}
               </template>
 
               <template #online="{ row: item }">

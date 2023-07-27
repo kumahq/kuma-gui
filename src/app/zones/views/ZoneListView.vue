@@ -72,23 +72,11 @@
                 </template>
 
                 <template #zoneCpVersion="{ rowValue }">
-                  <template v-if="rowValue">
-                    {{ rowValue }}
-                  </template>
-
-                  <template v-else>
-                    —
-                  </template>
+                  {{ rowValue || '—' }}
                 </template>
 
                 <template #storeType="{ rowValue }">
-                  <template v-if="rowValue">
-                    {{ rowValue }}
-                  </template>
-
-                  <template v-else>
-                    —
-                  </template>
+                  {{ rowValue || '—' }}
                 </template>
 
                 <template #status="{ rowValue }">
