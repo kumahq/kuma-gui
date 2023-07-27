@@ -72,11 +72,11 @@
                 </template>
 
                 <template #zoneCpVersion="{ rowValue }">
-                  {{ rowValue }}
+                  {{ rowValue || '—' }}
                 </template>
 
                 <template #storeType="{ rowValue }">
-                  {{ rowValue }}
+                  {{ rowValue || '—' }}
                 </template>
 
                 <template #status="{ rowValue }">
@@ -99,6 +99,10 @@
                     secondary-color="var(--yellow-300)"
                     size="20"
                   />
+
+                  <template v-else>
+                    &nbsp;
+                  </template>
                 </template>
 
                 <template #actions="{ row }">
@@ -232,7 +236,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
         zone: name,
       },
     }
-    let zoneCpVersion = '-'
+    let zoneCpVersion = ''
     let storeType = ''
     let cpCompat = true
 

@@ -18,21 +18,34 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const online = fake.number.int(100)
         const offline = fake.number.int(100)
 
-        return {
+        const serviceType = fake.kuma.serviceType()
+
+        const serviceInsight: any = {
           type: 'ServiceInsight',
-          serviceType: fake.kuma.serviceType(),
+          serviceType,
           mesh: params.mesh,
           name,
           creationTime: '2021-02-19T08:06:15.14624+01:00',
           modificationTime: '2021-02-19T08:07:37.539229+01:00',
-          addressPort: `${name}.mesh:${fake.internet.port()}`,
-          status: fake.kuma.status(),
-          dataplanes: {
+        }
+
+        if (fake.datatype.boolean()) {
+          serviceInsight.addressPort = `${name}.mesh:${fake.internet.port()}`
+        }
+
+        if (fake.datatype.boolean()) {
+          serviceInsight.status = fake.kuma.status()
+        }
+
+        if (serviceType === 'internal') {
+          serviceInsight.dataplanes = {
             total: online + offline,
             online,
             offline,
-          },
+          }
         }
+
+        return serviceInsight
       }),
       next,
     },
