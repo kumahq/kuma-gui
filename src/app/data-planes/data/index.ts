@@ -118,7 +118,6 @@ function getStatus(data: DataplaneOverview): string {
   const dataplaneInsight = data.dataplaneInsight
   const errors = dataplane.networking.inbound
     .filter(item => {
-      // @TODO
       return item.health && !item.health.ready
     })
     .map((item: {port: any; tags: {[x: string]: any;};}) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
@@ -158,7 +157,6 @@ function getTags(dataplane: Dataplane): Label[] {
         .flatMap((inbound) => Object.entries(inbound.tags))
       break
     case Object.keys(dataplane.networking.gateway?.tags || {}).length > 0:
-    // default:
       // gateway data plane has no inbounds, but has tags embedded in gateway branch
       tags = Object.entries(dataplane.networking.gateway?.tags ?? {})
       break
