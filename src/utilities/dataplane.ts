@@ -9,7 +9,6 @@ import {
   StatusKeyword,
   Version,
 } from '@/types/index.d'
-import { humanReadableDate } from '@/utilities/helpers'
 
 /**
  * Takes a data plane and constructs the list of tags. It removes duplicate tags so we don't display them twice. Note that tags are only considered a duplicate if both their key and their value are the same.
@@ -141,7 +140,7 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
   return versions
 }
 
-export function parseMTLSData(dataPlaneOverview: DataPlaneOverview) {
+export function parseMTLSData(dataPlaneOverview: DataPlaneOverview, formatIsoDate: (isoDate: string) => string) {
   if (dataPlaneOverview.dataplaneInsight === undefined || dataPlaneOverview.dataplaneInsight.mTLS === undefined) {
     return null
   }
@@ -150,12 +149,10 @@ export function parseMTLSData(dataPlaneOverview: DataPlaneOverview) {
   const rawExpDate = new Date(mTLS.certificateExpirationTime)
   // this prevents any weird date shifting
   const fixedExpDate = new Date(rawExpDate.getTime() + rawExpDate.getTimezoneOffset() * 60000)
-  // assembled to display date and time (in 24-hour format)
-  const assembledExpDate = `${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}`
 
   return {
-    certificateExpirationTime: assembledExpDate,
-    lastCertificateRegeneration: humanReadableDate(mTLS.lastCertificateRegeneration),
+    certificateExpirationTime: formatIsoDate(fixedExpDate.toISOString()),
+    lastCertificateRegeneration: formatIsoDate(mTLS.lastCertificateRegeneration),
     certificateRegenerations: mTLS.certificateRegenerations,
   }
 }

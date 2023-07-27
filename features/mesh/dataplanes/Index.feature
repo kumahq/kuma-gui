@@ -52,8 +52,8 @@ Feature: mesh / dataplanes / index
   Scenario: The Proxy listing has the expected content and UI elements
     Then the "$table-row" element exists 9 times
     Then the "$table-row:nth-child(1)" element contains
-      | Value             |
-      | fake-backend      |
-      | http              |
-      | February 18, 2021 |
-      | 1.0.8             |
+      | Value        |
+      | fake-backend |
+      | http         |
+      | Feb 18, 2021 |
+      | 1.0.8        |

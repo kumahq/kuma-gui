@@ -47,7 +47,7 @@ Feature: zones / zone-cps / item
       | dpToken      |
 
     When I click the "$nav-insights" element
-    Then the "$tab-insights" element contains "Connect time: July 28, 2020 at 4:18:09 PM"
+    Then the "$tab-insights" element contains "Connect time: Jul 28, 2020, 4:18 PM"
 
     When I click the "$nav-config" element
     Then the "$tab-config" element contains "dpToken"
