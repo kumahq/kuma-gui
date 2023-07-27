@@ -20,7 +20,6 @@ export type Dataplane = OriginalDataplane & {
   networking: DataplaneNetworking
   tags: { label: string, value: string }[]
   service: string
-  status: string
   protocol: string
   zone: string
 }
@@ -53,12 +52,17 @@ export const Dataplane = {
     return collection as CollectionResponse<Dataplane>
   },
   fromJSON(object: unknown): Dataplane {
-    const item = {
-      ...(object as OriginalDataplane),
-    } as Dataplane
-    // make sure networking.inbound is at least an empty array
-    item.networking = DataplaneNetworking.fromJSON(item.networking)
-    //
+    const generated = (object as OriginalDataplane)
+    const item: Dataplane = {
+      ...generated,
+      // make sure networking.inbound is at least an empty array
+      networking: DataplaneNetworking.fromJSON(generated.networking),
+      //
+      tags: [],
+      service: '',
+      protocol: '',
+      zone: '',
+    }
     item.tags = getTags(item)
     item.service = getTag(item, 'kuma.io/service')
     item.protocol = getTag(item, 'kuma.io/protocol')
@@ -69,15 +73,13 @@ export const Dataplane = {
 
 export const DataplaneInsight = {
   fromJSON(object: unknown): DataplaneInsight {
-    const original = object as OriginalDataplaneInsight
-    const item = {
-      ...original,
-    } as DataplaneInsight
-
-    return {
-      ...item as DataplaneInsight,
-      subscriptions: Array.isArray(original?.subscriptions) ? original.subscriptions : [],
+    const generated = (object as OriginalDataplaneInsight)
+    const item: DataplaneInsight = {
+      ...generated,
+      // make sure subscriptions is at least an empty array
+      subscriptions: Array.isArray(generated?.subscriptions) ? generated.subscriptions : [],
     }
+    return item
   },
 }
 export const DataplaneOverview = {
@@ -88,15 +90,17 @@ export const DataplaneOverview = {
     return collection as CollectionResponse<DataplaneOverview>
   },
   fromJSON(object: unknown): DataplaneOverview {
-    const item = {
-      ...(object as OriginalDataplaneOverview),
-    } as DataplaneOverview
-    // make sure dataplane.networking.inbound is at least an empty array
-    item.dataplane = Dataplane.fromJSON(item.dataplane)
-    // make sure subscriptions is at least an empty array
-    item.dataplaneInsight = DataplaneInsight.fromJSON(item.dataplaneInsight || {})
-    //
-    item.status = getStatus(item)
+    const generated = (object as OriginalDataplaneOverview)
+    const item: DataplaneOverview = {
+      ...generated,
+      dataplane: Dataplane.fromJSON(generated.dataplane),
+      dataplaneInsight: DataplaneInsight.fromJSON(generated.dataplaneInsight || {}),
+      status: '',
+      lastUpdated: new Date(0),
+      version: '',
+      compatible: false,
+    }
+
     const dependencies = getDependencies(item.dataplaneInsight)
     item.lastUpdated = getLastUpdated(item.dataplaneInsight)
     item.version = dependencies.kumaDp.version
@@ -108,6 +112,7 @@ export const DataplaneOverview = {
       },
     ).kind
     item.compatible = compatibility !== COMPATIBLE
+    item.status = getStatus(item)
     return item
   },
 }
