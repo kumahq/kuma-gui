@@ -1,6 +1,6 @@
 import { URLPattern } from 'urlpattern-polyfill'
 
-import { FS, Callback, createMerge, Mocker } from '@/test-support'
+import { FS, Callback, createMerge, Mocker, getOptions } from '@/test-support'
 import { dependencies, MockEnvKeys, AppEnvKeys, Env } from '@/test-support/fake'
 class Router<T> {
   routes: Map<URLPattern, T> = new Map()
@@ -40,6 +40,8 @@ const noop: Callback = (_merge, _req, response) => response
 export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server, fs: FS): Mocker => {
   const router = new Router(fs)
   return (path, opts = {}, cb = noop) => {
+    const options = getOptions(opts)
+
     // if path is `*` then that means mock everything, which currently means
     // changing to `/`
     path = path === '*' ? '/' : path
@@ -51,8 +53,8 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
       (req) => {
         try {
           const mockEnv: Env = (key, d = '') => {
-            if (typeof opts[key as MockEnvKeys] !== 'undefined') {
-              return opts[key as MockEnvKeys]
+            if (typeof options.env[key as MockEnvKeys] !== 'undefined') {
+              return options.env[key as MockEnvKeys]
             }
             return env(key as AppEnvKeys, d)
           }

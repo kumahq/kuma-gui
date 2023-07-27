@@ -23,7 +23,9 @@ describe('ZoneListView', () => {
   test('updates list when deleting Zone', async () => {
     const firstZoneName = 'zone-1'
     mock('/zones+insights', {
-      KUMA_ZONE_COUNT: '3',
+      env: {
+        KUMA_ZONE_COUNT: '3',
+      },
     }, (merge) => {
       return merge({
         body: {

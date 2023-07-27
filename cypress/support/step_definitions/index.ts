@@ -2,6 +2,7 @@ import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber
 import YAML from 'js-yaml'
 
 import { useServer, useMock } from '@/services/e2e'
+import type { Options } from '@/test-support'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
@@ -56,10 +57,13 @@ Given('the environment', (yaml: string) => {
   })
 })
 Given('the URL {string} responds with', (url: string, yaml: string) => {
+  const options: Options = {
+    env,
+  }
   const now = new Date().getTime()
   const mock = useMock()
   urls.set(url, `spy-${now}`)
-  mock(url, env, (respond) => {
+  mock(url, options, (respond) => {
     const response = respond((YAML.load(yaml) || {}) as { headers?: Record<string, string>, body?: Record<string, unknown> })
     return response
   }).as(urls.get(url))
