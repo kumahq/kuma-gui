@@ -229,13 +229,3 @@ const props = defineProps<{
   display: inline-block;
 }
 </style>
-
-<style lang="scss">
-.policy-collection {
-  .actions-column {
-    width: 5%;
-    min-width: 80px;
-    text-align: end;
-  }
-}
-</style>
