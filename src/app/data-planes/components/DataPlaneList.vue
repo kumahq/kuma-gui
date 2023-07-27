@@ -76,7 +76,7 @@
       />
 
       <template v-else>
-        —
+        {{ t('common.collection.none') }}
       </template>
     </template>
     <template #actions="{ row: item }">
@@ -299,20 +299,20 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       name,
       detailViewRoute,
       type,
-      zone: { title: zone ?? '—', route: zoneRoute },
-      service: { title: service ?? '—', route: serviceInsightRoute },
-      protocol: protocol ?? '—',
+      zone: { title: zone ?? t('common.collection.none'), route: zoneRoute },
+      service: { title: service ?? t('common.collection.none'), route: serviceInsightRoute },
+      protocol: protocol ?? t('common.collection.none'),
       status,
       totalUpdates: summary.totalUpdates,
       totalRejectedUpdates: summary.totalRejectedUpdates,
-      dpVersion: summary.dpVersion ?? '—',
-      envoyVersion: summary.envoyVersion ?? '—',
+      dpVersion: summary.dpVersion ?? t('common.collection.none'),
+      envoyVersion: summary.envoyVersion ?? t('common.collection.none'),
       warnings: [],
       unsupportedEnvoyVersion: false,
       unsupportedKumaDPVersion: false,
       kumaDpAndKumaCpMismatch: false,
-      lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
-      lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : '—',
+      lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
+      lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
       overview: dataPlaneOverview,
     }
 

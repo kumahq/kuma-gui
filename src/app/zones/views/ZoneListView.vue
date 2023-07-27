@@ -59,11 +59,11 @@
                 </template>
 
                 <template #zoneCpVersion="{ rowValue }">
-                  {{ rowValue || '—' }}
+                  {{ rowValue || t('common.collection.none') }}
                 </template>
 
                 <template #type="{ rowValue }">
-                  {{ rowValue || '—' }}
+                  {{ rowValue || t('common.collection.none') }}
                 </template>
 
                 <template #status="{ rowValue }">
@@ -73,7 +73,7 @@
                   />
 
                   <template v-else>
-                    —
+                    {{ t('common.collection.none') }}
                   </template>
                 </template>
 
@@ -93,7 +93,7 @@
                   </KTooltip>
 
                   <template v-else>
-                    &nbsp;
+                    {{ t('common.collection.none') }}
                   </template>
                 </template>
 

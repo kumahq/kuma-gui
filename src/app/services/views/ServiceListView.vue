@@ -52,11 +52,11 @@
               </template>
 
               <template #serviceType="{ rowValue }">
-                {{ rowValue || '—' }}
+                {{ rowValue || t('common.collection.none') }}
               </template>
 
               <template #addressPort="{ rowValue }">
-                {{ rowValue || '—' }}
+                {{ rowValue || t('common.collection.none') }}
               </template>
 
               <template #online="{ row: item }">
@@ -68,7 +68,7 @@
                 <template
                   v-else
                 >
-                  —
+                  {{ t('common.collection.none') }}
                 </template>
               </template>
 

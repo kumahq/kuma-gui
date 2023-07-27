@@ -59,7 +59,7 @@
                 />
 
                 <template v-else>
-                  —
+                  {{ t('common.collection.none') }}
                 </template>
               </template>
 
