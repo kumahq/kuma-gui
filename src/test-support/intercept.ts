@@ -74,7 +74,7 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
             url,
           }
           const _response = fetch(request)
-          const response = cb(createMerge(_response), request, _response)
+          const response = cb(createMerge(_response, options.mockMergeStyle), request, _response)
           req.reply({
             statusCode: parseInt(response.headers['Status-Code'] ?? '200'),
             delay: parseInt(mockEnv('KUMA_LATENCY', '0')),

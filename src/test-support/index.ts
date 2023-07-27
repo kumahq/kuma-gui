@@ -12,12 +12,23 @@ export type Merge = (obj: Partial<MockResponse>) => MockResponse
 export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
 export type Options = {
   env: Record<string, string>
+
+  /**
+   * Controls how mocks are merged.
+   *
+   * - `'deep'`: Mocks are merged with their corresponding default mock.
+   * - `'replace'`: Mocks are used as is.
+   *
+   * **Default**: `'deep'`
+   */
+  mockMergeStyle: 'deep' | 'replace'
 }
 type Server = ReturnType<typeof setupServer>
 
 export function getOptions(options: Partial<Options>): Options {
   return {
     env: options.env ?? {},
+    mockMergeStyle: options.mockMergeStyle ?? 'deep',
   }
 }
 
@@ -38,7 +49,17 @@ const combineMerge = (target: object[], source: object[], options: ArrayMergeOpt
 }
 
 const noop: Callback = (_merge, _req, response) => response
-export const createMerge = (response: MockResponse): Merge => (obj) => deepmerge(response, obj, { arrayMerge: combineMerge })
+
+function replaceMerge(_response: Partial<MockResponse>): MockResponse {
+  const { headers = {}, body = {} } = _response
+  return { headers, body }
+}
+
+export const createMerge = (response: Partial<MockResponse>, mockMergeStyle: Options['mockMergeStyle']): Merge => (obj) => {
+  return mockMergeStyle === 'replace'
+    ? replaceMerge(response)
+    : deepmerge(response, obj, { arrayMerge: combineMerge })
+}
 
 const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
   return (route: string, opts: Partial<Options> = {}, cb: Callback = noop) => {
@@ -59,7 +80,7 @@ const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
       if (latency !== 0) {
         await new Promise(resolve => setTimeout(resolve, latency))
       }
-      return cb(createMerge(_response), req, _response)
+      return cb(createMerge(_response, options.mockMergeStyle), req, _response)
     }
   }
 }

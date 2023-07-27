@@ -56,9 +56,10 @@ Given('the environment', (yaml: string) => {
     cy.setCookie(key, String(value))
   })
 })
-Given('the URL {string} responds with', (url: string, yaml: string) => {
+Given(/^the URL "(.*)" responds with( exactly)?$/, (url: string, exactly: string, yaml: string) => {
   const options: Options = {
     env,
+    mockMergeStyle: exactly ? 'replace' : 'deep',
   }
   const now = new Date().getTime()
   const mock = useMock()
