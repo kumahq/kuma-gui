@@ -16,6 +16,8 @@ type EnvProps = {
   KUMA_BASE_PATH: string
   KUMA_API_URL: string
   KUMA_UTM_QUERY_PARAMS: string
+  KUMA_MODE: string
+  KUMA_ENVIRONMENT: string
 }
 export type EnvVars = EnvArgs & EnvProps
 
@@ -42,6 +44,8 @@ export default class Env {
       KUMA_VERSION: version.pre,
       KUMA_API_URL: env('KUMA_API_URL') || config.apiUrl,
       KUMA_BASE_PATH: env('KUMA_BASE_PATH') || config.baseGuiPath,
+      KUMA_MODE: env('KUMA_MODE') || config.mode,
+      KUMA_ENVIRONMENT: env('KUMA_ENVIRONMENT') || config.environment,
     }
   }
 

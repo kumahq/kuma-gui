@@ -41,6 +41,12 @@ export type PathConfig = {
    * **Example**: `'2.0.1'`
    */
   version: string
+
+  product: string,
+  mode: string,
+  environment: string,
+  apiReadOnly: boolean,
+
 }
 
 export type TableHeader = {
