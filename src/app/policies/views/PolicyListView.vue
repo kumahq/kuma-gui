@@ -64,31 +64,29 @@
                         </template>
                       </KAlert>
 
-                      <AppCollection
-                        class="policy-collection"
-                        data-testid="policy-collection"
-                        :empty-state-title="`No Data`"
-                        :empty-state-message="`There are no ${selected.name} policies present.`"
-                        :headers="[
-                          { label: 'Name', key: 'name' },
-                          { label: 'Type', key: 'type' },
-                          { label: 'Actions', key: 'actions', hideLabel: true },
-                        ]"
-                        :page-number="props.page"
-                        :page-size="props.size"
-                        :total="data?.total"
-                        :items="data?.items"
-                        :error="error"
-                        @change="route.update"
+                      <!-- Load in all the totals for the policies so we can show them in the dropdown menu -->
+                      <DataSource
+                        v-slot="{data: insights}: MeshInsightSource"
+                        :src="`/${route.params.mesh}/insights`"
                       >
-                        <template #toolbar>
-                          <!--
-                              Load in all the totals for the policies so we can show them in the dropdown menu
-                            -->
-                          <DataSource
-                            v-slot="{data: insights}: MeshInsightSource"
-                            :src="`/${route.params.mesh}/insights`"
-                          >
+                        <AppCollection
+                          class="policy-collection"
+                          data-testid="policy-collection"
+                          :empty-state-title="`No Data`"
+                          :empty-state-message="`There are no ${selected.name} policies present.`"
+                          :headers="[
+                            { label: 'Name', key: 'name' },
+                            { label: 'Type', key: 'type' },
+                            { label: 'Actions', key: 'actions', hideLabel: true },
+                          ]"
+                          :page-number="props.page"
+                          :page-size="props.size"
+                          :total="data?.total"
+                          :items="data?.items"
+                          :error="error"
+                          @change="route.update"
+                        >
+                          <template #toolbar>
                             <KSelect
                               label="Policies"
                               :items="policies.policies.map(item => ({
@@ -117,66 +115,66 @@
                                 </span>
                               </template>
                             </KSelect>
-                          </DataSource>
 
-                          <DocumentationLink
-                            :href="t('policies.href.docs', {'name': selected.name})"
-                            data-testid="policy-documentation-link"
-                          />
-                        </template>
-                        <template #name="{ row: item }">
-                          <RouterLink
-                            :to="{
-                              name: 'policy-detail-view',
-                              params: {
-                                policy: item.name,
-                              },
-                            }"
-                          >
-                            {{ item.name }}
-                          </RouterLink>
-                        </template>
-                        <template #type="{ row: item }">
-                          {{ item.type }}
-                        </template>
-                        <template #actions="{ row: item }">
-                          <KDropdownMenu
-                            class="actions-dropdown"
-                            :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                            width="150"
-                          >
-                            <template #default>
-                              <KButton
-                                class="non-visual-button"
-                                appearance="secondary"
-                                size="small"
-                              >
-                                <template #icon>
-                                  <KIcon
-                                    color="var(--black-400)"
-                                    icon="more"
-                                    size="16"
-                                  />
-                                </template>
-                              </KButton>
-                            </template>
+                            <DocumentationLink
+                              :href="t('policies.href.docs', {'name': selected.name})"
+                              data-testid="policy-documentation-link"
+                            />
+                          </template>
+                          <template #name="{ row: item }">
+                            <RouterLink
+                              :to="{
+                                name: 'policy-detail-view',
+                                params: {
+                                  policy: item.name,
+                                },
+                              }"
+                            >
+                              {{ item.name }}
+                            </RouterLink>
+                          </template>
+                          <template #type="{ row: item }">
+                            {{ item.type }}
+                          </template>
+                          <template #actions="{ row: item }">
+                            <KDropdownMenu
+                              class="actions-dropdown"
+                              :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                              width="150"
+                            >
+                              <template #default>
+                                <KButton
+                                  class="non-visual-button"
+                                  appearance="secondary"
+                                  size="small"
+                                >
+                                  <template #icon>
+                                    <KIcon
+                                      color="var(--black-400)"
+                                      icon="more"
+                                      size="16"
+                                    />
+                                  </template>
+                                </KButton>
+                              </template>
 
-                            <template #items>
-                              <KDropdownItem
-                                :item="{
-                                  to: {
-                                    name: 'policy-detail-view',
-                                    params: {
-                                      policy: item.name,
+                              <template #items>
+                                <KDropdownItem
+                                  :item="{
+                                    to: {
+                                      name: 'policy-detail-view',
+                                      params: {
+                                        policy: item.name,
+                                      },
                                     },
-                                  },
-                                  label: t('common.collection.actions.view'),
-                                }"
-                              />
-                            </template>
-                          </KDropdownMenu>
-                        </template>
-                      </AppCollection>
+                                    label: t('common.collection.actions.view'),
+                                  }"
+                                />
+                              </template>
+                            </KDropdownMenu>
+                          </template>
+                        </AppCollection>
+                      </DataSource>
                     </div>
                   </template>
                 </KCard>
