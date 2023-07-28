@@ -78,14 +78,19 @@
                 </template>
 
                 <template #warnings="{ rowValue }">
-                  <KIcon
+                  <KTooltip
                     v-if="rowValue"
-                    class="mr-1"
-                    icon="warning"
-                    color="var(--black-500)"
-                    secondary-color="var(--yellow-300)"
-                    size="20"
-                  />
+                    :label="t('zone-cps.list.version_mismatch')"
+                  >
+                    <KIcon
+                      class="mr-1"
+                      icon="warning"
+                      color="var(--black-500)"
+                      secondary-color="var(--yellow-300)"
+                      size="20"
+                      hide-title
+                    />
+                  </KTooltip>
 
                   <template v-else>
                     &nbsp;
@@ -167,7 +172,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 

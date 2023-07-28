@@ -8,6 +8,8 @@ zone-cps:
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
+  list:
+    version_mismatch: 'Version mismatch'
 
 zone-ingresses:
   routes:
