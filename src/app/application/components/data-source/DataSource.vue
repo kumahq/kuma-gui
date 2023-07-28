@@ -76,9 +76,9 @@ const refresh = () => {
 
 <template>
   <slot
-    :data="message as any"
+    :data="(message as any)"
     :error="error"
     :refresh="refresh"
   />
-  <span />
+  <span v-if="false" />
 </template>
