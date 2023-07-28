@@ -4,7 +4,12 @@
     :href="props.href"
     target="_blank"
   >
-    <img src="@/assets/images/book.svg?url">
+    <KIcon
+      icon="book"
+      color="currentColor"
+      size="16"
+      hide-title
+    />
 
     <span class="visually-hidden">Documentation</span>
   </a>
