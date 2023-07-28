@@ -12,7 +12,7 @@
       { label: 'Kuma DP version', key: 'dpVersion' },
       { label: 'Status', key: 'status' },
       { label: 'Actions', key: 'actions', hideLabel: true },
-    ].filter(Boolean)"
+    ].filter(notEmpty)"
     :page-number="props.pageNumber"
     :page-size="props.pageSize"
     :total="props.total"
@@ -144,6 +144,7 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
+import { notEmpty } from '@/utilities/notEmpty'
 const store = useStore()
 const { t, formatIsoDate } = useI18n()
 
