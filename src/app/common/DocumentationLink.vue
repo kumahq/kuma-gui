@@ -1,24 +1,21 @@
 <template>
-  <KButton
+  <a
     class="docs-link"
-    appearance="outline"
+    :href="props.href"
     target="_blank"
-    :to="props.href"
   >
     <KIcon
-      icon="externalLink"
+      icon="book"
       color="currentColor"
       size="16"
       hide-title
     />
 
-    Documentation
-  </KButton>
+    <span class="visually-hidden">Documentation</span>
+  </a>
 </template>
 
 <script lang="ts" setup>
-import { KButton, KIcon } from '@kong/kongponents'
-
 const props = defineProps({
   href: {
     type: String,
@@ -26,3 +23,12 @@ const props = defineProps({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.docs-link {
+  display: inline-flex;
+  align-items: center;
+  padding-right: var(--spacing-sm);
+  padding-left: var(--spacing-sm);
+}
+</style>
