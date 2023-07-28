@@ -49,19 +49,6 @@
                 :error="error"
                 @change="route.update"
               >
-                <template
-                  v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-                  #toolbar
-                >
-                  <KButton
-                    appearance="creation"
-                    icon="plus"
-                    :to="{ name: 'zone-create-view' }"
-                  >
-                    Create Zone
-                  </KButton>
-                </template>
-
                 <template #name="{ row, rowValue }">
                   <RouterLink
                     :to="row.detailViewRoute"

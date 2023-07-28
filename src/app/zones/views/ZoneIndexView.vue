@@ -19,6 +19,19 @@
         </h1>
       </template>
 
+      <template
+        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+        #actions
+      >
+        <KButton
+          appearance="creation"
+          icon="plus"
+          :to="{ name: 'zone-create-view' }"
+        >
+          {{ t('zones.index.create') }}
+        </KButton>
+      </template>
+
       <NavTabs
         v-if="store.getters['config/getMulticlusterStatus']"
         :tabs="tabs"
@@ -35,13 +48,16 @@
 </template>
 
 <script lang="ts" setup>
+import { KButton } from '@kong/kongponents'
+
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
 import { useStore } from '@/store/store'
-import { useI18n } from '@/utilities'
+import { useEnv, useI18n } from '@/utilities'
 
+const env = useEnv()
 const { t } = useI18n()
 const store = useStore()
 
