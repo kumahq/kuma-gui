@@ -8,6 +8,8 @@ zone-cps:
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
+  list:
+    version_mismatch: 'Version mismatch'
 
 zone-ingresses:
   routes:
@@ -41,6 +43,8 @@ zones:
         zone-cp-list-view: Zone Control Planes
         zone-ingress-list-view: Ingresses
         zone-egress-list-view: Egresses
+  index:
+    create: 'Create Zone'
   form:
     exit: 'Exit'
     nameLabel: 'Name'

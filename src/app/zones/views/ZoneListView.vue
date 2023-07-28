@@ -37,7 +37,7 @@
                 :headers="[
                   { label: 'Name', key: 'name' },
                   { label: 'Zone CP Version', key: 'zoneCpVersion' },
-                  { label: 'Storage type', key: 'storeType' },
+                  { label: 'Type', key: 'type' },
                   { label: 'Status', key: 'status' },
                   { label: 'Warnings', key: 'warnings', hideLabel: true },
                   { label: 'Actions', key: 'actions', hideLabel: true },
@@ -49,19 +49,6 @@
                 :error="error"
                 @change="route.update"
               >
-                <template
-                  v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-                  #toolbar
-                >
-                  <KButton
-                    appearance="creation"
-                    icon="plus"
-                    :to="{ name: 'zone-create-view' }"
-                  >
-                    Create Zone
-                  </KButton>
-                </template>
-
                 <template #name="{ row, rowValue }">
                   <RouterLink
                     :to="row.detailViewRoute"
@@ -75,7 +62,7 @@
                   {{ rowValue || '—' }}
                 </template>
 
-                <template #storeType="{ rowValue }">
+                <template #type="{ rowValue }">
                   {{ rowValue || '—' }}
                 </template>
 
@@ -91,14 +78,19 @@
                 </template>
 
                 <template #warnings="{ rowValue }">
-                  <KIcon
+                  <KTooltip
                     v-if="rowValue"
-                    class="mr-1"
-                    icon="warning"
-                    color="var(--black-500)"
-                    secondary-color="var(--yellow-300)"
-                    size="20"
-                  />
+                    :label="t('zone-cps.list.version_mismatch')"
+                  >
+                    <KIcon
+                      class="mr-1"
+                      icon="warning"
+                      color="var(--black-500)"
+                      secondary-color="var(--yellow-300)"
+                      size="20"
+                      hide-title
+                    />
+                  </KTooltip>
 
                   <template v-else>
                     &nbsp;
@@ -180,8 +172,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
-import { ref } from 'vue'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
+import { computed, ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
@@ -203,7 +195,7 @@ type ZoneOverviewTableRow = {
   name: string
   status: StatusKeyword
   zoneCpVersion: string
-  storeType: string
+  type: 'universal' | 'kubernetes'
   warnings: boolean
 }
 
@@ -227,6 +219,8 @@ const props = defineProps({
 const isDeleteModalVisible = ref(false)
 const deleteZoneName = ref('')
 
+const environment = computed(() => store.getters['config/getEnvironment'])
+
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
   return zoneOverviews.map((zoneOverview) => {
     const { name } = zoneOverview
@@ -237,7 +231,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       },
     }
     let zoneCpVersion = ''
-    let storeType = ''
+    const type = environment.value
     let cpCompat = true
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
@@ -248,9 +242,6 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
         const { kumaCpGlobalCompatible = true } = item.version.kumaCp
 
         cpCompat = kumaCpGlobalCompatible
-        if (item.config) {
-          storeType = JSON.parse(item.config).store.type
-        }
       }
     })
 
@@ -261,7 +252,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       name,
       status,
       zoneCpVersion,
-      storeType,
+      type,
       warnings: !cpCompat,
     }
   })
