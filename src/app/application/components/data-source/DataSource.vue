@@ -80,5 +80,5 @@ const refresh = () => {
     :error="error"
     :refresh="refresh"
   />
-  <span v-if="false" />
+  <span class="visually-hidden" />
 </template>
