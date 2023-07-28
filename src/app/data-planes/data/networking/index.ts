@@ -10,17 +10,17 @@ export type DataplaneNetworkingInbound = OriginalDataplaneNetworkingInbound & {
   health: DataplaneNetworkingInboundHealth
 }
 export type DataplaneNetworking = OriginalDataplaneNetworking & {
-  inbound: OriginalDataplaneNetworkingInbound[]
+  inbound: DataplaneNetworkingInbound[]
 }
 export const DataplaneNetworking = {
   fromJSON(object: unknown): DataplaneNetworking {
-    const item = {
+    const generated = {
       ...(object as OriginalDataplaneNetworking),
-    } as DataplaneNetworking
+    }
     return {
-      ...item as DataplaneNetworking,
+      ...generated,
       ...{
-        inbound: Array.isArray(item.inbound) ? item.inbound.map((item: any) => DataplaneNetworkingInbound.fromJSON(item || {})) : [],
+        inbound: Array.isArray(generated.inbound) ? generated.inbound.map((item: any) => DataplaneNetworkingInbound.fromJSON(item || {})) : [],
       },
     }
   },
@@ -29,6 +29,7 @@ export const DataplaneNetworkingInbound = {
   fromJSON(object: any): DataplaneNetworkingInbound {
     return {
       ...object,
+      // an undefined health means we don't know either way
       // health: DataplaneNetworkingInboundHealth.fromJSON(object.health || {}),
     }
   },

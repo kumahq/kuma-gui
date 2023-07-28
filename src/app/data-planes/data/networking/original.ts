@@ -32,6 +32,15 @@ export interface DataplaneNetworking {
     port: number
     tags: Record<string, string>
   }[]
+  inbound?: {
+    port: number
+    servicePort: number
+    serviceAddress: string
+    tags: Record<string, string>
+    health?: {
+      ready: boolean
+    }
+  }[]
 }
 
 export interface DataplaneNetworkingInbound {

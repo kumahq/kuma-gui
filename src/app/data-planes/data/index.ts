@@ -77,7 +77,7 @@ export const DataplaneInsight = {
     const item: DataplaneInsight = {
       ...generated,
       // make sure subscriptions is at least an empty array
-      subscriptions: Array.isArray(generated?.subscriptions) ? generated.subscriptions : [],
+      subscriptions: Array.isArray(generated.subscriptions) ? generated.subscriptions : [],
     }
     return item
   },
