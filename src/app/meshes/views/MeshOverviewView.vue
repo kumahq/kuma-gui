@@ -119,10 +119,9 @@ import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { Mesh, MeshInsight } from '@/types/index.d'
 import { useKumaApi, useI18n } from '@/utilities'
-import { humanReadableDate } from '@/utilities/helpers'
 import { notEmpty } from '@/utilities/notEmpty'
 
-const { t } = useI18n()
+const { t, formatIsoDate } = useI18n()
 
 const kumaApi = useKumaApi()
 const route = useRoute()
@@ -141,8 +140,8 @@ const basicMesh = computed(() => {
   const { name, creationTime, modificationTime } = mesh.value
   return {
     name,
-    created: humanReadableDate(creationTime),
-    modified: humanReadableDate(modificationTime),
+    created: formatIsoDate(creationTime),
+    modified: formatIsoDate(modificationTime),
     'Data Plane Proxies': meshInsights.value.dataplanes.total,
   }
 })

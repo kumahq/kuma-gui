@@ -24,14 +24,14 @@
           v-if="details.connectTime"
           :term="t('http.api.property.connectTime')"
         >
-          {{ humanReadableDate(details.connectTime) }}
+          {{ formatIsoDate(details.connectTime) }}
         </DefinitionListItem>
 
         <DefinitionListItem
           v-if="details.disconnectTime"
           :term="t('http.api.property.disconnectTime')"
         >
-          {{ humanReadableDate(details.disconnectTime) }}
+          {{ formatIsoDate(details.disconnectTime) }}
         </DefinitionListItem>
       </DefinitionList>
     </div>
@@ -86,9 +86,8 @@ import { computed } from 'vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import { useI18n } from '@/utilities'
-import { humanReadableDate } from '@/utilities/helpers'
 
-const { t } = useI18n()
+const { t, formatIsoDate } = useI18n()
 
 const props = defineProps({
   details: {

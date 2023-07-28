@@ -144,9 +144,8 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
-import { humanReadableDate } from '@/utilities/helpers'
 const store = useStore()
-const { t } = useI18n()
+const { t, formatIsoDate } = useI18n()
 
 type DataPlaneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
@@ -312,8 +311,8 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       unsupportedEnvoyVersion: false,
       unsupportedKumaDPVersion: false,
       kumaDpAndKumaCpMismatch: false,
-      lastUpdated: summary.selectedUpdateTime ? humanReadableDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
-      lastConnected: summary.selectedTime ? humanReadableDate(new Date(summary.selectedTime).toUTCString()) : '—',
+      lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
+      lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : '—',
       overview: dataPlaneOverview,
     }
 

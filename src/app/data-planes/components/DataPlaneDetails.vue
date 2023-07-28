@@ -191,7 +191,7 @@ import {
   parseMTLSData,
 } from '@/utilities/dataplane'
 
-const { t } = useI18n()
+const { t, formatIsoDate } = useI18n()
 
 const kumaApi = useKumaApi()
 const store = useStore()
@@ -256,7 +256,7 @@ const detailViewRoute = computed(() => ({
 const statusWithReason = computed(() => getStatusAndReason(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataPlane))
 const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dataplaneInsight))
-const mtlsData = computed(() => parseMTLSData(props.dataPlaneOverview))
+const mtlsData = computed(() => parseMTLSData(props.dataPlaneOverview, formatIsoDate))
 const insightSubscriptions = computed(() => {
   const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? [])
 
