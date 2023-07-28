@@ -82,42 +82,44 @@
                         @change="route.update"
                       >
                         <template #toolbar>
-                          <!--
+                          <div>
+                            <!--
                               Load in all the totals for the policies so we can show them in the dropdown menu
                             -->
-                          <DataSource
-                            v-slot="{data: insights}: MeshInsightSource"
-                            :src="`/${route.params.mesh}/insights`"
-                          >
-                            <KSelect
-                              label="Policies"
-                              :items="policies.policies.map(item => ({
-                                label: item.name,
-                                value: item.path,
-                                selected: item.path === route.params.policyPath,
-                              }))"
-                              :label-attributes="{ class: 'visually-hidden' }"
-                              appearance="select"
-                              :enable-filtering="true"
-                              @selected="(item: SelectItem) => route.replace({
-                                name: 'policies-list-view',
-                                params: {
-                                  ...route.params,
-                                  policyPath: item.value,
-                                },
-                              })"
+                            <DataSource
+                              v-slot="{data: insights}: MeshInsightSource"
+                              :src="`/${route.params.mesh}/insights`"
                             >
-                              <template #item-template="{ item }">
-                                <span
-                                  :class="{
-                                    'policy-type-empty': !insights?.policies[item.label]?.total
-                                  }"
-                                >
-                                  {{ item.label }} ({{ insights?.policies[item.label]?.total || '0' }})
-                                </span>
-                              </template>
-                            </KSelect>
-                          </DataSource>
+                              <KSelect
+                                label="Policies"
+                                :items="policies.policies.map(item => ({
+                                  label: item.name,
+                                  value: item.path,
+                                  selected: item.path === route.params.policyPath,
+                                }))"
+                                :label-attributes="{ class: 'visually-hidden' }"
+                                appearance="select"
+                                :enable-filtering="true"
+                                @selected="(item: SelectItem) => route.replace({
+                                  name: 'policies-list-view',
+                                  params: {
+                                    ...route.params,
+                                    policyPath: item.value,
+                                  },
+                                })"
+                              >
+                                <template #item-template="{ item }">
+                                  <span
+                                    :class="{
+                                      'policy-type-empty': !insights?.policies[item.label]?.total
+                                    }"
+                                  >
+                                    {{ item.label }} ({{ insights?.policies[item.label]?.total || '0' }})
+                                  </span>
+                                </template>
+                              </KSelect>
+                            </DataSource>
+                          </div>
 
                           <DocumentationLink
                             :href="t('policies.href.docs', {'name': selected.name})"
