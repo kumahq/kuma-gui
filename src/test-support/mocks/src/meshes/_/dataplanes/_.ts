@@ -1,10 +1,12 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
+
   const isGateway = params.name.includes('gateway')
-  const name = `${fake.hacker.noun()}`
-  const zone = `${fake.hacker.noun()}`
+  const service = params.name ?? fake.hacker.noun()
   const isMultizone = true && fake.datatype.boolean()
+  const zone = fake.hacker.noun()
+
   return {
     headers: {
     },
@@ -19,7 +21,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         ...(isGateway && {
           gateway: {
             tags: {
-              'kuma.io/service': name,
+              'kuma.io/service': `${service}`,
               ...(isMultizone && {
                 'kuma.io/zone': zone,
               }),
@@ -34,7 +36,10 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
             serviceAddress: fake.internet.ip(),
             tags: {
               'kuma.io/protocol': fake.kuma.protocol(),
-              'kuma.io/service': name,
+              'kuma.io/service': `${service}`,
+              ...(isMultizone && {
+                'kuma.io/zone': zone,
+              }),
             },
           },
         ],

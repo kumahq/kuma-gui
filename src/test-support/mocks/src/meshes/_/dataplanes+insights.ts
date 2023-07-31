@@ -59,6 +59,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                   tags: {
                     'kuma.io/protocol': fake.kuma.protocol(),
                     'kuma.io/service': `${service}`,
+                    ...(isMultizone && {
+                      'kuma.io/zone': zone,
+                    }),
                   },
                 },
               ],
@@ -105,6 +108,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     gitTag: 'unknown',
                     gitCommit: 'unknown',
                     buildDate: 'unknown',
+                    kumaCpCompatible: fake.datatype.boolean(),
                   },
                   envoy: {
                     version: '1.16.2',
@@ -145,7 +149,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     gitTag: 'unknown',
                     gitCommit: 'unknown',
                     buildDate: 'unknown',
-                    kumaCpCompatible: true,
+                    kumaCpCompatible: fake.datatype.boolean(),
                   },
                   envoy: {
                     version: '1.16.2',
