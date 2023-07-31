@@ -8,8 +8,8 @@ Feature: mesh / services / index
       | item                | $items tbody tr                       |
       | item-title          | .entity-title                         |
       | navigation          | .route-mesh-view-tabs ul >            |
-      | button-tab          | $navigation li:nth-child(2) a         |
       | button-tab-selected | $navigation li:nth-child(2).active    |
+      | breadcrumbs         | .k-breadcrumbs                        |
     And the environment
       """
       KUMA_SERVICEINSIGHT_COUNT: 2
@@ -56,8 +56,8 @@ Feature: mesh / services / index
     # In this case $children refers to the data-plane-proxy table
     # external services shouldn't have this
     Then the "$children" element doesn't exist
-    Then the "$button-tab-selected" element exists
-    When I click the "$button-tab-selected a" element
+
+    When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "fake-service-2"
     When I click the "$item:nth-child(2) td:first-of-type a" element
