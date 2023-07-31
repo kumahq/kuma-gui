@@ -56,7 +56,14 @@
               </template>
 
               <template #addressPort="{ rowValue }">
-                {{ rowValue || t('common.collection.none') }}
+                <TextWithCopyButton
+                  v-if="rowValue"
+                  :text="rowValue"
+                />
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
+                </template>
               </template>
 
               <template #online="{ row: item }">
@@ -136,6 +143,7 @@ import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
