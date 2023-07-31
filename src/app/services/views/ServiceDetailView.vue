@@ -30,92 +30,97 @@
         <template
           v-else
         >
-          <ServiceSummary
-            :service="item"
-            :external-service="externalService"
-          />
-          <template
-            v-if="item?.serviceType !== 'external'"
-          >
-            <DataSource
-              v-slot="{data, error: dataplanesError}"
-              :src="`/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
-            >
-              <template
-                v-for="gateways in [typeof data?.items?.[0].dataplane.networking.gateway === 'undefined']"
-                :key="gateways"
+          <div class="stack">
+            <ServiceSummary
+              :service="item"
+              :external-service="externalService"
+            />
+
+            <template v-if="item?.serviceType !== 'external'">
+              <DataSource
+                v-slot="{data, error: dataplanesError}"
+                :src="`/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
               >
-                <DataPlaneList
-                  data-testid="data-plane-collection"
-                  class="data-plane-collection"
-                  :page-number="props.page"
-                  :page-size="props.size"
-                  :total="data?.total"
-                  :items="data?.items"
-                  :error="dataplanesError"
-                  :gateways="gateways"
-                  @change="({page, size}) => {
-                    // @TODO: Should we remove s: undefined?
-                    route.update({
-                      page: String(page),
-                      size: String(size)
-                    })
-                  }"
+                <template
+                  v-for="gateways in [typeof data?.items?.[0].dataplane.networking.gateway === 'undefined']"
+                  :key="gateways"
                 >
-                  <template #toolbar>
-                    <KFilterBar
-                      class="data-plane-proxy-filter"
-                      :placeholder="`tag: 'kuma.io/protocol: http'`"
-                      :query="props.query"
-                      :fields="{
-                        name: { description: 'filter by name or parts of a name' },
-                        protocol: { description: 'filter by “kuma.io/protocol” value' },
-                        tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                        zone: { description: 'filter by “kuma.io/zone” value' },
-                      }"
-                      @fields-change="(val) => route.update({
-                        query: val.query,
-                        s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
-                      })"
-                    />
-                    <template
-                      v-if="gateways"
-                    >
-                      <KSelect
-                        label="Type"
-                        :overlay-label="true"
-                        :items="[
-                          {
-                            label: 'All',
-                            value: 'all'
-                          },
-                          {
-                            label: 'Builtin',
-                            value: 'builtin'
-                          },
-                          {
-                            label: 'Delegated',
-                            value: 'delegated'
-                          }
-                        ].map(item => ({
-                          ...item,
-                          selected: item.value === props.gatewayType
-                        }))"
-                        appearance="select"
-                        @selected="(item: SelectItem) => route.update({
-                          gatewayType: String(item.value),
-                        })"
+                  <KCard>
+                    <template #body>
+                      <DataPlaneList
+                        data-testid="data-plane-collection"
+                        class="data-plane-collection"
+                        :page-number="props.page"
+                        :page-size="props.size"
+                        :total="data?.total"
+                        :items="data?.items"
+                        :error="dataplanesError"
+                        :gateways="gateways"
+                        @change="({page, size}) => {
+                          // @TODO: Should we remove s: undefined?
+                          route.update({
+                            page: String(page),
+                            size: String(size)
+                          })
+                        }"
                       >
-                        <template #item-template="{ item: value }">
-                          {{ value.label }}
+                        <template #toolbar>
+                          <KFilterBar
+                            class="data-plane-proxy-filter"
+                            :placeholder="`tag: 'kuma.io/protocol: http'`"
+                            :query="props.query"
+                            :fields="{
+                              name: { description: 'filter by name or parts of a name' },
+                              protocol: { description: 'filter by “kuma.io/protocol” value' },
+                              tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                              zone: { description: 'filter by “kuma.io/zone” value' },
+                            }"
+                            @fields-change="(val) => route.update({
+                              query: val.query,
+                              s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
+                            })"
+                          />
+                          <template
+                            v-if="gateways"
+                          >
+                            <KSelect
+                              label="Type"
+                              :overlay-label="true"
+                              :items="[
+                                {
+                                  label: 'All',
+                                  value: 'all'
+                                },
+                                {
+                                  label: 'Builtin',
+                                  value: 'builtin'
+                                },
+                                {
+                                  label: 'Delegated',
+                                  value: 'delegated'
+                                }
+                              ].map(item => ({
+                                ...item,
+                                selected: item.value === props.gatewayType
+                              }))"
+                              appearance="select"
+                              @selected="(item: SelectItem) => route.update({
+                                gatewayType: String(item.value),
+                              })"
+                            >
+                              <template #item-template="{ item: value }">
+                                {{ value.label }}
+                              </template>
+                            </KSelect>
+                          </template>
                         </template>
-                      </KSelect>
+                      </DataPlaneList>
                     </template>
-                  </template>
-                </DataPlaneList>
-              </template>
-            </DataSource>
-          </template>
+                  </KCard>
+                </template>
+              </DataSource>
+            </template>
+          </div>
         </template>
       </div>
     </AppView>
