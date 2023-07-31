@@ -88,7 +88,7 @@
     "jest-serializer-vue": "^3.1.0",
     "jest-transform-stub": "^2.0.0",
     "lockfile-lint": "^4.10.6",
-    "marked": "^5.1.2",
+    "marked": "^6.0.0",
     "msw": "~1.2.3",
     "postcss": "^8.4.27",
     "sass": "^1.64.1",
