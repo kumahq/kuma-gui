@@ -5,7 +5,7 @@ interface NavItem {
   /**
    * Name of an anchor route to look for in `route.matched` to determine whether a route belongs to a nav item.
    *
-   * An anchor route represents the route record that holds routes of a module; for example, the route “zone-abstract-view” holds all routes related to zones.
+   * An anchor route represents the route record that holds routes of a module; for example, the route “zone-index-view” holds all routes related to zones.
    */
   anchorRouteName?: string
 }
