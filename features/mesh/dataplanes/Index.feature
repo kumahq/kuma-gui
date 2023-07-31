@@ -40,14 +40,14 @@ Feature: mesh / dataplanes / index
   Scenario: The Proxy listing table has the correct columns
     Then the "$table-header" element exists 8 times
     Then the "$table-header" elements contain
-      | Value           |
-      | Name            |
-      | Service         |
-      | Protocol        |
-      | Zone            |
-      | Last Updated    |
-      | Kuma DP version |
-      | Status          |
+      | Value        |
+      | Name         |
+      | Service      |
+      | Protocol     |
+      | Zone         |
+      | Last Updated |
+      | Status       |
+      | Warnings     |
 
   Scenario: The Proxy listing has the expected content and UI elements
     Then the "$table-row" element exists 9 times
@@ -56,4 +56,3 @@ Feature: mesh / dataplanes / index
       | fake-backend |
       | http         |
       | Feb 18, 2021 |
-      | 1.0.8        |

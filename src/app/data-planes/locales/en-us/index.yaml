@@ -8,3 +8,5 @@ data-planes:
   href:
     docs:
       mutual-tls: '{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}'
+  list:
+    version_mismatch: 'Version mismatch'
