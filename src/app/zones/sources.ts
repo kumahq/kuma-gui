@@ -8,6 +8,10 @@ type PaginationParams = {
   page: number
 }
 
+type DetailParams = {
+  name: string
+}
+
 export type ZoneOverviewCollection = CollectionResponse<ZoneOverview>
 export type ZoneOverviewSource = DataSourceResponse<ZoneOverview>
 export type ZoneOverviewCollectionSource = DataSourceResponse<ZoneOverviewCollection>
@@ -29,6 +33,14 @@ export const sources = (api: KumaApi) => {
       const offset = params.size * (params.page - 1)
 
       return await api.getAllZoneOverviews({ size, offset })
+    },
+
+    '/zone-cps/:name': async (params: DetailParams, source: { close: () => void }) => {
+      source.close()
+
+      const name = params.name
+
+      return await api.getZoneOverview({ name })
     },
 
     '/zone-ingresses': async (params: PaginationParams, source: { close: () => void }) => {
