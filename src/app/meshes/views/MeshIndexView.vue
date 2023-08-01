@@ -8,7 +8,7 @@
           },
           text: t('meshes.routes.item.breadcrumbs'),
         },
-        {
+        ...(route.name !== 'mesh-detail-view' ? [{
           to: {
             name: 'mesh-detail-view',
             params: {
@@ -16,7 +16,7 @@
             },
           },
           text: route.params.mesh as string,
-        }
+        }] : []),
       ]"
     >
       <template #title>
