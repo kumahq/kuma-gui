@@ -52,6 +52,14 @@ export const sources = (api: KumaApi) => {
       return await api.getAllZoneIngressOverviews({ size, offset })
     },
 
+    '/zone-egresses/:name': async (params: DetailParams, source: { close: () => void }) => {
+      source.close()
+
+      const name = params.name
+
+      return await api.getZoneEgressOverview({ name })
+    },
+
     '/zone-egresses': async (params: PaginationParams, source: { close: () => void }) => {
       source.close()
 
