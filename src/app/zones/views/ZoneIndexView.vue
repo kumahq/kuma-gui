@@ -1,22 +1,8 @@
 <template>
   <RouteView>
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'zone-index-view',
-          },
-          text: t('zones.routes.items.breadcrumbs')
-        },
-      ]"
-    >
+    <AppView>
       <template #title>
-        <h1>
-          <RouteTitle
-            :title="t('zones.routes.items.title')"
-            :render="true"
-          />
-        </h1>
+        <h1>{{ t('zones.routes.items.title') }}</h1>
       </template>
 
       <template
@@ -46,7 +32,6 @@
 import { KButton } from '@kong/kongponents'
 
 import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useStore } from '@/store/store'
 import { useEnv, useI18n } from '@/utilities'

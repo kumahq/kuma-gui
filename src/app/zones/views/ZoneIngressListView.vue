@@ -3,16 +3,7 @@
     v-slot="{ route }"
     name="zone-ingress-list-view"
   >
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'zone-ingress-list-view',
-          },
-          text: t('zone-ingresses.routes.items.breadcrumbs')
-        },
-      ]"
-    >
+    <AppView>
       <template #title>
         <h2>
           <RouteTitle
