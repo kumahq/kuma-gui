@@ -409,16 +409,16 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         class="k-search-container"
                       >
                         <span
-                          class="k-search-icon kong-icon kong-icon-search"
+                          class="k-search-icon theme-light kong-icon kong-icon-search"
                           data-testid="k-code-block-search-icon"
                         >
                           <svg
                             data-testid="k-code-block-search-icon"
-                            fill="var(--steel-500)"
-                            height="20"
+                            fill="currentColor"
+                            height="20px"
                             role="img"
                             viewBox="0 0 24 24"
-                            width="20"
+                            width="20px"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
@@ -431,7 +431,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             <path
                               d="M10.88 18.75a7.88 7.88 0 1 0 0-15.75 7.88 7.88 0 0 0 0 15.75ZM16.44 16.44 21 21"
                               fill="none"
-                              stroke="var(--steel-500)"
+                              stroke="currentColor"
                               stroke-width="3"
                             />
                             
@@ -445,7 +445,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           for="code-block-data-plane-search-input"
                         >
                           <span
-                            class="k-visually-hidden"
+                            class="visually-hidden"
                           >
                             Search
                           </span>
@@ -458,12 +458,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         />
                         <!---->
                         <span
-                          class="k-is-processing-icon kong-icon kong-icon-spinner"
+                          class="k-is-processing-icon theme-light kong-icon kong-icon-spinner"
                           data-testid="k-code-block-is-processing-icon"
                         >
                           <svg
                             data-testid="k-code-block-is-processing-icon"
-                            fill="var(--steel-500)"
+                            fill="currentColor"
                             height="24px"
                             role="img"
                             viewBox="0 0 20 20"
@@ -483,7 +483,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               <path
                                 d="M5 10a5 5 0 1 0 5-5"
                                 fill="none"
-                                stroke="var(--steel-500)"
+                                stroke="currentColor"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
@@ -514,7 +514,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           
                           <span
-                            class="k-visually-hidden"
+                            class="visually-hidden"
                           >
                             RegExp mode enabled
                           </span>
@@ -534,10 +534,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             class="k-button-icon kong-icon kong-icon-filter"
                           >
                             <svg
-                              height="16"
+                              height="16px"
                               role="img"
                               viewBox="0 0 14 11"
-                              width="16"
+                              width="16px"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
@@ -561,7 +561,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           
                           <span
-                            class="k-visually-hidden"
+                            class="visually-hidden"
                           >
                             Filter mode enabled
                           </span>
@@ -581,10 +581,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             <svg
                               fill="currentColor"
-                              height="16"
+                              height="16px"
                               role="img"
                               viewBox="0 0 20 20"
-                              width="16"
+                              width="16px"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
@@ -611,7 +611,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           
                           <span
-                            class="k-visually-hidden"
+                            class="visually-hidden"
                           >
                             Previous match
                           </span>
@@ -631,10 +631,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             <svg
                               fill="currentColor"
-                              height="16"
+                              height="16px"
                               role="img"
                               viewBox="0 0 20 20"
-                              width="16"
+                              width="16px"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
@@ -661,7 +661,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           
                           <span
-                            class="k-visually-hidden"
+                            class="visually-hidden"
                           >
                             Next match
                           </span>
@@ -1208,10 +1208,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             class="kong-icon kong-icon-copy"
                           >
                             <svg
-                              height="18"
+                              height="16px"
                               role="img"
                               viewBox="0 0 32 32"
-                              width="18"
+                              width="16px"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
@@ -1232,7 +1232,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
 
                           </span>
                           <span
-                            class="k-visually-hidden"
+                            class="visually-hidden"
                           >
                             Copy
                           </span>

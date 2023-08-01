@@ -143,10 +143,10 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                           class="kong-icon kong-icon-copy"
                         >
                           <svg
-                            height="18"
+                            height="16px"
                             role="img"
                             viewBox="0 0 32 32"
-                            width="18"
+                            width="16px"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
@@ -167,7 +167,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
 
                         </span>
                         <span
-                          class="k-visually-hidden"
+                          class="visually-hidden"
                         >
                           Copy
                         </span>
