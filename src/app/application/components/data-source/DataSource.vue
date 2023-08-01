@@ -1,5 +1,15 @@
-<script setup lang="ts">
+<template>
+  <slot
+    :data="(message as any)"
+    :is-loading="isLoading"
+    :error="error"
+    :refresh="refresh"
+  />
 
+  <span class="visually-hidden" />
+</template>
+
+<script lang="ts" setup>
 import { watch, ref, onBeforeUnmount } from 'vue'
 
 import { useDataSourcePool } from '@/utilities'
@@ -14,6 +24,7 @@ const props = defineProps({
 })
 
 const message = ref<unknown>(undefined)
+const isLoading = ref(false)
 const error = ref<Error | undefined>(undefined)
 
 const emit = defineEmits<{
@@ -34,23 +45,30 @@ const open = async (src: string) => {
   if (src === '') {
     return
   }
+  isLoading.value = true
   state.controller = new AbortController()
   // this should emit proper events
   const source = data.source(src, sym)
+
   source.addEventListener(
     'message',
     (e) => {
       message.value = (e as MessageEvent).data
       // if we got a message we are no longer erroneous
       error.value = undefined
+      isLoading.value = false
+
       emit('change', message.value)
     },
     { signal: state.controller.signal },
   )
+
   source.addEventListener(
     'error',
     (e) => {
       error.value = (e as ErrorEvent).error as Error
+      isLoading.value = false
+
       emit('error', error.value)
     },
     { signal: state.controller.signal },
@@ -73,12 +91,3 @@ const refresh = () => {
   open(props.src)
 }
 </script>
-
-<template>
-  <slot
-    :data="(message as any)"
-    :error="error"
-    :refresh="refresh"
-  />
-  <span class="visually-hidden" />
-</template>

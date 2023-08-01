@@ -6,7 +6,12 @@ import SharedPool from './SharedPool'
 export type Source = (params: Record<string, unknown>, source: {close: () => void}) => Promise<unknown>
 export type Sources = Record<string, Source>
 // reusable Type Utility for easy to use Types within Vue templates
-export type DataSourceResponse<T> = {data: T | undefined, error: Error | undefined, refresh: () => void}
+export type DataSourceResponse<T> = {
+  data: T | undefined
+  isLoading: boolean
+  error: Error | undefined
+  refresh: () => void
+}
 export type Creator = (str: string, router: Router<Source>) => CallableEventSource
 export type Destroyer = (str: string, source: CallableEventSource) => void
 
