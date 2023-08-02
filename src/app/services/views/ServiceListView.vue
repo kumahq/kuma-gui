@@ -52,11 +52,11 @@
               </template>
 
               <template #serviceType="{ rowValue }">
-                {{ rowValue || '—' }}
+                {{ rowValue || t('common.collection.none') }}
               </template>
 
               <template #addressPort="{ rowValue }">
-                {{ rowValue || '—' }}
+                {{ rowValue || t('common.collection.none') }}
               </template>
 
               <template #online="{ row: item }">
@@ -68,7 +68,7 @@
                 <template
                   v-else
                 >
-                  —
+                  {{ t('common.collection.none') }}
                 </template>
               </template>
 
@@ -151,20 +151,5 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .actions-dropdown {
   display: inline-block;
-}
-</style>
-
-<style lang="scss">
-.service-collection {
-  .actions-column {
-    width: 5%;
-    min-width: 80px;
-    text-align: end;
-  }
-
-  .status-column {
-    width: 10%;
-    min-width: 200px;
-  }
 }
 </style>

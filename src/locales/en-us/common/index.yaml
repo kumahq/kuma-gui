@@ -12,6 +12,7 @@ common:
     title: 'No data'
     message: 'There are no {type} present.'
   collection:
+    none: ' '
     actions:
       delete: 'Delete'
       edit: 'Edit'

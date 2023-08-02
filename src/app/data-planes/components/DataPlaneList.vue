@@ -12,7 +12,7 @@
       { label: 'Kuma DP version', key: 'dpVersion' },
       { label: 'Status', key: 'status' },
       { label: 'Actions', key: 'actions', hideLabel: true },
-    ].filter(Boolean)"
+    ].filter(notEmpty)"
     :page-number="props.pageNumber"
     :page-size="props.pageSize"
     :total="props.total"
@@ -76,7 +76,7 @@
       />
 
       <template v-else>
-        —
+        {{ t('common.collection.none') }}
       </template>
     </template>
     <template #actions="{ row: item }">
@@ -144,6 +144,7 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
+import { notEmpty } from '@/utilities/notEmpty'
 const store = useStore()
 const { t, formatIsoDate } = useI18n()
 
@@ -299,20 +300,20 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       name,
       detailViewRoute,
       type,
-      zone: { title: zone ?? '—', route: zoneRoute },
-      service: { title: service ?? '—', route: serviceInsightRoute },
-      protocol: protocol ?? '—',
+      zone: { title: zone ?? t('common.collection.none'), route: zoneRoute },
+      service: { title: service ?? t('common.collection.none'), route: serviceInsightRoute },
+      protocol: protocol ?? t('common.collection.none'),
       status,
       totalUpdates: summary.totalUpdates,
       totalRejectedUpdates: summary.totalRejectedUpdates,
-      dpVersion: summary.dpVersion ?? '—',
-      envoyVersion: summary.envoyVersion ?? '—',
+      dpVersion: summary.dpVersion ?? t('common.collection.none'),
+      envoyVersion: summary.envoyVersion ?? t('common.collection.none'),
       warnings: [],
       unsupportedEnvoyVersion: false,
       unsupportedKumaDPVersion: false,
       kumaDpAndKumaCpMismatch: false,
-      lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
-      lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : '—',
+      lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
+      lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
       overview: dataPlaneOverview,
     }
 

@@ -197,16 +197,3 @@ async function loadData() {
   flex-grow: 1;
 }
 </style>
-<style lang="scss">
-.data-plane-collection {
-  .actions-column {
-    width: 5%;
-    min-width: 80px;
-    text-align: end;
-  }
-  .status-column {
-    width: 10%;
-    min-width: 200px;
-  }
-}
-</style>

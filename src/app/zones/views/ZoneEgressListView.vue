@@ -59,7 +59,7 @@
                 />
 
                 <template v-else>
-                  —
+                  {{ t('common.collection.none') }}
                 </template>
               </template>
 
@@ -162,20 +162,5 @@ function transformToTableData(zoneEgressOverviews: ZoneEgressOverview[]): ZoneEg
 <style lang="scss" scoped>
 .actions-dropdown {
   display: inline-block;
-}
-</style>
-
-<style lang="scss">
-.zone-egress-collection {
-  .actions-column {
-    width: 5%;
-    min-width: 80px;
-    text-align: end;
-  }
-
-  .status-column {
-    width: 10%;
-    min-width: 200px;
-  }
 }
 </style>

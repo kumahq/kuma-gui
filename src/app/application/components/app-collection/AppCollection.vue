@@ -1,9 +1,11 @@
 <template>
   <KTable
     class="app-collection"
+    :style="`--column-width: ${columnWidth}; --special-column-width: ${SPECIAL_COLUMN_WIDTH}%;`"
     :has-error="(typeof props.error !== 'undefined')"
     :pagination-total-items="props.total"
     :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
+    :headers="props.headers"
     :fetcher-cache-key="String(cacheKey)"
     :fetcher="({ page, pageSize, query }: FetcherParams) => {
       emit('change', {
@@ -46,10 +48,8 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  KTable,
-} from '@kong/kongponents'
-import { useSlots, ref, watch } from 'vue'
+import { KTable, TableHeader } from '@kong/kongponents'
+import { useSlots, ref, watch, computed } from 'vue'
 
 type CellAttrParams = {
   headerKey: string
@@ -68,11 +68,14 @@ type ChangeValue = {
   s: string
 }
 
+const SPECIAL_COLUMN_WIDTH = 5
+
 const props = withDefaults(defineProps<{
   total?: number,
   pageNumber: number,
   pageSize: number,
   items: unknown[] | undefined,
+  headers: TableHeader[],
   error: Error | undefined,
 }>(), {
   total: 0,
@@ -86,6 +89,18 @@ const slots = useSlots()
 
 const items = ref<unknown[] | undefined>(props.items)
 const cacheKey = ref<number>(0)
+
+const columnWidth = computed(() => {
+  const specialColumns = props.headers.filter((header) => ['warnings', 'actions'].includes(header.key))
+
+  if (specialColumns.length > 4) {
+    return 'initial'
+  }
+
+  const percentage = 100 - specialColumns.length * SPECIAL_COLUMN_WIDTH
+  const numberOfCommonColumns = props.headers.length - specialColumns.length
+  return `calc(${percentage}% / ${numberOfCommonColumns})`
+})
 
 watch(() => props.items, () => {
   cacheKey.value++
@@ -116,5 +131,18 @@ const click = (e: MouseEvent) => {
   gap: var(--spacing-md);
   font-size: var(--type-md);
   color: var(--black-500);
+}
+</style>
+
+<style type="scss">
+.app-collection td {
+  width: var(--column-width, initial);
+}
+
+.app-collection .warnings-column,
+.app-collection .actions-column {
+  width: var(--special-column-width, initial);
+  min-width: 80px;
+  text-align: end;
 }
 </style>

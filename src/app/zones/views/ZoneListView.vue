@@ -59,11 +59,11 @@
                 </template>
 
                 <template #zoneCpVersion="{ rowValue }">
-                  {{ rowValue || '—' }}
+                  {{ rowValue || t('common.collection.none') }}
                 </template>
 
                 <template #type="{ rowValue }">
-                  {{ rowValue || '—' }}
+                  {{ rowValue || t('common.collection.none') }}
                 </template>
 
                 <template #status="{ rowValue }">
@@ -73,7 +73,7 @@
                   />
 
                   <template v-else>
-                    —
+                    {{ t('common.collection.none') }}
                   </template>
                 </template>
 
@@ -93,7 +93,7 @@
                   </KTooltip>
 
                   <template v-else>
-                    &nbsp;
+                    {{ t('common.collection.none') }}
                   </template>
                 </template>
 
@@ -276,21 +276,5 @@ function setDeleteZoneName(name: string) {
 <style lang="scss" scoped>
 .actions-dropdown {
   display: inline-block;
-}
-</style>
-
-<style lang="scss">
-.zone-cp-collection {
-  .warnings-column,
-  .actions-column {
-    width: 5%;
-    min-width: 80px;
-    text-align: end;
-  }
-
-  .status-column {
-    width: 10%;
-    min-width: 200px;
-  }
 }
 </style>

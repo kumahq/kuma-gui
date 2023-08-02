@@ -87,7 +87,7 @@
                               mesh: item.name,
                             },
                           },
-                          label: 'View',
+                          label: t('common.collection.actions.view'),
                         }"
                       />
                     </template>
@@ -124,20 +124,5 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .actions-dropdown {
   display: inline-block;
-}
-</style>
-
-<style lang="scss">
-.mesh-collection {
-  .actions-column {
-    width: 5%;
-    min-width: 80px;
-    text-align: end;
-  }
-
-  .status-column {
-    width: 10%;
-    min-width: 200px;
-  }
 }
 </style>
