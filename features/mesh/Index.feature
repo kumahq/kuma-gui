@@ -4,7 +4,7 @@ Feature: mesh / index
       | Alias          | Selector                                     |
       | items          | [data-testid='mesh-collection']              |
       | item           | $items tbody tr                              |
-      | breadcrumb     | .k-breadcrumbs                               |
+      | breadcrumbs    | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |
       | navigation     | .route-mesh-view-tabs ul >                   |
 
@@ -25,8 +25,7 @@ Feature: mesh / index
     Then the "$item" element exists 2 times
     Then I click the "<Selector>" element
     Then the URL contains "/mesh/<Mesh>"
-    And the "$breadcrumb" element contains "<Mesh>"
-
+    And the "$breadcrumbs" element contains "Meshes"
 
     Then I click the "$navigation li:nth-child(2) a" element
     Then I click the "$navigation li:nth-child(3) a" element
@@ -34,7 +33,7 @@ Feature: mesh / index
     Then I click the "$navigation li:nth-child(5) a" element
     Then I click the "$navigation li:nth-child(1) a" element
 
-    And I click the "$breadcrumb li:nth-child(1) a" element
+    And I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(1) > a" element
     Then the "$item" element exists 2 times
 
     Examples:

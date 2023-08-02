@@ -7,16 +7,7 @@
       v-slot="{data, error}: MeshCollectionSource"
       :src="`/meshes?page=${props.page}&size=${props.size}`"
     >
-      <AppView
-        :breadcrumbs="[
-          {
-            to: {
-              name: 'mesh-list-view'
-            },
-            text: t('meshes.routes.items.breadcrumbs')
-          }
-        ]"
-      >
+      <AppView>
         <template #title>
           <h1>
             <RouteTitle

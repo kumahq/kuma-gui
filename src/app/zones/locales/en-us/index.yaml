@@ -38,7 +38,6 @@ zones:
       title: 'Create & connect Zone'
     items:
       title: Zones
-      breadcrumbs: Zones
       navigation:
         zone-cp-list-view: Zone Control Planes
         zone-ingress-list-view: Ingresses

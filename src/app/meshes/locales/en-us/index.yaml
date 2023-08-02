@@ -4,7 +4,7 @@ meshes:
       title: "{name} Mesh"
       breadcrumbs: Meshes
       navigation:
-        mesh-overview-view: Overview
+        mesh-detail-view: Overview
         services-abstract-view: Services
         data-planes-abstract-view: Data Plane Proxies
         gateways-abstract-view: Gateways
@@ -15,4 +15,3 @@ meshes:
       breadcrumbs: Meshes
     overview:
       title: Mesh overview
-

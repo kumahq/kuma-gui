@@ -7,8 +7,8 @@ Feature: mesh / policies / index
       | item                | $items tbody tr                           |
       | button-docs         | [data-testid='policy-documentation-link'] |
       | navigation          | .route-mesh-view-tabs ul >                |
-      | button-tab          | $navigation li:nth-child(5) a             |
       | button-tab-selected | $navigation li:nth-child(5).active        |
+      | breadcrumbs         | .k-breadcrumbs                            |
     And the environment
       """
       KUMA_CIRCUITBREAKER_COUNT: 2
@@ -65,6 +65,6 @@ Feature: mesh / policies / index
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
     When I click the "$item:nth-child(1) td:first-of-type a" element
     Then the URL contains "circuit-breakers/fake-cb-1"
-    Then the "$button-tab-selected" element exists
-    When I click the "$button-tab-selected a" element
+
+    When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times

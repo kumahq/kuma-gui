@@ -21,24 +21,31 @@ export const routes = (
     {
       path: '/zones',
       name: 'zone-index-view',
+      redirect: { name: 'zone-cp-list-view' },
       component: () => import('@/app/zones/views/ZoneIndexView.vue'),
-      redirect: () => ({ name: 'zone-cp-list-view' }),
       children: [
         {
           path: 'zone-cps',
-          name: 'zone-cp-abstract-view',
-          meta: {
-            module: 'zone-cps',
-          },
+          name: 'zone-cps',
           children: [
             {
               path: '',
-              name: 'zone-cp-list-view',
-              props: (route) => ({
-                page: getLastNumberParameter(route.query.page, 1),
-                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-              }),
-              component: () => import('@/app/zones/views/ZoneListView.vue'),
+              name: 'zone-cp-tabs-view',
+              meta: {
+                module: 'zone-cps',
+              },
+              component: () => import('@/app/zones/views/ZoneTabsView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'zone-cp-list-view',
+                  props: (route) => ({
+                    page: getLastNumberParameter(route.query.page, 1),
+                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
+                  }),
+                  component: () => import('@/app/zones/views/ZoneListView.vue'),
+                },
+              ],
             },
             {
               path: ':zone',
@@ -49,19 +56,26 @@ export const routes = (
         },
         {
           path: 'zone-ingresses',
-          name: 'zone-ingress-abstract-view',
-          meta: {
-            module: 'zone-ingresses',
-          },
+          name: 'zone-ingresses',
           children: [
             {
               path: '',
-              name: 'zone-ingress-list-view',
-              props: (route) => ({
-                page: getLastNumberParameter(route.query.page, 1),
-                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-              }),
-              component: () => import('@/app/zones/views/ZoneIngressListView.vue'),
+              name: 'zone-ingress-tabs-view',
+              meta: {
+                module: 'zone-ingresses',
+              },
+              component: () => import('@/app/zones/views/ZoneTabsView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'zone-ingress-list-view',
+                  props: (route) => ({
+                    page: getLastNumberParameter(route.query.page, 1),
+                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
+                  }),
+                  component: () => import('@/app/zones/views/ZoneIngressListView.vue'),
+                },
+              ],
             },
             {
               path: ':zoneIngress',
@@ -72,19 +86,26 @@ export const routes = (
         },
         {
           path: 'zone-egresses',
-          name: 'zone-egress-abstract-view',
-          meta: {
-            module: 'zone-egresses',
-          },
+          name: 'zone-egresses',
           children: [
             {
               path: '',
-              name: 'zone-egress-list-view',
-              props: (route) => ({
-                page: getLastNumberParameter(route.query.page, 1),
-                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-              }),
-              component: () => import('@/app/zones/views/ZoneEgressListView.vue'),
+              name: 'zone-egress-tabs-view',
+              meta: {
+                module: 'zone-egresses',
+              },
+              component: () => import('@/app/zones/views/ZoneTabsView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'zone-egress-list-view',
+                  props: (route) => ({
+                    page: getLastNumberParameter(route.query.page, 1),
+                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
+                  }),
+                  component: () => import('@/app/zones/views/ZoneEgressListView.vue'),
+                },
+              ],
             },
             {
               path: ':zoneEgress',
