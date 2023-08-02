@@ -171,14 +171,14 @@ const totalPolicyCount = computed(() => {
     return 0
   }
 
-  return Object.values(meshInsights.value.policies).reduce((total, stat) => total + stat.total, 0)
+  return Object.values(meshInsights.value.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
 })
 const policyTypes = computed(() => {
   if (meshInsights.value === null) {
     return []
   }
 
-  return Object.entries(meshInsights.value.policies)
+  return Object.entries(meshInsights.value.policies ?? {})
     .map(([policyTypeName, stat]) => {
       const policyType = store.state.policyTypesByName[policyTypeName]
 

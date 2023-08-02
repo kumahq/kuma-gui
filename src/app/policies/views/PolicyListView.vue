@@ -108,10 +108,10 @@
                               <template #item-template="{ item }">
                                 <span
                                   :class="{
-                                    'policy-type-empty': !insights?.policies[item.label]?.total
+                                    'policy-type-empty': !insights?.policies?.[item.label]?.total
                                   }"
                                 >
-                                  {{ item.label }} ({{ insights?.policies[item.label]?.total || '0' }})
+                                  {{ item.label }} ({{ insights?.policies?.[item.label]?.total || '0' }})
                                 </span>
                               </template>
                             </KSelect>
