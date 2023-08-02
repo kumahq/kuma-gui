@@ -329,7 +329,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     }
 
     if (isMultiZoneMode.value && summary.dpVersion) {
-      console.log(tags, KUMA_ZONE_TAG_NAME)
       const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
