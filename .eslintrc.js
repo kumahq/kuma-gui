@@ -98,6 +98,8 @@ const INLINE_NON_VOID_ELEMENTS = [
           ignoreWhenEmpty: true,
           ignores: ['router-link', 'pre', ...INLINE_NON_VOID_ELEMENTS],
         }],
+        // Reason: https://github.com/vuejs/eslint-plugin-vue/issues/2259
+        'vue/no-setup-props-destructure': 'off',
       },
     },
     {
