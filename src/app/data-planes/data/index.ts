@@ -1,62 +1,111 @@
+// generated protobuf or openapi imports
 import { DataplaneNetworking } from './networking'
-import { Version } from './version'
+import { Dataplane as GeneratedDataplane } from '@/data/proto/mesh/v1alpha1/dataplane'
+import {
+  DataplaneInsight as GeneratedDataplaneInsight,
+  DiscoverySubscription as GeneratedDiscoverySubscription,
+  Version as GeneratedVersion,
+  KumaDpVersion as GeneratedKumaDpVersion,
+  EnvoyVersion as GeneratedEnvoyVersion,
+} from '@/data/proto/mesh/v1alpha1/dataplane_insight'
+import { DataplaneOverview as GeneratedDataplaneOverview } from '@/data/proto/mesh/v1alpha1/dataplane_overview'
+// end generated protobuf or openapi imports
 import type {
   PaginatedApiListResponse as CollectionResponse,
 } from '@/types/api.d'
-import type {
-  DataPlaneOverview as OriginalDataplaneOverview,
-  DataPlane as OriginalDataplane,
-  DataPlaneInsight as OriginalDataplaneInsight,
-  DiscoverySubscription,
-  KumaDpVersion,
-  EnvoyVersion,
-} from '@/types/index.d'
-import {
-  compatibilityKind,
-  COMPATIBLE,
-} from '@/utilities/dataplane'
 
-export type Dataplane = OriginalDataplane & {
+type Label = {
+  label: string
+  value: string
+}
+type Dependencies = {
+  envoy?: GeneratedEnvoyVersion
+  kumaDp?: GeneratedKumaDpVersion,
+} & Record<string, {version: string}>
+
+export interface Entity {
+  type: string
+  name: string
+  creationTime: string
+  modificationTime: string
+}
+export const Entity = {
+  fromJSON: (object: any): Entity => {
+    return {
+      name: object.name || '',
+      type: object.type || '',
+      creationTime: object.creationTime || '',
+      modificationTime: object.modificationTime || '',
+    }
+  },
+}
+
+export type Dataplane = GeneratedDataplane & {
   networking: DataplaneNetworking
   tags: { label: string, value: string }[]
   service: string
   protocol: string
   zone: string
 }
-export type DataplaneInsight = OriginalDataplaneInsight & {
-  subscriptions: DiscoverySubscription[];
+export type DataplaneInsight = GeneratedDataplaneInsight & {
+  subscriptions: GeneratedDiscoverySubscription[];
 }
 
-export type DataplaneOverview = OriginalDataplaneOverview & {
+export type DataplaneOverview = GeneratedDataplaneOverview & Entity & {
+  dataplane: Dataplane
+  dataplaneInsight: DataplaneInsight
   status: string
-  // dependencies: Record<string, string>
   lastUpdated: Date
   version: string
   compatible: boolean,
-  dataplane: Dataplane
-  dataplaneInsight: DataplaneInsight
 }
+export const DataplaneOverview = {
+  fromJSONCollection(collection: CollectionResponse<any>): CollectionResponse<DataplaneOverview> {
+    collection.items = collection.items.map((item: any) => {
+      return DataplaneOverview.fromJSON(item)
+    })
+    return collection
+  },
+  fromJSON(object: any): DataplaneOverview {
+    const generated = GeneratedDataplaneOverview.fromJSON(object)
+    const item: DataplaneOverview = {
+      ...Entity.fromJSON(object),
+      ...generated,
+      dataplane: Dataplane.fromJSON(generated.dataplane || {}),
+      dataplaneInsight: DataplaneInsight.fromJSON(generated.dataplaneInsight || {}),
+      status: '',
+      lastUpdated: new Date(0),
+      version: '',
+      compatible: false,
+    }
 
-type Label = {
-  label: string
-  value: string
+    const dependencies = getDependencies(item.dataplaneInsight)
+    item.lastUpdated = getLastUpdated(item.dataplaneInsight)
+    // @TODO what does kumaDP.version not being set mean?
+    item.version = dependencies.kumaDp?.version ?? ''
+    item.compatible = isCompatible(
+      dependencies.kumaDp,
+      dependencies.envoy,
+    )
+
+    item.status = getStatus(item)
+    return item
+  },
 }
-type BuildVersion = KumaDpVersion | EnvoyVersion | { version: string}
-///
 
 export const Dataplane = {
-  fromJSONCollection(collection: CollectionResponse<unknown>): CollectionResponse<Dataplane> {
-    collection.items = collection.items.map((item: unknown) => {
+  fromJSONCollection(collection: CollectionResponse<any>): CollectionResponse<Dataplane> {
+    collection.items = collection.items.map((item: any) => {
       return Dataplane.fromJSON(item)
     })
-    return collection as CollectionResponse<Dataplane>
+    return collection
   },
-  fromJSON(object: unknown): Dataplane {
-    const generated = (object as OriginalDataplane)
+  fromJSON(object: any): Dataplane {
+    const generated = GeneratedDataplane.fromJSON(object)
     const item: Dataplane = {
       ...generated,
       // make sure networking.inbound is at least an empty array
-      networking: DataplaneNetworking.fromJSON(generated.networking),
+      networking: DataplaneNetworking.fromJSON(generated.networking || {}),
       //
       tags: [],
       service: '',
@@ -72,47 +121,14 @@ export const Dataplane = {
 }
 
 export const DataplaneInsight = {
-  fromJSON(object: unknown): DataplaneInsight {
-    const generated = (object as OriginalDataplaneInsight)
+  fromJSON(object: any): DataplaneInsight {
+    const generated = GeneratedDataplaneInsight.fromJSON(object || {})
     const item: DataplaneInsight = {
       ...generated,
       // make sure subscriptions is at least an empty array
       subscriptions: Array.isArray(generated.subscriptions) ? generated.subscriptions : [],
+      //
     }
-    return item
-  },
-}
-export const DataplaneOverview = {
-  fromJSONCollection(collection: CollectionResponse<unknown>): CollectionResponse<DataplaneOverview> {
-    collection.items = collection.items.map((item: unknown) => {
-      return DataplaneOverview.fromJSON(item)
-    })
-    return collection as CollectionResponse<DataplaneOverview>
-  },
-  fromJSON(object: unknown): DataplaneOverview {
-    const generated = (object as OriginalDataplaneOverview)
-    const item: DataplaneOverview = {
-      ...generated,
-      dataplane: Dataplane.fromJSON(generated.dataplane),
-      dataplaneInsight: DataplaneInsight.fromJSON(generated.dataplaneInsight || {}),
-      status: '',
-      lastUpdated: new Date(0),
-      version: '',
-      compatible: false,
-    }
-
-    const dependencies = getDependencies(item.dataplaneInsight)
-    item.lastUpdated = getLastUpdated(item.dataplaneInsight)
-    item.version = dependencies.kumaDp.version
-    const compatibility = compatibilityKind(
-      {
-        kumaDp: dependencies.kumaDp as KumaDpVersion,
-        envoy: dependencies.envoy as EnvoyVersion,
-        dependencies: {} as Record<string, string>,
-      },
-    ).kind
-    item.compatible = compatibility !== COMPATIBLE
-    item.status = getStatus(item)
     return item
   },
 }
@@ -123,10 +139,11 @@ function getStatus(data: DataplaneOverview): string {
   const dataplaneInsight = data.dataplaneInsight
   const errors = dataplane.networking.inbound
     .filter(item => {
+      // if item.health is undefined it means that there are no
+      // health checks for a proxy i.e. we don't know whether its
+      // healthy or not. For now we assume healthy
       return item.health && !item.health.ready
     })
-    .map((item: {port: any; tags: {[x: string]: any;};}) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
-
   let status: string
   switch (true) {
     case dataplane.networking.inbound.length === 0:
@@ -143,16 +160,18 @@ function getStatus(data: DataplaneOverview): string {
       break
     default: {
       const proxyOnline = dataplaneInsight.subscriptions.some(
-        (item: DiscoverySubscription) => item.connectTime && item.connectTime.length && !item.disconnectTime,
+        (item: GeneratedDiscoverySubscription) => item.connectTime && !item.disconnectTime,
       )
       status = proxyOnline ? 'online' : 'offline'
     }
   }
   return status
 }
+
 function getTag(dataplane: Dataplane, key: string): string {
   return getTags(dataplane).find((item: { label: string }) => item.label === key)?.value ?? ''
 }
+
 function getTags(dataplane: Dataplane): Label[] {
   let tags: [string, string][] = []
   switch (true) {
@@ -173,13 +192,14 @@ function getTags(dataplane: Dataplane): Label[] {
     .map((tagPair: string) => tagPair.split('='))
     .map(([label, value]) => ({ label, value }))
 }
-function getVersion(item: DataplaneInsight): Version {
-  return item.subscriptions.length === 0 ? Version.fromJSON({}) : Version.fromJSON(item.subscriptions[item.subscriptions.length - 1].version)
+
+function getVersion(item: DataplaneInsight): GeneratedVersion {
+  return item.subscriptions.length === 0 ? GeneratedVersion.fromJSON({}) : GeneratedVersion.fromJSON(item.subscriptions[item.subscriptions.length - 1].version || {})
 }
 
-function getDependencies(item: DataplaneInsight): Record<string, BuildVersion> {
+function getDependencies(item: DataplaneInsight): Dependencies {
   const version = getVersion(item)
-  const deps: Record<string, BuildVersion> = {}
+  const deps: Dependencies = {}
   if (version.envoy) {
     deps.envoy = version.envoy
   }
@@ -198,8 +218,20 @@ function getDependencies(item: DataplaneInsight): Record<string, BuildVersion> {
 
 function getLastUpdated(insight: DataplaneInsight): Date {
   return new Date(Math.max(
-    ...insight.subscriptions.reduce((prev: number[], item: DiscoverySubscription) => {
-      return prev.concat([new Date(item.status?.lastUpdateTime)?.getTime() ?? 0])
-    }, []),
+    ...insight.subscriptions.reduce((prev: number[], item: GeneratedDiscoverySubscription) => {
+      return prev.concat([item.status?.lastUpdateTime?.getTime() ?? 0])
+    }, [0]),
   ))
+}
+
+function isCompatible(kumaDp: GeneratedKumaDpVersion | undefined, envoy: GeneratedEnvoyVersion | undefined): boolean {
+  const isKumaCpCompatible = kumaDp?.kumaCpCompatible ?? true
+  if (!isKumaCpCompatible) {
+    return false
+  }
+  const isKumaDpCompatible = envoy?.kumaDpCompatible ?? true
+  if (!isKumaDpCompatible) {
+    return false
+  }
+  return true
 }
