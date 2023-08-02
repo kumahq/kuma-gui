@@ -9,8 +9,8 @@
       !props.gateways ? { label: 'Protocol', key: 'protocol' } : undefined,
       isMultiZoneMode ? { label: 'Zone', key: 'zone' } : undefined,
       { label: 'Last Updated', key: 'lastUpdated' },
-      { label: 'Kuma DP version', key: 'dpVersion' },
       { label: 'Status', key: 'status' },
+      { label: 'Warnings', key: 'warnings', hideLabel: true },
       { label: 'Actions', key: 'actions', hideLabel: true },
     ].filter(notEmpty)"
     :page-number="props.pageNumber"
@@ -48,15 +48,6 @@
         {{ rowValue.title }}
       </template>
     </template>
-    <template #dpVersion="{ row, rowValue }">
-      <div
-        :class="{
-          'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
-        }"
-      >
-        {{ rowValue }}
-      </div>
-    </template>
     <template #zone="{ rowValue }">
       <RouterLink
         v-if="rowValue.route"
@@ -79,6 +70,27 @@
         {{ t('common.collection.none') }}
       </template>
     </template>
+
+    <template #warnings="{ rowValue }">
+      <KTooltip
+        v-if="rowValue.length > 0"
+        :label="t('data-planes.list.version_mismatch')"
+      >
+        <KIcon
+          class="mr-1"
+          icon="warning"
+          color="var(--black-500)"
+          secondary-color="var(--yellow-300)"
+          size="20"
+          hide-title
+        />
+      </KTooltip>
+
+      <template v-else>
+        &nbsp;
+      </template>
+    </template>
+
     <template #actions="{ row: item }">
       <KDropdownMenu
         class="actions-dropdown"
@@ -124,6 +136,7 @@ import {
   KDropdownMenu,
   KButton,
   KIcon,
+  KTooltip,
 } from '@kong/kongponents'
 import { computed } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
@@ -140,8 +153,6 @@ import {
   dpTags,
   getStatusAndReason,
   COMPATIBLE,
-  INCOMPATIBLE_UNSUPPORTED_ENVOY,
-  INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
 import { notEmpty } from '@/utilities/notEmpty'
@@ -164,12 +175,8 @@ type DataPlaneOverviewTableRow = {
   status: StatusKeyword
   totalUpdates: number
   totalRejectedUpdates: number
-  dpVersion: string
   envoyVersion: string
   warnings: string[]
-  unsupportedEnvoyVersion: boolean
-  unsupportedKumaDPVersion: boolean
-  kumaDpAndKumaCpMismatch: boolean
   lastUpdated: string
   lastConnected: string
   overview: DataPlaneOverview
@@ -306,12 +313,8 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       status,
       totalUpdates: summary.totalUpdates,
       totalRejectedUpdates: summary.totalRejectedUpdates,
-      dpVersion: summary.dpVersion ?? t('common.collection.none'),
       envoyVersion: summary.envoyVersion ?? t('common.collection.none'),
       warnings: [],
-      unsupportedEnvoyVersion: false,
-      unsupportedKumaDPVersion: false,
-      kumaDpAndKumaCpMismatch: false,
       lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
       lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
       overview: dataPlaneOverview,
@@ -323,15 +326,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       if (kind !== COMPATIBLE) {
         item.warnings.push(kind)
       }
-
-      switch (kind) {
-        case INCOMPATIBLE_UNSUPPORTED_ENVOY:
-          item.unsupportedEnvoyVersion = true
-          break
-        case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
-          item.unsupportedKumaDPVersion = true
-          break
-      }
     }
 
     if (isMultiZoneMode.value && summary.dpVersion) {
@@ -339,7 +333,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
         item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
-        item.kumaDpAndKumaCpMismatch = true
       }
     }
 
@@ -350,10 +343,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 </script>
 
 <style lang="scss" scoped>
-.with-warnings {
-  color: var(--yellow-500);
-}
-
 .actions-dropdown {
   display: inline-block;
 }

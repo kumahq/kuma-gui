@@ -6,7 +6,7 @@ export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
     apiUrl: apiUrlDefault,
     version: '2.3.0',
     product: 'Kuma',
-    mode: 'standalone',
+    mode: 'global',
     environment: 'universal',
     apiReadOnly: false,
   }

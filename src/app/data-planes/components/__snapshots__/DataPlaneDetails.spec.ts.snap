@@ -909,6 +909,20 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             
           
                           </span>
+                          <span
+                            class="k-line"
+                          >
+                            
+            
+                            <a
+                              class="k-line-anchor"
+                              id="code-block-data-plane-L17"
+                            >
+                              17
+                            </a>
+                            
+          
+                          </span>
                           
                           
         
@@ -982,49 +996,49 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             :
                           </span>
-                           026f
+                           e026
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          3528
+                          f352
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          487e
+                          8487
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          8ebc
+                          e8eb
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          96fb
+                          c96f
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          49d5
+                          b49d
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          0bee
+                          50be
                           <span
                             class="token punctuation"
                           >
                             :
                           </span>
-                          9ac9
+                          e9ac
   
                           <span
                             class="token key atrule"
@@ -1058,7 +1072,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           <span
                             class="token number"
                           >
-                            9200
+                            28226
                           </span>
                           
       
@@ -1076,7 +1090,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           <span
                             class="token number"
                           >
-                            61546
+                            9200
                           </span>
                           
       
@@ -1090,7 +1104,49 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             :
                           </span>
-                           199.204.183.247
+                           4bbf
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          fb62
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          fbdd
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          dc1c
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          0631
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          de2d
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          9ef9
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                          b4f6
       
                           <span
                             class="token key atrule"
@@ -1114,7 +1170,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             :
                           </span>
-                           kafka
+                           grpc
         
                           <span
                             class="token key atrule"
@@ -1126,7 +1182,19 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             :
                           </span>
-                           system
+                           backend
+        
+                          <span
+                            class="token key atrule"
+                          >
+                            kuma.io/zone
+                          </span>
+                          <span
+                            class="token punctuation"
+                          >
+                            :
+                          </span>
+                           matrix
   
                           <span
                             class="token key atrule"
@@ -1160,7 +1228,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           <span
                             class="token number"
                           >
-                            20540
+                            9313
                           </span>
                           
       
@@ -1186,7 +1254,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           >
                             :
                           </span>
-                           bandwidth
+                           feed
                         </code>
                         
       

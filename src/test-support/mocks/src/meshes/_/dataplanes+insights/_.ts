@@ -2,6 +2,11 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
   const subscriptionCount = 10
+
+  const service = params.name ?? fake.hacker.noun()
+  const isMultizone = true && fake.datatype.boolean()
+  const zone = fake.hacker.noun()
+
   return {
     headers: {
     },
@@ -21,7 +26,10 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
               serviceAddress: fake.internet.ip(),
               tags: {
                 'kuma.io/protocol': fake.kuma.protocol(),
-                'kuma.io/service': params.name,
+                'kuma.io/service': `${service}`,
+                ...(isMultizone && {
+                  'kuma.io/zone': zone,
+                }),
               },
             },
           ],
@@ -68,6 +76,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                 gitTag: 'unknown',
                 gitCommit: 'unknown',
                 buildDate: 'unknown',
+                kumaCpCompatible: fake.datatype.boolean(),
               },
               envoy: {
                 version: '1.16.2',

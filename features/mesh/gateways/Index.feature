@@ -33,14 +33,14 @@ Feature: mesh / gateways / index
 
   Scenario: The Gateway listing table has the correct columns
     Then the "$item-header" elements contain
-      | Value           |
-      | Name            |
-      | Type            |
-      | Service         |
-      | Zone            |
-      | Last Updated    |
-      | Kuma DP version |
-      | Status          |
+      | Value        |
+      | Name         |
+      | Type         |
+      | Service      |
+      | Zone         |
+      | Last Updated |
+      | Status       |
+      | Warnings     |
 
   Scenario: The Gateway listing has the expected content and UI elements
     When I click the "$select-type" element
