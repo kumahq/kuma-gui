@@ -1937,6 +1937,11 @@
     flat "^5.0.2"
     intl-messageformat "^10.5.0"
 
+"@kong/design-tokens@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.9.0.tgz#ebdce87c460e6095428ca37792d90e9540527f7d"
+  integrity sha512-y68F8uUxLQZDRqN8365TPVsYPNPS9jGTlsap8A6N2MkYHYZ75Qnewl7cK6M+YUbG9AUx1YE64vt1yQe5+/Ydzg==
+
 "@kong/kongponents@^8.122.2":
   version "8.122.2"
   resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.122.2.tgz#c1812ca4d3ffdb1385dab7520a2eb89475279152"
