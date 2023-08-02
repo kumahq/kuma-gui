@@ -63,7 +63,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
                 <b>
                   See 
                   <a
-                    href="https://kuma.io/docs/1.7.x/deployments/multi-zone?utm_source=Kuma&utm_medium=Kuma#zone-control-plane"
+                    href="https://kuma.io/docs/2.3.x/deployments/multi-zone?utm_source=Kuma&utm_medium=Kuma#zone-control-plane"
                     target="_blank"
                   >
                     the documentation for options to install

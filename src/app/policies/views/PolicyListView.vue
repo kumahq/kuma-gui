@@ -56,7 +56,7 @@
                           <p>
                             <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
                             <a
-                              href="https://github.com/kumahq/kuma/issues/new/choose"
+                              :href="env('KUMA_FEEDBACK_URL')"
                               target="_blank"
                               rel="noopener noreferrer"
                             >issue</a>
@@ -117,7 +117,7 @@
                             </KSelect>
 
                             <DocumentationLink
-                              :href="t('policies.href.docs', {'name': selected.name})"
+                              :href="t('policies.href.docs', { name: selected.name.toLowerCase() })"
                               data-testid="policy-documentation-link"
                             />
                           </template>
@@ -210,9 +210,10 @@ import type {
   PolicyCollectionSource,
   PolicyTypeCollectionSource,
 } from '@/app/policies/sources'
-import { useI18n } from '@/utilities'
+import { useEnv, useI18n } from '@/utilities'
 
 const { t } = useI18n()
+const env = useEnv()
 
 const props = defineProps<{
   page: number
