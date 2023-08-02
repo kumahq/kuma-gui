@@ -87,7 +87,6 @@ const INLINE_NON_VOID_ELEMENTS = [
         caseInsensitive: true,
       },
     }],
-    'no-useless-constructor': 'off',
   },
   overrides: [
     {
@@ -119,6 +118,10 @@ const INLINE_NON_VOID_ELEMENTS = [
           argsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],
+
+        'no-useless-constructor': 'off',
+        '@typescript-eslint/no-useless-constructor': 'error',
+
         '@typescript-eslint/type-annotation-spacing': ['error', {
           before: false,
           after: true,
