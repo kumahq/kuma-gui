@@ -47,6 +47,7 @@ zones:
   form:
     exit: 'Exit'
     nameLabel: 'Name'
+    name_tooltip: 'Zone names may contain alphanumerical characters, dashes (-), and underscores (_).'
     createZoneButtonLabel: 'Create Zone & generate token'
     environmentLabel: 'Environment'
     universalLabel: 'Universal'

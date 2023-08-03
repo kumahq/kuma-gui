@@ -31,8 +31,16 @@
 
         <div class="form-wrapper mt-4">
           <div>
-            <KLabel for="zone-name">
-              {{ t('zones.form.nameLabel') }} *
+            <KLabel
+              for="zone-name"
+              required
+              :tooltip-attributes="{ placement: 'right'}"
+            >
+              {{ t('zones.form.nameLabel') }}
+
+              <template #tooltip>
+                {{ t('zones.form.name_tooltip') }}
+              </template>
             </KLabel>
 
             <KInput
