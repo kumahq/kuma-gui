@@ -100,7 +100,7 @@ describe('PolicyConnections.vue', () => {
   test('renders no item', async () => {
     const server = useServer()
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyPath/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/:policyPath/:policyName/dataplanes', (_req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )

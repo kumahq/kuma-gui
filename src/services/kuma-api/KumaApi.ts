@@ -17,6 +17,7 @@ import type {
   Mesh,
   MeshGatewayDataplane,
   MeshInsight,
+  PolicyDataplane,
   PolicyEntity,
   PolicyType,
   ServiceInsight,
@@ -207,8 +208,8 @@ export default class KumaApi extends Api {
     }
   }
 
-  getPolicyConnections({ mesh, policyPath, policyName }: { mesh: string; policyPath: string; policyName: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<any>> {
-    return this.client.get(`/meshes/${mesh}/${policyPath}/${policyName}/dataplanes`, { params })
+  getPolicyConnections({ mesh, path, name }: { mesh: string; path: string; name: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyDataplane>> {
+    return this.client.get(`/meshes/${mesh}/${path}/${name}/dataplanes`, { params })
   }
 
   getAllPolicyEntitiesFromMesh({ mesh, path }: { mesh: string, path: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyEntity>> {
