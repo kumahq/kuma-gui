@@ -8,6 +8,12 @@ type PaginationParams = {
   page: number
 }
 
+type DetailParams = {
+  name: string
+}
+
+type Closeable = { close: () => void }
+
 export type ZoneOverviewCollection = CollectionResponse<ZoneOverview>
 export type ZoneOverviewSource = DataSourceResponse<ZoneOverview>
 export type ZoneOverviewCollectionSource = DataSourceResponse<ZoneOverviewCollection>
@@ -22,7 +28,7 @@ export type ZoneEgressOverviewCollectionSource = DataSourceResponse<ZoneEgressOv
 
 export const sources = (api: KumaApi) => {
   return {
-    '/zone-cps': async (params: PaginationParams, source: { close: () => void }) => {
+    '/zone-cps': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
       const size = params.size
@@ -31,7 +37,15 @@ export const sources = (api: KumaApi) => {
       return await api.getAllZoneOverviews({ size, offset })
     },
 
-    '/zone-ingresses': async (params: PaginationParams, source: { close: () => void }) => {
+    '/zone-cps/:name': async (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const name = params.name
+
+      return await api.getZoneOverview({ name })
+    },
+
+    '/zone-ingresses': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
       const size = params.size
@@ -40,13 +54,29 @@ export const sources = (api: KumaApi) => {
       return await api.getAllZoneIngressOverviews({ size, offset })
     },
 
-    '/zone-egresses': async (params: PaginationParams, source: { close: () => void }) => {
+    '/zone-egresses/:name': async (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const name = params.name
+
+      return await api.getZoneEgressOverview({ name })
+    },
+
+    '/zone-egresses': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
       const size = params.size
       const offset = params.size * (params.page - 1)
 
       return await api.getAllZoneEgressOverviews({ size, offset })
+    },
+
+    '/zone-ingresses/:name': async (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const name = params.name
+
+      return await api.getZoneIngressOverview({ name })
     },
   }
 }
