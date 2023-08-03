@@ -47,7 +47,7 @@ zones:
   form:
     exit: 'Exit'
     nameLabel: 'Name'
-    name_tooltip: 'Zone names may contain alphanumerical characters, dashes (-), and underscores (_).'
+    name_tooltip: 'Zone names may contain lowercase alphanumerical characters, dashes (-), and underscores (_).'
     createZoneButtonLabel: 'Create Zone & generate token'
     environmentLabel: 'Environment'
     universalLabel: 'Universal'
@@ -147,9 +147,6 @@ zones:
     generalError:
       title: 'Could not create the Zone'
     statusError:
-      400:
-        title: 'The Zone name {zoneName} is invalid'
-        description: 'Zone names may contain alphanumerical characters, dashes (-), and underscores (_).'
       409:
         title: 'A Zone with the name {zoneName} already exists'
         description: 'If you want to connect a Zone with this name, you can delete the existing one and create a new one.'

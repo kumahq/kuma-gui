@@ -93,3 +93,24 @@ Feature: Zones: Zone create flow
     And I click the "$create-zone-button" element
     Then the "$error" element exists
     Then the "$instructions" element doesn't exist
+
+  Scenario: The form shows expected error for 400 response
+    Given the URL "/provision-zone" responds with
+      """
+      headers:
+        Status-Code: '400'
+      body:
+        type: '/std-errors'
+        status: 400
+        title: 'Invalid zone name'
+        detail: 'Resource is not valid'
+        invalid_parameters:
+          - field: 'name'
+            reason: "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols."
+      """
+
+    And I "type" "15" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$error" element contains "Invalid zone name"
+    And the "$instructions" element doesn't exist
