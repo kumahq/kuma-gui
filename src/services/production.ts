@@ -6,7 +6,7 @@ import { useApp, useBootstrap } from '../index'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
 import DataSourceLifeCycle from '@/app/application/services/data-source/index'
 import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-planes'
-import { routes as diagnosticsRoutes } from '@/app/diagnostics'
+import { routes as diagnosticsRoutes, services as diagnosticsModule } from '@/app/diagnostics'
 import { routes as gatewayRoutes, services as gateways } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
@@ -260,6 +260,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   ...dataplanes($),
   ...gateways($),
   ...policies($),
+  ...diagnosticsModule($),
 ]
 
 export const TOKENS = $

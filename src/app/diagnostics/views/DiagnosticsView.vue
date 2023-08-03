@@ -1,58 +1,65 @@
 <template>
-  <RouteView>
-    <RouteTitle
-      :title="t('diagnostics.routes.item.title')"
-    />
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'diagnostics',
-          },
-          text: t('diagnostics.routes.item.breadcrumbs')
-        },
-      ]"
+  <RouteView name="diagnostics">
+    <DataSource
+      v-slot="{ data, error }: ConfigSource"
+      :src="`/config`"
     >
-      <KCard>
-        <template #body>
-          <LoadingBlock v-if="code === null" />
-
-          <CodeBlock
-            v-else
-            id="code-block-diagnostics"
-            language="json"
-            :code="code"
-            is-searchable
-            query-key="diagnostics"
-          />
+      <AppView
+        :breadcrumbs="[
+          {
+            to: {
+              name: 'diagnostics',
+            },
+            text: t('diagnostics.routes.item.breadcrumbs')
+          },
+        ]"
+      >
+        <template #title>
+          <h1>
+            <RouteTitle
+              :title="t('diagnostics.routes.item.title')"
+              :render="true"
+            />
+          </h1>
         </template>
-      </KCard>
-    </AppView>
+
+        <KCard>
+          <template #body>
+            <LoadingBlock v-if="data === undefined" />
+
+            <ErrorBlock
+              v-else-if="error"
+              :error="error"
+            />
+
+            <CodeBlock
+              v-else
+              id="code-block-diagnostics"
+              data-testid="code-block-diagnostics"
+              language="json"
+              :code="JSON.stringify(data, null, 2)"
+              is-searchable
+              query-key="diagnostics"
+            />
+          </template>
+        </KCard>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import { KCard } from '@kong/kongponents'
-import { computed } from 'vue'
 
+import type { ConfigSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
-const store = useStore()
 const { t } = useI18n()
-
-const code = computed(() => {
-  const config = store.getters['config/getConfig']
-
-  if (config) {
-    return JSON.stringify(config, null, 2)
-  } else {
-    return null
-  }
-})
 </script>
