@@ -164,7 +164,7 @@
 
 <script lang="ts" setup>
 import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
@@ -186,7 +186,7 @@ type ZoneOverviewTableRow = {
   name: string
   status: StatusKeyword
   zoneCpVersion: string
-  type: 'universal' | 'kubernetes'
+  type: string
   warnings: boolean
 }
 
@@ -210,8 +210,6 @@ const props = defineProps({
 const isDeleteModalVisible = ref(false)
 const deleteZoneName = ref('')
 
-const environment = computed(() => store.getters['config/getEnvironment'])
-
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
   return zoneOverviews.map((zoneOverview) => {
     const { name } = zoneOverview
@@ -222,17 +220,21 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       },
     }
     let zoneCpVersion = ''
-    const type = environment.value
+    let type = 'kubernetes'
     let cpCompat = true
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
 
-    subscriptions.forEach((item: any) => {
+    subscriptions.forEach((item) => {
       if (item.version && item.version.kumaCp) {
         zoneCpVersion = item.version.kumaCp.version
         const { kumaCpGlobalCompatible = true } = item.version.kumaCp
 
         cpCompat = kumaCpGlobalCompatible
+      }
+
+      if (item.config) {
+        type = JSON.parse(item.config).environment
       }
     })
 
