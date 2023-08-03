@@ -2,11 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneDetails from './DataPlaneDetails.vue'
-import { createDataPlane } from '@/test-data/createDataPlane'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 import { useStore, useRouter } from '@/utilities'
 
-const dataPlane = createDataPlane()
 const dataPlaneOverview = createDataPlaneOverview()
 
 const store = useStore()
@@ -17,14 +15,13 @@ async function renderComponent(props = {}) {
     name: 'data-plane-detail-view',
     params: {
       mesh: 'default',
-      dataPlane: dataPlane.name,
+      dataPlane: dataPlaneOverview.name,
     },
   })
 
   return mount(DataPlaneDetails, {
     props: {
-      dataPlane,
-      dataPlaneOverview,
+      dataplaneOverview: dataPlaneOverview,
       ...props,
     },
   })

@@ -1,65 +1,60 @@
 <template>
   <RouteView
-    v-slot="{route: _route}"
+    v-slot="{ route }"
+    name="data-plane-detail-view"
   >
-    <RouteTitle
-      :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, {name: _route.params.dataPlane})"
-    />
+    <RouteTitle :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })" />
+
     <AppView
       :breadcrumbs="[
         {
           to: {
             name: `${props.isGatewayView ? 'gateways' : 'data-planes'}-list-view`,
             params: {
-              mesh: _route.params.mesh,
+              mesh: route.params.mesh,
             },
           },
           text: t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.breadcrumbs`)
         },
       ]"
     >
-      <div class="kcard-border">
-        <LoadingBlock v-if="isLoading" />
+      <DataSource
+        v-slot="{ data, isLoading, error }: DataplaneOverviewSource"
+        :src="`/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
+      >
+        <div class="kcard-border">
+          <LoadingBlock v-if="isLoading" />
 
-        <ErrorBlock
-          v-else-if="error !== null"
-          :error="error"
-        />
+          <ErrorBlock
+            v-else-if="error"
+            :error="error"
+          />
 
-        <EmptyBlock v-else-if="dataPlane === null || dataPlaneOverview === null" />
+          <EmptyBlock v-else-if="data === undefined" />
 
-        <DataPlaneDetails
-          v-else
-          :data-plane="dataPlane"
-          :data-plane-overview="dataPlaneOverview"
-        />
-      </div>
+          <DataPlaneDetails
+            v-else
+            :dataplane-overview="data"
+          />
+        </div>
+      </DataSource>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
+import type { DataplaneOverviewSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { DataPlane, DataPlaneOverview } from '@/types/index.d'
-import { useKumaApi, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 
-const kumaApi = useKumaApi()
-const route = useRoute()
 const { t } = useI18n()
-
-const dataPlane = ref<DataPlane | null>(null)
-const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
-const isLoading = ref(true)
-const error = ref<Error | null>(null)
 
 const props = defineProps({
   isGatewayView: {
@@ -68,29 +63,4 @@ const props = defineProps({
     default: false,
   },
 })
-
-loadData()
-
-async function loadData() {
-  error.value = null
-  isLoading.value = true
-
-  const mesh = route.params.mesh as string
-  const name = route.params.dataPlane as string
-
-  try {
-    dataPlane.value = await kumaApi.getDataplaneFromMesh({ mesh, name })
-    dataPlaneOverview.value = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
-  } catch (err) {
-    dataPlane.value = null
-
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
 </script>

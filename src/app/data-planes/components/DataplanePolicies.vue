@@ -11,7 +11,7 @@
     class="policies-list"
   >
     <SidecarDataplanePolicyList
-      :dpp-name="dataPlane.name"
+      :dpp-name="props.dataplaneOverview.name"
       :policy-type-entries="policyTypeEntries"
       :rule-entries="ruleEntries"
     />
@@ -41,7 +41,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useStore } from '@/store/store'
 import {
-  DataPlane,
+  DataPlaneOverview,
   DataplaneRule,
   LabelValue,
   MeshGatewayDataplane,
@@ -64,8 +64,8 @@ const kumaApi = useKumaApi()
 const store = useStore()
 
 const props = defineProps({
-  dataPlane: {
-    type: Object as PropType<DataPlane>,
+  dataplaneOverview: {
+    type: Object as PropType<DataPlaneOverview>,
     required: true,
   },
 })
@@ -78,7 +78,7 @@ const meshGatewayRoutePolicies = ref<MeshGatewayRoutePolicy[]>([])
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
 
-watch(() => props.dataPlane.name, function () {
+watch(() => props.dataplaneOverview.name, function () {
   fetchPolicies()
 })
 
@@ -93,27 +93,27 @@ async function fetchPolicies(): Promise<void> {
   meshGatewayRoutePolicies.value = []
 
   try {
-    const isMeshGatewayDataplane = props.dataPlane.networking.gateway?.type?.toUpperCase() === 'BUILTIN'
+    const isMeshGatewayDataplane = props.dataplaneOverview.dataplane.networking.gateway?.type?.toUpperCase() === 'BUILTIN'
 
     if (isMeshGatewayDataplane) {
       meshGatewayDataplane.value = await kumaApi.getMeshGatewayDataplane({
-        mesh: props.dataPlane.mesh,
-        name: props.dataPlane.name,
+        mesh: props.dataplaneOverview.mesh,
+        name: props.dataplaneOverview.name,
       })
 
       meshGatewayListenerEntries.value = getMeshGatewayListenerEntries(meshGatewayDataplane.value)
       meshGatewayRoutePolicies.value = getPolicyRoutes(meshGatewayDataplane.value.policies)
     } else {
       const { items: sidecarDataplanes } = await kumaApi.getSidecarDataplanePolicies({
-        mesh: props.dataPlane.mesh,
-        name: props.dataPlane.name,
+        mesh: props.dataplaneOverview.mesh,
+        name: props.dataplaneOverview.name,
       })
 
       policyTypeEntries.value = getPolicyTypeEntries(sidecarDataplanes ?? [])
 
       const { items: rules } = await kumaApi.getDataplaneRules({
-        mesh: props.dataPlane.mesh,
-        name: props.dataPlane.name,
+        mesh: props.dataplaneOverview.mesh,
+        name: props.dataplaneOverview.name,
       })
 
       ruleEntries.value = getRuleEntries(rules ?? [])
