@@ -225,15 +225,16 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
 
-    subscriptions.forEach((item: any) => {
+    subscriptions.forEach((item) => {
       if (item.version && item.version.kumaCp) {
         zoneCpVersion = item.version.kumaCp.version
         const { kumaCpGlobalCompatible = true } = item.version.kumaCp
 
         cpCompat = kumaCpGlobalCompatible
-        if (item.config) {
-          type = JSON.parse(item.config).environment
-        }
+      }
+
+      if (item.config) {
+        type = JSON.parse(item.config).environment
       }
     })
 
