@@ -25,7 +25,7 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"enironment":"universal"}'
+                  config: '{"environment":"universal"}'
                   status: {}
                   version:
                     kumaCp:
@@ -34,7 +34,7 @@ Feature: Zones: List view content
                       gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
                       buildDate: 2021-02-18T13:22:30Z
                 - connectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"enironment":"universal"}'
+                  config: '{"environment":"universal"}'
                   status: {}
                   version:
                     kumaCp:
@@ -47,7 +47,7 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"enironment":"kubernetes"}'
+                  config: '{"environment":"kubernetes"}'
                   status: {}
                   version:
                     kumaCp:
@@ -57,7 +57,7 @@ Feature: Zones: List view content
                       buildDate: 2021-02-18T13:22:30Z
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"enironment":"kubernetes"}'
+                  config: '{"environment":"kubernetes"}'
                   status: {}
                   version:
                     kumaCp:
