@@ -79,6 +79,7 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
             body: response.body,
           })
         } catch (e) {
+          console.error(e)
           req.continue()
         }
       },
