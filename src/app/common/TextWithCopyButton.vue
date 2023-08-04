@@ -1,10 +1,6 @@
 <template>
   <div class="copy-button-wrapper">
-    <slot>
-      <component :is="props.tag">
-        {{ props.text }}
-      </component>
-    </slot>
+    <slot>{{ props.text }}</slot>
 
     <CopyButton
       :text="props.text"
@@ -24,12 +20,6 @@ const props = defineProps({
   text: {
     type: String,
     required: true,
-  },
-
-  tag: {
-    type: String,
-    required: false,
-    default: 'span',
   },
 })
 </script>
