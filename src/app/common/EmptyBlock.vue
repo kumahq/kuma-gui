@@ -2,20 +2,12 @@
   <KEmptyState
     data-testid="empty-state"
     cta-is-hidden
+    icon="stateGruceo"
+    icon-size="96"
   >
     <template #title>
       <slot name="title">
-        <KIcon
-          class="mb-3"
-          icon="warning"
-          color="var(--black-500)"
-          secondary-color="var(--yellow-300)"
-          size="42"
-        />
-
-        <slot>
-          <p>There is no data to display.</p>
-        </slot>
+        <p><slot>There is no data to display.</slot></p>
       </slot>
     </template>
 
@@ -25,9 +17,16 @@
     >
       <slot name="message" />
     </template>
+
+    <template
+      v-if="$slots.cta"
+      #cta
+    >
+      <slot name="cta" />
+    </template>
   </KEmptyState>
 </template>
 
 <script lang="ts" setup>
-import { KEmptyState, KIcon } from '@kong/kongponents'
+import { KEmptyState } from '@kong/kongponents'
 </script>
