@@ -9,6 +9,7 @@ import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-pl
 import { routes as diagnosticsRoutes, services as diagnosticsModule } from '@/app/diagnostics'
 import { routes as gatewayRoutes, services as gateways } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
+import { services as mainOverviewModule } from '@/app/main-overview'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
 import { routes as onboardingRoutes } from '@/app/onboarding'
@@ -254,6 +255,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: diagnosticsRoutes,
   }],
   // Modules
+  ...mainOverviewModule($),
   ...zonesModule($),
   ...meshes($),
   ...servicesModule($),

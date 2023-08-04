@@ -2,7 +2,12 @@ import type { DataPlaneProxyStatus, DpVersions, MeshInsight, ResourceStat, Servi
 
 export type MergedMeshInsights = {
   meshesTotal: number
-  dataplanes: {
+  dataPlaneProxies: {
+    online: number
+    partiallyDegraded: number
+    total: number
+  }
+  gateways: {
     online: number
     partiallyDegraded: number
     total: number
@@ -84,14 +89,20 @@ export function mergeInsightsReducer(insights: MeshInsight[]): MergedMeshInsight
   return insights.reduce(
     (acc, insight) => ({
       meshesTotal: insights.length,
-      dataplanes: sumDataplanes(acc.dataplanes, insight.dataplanes),
+      dataPlaneProxies: sumDataplanes(acc.dataPlaneProxies, insight.dataplanesByType.standard),
+      gateways: sumDataplanes(acc.gateways, insight.dataplanesByType.gateway),
       policies: sumPolicies(acc.policies, insight.policies),
       dpVersions: sumVersions(acc.dpVersions, insight.dpVersions),
       services: sumServices(acc.services, insight.services),
     }),
     {
       meshesTotal: 0,
-      dataplanes: {
+      dataPlaneProxies: {
+        online: 0,
+        partiallyDegraded: 0,
+        total: 0,
+      },
+      gateways: {
         online: 0,
         partiallyDegraded: 0,
         total: 0,

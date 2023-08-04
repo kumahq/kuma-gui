@@ -2,4 +2,25 @@ main-overview:
   routes:
     item:
       title: Overview
-
+  detail:
+    health:
+      title: 'Global Control Plane health'
+      view_all: '(view all)'
+      zone_control_planes: 'Zones'
+      meshes: 'Meshes'
+      services: 'Services'
+      data_plane_proxies: 'Data Plane Proxies'
+    zone_control_planes:
+      title: 'Zones'
+      empty_state:
+        title: 'No Zones yet …'
+        message: 'Create your first Zone to start managing your Mesh'
+      table:
+        name: 'Name'
+        status: 'Status'
+    meshes:
+      title: 'Meshes'
+      table:
+        name: 'Name'
+        services: 'Services'
+        data_plane_proxies: 'Data Plane Proxies'

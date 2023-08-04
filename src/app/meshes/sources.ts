@@ -19,6 +19,8 @@ export type MeshCollection = CollectionResponse<Mesh>
 export type MeshCollectionSource = DataSourceResponse<MeshCollection>
 
 export type MeshInsightSource = DataSourceResponse<MeshInsight>
+export type MeshInsightCollection = CollectionResponse<MeshInsight>
+export type MeshInsightCollectionSource = DataSourceResponse<MeshInsightCollection>
 
 export const sources = (api: KumaApi) => {
   return {
@@ -37,6 +39,15 @@ export const sources = (api: KumaApi) => {
       const { name } = params
 
       return api.getMesh({ name })
+    },
+
+    '/mesh-insights': async (params: PaginationParams, source: Closeable) => {
+      source.close()
+
+      const { size } = params
+      const offset = params.size * (params.page - 1)
+
+      return api.getAllMeshInsights({ size, offset })
     },
 
     '/mesh-insights/:name': async (params: DetailParams, source: Closeable) => {

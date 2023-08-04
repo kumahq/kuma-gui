@@ -31,7 +31,7 @@ const props = defineProps({
 const processedMeshInsight = computed(() => mergeInsightsReducer([props.meshInsight]))
 
 const dataPlaneProxyStatus = computed(() => {
-  const { total, online, partiallyDegraded } = processedMeshInsight.value.dataplanes
+  const { total, online, partiallyDegraded } = processedMeshInsight.value.dataPlaneProxies
 
   return {
     total,
