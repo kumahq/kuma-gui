@@ -21,6 +21,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  shouldMakeRequest: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const message = ref<unknown>(undefined)
@@ -83,7 +88,11 @@ const close = (state: State) => {
   }
   return {}
 }
-watch(() => props.src, (src) => open(src), { immediate: true })
+watch(() => [props.src, props.shouldMakeRequest] as const, function ([src]) {
+  if (props.shouldMakeRequest) {
+    open(src)
+  }
+}, { immediate: true })
 onBeforeUnmount(() => {
   state = close(state)
 })
