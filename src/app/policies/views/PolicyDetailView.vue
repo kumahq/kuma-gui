@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{route}"
+    v-slot="{ route }"
+    name="policy-detail-view"
   >
-    <RouteTitle
-      :title="t('policies.routes.item.title', {name: route.params.policy})"
-    />
+    <RouteTitle :title="t('policies.routes.item.title', { name: route.params.policy })" />
+
     <AppView
       :breadcrumbs="[
         {
@@ -39,15 +39,15 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
+
 const store = useStore()
 const { t } = useI18n()
 
 const props = defineProps<{
-  mesh: string,
-  policyPath: string,
-  policyName: string,
+  mesh: string
+  policyPath: string
+  policyName: string
 }>()
 
 const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])
-
 </script>

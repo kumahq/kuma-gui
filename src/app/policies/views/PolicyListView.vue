@@ -30,7 +30,7 @@
           -->
           <DataSource
             v-slot="{data, error}: PolicyCollectionSource"
-            :src="`/${route.params.mesh}/policy-type/${selected.path}?page=${props.page}&size=${props.size}`"
+            :src="`/${route.params.mesh}/${selected.path}?page=${props.page}&size=${props.size}`"
           >
             <AppView>
               <template #title>

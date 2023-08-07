@@ -2,55 +2,60 @@
 
 exports[`PolicyConnections.vue renders snapshot 1`] = `
 <div>
-  <div>
-    
-    <h2>
-      Dataplanes
-    </h2>
-    <input
-      class="k-input mt-4"
-      data-testid="dataplane-search-input"
-      id="dataplane-search"
-      placeholder="Filter by name"
-      required=""
-      type="text"
-    />
-    
-    <p
-      class="mt-2"
-      data-testid="dataplane-name"
+  
+  <h2>
+    Dataplanes
+  </h2>
+  <input
+    class="k-input mt-4"
+    data-testid="dataplane-search-input"
+    id="dataplane-search"
+    placeholder="Filter by name"
+    required=""
+    type="text"
+  />
+  
+  
+  
+  <p
+    class="mt-2"
+    data-testid="dataplane-name"
+  >
+    <a
+      class=""
+      href="/gui/mesh/default/data-plane/backend"
     >
-      <a
-        class=""
-        href="/gui/mesh/default/data-plane/backend"
-      >
-        backend
-      </a>
-    </p>
-    <p
-      class="mt-2"
-      data-testid="dataplane-name"
+      backend
+    </a>
+  </p>
+  <p
+    class="mt-2"
+    data-testid="dataplane-name"
+  >
+    <a
+      class=""
+      href="/gui/mesh/default/data-plane/db"
     >
-      <a
-        class=""
-        href="/gui/mesh/default/data-plane/db"
-      >
-        db
-      </a>
-    </p>
-    <p
-      class="mt-2"
-      data-testid="dataplane-name"
+      db
+    </a>
+  </p>
+  <p
+    class="mt-2"
+    data-testid="dataplane-name"
+  >
+    <a
+      class=""
+      href="/gui/mesh/default/data-plane/frontend"
     >
-      <a
-        class=""
-        href="/gui/mesh/default/data-plane/frontend"
-      >
-        frontend
-      </a>
-    </p>
-    
-    
-  </div>
+      frontend
+    </a>
+  </p>
+  
+  
+  <span
+    class="visually-hidden"
+  />
+  
+  
 </div>
 `;
