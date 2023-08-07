@@ -39,7 +39,7 @@ import { KTable } from '@kong/kongponents'
 import { PropType, computed } from 'vue'
 
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import type { ZoneOverview } from '@/types/index.d'
+import type { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
@@ -55,7 +55,13 @@ const props = defineProps({
 const tableData = computed(() => props.zoneOverviews.map((zoneOverview) => {
   const { name } = zoneOverview
 
-  const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
+  let status: StatusKeyword | 'disabled'
+
+  if (zoneOverview.zone.enabled === false) {
+    status = 'disabled'
+  } else {
+    status = getItemStatusFromInsight(zoneOverview.zoneInsight)
+  }
 
   return {
     name,

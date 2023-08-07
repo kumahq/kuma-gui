@@ -24,3 +24,4 @@ http:
       partially_degraded: 'partially degraded'
       notAvailable: 'information not available'
       not_available: 'information not available'
+      disabled: 'disabled'

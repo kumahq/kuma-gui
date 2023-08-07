@@ -7,14 +7,7 @@
           :key="property"
           :term="t(`http.api.property.${property}`)"
         >
-          <KBadge
-            v-if="property === 'status'"
-            :appearance="value === 'offline' ? 'danger' : 'success'"
-          >
-            {{ value }}
-          </KBadge>
-
-          <template v-else-if="property === 'name'">
+          <template v-if="property === 'name'">
             <TextWithCopyButton :text="props.zoneOverview.name">
               <RouterLink
                 :to="{
@@ -32,6 +25,10 @@
           <template v-else>
             {{ value }}
           </template>
+        </DefinitionListItem>
+
+        <DefinitionListItem :term="t('http.api.property.status')">
+          <StatusBadge :status="status" />
         </DefinitionListItem>
       </DefinitionList>
     </template>
@@ -80,7 +77,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KBadge, KAlert } from '@kong/kongponents'
+import { KAlert } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -88,6 +85,7 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
@@ -129,13 +127,19 @@ const props = defineProps({
 
 const processedZoneOverview = computed(() => {
   const { type, name } = props.zoneOverview
-  const status = getItemStatusFromInsight(props.zoneOverview.zoneInsight)
 
   return {
     type,
     name,
-    status,
     'Authentication Type': getZoneDpServerAuthType(props.zoneOverview),
+  }
+})
+
+const status = computed(() => {
+  if (props.zoneOverview.zone.enabled === false) {
+    return 'disabled'
+  } else {
+    return getItemStatusFromInsight(props.zoneOverview.zoneInsight)
   }
 })
 

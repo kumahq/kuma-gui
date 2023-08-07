@@ -198,7 +198,7 @@ import { getItemStatusFromInsight } from '@/utilities/dataplane'
 type ZoneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
   name: string
-  status: StatusKeyword
+  status: StatusKeyword | 'disabled'
   zoneCpVersion: string
   type: string
   warnings: boolean
@@ -252,7 +252,13 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       }
     })
 
-    const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
+    let status: StatusKeyword | 'disabled'
+
+    if (zoneOverview.zone.enabled === false) {
+      status = 'disabled'
+    } else {
+      status = getItemStatusFromInsight(zoneOverview.zoneInsight)
+    }
 
     return {
       detailViewRoute,

@@ -17,16 +17,17 @@ import { useI18n } from '@/utilities'
 
 const i18n = useI18n()
 
-const BADGE_APPEARANCE: Record<StatusKeyword, BadgeAppearance> = {
+const BADGE_APPEARANCE: Record<StatusKeyword | 'disabled', BadgeAppearance> = {
   online: 'success',
   offline: 'danger',
   partially_degraded: 'warning',
   not_available: 'neutral',
+  disabled: 'neutral',
 }
 
 const props = defineProps({
   status: {
-    type: String as PropType<StatusKeyword>,
+    type: String as PropType<StatusKeyword | 'disabled'>,
     required: true,
   },
 })

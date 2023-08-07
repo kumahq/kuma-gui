@@ -21,7 +21,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           creationTime: '2021-02-19T08:06:15.380674+01:00',
           modificationTime: '2021-02-19T08:06:15.380674+01:00',
           zone: {
-            enabled: true,
+            enabled: fake.datatype.boolean(),
           },
           ...(shouldHaveZoneInsight && {
             zoneInsight: {
