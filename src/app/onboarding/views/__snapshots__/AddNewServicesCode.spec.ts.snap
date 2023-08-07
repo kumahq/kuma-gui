@@ -7,7 +7,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
   <div
     aria-atomic="true"
     aria-live="assertive"
-    class="route-view-title sr-only"
+    class="route-view-title visually-hidden"
   >
     Navigated to Add new services
   </div>
