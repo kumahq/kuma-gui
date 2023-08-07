@@ -30,7 +30,7 @@
           -->
           <DataSource
             v-slot="{data, error}: PolicyCollectionSource"
-            :src="`/${route.params.mesh}/${selected.path}?page=${props.page}&size=${props.size}`"
+            :src="`/meshes/${route.params.mesh}/policy-path/${selected.path}?page=${props.page}&size=${props.size}`"
           >
             <AppView>
               <template #title>
@@ -67,7 +67,7 @@
                       <!-- Load in all the totals for the policies so we can show them in the dropdown menu -->
                       <DataSource
                         v-slot="{data: insights}: MeshInsightSource"
-                        :src="`/${route.params.mesh}/insights`"
+                        :src="`/meshes/${route.params.mesh}/insights`"
                       >
                         <AppCollection
                           class="policy-collection"

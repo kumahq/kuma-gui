@@ -20,11 +20,11 @@
     >
       <DataSource
         v-slot="{ data, isLoading, error }: ServiceInsightSource"
-        :src="`/${route.params.mesh}/service-insights/${route.params.service}`"
+        :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
       >
         <DataSource
           v-slot="{ data: externalService, isLoading: isLoadingExternalService, error: externalServiceError }: ExternalServiceSource"
-          :src="`/${route.params.mesh}/external-services/${route.params.service}`"
+          :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
         >
           <LoadingBlock v-if="isLoading || isLoadingExternalService" />
 
@@ -45,7 +45,7 @@
               <template v-if="data?.serviceType !== 'external'">
                 <DataSource
                   v-slot="{ data: dataplanesData, error: dataplanesError }"
-                  :src="`/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
+                  :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
                 >
                   <template
                     v-for="gateways in [typeof dataplanesData?.items?.[0].dataplane.networking.gateway === 'undefined']"

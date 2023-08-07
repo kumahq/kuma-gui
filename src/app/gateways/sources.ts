@@ -25,7 +25,7 @@ export type GatewayCollectionSource = DataSourceResponse<GatewayCollection>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/:mesh/gateways': async (params: MeshParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/gateways': async (params: MeshParams & PaginationParams, source: Closeable) => {
       source.close()
       const offset = params.size * (params.page - 1)
       return api.getAllDataplaneOverviewsFromMesh({
@@ -36,7 +36,7 @@ export const sources = (api: KumaApi) => {
         size: params.size,
       })
     },
-    '/:mesh/gateways/of/:type': async (params: MeshParams & DataplaneTypeParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/gateways/of/:type': async (params: MeshParams & DataplaneTypeParams & PaginationParams, source: Closeable) => {
       source.close()
       const offset = params.size * (params.page - 1)
       return api.getAllDataplaneOverviewsFromMesh({
