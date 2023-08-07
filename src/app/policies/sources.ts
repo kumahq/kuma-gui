@@ -39,9 +39,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/:path': (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const path = params.path
-      const size = params.size
+      const { mesh, path, size } = params
       const offset = params.size * (params.page - 1)
 
       return api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size })
@@ -50,9 +48,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/:path/:name/dataplanes': (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const path = params.path
-      const name = params.name
+      const { mesh, path, name } = params
 
       return api.getPolicyConnections({ mesh, path, name })
     },
