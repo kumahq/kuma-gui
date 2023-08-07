@@ -7,7 +7,7 @@ type Token = ReturnType<typeof token>
 type Sources = ReturnType<typeof sources>
 
 const $ = {
-  sources: token<Sources>('access-role.sources'),
+  sources: token<Sources>('zone.sources'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
