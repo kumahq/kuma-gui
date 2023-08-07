@@ -31,7 +31,7 @@ export const sources = (api: KumaApi) => {
     '/zone-cps': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
-      const size = params.size
+      const { size } = params
       const offset = params.size * (params.page - 1)
 
       return await api.getAllZoneOverviews({ size, offset })
@@ -40,7 +40,7 @@ export const sources = (api: KumaApi) => {
     '/zone-cps/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const name = params.name
+      const { name } = params
 
       return await api.getZoneOverview({ name })
     },
@@ -48,7 +48,7 @@ export const sources = (api: KumaApi) => {
     '/zone-ingresses': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
-      const size = params.size
+      const { size } = params
       const offset = params.size * (params.page - 1)
 
       return await api.getAllZoneIngressOverviews({ size, offset })
@@ -57,7 +57,7 @@ export const sources = (api: KumaApi) => {
     '/zone-egresses/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const name = params.name
+      const { name } = params
 
       return await api.getZoneEgressOverview({ name })
     },
@@ -65,7 +65,7 @@ export const sources = (api: KumaApi) => {
     '/zone-egresses': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
-      const size = params.size
+      const { size } = params
       const offset = params.size * (params.page - 1)
 
       return await api.getAllZoneEgressOverviews({ size, offset })
@@ -74,7 +74,7 @@ export const sources = (api: KumaApi) => {
     '/zone-ingresses/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const name = params.name
+      const { name } = params
 
       return await api.getZoneIngressOverview({ name })
     },

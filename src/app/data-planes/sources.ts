@@ -37,8 +37,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const size = params.size
+      const { mesh, size } = params
       const offset = params.size * (params.page - 1)
       const gateway = 'false'
       const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
@@ -54,8 +53,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const name = params.name
+      const { mesh, name } = params
 
       return api.getDataplaneOverviewFromMesh({ mesh, name })
     },
@@ -63,8 +61,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/dataplanes/for/:service/of/:type': async (params: CollectionParams & ServiceParams & PaginationParams & DataplaneTypeParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const size = params.size
+      const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
       // here 'all' means both proxies/sidecars and gateways this currently fits

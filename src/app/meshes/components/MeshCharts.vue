@@ -12,36 +12,47 @@
 
 <script lang="ts" setup>
 import semverCompare from 'semver/functions/compare'
-import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { PropType, computed } from 'vue'
 
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
-import { MergedMeshInsights, mergeInsightsReducer } from '@/store/reducers/mesh-insights'
-import type { ChartDataPoint, DataPlaneProxyStatus, ServiceStatus } from '@/types/index.d'
-import { useI18n, useKumaApi } from '@/utilities'
+import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
+import type { ChartDataPoint, MeshInsight } from '@/types/index.d'
+import { useI18n } from '@/utilities'
 
 const i18n = useI18n()
-const kumaApi = useKumaApi()
-const route = useRoute()
 
-const isLoading = ref(false)
-const dataPlaneProxyStatus = ref<Required<DataPlaneProxyStatus>>({
-  total: 0,
-  online: 0,
-  partiallyDegraded: 0,
-  offline: 0,
+const props = defineProps({
+  meshInsight: {
+    type: Object as PropType<MeshInsight>,
+    required: true,
+  },
 })
-const serviceStatus = ref<Required<ServiceStatus>>({
-  total: 0,
-  internal: 0,
-  external: 0,
+
+const processedMeshInsight = computed(() => mergeInsightsReducer([props.meshInsight]))
+
+const dataPlaneProxyStatus = computed(() => {
+  const { total, online, partiallyDegraded } = processedMeshInsight.value.dataplanes
+
+  return {
+    total,
+    online,
+    partiallyDegraded,
+    offline: total - online - partiallyDegraded,
+  }
 })
-const dpVersions = ref<{
-  kumaDp: Record<string, DataPlaneProxyStatus>
-  envoy: Record<string, DataPlaneProxyStatus>
-}>({
-  kumaDp: {},
-  envoy: {},
+
+const serviceStatus = computed(() => {
+  const { total, internal, external } = processedMeshInsight.value.services
+
+  return {
+    total,
+    internal,
+    external,
+  }
+})
+
+const dpVersions = computed(() => {
+  return processedMeshInsight.value.dpVersions
 })
 
 const servicesChartData = computed(() => {
@@ -150,66 +161,6 @@ const envoyVersionsChartData = computed(() => {
     dataPoints,
   }
 })
-
-loadData()
-
-async function loadData() {
-  isLoading.value = true
-
-  const name = route.params.mesh as string
-
-  try {
-    const originalMeshInsight = await kumaApi.getMeshInsights({ name })
-    const meshInsight = mergeInsightsReducer([originalMeshInsight])
-
-    setDataPlaneProxyStatus(meshInsight)
-    setServiceStatus(meshInsight)
-    setDpVersions(meshInsight)
-  } catch {
-    dataPlaneProxyStatus.value = {
-      total: 0,
-      online: 0,
-      partiallyDegraded: 0,
-      offline: 0,
-    }
-    serviceStatus.value = {
-      total: 0,
-      internal: 0,
-      external: 0,
-    }
-    dpVersions.value = {
-      kumaDp: {},
-      envoy: {},
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
-
-function setDataPlaneProxyStatus(meshInsight: MergedMeshInsights) {
-  const { total, online, partiallyDegraded } = meshInsight.dataplanes
-
-  dataPlaneProxyStatus.value = {
-    total,
-    online,
-    partiallyDegraded,
-    offline: total - online - partiallyDegraded,
-  }
-}
-
-function setServiceStatus(meshInsight: MergedMeshInsights) {
-  const { total, internal, external } = meshInsight.services
-
-  serviceStatus.value = {
-    total,
-    internal,
-    external,
-  }
-}
-
-function setDpVersions(meshInsight: MergedMeshInsights) {
-  dpVersions.value = meshInsight.dpVersions
-}
 </script>
 
 <style lang="scss" scoped>
