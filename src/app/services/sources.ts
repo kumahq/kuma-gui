@@ -26,7 +26,7 @@ export type ExternalServiceSource = DataSourceResponse<ExternalService>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/:mesh/service-insights': async (params: CollectionParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
       const { mesh, size } = params
@@ -35,7 +35,7 @@ export const sources = (api: KumaApi) => {
       return api.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
     },
 
-    '/:mesh/service-insights/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
@@ -43,7 +43,7 @@ export const sources = (api: KumaApi) => {
       return api.getServiceInsight({ mesh, name })
     },
 
-    '/:mesh/external-services/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/external-services/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params

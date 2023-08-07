@@ -5,7 +5,7 @@
   >
     <DataSource
       v-slot="{data, error}: DataPlaneCollectionSource"
-      :src="`/${props.mesh}/dataplanes?page=${props.page}&size=${size}&search=${props.search}`"
+      :src="`/meshes/${props.mesh}/dataplanes?page=${props.page}&size=${size}&search=${props.search}`"
     >
       <AppView>
         <template #title>

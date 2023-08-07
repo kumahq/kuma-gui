@@ -20,7 +20,7 @@
     >
       <DataSource
         v-slot="{ data, isLoading, error }: DataplaneOverviewSource"
-        :src="`/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
+        :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
       >
         <div class="kcard-border">
           <LoadingBlock v-if="isLoading" />

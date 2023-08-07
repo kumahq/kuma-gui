@@ -13,7 +13,7 @@
 
   <DataSource
     v-slot="{ data, isLoading, error }: PolicyDataplaneCollectionSource"
-    :src="`/${props.mesh}/${props.policyPath}/${props.policyName}/dataplanes`"
+    :src="`/meshes/${props.mesh}/policy-path/${props.policyPath}/policy/${props.policyName}/dataplanes`"
   >
     <LoadingBlock v-if="isLoading" />
 

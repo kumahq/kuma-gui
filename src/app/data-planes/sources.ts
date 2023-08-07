@@ -34,7 +34,7 @@ export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
       const { mesh, size } = params
@@ -50,7 +50,7 @@ export const sources = (api: KumaApi) => {
       })
     },
 
-    '/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
@@ -58,7 +58,7 @@ export const sources = (api: KumaApi) => {
       return api.getDataplaneOverviewFromMesh({ mesh, name })
     },
 
-    '/:mesh/dataplanes/for/:service/of/:type': async (params: CollectionParams & ServiceParams & PaginationParams & DataplaneTypeParams, source: Closeable) => {
+    '/meshes/:mesh/dataplanes/for/:service/of/:type': async (params: CollectionParams & ServiceParams & PaginationParams & DataplaneTypeParams, source: Closeable) => {
       source.close()
 
       const { mesh, size } = params

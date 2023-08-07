@@ -5,7 +5,7 @@
   >
     <DataSource
       v-slot="{data, error}: GatewayCollectionSource"
-      :src="`/${route.params.mesh}/gateways/of/${props.gatewayType}?page=${props.page}&size=${size}&search=${props.search}`"
+      :src="`/meshes/${route.params.mesh}/gateways/of/${props.gatewayType}?page=${props.page}&size=${size}&search=${props.search}`"
     >
       <AppView>
         <template #title>
