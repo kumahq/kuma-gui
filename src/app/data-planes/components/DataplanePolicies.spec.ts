@@ -4,21 +4,23 @@ import { rest } from 'msw'
 
 import DataplanePolicies from './DataplanePolicies.vue'
 import { useServer } from '@/../jest/jest-setup-after-env'
-import { DataPlane } from '@/types/index.d'
+import { DataPlaneOverview } from '@/types/index.d'
 import { useStore, useRouter } from '@/utilities'
 
 const store = useStore()
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicyTypes')
 
-  const dataPlane: DataPlane = {
-    type: 'Dataplane',
+  const dataplaneOverview: DataPlaneOverview = {
+    type: 'DataplaneOverview',
     mesh: 'foo',
     name: 'dataplane-test-456',
     creationTime: '',
     modificationTime: '',
-    networking: {
-      address: '',
+    dataplane: {
+      networking: {
+        address: '',
+      },
     },
   }
 
@@ -27,13 +29,13 @@ async function renderComponent(props = {}) {
     name: 'data-plane-detail-view',
     params: {
       mesh: 'default',
-      dataPlane: dataPlane.name,
+      dataPlane: dataplaneOverview.name,
     },
   })
 
   return mount(DataplanePolicies, {
     props: {
-      dataPlane,
+      dataplaneOverview,
       ...props,
     },
   })

@@ -4,9 +4,9 @@
       <h1 class="entity-heading">
         DPP:
 
-        <TextWithCopyButton :text="dataPlane.name">
+        <TextWithCopyButton :text="props.dataplaneOverview.name">
           <router-link :to="detailViewRoute">
-            {{ dataPlane.name }}
+            {{ props.dataplaneOverview.name }}
           </router-link>
         </TextWithCopyButton>
       </h1>
@@ -61,7 +61,7 @@
         id="code-block-data-plane"
         class="mt-4"
         :resource-fetcher="fetchDataPlaneProxy"
-        :resource-fetcher-watch-key="props.dataPlane.name"
+        :resource-fetcher-watch-key="props.dataplaneOverview.name"
         is-searchable
       />
     </template>
@@ -89,14 +89,14 @@
     </template>
 
     <template #dpp-policies>
-      <DataplanePolicies :data-plane="dataPlane" />
+      <DataplanePolicies :dataplane-overview="dataplaneOverview" />
     </template>
 
     <template #xds-configuration>
       <EnvoyData
         data-path="xds"
-        :mesh="dataPlane.mesh"
-        :dpp-name="dataPlane.name"
+        :mesh="dataplaneOverview.mesh"
+        :dpp-name="dataplaneOverview.name"
         query-key="envoy-data-data-plane"
       />
     </template>
@@ -104,8 +104,8 @@
     <template #envoy-stats>
       <EnvoyData
         data-path="stats"
-        :mesh="dataPlane.mesh"
-        :dpp-name="dataPlane.name"
+        :mesh="dataplaneOverview.mesh"
+        :dpp-name="dataplaneOverview.name"
         query-key="envoy-data-data-plane"
       />
     </template>
@@ -113,8 +113,8 @@
     <template #envoy-clusters>
       <EnvoyData
         data-path="clusters"
-        :mesh="dataPlane.mesh"
-        :dpp-name="dataPlane.name"
+        :mesh="dataplaneOverview.mesh"
+        :dpp-name="dataplaneOverview.name"
         query-key="envoy-data-data-plane"
       />
     </template>
@@ -176,7 +176,6 @@ import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
 import {
   Compatibility,
-  DataPlane,
   DataPlaneOverview,
 } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
@@ -197,12 +196,7 @@ const kumaApi = useKumaApi()
 const store = useStore()
 
 const props = defineProps({
-  dataPlane: {
-    type: Object as PropType<DataPlane>,
-    required: true,
-  },
-
-  dataPlaneOverview: {
+  dataplaneOverview: {
     type: Object as PropType<DataPlaneOverview>,
     required: true,
   },
@@ -248,17 +242,17 @@ const warnings = ref<Compatibility[]>([])
 const detailViewRoute = computed(() => ({
   name: 'data-plane-detail-view',
   params: {
-    mesh: props.dataPlane.mesh,
-    dataPlane: props.dataPlane.name,
+    mesh: props.dataplaneOverview.mesh,
+    dataPlane: props.dataplaneOverview.name,
   },
 }))
 
-const statusWithReason = computed(() => getStatusAndReason(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
-const dataPlaneTags = computed(() => dpTags(props.dataPlane))
-const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dataplaneInsight))
-const mtlsData = computed(() => parseMTLSData(props.dataPlaneOverview, formatIsoDate))
+const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
+const dataPlaneTags = computed(() => dpTags(props.dataplaneOverview.dataplane))
+const dataPlaneVersions = computed(() => getVersions(props.dataplaneOverview.dataplaneInsight))
+const mtlsData = computed(() => parseMTLSData(props.dataplaneOverview, formatIsoDate))
 const insightSubscriptions = computed(() => {
-  const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? [])
+  const subscriptions = Array.from(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? [])
 
   subscriptions.reverse()
 
@@ -268,7 +262,7 @@ const insightSubscriptions = computed(() => {
 const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)
 
 function setWarnings() {
-  const subscriptions = props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
+  const subscriptions = props.dataplaneOverview.dataplaneInsight?.subscriptions ?? []
 
   if (subscriptions.length === 0 || !('version' in subscriptions[0])) {
     return
@@ -287,7 +281,7 @@ function setWarnings() {
   const isMulticluster = store.getters['config/getMulticlusterStatus']
 
   if (isMulticluster && version) {
-    const tags = dpTags(props.dataPlane)
+    const tags = dpTags(props.dataplaneOverview.dataplane)
     const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
     if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
@@ -304,7 +298,7 @@ function setWarnings() {
 setWarnings()
 
 async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
-  const { mesh, name } = props.dataPlane
+  const { mesh, name } = props.dataplaneOverview
   return await kumaApi.getDataplaneFromMesh({ mesh, name }, params)
 }
 </script>
