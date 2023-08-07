@@ -5,7 +5,7 @@
   >
     <DataSource
       v-slot="{data, error}: ServiceInsightCollectionSource"
-      :src="`/${props.mesh}/services?page=${props.page}&size=${props.size}`"
+      :src="`/${props.mesh}/service-insights?page=${props.page}&size=${props.size}`"
     >
       <AppView>
         <template #title>
