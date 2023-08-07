@@ -23,7 +23,7 @@ describe('env', () => {
           mode: 'standalone',
           environment: 'universal',
           apiReadOnly: false,
-        }
+        } as const
       }
     }
     const env = new MockEnv(

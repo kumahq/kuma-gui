@@ -352,8 +352,3 @@ export interface ClientConfigInterface {
   store: Store
   xdsServer: XdsServer
 }
-
-export interface ConfigInterface {
-  clientConfig: ClientConfigInterface | null
-  status: string | null
-}

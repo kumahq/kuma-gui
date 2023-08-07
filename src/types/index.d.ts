@@ -43,8 +43,8 @@ export type PathConfig = {
   version: string
 
   product: string,
-  mode: string,
-  environment: string,
+  mode: 'standalone' | 'global',
+  environment: 'universal' | 'kubernetes',
   apiReadOnly: boolean,
 
 }

@@ -1,12 +1,13 @@
 import { StoreOptions } from 'vuex'
 
-import { ConfigInterface } from './modules/config/config.types'
-import { OnboardingInterface } from './modules/onboarding/onboarding.types'
+import type { OnboardingInterface } from './modules/onboarding/onboarding.types'
 import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
+import { getPathConfigDefault } from '@/pathConfigDefault'
 import type KumaApi from '@/services/kuma-api/KumaApi'
-import config from '@/store/modules/config/config'
 import onboarding from '@/store/modules/onboarding/onboarding'
-import { Mesh } from '@/types/index.d'
+import type { Mesh } from '@/types/index.d'
+
+const { environment, mode } = getPathConfigDefault()
 
 /**
  * The root state of the application’s Vuex store minus all module state.
@@ -27,6 +28,10 @@ interface BareRootState {
   }
   totalDataplaneCount: number
   globalKdsAddress: string
+  apiStatus: 'OK' | null
+  environment: 'universal' | 'kubernetes'
+  mode: 'standalone' | 'global'
+  configurationType: 'memory' | 'kubernetes' | 'postgres'
 }
 
 const initialState: BareRootState = {
@@ -42,6 +47,10 @@ const initialState: BareRootState = {
   },
   totalDataplaneCount: 0,
   globalKdsAddress: 'grpcs://<global-kds-address>:5685',
+  apiStatus: null,
+  environment,
+  mode,
+  configurationType: 'kubernetes',
 }
 
 /**
@@ -50,14 +59,12 @@ const initialState: BareRootState = {
  * Module state is explicitly added because creating a store using modules needs it. By default, Vuex’s types for stores with namespaced modules will be incorrect.
  */
 export interface State extends BareRootState {
-  config: ConfigInterface
   onboarding: OnboardingInterface
 }
 
 export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
   return {
     modules: {
-      config: config(kumaApi),
       onboarding,
     },
 
@@ -66,8 +73,9 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
     getters: {
       shouldShowAppError: (state) => {
-        return state.defaultVisibility.appError && state.config.status !== 'OK'
+        return state.defaultVisibility.appError && state.apiStatus !== 'OK'
       },
+
       shouldShowOnboardingNotification: (state) => {
         const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
 
@@ -80,6 +88,10 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
       SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
       SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
       SET_GLOBAL_KDS_ADDRESS: (state, globalKdsAddress: typeof state.globalKdsAddress) => (state.globalKdsAddress = globalKdsAddress),
+      SET_API_STATUS: (state, apiStatus: typeof state.apiStatus) => (state.apiStatus = apiStatus),
+      SET_ENVIRONMENT: (state, environment: typeof state.environment) => (state.environment = environment),
+      SET_MODE: (state, mode: typeof state.mode) => (state.mode = mode),
+      SET_CONFIGURATION_TYPE: (state, configurationType: typeof state.configurationType) => (state.configurationType = configurationType),
     },
 
     actions: {
@@ -87,17 +99,29 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         commit('SET_GLOBAL_LOADING', isLoading)
       },
 
-      async bootstrap({ dispatch, getters }) {
-        // check the Kuma status before we do anything else
-        await dispatch('config/getStatus')
+      async bootstrap({ commit, dispatch }) {
+        const apiStatus = await kumaApi.getStatus()
+        commit('SET_API_STATUS', apiStatus)
 
         // only dispatch these actions if the Kuma is online
-        if (getters['config/getStatus'] === 'OK') {
+        if (apiStatus === 'OK') {
           await Promise.all([
             dispatch('fetchMeshList'),
             dispatch('fetchDataplaneTotalCount'),
-            dispatch('config/bootstrapConfig'),
+            dispatch('fetchClientConfig'),
           ])
+        }
+      },
+
+      async fetchClientConfig({ commit }) {
+        try {
+          const config = await kumaApi.getConfig()
+
+          commit('SET_ENVIRONMENT', config.environment)
+          commit('SET_MODE', config.mode)
+          commit('SET_CONFIGURATION_TYPE', config.store?.type)
+        } catch {
+          // Let’s keep the default values
         }
       },
 
@@ -122,8 +146,8 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
           })
 
           commit('SET_MESHES', meshes)
-        } catch (error) {
-          console.error(error)
+        } catch {
+          // Let’s keep the default values
         }
       },
 
@@ -132,8 +156,8 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
           const response = await kumaApi.getAllDataplanes({ size: 1 })
 
           commit('SET_TOTAL_DATAPLANE_COUNT', response.total)
-        } catch (error) {
-          console.error(error)
+        } catch {
+          // Let’s keep the default values
         }
       },
 
