@@ -25,7 +25,7 @@ export const sources = (api: KumaApi) => {
     '/meshes': async (params: PaginationParams, source: Closeable) => {
       source.close()
 
-      const size = params.size
+      const { size } = params
       const offset = params.size * (params.page - 1)
 
       return api.getAllMeshes({ size, offset })
@@ -34,7 +34,7 @@ export const sources = (api: KumaApi) => {
     '/meshes/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const name = params.name
+      const { name } = params
 
       return api.getMesh({ name })
     },
@@ -42,7 +42,7 @@ export const sources = (api: KumaApi) => {
     '/mesh-insights/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const name = params.name
+      const { name } = params
 
       return api.getMeshInsights({ name })
     },

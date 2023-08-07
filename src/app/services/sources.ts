@@ -29,8 +29,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/service-insights': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const size = params.size
+      const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
       return api.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
@@ -39,8 +38,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/service-insights/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const name = params.name
+      const { mesh, name } = params
 
       return api.getServiceInsight({ mesh, name })
     },
@@ -48,8 +46,7 @@ export const sources = (api: KumaApi) => {
     '/:mesh/external-services/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
-      const mesh = params.mesh
-      const name = params.name
+      const { mesh, name } = params
 
       return api.getExternalServiceByServiceInsightName(mesh, name)
     },
