@@ -2,7 +2,7 @@
 
 exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
 {
-  "dataplanes": {
+  "dataPlaneProxies": {
     "online": 0,
     "partiallyDegraded": 0,
     "total": 0,
@@ -10,6 +10,11 @@ exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
   "dpVersions": {
     "envoy": {},
     "kumaDp": {},
+  },
+  "gateways": {
+    "online": 0,
+    "partiallyDegraded": 0,
+    "total": 0,
   },
   "meshesTotal": 0,
   "policies": {},
@@ -23,10 +28,10 @@ exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
 
 exports[`mesh-insights calls mergeInsightsReducer with mesh insights 1`] = `
 {
-  "dataplanes": {
-    "online": 3,
-    "partiallyDegraded": 5,
-    "total": 13,
+  "dataPlaneProxies": {
+    "online": 8,
+    "partiallyDegraded": 2,
+    "total": 10,
   },
   "dpVersions": {
     "envoy": {
@@ -54,6 +59,11 @@ exports[`mesh-insights calls mergeInsightsReducer with mesh insights 1`] = `
       },
     },
   },
+  "gateways": {
+    "online": 2,
+    "partiallyDegraded": 1,
+    "total": 3,
+  },
   "meshesTotal": 1,
   "policies": {
     "Secret": {
@@ -79,10 +89,10 @@ exports[`mesh-insights calls mergeInsightsReducer with mesh insights 1`] = `
 
 exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] = `
 {
-  "dataplanes": {
-    "online": 12,
-    "partiallyDegraded": 20,
-    "total": 52,
+  "dataPlaneProxies": {
+    "online": 40,
+    "partiallyDegraded": 10,
+    "total": 50,
   },
   "dpVersions": {
     "envoy": {
@@ -109,6 +119,11 @@ exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] =
         "total": 4,
       },
     },
+  },
+  "gateways": {
+    "online": 10,
+    "partiallyDegraded": 5,
+    "total": 15,
   },
   "meshesTotal": 5,
   "policies": {

@@ -4,7 +4,7 @@
   >
     <div
       v-if="!hasParent"
-      class="route-view-title sr-only"
+      class="route-view-title visually-hidden"
       aria-live="assertive"
       aria-atomic="true"
     >

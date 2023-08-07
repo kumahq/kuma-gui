@@ -1,13 +1,12 @@
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
-export * from './routes'
 
 type Token = ReturnType<typeof token>
 type Sources = ReturnType<typeof sources>
 
 const $ = {
-  sources: token<Sources>('gateway.sources'),
+  sources: token<Sources>('main-overview.sources'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [

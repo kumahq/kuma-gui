@@ -1,7 +1,7 @@
 <template>
   <AppCollection
     :empty-state-title="t('common.emptyState.title')"
-    :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data plane proxies' })"
+    :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data Plane Proxies' })"
     :headers="[
       { label: 'Name', key: 'name' },
       props.gateways ? { label: 'Type', key: 'type' } : undefined,

@@ -7,7 +7,7 @@ import AppLoadingBar from '@/app/AppLoadingBar.vue'
 import AppOnboardingNotification from '@/app/AppOnboardingNotification.vue'
 import AppSidebar from '@/app/AppSidebar.vue'
 import KumaLogo from '@/app/common/KumaLogo.vue'
-import OverviewCharts from '@/app/main-overview/components/OverviewCharts.vue'
+import MainOverview from '@/app/main-overview/components/MainOverview.vue'
 import KubernetesGraph from '@/app/onboarding/components/graphs/KubernetesGraph.vue'
 import MemoryGraph from '@/app/onboarding/components/graphs/MemoryGraph.vue'
 import MultizoneGraph from '@/app/onboarding/components/graphs/MultizoneGraph.vue'
@@ -18,7 +18,7 @@ import { constant, createInjections } from '@/services/utils'
 export const TOKENS = {
   KumaLogo: constant(KumaLogo, { description: 'KumaLogo' }),
   GithubButton: constant(GithubButton, { description: 'GithubButton' }),
-  OverviewCharts: constant(OverviewCharts, { description: 'OverviewCharts' }),
+  MainOverview: constant(MainOverview, { description: 'MainOverview' }),
   KubernetesGraph: constant(KubernetesGraph, { description: 'KubernetesGraph' }),
   PostgresGraph: constant(PostgresGraph, { description: 'PostgresGraph' }),
   MemoryGraph: constant(MemoryGraph, { description: 'MemoryGraph' }),
@@ -34,7 +34,7 @@ export const TOKENS = {
 export const [
   useKumaLogo,
   useGithubButton,
-  useOverviewCharts,
+  useMainOverview,
   useKubernetesGraph,
   usePostgresGraph,
   useMemoryGraph,
@@ -49,7 +49,7 @@ export const [
 ] = createInjections(
   TOKENS.KumaLogo,
   TOKENS.GithubButton,
-  TOKENS.OverviewCharts,
+  TOKENS.MainOverview,
   TOKENS.KubernetesGraph,
   TOKENS.PostgresGraph,
   TOKENS.MemoryGraph,

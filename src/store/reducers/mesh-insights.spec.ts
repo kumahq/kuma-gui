@@ -12,12 +12,20 @@ function getMeshInsight(): MeshInsight {
     lastSync: '',
     dataplanes: {
       total: 13,
-      online: 3,
-      partiallyDegraded: 5,
+      online: 10,
+      partiallyDegraded: 3,
     },
     dataplanesByType: {
-      standard: {},
-      gateway: {},
+      standard: {
+        total: 10,
+        online: 8,
+        partiallyDegraded: 2,
+      },
+      gateway: {
+        total: 3,
+        online: 2,
+        partiallyDegraded: 1,
+      },
     },
     policies: {
       Secret: {
@@ -95,10 +103,10 @@ describe('mesh-insights', () => {
         {
           ...getMeshInsight(),
           ...{
-            dataplanes: {
-              total: 13,
-              online: 3,
-              partiallyDegraded: 5,
+            dataPlaneProxies: {
+              total: 10,
+              online: 8,
+              partiallyDegraded: 2,
             },
           },
         },
@@ -124,7 +132,8 @@ describe('mesh-insights', () => {
           ...getMeshInsight(),
           ...{
             policies: {},
-            dataplanes: {},
+            dataPlaneProxies: {},
+            gateways: {},
             dpVersions: {
               kumaDp: {},
               envoy: {},

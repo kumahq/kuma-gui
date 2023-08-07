@@ -1,7 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
-  // TODO: Setting different values here doesn’t seem to work. The mock always returns 14 objects.
-  const { total, next, pageTotal } = pager(
+  const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 20 })}`),
     req,
     '/mesh-insights',
@@ -12,14 +11,15 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
-        const mesh = `${fake.hacker.noun()}-${i}`
+        const id = offset + i
+        const name = `${fake.hacker.noun()}-${id}`
         const dataPlaneProxyStatus = fake.kuma.dataPlaneProxyStatus()
         const standardDataPlaneProxies = fake.kuma.dataPlaneProxyStatus(dataPlaneProxyStatus.total)
         const gateways = fake.kuma.dataPlaneProxyStatus(standardDataPlaneProxies.total)
 
         return {
           type: 'MeshInsight',
-          name: mesh,
+          name,
           creationTime: '2021-01-29T07:10:02.339031+01:00',
           modificationTime: '2021-01-29T07:29:02.314448+01:00',
           lastSync: '2021-01-29T06:29:02.314447Z',
