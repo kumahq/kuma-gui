@@ -39,15 +39,21 @@
               :term="t(`http.api.property.${property}`)"
             >
               <KBadge
-                v-if="typeof value === 'boolean'"
-                :appearance="value ? 'success' : 'danger'"
+                v-if="value === ''"
+                appearance="danger"
               >
-                {{ value ? 'Enabled' : 'Disabled' }}
+                Disabled
               </KBadge>
 
               <template v-else>
                 {{ value }}
               </template>
+            </DefinitionListItem>
+
+            <DefinitionListItem :term="t('http.api.property.localityAwareLoadBalancing')">
+              <KBadge :appearance="hasLocalityAwareLoadBalancing ? 'success' : 'danger'">
+                {{ hasLocalityAwareLoadBalancing ? 'Enabled' : 'Disabled' }}
+              </KBadge>
             </DefinitionListItem>
           </DefinitionList>
 
@@ -131,21 +137,14 @@ const basicMesh = computed(() => {
   }
 })
 
-const extendedMesh = computed(() => {
-  const mtls = getBackendData(props.mesh, 'mtls')
-  const logging = getBackendData(props.mesh, 'logging')
-  const metrics = getBackendData(props.mesh, 'metrics')
-  const tracing = getBackendData(props.mesh, 'tracing')
-  const localityAwareLoadBalancing = Boolean(props.mesh.routing?.localityAwareLoadBalancing)
+const hasLocalityAwareLoadBalancing = computed(() => Boolean(props.mesh.routing?.localityAwareLoadBalancing))
 
-  return {
-    mtls,
-    logging,
-    metrics,
-    tracing,
-    localityAwareLoadBalancing,
-  }
-})
+const extendedMesh = computed(() => ({
+  mtls: getBackendData(props.mesh, 'mtls'),
+  logging: getBackendData(props.mesh, 'logging'),
+  metrics: getBackendData(props.mesh, 'metrics'),
+  tracing: getBackendData(props.mesh, 'tracing'),
+}))
 
 const totalPolicyCount = computed(() => {
   return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
@@ -168,9 +167,9 @@ const policyTypes = computed(() => {
     .filter(notEmpty)
 })
 
-function getBackendData(mesh: Mesh, field: 'mtls' | 'logging' | 'metrics' | 'tracing'): string | boolean {
+function getBackendData(mesh: Mesh, field: 'mtls' | 'logging' | 'metrics' | 'tracing') {
   if (mesh[field] === undefined) {
-    return false
+    return ''
   }
 
   const enabledBackendName = mesh[field].enabledBackend ?? mesh[field].defaultBackend ?? mesh[field].backends[0].name
