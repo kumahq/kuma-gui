@@ -18,11 +18,6 @@ export const routes = (store: Store<State>) => {
           {
             path: `${prefix === 'policy' ? ':policyPath/' : ''}:policy`,
             name: `${prefix}-detail-view`,
-            props: (route) => ({
-              mesh: route.params.mesh,
-              policyPath: route.params.policyPath,
-              policyName: route.params.policy,
-            }),
             component: () => import('@/app/policies/views/PolicyDetailView.vue'),
           },
         ],

@@ -60,8 +60,8 @@
       <ResourceCodeBlock
         id="code-block-data-plane"
         class="mt-4"
+        :resource="props.dataplaneOverview"
         :resource-fetcher="fetchDataPlaneProxy"
-        :resource-fetcher-watch-key="props.dataplaneOverview.name"
         is-searchable
       />
     </template>
