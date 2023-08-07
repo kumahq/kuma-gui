@@ -1,10 +1,10 @@
 data-planes:
   routes:
     item:
-      title: "{name} Data plane proxy"
-      breadcrumbs: Data plane proxies
+      title: "{name} Data Plane Proxy"
+      breadcrumbs: Data Plane Proxies
     items:
-      title: Data plane proxies
+      title: Data Plane Proxies
   href:
     docs:
       mutual-tls: '{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}'
