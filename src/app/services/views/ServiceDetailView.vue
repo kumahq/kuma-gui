@@ -2,9 +2,8 @@
   <RouteView
     v-slot="{ route }"
     name="service-detail-view"
+    data-testid="service-detail-view"
   >
-    <RouteTitle :title="t('services.routes.item.title', {name: route.params.service})" />
-
     <AppView
       :breadcrumbs="[
         {
@@ -18,6 +17,15 @@
         },
       ]"
     >
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('services.routes.item.title', {name: route.params.service})"
+            :render="true"
+          />
+        </h2>
+      </template>
+
       <DataSource
         v-slot="{ data, isLoading, error }: ServiceInsightSource"
         :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"

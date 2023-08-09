@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="props.warnings.length > 0"
-    class="stack"
-  >
+  <div class="stack">
     <div
       v-for="(warning, index) in props.warnings"
       :key="`${warning.kind}/${index}`"

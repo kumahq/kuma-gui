@@ -22,7 +22,6 @@ export const routes = (
       path: '/zones',
       name: 'zone-index-view',
       redirect: { name: 'zone-cp-list-view' },
-      component: () => import('@/app/zones/views/ZoneIndexView.vue'),
       children: [
         {
           path: 'zone-cps',

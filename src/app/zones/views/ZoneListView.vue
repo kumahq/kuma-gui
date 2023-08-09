@@ -5,12 +5,26 @@
   >
     <AppView>
       <template #title>
-        <h2>
+        <h1>
           <RouteTitle
             :title="t('zone-cps.routes.items.title')"
             :render="true"
           />
-        </h2>
+        </h1>
+      </template>
+
+      <template
+        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && store.getters['config/getMulticlusterStatus']"
+        #actions
+      >
+        <KButton
+          appearance="creation"
+          icon="plus"
+          :to="{ name: 'zone-create-view' }"
+          data-testid="create-zone-link"
+        >
+          {{ t('zones.index.create') }}
+        </KButton>
       </template>
 
       <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />

@@ -1,7 +1,7 @@
 policies:
   routes:
     item:
-      title: "{name} Policy"
+      title: "{name} {type}"
       breadcrumbs: Policies
     items:
       title: "{name}"

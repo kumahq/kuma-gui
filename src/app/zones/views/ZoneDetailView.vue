@@ -2,9 +2,8 @@
   <RouteView
     v-slot="{ route }"
     name="zone-cp-detail-view"
+    data-testid="zone-cp-detail-view"
   >
-    <RouteTitle :title="t('zone-cps.routes.item.title', { name: route.params.zone })" />
-
     <AppView
       :breadcrumbs="[
         {
@@ -15,6 +14,15 @@
         },
       ]"
     >
+      <template #title>
+        <h1>
+          <RouteTitle
+            :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+            :render="true"
+          />
+        </h1>
+      </template>
+
       <DataSource
         v-slot="{ data, isLoading, error }: ZoneOverviewSource"
         :src="`/zone-cps/${route.params.zone}`"

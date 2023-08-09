@@ -3,8 +3,6 @@
     v-slot="{ route }"
     name="data-plane-detail-view"
   >
-    <RouteTitle :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })" />
-
     <AppView
       :breadcrumbs="[
         {
@@ -18,6 +16,15 @@
         },
       ]"
     >
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })"
+            :render="true"
+          />
+        </h2>
+      </template>
+
       <DataSource
         v-slot="{ data, isLoading, error }: DataplaneOverviewSource"
         :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"

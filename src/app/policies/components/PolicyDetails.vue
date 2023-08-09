@@ -1,21 +1,6 @@
 <template>
   <div class="policy-details kcard-border">
     <TabsWidget :tabs="tabs">
-      <template #tabHeader>
-        <h1
-          class="entity-heading"
-          data-testid="policy-single-entity"
-        >
-          {{ props.policy.type }}:
-
-          <TextWithCopyButton :text="props.policy.name">
-            <router-link :to="detailViewRoute">
-              {{ props.policy.name }}
-            </router-link>
-          </TextWithCopyButton>
-        </h1>
-      </template>
-
       <template #overview>
         <ResourceCodeBlock
           id="code-block-policy"
@@ -37,12 +22,11 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed } from 'vue'
+import { PropType } from 'vue'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import type { PolicyEntity } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
@@ -70,15 +54,6 @@ const tabs = [
     title: 'Affected DPPs',
   },
 ]
-
-const detailViewRoute = computed(() => ({
-  name: 'policy-detail-view',
-  params: {
-    mesh: props.policy.mesh,
-    policy: props.policy.name,
-    policyPath: props.path,
-  },
-}))
 
 async function fetchPolicy(params?: SingleResourceParameters) {
   const { name, mesh } = props.policy

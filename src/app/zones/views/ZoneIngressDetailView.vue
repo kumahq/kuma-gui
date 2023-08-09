@@ -2,9 +2,8 @@
   <RouteView
     v-slot="{ route }"
     name="zone-ingress-detail-view"
+    data-testid="zone-ingress-detail-view"
   >
-    <RouteTitle :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })" />
-
     <AppView
       :breadcrumbs="[
         {
@@ -15,6 +14,15 @@
         },
       ]"
     >
+      <template #title>
+        <h1>
+          <RouteTitle
+            :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
+            :render="true"
+          />
+        </h1>
+      </template>
+
       <DataSource
         v-slot="{ data, isLoading, error }: ZoneIngressOverviewSource"
         :src="`/zone-ingresses/${route.params.zoneIngress}`"
