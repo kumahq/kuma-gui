@@ -16,12 +16,10 @@
       :env="env"
       :route="{
         update: (params: Record<string, string | undefined>) => {
-          router.push(
-            {
-              name: props.name,
-              query: cleanQuery(params, route.query),
-            }
-          )
+          router.replace({
+            name: props.name,
+            query: cleanQuery(params, route.query),
+          })
         },
         replace: (...args: Parameters<typeof router['push']>) => {
           router.push(...args)
@@ -116,5 +114,4 @@ watch(() => props.attrs, (attrs) => {
 onBeforeUnmount(() => {
   parent.removeAttrs(sym)
 })
-
 </script>
