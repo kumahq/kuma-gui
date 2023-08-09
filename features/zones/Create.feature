@@ -4,6 +4,7 @@ Feature: Zones: Zone create flow
       | Alias                               | Selector                                            |
       | name-input                          | [data-testid='name-input']                          |
       | create-zone-button                  | [data-testid='create-zone-button']                  |
+      | create-zone-link                    | [data-testid='create-zone-link']                    |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
       | ingress-input-switch                | [for='zone-ingress-enabled']                        |
@@ -11,7 +12,10 @@ Feature: Zones: Zone create flow
       | zone-connected-scanner              | [data-testid='zone-connected-scanner']              |
       | error                               | [data-testid='create-zone-error']                   |
       | instructions                        | [data-testid='connect-zone-instructions']           |
-    When I visit the "/zones/create" URL
+    When I visit the "/zones" URL
+    Then the page title contains "Zone Control Planes"
+    When I click the "$create-zone-link" element
+    Then the page title contains "Create & connect Zone"
 
   Scenario: The form shows only the initial elements
     Then the "$name-input" element exists
@@ -89,4 +93,3 @@ Feature: Zones: Zone create flow
     And I click the "$create-zone-button" element
     Then the "$error" element exists
     Then the "$instructions" element doesn't exist
-

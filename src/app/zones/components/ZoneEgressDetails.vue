@@ -1,17 +1,5 @@
 <template>
   <TabsWidget :tabs="TABS">
-    <template #tabHeader>
-      <h1 class="entity-heading">
-        Zone Egress:
-
-        <TextWithCopyButton :text="processedZoneEgressOverview.name">
-          <router-link :to="detailViewRoute">
-            {{ processedZoneEgressOverview.name }}
-          </router-link>
-        </TextWithCopyButton>
-      </h1>
-    </template>
-
     <template #overview>
       <DefinitionList>
         <DefinitionListItem
@@ -20,7 +8,18 @@
           :term="t(`http.api.property.${property}`)"
         >
           <template v-if="property === 'name'">
-            <TextWithCopyButton :text="value" />
+            <TextWithCopyButton :text="props.zoneEgressOverview.name">
+              <RouterLink
+                :to="{
+                  name: 'zone-egress-detail-view',
+                  params: {
+                    zoneEgress: props.zoneEgressOverview.name,
+                  },
+                }"
+              >
+                {{ props.zoneEgressOverview.name }}
+              </RouterLink>
+            </TextWithCopyButton>
           </template>
 
           <template v-else>
@@ -122,13 +121,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-const detailViewRoute = computed(() => ({
-  name: 'zone-egress-detail-view',
-  params: {
-    zoneEgress: props.zoneEgressOverview.name,
-  },
-}))
 
 const processedZoneEgressOverview = computed(() => {
   const { type, name } = props.zoneEgressOverview

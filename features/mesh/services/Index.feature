@@ -6,7 +6,6 @@ Feature: mesh / services / index
       | children            | [data-testid='data-plane-collection'] |
       | items-header        | $items th                             |
       | item                | $items tbody tr                       |
-      | item-title          | .entity-title                         |
       | navigation          | .route-mesh-view-tabs ul >            |
       | button-tab-selected | $navigation li:nth-child(2).active    |
       | breadcrumbs         | .k-breadcrumbs                        |
@@ -62,6 +61,6 @@ Feature: mesh / services / index
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "fake-service-2"
     When I click the "$item:nth-child(2) td:first-of-type a" element
     Then the URL contains "service/fake-service-2"
-    Then the "$item-title" element contains "fake-service-2"
+    Then the "[data-testid='service-detail-view']" element contains "fake-service-2 Service"
     # In this case $children refers to the data-plane-proxy table
     Then the "$children" element exists

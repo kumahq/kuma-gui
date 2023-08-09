@@ -1,17 +1,5 @@
 <template>
   <TabsWidget :tabs="filteredTabs">
-    <template #tabHeader>
-      <h1 class="entity-heading">
-        Zone Control Plane:
-
-        <TextWithCopyButton :text="processedZoneOverview.name">
-          <router-link :to="detailViewRoute">
-            {{ processedZoneOverview.name }}
-          </router-link>
-        </TextWithCopyButton>
-      </h1>
-    </template>
-
     <template #overview>
       <DefinitionList>
         <DefinitionListItem
@@ -27,7 +15,18 @@
           </KBadge>
 
           <template v-else-if="property === 'name'">
-            <TextWithCopyButton :text="value" />
+            <TextWithCopyButton :text="props.zoneOverview.name">
+              <RouterLink
+                :to="{
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: props.zoneOverview.name,
+                  },
+                }"
+              >
+                {{ props.zoneOverview.name }}
+              </RouterLink>
+            </TextWithCopyButton>
           </template>
 
           <template v-else>
@@ -127,13 +126,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-const detailViewRoute = computed(() => ({
-  name: 'zone-cp-detail-view',
-  params: {
-    zone: props.zoneOverview.name,
-  },
-}))
 
 const processedZoneOverview = computed(() => {
   const { type, name } = props.zoneOverview

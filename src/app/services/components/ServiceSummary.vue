@@ -3,24 +3,22 @@
     <template #body>
       <div class="entity-section-list">
         <section>
-          <h1 class="entity-title">
-            <span>
-              Service:
-
-              <TextWithCopyButton :text="props.service.name">
-                <router-link :to="detailViewRoute">
-                  {{ props.service.name }}
-                </router-link>
-              </TextWithCopyButton>
-            </span>
-
-            <StatusBadge
+          <DefinitionList>
+            <DefinitionListItem
               v-if="status"
-              :status="status"
-            />
-          </h1>
+              :term="t('http.api.property.status')"
+            >
+              <StatusBadge :status="status" />
+            </DefinitionListItem>
 
-          <DefinitionList class="mt-4">
+            <DefinitionListItem :term="t('http.api.property.name')">
+              <TextWithCopyButton :text="props.service.name">
+                <RouterLink :to="detailViewRoute">
+                  {{ props.service.name }}
+                </RouterLink>
+              </TextWithCopyButton>
+            </DefinitionListItem>
+
             <DefinitionListItem term="Address">
               <template v-if="address !== null">
                 {{ address }}
@@ -79,9 +77,10 @@ import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { ExternalService, ServiceInsight } from '@/types/index.d'
-import { useKumaApi } from '@/utilities'
+import { useI18n, useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
+const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
   service: ServiceInsight
@@ -166,11 +165,5 @@ async function fetchService(params?: SingleResourceParameters) {
 
 .entity-section-list > :not(:last-child) {
   padding-right: var(--spacing-md);
-}
-
-.entity-title {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
 }
 </style>

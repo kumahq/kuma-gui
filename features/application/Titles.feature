@@ -39,4 +39,4 @@ Feature: The HTML title is correct on each page
       | /mesh/default/data-plane/data-plane-name | Data Plane Proxy   |
 
       | /mesh/default/policies/circuit-breakers         | CircuitBreaker |
-      | /mesh/default/policy/circuit-breakers/program-0 | Policy         |
+      | /mesh/default/policy/circuit-breakers/program-0 | CircuitBreaker |

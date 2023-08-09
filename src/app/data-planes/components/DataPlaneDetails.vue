@@ -1,19 +1,23 @@
 <template>
   <TabsWidget :tabs="filteredTabs">
-    <template #tabHeader>
-      <h1 class="entity-heading">
-        DPP:
-
-        <TextWithCopyButton :text="props.dataplaneOverview.name">
-          <router-link :to="detailViewRoute">
-            {{ props.dataplaneOverview.name }}
-          </router-link>
-        </TextWithCopyButton>
-      </h1>
-    </template>
-
     <template #overview>
       <DefinitionList>
+        <DefinitionListItem :term="t('http.api.property.name')">
+          <TextWithCopyButton :text="props.dataplaneOverview.name">
+            <RouterLink
+              :to="{
+                name: 'data-plane-detail-view',
+                params: {
+                  mesh: props.dataplaneOverview.mesh,
+                  dataPlane: props.dataplaneOverview.name,
+                },
+              }"
+            >
+              {{ props.dataplaneOverview.name }}
+            </RouterLink>
+          </TextWithCopyButton>
+        </DefinitionListItem>
+
         <DefinitionListItem
           v-if="dataPlaneTags.length > 0"
           term="Tags"
@@ -147,7 +151,10 @@
     </template>
 
     <template #warnings>
-      <WarningsWidget :warnings="warnings" />
+      <WarningsWidget
+        v-if="warnings.length > 0"
+        :warnings="warnings"
+      />
     </template>
   </TabsWidget>
 </template>
@@ -238,14 +245,6 @@ const tabs = [
 ]
 
 const warnings = ref<Compatibility[]>([])
-
-const detailViewRoute = computed(() => ({
-  name: 'data-plane-detail-view',
-  params: {
-    mesh: props.dataplaneOverview.mesh,
-    dataPlane: props.dataplaneOverview.name,
-  },
-}))
 
 const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataplaneOverview.dataplane))
