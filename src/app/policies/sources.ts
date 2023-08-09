@@ -45,6 +45,14 @@ export const sources = (api: KumaApi) => {
       return api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size })
     },
 
+    '/meshes/:mesh/policy-path/:path/policy/:name': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, path, name } = params
+
+      return api.getSinglePolicyEntity({ mesh, path, name })
+    },
+
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': (params: DetailParams, source: Closeable) => {
       source.close()
 

@@ -56,8 +56,8 @@
 
         <ResourceCodeBlock
           id="code-block-service"
+          :resource="props.service"
           :resource-fetcher="fetchService"
-          :resource-fetcher-watch-key="props.service.name"
           is-searchable
           :show-copy-as-kubernetes-button="props.service.serviceType === 'external' && props.externalService !== null"
           code-max-height="250px"

@@ -86,8 +86,8 @@
       <template #body>
         <ResourceCodeBlock
           id="code-block-mesh"
+          :resource="props.mesh"
           :resource-fetcher="fetchMesh"
-          :resource-fetcher-watch-key="mesh?.name || null"
         />
       </template>
     </KCard>
