@@ -3,13 +3,23 @@
     <template #overview>
       <KCard>
         <template #body>
-          <DefinitionList>
-            <DefinitionListItem
-              v-for="(value, property) in processedZoneEgressOverview"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              <template v-if="property === 'name'">
+          <div class="variable-columns">
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.status') }}
+              </template>
+
+              <template #body>
+                <StatusBadge :status="status" />
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.name') }}
+              </template>
+
+              <template #body>
                 <TextWithCopyButton :text="props.zoneEgressOverview.name">
                   <RouterLink
                     :to="{
@@ -23,12 +33,18 @@
                   </RouterLink>
                 </TextWithCopyButton>
               </template>
+            </DefinitionCard>
 
-              <template v-else>
-                {{ value }}
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.type') }}
               </template>
-            </DefinitionListItem>
-          </DefinitionList>
+
+              <template #body>
+                {{ props.zoneEgressOverview.type }}
+              </template>
+            </DefinitionCard>
+          </div>
         </template>
       </KCard>
     </template>
@@ -56,7 +72,7 @@
     <template #xds-configuration>
       <EnvoyData
         data-path="xds"
-        :zone-egress-name="processedZoneEgressOverview.name"
+        :zone-egress-name="props.zoneEgressOverview.name"
         query-key="envoy-data-zone-egress"
       />
     </template>
@@ -64,7 +80,7 @@
     <template #envoy-stats>
       <EnvoyData
         data-path="stats"
-        :zone-egress-name="processedZoneEgressOverview.name"
+        :zone-egress-name="props.zoneEgressOverview.name"
         query-key="envoy-data-zone-egress"
       />
     </template>
@@ -72,7 +88,7 @@
     <template #envoy-clusters>
       <EnvoyData
         data-path="clusters"
-        :zone-egress-name="processedZoneEgressOverview.name"
+        :zone-egress-name="props.zoneEgressOverview.name"
         query-key="envoy-data-zone-egress"
       />
     </template>
@@ -85,38 +101,39 @@ import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { ZoneEgressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const { t } = useI18n()
 
 const TABS = [
   {
     hash: '#overview',
-    title: 'Overview',
+    title: t('zone-egresses.routes.item.tabs.overview'),
   },
   {
     hash: '#insights',
-    title: 'Zone Egress Insights',
+    title: t('zone-egresses.routes.item.tabs.insights'),
   },
   {
     hash: '#xds-configuration',
-    title: 'XDS Configuration',
+    title: t('zone-egresses.routes.item.tabs.xds_configuration'),
   },
   {
     hash: '#envoy-stats',
-    title: 'Stats',
+    title: t('zone-egresses.routes.item.tabs.stats'),
   },
   {
     hash: '#envoy-clusters',
-    title: 'Clusters',
+    title: t('zone-egresses.routes.item.tabs.clusters'),
   },
 ]
 
@@ -127,14 +144,7 @@ const props = defineProps({
   },
 })
 
-const processedZoneEgressOverview = computed(() => {
-  const { type, name } = props.zoneEgressOverview
-
-  return {
-    type,
-    name,
-  }
-})
+const status = computed(() => getItemStatusFromInsight(props.zoneEgressOverview.zoneEgressInsight))
 
 const subscriptionsReversed = computed<any[]>(() => {
   const subscriptions = props.zoneEgressOverview.zoneEgressInsight?.subscriptions ?? []

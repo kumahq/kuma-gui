@@ -32,3 +32,17 @@ Adapted from https://every-layout.dev/layouts/switcher/.
   // Accounts for the gaps.
   inline-size: calc((100% - ((var(--columns) - 1) * var(--AppGap))) / var(--columns));
 }
+
+
+/*
+.variable-columns
+*/
+
+.variable-columns {
+  display: flex;
+  gap: var(--AppGap);
+}
+
+.variable-columns>* {
+  flex-grow: 1;
+}

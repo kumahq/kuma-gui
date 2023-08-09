@@ -4,10 +4,8 @@ Feature: zones / zone-cps / item
       | Alias                          | Selector                                 |
       | zone-control-plane-detail-view | [data-testid='zone-cp-detail-view']      |
       | nav-insights                   | #insights-tab                            |
-      | nav-config                     | #config-tab                              |
       | tab-overview                   | #panel-0                                 |
       | tab-insights                   | #panel-1                                 |
-      | tab-config                     | #panel-2                                 |
       | warning-no-subscriptions       | [data-testid='warning-no-subscriptions'] |
 
     And the URL "/config" responds with
@@ -26,6 +24,8 @@ Feature: zones / zone-cps / item
       """
       body:
         name: zone-cp-1
+        zone:
+          enabled: true
         zoneInsight:
           subscriptions:
             - connectTime: 2020-07-28T16:18:09.743141Z
@@ -33,24 +33,21 @@ Feature: zones / zone-cps / item
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: ~
               config: |
-                {"dpServer": {"auth": {"type": "dpToken"}}}
+                { "environment": "universal", "dpServer": { "auth": { "type": "dpToken" } } }
       """
 
     When I visit the "/zones/zone-cps/zone-cp-1" URL
-    Then the page title contains "Zone Control Plane"
+    Then the page title contains "zone-cp-1 Zone Control Plane"
     Then the "$zone-control-plane-detail-view" element contains "zone-cp-1 Zone Control Plane"
 
     Then the "$tab-overview" element contains
-      | Value        |
-      | ZoneOverview |
-      | online       |
-      | dpToken      |
+      | Value     |
+      | universal |
+      | online    |
+      | dpToken   |
 
     When I click the "$nav-insights" element
     Then the "$tab-insights" element contains "Connect time: Jul 28, 2020, 4:18 PM"
-
-    When I click the "$nav-config" element
-    Then the "$tab-config" element contains "dpToken"
 
   Scenario: When subscriptions aren't set a warning is shown
     And the URL "/zones+insights/zone-cp-1" responds with
@@ -61,5 +58,4 @@ Feature: zones / zone-cps / item
           subscriptions: ~
       """
     When I visit the "/zones/zone-cps/zone-cp-1" URL
-    And I click the "$nav-config" element
     Then the "$warning-no-subscriptions" element exists

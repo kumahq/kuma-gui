@@ -20,79 +20,75 @@
           v-slot="{ data, error }: ZoneIngressOverviewCollectionSource"
           :src="`/zone-ingresses?size=${props.size}&page=${props.page}`"
         >
-          <KCard>
-            <template #body>
-              <AppCollection
-                class="zone-ingress-collection"
-                data-testid="zone-ingress-collection"
-                :headers="[
-                  { label: 'Name', key: 'name' },
-                  { label: 'Status', key: 'status' },
-                  { label: 'Actions', key: 'actions', hideLabel: true },
-                ]"
-                :page-number="props.page"
-                :page-size="props.size"
-                :total="data?.total"
-                :items="data ? transformToTableData(data.items) : undefined"
-                :error="error"
-                @change="route.update"
+          <AppCollection
+            class="zone-ingress-collection"
+            data-testid="zone-ingress-collection"
+            :headers="[
+              { label: 'Name', key: 'name' },
+              { label: 'Status', key: 'status' },
+              { label: 'Actions', key: 'actions', hideLabel: true },
+            ]"
+            :page-number="props.page"
+            :page-size="props.size"
+            :total="data?.total"
+            :items="data ? transformToTableData(data.items) : undefined"
+            :error="error"
+            @change="route.update"
+          >
+            <template #name="{ row, rowValue }">
+              <RouterLink
+                :to="row.detailViewRoute"
+                data-testid="detail-view-link"
               >
-                <template #name="{ row, rowValue }">
-                  <RouterLink
-                    :to="row.detailViewRoute"
-                    data-testid="detail-view-link"
+                {{ rowValue }}
+              </RouterLink>
+            </template>
+
+            <template #status="{ rowValue }">
+              <StatusBadge
+                v-if="rowValue"
+                :status="rowValue"
+              />
+
+              <template v-else>
+                {{ t('common.collection.none') }}
+              </template>
+            </template>
+
+            <template #actions="{ row }">
+              <KDropdownMenu
+                class="actions-dropdown"
+                data-testid="actions-dropdown"
+                :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                width="150"
+              >
+                <template #default>
+                  <KButton
+                    class="non-visual-button"
+                    appearance="secondary"
+                    size="small"
                   >
-                    {{ rowValue }}
-                  </RouterLink>
-                </template>
-
-                <template #status="{ rowValue }">
-                  <StatusBadge
-                    v-if="rowValue"
-                    :status="rowValue"
-                  />
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #actions="{ row }">
-                  <KDropdownMenu
-                    class="actions-dropdown"
-                    data-testid="actions-dropdown"
-                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                    width="150"
-                  >
-                    <template #default>
-                      <KButton
-                        class="non-visual-button"
-                        appearance="secondary"
-                        size="small"
-                      >
-                        <template #icon>
-                          <KIcon
-                            color="var(--black-400)"
-                            icon="more"
-                            size="16"
-                          />
-                        </template>
-                      </KButton>
-                    </template>
-
-                    <template #items>
-                      <KDropdownItem
-                        :item="{
-                          to: row.detailViewRoute,
-                          label: t('common.collection.actions.view'),
-                        }"
+                    <template #icon>
+                      <KIcon
+                        color="var(--black-400)"
+                        icon="more"
+                        size="16"
                       />
                     </template>
-                  </KDropdownMenu>
+                  </KButton>
                 </template>
-              </AppCollection>
+
+                <template #items>
+                  <KDropdownItem
+                    :item="{
+                      to: row.detailViewRoute,
+                      label: t('common.collection.actions.view'),
+                    }"
+                  />
+                </template>
+              </KDropdownMenu>
             </template>
-          </KCard>
+          </AppCollection>
         </DataSource>
       </template>
     </AppView>
@@ -100,7 +96,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
+import { KButton, KDropdownItem, KDropdownMenu, KIcon } from '@kong/kongponents'
 import { RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'

@@ -10,7 +10,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       creationTime: '2021-02-19T08:06:15.380674+01:00',
       modificationTime: '2021-02-19T08:06:15.380674+01:00',
       zone: {
-        enabled: true,
+        enabled: fake.datatype.boolean(),
       },
       zoneInsight: {
         subscriptions: Array.from({ length: subscriptions }).map((_) => {
@@ -91,6 +91,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 gitTag: '1.0.0-rc2-211-g823fe8ce',
                 gitCommit: fake.git.commitSha(),
                 buildDate: '2021-02-18T13:22:30Z',
+                kumaCpGlobalCompatible: fake.datatype.boolean(),
               },
             },
           }

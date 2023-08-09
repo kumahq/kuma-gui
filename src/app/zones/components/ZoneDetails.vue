@@ -1,36 +1,94 @@
 <template>
-  <TabsWidget :tabs="filteredTabs">
+  <TabsWidget :tabs="TABS">
     <template #overview>
-      <DefinitionList>
-        <DefinitionListItem
-          v-for="(value, property) in processedZoneOverview"
-          :key="property"
-          :term="t(`http.api.property.${property}`)"
-        >
-          <template v-if="property === 'name'">
-            <TextWithCopyButton :text="props.zoneOverview.name">
-              <RouterLink
-                :to="{
-                  name: 'zone-cp-detail-view',
-                  params: {
-                    zone: props.zoneOverview.name,
-                  },
-                }"
-              >
-                {{ props.zoneOverview.name }}
-              </RouterLink>
-            </TextWithCopyButton>
-          </template>
+      <div class="stack">
+        <WarningsWidget
+          v-if="warnings.length > 0"
+          :warnings="warnings"
+        />
 
-          <template v-else>
-            {{ value }}
-          </template>
-        </DefinitionListItem>
+        <KCard>
+          <template #body>
+            <div class="variable-columns">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
 
-        <DefinitionListItem :term="t('http.api.property.status')">
-          <StatusBadge :status="status" />
-        </DefinitionListItem>
-      </DefinitionList>
+                <template #body>
+                  <StatusBadge :status="status" />
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.name') }}
+                </template>
+
+                <template #body>
+                  <TextWithCopyButton :text="props.zoneOverview.name">
+                    <RouterLink
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: props.zoneOverview.name,
+                        },
+                      }"
+                    >
+                      {{ props.zoneOverview.name }}
+                    </RouterLink>
+                  </TextWithCopyButton>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.type') }}
+                </template>
+
+                <template #body>
+                  {{ type }}
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.authenticationType') }}
+                </template>
+
+                <template #body>
+                  {{ authenticationType }}
+                </template>
+              </DefinitionCard>
+            </div>
+          </template>
+        </KCard>
+
+        <div>
+          <h2>{{ t('zone-cps.detail.configuration_title') }}</h2>
+
+          <CodeBlock
+            v-if="codeOutput !== null"
+            id="code-block-zone-config"
+            class="mt-4"
+            language="json"
+            :code="codeOutput"
+            is-searchable
+            query-key="zone-config"
+          />
+
+          <KAlert
+            v-else
+            class="mt-4"
+            data-testid="warning-no-subscriptions"
+            appearance="warning"
+          >
+            <template #alertMessage>
+              {{ t('zone-cps.detail.no_subscriptions') }}
+            </template>
+          </KAlert>
+        </div>
+      </div>
     </template>
 
     <template #insights>
@@ -49,42 +107,17 @@
         </AccordionItem>
       </AccordionList>
     </template>
-
-    <template #config>
-      <CodeBlock
-        v-if="codeOutput !== null"
-        id="code-block-zone-config"
-        language="json"
-        :code="codeOutput"
-        is-searchable
-        query-key="zone-config"
-      />
-      <KAlert
-        v-else
-        data-testid="warning-no-subscriptions"
-        appearance="warning"
-      >
-        <template #alertMessage>
-          {{ t('zone-cps.routes.item.config.no-subscriptions') }}
-        </template>
-      </KAlert>
-    </template>
-
-    <template #warnings>
-      <WarningsWidget :warnings="warnings" />
-    </template>
   </TabsWidget>
 </template>
 
 <script lang="ts" setup>
-import { KAlert } from '@kong/kongponents'
+import { KAlert, KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
@@ -102,19 +135,11 @@ const env = useEnv()
 const TABS = [
   {
     hash: '#overview',
-    title: 'Overview',
+    title: t('zone-cps.routes.item.tabs.overview'),
   },
   {
     hash: '#insights',
-    title: 'Zone Insights',
-  },
-  {
-    hash: '#config',
-    title: 'Config',
-  },
-  {
-    hash: '#warnings',
-    title: 'Warnings',
+    title: t('zone-cps.routes.item.tabs.insights'),
   },
 ]
 
@@ -125,16 +150,15 @@ const props = defineProps({
   },
 })
 
-const processedZoneOverview = computed(() => {
-  const { type, name } = props.zoneOverview
-
-  return {
-    type,
-    name,
-    'Authentication Type': getZoneDpServerAuthType(props.zoneOverview),
+const type = computed(() => {
+  for (const subscription of props.zoneOverview.zoneInsight?.subscriptions ?? []) {
+    if (subscription.config) {
+      return JSON.parse(subscription.config).environment
+    }
   }
-})
 
+  return 'kubernetes'
+})
 const status = computed(() => {
   if (props.zoneOverview.zone.enabled === false) {
     return 'disabled'
@@ -142,11 +166,7 @@ const status = computed(() => {
     return getItemStatusFromInsight(props.zoneOverview.zoneInsight)
   }
 })
-
-const subscriptionsReversed = computed(() => {
-  const subscriptions = props.zoneOverview.zoneInsight?.subscriptions ?? []
-  return Array.from(subscriptions).reverse()
-})
+const authenticationType = computed(() => getZoneDpServerAuthType(props.zoneOverview))
 
 const warnings = computed<ZoneCompatibility[]>(() => {
   const warnings = []
@@ -184,11 +204,14 @@ const codeOutput = computed(() => {
   return null
 })
 
-const filteredTabs = computed(() => {
-  if (warnings.value.length === 0) {
-    return TABS.filter((tab) => tab.hash !== '#warnings')
-  }
-
-  return TABS
+const subscriptionsReversed = computed(() => {
+  const subscriptions = props.zoneOverview.zoneInsight?.subscriptions ?? []
+  return Array.from(subscriptions).reverse()
 })
 </script>
+
+<style lang="scss" scoped>
+.definition-card-list>*+* {
+  margin-top: var(--spacing-xs);
+}
+</style>

@@ -1,21 +1,33 @@
 zone-cps:
   routes:
     item:
-      title: "{name} Zone Control Plane"
+      title: '{name} Zone Control Plane'
       breadcrumbs: Zone Control Planes
-      config:
-        no-subscriptions: This zone has no subscriptions
+      tabs:
+        overview: 'Overview'
+        insights: 'Zone insights'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
   list:
     version_mismatch: 'Version mismatch'
+  detail:
+    configuration_title: 'Configuration'
+    no_subscriptions: 'This zone has no subscriptions'
+    connect_time: 'Connect time'
+    disconnect_time: 'Disconnect time'
 
 zone-ingresses:
   routes:
     item:
-      title: "{name} Zone Ingress"
+      title: '{name} Zone Ingress'
       breadcrumbs: Ingresses
+      tabs:
+        overview: 'Overview'
+        insights: 'Zone Ingress insights'
+        xds_configuration: 'XDS Configuration'
+        stats: 'Stats'
+        clusters: 'Clusters'
     items:
       title: Ingresses
       breadcrumbs: Ingresses
@@ -23,8 +35,14 @@ zone-ingresses:
 zone-egresses:
   routes:
     item:
-      title: "{name} Zone Egress"
+      title: '{name} Zone Egress'
       breadcrumbs: Egresses
+      tabs:
+        overview: 'Overview'
+        insights: 'Zone Egress insights'
+        xds_configuration: 'XDS Configuration'
+        stats: 'Stats'
+        clusters: 'Clusters'
     items:
       title: Egresses
       breadcrumbs: Egresses
