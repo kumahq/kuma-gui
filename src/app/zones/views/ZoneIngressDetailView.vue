@@ -36,13 +36,11 @@
 
         <EmptyBlock v-else-if="data === undefined" />
 
-        <div
+        <ZoneIngressDetails
           v-else
-          class="kcard-border"
+          :zone-ingress-overview="data"
           data-testid="detail-view-details"
-        >
-          <ZoneIngressDetails :zone-ingress-overview="data" />
-        </div>
+        />
       </DataSource>
     </AppView>
   </RouteView>

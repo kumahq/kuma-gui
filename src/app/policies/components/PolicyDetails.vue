@@ -1,24 +1,22 @@
 <template>
-  <div class="policy-details kcard-border">
-    <TabsWidget :tabs="tabs">
-      <template #overview>
-        <ResourceCodeBlock
-          id="code-block-policy"
-          :resource="props.policy"
-          :resource-fetcher="fetchPolicy"
-          is-searchable
-        />
-      </template>
+  <TabsWidget :tabs="tabs">
+    <template #overview>
+      <ResourceCodeBlock
+        id="code-block-policy"
+        :resource="props.policy"
+        :resource-fetcher="fetchPolicy"
+        is-searchable
+      />
+    </template>
 
-      <template #affected-dpps>
-        <PolicyConnections
-          :mesh="props.policy.mesh"
-          :policy-name="props.policy.name"
-          :policy-path="props.path"
-        />
-      </template>
-    </TabsWidget>
-  </div>
+    <template #affected-dpps>
+      <PolicyConnections
+        :mesh="props.policy.mesh"
+        :policy-name="props.policy.name"
+        :policy-path="props.path"
+      />
+    </template>
+  </TabsWidget>
 </template>
 
 <script lang="ts" setup>

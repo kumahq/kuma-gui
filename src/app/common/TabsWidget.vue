@@ -1,66 +1,35 @@
 <template>
-  <div
-    class="tab-container"
-    data-testid="tab-container"
+  <KTabs
+    v-model="activeTabHash"
+    :tabs="tabs"
+    @changed="switchTab"
   >
-    <LoadingBlock v-if="isLoading" />
-
-    <ErrorBlock
-      v-else-if="error !== null"
-      :error="error"
-    />
-
-    <template v-else>
-      <header
-        v-if="$slots.tabHeader"
-        class="tab__header"
-      >
-        <slot name="tabHeader" />
-      </header>
-
-      <div class="tab__content-container">
-        <KTabs
-          v-model="activeTabHash"
-          :tabs="tabs"
-          @changed="switchTab"
-        >
-          <template
-            v-for="(tab, index) in tabsSlots"
-            :key="index"
-            #[tab]
-          >
-            <KCard border-variant="noBorder">
-              <template #body>
-                <slot :name="tab" />
-              </template>
-            </KCard>
-          </template>
-
-          <template #warnings-anchor>
-            <span class="flex items-center with-warnings">
-              <KIcon
-                class="mr-1"
-                icon="warning"
-                color="var(--black-500)"
-                secondary-color="var(--yellow-300)"
-                size="16"
-              />
-
-              <span>Warnings</span>
-            </span>
-          </template>
-        </KTabs>
-      </div>
+    <template
+      v-for="(tab, index) in tabsSlots"
+      :key="index"
+      #[tab]
+    >
+      <slot :name="tab" />
     </template>
-  </div>
+
+    <template #warnings-anchor>
+      <KIcon
+        class="mr-1"
+        icon="warning"
+        color="var(--black-500)"
+        secondary-color="var(--yellow-300)"
+        size="16"
+      />
+
+      <span class="with-warnings">Warnings</span>
+    </template>
+  </KTabs>
 </template>
 
 <script lang="ts" setup>
-import { KCard, KIcon, KTabs } from '@kong/kongponents'
+import { KIcon, KTabs } from '@kong/kongponents'
 import { computed, PropType, ref } from 'vue'
 
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { logEvents } from '@/services/logger/Logger'
 import { useLogger } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -71,42 +40,6 @@ const props = defineProps({
   tabs: {
     type: Array as PropType<Array<{ hash: string, title: string }>>,
     required: true,
-  },
-
-  isLoading: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  isEmpty: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  hasError: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  error: {
-    type: [Error, null] as PropType<Error | null>,
-    required: false,
-    default: null,
-  },
-
-  hasBorder: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  initialTabOverride: {
-    type: String,
-    required: false,
-    default: null,
   },
 })
 
@@ -123,8 +56,6 @@ function start() {
 
   if (tab !== null) {
     activeTabHash.value = `#${tab}`
-  } else if (props.initialTabOverride !== null) {
-    activeTabHash.value = `#${props.initialTabOverride}`
   }
 }
 
@@ -140,27 +71,13 @@ function switchTab(newActiveTabHash: string): void {
 </script>
 
 <style lang="scss" scoped>
-.tab-container {
-  margin: var(--spacing-lg) 0 0 0;
-}
-
-.tab__header {
-  display: flex;
-  align-items: center;
-  margin: 0 0 var(--spacing-md) 0;
-  padding: 0 var(--spacing-md);
-}
-
-.tab__header > :not(:first-child) {
-  margin-left: var(--spacing-md);
-}
-
-.tab__content-container {
-  position: relative;
-  z-index: 1;
-}
-
 .with-warnings {
   color: var(--yellow-500);
+}
+</style>
+
+<style lang="scss">
+.tab-container {
+  margin-top: var(--AppGap);
 }
 </style>

@@ -1,39 +1,43 @@
 <template>
   <TabsWidget :tabs="filteredTabs">
     <template #overview>
-      <DefinitionList>
-        <DefinitionListItem
-          v-for="(value, property) in processedZoneOverview"
-          :key="property"
-          :term="t(`http.api.property.${property}`)"
-        >
-          <KBadge
-            v-if="property === 'status'"
-            :appearance="value === 'offline' ? 'danger' : 'success'"
-          >
-            {{ value }}
-          </KBadge>
-
-          <template v-else-if="property === 'name'">
-            <TextWithCopyButton :text="props.zoneOverview.name">
-              <RouterLink
-                :to="{
-                  name: 'zone-cp-detail-view',
-                  params: {
-                    zone: props.zoneOverview.name,
-                  },
-                }"
+      <KCard>
+        <template #body>
+          <DefinitionList>
+            <DefinitionListItem
+              v-for="(value, property) in processedZoneOverview"
+              :key="property"
+              :term="t(`http.api.property.${property}`)"
+            >
+              <KBadge
+                v-if="property === 'status'"
+                :appearance="value === 'offline' ? 'danger' : 'success'"
               >
-                {{ props.zoneOverview.name }}
-              </RouterLink>
-            </TextWithCopyButton>
-          </template>
+                {{ value }}
+              </KBadge>
 
-          <template v-else>
-            {{ value }}
-          </template>
-        </DefinitionListItem>
-      </DefinitionList>
+              <template v-else-if="property === 'name'">
+                <TextWithCopyButton :text="props.zoneOverview.name">
+                  <RouterLink
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: props.zoneOverview.name,
+                      },
+                    }"
+                  >
+                    {{ props.zoneOverview.name }}
+                  </RouterLink>
+                </TextWithCopyButton>
+              </template>
+
+              <template v-else>
+                {{ value }}
+              </template>
+            </DefinitionListItem>
+          </DefinitionList>
+        </template>
+      </KCard>
     </template>
 
     <template #insights>
@@ -80,7 +84,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KBadge, KAlert } from '@kong/kongponents'
+import { KAlert, KBadge, KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
