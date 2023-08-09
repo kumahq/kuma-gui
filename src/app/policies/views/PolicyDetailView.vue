@@ -47,7 +47,6 @@
           v-else
           :policy="data"
           :path="route.params.policyPath"
-          :update-resource-params="updateResourceParams"
           data-testid="detail-view-details"
         />
       </DataSource>
@@ -56,8 +55,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
 import PolicyDetails from '../components/PolicyDetails.vue'
 import type { PolicySource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
@@ -68,15 +65,8 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useStore } from '@/store/store'
-import type { SingleResourceParameters } from '@/types/api.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 const store = useStore()
-
-const params = ref<SingleResourceParameters>({ format: 'universal' })
-
-function updateResourceParams(newParams: SingleResourceParameters) {
-  params.value = newParams
-}
 </script>
