@@ -75,19 +75,6 @@
                 {{ t('main-overview.detail.health.view_all') }}
               </RouterLink>
             </div>
-
-            <div
-              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-              class="card-actions"
-            >
-              <KButton
-                appearance="creation"
-                icon="plus"
-                :to="{ name: 'zone-create-view' }"
-              >
-                {{ t('zones.index.create') }}
-              </KButton>
-            </div>
           </div>
 
           <EmptyBlock v-if="props.zoneOverviews.length === 0">
@@ -180,15 +167,6 @@ const meshInsight = computed(() => mergeInsightsReducer(props.meshInsights))
 </script>
 
 <style lang="scss" scoped>
-.variable-columns {
-  display: flex;
-  gap: var(--AppGap);
-}
-
-.variable-columns>* {
-  flex-grow: 1;
-}
-
 .card-header {
   display: flex;
   justify-content: space-between;

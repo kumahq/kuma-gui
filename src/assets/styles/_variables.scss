@@ -37,15 +37,14 @@
   // Sets a default border style for commonly used component frames/panels.
   --KCardPaddingX: var(--AppGap);
   --KCardPaddingY: var(--KCardPaddingX);
-  --KCardBorderRadius: 3px;
+  --KCardBorderRadius: 9px;
   --KCardBackground: var(--white);
   --KCardBorder: 1px solid var(--grey-300);
 }
+
 :root.is-fullscreen {
   --AppHeaderHeight: 0;
   --AppSidebarWidth: 0;
   --AppContentPadding: 0;
   --AppDisplay: block;
 }
-
-
