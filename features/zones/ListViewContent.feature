@@ -9,7 +9,7 @@ Feature: Zones: List view content
   Scenario Outline: Zone CP list view has expected content
     Given the environment
       """
-      KUMA_ZONE_COUNT: 2
+      KUMA_ZONE_COUNT: 3
       """
     And the URL "/config" responds with
       """
@@ -21,6 +21,8 @@ Feature: Zones: List view content
       body:
         items:
           - name: zone-cp-1
+            zone:
+              enabled: true
             zoneInsight:
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
@@ -43,6 +45,8 @@ Feature: Zones: List view content
                       gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
                       buildDate: 2021-02-18T13:22:30Z
           - name: zone-cp-2
+            zone:
+              enabled: true
             zoneInsight:
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
@@ -55,6 +59,21 @@ Feature: Zones: List view content
                       gitTag: 1.0.0-rc2-211-g823fe8ce
                       gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
                       buildDate: 2021-02-18T13:22:30Z
+                - connectTime: 2020-07-28T16:18:09.743141Z
+                  disconnectTime: 2020-07-28T16:18:09.743141Z
+                  config: '{"environment":"kubernetes"}'
+                  status: {}
+                  version:
+                    kumaCp:
+                      version: 1.0.0-rc2-211-g823fe8ce
+                      gitTag: 1.0.0-rc2-211-g823fe8ce
+                      gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
+                      buildDate: 2021-02-18T13:22:30Z
+          - name: zone-cp-3
+            zone:
+              enabled: false
+            zoneInsight:
+              subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
                   config: '{"environment":"kubernetes"}'
@@ -79,6 +98,9 @@ Feature: Zones: List view content
     Then the "$zone-cp-table-row:nth-child(2) .name-column" element contains "zone-cp-2"
     Then the "$zone-cp-table-row:nth-child(2) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
     Then the "$zone-cp-table-row:nth-child(2) .type-column" element contains "kubernetes"
+
+    Then the "$zone-cp-table-row:nth-child(3) .status-column" element contains "disabled"
+    Then the "$zone-cp-table-row:nth-child(3) .name-column" element contains "zone-cp-3"
 
   Scenario Outline: Zone Ingress list view has expected content
     Given the environment

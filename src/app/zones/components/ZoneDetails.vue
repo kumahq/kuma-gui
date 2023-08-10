@@ -1,43 +1,36 @@
 <template>
   <TabsWidget :tabs="filteredTabs">
     <template #overview>
-      <KCard>
-        <template #body>
-          <DefinitionList>
-            <DefinitionListItem
-              v-for="(value, property) in processedZoneOverview"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              <KBadge
-                v-if="property === 'status'"
-                :appearance="value === 'offline' ? 'danger' : 'success'"
+      <DefinitionList>
+        <DefinitionListItem
+          v-for="(value, property) in processedZoneOverview"
+          :key="property"
+          :term="t(`http.api.property.${property}`)"
+        >
+          <template v-if="property === 'name'">
+            <TextWithCopyButton :text="props.zoneOverview.name">
+              <RouterLink
+                :to="{
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: props.zoneOverview.name,
+                  },
+                }"
               >
-                {{ value }}
-              </KBadge>
+                {{ props.zoneOverview.name }}
+              </RouterLink>
+            </TextWithCopyButton>
+          </template>
 
-              <template v-else-if="property === 'name'">
-                <TextWithCopyButton :text="props.zoneOverview.name">
-                  <RouterLink
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: props.zoneOverview.name,
-                      },
-                    }"
-                  >
-                    {{ props.zoneOverview.name }}
-                  </RouterLink>
-                </TextWithCopyButton>
-              </template>
+          <template v-else>
+            {{ value }}
+          </template>
+        </DefinitionListItem>
 
-              <template v-else>
-                {{ value }}
-              </template>
-            </DefinitionListItem>
-          </DefinitionList>
-        </template>
-      </KCard>
+        <DefinitionListItem :term="t('http.api.property.status')">
+          <StatusBadge :status="status" />
+        </DefinitionListItem>
+      </DefinitionList>
     </template>
 
     <template #insights>
@@ -84,7 +77,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KBadge, KCard } from '@kong/kongponents'
+import { KAlert } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -92,6 +85,7 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
@@ -133,13 +127,19 @@ const props = defineProps({
 
 const processedZoneOverview = computed(() => {
   const { type, name } = props.zoneOverview
-  const status = getItemStatusFromInsight(props.zoneOverview.zoneInsight)
 
   return {
     type,
     name,
-    status,
     'Authentication Type': getZoneDpServerAuthType(props.zoneOverview),
+  }
+})
+
+const status = computed(() => {
+  if (props.zoneOverview.zone.enabled === false) {
+    return 'disabled'
+  } else {
+    return getItemStatusFromInsight(props.zoneOverview.zoneInsight)
   }
 })
 
