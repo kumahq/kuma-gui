@@ -1,6 +1,7 @@
 http:
   api:
     property:
+      tls: TLS
       mtls: mTLS
       mTLS: mTLS
       globalInstanceId: Global instance ID

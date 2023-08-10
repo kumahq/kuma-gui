@@ -1,30 +1,30 @@
 Feature: mesh / services / item
   Background:
     Given the CSS selectors
-      | Alias               | Selector                                                                          |
-      | items               | [data-testid='data-plane-collection']                                             |
-      | item                | $items tbody tr                                                                   |
-      | input-search        | [data-testid='k-filter-bar-filter-input']                                         |
-      | button-search       | [data-testid='k-filter-bar-submit-query-button']                                  |
-      | button-clear-search | [data-testid="k-filter-bar-clear-query-button"]                                   |
-      | button-actions      | $item:nth-child(1) .actions-column .dropdown-trigger button                       |
-      | button-view         | $item:nth-child(1) .actions-column [data-testid="k-dropdown-item-View-details"] a |
+      | Alias                  | Selector                                                                          |
+      | data-plane-proxies-tab | #dataPlaneProxies-tab                                                             |
+      | item                   | [data-testid='data-plane-collection'] tbody tr                                    |
+      | input-search           | [data-testid='k-filter-bar-filter-input']                                         |
+      | button-search          | [data-testid='k-filter-bar-submit-query-button']                                  |
+      | button-clear-search    | [data-testid="k-filter-bar-clear-query-button"]                                   |
+      | button-actions         | $item:nth-child(1) .actions-column .dropdown-trigger button                       |
+      | button-view            | $item:nth-child(1) .actions-column [data-testid="k-dropdown-item-View-details"] a |
 
   Rule: With an external service
     Background:
-      Given the URL "/meshes/default/service-insights/firewall-1" responds with
+      Given the URL "/meshes/default/service-insights/firewall-1_external" responds with
         """
         body:
           serviceType: "external"
         """
-      When I visit the "/mesh/default/service/firewall-1" URL
+      When I visit the "/mesh/default/service/firewall-1_external" URL
 
     Scenario: External services don't display the dataplane list
-      Then the "$items" element doesn't exist
+      Then the "$data-plane-proxies-tab" element doesn't exist
 
   Rule: With an internal service
     Background:
-      Given the URL "/meshes/default/service-insights/firewall-1" responds with
+      Given the URL "/meshes/default/service-insights/system-1_internal" responds with
         """
         body:
           serviceType: "internal"
@@ -38,20 +38,20 @@ Feature: mesh / services / item
                   networking:
                     gateway: ~
         """
-      When I visit the "/mesh/default/service/firewall-1" URL
+      When I visit the "/mesh/default/service/system-1_internal" URL
 
     Scenario: Internal services request the dataplanes for the service
-      Then the "$items" element exists
-      And the URL "/meshes/default/dataplanes+insights" was requested with
+      When I click the "$data-plane-proxies-tab" element
+      Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
-          tag: "kuma.io/service:firewall-1"
+          tag: "kuma.io/service:system-1_internal"
           offset: 0
           size: 50
         """
 
     Scenario: Searching by tag doesn't overwrite the existing service tag
-      Then the "$items" element exists
+      When I click the "$data-plane-proxies-tab" element
       Then the "[data-testid='k-filter-bar-filter-input']" element isn't disabled
       And I wait for 500 ms
       When I "type" "tag:version" into the "$input-search" element
@@ -63,17 +63,17 @@ Feature: mesh / services / item
         """
         searchParams:
           tag:
-            - "kuma.io/service:firewall-1"
+            - "kuma.io/service:system-1_internal"
             - "version"
           offset: 0
           size: 50
         """
 
     Scenario: Searching by service tag doesn't overwrite the existing service tag
-      Then the "$items" element exists
+      When I click the "$data-plane-proxies-tab" element
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
-      When I "type" "tag:kuma.io/service:firewall-2" into the "$input-search" element
+      When I "type" "tag:kuma.io/service:panel-2_internal" into the "$input-search" element
       And the URL "/meshes/default/dataplanes+insights" responds with
         """
         """
@@ -82,11 +82,11 @@ Feature: mesh / services / item
         """
         searchParams:
           tag:
-            - "kuma.io/service:firewall-2"
+            - "kuma.io/service:panel-2_internal"
         """
 
     Scenario: The clear search button sends a new request with no search params
-      Then the "$items" element exists
+      When I click the "$data-plane-proxies-tab" element
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
@@ -99,7 +99,7 @@ Feature: mesh / services / item
         searchParams:
           name: a-service
           tag:
-            - "kuma.io/service:firewall-1"
+            - "kuma.io/service:system-1_internal"
             - "kuma.io/protocol:tcp"
           offset: 0
           size: 50
@@ -117,7 +117,7 @@ Feature: mesh / services / item
         """
 
     Scenario: The clear search button sends a new request with the correct service tag
-      Then the "$items" element exists
+      When I click the "$data-plane-proxies-tab" element
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
@@ -130,7 +130,7 @@ Feature: mesh / services / item
         searchParams:
           name: a-service
           tag:
-            - "kuma.io/service:firewall-1"
+            - "kuma.io/service:system-1_internal"
             - "kuma.io/protocol:tcp"
           offset: 0
           size: 50
@@ -143,15 +143,17 @@ Feature: mesh / services / item
         """
         searchParams:
           tag:
-            - "kuma.io/service:firewall-1"
+            - "kuma.io/service:system-1_internal"
         """
 
     Scenario: Clicking an item takes you to the correct page
+      When I click the "$data-plane-proxies-tab" element
       Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
       And I click the "$item:nth-child(1) td:nth-child(1) a" element
       Then the URL contains "/mesh/default/data-plane/fake-dataplane"
 
     Scenario: Clicking an items view menu takes you to the correct page
+      When I click the "$data-plane-proxies-tab" element
       Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
       And I click the "$button-actions" element
       Then I click the "$button-view" element
