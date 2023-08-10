@@ -29,21 +29,20 @@
         v-slot="{ data, isLoading, error }: DataplaneOverviewSource"
         :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
       >
-        <div class="kcard-border">
-          <LoadingBlock v-if="isLoading" />
+        <LoadingBlock v-if="isLoading" />
 
-          <ErrorBlock
-            v-else-if="error"
-            :error="error"
-          />
+        <ErrorBlock
+          v-else-if="error"
+          :error="error"
+        />
 
-          <EmptyBlock v-else-if="data === undefined" />
+        <EmptyBlock v-else-if="data === undefined" />
 
-          <DataPlaneDetails
-            v-else
-            :dataplane-overview="data"
-          />
-        </div>
+        <DataPlaneDetails
+          v-else
+          :dataplane-overview="data"
+          data-testid="detail-view-details"
+        />
       </DataSource>
     </AppView>
   </RouteView>

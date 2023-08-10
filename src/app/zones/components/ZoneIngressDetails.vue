@@ -1,32 +1,36 @@
 <template>
   <TabsWidget :tabs="TABS">
     <template #overview>
-      <DefinitionList>
-        <DefinitionListItem
-          v-for="(value, property) in processedZoneIngressOverview"
-          :key="property"
-          :term="t(`http.api.property.${property}`)"
-        >
-          <template v-if="property === 'name'">
-            <TextWithCopyButton :text="props.zoneIngressOverview.name">
-              <RouterLink
-                :to="{
-                  name: 'zone-ingress-detail-view',
-                  params: {
-                    zoneIngress: props.zoneIngressOverview.name,
-                  },
-                }"
-              >
-                {{ props.zoneIngressOverview.name }}
-              </RouterLink>
-            </TextWithCopyButton>
-          </template>
+      <KCard>
+        <template #body>
+          <DefinitionList>
+            <DefinitionListItem
+              v-for="(value, property) in processedZoneIngressOverview"
+              :key="property"
+              :term="t(`http.api.property.${property}`)"
+            >
+              <template v-if="property === 'name'">
+                <TextWithCopyButton :text="props.zoneIngressOverview.name">
+                  <RouterLink
+                    :to="{
+                      name: 'zone-ingress-detail-view',
+                      params: {
+                        zoneIngress: props.zoneIngressOverview.name,
+                      },
+                    }"
+                  >
+                    {{ props.zoneIngressOverview.name }}
+                  </RouterLink>
+                </TextWithCopyButton>
+              </template>
 
-          <template v-else>
-            {{ value }}
-          </template>
-        </DefinitionListItem>
-      </DefinitionList>
+              <template v-else>
+                {{ value }}
+              </template>
+            </DefinitionListItem>
+          </DefinitionList>
+        </template>
+      </KCard>
     </template>
 
     <template #insights>
@@ -76,6 +80,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
