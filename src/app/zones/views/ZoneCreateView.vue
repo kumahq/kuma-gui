@@ -31,8 +31,16 @@
 
         <div class="form-wrapper mt-4">
           <div>
-            <KLabel for="zone-name">
-              {{ t('zones.form.nameLabel') }} *
+            <KLabel
+              for="zone-name"
+              required
+              :tooltip-attributes="{ placement: 'right'}"
+            >
+              {{ t('zones.form.nameLabel') }}
+
+              <template #tooltip>
+                {{ t('zones.form.name_tooltip') }}
+              </template>
             </KLabel>
 
             <KInput
@@ -238,8 +246,6 @@ type ErrorState = {
 const { t } = useI18n()
 const kumaApi = useKumaApi()
 
-const HANDLED_STATUS_CODES = [400, 409, 500]
-
 const zone = ref<{ token: string } | null>(null)
 const isChangingZone = ref(false)
 const changingError = ref<Error | null>(null)
@@ -277,7 +283,7 @@ async function createZone() {
   try {
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
-    if (err instanceof ApiError && HANDLED_STATUS_CODES.includes(err.status)) {
+    if (err instanceof ApiError && [409, 500].includes(err.status)) {
       errorState.value = {
         error: err,
         title: t(`zones.create.statusError.${err.status}.title`, { zoneName: name.value }),
@@ -288,8 +294,8 @@ async function createZone() {
     } else if (err instanceof Error) {
       errorState.value = {
         error: err,
-        title: t('zones.create.generalError.title'),
-        icon: 'warning',
+        title: err instanceof ApiError ? err.title : t('zones.create.generalError.title'),
+        icon: 'errorFilled',
         badgeAppearance: 'danger',
       }
     } else {
