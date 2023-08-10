@@ -252,11 +252,9 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       }
     })
 
-    let status: StatusKeyword | 'disabled'
+    let status: StatusKeyword | 'disabled' = 'disabled'
 
-    if (zoneOverview.zone.enabled === false) {
-      status = 'disabled'
-    } else {
+    if (zoneOverview.zone.enabled === true) {
       status = getItemStatusFromInsight(zoneOverview.zoneInsight)
     }
 
