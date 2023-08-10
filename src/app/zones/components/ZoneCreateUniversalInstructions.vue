@@ -77,11 +77,3 @@ const universalConfig = computed(() => {
   return i18n.t('zones.form.universal.connectZone.config', placeholders).trim()
 })
 </script>
-
-<style lang="scss" scoped>
-// TODO: Remove these once we have this sort of style covered by our base styles.
-h3:not(:first-child),
-p:not(:first-child) {
-  margin-top: var(--spacing-md);
-}
-</style>

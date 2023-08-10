@@ -43,7 +43,6 @@
       </p>
 
       <KDropdownMenu
-        class="help-menu"
         icon="help"
         button-appearance="outline"
         :kpop-attributes="{ placement: 'bottomEnd' }"
@@ -161,6 +160,10 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
   display: flex;
   align-items: center;
   gap: var(--spacing-lg);
+}
+
+.app-status {
+  margin-top: 0;
 }
 
 .app-status--desktop {

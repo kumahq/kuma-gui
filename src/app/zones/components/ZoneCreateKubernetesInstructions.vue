@@ -157,17 +157,3 @@ const kubernetesConfig = computed(() => {
 })
 
 </script>
-
-<style lang="scss" scoped>
-// TODO: Remove these once we have this sort of style covered by our base styles.
-h3:not(:first-child),
-ul:not(:first-child),
-p:not(:first-child) {
-  margin-top: var(--spacing-md);
-}
-
-ul {
-  padding-left: var(--spacing-lg);
-  list-style: disc;
-}
-</style>

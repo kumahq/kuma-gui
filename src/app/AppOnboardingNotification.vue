@@ -5,7 +5,6 @@
   >
     <KAlert
       appearance="success"
-      class="dismissible"
       dismiss-type="icon"
       @closed="closeAlert"
     >

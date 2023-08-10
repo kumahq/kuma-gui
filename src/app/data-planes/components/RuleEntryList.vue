@@ -55,10 +55,7 @@
             </template>
 
             <template #addresses="{ rowValue }">
-              <ul
-                v-if="rowValue.length > 0"
-                class="list"
-              >
+              <ul v-if="rowValue.length > 0">
                 <li
                   v-for="(address, addressIndex) in rowValue"
                   :key="`${index}-${addressIndex}`"
@@ -73,10 +70,7 @@
             </template>
 
             <template #origins="{ rowValue }">
-              <ul
-                v-if="rowValue.length > 0"
-                class="list"
-              >
+              <ul v-if="rowValue.length > 0">
                 <li
                   v-for="(origin, originIndex) in rowValue"
                   :key="`${index}-${originIndex}`"
@@ -170,11 +164,6 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 .tag-list {
   display: flex;
   margin-top: var(--spacing-xxs);
-}
-
-.list {
-  list-style: initial;
-  padding-left: var(--spacing-md);
 }
 </style>
 

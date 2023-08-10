@@ -12,7 +12,9 @@
     v-if="ruleEntries.length > 0"
     class="mt-2"
   >
-    <h2>Rules</h2>
+    <h2 class="mb-2">
+      Rules
+    </h2>
 
     <RuleEntryList
       id="rules"
@@ -45,9 +47,3 @@ const props = defineProps({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-h2 {
-  margin-bottom: var(--spacing-xs);
-}
-</style>

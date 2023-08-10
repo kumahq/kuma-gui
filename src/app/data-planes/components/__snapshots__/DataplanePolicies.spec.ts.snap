@@ -384,9 +384,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <ul
-                          class="origin-list"
-                        >
+                        <ul>
                           
                           <li>
                             <a
@@ -625,9 +623,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <ul
-                          class="origin-list"
-                        >
+                        <ul>
                           
                           <li>
                             <a
@@ -868,9 +864,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <ul
-                          class="origin-list"
-                        >
+                        <ul>
                           
                           <li>
                             <a
@@ -1051,8 +1045,10 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
   <div
     class="mt-2"
   >
-    <h2>
-      Rules
+    <h2
+      class="mb-2"
+    >
+       Rules 
     </h2>
     <ul
       class="accordion-list"
