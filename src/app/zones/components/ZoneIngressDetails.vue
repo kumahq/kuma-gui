@@ -50,47 +50,63 @@
     </template>
 
     <template #insights>
-      <AccordionList :initially-open="0">
-        <AccordionItem
-          v-for="(value, key) in subscriptionsReversed"
-          :key="key"
-        >
-          <template #accordion-header>
-            <SubscriptionHeader :details="value" />
-          </template>
+      <KCard>
+        <template #body>
+          <AccordionList :initially-open="0">
+            <AccordionItem
+              v-for="(value, key) in subscriptionsReversed"
+              :key="key"
+            >
+              <template #accordion-header>
+                <SubscriptionHeader :details="value" />
+              </template>
 
-          <template #accordion-content>
-            <SubscriptionDetails
-              :details="value"
-              is-discovery-subscription
-            />
-          </template>
-        </AccordionItem>
-      </AccordionList>
+              <template #accordion-content>
+                <SubscriptionDetails
+                  :details="value"
+                  is-discovery-subscription
+                />
+              </template>
+            </AccordionItem>
+          </AccordionList>
+        </template>
+      </KCard>
     </template>
 
     <template #xds-configuration>
-      <EnvoyData
-        data-path="xds"
-        :zone-ingress-name="props.zoneIngressOverview.name"
-        query-key="envoy-data-zone-ingress"
-      />
+      <KCard>
+        <template #body>
+          <EnvoyData
+            data-path="xds"
+            :zone-ingress-name="props.zoneIngressOverview.name"
+            query-key="envoy-data-zone-ingress"
+          />
+        </template>
+      </KCard>
     </template>
 
     <template #envoy-stats>
-      <EnvoyData
-        data-path="stats"
-        :zone-ingress-name="props.zoneIngressOverview.name"
-        query-key="envoy-data-zone-ingress"
-      />
+      <KCard>
+        <template #body>
+          <EnvoyData
+            data-path="stats"
+            :zone-ingress-name="props.zoneIngressOverview.name"
+            query-key="envoy-data-zone-ingress"
+          />
+        </template>
+      </KCard>
     </template>
 
     <template #envoy-clusters>
-      <EnvoyData
-        data-path="clusters"
-        :zone-ingress-name="props.zoneIngressOverview.name"
-        query-key="envoy-data-zone-ingress"
-      />
+      <KCard>
+        <template #body>
+          <EnvoyData
+            data-path="clusters"
+            :zone-ingress-name="props.zoneIngressOverview.name"
+            query-key="envoy-data-zone-ingress"
+          />
+        </template>
+      </KCard>
     </template>
   </TabsWidget>
 </template>

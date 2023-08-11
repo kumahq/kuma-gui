@@ -1,166 +1,204 @@
 <template>
   <TabsWidget :tabs="filteredTabs">
     <template #overview>
-      <DefinitionList>
-        <DefinitionListItem :term="t('http.api.property.name')">
-          <TextWithCopyButton :text="props.dataplaneOverview.name">
-            <RouterLink
-              :to="{
-                name: 'data-plane-detail-view',
-                params: {
-                  mesh: props.dataplaneOverview.mesh,
-                  dataPlane: props.dataplaneOverview.name,
-                },
-              }"
-            >
-              {{ props.dataplaneOverview.name }}
-            </RouterLink>
-          </TextWithCopyButton>
-        </DefinitionListItem>
+      <div class="stack">
+        <KCard>
+          <template #body>
+            <DefinitionList>
+              <DefinitionListItem :term="t('http.api.property.name')">
+                <TextWithCopyButton :text="props.dataplaneOverview.name">
+                  <RouterLink
+                    :to="{
+                      name: 'data-plane-detail-view',
+                      params: {
+                        mesh: props.dataplaneOverview.mesh,
+                        dataPlane: props.dataplaneOverview.name,
+                      },
+                    }"
+                  >
+                    {{ props.dataplaneOverview.name }}
+                  </RouterLink>
+                </TextWithCopyButton>
+              </DefinitionListItem>
 
-        <DefinitionListItem
-          v-if="dataPlaneTags.length > 0"
-          term="Tags"
-        >
-          <TagList :tags="dataPlaneTags" />
-        </DefinitionListItem>
+              <DefinitionListItem
+                v-if="dataPlaneTags.length > 0"
+                term="Tags"
+              >
+                <TagList :tags="dataPlaneTags" />
+              </DefinitionListItem>
 
-        <DefinitionListItem
-          v-if="statusWithReason.status"
-          term="Status"
-        >
-          <StatusBadge :status="statusWithReason.status" />
-        </DefinitionListItem>
+              <DefinitionListItem
+                v-if="statusWithReason.status"
+                term="Status"
+              >
+                <StatusBadge :status="statusWithReason.status" />
+              </DefinitionListItem>
 
-        <DefinitionListItem
-          v-if="statusWithReason.reason.length > 0"
-          term="Reason"
-        >
-          <div
-            v-for="(reason, index) in statusWithReason.reason"
-            :key="index"
-            class="reason"
-          >
-            {{ reason }}
-          </div>
-        </DefinitionListItem>
+              <DefinitionListItem
+                v-if="statusWithReason.reason.length > 0"
+                term="Reason"
+              >
+                <div
+                  v-for="(reason, index) in statusWithReason.reason"
+                  :key="index"
+                  class="reason"
+                >
+                  {{ reason }}
+                </div>
+              </DefinitionListItem>
 
-        <DefinitionListItem
-          v-if="dataPlaneVersions !== null"
-          term="Dependencies"
-        >
-          <ul>
-            <li
-              v-for="(version, dependency) in dataPlaneVersions"
-              :key="dependency"
-              class="tag-cols"
-            >
-              {{ dependency }}: {{ version }}
-            </li>
-          </ul>
-        </DefinitionListItem>
-      </DefinitionList>
+              <DefinitionListItem
+                v-if="dataPlaneVersions !== null"
+                term="Dependencies"
+              >
+                <ul>
+                  <li
+                    v-for="(version, dependency) in dataPlaneVersions"
+                    :key="dependency"
+                    class="tag-cols"
+                  >
+                    {{ dependency }}: {{ version }}
+                  </li>
+                </ul>
+              </DefinitionListItem>
+            </DefinitionList>
+          </template>
+        </KCard>
 
-      <ResourceCodeBlock
-        id="code-block-data-plane"
-        class="mt-4"
-        :resource="props.dataplaneOverview"
-        :resource-fetcher="fetchDataPlaneProxy"
-        is-searchable
-      />
+        <KCard>
+          <template #body>
+            <ResourceCodeBlock
+              id="code-block-data-plane"
+              :resource="props.dataplaneOverview"
+              :resource-fetcher="fetchDataPlaneProxy"
+              is-searchable
+            />
+          </template>
+        </KCard>
+      </div>
     </template>
 
     <template #insights>
-      <StatusInfo :is-empty="insightSubscriptions.length === 0">
-        <AccordionList :initially-open="0">
-          <AccordionItem
-            v-for="(insight, key) in insightSubscriptions"
-            :key="key"
-          >
-            <template #accordion-header>
-              <SubscriptionHeader :details="insight" />
-            </template>
+      <KCard>
+        <template #body>
+          <StatusInfo :is-empty="insightSubscriptions.length === 0">
+            <AccordionList :initially-open="0">
+              <AccordionItem
+                v-for="(insight, key) in insightSubscriptions"
+                :key="key"
+              >
+                <template #accordion-header>
+                  <SubscriptionHeader :details="insight" />
+                </template>
 
-            <template #accordion-content>
-              <SubscriptionDetails
-                :details="insight"
-                is-discovery-subscription
-              />
-            </template>
-          </AccordionItem>
-        </AccordionList>
-      </StatusInfo>
+                <template #accordion-content>
+                  <SubscriptionDetails
+                    :details="insight"
+                    is-discovery-subscription
+                  />
+                </template>
+              </AccordionItem>
+            </AccordionList>
+          </StatusInfo>
+        </template>
+      </KCard>
     </template>
 
     <template #dpp-policies>
-      <DataplanePolicies :dataplane-overview="dataplaneOverview" />
+      <KCard>
+        <template #body>
+          <DataplanePolicies :dataplane-overview="dataplaneOverview" />
+        </template>
+      </KCard>
     </template>
 
     <template #xds-configuration>
-      <EnvoyData
-        data-path="xds"
-        :mesh="dataplaneOverview.mesh"
-        :dpp-name="dataplaneOverview.name"
-        query-key="envoy-data-data-plane"
-      />
+      <KCard>
+        <template #body>
+          <EnvoyData
+            data-path="xds"
+            :mesh="dataplaneOverview.mesh"
+            :dpp-name="dataplaneOverview.name"
+            query-key="envoy-data-data-plane"
+          />
+        </template>
+      </KCard>
     </template>
 
     <template #envoy-stats>
-      <EnvoyData
-        data-path="stats"
-        :mesh="dataplaneOverview.mesh"
-        :dpp-name="dataplaneOverview.name"
-        query-key="envoy-data-data-plane"
-      />
+      <KCard>
+        <template #body>
+          <EnvoyData
+            data-path="stats"
+            :mesh="dataplaneOverview.mesh"
+            :dpp-name="dataplaneOverview.name"
+            query-key="envoy-data-data-plane"
+          />
+        </template>
+      </KCard>
     </template>
 
     <template #envoy-clusters>
-      <EnvoyData
-        data-path="clusters"
-        :mesh="dataplaneOverview.mesh"
-        :dpp-name="dataplaneOverview.name"
-        query-key="envoy-data-data-plane"
-      />
+      <KCard>
+        <template #body>
+          <EnvoyData
+            data-path="clusters"
+            :mesh="dataplaneOverview.mesh"
+            :dpp-name="dataplaneOverview.name"
+            query-key="envoy-data-data-plane"
+          />
+        </template>
+      </KCard>
     </template>
 
     <template #mtls>
-      <KAlert
-        v-if="mtlsData === null"
-        appearance="danger"
-      >
-        <template #alertMessage>
-          This data plane proxy does not yet have mTLS configured —
-          <a
-            :href="t('data-planes.href.docs.mutual-tls')"
-            class="external-link"
-            target="_blank"
+      <KCard>
+        <template #body>
+          <KAlert
+            v-if="mtlsData === null"
+            appearance="danger"
           >
-            Learn About Certificates in {{ t('common.product.name') }}
-          </a>
+            <template #alertMessage>
+              This data plane proxy does not yet have mTLS configured —
+              <a
+                :href="t('data-planes.href.docs.mutual-tls')"
+                class="external-link"
+                target="_blank"
+              >
+                Learn About Certificates in {{ t('common.product.name') }}
+              </a>
+            </template>
+          </KAlert>
+
+          <DefinitionList v-else>
+            <DefinitionListItem
+              v-for="(value, property) in mtlsData"
+              :key="property"
+              :term="t(`http.api.property.${property}`)"
+            >
+              {{ value }}
+            </DefinitionListItem>
+          </DefinitionList>
         </template>
-      </KAlert>
-      <DefinitionList v-else>
-        <DefinitionListItem
-          v-for="(value, property) in mtlsData"
-          :key="property"
-          :term="t(`http.api.property.${property}`)"
-        >
-          {{ value }}
-        </DefinitionListItem>
-      </DefinitionList>
+      </KCard>
     </template>
 
     <template #warnings>
-      <WarningsWidget
-        v-if="warnings.length > 0"
-        :warnings="warnings"
-      />
+      <KCard>
+        <template #body>
+          <WarningsWidget
+            v-if="warnings.length > 0"
+            :warnings="warnings"
+          />
+        </template>
+      </KCard>
     </template>
   </TabsWidget>
 </template>
 
 <script lang="ts" setup>
-import { KAlert } from '@kong/kongponents'
+import { KAlert, KCard } from '@kong/kongponents'
 import { computed, ref, PropType } from 'vue'
 
 import DataplanePolicies from './DataplanePolicies.vue'

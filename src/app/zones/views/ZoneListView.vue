@@ -34,116 +34,120 @@
           v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
           :src="`/zone-cps?size=${props.size}&page=${props.page}`"
         >
-          <AppCollection
-            class="zone-cp-collection"
-            data-testid="zone-cp-collection"
-            :headers="[
-              { label: 'Name', key: 'name' },
-              { label: 'Zone CP Version', key: 'zoneCpVersion' },
-              { label: 'Type', key: 'type' },
-              { label: 'Status', key: 'status' },
-              { label: 'Warnings', key: 'warnings', hideLabel: true },
-              { label: 'Actions', key: 'actions', hideLabel: true },
-            ]"
-            :page-number="props.page"
-            :page-size="props.size"
-            :total="data?.total"
-            :items="data ? transformToTableData(data.items) : undefined"
-            :error="error"
-            @change="route.update"
-          >
-            <template #name="{ row, rowValue }">
-              <RouterLink
-                :to="row.detailViewRoute"
-                data-testid="detail-view-link"
+          <KCard>
+            <template #body>
+              <AppCollection
+                class="zone-cp-collection"
+                data-testid="zone-cp-collection"
+                :headers="[
+                  { label: 'Name', key: 'name' },
+                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                  { label: 'Type', key: 'type' },
+                  { label: 'Status', key: 'status' },
+                  { label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :page-number="props.page"
+                :page-size="props.size"
+                :total="data?.total"
+                :items="data ? transformToTableData(data.items) : undefined"
+                :error="error"
+                @change="route.update"
               >
-                {{ rowValue }}
-              </RouterLink>
-            </template>
-
-            <template #zoneCpVersion="{ rowValue }">
-              {{ rowValue || t('common.collection.none') }}
-            </template>
-
-            <template #type="{ rowValue }">
-              {{ rowValue || t('common.collection.none') }}
-            </template>
-
-            <template #status="{ rowValue }">
-              <StatusBadge
-                v-if="rowValue"
-                :status="rowValue"
-              />
-
-              <template v-else>
-                {{ t('common.collection.none') }}
-              </template>
-            </template>
-
-            <template #warnings="{ rowValue }">
-              <KTooltip
-                v-if="rowValue"
-                :label="t('zone-cps.list.version_mismatch')"
-              >
-                <KIcon
-                  class="mr-1"
-                  icon="warning"
-                  color="var(--black-500)"
-                  secondary-color="var(--yellow-300)"
-                  size="20"
-                  hide-title
-                />
-              </KTooltip>
-
-              <template v-else>
-                {{ t('common.collection.none') }}
-              </template>
-            </template>
-
-            <template #actions="{ row }">
-              <KDropdownMenu
-                class="actions-dropdown"
-                data-testid="actions-dropdown"
-                :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                width="150"
-              >
-                <template #default>
-                  <KButton
-                    class="non-visual-button"
-                    appearance="secondary"
-                    size="small"
+                <template #name="{ row, rowValue }">
+                  <RouterLink
+                    :to="row.detailViewRoute"
+                    data-testid="detail-view-link"
                   >
-                    <template #icon>
-                      <KIcon
-                        color="var(--black-400)"
-                        icon="more"
-                        size="16"
-                      />
-                    </template>
-                  </KButton>
+                    {{ rowValue }}
+                  </RouterLink>
                 </template>
 
-                <template #items>
-                  <KDropdownItem
-                    :item="{
-                      to: row.detailViewRoute,
-                      label: t('common.collection.actions.view'),
-                    }"
+                <template #zoneCpVersion="{ rowValue }">
+                  {{ rowValue || t('common.collection.none') }}
+                </template>
+
+                <template #type="{ rowValue }">
+                  {{ rowValue || t('common.collection.none') }}
+                </template>
+
+                <template #status="{ rowValue }">
+                  <StatusBadge
+                    v-if="rowValue"
+                    :status="rowValue"
                   />
 
-                  <KDropdownItem
-                    v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-                    has-divider
-                    is-dangerous
-                    data-testid="dropdown-delete-item"
-                    @click="setDeleteZoneName(row.name)"
-                  >
-                    {{ t('common.collection.actions.delete') }}
-                  </KDropdownItem>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
                 </template>
-              </KDropdownMenu>
+
+                <template #warnings="{ rowValue }">
+                  <KTooltip
+                    v-if="rowValue"
+                    :label="t('zone-cps.list.version_mismatch')"
+                  >
+                    <KIcon
+                      class="mr-1"
+                      icon="warning"
+                      color="var(--black-500)"
+                      secondary-color="var(--yellow-300)"
+                      size="20"
+                      hide-title
+                    />
+                  </KTooltip>
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #actions="{ row }">
+                  <KDropdownMenu
+                    class="actions-dropdown"
+                    data-testid="actions-dropdown"
+                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                    width="150"
+                  >
+                    <template #default>
+                      <KButton
+                        class="non-visual-button"
+                        appearance="secondary"
+                        size="small"
+                      >
+                        <template #icon>
+                          <KIcon
+                            color="var(--black-400)"
+                            icon="more"
+                            size="16"
+                          />
+                        </template>
+                      </KButton>
+                    </template>
+
+                    <template #items>
+                      <KDropdownItem
+                        :item="{
+                          to: row.detailViewRoute,
+                          label: t('common.collection.actions.view'),
+                        }"
+                      />
+
+                      <KDropdownItem
+                        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                        has-divider
+                        is-dangerous
+                        data-testid="dropdown-delete-item"
+                        @click="setDeleteZoneName(row.name)"
+                      >
+                        {{ t('common.collection.actions.delete') }}
+                      </KDropdownItem>
+                    </template>
+                  </KDropdownMenu>
+                </template>
+              </AppCollection>
             </template>
-          </AppCollection>
+          </KCard>
 
           <DeleteResourceModal
             v-if="isDeleteModalVisible"
@@ -173,7 +177,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
 import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 

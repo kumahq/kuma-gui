@@ -67,45 +67,52 @@
         <div>
           <h2>{{ t('zone-cps.detail.configuration_title') }}</h2>
 
-          <CodeBlock
-            v-if="codeOutput !== null"
-            id="code-block-zone-config"
-            class="mt-4"
-            language="json"
-            :code="codeOutput"
-            is-searchable
-            query-key="zone-config"
-          />
+          <KCard class="mt-4">
+            <template #body>
+              <CodeBlock
+                v-if="codeOutput !== null"
+                id="code-block-zone-config"
+                language="json"
+                :code="codeOutput"
+                is-searchable
+                query-key="zone-config"
+              />
 
-          <KAlert
-            v-else
-            class="mt-4"
-            data-testid="warning-no-subscriptions"
-            appearance="warning"
-          >
-            <template #alertMessage>
-              {{ t('zone-cps.detail.no_subscriptions') }}
+              <KAlert
+                v-else
+                class="mt-4"
+                data-testid="warning-no-subscriptions"
+                appearance="warning"
+              >
+                <template #alertMessage>
+                  {{ t('zone-cps.detail.no_subscriptions') }}
+                </template>
+              </KAlert>
             </template>
-          </KAlert>
+          </KCard>
         </div>
       </div>
     </template>
 
     <template #insights>
-      <AccordionList :initially-open="0">
-        <AccordionItem
-          v-for="(value, key) in subscriptionsReversed"
-          :key="key"
-        >
-          <template #accordion-header>
-            <SubscriptionHeader :details="value" />
-          </template>
+      <KCard>
+        <template #body>
+          <AccordionList :initially-open="0">
+            <AccordionItem
+              v-for="(value, key) in subscriptionsReversed"
+              :key="key"
+            >
+              <template #accordion-header>
+                <SubscriptionHeader :details="value" />
+              </template>
 
-          <template #accordion-content>
-            <SubscriptionDetails :details="value" />
-          </template>
-        </AccordionItem>
-      </AccordionList>
+              <template #accordion-content>
+                <SubscriptionDetails :details="value" />
+              </template>
+            </AccordionItem>
+          </AccordionList>
+        </template>
+      </KCard>
     </template>
   </TabsWidget>
 </template>
