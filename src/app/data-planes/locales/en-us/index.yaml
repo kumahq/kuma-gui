@@ -3,6 +3,14 @@ data-planes:
     item:
       title: "{name} Data Plane Proxy"
       breadcrumbs: Data Plane Proxies
+      tabs:
+        overview: 'Overview'
+        insights: 'Insights'
+        policies: 'Policies'
+        xds_configuration: 'XDS Configuration'
+        stats: 'Stats'
+        clusters: 'Clusters'
+        mtls: 'Certificate Insights'
     items:
       title: Data Plane Proxies
   href:

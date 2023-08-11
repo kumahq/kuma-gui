@@ -117,7 +117,7 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
 
   const versions: Record<string, string> = {}
 
-  const lastSubscription: DiscoverySubscription = dataPlaneInsight.subscriptions[dataPlaneInsight.subscriptions.length - 1]
+  const lastSubscription = dataPlaneInsight.subscriptions[dataPlaneInsight.subscriptions.length - 1]
 
   if (lastSubscription.version === undefined) {
     return null

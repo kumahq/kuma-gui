@@ -1,81 +1,105 @@
 <template>
-  <TabsWidget :tabs="filteredTabs">
+  <TabsWidget :tabs="TABS">
     <template #overview>
       <div class="stack">
-        <KCard>
-          <template #body>
-            <DefinitionList>
-              <DefinitionListItem :term="t('http.api.property.name')">
-                <TextWithCopyButton :text="props.dataplaneOverview.name">
-                  <RouterLink
-                    :to="{
-                      name: 'data-plane-detail-view',
-                      params: {
-                        mesh: props.dataplaneOverview.mesh,
-                        dataPlane: props.dataplaneOverview.name,
-                      },
-                    }"
-                  >
-                    {{ props.dataplaneOverview.name }}
-                  </RouterLink>
-                </TextWithCopyButton>
-              </DefinitionListItem>
-
-              <DefinitionListItem
-                v-if="dataPlaneTags.length > 0"
-                term="Tags"
-              >
-                <TagList :tags="dataPlaneTags" />
-              </DefinitionListItem>
-
-              <DefinitionListItem
-                v-if="statusWithReason.status"
-                term="Status"
-              >
-                <StatusBadge :status="statusWithReason.status" />
-              </DefinitionListItem>
-
-              <DefinitionListItem
-                v-if="statusWithReason.reason.length > 0"
-                term="Reason"
-              >
-                <div
-                  v-for="(reason, index) in statusWithReason.reason"
-                  :key="index"
-                  class="reason"
-                >
-                  {{ reason }}
-                </div>
-              </DefinitionListItem>
-
-              <DefinitionListItem
-                v-if="dataPlaneVersions !== null"
-                term="Dependencies"
-              >
-                <ul>
-                  <li
-                    v-for="(version, dependency) in dataPlaneVersions"
-                    :key="dependency"
-                    class="tag-cols"
-                  >
-                    {{ dependency }}: {{ version }}
-                  </li>
-                </ul>
-              </DefinitionListItem>
-            </DefinitionList>
-          </template>
-        </KCard>
+        <WarningsWidget
+          v-if="warnings.length > 0"
+          :warnings="warnings"
+          data-testid="data-plane-warnings"
+        />
 
         <KCard>
           <template #body>
-            <ResourceCodeBlock
-              id="code-block-data-plane"
-              :resource="props.dataplaneOverview"
-              :resource-fetcher="fetchDataPlaneProxy"
-              is-searchable
-            />
+            <div class="variable-columns">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
+
+                <template #body>
+                  <div class="status-with-reason">
+                    <StatusBadge :status="statusWithReason.status" />
+
+                    <KTooltip
+                      v-if="statusWithReason.reason.length > 0"
+                      :label="statusWithReason.reason.join(', ')"
+                      class="reason-tooltip"
+                    >
+                      <KIcon
+                        icon="info"
+                        size="20"
+                        hide-title
+                      />
+                    </KTooltip>
+                  </div>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.name') }}
+                </template>
+
+                <template #body>
+                  <TextWithCopyButton :text="props.dataplaneOverview.name">
+                    <RouterLink
+                      :to="{
+                        name: 'data-plane-detail-view',
+                        params: {
+                          mesh: props.dataplaneOverview.mesh,
+                          dataPlane: props.dataplaneOverview.name,
+                        },
+                      }"
+                    >
+                      {{ props.dataplaneOverview.name }}
+                    </RouterLink>
+                  </TextWithCopyButton>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.tags') }}
+                </template>
+
+                <template #body>
+                  <TagList
+                    v-if="dataPlaneTags.length > 0"
+                    :tags="dataPlaneTags"
+                  />
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.dependencies') }}
+                </template>
+
+                <template #body>
+                  <TagList
+                    v-if="dataPlaneVersions !== null"
+                    :tags="dataPlaneVersions"
+                  />
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+            </div>
           </template>
         </KCard>
+
+        <ResourceCodeBlock
+          id="code-block-data-plane"
+          :resource="props.dataplaneOverview"
+          :resource-fetcher="fetchDataPlaneProxy"
+          is-searchable
+        />
       </div>
     </template>
 
@@ -183,27 +207,17 @@
         </template>
       </KCard>
     </template>
-
-    <template #warnings>
-      <KCard>
-        <template #body>
-          <WarningsWidget
-            v-if="warnings.length > 0"
-            :warnings="warnings"
-          />
-        </template>
-      </KCard>
-    </template>
   </TabsWidget>
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KCard } from '@kong/kongponents'
-import { computed, ref, PropType } from 'vue'
+import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
+import { computed, PropType } from 'vue'
 
 import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
@@ -219,10 +233,7 @@ import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
-import {
-  Compatibility,
-  DataPlaneOverview,
-} from '@/types/index.d'
+import { Compatibility, DataPlaneOverview } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 import {
   compatibilityKind,
@@ -236,7 +247,6 @@ import {
 } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
-
 const kumaApi = useKumaApi()
 const store = useStore()
 
@@ -247,42 +257,36 @@ const props = defineProps({
   },
 })
 
-const tabs = [
+const TABS = [
   {
     hash: '#overview',
-    title: 'Overview',
+    title: t('data-planes.routes.item.tabs.overview'),
   },
   {
     hash: '#insights',
-    title: 'DPP Insights',
+    title: t('data-planes.routes.item.tabs.insights'),
   },
   {
     hash: '#dpp-policies',
-    title: 'Policies',
+    title: t('data-planes.routes.item.tabs.policies'),
   },
   {
     hash: '#xds-configuration',
-    title: 'XDS Configuration',
+    title: t('data-planes.routes.item.tabs.xds_configuration'),
   },
   {
     hash: '#envoy-stats',
-    title: 'Stats',
+    title: t('data-planes.routes.item.tabs.stats'),
   },
   {
     hash: '#envoy-clusters',
-    title: 'Clusters',
+    title: t('data-planes.routes.item.tabs.clusters'),
   },
   {
     hash: '#mtls',
-    title: 'Certificate Insights',
-  },
-  {
-    hash: '#warnings',
-    title: 'Warnings',
+    title: t('data-planes.routes.item.tabs.mtls'),
   },
 ]
-
-const warnings = ref<Compatibility[]>([])
 
 const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataplaneOverview.dataplane))
@@ -296,33 +300,34 @@ const insightSubscriptions = computed(() => {
   return subscriptions
 })
 
-const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)
-
-function setWarnings() {
+const warnings = computed(() => {
   const subscriptions = props.dataplaneOverview.dataplaneInsight?.subscriptions ?? []
-
-  if (subscriptions.length === 0 || !('version' in subscriptions[0])) {
-    return
+  if (subscriptions.length === 0) {
+    return []
   }
 
-  const version = subscriptions[0].version
+  const lastSubscription = subscriptions[subscriptions.length - 1]
+  if (!('version' in lastSubscription) || !lastSubscription.version) {
+    return []
+  }
 
-  if (version && version.kumaDp && version.envoy) {
+  const warnings: Compatibility[] = []
+  const version = lastSubscription.version
+
+  if (version.kumaDp && version.envoy) {
     const compatibility = compatibilityKind(version)
 
     if (compatibility.kind !== COMPATIBLE && compatibility.kind !== INCOMPATIBLE_WRONG_FORMAT) {
-      warnings.value.push(compatibility)
+      warnings.push(compatibility)
     }
   }
 
-  const isMulticluster = store.getters['config/getMulticlusterStatus']
-
-  if (isMulticluster && version) {
+  if (store.getters['config/getMulticlusterStatus']) {
     const tags = dpTags(props.dataplaneOverview.dataplane)
     const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
     if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
-      warnings.value.push({
+      warnings.push({
         kind: INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
         payload: {
           kumaDp: version.kumaDp.version,
@@ -330,9 +335,9 @@ function setWarnings() {
       })
     }
   }
-}
 
-setWarnings()
+  return warnings
+})
 
 async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
   const { mesh, name } = props.dataplaneOverview
@@ -341,29 +346,16 @@ async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
 </script>
 
 <style lang="scss" scoped>
-.entity-heading {
-  font-size: inherit;
-  font-weight: var(--font-weight-regular);
+.status-with-reason {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
+</style>
 
-.reason {
-  margin-left: var(--spacing-md);
-  margin-bottom: var(--spacing-xxs);
-  margin-top: var(--spacing-xxs);
-}
-
-.tag-cols {
-  display: grid;
-  grid-auto-flow: column dense;
-  grid-template-columns: 1fr 2fr;
-
-  span {
-    display: inline-block;
-    padding: var(--spacing-xs);
-  }
-
-  span:first-of-type {
-    font-weight: var(--font-weight-semi-bold);
-  }
+<style lang="scss">
+.reason-tooltip .kong-icon {
+  display: flex;
+  align-items: center;
 }
 </style>

@@ -40,6 +40,7 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 
 .variable-columns {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--AppGap);
 }
 

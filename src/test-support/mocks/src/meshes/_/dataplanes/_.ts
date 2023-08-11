@@ -31,6 +31,9 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         }),
         inbound: [
           {
+            health: {
+              ready: fake.datatype.boolean(),
+            },
             port: fake.internet.port(),
             servicePort: fake.internet.port(),
             serviceAddress: fake.internet.ip(),

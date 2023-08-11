@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
-  const subscriptionCount = 10
+  const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
   const service = params.name ?? fake.hacker.noun()
   const isMultizone = true && fake.datatype.boolean()
@@ -21,6 +21,9 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           address: fake.internet.ip(),
           inbound: [
             {
+              health: {
+                ready: fake.datatype.boolean(),
+              },
               port: fake.internet.port(),
               servicePort: fake.internet.port(),
               serviceAddress: fake.internet.ip(),
@@ -81,6 +84,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
               envoy: {
                 version: '1.16.2',
                 build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL',
+                kumaDpCompatible: fake.datatype.boolean(),
               },
               dependencies: {
                 coredns: '1.8.3',
