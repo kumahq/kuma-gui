@@ -421,7 +421,7 @@ export interface ExternalService extends MeshEntity {
 
 export interface Zone {
   name: string
-  enabled: boolean
+  enabled?: boolean
 }
 
 /**

@@ -178,6 +178,7 @@ import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
+import { getZoneControlPlaneStatus } from '../getZoneControlPlaneStatus'
 import type { ZoneOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
@@ -189,7 +190,6 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useStore } from '@/store/store'
 import { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 type ZoneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
@@ -248,11 +248,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       }
     })
 
-    let status: StatusKeyword | 'disabled' = 'disabled'
-
-    if (zoneOverview.zone.enabled === true) {
-      status = getItemStatusFromInsight(zoneOverview.zoneInsight)
-    }
+    const status = getZoneControlPlaneStatus(zoneOverview)
 
     return {
       detailViewRoute,

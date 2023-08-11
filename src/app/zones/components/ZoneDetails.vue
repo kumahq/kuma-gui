@@ -114,6 +114,7 @@
 import { KAlert, KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import { getZoneControlPlaneStatus } from '../getZoneControlPlaneStatus'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
@@ -126,7 +127,7 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'
 import { useI18n, useEnv } from '@/utilities'
-import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
+import { INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
 import { getZoneDpServerAuthType } from '@/utilities/helpers'
 
 const { t } = useI18n()
@@ -159,13 +160,7 @@ const type = computed(() => {
 
   return 'kubernetes'
 })
-const status = computed(() => {
-  if (props.zoneOverview.zone.enabled === false) {
-    return 'disabled'
-  } else {
-    return getItemStatusFromInsight(props.zoneOverview.zoneInsight)
-  }
-})
+const status = computed(() => getZoneControlPlaneStatus(props.zoneOverview))
 const authenticationType = computed(() => getZoneDpServerAuthType(props.zoneOverview))
 
 const warnings = computed<ZoneCompatibility[]>(() => {
