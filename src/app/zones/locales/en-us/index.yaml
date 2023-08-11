@@ -5,7 +5,7 @@ zone-cps:
       breadcrumbs: Zone Control Planes
       tabs:
         overview: 'Overview'
-        insights: 'Zone insights'
+        insights: 'Insights'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
@@ -14,8 +14,6 @@ zone-cps:
   detail:
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
-    connect_time: 'Connect time'
-    disconnect_time: 'Disconnect time'
 
 zone-ingresses:
   routes:

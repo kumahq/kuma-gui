@@ -99,15 +99,15 @@
         <template #body>
           <AccordionList :initially-open="0">
             <AccordionItem
-              v-for="(value, key) in subscriptionsReversed"
-              :key="key"
+              v-for="(description, index) in subscriptionsReversed"
+              :key="index"
             >
               <template #accordion-header>
-                <SubscriptionHeader :details="value" />
+                <SubscriptionHeader :subscription="description" />
               </template>
 
               <template #accordion-content>
-                <SubscriptionDetails :details="value" />
+                <SubscriptionDetails :subscription="description" />
               </template>
             </AccordionItem>
           </AccordionList>

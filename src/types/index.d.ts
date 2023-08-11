@@ -62,13 +62,25 @@ export type TableData = {
   data: any
 }
 
+export interface DiscoveryServiceStats {
+  responsesSent?: string
+  responsesAcknowledged?: string
+  responsesRejected?: string
+}
+
+export interface KDSSubscriptionStatus {
+  lastUpdateTime: string
+  total: DiscoveryServiceStats
+  stat: Record<string, DiscoveryServiceStats>
+}
+
 export interface KDSSubscription {
   config: string
   id: string
   globalInstanceId: string
   connectTime: string
   disconnectTime?: string
-  status: any
+  status: KDSSubscriptionStatus
   version: any
 }
 
@@ -97,12 +109,6 @@ export interface GlobalInsights {
   type: 'GlobalInsights'
   creationTime: string
   resources: Record<string, ResourceStat>
-}
-
-export interface DiscoveryServiceStats {
-  responsesSent?: string
-  responsesAcknowledged?: string
-  responsesRejected?: string
 }
 
 export interface KumaDpVersion {

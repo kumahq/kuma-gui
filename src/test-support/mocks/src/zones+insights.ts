@@ -31,7 +31,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                   id: 'b21265cf-f856-4214-ad1b-42539c4b20a9',
                   globalInstanceId: 'foobar',
                   connectTime: '2020-07-28T16:08:09.743141Z',
-                  disconnectTime: '2020-07-28T16:08:09.743194Z',
+                  disconnectTime: fake.datatype.boolean() ? '2021-02-17T07:33:36.412683Z' : undefined,
                   status: {
                     lastUpdateTime: '2021-02-19T07:06:16.384057Z',
                     total: {

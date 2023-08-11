@@ -89,12 +89,12 @@
                 :key="key"
               >
                 <template #accordion-header>
-                  <SubscriptionHeader :details="insight" />
+                  <SubscriptionHeader :subscription="insight" />
                 </template>
 
                 <template #accordion-content>
                   <SubscriptionDetails
-                    :details="insight"
+                    :subscription="insight"
                     is-discovery-subscription
                   />
                 </template>

@@ -19,7 +19,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             id: fake.string.uuid(),
             globalInstanceId: fake.hacker.noun(),
             connectTime: '2020-07-28T16:18:09.743141Z',
-            disconnectTime: '2020-07-28T16:18:09.743194Z',
+            disconnectTime: fake.datatype.boolean() ? '2021-02-17T07:33:36.412683Z' : undefined,
             status: {
               lastUpdateTime: '2021-02-19T07:06:16.384057Z',
               total: {
