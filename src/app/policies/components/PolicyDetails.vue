@@ -1,25 +1,34 @@
 <template>
   <TabsWidget :tabs="tabs">
     <template #overview>
-      <ResourceCodeBlock
-        id="code-block-policy"
-        :resource="props.policy"
-        :resource-fetcher="fetchPolicy"
-        is-searchable
-      />
+      <KCard>
+        <template #body>
+          <ResourceCodeBlock
+            id="code-block-policy"
+            :resource="props.policy"
+            :resource-fetcher="fetchPolicy"
+            is-searchable
+          />
+        </template>
+      </KCard>
     </template>
 
     <template #affected-dpps>
-      <PolicyConnections
-        :mesh="props.policy.mesh"
-        :policy-name="props.policy.name"
-        :policy-path="props.path"
-      />
+      <KCard>
+        <template #body>
+          <PolicyConnections
+            :mesh="props.policy.mesh"
+            :policy-name="props.policy.name"
+            :policy-path="props.path"
+          />
+        </template>
+      </KCard>
     </template>
   </TabsWidget>
 </template>
 
 <script lang="ts" setup>
+import { KCard } from '@kong/kongponents'
 import { PropType } from 'vue'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
