@@ -1,77 +1,101 @@
 <template>
-  <KCard>
-    <template #body>
-      <div class="entity-section-list">
-        <section>
-          <DefinitionList>
-            <DefinitionListItem
-              v-if="status"
-              :term="t('http.api.property.status')"
-            >
-              <StatusBadge :status="status" />
-            </DefinitionListItem>
+  <div class="stack">
+    <KCard>
+      <template #body>
+        <div class="variable-columns">
+          <DefinitionCard v-if="status !== null">
+            <template #title>
+              {{ t('http.api.property.status') }}
+            </template>
 
-            <DefinitionListItem :term="t('http.api.property.name')">
+            <template #body>
+              <StatusBadge :status="status" />
+            </template>
+          </DefinitionCard>
+
+          <DefinitionCard>
+            <template #title>
+              {{ t('http.api.property.name') }}
+            </template>
+
+            <template #body>
               <TextWithCopyButton :text="props.service.name">
-                <RouterLink :to="detailViewRoute">
+                <RouterLink
+                  :to="{
+                    name: 'service-detail-view',
+                    params: {
+                      service: props.service.name,
+                      mesh: props.service.mesh,
+                    },
+                  }"
+                >
                   {{ props.service.name }}
                 </RouterLink>
               </TextWithCopyButton>
-            </DefinitionListItem>
+            </template>
+          </DefinitionCard>
 
-            <DefinitionListItem term="Address">
-              <template v-if="address !== null">
-                {{ address }}
-              </template>
+          <DefinitionCard v-if="address !== null">
+            <template #title>
+              {{ t('http.api.property.address') }}
+            </template>
 
-              <template v-else>
-                —
-              </template>
-            </DefinitionListItem>
+            <template #body>
+              {{ address }}
+            </template>
+          </DefinitionCard>
 
-            <DefinitionListItem
-              v-if="tls !== null"
-              term="TLS"
-            >
+          <DefinitionCard v-if="tls !== null">
+            <template #title>
+              {{ t('http.api.property.tls') }}
+            </template>
+
+            <template #body>
               {{ tls }}
-            </DefinitionListItem>
+            </template>
+          </DefinitionCard>
 
-            <DefinitionListItem
-              v-if="numberOfDataPlaneProxies !== null"
-              term="Data Plane Proxies"
-            >
-              {{ numberOfDataPlaneProxies }}
-            </DefinitionListItem>
+          <ResourceStatus
+            v-if="dataPlaneProxies !== null"
+            :online="dataPlaneProxies.online ?? 0"
+            :total="dataPlaneProxies.total ?? 0"
+          >
+            <template #title>
+              {{ t('http.api.property.dataPlaneProxies') }}
+            </template>
+          </ResourceStatus>
 
-            <DefinitionListItem
-              v-if="tags !== null"
-              term="Tags"
-            >
+          <DefinitionCard v-if="tags !== null">
+            <template #title>
+              {{ t('http.api.property.tags') }}
+            </template>
+
+            <template #body>
               <TagList :tags="tags" />
-            </DefinitionListItem>
-          </DefinitionList>
-        </section>
+            </template>
+          </DefinitionCard>
+        </div>
+      </template>
+    </KCard>
 
-        <ResourceCodeBlock
-          id="code-block-service"
-          :resource="props.service"
-          :resource-fetcher="fetchService"
-          is-searchable
-          :show-copy-as-kubernetes-button="props.service.serviceType === 'external' && props.externalService !== null"
-          code-max-height="250px"
-        />
-      </div>
-    </template>
-  </KCard>
+    <ResourceCodeBlock
+      id="code-block-service"
+      :resource="props.service"
+      :resource-fetcher="fetchService"
+      is-searchable
+      :show-copy-as-kubernetes-button="props.service.serviceType === 'external' && props.externalService !== null"
+      code-max-height="250px"
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { KCard } from '@kong/kongponents'
 import { computed } from 'vue'
 
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
+import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
@@ -89,14 +113,6 @@ const props = withDefaults(defineProps<{
   externalService: null,
 })
 
-const detailViewRoute = computed(() => ({
-  name: 'service-detail-view',
-  params: {
-    service: props.service.name,
-    mesh: props.service.mesh,
-  },
-}))
-
 const address = computed(() => {
   if (props.service.serviceType === 'external' && props.externalService !== null) {
     return props.externalService.networking.address
@@ -113,14 +129,11 @@ const tls = computed(() => {
   }
 })
 
-const numberOfDataPlaneProxies = computed(() => {
+const dataPlaneProxies = computed(() => {
   if (props.service.serviceType === 'external') {
     return null
   } else {
-    const online = props.service.dataplanes?.online ?? 0
-    const total = props.service.dataplanes?.total ?? 0
-
-    return `${online} online / ${total} total`
+    return props.service.dataplanes ?? null
   }
 })
 
@@ -150,20 +163,3 @@ async function fetchService(params?: SingleResourceParameters) {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.entity-section-list {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: var(--spacing-md);
-}
-
-.entity-section-list > * {
-  flex-basis: 60ch;
-  min-inline-size: 0;
-}
-
-.entity-section-list > :not(:last-child) {
-  padding-right: var(--spacing-md);
-}
-</style>

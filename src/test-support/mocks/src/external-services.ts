@@ -1,14 +1,22 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
-  const total = fake.number.int(10)
+export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const { offset, total, next, pageTotal } = pager(
+    env('KUMA_EXTERNALSERVICES_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
+    req,
+    `/meshes/${req.params.mesh}/external-services`,
+  )
 
   return {
     headers: {},
     body: {
       total,
-      items: Array.from({ length: total }).map((_, i) => {
-        const mesh = `${fake.hacker.noun()}-${i}`
-        const name = `${fake.hacker.noun()}-${i}`
+      next,
+      items: Array.from({ length: pageTotal }).map((_, i) => {
+        const id = offset + i
+        const mesh = req.params.mesh
+        const nameQueryParam = req.url.searchParams.get('name')
+        const name = nameQueryParam ?? `${fake.hacker.noun()}-external-${id}`
+
         return {
           type: 'ExternalService',
           mesh,
@@ -16,7 +24,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
           creationTime: '2021-02-02T10:59:26.640498+01:00',
           modificationTime: '2021-02-02T10:59:26.640498+01:00',
           networking: {
-            address: `${fake.internet.domainName()}:${fake.internet.port()}`,
+            address: `${name}.mesh:${fake.internet.port()}`,
             tls: {
               enabled: true,
               allowRenegotiation: false,
@@ -34,7 +42,6 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
           },
         }
       }),
-      next: null,
     },
   }
 }

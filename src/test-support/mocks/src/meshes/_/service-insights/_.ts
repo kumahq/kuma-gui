@@ -1,24 +1,25 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
-  const params = req.params
-  const online = fake.number.int(100)
-  const offline = fake.number.int(100)
+  const { mesh, name } = req.params
+  const serviceType = (name as string).split('_')[1] ?? fake.kuma.serviceType()
+
+  const serviceInsight: any = {
+    type: 'ServiceInsight',
+    serviceType,
+    mesh,
+    name,
+    creationTime: '2021-02-19T08:06:15.14624+01:00',
+    modificationTime: '2021-02-19T08:07:37.539229+01:00',
+  }
+
+  if (serviceType === 'internal') {
+    serviceInsight.addressPort = `${name}.mesh:${fake.internet.port()}`
+    serviceInsight.status = fake.kuma.status()
+    serviceInsight.dataplanes = fake.kuma.dataPlaneProxyStatus()
+  }
+
   return {
     headers: {},
-    body: {
-      type: 'ServiceInsight',
-      serviceType: fake.kuma.serviceType(),
-      mesh: params.mesh,
-      name: params.name,
-      creationTime: '2021-02-19T08:06:15.14624+01:00',
-      modificationTime: '2021-02-19T08:07:37.539229+01:00',
-      addressPort: `${params.name}.mesh:${fake.internet.port()}`,
-      status: fake.kuma.status(),
-      dataplanes: {
-        total: online + offline,
-        online,
-        offline,
-      },
-    },
+    body: serviceInsight,
   }
 }

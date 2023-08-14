@@ -55,3 +55,7 @@ export interface DataPlaneOverviewParameters extends PaginationParameters {
    */
   tag?: string | string[]
 }
+
+export interface ExternalServicesParameters extends PaginationParameters {
+  name?: string
+}

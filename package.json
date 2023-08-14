@@ -22,7 +22,7 @@
     "lint:ts": "vue-tsc --noEmit",
     "test": "cross-env TZ=UTC VITE_ZONE_CREATION_FLOW=enabled jest",
     "test:browser": "cross-env TZ=UTC cypress run --browser chrome",
-    "test:browser:view": "cross-env TZ=UTC KUMA_BASE_URL=http://localhost:8080/gui cypress open --browser chrome",
+    "test:browser:view": "cross-env TZ=UTC KUMA_BASE_URL=http://localhost:8080/gui cypress open --e2e --browser chrome",
     "test:watch": "yarn run test --watch"
   },
   "engines": {
