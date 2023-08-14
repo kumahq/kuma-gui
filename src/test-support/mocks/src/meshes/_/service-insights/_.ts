@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh, name } = req.params
-  const serviceType = (name as string).split('_')[1] ?? 'internal'
+  const serviceType = (name as string).split('_')[1] ?? fake.kuma.serviceType()
 
   const serviceInsight: any = {
     type: 'ServiceInsight',
