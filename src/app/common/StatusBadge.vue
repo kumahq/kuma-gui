@@ -37,14 +37,14 @@ const props = defineProps({
 .status {
   align-items: center;
   white-space: nowrap;
-  font-weight: var(--font-weight-medium);
+  font-weight: $kui-font-weight-medium;
 }
 
 .status::before {
   content: '';
   display: inline-block;
   vertical-align: middle;
-  margin-right: var(--spacing-xxs);
+  margin-right: $kui-space-20;
   border: 4px solid currentColor;
   border-radius: 50%;
 }

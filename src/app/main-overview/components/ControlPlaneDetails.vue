@@ -176,18 +176,18 @@ const meshInsight = computed(() => mergeInsightsReducer(props.meshInsights))
 .card-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: $kui-space-60;
 }
 
 .card-title {
   display: flex;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
   align-items: baseline;
 }
 
 .card-actions {
   display: flex;
-  gap: var(--spacing-md);
+  gap: $kui-space-60;
   align-items: flex-end;
 }
 </style>

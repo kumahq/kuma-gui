@@ -29,7 +29,7 @@ const modifiedDate = computed(() => formatIsoDate(props.modificationTime))
 .date-status {
   display: inline-flex;
   align-items: flex-end;
-  gap: var(--spacing-sm);
-  color: var(--black-300);
+  gap: $kui-space-50;
+  color: $kui-color-text-neutral;
 }
 </style>

@@ -1,16 +1,9 @@
 :root {
-  --font-family-sans: Inter, Helvetica, Arial, sans-serif;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semi-bold: 600;
-  --font-weight-bold: 700;
-  --font-family-mono: 'Fira Mono', Menlo, Monaco, Consolas, Liberation Mono, 'Courier New', monospace;
-
   // COMPONENTS
   --AppHeaderHeight: 60px;
   --AppSidebarWidth: 240px;
-  --AppGap: var(--spacing-lg);
-  --AppContentPadding: var(--spacing-lg);
+  --AppGap: #{$kui-space-80};
+  --AppContentPadding: #{$kui-space-80};
   --AppDisplay: grid;
 
   // ONBOARDING
@@ -31,15 +24,10 @@
 
   // KONGPONENTS
   // Reduces the excessive vertical padding.
-  --KPopPaddingY: var(--spacing-xs);
+  --KPopPaddingY: #{$kui-space-40};
   // Removes the default max width of 200 pixels because badges should never be cut-off.
   --KBadgeMaxWidth: auto;
-  // Sets a default border style for commonly used component frames/panels.
-  --KCardPaddingX: var(--AppGap);
-  --KCardPaddingY: var(--KCardPaddingX);
   --KCardBorderRadius: 9px;
-  --KCardBackground: var(--white);
-  --KCardBorder: 1px solid var(--grey-300);
 }
 
 :root.is-fullscreen {

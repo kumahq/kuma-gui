@@ -53,10 +53,10 @@ const disconnectTime = computed(() => props.subscription.disconnectTime ? format
 .subscription-header {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding-right: var(--spacing-xs);
-  padding-left: var(--spacing-xs);
+  padding-right: $kui-space-40;
+  padding-left: $kui-space-40;
   font-size: 1.125rem;
   line-height: 1.75rem;
-  font-weight: var(--font-weight-medium);
+  font-weight: $kui-font-weight-medium;
 }
 </style>

@@ -8,7 +8,7 @@
         class="mb-3"
         icon="spinner"
         color="rgba(0, 0, 0, 0.1)"
-        size="42"
+        :size="KUI_ICON_SIZE_50"
       />
 
       <slot>
@@ -19,5 +19,6 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { KEmptyState, KIcon } from '@kong/kongponents'
 </script>

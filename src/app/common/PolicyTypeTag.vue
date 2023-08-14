@@ -10,7 +10,7 @@
     <KIcon
       v-else
       icon="brain"
-      size="24"
+      :size="KUI_ICON_SIZE_50"
     />
 
     <slot>
@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { KIcon } from '@kong/kongponents'
 
 import CircuitBreakerIconUrl from '@/assets/images/policies/CircuitBreaker.png'
@@ -72,7 +73,7 @@ const props = defineProps({
 .policy-type-tag {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
 }
 
 .policy-type-tag-icon {

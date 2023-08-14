@@ -31,8 +31,8 @@ const emit = defineEmits<{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-lg);
-  border: 3px solid var(--grey-400);
+  padding: $kui-space-80;
+  border: 3px solid #b6b6bd;
   border-radius: 5px;
   box-shadow: 4px 4px 14px 4px var(--onboarding-shadow);
 }

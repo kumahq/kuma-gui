@@ -127,20 +127,20 @@ const props = defineProps({
 
 .data-list {
   display: inline-flex;
-  gap: var(--spacing-sm);
+  gap: $kui-space-50;
 }
 
 .badge-list {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
 }
 
 .policy-wrapper {
   --columns: 2;
   display: grid;
-  gap: var(--spacing-sm);
+  gap: $kui-space-50;
   grid-template-columns: repeat(var(--columns), 1fr);
 
   @media (min-width: 1270px) {
@@ -149,18 +149,18 @@ const props = defineProps({
 }
 
 .policy-type {
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: $kui-space-40;
   text-transform: uppercase;
-  font-size: var(--type-sm);
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--grey-500);
+  font-size: $kui-font-size-30;
+  font-weight: $kui-font-weight-semibold;
+  color: $kui-color-text-neutral;
 }
 </style>
 
 <style lang="scss">
 .mesh-gateway-policy-list .accordion-item-header {
   padding-left: 0;
-  padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
+  padding-top: $kui-space-40;
+  padding-bottom: $kui-space-40;
 }
 </style>

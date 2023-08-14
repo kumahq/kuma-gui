@@ -8,6 +8,6 @@
 .definition-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
 }
 </style>

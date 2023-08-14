@@ -87,16 +87,16 @@ async function checkVersion(currentVersion: string): Promise<void> {
 <style lang="scss" scoped>
 .upgrade-check-alert.k-alert.small {
   // Uses smaller paddings for this particular alert.
-  padding: var(--spacing-xxs) var(--spacing-xs);
+  padding: $kui-space-20 $kui-space-40;
 }
 
 .alert-content {
   display: flex;
   align-items: center;
-  font-size: var(--type-sm);
+  font-size: $kui-font-size-30;
 
   > *:first-of-type {
-    margin-right: var(--spacing-sm);
+    margin-right: $kui-space-50;
   }
 }
 

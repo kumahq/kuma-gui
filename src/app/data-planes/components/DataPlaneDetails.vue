@@ -30,7 +30,7 @@
                     >
                       <KIcon
                         icon="info"
-                        size="20"
+                        :size="KUI_ICON_SIZE_30"
                         hide-title
                       />
                     </KTooltip>
@@ -264,6 +264,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 import { useRoute } from 'vue-router'
@@ -404,7 +405,7 @@ async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
 .status-with-reason {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: $kui-space-50;
 }
 </style>
 

@@ -206,6 +206,6 @@ const subscriptionsReversed = computed(() => {
 
 <style lang="scss" scoped>
 .definition-card-list>*+* {
-  margin-top: var(--spacing-xs);
+  margin-top: $kui-space-40;
 }
 </style>

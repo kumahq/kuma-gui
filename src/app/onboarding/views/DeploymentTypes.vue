@@ -103,8 +103,8 @@ onMounted(function () {
 .radio-button-group {
   display: flex;
   justify-content: center;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
+  gap: $kui-space-80;
+  margin-bottom: $kui-space-60;
 }
 
 .radio-button-group .k-radio {

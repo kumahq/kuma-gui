@@ -39,7 +39,7 @@
                     <KIcon
                       v-if="item.status"
                       icon="check"
-                      size="14"
+                      :size="KUI_ICON_SIZE_30"
                       color="currentColor"
                     />
                   </span>
@@ -62,6 +62,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KIcon } from '@kong/kongponents'
 import { computed } from 'vue'
 
@@ -120,11 +121,11 @@ const statuses = computed(() => [
 }
 
 .item-status-list {
-  margin-top: var(--spacing-md);
+  margin-top: $kui-space-60;
 }
 
 .item-status-list > * + * {
-  margin-top: var(--spacing-xs);
+  margin-top: $kui-space-40;
 }
 
 .circle {
@@ -134,6 +135,6 @@ const statuses = computed(() => [
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--grey-300);
+  background-color: #e7e7ec;
 }
 </style>

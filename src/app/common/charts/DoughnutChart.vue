@@ -170,7 +170,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: $kui-space-50;
 }
 
 // This element is important. Do not remove it.
@@ -200,7 +200,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
 .chart-title__total {
   display: block;
   font-size: 1.2em;
-  font-weight: var(--font-weight-semi-bold);
+  font-weight: $kui-font-weight-semibold;
 }
 
 .chart-title__subtitle {
@@ -211,7 +211,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
 .legend-entry::before {
   content: '';
   display: inline-block;
-  margin-right: var(--spacing-xs);
+  margin-right: $kui-space-40;
   width: 30px;
   height: 10px;
   background-color: var(--data-background-color);

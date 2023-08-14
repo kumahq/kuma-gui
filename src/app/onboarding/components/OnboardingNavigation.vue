@@ -97,6 +97,6 @@ function changeStep(step: string): void {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: $kui-space-50;
 }
 </style>

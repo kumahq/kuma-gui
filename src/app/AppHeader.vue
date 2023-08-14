@@ -78,7 +78,7 @@
           <KIcon
             icon="gearFilled"
             class="k-button-icon"
-            size="16"
+            :size="KUI_ICON_SIZE_30"
             color="currentColor"
             hide-title
           />
@@ -90,6 +90,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   KButton,
   KDropdownMenu,
@@ -145,11 +146,11 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-lg);
-  padding-right: var(--spacing-lg);
-  padding-left: var(--spacing-lg);
-  border-bottom: var(--KCardBorder);
-  background-color: var(--white);
+  gap: $kui-space-80;
+  padding-right: $kui-space-80;
+  padding-left: $kui-space-80;
+  border-bottom: $kui-border-width-10 solid $kui-color-border;
+  background-color: $kui-color-background;
 }
 
 .gh-star {
@@ -159,7 +160,7 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
 .horizontal-list {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: $kui-space-80;
 }
 
 .app-status {
@@ -167,7 +168,7 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
 }
 
 .app-status--desktop {
-  color: var(--grey-500);
+  color: $kui-color-text-neutral;
   display: none;
 
   @media screen and (min-width: 900px) {

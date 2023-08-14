@@ -13,7 +13,7 @@
       <KIcon
         color="currentColor"
         icon="copy"
-        size="18"
+        :size="KUI_ICON_SIZE_30"
         :title="props.copyText"
       />
 
@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KButton, KClipboardProvider, KIcon } from '@kong/kongponents'
 
 import type { PropType } from 'vue'
@@ -94,23 +95,22 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
 }
 
 .copy-button {
-  --tooltip-text-color: var(--white);
-  --tooltip-background-color: var(--grey-600);
+  --tooltip-background-color: #{$kui-color-background-neutral-stronger};
 }
 
 .copy-button[data-tooltip-copy-success="false"] {
-  --tooltip-background-color: var(--red-700);
+  --tooltip-background-color: #{$kui-color-background-danger-stronger};
 }
 
 .copy-button[data-tooltip-text]::after {
   background-color: var(--tooltip-background-color);
   border-radius: 3px;
-  color: var(--tooltip-text-color);
+  color: $kui-color-text-inverse;
   content: attr(data-tooltip-text);
-  font-weight: var(--font-weight-regular);
-  padding: var(--spacing-xs);
+  font-weight: $kui-font-weight-regular;
+  padding: $kui-space-40;
   position: absolute;
-  right: calc(100% + var(--spacing-xs));
+  right: calc(100% + $kui-space-40);
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;

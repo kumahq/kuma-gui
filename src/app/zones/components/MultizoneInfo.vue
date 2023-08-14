@@ -4,7 +4,7 @@
       <KIcon
         class="mb-3"
         icon="dangerCircleOutline"
-        size="42"
+        :size="KUI_ICON_SIZE_50"
       />
 
       <p>{{ t('common.product.name') }} is running in Standalone mode.</p>
@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
 import { useI18n } from '@/utilities'

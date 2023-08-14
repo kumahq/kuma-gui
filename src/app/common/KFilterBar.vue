@@ -16,11 +16,11 @@
       <KIcon
         aria-hidden="true"
         class="k-filter-icon"
-        color="var(--grey-400)"
+        :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
         data-testid="k-filter-bar-filter-icon"
         hide-title
         icon="filter"
-        size="20"
+        :size="KUI_ICON_SIZE_30"
       />
     </button>
 
@@ -94,7 +94,7 @@
               color="currentColor"
               hide-title
               icon="chevronRight"
-              size="16"
+              :size="KUI_ICON_SIZE_30"
             />
           </button>
         </div>
@@ -116,13 +116,14 @@
         color="currentColor"
         icon="clear"
         hide-title
-        size="20"
+        :size="KUI_ICON_SIZE_30"
       />
     </button>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KIcon } from '@kong/kongponents'
 import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 
@@ -419,14 +420,14 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   position: relative;
   display: inline-flex;
   align-items: stretch;
-  background-color: var(--white);
-  border: 1px solid var(--grey-300);
+  background-color: $kui-color-background;
+  border: $kui-border-width-10 solid $kui-color-border;
   border-radius: 3px;
   transition: border 0.1s ease;
 }
 
 .k-filter-bar:focus-within {
-  border-color: var(--blue-400);
+  border-color: $kui-color-border-primary-weak;
 }
 
 .k-focus-filter-input-button {
@@ -437,7 +438,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
 .k-filter-icon {
   display: inline-flex;
   align-items: center;
-  padding: 0 var(--spacing-xs);
+  padding: 0 $kui-space-40;
 }
 
 .k-filter-bar-input {
@@ -453,52 +454,52 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
 
 .k-suggestion-box {
   position: absolute;
-  top: calc(100% + var(--spacing-xxs));
+  top: calc(100% + $kui-space-20);
   right: -1px;
   left: -1px;
   z-index: 1;
-  padding: var(--spacing-xxs);
-  background-color: var(--white);
-  border: 1px solid var(--grey-400);
+  padding: $kui-space-20;
+  background-color: $kui-color-background;
+  border: $kui-border-width-10 solid $kui-color-border;
   border-radius: 3px;
 }
 
 .k-filter-bar-error {
-  padding: var(--spacing-xxs) var(--spacing-xs);
-  color: var(--red-700);
+  padding: $kui-space-20 $kui-space-40;
+  color: $kui-color-text-danger;
 }
 
 .k-submit-query-button {
   align-self: stretch;
   text-align: left;
-  padding: var(--spacing-xxs) var(--spacing-xs);
+  padding: $kui-space-20 $kui-space-40;
   border-radius: 3px;
 }
 
 .k-filter-bar-error:not(:last-child),
 .k-submit-query-button:not(:last-child) {
-  margin-bottom: var(--spacing-xxs);
-  border-bottom: 1px solid var(--grey-300);
-  padding-bottom: var(--spacing-xxs);
+  margin-bottom: $kui-space-20;
+  border-bottom: $kui-border-width-10 solid $kui-color-border;
+  padding-bottom: $kui-space-20;
 }
 
 .k-suggestion-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xxs);
+  gap: $kui-space-20;
 }
 
 .k-suggestion-list-item {
   position: relative;
   display: flex;
   align-items: center;
-  padding: var(--spacing-xxs) 0 var(--spacing-xxs) var(--spacing-xs);
+  padding: $kui-space-20 0 $kui-space-20 $kui-space-40;
 }
 
 .k-submit-query-button-is-selected,
 .k-suggestion-list-item-is-selected {
-  color: var(--white);
-  background-color: var(--blue-500);
+  color: $kui-color-text-inverse;
+  background-color: $kui-color-background-primary;
   border-radius: 3px;
 }
 
@@ -507,16 +508,16 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   display: inline-flex;
   align-items: center;
   margin-left: auto;
-  padding-right: var(--spacing-xxs);
-  padding-left: var(--spacing-xxs);
+  padding-right: $kui-space-20;
+  padding-left: $kui-space-20;
   border-radius: 3px;
-  color: var(--grey-400);
+  color: $kui-color-text-neutral-weak;
 }
 
 .k-apply-suggestion-button:hover,
 .k-apply-suggestion-button:focus {
-  color: var(--white);
-  background-color: var(--blue-500);
+  color: $kui-color-text-inverse;
+  background-color: $kui-color-background-primary;
 }
 
 .k-apply-suggestion-button::before {
@@ -529,19 +530,19 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
 .k-clear-query-button {
   display: inline-flex;
   align-items: center;
-  padding: 0 var(--spacing-xs);
+  padding: 0 $kui-space-40;
   margin: 0;
   font: inherit;
-  color: var(--grey-400);
+  color: $kui-color-text-neutral-weak;
   background-color: transparent;
-  border: 1px solid transparent;
+  border: $kui-border-width-10 solid transparent;
   border-radius: 3px;
   appearance: none;
 }
 
 .k-clear-query-button:focus {
-  border-color: var(--blue-500);
+  border-color: $kui-color-border-primary;
   outline: none;
-  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--blue-500);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px $kui-color-border-primary;
 }
 </style>
