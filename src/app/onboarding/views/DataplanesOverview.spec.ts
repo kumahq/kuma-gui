@@ -11,7 +11,7 @@ function renderComponent() {
 describe('DataplanesOverview.vue', () => {
   const mock = useMock()
   test('renders snapshot', async () => {
-    mock('/dataplanes', {}, (merge) => {
+    mock('/dataplanes', { KUMA_DATAPLANE_COUNT: '1' }, (merge) => {
       return merge({
         body: {
           items: [
@@ -19,6 +19,21 @@ describe('DataplanesOverview.vue', () => {
               name: 'dataplane-test-456',
             },
           ],
+        },
+      })
+    })
+    mock('/meshes/:mesh/dataplanes+insights/:name', { KUMA_SUBSCRIPTION_COUNT: '1' }, (merge) => {
+      return merge({
+        body: {
+          name: 'dataplane-test-456',
+          dataplaneInsight: {
+            subscriptions: [
+              {
+                connectTime: '2021-02-17T07:33:36.412683Z',
+                disconnectTime: '',
+              },
+            ],
+          },
         },
       })
     })
