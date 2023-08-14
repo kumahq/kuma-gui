@@ -109,16 +109,16 @@
           <StatusInfo :is-empty="insightSubscriptions.length === 0">
             <AccordionList :initially-open="0">
               <AccordionItem
-                v-for="(insight, key) in insightSubscriptions"
+                v-for="(subscription, key) in insightSubscriptions"
                 :key="key"
               >
                 <template #accordion-header>
-                  <SubscriptionHeader :subscription="insight" />
+                  <SubscriptionHeader :subscription="subscription" />
                 </template>
 
                 <template #accordion-content>
                   <SubscriptionDetails
-                    :subscription="insight"
+                    :subscription="subscription"
                     is-discovery-subscription
                   />
                 </template>
