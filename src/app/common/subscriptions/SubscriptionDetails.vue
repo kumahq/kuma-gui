@@ -75,9 +75,9 @@ const props = defineProps({
 
 type StatusRow = {
   type: string
-  responsesSent: number
-  responsesAcknowledged: number
-  responsesRejected: number
+  responsesSent: string
+  responsesAcknowledged: string
+  responsesRejected: string
 }
 
 const statuses = computed<StatusRow[]>(() => {
@@ -99,9 +99,9 @@ const statuses = computed<StatusRow[]>(() => {
 
     return {
       type,
-      responsesSent: parseInt(responsesSent),
-      responsesAcknowledged: parseInt(responsesAcknowledged),
-      responsesRejected: parseInt(responsesRejected),
+      responsesSent,
+      responsesAcknowledged,
+      responsesRejected,
     }
   })
 })
