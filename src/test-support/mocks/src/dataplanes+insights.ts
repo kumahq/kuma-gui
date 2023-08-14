@@ -23,18 +23,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             networking: {
               address: '127.0.0.1',
               inbound: [
-                {
-                  health: {
-                    ready: fake.datatype.boolean(),
-                  },
-                  port: 7776,
-                  servicePort: 7777,
-                  serviceAddress: '127.0.0.1',
-                  tags: {
-                    'kuma.io/protocol': 'http',
-                    'kuma.io/service': 'backend',
-                  },
-                },
+                fake.kuma.inbound(fake.hacker.noun()),
               ],
               outbound: [
                 {

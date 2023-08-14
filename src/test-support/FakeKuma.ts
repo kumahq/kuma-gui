@@ -116,6 +116,26 @@ export class KumaModule {
 
     return Object.fromEntries(values)
   }
+
+  inbound(service: string, zone?: string) {
+    return {
+      ...(this.faker.datatype.boolean() && {
+        health: {
+          ready: this.faker.datatype.boolean(),
+        },
+      }),
+      port: this.faker.internet.port(),
+      servicePort: this.faker.internet.port(),
+      serviceAddress: this.faker.internet.ip(),
+      tags: {
+        'kuma.io/protocol': this.protocol(),
+        'kuma.io/service': service,
+        ...(zone && {
+          'kuma.io/zone': zone,
+        }),
+      },
+    }
+  }
 }
 export default class FakeKuma extends Faker {
   kuma = new KumaModule(this)

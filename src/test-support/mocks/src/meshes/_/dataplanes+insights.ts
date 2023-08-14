@@ -30,7 +30,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const service = tags['kuma.io/service'] ?? `${fake.hacker.noun()}`
 
         const name = `${_name || fake.hacker.noun()}${isGateway ? '-gateway' : '-proxy'}-${id}`
-        const zone = `${fake.hacker.noun()}-${id}`
+        const zone = isMultizone ? `${fake.hacker.noun()}-${id}` : undefined
 
         return {
           type: 'DataplaneOverview',
@@ -45,7 +45,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 gateway: {
                   tags: {
                     'kuma.io/service': name,
-                    ...(isMultizone && {
+                    ...(zone && {
                       'kuma.io/zone': zone,
                     }),
                   },
@@ -53,21 +53,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 },
               }),
               inbound: [
-                {
-                  health: {
-                    ready: fake.datatype.boolean(),
-                  },
-                  port: fake.internet.port(),
-                  servicePort: fake.internet.port(),
-                  serviceAddress: fake.internet.ip(),
-                  tags: {
-                    'kuma.io/protocol': fake.kuma.protocol(),
-                    'kuma.io/service': `${service}`,
-                    ...(isMultizone && {
-                      'kuma.io/zone': zone,
-                    }),
-                  },
-                },
+                fake.kuma.inbound(service, zone),
               ],
               outbound: [
                 {

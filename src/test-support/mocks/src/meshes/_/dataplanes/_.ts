@@ -3,7 +3,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
 
   const isGateway = params.name.includes('gateway')
-  const service = params.name ?? fake.hacker.noun()
+  const service = (params.name as string) ?? fake.hacker.noun()
   const isMultizone = true && fake.datatype.boolean()
   const zone = fake.hacker.noun()
 
@@ -30,21 +30,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           },
         }),
         inbound: [
-          {
-            health: {
-              ready: fake.datatype.boolean(),
-            },
-            port: fake.internet.port(),
-            servicePort: fake.internet.port(),
-            serviceAddress: fake.internet.ip(),
-            tags: {
-              'kuma.io/protocol': fake.kuma.protocol(),
-              'kuma.io/service': `${service}`,
-              ...(isMultizone && {
-                'kuma.io/zone': zone,
-              }),
-            },
-          },
+          fake.kuma.inbound(service, isMultizone ? zone : undefined),
         ],
         outbound: [
           {
