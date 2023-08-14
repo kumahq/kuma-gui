@@ -17,6 +17,13 @@ common:
       delete: 'Delete'
       edit: 'Edit'
       view: 'View details'
+  detail:
+    subscriptions:
+      no_stats: 'There are no statistics for subscription “{id}”'
+      connect_time: 'Connect time'
+      disconnect_time: 'Disconnect time'
+      type: 'Type'
+    none: '—'
   charts:
     dataPlaneProxies:
       title: 'DP Proxies'

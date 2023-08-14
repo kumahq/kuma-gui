@@ -54,16 +54,16 @@
         <template #body>
           <AccordionList :initially-open="0">
             <AccordionItem
-              v-for="(value, key) in subscriptionsReversed"
-              :key="key"
+              v-for="(subscription, index) in subscriptionsReversed"
+              :key="index"
             >
               <template #accordion-header>
-                <SubscriptionHeader :details="value" />
+                <SubscriptionHeader :subscription="subscription" />
               </template>
 
               <template #accordion-content>
                 <SubscriptionDetails
-                  :details="value"
+                  :subscription="subscription"
                   is-discovery-subscription
                 />
               </template>

@@ -28,8 +28,3 @@
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-
-.kong-card .k-card-body:not(.increase-specificity) {
-  // Overrides the line-height of KCard bodies using a unitless (i.e. relative) value. KCard bodies have `font-size: 12px` and `line-height: 16px` (i.e. a ratio of 1.33333) by default; however, in some contexts (e.g. table cells), a different font size is specified without a matching line-height. This fixes it without changing the appearance of KCard in other contexts.
-  line-height: 1.33333;
-}

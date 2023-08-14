@@ -1,97 +1,69 @@
 <template>
-  <div>
-    <div v-if="details.globalInstanceId || details.controlPlaneInstanceId || details.connectTime || details.disconnectTime">
-      <h5 class="overview-tertiary-title">
-        General Information:
-      </h5>
-
-      <DefinitionList>
-        <DefinitionListItem
-          v-if="details.globalInstanceId"
-          :term="t('http.api.property.globalInstanceId')"
-        >
-          {{ details.globalInstanceId }}
-        </DefinitionListItem>
-
-        <DefinitionListItem
-          v-if="details.controlPlaneInstanceId"
-          :term="t('http.api.property.controlPlaneInstanceId')"
-        >
-          {{ details.controlPlaneInstanceId }}
-        </DefinitionListItem>
-
-        <DefinitionListItem
-          v-if="details.connectTime"
-          :term="t('http.api.property.connectTime')"
-        >
-          {{ formatIsoDate(details.connectTime) }}
-        </DefinitionListItem>
-
-        <DefinitionListItem
-          v-if="details.disconnectTime"
-          :term="t('http.api.property.disconnectTime')"
-        >
-          {{ formatIsoDate(details.disconnectTime) }}
-        </DefinitionListItem>
-      </DefinitionList>
-    </div>
-
-    <div
-      v-if="detailsIterator"
-      class="columns mt-4"
-      style="--columns: 4"
-    >
-      <template
-        v-for="(item, label) in detailsIterator"
-        :key="label"
-      >
-        <div v-if="Object.keys(item).length > 0">
-          <h6 class="overview-tertiary-title">
-            {{ t(`http.api.property.${label}`) }}:
-          </h6>
-
-          <DefinitionList>
-            <DefinitionListItem
-              v-for="(value, property) in item"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              {{ formatError(formatValue(value)) }}
-            </DefinitionListItem>
-          </DefinitionList>
-        </div>
-      </template>
-    </div>
-
+  <div class="stack">
     <KAlert
-      v-else
+      v-if="statuses.length === 0"
       appearance="info"
-      class="mt-4"
     >
       <template #alertIcon>
         <KIcon icon="portal" />
       </template>
 
       <template #alertMessage>
-        There are no subscription statistics for <strong>{{ details.id }}</strong>
+        {{ t('common.detail.subscriptions.no_stats', { id: props.subscription.id }) }}
       </template>
     </KAlert>
+
+    <template v-else>
+      <div>
+        <div class="row">
+          <div class="header">
+            {{ t('common.detail.subscriptions.type') }}
+          </div>
+
+          <div class="header">
+            {{ t('http.api.property.responsesSent') }}
+          </div>
+
+          <div class="header">
+            {{ t('http.api.property.responsesAcknowledged') }}
+          </div>
+        </div>
+
+        <div
+          v-for="(row, index) in statuses"
+          :key="index"
+          class="row"
+          :data-testid="`subscription-status-${row.type}`"
+        >
+          <div class="type">
+            {{ t(`http.api.property.${row.type}`) }}
+          </div>
+
+          <div>
+            {{ row.responsesSent }}
+          </div>
+
+          <div>
+            {{ row.responsesAcknowledged }}
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { KAlert, KIcon } from '@kong/kongponents'
-import { computed } from 'vue'
+import { PropType, computed } from 'vue'
 
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import type { DiscoveryServiceStats, DiscoverySubscription, KDSSubscription } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
-const { t, formatIsoDate } = useI18n()
+const { t } = useI18n()
 
 const props = defineProps({
-  details: {
-    type: Object,
+  subscription: {
+    type: Object as PropType<KDSSubscription | DiscoverySubscription>,
     required: true,
   },
 
@@ -101,32 +73,38 @@ const props = defineProps({
   },
 })
 
-const detailsIterator = computed<Record<string, Record<string, any>>>(() => {
-  let details
-  if (props.isDiscoverySubscription) {
-    const { lastUpdateTime, total, ...restDetails } = props.details.status
+type StatusRow = {
+  type: string
+  responsesSent: string
+  responsesAcknowledged: string
+  responsesRejected: string
+}
 
-    details = restDetails
+const statuses = computed<StatusRow[]>(() => {
+  let status: Record<string, DiscoveryServiceStats>
+
+  if ('controlPlaneInstanceId' in props.subscription) {
+    const { lastUpdateTime, total, ...discoverySubscriptionStatus } = props.subscription.status
+    status = discoverySubscriptionStatus
+  } else {
+    status = props.subscription.status?.stat ?? {}
   }
 
-  if (props.details.status?.stat) {
-    details = props.details.status?.stat
+  if (!status) {
+    return []
   }
 
-  return details
+  return Object.entries(status).map(([type, stat]) => {
+    const { responsesSent = '0', responsesAcknowledged = '0', responsesRejected = '0' } = stat
+
+    return {
+      type,
+      responsesSent,
+      responsesAcknowledged,
+      responsesRejected,
+    }
+  })
 })
-
-function formatValue(value: string): string {
-  return value ? parseInt(value, 10).toLocaleString('en').toString() : '0'
-}
-
-function formatError(value: string): string {
-  if (value === '--') {
-    return 'error calculating'
-  }
-
-  return value
-}
 </script>
 
 <style lang="scss" scoped>
@@ -135,5 +113,20 @@ function formatError(value: string): string {
   font-weight: var(--font-weight-semi-bold);
   color: var(--grey-500);
   margin: var(--spacing-xs) 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: var(--spacing-xs);
+}
+
+.header,
+.type {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.type {
+  color: var(--grey-600);
 }
 </style>

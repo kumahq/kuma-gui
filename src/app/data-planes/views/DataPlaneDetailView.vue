@@ -2,6 +2,7 @@
   <RouteView
     v-slot="{ route }"
     name="data-plane-detail-view"
+    data-testid="data-plane-detail-view"
   >
     <AppView
       :breadcrumbs="[
