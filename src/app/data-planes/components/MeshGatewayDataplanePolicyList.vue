@@ -1,11 +1,10 @@
 <template>
   <div class="mesh-gateway-policy-list">
-    <h3>Gateway policies</h3>
+    <h3 class="mb-2">
+      Gateway policies
+    </h3>
 
-    <ul
-      v-if="meshGatewayRoutePolicies.length > 0"
-      class="policy-list"
-    >
+    <ul v-if="meshGatewayRoutePolicies.length > 0">
       <li
         v-for="(policy, index) in meshGatewayRoutePolicies"
         :key="index"
@@ -16,7 +15,7 @@
       </li>
     </ul>
 
-    <h3 class="mt-6">
+    <h3 class="mt-6 mb-2">
       Listeners
     </h3>
 
@@ -31,7 +30,7 @@
           </div>
 
           <template v-if="listenerEntry.routeEntries.length > 0">
-            <h4 class="mt-2">
+            <h4 class="mt-2 mb-2">
               Routes
             </h4>
 
@@ -73,7 +72,7 @@
                   v-if="routeEntry.policies.length > 0"
                   #accordion-content
                 >
-                  <ul class="policy-list mt-1">
+                  <ul class="mt-1">
                     <li
                       v-for="(policy, policyIndex) in routeEntry.policies"
                       :key="`${index}-${policyIndex}`"
@@ -120,15 +119,6 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-h3, h4 {
-  margin-bottom: var(--spacing-xs);
-}
-
-.policy-list {
-  padding-left: 1.5rem;
-  list-style: disc;
-}
-
 .dataplane-policy-header {
   display: flex;
   justify-content: space-between;

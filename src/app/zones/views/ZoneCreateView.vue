@@ -327,16 +327,3 @@ async function scanForEnabledZone() {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// TODO: Remove these once we have this sort of style covered by our base styles.
-ul:not(:first-child),
-p:not(:first-child) {
-  margin-top: var(--spacing-md);
-}
-
-ul {
-  padding-left: var(--spacing-lg);
-  list-style: disc;
-}
-</style>
