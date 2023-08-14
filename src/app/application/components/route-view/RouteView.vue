@@ -14,6 +14,7 @@
       name="default"
       :t="t"
       :env="env"
+      :can="can"
       :route="{
         update: (params: Record<string, string | undefined>) => {
           router.replace({
@@ -39,6 +40,7 @@ import { provide, inject, ref, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT } from '.'
+import { useCan } from '../../index'
 import {
   urlParam,
   cleanQuery,
@@ -48,6 +50,7 @@ import {
 import { useI18n, useEnv } from '@/utilities'
 
 const env = useEnv()
+const can = useCan()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()

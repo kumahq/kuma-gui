@@ -3,6 +3,7 @@ import { createStore, StoreOptions, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
+import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
 import DataSourceLifeCycle from '@/app/application/services/data-source/index'
 import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-planes'
@@ -32,6 +33,7 @@ import type {
 } from 'vue-router'
 
 const $ = {
+  ...APPLICATION,
   EnvVars: token<EnvVars>('EnvVars'),
   Env: token<Env>('Env'),
   env: token<Alias<Env['var']>>('env'),
@@ -255,6 +257,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: diagnosticsRoutes,
   }],
   // Modules
+  ...application($),
   ...mainOverviewModule($),
   ...zonesModule($),
   ...meshes($),

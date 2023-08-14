@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, can }"
     name="gateways-list-view"
   >
     <DataSource
@@ -44,7 +44,9 @@
                     name: { description: 'filter by name or parts of a name' },
                     service: { description: 'filter by “kuma.io/service” value' },
                     tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                    zone: { description: 'filter by “kuma.io/zone” value' },
+                    ...( can('use zones') ? {
+                      zone: { description: 'filter by “kuma.io/zone” value' },
+                    } : {})
                   }"
                   @fields-change="(val) => route.update({
                     query: val.query,
