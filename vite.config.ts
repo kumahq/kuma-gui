@@ -70,6 +70,15 @@ export const config: UserConfigFn = ({ mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+            @import "@kong/design-tokens/tokens/scss/variables";
+          `,
+        },
+      },
+    },
     build: {
       modulePreload: {
         resolveDependencies: () => [],
