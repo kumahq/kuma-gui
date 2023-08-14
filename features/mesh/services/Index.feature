@@ -17,8 +17,8 @@ Feature: mesh / services / index
       """
       body:
         items:
-        - name: service-1_external
-        - name: service-2_internal
+        - name: service-1
+        - name: service-2
       """
     When I visit the "/mesh/default/services" URL
 
@@ -36,32 +36,32 @@ Feature: mesh / services / index
     Then the "$button-tab-selected" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
-      | Value              |
-      | service-1_external |
+      | Value     |
+      | service-1 |
   Scenario: Clicking the link goes to the detail page and back again
-    Given the URL "/meshes/default/service-insights/service-1_external" responds with
+    Given the URL "/meshes/default/service-insights/service-1" responds with
       """
       body:
         serviceType: external
       """
-    And the URL "/meshes/default/service-insights/service-2_internal" responds with
+    And the URL "/meshes/default/service-insights/service-2" responds with
       """
       body:
         serviceType: internal
       """
-    Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1_external"
+    Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1"
     When I click the "$item:nth-child(1) td:first-of-type a" element
-    Then the URL contains "service/service-1_external"
+    Then the URL contains "service/service-1"
     Then the "#overview-tab" element exists
     # Service Insights with serviceType "external" shouldn't have a Data Plane Proxy table
     And the "#dataPlaneProxies-tab" element doesn't exists
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times
-    Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2_internal"
+    Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2"
     When I click the "$item:nth-child(2) td:first-of-type a" element
-    Then the URL contains "service/service-2_internal"
-    Then the "[data-testid='service-detail-view']" element contains "service-2_internal Service"
+    Then the URL contains "service/service-2"
+    Then the "[data-testid='service-detail-view']" element contains "service-2 Service"
     Then the "#overview-tab" element exists
     # Service Insights with serviceType "internal" should have a Data Plane Proxy table
     And the "#dataPlaneProxies-tab" element exists

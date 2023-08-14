@@ -12,19 +12,19 @@ Feature: mesh / services / item
 
   Rule: With an external service
     Background:
-      Given the URL "/meshes/default/service-insights/firewall-1_external" responds with
+      Given the URL "/meshes/default/service-insights/firewall-1" responds with
         """
         body:
           serviceType: "external"
         """
-      When I visit the "/mesh/default/service/firewall-1_external" URL
+      When I visit the "/mesh/default/service/firewall-1" URL
 
     Scenario: External services don't display the dataplane list
       Then the "$data-plane-proxies-tab" element doesn't exist
 
   Rule: With an internal service
     Background:
-      Given the URL "/meshes/default/service-insights/system-1_internal" responds with
+      Given the URL "/meshes/default/service-insights/system-1" responds with
         """
         body:
           serviceType: "internal"
@@ -38,14 +38,14 @@ Feature: mesh / services / item
                   networking:
                     gateway: ~
         """
-      When I visit the "/mesh/default/service/system-1_internal" URL
+      When I visit the "/mesh/default/service/system-1" URL
 
     Scenario: Internal services request the dataplanes for the service
       When I click the "$data-plane-proxies-tab" element
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
-          tag: "kuma.io/service:system-1_internal"
+          tag: "kuma.io/service:system-1"
           offset: 0
           size: 50
         """
@@ -63,7 +63,7 @@ Feature: mesh / services / item
         """
         searchParams:
           tag:
-            - "kuma.io/service:system-1_internal"
+            - "kuma.io/service:system-1"
             - "version"
           offset: 0
           size: 50
@@ -73,7 +73,7 @@ Feature: mesh / services / item
       When I click the "$data-plane-proxies-tab" element
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
-      When I "type" "tag:kuma.io/service:panel-2_internal" into the "$input-search" element
+      When I "type" "tag:kuma.io/service:panel-2" into the "$input-search" element
       And the URL "/meshes/default/dataplanes+insights" responds with
         """
         """
@@ -82,7 +82,7 @@ Feature: mesh / services / item
         """
         searchParams:
           tag:
-            - "kuma.io/service:panel-2_internal"
+            - "kuma.io/service:panel-2"
         """
 
     Scenario: The clear search button sends a new request with no search params
@@ -99,7 +99,7 @@ Feature: mesh / services / item
         searchParams:
           name: a-service
           tag:
-            - "kuma.io/service:system-1_internal"
+            - "kuma.io/service:system-1"
             - "kuma.io/protocol:tcp"
           offset: 0
           size: 50
@@ -130,7 +130,7 @@ Feature: mesh / services / item
         searchParams:
           name: a-service
           tag:
-            - "kuma.io/service:system-1_internal"
+            - "kuma.io/service:system-1"
             - "kuma.io/protocol:tcp"
           offset: 0
           size: 50
@@ -143,7 +143,7 @@ Feature: mesh / services / item
         """
         searchParams:
           tag:
-            - "kuma.io/service:system-1_internal"
+            - "kuma.io/service:system-1"
         """
 
     Scenario: Clicking an item takes you to the correct page
