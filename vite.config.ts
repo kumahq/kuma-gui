@@ -9,6 +9,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
 
+import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
 import { getPathConfigDefault } from './src/pathConfigDefault'
 
 dotenv.config()
@@ -73,9 +74,9 @@ export const config: UserConfigFn = ({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `
+          additionalData: hoistUseStatements(`
             @import "@kong/design-tokens/tokens/scss/variables";
-          `,
+          `),
         },
       },
     },
