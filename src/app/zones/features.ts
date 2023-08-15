@@ -1,7 +1,7 @@
-import type { Can } from '@/app/application/services/can'
+import type { Can, Features } from '@/app/application/services/can'
 import type Env from '@/services/env/Env'
-export const features = (env: Env['var']) => {
-  const features = {
+export const features = (env: Env['var']): Features => {
+  return {
     'use zones': () => {
       return env('KUMA_MODE') === 'global'
     },
@@ -9,5 +9,4 @@ export const features = (env: Env['var']) => {
       return can('use zones') && env('KUMA_ZONE_CREATION_FLOW') === 'enabled'
     },
   }
-  return features
 }
