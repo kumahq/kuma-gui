@@ -7,10 +7,7 @@
     :query-key="props.id"
     :code-max-height="props.codeMaxHeight"
   >
-    <template
-      v-if="showCopyAsKubernetesButton"
-      #secondary-actions
-    >
+    <template #secondary-actions>
       <CopyButton
         :get-text="getYamlAsKubernetes"
         :copy-text="i18n.t('common.copyKubernetesText')"
@@ -62,12 +59,6 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
-  },
-
-  showCopyAsKubernetesButton: {
-    type: Boolean,
-    required: false,
-    default: true,
   },
 })
 

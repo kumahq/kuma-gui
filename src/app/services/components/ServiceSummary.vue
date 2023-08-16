@@ -79,11 +79,11 @@
     </KCard>
 
     <ResourceCodeBlock
+      v-if="props.service.serviceType === 'external' && props.externalService !== null"
       id="code-block-service"
       :resource="props.service"
       :resource-fetcher="fetchService"
       is-searchable
-      :show-copy-as-kubernetes-button="props.service.serviceType === 'external' && props.externalService !== null"
       code-max-height="250px"
     />
   </div>
@@ -154,12 +154,8 @@ const tags = computed(() => {
 })
 
 async function fetchService(params?: SingleResourceParameters) {
-  if (props.service.serviceType === 'external' && props.externalService !== null) {
-    const { mesh, name } = props.externalService
-    return await kumaApi.getExternalService({ mesh, name }, params)
-  } else {
-    const { mesh, name } = props.service
-    return await kumaApi.getServiceInsight({ mesh, name }, params)
-  }
+  // Justification for type assertion: this function is only used in a context where an appropriate check is made.
+  const { mesh, name } = props.externalService as ExternalService
+  return await kumaApi.getExternalService({ mesh, name }, params)
 }
 </script>
