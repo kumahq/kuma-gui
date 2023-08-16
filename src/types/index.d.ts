@@ -451,16 +451,31 @@ export interface ZoneEgressOverview extends MeshEntity {
   zoneEgressInsight: any
 }
 
+export interface Backend {
+  name: string
+  type: string
+  conf?: Record<string, string | number>
+}
+
+export interface MeshBackend {
+  enabledBackend?: string
+  defaultBackend?: string
+  backends?: Backend[]
+}
+
 /**
  * Entity as returned via the `/meshes/:mesh` endpoint.
  */
 export interface Mesh extends Entity {
   type: 'Mesh'
-  mtls?: any
-  logging?: any
-  tracing?: any
-  metrics?: any
-  routing?: any
+  mtls?: MeshBackend
+  logging?: MeshBackend
+  tracing?: MeshBackend
+  metrics?: MeshBackend
+  routing?: {
+    localityAwareLoadBalancing?: boolean
+    zoneEgress?: boolean
+  }
 }
 
 export type DpVersions = {
