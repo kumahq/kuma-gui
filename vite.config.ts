@@ -9,6 +9,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
 
+import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
 import { getPathConfigDefault } from './src/pathConfigDefault'
 
 dotenv.config()
@@ -68,6 +69,15 @@ export const config: UserConfigFn = ({ mode }) => {
          * Used to import files using, for example, '@/api/kumaApi'.
          */
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: hoistUseStatements(`
+            @import "@kong/design-tokens/tokens/scss/variables";
+          `),
+        },
       },
     },
     build: {

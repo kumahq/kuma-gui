@@ -1,5 +1,7 @@
 /** @typedef {import('eslint').ESLint.ConfigData} Config */
 
+const deprecatedUtilityClasses = require('./dev-utilities/deprecatedUtilityClasses')
+
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
   'a',
@@ -99,6 +101,8 @@ const INLINE_NON_VOID_ELEMENTS = [
         }],
         // Reason: https://github.com/vuejs/eslint-plugin-vue/issues/2259
         'vue/no-setup-props-destructure': 'off',
+        // Disallow Kongponents utility classes
+        'vue/no-restricted-class': ['error', ...deprecatedUtilityClasses],
       },
     },
     {
