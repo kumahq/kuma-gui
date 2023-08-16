@@ -28,7 +28,7 @@ const pager: Pager = (_total: string | number, req: RestRequest, self) => {
 
   const remaining = total - offset
   const pageTotal = Math.min(size, remaining)
-  const next = remaining <= size ? null : `${baseUrl}${self}?offset=${offset + size}`
+  const next = remaining <= size ? null : `${baseUrl}${self}?size=${size}offset=${offset + size}`
   return {
     next,
     pageTotal,

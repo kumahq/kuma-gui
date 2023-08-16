@@ -89,6 +89,10 @@ When('I clear the {string} element', (selector: string) => {
   $(selector).clear()
 })
 
+When('I go {string}', (direction: number | Cypress.HistoryDirection) => {
+  cy.go(direction)
+})
+
 // assert
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
