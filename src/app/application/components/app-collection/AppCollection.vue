@@ -97,6 +97,8 @@ const cacheKey = ref<number>(0)
  * This is a hack around the fact that there is no other way to tell KTable if the current page of a paginated view has changed. KTable assumes it’s the *sole* owner/maintainer of pagination-related state, but that’s a design flaw that doesn’t account for browser history navigation (e.g. pressing back to go from page 2 to page 1).
  *
  * Is triggered via a watcher whenever `props.pageNumber` changes while the last page number that was emitted by KTable (via calls to its `fetcher` prop) is different (i.e. the page number has changed independently of a KTable mechanism).
+ *
+ * TODO: If https://github.com/Kong/kongponents/pull/1631 is accepted, this hack can be removed in favor of setting the new prop whenever the page number changes externally.
  */
 const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
