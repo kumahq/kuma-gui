@@ -40,3 +40,33 @@ Feature: MainNavigation
       | $main-nav .nav-item-home a              | Overview            |
       | $main-nav .nav-item-zone-cp-list-view a | Zone Control Planes |
       | [data-testid='nav-item-diagnostics']    | Diagnostics         |
+
+  Scenario: History navigation
+    Given the environment
+      """
+      KUMA_MESH_COUNT: 60
+      """
+    # This hack is necessary for the "the environment" population above to have an effect.
+    And the URL "/meshes" responds with
+      """
+      """
+
+    When I visit the "/" URL
+    Then the page title contains "Overview"
+    And the "[data-testid='zone-control-planes-status']" element exists
+
+    When I click the "$main-nav .nav-item-mesh-list-view a" element
+    Then the page title contains "Meshes"
+    And the "[data-testid='page-1-btn'].active" element exists
+
+    When I click the "[data-testid='next-btn'] > a" element
+    Then the page title contains "Meshes"
+    And the "[data-testid='page-2-btn'].active" element exists
+
+    When I go "back"
+    Then the page title contains "Meshes"
+    And the "[data-testid='page-1-btn'].active" element exists
+
+    When I go "back"
+    Then the page title contains "Overview"
+    And the "[data-testid='zone-control-planes-status']" element exists
