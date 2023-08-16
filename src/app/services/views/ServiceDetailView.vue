@@ -27,8 +27,8 @@
       </template>
 
       <DataSource
-        v-slot="{ data, isLoading, error }: ServiceInsightSource"
-        :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
+        v-slot="{ data, isLoading, error }: ServiceSource"
+        :src="`/meshes/${route.params.mesh}/services/${route.params.service}`"
       >
         <LoadingBlock v-if="isLoading" />
 
@@ -39,125 +39,109 @@
 
         <EmptyBlock v-else-if="data === undefined" />
 
-        <DataSource
+        <TabsWidget
           v-else
-          v-slot="{ data: externalService, isLoading: isLoadingExternalService, error: externalServiceError }: ExternalServiceSource"
-          :should-make-request="data.serviceType === 'external'"
-          :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
+          :tabs="TABS.filter((tab) => {
+            if (tab.hash === '#overview') {
+              return true
+            } else {
+              return data.serviceInsight.serviceType !== 'external'
+            }
+          })"
         >
-          <LoadingBlock v-if="data.serviceType === 'external' && isLoadingExternalService" />
+          <template #overview>
+            <ServiceSummary
+              :service="data.serviceInsight"
+              :external-service="data.externalService"
+            />
+          </template>
 
-          <ErrorBlock
-            v-else-if="data.serviceType === 'external' && externalServiceError"
-            :error="externalServiceError"
-          />
-
-          <EmptyBlock v-else-if="data.serviceType === 'external' && externalService === undefined" />
-
-          <TabsWidget
-            v-else
-            :tabs="TABS.filter((tab) => {
-              if (tab.hash === '#overview') {
-                return true
-              } else {
-                return data.serviceType !== 'external'
-              }
-            })"
+          <template
+            v-if="data.serviceInsight.serviceType !== 'external'"
+            #dataPlaneProxies
           >
-            <template #overview>
-              <ServiceSummary
-                :service="data"
-                :external-service="externalService"
-              />
-            </template>
-
-            <template
-              v-if="data?.serviceType !== 'external'"
-              #dataPlaneProxies
+            <DataSource
+              v-slot="{ data: dataplanesData, error: dataplanesError }"
+              :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
             >
-              <DataSource
-                v-slot="{ data: dataplanesData, error: dataplanesError }"
-                :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
+              <template
+                v-for="gateways in [typeof dataplanesData?.items?.[0]?.dataplane?.networking?.gateway === 'undefined']"
+                :key="gateways"
               >
-                <template
-                  v-for="gateways in [typeof dataplanesData?.items?.[0]?.dataplane?.networking?.gateway === 'undefined']"
-                  :key="gateways"
-                >
-                  <KCard>
-                    <template #body>
-                      <DataPlaneList
-                        data-testid="data-plane-collection"
-                        class="data-plane-collection"
-                        :page-number="props.page"
-                        :page-size="props.size"
-                        :total="dataplanesData?.total"
-                        :items="dataplanesData?.items"
-                        :error="dataplanesError"
-                        :gateways="gateways"
-                        @change="({page, size}) => {
-                          // @TODO: Should we remove s: undefined?
-                          route.update({
-                            page: String(page),
-                            size: String(size)
-                          })
-                        }"
-                      >
-                        <template #toolbar>
-                          <KFilterBar
-                            class="data-plane-proxy-filter"
-                            :placeholder="`tag: 'kuma.io/protocol: http'`"
-                            :query="props.query"
-                            :fields="{
-                              name: { description: 'filter by name or parts of a name' },
-                              protocol: { description: 'filter by “kuma.io/protocol” value' },
-                              tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                              zone: { description: 'filter by “kuma.io/zone” value' },
-                            }"
-                            @fields-change="(val) => route.update({
-                              query: val.query,
-                              s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
-                            })"
-                          />
+                <KCard>
+                  <template #body>
+                    <DataPlaneList
+                      data-testid="data-plane-collection"
+                      class="data-plane-collection"
+                      :page-number="props.page"
+                      :page-size="props.size"
+                      :total="dataplanesData?.total"
+                      :items="dataplanesData?.items"
+                      :error="dataplanesError"
+                      :gateways="gateways"
+                      @change="({page, size}) => {
+                        // @TODO: Should we remove s: undefined?
+                        route.update({
+                          page: String(page),
+                          size: String(size)
+                        })
+                      }"
+                    >
+                      <template #toolbar>
+                        <KFilterBar
+                          class="data-plane-proxy-filter"
+                          :placeholder="`tag: 'kuma.io/protocol: http'`"
+                          :query="props.query"
+                          :fields="{
+                            name: { description: 'filter by name or parts of a name' },
+                            protocol: { description: 'filter by “kuma.io/protocol” value' },
+                            tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                            zone: { description: 'filter by “kuma.io/zone” value' },
+                          }"
+                          @fields-change="(val) => route.update({
+                            query: val.query,
+                            s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
+                          })"
+                        />
 
-                          <KSelect
-                            v-if="gateways"
-                            label="Type"
-                            :overlay-label="true"
-                            :items="[
-                              {
-                                label: 'All',
-                                value: 'all'
-                              },
-                              {
-                                label: 'Builtin',
-                                value: 'builtin'
-                              },
-                              {
-                                label: 'Delegated',
-                                value: 'delegated'
-                              }
-                            ].map(item => ({
-                              ...item,
-                              selected: item.value === props.gatewayType
-                            }))"
-                            appearance="select"
-                            @selected="(item: SelectItem) => route.update({
-                              gatewayType: String(item.value),
-                            })"
-                          >
-                            <template #item-template="{ item: value }">
-                              {{ value.label }}
-                            </template>
-                          </KSelect>
-                        </template>
-                      </DataPlaneList>
-                    </template>
-                  </KCard>
-                </template>
-              </DataSource>
-            </template>
-          </TabsWidget>
-        </DataSource>
+                        <KSelect
+                          v-if="gateways"
+                          label="Type"
+                          :overlay-label="true"
+                          :items="[
+                            {
+                              label: 'All',
+                              value: 'all'
+                            },
+                            {
+                              label: 'Builtin',
+                              value: 'builtin'
+                            },
+                            {
+                              label: 'Delegated',
+                              value: 'delegated'
+                            }
+                          ].map(item => ({
+                            ...item,
+                            selected: item.value === props.gatewayType
+                          }))"
+                          appearance="select"
+                          @selected="(item: SelectItem) => route.update({
+                            gatewayType: String(item.value),
+                          })"
+                        >
+                          <template #item-template="{ item: value }">
+                            {{ value.label }}
+                          </template>
+                        </KSelect>
+                      </template>
+                    </DataPlaneList>
+                  </template>
+                </KCard>
+              </template>
+            </DataSource>
+          </template>
+        </TabsWidget>
       </DataSource>
     </AppView>
   </RouteView>
@@ -167,7 +151,7 @@
 import { KCard, KSelect, SelectItem } from '@kong/kongponents'
 
 import ServiceSummary from '../components/ServiceSummary.vue'
-import type { ExternalServiceSource, ServiceInsightSource } from '../sources'
+import type { ServiceSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
