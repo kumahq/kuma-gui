@@ -185,16 +185,16 @@ const props = defineProps({
   },
 })
 
-const mtls = computed(() => getBackendData(props.mesh.mtls))
-const logging = computed(() => getBackendData(props.mesh.logging))
-const metrics = computed(() => getBackendData(props.mesh.metrics))
-const tracing = computed(() => getBackendData(props.mesh.tracing))
+const mtls = computed(() => getBackendTypeAndName(props.mesh.mtls))
+const logging = computed(() => getBackendTypeAndName(props.mesh.logging))
+const metrics = computed(() => getBackendTypeAndName(props.mesh.metrics))
+const tracing = computed(() => getBackendTypeAndName(props.mesh.tracing))
 
 const totalPolicyCount = computed(() => {
   return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
 })
 
-function getBackendData(meshBackend?: MeshBackend) {
+function getBackendTypeAndName(meshBackend?: MeshBackend) {
   if (!meshBackend || !Array.isArray(meshBackend.backends) || meshBackend.backends.length === 0) {
     return ''
   }
