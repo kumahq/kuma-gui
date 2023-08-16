@@ -194,8 +194,8 @@ const totalPolicyCount = computed(() => {
   return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
 })
 
-function getBackendTypeAndName(meshBackend?: MeshBackend) {
-  if (!meshBackend || !Array.isArray(meshBackend.backends) || meshBackend.backends.length === 0) {
+function getBackendTypeAndName(meshBackend?: MeshBackend): string {
+  if (!meshBackend || !Array.isArray(meshBackend?.backends) || meshBackend.backends.length === 0) {
     return ''
   }
 
