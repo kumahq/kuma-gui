@@ -174,7 +174,7 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         try {
           const meshInsight = await kumaApi.getMeshInsights({ name })
 
-          commit('SET_POLICY_TYPE_TOTALS', meshInsight.policies)
+          commit('SET_POLICY_TYPE_TOTALS', meshInsight.policies ?? {})
         } catch {
           commit('SET_POLICY_TYPE_TOTALS', {})
         }
