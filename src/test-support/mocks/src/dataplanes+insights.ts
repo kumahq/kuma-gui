@@ -16,14 +16,14 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         return {
           type: 'DataplaneOverview',
           mesh: `${fake.hacker.noun()}-${id}`,
-          name: `${fake.hacker.noun()}-${id}`,
+          name: `${fake.kuma.dataPlaneProxyName()}-${id}`,
           creationTime: '2021-02-17T08:33:36.442044+01:00',
           modificationTime: '2021-02-17T08:33:36.442044+01:00',
           dataplane: {
             networking: {
               address: '127.0.0.1',
               inbound: [
-                fake.kuma.inbound(fake.hacker.noun()),
+                fake.kuma.inbound(fake.kuma.serviceName()),
               ],
               outbound: [
                 {
