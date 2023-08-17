@@ -163,7 +163,7 @@
           <ResourceCodeBlock
             id="code-block-data-plane"
             class="mt-4"
-            :resource="props.dataplaneOverview"
+            :resource="props.dataplane"
             :resource-fetcher="fetchDataPlaneProxy"
             is-searchable
           />
@@ -284,7 +284,7 @@ import { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
-import { Compatibility, DataPlaneOverview } from '@/types/index.d'
+import { Compatibility, DataPlane, DataPlaneOverview } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 import {
   compatibilityKind,
@@ -302,6 +302,11 @@ const kumaApi = useKumaApi()
 const store = useStore()
 
 const props = defineProps({
+  dataplane: {
+    type: Object as PropType<DataPlane>,
+    required: true,
+  },
+
   dataplaneOverview: {
     type: Object as PropType<DataPlaneOverview>,
     required: true,
@@ -387,7 +392,7 @@ const warnings = computed(() => {
 })
 
 async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
-  const { mesh, name } = props.dataplaneOverview
+  const { mesh, name } = props.dataplane
   return await kumaApi.getDataplaneFromMesh({ mesh, name }, params)
 }
 </script>

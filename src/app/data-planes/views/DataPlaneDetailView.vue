@@ -36,23 +36,32 @@
       </template>
 
       <DataSource
-        v-slot="{ data, isLoading, error }: DataplaneOverviewSource"
-        :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
+        v-slot="{ data, error }: DataplaneSource"
+        :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
       >
-        <LoadingBlock v-if="isLoading" />
+        <DataSource
+          v-slot="{ data: dataplaneOverview, error: dataplaneOverviewError }: DataplaneOverviewSource"
+          :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
+        >
+          <ErrorBlock
+            v-if="error"
+            :error="error"
+          />
 
-        <ErrorBlock
-          v-else-if="error"
-          :error="error"
-        />
+          <ErrorBlock
+            v-else-if="dataplaneOverviewError"
+            :error="dataplaneOverviewError"
+          />
 
-        <EmptyBlock v-else-if="data === undefined" />
+          <LoadingBlock v-else-if="data === undefined || dataplaneOverview === undefined" />
 
-        <DataPlaneDetails
-          v-else
-          :dataplane-overview="data"
-          data-testid="detail-view-details"
-        />
+          <DataPlaneDetails
+            v-else
+            :dataplane="data"
+            :dataplane-overview="dataplaneOverview"
+            data-testid="detail-view-details"
+          />
+        </DataSource>
       </DataSource>
     </AppView>
   </RouteView>
@@ -60,12 +69,11 @@
 
 <script lang="ts" setup>
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
-import type { DataplaneOverviewSource } from '../sources'
+import type { DataplaneOverviewSource, DataplaneSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useI18n } from '@/utilities'
