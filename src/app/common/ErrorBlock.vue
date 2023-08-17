@@ -57,15 +57,22 @@
       v-if="(error instanceof ApiError)"
       class="badge-list"
     >
-      <KBadge
-        v-if="error.type"
-        :appearance="props.badgeAppearance"
-      >
-        {{ error.type }}
-      </KBadge>
-
       <KBadge :appearance="props.badgeAppearance">
         {{ error.status }}
+      </KBadge>
+
+      <KBadge
+        v-if="error.type"
+        appearance="neutral"
+      >
+        type: {{ error.type }}
+      </KBadge>
+
+      <KBadge
+        v-if="error.instance"
+        appearance="neutral"
+      >
+        trace: <TextWithCopyButton :text="error.instance" />
       </KBadge>
     </div>
   </div>
@@ -76,6 +83,7 @@ import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
 
