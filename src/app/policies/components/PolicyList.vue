@@ -84,7 +84,13 @@
 
         <KCard>
           <template #body>
+            <ErrorBlock
+              v-if="props.policyError !== undefined"
+              :error="props.policyError"
+            />
+
             <AppCollection
+              v-else
               class="policy-collection"
               data-testid="policy-collection"
               :empty-state-message="t('common.emptyState.message', { type: `${props.currentPolicyType.name} policies` })"
@@ -192,6 +198,7 @@ import { useRoute } from 'vue-router'
 import { PolicyCollection } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { MeshInsight, PolicyType } from '@/types/index.d'
 import { useI18n } from '@/utilities'

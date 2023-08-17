@@ -5,7 +5,7 @@ Feature: mesh / policies / data
       | items         | [data-testid='policy-collection']   |
       | item          | $items tbody tr                     |
       | state-empty   | [data-testid='k-table-empty-state'] |
-      | state-error   | [data-testid='k-table-error-state'] |
+      | state-error   | [data-testid='error-state']         |
       | state-loading | [data-testid='loading-block']       |
     And the URL "/mesh-insights/default" responds with
       """

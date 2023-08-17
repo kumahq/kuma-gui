@@ -18,7 +18,13 @@
         </template>
         <KCard>
           <template #body>
+            <ErrorBlock
+              v-if="error !== undefined"
+              :error="error"
+            />
+
             <AppCollection
+              v-else
               class="service-collection"
               data-testid="service-collection"
               :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
@@ -142,6 +148,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'

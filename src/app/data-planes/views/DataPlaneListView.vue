@@ -18,7 +18,13 @@
         </template>
         <KCard>
           <template #body>
+            <ErrorBlock
+              v-if="error !== undefined"
+              :error="error"
+            />
+
             <DataPlaneList
+              v-else
               data-testid="data-plane-collection"
               class="data-plane-collection"
               :page-number="props.page"
@@ -67,6 +73,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
 import { useI18n } from '@/utilities'
 

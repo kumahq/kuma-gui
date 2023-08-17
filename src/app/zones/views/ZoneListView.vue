@@ -37,7 +37,13 @@
         >
           <KCard>
             <template #body>
+              <ErrorBlock
+                v-if="error !== undefined"
+                :error="error"
+              />
+
               <AppCollection
+                v-else
                 class="zone-cp-collection"
                 data-testid="zone-cp-collection"
                 :headers="[
@@ -193,6 +199,7 @@ import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { useStore } from '@/store/store'
