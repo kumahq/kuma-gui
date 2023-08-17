@@ -11,8 +11,13 @@
       <LoadingBlock v-if="meshInsightsIsLoading || zoneOverviewsIsLoading" />
 
       <ErrorBlock
-        v-else-if="meshInsightsError ?? zoneOverviewsError"
-        :error="meshInsightsError ?? zoneOverviewsError"
+        v-else-if="meshInsightsError"
+        :error="meshInsightsError"
+      />
+
+      <ErrorBlock
+        v-else-if="zoneOverviewsError"
+        :error="zoneOverviewsError"
       />
 
       <ControlPlaneDetails
