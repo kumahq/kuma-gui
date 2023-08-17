@@ -2,13 +2,7 @@
   <div class="overview">
     <KEmptyState>
       <template #title>
-        <KIcon
-          class="mb-3"
-          icon="warning"
-          color="var(--black-500)"
-          secondary-color="var(--yellow-300)"
-          size="64"
-        />
+        <WarningIcon class="mb-3" />
 
         <p>Page Not Found</p>
       </template>
@@ -30,5 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
+import { KButton, KEmptyState } from '@kong/kongponents'
+
+import WarningIcon from '@/app/common/WarningIcon.vue'
 </script>

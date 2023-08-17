@@ -76,11 +76,8 @@
         v-if="rowValue.length > 0"
         :label="t('data-planes.list.version_mismatch')"
       >
-        <KIcon
+        <WarningIcon
           class="mr-1"
-          icon="warning"
-          color="var(--black-500)"
-          secondary-color="var(--yellow-300)"
           size="20"
           hide-title
         />
@@ -143,6 +140,7 @@ import { RouteLocationNamedRaw } from 'vue-router'
 
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import WarningIcon from '@/app/common/WarningIcon.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'

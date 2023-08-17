@@ -11,23 +11,11 @@
     >
       <slot :name="tab" />
     </template>
-
-    <template #warnings-anchor>
-      <KIcon
-        class="mr-1"
-        icon="warning"
-        color="var(--black-500)"
-        secondary-color="var(--yellow-300)"
-        size="16"
-      />
-
-      <span class="with-warnings">Warnings</span>
-    </template>
   </KTabs>
 </template>
 
 <script lang="ts" setup>
-import { KIcon, KTabs } from '@kong/kongponents'
+import { KTabs } from '@kong/kongponents'
 import { computed, PropType, ref } from 'vue'
 
 import { logEvents } from '@/services/logger/Logger'
@@ -69,12 +57,6 @@ function switchTab(newActiveTabHash: string): void {
   emit('on-tab-change', newActiveTabHash)
 }
 </script>
-
-<style lang="scss" scoped>
-.with-warnings {
-  color: var(--yellow-500);
-}
-</style>
 
 <style lang="scss">
 .tab-container {

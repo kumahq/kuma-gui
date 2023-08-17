@@ -87,11 +87,8 @@
                     v-if="rowValue"
                     :label="t('zone-cps.list.version_mismatch')"
                   >
-                    <KIcon
+                    <WarningIcon
                       class="mr-1"
-                      icon="warning"
-                      color="var(--black-500)"
-                      secondary-color="var(--yellow-300)"
                       size="20"
                       hide-title
                     />
@@ -191,6 +188,7 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import WarningIcon from '@/app/common/WarningIcon.vue'
 import { useStore } from '@/store/store'
 import { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'

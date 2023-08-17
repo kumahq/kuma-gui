@@ -5,11 +5,16 @@
   >
     <KEmptyState cta-is-hidden>
       <template #title>
+        <WarningIcon
+          v-if="props.icon === 'warning'"
+          class="mb-3"
+          size="42"
+        />
+
         <KIcon
+          v-else
           class="mb-3"
           :icon="props.icon"
-          :color="props.icon === 'warning' ? 'var(--black-500)' : undefined"
-          :secondary-color="props.icon === 'warning' ? 'var(--yellow-300)' : undefined"
           size="42"
         />
 
@@ -70,6 +75,7 @@
 import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import WarningIcon from '@/app/common/WarningIcon.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
 
 const props = defineProps({
