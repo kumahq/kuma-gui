@@ -25,11 +25,21 @@ Feature: mesh / dataplanes / index
             subscriptions:
             - status:
                 lastUpdateTime: 2021-02-16T08:33:36.442044+01:00
+                total: {}
+                cds: {}
+                eds: {}
+                lds: {}
+                rds: {}
               version:
                 kumaDp:
                   version: 1.0.7
             - status:
                 lastUpdateTime: 2021-02-18T08:33:36.442044+01:00
+                total: {}
+                cds: {}
+                eds: {}
+                lds: {}
+                rds: {}
               version:
                 kumaDp:
                   version: 1.0.8
