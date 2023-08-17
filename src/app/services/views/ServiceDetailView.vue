@@ -27,8 +27,8 @@
       </template>
 
       <DataSource
-        v-slot="{ data, isLoading, error }: ServiceSource"
-        :src="`/meshes/${route.params.mesh}/services/${route.params.service}`"
+        v-slot="{ data, isLoading, error }: ServiceInsightSource"
+        :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
       >
         <LoadingBlock v-if="isLoading" />
 
@@ -41,17 +41,38 @@
 
         <TabsWidget
           v-else
-          :tabs="getTabs(data.serviceInsight)"
+          :tabs="getTabs(data)"
         >
           <template #overview>
-            <ServiceSummary
-              :service="data.serviceInsight"
-              :external-service="data.externalService"
+            <DataSource
+              v-if="data.serviceType === 'external'"
+              v-slot="{ data: externalService, isLoading: externalServiceIsLoading, error: externalServiceError }: ExternalServiceSource"
+              :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
+            >
+              <LoadingBlock v-if="externalServiceIsLoading" />
+
+              <ErrorBlock
+                v-else-if="externalServiceError"
+                :error="externalServiceError"
+              />
+
+              <EmptyBlock v-else-if="externalService === undefined" />
+
+              <ExternalServiceDetails
+                v-else
+                :service-insight="data"
+                :external-service="externalService"
+              />
+            </DataSource>
+
+            <ServiceInsightDetails
+              v-else
+              :service-insight="data"
             />
           </template>
 
           <template
-            v-if="data.serviceInsight.serviceType !== 'external'"
+            v-if="data.serviceType !== 'external'"
             #dataPlaneProxies
           >
             <DataSource
@@ -144,8 +165,9 @@
 <script lang="ts" setup>
 import { KCard, KSelect, SelectItem } from '@kong/kongponents'
 
-import ServiceSummary from '../components/ServiceSummary.vue'
-import type { ServiceSource } from '../sources'
+import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
+import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
+import type { ExternalServiceSource, ServiceInsightSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'

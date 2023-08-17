@@ -8,3 +8,6 @@ services:
         data_plane_proxies: 'Data Plane Proxies'
     items:
       title: Services
+  detail:
+    enabled: 'Enabled'
+    disabled: 'Disabled'
