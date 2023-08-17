@@ -41,13 +41,7 @@
 
         <TabsWidget
           v-else
-          :tabs="TABS.filter((tab) => {
-            if (tab.hash === '#overview') {
-              return true
-            } else {
-              return data.serviceInsight.serviceType !== 'external'
-            }
-          })"
+          :tabs="getTabs(data.serviceInsight)"
         >
           <template #overview>
             <ServiceSummary
@@ -162,20 +156,10 @@ import KFilterBar from '@/app/common/KFilterBar.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
+import type { ServiceInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
-
-const TABS = [
-  {
-    hash: '#overview',
-    title: t('services.routes.item.tabs.overview'),
-  },
-  {
-    hash: '#dataPlaneProxies',
-    title: t('services.routes.item.tabs.data_plane_proxies'),
-  },
-]
 
 const props = defineProps<{
   page: number
@@ -187,6 +171,24 @@ const props = defineProps<{
   mesh: string
   service: string
 }>()
+
+function getTabs(serviceInsight: ServiceInsight) {
+  const tabs = [
+    {
+      hash: '#overview',
+      title: t('services.routes.item.tabs.overview'),
+    },
+  ]
+
+  if (serviceInsight.serviceType === 'internal') {
+    tabs.push({
+      hash: '#dataPlaneProxies',
+      title: t('services.routes.item.tabs.data_plane_proxies'),
+    })
+  }
+
+  return tabs
+}
 </script>
 
 <style lang="scss" scoped>
