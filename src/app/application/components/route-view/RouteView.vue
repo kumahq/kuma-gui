@@ -14,6 +14,7 @@
       name="default"
       :t="t"
       :env="env"
+      :can="can"
       :route="{
         update: (params: Record<string, string | undefined>) => {
           // Avoids `router.push` specifically in the case where we try to persist the `page` query parameter in the URL while there isn’t one already. This happens when navigating to a list view through the UI (i.e. without directly using the `page` query parameter). If we use `router.push`, this creates a second history entry after that navigation which makes it near impossible to navigate back through the history because the browser will be stuck in a loop.
@@ -41,6 +42,7 @@ import { provide, inject, ref, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT } from '.'
+import { useCan } from '../../index'
 import {
   urlParam,
   cleanQuery,
@@ -50,6 +52,7 @@ import {
 import { useI18n, useEnv } from '@/utilities'
 
 const env = useEnv()
+const can = useCan()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
