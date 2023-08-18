@@ -22,7 +22,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
                 name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
-                  policyPath: 'meshaccesslogs',
+                  policyType: 'MeshAccessLog',
                   policy: 'mal-1',
                 },
               },
@@ -46,7 +46,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
                 name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
-                  policyPath: 'meshtraces',
+                  policyType: 'MeshTrace',
                   policy: 'mal-1',
                 },
               },
@@ -84,7 +84,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
                 name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
-                  policyPath: 'meshtrafficpermissions',
+                  policyType: 'MeshTrafficPermission',
                   policy: 'mtp-1',
                 },
               },
@@ -113,7 +113,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
                 name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
-                  policyPath: 'meshtrafficpermissions',
+                  policyType: 'MeshTrafficPermission',
                   policy: 'default',
                 },
               },
@@ -146,7 +146,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
                 name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
-                  policyPath: 'meshtrafficpermissions',
+                  policyType: 'MeshTrafficPermission',
                   policy: 'mtp-1',
                 },
               },
@@ -157,7 +157,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
                 name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
-                  policyPath: 'meshtrafficpermissions',
+                  policyType: 'MeshTrafficPermission',
                   policy: 'mtp-2',
                 },
               },

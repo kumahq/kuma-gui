@@ -39,23 +39,13 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 const route = useRoute()
-const store = useStore()
-
-// Updates the policy type totals based on the current mesh.
-watch(() => route.params.mesh, (newMesh, oldMesh) => {
-  if (newMesh !== oldMesh && newMesh) {
-    store.dispatch('fetchPolicyTypeTotals', newMesh)
-  }
-}, { immediate: true })
 </script>

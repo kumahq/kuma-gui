@@ -6,7 +6,7 @@ import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import config from '@/store/modules/config/config'
 import onboarding from '@/store/modules/onboarding/onboarding'
-import { Mesh, PolicyType, ResourceStat } from '@/types/index.d'
+import { Mesh } from '@/types/index.d'
 
 /**
  * The root state of the application’s Vuex store minus all module state.
@@ -26,10 +26,6 @@ interface BareRootState {
     next: string | null
   }
   totalDataplaneCount: number
-  policyTypes: PolicyType[]
-  policyTypesByPath: Record<string, PolicyType | undefined>
-  policyTypesByName: Record<string, PolicyType | undefined>
-  policyTypeTotals: Record<string, ResourceStat>
   globalKdsAddress: string
 }
 
@@ -45,10 +41,6 @@ const initialState: BareRootState = {
     next: null,
   },
   totalDataplaneCount: 0,
-  policyTypes: [],
-  policyTypesByPath: {},
-  policyTypesByName: {},
-  policyTypeTotals: {},
   globalKdsAddress: 'grpcs://<global-kds-address>:5685',
 }
 
@@ -87,14 +79,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
       SET_GLOBAL_LOADING: (state, globalLoading: typeof state.globalLoading) => (state.globalLoading = globalLoading),
       SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
       SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
-      SET_POLICY_TYPES: (state, policyTypes: typeof state.policyTypes) => {
-        policyTypes.sort((policyTypeA, policyTypeB) => policyTypeA.name.localeCompare(policyTypeB.name))
-
-        state.policyTypes = policyTypes
-      },
-      SET_POLICY_TYPES_BY_PATH: (state, policyTypesByPath: typeof state.policyTypesByPath) => (state.policyTypesByPath = policyTypesByPath),
-      SET_POLICY_TYPES_BY_NAME: (state, policyTypesByName: typeof state.policyTypesByName) => (state.policyTypesByName = policyTypesByName),
-      SET_POLICY_TYPE_TOTALS: (state, policyTypeTotals: typeof state.policyTypeTotals) => (state.policyTypeTotals = policyTypeTotals),
       SET_GLOBAL_KDS_ADDRESS: (state, globalKdsAddress: typeof state.globalKdsAddress) => (state.globalKdsAddress = globalKdsAddress),
     },
 
@@ -153,31 +137,8 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         }
       },
 
-      async fetchPolicyTypes({ commit }) {
-        const { policies: policyTypes } = await kumaApi.getPolicyTypes()
-        const policyTypesByPath = policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.path]: policyType }), {})
-        const policyTypesByName = policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})
-
-        commit('SET_POLICY_TYPES', policyTypes)
-        commit('SET_POLICY_TYPES_BY_PATH', policyTypesByPath)
-        commit('SET_POLICY_TYPES_BY_NAME', policyTypesByName)
-      },
-
       updateGlobalKdsAddress({ commit }, globalKdsAddress: string) {
         commit('SET_GLOBAL_KDS_ADDRESS', globalKdsAddress)
-      },
-
-      /**
-       * Used by the policy routes to determine the redirect target based on which policy type a user has policies for.
-       */
-      async fetchPolicyTypeTotals({ commit }, name: string) {
-        try {
-          const meshInsight = await kumaApi.getMeshInsights({ name })
-
-          commit('SET_POLICY_TYPE_TOTALS', meshInsight.policies ?? {})
-        } catch {
-          commit('SET_POLICY_TYPE_TOTALS', {})
-        }
       },
     },
   }

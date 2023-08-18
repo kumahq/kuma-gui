@@ -27,7 +27,7 @@ Feature: mesh / policies / data
         - name: fake-cb-1
         - name: fake-cb-2
       """
-    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    When I visit the "/mesh/default/policies/CircuitBreaker" URL
     Then the "$state-loading" element exists
     Then the "$item" element exists 2 times
   Scenario: Zero items shows the empty state
@@ -38,7 +38,7 @@ Feature: mesh / policies / data
     And the URL "/meshes/default/circuit-breakers" responds with
       """
       """
-    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    When I visit the "/mesh/default/policies/CircuitBreaker" URL
     Then the "$state-empty" element exists
 
   Scenario: Erroring shows an error state
@@ -47,5 +47,5 @@ Feature: mesh / policies / data
       headers:
         Status-Code: '503'
       """
-    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    When I visit the "/mesh/default/policies/CircuitBreaker" URL
     Then the "$state-error" element exists

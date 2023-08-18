@@ -5,12 +5,9 @@ import { rest } from 'msw'
 import DataplanePolicies from './DataplanePolicies.vue'
 import { useServer } from '@/../jest/jest-setup-after-env'
 import { DataPlaneOverview } from '@/types/index.d'
-import { useStore, useRouter } from '@/utilities'
+import { useRouter } from '@/utilities'
 
-const store = useStore()
 async function renderComponent(props = {}) {
-  await store.dispatch('fetchPolicyTypes')
-
   const dataplaneOverview: DataPlaneOverview = {
     type: 'DataplaneOverview',
     mesh: 'foo',

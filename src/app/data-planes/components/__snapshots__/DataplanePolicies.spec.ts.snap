@@ -31,11 +31,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           <span
             class="policy-type-tag"
           >
-            <img
-              alt=""
-              class="policy-type-tag-icon"
-              src=""
-            />
+            <span
+              class="kong-icon kong-icon-brain"
+            >
+              <svg
+                height="24"
+                role="img"
+                viewBox="-2 -2 28 28"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <path
+                  d="M11 4h2v16h-2z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+
+                <title>
+                  Brain
+                </title>
+              </svg>
+              
+
+            </span>
             
             FaultInjection (3) 
             
@@ -389,7 +447,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/gui/mesh/default/policy/fault-injections/fi1.kuma-system"
+                              href="/gui/mesh/default/policy/FaultInjection/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -628,7 +686,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/gui/mesh/default/policy/fault-injections/fi1.kuma-system"
+                              href="/gui/mesh/default/policy/FaultInjection/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -869,7 +927,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/gui/mesh/default/policy/fault-injections/web-to-backend.kuma-system"
+                              href="/gui/mesh/default/policy/FaultInjection/web-to-backend.kuma-system"
                             >
                               web-to-backend.kuma-system
                             </a>
@@ -907,11 +965,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           <span
             class="policy-type-tag"
           >
-            <img
-              alt=""
-              class="policy-type-tag-icon"
-              src=""
-            />
+            <span
+              class="kong-icon kong-icon-brain"
+            >
+              <svg
+                height="24"
+                role="img"
+                viewBox="-2 -2 28 28"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <path
+                  d="M11 4h2v16h-2z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+
+                <title>
+                  Brain
+                </title>
+              </svg>
+              
+
+            </span>
             
             HealthCheck (4) 
             
@@ -944,11 +1060,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           <span
             class="policy-type-tag"
           >
-            <img
-              alt=""
-              class="policy-type-tag-icon"
-              src=""
-            />
+            <span
+              class="kong-icon kong-icon-brain"
+            >
+              <svg
+                height="24"
+                role="img"
+                viewBox="-2 -2 28 28"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <path
+                  d="M11 4h2v16h-2z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+
+                <title>
+                  Brain
+                </title>
+              </svg>
+              
+
+            </span>
             
             Timeout (1) 
             
@@ -981,11 +1155,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           <span
             class="policy-type-tag"
           >
-            <img
-              alt=""
-              class="policy-type-tag-icon"
-              src=""
-            />
+            <span
+              class="kong-icon kong-icon-brain"
+            >
+              <svg
+                height="24"
+                role="img"
+                viewBox="-2 -2 28 28"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <path
+                  d="M11 4h2v16h-2z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+
+                <title>
+                  Brain
+                </title>
+              </svg>
+              
+
+            </span>
             
             TrafficPermission (1) 
             
@@ -1018,11 +1250,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           <span
             class="policy-type-tag"
           >
-            <img
-              alt=""
-              class="policy-type-tag-icon"
-              src=""
-            />
+            <span
+              class="kong-icon kong-icon-brain"
+            >
+              <svg
+                height="24"
+                role="img"
+                viewBox="-2 -2 28 28"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <path
+                  d="M11 4h2v16h-2z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                  fill="#A3BBCC"
+                />
+                
+  
+                <path
+                  d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+  
+                <path
+                  d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-width="2"
+                />
+                
+
+                <title>
+                  Brain
+                </title>
+              </svg>
+              
+
+            </span>
             
             TrafficTrace (1) 
             
@@ -1071,11 +1361,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             <span
               class="policy-type-tag"
             >
-              <img
-                alt=""
-                class="policy-type-tag-icon"
-                src=""
-              />
+              <span
+                class="kong-icon kong-icon-brain"
+              >
+                <svg
+                  height="24"
+                  role="img"
+                  viewBox="-2 -2 28 28"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  
+  
+                  <path
+                    d="M11 4h2v16h-2z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+
+                  <title>
+                    Brain
+                  </title>
+                </svg>
+                
+
+              </span>
               
               MeshCircuitBreaker (6) 
               
@@ -1108,11 +1456,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             <span
               class="policy-type-tag"
             >
-              <img
-                alt=""
-                class="policy-type-tag-icon"
-                src=""
-              />
+              <span
+                class="kong-icon kong-icon-brain"
+              >
+                <svg
+                  height="24"
+                  role="img"
+                  viewBox="-2 -2 28 28"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  
+  
+                  <path
+                    d="M11 4h2v16h-2z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+
+                  <title>
+                    Brain
+                  </title>
+                </svg>
+                
+
+              </span>
               
               MeshRateLimit (1) 
               
@@ -1145,11 +1551,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             <span
               class="policy-type-tag"
             >
-              <img
-                alt=""
-                class="policy-type-tag-icon"
-                src=""
-              />
+              <span
+                class="kong-icon kong-icon-brain"
+              >
+                <svg
+                  height="24"
+                  role="img"
+                  viewBox="-2 -2 28 28"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  
+  
+                  <path
+                    d="M11 4h2v16h-2z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+
+                  <title>
+                    Brain
+                  </title>
+                </svg>
+                
+
+              </span>
               
               MeshRetry (2) 
               
@@ -1182,11 +1646,69 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             <span
               class="policy-type-tag"
             >
-              <img
-                alt=""
-                class="policy-type-tag-icon"
-                src=""
-              />
+              <span
+                class="kong-icon kong-icon-brain"
+              >
+                <svg
+                  height="24"
+                  role="img"
+                  viewBox="-2 -2 28 28"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  
+  
+                  <path
+                    d="M11 4h2v16h-2z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M6 8h12v2H6zM2 14h20v2H2zM6 20h12v2H6z"
+                    fill="#A3BBCC"
+                  />
+                  
+  
+                  <path
+                    d="M12 4a2 2 0 100-4 2 2 0 000 4z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M0,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M21,14.75a1.5,1.5 0 1,0 3,0a1.5,1.5 0 1,0 -3,0"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+  
+                  <path
+                    d="M5.25 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 10.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM5.25 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.75 22.25a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-width="2"
+                  />
+                  
+
+                  <title>
+                    Brain
+                  </title>
+                </svg>
+                
+
+              </span>
               
               MeshTrace (1) 
               

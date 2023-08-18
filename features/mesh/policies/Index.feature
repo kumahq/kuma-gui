@@ -42,7 +42,7 @@ Feature: mesh / policies / index
         - name: fake-cb-1
         - name: fake-cb-2
       """
-    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    When I visit the "/mesh/default/policies/CircuitBreaker" URL
 
   Scenario: We have a documentation link
     Then the "$button-docs" element exists
@@ -64,7 +64,7 @@ Feature: mesh / policies / index
   Scenario: Clicking the link goes to the detail page and back again
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
     When I click the "$item:nth-child(1) td:first-of-type a" element
-    Then the URL contains "circuit-breakers/fake-cb-1"
+    Then the URL contains "CircuitBreaker/fake-cb-1"
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times

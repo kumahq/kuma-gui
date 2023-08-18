@@ -11,45 +11,45 @@
       v-slot="{data: policies, error: policyError}: PolicyTypeCollectionSource"
       :src="`/*/policy-types`"
     >
+      <LoadingBlock v-if="policies === undefined" />
+
       <ErrorBlock
-        v-if="policyError"
+        v-else-if="policyError"
         :error="policyError"
       />
-      <LoadingBlock v-else-if="policies === undefined" />
+
       <EmptyBlock v-else-if="policies.policies.length === 0" />
 
-      <template
-        v-else
-      >
+      <template v-else>
         <template
-          v-for="selected in [policies.policies.find(item => item.path === route.params.policyPath) ?? policies.policies[0]]"
-          :key="selected.path"
+          v-for="currentPolicyType in [policies.policies.find((item) => item.name === route.params.policyType) ?? policies.policies[0]]"
+          :key="currentPolicyType.name"
         >
           <!--
             Load in all the policies for this type to render the listing
           -->
           <DataSource
             v-slot="{data, error}: PolicyCollectionSource"
-            :src="`/meshes/${route.params.mesh}/policy-path/${selected.path}?page=${props.page}&size=${props.size}`"
+            :src="`/meshes/${route.params.mesh}/policy-path/${currentPolicyType.path}?page=${props.page}&size=${props.size}`"
           >
             <AppView>
               <template #title>
                 <h2>
                   Policies: <RouteTitle
-                    :title="t('policies.routes.items.title', {name: selected.name})"
+                    :title="t('policies.routes.items.title', {name: currentPolicyType.name})"
                     :render="true"
                   />
                 </h2>
               </template>
               <div
                 class="relative"
-                :class="selected.path"
+                :class="currentPolicyType.name"
               >
                 <KCard>
                   <template #body>
                     <div class="stack">
                       <KAlert
-                        v-if="selected.isExperimental"
+                        v-if="currentPolicyType.isExperimental"
                         appearance="warning"
                       >
                         <template #alertMessage>
@@ -73,7 +73,7 @@
                           class="policy-collection"
                           data-testid="policy-collection"
                           :empty-state-title="`No Data`"
-                          :empty-state-message="`There are no ${selected.name} policies present.`"
+                          :empty-state-message="`There are no ${currentPolicyType.name} policies present.`"
                           :headers="[
                             { label: 'Name', key: 'name' },
                             { label: 'Type', key: 'type' },
@@ -91,8 +91,8 @@
                               label="Policies"
                               :items="policies.policies.map(item => ({
                                 label: item.name,
-                                value: item.path,
-                                selected: item.path === route.params.policyPath,
+                                value: item.name,
+                                selected: item.name === route.params.policyType,
                               }))"
                               :label-attributes="{ class: 'visually-hidden' }"
                               appearance="select"
@@ -101,7 +101,7 @@
                                 name: 'policies-list-view',
                                 params: {
                                   ...route.params,
-                                  policyPath: item.value,
+                                  policyType: item.value,
                                 },
                               })"
                             >
@@ -117,7 +117,7 @@
                             </KSelect>
 
                             <DocumentationLink
-                              :href="t('policies.href.docs', { name: selected.name })"
+                              :href="t('policies.href.docs', { name: currentPolicyType.name })"
                               data-testid="policy-documentation-link"
                             />
                           </template>
