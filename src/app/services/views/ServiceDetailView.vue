@@ -91,7 +91,6 @@
                       :error="dataplanesError"
                       :gateways="gateways"
                       @change="({page, size}) => {
-                        // @TODO: Should we remove s: undefined?
                         route.update({
                           page: String(page),
                           size: String(size)
