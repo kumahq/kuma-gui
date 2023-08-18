@@ -26,7 +26,7 @@ export type ExternalServiceSource = DataSourceResponse<ExternalService>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/meshes/:mesh/service-insights': async (params: CollectionParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights': (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
       const { mesh, size } = params
