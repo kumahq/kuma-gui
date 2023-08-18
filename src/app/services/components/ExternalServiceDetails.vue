@@ -56,7 +56,6 @@
       :resource="props.externalService"
       :resource-fetcher="fetchExternalService"
       is-searchable
-      code-max-height="250px"
     />
   </div>
 </template>
