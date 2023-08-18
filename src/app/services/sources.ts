@@ -18,14 +18,15 @@ type PaginationParams = {
 
 type Closeable = { close: () => void }
 
-export type ExternalServiceSource = DataSourceResponse<ExternalService>
 export type ServiceInsightSource = DataSourceResponse<ServiceInsight>
 export type ServiceInsightCollection = CollectionResponse<ServiceInsight>
 export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCollection>
 
+export type ExternalServiceSource = DataSourceResponse<ExternalService>
+
 export const sources = (api: KumaApi) => {
   return {
-    '/meshes/:mesh/service-insights': async (params: CollectionParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights': (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
       const { mesh, size } = params
@@ -34,7 +35,7 @@ export const sources = (api: KumaApi) => {
       return api.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
     },
 
-    '/meshes/:mesh/service-insights/:name': async (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
@@ -42,7 +43,7 @@ export const sources = (api: KumaApi) => {
       return api.getServiceInsight({ mesh, name })
     },
 
-    '/meshes/:mesh/external-services/:name': async (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/external-services/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
