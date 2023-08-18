@@ -117,7 +117,7 @@
                             </KSelect>
 
                             <DocumentationLink
-                              :href="t('policies.href.docs', { name: selected.name.toLowerCase() })"
+                              :href="t('policies.href.docs', { name: selected.name })"
                               data-testid="policy-documentation-link"
                             />
                           </template>
