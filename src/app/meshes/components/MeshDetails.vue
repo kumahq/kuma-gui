@@ -2,95 +2,156 @@
   <div class="stack">
     <KCard>
       <template #body>
-        <MeshCharts :mesh-insight="meshInsight" />
-      </template>
-    </KCard>
-
-    <KCard>
-      <template #body>
-        <div class="columns">
-          <DefinitionList>
-            <DefinitionListItem
-              v-for="(value, property) in basicMesh"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              <KBadge
-                v-if="typeof value === 'boolean'"
-                :appearance="value ? 'success' : 'danger'"
-              >
-                {{ value ? 'Enabled' : 'Disabled' }}
-              </KBadge>
-
-              <template v-else-if="property === 'name' && typeof value === 'string'">
-                <TextWithCopyButton :text="value" />
+        <div class="stack">
+          <div
+            class="columns"
+            style="--columns: 4"
+          >
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.name') }}
               </template>
 
-              <template v-else>
-                {{ value }}
-              </template>
-            </DefinitionListItem>
-          </DefinitionList>
-
-          <DefinitionList>
-            <DefinitionListItem
-              v-for="(value, property) in extendedMesh"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              <KBadge
-                v-if="value === ''"
-                appearance="danger"
-              >
-                Disabled
-              </KBadge>
-
-              <template v-else>
-                {{ value }}
-              </template>
-            </DefinitionListItem>
-
-            <DefinitionListItem :term="t('http.api.property.localityAwareLoadBalancing')">
-              <KBadge :appearance="hasLocalityAwareLoadBalancing ? 'success' : 'danger'">
-                {{ hasLocalityAwareLoadBalancing ? 'Enabled' : 'Disabled' }}
-              </KBadge>
-            </DefinitionListItem>
-          </DefinitionList>
-
-          <DefinitionList>
-            <DefinitionListItem :term="`Policies (${totalPolicyCount})`">
-              <ul>
-                <li
-                  v-for="(policyType, index) in policyTypes"
-                  :key="index"
-                >
-                  <router-link
+              <template #body>
+                <TextWithCopyButton :text="props.mesh.name">
+                  <RouterLink
                     :to="{
-                      name: 'policies-list-view',
+                      name: 'mesh-detail-view',
                       params: {
-                        policyPath: policyType.path
-                      }
+                        mesh: props.mesh.name,
+                      },
                     }"
                   >
-                    {{ policyType.name }}: {{ policyType.total }}
-                  </router-link>
-                </li>
-              </ul>
-            </DefinitionListItem>
-          </DefinitionList>
+                    {{ props.mesh.name }}
+                  </RouterLink>
+                </TextWithCopyButton>
+              </template>
+            </DefinitionCard>
+
+            <ResourceStatus
+              :total="props.meshInsight.services.total ?? 0"
+              data-testid="services-status"
+            >
+              <template #title>
+                {{ t('meshes.detail.services') }}
+              </template>
+            </ResourceStatus>
+
+            <ResourceStatus
+              :total="props.meshInsight.dataplanesByType.standard.total ?? 0"
+              data-testid="data-plane-proxies-status"
+            >
+              <template #title>
+                {{ t('meshes.detail.data_plane_proxies') }}
+              </template>
+            </ResourceStatus>
+
+            <ResourceStatus
+              :total="totalPolicyCount"
+              data-testid="policies-status"
+            >
+              <template #title>
+                {{ t('meshes.detail.policies') }}
+              </template>
+            </ResourceStatus>
+          </div>
+
+          <div
+            class="columns"
+            style="--columns: 4"
+          >
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.mtls') }}
+              </template>
+
+              <template #body>
+                <KBadge
+                  v-if="mtls === ''"
+                  appearance="neutral"
+                >
+                  {{ t('meshes.detail.disabled') }}
+                </KBadge>
+
+                <template v-else>
+                  {{ mtls }}
+                </template>
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.logging') }}
+              </template>
+
+              <template #body>
+                <KBadge
+                  v-if="logging === ''"
+                  appearance="neutral"
+                >
+                  {{ t('meshes.detail.disabled') }}
+                </KBadge>
+
+                <template v-else>
+                  {{ logging }}
+                </template>
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.metrics') }}
+              </template>
+
+              <template #body>
+                <KBadge
+                  v-if="metrics === ''"
+                  appearance="neutral"
+                >
+                  {{ t('meshes.detail.disabled') }}
+                </KBadge>
+
+                <template v-else>
+                  {{ metrics }}
+                </template>
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.tracing') }}
+              </template>
+
+              <template #body>
+                <KBadge
+                  v-if="tracing === ''"
+                  appearance="neutral"
+                >
+                  {{ t('meshes.detail.disabled') }}
+                </KBadge>
+
+                <template v-else>
+                  {{ tracing }}
+                </template>
+              </template>
+            </DefinitionCard>
+          </div>
         </div>
       </template>
     </KCard>
 
-    <KCard>
-      <template #body>
-        <ResourceCodeBlock
-          id="code-block-mesh"
-          :resource="props.mesh"
-          :resource-fetcher="fetchMesh"
-        />
-      </template>
-    </KCard>
+    <ResourceCodeBlock
+      id="code-block-mesh"
+      :resource="props.mesh"
+      :resource-fetcher="fetchMesh"
+    />
+
+    <div class="date-status-wrapper">
+      <ResourceDateStatus
+        :creation-time="props.mesh.creationTime"
+        :modification-time="props.mesh.modificationTime"
+      />
+    </div>
   </div>
 </template>
 
@@ -99,21 +160,18 @@ import { KBadge, KCard } from '@kong/kongponents'
 import { PropType, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import MeshCharts from '../components/MeshCharts.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
+import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
+import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
-import type { Mesh, MeshInsight } from '@/types/index.d'
+import type { Mesh, MeshBackend, MeshInsight } from '@/types/index.d'
 import { useKumaApi, useI18n } from '@/utilities'
-import { notEmpty } from '@/utilities/notEmpty'
 
-const { t, formatIsoDate } = useI18n()
+const { t } = useI18n()
 const kumaApi = useKumaApi()
 const route = useRoute()
-const store = useStore()
 
 const props = defineProps({
   mesh: {
@@ -127,53 +185,26 @@ const props = defineProps({
   },
 })
 
-const basicMesh = computed(() => {
-  const { name, creationTime, modificationTime } = props.mesh
-  return {
-    name,
-    created: formatIsoDate(creationTime),
-    modified: formatIsoDate(modificationTime),
-    'Data Plane Proxies': props.meshInsight.dataplanes.total,
-  }
-})
-
-const hasLocalityAwareLoadBalancing = computed(() => Boolean(props.mesh.routing?.localityAwareLoadBalancing))
-
-const extendedMesh = computed(() => ({
-  mtls: getBackendData(props.mesh, 'mtls'),
-  logging: getBackendData(props.mesh, 'logging'),
-  metrics: getBackendData(props.mesh, 'metrics'),
-  tracing: getBackendData(props.mesh, 'tracing'),
-}))
+const mtls = computed(() => getBackendTypeAndName(props.mesh.mtls))
+const logging = computed(() => getBackendTypeAndName(props.mesh.logging))
+const metrics = computed(() => getBackendTypeAndName(props.mesh.metrics))
+const tracing = computed(() => getBackendTypeAndName(props.mesh.tracing))
 
 const totalPolicyCount = computed(() => {
   return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
 })
-const policyTypes = computed(() => {
-  return Object.entries(props.meshInsight.policies ?? {})
-    .map(([policyTypeName, stat]) => {
-      const policyType = store.state.policyTypesByName[policyTypeName]
 
-      if (policyType && stat.total !== 0) {
-        return {
-          name: policyType.name,
-          path: policyType.path,
-          total: stat.total,
-        }
-      }
-
-      return null
-    })
-    .filter(notEmpty)
-})
-
-function getBackendData(mesh: Mesh, field: 'mtls' | 'logging' | 'metrics' | 'tracing') {
-  if (mesh[field] === undefined) {
+function getBackendTypeAndName(meshBackend?: MeshBackend): string {
+  if (!meshBackend || !Array.isArray(meshBackend?.backends) || meshBackend.backends.length === 0) {
     return ''
   }
 
-  const enabledBackendName = mesh[field].enabledBackend ?? mesh[field].defaultBackend ?? mesh[field].backends[0].name
-  const enabledBackend = mesh[field].backends.find((backend: any) => backend.name === enabledBackendName)
+  const enabledBackendName = meshBackend.enabledBackend ?? meshBackend.defaultBackend ?? meshBackend.backends[0].name
+  const enabledBackend = meshBackend.backends.find((backend) => backend.name === enabledBackendName)
+
+  if (enabledBackend === undefined) {
+    return ''
+  }
 
   return `${enabledBackend.type} / ${enabledBackend.name}`
 }
@@ -183,3 +214,10 @@ async function fetchMesh(params?: SingleResourceParameters) {
   return await kumaApi.getMesh({ name }, params)
 }
 </script>
+
+<style lang="scss" scoped>
+.date-status-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

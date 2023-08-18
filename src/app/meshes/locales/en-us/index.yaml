@@ -15,3 +15,8 @@ meshes:
       breadcrumbs: Meshes
     overview:
       title: Mesh overview
+  detail:
+    services: 'Services'
+    data_plane_proxies: 'Data Plane Proxies'
+    policies: 'Policies'
+    disabled: 'Disabled'

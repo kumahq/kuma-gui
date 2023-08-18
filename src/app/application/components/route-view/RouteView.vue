@@ -16,7 +16,9 @@
       :env="env"
       :route="{
         update: (params: Record<string, string | undefined>) => {
-          router.replace({
+          // Avoids `router.push` specifically in the case where we try to persist the `page` query parameter in the URL while there isn’t one already. This happens when navigating to a list view through the UI (i.e. without directly using the `page` query parameter). If we use `router.push`, this creates a second history entry after that navigation which makes it near impossible to navigate back through the history because the browser will be stuck in a loop.
+          const method = !Boolean(route.query.page) ? 'replace' : 'push'
+          router[method]({
             name: props.name,
             query: cleanQuery(params, route.query),
           })
