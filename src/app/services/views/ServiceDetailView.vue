@@ -27,17 +27,15 @@
       </template>
 
       <DataSource
-        v-slot="{ data, isLoading, error }: ServiceInsightSource"
+        v-slot="{ data, error }: ServiceInsightSource"
         :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
       >
-        <LoadingBlock v-if="isLoading" />
+        <LoadingBlock v-if="data === undefined" />
 
         <ErrorBlock
           v-else-if="error"
           :error="error"
         />
-
-        <EmptyBlock v-else-if="data === undefined" />
 
         <TabsWidget
           v-else
@@ -46,17 +44,15 @@
           <template #overview>
             <DataSource
               v-if="data.serviceType === 'external'"
-              v-slot="{ data: externalService, isLoading: externalServiceIsLoading, error: externalServiceError }: ExternalServiceSource"
+              v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
               :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
             >
-              <LoadingBlock v-if="externalServiceIsLoading" />
+              <LoadingBlock v-if="externalService === undefined" />
 
               <ErrorBlock
                 v-else-if="externalServiceError"
                 :error="externalServiceError"
               />
-
-              <EmptyBlock v-else-if="externalService === undefined" />
 
               <ExternalServiceDetails
                 v-else
@@ -172,7 +168,6 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
