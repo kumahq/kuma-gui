@@ -4,7 +4,7 @@
       <template #body>
         <div
           class="columns"
-          style="--columns: 4;"
+          style="--columns: 3;"
         >
           <DefinitionCard>
             <template #title>
@@ -35,16 +35,6 @@
 
             <template #body>
               {{ props.externalService.networking.address }}
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.tls') }}
-            </template>
-
-            <template #body>
-              {{ props.externalService.networking.tls?.enabled ? t('services.detail.enabled') : t('services.detail.disabled') }}
             </template>
           </DefinitionCard>
 
