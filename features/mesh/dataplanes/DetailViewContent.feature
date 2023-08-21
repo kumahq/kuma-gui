@@ -20,6 +20,8 @@ Feature: Data Plane Proxies: Detail view content
       | rule-list               | [data-testid='rule-list']                                                       |
       | rule-list-item          | $rule-list .accordion-item:nth-child(1) [data-testid='accordion-item-button']   |
       | rule-list-item-button   | $rule-list-item [data-testid='accordion-item-button']                           |
+      | clusters-tab            | #envoy-clusters-tab                                                             |
+      | clusters-content        | #panel-5                                                                        |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
@@ -115,3 +117,15 @@ Feature: Data Plane Proxies: Detail view content
 
     When I click the "$rule-list-item" element
     Then the "$policies-content" element contains "kuma.io/service:demo-app_kuma-demo_svc_5000"
+
+  Scenario: Envoy data
+    Given the URL "/meshes/default/dataplanes/dpp-1/clusters" responds with
+      """
+      body:
+        access_log_sink::observability_name::access_log_sink
+        access_log_sink::default_priority::max_connections::1024
+        access_log_sink::default_priority::max_pending_requests::1024
+        access_log_sink::default_priority::max_requests::1024
+      """
+    When I click the "$clusters-tab" element
+    Then the "$clusters-content" element contains "access_log_sink::observability_name::access_log_sink"

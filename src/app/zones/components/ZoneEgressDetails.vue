@@ -76,11 +76,26 @@
     <template #xds-configuration>
       <KCard>
         <template #body>
-          <EnvoyData
-            data-path="xds"
-            :zone-egress-name="props.zoneEgressOverview.name"
-            query-key="envoy-data-zone-egress"
-          />
+          <DataSource
+            v-slot="{ data, error, refresh }: EnvoyDataSource"
+            :src="`/zone-egresses/${props.zoneEgressOverview.name}/data-path/xds`"
+          >
+            <ErrorBlock
+              v-if="error"
+              :error="error"
+            />
+
+            <LoadingBlock v-else-if="data === undefined" />
+
+            <EmptyBlock v-else-if="data === ''" />
+
+            <EnvoyData
+              v-else
+              :content="data"
+              query-key="envoy-data-xds-zone-egress"
+              @refresh="refresh"
+            />
+          </DataSource>
         </template>
       </KCard>
     </template>
@@ -88,11 +103,26 @@
     <template #envoy-stats>
       <KCard>
         <template #body>
-          <EnvoyData
-            data-path="stats"
-            :zone-egress-name="props.zoneEgressOverview.name"
-            query-key="envoy-data-zone-egress"
-          />
+          <DataSource
+            v-slot="{ data, error, refresh }: EnvoyDataSource"
+            :src="`/zone-egresses/${props.zoneEgressOverview.name}/data-path/stats`"
+          >
+            <ErrorBlock
+              v-if="error"
+              :error="error"
+            />
+
+            <LoadingBlock v-else-if="data === undefined" />
+
+            <EmptyBlock v-else-if="data === ''" />
+
+            <EnvoyData
+              v-else
+              :content="data"
+              query-key="envoy-data-stats-zone-egress"
+              @refresh="refresh"
+            />
+          </DataSource>
         </template>
       </KCard>
     </template>
@@ -100,11 +130,26 @@
     <template #envoy-clusters>
       <KCard>
         <template #body>
-          <EnvoyData
-            data-path="clusters"
-            :zone-egress-name="props.zoneEgressOverview.name"
-            query-key="envoy-data-zone-egress"
-          />
+          <DataSource
+            v-slot="{ data, error, refresh }: EnvoyDataSource"
+            :src="`/zone-egresses/${props.zoneEgressOverview.name}/data-path/clusters`"
+          >
+            <ErrorBlock
+              v-if="error"
+              :error="error"
+            />
+
+            <LoadingBlock v-else-if="data === undefined" />
+
+            <EmptyBlock v-else-if="data === ''" />
+
+            <EnvoyData
+              v-else
+              :content="data"
+              query-key="envoy-data-clusters-zone-egress"
+              @refresh="refresh"
+            />
+          </DataSource>
         </template>
       </KCard>
     </template>
@@ -115,10 +160,15 @@
 import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import { EnvoyDataSource } from '../sources'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'

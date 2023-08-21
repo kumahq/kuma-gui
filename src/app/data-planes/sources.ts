@@ -12,6 +12,10 @@ type DetailParams = CollectionParams & {
   name: string
 }
 
+type EnvoyDataParams = DetailParams & {
+  dataPath: 'xds' | 'clusters' | 'stats'
+}
+
 type PaginationParams = {
   size: number
   page: number
@@ -32,6 +36,8 @@ export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
 export type DataPlaneCollection = CollectionResponse<DataplaneOverview>
 export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
 
+export type EnvoyDataSource = DataSourceResponse<object | string>
+
 export const sources = (api: KumaApi) => {
   return {
     '/meshes/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
@@ -48,6 +54,14 @@ export const sources = (api: KumaApi) => {
         offset,
         size,
       })
+    },
+
+    '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, name, dataPath } = params
+
+      return api.getDataplaneData({ mesh, dppName: name, dataPath })
     },
 
     '/meshes/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {
