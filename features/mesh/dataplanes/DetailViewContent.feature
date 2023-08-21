@@ -1,17 +1,25 @@
 Feature: Data Plane Proxies: Detail view content
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                                  |
-      | detail-view      | [data-testid='data-plane-detail-view']                    |
-      | warnings         | [data-testid='data-plane-warnings']                       |
-      | overview-tab     | #overview-tab                                             |
-      | overview-content | #panel-0                                                  |
-      | insights-tab     | #insights-tab                                             |
-      | insights-content | #panel-1                                                  |
-      | status-cds       | $insights-content [data-testid='subscription-status-cds'] |
-      | status-eds       | $insights-content [data-testid='subscription-status-eds'] |
-      | status-lds       | $insights-content [data-testid='subscription-status-lds'] |
-      | status-rds       | $insights-content [data-testid='subscription-status-rds'] |
+      | Alias                   | Selector                                                                        |
+      | detail-view             | [data-testid='data-plane-detail-view']                                          |
+      | warnings                | [data-testid='data-plane-warnings']                                             |
+      | overview-tab            | #overview-tab                                                                   |
+      | overview-content        | #panel-0                                                                        |
+      | insights-tab            | #insights-tab                                                                   |
+      | insights-content        | #panel-1                                                                        |
+      | status-cds              | $insights-content [data-testid='subscription-status-cds']                       |
+      | status-eds              | $insights-content [data-testid='subscription-status-eds']                       |
+      | status-lds              | $insights-content [data-testid='subscription-status-lds']                       |
+      | status-rds              | $insights-content [data-testid='subscription-status-rds']                       |
+      | policies-tab            | #dpp-policies-tab                                                               |
+      | policies-content        | #panel-2                                                                        |
+      | policy-list             | [data-testid='policy-list']                                                     |
+      | policy-list-item        | $policy-list .accordion-item:nth-child(1) [data-testid='accordion-item-button'] |
+      | policy-list-item-button | $policy-list-item [data-testid='accordion-item-button']                         |
+      | rule-list               | [data-testid='rule-list']                                                       |
+      | rule-list-item          | $rule-list .accordion-item:nth-child(1) [data-testid='accordion-item-button']   |
+      | rule-list-item-button   | $rule-list-item [data-testid='accordion-item-button']                           |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
@@ -99,3 +107,11 @@ Feature: Data Plane Proxies: Detail view content
 
     And the "$status-rds" element contains "RDS"
     And the "$status-rds" element contains "0"
+
+  Scenario: Policies tab
+    When I click the "$policies-tab" element
+    And I click the "$policy-list-item" element
+    Then the "$policies-content" element contains "kuma.io/service:service-a"
+
+    When I click the "$rule-list-item" element
+    Then the "$policies-content" element contains "kuma.io/service:demo-app_kuma-demo_svc_5000"
