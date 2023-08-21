@@ -37,10 +37,14 @@ async function renderComponent(props = {}) {
         {
           name: 'CircuitBreaker',
           path: 'circuit-breakers',
+          readOnly: false,
+          isExperimental: false,
         },
         {
           name: 'FaultInjection',
           path: 'fault-injections',
+          readOnly: false,
+          isExperimental: false,
         },
       ],
       ...props,
