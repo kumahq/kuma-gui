@@ -136,12 +136,12 @@
             v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
             :src="`/*/policy-types`"
           >
-            <LoadingBlock v-if="policyTypesData === undefined" />
-
             <ErrorBlock
-              v-else-if="policyTypesError"
+              v-if="policyTypesError"
               :error="policyTypesError"
             />
+
+            <LoadingBlock v-else-if="policyTypesData === undefined" />
 
             <EmptyBlock v-else-if="policyTypesData.policies.length === 0" />
 
