@@ -184,6 +184,8 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
   const policyRoutes: MeshGatewayRoutePolicy[] = []
 
   for (const policy of Object.values(policies)) {
+    const policyType = policyTypesByName.value[policy.type] as PolicyType
+
     policyRoutes.push({
       type: policy.type,
       name: policy.name,
@@ -191,7 +193,7 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
         name: 'policy-detail-view',
         params: {
           mesh: policy.mesh,
-          policyPath: policyTypesByName.value[policy.type]?.path,
+          policyPath: policyType.path,
           policy: policy.name,
         },
       },
@@ -224,9 +226,10 @@ function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyType
       }
 
       const policyTypeEntry = policyTypeEntriesByType.get(policyTypeName) as PolicyTypeEntry
+      const policyType = policyTypesByName.value[policyTypeName] as PolicyType
 
       for (const policy of policies) {
-        const connections = getPolicyTypeEntryConnections(policy, sidecarDataplane, destinationTags, name)
+        const connections = getPolicyTypeEntryConnections(policy, policyType, sidecarDataplane, destinationTags, name)
 
         policyTypeEntry.connections.push(...connections)
       }
@@ -240,7 +243,7 @@ function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyType
   return policyTypeEntries
 }
 
-function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
+function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: PolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
   const config = policy.conf && Object.keys(policy.conf).length > 0 ? toYaml(policy.conf) : null
   const origin: PolicyTypeEntryOrigin = {
     name: policy.name,
@@ -248,7 +251,7 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDatapla
       name: 'policy-detail-view',
       params: {
         mesh: policy.mesh,
-        policyPath: policyTypesByName.value[policy.type]?.path,
+        policyPath: policyType.path,
         policy: policy.name,
       },
     },
@@ -290,7 +293,8 @@ function getRuleEntries(rules: DataplaneRule[]): RuleEntry[] {
     }
 
     const policyTypeEntry = policyTypeEntriesByType.get(rule.policyType) as RuleEntry
-    const connections = getRuleEntryConnections(rule)
+    const policyType = policyTypesByName.value[rule.policyType] as PolicyType
+    const connections = getRuleEntryConnections(rule, policyType)
 
     policyTypeEntry.connections.push(...connections)
   }
@@ -302,7 +306,7 @@ function getRuleEntries(rules: DataplaneRule[]): RuleEntry[] {
   return policyTypeEntries
 }
 
-function getRuleEntryConnections(rule: DataplaneRule): RuleEntryConnection[] {
+function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): RuleEntryConnection[] {
   const { type, service, subset, conf } = rule
 
   // Guards against likely API changes. The response currently contains `"subset": {}` instead of omitting the value or setting it to `null`, but that might change in the future.
@@ -374,7 +378,7 @@ function getRuleEntryConnections(rule: DataplaneRule): RuleEntryConnection[] {
         name: 'policy-detail-view',
         params: {
           mesh: ruleOrigin.mesh,
-          policyPath: policyTypesByName.value[rule.policyType]?.path,
+          policyPath: policyType.path,
           policy: ruleOrigin.name,
         },
       },
