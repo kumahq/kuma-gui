@@ -32,14 +32,13 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from 'vue'
+import { PropType, computed, ref, watch } from 'vue'
 
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
 import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useStore } from '@/store/store'
 import {
   DataPlaneOverview,
   DataplaneRule,
@@ -48,8 +47,8 @@ import {
   MeshGatewayListenerEntry,
   MeshGatewayRouteEntry,
   MeshGatewayRoutePolicy,
-  PolicyType,
   MatchedPolicyType,
+  PolicyType,
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
   PolicyTypeEntryOrigin,
@@ -61,11 +60,15 @@ import { useKumaApi } from '@/utilities'
 import { toYaml } from '@/utilities/toYaml'
 
 const kumaApi = useKumaApi()
-const store = useStore()
 
 const props = defineProps({
   dataplaneOverview: {
     type: Object as PropType<DataPlaneOverview>,
+    required: true,
+  },
+
+  policyTypes: {
+    type: Array as PropType<PolicyType[]>,
     required: true,
   },
 })
@@ -77,6 +80,8 @@ const meshGatewayListenerEntries = ref<MeshGatewayListenerEntry[]>([])
 const meshGatewayRoutePolicies = ref<MeshGatewayRoutePolicy[]>([])
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
+
+const policyTypesByName = computed<Record<string, PolicyType | undefined>>(() => props.policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {}))
 
 watch(() => props.dataplaneOverview.name, function () {
   fetchPolicies()
@@ -179,7 +184,7 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
   const policyRoutes: MeshGatewayRoutePolicy[] = []
 
   for (const policy of Object.values(policies)) {
-    const policyType = store.state.policyTypesByName[policy.type] as PolicyType
+    const policyType = policyTypesByName.value[policy.type] as PolicyType
 
     policyRoutes.push({
       type: policy.type,
@@ -221,7 +226,7 @@ function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyType
       }
 
       const policyTypeEntry = policyTypeEntriesByType.get(policyTypeName) as PolicyTypeEntry
-      const policyType = store.state.policyTypesByName[policyTypeName] as PolicyType
+      const policyType = policyTypesByName.value[policyTypeName] as PolicyType
 
       for (const policy of policies) {
         const connections = getPolicyTypeEntryConnections(policy, policyType, sidecarDataplane, destinationTags, name)
@@ -288,7 +293,7 @@ function getRuleEntries(rules: DataplaneRule[]): RuleEntry[] {
     }
 
     const policyTypeEntry = policyTypeEntriesByType.get(rule.policyType) as RuleEntry
-    const policyType = store.state.policyTypesByName[rule.policyType] as PolicyType
+    const policyType = policyTypesByName.value[rule.policyType] as PolicyType
     const connections = getRuleEntryConnections(rule, policyType)
 
     policyTypeEntry.connections.push(...connections)

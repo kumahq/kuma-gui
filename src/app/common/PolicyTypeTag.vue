@@ -1,9 +1,9 @@
 <template>
   <span class="policy-type-tag">
     <img
-      v-if="policy.iconUrl !== null"
+      v-if="POLICY_ICON[props.policyType]"
       class="policy-type-tag-icon"
-      :src="policy.iconUrl"
+      :src="POLICY_ICON[props.policyType]"
       alt=""
     >
 
@@ -21,7 +21,6 @@
 
 <script lang="ts" setup>
 import { KIcon } from '@kong/kongponents'
-import { computed } from 'vue'
 
 import CircuitBreakerIconUrl from '@/assets/images/policies/CircuitBreaker.png'
 import FaultInjectionIconUrl from '@/assets/images/policies/FaultInjection.png'
@@ -35,36 +34,30 @@ import TrafficPermissionIconUrl from '@/assets/images/policies/TrafficPermission
 import TrafficRouteIconUrl from '@/assets/images/policies/TrafficRoute.png'
 import TrafficTraceIconUrl from '@/assets/images/policies/TrafficTrace.png'
 import VirtualOutboundIconUrl from '@/assets/images/policies/VirtualOutbound.png'
-import { useStore } from '@/store/store'
 
-const store = useStore()
-
-type PolicyTagDefinition = { iconUrl: string | null }
-
-const POLICIES: Record<string, PolicyTagDefinition> = {
-  CircuitBreaker: { iconUrl: CircuitBreakerIconUrl },
-  FaultInjection: { iconUrl: FaultInjectionIconUrl },
-  HealthCheck: { iconUrl: HealthCheckIconUrl },
-  MeshAccessLog: { iconUrl: TrafficLogIconUrl }, // TODO: Update with new icon when/if available.
-  MeshCircuitBreaker: { iconUrl: CircuitBreakerIconUrl }, // TODO: Update with new icon when/if available.
-  MeshGateway: { iconUrl: null }, // TODO: Update with new icon when/if available.
-  MeshGatewayRoute: { iconUrl: null }, // TODO: Update with new icon when/if available.
-  MeshHealthCheck: { iconUrl: HealthCheckIconUrl }, // TODO: Update with new icon when/if available.
-  MeshProxyPatch: { iconUrl: ProxyTemplateIconUrl }, // TODO: Update with new icon when/if available.
-  MeshRateLimit: { iconUrl: RateLimitIconUrl }, // TODO: Update with new icon when/if available.
-  MeshRetry: { iconUrl: RetryIconUrl }, // TODO: Update with new icon when/if available.
-  MeshTimeout: { iconUrl: TimeoutIconUrl }, // TODO: Update with new icon when/if available.
-  MeshTrace: { iconUrl: TrafficTraceIconUrl }, // TODO: Update with new icon when/if available.
-  MeshTrafficPermission: { iconUrl: TrafficPermissionIconUrl }, // TODO: Update with new icon when/if available.
-  ProxyTemplate: { iconUrl: ProxyTemplateIconUrl },
-  RateLimit: { iconUrl: RateLimitIconUrl },
-  Retry: { iconUrl: RetryIconUrl },
-  Timeout: { iconUrl: TimeoutIconUrl },
-  TrafficLog: { iconUrl: TrafficLogIconUrl },
-  TrafficPermission: { iconUrl: TrafficPermissionIconUrl },
-  TrafficRoute: { iconUrl: TrafficRouteIconUrl },
-  TrafficTrace: { iconUrl: TrafficTraceIconUrl },
-  VirtualOutbound: { iconUrl: VirtualOutboundIconUrl },
+const POLICY_ICON: Record<string, string> = {
+  CircuitBreaker: CircuitBreakerIconUrl,
+  FaultInjection: FaultInjectionIconUrl,
+  HealthCheck: HealthCheckIconUrl,
+  MeshAccessLog: TrafficLogIconUrl, // TODO: Update with new icon when/if available.
+  MeshCircuitBreaker: CircuitBreakerIconUrl,
+  MeshFaultInjection: FaultInjectionIconUrl,
+  MeshHealthCheck: HealthCheckIconUrl, // TODO: Update with new icon when/if available.
+  MeshProxyPatch: ProxyTemplateIconUrl, // TODO: Update with new icon when/if available.
+  MeshRateLimit: RateLimitIconUrl,
+  MeshRetry: RetryIconUrl,
+  MeshTimeout: TimeoutIconUrl,
+  MeshTrace: TrafficTraceIconUrl,
+  MeshTrafficPermission: TrafficPermissionIconUrl,
+  ProxyTemplate: ProxyTemplateIconUrl,
+  RateLimit: RateLimitIconUrl,
+  Retry: RetryIconUrl,
+  Timeout: TimeoutIconUrl,
+  TrafficLog: TrafficLogIconUrl,
+  TrafficPermission: TrafficPermissionIconUrl,
+  TrafficRoute: TrafficRouteIconUrl,
+  TrafficTrace: TrafficTraceIconUrl,
+  VirtualOutbound: VirtualOutboundIconUrl,
 }
 
 const props = defineProps({
@@ -73,18 +66,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-const policyTagDefinitions = computed<Record<string, PolicyTagDefinition>>(() => {
-  const policyTagDefinitionEntries: [string, PolicyTagDefinition][] = store.state.policyTypes.map((policyType) => {
-    const policyTagDefinition = POLICIES[policyType.name] ?? { iconUrl: null }
-
-    return [policyType.name, policyTagDefinition]
-  })
-
-  return Object.fromEntries(policyTagDefinitionEntries)
-})
-
-const policy = computed(() => policyTagDefinitions.value[props.policyType])
 </script>
 
 <style lang="scss" scoped>

@@ -6,6 +6,7 @@
   <PolicyTypeEntryList
     id="policies"
     :policy-type-entries="props.policyTypeEntries"
+    data-testid="policy-list"
   />
 
   <div
@@ -19,6 +20,7 @@
     <RuleEntryList
       id="rules"
       :rule-entries="props.ruleEntries"
+      data-testid="rule-list"
     />
   </div>
 </template>

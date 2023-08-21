@@ -232,10 +232,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
   [$.policyRoutes, {
     service: policyRoutes,
-    arguments: [
-      $.store,
-      $.Env,
-    ],
   }],
 
   [$.zoneRoutes, {

@@ -31,9 +31,6 @@ export function useBootstrap(store: Store<State>) {
         // application. This is mainly needed to properly redirect users to the
         // onboarding flow in the appropriate scenarios.
         store.dispatch('bootstrap'),
-        // Loads available policy types in order to populate the necessary
-        // information used for and policy lookups in the app.
-        store.dispatch('fetchPolicyTypes'),
       ])
     } else {
       store.state.defaultVisibility.appError = false

@@ -3,14 +3,10 @@ import { flushPromises, mount } from '@vue/test-utils'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
 import { createPolicyTypeEntries } from '@/test-data/createPolicyTypeEntries'
-import { useStore } from '@/utilities'
 
-const store = useStore()
 const policyTypeEntries = createPolicyTypeEntries()
 
-async function renderComponent(props = {}) {
-  await store.dispatch('fetchPolicyTypes')
-
+function renderComponent(props = {}) {
   return mount(PolicyTypeEntryList, {
     props: {
       policyTypeEntries,
@@ -21,7 +17,7 @@ async function renderComponent(props = {}) {
 
 describe('PolicyTypeEntryList', () => {
   test('works', async () => {
-    const wrapper = await renderComponent()
+    const wrapper = renderComponent()
 
     const expectedStrings = ['MeshAccessLog', 'MeshTrace', 'MeshTrafficPermission']
 
