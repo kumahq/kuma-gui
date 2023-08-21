@@ -12,7 +12,7 @@ async function renderComponent() {
     name: 'policy-detail-view',
     params: {
       mesh: 'default',
-      policyType: 'CircuitBreaker',
+      policyPath: 'circuit-breakers',
       policy: 'foo',
     },
   })

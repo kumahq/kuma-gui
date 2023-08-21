@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from 'vue'
+import { PropType, computed, ref, watch } from 'vue'
 
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
 import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
@@ -48,6 +48,7 @@ import {
   MeshGatewayRouteEntry,
   MeshGatewayRoutePolicy,
   MatchedPolicyType,
+  PolicyType,
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
   PolicyTypeEntryOrigin,
@@ -65,6 +66,11 @@ const props = defineProps({
     type: Object as PropType<DataPlaneOverview>,
     required: true,
   },
+
+  policyTypes: {
+    type: Array as PropType<PolicyType[]>,
+    required: true,
+  },
 })
 
 const meshGatewayDataplane = ref<MeshGatewayDataplane | null>(null)
@@ -74,6 +80,8 @@ const meshGatewayListenerEntries = ref<MeshGatewayListenerEntry[]>([])
 const meshGatewayRoutePolicies = ref<MeshGatewayRoutePolicy[]>([])
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
+
+const policyTypesByName = computed<Record<string, PolicyType | undefined>>(() => props.policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {}))
 
 watch(() => props.dataplaneOverview.name, function () {
   fetchPolicies()
@@ -144,7 +152,7 @@ function getMeshGatewayListenerEntries(meshGatewayDataplane: MeshGatewayDataplan
               name: 'policy-detail-view',
               params: {
                 mesh: meshGatewayDataplane.gateway.mesh,
-                policyType: 'MeshGatewayRoute',
+                policyPath: 'meshgatewayroutes',
                 policy: route.route,
               },
             },
@@ -183,7 +191,7 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
         name: 'policy-detail-view',
         params: {
           mesh: policy.mesh,
-          policyType: policy.type,
+          policyPath: policyTypesByName.value[policy.type]?.path,
           policy: policy.name,
         },
       },
@@ -240,7 +248,7 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDatapla
       name: 'policy-detail-view',
       params: {
         mesh: policy.mesh,
-        policyType: policy.type,
+        policyPath: policyTypesByName.value[policy.type]?.path,
         policy: policy.name,
       },
     },
@@ -366,7 +374,7 @@ function getRuleEntryConnections(rule: DataplaneRule): RuleEntryConnection[] {
         name: 'policy-detail-view',
         params: {
           mesh: ruleOrigin.mesh,
-          policyType: rule.policyType,
+          policyPath: policyTypesByName.value[rule.policyType]?.path,
           policy: ruleOrigin.name,
         },
       },

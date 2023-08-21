@@ -11,7 +11,7 @@
             name: 'policies-list-view',
             params: {
               mesh: route.params.mesh,
-              policyType: route.params.policyType,
+              policyPath: route.params.policyPath,
             },
           },
           text: t('policies.routes.item.breadcrumbs')
@@ -23,7 +23,7 @@
           <RouteTitle
             :title="t('policies.routes.item.title', {
               name: route.params.policy,
-              type: route.params.policyType,
+              type: route.params.policyPath,
             })"
             :render="true"
           />
@@ -45,7 +45,7 @@
 
         <template v-else>
           <template
-            v-for="currentPolicyType in [policiesData.policies.find((item) => item.name === route.params.policyType) ?? policiesData.policies[0]]"
+            v-for="currentPolicyType in [policiesData.policies.find((item) => item.path === route.params.policyPath) ?? policiesData.policies[0]]"
             :key="currentPolicyType.name"
           >
             <DataSource

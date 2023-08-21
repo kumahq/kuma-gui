@@ -22,7 +22,7 @@
 
       <template v-else>
         <template
-          v-for="currentPolicyType in [policies.policies.find((item) => item.name === route.params.policyType) ?? policies.policies[0]]"
+          v-for="currentPolicyType in [policies.policies.find((item) => item.path === route.params.policyPath) ?? policies.policies[0]]"
           :key="currentPolicyType.name"
         >
           <!--
@@ -91,8 +91,8 @@
                               label="Policies"
                               :items="policies.policies.map(item => ({
                                 label: item.name,
-                                value: item.name,
-                                selected: item.name === route.params.policyType,
+                                value: item.path,
+                                selected: item.path === route.params.policyPath,
                               }))"
                               :label-attributes="{ class: 'visually-hidden' }"
                               appearance="select"
@@ -101,7 +101,7 @@
                                 name: 'policies-list-view',
                                 params: {
                                   ...route.params,
-                                  policyType: item.value,
+                                  policyPath: item.value,
                                 },
                               })"
                             >

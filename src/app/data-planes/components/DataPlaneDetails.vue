@@ -132,7 +132,25 @@
     <template #dpp-policies>
       <KCard>
         <template #body>
-          <DataplanePolicies :dataplane-overview="dataplaneOverview" />
+          <DataSource
+            v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
+            :src="`/*/policy-types`"
+          >
+            <LoadingBlock v-if="policyTypesData === undefined" />
+
+            <ErrorBlock
+              v-else-if="policyTypesError"
+              :error="policyTypesError"
+            />
+
+            <EmptyBlock v-else-if="policyTypesData.policies.length === 0" />
+
+            <DataplanePolicies
+              v-else
+              :dataplane-overview="dataplaneOverview"
+              :policy-types="policyTypesData.policies"
+            />
+          </DataSource>
         </template>
       </KCard>
     </template>
@@ -215,12 +233,16 @@ import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import DataplanePolicies from './DataplanePolicies.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import DefinitionList from '@/app/common/DefinitionList.vue'
 import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
@@ -230,6 +252,7 @@ import TabsWidget from '@/app/common/TabsWidget.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
+import { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'

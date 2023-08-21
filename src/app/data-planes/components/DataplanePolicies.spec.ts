@@ -33,6 +33,16 @@ async function renderComponent(props = {}) {
   return mount(DataplanePolicies, {
     props: {
       dataplaneOverview,
+      policyTypes: [
+        {
+          name: 'CircuitBreaker',
+          path: 'circuit-breakers',
+        },
+        {
+          name: 'FaultInjection',
+          path: 'fault-injections',
+        },
+      ],
       ...props,
     },
   })

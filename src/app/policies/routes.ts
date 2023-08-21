@@ -14,7 +14,7 @@ export const routes = () => {
         redirect: () => ({ name: 'policies' }),
         children: [
           {
-            path: `${prefix === 'policy' ? ':policyType/' : ''}:policy`,
+            path: `${prefix === 'policy' ? ':policyPath/' : ''}:policy`,
             name: `${prefix}-detail-view`,
             component: () => import('@/app/policies/views/PolicyDetailView.vue'),
           },
@@ -42,18 +42,17 @@ export const routes = () => {
                   ...to,
                   params: {
                     ...to.params,
-                    policyType: 'CircuitBreaker',
+                    policyPath: 'circuit-breakers',
                   },
                   name: 'policies-list-view',
                 }
               },
               children: [
                 {
-                  path: ':policyType',
+                  path: ':policyPath',
                   name: `${prefix}-list-view`,
                   component: () => import('@/app/policies/views/PolicyListView.vue'),
                   props: (route) => ({
-                    policyType: route.params.policyType,
                     page: getLastNumberParameter(route.query.page, 1),
                     size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
                   }),
