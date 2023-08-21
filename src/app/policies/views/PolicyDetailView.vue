@@ -4,50 +4,50 @@
     name="policy-detail-view"
     data-testid="policy-detail-view"
   >
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'policies-list-view',
-            params: {
-              mesh: route.params.mesh,
-              policyPath: route.params.policyPath,
-            },
-          },
-          text: t('policies.routes.item.breadcrumbs')
-        },
-      ]"
+    <DataSource
+      v-slot="{ data: policiesData, isLoading: policiesIsLoading, error: policiesError }: PolicyTypeCollectionSource"
+      :src="`/*/policy-types`"
     >
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('policies.routes.item.title', {
-              name: route.params.policy,
-              type: route.params.policyPath,
-            })"
-            :render="true"
-          />
-        </h2>
-      </template>
+      <LoadingBlock v-if="policiesIsLoading" />
 
-      <DataSource
-        v-slot="{ data: policiesData, isLoading: policiesIsLoading, error: policiesError }: PolicyTypeCollectionSource"
-        :src="`/*/policy-types`"
-      >
-        <LoadingBlock v-if="policiesIsLoading" />
+      <ErrorBlock
+        v-else-if="policiesError"
+        :error="policiesError"
+      />
 
-        <ErrorBlock
-          v-else-if="policiesError"
-          :error="policiesError"
-        />
+      <EmptyBlock v-else-if="policiesData === undefined || policiesData.policies.length === 0" />
 
-        <EmptyBlock v-else-if="policiesData === undefined || policiesData.policies.length === 0" />
-
-        <template v-else>
-          <template
-            v-for="currentPolicyType in [policiesData.policies.find((item) => item.path === route.params.policyPath) ?? policiesData.policies[0]]"
-            :key="currentPolicyType.name"
+      <template v-else>
+        <template
+          v-for="currentPolicyType in [policiesData.policies.find((item) => item.path === route.params.policyPath) ?? policiesData.policies[0]]"
+          :key="currentPolicyType.name"
+        >
+          <AppView
+            :breadcrumbs="[
+              {
+                to: {
+                  name: 'policies-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                    policyPath: route.params.policyPath,
+                  },
+                },
+                text: t('policies.routes.item.breadcrumbs')
+              },
+            ]"
           >
+            <template #title>
+              <h2>
+                <RouteTitle
+                  :title="t('policies.routes.item.title', {
+                    name: route.params.policy,
+                    type: currentPolicyType.name,
+                  })"
+                  :render="true"
+                />
+              </h2>
+            </template>
+
             <DataSource
               v-slot="{ data, isLoading, error }: PolicySource"
               :src="`/meshes/${route.params.mesh}/policy-path/${currentPolicyType.path}/policy/${route.params.policy}`"
@@ -68,10 +68,10 @@
                 data-testid="detail-view-details"
               />
             </DataSource>
-          </template>
+          </AppView>
         </template>
-      </DataSource>
-    </AppView>
+      </template>
+    </DataSource>
   </RouteView>
 </template>
 
