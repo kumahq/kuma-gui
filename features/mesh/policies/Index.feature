@@ -2,6 +2,7 @@ Feature: mesh / policies / index
   Background:
     Given the CSS selectors
       | Alias               | Selector                                  |
+      | policy-type-list    | [data-testid='policy-type-list']          |
       | items               | [data-testid='policy-collection']         |
       | items-header        | $items th                                 |
       | item                | $items tbody tr                           |
@@ -23,7 +24,7 @@ Feature: mesh / policies / index
             - total: 2
           FaultInjection: ~
           HealthChecks: ~
-          MeshGatewayRoute',
+          MeshGatewayRoute: ~
           MeshGateway: ~
           ProxyTemplate: ~
           RateLimit: ~
@@ -53,6 +54,7 @@ Feature: mesh / policies / index
       | Value |
       | Name  |
       | Type  |
+
   Scenario: The items have the expected content and UI elements
     Then the "$button-tab-selected" element exists
     Then the "$item" element exists 2 times
@@ -68,3 +70,8 @@ Feature: mesh / policies / index
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times
+
+  Scenario: Clicking policy types in the sidebar switching listing
+    Then the "$item:nth-child(1)" element contains "CircuitBreaker"
+    When I click the "[data-testid='policy-type-link-FaultInjection']" element
+    Then the "$item:nth-child(1)" element contains "FaultInjection"

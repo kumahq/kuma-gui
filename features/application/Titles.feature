@@ -38,5 +38,5 @@ Feature: The HTML title is correct on each page
       | /mesh/default/data-planes                | Data Plane Proxies |
       | /mesh/default/data-plane/data-plane-name | Data Plane Proxy   |
 
-      | /mesh/default/policies/circuit-breakers         | CircuitBreaker           |
+      | /mesh/default/policies/circuit-breakers         | Policies                 |
       | /mesh/default/policy/circuit-breakers/program-0 | program-0 CircuitBreaker |

@@ -8,6 +8,7 @@ common:
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
   copyKubernetesShortText: 'as k8s'
+  documentation: 'Documentation'
   emptyState:
     title: 'No data'
     message: 'There are no {type} present.'

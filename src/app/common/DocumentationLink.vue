@@ -8,14 +8,18 @@
       icon="book"
       color="currentColor"
       size="16"
-      hide-title
+      :title="t('common.documentation')"
     />
 
-    <span class="visually-hidden">Documentation</span>
+    <span class="visually-hidden">{{ t('common.documentation') }}</span>
   </a>
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
+
 const props = defineProps({
   href: {
     type: String,
