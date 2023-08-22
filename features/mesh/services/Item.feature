@@ -10,17 +10,23 @@ Feature: mesh / services / item
       | button-actions         | $item:nth-child(1) .actions-column .dropdown-trigger button                       |
       | button-view            | $item:nth-child(1) .actions-column [data-testid="k-dropdown-item-View-details"] a |
 
-  Rule: With an external service
-    Background:
-      Given the URL "/meshes/default/service-insights/firewall-1" responds with
-        """
+  Scenario Outline: Shows Data Plane Proxies for service type <ServiceType>
+    Given the URL "/meshes/default/service-insights/firewall-1" responds with
+      """
         body:
-          serviceType: "external"
-        """
-      When I visit the "/mesh/default/service/firewall-1" URL
+          serviceType: <ServiceType>
+      """
 
-    Scenario: External services don't display the dataplane list
-      Then the "$data-plane-proxies-tab" element doesn't exist
+    When I visit the "/mesh/default/service/firewall-1" URL
+    Then the "$data-plane-proxies-tab" element <ExistsAssertion>
+
+    Examples:
+      | ServiceType       | ExistsAssertion |
+      | ~                 | exists          |
+      | internal          | exists          |
+      | gateway_builtin   | exists          |
+      | gateway_delegated | exists          |
+      | external          | doesn't exist   |
 
   Rule: With an internal service
     Background:
