@@ -40,7 +40,11 @@
           <template #body>
             <div class="description">
               <div class="description-content">
-                <h3>{{ t('policies.collection.title') }}</h3>
+                <h3>
+                  <PolicyTypeTag :policy-type="policyType.name">
+                    {{ t('policies.collection.title', { name: policyType.name }) }}
+                  </PolicyTypeTag>
+                </h3>
 
                 <p>{{ t('policies.collection.description') }}</p>
               </div>
@@ -186,6 +190,7 @@ import { useRoute } from 'vue-router'
 import { PolicyCollection } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
+import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { MeshInsight, PolicyType } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { notEmpty } from '@/utilities/notEmpty'
