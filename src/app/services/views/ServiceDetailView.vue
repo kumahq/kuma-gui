@@ -196,7 +196,8 @@ function getTabs(serviceInsight: ServiceInsight) {
     },
   ]
 
-  if (serviceInsight.serviceType === 'internal') {
+  // All non-external service types have Data Plane Proxies
+  if (serviceInsight.serviceType !== 'external') {
     tabs.push({
       hash: '#dataPlaneProxies',
       title: t('services.routes.item.tabs.data_plane_proxies'),
