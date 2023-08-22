@@ -10,7 +10,7 @@
           :key="index"
           class="policy-type-link-wrapper"
           :class="{
-            'policy-type-link-wrapper--is-active': policyType.path === props.currentPolicyTypePath,
+            'policy-type-link-wrapper--is-active': policyType.path === props.currentPolicyType.path,
           }"
         >
           <RouterLink
@@ -41,8 +41,8 @@
             <div class="description">
               <div class="description-content">
                 <h3>
-                  <PolicyTypeTag :policy-type="currentPolicyType.name">
-                    {{ t('policies.collection.title', { name: currentPolicyType.name }) }}
+                  <PolicyTypeTag :policy-type="props.currentPolicyType.name">
+                    {{ t('policies.collection.title', { name: props.currentPolicyType.name }) }}
                   </PolicyTypeTag>
                 </h3>
 
@@ -51,28 +51,28 @@
 
               <div class="description-actions">
                 <KBadge
-                  v-if="currentPolicyType.isExperimental"
+                  v-if="props.currentPolicyType.isExperimental"
                   appearance="warning"
                 >
                   {{ t('policies.collection.beta') }}
                 </KBadge>
 
                 <KBadge
-                  v-if="currentPolicyType.isInbound"
+                  v-if="props.currentPolicyType.isInbound"
                   appearance="neutral"
                 >
                   {{ t('policies.collection.inbound') }}
                 </KBadge>
 
                 <KBadge
-                  v-if="currentPolicyType.isOutbound"
+                  v-if="props.currentPolicyType.isOutbound"
                   appearance="neutral"
                 >
                   {{ t('policies.collection.outbound') }}
                 </KBadge>
 
                 <DocumentationLink
-                  :href="t('policies.href.docs', { name: currentPolicyType.name })"
+                  :href="t('policies.href.docs', { name: props.currentPolicyType.name })"
                   data-testid="policy-documentation-link"
                 />
               </div>
@@ -86,10 +86,10 @@
               class="policy-collection"
               data-testid="policy-collection"
               :empty-state-title="t('common.emptyState.title')"
-              :empty-state-message="t('common.emptyState.message', { type: `${currentPolicyType.name} policies` })"
+              :empty-state-message="t('common.emptyState.message', { type: `${props.currentPolicyType.name} policies` })"
               :headers="[
                 { label: 'Name', key: 'name' },
-                currentPolicyType.isTargetRefBased ? { label: 'Target ref', key: 'targetRef' } : undefined,
+                props.currentPolicyType.isTargetRefBased ? { label: 'Target ref', key: 'targetRef' } : undefined,
                 { label: 'Actions', key: 'actions', hideLabel: true },
               ].filter(notEmpty)"
               :page-number="props.pageNumber"
@@ -105,7 +105,7 @@
                     name: 'policy-detail-view',
                     params: {
                       mesh: route.params.mesh,
-                      policyPath: currentPolicyType.path,
+                      policyPath: props.currentPolicyType.path,
                       policy: rowValue,
                     },
                   }"
@@ -115,7 +115,7 @@
               </template>
 
               <template #targetRef="{ row }">
-                <template v-if="currentPolicyType.isTargetRefBased">
+                <template v-if="props.currentPolicyType.isTargetRefBased">
                   <KBadge appearance="neutral">
                     {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b>
                     </span>
@@ -156,7 +156,7 @@
                           name: 'policy-detail-view',
                           params: {
                             mesh: route.params.mesh,
-                            policyPath: currentPolicyType.path,
+                            policyPath: props.currentPolicyType.path,
                             policy: row.name,
                           },
                         },
@@ -183,7 +183,6 @@ import {
   KDropdownMenu,
   KIcon,
 } from '@kong/kongponents'
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { PolicyCollection } from '../sources'
@@ -207,7 +206,7 @@ const props = defineProps<{
   pageNumber: number
   pageSize: number
   policyTypes: PolicyType[]
-  currentPolicyTypePath: string
+  currentPolicyType: PolicyType
   policyCollection: PolicyCollection | undefined
   policyError: Error | undefined
   meshInsight: MeshInsight | undefined
@@ -216,8 +215,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   (event: 'change', value: ChangeValue): void
 }>()
-
-const currentPolicyType = computed(() => props.policyTypes.find((policyType) => policyType.path === props.currentPolicyTypePath) ?? props.policyTypes[0])
 </script>
 
 <style lang="scss" scoped>

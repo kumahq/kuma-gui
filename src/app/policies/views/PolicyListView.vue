@@ -43,7 +43,7 @@
               <PolicyList
                 :page-number="props.page"
                 :page-size="props.size"
-                :current-policy-type-path="route.params.policyPath"
+                :current-policy-type="policyTypesData.policies.find((policyType) => policyType.path === route.params.policyPath) ?? policyTypesData.policies[0]"
                 :policy-types="policyTypesData.policies"
                 :mesh-insight="meshInsight"
                 :policy-collection="data"
