@@ -71,9 +71,9 @@
               :empty-state-message="t('common.emptyState.message', { type: `${policyType.name} policies` })"
               :headers="[
                 { label: 'Name', key: 'name' },
-                { label: 'Type', key: 'type' },
+                policyType.isTargetRefBased ? { label: 'Target ref', key: 'targetRef' } : undefined,
                 { label: 'Actions', key: 'actions', hideLabel: true },
-              ]"
+              ].filter(notEmpty)"
               :page-number="props.pageNumber"
               :page-size="props.pageSize"
               :total="props.policyCollection?.total"
@@ -96,8 +96,18 @@
                 </RouterLink>
               </template>
 
-              <template #type="{ rowValue }">
-                {{ rowValue }}
+              <template #targetRef="{ row }">
+                <template v-if="row.spec?.targetRef">
+                  <KBadge appearance="neutral">
+                    {{ row.spec?.targetRef?.kind }}
+                  </KBadge>
+
+                  {{ row.spec?.targetRef?.name ?? t('common.detail.none') }}
+                </template>
+
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
               </template>
 
               <template #actions="{ row }">
@@ -164,6 +174,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import type { MeshInsight, PolicyType } from '@/types/index.d'
 import { useI18n } from '@/utilities'
+import { notEmpty } from '@/utilities/notEmpty'
 
 type ChangeValue = {
   page: number
