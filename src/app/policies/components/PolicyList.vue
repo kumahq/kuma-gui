@@ -6,7 +6,10 @@
     >
       <template #body>
         <div
-          v-for="(policyTypeWrapper, index) in sortedPolicyTypeWrappers"
+          v-for="(policyTypeWrapper, index) in props.policyTypes.map((policyType) => ({
+            policyType,
+            numberOfPolicies: props.meshInsight?.policies?.[policyType.name]?.total ?? 0,
+          }))"
           :key="index"
           class="policy-type-link-wrapper"
           :class="{
@@ -218,11 +221,6 @@ const emit = defineEmits<{
 }>()
 
 const policyType = computed(() => props.policyTypes.find((policyType) => policyType.path === props.currentPolicyTypePath) ?? props.policyTypes[0])
-
-const sortedPolicyTypeWrappers = computed(() => props.policyTypes.map((policyType) => ({
-  policyType,
-  numberOfPolicies: props.meshInsight?.policies?.[policyType.name]?.total ?? 0,
-})))
 </script>
 
 <style lang="scss" scoped>
