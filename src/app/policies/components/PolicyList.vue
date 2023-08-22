@@ -1,6 +1,9 @@
 <template>
   <div class="policy-list-content">
-    <KCard data-testid="policy-type-list">
+    <KCard
+      class="policy-type-list"
+      data-testid="policy-type-list"
+    >
       <template #body>
         <div
           v-for="(policyTypeWrapper, index) in sortedPolicyTypeWrappers"
@@ -31,102 +34,116 @@
       </template>
     </KCard>
 
-    <KCard class="policy-list">
-      <template #body>
-        <div class="stack">
-          <AppCollection
-            class="policy-collection"
-            data-testid="policy-collection"
-            :empty-state-title="t('common.emptyState.title')"
-            :empty-state-message="t('common.emptyState.message', { type: `${policyType.name} policies` })"
-            :headers="[
-              { label: 'Name', key: 'name' },
-              { label: 'Type', key: 'type' },
-              { label: 'Actions', key: 'actions', hideLabel: true },
-            ]"
-            :page-number="props.pageNumber"
-            :page-size="props.pageSize"
-            :total="props.policyCollection?.total"
-            :items="props.policyCollection?.items"
-            :error="props.policyError"
-            @change="emit('change', $event)"
-          >
-            <template #toolbar>
-              <KBadge
-                v-if="policyType.isExperimental"
-                appearance="warning"
-              >
-                {{ t('policies.collection.beta') }}
-              </KBadge>
+    <div class="policy-list">
+      <div class="stack">
+        <KCard>
+          <template #body>
+            <div class="description">
+              <div class="description-content">
+                <h3>{{ t('policies.collection.title') }}</h3>
 
-              <DocumentationLink
-                :href="t('policies.href.docs', { name: policyType.name })"
-                data-testid="policy-documentation-link"
-              />
-            </template>
+                <p>{{ t('policies.collection.description') }}</p>
+              </div>
 
-            <template #name="{ rowValue }">
-              <RouterLink
-                :to="{
-                  name: 'policy-detail-view',
-                  params: {
-                    mesh: route.params.mesh,
-                    policyPath: policyType.path,
-                    policy: rowValue,
-                  },
-                }"
-              >
+              <div class="description-actions">
+                <KBadge
+                  v-if="policyType.isExperimental"
+                  appearance="warning"
+                >
+                  {{ t('policies.collection.beta') }}
+                </KBadge>
+
+                <DocumentationLink
+                  :href="t('policies.href.docs', { name: policyType.name })"
+                  data-testid="policy-documentation-link"
+                />
+              </div>
+            </div>
+          </template>
+        </KCard>
+
+        <KCard>
+          <template #body>
+            <AppCollection
+              class="policy-collection"
+              data-testid="policy-collection"
+              :empty-state-title="t('common.emptyState.title')"
+              :empty-state-message="t('common.emptyState.message', { type: `${policyType.name} policies` })"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Type', key: 'type' },
+                { label: 'Actions', key: 'actions', hideLabel: true },
+              ]"
+              :page-number="props.pageNumber"
+              :page-size="props.pageSize"
+              :total="props.policyCollection?.total"
+              :items="props.policyCollection?.items"
+              :error="props.policyError"
+              @change="emit('change', $event)"
+            >
+              <template #name="{ rowValue }">
+                <RouterLink
+                  :to="{
+                    name: 'policy-detail-view',
+                    params: {
+                      mesh: route.params.mesh,
+                      policyPath: policyType.path,
+                      policy: rowValue,
+                    },
+                  }"
+                >
+                  {{ rowValue }}
+                </RouterLink>
+              </template>
+
+              <template #type="{ rowValue }">
                 {{ rowValue }}
-              </RouterLink>
-            </template>
+              </template>
 
-            <template #type="{ rowValue }">
-              {{ rowValue }}
-            </template>
+              <template #actions="{ row }">
+                <KDropdownMenu
+                  class="actions-dropdown"
+                  :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                  width="150"
+                >
+                  <template #default>
+                    <KButton
+                      class="non-visual-button"
+                      appearance="secondary"
+                      size="small"
+                    >
+                      <template #icon>
+                        <KIcon
+                          color="var(--black-400)"
+                          icon="more"
+                          size="16"
+                        />
+                      </template>
+                    </KButton>
+                  </template>
 
-            <template #actions="{ row }">
-              <KDropdownMenu
-                class="actions-dropdown"
-                :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                width="150"
-              >
-                <template #default>
-                  <KButton
-                    class="non-visual-button"
-                    appearance="secondary"
-                    size="small"
-                  >
-                    <template #icon>
-                      <KIcon
-                        color="var(--black-400)"
-                        icon="more"
-                        size="16"
-                      />
-                    </template>
-                  </KButton>
-                </template>
-
-                <template #items>
-                  <KDropdownItem
-                    :item="{
-                      to: {
-                        name: 'policy-detail-view',
-                        params: {
-                          mesh: route.params.mesh,
-                          policyPath: policyType.path,
-                          policy: row.name,
+                  <template #items>
+                    <KDropdownItem
+                      :item="{
+                        to: {
+                          name: 'policy-detail-view',
+                          params: {
+                            mesh: route.params.mesh,
+                            policyPath: policyType.path,
+                            policy: row.name,
+                          },
                         },
-                      },
-                      label: t('common.collection.actions.view'),
-                    }"
-                  />
-                </template>
-              </KDropdownMenu>
-            </template>
-          </AppCollection>
-        </div>
-      </template>
-    </KCard>
+                        label: t('common.collection.actions.view'),
+                      }"
+                    />
+                  </template>
+                </KDropdownMenu>
+              </template>
+            </AppCollection>
+          </template>
+        </KCard>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -185,6 +202,10 @@ const sortedPolicyTypeWrappers = computed(() => props.policyTypes.map((policyTyp
   gap: var(--AppGap);
 }
 
+.policy-type-list {
+  align-self: flex-start;
+}
+
 .policy-type-link-wrapper {
   font-size: 1rem;
   display: flex;
@@ -214,6 +235,21 @@ const sortedPolicyTypeWrappers = computed(() => props.policyTypes.map((policyTyp
 
 .policy-list {
   flex-grow: 1;
+}
+
+.description {
+  display: flex;
+  gap: $kui-space-60;
+}
+
+.description-content {
+  flex-grow: 1;
+}
+
+.description-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: $kui-space-40;
 }
 
 .actions-dropdown {

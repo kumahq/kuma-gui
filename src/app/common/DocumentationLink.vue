@@ -32,7 +32,7 @@ const props = defineProps({
 .docs-link {
   display: inline-flex;
   align-items: center;
-  padding-right: var(--spacing-sm);
-  padding-left: var(--spacing-sm);
+  padding-right: $kui-space-40;
+  padding-left: $kui-space-40;
 }
 </style>
