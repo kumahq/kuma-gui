@@ -117,10 +117,9 @@
               <template #targetRef="{ row }">
                 <template v-if="row.spec?.targetRef">
                   <KBadge appearance="neutral">
-                    {{ row.spec?.targetRef?.kind }}
+                    {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b>
+                    </span>
                   </KBadge>
-
-                  {{ row.spec?.targetRef?.name ?? t('common.detail.none') }}
                 </template>
 
                 <template v-else>
