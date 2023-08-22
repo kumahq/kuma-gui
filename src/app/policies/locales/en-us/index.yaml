@@ -7,3 +7,5 @@ policies:
       title: "Policies"
   href:
     docs: '{KUMA_DOCS_URL}/policies/{name}?{KUMA_UTM_QUERY_PARAMS}'
+  collection:
+    beta: 'Beta'

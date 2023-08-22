@@ -34,27 +34,11 @@
     <KCard class="policy-list">
       <template #body>
         <div class="stack">
-          <KAlert
-            v-if="policyType.isExperimental"
-            appearance="warning"
-          >
-            <template #alertMessage>
-              <p>
-                <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
-                <a
-                  :href="env('KUMA_FEEDBACK_URL')"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >issue</a>
-              </p>
-            </template>
-          </KAlert>
-
           <AppCollection
             class="policy-collection"
             data-testid="policy-collection"
-            :empty-state-title="`No Data`"
-            :empty-state-message="`There are no ${policyType.name} policies present.`"
+            :empty-state-title="t('common.emptyState.title')"
+            :empty-state-message="t('common.emptyState.message', { type: `${policyType.name} policies` })"
             :headers="[
               { label: 'Name', key: 'name' },
               { label: 'Type', key: 'type' },
@@ -68,6 +52,13 @@
             @change="emit('change', $event)"
           >
             <template #toolbar>
+              <KBadge
+                v-if="policyType.isExperimental"
+                appearance="warning"
+              >
+                {{ t('policies.collection.beta') }}
+              </KBadge>
+
               <DocumentationLink
                 :href="t('policies.href.docs', { name: policyType.name })"
                 data-testid="policy-documentation-link"
@@ -141,7 +132,7 @@
 
 <script lang="ts" setup>
 import {
-  KAlert,
+  KBadge,
   KButton,
   KCard,
   KDropdownItem,
@@ -155,7 +146,7 @@ import { PolicyCollection } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import type { MeshInsight, PolicyType } from '@/types/index.d'
-import { useEnv, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 
 type ChangeValue = {
   page: number
@@ -164,7 +155,6 @@ type ChangeValue = {
 }
 
 const { t } = useI18n()
-const env = useEnv()
 const route = useRoute()
 
 const props = defineProps<{
