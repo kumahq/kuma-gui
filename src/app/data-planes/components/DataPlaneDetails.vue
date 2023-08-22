@@ -94,12 +94,80 @@
           </template>
         </KCard>
 
-        <ResourceCodeBlock
-          id="code-block-data-plane"
-          :resource="props.dataplaneOverview"
-          :resource-fetcher="fetchDataPlaneProxy"
-          is-searchable
-        />
+        <div>
+          <h3>{{ t('data-planes.detail.mtls') }}</h3>
+
+          <KAlert
+            v-if="mtlsData === null"
+            class="mt-4"
+            appearance="danger"
+          >
+            <template #alertMessage>
+              {{ t('data-planes.detail.no_mtls') }} —
+              <a
+                :href="t('data-planes.href.docs.mutual-tls')"
+                class="external-link"
+                target="_blank"
+              >
+                {{ t('data-planes.detail.no_mtls_learn_more', { product: t('common.product.name') }) }}
+              </a>
+            </template>
+          </KAlert>
+
+          <KCard
+            v-else
+            class="mt-4"
+          >
+            <template #body>
+              <div
+                class="columns"
+                style="--columns: 3;"
+              >
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.certificateExpirationTime') }}
+                  </template>
+
+                  <template #body>
+                    {{ mtlsData.certificateExpirationTime }}
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.lastCertificateRegeneration') }}
+                  </template>
+
+                  <template #body>
+                    {{ mtlsData.lastCertificateRegeneration }}
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.certificateRegenerations') }}
+                  </template>
+
+                  <template #body>
+                    {{ mtlsData.certificateRegenerations }}
+                  </template>
+                </DefinitionCard>
+              </div>
+            </template>
+          </KCard>
+        </div>
+
+        <div>
+          <h3>{{ t('data-planes.detail.configuration') }}</h3>
+
+          <ResourceCodeBlock
+            id="code-block-data-plane"
+            class="mt-4"
+            :resource="props.dataplaneOverview"
+            :resource-fetcher="fetchDataPlaneProxy"
+            is-searchable
+          />
+        </div>
       </div>
     </template>
 
@@ -193,38 +261,6 @@
         </template>
       </KCard>
     </template>
-
-    <template #mtls>
-      <KCard>
-        <template #body>
-          <KAlert
-            v-if="mtlsData === null"
-            appearance="danger"
-          >
-            <template #alertMessage>
-              This data plane proxy does not yet have mTLS configured —
-              <a
-                :href="t('data-planes.href.docs.mutual-tls')"
-                class="external-link"
-                target="_blank"
-              >
-                Learn About Certificates in {{ t('common.product.name') }}
-              </a>
-            </template>
-          </KAlert>
-
-          <DefinitionList v-else>
-            <DefinitionListItem
-              v-for="(value, property) in mtlsData"
-              :key="property"
-              :term="t(`http.api.property.${property}`)"
-            >
-              {{ value }}
-            </DefinitionListItem>
-          </DefinitionList>
-        </template>
-      </KCard>
-    </template>
   </TabsWidget>
 </template>
 
@@ -237,8 +273,6 @@ import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -304,10 +338,6 @@ const TABS = [
   {
     hash: '#envoy-clusters',
     title: t('data-planes.routes.item.tabs.clusters'),
-  },
-  {
-    hash: '#mtls',
-    title: t('data-planes.routes.item.tabs.mtls'),
   },
 ]
 

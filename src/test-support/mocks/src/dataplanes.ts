@@ -17,7 +17,7 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
         return {
           type: 'Dataplane',
           mesh: `${fake.hacker.noun()}-${id}`,
-          name: `${fake.hacker.noun()}-${id}`,
+          name: `${fake.kuma.dataPlaneProxyName()}-${id}`,
           networking: {},
         }
       }),

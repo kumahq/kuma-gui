@@ -42,6 +42,23 @@ export class KumaModule {
     )
   }
 
+  serviceName(serviceType: string = 'internal') {
+    const prefix = `${this.faker.hacker.noun()}_`
+
+    if (serviceType === 'gateway_delegated' || serviceType === 'gateway_builtin') {
+      return prefix + 'gateway'
+    } else {
+      return prefix + `${this.faker.hacker.noun()}_svc.mesh:80_${serviceType}`
+    }
+  }
+
+  dataPlaneProxyName() {
+    const namespace = this.faker.hacker.noun()
+    const deploymentId = this.faker.string.hexadecimal({ length: 10, casing: 'lower', prefix: '' })
+    const podId = this.faker.string.hexadecimal({ length: 5, casing: 'lower', prefix: '' })
+    return `${this.faker.hacker.noun()}-${deploymentId}-${podId}.${namespace}`
+  }
+
   status() {
     return this.faker.helpers.arrayElement(
       [

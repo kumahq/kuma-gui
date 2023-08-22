@@ -10,7 +10,6 @@ data-planes:
         xds_configuration: 'XDS Configuration'
         stats: 'Stats'
         clusters: 'Clusters'
-        mtls: 'Certificate Insights'
     items:
       title: Data Plane Proxies
   href:
@@ -18,3 +17,8 @@ data-planes:
       mutual-tls: '{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}'
   list:
     version_mismatch: 'Version mismatch'
+  detail:
+    mtls: 'Certificate'
+    no_mtls: 'This Data Plane Proxy does not have mTLS configured, yet'
+    no_mtls_learn_more: 'Learn about certificates in {product}'
+    configuration: 'Configuration'

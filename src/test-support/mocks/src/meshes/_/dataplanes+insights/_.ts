@@ -3,7 +3,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const params = req.params
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
-  const service = (params.name as string) ?? fake.hacker.noun()
+  const service = fake.kuma.serviceName()
   const isMultizone = true && fake.datatype.boolean()
   const zone = fake.hacker.noun()
 
@@ -26,7 +26,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             {
               port: fake.internet.port(),
               tags: {
-                'kuma.io/service': fake.hacker.noun(),
+                'kuma.io/service': fake.kuma.serviceName(),
               },
             },
           ],
