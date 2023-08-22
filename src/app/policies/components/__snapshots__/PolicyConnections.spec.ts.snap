@@ -3,9 +3,9 @@
 exports[`PolicyConnections.vue renders snapshot 1`] = `
 <div>
   
-  <h2>
-    Dataplanes
-  </h2>
+  <h3>
+    Affected Data Plane Proxies
+  </h3>
   <input
     class="k-input mt-4"
     data-testid="dataplane-search-input"
@@ -16,41 +16,40 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
   />
   
   
-  
-  <p
-    class="mt-2"
-    data-testid="dataplane-name"
-  >
-    <a
-      class=""
-      href="/gui/mesh/default/data-plane/backend"
+  <ul>
+    
+    <li
+      data-testid="dataplane-name"
     >
-      backend
-    </a>
-  </p>
-  <p
-    class="mt-2"
-    data-testid="dataplane-name"
-  >
-    <a
-      class=""
-      href="/gui/mesh/default/data-plane/db"
+      <a
+        class=""
+        href="/gui/mesh/default/data-plane/backend"
+      >
+        backend
+      </a>
+    </li>
+    <li
+      data-testid="dataplane-name"
     >
-      db
-    </a>
-  </p>
-  <p
-    class="mt-2"
-    data-testid="dataplane-name"
-  >
-    <a
-      class=""
-      href="/gui/mesh/default/data-plane/frontend"
+      <a
+        class=""
+        href="/gui/mesh/default/data-plane/db"
+      >
+        db
+      </a>
+    </li>
+    <li
+      data-testid="dataplane-name"
     >
-      frontend
-    </a>
-  </p>
-  
+      <a
+        class=""
+        href="/gui/mesh/default/data-plane/frontend"
+      >
+        frontend
+      </a>
+    </li>
+    
+  </ul>
   
   <span
     class="visually-hidden"
