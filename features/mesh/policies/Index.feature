@@ -87,4 +87,4 @@ Feature: mesh / policies / index
 
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
     Then the "$item:nth-child(1)" element contains "mfi-1"
-    And the "$item:nth-child(1)" element contains "MeshService service-1"
+    And the "$item:nth-child(1)" element contains "MeshService:service-1"
