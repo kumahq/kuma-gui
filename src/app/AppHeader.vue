@@ -121,7 +121,7 @@ const { t } = useI18n()
 
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const environmentName = computed(() => {
-  const environment = store.getters['config/getEnvironment']
+  const environment = store.state.environment
 
   if (environment) {
     return environment.charAt(0).toUpperCase() + environment.substring(1)
@@ -130,7 +130,7 @@ const environmentName = computed(() => {
   }
 })
 
-const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Multi-Zone' : 'Standalone')
+const mode = computed(() => store.state.mode === 'global' ? 'Multi-Zone' : 'Standalone')
 
 </script>
 

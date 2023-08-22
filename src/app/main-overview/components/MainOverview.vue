@@ -6,7 +6,7 @@
     <DataSource
       v-slot="{ data: zoneOverviewsData, isLoading: zoneOverviewsIsLoading, error: zoneOverviewsError }: ZoneOverviewCollectionSource"
       src="/all-zone-overviews"
-      :should-make-request="store.getters['config/getMulticlusterStatus']"
+      :should-make-request="store.state.mode === 'global'"
     >
       <LoadingBlock v-if="meshInsightsIsLoading || zoneOverviewsIsLoading" />
 

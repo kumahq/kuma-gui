@@ -115,7 +115,7 @@ const k8sRunCommand = 'kubectl apply -f https://bit.ly/3Kh2Try'
 const hasDPPs = ref(false)
 const dppsTimeout = ref<number | null>(null)
 
-const isKubernetes = computed(() => store.getters['config/getEnvironment'] === 'kubernetes')
+const isKubernetes = computed(() => store.state.environment === 'kubernetes')
 
 getDPPs()
 

@@ -2,7 +2,7 @@
   <RouteView>
     <AppView>
       <NavTabs
-        v-if="store.getters['config/getMulticlusterStatus']"
+        v-if="store.state.mode === 'global'"
         :tabs="tabs"
       />
 

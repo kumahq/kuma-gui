@@ -22,7 +22,7 @@ import { useNav } from '@/utilities'
 const getNavItems = useNav()
 const store = useStore()
 
-const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus']))
+const navItems = computed(() => getNavItems(store.state.mode === 'global'))
 </script>
 
 <style lang="scss" scoped>

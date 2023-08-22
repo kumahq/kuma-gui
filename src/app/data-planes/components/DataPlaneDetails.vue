@@ -345,7 +345,7 @@ const warnings = computed(() => {
     }
   }
 
-  if (store.getters['config/getMulticlusterStatus']) {
+  if (store.state.mode === 'global') {
     const tags = dpTags(props.dataplaneOverview.dataplane)
     const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 

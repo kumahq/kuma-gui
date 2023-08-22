@@ -13,7 +13,7 @@
         </h2>
       </template>
 
-      <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+      <MultizoneInfo v-if="store.state.mode === 'standalone'" />
 
       <template v-else>
         <DataSource

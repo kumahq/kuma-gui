@@ -74,7 +74,7 @@ const tableData = ref<{ total: number, data: any [] }>({
   ],
 })
 
-const previousStep = computed(() => store.getters['config/getMulticlusterStatus'] ? 'onboarding-multi-zone' : 'onboarding-configuration-types')
+const previousStep = computed(() => store.state.mode === 'global' ? 'onboarding-multi-zone' : 'onboarding-configuration-types')
 </script>
 
 <style lang="scss" scoped>

@@ -205,7 +205,7 @@ const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
 }>()
 
-const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
+const isMultiZoneMode = computed(() => store.state.mode === 'global')
 
 function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlaneOverviewTableRow[] {
   return dataPlaneOverviews.map((dataPlaneOverview) => {

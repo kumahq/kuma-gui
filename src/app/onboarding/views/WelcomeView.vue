@@ -79,11 +79,11 @@ const store = useStore()
 const { t } = useI18n()
 
 const enviromentFormatted = computed(() => {
-  const environment = store.getters['config/getEnvironment']
+  const environment = store.state.environment
   return environment.charAt(0).toUpperCase() + environment.slice(1)
 })
 
-const isMulticluster = computed(() => store.getters['config/getMulticlusterStatus'])
+const isMulticluster = computed(() => store.state.mode === 'global')
 const statuses = computed(() => [
   {
     name: `Run ${t('common.product.name')} control plane`,

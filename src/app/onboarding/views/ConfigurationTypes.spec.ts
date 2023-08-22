@@ -12,7 +12,17 @@ function renderComponent() {
 describe('ConfigurationTypes.vue', () => {
   const mock = useMock()
   const store = useStore()
-  test('renders snapshot', () => {
+
+  test('renders snapshot', async () => {
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'standalone',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
@@ -27,6 +37,7 @@ describe('ConfigurationTypes.vue', () => {
       })
     })
     await store.dispatch('bootstrap')
+
     const wrapper = renderComponent()
 
     expect(wrapper.html()).toContain('/onboarding/multi-zone')

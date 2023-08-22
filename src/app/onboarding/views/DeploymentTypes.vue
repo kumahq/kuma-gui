@@ -87,7 +87,7 @@ const mode = ref<'standalone' | 'multi-zone'>('standalone')
 const currentGraphComponent = computed(() => componentMap[mode.value])
 
 onMounted(function () {
-  mode.value = store.getters['config/getMulticlusterStatus'] ? 'multi-zone' : 'standalone'
+  mode.value = store.state.mode === 'global' ? 'multi-zone' : 'standalone'
 })
 </script>
 

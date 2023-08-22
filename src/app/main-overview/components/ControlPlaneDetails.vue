@@ -10,7 +10,7 @@
 
         <div class="variable-columns">
           <ResourceStatus
-            :total="store.getters['config/getMulticlusterStatus'] ? props.zoneOverviews.length : 1"
+            :total="store.state.mode === 'global' ? props.zoneOverviews.length : 1"
             data-testid="zone-control-planes-status"
           >
             <template #icon>
@@ -65,7 +65,7 @@
     </KCard>
 
     <div class="variable-columns">
-      <KCard v-if="store.getters['config/getMulticlusterStatus']">
+      <KCard v-if="store.state.mode === 'global'">
         <template #body>
           <div class="card-header">
             <div class="card-title">

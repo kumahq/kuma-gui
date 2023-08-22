@@ -90,10 +90,10 @@ const { t } = useI18n()
 const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
 
 onMounted(function () {
-  mode.value = store.getters['config/getConfigurationType']
+  mode.value = store.state.configurationType
 })
 
-const nextStep = computed(() => store.getters['config/getMulticlusterStatus'] ? 'onboarding-multi-zone' : 'onboarding-create-mesh')
+const nextStep = computed(() => store.state.mode === 'global' ? 'onboarding-multi-zone' : 'onboarding-create-mesh')
 
 const currentGraphComponent = computed(() => componentMap[mode.value])
 </script>

@@ -14,7 +14,7 @@
       </template>
 
       <template
-        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && store.getters['config/getMulticlusterStatus']"
+        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && store.state.mode === 'global'"
         #actions
       >
         <KButton
@@ -27,7 +27,7 @@
         </KButton>
       </template>
 
-      <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+      <MultizoneInfo v-if="store.state.mode === 'standalone'" />
 
       <template v-else>
         <DataSource
