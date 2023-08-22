@@ -53,6 +53,20 @@
                   {{ t('policies.collection.beta') }}
                 </KBadge>
 
+                <KBadge
+                  v-if="policyType.isInbound"
+                  appearance="neutral"
+                >
+                  {{ t('policies.collection.inbound') }}
+                </KBadge>
+
+                <KBadge
+                  v-if="policyType.isOutbound"
+                  appearance="neutral"
+                >
+                  {{ t('policies.collection.outbound') }}
+                </KBadge>
+
                 <DocumentationLink
                   :href="t('policies.href.docs', { name: policyType.name })"
                   data-testid="policy-documentation-link"
