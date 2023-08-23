@@ -1,13 +1,13 @@
 <template>
   <img
     src="@/assets/images/product-logo.png"
-    :alt="`${env('KUMA_PRODUCT_NAME')} Logo`"
+    :alt="`${t('common.product.name')} Logo`"
   >
 </template>
 
 <script lang="ts" setup>
-import { useEnv } from '@/utilities'
-const env = useEnv()
+import { useI18n } from '@/utilities'
+const { t } = useI18n()
 </script>
 
 <style lang="scss" scoped>

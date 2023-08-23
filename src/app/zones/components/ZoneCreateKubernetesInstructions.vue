@@ -5,7 +5,7 @@
     <ul>
       <li>
         <b>{{ i18n.t('zones.form.kubernetes.prerequisites.step1Label') }}{{ props.zoneIngressEnabled ? ' ' + i18n.t('zones.form.kubernetes.prerequisites.step1LabelAddendum') : '' }}</b>:
-        {{ i18n.t('zones.form.kubernetes.prerequisites.step1Description', { productName: env('KUMA_PRODUCT_NAME') }) }}
+        {{ i18n.t('zones.form.kubernetes.prerequisites.step1Description', { productName: i18n.t('common.product.name') }) }}
       </li>
 
       <li>
@@ -102,11 +102,9 @@ import { useRoute } from 'vue-router'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import { useStore } from '@/store/store'
 import {
-  useEnv,
   useI18n,
 } from '@/utilities'
 
-const env = useEnv()
 const i18n = useI18n()
 const route = useRoute()
 const store = useStore()
