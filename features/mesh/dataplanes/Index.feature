@@ -9,6 +9,7 @@ Feature: mesh / dataplanes / index
     And the environment
       """
       KUMA_DATAPLANE_COUNT: 9
+      KUMA_SUBSCRIPTION_COUNT: 2
       """
     And the URL "/meshes/default/dataplanes+insights" responds with
       """
@@ -25,14 +26,8 @@ Feature: mesh / dataplanes / index
             subscriptions:
             - status:
                 lastUpdateTime: 2021-02-16T08:33:36.442044+01:00
-              version:
-                kumaDp:
-                  version: 1.0.7
             - status:
                 lastUpdateTime: 2021-02-18T08:33:36.442044+01:00
-              version:
-                kumaDp:
-                  version: 1.0.8
         - name: fake-frontend
       """
     When I visit the "/mesh/default/data-planes" URL
