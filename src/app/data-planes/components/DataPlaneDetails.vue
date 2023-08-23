@@ -158,15 +158,29 @@
         </div>
 
         <div>
-          <h3>{{ t('data-planes.detail.configuration') }}</h3>
+          <DataSource
+            v-slot="{ data, error }: DataplaneSource"
+            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
+          >
+            <ErrorBlock
+              v-if="error"
+              :error="error"
+            />
 
-          <ResourceCodeBlock
-            id="code-block-data-plane"
-            class="mt-4"
-            :resource="props.dataplane"
-            :resource-fetcher="fetchDataPlaneProxy"
-            is-searchable
-          />
+            <LoadingBlock v-else-if="data === undefined" />
+
+            <template v-else>
+              <h3>{{ t('data-planes.detail.configuration') }}</h3>
+
+              <ResourceCodeBlock
+                id="code-block-data-plane"
+                class="mt-4"
+                :resource="data"
+                :resource-fetcher="fetchDataPlaneProxy"
+                is-searchable
+              />
+            </template>
+          </DataSource>
         </div>
       </div>
     </template>
@@ -261,8 +275,10 @@
 <script lang="ts" setup>
 import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
+import { useRoute } from 'vue-router'
 
 import DataplanePolicies from './DataplanePolicies.vue'
+import type { DataplaneSource } from '../sources'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
@@ -284,7 +300,7 @@ import { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import type { SingleResourceParameters } from '@/types/api.d'
-import { Compatibility, DataPlane, DataPlaneOverview } from '@/types/index.d'
+import { Compatibility, DataPlaneOverview } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 import {
   compatibilityKind,
@@ -299,14 +315,10 @@ import {
 
 const { t, formatIsoDate } = useI18n()
 const kumaApi = useKumaApi()
+const route = useRoute()
 const store = useStore()
 
 const props = defineProps({
-  dataplane: {
-    type: Object as PropType<DataPlane>,
-    required: true,
-  },
-
   dataplaneOverview: {
     type: Object as PropType<DataPlaneOverview>,
     required: true,
@@ -392,7 +404,7 @@ const warnings = computed(() => {
 })
 
 async function fetchDataPlaneProxy(params?: SingleResourceParameters) {
-  const { mesh, name } = props.dataplane
+  const { mesh, name } = props.dataplaneOverview
   return await kumaApi.getDataplaneFromMesh({ mesh, name }, params)
 }
 </script>

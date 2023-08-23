@@ -36,32 +36,21 @@
       </template>
 
       <DataSource
-        v-slot="{ data, error }: DataplaneSource"
-        :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
+        v-slot="{ data, error }: DataplaneOverviewSource"
+        :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
       >
-        <DataSource
-          v-slot="{ data: dataplaneOverview, error: dataplaneOverviewError }: DataplaneOverviewSource"
-          :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
-        >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
+        <ErrorBlock
+          v-if="error"
+          :error="error"
+        />
 
-          <ErrorBlock
-            v-else-if="dataplaneOverviewError"
-            :error="dataplaneOverviewError"
-          />
+        <LoadingBlock v-else-if="data === undefined" />
 
-          <LoadingBlock v-else-if="data === undefined || dataplaneOverview === undefined" />
-
-          <DataPlaneDetails
-            v-else
-            :dataplane="data"
-            :dataplane-overview="dataplaneOverview"
-            data-testid="detail-view-details"
-          />
-        </DataSource>
+        <DataPlaneDetails
+          v-else
+          :dataplane-overview="data"
+          data-testid="detail-view-details"
+        />
       </DataSource>
     </AppView>
   </RouteView>
@@ -69,7 +58,7 @@
 
 <script lang="ts" setup>
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
-import type { DataplaneOverviewSource, DataplaneSource } from '../sources'
+import type { DataplaneOverviewSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
