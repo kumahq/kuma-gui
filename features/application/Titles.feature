@@ -20,23 +20,23 @@ Feature: The HTML title is correct on each page
 
       | /zones/create                           | Create & connect Zone |
       | /zones/zone-cps                         | Zone Control Planes   |
-      | /zones/zone-cps/zone-cp-name            | Zone Control Plane    |
+      | /zones/zone-cps/zone-cp-name            | zone-cp-name          |
       | /zones/zone-ingresses                   | Ingresses             |
-      | /zones/zone-ingresses/zone-ingress-name | Ingress               |
+      | /zones/zone-ingresses/zone-ingress-name | zone-ingress-name     |
       | /zones/zone-egresses                    | Egresses              |
-      | /zones/zone-egresses/zone-egress-name   | Egress                |
+      | /zones/zone-egresses/zone-egress-name   | zone-egress-name      |
 
       | /mesh         | Meshes        |
       | /mesh/default | Mesh overview |
 
-      | /mesh/default/services             | Services |
-      | /mesh/default/service/service-name | Service  |
+      | /mesh/default/services             | Services     |
+      | /mesh/default/service/service-name | service-name |
 
-      | /mesh/default/gateways             | Gateways |
-      | /mesh/default/gateway/gateway-name | Gateway  |
+      | /mesh/default/gateways             | Gateways     |
+      | /mesh/default/gateway/gateway-name | gateway-name |
 
       | /mesh/default/data-planes                | Data Plane Proxies |
-      | /mesh/default/data-plane/data-plane-name | Data Plane Proxy   |
+      | /mesh/default/data-plane/data-plane-name | data-plane-name    |
 
-      | /mesh/default/policies/circuit-breakers         | Policies                 |
-      | /mesh/default/policy/circuit-breakers/program-0 | program-0 CircuitBreaker |
+      | /mesh/default/policies/circuit-breakers         | Policies  |
+      | /mesh/default/policy/circuit-breakers/program-0 | program-0 |

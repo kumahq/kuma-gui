@@ -1,7 +1,7 @@
 zone-cps:
   routes:
     item:
-      title: '{name} Zone Control Plane'
+      title: '{name}'
       breadcrumbs: Zone Control Planes
       tabs:
         overview: 'Overview'
@@ -18,7 +18,7 @@ zone-cps:
 zone-ingresses:
   routes:
     item:
-      title: '{name} Zone Ingress'
+      title: '{name}'
       breadcrumbs: Ingresses
       tabs:
         overview: 'Overview'
@@ -33,7 +33,7 @@ zone-ingresses:
 zone-egresses:
   routes:
     item:
-      title: '{name} Zone Egress'
+      title: '{name}'
       breadcrumbs: Egresses
       tabs:
         overview: 'Overview'

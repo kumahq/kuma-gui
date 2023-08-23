@@ -81,8 +81,8 @@ Feature: Data Plane Proxies: Detail view content
     When I visit the "/mesh/default/data-plane/dpp-1" URL
 
   Scenario: Data Plane Proxy detail view has expected content
-    Then the page title contains "dpp-1 Data Plane Proxy"
-    And the "$detail-view" element contains "dpp-1 Data Plane Proxy"
+    Then the page title contains "dpp-1"
+    And the "$detail-view" element contains "dpp-1"
 
     And the "$overview-content" element contains "online"
     And the "$overview-content" element contains "dpp-1"

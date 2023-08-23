@@ -17,6 +17,24 @@ Feature: Zones: Page navigation
       body:
         mode: global
       """
+    And the URL "/zones+insights" responds with
+      """
+      body:
+        items:
+          - name: zone-cp-1
+      """
+    And the URL "/zoneingresses+insights" responds with
+      """
+      body:
+        items:
+          - name: zone-ingress-1
+      """
+    And the URL "/zoneegressoverviews" responds with
+      """
+      body:
+        items:
+          - name: zone-egress-1
+      """
 
     When I visit the "/zones" URL
     # This `cy.wait` stabilizes the test significantly. For some reason, it can happen that the subsequent navigation to via nav tab is never triggered.
@@ -34,7 +52,7 @@ Feature: Zones: Page navigation
     Then the "<TableSelector>" element exists
 
     Examples:
-      | RouteName              | TableSelector                           | DetailViewTitle    | ListViewTitle       |
-      | zone-cp-list-view      | [data-testid='zone-cp-collection']      | Zone Control Plane | Zone Control Planes |
-      | zone-ingress-list-view | [data-testid='zone-ingress-collection'] | Ingress            | Ingresses           |
-      | zone-egress-list-view  | [data-testid='zone-egress-collection']  | Egress             | Egresses            |
+      | RouteName              | TableSelector                           | DetailViewTitle | ListViewTitle       |
+      | zone-cp-list-view      | [data-testid='zone-cp-collection']      | zone-cp-1       | Zone Control Planes |
+      | zone-ingress-list-view | [data-testid='zone-ingress-collection'] | zone-ingress-1  | Ingresses           |
+      | zone-egress-list-view  | [data-testid='zone-egress-collection']  | zone-egress-1   | Egresses            |

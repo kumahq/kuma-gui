@@ -27,8 +27,8 @@ Feature: Zones: Detail view content
       """
 
     When I visit the "/zones/zone-ingresses/zone-ingress-1" URL
-    Then the page title contains "Zone Ingress"
-    Then the "$ingress-detail-view" element contains "zone-ingress-1 Zone Ingress"
+    Then the page title contains "zone-ingress-1"
+    Then the "$ingress-detail-view" element contains "zone-ingress-1"
     Then the "$ingress-detail-view" element contains "ZoneIngressOverview"
 
     When I click the "#insights-tab" element
@@ -56,8 +56,8 @@ Feature: Zones: Detail view content
       """
 
     When I visit the "/zones/zone-egresses/zone-egress-1" URL
-    Then the page title contains "Zone Egress"
-    Then the "$egress-detail-view" element contains "zone-egress-1 Zone Egress"
+    Then the page title contains "zone-egress-1"
+    Then the "$egress-detail-view" element contains "zone-egress-1"
     Then the "$egress-detail-view" element contains "ZoneEgressOverview"
 
     When I click the "#insights-tab" element

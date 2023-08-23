@@ -37,8 +37,8 @@ Feature: zones / zone-cps / item
       """
 
     When I visit the "/zones/zone-cps/zone-cp-1" URL
-    Then the page title contains "zone-cp-1 Zone Control Plane"
-    Then the "$zone-control-plane-detail-view" element contains "zone-cp-1 Zone Control Plane"
+    Then the page title contains "zone-cp-1"
+    Then the "$zone-control-plane-detail-view" element contains "zone-cp-1"
 
     Then the "$tab-overview" element contains
       | Value     |
