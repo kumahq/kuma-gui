@@ -13,18 +13,7 @@
               </template>
 
               <template #body>
-                <TextWithCopyButton :text="props.mesh.name">
-                  <RouterLink
-                    :to="{
-                      name: 'mesh-detail-view',
-                      params: {
-                        mesh: props.mesh.name,
-                      },
-                    }"
-                  >
-                    {{ props.mesh.name }}
-                  </RouterLink>
-                </TextWithCopyButton>
+                <TextWithCopyButton :text="props.mesh.name" />
               </template>
             </DefinitionCard>
 

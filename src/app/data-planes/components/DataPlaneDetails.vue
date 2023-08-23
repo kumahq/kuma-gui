@@ -10,7 +10,10 @@
 
         <KCard>
           <template #body>
-            <div class="variable-columns">
+            <div
+              class="columns"
+              style="--columns: 4;"
+            >
               <DefinitionCard>
                 <template #title>
                   {{ t('http.api.property.status') }}
@@ -41,19 +44,7 @@
                 </template>
 
                 <template #body>
-                  <TextWithCopyButton :text="props.dataplaneOverview.name">
-                    <RouterLink
-                      :to="{
-                        name: 'data-plane-detail-view',
-                        params: {
-                          mesh: props.dataplaneOverview.mesh,
-                          dataPlane: props.dataplaneOverview.name,
-                        },
-                      }"
-                    >
-                      {{ props.dataplaneOverview.name }}
-                    </RouterLink>
-                  </TextWithCopyButton>
+                  <TextWithCopyButton :text="props.dataplaneOverview.name" />
                 </template>
               </DefinitionCard>
 

@@ -3,7 +3,10 @@
     <template #overview>
       <KCard>
         <template #body>
-          <div class="variable-columns">
+          <div
+            class="columns"
+            style="--columns: 3;"
+          >
             <DefinitionCard>
               <template #title>
                 {{ t('http.api.property.status') }}
@@ -20,18 +23,7 @@
               </template>
 
               <template #body>
-                <TextWithCopyButton :text="props.zoneEgressOverview.name">
-                  <RouterLink
-                    :to="{
-                      name: 'zone-egress-detail-view',
-                      params: {
-                        zoneEgress: props.zoneEgressOverview.name,
-                      },
-                    }"
-                  >
-                    {{ props.zoneEgressOverview.name }}
-                  </RouterLink>
-                </TextWithCopyButton>
+                <TextWithCopyButton :text="props.zoneEgressOverview.name" />
               </template>
             </DefinitionCard>
 

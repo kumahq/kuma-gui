@@ -39,6 +39,6 @@ const props = defineProps({
 <style lang="scss" scoped>
 .status-separator,
 .status-separator + .status-total {
-  color: var(--black-200);
+  color: $kui-color-text-neutral;
 }
 </style>

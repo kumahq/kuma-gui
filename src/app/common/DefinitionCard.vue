@@ -16,21 +16,21 @@
 .definition-card {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
 }
 
 .definition-card-title {
   display: flex;
   align-items: flex-end;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
 }
 
 .definition-card-container {
   flex-grow: 1;
   display: flex;
-  align-items: center;
-  font-size: var(--type-xxl);
+  align-items: flex-start;
+  font-size: $kui-font-size-60;
   line-height: 1.5;
-  font-weight: var(--font-weight-bold);
+  font-weight: $kui-font-weight-bold;
 }
 </style>
