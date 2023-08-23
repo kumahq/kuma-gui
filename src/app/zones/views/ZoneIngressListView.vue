@@ -5,12 +5,12 @@
   >
     <AppView>
       <template #title>
-        <h2>
+        <h1>
           <RouteTitle
             :title="t('zone-ingresses.routes.items.title')"
             :render="true"
           />
-        </h2>
+        </h1>
       </template>
 
       <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />

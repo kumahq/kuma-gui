@@ -26,6 +26,15 @@
             :breadcrumbs="[
               {
                 to: {
+                  name: 'mesh-detail-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                },
+                text: route.params.mesh,
+              },
+              {
+                to: {
                   name: 'policies-list-view',
                   params: {
                     mesh: route.params.mesh,
@@ -37,12 +46,12 @@
             ]"
           >
             <template #title>
-              <h2>
+              <h1>
                 <RouteTitle
                   :title="t('policies.routes.item.title', { name: route.params.policy })"
                   :render="true"
                 />
-              </h2>
+              </h1>
             </template>
 
             <DataSource

@@ -2,12 +2,15 @@
   <RouteView>
     <AppView
       :breadcrumbs="[
-        {
+        ...(route.name !== 'mesh-detail-view' ? [{
           to: {
-            name: 'mesh-list-view'
+            name: 'mesh-detail-view',
+            params: {
+              mesh: route.params.mesh,
+            },
           },
-          text: t('meshes.routes.item.breadcrumbs'),
-        },
+          text: route.params.mesh as string,
+        }] : []),
       ]"
     >
       <RouterView v-slot="child">
@@ -21,9 +24,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
+
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useI18n } from '@/utilities'
 
-const { t } = useI18n()
+const route = useRoute()
 </script>

@@ -5,12 +5,12 @@
   >
     <AppView>
       <template #title>
-        <h2>
+        <h1>
           <RouteTitle
             :title="t('zone-egresses.routes.items.title')"
             :render="true"
           />
-        </h2>
+        </h1>
       </template>
 
       <DataSource
