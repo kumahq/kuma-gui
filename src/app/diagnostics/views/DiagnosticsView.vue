@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+import type { ConfigSource } from '../sources'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+</script>
 <template>
   <RouteView
     v-slot="{ t }"
@@ -50,10 +56,3 @@
     </DataSource>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import type { ConfigSource } from '../sources'
-import CodeBlock from '@/app/common/CodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
-</script>
