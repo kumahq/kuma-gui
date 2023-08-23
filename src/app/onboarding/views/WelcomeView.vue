@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ t, can }"
+  >
     <RouteTitle
       :title="t('onboarding.routes.welcome.title', {name: t('common.product.name')})"
     />
@@ -32,7 +34,33 @@
             <div class="item-status-list-wrapper">
               <ul class="item-status-list">
                 <li
-                  v-for="item in statuses"
+                  v-for="item in [
+                    {
+                      name: `Run ${t('common.product.name')} control plane`,
+                      status: true,
+                    },
+                    {
+                      name: 'Learn about deployments',
+                      status: false,
+                    },
+                    {
+                      name: 'Learn about configuration storage',
+                      status: false,
+                    },
+                    ...can('use zones') ? [{ name: 'Add zones', status: false }] : [],
+                    {
+                      name: 'Create the mesh',
+                      status: false,
+                    },
+                    {
+                      name: 'Add services',
+                      status: false,
+                    },
+                    {
+                      name: 'Go to the dashboard',
+                      status: false,
+                    },
+                  ]"
                   :key="item.name"
                 >
                   <span class="circle mr-2">
@@ -55,7 +83,7 @@
           </template>
         </OnboardingPage>
 
-        <WelcomeAnimationSvg :longer="isMulticluster" />
+        <WelcomeAnimationSvg :longer="can('use zones')" />
       </div>
     </AppView>
   </RouteView>
@@ -74,44 +102,14 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useStore } from '@/store/store'
-import { useI18n } from '@/utilities'
 
 const store = useStore()
-const { t } = useI18n()
 
 const enviromentFormatted = computed(() => {
   const environment = store.getters['config/getEnvironment']
   return environment.charAt(0).toUpperCase() + environment.slice(1)
 })
 
-const isMulticluster = computed(() => store.getters['config/getMulticlusterStatus'])
-const statuses = computed(() => [
-  {
-    name: `Run ${t('common.product.name')} control plane`,
-    status: true,
-  },
-  {
-    name: 'Learn about deployments',
-    status: false,
-  },
-  {
-    name: 'Learn about configuration storage',
-    status: false,
-  },
-  ...isMulticluster.value ? [{ name: 'Add zones', status: false }] : [],
-  {
-    name: 'Create the mesh',
-    status: false,
-  },
-  {
-    name: 'Add services',
-    status: false,
-  },
-  {
-    name: 'Go to the dashboard',
-    status: false,
-  },
-])
 </script>
 
 <style lang="scss" scoped>
