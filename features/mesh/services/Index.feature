@@ -61,7 +61,7 @@ Feature: mesh / services / index
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2"
     When I click the "$item:nth-child(2) td:first-of-type a" element
     Then the URL contains "service/service-2"
-    Then the "[data-testid='service-detail-view']" element contains "service-2 Service"
+    Then the "[data-testid='service-detail-view']" element contains "service-2"
     Then the "#overview-tab" element exists
     # Service Insights with serviceType "internal" should have a Data Plane Proxy table
     And the "#dataPlaneProxies-tab" element exists

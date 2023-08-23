@@ -39,10 +39,7 @@
             <template #title>
               <h2>
                 <RouteTitle
-                  :title="t('policies.routes.item.title', {
-                    name: route.params.policy,
-                    type: currentPolicyType.name,
-                  })"
+                  :title="t('policies.routes.item.title', { name: route.params.policy })"
                   :render="true"
                 />
               </h2>

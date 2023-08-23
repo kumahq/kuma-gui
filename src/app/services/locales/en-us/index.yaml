@@ -1,7 +1,7 @@
 services:
   routes:
     item:
-      title: "{name} Service"
+      title: "{name}"
       breadcrumbs: Services
       tabs:
         overview: 'Overview'

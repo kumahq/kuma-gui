@@ -1,7 +1,7 @@
 gateways:
   routes:
     item:
-      title: "{name} Gateway"
+      title: "{name}"
       breadcrumbs: Gateways
     items:
       title: Gateways

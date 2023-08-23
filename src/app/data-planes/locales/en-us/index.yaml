@@ -1,7 +1,7 @@
 data-planes:
   routes:
     item:
-      title: "{name} Data Plane Proxy"
+      title: "{name}"
       breadcrumbs: Data Plane Proxies
       tabs:
         overview: 'Overview'

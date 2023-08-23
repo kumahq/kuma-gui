@@ -1,7 +1,7 @@
 meshes:
   routes:
     item:
-      title: "{name} Mesh"
+      title: "{name}"
       breadcrumbs: Meshes
       navigation:
         mesh-detail-view: Overview
