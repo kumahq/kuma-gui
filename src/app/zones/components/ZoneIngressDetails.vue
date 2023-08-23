@@ -20,18 +20,7 @@
               </template>
 
               <template #body>
-                <TextWithCopyButton :text="props.zoneIngressOverview.name">
-                  <RouterLink
-                    :to="{
-                      name: 'zone-ingress-detail-view',
-                      params: {
-                        zoneIngress: props.zoneIngressOverview.name,
-                      },
-                    }"
-                  >
-                    {{ props.zoneIngressOverview.name }}
-                  </RouterLink>
-                </TextWithCopyButton>
+                <TextWithCopyButton :text="props.zoneIngressOverview.name" />
               </template>
             </DefinitionCard>
 

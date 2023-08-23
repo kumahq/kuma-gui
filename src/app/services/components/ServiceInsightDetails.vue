@@ -22,19 +22,7 @@
             </template>
 
             <template #body>
-              <TextWithCopyButton :text="props.serviceInsight.name">
-                <RouterLink
-                  :to="{
-                    name: 'service-detail-view',
-                    params: {
-                      service: props.serviceInsight.name,
-                      mesh: props.serviceInsight.mesh,
-                    },
-                  }"
-                >
-                  {{ props.serviceInsight.name }}
-                </RouterLink>
-              </TextWithCopyButton>
+              <TextWithCopyButton :text="props.serviceInsight.name" />
             </template>
           </DefinitionCard>
 
@@ -44,7 +32,14 @@
             </template>
 
             <template #body>
-              {{ props.serviceInsight.addressPort ?? t('common.detail.none') }}
+              <TextWithCopyButton
+                v-if="props.serviceInsight.addressPort"
+                :text="props.serviceInsight.addressPort"
+              />
+
+              <template v-else>
+                {{ t('common.detail.none') }}
+              </template>
             </template>
           </DefinitionCard>
 
