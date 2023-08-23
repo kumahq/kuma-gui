@@ -228,7 +228,6 @@ const emit = defineEmits<{
 }
 
 .policy-type-link-wrapper {
-  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
