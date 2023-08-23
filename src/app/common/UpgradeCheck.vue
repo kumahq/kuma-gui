@@ -9,7 +9,7 @@
       <template #alertMessage>
         <div class="alert-content">
           <div>
-            {{ env('KUMA_PRODUCT_NAME') }} update available
+            {{ t('common.product.name') }} update available
           </div>
 
           <div>
@@ -32,10 +32,11 @@
 import { KAlert, KButton } from '@kong/kongponents'
 import { ref } from 'vue'
 
-import { useEnv, useKumaApi } from '@/utilities'
+import { useEnv, useKumaApi, useI18n } from '@/utilities'
 
 const kumaApi = useKumaApi()
 const env = useEnv()
+const { t } = useI18n()
 
 const latestVersion = ref('')
 const showNotice = ref(false)
