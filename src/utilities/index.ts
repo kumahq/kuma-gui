@@ -1,4 +1,4 @@
-import { TOKENS } from '@/services/production'
+import { TOKENS } from '@/services/tokens'
 import { createInjections } from '@/services/utils'
 
 export const [

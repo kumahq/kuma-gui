@@ -13,12 +13,16 @@ import type { Router } from 'vue-router'
 export function useApp(
   store: Store<State>,
   router: Router,
+  components: [string, Component][],
 ) {
   return async (App: Component) => {
     const app = createApp(App)
     app.use(store, storeKey)
     app.use(router)
     app.use(Kongponents)
+    components.forEach(([name, component]: [string, Component]) => {
+      app.component(name, component)
+    })
     return app
   }
 }

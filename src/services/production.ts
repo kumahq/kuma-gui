@@ -4,9 +4,10 @@ import {
   createRouter,
   createWebHistory,
 } from 'vue-router'
-import { createStore, Store } from 'vuex'
+import { createStore } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
+import { TOKENS as _TOKENS } from './tokens'
 import { useApp } from '../index'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import type { Can } from '@/app/application/services/can'
@@ -16,64 +17,23 @@ import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-pl
 import { routes as gatewayRoutes, services as gateways } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
 import { services as mainOverviewModule } from '@/app/main-overview'
-import type { SplitRouteRecordRaw } from '@/app/meshes'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
 import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import { routes as zoneRoutes, actions as zoneActionRoutes, services as zonesModule } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
 import routes from '@/router/routes'
-import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
+import Env, { EnvArgs } from '@/services/env/Env'
 import I18n from '@/services/i18n/I18n'
 import KumaApi from '@/services/kuma-api/KumaApi'
 import { RestClient } from '@/services/kuma-api/RestClient'
-import Logger from '@/services/logger/Logger'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
-import { token, get, constant } from '@/services/utils'
-import { storeConfig, State } from '@/store/storeConfig'
-import type {
-  Router,
-} from 'vue-router'
+import { get, constant } from '@/services/utils'
+import { storeConfig } from '@/store/storeConfig'
 
 const $ = {
   ...APPLICATION,
-  EnvVars: token<EnvVars>('EnvVars'),
-  Env: token<Env>('Env'),
-  env: token<Alias<Env['var']>>('env'),
-
-  i18n: token<ReturnType<typeof I18n>>('i18n'),
-  enUs: token('i18n.locale.enUs'),
-  kumaEnUs: token('kuma.locale.enUs'),
-
-  httpClient: token<RestClient>('httpClient'),
-  api: token<KumaApi>('KumaApi'),
-  getDataSourceCacheKeyPrefix: token<() => string>('getDataSourceCacheKeyPrefix'),
-  dataSourcePool: token<DataSourcePool>('DataSourcePool'),
-  dataSourceLifecycle: token<typeof DataSourceLifeCycle>('DataSourceLifecycle'),
-  sources: token('sources'),
-
-  store: token<Store<State>>('store'),
-
-  router: token<Router>('router'),
-  routes: token<RouteRecordRaw[]>('vue.routes'),
-  routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
-  navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
-  guards: token<NavigationGuard[]>('app.guards'),
-
-  meshRoutes: token<RouteRecordRaw[]>('kuma.mesh.routes'),
-
-  dataplaneRoutes: token<SplitRouteRecordRaw[]>('kuma.dataplane.routes'),
-  gatewayRoutes: token<SplitRouteRecordRaw[]>('kuma.gateway.routes'),
-  serviceRoutes: token<SplitRouteRecordRaw[]>('kuma.service.routes'),
-  policyRoutes: token<SplitRouteRecordRaw[]>('kuma.policy.routes'),
-
-  zoneRoutes: token<RouteRecordRaw[]>('kuma.zone.routes'),
-
-  nav: token<ReturnType<typeof getNavItems>>('nav'),
-
-  logger: token<Logger>('logger'),
-
-  app: token<ReturnType<typeof useApp>>('app'),
+  ..._TOKENS,
 }
 type SupportedTokens = typeof $
 export const services: ServiceConfigurator<SupportedTokens> = ($) => [
@@ -203,6 +163,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     arguments: [
       $.store,
       $.router,
+      $.components,
     ],
   }],
   // Routes
