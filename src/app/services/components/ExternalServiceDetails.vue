@@ -12,19 +12,7 @@
             </template>
 
             <template #body>
-              <TextWithCopyButton :text="props.serviceInsight.name">
-                <RouterLink
-                  :to="{
-                    name: 'service-detail-view',
-                    params: {
-                      service: props.serviceInsight.name,
-                      mesh: props.serviceInsight.mesh,
-                    },
-                  }"
-                >
-                  {{ props.serviceInsight.name }}
-                </RouterLink>
-              </TextWithCopyButton>
+              <TextWithCopyButton :text="props.serviceInsight.name" />
             </template>
           </DefinitionCard>
 

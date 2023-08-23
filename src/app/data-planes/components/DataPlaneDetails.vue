@@ -10,7 +10,10 @@
 
         <KCard>
           <template #body>
-            <div class="variable-columns">
+            <div
+              class="columns"
+              style="--columns: 4;"
+            >
               <DefinitionCard>
                 <template #title>
                   {{ t('http.api.property.status') }}

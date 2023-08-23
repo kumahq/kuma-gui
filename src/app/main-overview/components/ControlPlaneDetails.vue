@@ -8,7 +8,10 @@
           </div>
         </div>
 
-        <div class="variable-columns">
+        <div
+          class="columns"
+          style="--columns: 4;"
+        >
           <ResourceStatus
             :total="store.getters['config/getMulticlusterStatus'] ? props.zoneOverviews.length : 1"
             data-testid="zone-control-planes-status"
@@ -64,7 +67,10 @@
       </template>
     </KCard>
 
-    <div class="variable-columns">
+    <div
+      class="columns"
+      style="--columns: 2;"
+    >
       <KCard v-if="store.getters['config/getMulticlusterStatus']">
         <template #body>
           <div class="card-header">

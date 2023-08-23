@@ -9,7 +9,10 @@
 
         <KCard>
           <template #body>
-            <div class="variable-columns">
+            <div
+              class="columns"
+              style="--columns: 4;"
+            >
               <DefinitionCard>
                 <template #title>
                   {{ t('http.api.property.status') }}
@@ -26,18 +29,7 @@
                 </template>
 
                 <template #body>
-                  <TextWithCopyButton :text="props.zoneOverview.name">
-                    <RouterLink
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: props.zoneOverview.name,
-                        },
-                      }"
-                    >
-                      {{ props.zoneOverview.name }}
-                    </RouterLink>
-                  </TextWithCopyButton>
+                  <TextWithCopyButton :text="props.zoneOverview.name" />
                 </template>
               </DefinitionCard>
 
