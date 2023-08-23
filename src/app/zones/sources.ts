@@ -12,6 +12,10 @@ type DetailParams = {
   name: string
 }
 
+type EnvoyDataParams = DetailParams & {
+  dataPath: 'xds' | 'clusters' | 'stats'
+}
+
 type Closeable = { close: () => void }
 
 export type ZoneOverviewCollection = CollectionResponse<ZoneOverview>
@@ -25,6 +29,8 @@ export type ZoneIngressOverviewCollectionSource = DataSourceResponse<ZoneIngress
 export type ZoneEgressOverviewCollection = CollectionResponse<ZoneEgressOverview>
 export type ZoneEgressOverviewSource = DataSourceResponse<ZoneEgressOverview>
 export type ZoneEgressOverviewCollectionSource = DataSourceResponse<ZoneEgressOverviewCollection>
+
+export type EnvoyDataSource = DataSourceResponse<object | string>
 
 export const sources = (api: KumaApi) => {
   return {
@@ -54,12 +60,20 @@ export const sources = (api: KumaApi) => {
       return await api.getAllZoneIngressOverviews({ size, offset })
     },
 
-    '/zone-egresses/:name': async (params: DetailParams, source: Closeable) => {
+    '/zone-ingresses/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { name } = params
 
-      return await api.getZoneEgressOverview({ name })
+      return await api.getZoneIngressOverview({ name })
+    },
+
+    '/zone-ingresses/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
+      source.close()
+
+      const { name, dataPath } = params
+
+      return api.getZoneIngressData({ zoneIngressName: name, dataPath })
     },
 
     '/zone-egresses': async (params: PaginationParams, source: Closeable) => {
@@ -71,12 +85,20 @@ export const sources = (api: KumaApi) => {
       return await api.getAllZoneEgressOverviews({ size, offset })
     },
 
-    '/zone-ingresses/:name': async (params: DetailParams, source: Closeable) => {
+    '/zone-egresses/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { name } = params
 
-      return await api.getZoneIngressOverview({ name })
+      return await api.getZoneEgressOverview({ name })
+    },
+
+    '/zone-egresses/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
+      source.close()
+
+      const { name, dataPath } = params
+
+      return api.getZoneEgressData({ zoneEgressName: name, dataPath })
     },
   }
 }

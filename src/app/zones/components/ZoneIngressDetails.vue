@@ -77,9 +77,8 @@
       <KCard>
         <template #body>
           <EnvoyData
-            data-path="xds"
-            :zone-ingress-name="props.zoneIngressOverview.name"
-            query-key="envoy-data-zone-ingress"
+            :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/xds`"
+            query-key="envoy-data-xds-zone-ingress"
           />
         </template>
       </KCard>
@@ -89,9 +88,8 @@
       <KCard>
         <template #body>
           <EnvoyData
-            data-path="stats"
-            :zone-ingress-name="props.zoneIngressOverview.name"
-            query-key="envoy-data-zone-ingress"
+            :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/stats`"
+            query-key="envoy-data-stats-zone-ingress"
           />
         </template>
       </KCard>
@@ -101,9 +99,8 @@
       <KCard>
         <template #body>
           <EnvoyData
-            data-path="clusters"
-            :zone-ingress-name="props.zoneIngressOverview.name"
-            query-key="envoy-data-zone-ingress"
+            :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/clusters`"
+            query-key="envoy-data-clusters-zone-ingress"
           />
         </template>
       </KCard>

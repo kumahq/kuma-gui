@@ -1,133 +1,63 @@
 <template>
   <div>
-    <div class="envoy-data-actions">
-      <KButton
-        :disabled="isLoading"
-        appearance="primary"
-        icon="redo"
-        data-testid="envoy-data-refresh-button"
-        @click="fetchContent"
-      >
-        Refresh
-      </KButton>
-    </div>
-
-    <StatusInfo
-      :is-loading="isLoading"
-      :error="error"
+    <DataSource
+      v-slot="{ data, error, refresh }: EnvoyDataSource"
+      :src="props.src"
     >
-      <CodeBlock
-        :id="`code-block-${props.dataPath}`"
-        language="json"
-        :code="code"
-        is-searchable
-        :query-key="props.queryKey ?? `code-block-${props.dataPath}`"
+      <ErrorBlock
+        v-if="error"
+        :error="error"
       />
-    </StatusInfo>
+
+      <LoadingBlock v-else-if="data === undefined" />
+
+      <EmptyBlock v-else-if="data === ''" />
+
+      <template v-else>
+        <div class="envoy-data-actions">
+          <KButton
+            appearance="primary"
+            icon="redo"
+            data-testid="envoy-data-refresh-button"
+            @click="refresh"
+          >
+            Refresh
+          </KButton>
+        </div>
+
+        <CodeBlock
+          id="code-block-envoy-data"
+          language="json"
+          :code="typeof data === 'string' ? data : JSON.stringify(data, null, 2)"
+          is-searchable
+          :query-key="props.queryKey"
+        />
+      </template>
+    </DataSource>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { KButton } from '@kong/kongponents'
-import { onMounted, PropType, ref, watch } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import StatusInfo from './StatusInfo.vue'
-import { useKumaApi } from '@/utilities'
-
-const kumaApi = useKumaApi()
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { EnvoyDataSource } from '@/app/zones/sources'
 
 const props = defineProps({
-  dataPath: {
-    type: String as PropType<'xds' | 'stats' | 'clusters'>,
+  src: {
+    type: String,
     required: true,
   },
 
   queryKey: {
     type: String,
-    required: false,
-    default: null,
-  },
-
-  mesh: {
-    type: String,
-    required: false,
-    default: '',
-  },
-
-  dppName: {
-    type: String,
-    required: false,
-    default: '',
-  },
-
-  zoneIngressName: {
-    type: String,
-    required: false,
-    default: '',
-  },
-
-  zoneEgressName: {
-    type: String,
-    required: false,
-    default: '',
+    required: true,
   },
 })
-
-const isLoading = ref(true)
-const error = ref<Error | null>(null)
-const code = ref('')
-
-watch(() => props.dppName, function () {
-  fetchContent()
-})
-watch(() => props.zoneIngressName, function () {
-  fetchContent()
-})
-watch(() => props.zoneEgressName, function () {
-  fetchContent()
-})
-
-onMounted(function () {
-  fetchContent()
-})
-
-async function fetchContent() {
-  error.value = null
-  isLoading.value = true
-
-  try {
-    let content = ''
-
-    if (props.mesh !== '' && props.dppName !== '') {
-      content = await kumaApi.getDataplaneData({
-        dataPath: props.dataPath,
-        mesh: props.mesh,
-        dppName: props.dppName,
-      })
-    } else if (props.zoneIngressName !== '') {
-      content = await kumaApi.getZoneIngressData({
-        dataPath: props.dataPath,
-        zoneIngressName: props.zoneIngressName,
-      })
-    } else if (props.zoneEgressName !== '') {
-      content = await kumaApi.getZoneEgressData({
-        dataPath: props.dataPath,
-        zoneEgressName: props.zoneEgressName,
-      })
-    }
-
-    code.value = typeof content === 'string' ? content : JSON.stringify(content, null, 2)
-  } catch (err) {
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
 </script>
 
 <style lang="scss" scoped>

@@ -227,10 +227,8 @@
       <KCard>
         <template #body>
           <EnvoyData
-            data-path="xds"
-            :mesh="dataplaneOverview.mesh"
-            :dpp-name="dataplaneOverview.name"
-            query-key="envoy-data-data-plane"
+            :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/xds`"
+            query-key="envoy-data-xds-data-plane"
           />
         </template>
       </KCard>
@@ -240,10 +238,8 @@
       <KCard>
         <template #body>
           <EnvoyData
-            data-path="stats"
-            :mesh="dataplaneOverview.mesh"
-            :dpp-name="dataplaneOverview.name"
-            query-key="envoy-data-data-plane"
+            :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/stats`"
+            query-key="envoy-data-stats-data-plane"
           />
         </template>
       </KCard>
@@ -253,10 +249,8 @@
       <KCard>
         <template #body>
           <EnvoyData
-            data-path="clusters"
-            :mesh="dataplaneOverview.mesh"
-            :dpp-name="dataplaneOverview.name"
-            query-key="envoy-data-data-plane"
+            :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/clusters`"
+            query-key="envoy-data-clusters-data-plane"
           />
         </template>
       </KCard>
