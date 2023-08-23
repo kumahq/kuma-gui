@@ -25,7 +25,9 @@ export class DataSourcePool {
   // ensure they are shared singletons
   pool: SharedPool<string, CallableEventSource>
 
-  constructor(requests: Sources, { create, destroy }: {create: Creator, destroy: Destroyer}) {
+  getCacheKeyPrefix: () => string
+
+  constructor(requests: Sources, { create, destroy }: {create: Creator, destroy: Destroyer}, getCacheKeyPrefix: () => string) {
     const requestRouter: Router<Source> = new Router(requests)
 
     this.pool = new SharedPool<string, CallableEventSource>(
@@ -36,18 +38,21 @@ export class DataSourcePool {
         destroy(src, source)
       },
     )
+
+    this.getCacheKeyPrefix = getCacheKeyPrefix
   }
 
   source(src: string, ref: symbol): CallableEventSource {
+    const cacheKey = this.getCacheKeyPrefix() + src
     const _source = this.pool.acquire(src, ref)
     _source.addEventListener('message', (e: Event) => {
       // always fill the cache on a successful response
-      this.cache.set(src, (e as MessageEvent).data)
+      this.cache.set(cacheKey, (e as MessageEvent).data)
     })
-    if (this.cache.has(src)) {
+    if (this.cache.has(cacheKey)) {
       Promise.resolve().then(() => {
         _source?.dispatchEvent(
-          new MessageEvent('message', { data: this.cache.get(src) }),
+          new MessageEvent('message', { data: this.cache.get(cacheKey) }),
         )
       })
     }

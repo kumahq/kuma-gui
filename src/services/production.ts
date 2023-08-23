@@ -44,6 +44,7 @@ const $ = {
 
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
+  getDataSourceCacheKeyPrefix: token<() => string>('getDataSourceCacheKeyPrefix'),
   dataSourcePool: token<DataSourcePool>('DataSourcePool'),
   dataSourceLifecycle: token<typeof DataSourceLifeCycle>('DataSourceLifecycle'),
   sources: token('sources'),
@@ -124,11 +125,18 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.dataSourceLifecycle, {
     constant: DataSourceLifeCycle,
   }],
+  [$.getDataSourceCacheKeyPrefix, {
+    service: () => () => '',
+    arguments: [
+      $.router,
+    ],
+  }],
   [$.dataSourcePool, {
     service: DataSourcePool,
     arguments: [
       $.sources,
       $.dataSourceLifecycle,
+      $.getDataSourceCacheKeyPrefix,
     ],
   }],
   [$.api, {
