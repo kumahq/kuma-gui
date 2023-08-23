@@ -1,35 +1,55 @@
 <template>
   <div>
-    <div class="envoy-data-actions">
-      <KButton
-        appearance="primary"
-        icon="redo"
-        data-testid="envoy-data-refresh-button"
-        @click="emit('refresh')"
-      >
-        Refresh
-      </KButton>
-    </div>
+    <DataSource
+      v-slot="{ data, error, refresh }: EnvoyDataSource"
+      :src="props.src"
+    >
+      <ErrorBlock
+        v-if="error"
+        :error="error"
+      />
 
-    <CodeBlock
-      id="code-block-envoy-data"
-      language="json"
-      :code="typeof props.content === 'string' ? props.content : JSON.stringify(props.content, null, 2)"
-      is-searchable
-      :query-key="props.queryKey"
-    />
+      <LoadingBlock v-else-if="data === undefined" />
+
+      <EmptyBlock v-else-if="data === ''" />
+
+      <template v-else>
+        <div class="envoy-data-actions">
+          <KButton
+            appearance="primary"
+            icon="redo"
+            data-testid="envoy-data-refresh-button"
+            @click="refresh"
+          >
+            Refresh
+          </KButton>
+        </div>
+
+        <CodeBlock
+          id="code-block-envoy-data"
+          language="json"
+          :code="typeof data === 'string' ? data : JSON.stringify(data, null, 2)"
+          is-searchable
+          :query-key="props.queryKey"
+        />
+      </template>
+    </DataSource>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { KButton } from '@kong/kongponents'
-import { PropType } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { EnvoyDataSource } from '@/app/zones/sources'
 
 const props = defineProps({
-  content: {
-    type: [Object, String] as PropType<object | string>,
+  src: {
+    type: String,
     required: true,
   },
 
@@ -38,10 +58,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-const emit = defineEmits<{
-  (event: 'refresh'): void
-}>()
 </script>
 
 <style lang="scss" scoped>

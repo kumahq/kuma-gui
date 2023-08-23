@@ -76,26 +76,10 @@
     <template #xds-configuration>
       <KCard>
         <template #body>
-          <DataSource
-            v-slot="{ data, error, refresh }: EnvoyDataSource"
+          <EnvoyData
             :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/xds`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <EmptyBlock v-else-if="data === ''" />
-
-            <EnvoyData
-              v-else
-              :content="data"
-              query-key="envoy-data-xds-zone-ingress"
-              @refresh="refresh"
-            />
-          </DataSource>
+            query-key="envoy-data-xds-zone-ingress"
+          />
         </template>
       </KCard>
     </template>
@@ -103,26 +87,10 @@
     <template #envoy-stats>
       <KCard>
         <template #body>
-          <DataSource
-            v-slot="{ data, error, refresh }: EnvoyDataSource"
+          <EnvoyData
             :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/stats`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <EmptyBlock v-else-if="data === ''" />
-
-            <EnvoyData
-              v-else
-              :content="data"
-              query-key="envoy-data-stats-zone-ingress"
-              @refresh="refresh"
-            />
-          </DataSource>
+            query-key="envoy-data-stats-zone-ingress"
+          />
         </template>
       </KCard>
     </template>
@@ -130,26 +98,10 @@
     <template #envoy-clusters>
       <KCard>
         <template #body>
-          <DataSource
-            v-slot="{ data, error, refresh }: EnvoyDataSource"
+          <EnvoyData
             :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/clusters`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <EmptyBlock v-else-if="data === ''" />
-
-            <EnvoyData
-              v-else
-              :content="data"
-              query-key="envoy-data-clusters-zone-ingress"
-              @refresh="refresh"
-            />
-          </DataSource>
+            query-key="envoy-data-clusters-zone-ingress"
+          />
         </template>
       </KCard>
     </template>
@@ -160,15 +112,10 @@
 import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
-import { EnvoyDataSource } from '../sources'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'

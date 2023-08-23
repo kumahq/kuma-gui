@@ -226,26 +226,10 @@
     <template #xds-configuration>
       <KCard>
         <template #body>
-          <DataSource
-            v-slot="{ data, error, refresh }: EnvoyDataSource"
+          <EnvoyData
             :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/xds`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <EmptyBlock v-else-if="data === ''" />
-
-            <EnvoyData
-              v-else
-              :content="data"
-              query-key="envoy-data-xds-data-plane"
-              @refresh="refresh"
-            />
-          </DataSource>
+            query-key="envoy-data-xds-data-plane"
+          />
         </template>
       </KCard>
     </template>
@@ -253,26 +237,10 @@
     <template #envoy-stats>
       <KCard>
         <template #body>
-          <DataSource
-            v-slot="{ data, error, refresh }: EnvoyDataSource"
+          <EnvoyData
             :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/stats`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <EmptyBlock v-else-if="data === ''" />
-
-            <EnvoyData
-              v-else
-              :content="data"
-              query-key="envoy-data-stats-data-plane"
-              @refresh="refresh"
-            />
-          </DataSource>
+            query-key="envoy-data-stats-data-plane"
+          />
         </template>
       </KCard>
     </template>
@@ -280,26 +248,10 @@
     <template #envoy-clusters>
       <KCard>
         <template #body>
-          <DataSource
-            v-slot="{ data, error, refresh }: EnvoyDataSource"
+          <EnvoyData
             :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/clusters`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <EmptyBlock v-else-if="data === ''" />
-
-            <EnvoyData
-              v-else
-              :content="data"
-              query-key="envoy-data-clusters-data-plane"
-              @refresh="refresh"
-            />
-          </DataSource>
+            query-key="envoy-data-clusters-data-plane"
+          />
         </template>
       </KCard>
     </template>
@@ -311,7 +263,6 @@ import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import DataplanePolicies from './DataplanePolicies.vue'
-import { EnvoyDataSource } from '../sources'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
