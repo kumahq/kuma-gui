@@ -8,14 +8,18 @@
       icon="book"
       color="currentColor"
       size="16"
-      hide-title
+      :title="t('common.documentation')"
     />
 
-    <span class="visually-hidden">Documentation</span>
+    <span class="visually-hidden">{{ t('common.documentation') }}</span>
   </a>
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
+
 const props = defineProps({
   href: {
     type: String,
@@ -28,7 +32,7 @@ const props = defineProps({
 .docs-link {
   display: inline-flex;
   align-items: center;
-  padding-right: var(--spacing-sm);
-  padding-left: var(--spacing-sm);
+  padding-right: $kui-space-40;
+  padding-left: $kui-space-40;
 }
 </style>

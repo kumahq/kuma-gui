@@ -2,6 +2,7 @@ Feature: mesh / policies / index
   Background:
     Given the CSS selectors
       | Alias               | Selector                                  |
+      | policy-type-list    | [data-testid='policy-type-list']          |
       | items               | [data-testid='policy-collection']         |
       | items-header        | $items th                                 |
       | item                | $items tbody tr                           |
@@ -23,7 +24,7 @@ Feature: mesh / policies / index
             - total: 2
           FaultInjection: ~
           HealthChecks: ~
-          MeshGatewayRoute',
+          MeshGatewayRoute: ~
           MeshGateway: ~
           ProxyTemplate: ~
           RateLimit: ~
@@ -48,18 +49,17 @@ Feature: mesh / policies / index
     Then the "$button-docs" element exists
 
   Scenario: The items have the correct columns
-    Then the "$items-header" element exists 3 times
+    Then the "$items-header" element exists 2 times
     Then the "$items-header" elements contain
       | Value |
       | Name  |
-      | Type  |
+
   Scenario: The items have the expected content and UI elements
     Then the "$button-tab-selected" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
-      | Value          |
-      | fake-cb-1      |
-      | CircuitBreaker |
+      | Value     |
+      | fake-cb-1 |
 
   Scenario: Clicking the link goes to the detail page and back again
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
@@ -68,3 +68,23 @@ Feature: mesh / policies / index
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times
+
+  Scenario: Clicking policy types in the sidebar switches listing
+    Given the URL "/meshes/default/meshfaultinjections" responds with
+      """
+      body:
+        items:
+          - name: mfi-1
+            spec:
+              targetRef:
+                kind: MeshService
+                name: service-1
+          - name: mfi-2
+      """
+
+    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    Then the "$item:nth-child(1)" element contains "fake-cb-1"
+
+    When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
+    Then the "$item:nth-child(1)" element contains "mfi-1"
+    And the "$item:nth-child(1)" element contains "MeshService:service-1"

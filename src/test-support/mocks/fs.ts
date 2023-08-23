@@ -26,6 +26,8 @@ import _27 from './src/meshes/_/fault-injections'
 import _28 from './src/meshes/_/fault-injections/_'
 import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
+import _52 from './src/meshes/_/meshfaultinjections'
+import _53 from './src/meshes/_/meshfaultinjections/_'
 import _31 from './src/meshes/_/meshgatewayroutes'
 import _32 from './src/meshes/_/meshgatewayroutes/_'
 import _33 from './src/meshes/_/meshgateways'
@@ -100,6 +102,8 @@ export const fs: FS = {
   '/meshes/:mesh/fault-injections/:name': _28,
   '/meshes/:mesh/health-checks': _29,
   '/meshes/:mesh/health-checks/:name': _30,
+  '/meshes/:mesh/meshfaultinjections': _52,
+  '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshgatewayroutes': _31,
   '/meshes/:mesh/meshgatewayroutes/:name': _32,
   '/meshes/:mesh/meshgateways': _33,

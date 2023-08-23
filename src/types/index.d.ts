@@ -204,6 +204,13 @@ export type PolicyType = {
   isExperimental: boolean
 
   readOnly: boolean
+
+  /**
+   * Whether the policy type is based on target refs (e.g. its policies have a top-level target ref, etc.).
+   */
+  isTargetRefBased: boolean
+  isInbound: boolean
+  isOutbound: boolean
 }
 
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'

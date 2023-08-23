@@ -5,21 +5,21 @@
     data-testid="policy-detail-view"
   >
     <DataSource
-      v-slot="{ data: policiesData, isLoading: policiesIsLoading, error: policiesError }: PolicyTypeCollectionSource"
+      v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
       :src="`/*/policy-types`"
     >
-      <LoadingBlock v-if="policiesIsLoading" />
-
       <ErrorBlock
-        v-else-if="policiesError"
-        :error="policiesError"
+        v-if="policyTypesError"
+        :error="policyTypesError"
       />
 
-      <EmptyBlock v-else-if="policiesData === undefined || policiesData.policies.length === 0" />
+      <LoadingBlock v-else-if="policyTypesData === undefined" />
+
+      <EmptyBlock v-else-if="policyTypesData.policies.length === 0" />
 
       <template v-else>
         <template
-          v-for="currentPolicyType in [policiesData.policies.find((item) => item.path === route.params.policyPath) ?? policiesData.policies[0]]"
+          v-for="currentPolicyType in [policyTypesData.policies.find((item) => item.path === route.params.policyPath) ?? policyTypesData.policies[0]]"
           :key="currentPolicyType.name"
         >
           <AppView

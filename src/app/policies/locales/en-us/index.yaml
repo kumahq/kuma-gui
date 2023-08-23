@@ -4,6 +4,12 @@ policies:
       title: "{name} {type}"
       breadcrumbs: Policies
     items:
-      title: "{name}"
+      title: "Policies"
   href:
     docs: '{KUMA_DOCS_URL}/policies/{name}?{KUMA_UTM_QUERY_PARAMS}'
+  collection:
+    beta: 'Beta'
+    title: 'About {name}'
+    description: 'Use policies to apply filters to incoming or outgoing traffic of Data Plane Proxies. To generate the Envoy configuration of a proxy the control-plane uses its data-plane configuration with the policies matching it.'
+    inbound: 'Inbound'
+    outbound: 'Outbound'
