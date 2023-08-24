@@ -85,6 +85,18 @@
               </template>
             </template>
           </DefinitionCard>
+
+          <DefinitionCard>
+            <template #title>
+              {{ t('http.api.property.zoneEgress') }}
+            </template>
+
+            <template #body>
+              <KBadge appearance="neutral">
+                {{ t(`meshes.detail.${Boolean(props.mesh.routing?.zoneEgress) ? 'enabled' : 'disabled'}`) }}
+              </KBadge>
+            </template>
+          </DefinitionCard>
         </div>
       </div>
     </template>
