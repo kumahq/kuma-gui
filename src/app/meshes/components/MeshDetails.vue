@@ -69,25 +69,6 @@
 
           <DefinitionCard>
             <template #title>
-              {{ t('http.api.property.logging') }}
-            </template>
-
-            <template #body>
-              <KBadge
-                v-if="logging === ''"
-                appearance="neutral"
-              >
-                {{ t('meshes.detail.disabled') }}
-              </KBadge>
-
-              <template v-else>
-                {{ logging }}
-              </template>
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
-            <template #title>
               {{ t('http.api.property.metrics') }}
             </template>
 
@@ -101,25 +82,6 @@
 
               <template v-else>
                 {{ metrics }}
-              </template>
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.tracing') }}
-            </template>
-
-            <template #body>
-              <KBadge
-                v-if="tracing === ''"
-                appearance="neutral"
-              >
-                {{ t('meshes.detail.disabled') }}
-              </KBadge>
-
-              <template v-else>
-                {{ tracing }}
               </template>
             </template>
           </DefinitionCard>
@@ -154,9 +116,7 @@ const props = defineProps({
 })
 
 const mtls = computed(() => getBackendTypeAndName(props.mesh.mtls))
-const logging = computed(() => getBackendTypeAndName(props.mesh.logging))
 const metrics = computed(() => getBackendTypeAndName(props.mesh.metrics))
-const tracing = computed(() => getBackendTypeAndName(props.mesh.tracing))
 
 const totalPolicyCount = computed(() => {
   return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
