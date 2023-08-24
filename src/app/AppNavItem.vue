@@ -69,11 +69,11 @@ function onNavItemClick() {
 <style lang="scss" scoped>
 .nav-item {
   position: relative;
-  margin-left: var(--spacing-xs);
+  margin-left: $kui-space-40;
 }
 
 .nav-item:not(:first-child) {
-  margin-top: var(--spacing-xxs);
+  margin-top: $kui-space-20;
 }
 
 .nav-link {
@@ -81,7 +81,7 @@ function onNavItemClick() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-xs) var(--spacing-md);
+  padding: $kui-space-40 $kui-space-60;
   border-radius: 5px;
   text-decoration: none;
   color: currentColor;
@@ -89,6 +89,6 @@ function onNavItemClick() {
 
 .nav-link:hover,
 .nav-link--is-active {
-  background-color: var(--grey-300);
+  background-color: $kui-color-background-neutral-weaker;
 }
 </style>

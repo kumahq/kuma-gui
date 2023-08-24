@@ -193,7 +193,7 @@ onMounted(function () {
       top: 0px;
       width: 15px;
       height: 15px;
-      background: var(--white);
+      background: #fff;
       box-shadow: inset 0 0 0 2px var(--onboarding-accent);
       border-radius: 100%;
       offset-distance: 0%;
@@ -218,7 +218,7 @@ onMounted(function () {
       }
       &:after {
         z-index: 1;
-        background: var(--white);
+        background: #fff;
         box-shadow: inset 0 0 0 2px var(--onboarding-accent);
       }
       &:before {

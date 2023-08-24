@@ -148,7 +148,6 @@ onBeforeUnmount(() => {
 }
 .app-view-title-bar {
   h1, h2, h3, h4, h5, h6  {
-    color: var(--black-500);
     line-height: 36px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -156,22 +155,22 @@ onBeforeUnmount(() => {
 }
 .app-view-title-bar h1 {
   line-height: 1.3;
-  font-weight: var(--font-weight-semi-bold);
-  font-size: var(--type-xxxl, 32px);
+  font-weight: $kui-font-weight-semibold;
+  font-size: $kui-font-size-80;
 }
 .app-view-title-bar h2 {
-  font-size: var(--type-xl, 22px);
+  font-size: $kui-font-size-60;
 }
 .is-fullscreen {
   .app-view-title-bar {
-    padding: var(--spacing-lg) var(--spacing-xl);
-    border-bottom: 1px solid var(--grey-300);
+    padding: $kui-space-80 $kui-space-90;
+    border-bottom: $kui-border-width-10 solid $kui-color-border;
   }
   .app-view-title-bar h1 {
-    margin-left: var(--spacing-xs);
-    padding-left: var(--spacing-xs);
-    border-left: 1px solid var(--grey-300);
-    font-size: 20px;
+    margin-left: $kui-space-40;
+    padding-left: $kui-space-40;
+    border-left: $kui-border-width-10 solid $kui-color-border;
+    font-size: $kui-font-size-60;
   }
 }
 </style>
@@ -182,7 +181,7 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: $kui-space-60;
 }
 
 </style>

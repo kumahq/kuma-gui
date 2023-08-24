@@ -87,12 +87,9 @@
                     v-if="rowValue"
                     :label="t('zone-cps.list.version_mismatch')"
                   >
-                    <KIcon
+                    <WarningIcon
                       class="mr-1"
-                      icon="warning"
-                      color="var(--black-500)"
-                      secondary-color="var(--yellow-300)"
-                      size="20"
+                      :size="KUI_ICON_SIZE_30"
                       hide-title
                     />
                   </KTooltip>
@@ -117,9 +114,9 @@
                       >
                         <template #icon>
                           <KIcon
-                            color="var(--black-400)"
+                            :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
                             icon="more"
-                            size="16"
+                            :size="KUI_ICON_SIZE_30"
                           />
                         </template>
                       </KButton>
@@ -177,6 +174,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
 import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
@@ -191,6 +189,7 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import WarningIcon from '@/app/common/WarningIcon.vue'
 import { useStore } from '@/store/store'
 import { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useEnv, useI18n, useKumaApi } from '@/utilities'

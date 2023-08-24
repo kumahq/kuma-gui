@@ -39,9 +39,9 @@ const navItems = computed(() => getNavItems(store.getters['config/getMulticluste
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  padding-top: var(--spacing-xs);
-  padding-right: var(--spacing-xs);
-  border-right: var(--KCardBorder);
-  background-color: var(--white);
+  padding-top: $kui-space-40;
+  padding-right: $kui-space-40;
+  border-right: $kui-border-width-10 solid $kui-color-border;
+  background-color:  $kui-color-background;
 }
 </style>

@@ -1,10 +1,9 @@
 @import '@kong/kongponents/dist/style.css';
-@import '@kong/kongponents/dist/_variables.scss';
 
+@import 'mixins';
 @import 'fonts';
 @import 'variables';
 @import 'base';
-@import 'kongponents-overrides';
 @import 'components';
 @import 'forms';
 @import 'utilities';

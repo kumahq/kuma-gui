@@ -109,24 +109,24 @@ const statuses = computed<StatusRow[]>(() => {
 
 <style lang="scss" scoped>
 .overview-tertiary-title {
-  font-size: var(--type-sm);
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--grey-500);
-  margin: var(--spacing-xs) 0;
+  font-size: $kui-font-size-30;
+  font-weight: $kui-font-weight-semibold;
+  color: $kui-color-text-neutral;
+  margin: $kui-space-40 0;
 }
 
 .row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: var(--spacing-xs);
+  padding: $kui-space-40;
 }
 
 .header,
 .type {
-  font-weight: var(--font-weight-semi-bold);
+  font-weight: $kui-font-weight-semibold;
 }
 
 .type {
-  color: var(--grey-600);
+  color: $kui-color-text-neutral-stronger;
 }
 </style>

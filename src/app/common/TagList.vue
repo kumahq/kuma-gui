@@ -94,7 +94,7 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
 .tag-list {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xxs);
+  gap: $kui-space-20;
 }
 
 .tag-badge a {

@@ -12,7 +12,7 @@
       y="133.5"
       width="307"
       height="241"
-      stroke="var(--grey-300)"
+      stroke="#e7e7ec"
       stroke-width="3"
       stroke-dasharray="6 6"
     />
@@ -21,7 +21,7 @@
       y="133.499"
       width="308"
       height="241"
-      stroke="var(--grey-300)"
+      stroke="#e7e7ec"
       stroke-width="3"
       stroke-dasharray="6 6"
     />

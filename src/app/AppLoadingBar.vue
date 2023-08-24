@@ -39,7 +39,7 @@ onUnmounted(function () {
 
 <style lang="scss" scoped>
 .full-screen {
-  background: var(--white);
+  background: $kui-color-background;
   position: fixed;
   top: 0;
   left: 0;
@@ -60,11 +60,11 @@ onUnmounted(function () {
   .progress {
     margin-top: 1rem;
     width: 130%;
-    background-color: var(--grey-300);
+    background-color: $kui-color-background-neutral-weak;
 
     .progress-bar {
       height: 5px;
-      background-color: var(--blue-400);
+      background-color: $kui-color-background-primary-weak;
     }
   }
 }

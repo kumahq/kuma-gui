@@ -37,8 +37,8 @@ const props = defineProps({
 .onboarding-container {
   width: 100%;
   margin: 0 auto;
-  padding: var(--spacing-md);
-  background-color: var(--white);
+  padding: $kui-space-60;
+  background-color: #fff;
   box-shadow: var(--onboarding-shadow);
 
   @media (min-width: 768px) {
@@ -56,7 +56,7 @@ const props = defineProps({
 }
 
 .onboarding-container__header {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: $kui-space-80;
 }
 
 .onboarding-container__content {
@@ -71,7 +71,7 @@ const props = defineProps({
 }
 
 .onboarding-container__content--with-image {
-  background-color: var(--blue-100);
+  background-color: #f2f6fe;
 }
 
 .onboarding-container__inner-content {

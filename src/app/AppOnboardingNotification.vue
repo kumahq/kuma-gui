@@ -46,7 +46,7 @@ function closeAlert() {
 
 <style lang="scss" scoped>
 .onboarding-check {
-  margin: 0 0 var(--spacing-xl) 0;
+  margin: 0 0 $kui-space-90 0;
 }
 
 .alert-content {
@@ -55,7 +55,7 @@ function closeAlert() {
     align-items: center;
 
     > *:first-of-type {
-      margin-right: var(--spacing-md);
+      margin-right: $kui-space-60;
     }
 
     > *:last-of-type {

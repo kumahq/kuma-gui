@@ -65,6 +65,6 @@ const props = defineProps({
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: $kui-space-60;
 }
 </style>

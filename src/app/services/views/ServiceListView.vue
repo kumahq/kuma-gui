@@ -97,9 +97,9 @@
                     >
                       <template #icon>
                         <KIcon
-                          color="var(--black-400)"
+                          :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
                           icon="more"
-                          size="16"
+                          :size="KUI_ICON_SIZE_30"
                         />
                       </template>
                     </KButton>
@@ -128,6 +128,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   KCard,
   KIcon,

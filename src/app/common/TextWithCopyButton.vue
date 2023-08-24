@@ -28,6 +28,6 @@ const props = defineProps({
 .copy-button-wrapper {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: $kui-space-40;
 }
 </style>

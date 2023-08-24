@@ -5,12 +5,17 @@
   >
     <KEmptyState cta-is-hidden>
       <template #title>
+        <WarningIcon
+          v-if="props.icon === 'warning'"
+          class="mb-3"
+          :size="KUI_ICON_SIZE_50"
+        />
+
         <KIcon
+          v-else
           class="mb-3"
           :icon="props.icon"
-          :color="props.icon === 'warning' ? 'var(--black-500)' : undefined"
-          :secondary-color="props.icon === 'warning' ? 'var(--yellow-300)' : undefined"
-          size="42"
+          :size="KUI_ICON_SIZE_50"
         />
 
         <slot>
@@ -67,9 +72,11 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import WarningIcon from '@/app/common/WarningIcon.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
 
 const props = defineProps({
@@ -95,7 +102,7 @@ const props = defineProps({
 const invalidParameters = computed(() => props.error instanceof ApiError ? props.error.invalidParameters : [])
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .error-block {
   position: relative;
 }
@@ -106,12 +113,12 @@ const invalidParameters = computed(() => props.error instanceof ApiError ? props
 
 .badge-list {
   position: absolute;
-  top: var(--spacing-xs);
-  right: var(--spacing-xs);
+  top: 16px;
+  right: 16px;
   display: flex;
 }
 
 .badge-list > * + * {
-  margin-left: var(--spacing-xs);
+  margin-left: $kui-space-40;
 }
 </style>

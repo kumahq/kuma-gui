@@ -54,7 +54,7 @@
     <g filter="url(#filter2_d)">
       <path
         d="M79 41.5L67 41.5L67 26L79 41.5Z"
-        fill="var(--grey-400)"
+        fill="#b6b6bd"
       />
     </g>
 

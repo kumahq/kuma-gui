@@ -105,7 +105,7 @@ function end(element: Element) {
 <style lang="scss" scoped>
 .accordion-item {
   position: relative;
-  border-bottom: var(--KCardBorder);
+  border-bottom: $kui-border-width-10 solid $kui-color-border;
 }
 
 .accordion-item:last-child {
@@ -127,7 +127,7 @@ function end(element: Element) {
 
 .active {
   .accordion-item-header::after {
-    margin-left: var(--spacing-sm);
+    margin-left: $kui-space-50;
     transform: rotate(-180deg) translateY(-50%);
     top: calc(50% - 4px);
   }
@@ -138,8 +138,8 @@ function end(element: Element) {
   display: block;
   width: 100%;
   text-align: left;
-  padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
+  padding-top: $kui-space-40;
+  padding-bottom: $kui-space-40;
 
   &::after {
     position: absolute;
@@ -155,7 +155,7 @@ function end(element: Element) {
 }
 
 .accordion-item-content {
-  padding-top: var(--spacing-xs);
-  padding-bottom: var(--spacing-xs);
+  padding-top: $kui-space-40;
+  padding-bottom: $kui-space-40;
 }
 </style>

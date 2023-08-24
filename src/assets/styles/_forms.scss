@@ -5,7 +5,7 @@
 }
 
 .form-wrapper>*+* {
-  margin-block-start: var(--spacing-md);
+  margin-block-start: $kui-space-60;
 }
 
 .radio-button-group>* {
@@ -13,5 +13,5 @@
 }
 
 .radio-button-group>*+* {
-  margin-block-start: var(--spacing-xs);
+  margin-block-start: $kui-space-40;
 }

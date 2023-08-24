@@ -76,12 +76,9 @@
         v-if="rowValue.length > 0"
         :label="t('data-planes.list.version_mismatch')"
       >
-        <KIcon
+        <WarningIcon
           class="mr-1"
-          icon="warning"
-          color="var(--black-500)"
-          secondary-color="var(--yellow-300)"
-          size="20"
+          :size="KUI_ICON_SIZE_30"
           hide-title
         />
       </KTooltip>
@@ -105,9 +102,9 @@
           >
             <template #icon>
               <KIcon
-                color="var(--black-400)"
+                :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
                 icon="more"
-                size="16"
+                :size="KUI_ICON_SIZE_30"
               />
             </template>
           </KButton>
@@ -131,6 +128,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   KDropdownItem,
   KDropdownMenu,
@@ -143,6 +141,7 @@ import { RouteLocationNamedRaw } from 'vue-router'
 
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import WarningIcon from '@/app/common/WarningIcon.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'

@@ -393,6 +393,6 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
 
 <style lang="scss" scoped>
 .policies-list {
-  padding: var(--spacing-sm);
+  padding: $kui-space-50;
 }
 </style>

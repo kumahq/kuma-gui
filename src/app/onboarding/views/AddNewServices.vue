@@ -98,6 +98,6 @@ function setMode(newMode: typeof store.state.onboarding.mode): void {
 
 .service-mode-title {
   text-transform: uppercase;
-  font-weight: var(--font-weight-semi-bold);
+  font-weight: $kui-font-weight-semibold;
 }
 </style>

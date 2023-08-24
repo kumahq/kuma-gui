@@ -162,11 +162,11 @@ function clearZoneIngressTimeout() {
 }
 
 .status--is-connected {
-  color: var(--green-500);
+  color: $kui-color-text-success;
 }
 
 .status--is-disconnected {
-  color: var(--red-500);
+  color: $kui-color-text-danger;
 }
 
 .status-loading-box {

@@ -138,10 +138,11 @@ const click = (e: MouseEvent) => {
   }
 }
 </script>
-<style type="scss" scoped>
+
+<style lang="scss" scoped>
 .app-collection :deep(td:first-of-type > a) {
   color: inherit;
-  font-weight: var(--font-weight-semi-bold);
+  font-weight: $kui-font-weight-semibold;
   text-decoration: none;
 }
 
@@ -150,13 +151,12 @@ const click = (e: MouseEvent) => {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  gap: var(--spacing-md);
-  font-size: var(--type-md);
-  color: var(--black-500);
+  gap: $kui-space-60;
+  font-size: $kui-font-size-40;
 }
 </style>
 
-<style type="scss">
+<style lang="scss">
 .app-collection td {
   width: var(--column-width, initial);
 }

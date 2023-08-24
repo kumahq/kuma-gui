@@ -7,22 +7,22 @@
             <KIcon
               v-if="isRunning"
               icon="spinner"
-              color="var(--grey-300)"
-              size="42"
+              :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+              :size="KUI_ICON_SIZE_50"
             />
 
             <KIcon
               v-else-if="hasError"
               icon="errorFilled"
-              color="var(--red-500)"
-              size="42"
+              :color="KUI_COLOR_TEXT_DANGER"
+              :size="KUI_ICON_SIZE_50"
             />
 
             <KIcon
               v-else
               icon="circleCheck"
-              color="var(--green-500)"
-              size="42"
+              :color="KUI_COLOR_TEXT_SUCCESS"
+              :size="KUI_ICON_SIZE_50"
             />
           </div>
 
@@ -64,6 +64,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_COLOR_TEXT_DANGER, KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { KEmptyState, KIcon } from '@kong/kongponents'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
