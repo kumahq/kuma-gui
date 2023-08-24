@@ -1,6 +1,16 @@
 <template>
   <div>
+    <KAlert
+      v-if="props.status !== 'online'"
+      appearance="info"
+    >
+      <template #alertMessage>
+        <p>{{ t('common.detail.no_envoy_data', { resource: props.resource }) }}</p>
+      </template>
+    </KAlert>
+
     <DataSource
+      v-else
       v-slot="{ data, error, refresh }: EnvoyDataSource"
       :src="props.src"
     >
@@ -38,7 +48,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton } from '@kong/kongponents'
+import { KAlert, KButton } from '@kong/kongponents'
+import { PropType } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
@@ -46,8 +57,22 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { EnvoyDataSource } from '@/app/zones/sources'
+import { StatusKeyword } from '@/types'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 
 const props = defineProps({
+  status: {
+    type: String as PropType<StatusKeyword>,
+    required: true,
+  },
+
+  resource: {
+    type: String,
+    required: true,
+  },
+
   src: {
     type: String,
     required: true,

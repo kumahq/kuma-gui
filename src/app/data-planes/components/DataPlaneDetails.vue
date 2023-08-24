@@ -232,6 +232,8 @@
       <KCard>
         <template #body>
           <EnvoyData
+            :status="statusWithReason.status"
+            resource="Data Plane Proxy"
             :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/xds`"
             query-key="envoy-data-xds-data-plane"
           />
@@ -243,6 +245,8 @@
       <KCard>
         <template #body>
           <EnvoyData
+            :status="statusWithReason.status"
+            resource="Data Plane Proxy"
             :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/stats`"
             query-key="envoy-data-stats-data-plane"
           />
@@ -254,6 +258,8 @@
       <KCard>
         <template #body>
           <EnvoyData
+            :status="statusWithReason.status"
+            resource="Data Plane Proxy"
             :src="`/meshes/${props.dataplaneOverview.mesh}/dataplanes/${props.dataplaneOverview.name}/data-path/clusters`"
             query-key="envoy-data-clusters-data-plane"
           />

@@ -69,6 +69,8 @@
       <KCard>
         <template #body>
           <EnvoyData
+            :status="status"
+            resource="Zone"
             :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/xds`"
             query-key="envoy-data-xds-zone-ingress"
           />
@@ -80,6 +82,8 @@
       <KCard>
         <template #body>
           <EnvoyData
+            :status="status"
+            resource="Zone"
             :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/stats`"
             query-key="envoy-data-stats-zone-ingress"
           />
@@ -91,6 +95,8 @@
       <KCard>
         <template #body>
           <EnvoyData
+            :status="status"
+            resource="Zone"
             :src="`/zone-ingresses/${props.zoneIngressOverview.name}/data-path/clusters`"
             query-key="envoy-data-clusters-zone-ingress"
           />

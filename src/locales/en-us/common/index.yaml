@@ -28,3 +28,4 @@ common:
     none: '—'
     created: 'Created'
     modified: 'Modified'
+    no_envoy_data: 'No Envoy data is available because the {resource} is not online'
