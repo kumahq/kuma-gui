@@ -23,7 +23,7 @@
     <EmptyBlock v-else-if="data.items.length === 0" />
 
     <template v-else>
-      <ul>
+      <ul data-testid="affected-data-plane-proxies">
         <li
           v-for="(policyDataplane, key) in data.items.filter((policyDataplane) => policyDataplane.dataplane.name.toLowerCase().includes(searchInput.toLowerCase()))"
           :key="key"
