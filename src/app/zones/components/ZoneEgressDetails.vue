@@ -1,68 +1,68 @@
 <template>
   <TabsWidget :tabs="TABS">
     <template #overview>
-      <KCard>
-        <template #body>
-          <div
-            class="columns"
-            style="--columns: 3;"
-          >
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.status') }}
-              </template>
-
-              <template #body>
-                <StatusBadge :status="status" />
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.name') }}
-              </template>
-
-              <template #body>
-                <TextWithCopyButton :text="props.zoneEgressOverview.name" />
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.type') }}
-              </template>
-
-              <template #body>
-                {{ props.zoneEgressOverview.type }}
-              </template>
-            </DefinitionCard>
-          </div>
-        </template>
-      </KCard>
-    </template>
-
-    <template #insights>
-      <KCard>
-        <template #body>
-          <AccordionList :initially-open="0">
-            <AccordionItem
-              v-for="(subscription, index) in subscriptionsReversed"
-              :key="index"
+      <div class="stack">
+        <KCard>
+          <template #body>
+            <div
+              class="columns"
+              style="--columns: 3;"
             >
-              <template #accordion-header>
-                <SubscriptionHeader :subscription="subscription" />
-              </template>
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
 
-              <template #accordion-content>
-                <SubscriptionDetails
-                  :subscription="subscription"
-                  is-discovery-subscription
-                />
-              </template>
-            </AccordionItem>
-          </AccordionList>
-        </template>
-      </KCard>
+                <template #body>
+                  <StatusBadge :status="status" />
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.name') }}
+                </template>
+
+                <template #body>
+                  <TextWithCopyButton :text="props.zoneEgressOverview.name" />
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.type') }}
+                </template>
+
+                <template #body>
+                  {{ props.zoneEgressOverview.type }}
+                </template>
+              </DefinitionCard>
+            </div>
+          </template>
+        </KCard>
+
+        <KCard>
+          <template #body>
+            <AccordionList :initially-open="0">
+              <AccordionItem
+                v-for="(subscription, index) in subscriptionsReversed"
+                :key="index"
+              >
+                <template #accordion-header>
+                  <SubscriptionHeader :subscription="subscription" />
+                </template>
+
+                <template #accordion-content>
+                  <SubscriptionDetails
+                    :subscription="subscription"
+                    is-discovery-subscription
+                  />
+                </template>
+              </AccordionItem>
+            </AccordionList>
+          </template>
+        </KCard>
+      </div>
     </template>
 
     <template #xds-configuration>
@@ -129,10 +129,6 @@ const TABS = [
   {
     hash: '#overview',
     title: t('zone-egresses.routes.item.tabs.overview'),
-  },
-  {
-    hash: '#insights',
-    title: t('zone-egresses.routes.item.tabs.insights'),
   },
   {
     hash: '#xds-configuration',
