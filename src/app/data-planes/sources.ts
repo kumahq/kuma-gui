@@ -1,7 +1,7 @@
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { DataPlaneOverview as DataplaneOverview } from '@/types/index.d'
+import type { DataPlane, DataPlaneOverview as DataplaneOverview } from '@/types/index.d'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 
 type CollectionParams = {
@@ -32,6 +32,7 @@ type DataplaneTypeParams = {
 
 type Closeable = { close: () => void }
 
+export type DataplaneSource = DataSourceResponse<DataPlane>
 export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
 export type DataPlaneCollection = CollectionResponse<DataplaneOverview>
 export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
@@ -54,6 +55,14 @@ export const sources = (api: KumaApi) => {
         offset,
         size,
       })
+    },
+
+    '/meshes/:mesh/dataplanes/:name': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, name } = params
+
+      return api.getDataplaneFromMesh({ mesh, name })
     },
 
     '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {

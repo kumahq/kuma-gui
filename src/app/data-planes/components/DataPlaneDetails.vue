@@ -149,15 +149,29 @@
         </div>
 
         <div>
-          <h3>{{ t('data-planes.detail.configuration') }}</h3>
+          <DataSource
+            v-slot="{ data, error }: DataplaneSource"
+            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
+          >
+            <ErrorBlock
+              v-if="error"
+              :error="error"
+            />
 
-          <ResourceCodeBlock
-            id="code-block-data-plane"
-            class="mt-4"
-            :resource="props.dataplaneOverview"
-            :resource-fetcher="fetchDataPlaneProxy"
-            is-searchable
-          />
+            <LoadingBlock v-else-if="data === undefined" />
+
+            <template v-else>
+              <h3>{{ t('data-planes.detail.configuration') }}</h3>
+
+              <ResourceCodeBlock
+                id="code-block-data-plane"
+                class="mt-4"
+                :resource="data"
+                :resource-fetcher="fetchDataPlaneProxy"
+                is-searchable
+              />
+            </template>
+          </DataSource>
         </div>
       </div>
     </template>
@@ -252,8 +266,10 @@
 <script lang="ts" setup>
 import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
+import { useRoute } from 'vue-router'
 
 import DataplanePolicies from './DataplanePolicies.vue'
+import type { DataplaneSource } from '../sources'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
@@ -290,6 +306,7 @@ import {
 
 const { t, formatIsoDate } = useI18n()
 const kumaApi = useKumaApi()
+const route = useRoute()
 const store = useStore()
 
 const props = defineProps({

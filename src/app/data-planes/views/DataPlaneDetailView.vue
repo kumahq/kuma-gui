@@ -36,17 +36,15 @@
       </template>
 
       <DataSource
-        v-slot="{ data, isLoading, error }: DataplaneOverviewSource"
+        v-slot="{ data, error }: DataplaneOverviewSource"
         :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
       >
-        <LoadingBlock v-if="isLoading" />
-
         <ErrorBlock
-          v-else-if="error"
+          v-if="error"
           :error="error"
         />
 
-        <EmptyBlock v-else-if="data === undefined" />
+        <LoadingBlock v-else-if="data === undefined" />
 
         <DataPlaneDetails
           v-else
@@ -65,7 +63,6 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useI18n } from '@/utilities'
