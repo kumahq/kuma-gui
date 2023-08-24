@@ -123,17 +123,14 @@ const totalPolicyCount = computed(() => {
 })
 
 function getBackendTypeAndName(meshBackend?: MeshBackend): string {
-  if (!meshBackend || !Array.isArray(meshBackend?.backends) || meshBackend.backends.length === 0) {
-    return ''
+  if (meshBackend?.enabledBackend && Array.isArray(meshBackend.backends)) {
+    const enabledBackend = meshBackend.backends.find((backend) => backend.name === meshBackend.enabledBackend)
+
+    if (enabledBackend !== undefined) {
+      return `${enabledBackend.type} / ${enabledBackend.name}`
+    }
   }
 
-  const enabledBackendName = meshBackend.enabledBackend ?? meshBackend.defaultBackend ?? meshBackend.backends[0].name
-  const enabledBackend = meshBackend.backends.find((backend) => backend.name === enabledBackendName)
-
-  if (enabledBackend === undefined) {
-    return ''
-  }
-
-  return `${enabledBackend.type} / ${enabledBackend.name}`
+  return ''
 }
 </script>
