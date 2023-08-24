@@ -1,6 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
-  const params = req.params
+  const { mesh, name } = req.params
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
   const service = fake.kuma.serviceName()
@@ -12,13 +12,24 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     },
     body: {
       type: 'DataplaneOverview',
-      mesh: params.mesh,
-      name: params.name,
+      mesh,
+      name,
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
       dataplane: {
         networking: {
           address: fake.internet.ip(),
+          ...(name.includes('-gateway') && {
+            gateway: {
+              tags: {
+                'kuma.io/service': service,
+                ...(isMultizone && {
+                  'kuma.io/zone': zone,
+                }),
+              },
+              type: 'BUILTIN',
+            },
+          }),
           inbound: [
             fake.kuma.inbound(service, isMultizone ? zone : undefined),
           ],

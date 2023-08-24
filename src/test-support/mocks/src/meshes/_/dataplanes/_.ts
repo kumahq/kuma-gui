@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh, name } = req.params
-  const isGateway = name.includes('gateway')
+  const isGateway = name.includes('-gateway')
   const service = fake.kuma.serviceName(isGateway ? 'gateway_builtin' : 'internal')
   const isMultizone = true && fake.datatype.boolean()
   const zone = fake.hacker.noun()

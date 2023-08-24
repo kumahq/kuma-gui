@@ -29,7 +29,7 @@
             <DataplanePolicies
               v-else
               :dataplane-overview="props.data"
-              :policy-types="policyTypesData.policies"
+              :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
             />
           </DataSource>
         </template>
