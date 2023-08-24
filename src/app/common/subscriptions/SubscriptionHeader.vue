@@ -1,6 +1,6 @@
 <template>
   <header class="subscription-header">
-    <span>
+    <span class="instance-id">
       <img src="@/assets/images/icon-deployed-code.svg?url">
 
       <template v-if="globalInstanceId">
@@ -25,6 +25,12 @@
         <b>{{ t('common.detail.subscriptions.disconnect_time') }}</b>: {{ disconnectTime }}
       </template>
     </span>
+
+    <span class="responses-sent-acknowledged">
+      {{ t('common.detail.subscriptions.responses_sent_acknowledged') }}:
+
+      {{ total.responsesSent }}/{{ total.responsesAcknowledged }}
+    </span>
   </header>
 </template>
 
@@ -47,16 +53,34 @@ const globalInstanceId = computed(() => 'globalInstanceId' in props.subscription
 const controlPlaneInstanceId = computed(() => 'controlPlaneInstanceId' in props.subscription ? props.subscription.controlPlaneInstanceId : null)
 const connectTime = computed(() => props.subscription.connectTime ? formatIsoDate(props.subscription.connectTime) : null)
 const disconnectTime = computed(() => props.subscription.disconnectTime ? formatIsoDate(props.subscription.disconnectTime) : null)
+const total = computed(() => {
+  const { responsesSent = 0, responsesAcknowledged = 0, responsesRejected = 0 } = props.subscription.status?.total ?? {}
+
+  return {
+    responsesSent,
+    responsesAcknowledged,
+    responsesRejected,
+  }
+})
 </script>
 
 <style lang="scss" scoped>
 .subscription-header {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 30ch repeat(3, 1fr);
+  gap: $kui-space-80;
   padding-right: $kui-space-40;
   padding-left: $kui-space-40;
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: $kui-font-weight-medium;
+}
+
+.instance-id {
+  flex-basis: 30ch;
+}
+
+.responses-sent-acknowledged {
+  color: $kui-color-text-neutral;
 }
 </style>

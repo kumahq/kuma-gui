@@ -41,7 +41,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
                 controlPlaneInstanceId: `${fake.hacker.noun()}-${i}`,
                 connectTime: '2021-02-17T07:33:36.412683Z',
-                disconnectTime: fake.datatype.boolean() ? '2021-02-17T07:33:36.412683Z' : undefined,
+                disconnectTime: i < (subscriptionCount - 1) ? '2021-02-17T07:33:36.412683Z' : undefined,
                 status: {
                   lastUpdateTime: '2021-02-17T10:48:03.638434Z',
                   total: {

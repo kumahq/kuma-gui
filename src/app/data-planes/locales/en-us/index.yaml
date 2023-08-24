@@ -5,7 +5,7 @@ data-planes:
       breadcrumbs: Data Plane Proxies
       tabs:
         overview: 'Overview'
-        insights: 'Insights'
+        insights: 'Subscriptions'
         policies: 'Policies'
         xds_configuration: 'XDS Configuration'
         stats: 'Stats'

@@ -6,8 +6,8 @@ http:
       mTLS: mTLS
       globalInstanceId: Global instance ID
       controlPlaneInstanceId: CP instance ID
-      connectTime: Last connected
-      disconnectTime: Disconnect time
+      connectTime: Connected
+      disconnectTime: Disconnected
       cds: CDS
       eds: EDS
       lds: LDS

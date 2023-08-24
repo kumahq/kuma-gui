@@ -5,7 +5,7 @@ zone-cps:
       breadcrumbs: Zone Control Planes
       tabs:
         overview: 'Overview'
-        insights: 'Insights'
+        insights: 'Subscriptions'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
@@ -25,7 +25,7 @@ zone-ingresses:
       breadcrumbs: Ingresses
       tabs:
         overview: 'Overview'
-        insights: 'Zone Ingress insights'
+        insights: 'Zone Ingress subscriptions'
         xds_configuration: 'XDS Configuration'
         stats: 'Stats'
         clusters: 'Clusters'
@@ -42,7 +42,7 @@ zone-egresses:
       breadcrumbs: Egresses
       tabs:
         overview: 'Overview'
-        insights: 'Zone Egress insights'
+        insights: 'Zone Egress subscriptions'
         xds_configuration: 'XDS Configuration'
         stats: 'Stats'
         clusters: 'Clusters'

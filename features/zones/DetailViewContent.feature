@@ -30,9 +30,7 @@ Feature: Zones: Detail view content
     Then the page title contains "zone-ingress-1"
     Then the "$ingress-detail-view" element contains "zone-ingress-1"
     Then the "$ingress-detail-view" element contains "ZoneIngressOverview"
-
-    When I click the "#insights-tab" element
-    Then the "$ingress-detail-view" element contains "Connect time: Jul 28, 2020, 4:18 PM"
+    Then the "$ingress-detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
 
   Scenario Outline: Zone Egress detail view has expected content
     Given the URL "/config" responds with
@@ -59,6 +57,4 @@ Feature: Zones: Detail view content
     Then the page title contains "zone-egress-1"
     Then the "$egress-detail-view" element contains "zone-egress-1"
     Then the "$egress-detail-view" element contains "ZoneEgressOverview"
-
-    When I click the "#insights-tab" element
-    Then the "$egress-detail-view" element contains "Connect time: Jul 28, 2020, 4:18 PM"
+    Then the "$egress-detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
