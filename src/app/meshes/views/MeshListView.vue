@@ -22,7 +22,6 @@
               <AppCollection
                 class="mesh-collection"
                 data-testid="mesh-collection"
-                :empty-state-title="t('common.emptyState.title')"
                 :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
                 :headers="[
                   { label: 'Name', key: 'name' },

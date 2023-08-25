@@ -85,7 +85,6 @@
             <AppCollection
               class="policy-collection"
               data-testid="policy-collection"
-              :empty-state-title="t('common.emptyState.title')"
               :empty-state-message="t('common.emptyState.message', { type: `${props.currentPolicyType.name} policies` })"
               :headers="[
                 { label: 'Name', key: 'name' },

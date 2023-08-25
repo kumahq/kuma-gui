@@ -21,7 +21,6 @@
             <AppCollection
               class="service-collection"
               data-testid="service-collection"
-              :empty-state-title="t('common.emptyState.title')"
               :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
               :headers="[
                 { label: 'Name', key: 'name' },

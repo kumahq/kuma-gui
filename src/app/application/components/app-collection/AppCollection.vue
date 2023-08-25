@@ -5,7 +5,7 @@
     :style="`--column-width: ${columnWidth}; --special-column-width: ${SPECIAL_COLUMN_WIDTH}%;`"
     :has-error="(typeof props.error !== 'undefined')"
     :pagination-total-items="props.total"
-    :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
+    :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize ?? PAGE_SIZE_DEFAULT }"
     :headers="props.headers"
     :fetcher-cache-key="String(cacheKey)"
     :fetcher="({ page, pageSize, query }: FetcherParams) => {
@@ -25,10 +25,32 @@
     @row:click="click"
   >
     <template
-      v-if="$slots.emptyState || props.items?.length === 0"
+      v-if="props.items?.length === 0"
       #empty-state
     >
-      <EmptyBlock />
+      <EmptyBlock>
+        {{ props.emptyStateTitle ?? t('common.emptyState.title') }}
+
+        <template
+          v-if="props.emptyStateMessage"
+          #message
+        >
+          {{ props.emptyStateMessage }}
+        </template>
+
+        <template
+          v-if="props.emptyStateCtaTo"
+          #cta
+        >
+          <KButton
+            appearance="primary"
+            icon="plus"
+            :to="props.emptyStateCtaTo"
+          >
+            {{ props.emptyStateCtaText }}
+          </KButton>
+        </template>
+      </EmptyBlock>
     </template>
 
     <template
@@ -56,10 +78,13 @@
 </template>
 
 <script lang="ts" setup>
-import { KTable, TableHeader } from '@kong/kongponents'
+import { KButton, KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, computed } from 'vue'
+import { RouteLocationRaw } from 'vue-router'
 
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { useI18n } from '@/utilities'
 
 type CellAttrParams = {
   headerKey: string
@@ -78,17 +103,30 @@ type ChangeValue = {
   s: string
 }
 
+const { t } = useI18n()
+
 const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
   total?: number,
-  pageNumber: number,
-  pageSize: number,
+  pageNumber?: number,
+  pageSize?: number,
   items: unknown[] | undefined,
   headers: TableHeader[],
-  error: Error | undefined,
+  error?: Error | undefined,
+  emptyStateTitle?: string
+  emptyStateMessage?: string
+  emptyStateCtaTo?: string | RouteLocationRaw
+  emptyStateCtaText?: string
 }>(), {
   total: 0,
+  pageNumber: 1,
+  pageSize: 30,
+  error: undefined,
+  emptyStateTitle: undefined,
+  emptyStateMessage: undefined,
+  emptyStateCtaTo: undefined,
+  emptyStateCtaText: undefined,
 })
 
 const emit = defineEmits<{

@@ -7,7 +7,7 @@
   >
     <template #title>
       <slot name="title">
-        <p><slot>There is no data to display.</slot></p>
+        <p><slot>{{ t('common.emptyState.title') }}</slot></p>
       </slot>
     </template>
 
@@ -29,4 +29,8 @@
 
 <script lang="ts" setup>
 import { KEmptyState } from '@kong/kongponents'
+
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 </script>

@@ -115,10 +115,7 @@
             </div>
           </div>
 
-          <EmptyBlock v-if="props.meshInsights.length === 0" />
-
           <MeshesDetails
-            v-else
             data-testid="meshes-details"
             :mesh-insights="props.meshInsights.slice(0, 10)"
           />
@@ -134,7 +131,6 @@ import { PropType, computed } from 'vue'
 
 import MeshesDetails from './MeshesDetails.vue'
 import ZoneControlPlanesDetails from './ZoneControlPlanesDetails.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
