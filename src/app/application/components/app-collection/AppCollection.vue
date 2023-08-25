@@ -42,7 +42,15 @@
           v-if="props.emptyStateCtaTo"
           #cta
         >
+          <DocumentationLink
+            v-if="typeof props.emptyStateCtaTo === 'string'"
+            :href="props.emptyStateCtaTo"
+          >
+            {{ props.emptyStateCtaText }}
+          </DocumentationLink>
+
           <KButton
+            v-else
             appearance="primary"
             icon="plus"
             :to="props.emptyStateCtaTo"
@@ -82,6 +90,7 @@ import { KButton, KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, computed } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
+import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useI18n } from '@/utilities'

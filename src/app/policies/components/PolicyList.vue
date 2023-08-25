@@ -74,7 +74,9 @@
                 <DocumentationLink
                   :href="t('policies.href.docs', { name: props.currentPolicyType.name })"
                   data-testid="policy-documentation-link"
-                />
+                >
+                  <span class="visually-hidden">{{ t('common.documentation') }}</span>
+                </DocumentationLink>
               </div>
             </div>
           </template>
@@ -86,6 +88,8 @@
               class="policy-collection"
               data-testid="policy-collection"
               :empty-state-message="t('common.emptyState.message', { type: `${props.currentPolicyType.name} policies` })"
+              :empty-state-cta-to="t('policies.href.docs', { name: props.currentPolicyType.name })"
+              :empty-state-cta-text="t('common.documentation')"
               :headers="[
                 { label: 'Name', key: 'name' },
                 props.currentPolicyType.isTargetRefBased ? { label: 'Target ref', key: 'targetRef' } : undefined,
