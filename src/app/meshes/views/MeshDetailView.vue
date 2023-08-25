@@ -23,12 +23,29 @@
 
           <EmptyBlock v-else-if="mesh === undefined || meshInsight === undefined" />
 
-          <MeshDetails
+          <div
             v-else
-            :mesh="mesh"
-            :mesh-insight="meshInsight"
+            class="stack"
             data-testid="detail-view-details"
-          />
+          >
+            <MeshDetails
+              :mesh="mesh"
+              :mesh-insight="meshInsight"
+            />
+
+            <ResourceCodeBlock
+              id="code-block-mesh"
+              :resource="mesh"
+              :resource-fetcher="(params) => kumaApi.getMesh({ name: route.params.mesh }, params)"
+            />
+
+            <div class="date-status-wrapper">
+              <ResourceDateStatus
+                :creation-time="mesh.creationTime"
+                :modification-time="mesh.modificationTime"
+              />
+            </div>
+          </div>
         </DataSource>
       </DataSource>
     </AppView>
@@ -36,7 +53,6 @@
 </template>
 
 <script lang="ts" setup>
-import MeshDetails from '../components/MeshDetails.vue'
 import type { MeshSource, MeshInsightSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
@@ -45,7 +61,19 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useI18n } from '@/utilities'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
+import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
+import { useMeshDetails } from '@/components'
+import { useI18n, useKumaApi } from '@/utilities'
 
 const { t } = useI18n()
+const kumaApi = useKumaApi()
+const MeshDetails = useMeshDetails()
 </script>
+
+<style lang="scss" scoped>
+.date-status-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

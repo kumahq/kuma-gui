@@ -8,6 +8,7 @@ import AppOnboardingNotification from '@/app/AppOnboardingNotification.vue'
 import AppSidebar from '@/app/AppSidebar.vue'
 import KumaLogo from '@/app/common/KumaLogo.vue'
 import MainOverview from '@/app/main-overview/components/MainOverview.vue'
+import MeshDetails from '@/app/meshes/components/MeshDetails.vue'
 import KubernetesGraph from '@/app/onboarding/components/graphs/KubernetesGraph.vue'
 import MemoryGraph from '@/app/onboarding/components/graphs/MemoryGraph.vue'
 import MultizoneGraph from '@/app/onboarding/components/graphs/MultizoneGraph.vue'
@@ -30,6 +31,7 @@ export const TOKENS = {
   AppErrorMessage: constant(AppErrorMessage, { description: 'AppErrorMessage' }),
   AppOnboardingNotification: constant(AppOnboardingNotification, { description: 'AppOnboardingNotification' }),
   MainView: constant(MainView, { description: 'MainView' }),
+  MeshDetails: constant(MeshDetails, { description: 'MeshDetails' }),
 }
 export const [
   useKumaLogo,
@@ -46,6 +48,7 @@ export const [
   useAppErrorMessage,
   useAppOnboardingNotification,
   useMainView,
+  useMeshDetails,
 ] = createInjections(
   TOKENS.KumaLogo,
   TOKENS.GithubButton,
@@ -61,4 +64,5 @@ export const [
   TOKENS.AppErrorMessage,
   TOKENS.AppOnboardingNotification,
   TOKENS.MainView,
+  TOKENS.MeshDetails,
 )
