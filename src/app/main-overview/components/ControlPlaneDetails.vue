@@ -83,32 +83,7 @@
             </div>
           </div>
 
-          <EmptyBlock v-if="props.zoneOverviews.length === 0">
-            {{ t('main-overview.detail.zone_control_planes.empty_state.title') }}
-
-            <template
-              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-              #message
-            >
-              {{ t('main-overview.detail.zone_control_planes.empty_state.message') }}
-            </template>
-
-            <template
-              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-              #cta
-            >
-              <KButton
-                appearance="creation"
-                icon="plus"
-                :to="{ name: 'zone-create-view' }"
-              >
-                {{ t('zones.index.create') }}
-              </KButton>
-            </template>
-          </EmptyBlock>
-
           <ZoneControlPlanesDetails
-            v-else
             data-testid="zone-control-planes-details"
             :zone-overviews="props.zoneOverviews.slice(0, 10)"
           />
@@ -151,9 +126,8 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
 import { MeshInsight, ZoneOverview } from '@/types/index.d'
-import { useEnv, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 
-const env = useEnv()
 const { t } = useI18n()
 const store = useStore()
 

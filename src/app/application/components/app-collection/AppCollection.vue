@@ -20,11 +20,17 @@
     :cell-attrs="({ headerKey }: CellAttrParams) => ({
       class: `${headerKey}-column`
     })"
-    empty-state-icon-size="96"
     disable-sorting
     hide-pagination-when-optional
     @row:click="click"
   >
+    <template
+      v-if="$slots.emptyState || props.items?.length === 0"
+      #empty-state
+    >
+      <EmptyBlock />
+    </template>
+
     <template
       v-for="key in Object.keys(slots)"
       :key="key"
@@ -52,6 +58,8 @@
 <script lang="ts" setup>
 import { KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, computed } from 'vue'
+
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 
 type CellAttrParams = {
   headerKey: string
