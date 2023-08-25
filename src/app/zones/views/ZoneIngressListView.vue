@@ -35,6 +35,9 @@
                 :total="data?.total"
                 :items="data ? transformToTableData(data.items) : undefined"
                 :error="error"
+                :empty-state-message="t('common.emptyState.message', { type: 'Zone Ingresses' })"
+                :empty-state-cta-to="t('zone-ingresses.href.docs')"
+                :empty-state-cta-text="t('common.documentation')"
                 @change="route.update"
               >
                 <template #name="{ row, rowValue }">

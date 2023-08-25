@@ -14,6 +14,8 @@ data-planes:
       title: Data Plane Proxies
   href:
     docs:
+      data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'
+      gateway: '{KUMA_DOCS_URL}/explore/gateway?{KUMA_UTM_QUERY_PARAMS}'
       mutual-tls: '{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}'
   list:
     version_mismatch: 'Version mismatch'
