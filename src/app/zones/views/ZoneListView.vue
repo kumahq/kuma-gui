@@ -18,7 +18,7 @@
         #actions
       >
         <KButton
-          appearance="creation"
+          appearance="primary"
           icon="plus"
           :to="{ name: 'zone-create-view' }"
           data-testid="create-zone-link"

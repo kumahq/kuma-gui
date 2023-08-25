@@ -27,7 +27,7 @@
           #cta
         >
           <KButton
-            appearance="creation"
+            appearance="primary"
             icon="plus"
             :to="{ name: 'zone-create-view' }"
           >
