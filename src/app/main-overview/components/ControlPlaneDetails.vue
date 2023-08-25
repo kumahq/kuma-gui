@@ -81,6 +81,19 @@
                 {{ t('main-overview.detail.health.view_all') }}
               </RouterLink>
             </div>
+
+            <div
+              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && props.zoneOverviews.length > 0"
+              class="card-actions"
+            >
+              <KButton
+                appearance="primary"
+                icon="plus"
+                :to="{ name: 'zone-create-view' }"
+              >
+                {{ t('zones.index.create') }}
+              </KButton>
+            </div>
           </div>
 
           <ZoneControlPlanesDetails
@@ -126,9 +139,10 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
 import { MeshInsight, ZoneOverview } from '@/types/index.d'
-import { useI18n } from '@/utilities'
+import { useI18n, useEnv } from '@/utilities'
 
 const { t } = useI18n()
+const env = useEnv()
 const store = useStore()
 
 const props = defineProps({
