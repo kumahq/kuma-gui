@@ -71,7 +71,7 @@
     "canvas": "^2.11.2",
     "cross-env": "^7.0.3",
     "cypress": "^12.17.4",
-    "cypress-fail-fast": "^7.0.2",
+    "cypress-fail-fast": "^7.0.3",
     "dotenv": "^16.3.1",
     "esbuild": "^0.19.2",
     "eslint": "^8.47.0",
