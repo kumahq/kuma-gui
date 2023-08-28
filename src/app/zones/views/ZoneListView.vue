@@ -14,11 +14,11 @@
       </template>
 
       <template
-        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && store.getters['config/getMulticlusterStatus']"
+        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && store.getters['config/getMulticlusterStatus'] && isCreateZoneButtonVisible"
         #actions
       >
         <KButton
-          appearance="creation"
+          appearance="primary"
           icon="plus"
           :to="{ name: 'zone-create-view' }"
           data-testid="create-zone-link"
@@ -33,6 +33,7 @@
         <DataSource
           v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
           :src="`/zone-cps?size=${props.size}&page=${props.page}`"
+          @change="setIsCreateZoneButtonVisible"
         >
           <KCard>
             <template #body>
@@ -52,6 +53,10 @@
                 :total="data?.total"
                 :items="data ? transformToTableData(data.items) : undefined"
                 :error="error"
+                :empty-state-title="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.title') : undefined"
+                :empty-state-message="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.message') : undefined"
+                :empty-state-cta-to="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? { name: 'zone-create-view' } : undefined"
+                :empty-state-cta-text="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zones.index.create') : undefined"
                 @change="route.update"
               >
                 <template #name="{ row, rowValue }">
@@ -221,6 +226,7 @@ const props = defineProps({
 })
 
 const isDeleteModalVisible = ref(false)
+const isCreateZoneButtonVisible = ref(false)
 const deleteZoneName = ref('')
 
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
@@ -276,6 +282,10 @@ function toggleDeleteModal() {
 function setDeleteZoneName(name: string) {
   toggleDeleteModal()
   deleteZoneName.value = name
+}
+
+function setIsCreateZoneButtonVisible(data: any) {
+  isCreateZoneButtonVisible.value = data?.items.length > 0
 }
 </script>
 

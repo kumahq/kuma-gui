@@ -15,6 +15,8 @@ meshes:
       breadcrumbs: Meshes
     overview:
       title: Mesh overview
+  href:
+    docs: '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
   detail:
     services: 'Services'
     data_plane_proxies: 'Data Plane Proxies'

@@ -14,6 +14,9 @@ zone-cps:
   detail:
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
+  empty_state:
+    title: 'No Zones yet …'
+    message: 'Create your first Zone to start managing your Mesh'
 
 zone-ingresses:
   routes:
@@ -29,6 +32,8 @@ zone-ingresses:
     items:
       title: Ingresses
       breadcrumbs: Ingresses
+  href:
+    docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'
 
 zone-egresses:
   routes:
@@ -44,6 +49,8 @@ zone-egresses:
     items:
       title: Egresses
       breadcrumbs: Egresses
+  href:
+    docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'
 
 zones:
   href:

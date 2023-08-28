@@ -22,8 +22,6 @@
               <AppCollection
                 class="mesh-collection"
                 data-testid="mesh-collection"
-                :empty-state-title="t('common.emptyState.title')"
-                :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
                 :headers="[
                   { label: 'Name', key: 'name' },
                   { label: 'Actions', key: 'actions', hideLabel: true },
@@ -33,6 +31,9 @@
                 :total="data?.total"
                 :items="data?.items"
                 :error="error"
+                :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
+                :empty-state-cta-to="t('meshes.href.docs')"
+                :empty-state-cta-text="t('common.documentation')"
                 @change="route.update"
               >
                 <template #name="{ row: item }">

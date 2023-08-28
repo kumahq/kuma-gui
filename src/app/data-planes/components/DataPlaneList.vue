@@ -1,7 +1,8 @@
 <template>
   <AppCollection
-    :empty-state-title="t('common.emptyState.title')"
     :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data Plane Proxies' })"
+    :empty-state-cta-to="t(`data-planes.href.docs.${props.gateways ? 'gateway' : 'data_plane_proxy'}`)"
+    :empty-state-cta-text="t('common.documentation')"
     :headers="[
       { label: 'Name', key: 'name' },
       props.gateways ? { label: 'Type', key: 'type' } : undefined,

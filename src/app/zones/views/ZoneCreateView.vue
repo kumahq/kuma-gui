@@ -54,7 +54,7 @@
           </div>
 
           <KButton
-            appearance="creation"
+            appearance="primary"
             :icon="isChangingZone ? 'spinner' : 'plus'"
             :disabled="isCreateButtonDisabled"
             data-testid="create-zone-button"

@@ -11,7 +11,7 @@
       :title="t('common.documentation')"
     />
 
-    <span class="visually-hidden">{{ t('common.documentation') }}</span>
+    <span><slot>{{ t('common.documentation') }}</slot></span>
   </a>
 </template>
 
@@ -22,18 +22,16 @@ import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps({
-  href: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  href: string
+}>()
 </script>
 
 <style lang="scss" scoped>
 .docs-link {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
+  gap: $kui-space-20;
   padding-right: $kui-space-40;
   padding-left: $kui-space-40;
 }

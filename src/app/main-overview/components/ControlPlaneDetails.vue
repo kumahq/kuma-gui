@@ -81,34 +81,22 @@
                 {{ t('main-overview.detail.health.view_all') }}
               </RouterLink>
             </div>
-          </div>
 
-          <EmptyBlock v-if="props.zoneOverviews.length === 0">
-            {{ t('main-overview.detail.zone_control_planes.empty_state.title') }}
-
-            <template
-              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-              #message
-            >
-              {{ t('main-overview.detail.zone_control_planes.empty_state.message') }}
-            </template>
-
-            <template
-              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
-              #cta
+            <div
+              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && props.zoneOverviews.length > 0"
+              class="card-actions"
             >
               <KButton
-                appearance="creation"
+                appearance="primary"
                 icon="plus"
                 :to="{ name: 'zone-create-view' }"
               >
                 {{ t('zones.index.create') }}
               </KButton>
-            </template>
-          </EmptyBlock>
+            </div>
+          </div>
 
           <ZoneControlPlanesDetails
-            v-else
             data-testid="zone-control-planes-details"
             :zone-overviews="props.zoneOverviews.slice(0, 10)"
           />
@@ -127,10 +115,7 @@
             </div>
           </div>
 
-          <EmptyBlock v-if="props.meshInsights.length === 0" />
-
           <MeshesDetails
-            v-else
             data-testid="meshes-details"
             :mesh-insights="props.meshInsights.slice(0, 10)"
           />
@@ -146,15 +131,14 @@ import { PropType, computed } from 'vue'
 
 import MeshesDetails from './MeshesDetails.vue'
 import ZoneControlPlanesDetails from './ZoneControlPlanesDetails.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { useStore } from '@/store/store'
 import { MeshInsight, ZoneOverview } from '@/types/index.d'
-import { useEnv, useI18n } from '@/utilities'
+import { useI18n, useEnv } from '@/utilities'
 
-const env = useEnv()
 const { t } = useI18n()
+const env = useEnv()
 const store = useStore()
 
 const props = defineProps({

@@ -12,9 +12,6 @@ main-overview:
       data_plane_proxies: 'Data Plane Proxies'
     zone_control_planes:
       title: 'Zones'
-      empty_state:
-        title: 'No Zones yet …'
-        message: 'Create your first Zone to start managing your Mesh'
       table:
         name: 'Name'
         status: 'Status'

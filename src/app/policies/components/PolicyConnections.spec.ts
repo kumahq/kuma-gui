@@ -109,6 +109,6 @@ describe('PolicyConnections.vue', () => {
 
     await flushPromises()
 
-    expect(wrapper.html()).toContain('There is no data to display.')
+    expect(wrapper.html()).toContain('No data')
   })
 })
