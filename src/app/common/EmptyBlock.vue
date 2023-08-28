@@ -2,7 +2,7 @@
   <KEmptyState
     data-testid="empty-state"
     cta-is-hidden
-    icon="stateGruceo"
+    :icon="t('common.emptyState.icon')"
     icon-size="96"
   >
     <template #title>
