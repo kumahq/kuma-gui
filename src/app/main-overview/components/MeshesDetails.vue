@@ -10,6 +10,8 @@
     :items="tableData"
     :total="tableData.length"
     :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
+    :empty-state-cta-to="t('meshes.href.docs')"
+    :empty-state-cta-text="t('common.documentation')"
   >
     <template #name="{ rowValue }">
       <RouterLink
