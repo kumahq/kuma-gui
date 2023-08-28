@@ -125,14 +125,6 @@ function end(element: Element) {
   opacity: 0;
 }
 
-.active {
-  .accordion-item-header::after {
-    margin-left: $kui-space-50;
-    transform: rotate(-180deg) translateY(-50%);
-    top: calc(50% - 4px);
-  }
-}
-
 .accordion-item-header {
   position: relative;
   display: block;
@@ -153,6 +145,12 @@ function end(element: Element) {
     border-left: 0.325em solid transparent;
     transition: 0.25s ease;
   }
+}
+
+.active .accordion-item-header::after {
+  margin-left: $kui-space-50;
+  transform: rotate(-180deg) translateY(-50%);
+  top: calc(50% - 4px);
 }
 
 .accordion-item-content {

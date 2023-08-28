@@ -32,23 +32,6 @@ ol {
   margin: 0;
 }
 
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ul,
-ol {
-  &:not(:first-child) {
-    margin-top: $kui-space-50;
-  }
-}
-
-dl p:not(:first-child) {
-  margin-top: $kui-space-10;
-}
-
 h1,
 h2,
 h3,
@@ -83,6 +66,28 @@ h6 {
   font-size: 0.67rem;
 }
 
+ul,
+ol {
+  padding-left: $kui-space-60;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  &:not(:first-child) {
+    margin-top: $kui-space-50;
+  }
+}
+
+dl p:not(:first-child) {
+  margin-top: $kui-space-10;
+}
+
 a {
   text-decoration: none;
   color: $kui-color-text-primary;
@@ -110,15 +115,6 @@ pre {
 
 textarea {
   resize: vertical;
-}
-
-ul,
-ol {
-  padding-left: $kui-space-60;
-}
-
-button {
-  cursor: pointer;
 }
 
 img,
@@ -156,6 +152,7 @@ select {
 button {
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 input {
@@ -174,7 +171,7 @@ select {
   border: $kui-border-width-10 solid $kui-color-border;
   border-radius: 3px;
   font-size: $kui-font-size-40;
-  line-height: $kui-font-size-60;
+  line-height: $kui-line-height-30;
   padding: 10px 30px 10px 13px;
   background-color: $kui-color-background;
   background-image: url('@/assets/images/chevron-down.svg?url');

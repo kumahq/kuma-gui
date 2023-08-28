@@ -146,6 +146,7 @@ onMounted(function () {
 
 <style lang="scss" scoped>
 @use 'sass:math';
+@use 'sass:list';
 
 .svg {
   --path1: path('M1444 893h252');
@@ -196,12 +197,11 @@ onMounted(function () {
       background: #fff;
       box-shadow: inset 0 0 0 2px var(--onboarding-accent);
       border-radius: 100%;
-      offset-distance: 0%;
       transform: scale(0);
       z-index: 2;
       --end: 100%;
       --start: 0%;
-      --duration: #{5*$baseSpeed}s;
+      --duration: #{5 * $baseSpeed}s;
       offset-distance: var(--start);
       filter: hue-rotate(180deg) brightness(6) blur(40px);
       will-change: offset-distance, filter;
@@ -296,7 +296,7 @@ onMounted(function () {
     will-change: stroke-dashoffset, filter;
 
     @for $i from 1 through 5 {
-      $length: nth($lengths, $i);
+      $length: list.nth($lengths, $i);
       filter: hue-rotate(40deg) brightness(2) blur(4px);
 
       &:nth-of-type(#{$i}) {
@@ -324,10 +324,10 @@ onMounted(function () {
           @for $i from 1 through 26 {
             &:nth-of-type(#{$i}) {
               &:before {
-                animation-delay: #{math.div($i, -16)*$baseSpeed}s;
+                animation-delay: #{math.div($i, -16) * $baseSpeed}s;
               }
-              transition-delay: #{(math.div($i, 18) + 2)*$baseSpeed}s, #{(math.div($i, 18) + 2)*$baseSpeed}s, calc(#{(math.div($i, 18) + 1.85)*$baseSpeed}s + var(--duration)),
-                #{(math.div($i, 18) + 2)*$baseSpeed}s;
+              transition-delay: #{(math.div($i, 18) + 2) * $baseSpeed}s, #{(math.div($i, 18) + 2) * $baseSpeed}s, calc(#{(math.div($i, 18) + 1.85) * $baseSpeed}s + var(--duration)),
+                #{(math.div($i, 18) + 2) * $baseSpeed}s;
               filter: hue-rotate(0deg) brightness(1) blur(0px);
               offset-distance: var(--end);
               opacity: 0;

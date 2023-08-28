@@ -110,7 +110,7 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
   font-weight: $kui-font-weight-regular;
   padding: $kui-space-40;
   position: absolute;
-  right: calc(100% + $kui-space-40);
+  right: calc(100% + 8px);
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
