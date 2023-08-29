@@ -1,62 +1,72 @@
 <template>
   <RouteView
-    v-slot="{ route }"
     name="zone-egress-detail-view"
     data-testid="zone-egress-detail-view"
   >
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'zone-egress-list-view',
-          },
-          text: t('zone-egresses.routes.item.breadcrumbs')
-        },
-      ]"
-    >
-      <template #title>
-        <h1>
-          <RouteTitle
-            :title="t('zone-egresses.routes.item.title', { name: route.params.zoneEgress })"
-            :render="true"
-          />
-        </h1>
-      </template>
-
-      <DataSource
-        v-slot="{ data, isLoading, error }: ZoneEgressOverviewSource"
-        :src="`/zone-egresses/${route.params.zoneEgress}`"
+    <AppView>
+      <div
+        class="stack"
+        data-testid="detail-view-details"
       >
-        <LoadingBlock v-if="isLoading" />
+        <KCard>
+          <template #body>
+            <div
+              class="columns"
+              style="--columns: 2;"
+            >
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
 
-        <ErrorBlock
-          v-else-if="error !== undefined"
-          :error="error"
-        />
+                <template #body>
+                  <StatusBadge :status="getItemStatusFromInsight(props.data.zoneEgressInsight)" />
+                </template>
+              </DefinitionCard>
 
-        <EmptyBlock v-else-if="data === undefined" />
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.address') }}
+                </template>
 
-        <ZoneEgressDetails
-          v-else
-          :zone-egress-overview="data"
-          data-testid="detail-view-details"
-        />
-      </DataSource>
+                <template #body>
+                  <template v-if="props.data.zoneEgress.networking?.address && props.data.zoneEgress.networking?.port">
+                    <TextWithCopyButton :text="`${props.data.zoneEgress.networking.address}:${props.data.zoneEgress.networking.port}`" />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+            </div>
+          </template>
+        </KCard>
+
+        <KCard>
+          <template #body>
+            <SubscriptionList :subscriptions="props.data.zoneEgressInsight?.subscriptions ?? []" />
+          </template>
+        </KCard>
+      </div>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
-import type { ZoneEgressOverviewSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
+import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { ZoneEgressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const { t } = useI18n()
+
+const props = defineProps<{
+  data: ZoneEgressOverview
+}>()
 </script>

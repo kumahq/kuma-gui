@@ -28,12 +28,7 @@ import NavTabs from '@/app/common/NavTabs.vue'
           },
         ]"
       />
-      <RouterView v-slot="{ Component, route }">
-        <component
-          :is="Component"
-          :key="route.path"
-        />
-      </RouterView>
+      <RouterView />
     </AppView>
   </RouteView>
 </template>

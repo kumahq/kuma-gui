@@ -48,8 +48,20 @@ export const routes = (
             },
             {
               path: ':zone',
-              name: 'zone-cp-detail-view',
-              component: () => import('@/app/zones/views/ZoneDetailView.vue'),
+              name: 'zone-cp-detail-tabs-view',
+              component: () => import('@/app/zones/views/ZoneDetailTabsView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'zone-cp-detail-view',
+                  component: () => import('@/app/zones/views/ZoneDetailView.vue'),
+                },
+                {
+                  path: 'subscriptions',
+                  name: 'zone-cp-subscriptions-view',
+                  component: () => import('@/app/zones/views/ZoneSubscriptionsView.vue'),
+                },
+              ],
             },
           ],
         },
@@ -78,8 +90,30 @@ export const routes = (
             },
             {
               path: ':zoneIngress',
-              name: 'zone-ingress-detail-view',
-              component: () => import('@/app/zones/views/ZoneIngressDetailView.vue'),
+              name: 'zone-ingress-detail-tabs-view',
+              component: () => import('@/app/zones/views/ZoneIngressDetailTabsView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'zone-ingress-detail-view',
+                  component: () => import('@/app/zones/views/ZoneIngressDetailView.vue'),
+                },
+                {
+                  path: 'xds-config',
+                  name: 'zone-ingress-xds-config-view',
+                  component: () => import('@/app/zones/views/ZoneIngressXdsConfigView.vue'),
+                },
+                {
+                  path: 'stats',
+                  name: 'zone-ingress-stats-view',
+                  component: () => import('@/app/zones/views/ZoneIngressStatsView.vue'),
+                },
+                {
+                  path: 'clusters',
+                  name: 'zone-ingress-clusters-view',
+                  component: () => import('@/app/zones/views/ZoneIngressClustersView.vue'),
+                },
+              ],
             },
           ],
         },
@@ -108,8 +142,30 @@ export const routes = (
             },
             {
               path: ':zoneEgress',
-              name: 'zone-egress-detail-view',
-              component: () => import('@/app/zones/views/ZoneEgressDetailView.vue'),
+              name: 'zone-egress-detail-tabs-view',
+              component: () => import('@/app/zones/views/ZoneEgressDetailTabsView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'zone-egress-detail-view',
+                  component: () => import('@/app/zones/views/ZoneEgressDetailView.vue'),
+                },
+                {
+                  path: 'xds-config',
+                  name: 'zone-egress-xds-config-view',
+                  component: () => import('@/app/zones/views/ZoneEgressXdsConfigView.vue'),
+                },
+                {
+                  path: 'stats',
+                  name: 'zone-egress-stats-view',
+                  component: () => import('@/app/zones/views/ZoneEgressStatsView.vue'),
+                },
+                {
+                  path: 'clusters',
+                  name: 'zone-egress-clusters-view',
+                  component: () => import('@/app/zones/views/ZoneEgressClustersView.vue'),
+                },
+              ],
             },
           ],
         },

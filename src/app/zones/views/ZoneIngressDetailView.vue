@@ -1,62 +1,88 @@
 <template>
   <RouteView
-    v-slot="{ route }"
     name="zone-ingress-detail-view"
     data-testid="zone-ingress-detail-view"
   >
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'zone-ingress-list-view',
-          },
-          text: t('zone-ingresses.routes.item.breadcrumbs')
-        },
-      ]"
-    >
-      <template #title>
-        <h1>
-          <RouteTitle
-            :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
-            :render="true"
-          />
-        </h1>
-      </template>
-
-      <DataSource
-        v-slot="{ data, isLoading, error }: ZoneIngressOverviewSource"
-        :src="`/zone-ingresses/${route.params.zoneIngress}`"
+    <AppView>
+      <div
+        class="stack"
+        data-testid="detail-view-details"
       >
-        <LoadingBlock v-if="isLoading" />
+        <KCard>
+          <template #body>
+            <div
+              class="columns"
+              style="--columns: 3;"
+            >
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
 
-        <ErrorBlock
-          v-else-if="error !== undefined"
-          :error="error"
-        />
+                <template #body>
+                  <StatusBadge :status="getItemStatusFromInsight(props.data.zoneIngressInsight)" />
+                </template>
+              </DefinitionCard>
 
-        <EmptyBlock v-else-if="data === undefined" />
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.address') }}
+                </template>
 
-        <ZoneIngressDetails
-          v-else
-          :zone-ingress-overview="data"
-          data-testid="detail-view-details"
-        />
-      </DataSource>
+                <template #body>
+                  <template v-if="props.data.zoneIngress.networking?.address && props.data.zoneIngress.networking?.port">
+                    <TextWithCopyButton :text="`${props.data.zoneIngress.networking.address}:${props.data.zoneIngress.networking.port}`" />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.advertisedAddress') }}
+                </template>
+
+                <template #body>
+                  <template v-if="props.data.zoneIngress.networking?.advertisedAddress && props.data.zoneIngress.networking?.advertisedPort">
+                    <TextWithCopyButton :text="`${props.data.zoneIngress.networking.advertisedAddress}:${props.data.zoneIngress.networking.advertisedPort}`" />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+            </div>
+          </template>
+        </KCard>
+
+        <KCard>
+          <template #body>
+            <SubscriptionList :subscriptions="props.data.zoneIngressInsight?.subscriptions ?? []" />
+          </template>
+        </KCard>
+      </div>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import ZoneIngressDetails from '../components/ZoneIngressDetails.vue'
-import type { ZoneIngressOverviewSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
+import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { ZoneIngressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const { t } = useI18n()
+
+const props = defineProps<{
+  data: ZoneIngressOverview
+}>()
 </script>

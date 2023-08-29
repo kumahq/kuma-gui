@@ -3,9 +3,9 @@ zone-cps:
     item:
       title: '{name}'
       breadcrumbs: Zone Control Planes
-      tabs:
-        overview: 'Overview'
-        insights: 'Subscriptions'
+      navigation:
+        zone-cp-detail-view: 'Overview'
+        zone-cp-subscriptions-view: 'Subscriptions'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
@@ -23,12 +23,11 @@ zone-ingresses:
     item:
       title: '{name}'
       breadcrumbs: Ingresses
-      tabs:
-        overview: 'Overview'
-        insights: 'Zone Ingress subscriptions'
-        xds_configuration: 'XDS Configuration'
-        stats: 'Stats'
-        clusters: 'Clusters'
+      navigation:
+        zone-ingress-detail-view: 'Overview'
+        zone-ingress-xds-config-view: 'XDS Configuration'
+        zone-ingress-stats-view: 'Stats'
+        zone-ingress-clusters-view: 'Clusters'
     items:
       title: Ingresses
       breadcrumbs: Ingresses
@@ -40,12 +39,11 @@ zone-egresses:
     item:
       title: '{name}'
       breadcrumbs: Egresses
-      tabs:
-        overview: 'Overview'
-        insights: 'Zone Egress subscriptions'
-        xds_configuration: 'XDS Configuration'
-        stats: 'Stats'
-        clusters: 'Clusters'
+      navigation:
+        zone-egress-detail-view: 'Overview'
+        zone-egress-xds-config-view: 'XDS Configuration'
+        zone-egress-stats-view: 'Stats'
+        zone-egress-clusters-view: 'Clusters'
     items:
       title: Egresses
       breadcrumbs: Egresses
