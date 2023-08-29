@@ -137,6 +137,14 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
                       >
                         <!--v-if-->
                       </span>
+                       Add zones
+                    </li>
+                    <li>
+                      <span
+                        class="circle mr-2"
+                      >
+                        <!--v-if-->
+                      </span>
                        Create the mesh
                     </li>
                     <li>
@@ -211,7 +219,7 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
         </div>
         <svg
           class="background svg"
-          longer="false"
+          longer="true"
           viewBox="0 0 1920 1080"
           xmlns="http://www.w3.org/2000/svg"
         >

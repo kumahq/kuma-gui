@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, can }"
     name="zone-ingress-list-view"
   >
     <AppView>
@@ -12,8 +12,7 @@
           />
         </h1>
       </template>
-
-      <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+      <MultizoneInfo v-if="!can('use zones')" />
 
       <template v-else>
         <DataSource
@@ -115,7 +114,6 @@ import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { useStore } from '@/store/store'
 import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
@@ -127,7 +125,6 @@ type ZoneIngressOverviewTableRow = {
 }
 
 const { t } = useI18n()
-const store = useStore()
 
 const props = defineProps({
   page: {

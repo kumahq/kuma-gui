@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t, can, env }"
     name="zone-cp-list-view"
   >
     <AppView>
@@ -14,7 +14,7 @@
       </template>
 
       <template
-        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && store.getters['config/getMulticlusterStatus'] && isCreateZoneButtonVisible"
+        v-if="can('create zones') && isCreateZoneButtonVisible"
         #actions
       >
         <KButton
@@ -27,7 +27,7 @@
         </KButton>
       </template>
 
-      <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
+      <MultizoneInfo v-if="!can('use zones')" />
 
       <template v-else>
         <DataSource
@@ -136,7 +136,7 @@
                       />
 
                       <KDropdownItem
-                        v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled'"
+                        v-if="can('create zones')"
                         has-divider
                         is-dangerous
                         data-testid="dropdown-delete-item"
@@ -195,9 +195,8 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
-import { useStore } from '@/store/store'
 import { StatusKeyword, ZoneOverview } from '@/types/index.d'
-import { useEnv, useI18n, useKumaApi } from '@/utilities'
+import { useKumaApi } from '@/utilities'
 
 type ZoneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
@@ -208,10 +207,7 @@ type ZoneOverviewTableRow = {
   warnings: boolean
 }
 
-const env = useEnv()
-const { t } = useI18n()
 const kumaApi = useKumaApi()
-const store = useStore()
 
 const props = defineProps({
   page: {

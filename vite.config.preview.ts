@@ -46,6 +46,10 @@ export const config: (context: PreviewConfigContext) => UserConfigFn = ({
                 baseGuiPath: base,
                 apiUrl: api,
                 version,
+                product: 'Kuma',
+                mode: 'global',
+                environment: 'universal',
+                apiReadOnly: false,
               },
             ))
           server.middlewares.use('/', async (req, res, next) => {
