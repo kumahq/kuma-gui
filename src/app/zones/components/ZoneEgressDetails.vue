@@ -30,11 +30,17 @@
 
               <DefinitionCard>
                 <template #title>
-                  {{ t('http.api.property.type') }}
+                  {{ t('http.api.property.address') }}
                 </template>
 
                 <template #body>
-                  {{ props.zoneEgressOverview.type }}
+                  <template v-if="props.zoneEgressOverview.zoneEgress.networking?.address && props.zoneEgressOverview.zoneEgress.networking?.port">
+                    <TextWithCopyButton :text="`${props.zoneEgressOverview.zoneEgress.networking.address}:${props.zoneEgressOverview.zoneEgress.networking.port}`" />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
                 </template>
               </DefinitionCard>
             </div>

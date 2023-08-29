@@ -18,12 +18,10 @@
       <b>{{ t('common.detail.subscriptions.connect_time') }}</b>: {{ connectTime }}
     </span>
 
-    <span>
-      <template v-if="disconnectTime">
-        <img src="@/assets/images/icon-disconnected.svg?url">
+    <span v-if="disconnectTime">
+      <img src="@/assets/images/icon-disconnected.svg?url">
 
-        <b>{{ t('common.detail.subscriptions.disconnect_time') }}</b>: {{ disconnectTime }}
-      </template>
+      <b>{{ t('common.detail.subscriptions.disconnect_time') }}</b>: {{ disconnectTime }}
     </span>
 
     <span class="responses-sent-acknowledged">
@@ -66,8 +64,7 @@ const total = computed(() => {
 
 <style lang="scss" scoped>
 .subscription-header {
-  display: grid;
-  grid-template-columns: 30ch repeat(3, 1fr);
+  display: flex;
   gap: $kui-space-80;
   padding-right: $kui-space-40;
   padding-left: $kui-space-40;
@@ -75,7 +72,7 @@ const total = computed(() => {
 }
 
 .instance-id {
-  flex-basis: 30ch;
+  flex-basis: 50ch;
 }
 
 .responses-sent-acknowledged {

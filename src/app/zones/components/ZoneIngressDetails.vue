@@ -6,7 +6,7 @@
           <template #body>
             <div
               class="columns"
-              style="--columns: 3;"
+              style="--columns: 4;"
             >
               <DefinitionCard>
                 <template #title>
@@ -30,11 +30,33 @@
 
               <DefinitionCard>
                 <template #title>
-                  {{ t('http.api.property.type') }}
+                  {{ t('http.api.property.address') }}
                 </template>
 
                 <template #body>
-                  {{ props.zoneIngressOverview.type }}
+                  <template v-if="props.zoneIngressOverview.zoneIngress.networking?.address && props.zoneIngressOverview.zoneIngress.networking?.port">
+                    <TextWithCopyButton :text="`${props.zoneIngressOverview.zoneIngress.networking.address}:${props.zoneIngressOverview.zoneIngress.networking.port}`" />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.advertisedAddress') }}
+                </template>
+
+                <template #body>
+                  <template v-if="props.zoneIngressOverview.zoneIngress.networking?.advertisedAddress && props.zoneIngressOverview.zoneIngress.networking?.advertisedPort">
+                    <TextWithCopyButton :text="`${props.zoneIngressOverview.zoneIngress.networking.advertisedAddress}:${props.zoneIngressOverview.zoneIngress.networking.advertisedPort}`" />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
                 </template>
               </DefinitionCard>
             </div>
