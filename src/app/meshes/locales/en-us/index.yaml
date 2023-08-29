@@ -21,4 +21,5 @@ meshes:
     services: 'Services'
     data_plane_proxies: 'Data Plane Proxies'
     policies: 'Policies'
+    enabled: 'Enabled'
     disabled: 'Disabled'

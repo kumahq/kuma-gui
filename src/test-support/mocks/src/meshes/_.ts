@@ -100,6 +100,11 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           ],
         },
       }),
+      ...(fake.datatype.boolean() && {
+        routing: {
+          zoneEgress: fake.datatype.boolean(),
+        },
+      }),
     },
   }
 }

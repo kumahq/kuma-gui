@@ -69,25 +69,6 @@
 
           <DefinitionCard>
             <template #title>
-              {{ t('http.api.property.logging') }}
-            </template>
-
-            <template #body>
-              <KBadge
-                v-if="logging === ''"
-                appearance="neutral"
-              >
-                {{ t('meshes.detail.disabled') }}
-              </KBadge>
-
-              <template v-else>
-                {{ logging }}
-              </template>
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
-            <template #title>
               {{ t('http.api.property.metrics') }}
             </template>
 
@@ -107,20 +88,13 @@
 
           <DefinitionCard>
             <template #title>
-              {{ t('http.api.property.tracing') }}
+              {{ t('http.api.property.zoneEgress') }}
             </template>
 
             <template #body>
-              <KBadge
-                v-if="tracing === ''"
-                appearance="neutral"
-              >
-                {{ t('meshes.detail.disabled') }}
+              <KBadge appearance="neutral">
+                {{ t(`meshes.detail.${Boolean(props.mesh.routing?.zoneEgress) ? 'enabled' : 'disabled'}`) }}
               </KBadge>
-
-              <template v-else>
-                {{ tracing }}
-              </template>
             </template>
           </DefinitionCard>
         </div>
@@ -154,26 +128,21 @@ const props = defineProps({
 })
 
 const mtls = computed(() => getBackendTypeAndName(props.mesh.mtls))
-const logging = computed(() => getBackendTypeAndName(props.mesh.logging))
 const metrics = computed(() => getBackendTypeAndName(props.mesh.metrics))
-const tracing = computed(() => getBackendTypeAndName(props.mesh.tracing))
 
 const totalPolicyCount = computed(() => {
   return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
 })
 
 function getBackendTypeAndName(meshBackend?: MeshBackend): string {
-  if (!meshBackend || !Array.isArray(meshBackend?.backends) || meshBackend.backends.length === 0) {
-    return ''
+  if (meshBackend?.enabledBackend && Array.isArray(meshBackend.backends)) {
+    const enabledBackend = meshBackend.backends.find((backend) => backend.name === meshBackend.enabledBackend)
+
+    if (enabledBackend !== undefined) {
+      return `${enabledBackend.type} / ${enabledBackend.name}`
+    }
   }
 
-  const enabledBackendName = meshBackend.enabledBackend ?? meshBackend.defaultBackend ?? meshBackend.backends[0].name
-  const enabledBackend = meshBackend.backends.find((backend) => backend.name === enabledBackendName)
-
-  if (enabledBackend === undefined) {
-    return ''
-  }
-
-  return `${enabledBackend.type} / ${enabledBackend.name}`
+  return ''
 }
 </script>
