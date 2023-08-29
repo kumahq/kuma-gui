@@ -49,23 +49,7 @@
 
         <KCard>
           <template #body>
-            <AccordionList :initially-open="0">
-              <AccordionItem
-                v-for="(subscription, index) in subscriptionsReversed"
-                :key="index"
-              >
-                <template #accordion-header>
-                  <SubscriptionHeader :subscription="subscription" />
-                </template>
-
-                <template #accordion-content>
-                  <SubscriptionDetails
-                    :subscription="subscription"
-                    is-discovery-subscription
-                  />
-                </template>
-              </AccordionItem>
-            </AccordionList>
+            <SubscriptionList :subscriptions="props.zoneEgressOverview.zoneEgressInsight?.subscriptions ?? []" />
           </template>
         </KCard>
       </div>
@@ -116,13 +100,10 @@
 import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
-import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
+import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { ZoneEgressOverview } from '@/types/index.d'
@@ -158,9 +139,4 @@ const props = defineProps({
 })
 
 const status = computed(() => getItemStatusFromInsight(props.zoneEgressOverview.zoneEgressInsight))
-
-const subscriptionsReversed = computed<any[]>(() => {
-  const subscriptions = props.zoneEgressOverview.zoneEgressInsight?.subscriptions ?? []
-  return Array.from(subscriptions).reverse()
-})
 </script>
