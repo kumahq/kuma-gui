@@ -13,3 +13,5 @@ policies:
     description: 'Use policies to apply filters to incoming or outgoing traffic of Data Plane Proxies. To generate the Envoy configuration of a proxy the control-plane uses its data-plane configuration with the policies matching it.'
     inbound: 'Inbound'
     outbound: 'Outbound'
+  detail:
+    affected_dpps: 'Affected Data Plane Proxies'

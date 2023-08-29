@@ -1,6 +1,4 @@
 <template>
-  <h2>Dataplanes</h2>
-
   <input
     id="dataplane-search"
     v-model="searchInput"
@@ -12,37 +10,38 @@
   >
 
   <DataSource
-    v-slot="{ data, isLoading, error }: PolicyDataplaneCollectionSource"
+    v-slot="{ data, error }: PolicyDataplaneCollectionSource"
     :src="`/meshes/${props.mesh}/policy-path/${props.policyPath}/policy/${props.policyName}/dataplanes`"
   >
-    <LoadingBlock v-if="isLoading" />
-
     <ErrorBlock
-      v-else-if="error"
+      v-if="error"
       :error="error"
     />
 
-    <EmptyBlock v-else-if="data === undefined || data.items.length === 0" />
+    <LoadingBlock v-else-if="data === undefined" />
+
+    <EmptyBlock v-else-if="data.items.length === 0" />
 
     <template v-else>
-      <p
-        v-for="(policyDataplane, key) in data.items.filter((policyDataplane) => policyDataplane.dataplane.name.toLowerCase().includes(searchInput.toLowerCase()))"
-        :key="key"
-        class="mt-2"
-        data-testid="dataplane-name"
-      >
-        <RouterLink
-          :to="{
-            name: 'data-plane-detail-view',
-            params: {
-              mesh: policyDataplane.dataplane.mesh,
-              dataPlane: policyDataplane.dataplane.name,
-            },
-          }"
+      <ul data-testid="affected-data-plane-proxies">
+        <li
+          v-for="(policyDataplane, key) in data.items.filter((policyDataplane) => policyDataplane.dataplane.name.toLowerCase().includes(searchInput.toLowerCase()))"
+          :key="key"
+          data-testid="dataplane-name"
         >
-          {{ policyDataplane.dataplane.name }}
-        </RouterLink>
-      </p>
+          <RouterLink
+            :to="{
+              name: 'data-plane-detail-view',
+              params: {
+                mesh: policyDataplane.dataplane.mesh,
+                dataPlane: policyDataplane.dataplane.name,
+              },
+            }"
+          >
+            {{ policyDataplane.dataplane.name }}
+          </RouterLink>
+        </li>
+      </ul>
     </template>
   </DataSource>
 </template>
