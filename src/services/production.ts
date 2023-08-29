@@ -1,6 +1,7 @@
 import {
-  RouteRecordRaw, NavigationGuard,
-  createRouter as createVueRouter,
+  RouteRecordRaw,
+  NavigationGuard,
+  createRouter,
   createWebHistory,
 } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
@@ -172,7 +173,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   // Router
   [$.router, {
     service: (env: Alias<Env['var']>, routes: RouteRecordRaw[], guards: NavigationGuard[]) => {
-      const router = createVueRouter({
+      const router = createRouter({
         history: createWebHistory(env('KUMA_BASE_PATH')),
         routes,
       })
