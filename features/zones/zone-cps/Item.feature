@@ -47,7 +47,7 @@ Feature: zones / zone-cps / item
       | dpToken   |
 
     When I click the "$nav-insights" element
-    Then the "$tab-insights" element contains "Connect time: Jul 28, 2020, 4:18 PM"
+    Then the "$tab-insights" element contains "Connected: Jul 28, 2020, 4:18 PM"
 
   Scenario: When subscriptions aren't set a warning is shown
     And the URL "/zones+insights/zone-cp-1" responds with

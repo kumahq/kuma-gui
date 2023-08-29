@@ -93,7 +93,7 @@ Feature: Data Plane Proxies: Detail view content
     And the "$warnings" element doesn't exist
 
     When I click the "$insights-tab" element
-    Then the "$insights-content" element contains "Connect time: Feb 17, 2021, 7:33 AM"
+    Then the "$insights-content" element contains "Connected: Feb 17, 2021, 7:33 AM"
     Then the "$insights-content" element contains "CP instance ID: dpp-1-cp-instance-id"
 
     And the "$status-cds" element contains "CDS"

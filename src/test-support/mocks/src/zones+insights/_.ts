@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
-  const subscriptions = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   return {
     headers: {},
     body: {
@@ -13,13 +13,13 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         enabled: fake.datatype.boolean(),
       },
       zoneInsight: {
-        subscriptions: Array.from({ length: subscriptions }).map((_) => {
+        subscriptions: Array.from({ length: subscriptionCount }).map((_, i) => {
           return {
             config: fake.kuma.subscriptionConfig(),
             id: fake.string.uuid(),
             globalInstanceId: fake.hacker.noun(),
             connectTime: '2020-07-28T16:18:09.743141Z',
-            disconnectTime: fake.datatype.boolean() ? '2021-02-17T07:33:36.412683Z' : undefined,
+            disconnectTime: i < (subscriptionCount - 1) ? '2021-02-17T07:33:36.412683Z' : undefined,
             status: {
               lastUpdateTime: '2021-02-19T07:06:16.384057Z',
               total: {

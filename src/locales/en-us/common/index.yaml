@@ -22,9 +22,11 @@ common:
   detail:
     subscriptions:
       no_stats: 'There are no statistics for subscription “{id}”'
-      connect_time: 'Connect time'
-      disconnect_time: 'Disconnect time'
+      connect_time: 'Connected'
+      disconnect_time: 'Disconnected'
       type: 'Type'
+      responses_sent_acknowledged: 'Responses sent/ack’ed'
     none: '—'
     created: 'Created'
     modified: 'Modified'
+    no_envoy_data: 'No Envoy data is available because the {resource} is not online'

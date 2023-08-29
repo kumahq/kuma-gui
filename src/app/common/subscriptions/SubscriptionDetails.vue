@@ -21,11 +21,7 @@
           </div>
 
           <div class="header">
-            {{ t('http.api.property.responsesSent') }}
-          </div>
-
-          <div class="header">
-            {{ t('http.api.property.responsesAcknowledged') }}
+            {{ t('common.detail.subscriptions.responses_sent_acknowledged') }}
           </div>
         </div>
 
@@ -40,11 +36,7 @@
           </div>
 
           <div>
-            {{ row.responsesSent }}
-          </div>
-
-          <div>
-            {{ row.responsesAcknowledged }}
+            {{ row.responsesSent }}/{{ row.responsesAcknowledged }}
           </div>
         </div>
       </div>
@@ -108,16 +100,9 @@ const statuses = computed<StatusRow[]>(() => {
 </script>
 
 <style lang="scss" scoped>
-.overview-tertiary-title {
-  font-size: $kui-font-size-30;
-  font-weight: $kui-font-weight-semibold;
-  color: $kui-color-text-neutral;
-  margin: $kui-space-40 0;
-}
-
 .row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 30ch 1fr;
   padding: $kui-space-40;
 }
 

@@ -59,6 +59,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 id: 'cc2743b5-43e0-45b6-be88-956ea91a4aad',
                 controlPlaneInstanceId: 'kuma-control-plane-84f5589874-nmspq-0867',
                 connectTime: '2021-07-13T08:41:04.556796688Z',
+                disconnectTime: fake.datatype.boolean() ? '2021-02-17T07:33:36.412683Z' : undefined,
                 generation: 409,
                 status: {
                   lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
