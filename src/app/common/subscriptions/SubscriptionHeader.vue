@@ -71,8 +71,6 @@ const total = computed(() => {
   gap: $kui-space-80;
   padding-right: $kui-space-40;
   padding-left: $kui-space-40;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
   font-weight: $kui-font-weight-medium;
 }
 
