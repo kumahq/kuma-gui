@@ -1,4 +1,8 @@
-import { RouteRecordRaw, NavigationGuard } from 'vue-router'
+import {
+  RouteRecordRaw, NavigationGuard,
+  createRouter as createVueRouter,
+  createWebHistory,
+} from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
@@ -13,12 +17,11 @@ import { getNavItems } from '@/app/getNavItems'
 import { services as mainOverviewModule } from '@/app/main-overview'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
-import { routes as onboardingRoutes } from '@/app/onboarding'
+import { routes as onboardingRoutes, services as onboarding } from '@/app/onboarding'
 import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import { routes as zoneRoutes, actions as zoneActionRoutes, services as zonesModule } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
-import { createRouter, onboardingRouteGuard } from '@/router/router'
 import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
 import I18n from '@/services/i18n/I18n'
@@ -168,13 +171,22 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
 
   // Router
   [$.router, {
-    service: (routes: RouteRecordRaw[], store: Store<State>, env: Alias<Env['var']>) => {
-      return createRouter(routes, store, env('KUMA_BASE_PATH'))
+    service: (env: Alias<Env['var']>, routes: RouteRecordRaw[], guards: NavigationGuard[]) => {
+      const router = createVueRouter({
+        history: createWebHistory(env('KUMA_BASE_PATH')),
+        routes,
+      })
+
+      guards.forEach((item) => {
+        router.beforeEach(item)
+      })
+
+      return router
     },
     arguments: [
-      $.routes,
-      $.store,
       $.env,
+      $.routes,
+      $.navigationGuards,
     ],
   }],
   // Nav
@@ -194,17 +206,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: useBootstrap,
     arguments: [
       $.store,
-    ],
-  }],
-  [$.onboardingRouteGuards, {
-    service: (store: Store<State>) => {
-      return [onboardingRouteGuard(store)]
-    },
-    arguments: [
-      $.store,
-    ],
-    labels: [
-      $.navigationGuards,
     ],
   }],
 
@@ -260,6 +261,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.diagnosticsRoutes, {
     service: diagnosticsRoutes,
   }],
+
   // Modules
   ...application($),
   ...mainOverviewModule($),
@@ -270,6 +272,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   ...gateways($),
   ...policies($),
   ...diagnosticsModule($),
+  ...onboarding($),
 ]
 
 export const TOKENS = $

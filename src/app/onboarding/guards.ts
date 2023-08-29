@@ -1,38 +1,10 @@
 import {
-  createRouter as createVueRouter,
-  createWebHistory,
   NavigationGuard,
-  Router,
-  RouteRecordRaw,
 } from 'vue-router'
 
 import type { State } from '@/store/storeConfig'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import type { Store } from 'vuex'
-
-export function createRouter(routes: RouteRecordRaw[], store: Store<State>, baseGuiPath: string = '/'): Router {
-  const router = createVueRouter({
-    history: createWebHistory(baseGuiPath),
-    routes,
-  })
-
-  router.beforeEach(redirectOldHashHistoryUrlPaths())
-  router.beforeEach(onboardingRouteGuard(store))
-
-  return router
-}
-
-/**
- * Redirects navigations to old hash history-style URL paths.
- */
-const redirectOldHashHistoryUrlPaths = (): NavigationGuard => (to, _from, next) => {
-  if (to.fullPath.startsWith('/#/')) {
-    next(to.fullPath.substring(2))
-  } else {
-    next()
-  }
-}
-
 /**
  * Redirects the user to the appropriate onboarding view if they haven’t completed it, yet.
  *
