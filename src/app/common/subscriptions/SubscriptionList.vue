@@ -1,5 +1,5 @@
 <template>
-  <AccordionList :initially-open="0">
+  <AccordionList>
     <AccordionItem
       v-for="(subscription, index) in reversedSubscriptions"
       :key="index"
