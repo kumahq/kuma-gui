@@ -17,12 +17,7 @@
         :tabs="tabs"
       />
 
-      <RouterView v-slot="child">
-        <component
-          :is="child.Component"
-          :key="child.route.path"
-        />
-      </RouterView>
+      <RouterView />
     </AppView>
   </RouteView>
 </template>

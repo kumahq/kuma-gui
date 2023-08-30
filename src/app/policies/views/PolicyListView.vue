@@ -41,6 +41,7 @@
               :src="`/mesh-insights/${route.params.mesh}`"
             >
               <PolicyList
+                :key="route.params.policyPath"
                 :page-number="props.page"
                 :page-size="props.size"
                 :current-policy-type="policyTypesData.policies.find((policyType) => policyType.path === route.params.policyPath) ?? policyTypesData.policies[0]"
