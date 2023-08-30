@@ -5,7 +5,6 @@ data-planes:
       breadcrumbs: Data Plane Proxies
       navigation:
         data-plane-detail-view: 'Overview'
-        data-plane-subscriptions-view: 'Subscriptions'
         data-plane-policies-view: 'Policies'
         data-plane-xds-config-view: 'XDS Configuration'
         data-plane-stats-view: 'Stats'
@@ -22,6 +21,7 @@ data-planes:
     version_mismatch: 'Version mismatch'
   detail:
     mtls: 'Certificate'
+    subscriptions: 'XDS connections'
     no_mtls: 'This Data Plane Proxy does not have mTLS configured, yet'
     no_mtls_learn_more: 'Learn about certificates in {product}'
     configuration: 'Configuration'

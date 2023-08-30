@@ -74,7 +74,7 @@
     </KCard>
 
     <div>
-      <h3>{{ t('data-planes.detail.mtls') }}</h3>
+      <h2>{{ t('data-planes.detail.mtls') }}</h2>
 
       <KAlert
         v-if="mtlsData === null"
@@ -135,6 +135,16 @@
         </template>
       </KCard>
     </div>
+
+    <div v-if="(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? []).length > 0">
+      <h2>{{ t('data-planes.detail.subscriptions') }}</h2>
+
+      <KCard class="mt-4">
+        <template #body>
+          <SubscriptionList :subscriptions="props.dataplaneOverview.dataplaneInsight?.subscriptions ?? []" />
+        </template>
+      </KCard>
+    </div>
   </div>
 </template>
 
@@ -146,6 +156,7 @@ import { computed, PropType } from 'vue'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import TagList from '@/app/common/TagList.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'

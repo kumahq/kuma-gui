@@ -23,11 +23,6 @@ export const routes = () => {
                 component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
               },
               {
-                path: 'subscriptions',
-                name: `${prefix}-subscriptions-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsView.vue'),
-              },
-              {
                 path: 'policies',
                 name: `${prefix}-policies-view`,
                 component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
