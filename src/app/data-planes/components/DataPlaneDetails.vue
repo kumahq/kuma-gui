@@ -12,7 +12,7 @@
           <template #body>
             <div
               class="columns"
-              style="--columns: 4;"
+              style="--columns: 3;"
             >
               <DefinitionCard>
                 <template #title>
@@ -35,16 +35,6 @@
                       />
                     </KTooltip>
                   </div>
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.name') }}
-                </template>
-
-                <template #body>
-                  <TextWithCopyButton :text="props.dataplaneOverview.name" />
                 </template>
               </DefinitionCard>
 
@@ -312,7 +302,6 @@ import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'

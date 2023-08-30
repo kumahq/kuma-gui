@@ -4,7 +4,7 @@
       <template #body>
         <div
           class="columns"
-          style="--columns: 4;"
+          style="--columns: 3;"
         >
           <DefinitionCard>
             <template #title>
@@ -13,16 +13,6 @@
 
             <template #body>
               <StatusBadge :status="props.serviceInsight.status ?? 'not_available'" />
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.name') }}
-            </template>
-
-            <template #body>
-              <TextWithCopyButton :text="props.serviceInsight.name" />
             </template>
           </DefinitionCard>
 

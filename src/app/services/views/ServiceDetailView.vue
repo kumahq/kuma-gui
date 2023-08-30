@@ -28,10 +28,12 @@
     >
       <template #title>
         <h1>
-          <RouteTitle
-            :title="t('services.routes.item.title', {name: route.params.service})"
-            :render="true"
-          />
+          <TextWithCopyButton :text="route.params.service">
+            <RouteTitle
+              :title="t('services.routes.item.title', { name: route.params.service })"
+              :render="true"
+            />
+          </TextWithCopyButton>
         </h1>
       </template>
 
@@ -184,6 +186,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
 import type { ServiceInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'

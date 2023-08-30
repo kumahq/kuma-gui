@@ -28,10 +28,12 @@
     >
       <template #title>
         <h1>
-          <RouteTitle
-            :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })"
-            :render="true"
-          />
+          <TextWithCopyButton :text="route.params.dataPlane">
+            <RouteTitle
+              :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })"
+              :render="true"
+            />
+          </TextWithCopyButton>
         </h1>
       </template>
 
@@ -65,6 +67,7 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

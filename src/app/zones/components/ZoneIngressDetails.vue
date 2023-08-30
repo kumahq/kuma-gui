@@ -6,7 +6,7 @@
           <template #body>
             <div
               class="columns"
-              style="--columns: 4;"
+              style="--columns: 3;"
             >
               <DefinitionCard>
                 <template #title>
@@ -15,16 +15,6 @@
 
                 <template #body>
                   <StatusBadge :status="status" />
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.name') }}
-                </template>
-
-                <template #body>
-                  <TextWithCopyButton :text="props.zoneIngressOverview.name" />
                 </template>
               </DefinitionCard>
 

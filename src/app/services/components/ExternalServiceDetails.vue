@@ -4,18 +4,8 @@
       <template #body>
         <div
           class="columns"
-          style="--columns: 3;"
+          style="--columns: 2;"
         >
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.name') }}
-            </template>
-
-            <template #body>
-              <TextWithCopyButton :text="props.serviceInsight.name" />
-            </template>
-          </DefinitionCard>
-
           <DefinitionCard>
             <template #title>
               {{ t('http.api.property.address') }}
@@ -54,7 +44,6 @@ import { KCard } from '@kong/kongponents'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import { ExternalService, ServiceInsight } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'

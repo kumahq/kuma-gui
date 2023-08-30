@@ -4,18 +4,8 @@
       <div class="stack">
         <div
           class="columns"
-          style="--columns: 4"
+          style="--columns: 3;"
         >
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.name') }}
-            </template>
-
-            <template #body>
-              <TextWithCopyButton :text="props.mesh.name" />
-            </template>
-          </DefinitionCard>
-
           <ResourceStatus
             :total="props.meshInsight.services.total ?? 0"
             data-testid="services-status"
@@ -109,7 +99,6 @@ import { PropType, computed } from 'vue'
 
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { Mesh, MeshBackend, MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 

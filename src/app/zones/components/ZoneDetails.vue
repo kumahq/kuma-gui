@@ -11,7 +11,7 @@
           <template #body>
             <div
               class="columns"
-              style="--columns: 4;"
+              style="--columns: 3;"
             >
               <DefinitionCard>
                 <template #title>
@@ -20,16 +20,6 @@
 
                 <template #body>
                   <StatusBadge :status="status" />
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.name') }}
-                </template>
-
-                <template #body>
-                  <TextWithCopyButton :text="props.zoneOverview.name" />
                 </template>
               </DefinitionCard>
 
@@ -126,7 +116,6 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'
 import { useI18n, useEnv } from '@/utilities'

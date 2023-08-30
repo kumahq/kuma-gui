@@ -3,10 +3,12 @@
     <AppView>
       <template #title>
         <h1>
-          <RouteTitle
-            :title="t('meshes.routes.item.title', { name: route.params.mesh })"
-            :render="true"
-          />
+          <TextWithCopyButton :text="route.params.mesh">
+            <RouteTitle
+              :title="t('meshes.routes.item.title', { name: route.params.mesh })"
+              :render="true"
+            />
+          </TextWithCopyButton>
         </h1>
       </template>
 
@@ -32,6 +34,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

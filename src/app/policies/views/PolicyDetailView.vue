@@ -47,10 +47,12 @@
           >
             <template #title>
               <h1>
-                <RouteTitle
-                  :title="t('policies.routes.item.title', { name: route.params.policy })"
-                  :render="true"
-                />
+                <TextWithCopyButton :text="route.params.policy">
+                  <RouteTitle
+                    :title="t('policies.routes.item.title', { name: route.params.policy })"
+                    :render="true"
+                  />
+                </TextWithCopyButton>
               </h1>
             </template>
 
@@ -91,6 +93,7 @@ import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
