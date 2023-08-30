@@ -34,3 +34,9 @@
   font-weight: $kui-font-weight-bold;
 }
 </style>
+
+<style lang="scss">
+.definition-card-container > * {
+  min-width: 0;
+}
+</style>
