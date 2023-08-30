@@ -1,6 +1,6 @@
 <template>
   <div class="copy-button-wrapper">
-    <slot>{{ props.text }}</slot>
+    <span class="text"><slot>{{ props.text }}</slot></span>
 
     <CopyButton
       :text="props.text"
@@ -29,5 +29,10 @@ const props = defineProps({
   display: inline-flex;
   align-items: center;
   gap: $kui-space-40;
+}
+
+.text {
+  min-width: 0;
+  word-wrap: break-word;
 }
 </style>

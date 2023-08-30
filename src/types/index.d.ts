@@ -446,15 +446,41 @@ export interface ZoneOverview extends MeshEntity {
   zoneInsight?: ZoneInsight
 }
 
+export interface ZoneIngressNetworking {
+  address?: string
+  advertisedAddress?: string
+  port?: string
+  advertisedPort?: string
+}
+
+export interface AvailableService {
+  tags?: Record<string, string>
+  instances?: number
+  mesh?: string
+  externalService?: boolean
+}
+
 export interface ZoneIngressOverview extends MeshEntity {
   type: 'ZoneIngressOverview'
-  zoneIngress: any
+  zoneIngress: {
+    zone?: string
+    networking?: ZoneIngressNetworking
+    availableServices?: AvailableService[]
+  }
   zoneIngressInsight: any
+}
+
+export interface ZoneEgressNetworking {
+  address?: string
+  port?: string
 }
 
 export interface ZoneEgressOverview extends MeshEntity {
   type: 'ZoneEgressOverview'
-  zoneEgress: any
+  zoneEgress: {
+    zone?: string
+    networking?: ZoneEgressNetworking
+  }
   zoneEgressInsight: any
 }
 

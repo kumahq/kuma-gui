@@ -30,6 +30,7 @@
               data-testid="zone-egress-collection"
               :headers="[
                 { label: 'Name', key: 'name' },
+                { label: 'Address', key: 'addressPort' },
                 { label: 'Status', key: 'status' },
                 { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
@@ -50,6 +51,17 @@
                 >
                   {{ rowValue }}
                 </RouterLink>
+              </template>
+
+              <template #addressPort="{ rowValue }">
+                <TextWithCopyButton
+                  v-if="rowValue"
+                  :text="rowValue"
+                />
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
+                </template>
               </template>
 
               <template #status="{ rowValue }">
@@ -117,6 +129,7 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { StatusKeyword, ZoneEgressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
@@ -124,6 +137,7 @@ import { getItemStatusFromInsight } from '@/utilities/dataplane'
 type ZoneEgressOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
   name: string
+  addressPort: string | undefined
   status: StatusKeyword
 }
 
@@ -150,11 +164,20 @@ function transformToTableData(zoneEgressOverviews: ZoneEgressOverview[]): ZoneEg
         zoneEgress: name,
       },
     }
+
+    const { networking } = entity.zoneEgress
+
+    let addressPort
+    if (networking?.address && networking?.port) {
+      addressPort = `${networking.address}:${networking.port}`
+    }
+
     const status = getItemStatusFromInsight(entity.zoneEgressInsight ?? {})
 
     return {
       detailViewRoute,
       name,
+      addressPort,
       status,
     }
   })

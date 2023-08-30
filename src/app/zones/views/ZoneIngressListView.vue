@@ -32,6 +32,8 @@
                 data-testid="zone-ingress-collection"
                 :headers="[
                   { label: 'Name', key: 'name' },
+                  { label: 'Address', key: 'addressPort' },
+                  { label: 'Advertised address', key: 'advertisedAddressPort' },
                   { label: 'Status', key: 'status' },
                   { label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
@@ -52,6 +54,28 @@
                   >
                     {{ rowValue }}
                   </RouterLink>
+                </template>
+
+                <template #addressPort="{ rowValue }">
+                  <TextWithCopyButton
+                    v-if="rowValue"
+                    :text="rowValue"
+                  />
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #advertisedAddressPort="{ rowValue }">
+                  <TextWithCopyButton
+                    v-if="rowValue"
+                    :text="rowValue"
+                  />
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
                 </template>
 
                 <template #status="{ rowValue }">
@@ -121,6 +145,7 @@ import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
@@ -128,6 +153,8 @@ import { getItemStatusFromInsight } from '@/utilities/dataplane'
 type ZoneIngressOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
   name: string
+  addressPort: string | undefined
+  advertisedAddressPort: string | undefined
   status: StatusKeyword
 }
 
@@ -154,11 +181,26 @@ function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): Zone
         zoneIngress: name,
       },
     }
+
+    const { networking } = entity.zoneIngress
+
+    let addressPort
+    if (networking?.address && networking?.port) {
+      addressPort = `${networking.address}:${networking.port}`
+    }
+
+    let advertisedAddressPort
+    if (networking?.advertisedAddress && networking?.advertisedPort) {
+      advertisedAddressPort = `${networking.advertisedAddress}:${networking.advertisedPort}`
+    }
+
     const status = getItemStatusFromInsight(entity.zoneIngressInsight ?? {})
 
     return {
       detailViewRoute,
       name,
+      addressPort,
+      advertisedAddressPort,
       status,
     }
   })
