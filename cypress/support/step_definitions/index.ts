@@ -94,6 +94,12 @@ When('I go {string}', (direction: number | Cypress.HistoryDirection) => {
 })
 
 // assert
+Then('the URL is {string}', (expected: string) => {
+  cy.url().then((url) => {
+    const actual = new URL(url).pathname.replace(/^\/gui/, '')
+    expect(expected).to.equal(actual)
+  })
+})
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
 })
