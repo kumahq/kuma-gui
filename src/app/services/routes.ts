@@ -15,18 +15,27 @@ export const routes = () => {
         children: [
           {
             path: ':service',
-            name: `${prefix}-detail-view`,
-            component: () => import('@/app/services/views/ServiceDetailView.vue'),
-            props: (route) => ({
-              mesh: route.params.mesh,
-              service: route.params.service,
-              gatewayType: route.query.gatewayType || 'all',
-              page: getLastNumberParameter(route.query.page, 1),
-              size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-              query: decodeURIComponent(String(route.query.query || '')),
-              search: decodeURIComponent(String(route.query.s || '')),
-
-            }),
+            name: `${prefix}-detail-tabs-view`,
+            component: () => import('@/app/services/views/ServiceDetailTabsView.vue'),
+            children: [
+              {
+                path: '',
+                name: `${prefix}-detail-view`,
+                component: () => import('@/app/services/views/ServiceDetailView.vue'),
+              },
+              {
+                path: 'data-plane-proxies',
+                name: `${prefix}-data-plane-proxies-view`,
+                component: () => import('@/app/services/views/ServiceDataPlaneProxiesView.vue'),
+                props: (route) => ({
+                  gatewayType: route.query.gatewayType || 'all',
+                  page: getLastNumberParameter(route.query.page, 1),
+                  size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
+                  query: decodeURIComponent(String(route.query.query || '')),
+                  search: decodeURIComponent(String(route.query.s || '')),
+                }),
+              },
+            ],
           },
         ],
       },
