@@ -5,7 +5,6 @@ zone-cps:
       breadcrumbs: Zone Control Planes
       navigation:
         zone-cp-detail-view: 'Overview'
-        zone-cp-subscriptions-view: 'Subscriptions'
         zone-cp-config-view: 'Config'
     items:
       title: Zone Control Planes
@@ -13,6 +12,7 @@ zone-cps:
   list:
     version_mismatch: 'Version mismatch'
   detail:
+    subscriptions: 'KDS connections'
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
   empty_state:
@@ -35,6 +35,8 @@ zone-ingresses:
       breadcrumbs: Ingresses
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'
+  detail:
+    subscriptions: 'XDS connections'
 
 zone-egresses:
   routes:
@@ -52,6 +54,8 @@ zone-egresses:
       breadcrumbs: Egresses
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'
+  detail:
+    subscriptions: 'XDS connections'
 
 zones:
   href:

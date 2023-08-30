@@ -43,6 +43,16 @@
         </div>
       </template>
     </KCard>
+
+    <div v-if="(props.zoneOverview.zoneInsight?.subscriptions ?? []).length > 0">
+      <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
+
+      <KCard class="mt-4">
+        <template #body>
+          <SubscriptionList :subscriptions="props.zoneOverview.zoneInsight?.subscriptions ?? []" />
+        </template>
+      </KCard>
+    </div>
   </div>
 </template>
 
@@ -53,6 +63,7 @@ import { computed, PropType } from 'vue'
 import { getZoneControlPlaneStatus } from '../getZoneControlPlaneStatus'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'
 import { useI18n, useEnv } from '@/utilities'

@@ -57,11 +57,6 @@ export const routes = (
                   component: () => import('@/app/zones/views/ZoneDetailView.vue'),
                 },
                 {
-                  path: 'subscriptions',
-                  name: 'zone-cp-subscriptions-view',
-                  component: () => import('@/app/zones/views/ZoneSubscriptionsView.vue'),
-                },
-                {
                   path: 'config',
                   name: 'zone-cp-config-view',
                   component: () => import('@/app/zones/views/ZoneConfigView.vue'),

@@ -1,12 +1,10 @@
 Feature: zones / zone-cps / item
   Background:
     Given the CSS selectors
-      | Alias                    | Selector                                   |
-      | zone-detail-tabs-view    | [data-testid='zone-cp-detail-tabs-view']   |
-      | nav-insights             | #zone-cp-subscriptions-view-tab a          |
-      | tab-overview             | [data-testid='zone-cp-detail-view']        |
-      | tab-insights             | [data-testid='zone-cp-subscriptions-view'] |
-      | warning-no-subscriptions | [data-testid='warning-no-subscriptions']   |
+      | Alias                    | Selector                                 |
+      | zone-detail-tabs-view    | [data-testid='zone-cp-detail-tabs-view'] |
+      | tab-overview             | [data-testid='zone-cp-detail-view']      |
+      | warning-no-subscriptions | [data-testid='warning-no-subscriptions'] |
 
     And the URL "/config" responds with
       """
@@ -46,8 +44,7 @@ Feature: zones / zone-cps / item
       | online    |
       | dpToken   |
 
-    When I click the "$nav-insights" element
-    Then the "$tab-insights" element contains "Connected: Jul 28, 2020, 4:18 PM"
+    Then the "$tab-overview" element contains "Connected: Jul 28, 2020, 4:18 PM"
 
   Scenario: When subscriptions aren't set a warning is shown
     And the URL "/zones+insights/zone-cp-1" responds with
