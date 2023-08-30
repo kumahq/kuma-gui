@@ -13,13 +13,11 @@ import type { Can } from '@/app/application/services/can'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
 import DataSourceLifeCycle from '@/app/application/services/data-source/index'
 import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-planes'
-import { routes as diagnosticsRoutes, services as diagnosticsModule } from '@/app/diagnostics'
 import { routes as gatewayRoutes, services as gateways } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
 import { services as mainOverviewModule } from '@/app/main-overview'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
-import { routes as onboardingRoutes, services as onboarding } from '@/app/onboarding'
 import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import { routes as zoneRoutes, actions as zoneActionRoutes, services as zonesModule } from '@/app/zones'
@@ -59,7 +57,9 @@ const $ = {
 
   router: token<Router>('router'),
   routes: token<RouteRecordRaw[]>('vue.routes'),
+  routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
   navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
+  guards: token<NavigationGuard[]>('app.guards'),
 
   meshRoutes: token<RouteRecordRaw[]>('kuma.mesh.routes'),
 
@@ -69,10 +69,6 @@ const $ = {
   policyRoutes: token<SplitRouteRecordRaw[]>('kuma.policy.routes'),
 
   zoneRoutes: token<RouteRecordRaw[]>('kuma.zone.routes'),
-
-  diagnosticsRoutes: token<RouteRecordRaw[]>('kuma.diagnostics.routes'),
-  onboardingRoutes: token<RouteRecordRaw[]>('kuma.onboarding.routes'),
-  onboardingRouteGuards: token<NavigationGuard[]>('kuma.onboarding.routes'),
 
   nav: token<ReturnType<typeof getNavItems>>('nav'),
 
@@ -180,7 +176,9 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       })
 
       guards.forEach((item) => {
-        router.beforeEach(item)
+        if (typeof item === 'function') {
+          router.beforeEach(item)
+        }
       })
 
       return router
@@ -191,6 +189,15 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.navigationGuards,
     ],
   }],
+  [$.guards, {
+    service: () => {
+      return []
+    },
+    labels: [
+      $.navigationGuards,
+    ],
+  }],
+
   // Nav
   [$.nav, {
     service: (can: Can) => getNavItems(can('use zones')),
@@ -218,10 +225,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.routes, {
     service: routes,
     arguments: [
-      $.zoneRoutes,
-      $.meshRoutes,
-      $.onboardingRoutes,
-      $.diagnosticsRoutes,
+      $.routesLabel,
     ],
   }],
 
@@ -232,6 +236,9 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.gatewayRoutes,
       $.dataplaneRoutes,
       $.policyRoutes,
+    ],
+    labels: [
+      $.routesLabel,
     ],
   }],
 
@@ -258,13 +265,9 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
         },
       ),
     ],
-  }],
-
-  [$.onboardingRoutes, {
-    service: onboardingRoutes,
-  }],
-  [$.diagnosticsRoutes, {
-    service: diagnosticsRoutes,
+    labels: [
+      $.routesLabel,
+    ],
   }],
 
   // Modules
@@ -276,8 +279,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   ...dataplanes($),
   ...gateways($),
   ...policies($),
-  ...diagnosticsModule($),
-  ...onboarding($),
 ]
 
 export const TOKENS = $

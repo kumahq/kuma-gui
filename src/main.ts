@@ -1,3 +1,5 @@
+import { services as diagnostics } from '@/app/diagnostics'
+import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as $, services as production } from '@/services/production'
 import { build } from '@/services/utils'
 
@@ -5,6 +7,14 @@ async function mountVueApplication() {
   const get = build(
     // production service container configuration
     production($),
+    onboarding({
+      ...$,
+      routes: $.routesLabel,
+    }),
+    diagnostics({
+      ...$,
+      routes: $.routesLabel,
+    }),
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
       ? await (async () => {

@@ -6,6 +6,7 @@ import { config } from '@vue/test-utils'
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { TOKENS as TEST, services as testing } from '../src/services/testing'
+import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as DEV, services as development } from '@/services/development'
 import CliEnv from '@/services/env/CliEnv'
 import { TOKENS as PROD, services as production } from '@/services/production'
@@ -25,6 +26,11 @@ const $ = {
 (async () => {
   build(
     production($),
+    onboarding({
+      ...$,
+      routes: $.routesLabel,
+    }),
+
     development($),
     testing($),
   )
