@@ -72,6 +72,10 @@
     </template>
 
     <template #xds-configuration>
+      <h2 class="mb-4">
+        {{ t('zone-egresses.routes.item.tabs.xds_configuration') }}
+      </h2>
+
       <KCard>
         <template #body>
           <EnvoyData
@@ -85,6 +89,10 @@
     </template>
 
     <template #envoy-stats>
+      <h2 class="mb-4">
+        {{ t('zone-egresses.routes.item.tabs.stats') }}
+      </h2>
+
       <KCard>
         <template #body>
           <EnvoyData
@@ -98,6 +106,10 @@
     </template>
 
     <template #envoy-clusters>
+      <h2 class="mb-4">
+        {{ t('zone-egresses.routes.item.tabs.clusters') }}
+      </h2>
+
       <KCard>
         <template #body>
           <EnvoyData

@@ -5,7 +5,7 @@ zone-cps:
       breadcrumbs: Zone Control Planes
       tabs:
         overview: 'Overview'
-        insights: 'Subscriptions'
+        insights: 'KDS connections'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes

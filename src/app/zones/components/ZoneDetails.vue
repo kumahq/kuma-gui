@@ -87,6 +87,10 @@
     </template>
 
     <template #insights>
+      <h2 class="mb-4">
+        {{ t('zone-cps.routes.item.tabs.insights') }}
+      </h2>
+
       <KCard>
         <template #body>
           <AccordionList :initially-open="0">

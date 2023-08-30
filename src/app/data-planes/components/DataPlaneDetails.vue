@@ -177,6 +177,10 @@
     </template>
 
     <template #insights>
+      <h2 class="mb-4">
+        {{ t('data-planes.routes.item.tabs.insights') }}
+      </h2>
+
       <KCard>
         <template #body>
           <StatusInfo :is-empty="insightSubscriptions.length === 0">
@@ -203,6 +207,10 @@
     </template>
 
     <template #dpp-policies>
+      <h2 class="mb-4">
+        {{ t('data-planes.routes.item.tabs.policies') }}
+      </h2>
+
       <KCard>
         <template #body>
           <DataSource
@@ -229,6 +237,10 @@
     </template>
 
     <template #xds-configuration>
+      <h2 class="mb-4">
+        {{ t('data-planes.routes.item.tabs.xds_configuration') }}
+      </h2>
+
       <KCard>
         <template #body>
           <EnvoyData
@@ -242,6 +254,10 @@
     </template>
 
     <template #envoy-stats>
+      <h2 class="mb-4">
+        {{ t('data-planes.routes.item.tabs.stats') }}
+      </h2>
+
       <KCard>
         <template #body>
           <EnvoyData
@@ -255,6 +271,10 @@
     </template>
 
     <template #envoy-clusters>
+      <h2 class="mb-4">
+        {{ t('data-planes.routes.item.tabs.clusters') }}
+      </h2>
+
       <KCard>
         <template #body>
           <EnvoyData

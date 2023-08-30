@@ -80,6 +80,10 @@
             v-if="data.serviceType !== 'external'"
             #dataPlaneProxies
           >
+            <h2 class="mb-4">
+              {{ t('services.routes.item.tabs.data_plane_proxies') }}
+            </h2>
+
             <DataSource
               v-slot="{ data: dataplanesData, error: dataplanesError }"
               :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${props.gatewayType}?page=${props.page}&size=${props.size}&search=${props.search}`"
