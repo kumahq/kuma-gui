@@ -10,6 +10,7 @@ data-planes:
         data-plane-xds-config-view: 'XDS Configuration'
         data-plane-stats-view: 'Stats'
         data-plane-clusters-view: 'Clusters'
+        data-plane-config-view: 'YAML'
     items:
       title: Data Plane Proxies
   href:

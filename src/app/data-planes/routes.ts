@@ -47,6 +47,11 @@ export const routes = () => {
                 name: `${prefix}-clusters-view`,
                 component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
               },
+              {
+                path: 'config',
+                name: `${prefix}-config-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
+              },
             ],
           },
         ],

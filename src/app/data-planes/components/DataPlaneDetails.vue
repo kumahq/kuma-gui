@@ -135,32 +135,6 @@
         </template>
       </KCard>
     </div>
-
-    <div>
-      <DataSource
-        v-slot="{ data, error }: DataplaneSource"
-        :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
-      >
-        <ErrorBlock
-          v-if="error"
-          :error="error"
-        />
-
-        <LoadingBlock v-else-if="data === undefined" />
-
-        <template v-else>
-          <h3>{{ t('data-planes.detail.configuration') }}</h3>
-
-          <ResourceCodeBlock
-            id="code-block-data-plane"
-            class="mt-4"
-            :resource="data"
-            :resource-fetcher="(params) => kumaApi.getDataplaneFromMesh({ mesh: data.mesh, name: data.name }, params)"
-            is-searchable
-          />
-        </template>
-      </DataSource>
-    </div>
   </div>
 </template>
 
@@ -168,21 +142,15 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
-import { useRoute } from 'vue-router'
 
-import type { DataplaneSource } from '../sources'
 import { useCan } from '@/app/application'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { Compatibility, DataPlaneOverview } from '@/types/index.d'
-import { useI18n, useKumaApi } from '@/utilities'
+import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -195,8 +163,6 @@ import {
 } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
-const kumaApi = useKumaApi()
-const route = useRoute()
 const can = useCan()
 
 const props = defineProps({
