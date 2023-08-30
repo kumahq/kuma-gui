@@ -17,8 +17,13 @@
           <LoadingBlock v-if="isLoadingMesh || isLoadingMeshInsight" />
 
           <ErrorBlock
-            v-else-if="meshError ?? meshInsightError"
-            :error="meshError ?? meshInsightError"
+            v-else-if="meshError"
+            :error="meshError"
+          />
+
+          <ErrorBlock
+            v-else-if="meshInsightError"
+            :error="meshInsightError"
           />
 
           <EmptyBlock v-else-if="mesh === undefined || meshInsight === undefined" />

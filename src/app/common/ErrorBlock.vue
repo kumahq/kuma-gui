@@ -19,34 +19,33 @@
         />
 
         <slot>
-          <p>An error has occurred while trying to load this data.</p>
+          <p>{{ error instanceof ApiError ? error.detail : t('common.error_state.title') }}</p>
         </slot>
       </template>
 
-      <template
-        v-if="$slots.message || error !== null || invalidParameters.length > 0"
-        #message
-      >
-        <template v-if="$slots.message">
-          <slot name="message" />
-        </template>
+      <template #message>
+        <slot
+          v-if="$slots.message"
+          name="message"
+        />
+
+        <p v-else>
+          {{ error.message }}
+        </p>
 
         <details
-          v-else
+          v-if="invalidParameters.length > 0"
           class="error-block-details"
+          data-testid="error-invalid-parameters"
         >
-          <summary>Details</summary>
+          <summary>{{ t('common.error_state.details') }}</summary>
 
-          <p v-if="error !== null">
-            {{ error.message }}
-          </p>
-
-          <ul v-if="invalidParameters.length > 0">
+          <ul>
             <li
               v-for="(parameter, index) in invalidParameters"
               :key="index"
             >
-              <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
+              {{ t('common.error_state.field') }} <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
             </li>
           </ul>
         </details>
@@ -58,14 +57,26 @@
       class="badge-list"
     >
       <KBadge
-        v-if="error.type"
         :appearance="props.badgeAppearance"
+        data-testid="error-status"
       >
-        {{ error.type }}
+        {{ error.status }}
       </KBadge>
 
-      <KBadge :appearance="props.badgeAppearance">
-        {{ error.status }}
+      <KBadge
+        v-if="error.type"
+        appearance="neutral"
+        data-testid="error-type"
+      >
+        type: {{ error.type }}
+      </KBadge>
+
+      <KBadge
+        v-if="error.instance"
+        appearance="neutral"
+        data-testid="error-trace"
+      >
+        trace: <TextWithCopyButton :text="error.instance" />
       </KBadge>
     </div>
   </div>
@@ -76,14 +87,17 @@ import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 
 const props = defineProps({
   error: {
-    type: [Error, null] as PropType<Error | null>,
-    required: false,
-    default: null,
+    type: Error,
+    required: true,
   },
 
   icon: {

@@ -94,5 +94,9 @@ function createApiError(response: Response, data: unknown): ApiError {
     title = 'An error has occurred while trying to load this data.'
   }
 
+  if (instance) {
+    title += ` (trace: ${instance})`
+  }
+
   return new ApiError({ status, type, title, detail, instance, invalidParameters })
 }

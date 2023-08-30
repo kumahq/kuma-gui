@@ -19,7 +19,13 @@
         <div class="stack">
           <KCard>
             <template #body>
+              <ErrorBlock
+                v-if="error !== undefined"
+                :error="error"
+              />
+
               <AppCollection
+                v-else
                 class="mesh-collection"
                 data-testid="mesh-collection"
                 :headers="[
@@ -104,6 +110,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

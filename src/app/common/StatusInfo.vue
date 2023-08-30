@@ -3,7 +3,7 @@
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock
-      v-else-if="hasError || error !== null"
+      v-else-if="error !== null"
       :error="error"
     />
 
@@ -24,11 +24,6 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 defineProps({
   isLoading: {
-    type: Boolean,
-    default: false,
-  },
-
-  hasError: {
     type: Boolean,
     default: false,
   },

@@ -21,7 +21,13 @@
         >
           <KCard>
             <template #body>
+              <ErrorBlock
+                v-if="error !== undefined"
+                :error="error"
+              />
+
               <AppCollection
+                v-else
                 class="zone-ingress-collection"
                 data-testid="zone-ingress-collection"
                 :headers="[
@@ -113,6 +119,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
