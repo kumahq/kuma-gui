@@ -58,4 +58,5 @@ Feature: zones / zone-cps / item
           subscriptions: ~
       """
     When I visit the "/zones/zone-cps/zone-cp-1" URL
+    And I click the "#zone-cp-config-view-tab a" element
     Then the "$warning-no-subscriptions" element exists
