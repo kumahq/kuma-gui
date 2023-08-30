@@ -15,26 +15,6 @@ describe('config module', () => {
 
       expect(result).toBe('foo')
     })
-
-    test('tests getMulticlusterStatus getter when global mode', () => {
-      const getters = {
-        getMode: 'global',
-      }
-
-      const result = configModule.getters.getMulticlusterStatus({} as any, getters, {} as any, {})
-
-      expect(result).toBe(true)
-    })
-
-    test('tests getMulticlusterStatus getter when standalone', () => {
-      const getters = {
-        getMode: 'standalone',
-      }
-
-      const result = configModule.getters.getMulticlusterStatus({} as any, getters, {} as any, {})
-
-      expect(result).toBe(false)
-    })
   })
 
   describe('actions', () => {

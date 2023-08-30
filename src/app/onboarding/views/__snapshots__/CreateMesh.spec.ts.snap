@@ -175,7 +175,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
               <a
                 class="k-button medium rounded secondary"
                 data-testid="onboarding-previous-button"
-                href="/gui/onboarding/configuration-types"
+                href="/gui/onboarding/multi-zone"
                 type="button"
               >
                 

@@ -9,6 +9,7 @@ import { createStore, StoreOptions, Store } from 'vuex'
 import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
+import type { Can } from '@/app/application/services/can'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
 import DataSourceLifeCycle from '@/app/application/services/data-source/index'
 import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-planes'
@@ -73,7 +74,7 @@ const $ = {
   onboardingRoutes: token<RouteRecordRaw[]>('kuma.onboarding.routes'),
   onboardingRouteGuards: token<NavigationGuard[]>('kuma.onboarding.routes'),
 
-  nav: token<typeof getNavItems>('nav'),
+  nav: token<ReturnType<typeof getNavItems>>('nav'),
 
   logger: token<Logger>('logger'),
 
@@ -192,7 +193,10 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
   // Nav
   [$.nav, {
-    service: () => (multizone: boolean) => getNavItems(multizone),
+    service: (can: Can) => getNavItems(can('use zones')),
+    arguments: [
+      $.can,
+    ],
   }],
 
   // App

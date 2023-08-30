@@ -10,6 +10,7 @@ Feature: Overview: Detail view content
     Given the environment
       """
       KUMA_MESH_COUNT: 3
+      KUMA_MODE: standalone
       """
     And the URL "/config" responds with
       """

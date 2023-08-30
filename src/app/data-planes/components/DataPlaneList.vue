@@ -137,14 +137,13 @@ import {
   KIcon,
   KTooltip,
 } from '@kong/kongponents'
-import { computed } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
+import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
-import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { DataPlaneOverview, StatusKeyword, Version } from '@/types/index.d'
 import { useI18n } from '@/utilities'
@@ -156,8 +155,9 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
 import { notEmpty } from '@/utilities/notEmpty'
-const store = useStore()
+
 const { t, formatIsoDate } = useI18n()
+const can = useCan()
 
 type DataPlaneOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
@@ -205,7 +205,7 @@ const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
 }>()
 
-const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
+const isMultiZoneMode = can('use zones')
 
 function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlaneOverviewTableRow[] {
   return dataPlaneOverviews.map((dataPlaneOverview) => {
@@ -328,7 +328,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       }
     }
 
-    if (isMultiZoneMode.value && summary.dpVersion) {
+    if (isMultiZoneMode && summary.dpVersion) {
       const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {

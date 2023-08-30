@@ -101,6 +101,7 @@ import {
 import { computed } from 'vue'
 
 import UpgradeCheck from './common/UpgradeCheck.vue'
+import { useCan } from '@/app/application'
 import {
   useKumaLogo,
   useGithubButton,
@@ -118,6 +119,7 @@ const [
 
 const store = useStore()
 const env = useEnv()
+const can = useCan()
 const { t } = useI18n()
 
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
@@ -131,7 +133,7 @@ const environmentName = computed(() => {
   }
 })
 
-const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Multi-Zone' : 'Standalone')
+const mode = can('use zones') ? 'Multi-Zone' : 'Standalone'
 
 </script>
 

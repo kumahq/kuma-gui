@@ -13,7 +13,7 @@
           style="--columns: 4;"
         >
           <ResourceStatus
-            :total="store.getters['config/getMulticlusterStatus'] ? props.zoneOverviews.length : 1"
+            :total="can('use zones') ? props.zoneOverviews.length : 1"
             data-testid="zone-control-planes-status"
           >
             <template #icon>
@@ -71,7 +71,7 @@
       class="columns"
       style="--columns: 2;"
     >
-      <KCard v-if="store.getters['config/getMulticlusterStatus']">
+      <KCard v-if="can('use zones')">
         <template #body>
           <div class="card-header">
             <div class="card-title">
@@ -83,7 +83,7 @@
             </div>
 
             <div
-              v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && props.zoneOverviews.length > 0"
+              v-if="can('create zones') && props.zoneOverviews.length > 0"
               class="card-actions"
             >
               <KButton
@@ -131,15 +131,14 @@ import { PropType, computed } from 'vue'
 
 import MeshesDetails from './MeshesDetails.vue'
 import ZoneControlPlanesDetails from './ZoneControlPlanesDetails.vue'
+import { useCan } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
-import { useStore } from '@/store/store'
 import { MeshInsight, ZoneOverview } from '@/types/index.d'
-import { useI18n, useEnv } from '@/utilities'
+import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
-const env = useEnv()
-const store = useStore()
+const can = useCan()
 
 const props = defineProps({
   meshInsights: {
