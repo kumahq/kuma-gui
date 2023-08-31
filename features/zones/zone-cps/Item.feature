@@ -5,12 +5,11 @@ Feature: zones / zone-cps / item
       | zone-detail-tabs-view    | [data-testid='zone-cp-detail-tabs-view'] |
       | tab-overview             | [data-testid='zone-cp-detail-view']      |
       | warning-no-subscriptions | [data-testid='warning-no-subscriptions'] |
+    And the environment
+      """
+      KUMA_MODE: global
+      """
 
-    And the URL "/config" responds with
-      """
-      body:
-        mode: global
-      """
   Scenario: Zone CP detail view has expected content
     # We always use the final subscription
     # If the disconnectTime is empty then we are online

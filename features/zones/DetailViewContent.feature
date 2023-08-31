@@ -6,13 +6,12 @@ Feature: Zones: Detail view content
       | ingress-detail-tabs-view | [data-testid='zone-ingress-detail-tabs-view'] |
       | egress-detail-view       | [data-testid='zone-egress-detail-view']       |
       | egress-detail-tabs-view  | [data-testid='zone-egress-detail-tabs-view']  |
+    And the environment
+      """
+      KUMA_MODE: global
+      """
 
   Scenario Outline: Zone Ingress detail view has expected content
-    Given the URL "/config" responds with
-      """
-      body:
-        mode: global
-      """
     And the URL "/zoneingresses+insights/zone-ingress-1" responds with
       """
       body:
@@ -38,11 +37,6 @@ Feature: Zones: Detail view content
     Then the "$ingress-detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
 
   Scenario Outline: Zone Egress detail view has expected content
-    Given the URL "/config" responds with
-      """
-      body:
-        mode: global
-      """
     And the URL "/zoneegressoverviews/zone-egress-1" responds with
       """
       body:

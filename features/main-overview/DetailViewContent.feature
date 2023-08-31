@@ -12,11 +12,6 @@ Feature: Overview: Detail view content
       KUMA_MESH_COUNT: 3
       KUMA_MODE: standalone
       """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: 'standalone'
-      """
     And the URL "/mesh-insights" responds with
       """
       body:
@@ -58,11 +53,7 @@ Feature: Overview: Detail view content
       """
       KUMA_ZONE_COUNT: 2
       KUMA_MESH_COUNT: 3
-      """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: 'global'
+      KUMA_MODE: global
       """
     And the URL "/zones+insights" responds with
       """

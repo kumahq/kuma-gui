@@ -11,11 +11,7 @@ Feature: Zones: Page navigation
       KUMA_ZONE_COUNT: 2
       KUMA_ZONEINGRESS_COUNT: 1
       KUMA_ZONEEGRESS_COUNT: 1
-      """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: global
+      KUMA_MODE: global
       """
     And the URL "/zones+insights" responds with
       """

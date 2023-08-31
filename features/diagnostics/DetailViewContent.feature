@@ -5,10 +5,9 @@ Feature: Diagnostics: Detail view content
       | details | [data-testid='code-block-diagnostics'] |
 
   Scenario: Diagnostics detail view has expected content
-    Given the URL "/config" responds with
+    Given the environment
       """
-      body:
-        mode: global
+      KUMA_MODE: global
       """
 
     When I visit the "/diagnostics" URL

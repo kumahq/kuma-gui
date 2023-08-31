@@ -23,11 +23,7 @@ Feature: Data Plane Proxies: Detail view content
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
-      """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: global
+      KUMA_MODE: global
       """
     # TODO: Use exact mocking here. It’s almost impossible to control the test data without exact mocking. For example, I need to set `disconnectTime: ''` just so that I don’t risk a faker-random disconnect time appearing in the last subscription.
     And the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
