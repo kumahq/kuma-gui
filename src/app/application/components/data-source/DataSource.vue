@@ -1,7 +1,6 @@
 <template>
   <slot
     :data="(message as any)"
-    :is-loading="isLoading"
     :error="error"
     :refresh="refresh"
   />
@@ -24,7 +23,6 @@ const props = defineProps({
 })
 
 const message = ref<unknown>(undefined)
-const isLoading = ref(false)
 const error = ref<Error | undefined>(undefined)
 
 const emit = defineEmits<{
@@ -45,7 +43,6 @@ const open = async (src: string) => {
   if (src === '') {
     return
   }
-  isLoading.value = true
   state.controller = new AbortController()
   // this should emit proper events
   const source = data.source(src, sym)
@@ -56,7 +53,6 @@ const open = async (src: string) => {
       message.value = (e as MessageEvent).data
       // if we got a message we are no longer erroneous
       error.value = undefined
-      isLoading.value = false
 
       emit('change', message.value)
     },
@@ -67,7 +63,6 @@ const open = async (src: string) => {
     'error',
     (e) => {
       error.value = (e as ErrorEvent).error as Error
-      isLoading.value = false
 
       emit('error', error.value)
     },

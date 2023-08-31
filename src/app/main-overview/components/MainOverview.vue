@@ -1,16 +1,14 @@
 <template>
   <DataSource
-    v-slot="{ data: meshInsightsData, isLoading: meshInsightsIsLoading, error: meshInsightsError }: MeshInsightCollectionSource"
+    v-slot="{ data: meshInsightsData, error: meshInsightsError }: MeshInsightCollectionSource"
     src="/all-mesh-insights"
   >
     <DataSource
-      v-slot="{ data: zoneOverviewsData, isLoading: zoneOverviewsIsLoading, error: zoneOverviewsError }: ZoneOverviewCollectionSource"
+      v-slot="{ data: zoneOverviewsData, error: zoneOverviewsError }: ZoneOverviewCollectionSource"
       :src="can('use zones') ? '/all-zone-overviews' : ''"
     >
-      <LoadingBlock v-if="meshInsightsIsLoading || zoneOverviewsIsLoading" />
-
       <ErrorBlock
-        v-else-if="meshInsightsError"
+        v-if="meshInsightsError"
         :error="meshInsightsError"
       />
 
@@ -19,11 +17,13 @@
         :error="zoneOverviewsError"
       />
 
+      <LoadingBlock v-else-if="meshInsightsData === undefined || (can('use zones') && zoneOverviewsData === undefined)" />
+
       <ControlPlaneDetails
         v-else
         data-testid="detail-view-details"
-        :mesh-insights="meshInsightsData?.items"
-        :zone-overviews="zoneOverviewsData?.items"
+        :mesh-insights="meshInsightsData.items"
+        :zone-overviews="zoneOverviewsData?.items ?? []"
       />
     </DataSource>
   </DataSource>
