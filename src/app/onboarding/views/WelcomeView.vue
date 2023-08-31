@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ t, can }"
+    v-slot="{ env, t, can }"
   >
     <RouteTitle
       :title="t('onboarding.routes.welcome.title', {name: t('common.product.name')})"
@@ -20,7 +20,7 @@
                 </p>
 
                 <p>
-                  We have automatically detected that you are running on <strong>{{ enviromentFormatted }}</strong>.
+                  We have automatically detected that you are running on <strong data-testid="kuma-environment">{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</strong>.
                 </p>
               </template>
             </OnboardingHeading>
@@ -92,7 +92,6 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KIcon } from '@kong/kongponents'
-import { computed } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
@@ -101,15 +100,6 @@ import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useStore } from '@/store/store'
-
-const store = useStore()
-
-const enviromentFormatted = computed(() => {
-  const environment = store.getters['config/getEnvironment']
-  return environment.charAt(0).toUpperCase() + environment.slice(1)
-})
-
 </script>
 
 <style lang="scss" scoped>
