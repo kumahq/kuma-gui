@@ -1,9 +1,11 @@
 Feature: Zones: Detail view content
   Background:
     Given the CSS selectors
-      | Alias               | Selector                                 |
-      | ingress-detail-view | [data-testid='zone-ingress-detail-view'] |
-      | egress-detail-view  | [data-testid='zone-egress-detail-view']  |
+      | Alias                    | Selector                                      |
+      | ingress-detail-view      | [data-testid='zone-ingress-detail-view']      |
+      | ingress-detail-tabs-view | [data-testid='zone-ingress-detail-tabs-view'] |
+      | egress-detail-view       | [data-testid='zone-egress-detail-view']       |
+      | egress-detail-tabs-view  | [data-testid='zone-egress-detail-tabs-view']  |
 
   Scenario Outline: Zone Ingress detail view has expected content
     Given the URL "/config" responds with
@@ -31,7 +33,7 @@ Feature: Zones: Detail view content
 
     When I visit the "/zones/zone-ingresses/zone-ingress-1" URL
     Then the page title contains "zone-ingress-1"
-    Then the "$ingress-detail-view" element contains "zone-ingress-1"
+    Then the "$ingress-detail-tabs-view" element contains "zone-ingress-1"
     Then the "$ingress-detail-view" element contains "166.197.238.26:20555"
     Then the "$ingress-detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
 
@@ -61,6 +63,6 @@ Feature: Zones: Detail view content
 
     When I visit the "/zones/zone-egresses/zone-egress-1" URL
     Then the page title contains "zone-egress-1"
-    Then the "$egress-detail-view" element contains "zone-egress-1"
+    Then the "$egress-detail-tabs-view" element contains "zone-egress-1"
     Then the "$egress-detail-view" element contains "166.197.238.26:20555"
     Then the "$egress-detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"

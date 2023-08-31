@@ -57,7 +57,7 @@
               </template>
 
               <template #serviceType="{ rowValue }">
-                {{ rowValue || t('common.collection.none') }}
+                {{ rowValue || 'internal' }}
               </template>
 
               <template #addressPort="{ rowValue }">

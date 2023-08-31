@@ -3,8 +3,8 @@ services:
     item:
       title: "{name}"
       breadcrumbs: Services
-      tabs:
-        overview: 'Overview'
-        data_plane_proxies: 'Data Plane Proxies'
+      navigation:
+        service-detail-view: 'Overview'
+        service-data-plane-proxies-view: 'Data Plane Proxies'
     items:
       title: Services

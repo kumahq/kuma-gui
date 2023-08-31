@@ -2,7 +2,7 @@ Feature: mesh / services / item
   Background:
     Given the CSS selectors
       | Alias                  | Selector                                                                          |
-      | data-plane-proxies-tab | #dataPlaneProxies-tab                                                             |
+      | data-plane-proxies-tab | #service-data-plane-proxies-view-tab a                                            |
       | item                   | [data-testid='data-plane-collection'] tbody tr                                    |
       | input-search           | [data-testid='k-filter-bar-filter-input']                                         |
       | button-search          | [data-testid='k-filter-bar-submit-query-button']                                  |

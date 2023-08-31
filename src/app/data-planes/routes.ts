@@ -14,8 +14,40 @@ export const routes = () => {
         children: [
           {
             path: ':dataPlane',
-            name: `${prefix}-detail-view`,
-            component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+            name: `${prefix}-detail-tabs-view`,
+            component: () => import('@/app/data-planes/views/DataPlaneDetailTabsView.vue'),
+            children: [
+              {
+                path: '',
+                name: `${prefix}-detail-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+              },
+              {
+                path: 'subscriptions',
+                name: `${prefix}-subscriptions-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsView.vue'),
+              },
+              {
+                path: 'policies',
+                name: `${prefix}-policies-view`,
+                component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
+              },
+              {
+                path: 'xds-config',
+                name: `${prefix}-xds-config-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneXdsConfigView.vue'),
+              },
+              {
+                path: 'stats',
+                name: `${prefix}-stats-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneStatsView.vue'),
+              },
+              {
+                path: 'clusters',
+                name: `${prefix}-clusters-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
+              },
+            ],
           },
         ],
       },

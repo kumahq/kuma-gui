@@ -4,24 +4,24 @@ Feature: Data Plane Proxies: Detail view content
       | Alias                   | Selector                                                                        |
       | detail-view             | [data-testid='data-plane-detail-view']                                          |
       | warnings                | [data-testid='data-plane-warnings']                                             |
-      | overview-tab            | #overview-tab                                                                   |
-      | overview-content        | #panel-0                                                                        |
-      | insights-tab            | #insights-tab                                                                   |
-      | insights-content        | #panel-1                                                                        |
+      | overview-tab            | #data-plane-detail-view-tab a                                                   |
+      | overview-content        | [data-testid='data-plane-detail-view']                                          |
+      | insights-tab            | #data-plane-subscriptions-view-tab a                                            |
+      | insights-content        | [data-testid='data-plane-subscriptions-view']                                   |
       | status-cds              | $insights-content [data-testid='subscription-status-cds']                       |
       | status-eds              | $insights-content [data-testid='subscription-status-eds']                       |
       | status-lds              | $insights-content [data-testid='subscription-status-lds']                       |
       | status-rds              | $insights-content [data-testid='subscription-status-rds']                       |
-      | policies-tab            | #dpp-policies-tab                                                               |
-      | policies-content        | #panel-2                                                                        |
+      | policies-tab            | #data-plane-policies-view-tab a                                                 |
+      | policies-content        | [data-testid='data-plane-policies-view']                                        |
       | policy-list             | [data-testid='policy-list']                                                     |
       | policy-list-item        | $policy-list .accordion-item:nth-child(1) [data-testid='accordion-item-button'] |
       | policy-list-item-button | $policy-list-item [data-testid='accordion-item-button']                         |
       | rule-list               | [data-testid='rule-list']                                                       |
       | rule-list-item          | $rule-list .accordion-item:nth-child(1) [data-testid='accordion-item-button']   |
       | rule-list-item-button   | $rule-list-item [data-testid='accordion-item-button']                           |
-      | clusters-tab            | #envoy-clusters-tab                                                             |
-      | clusters-content        | #panel-5                                                                        |
+      | clusters-tab            | #data-plane-clusters-view-tab a                                                 |
+      | clusters-content        | [data-testid='data-plane-clusters-view']                                        |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2

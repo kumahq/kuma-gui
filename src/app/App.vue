@@ -6,7 +6,7 @@
       <AppHeader v-if="!isWizard" />
 
       <div v-if="route.meta.onboardingProcess">
-        <router-view />
+        <RouterView />
       </div>
 
       <div
@@ -23,25 +23,19 @@
 
           <AppOnboardingNotification v-if="!isWizard && shouldShowOnboardingNotification" />
 
-          <router-view
-            :key="routeKey"
-            v-slot="{ Component }"
-          >
+          <RouterView v-slot="{ Component }">
             <transition
               mode="out-in"
               name="fade"
             >
-              <div
-                :key="(route.name as string)"
-                class="transition-root"
-              >
+              <div class="transition-root">
                 <component
                   :is="Component"
                   :data="props.data"
                 />
               </div>
             </transition>
-          </router-view>
+          </RouterView>
         </AppView>
       </div>
     </template>
@@ -85,19 +79,6 @@ const [
 const store = useStore()
 const route = useRoute()
 
-/**
- * The `router-view`’s `key` attribute value.
- *
- * Set to the current `route.path` to trigger an explicit re-render via Vue’s `key` mechanism when navigating between routes that only change in dynamic path segments while matching the same route definition.
- *
- * **Example**:
- *
- * From: /mesh/default/services/backend
- * To: /mesh/default/services/ingress
- *
- * Both routes resolve to the same route definition and the router’s default behavior is to not re-render the component in such navigations.
- */
-const routeKey = computed(() => route.path)
 const isWizard = computed(() => route.meta.isWizard === true)
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)

@@ -1,12 +1,12 @@
 Feature: zones / zone-cps / item
   Background:
     Given the CSS selectors
-      | Alias                          | Selector                                 |
-      | zone-control-plane-detail-view | [data-testid='zone-cp-detail-view']      |
-      | nav-insights                   | #insights-tab                            |
-      | tab-overview                   | #panel-0                                 |
-      | tab-insights                   | #panel-1                                 |
-      | warning-no-subscriptions       | [data-testid='warning-no-subscriptions'] |
+      | Alias                    | Selector                                   |
+      | zone-detail-tabs-view    | [data-testid='zone-cp-detail-tabs-view']   |
+      | nav-insights             | #zone-cp-subscriptions-view-tab a          |
+      | tab-overview             | [data-testid='zone-cp-detail-view']        |
+      | tab-insights             | [data-testid='zone-cp-subscriptions-view'] |
+      | warning-no-subscriptions | [data-testid='warning-no-subscriptions']   |
 
     And the URL "/config" responds with
       """
@@ -38,7 +38,7 @@ Feature: zones / zone-cps / item
 
     When I visit the "/zones/zone-cps/zone-cp-1" URL
     Then the page title contains "zone-cp-1"
-    Then the "$zone-control-plane-detail-view" element contains "zone-cp-1"
+    Then the "$zone-detail-tabs-view" element contains "zone-cp-1"
 
     Then the "$tab-overview" element contains
       | Value     |

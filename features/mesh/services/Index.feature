@@ -52,16 +52,16 @@ Feature: mesh / services / index
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1"
     When I click the "$item:nth-child(1) td:first-of-type a" element
     Then the URL contains "service/service-1"
-    Then the "#overview-tab" element exists
+    Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "external" shouldn't have a Data Plane Proxy table
-    And the "#dataPlaneProxies-tab" element doesn't exists
+    And the "#service-data-plane-proxies-view-tab a" element doesn't exists
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2"
     When I click the "$item:nth-child(2) td:first-of-type a" element
     Then the URL contains "service/service-2"
-    Then the "[data-testid='service-detail-view']" element contains "service-2"
-    Then the "#overview-tab" element exists
+    Then the "[data-testid='service-detail-tabs-view']" element contains "service-2"
+    Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "internal" should have a Data Plane Proxy table
-    And the "#dataPlaneProxies-tab" element exists
+    And the "#service-data-plane-proxies-view-tab a" element exists

@@ -3,13 +3,13 @@ data-planes:
     item:
       title: "{name}"
       breadcrumbs: Data Plane Proxies
-      tabs:
-        overview: 'Overview'
-        insights: 'Subscriptions'
-        policies: 'Policies'
-        xds_configuration: 'XDS Configuration'
-        stats: 'Stats'
-        clusters: 'Clusters'
+      navigation:
+        data-plane-detail-view: 'Overview'
+        data-plane-subscriptions-view: 'Subscriptions'
+        data-plane-policies-view: 'Policies'
+        data-plane-xds-config-view: 'XDS Configuration'
+        data-plane-stats-view: 'Stats'
+        data-plane-clusters-view: 'Clusters'
     items:
       title: Data Plane Proxies
   href:
