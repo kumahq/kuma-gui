@@ -140,6 +140,7 @@ function end(element: Element) {
   text-align: left;
   padding-top: $kui-space-40;
   padding-bottom: $kui-space-40;
+  padding-right: $kui-space-60;
 
   &::after {
     position: absolute;

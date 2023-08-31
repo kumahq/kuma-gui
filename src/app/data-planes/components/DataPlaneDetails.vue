@@ -79,7 +79,7 @@
       <KAlert
         v-if="mtlsData === null"
         class="mt-4"
-        appearance="danger"
+        appearance="warning"
       >
         <template #alertMessage>
           {{ t('data-planes.detail.no_mtls') }} —
