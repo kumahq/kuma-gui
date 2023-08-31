@@ -454,7 +454,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
 
 .k-suggestion-box {
   position: absolute;
-  top: calc(100% + $kui-space-20);
+  top: calc(100% + 4px);
   right: -1px;
   left: -1px;
   z-index: 1;

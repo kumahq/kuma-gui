@@ -49,6 +49,7 @@ jobs:
         run: |
           yarn run lint
           yarn run lint:ts
+          yarn run lint:styles
 
   cli-tests:
     needs: [install-dependencies]

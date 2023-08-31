@@ -145,8 +145,7 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   margin-bottom: 20px; /* 2rem */
-}
-.app-view-title-bar {
+
   h1, h2, h3, h4, h5, h6  {
     line-height: 36px;
     overflow: hidden;
