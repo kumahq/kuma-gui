@@ -5,15 +5,15 @@
     :empty-state-cta-text="t('common.documentation')"
     :headers="[
       { label: 'Name', key: 'name' },
-      props.gateways ? { label: 'Type', key: 'type' } : undefined,
+      ...(props.gateways ? [{ label: 'Type', key: 'type' }] : []),
       { label: 'Service', key: 'service' },
-      !props.gateways ? { label: 'Protocol', key: 'protocol' } : undefined,
-      isMultiZoneMode ? { label: 'Zone', key: 'zone' } : undefined,
+      ...(!props.gateways ? [{ label: 'Protocol', key: 'protocol' }] : []),
+      ...(isMultiZoneMode ? [{ label: 'Zone', key: 'zone' }] : []),
       { label: 'Last Updated', key: 'lastUpdated' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
       { label: 'Actions', key: 'actions', hideLabel: true },
-    ].filter(notEmpty)"
+    ]"
     :page-number="props.pageNumber"
     :page-size="props.pageSize"
     :total="props.total"
@@ -154,7 +154,6 @@ import {
   COMPATIBLE,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
-import { notEmpty } from '@/utilities/notEmpty'
 
 const { t, formatIsoDate } = useI18n()
 const can = useCan()
