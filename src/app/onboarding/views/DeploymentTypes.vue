@@ -56,11 +56,12 @@
 
 <script lang="ts" setup>
 import { KRadio } from '@kong/kongponents'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import { useCan } from '@/app/application'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
@@ -68,7 +69,6 @@ import {
   useMultizoneGraph,
   useStandaloneGraph,
 } from '@/components'
-import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
 const MultizoneGraph = useMultizoneGraph()
@@ -79,16 +79,13 @@ const componentMap: Record<string, any> = {
   'multi-zone': MultizoneGraph,
 }
 
-const store = useStore()
 const { t } = useI18n()
+const can = useCan()
 
-const mode = ref<'standalone' | 'multi-zone'>('standalone')
+const mode = ref<'standalone' | 'multi-zone'>(can('use zones') ? 'multi-zone' : 'standalone')
 
 const currentGraphComponent = computed(() => componentMap[mode.value])
 
-onMounted(function () {
-  mode.value = store.getters['config/getMulticlusterStatus'] ? 'multi-zone' : 'standalone'
-})
 </script>
 
 <style lang="scss" scoped>

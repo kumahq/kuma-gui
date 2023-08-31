@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ can }"
+  >
     <RouteTitle
       :title="t('onboarding.routes.create-mesh.title')"
     />
@@ -33,7 +35,7 @@
         <template #navigation>
           <OnboardingNavigation
             next-step="onboarding-add-services"
-            :previous-step="previousStep"
+            :previous-step="can('use zones') ? 'onboarding-multi-zone' : 'onboarding-configuration-types'"
           />
         </template>
       </OnboardingPage>
@@ -43,7 +45,7 @@
 
 <script lang="ts" setup>
 import { KTable } from '@kong/kongponents'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
@@ -51,7 +53,6 @@ import OnboardingPage from '../components/OnboardingPage.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
 const TABLE_HEADERS = [
@@ -60,7 +61,6 @@ const TABLE_HEADERS = [
   { label: 'DPPs', key: 'dppsAmount' },
 ]
 
-const store = useStore()
 const { t } = useI18n()
 
 const tableData = ref<{ total: number, data: any [] }>({
@@ -73,8 +73,6 @@ const tableData = ref<{ total: number, data: any [] }>({
     },
   ],
 })
-
-const previousStep = computed(() => store.getters['config/getMulticlusterStatus'] ? 'onboarding-multi-zone' : 'onboarding-configuration-types')
 </script>
 
 <style lang="scss" scoped>

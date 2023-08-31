@@ -171,6 +171,7 @@ import { computed, PropType } from 'vue'
 import { useRoute } from 'vue-router'
 
 import type { DataplaneSource } from '../sources'
+import { useCan } from '@/app/application'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -180,7 +181,6 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
-import { useStore } from '@/store/store'
 import { Compatibility, DataPlaneOverview } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 import {
@@ -197,7 +197,7 @@ import {
 const { t, formatIsoDate } = useI18n()
 const kumaApi = useKumaApi()
 const route = useRoute()
-const store = useStore()
+const can = useCan()
 
 const props = defineProps({
   dataplaneOverview: {
@@ -233,7 +233,7 @@ const warnings = computed(() => {
     }
   }
 
-  if (store.getters['config/getMulticlusterStatus']) {
+  if (can('use zones')) {
     const tags = dpTags(props.dataplaneOverview.dataplane)
     const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 

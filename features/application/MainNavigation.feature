@@ -4,11 +4,10 @@ Feature: MainNavigation
       | Alias    | Selector     |
       | main-nav | .app-sidebar |
 
-  Scenario Outline: The navigation shows Zone items depending on mode
-    Given the URL "/config" responds with
+  Scenario Outline: The navigation shows the correct nav for <Mode>
+    Given the environment
       """
-      body:
-        mode: <Mode>
+      KUMA_MODE: <Mode>
       """
     When I visit the "/" URL
     Then the "$main-nav .nav-item-<RouteName>" element <ExistsAssertion>

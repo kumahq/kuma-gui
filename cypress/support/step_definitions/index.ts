@@ -51,6 +51,9 @@ Given('the environment', (yaml: string) => {
     ...env,
     ...YAML.load(yaml) as object,
   }
+  Object.entries(env).forEach(([key, value]) => {
+    cy.setCookie(key, String(value))
+  })
 })
 Given('the URL {string} responds with', (url: string, yaml: string) => {
   const now = new Date().getTime()

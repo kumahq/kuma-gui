@@ -1027,7 +1027,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 <a
                   class="k-button medium rounded primary"
                   data-testid="onboarding-next-button"
-                  href="/gui/onboarding/create-mesh"
+                  href="/gui/onboarding/multi-zone"
                   type="button"
                 >
                   

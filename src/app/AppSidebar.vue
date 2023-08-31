@@ -13,16 +13,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 
 import AppNavItem from './AppNavItem.vue'
-import { useStore } from '@/store/store'
 import { useNav } from '@/utilities'
 
-const getNavItems = useNav()
-const store = useStore()
-
-const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus']))
+const navItems = useNav()
 </script>
 
 <style lang="scss" scoped>

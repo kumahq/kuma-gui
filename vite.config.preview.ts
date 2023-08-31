@@ -39,20 +39,29 @@ export const config: (context: PreviewConfigContext) => UserConfigFn = ({
           const index = `${root}${base}/index.html`
           logger.info(`Serving: ${index} as index.html`)
           const template = (await read(index)).toString()
-          const body = template
-            .replace('{{.BaseGuiPath}}', base)
-            .replace('{{.}}', JSON.stringify(
-              {
-                baseGuiPath: base,
-                apiUrl: api,
-                version,
-                product: 'Kuma',
-                mode: 'global',
-                environment: 'universal',
-                apiReadOnly: false,
-              },
-            ))
           server.middlewares.use('/', async (req, res, next) => {
+            const cookies = (req.headers?.cookie ?? '').split(';')
+              .map((item) => item.trim())
+              .filter((item) => item !== '')
+              .reduce((prev, item) => {
+                const [key, value] = item.split('=')
+                prev[key] = value
+                return prev
+              }, {} as Record<string, string>)
+
+            const body = template
+              .replace('{{.BaseGuiPath}}', base)
+              .replace('{{.}}', JSON.stringify(
+                {
+                  baseGuiPath: base,
+                  apiUrl: api,
+                  version,
+                  product: 'Kuma',
+                  mode: cookies.KUMA_MODE ?? 'global',
+                  environment: 'universal',
+                  apiReadOnly: false,
+                },
+              ))
             if ((req.originalUrl || '').startsWith(base) && !await exists(`${root}${req.originalUrl}`)) {
               res.end(body)
             } else {

@@ -18,11 +18,7 @@ const getters: GetterTree<ConfigInterface, State> = {
   getStatus: state => state.status,
   getConfig: state => state.clientConfig,
   getEnvironment: state => state.clientConfig?.environment,
-  getMode: state => state.clientConfig?.mode,
   getConfigurationType: state => state.clientConfig?.store?.type,
-  getMulticlusterStatus: (_state, getters) => {
-    return getters.getMode === 'global'
-  },
 }
 
 const actions = (kumaApi: KumaApi): ActionTree<ConfigInterface, State> => ({

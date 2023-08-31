@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ can }"
+  >
     <RouteTitle
       :title="t('onboarding.routes.configuration-types.title')"
     />
@@ -47,7 +49,7 @@
 
         <template #navigation>
           <OnboardingNavigation
-            :next-step="nextStep"
+            :next-step="can('use zones') ? 'onboarding-multi-zone' : 'onboarding-create-mesh'"
             previous-step="onboarding-deployment-types"
           />
         </template>
@@ -92,8 +94,6 @@ const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
 onMounted(function () {
   mode.value = store.getters['config/getConfigurationType']
 })
-
-const nextStep = computed(() => store.getters['config/getMulticlusterStatus'] ? 'onboarding-multi-zone' : 'onboarding-create-mesh')
 
 const currentGraphComponent = computed(() => componentMap[mode.value])
 </script>

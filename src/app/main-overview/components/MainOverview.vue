@@ -5,8 +5,7 @@
   >
     <DataSource
       v-slot="{ data: zoneOverviewsData, isLoading: zoneOverviewsIsLoading, error: zoneOverviewsError }: ZoneOverviewCollectionSource"
-      src="/all-zone-overviews"
-      :should-make-request="store.getters['config/getMulticlusterStatus']"
+      :src="can('use zones') ? '/all-zone-overviews' : ''"
     >
       <LoadingBlock v-if="meshInsightsIsLoading || zoneOverviewsIsLoading" />
 
@@ -33,10 +32,10 @@
 <script lang="ts" setup>
 import ControlPlaneDetails from '../components/ControlPlaneDetails.vue'
 import type { MeshInsightCollectionSource, ZoneOverviewCollectionSource } from '../sources'
+import { useCan } from '@/app/application'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useStore } from '@/store/store'
 
-const store = useStore()
+const can = useCan()
 </script>
