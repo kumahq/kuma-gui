@@ -89,6 +89,13 @@ function getNavTabs(serviceInsight: ServiceInsight): NavTab[] {
 
   return routes
     .filter((route) => {
+      if (
+        (serviceInsight.serviceType === undefined || serviceInsight.serviceType === 'internal') &&
+        route.name === 'service-config-view'
+      ) {
+        return false
+      }
+
       if (serviceInsight.serviceType === 'external' && route.name === 'service-data-plane-proxies-view') {
         return false
       }

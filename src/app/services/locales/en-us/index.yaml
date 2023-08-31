@@ -6,5 +6,6 @@ services:
       navigation:
         service-detail-view: 'Overview'
         service-data-plane-proxies-view: 'Data Plane Proxies'
+        service-config-view: 'YAML'
     items:
       title: Services

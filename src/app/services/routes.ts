@@ -24,6 +24,11 @@ export const routes = () => {
                 component: () => import('@/app/services/views/ServiceDetailView.vue'),
               },
               {
+                path: 'config',
+                name: `${prefix}-config-view`,
+                component: () => import('@/app/services/views/ServiceConfigView.vue'),
+              },
+              {
                 path: 'data-plane-proxies',
                 name: `${prefix}-data-plane-proxies-view`,
                 component: () => import('@/app/services/views/ServiceDataPlaneProxiesView.vue'),
