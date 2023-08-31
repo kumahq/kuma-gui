@@ -58,7 +58,7 @@ export const config: (context: PreviewConfigContext) => UserConfigFn = ({
                   version,
                   product: 'Kuma',
                   mode: cookies.KUMA_MODE ?? 'global',
-                  environment: 'universal',
+                  environment: cookies.KUMA_ENVIRONMENT ?? 'universal',
                   apiReadOnly: false,
                 },
               ))

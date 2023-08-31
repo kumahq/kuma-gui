@@ -23,6 +23,9 @@ When('I visit the {string} URL', function (path: string) {
           case 'KUMA_MODE':
             config.mode = item.value
             break
+          case 'KUMA_ENVIRONMENT':
+            config.environment = item.value
+            break
         }
       })
       node.textContent = JSON.stringify(config)
