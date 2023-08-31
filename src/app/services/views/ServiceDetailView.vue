@@ -16,15 +16,15 @@
 
       <template v-if="props.data.serviceType === 'external'">
         <DataSource
-          v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
+          v-slot="{ data: externalService, error }: ExternalServiceSource"
           :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
         >
-          <LoadingBlock v-if="externalService === undefined" />
-
           <ErrorBlock
-            v-else-if="externalServiceError"
-            :error="externalServiceError"
+            v-if="error"
+            :error="error"
           />
+
+          <LoadingBlock v-else-if="externalService === undefined" />
 
           <ExternalServiceDetails
             v-else

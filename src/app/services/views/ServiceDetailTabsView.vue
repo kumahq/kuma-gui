@@ -41,12 +41,12 @@
         v-slot="{ data, error }: ServiceInsightSource"
         :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
       >
-        <LoadingBlock v-if="data === undefined" />
-
         <ErrorBlock
-          v-else-if="error"
+          v-if="error"
           :error="error"
         />
+
+        <LoadingBlock v-else-if="data === undefined" />
 
         <template v-else>
           <NavTabs

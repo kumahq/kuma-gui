@@ -8,7 +8,6 @@ export type Sources = Record<string, Source>
 // reusable Type Utility for easy to use Types within Vue templates
 export type DataSourceResponse<T> = {
   data: T | undefined
-  isLoading: boolean
   error: Error | undefined
   refresh: () => void
 }

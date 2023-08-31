@@ -25,12 +25,12 @@
 
         <KCard>
           <template #body>
-            <LoadingBlock v-if="data === undefined" />
-
             <ErrorBlock
-              v-else-if="error"
+              v-if="error"
               :error="error"
             />
+
+            <LoadingBlock v-else-if="data === undefined" />
 
             <CodeBlock
               v-else

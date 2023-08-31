@@ -57,17 +57,15 @@
             </template>
 
             <DataSource
-              v-slot="{ data, isLoading, error }: PolicySource"
+              v-slot="{ data, error }: PolicySource"
               :src="`/meshes/${route.params.mesh}/policy-path/${currentPolicyType.path}/policy/${route.params.policy}`"
             >
-              <LoadingBlock v-if="isLoading" />
-
               <ErrorBlock
-                v-else-if="error"
+                v-if="error"
                 :error="error"
               />
 
-              <EmptyBlock v-else-if="data === undefined" />
+              <LoadingBlock v-else-if="data === undefined" />
 
               <PolicyDetails
                 v-else
