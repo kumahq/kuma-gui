@@ -3,5 +3,7 @@ gateways:
     item:
       title: "{name}"
       breadcrumbs: Gateways
+      navigation:
+        gateway-policies-view: 'Policies'
     items:
       title: Gateways

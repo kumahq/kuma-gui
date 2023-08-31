@@ -28,7 +28,7 @@ export const routes = () => {
               {
                 path: 'policies',
                 name: `${prefix}-policies-view`,
-                component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
+                component: () => import('@/app/gateways/views/GatewayPoliciesView.vue'),
               },
               {
                 path: 'xds-config',
