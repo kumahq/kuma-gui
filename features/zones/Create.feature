@@ -1,7 +1,8 @@
-Feature: Zones: Zone create flow
+Feature: Zones: Create Zone flow
   Background:
     Given the CSS selectors
       | Alias                               | Selector                                            |
+      | zone-nav-item                       | .app-sidebar > .nav-item:nth-child(2) > a           |
       | name-input                          | [data-testid='name-input']                          |
       | create-zone-button                  | [data-testid='create-zone-button']                  |
       | create-zone-link                    | [data-testid='create-zone-link']                    |
@@ -12,12 +13,42 @@ Feature: Zones: Zone create flow
       | zone-connected-scanner              | [data-testid='zone-connected-scanner']              |
       | error                               | [data-testid='create-zone-error']                   |
       | instructions                        | [data-testid='connect-zone-instructions']           |
-    When I visit the "/zones" URL
+    And the environment
+      """
+      KUMA_MODE: global
+      """
+
+  Scenario: Create Zone link doesn't exist in standalone mode
+    Given the environment
+      """
+      KUMA_MODE: standalone
+      """
+
+    When I visit the "/" URL
+    Then the "[data-testid='loading-block']" element doesn't exist
+    And I click the "$zone-nav-item" element
+
+    Then the page title contains "Egresses"
+    And the "$create-zone-link" element doesn't exist
+
+  Scenario: Create Zone link exists in global mode
+    Given the environment
+      """
+      KUMA_MODE: global
+      """
+
+    When I visit the "/" URL
+    Then the "[data-testid='loading-block']" element doesn't exist
+    And I click the "$zone-nav-item" element
+
     Then the page title contains "Zone Control Planes"
+    And the "$create-zone-link" element exists
+
     When I click the "$create-zone-link" element
     Then the page title contains "Create & connect Zone"
 
   Scenario: The form shows only the initial elements
+    When I visit the "/zones/create" URL
     Then the "$name-input" element exists
     Then the "$create-zone-button" element is disabled
 
@@ -27,6 +58,7 @@ Feature: Zones: Zone create flow
     Then the "$egress-input-switch" element doesn't exist
 
   Scenario: The form interactions behave correctly
+    When I visit the "/zones/create" URL
     Then the "$create-zone-button" element is disabled
 
     When I "type" "test" into the "$name-input" element
@@ -84,6 +116,7 @@ Feature: Zones: Zone create flow
     Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"
 
   Scenario: The form shows an error
+    When I visit the "/zones/create" URL
     Given the URL "/provision-zone" responds with
       """
       headers:
@@ -95,6 +128,7 @@ Feature: Zones: Zone create flow
     Then the "$instructions" element doesn't exist
 
   Scenario: The form shows expected error for 400 response
+    When I visit the "/zones/create" URL
     Given the URL "/provision-zone" responds with
       """
       headers:
