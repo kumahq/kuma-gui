@@ -1,14 +1,12 @@
 Feature: mesh / services / index
   Background:
     Given the CSS selectors
-      | Alias               | Selector                              |
-      | items               | [data-testid='service-collection']    |
-      | children            | [data-testid='data-plane-collection'] |
-      | items-header        | $items th                             |
-      | item                | $items tbody tr                       |
-      | navigation          | .route-mesh-view-tabs ul >            |
-      | button-tab-selected | $navigation li:nth-child(2).active    |
-      | breadcrumbs         | .k-breadcrumbs                        |
+      | Alias        | Selector                              |
+      | items        | [data-testid='service-collection']    |
+      | children     | [data-testid='data-plane-collection'] |
+      | items-header | $items th                             |
+      | item         | $items tbody tr                       |
+      | breadcrumbs  | .k-breadcrumbs                        |
     And the environment
       """
       KUMA_SERVICEINSIGHT_COUNT: 2
@@ -33,7 +31,7 @@ Feature: mesh / services / index
       | Status                      |
 
   Scenario: The items have the expected content and UI elements
-    Then the "$button-tab-selected" element exists
+    Then the "#services-abstract-view-tab.active" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
