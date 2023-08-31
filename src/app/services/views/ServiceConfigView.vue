@@ -20,12 +20,12 @@
             v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
             :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
           >
-            <LoadingBlock v-if="externalService === undefined" />
-
             <ErrorBlock
-              v-else-if="externalServiceError"
+              v-if="externalServiceError"
               :error="externalServiceError"
             />
+
+            <LoadingBlock v-else-if="externalService === undefined" />
 
             <ResourceCodeBlock
               v-else
