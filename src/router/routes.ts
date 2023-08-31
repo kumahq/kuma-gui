@@ -1,9 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 export default (
-  zones: RouteRecordRaw[],
-  meshes: RouteRecordRaw[],
-  onboarding: RouteRecordRaw[],
-  diagnostics: RouteRecordRaw[],
+  routes: RouteRecordRaw[],
 ): RouteRecordRaw[] => {
   return [
     {
@@ -20,9 +17,6 @@ export default (
       name: 'home',
       component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
     },
-    ...zones,
-    ...meshes,
-    ...onboarding,
-    ...diagnostics,
+    ...routes,
   ]
 }
