@@ -44,30 +44,12 @@
       </template>
     </KCard>
 
-    <div>
-      <h2>{{ t('zone-cps.detail.configuration_title') }}</h2>
+    <div v-if="(props.zoneOverview.zoneInsight?.subscriptions ?? []).length > 0">
+      <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
 
       <KCard class="mt-4">
         <template #body>
-          <CodeBlock
-            v-if="codeOutput !== null"
-            id="code-block-zone-config"
-            language="json"
-            :code="codeOutput"
-            is-searchable
-            query-key="zone-config"
-          />
-
-          <KAlert
-            v-else
-            class="mt-4"
-            data-testid="warning-no-subscriptions"
-            appearance="warning"
-          >
-            <template #alertMessage>
-              {{ t('zone-cps.detail.no_subscriptions') }}
-            </template>
-          </KAlert>
+          <SubscriptionList :subscriptions="props.zoneOverview.zoneInsight?.subscriptions ?? []" />
         </template>
       </KCard>
     </div>
@@ -75,13 +57,13 @@
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KCard } from '@kong/kongponents'
+import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import { getZoneControlPlaneStatus } from '../getZoneControlPlaneStatus'
-import CodeBlock from '@/app/common/CodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 import type { ZoneCompatibility, ZoneOverview } from '@/types/index.d'
 import { useI18n, useEnv } from '@/utilities'
@@ -131,18 +113,5 @@ const warnings = computed<ZoneCompatibility[]>(() => {
   }
 
   return warnings
-})
-
-const codeOutput = computed(() => {
-  const subscriptions = props.zoneOverview.zoneInsight?.subscriptions ?? []
-  if (subscriptions.length > 0) {
-    const lastSubscription = subscriptions[subscriptions.length - 1]
-
-    if (lastSubscription.config) {
-      return JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
-    }
-  }
-
-  return null
 })
 </script>

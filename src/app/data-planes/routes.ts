@@ -23,11 +23,6 @@ export const routes = () => {
                 component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
               },
               {
-                path: 'subscriptions',
-                name: `${prefix}-subscriptions-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneSubscriptionsView.vue'),
-              },
-              {
                 path: 'policies',
                 name: `${prefix}-policies-view`,
                 component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
@@ -46,6 +41,11 @@ export const routes = () => {
                 path: 'clusters',
                 name: `${prefix}-clusters-view`,
                 component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
+              },
+              {
+                path: 'config',
+                name: `${prefix}-config-view`,
+                component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
               },
             ],
           },

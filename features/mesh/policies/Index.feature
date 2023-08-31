@@ -1,15 +1,13 @@
 Feature: mesh / policies / index
   Background:
     Given the CSS selectors
-      | Alias               | Selector                                  |
-      | policy-type-list    | [data-testid='policy-type-list']          |
-      | items               | [data-testid='policy-collection']         |
-      | items-header        | $items th                                 |
-      | item                | $items tbody tr                           |
-      | button-docs         | [data-testid='policy-documentation-link'] |
-      | navigation          | .route-mesh-view-tabs ul >                |
-      | button-tab-selected | $navigation li:nth-child(5).active        |
-      | breadcrumbs         | .k-breadcrumbs                            |
+      | Alias            | Selector                                  |
+      | policy-type-list | [data-testid='policy-type-list']          |
+      | items            | [data-testid='policy-collection']         |
+      | items-header     | $items th                                 |
+      | item             | $items tbody tr                           |
+      | button-docs      | [data-testid='policy-documentation-link'] |
+      | breadcrumbs      | .k-breadcrumbs                            |
     And the environment
       """
       KUMA_CIRCUITBREAKER_COUNT: 2
@@ -55,7 +53,7 @@ Feature: mesh / policies / index
       | Name  |
 
   Scenario: The items have the expected content and UI elements
-    Then the "$button-tab-selected" element exists
+    Then the "#policies-abstract-view-tab.active" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
       | Value     |

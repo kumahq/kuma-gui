@@ -27,7 +27,7 @@
 
       <DataSource
         v-slot="{ data, error }: ZoneEgressOverviewSource"
-        :src="`/zone-egresses/${route.params.zoneEgress}`"
+        :src="`/zone-egress-overviews/${route.params.zoneEgress}`"
       >
         <ErrorBlock
           v-if="error !== undefined"

@@ -5,15 +5,6 @@
     data-testid="service-detail-view"
   >
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('services.routes.item.navigation.service-detail-view')"
-            :render="true"
-          />
-        </h2>
-      </template>
-
       <template v-if="props.data.serviceType === 'external'">
         <DataSource
           v-slot="{ data: externalService, error }: ExternalServiceSource"
@@ -28,7 +19,6 @@
 
           <ExternalServiceDetails
             v-else
-            :service-insight="data"
             :external-service="externalService"
           />
         </DataSource>
@@ -48,14 +38,10 @@ import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
 import type { ExternalServiceSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import type { ServiceInsight } from '@/types/index.d'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   data: ServiceInsight

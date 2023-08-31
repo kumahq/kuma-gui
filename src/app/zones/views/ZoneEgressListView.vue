@@ -15,7 +15,7 @@
 
       <DataSource
         v-slot="{ data, error }: ZoneEgressOverviewCollectionSource"
-        :src="`/zone-egresses?size=${props.size}&page=${props.page}`"
+        :src="`/zone-egress-overviews?size=${props.size}&page=${props.page}`"
       >
         <KCard>
           <template #body>

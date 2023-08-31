@@ -5,6 +5,7 @@ meshes:
       breadcrumbs: Meshes
       navigation:
         mesh-detail-view: Overview
+        mesh-config-view: YAML
         services-abstract-view: Services
         data-planes-abstract-view: Data Plane Proxies
         gateways-abstract-view: Gateways

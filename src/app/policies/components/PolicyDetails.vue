@@ -15,7 +15,7 @@
     <ResourceCodeBlock
       id="code-block-policy"
       :resource="props.policy"
-      :resource-fetcher="fetchPolicy"
+      :resource-fetcher="(params) => kumaApi.getSinglePolicyEntity({ name: props.policy.name, mesh: props.policy.mesh, path: props.path }, params)"
       is-searchable
     />
   </div>
@@ -27,7 +27,6 @@ import { PropType } from 'vue'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import type { SingleResourceParameters } from '@/types/api.d'
 import type { PolicyEntity } from '@/types/index.d'
 import { useKumaApi, useI18n } from '@/utilities'
 
@@ -45,11 +44,4 @@ const props = defineProps({
     required: true,
   },
 })
-
-async function fetchPolicy(params?: SingleResourceParameters) {
-  const { name, mesh } = props.policy
-  const path = props.path
-
-  return await kumaApi.getSinglePolicyEntity({ name, mesh, path }, params)
-}
 </script>

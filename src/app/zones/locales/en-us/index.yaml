@@ -5,13 +5,14 @@ zone-cps:
       breadcrumbs: Zone Control Planes
       navigation:
         zone-cp-detail-view: 'Overview'
-        zone-cp-subscriptions-view: 'Subscriptions'
+        zone-cp-config-view: 'Config'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
   list:
     version_mismatch: 'Version mismatch'
   detail:
+    subscriptions: 'KDS connections'
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
   empty_state:
@@ -28,11 +29,14 @@ zone-ingresses:
         zone-ingress-xds-config-view: 'XDS Configuration'
         zone-ingress-stats-view: 'Stats'
         zone-ingress-clusters-view: 'Clusters'
+        zone-ingress-config-view: 'YAML'
     items:
       title: Ingresses
       breadcrumbs: Ingresses
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'
+  detail:
+    subscriptions: 'XDS connections'
 
 zone-egresses:
   routes:
@@ -44,11 +48,14 @@ zone-egresses:
         zone-egress-xds-config-view: 'XDS Configuration'
         zone-egress-stats-view: 'Stats'
         zone-egress-clusters-view: 'Clusters'
+        zone-egress-config-view: 'YAML'
     items:
       title: Egresses
       breadcrumbs: Egresses
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'
+  detail:
+    subscriptions: 'XDS connections'
 
 zones:
   href:

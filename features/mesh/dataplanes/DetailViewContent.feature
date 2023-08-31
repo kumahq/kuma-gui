@@ -6,12 +6,10 @@ Feature: Data Plane Proxies: Detail view content
       | warnings                | [data-testid='data-plane-warnings']                                             |
       | overview-tab            | #data-plane-detail-view-tab a                                                   |
       | overview-content        | [data-testid='data-plane-detail-view']                                          |
-      | insights-tab            | #data-plane-subscriptions-view-tab a                                            |
-      | insights-content        | [data-testid='data-plane-subscriptions-view']                                   |
-      | status-cds              | $insights-content [data-testid='subscription-status-cds']                       |
-      | status-eds              | $insights-content [data-testid='subscription-status-eds']                       |
-      | status-lds              | $insights-content [data-testid='subscription-status-lds']                       |
-      | status-rds              | $insights-content [data-testid='subscription-status-rds']                       |
+      | status-cds              | $overview-content [data-testid='subscription-status-cds']                       |
+      | status-eds              | $overview-content [data-testid='subscription-status-eds']                       |
+      | status-lds              | $overview-content [data-testid='subscription-status-lds']                       |
+      | status-rds              | $overview-content [data-testid='subscription-status-rds']                       |
       | policies-tab            | #data-plane-policies-view-tab a                                                 |
       | policies-content        | [data-testid='data-plane-policies-view']                                        |
       | policy-list             | [data-testid='policy-list']                                                     |
@@ -92,9 +90,10 @@ Feature: Data Plane Proxies: Detail view content
     And the "$overview-content" element contains "kumaDp:1.0.8"
     And the "$warnings" element doesn't exist
 
-    When I click the "$insights-tab" element
-    Then the "$insights-content" element contains "Connected: Feb 17, 2021, 7:33 AM"
-    Then the "$insights-content" element contains "CP instance ID: dpp-1-cp-instance-id"
+    Then the "$overview-content" element contains "Connected: Feb 17, 2021, 7:33 AM"
+    Then the "$overview-content" element contains "CP instance ID: dpp-1-cp-instance-id"
+
+    When I click the ".accordion-item:nth-child(1) [data-testid='accordion-item-button']" element
 
     And the "$status-cds" element contains "CDS"
     And the "$status-cds" element contains "1"

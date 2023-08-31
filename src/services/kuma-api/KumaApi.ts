@@ -24,7 +24,9 @@ import type {
   ServiceInsight,
   SidecarDataplane,
   Zone,
+  ZoneEgress,
   ZoneEgressOverview,
+  ZoneIngress,
   ZoneIngressOverview,
   ZoneOverview,
 } from '@/types/index.d'
@@ -87,6 +89,10 @@ export default class KumaApi extends Api {
     return this.client.get(`/zones+insights/${name}`, { params })
   }
 
+  getZoneIngress({ name }: { name: string }, params?: any): Promise<ZoneIngress> {
+    return this.client.get(`/zoneingresses/${name}`, { params })
+  }
+
   /**
    * Fetches additional data like xDS configuration, envoy stats, or envoy clusters.
    */
@@ -100,6 +106,10 @@ export default class KumaApi extends Api {
 
   getZoneIngressOverview({ name }: { name: string }, params?: any): Promise<ZoneIngressOverview> {
     return this.client.get(`/zoneingresses+insights/${name}`, { params })
+  }
+
+  getZoneEgress({ name }: { name: string }, params?: any): Promise<ZoneEgress> {
+    return this.client.get(`/zoneegresses/${name}`, { params })
   }
 
   /**

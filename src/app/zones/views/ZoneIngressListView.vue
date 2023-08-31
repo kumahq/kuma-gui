@@ -17,7 +17,7 @@
       <template v-else>
         <DataSource
           v-slot="{ data, error }: ZoneIngressOverviewCollectionSource"
-          :src="`/zone-ingresses?size=${props.size}&page=${props.page}`"
+          :src="`/zone-ingress-overviews?size=${props.size}&page=${props.page}`"
         >
           <KCard>
             <template #body>
