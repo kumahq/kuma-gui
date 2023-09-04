@@ -39,7 +39,7 @@ jobs:
       BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
     steps:
       - name: Check-out GUI
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.BRANCH }}
 
@@ -72,7 +72,7 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Check-out main application
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # This needs to be a token that grants read access to `HOST_REPOSITORY`. If that repository is private, it needs general access to the `repo` scope which grants access to read private repositories. Otherwise, you will run into an error telling you that the checkout actions can’t determine the repository’s default branch. This is on account of a lack of access not because it can’t determine the default branch.
           token: ${{ steps.github-app-token.outputs.token }}
