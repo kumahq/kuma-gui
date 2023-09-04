@@ -1076,10 +1076,10 @@
     minimatch "^3.0.4"
     node-hook "^1.0.0"
 
-"@badeball/cypress-cucumber-preprocessor@^18.0.4":
-  version "18.0.4"
-  resolved "https://registry.yarnpkg.com/@badeball/cypress-cucumber-preprocessor/-/cypress-cucumber-preprocessor-18.0.4.tgz#12d048ce93b66bc4ca12b39af32143f1e9834b20"
-  integrity sha512-KUXjwKVZ+8ALZu5yCKeune2Ca7OIaJV0b5kiUBYDFIFGc2IE4j/cH2VpzT7MmejOy7W5KpEuE/PDj8GaSzWJng==
+"@badeball/cypress-cucumber-preprocessor@^18.0.5":
+  version "18.0.5"
+  resolved "https://registry.yarnpkg.com/@badeball/cypress-cucumber-preprocessor/-/cypress-cucumber-preprocessor-18.0.5.tgz#4caee6838d677ac77b4e96bf1574a98b03ebd098"
+  integrity sha512-/nMGGlNQe2gyQWfuovBSu8ZmVhKGEz5dLR2CSlRSHdHF9+4Ymaf7Nfo4akV6bAkV7Utvo+iET9ycN//iqAZHlA==
   dependencies:
     "@badeball/cypress-configuration" "^6.1.0"
     "@cucumber/cucumber" "^9.1.0"
