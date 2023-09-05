@@ -321,7 +321,7 @@ export interface Store {
   cache: Cache
   kubernetes: Kubernetes2
   postgres: Postgres
-  type: string
+  type: 'kubernetes' | 'postgres' | 'memory'
   upsert: Upsert
 }
 

@@ -17,7 +17,6 @@ const mutations: MutationTree<ConfigInterface> = {
 const getters: GetterTree<ConfigInterface, State> = {
   getStatus: state => state.status,
   getConfig: state => state.clientConfig,
-  getConfigurationType: state => state.clientConfig?.store?.type,
 }
 
 const actions = (kumaApi: KumaApi): ActionTree<ConfigInterface, State> => ({
