@@ -1,7 +1,7 @@
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { DataPlane, DataPlaneOverview as DataplaneOverview } from '@/types/index.d'
+import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
+import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, SidecarDataplane } from '@/types/index.d'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 
 type CollectionParams = {
@@ -39,6 +39,12 @@ export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
+export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane>
+export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDataplaneCollection>
+
+export type DataplaneRulesCollection = CollectionResponse<DataplaneRule>
+export type DataplaneRulesCollectionSource = DataSourceResponse<DataplaneRulesCollection>
+
 export const sources = (api: KumaApi) => {
   return {
     '/meshes/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
@@ -71,6 +77,22 @@ export const sources = (api: KumaApi) => {
       const { mesh, name, dataPath } = params
 
       return api.getDataplaneData({ mesh, dppName: name, dataPath })
+    },
+
+    '/meshes/:mesh/dataplanes/:name/sidecar-dataplanes-policies': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, name } = params
+
+      return api.getSidecarDataplanePolicies({ mesh, name })
+    },
+
+    '/meshes/:mesh/dataplanes/:name/rules': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, name } = params
+
+      return api.getDataplaneRules({ mesh, name })
     },
 
     '/meshes/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {

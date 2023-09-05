@@ -5,6 +5,7 @@ import type {
 } from '@/types/api.d'
 import type {
   DataPlaneOverview as DataplaneOverview,
+  MeshGatewayDataplane,
 } from '@/types/index.d'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 type DataplaneTypeParams = {
@@ -17,15 +18,22 @@ type PaginationParams = {
   page: number
   search: string
 }
-type MeshParams = {
+type CollectionParams = {
   mesh: string
 }
+
+type DetailParams = CollectionParams & {
+  name: string
+}
+
 export type GatewayCollection = CollectionResponse<DataplaneOverview>
 export type GatewayCollectionSource = DataSourceResponse<GatewayCollection>
 
+export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
+
 export const sources = (api: KumaApi) => {
   return {
-    '/meshes/:mesh/gateways': async (params: MeshParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/gateways': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
       const offset = params.size * (params.page - 1)
       return api.getAllDataplaneOverviewsFromMesh({
@@ -36,7 +44,7 @@ export const sources = (api: KumaApi) => {
         size: params.size,
       })
     },
-    '/meshes/:mesh/gateways/of/:type': async (params: MeshParams & DataplaneTypeParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/gateways/of/:type': async (params: CollectionParams & DataplaneTypeParams & PaginationParams, source: Closeable) => {
       source.close()
       const offset = params.size * (params.page - 1)
       return api.getAllDataplaneOverviewsFromMesh({
@@ -47,6 +55,14 @@ export const sources = (api: KumaApi) => {
         offset,
         size: params.size,
       })
+    },
+
+    '/meshes/:mesh/gateways/:name/policies': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, name } = params
+
+      return api.getMeshGatewayDataplane({ mesh, name })
     },
   }
 }
