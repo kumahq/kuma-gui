@@ -17,9 +17,7 @@ const mutations: MutationTree<OnboardingInterface> = {
 }
 
 const actions: ActionTree<OnboardingInterface, State> = {
-  completeOnboarding({ commit, dispatch }) {
-    dispatch('fetchDataplaneTotalCount', null, { root: true })
-
+  completeOnboarding({ commit }) {
     commit('SET_IS_COMPLETED', true)
     ClientStorage.set('onboardingIsCompleted', 'true')
     ClientStorage.remove('onboardingStep')

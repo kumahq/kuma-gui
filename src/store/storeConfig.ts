@@ -2,11 +2,9 @@ import { StoreOptions } from 'vuex'
 
 import { ConfigInterface } from './modules/config/config.types'
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
-import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import config from '@/store/modules/config/config'
 import onboarding from '@/store/modules/onboarding/onboarding'
-import { Mesh } from '@/types/index.d'
 
 /**
  * The root state of the application’s Vuex store minus all module state.
@@ -18,14 +16,7 @@ interface BareRootState {
    */
   defaultVisibility: {
     appError: boolean
-    onboardingNotification: boolean
   }
-  meshes: {
-    items: Mesh[]
-    total: number
-    next: string | null
-  }
-  totalDataplaneCount: number
   globalKdsAddress: string
 }
 
@@ -33,14 +24,7 @@ const initialState: BareRootState = {
   globalLoading: true,
   defaultVisibility: {
     appError: true,
-    onboardingNotification: true,
   },
-  meshes: {
-    total: 0,
-    items: [],
-    next: null,
-  },
-  totalDataplaneCount: 0,
   globalKdsAddress: 'grpcs://<global-kds-address>:5685',
 }
 
@@ -68,17 +52,10 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
       shouldShowAppError: (state) => {
         return state.defaultVisibility.appError && state.config.status !== 'OK'
       },
-      shouldShowOnboardingNotification: (state) => {
-        const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
-
-        return state.defaultVisibility.onboardingNotification && state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
-      },
     },
 
     mutations: {
       SET_GLOBAL_LOADING: (state, globalLoading: typeof state.globalLoading) => (state.globalLoading = globalLoading),
-      SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
-      SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
       SET_GLOBAL_KDS_ADDRESS: (state, globalKdsAddress: typeof state.globalKdsAddress) => (state.globalKdsAddress = globalKdsAddress),
     },
 
@@ -94,46 +71,8 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
         // only dispatch these actions if the Kuma is online
         if (getters['config/getStatus'] === 'OK') {
           await Promise.all([
-            dispatch('fetchMeshList'),
-            dispatch('fetchDataplaneTotalCount'),
             dispatch('config/bootstrapConfig'),
           ])
-        }
-      },
-
-      async fetchMeshList({ commit, state }) {
-        const params = {
-          size: PAGE_REQUEST_SIZE_DEFAULT,
-        }
-
-        try {
-          const { total, items, next } = await kumaApi.getAllMeshes(params)
-          const meshes: typeof state.meshes = { items: items ?? [], total, next }
-
-          meshes.items.sort((meshA, meshB) => {
-            // Prioritizes the mesh named “default”.
-            if (meshA.name === 'default') {
-              return -1
-            } else if (meshB.name === 'default') {
-              return 1
-            }
-
-            return meshA.name.localeCompare(meshB.name)
-          })
-
-          commit('SET_MESHES', meshes)
-        } catch (error) {
-          console.error(error)
-        }
-      },
-
-      async fetchDataplaneTotalCount({ commit }) {
-        try {
-          const response = await kumaApi.getAllDataplanes({ size: 1 })
-
-          commit('SET_TOTAL_DATAPLANE_COUNT', response.total)
-        } catch (error) {
-          console.error(error)
         }
       },
 
