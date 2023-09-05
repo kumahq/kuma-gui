@@ -4,6 +4,7 @@ Feature: Zones: Create Zone flow
       | Alias                               | Selector                                            |
       | zone-nav-item                       | .app-sidebar > .nav-item:nth-child(2) > a           |
       | name-input                          | [data-testid='name-input']                          |
+      | name-input-group                    | [data-testid='name-input-group']                    |
       | create-zone-button                  | [data-testid='create-zone-button']                  |
       | create-zone-link                    | [data-testid='create-zone-link']                    |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
@@ -115,20 +116,21 @@ Feature: Zones: Create Zone flow
       """
     Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"
 
-  Scenario: The form shows an error
-    When I visit the "/zones/create" URL
+  Scenario: The form shows expected error for 409 response
     Given the URL "/provision-zone" responds with
       """
       headers:
         Status-Code: '409'
       """
+
+    When I visit the "/zones/create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
+
     Then the "$error" element exists
     Then the "$instructions" element doesn't exist
 
   Scenario: The form shows expected error for 400 response
-    When I visit the "/zones/create" URL
     Given the URL "/provision-zone" responds with
       """
       headers:
@@ -143,8 +145,27 @@ Feature: Zones: Create Zone flow
             reason: "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols."
       """
 
-    And I "type" "15" into the "$name-input" element
+    When I visit the "/zones/create" URL
+    # Note: We're deliberately using a valid name here in order to not trigger client-side validation.
+    And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
     Then the "$error" element contains "Invalid zone name"
+    And the "$name-input-group" element contains "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols."
     And the "$instructions" element doesn't exist
+
+  Scenario: The form shows expected error for client-side name validation
+    When I visit the "/zones/create" URL
+    And I "type" "zone.eu" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$error" element doesn't exist
+    And the "$name-input-group" element contains "The name must be a valid RFC 1035 DNS name, which means it must start with a letter, be less than 64 characters long, and only contain lowercase letters, numbers, and '-'."
+    And the "$instructions" element doesn't exist
+
+    When I clear the "$name-input" element
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$error" element doesn't exist
+    And the "$instructions" element exists
