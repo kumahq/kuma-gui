@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ can }"
+  >
     <RouteTitle
       :title="t('onboarding.routes.add-services-code.title')"
     />
@@ -18,7 +20,7 @@
             The demo application includes two services: a Redis backend to store a counter value, and a frontend web UI to show and increment the counter.
           </p>
 
-          <template v-if="isKubernetes">
+          <template v-if="can('use kubernetes')">
             <p>To run execute the following command:</p>
 
             <CodeBlock
@@ -89,7 +91,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onUnmounted, ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 
 import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
@@ -99,12 +101,10 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import { useStore } from '@/store/store'
 import { useKumaApi, useI18n } from '@/utilities'
 const { t } = useI18n()
 
 const kumaApi = useKumaApi()
-const store = useStore()
 
 const LONG_POOLING_INTERVAL = 1000
 
@@ -114,8 +114,6 @@ const k8sRunCommand = 'kubectl apply -f https://bit.ly/3Kh2Try'
 
 const hasDPPs = ref(false)
 const dppsTimeout = ref<number | null>(null)
-
-const isKubernetes = computed(() => store.getters['config/getEnvironment'] === 'kubernetes')
 
 getDPPs()
 

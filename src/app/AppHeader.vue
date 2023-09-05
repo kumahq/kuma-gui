@@ -32,14 +32,14 @@
 
           <template #content>
             <p>
-              {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
+              {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
             </p>
           </template>
         </KPop>
       </div>
 
       <p class="app-status app-status--desktop">
-        {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
+        {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
       </p>
 
       <KDropdownMenu
@@ -101,7 +101,6 @@ import {
 import { computed } from 'vue'
 
 import UpgradeCheck from './common/UpgradeCheck.vue'
-import { useCan } from '@/app/application'
 import {
   useKumaLogo,
   useGithubButton,
@@ -119,21 +118,9 @@ const [
 
 const store = useStore()
 const env = useEnv()
-const can = useCan()
 const { t } = useI18n()
 
 const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
-const environmentName = computed(() => {
-  const environment = store.getters['config/getEnvironment']
-
-  if (environment) {
-    return environment.charAt(0).toUpperCase() + environment.substring(1)
-  } else {
-    return 'Universal'
-  }
-})
-
-const mode = can('use zones') ? 'Multi-Zone' : 'Standalone'
 
 </script>
 

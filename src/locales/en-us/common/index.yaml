@@ -4,6 +4,12 @@ common:
     href:
       docs:
         index: '{KUMA_DOCS_URL}/'
+    environment:
+      universal: Universal
+      kubernetes: Kubernetes
+    mode:
+      standalone: Standalone
+      global: Multi-Zone
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
