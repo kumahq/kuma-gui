@@ -10,6 +10,9 @@ on:
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
+    outputs:
+      spec_groups: ${{ steps.set-groups.outputs.groups }}
+      spec_group_ids: ${{ steps.set-group-ids.outputs.group_ids }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
@@ -22,12 +25,19 @@ jobs:
             **/node_modules
             /home/runner/.cache
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-
       - if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           yarn install --frozen-lockfile
           yarn run lint:lockfile
           yarn deps
+      - id: set-groups
+        env:
+          THREAD_COUNT: 5
+        run: echo "groups=$(find features -type f -name '*.feature' | xargs -n $(($(find features -type f -name '*.feature' | wc -l) / $THREAD_COUNT + 1)) | tr ' ' ',' | jq -R . | jq -s -cM .)" >> $GITHUB_OUTPUT
+      - id: set-group-ids
+        env:
+          SPEC_GROUPS: ${{ steps.set-groups.outputs.groups }}
+        run: echo "group_ids=$(echo $SPEC_GROUPS | jq -cM 'to_entries | map(.key)')" >> $GITHUB_OUTPUT
 
   lint-tests:
     needs: [install-dependencies]
@@ -72,6 +82,11 @@ jobs:
   browser-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        container: ${{ fromJSON(needs.install-dependencies.outputs.spec_group_ids) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
@@ -86,9 +101,11 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
       - run: |
           yarn build:staging
-      - run: |
+      - env:
+          SPEC_GROUPS: ${{ needs.install-dependencies.outputs.spec_groups }}
+        run: |
           yarn preview:built &
-          CYPRESS_video=true yarn run test:browser
+          CYPRESS_video=true yarn run test:browser --spec $(echo $SPEC_GROUPS | jq -cMr '.[${{ matrix.container }}]')
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
