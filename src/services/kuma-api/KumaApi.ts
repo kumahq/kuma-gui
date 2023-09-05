@@ -1,5 +1,4 @@
 import { Api } from './Api'
-import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 import type {
   ApiKindListResponse,
   ApiListResponse,
@@ -9,6 +8,7 @@ import type {
   PaginationParameters,
   SingleResourceParameters,
 } from '@/types/api.d'
+import type { Config } from '@/types/config.d'
 import type {
   DataPlane,
   DataPlaneOverview,
@@ -32,21 +32,11 @@ import type {
 } from '@/types/index.d'
 
 export default class KumaApi extends Api {
-  async getStatus(): Promise<'OK' | null> {
-    try {
-      const { response } = await this.client.raw('/')
-
-      return response.status === 200 ? 'OK' : null
-    } catch {
-      return null
-    }
-  }
-
   async getLatestVersion(): Promise<string> {
     return this.client.get(this.env('KUMA_VERSION_URL'))
   }
 
-  getConfig(): Promise<ClientConfigInterface> {
+  getConfig(): Promise<Config> {
     return this.client.get('/config')
   }
 

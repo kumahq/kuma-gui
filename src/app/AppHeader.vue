@@ -21,7 +21,6 @@
     </div>
 
     <div
-      v-if="!shouldShowAppError"
       class="horizontal-list"
     >
       <div class="app-status app-status--mobile">
@@ -98,14 +97,12 @@ import {
   KIcon,
   KPop,
 } from '@kong/kongponents'
-import { computed } from 'vue'
 
 import UpgradeCheck from './common/UpgradeCheck.vue'
 import {
   useKumaLogo,
   useGithubButton,
 } from '@/components'
-import { useStore } from '@/store/store'
 import { useEnv, useI18n } from '@/utilities'
 
 const [
@@ -116,11 +113,8 @@ const [
   useGithubButton(),
 ]
 
-const store = useStore()
 const env = useEnv()
 const { t } = useI18n()
-
-const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 
 </script>
 
