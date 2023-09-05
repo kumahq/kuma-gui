@@ -16,35 +16,45 @@
         </template>
 
         <template #content>
-          <div class="graph-list mb-6">
-            <component :is="currentGraphComponent" />
-          </div>
-
-          <div class="radio-button-group">
-            <KRadio
-              v-model="mode"
-              name="deployment"
-              selected-value="kubernetes"
+          <DataSource
+            v-slot="{ data }: ConfigSource"
+            :src="`/config`"
+            @change="change"
+          >
+            <template
+              v-if="(typeof data !== 'undefined')"
             >
-              Kubernetes
-            </KRadio>
+              <div class="graph-list mb-6">
+                <component :is="currentGraphComponent" />
+              </div>
 
-            <KRadio
-              v-model="mode"
-              name="deployment"
-              selected-value="postgres"
-            >
-              Postgres
-            </KRadio>
+              <div class="radio-button-group">
+                <KRadio
+                  v-model="mode"
+                  name="deployment"
+                  selected-value="kubernetes"
+                >
+                  Kubernetes
+                </KRadio>
 
-            <KRadio
-              v-model="mode"
-              name="deployment"
-              selected-value="memory"
-            >
-              Memory
-            </KRadio>
-          </div>
+                <KRadio
+                  v-model="mode"
+                  name="deployment"
+                  selected-value="postgres"
+                >
+                  Postgres
+                </KRadio>
+
+                <KRadio
+                  v-model="mode"
+                  name="deployment"
+                  selected-value="memory"
+                >
+                  Memory
+                </KRadio>
+              </div>
+            </template>
+          </DataSource>
         </template>
 
         <template #navigation>
@@ -60,20 +70,21 @@
 
 <script lang="ts" setup>
 import { KRadio } from '@kong/kongponents'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
+import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import type { ConfigSource, Config } from '@/app/diagnostics/sources'
 import {
   useKubernetesGraph,
   useMemoryGraph,
   usePostgresGraph,
 } from '@/components'
-import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
 const KubernetesGraph = useKubernetesGraph()
@@ -86,14 +97,13 @@ const componentMap: Record<string, any> = {
   kubernetes: KubernetesGraph,
 }
 
-const store = useStore()
 const { t } = useI18n()
 
 const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
 
-onMounted(function () {
-  mode.value = store.getters['config/getConfigurationType']
-})
+const change = (e: Config) => {
+  mode.value = e.store.type
+}
 
 const currentGraphComponent = computed(() => componentMap[mode.value])
 </script>
