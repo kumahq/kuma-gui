@@ -1,36 +1,9 @@
+import { defineSources } from '@/app/application/services/data-source'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
 import type KumaApi from '@/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse, DataPlaneOverviewParameters, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
-
-type CollectionParams = {
-  mesh: string
-}
-
-type DetailParams = CollectionParams & {
-  name: string
-}
-
-type EnvoyDataParams = DetailParams & {
-  dataPath: 'xds' | 'clusters' | 'stats'
-}
-
-type PaginationParams = {
-  size: number
-  page: number
-  search: string
-}
-
-type ServiceParams = {
-  service: string
-}
-
-type DataplaneTypeParams = {
-  type: 'all' | 'standard' | 'delegated' | 'builtin'
-}
-
-type Closeable = { close: () => void }
 
 export type DataplaneSource = DataSourceResponse<DataPlane>
 export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
@@ -47,70 +20,53 @@ export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane
 export type DataplaneRulesCollection = CollectionResponse<DataplaneRule>
 export type DataplaneRulesCollectionSource = DataSourceResponse<DataplaneRulesCollection>
 
+const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
+  return arr.includes(item as T[number])
+}
+
 export const sources = (api: KumaApi) => {
-  return {
-    '/meshes/:mesh/dataplanes/:name': (params: DetailParams, source: Closeable) => {
-      source.close()
+  return defineSources({
+    '/meshes/:mesh/dataplanes/:name': async (params) => {
+      return api.getDataplaneFromMesh(params)
+    },
 
+    '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': async (params) => {
       const { mesh, name } = params
+      const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
 
-      return api.getDataplaneFromMesh({ mesh, name })
+      return api.getDataplaneData({
+        mesh,
+        dppName: name,
+        dataPath,
+      })
     },
 
-    '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, name, dataPath } = params
-
-      return api.getDataplaneData({ mesh, dppName: name, dataPath })
+    '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': async (params) => {
+      return api.getSidecarDataplanePolicies(params)
     },
 
-    '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': (params: DetailParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, name } = params
-
-      return api.getSidecarDataplanePolicies({ mesh, name })
+    '/meshes/:mesh/dataplanes/:name/rules': async (params) => {
+      return api.getDataplaneRules(params)
     },
 
-    '/meshes/:mesh/dataplanes/:name/rules': (params: DetailParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, name } = params
-
-      return api.getDataplaneRules({ mesh, name })
+    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': (params) => {
+      return api.getMeshGatewayDataplane(params)
     },
 
-    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': (params: DetailParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, name } = params
-
-      return api.getMeshGatewayDataplane({ mesh, name })
+    '/meshes/:mesh/dataplane-overviews/:name': async (params) => {
+      return api.getDataplaneOverviewFromMesh(params)
     },
 
-    '/meshes/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, name } = params
-
-      return api.getDataplaneOverviewFromMesh({ mesh, name })
-    },
-
-    '/meshes/:mesh/dataplanes/of/:type': async (params: CollectionParams & DataplaneTypeParams & PaginationParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, size, type } = params
+    '/meshes/:mesh/dataplanes/of/:type': async (params) => {
+      const { mesh, size } = params
       const offset = size * (params.page - 1)
 
       const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
 
-      const gatewayParams: DataPlaneOverviewParameters = {}
-      if (type === 'standard') {
-        gatewayParams.gateway = 'false'
-      } else if (type !== 'all') {
-        gatewayParams.gateway = type
-      }
+      const type = params.type === 'standard' ? 'false' : params.type
+      const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
+        ? { gateway: type }
+        : {}
 
       return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...filterParams,
@@ -120,28 +76,24 @@ export const sources = (api: KumaApi) => {
       })
     },
 
-    '/meshes/:mesh/dataplanes/for/:service/of/:type': async (params: CollectionParams & ServiceParams & PaginationParams & DataplaneTypeParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, size, type } = params
+    '/meshes/:mesh/dataplanes/for/:service/of/:type': async (params) => {
+      const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      // here 'all' means both proxies/sidecars and gateways this currently fits
-      // our usecases but we should probably include `gateway | sidecar` or
-      // similar
       const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
+
       if (typeof filterParams.tag === 'undefined') {
         filterParams.tag = []
       }
       filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/service:'))
       filterParams.tag.push(`kuma.io/service:${params.service}`)
 
-      const gatewayParams: DataPlaneOverviewParameters = {}
-      if (type === 'standard') {
-        gatewayParams.gateway = 'false'
-      } else if (type !== 'all') {
-        gatewayParams.gateway = type
-      }
+      // we use `all` in code to mean "don't specify ?gateway=0 at all" i.e.
+      // both gateway and sidecars
+      const type = params.type === 'standard' ? 'false' : params.type
+      const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
+        ? { gateway: type }
+        : {}
 
       return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...filterParams,
@@ -150,5 +102,5 @@ export const sources = (api: KumaApi) => {
         size,
       })
     },
-  }
+  })
 }

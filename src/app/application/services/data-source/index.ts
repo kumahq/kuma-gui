@@ -2,6 +2,29 @@ import CallableEventSource from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
 export type { DataSourceResponse } from './DataSourcePool'
 
+type ExtractRouteParams<T extends string> =
+  string extends T
+    ? Record<string, string>
+    : T extends `${infer _Start}:${infer Param}/${infer Rest}`
+      ? {[k in Param | keyof ExtractRouteParams<Rest>]: string}
+      : T extends `${infer _Start}:${infer Param}`
+        ? {[k in Param]: string}
+        : {};
+
+type PaginationParams = {
+  size: number
+  page: number
+  search: string
+}
+
+type ExtractSources<T extends string, K> = {
+  [Route in T]: (params: ExtractRouteParams<Route> & K, source: { close: () => void }) => void
+}
+
+export const defineSources = <T extends string>(sources: ExtractSources<T, PaginationParams>) => {
+  return sources
+}
+
 type Configuration = {
   interval?: number
   retry?: (e: unknown) => Promise<void> | undefined
