@@ -98,9 +98,9 @@
               :empty-state-cta-text="t('common.documentation')"
               :headers="[
                 { label: 'Name', key: 'name' },
-                props.currentPolicyType.isTargetRefBased ? { label: 'Target ref', key: 'targetRef' } : undefined,
+                ...(props.currentPolicyType.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
                 { label: 'Actions', key: 'actions', hideLabel: true },
-              ].filter(notEmpty)"
+              ]"
               :page-number="props.pageNumber"
               :page-size="props.pageSize"
               :total="props.policyCollection?.total"
@@ -202,7 +202,6 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { MeshInsight, PolicyType } from '@/types/index.d'
 import { useI18n } from '@/utilities'
-import { notEmpty } from '@/utilities/notEmpty'
 
 type ChangeValue = {
   page: number
