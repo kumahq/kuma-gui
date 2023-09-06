@@ -160,6 +160,8 @@ const meshInsight = computed(() => mergeInsightsReducer(props.meshInsights))
   display: flex;
   justify-content: space-between;
   margin-bottom: $kui-space-60;
+  // Makes card header the same height as buttons so that they align with or without buttons present.
+  height: 42px;
 }
 
 .card-title {
