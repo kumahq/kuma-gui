@@ -19,8 +19,19 @@
 
       <template #actions>
         <KButton
+          v-if="token === '' || isZoneConnected"
           appearance="outline"
+          data-testid="exit-button"
           :to="{ name: 'zone-cp-list-view' }"
+        >
+          {{ t('zones.form.exit') }}
+        </KButton>
+
+        <KButton
+          v-else
+          appearance="outline"
+          data-testid="exit-button"
+          @click="toggleConfirmModal"
         >
           {{ t('zones.form.exit') }}
         </KButton>
@@ -179,7 +190,7 @@
           <EntityScanner
             :loader-function="scanForEnabledZone"
             :has-error="scanError !== null"
-            :can-complete="isScanComplete"
+            :can-complete="isZoneConnected"
             data-testid="zone-connected-scanner"
           >
             <template #loading-title>
@@ -220,13 +231,40 @@
           </EntityScanner>
         </div>
       </div>
+
+      <KModal
+        :is-visible="isConfirmModalVisible"
+        :title="t('zones.form.confirm_modal.title')"
+        data-testid="confirm-exit-modal"
+        @canceled="toggleConfirmModal"
+        @proceed="router.push({ name: 'zone-cp-list-view' })"
+      >
+        <template #header-content>
+          {{ t('zones.form.confirm_modal.title') }}
+        </template>
+
+        <template #body-content>
+          {{ t('zones.form.confirm_modal.body') }}
+        </template>
+
+        <template #action-buttons>
+          <KButton
+            appearance="primary"
+            :to="{ name: 'zone-cp-list-view' }"
+            data-testid="confirm-exit-button"
+          >
+            {{ t('zones.form.confirm_modal.action_button') }}
+          </KButton>
+        </template>
+      </KModal>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { type BadgeAppearance, KButton, KInput, KInputSwitch, KLabel, KRadio } from '@kong/kongponents'
+import { type BadgeAppearance, KButton, KInput, KInputSwitch, KLabel, KModal, KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import EntityScanner from '../components/EntityScanner.vue'
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
@@ -249,6 +287,7 @@ type ErrorState = {
 
 const { t } = useI18n()
 const kumaApi = useKumaApi()
+const router = useRouter()
 
 /**
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#rfc-1035-label-names
@@ -257,6 +296,7 @@ const NAME_REGEX = /^(?![-0-9])[a-z0-9-]{1,63}$/
 
 const zone = ref<{ token: string } | null>(null)
 const isChangingZone = ref(false)
+const isConfirmModalVisible = ref(false)
 const errorState = ref<ErrorState>({
   error: null,
   title: null,
@@ -265,7 +305,7 @@ const errorState = ref<ErrorState>({
 })
 const frontendNameError = ref<string | null>(null)
 
-const isScanComplete = ref(false)
+const isZoneConnected = ref(false)
 const scanError = ref<Error | null>(null)
 
 const name = ref('')
@@ -359,14 +399,14 @@ function validateName(name: string): boolean {
  * Polling callback function passed to the EntityScanner component used to determine whether a Zone was connected successfully.
  */
 async function scanForEnabledZone() {
-  isScanComplete.value = false
+  isZoneConnected.value = false
   scanError.value = null
 
   try {
     // The presence of a `ZoneOverview` object’s subscriptions with a connect time and without a disconnect time indicate a Zone to be online.
     const zoneOverview = await kumaApi.getZoneOverview({ name: name.value })
     const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
-    isScanComplete.value = status === 'online'
+    isZoneConnected.value = status === 'online'
   } catch (err) {
     if (err instanceof Error) {
       scanError.value = err
@@ -374,5 +414,9 @@ async function scanForEnabledZone() {
       console.error(err)
     }
   }
+}
+
+function toggleConfirmModal() {
+  isConfirmModalVisible.value = !isConfirmModalVisible.value
 }
 </script>

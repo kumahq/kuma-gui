@@ -3,6 +3,9 @@ Feature: Zones: Create Zone flow
     Given the CSS selectors
       | Alias                               | Selector                                             |
       | zone-nav-item                       | .app-sidebar > .nav-item:nth-child(2) > a            |
+      | exit-button                         | [data-testid='exit-button']                          |
+      | confirm-exit-modal                  | [data-testid='confirm-exit-modal']                   |
+      | confirm-exit-button                 | [data-testid='confirm-exit-button']                  |
       | name-input                          | [data-testid='name-input']                           |
       | name-input-invalid-dns-name         | $name-input[data-test-error-type='invalid-dns-name'] |
       | create-zone-button                  | [data-testid='create-zone-button']                   |
@@ -168,3 +171,68 @@ Feature: Zones: Create Zone flow
 
     Then the "$error" element doesn't exist
     And the "$instructions" element exists
+
+  Scenario: Exiting the form in a safe state without confirm dialog
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
+    And the URL "/provision-zone" responds with
+      """
+      body:
+        token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
+      """
+    And the URL "/zones+insights/test" responds with
+      """
+      body:
+        zoneInsight:
+          subscriptions:
+            - connectTime: '2020-07-28T16:18:09.743141Z'
+              disconnectTime: ~
+              status: {}
+      """
+
+    When I visit the "/zones/create" URL
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$instructions" element exists
+    And the "$zone-connected-scanner[data-test-state='success']" element exists
+
+    When I click the "$exit-button" element
+
+    Then the "$confirm-exit-modal" element doesn't exist
+    And the page title contains "Zone Control Planes"
+
+  Scenario: Exiting the form in an unsafe state with confirm dialog
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 0
+      """
+    And the URL "/provision-zone" responds with
+      """
+      body:
+        token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
+      """
+    And the URL "/zones+insights/test" responds with
+      """
+      body:
+        zoneInsight:
+          subscriptions: []
+      """
+
+    When I visit the "/zones/create" URL
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$instructions" element exists
+    And the "$zone-connected-scanner[data-test-state='waiting']" element exists
+
+    When I click the "$exit-button" element
+
+    Then the "$confirm-exit-modal" element exists
+
+    When I click the "$confirm-exit-button" element
+
+    Then the "$confirm-exit-modal" element doesn't exist
+    And the page title contains "Zone Control Planes"
