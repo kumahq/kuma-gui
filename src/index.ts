@@ -22,8 +22,3 @@ export function useApp(
     return app
   }
 }
-
-export function useBootstrap(_store: Store<State>) {
-  return async (_isAllowedToMakeApiCalls: boolean = true) => {
-  }
-}

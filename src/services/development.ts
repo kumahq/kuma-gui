@@ -1,11 +1,12 @@
 import { setupWorker, MockedRequest, rest } from 'msw'
 
 import Logger from './logger/Logger'
+import { TOKENS as CONTROL_PLANES } from '@/app/control-planes'
 import cookied from '@/services/env/CookiedEnv'
 import type Env from '@/services/env/Env'
 import debugI18n from '@/services/i18n/DebugI18n'
+import type { ServiceConfigurator, Token, TokenType } from '@/services/utils'
 import { token, get } from '@/services/utils'
-import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, Token, TokenType } from '@/services/utils'
 import type { FS } from '@/test-support'
 import { fakeApi } from '@/test-support'
 import { fs } from '@/test-support/mocks/fs'
@@ -17,34 +18,44 @@ type Msw = {
   resetHandlers: () => void
   close: () => void
 } & ReturnType<typeof setupWorker>
+type I18n = ReturnType<typeof debugI18n>
+type Sources = TokenType<typeof CONTROL_PLANES.sources>
+type AEnv = Env['var']
 
 const $ = {
   msw: token<Msw>('msw'),
   fakeFS: token<FS>('fake.fs'),
   kumaFS: token<FS>('fake.fs.kuma'),
+  controlPlaneSources: CONTROL_PLANES.sources,
 }
-type I18n = ReturnType<typeof debugI18n>
-type SupportedTokens = {
-  Env: Token
-  EnvVars: Token
+
+type SupportedTokens = typeof $ & {
   i18n: Token
   logger: Token
-  msw: Token
-  bootstrap: Token
-  env: Token<Alias<Env['var']>>
+  env: Token<AEnv>
 }
 
+let started = false
 export const services: ServiceConfigurator<SupportedTokens> = (app) => [
+  [token<Sources>('control-planes.sources.with.mockServer'), {
+    service: (target: () => Sources) => {
+      const sources = target()
+      const p = sources['/control-plane/addresses']
 
-  [token<Decorator<typeof app.bootstrap>>('bootstrap.with.mockServer'), {
-    service: (bootstrap: ReturnDecorated<typeof app.bootstrap>) => {
-      const env = get(app.env)
-      if (env('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
-        get($.msw)
+      sources['/control-plane/addresses'] = (...args) => {
+        const result = p(...args)
+        const env = get(app.env)
+        if (env('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
+          if (!started) {
+            started = true
+            get($.msw)
+          }
+        }
+        return result
       }
-      return bootstrap()
+      return sources
     },
-    decorates: app.bootstrap,
+    decorates: $.controlPlaneSources,
   }],
 
   [token<I18n>('i18n.debug'), {
@@ -60,8 +71,8 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
     decorates: app.i18n,
   }],
 
-  [token<ReturnType<typeof cookied>>('env.debug'), {
-    service: (env: () => Alias<Env['var']>) => {
+  [token<AEnv>('env.debug'), {
+    service: (env: () => AEnv) => {
       return cookied(env())
     },
     decorates: app.env,

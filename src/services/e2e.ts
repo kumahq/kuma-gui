@@ -23,7 +23,6 @@ const $ = {
   Env: token('Env'),
 
   logger: token('logger'),
-  bootstrap: token('bootstrap'),
 }
 type Token = ReturnType<typeof token>
 export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [
