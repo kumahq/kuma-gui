@@ -10,11 +10,7 @@ Feature: Zones: List view content
     Given the environment
       """
       KUMA_ZONE_COUNT: 3
-      """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: global
+      KUMA_MODE: global
       """
     And the URL "/zones+insights" responds with
       """
@@ -106,11 +102,7 @@ Feature: Zones: List view content
     Given the environment
       """
       KUMA_ZONEINGRESS_COUNT: 1
-      """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: global
+      KUMA_MODE: global
       """
     And the URL "/zoneingresses+insights" responds with
       """
@@ -152,11 +144,7 @@ Feature: Zones: List view content
     Given the environment
       """
       KUMA_ZONEEGRESS_COUNT: 1
-      """
-    And the URL "/config" responds with
-      """
-      body:
-        mode: global
+      KUMA_MODE: global
       """
     And the URL "/zoneegressoverviews" responds with
       """

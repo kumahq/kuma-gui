@@ -30,11 +30,17 @@ Feature: mesh / dataplanes / index
                 lastUpdateTime: 2021-02-18T08:33:36.442044+01:00
         - name: fake-frontend
       """
+
+  Scenario: The Proxy listing table has the correct columns (mode: global)
+    Given the environment
+      """
+      KUMA_MODE: global
+      """
+
     When I visit the "/mesh/default/data-planes" URL
 
-  Scenario: The Proxy listing table has the correct columns
     Then the "$table-header" element exists 8 times
-    Then the "$table-header" elements contain
+    And the "$table-header" elements contain
       | Value        |
       | Name         |
       | Service      |
@@ -44,7 +50,27 @@ Feature: mesh / dataplanes / index
       | Status       |
       | Warnings     |
 
+  Scenario: The Proxy listing table has the correct columns (mode: standalone)
+    Given the environment
+      """
+      KUMA_MODE: standalone
+      """
+
+    When I visit the "/mesh/default/data-planes" URL
+
+    Then the "$table-header" element exists 7 times
+    And the "$table-header" elements contain
+      | Value        |
+      | Name         |
+      | Service      |
+      | Protocol     |
+      | Last Updated |
+      | Status       |
+      | Warnings     |
+
   Scenario: The Proxy listing has the expected content and UI elements
+    When I visit the "/mesh/default/data-planes" URL
+
     Then the "$table-row" element exists 9 times
     Then the "$table-row:nth-child(1)" element contains
       | Value        |
