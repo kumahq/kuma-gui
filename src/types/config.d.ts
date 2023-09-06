@@ -331,7 +331,7 @@ export interface XdsServer {
   nackBackoff: string
 }
 
-export interface ClientConfigInterface {
+export interface Config {
   access: Access
   apiServer: ApiServer
   bootstrapServer: BootstrapServer
@@ -351,9 +351,4 @@ export interface ClientConfigInterface {
   runtime: Runtime
   store: Store
   xdsServer: XdsServer
-}
-
-export interface ConfigInterface {
-  clientConfig: ClientConfigInterface | null
-  status: string | null
 }

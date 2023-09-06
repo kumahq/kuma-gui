@@ -16,11 +16,6 @@
         <AppSidebar v-if="!isWizard" />
 
         <AppView>
-          <AppErrorMessage
-            v-if="shouldShowAppError"
-            data-testid="app-error"
-          />
-
           <AppOnboardingNotification v-if="!isWizard" />
 
           <RouterView v-slot="{ Component }">
@@ -52,7 +47,6 @@ import {
   useAppSidebar,
   useAppHeader,
   useAppLoadingBar,
-  useAppErrorMessage,
   useAppOnboardingNotification,
 } from '@/components'
 import { useStore } from '@/store/store'
@@ -67,20 +61,17 @@ const [
   AppSidebar,
   AppHeader,
   AppLoadingBar,
-  AppErrorMessage,
   AppOnboardingNotification,
 ] = [
   useAppSidebar(),
   useAppHeader(),
   useAppLoadingBar(),
-  useAppErrorMessage(),
   useAppOnboardingNotification(),
 ]
 const store = useStore()
 const route = useRoute()
 
 const isWizard = computed(() => route.meta.isWizard === true)
-const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
 
 </script>
 <style lang="scss" scoped>

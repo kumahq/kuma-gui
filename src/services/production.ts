@@ -4,7 +4,7 @@ import {
   createRouter,
   createWebHistory,
 } from 'vue-router'
-import { createStore, StoreOptions, Store } from 'vuex'
+import { createStore, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
 import { useApp, useBootstrap } from '../index'
@@ -52,7 +52,6 @@ const $ = {
   dataSourceLifecycle: token<typeof DataSourceLifeCycle>('DataSourceLifecycle'),
   sources: token('sources'),
 
-  storeConfig: token<StoreOptions<State>>('storeOptions'),
   store: token<Store<State>>('store'),
 
   router: token<Router>('router'),
@@ -154,17 +153,10 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   }],
 
   // Store
-  [$.storeConfig, {
-    service: storeConfig,
-    arguments: [
-      $.api,
-    ],
-  }],
   [$.store, {
-    service: createStore,
-    arguments: [
-      $.storeConfig,
-    ],
+    service: () => {
+      return createStore(storeConfig())
+    },
   }],
 
   // Router

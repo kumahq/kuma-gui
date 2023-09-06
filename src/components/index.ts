@@ -1,6 +1,5 @@
 import GithubButton from 'vue-github-button'
 
-import AppErrorMessage from '@/app/AppErrorMessage.vue'
 import AppHeader from '@/app/AppHeader.vue'
 import MainView from '@/app/application/components/app-view/MainView.vue'
 import AppLoadingBar from '@/app/AppLoadingBar.vue'
@@ -28,7 +27,6 @@ export const TOKENS = {
   AppSidebar: constant(AppSidebar, { description: 'AppSidebar' }),
   AppHeader: constant(AppHeader, { description: 'AppHeader' }),
   AppLoadingBar: constant(AppLoadingBar, { description: 'AppLoadingBar' }),
-  AppErrorMessage: constant(AppErrorMessage, { description: 'AppErrorMessage' }),
   AppOnboardingNotification: constant(AppOnboardingNotification, { description: 'AppOnboardingNotification' }),
   MainView: constant(MainView, { description: 'MainView' }),
   MeshDetails: constant(MeshDetails, { description: 'MeshDetails' }),
@@ -45,7 +43,6 @@ export const [
   useAppSidebar,
   useAppHeader,
   useAppLoadingBar,
-  useAppErrorMessage,
   useAppOnboardingNotification,
   useMainView,
   useMeshDetails,
@@ -61,7 +58,6 @@ export const [
   TOKENS.AppSidebar,
   TOKENS.AppHeader,
   TOKENS.AppLoadingBar,
-  TOKENS.AppErrorMessage,
   TOKENS.AppOnboardingNotification,
   TOKENS.MainView,
   TOKENS.MeshDetails,

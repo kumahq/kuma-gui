@@ -23,17 +23,7 @@ export function useApp(
   }
 }
 
-export function useBootstrap(store: Store<State>) {
-  return async (isAllowedToMakeApiCalls: boolean = true) => {
-    if (isAllowedToMakeApiCalls) {
-      await Promise.all([
-        // Fetches basic resources before setting up the router and mounting the
-        // application. This is mainly needed to properly redirect users to the
-        // onboarding flow in the appropriate scenarios.
-        store.dispatch('bootstrap'),
-      ])
-    } else {
-      store.state.defaultVisibility.appError = false
-    }
+export function useBootstrap(_store: Store<State>) {
+  return async (_isAllowedToMakeApiCalls: boolean = true) => {
   }
 }
