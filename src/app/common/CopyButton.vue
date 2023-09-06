@@ -1,12 +1,13 @@
 <template>
   <KClipboardProvider v-slot="{ copyToClipboard }">
     <KButton
+      v-bind="$attrs"
       appearance="outline"
-      class="copy-button non-visual-button"
+      class="copy-button"
       data-testid="copy-button"
       :is-rounded="false"
       size="small"
-      :title="props.copyText"
+      :title="!props.hideTitle ? props.copyText : undefined"
       type="button"
       @click="copy($event, copyToClipboard)"
     >
@@ -14,7 +15,8 @@
         color="currentColor"
         icon="copy"
         :size="KUI_ICON_SIZE_30"
-        :title="props.copyText"
+        :title="!props.hideTitle ? props.copyText : undefined"
+        :hide-title="props.hideTitle"
       />
 
       <slot>
@@ -60,6 +62,11 @@ const props = defineProps({
     required: false,
     default: 'Failed to copy!',
   },
+
+  hideTitle: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 async function copy(event: Event, copyToClipboard: (text: string) => Promise<boolean>) {
@@ -88,6 +95,12 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
 }
 </script>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <style lang="scss" scoped>
 // Overrides KButton’s default padding.
 .copy-button.copy-button {
@@ -104,7 +117,7 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
 
 .copy-button[data-tooltip-text]::after {
   background-color: var(--tooltip-background-color);
-  border-radius: 3px;
+  border-radius: $kui-border-radius-20;
   color: $kui-color-text-inverse;
   content: attr(data-tooltip-text);
   font-weight: $kui-font-weight-regular;

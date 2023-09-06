@@ -9,16 +9,33 @@
   >
     <template #secondary-actions>
       <CopyButton
+        class="kubernetes-copy-button"
         :get-text="getYamlAsKubernetes"
-        :copy-text="i18n.t('common.copyKubernetesText')"
+        :copy-text="t('common.copyKubernetesText')"
+        hide-title
       >
-        {{ i18n.t('common.copyKubernetesShortText') }}
+        {{ t('common.copyKubernetesShortText') }}
+
+        <KTooltip
+          :label="t('common.copyKubernetesTooltip')"
+          placement="bottomEnd"
+          max-width="200"
+        >
+          <KIcon
+            icon="info"
+            color="currentColor"
+            :size="KUI_ICON_SIZE_30"
+            hide-title
+          />
+        </KTooltip>
       </CopyButton>
     </template>
   </CodeBlock>
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KIcon, KTooltip } from '@kong/kongponents'
 import { PropType, computed } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
@@ -28,7 +45,7 @@ import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { toYaml } from '@/utilities/toYaml'
 
-const i18n = useI18n()
+const { t } = useI18n()
 
 const props = defineProps({
   id: {
@@ -76,3 +93,11 @@ function toYamlRepresentation(resource: Entity): string {
   return toYaml(resourceWithoutTimes)
 }
 </script>
+
+<style lang="scss">
+.kubernetes-copy-button:not(.increase-specificity.increase-specificity) {
+  padding: $kui-space-20 $kui-space-40;
+  border: $kui-border-width-10 solid $kui-color-border-neutral-weak;
+  border-radius: $kui-border-radius-20;
+}
+</style>

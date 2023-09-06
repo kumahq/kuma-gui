@@ -14,6 +14,7 @@ common:
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
   copyKubernetesShortText: 'as k8s'
+  copyKubernetesTooltip: 'Copy as Kubernetes'
   documentation: 'Documentation'
   error_state:
     title: 'An error has occurred while trying to load this data.'
