@@ -27,6 +27,7 @@
 
     <CodeBlock
       id="zone-universal-config-code-block"
+      data-testid="zone-universal-config"
       class="mt-4"
       :code="universalConfig"
       language="yaml"
@@ -50,15 +51,18 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import { useStore } from '@/store/store'
 import { useI18n } from '@/utilities'
 
 const i18n = useI18n()
 const route = useRoute()
-const store = useStore()
 
 const props = defineProps({
   zoneName: {
+    type: String,
+    required: true,
+  },
+
+  globalKdsAddress: {
     type: String,
     required: true,
   },
@@ -73,7 +77,7 @@ const saveTokenCommand = computed(() => i18n.t('zones.form.universal.saveToken.s
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
-    globalKdsAddress: store.state.globalKdsAddress,
+    globalKdsAddress: props.globalKdsAddress,
   }
 
   if (typeof route.params.virtualControlPlaneId === 'string') {
