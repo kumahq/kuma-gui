@@ -48,7 +48,7 @@ export const TOKENS = {
 
   zoneRoutes: token<RouteRecordRaw[]>('kuma.zone.routes'),
 
-  nav: token<typeof getNavItems>('nav'),
+  nav: token<ReturnType<typeof getNavItems>>('nav'),
 
   logger: token<Logger>('logger'),
 
