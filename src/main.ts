@@ -1,3 +1,4 @@
+import { services as controlPlanes } from '@/app/control-planes'
 import { services as diagnostics } from '@/app/diagnostics'
 import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as $, services as production } from '@/services/production'
@@ -7,6 +8,11 @@ async function mountVueApplication() {
   const get = build(
     // production service container configuration
     production($),
+
+    controlPlanes({
+      ...$,
+      routes: $.routesLabel,
+    }),
     onboarding({
       ...$,
       routes: $.routesLabel,
@@ -29,12 +35,6 @@ async function mountVueApplication() {
 
   const app = await get($.app)((await import('./app/App.vue')).default)
   app.mount('#app')
-
-  const store = get($.store)
-  await store.dispatch('updateGlobalLoading', true)
-  const bootstrap = get($.bootstrap)
-  await bootstrap()
-  await store.dispatch('updateGlobalLoading', false)
 }
 
 mountVueApplication()

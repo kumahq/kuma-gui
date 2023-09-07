@@ -7,7 +7,7 @@ import {
 import { createStore, Store } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
-import { useApp, useBootstrap } from '../index'
+import { useApp } from '../index'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import type { Can } from '@/app/application/services/can'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
@@ -74,7 +74,6 @@ const $ = {
   logger: token<Logger>('logger'),
 
   app: token<ReturnType<typeof useApp>>('app'),
-  bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
 }
 type SupportedTokens = typeof $
 export const services: ServiceConfigurator<SupportedTokens> = ($) => [
@@ -206,13 +205,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.router,
     ],
   }],
-  [$.bootstrap, {
-    service: useBootstrap,
-    arguments: [
-      $.store,
-    ],
-  }],
-
   // Routes
   [$.routes, {
     service: routes,

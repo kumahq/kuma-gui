@@ -23,7 +23,7 @@ export type EnvVars = EnvArgs & EnvProps
 
 type EnvInternal = EnvArgs & Partial<EnvProps>
 export default class Env {
-  env: EnvVars | undefined
+  protected env: EnvVars | undefined
   constructor(envArgs: EnvArgs) {
     let _env: EnvInternal = envArgs
     const env = (str: keyof EnvInternal, d: string = '') => this.var(str, _env?.[str] ?? d)

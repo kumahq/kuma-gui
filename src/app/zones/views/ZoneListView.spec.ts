@@ -2,8 +2,9 @@ import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import ZoneListView from './ZoneListView.vue'
+
 import { useMock } from '@/../jest/jest-setup-after-env'
-import { useKumaApi, useStore } from '@/utilities'
+import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
 
@@ -18,7 +19,6 @@ function renderComponent() {
 
 describe('ZoneListView', () => {
   const mock = useMock()
-  const store = useStore()
 
   test('updates list when deleting Zone', async () => {
     const firstZoneName = 'zone-1'
@@ -48,7 +48,6 @@ describe('ZoneListView', () => {
         },
       })
     })
-    await store.dispatch('bootstrap')
 
     jest.spyOn(kumaApi, 'deleteZone').mockImplementation(() => Promise.resolve())
     jest.spyOn(kumaApi, 'getAllZoneOverviews')

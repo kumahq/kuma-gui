@@ -7,12 +7,10 @@ import onboarding from '@/store/modules/onboarding/onboarding'
  * The root state of the application’s Vuex store minus all module state.
  */
 interface BareRootState {
-  globalLoading: boolean
   globalKdsAddress: string
 }
 
 const initialState: BareRootState = {
-  globalLoading: true,
   globalKdsAddress: 'grpcs://<global-kds-address>:5685',
 }
 
@@ -35,15 +33,10 @@ export const storeConfig = (): StoreOptions<State> => {
     state: () => initialState as State,
 
     mutations: {
-      SET_GLOBAL_LOADING: (state, globalLoading: typeof state.globalLoading) => (state.globalLoading = globalLoading),
       SET_GLOBAL_KDS_ADDRESS: (state, globalKdsAddress: typeof state.globalKdsAddress) => (state.globalKdsAddress = globalKdsAddress),
     },
 
     actions: {
-      updateGlobalLoading({ commit }, isLoading: boolean) {
-        commit('SET_GLOBAL_LOADING', isLoading)
-      },
-
       updateGlobalKdsAddress({ commit }, globalKdsAddress: string) {
         commit('SET_GLOBAL_KDS_ADDRESS', globalKdsAddress)
       },

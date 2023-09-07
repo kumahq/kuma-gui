@@ -2,8 +2,8 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import CreateMesh from './CreateMesh.vue'
+
 import { useMock } from '@/../jest/jest-setup-after-env'
-import { useStore } from '@/utilities'
 
 function renderComponent() {
   return mount(CreateMesh)
@@ -11,7 +11,6 @@ function renderComponent() {
 
 describe('CreateMesh.vue', () => {
   const mock = useMock()
-  const store = useStore()
   test('renders snapshot', async () => {
     const wrapper = renderComponent()
 
@@ -28,7 +27,6 @@ describe('CreateMesh.vue', () => {
         },
       })
     })
-    await store.dispatch('bootstrap')
     const wrapper = renderComponent()
 
     expect(wrapper.html()).toContain('/onboarding/multi-zone')
