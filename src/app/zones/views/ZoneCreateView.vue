@@ -37,199 +37,243 @@
         </KButton>
       </template>
 
-      <div class="form-content">
-        <h1>{{ t('zones.routes.create.title') }}</h1>
+      <div class="form-wrapper">
+        <KCard>
+          <template #body>
+            <div class="form">
+              <div>
+                <h1 class="form-title">
+                  {{ t('zones.routes.create.title') }}
+                </h1>
+              </div>
 
-        <div class="form-wrapper mt-4">
-          <div>
-            <KLabel
-              for="zone-name"
-              required
-              :tooltip-attributes="{ placement: 'right'}"
-            >
-              {{ t('zones.form.nameLabel') }}
+              <div class="form-section">
+                <div class="form-section__header">
+                  <h2 class="form-section-title">
+                    {{ t('zones.form.section.name.title') }}
+                  </h2>
+                </div>
 
-              <template #tooltip>
-                {{ t('zones.form.name_tooltip') }}
+                <div class="form-section__content">
+                  <div>
+                    <KLabel
+                      for="zone-name"
+                      required
+                      :tooltip-attributes="{ placement: 'right'}"
+                    >
+                      {{ t('zones.form.nameLabel') }}
+
+                      <template #tooltip>
+                        {{ t('zones.form.name_tooltip') }}
+                      </template>
+                    </KLabel>
+
+                    <KInput
+                      id="zone-name"
+                      v-model="name"
+                      type="text"
+                      name="zone-name"
+                      data-testid="name-input"
+                      :data-test-error-type="nameError !== null ? 'invalid-dns-name' : undefined"
+                      :has-error="nameError !== null"
+                      :error-message="nameError ?? undefined"
+                      :disabled="zone !== null"
+                      @blur="validateName(name)"
+                    />
+                  </div>
+
+                  <KButton
+                    appearance="primary"
+                    class="mt-4"
+                    :icon="isChangingZone ? 'spinner' : 'plus'"
+                    :disabled="isCreateButtonDisabled"
+                    data-testid="create-zone-button"
+                    @click="createZone"
+                  >
+                    {{ t('zones.form.createZoneButtonLabel') }}
+                  </KButton>
+
+                  <ErrorBlock
+                    v-if="errorState.error !== null"
+                    class="mt-4"
+                    :error="errorState.error"
+                    :badge-appearance="errorState.badgeAppearance"
+                    :icon="errorState.icon"
+                    data-testid="create-zone-error"
+                  >
+                    <p>{{ errorState.title }}</p>
+
+                    <template
+                      v-if="errorState.description"
+                      #message
+                    >
+                      <p>{{ errorState.description }}</p>
+                    </template>
+                  </ErrorBlock>
+                </div>
+              </div>
+
+              <template v-if="zone !== null">
+                <div
+                  class="form-section"
+                  data-testid="connect-zone-instructions"
+                >
+                  <div class="form-section__header">
+                    <h2 class="form-section-title">
+                      {{ t('zones.form.section.configuration.title') }}
+                    </h2>
+                  </div>
+
+                  <div class="form-section__content">
+                    <div>
+                      <span class="k-input-label">
+                        {{ t('zones.form.environmentLabel') }} *
+                      </span>
+
+                      <div class="radio-button-group">
+                        <KRadio
+                          id="zone-environment-universal"
+                          v-model="environment"
+                          selected-value="universal"
+                          name="zone-environment"
+                          data-testid="environment-universal-radio-button"
+                        >
+                          {{ t('zones.form.universalLabel') }}
+                        </KRadio>
+
+                        <KRadio
+                          id="zone-environment-kubernetes"
+                          v-model="environment"
+                          selected-value="kubernetes"
+                          name="zone-environment"
+                          data-testid="environment-kubernetes-radio-button"
+                        >
+                          {{ t('zones.form.kubernetesLabel') }}
+                        </KRadio>
+                      </div>
+                    </div>
+
+                    <template v-if="environment === 'kubernetes'">
+                      <div class="mt-4">
+                        <span class="k-input-label">
+                          {{ t('zones.form.zoneIngressLabel') }} *
+                        </span>
+
+                        <div class="radio-button-group">
+                          <KInputSwitch
+                            id="zone-ingress-enabled"
+                            v-model="zoneIngressEnabled"
+                            data-testid="ingress-input-switch"
+                          >
+                            <template #label>
+                              {{ t('zones.form.zoneIngressEnabledLabel') }}
+                            </template>
+                          </KInputSwitch>
+                        </div>
+                      </div>
+
+                      <div class="mt-4">
+                        <span class="k-input-label">
+                          {{ t('zones.form.zoneEgressLabel') }} *
+                        </span>
+
+                        <div class="radio-button-group">
+                          <KInputSwitch
+                            id="zone-egress-enabled"
+                            v-model="zoneEgressEnabled"
+                            data-testid="egress-input-switch"
+                          >
+                            <template #label>
+                              {{ t('zones.form.zoneEgressEnabledLabel') }}
+                            </template>
+                          </KInputSwitch>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <h2 class="form-section-title">
+                      {{ t('zones.form.section.connect_zone.title') }}
+                    </h2>
+                  </div>
+
+                  <div class="form-section__content">
+                    <ZoneCreateUniversalInstructions
+                      v-if="environment === 'universal'"
+                      :zone-name="name"
+                      :token="token"
+                    />
+
+                    <ZoneCreateKubernetesInstructions
+                      v-else
+                      :zone-name="name"
+                      :zone-ingress-enabled="zoneIngressEnabled"
+                      :zone-egress-enabled="zoneEgressEnabled"
+                      :token="token"
+                      :base64-encoded-token="base64EncodedToken"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <div class="form-section__header">
+                    <h2 class="form-section-title">
+                      {{ t('zones.form.section.scanner.title') }}
+                    </h2>
+                  </div>
+
+                  <div class="form-section__content">
+                    <EntityScanner
+                      :loader-function="scanForEnabledZone"
+                      :has-error="scanError !== null"
+                      :can-complete="isZoneConnected"
+                      data-testid="zone-connected-scanner"
+                    >
+                      <template #loading-title>
+                        {{ t('zones.form.scan.waitTitle') }}
+                      </template>
+
+                      <template #complete-title>
+                        {{ t('zones.form.scan.completeTitle') }}
+                      </template>
+
+                      <template #complete-content>
+                        <p>
+                          {{ t('zones.form.scan.completeDescription', { name }) }}
+                        </p>
+
+                        <p class="mt-2">
+                          <KButton
+                            appearance="primary"
+                            :to="{
+                              name: 'zone-cp-detail-view',
+                              params: {
+                                zone: name
+                              },
+                            }"
+                          >
+                            {{ t('zones.form.scan.completeButtonLabel', { name }) }}
+                          </KButton>
+                        </p>
+                      </template>
+
+                      <template #error-title>
+                        <h3>{{ t('zones.form.scan.errorTitle') }}</h3>
+                      </template>
+
+                      <template #error-content>
+                        <p>{{ t('zones.form.scan.errorDescription') }}</p>
+                      </template>
+                    </EntityScanner>
+                  </div>
+                </div>
               </template>
-            </KLabel>
-
-            <KInput
-              id="zone-name"
-              v-model="name"
-              type="text"
-              name="zone-name"
-              data-testid="name-input"
-              :data-test-error-type="nameError !== null ? 'invalid-dns-name' : undefined"
-              :has-error="nameError !== null"
-              :error-message="nameError ?? undefined"
-              :disabled="zone !== null"
-              @blur="validateName(name)"
-            />
-          </div>
-
-          <KButton
-            appearance="primary"
-            :icon="isChangingZone ? 'spinner' : 'plus'"
-            :disabled="isCreateButtonDisabled"
-            data-testid="create-zone-button"
-            @click="createZone"
-          >
-            {{ t('zones.form.createZoneButtonLabel') }}
-          </KButton>
-        </div>
-
-        <ErrorBlock
-          v-if="errorState.error !== null"
-          class="mt-4"
-          :error="errorState.error"
-          :badge-appearance="errorState.badgeAppearance"
-          :icon="errorState.icon"
-          data-testid="create-zone-error"
-        >
-          <p>{{ errorState.title }}</p>
-
-          <template
-            v-if="errorState.description"
-            #message
-          >
-            <p>{{ errorState.description }}</p>
-          </template>
-        </ErrorBlock>
-
-        <div
-          v-if="zone !== null"
-          class="form-wrapper mt-4"
-          data-testid="connect-zone-instructions"
-        >
-          <div>
-            <span class="k-input-label">
-              {{ t('zones.form.environmentLabel') }} *
-            </span>
-
-            <div class="radio-button-group">
-              <KRadio
-                id="zone-environment-universal"
-                v-model="environment"
-                selected-value="universal"
-                name="zone-environment"
-                data-testid="environment-universal-radio-button"
-              >
-                {{ t('zones.form.universalLabel') }}
-              </KRadio>
-
-              <KRadio
-                id="zone-environment-kubernetes"
-                v-model="environment"
-                selected-value="kubernetes"
-                name="zone-environment"
-                data-testid="environment-kubernetes-radio-button"
-              >
-                {{ t('zones.form.kubernetesLabel') }}
-              </KRadio>
-            </div>
-          </div>
-
-          <template v-if="environment === 'kubernetes'">
-            <div>
-              <span class="k-input-label">
-                {{ t('zones.form.zoneIngressLabel') }} *
-              </span>
-
-              <div class="radio-button-group">
-                <KInputSwitch
-                  id="zone-ingress-enabled"
-                  v-model="zoneIngressEnabled"
-                  data-testid="ingress-input-switch"
-                >
-                  <template #label>
-                    {{ t('zones.form.zoneIngressEnabledLabel') }}
-                  </template>
-                </KInputSwitch>
-              </div>
-            </div>
-
-            <div>
-              <span class="k-input-label">
-                {{ t('zones.form.zoneEgressLabel') }} *
-              </span>
-
-              <div class="radio-button-group">
-                <KInputSwitch
-                  id="zone-egress-enabled"
-                  v-model="zoneEgressEnabled"
-                  data-testid="egress-input-switch"
-                >
-                  <template #label>
-                    {{ t('zones.form.zoneEgressEnabledLabel') }}
-                  </template>
-                </KInputSwitch>
-              </div>
             </div>
           </template>
-
-          <h2 class="mt-6">
-            {{ t('zones.form.connectZone') }}
-          </h2>
-
-          <ZoneCreateUniversalInstructions
-            v-if="environment === 'universal'"
-            :zone-name="name"
-            :token="token"
-          />
-
-          <ZoneCreateKubernetesInstructions
-            v-else
-            :zone-name="name"
-            :zone-ingress-enabled="zoneIngressEnabled"
-            :zone-egress-enabled="zoneEgressEnabled"
-            :token="token"
-            :base64-encoded-token="base64EncodedToken"
-          />
-
-          <EntityScanner
-            :loader-function="scanForEnabledZone"
-            :has-error="scanError !== null"
-            :can-complete="isZoneConnected"
-            data-testid="zone-connected-scanner"
-          >
-            <template #loading-title>
-              {{ t('zones.form.scan.waitTitle') }}
-            </template>
-
-            <template #complete-title>
-              {{ t('zones.form.scan.completeTitle') }}
-            </template>
-
-            <template #complete-content>
-              <p>
-                {{ t('zones.form.scan.completeDescription', { name }) }}
-              </p>
-
-              <p class="mt-2">
-                <KButton
-                  appearance="primary"
-                  :to="{
-                    name: 'zone-cp-detail-view',
-                    params: {
-                      zone: name
-                    },
-                  }"
-                >
-                  {{ t('zones.form.scan.completeButtonLabel', { name }) }}
-                </KButton>
-              </p>
-            </template>
-
-            <template #error-title>
-              <h3>{{ t('zones.form.scan.errorTitle') }}</h3>
-            </template>
-
-            <template #error-content>
-              <p>{{ t('zones.form.scan.errorDescription') }}</p>
-            </template>
-          </EntityScanner>
-        </div>
+        </KCard>
       </div>
 
       <KModal

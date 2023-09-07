@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3>1. {{ i18n.t('zones.form.universal.saveToken.title') }}</h3>
+    <h3>
+      <span class="step-number">1</span>
+      {{ i18n.t('zones.form.universal.saveToken.title') }}
+    </h3>
 
     <p>{{ i18n.t('zones.form.universal.saveToken.saveTokenDescription') }}</p>
 
@@ -11,7 +14,10 @@
       language="bash"
     />
 
-    <h3>2. {{ i18n.t('zones.form.universal.connectZone.title') }}</h3>
+    <h3>
+      <span class="step-number">2</span>
+      {{ i18n.t('zones.form.universal.connectZone.title') }}
+    </h3>
 
     <p>{{ i18n.t('zones.form.universal.connectZone.configDescription') }}</p>
 
@@ -77,3 +83,18 @@ const universalConfig = computed(() => {
   return i18n.t('zones.form.universal.connectZone.config', placeholders).trim()
 })
 </script>
+
+<style lang="scss" scoped>
+.step-number {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: $kui-space-20;
+  color: $kui-color-text-inverse;
+  background-color: #169fcc;
+  border-radius: 50%;
+  font-size: $kui-font-size-40;
+}
+</style>

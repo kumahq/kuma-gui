@@ -1,11 +1,41 @@
-.form-content {
-  max-width: 1000px;
-  margin-right: auto;
-  margin-left: auto;
+.form-wrapper {
+  margin-top: $kui-space-100;
+  margin-bottom: $kui-space-100;
+  padding-right: 5%;
+  padding-left: 5%;
+
+  @media (min-width: $kui-breakpoint-desktop) {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
 }
 
-.form-wrapper>*+* {
-  margin-block-start: $kui-space-60;
+.form>*+* {
+  margin-top: $kui-space-100;
+  border-top: $kui-border-width-10 solid $kui-color-border;
+  padding-top: $kui-space-100;
+}
+
+.form-title {
+  font-size: $kui-font-size-70;
+}
+
+.form-section {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: $kui-space-100;
+}
+
+.form-section__header {
+  grid-column-start: 1;
+}
+
+.form-section__content {
+  grid-column-start: 2;
+}
+
+.form-section-title {
+  font-size: $kui-font-size-50;
 }
 
 .radio-button-group>* {
