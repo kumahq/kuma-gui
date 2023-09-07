@@ -20,8 +20,6 @@ export const TOKENS = {
   env: token<Alias<Env['var']>>('env'),
   components: token('vue.components'),
 
-  i18n: token<ReturnType<typeof I18n>>('i18n'),
-  enUs: token('i18n.locale.enUs'),
   kumaEnUs: token('kuma.locale.enUs'),
 
   httpClient: token<RestClient>('httpClient'),

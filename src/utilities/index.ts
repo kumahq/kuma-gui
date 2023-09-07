@@ -1,5 +1,6 @@
 import { TOKENS } from '@/services/tokens'
 import { createInjections } from '@/services/utils'
+export { useI18n } from '@/app/application'
 
 export const [
   useEnv,
@@ -7,7 +8,6 @@ export const [
   useKumaApi,
   useStore,
   useRouter,
-  useI18n,
   useLogger,
   useDataSourcePool,
 ] = createInjections(
@@ -16,7 +16,6 @@ export const [
   TOKENS.api,
   TOKENS.store,
   TOKENS.router,
-  TOKENS.i18n,
   TOKENS.logger,
   TOKENS.dataSourcePool,
 )
