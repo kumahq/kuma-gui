@@ -1,5 +1,14 @@
+<script lang="ts" setup>
+import type { ConfigSource } from '../sources'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+</script>
 <template>
-  <RouteView name="diagnostics">
+  <RouteView
+    v-slot="{ t }"
+    name="diagnostics"
+  >
     <DataSource
       v-slot="{ data, error }: ConfigSource"
       :src="`/config`"
@@ -47,19 +56,3 @@
     </DataSource>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
-import type { ConfigSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import CodeBlock from '@/app/common/CodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-</script>
