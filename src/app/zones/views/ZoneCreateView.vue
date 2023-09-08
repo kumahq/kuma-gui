@@ -30,7 +30,7 @@
         <h1>{{ t('zones.routes.create.title') }}</h1>
 
         <div class="form-wrapper mt-4">
-          <div data-testid="name-input-group">
+          <div>
             <KLabel
               for="zone-name"
               required
@@ -49,6 +49,7 @@
               type="text"
               name="zone-name"
               data-testid="name-input"
+              :data-test-error-type="nameError !== null ? 'invalid-dns-name' : undefined"
               :has-error="nameError !== null"
               :error-message="nameError ?? undefined"
               :disabled="zone !== null"
