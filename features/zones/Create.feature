@@ -1,18 +1,19 @@
 Feature: Zones: Create Zone flow
   Background:
     Given the CSS selectors
-      | Alias                               | Selector                                            |
-      | zone-nav-item                       | .app-sidebar > .nav-item:nth-child(2) > a           |
-      | name-input                          | [data-testid='name-input']                          |
-      | create-zone-button                  | [data-testid='create-zone-button']                  |
-      | create-zone-link                    | [data-testid='create-zone-link']                    |
-      | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']  |
-      | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button'] |
-      | ingress-input-switch                | [for='zone-ingress-enabled']                        |
-      | egress-input-switch                 | [for='zone-egress-enabled']                         |
-      | zone-connected-scanner              | [data-testid='zone-connected-scanner']              |
-      | error                               | [data-testid='create-zone-error']                   |
-      | instructions                        | [data-testid='connect-zone-instructions']           |
+      | Alias                               | Selector                                             |
+      | zone-nav-item                       | .app-sidebar > .nav-item:nth-child(2) > a            |
+      | name-input                          | [data-testid='name-input']                           |
+      | name-input-invalid-dns-name         | $name-input[data-test-error-type='invalid-dns-name'] |
+      | create-zone-button                  | [data-testid='create-zone-button']                   |
+      | create-zone-link                    | [data-testid='create-zone-link']                     |
+      | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']   |
+      | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button']  |
+      | ingress-input-switch                | [for='zone-ingress-enabled']                         |
+      | egress-input-switch                 | [for='zone-egress-enabled']                          |
+      | zone-connected-scanner              | [data-testid='zone-connected-scanner']               |
+      | error                               | [data-testid='create-zone-error']                    |
+      | instructions                        | [data-testid='connect-zone-instructions']            |
     And the environment
       """
       KUMA_MODE: global
@@ -86,7 +87,7 @@ Feature: Zones: Create Zone flow
     Then the "$environment-kubernetes-radio-button" element is checked
     Then the "$ingress-input-switch input" element is checked
     Then the "$egress-input-switch input" element is checked
-    Then the "$zone-connected-scanner" element contains "Waiting for Zone to be connected"
+    Then the "$zone-connected-scanner[data-test-state='waiting']" element exists
 
     When I click the "$ingress-input-switch" element
     Then the "$ingress-input-switch input" element isn't checked
@@ -113,22 +114,23 @@ Feature: Zones: Create Zone flow
               disconnectTime: ~
               status: {}
       """
-    Then the "$zone-connected-scanner" element contains "The Zone “test” is now connected"
+    Then the "$zone-connected-scanner[data-test-state='success']" element exists
 
-  Scenario: The form shows an error
-    When I visit the "/zones/create" URL
+  Scenario: The form shows expected error for 409 response
     Given the URL "/provision-zone" responds with
       """
       headers:
         Status-Code: '409'
       """
+
+    When I visit the "/zones/create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
+
     Then the "$error" element exists
     Then the "$instructions" element doesn't exist
 
   Scenario: The form shows expected error for 400 response
-    When I visit the "/zones/create" URL
     Given the URL "/provision-zone" responds with
       """
       headers:
@@ -143,8 +145,26 @@ Feature: Zones: Create Zone flow
             reason: "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols."
       """
 
-    And I "type" "15" into the "$name-input" element
+    When I visit the "/zones/create" URL
+    # Note: We're deliberately using a valid name here in order to not trigger client-side validation.
+    And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
-    Then the "$error" element contains "Invalid zone name"
+    Then the "$name-input-invalid-dns-name" element exists
     And the "$instructions" element doesn't exist
+
+  Scenario: The form shows expected error for client-side name validation
+    When I visit the "/zones/create" URL
+    And I "type" "zone.eu" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$error" element doesn't exist
+    And the "$name-input-invalid-dns-name" element exists
+    And the "$instructions" element doesn't exist
+
+    When I clear the "$name-input" element
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
+
+    Then the "$error" element doesn't exist
+    And the "$instructions" element exists

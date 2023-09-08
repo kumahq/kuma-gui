@@ -1,5 +1,8 @@
 <template>
-  <div class="scanner">
+  <div
+    class="scanner"
+    :data-test-state="isRunning ? 'waiting' : hasError ? 'error' : 'success'"
+  >
     <div class="scanner-content">
       <KEmptyState cta-is-hidden>
         <template #title>

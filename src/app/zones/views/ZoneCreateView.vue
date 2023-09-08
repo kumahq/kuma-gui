@@ -49,7 +49,11 @@
               type="text"
               name="zone-name"
               data-testid="name-input"
+              :data-test-error-type="nameError !== null ? 'invalid-dns-name' : undefined"
+              :has-error="nameError !== null"
+              :error-message="nameError ?? undefined"
               :disabled="zone !== null"
+              @blur="validateName(name)"
             />
           </div>
 
@@ -246,15 +250,20 @@ type ErrorState = {
 const { t } = useI18n()
 const kumaApi = useKumaApi()
 
+/**
+ * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#rfc-1035-label-names
+ */
+const NAME_REGEX = /^(?![-0-9])[a-z0-9-]{1,63}$/
+
 const zone = ref<{ token: string } | null>(null)
 const isChangingZone = ref(false)
-const changingError = ref<Error | null>(null)
 const errorState = ref<ErrorState>({
   error: null,
   title: null,
   icon: 'warning',
   badgeAppearance: 'warning',
 })
+const frontendNameError = ref<string | null>(null)
 
 const isScanComplete = ref(false)
 const scanError = ref<Error | null>(null)
@@ -273,14 +282,41 @@ const isCreateButtonDisabled = computed(() => {
     zone.value !== null
 })
 
+const nameError = computed(() => {
+  // Reads client-side error
+  if (frontendNameError.value !== null) {
+    return frontendNameError.value
+  }
+
+  // Reads server-side error
+  if (errorState.value.error instanceof ApiError) {
+    const nameError = errorState.value.error.invalidParameters.find((param) => param.field === 'name')
+    if (nameError !== undefined) {
+      return nameError.reason
+    }
+  }
+
+  return null
+})
+
 /**
  * Creates a Zone via request to the appropriate endpoint. Importantly, this returns a Zone object including a base64-encoded token which is needed for enabling the Zone in the subsequent steps of the Zone creation flow.
  */
 async function createZone() {
   isChangingZone.value = true
-  changingError.value = null
+  errorState.value = {
+    error: null,
+    title: null,
+    icon: 'warning',
+    badgeAppearance: 'warning',
+  }
 
   try {
+    const isValidName = validateName(name.value)
+    if (!isValidName) {
+      return
+    }
+
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
     if (err instanceof ApiError && [409, 500].includes(err.status)) {
@@ -295,6 +331,7 @@ async function createZone() {
       errorState.value = {
         error: err,
         title: err instanceof ApiError ? err.title : t('zones.create.generalError.title'),
+        description: err instanceof ApiError && err.detail ? err.detail : undefined,
         icon: 'errorFilled',
         badgeAppearance: 'danger',
       }
@@ -304,6 +341,18 @@ async function createZone() {
   } finally {
     isChangingZone.value = false
   }
+}
+
+function validateName(name: string): boolean {
+  const isValidName = NAME_REGEX.test(name)
+
+  if (isValidName) {
+    frontendNameError.value = null
+  } else {
+    frontendNameError.value = t('zones.create.invalidNameError')
+  }
+
+  return isValidName
 }
 
 /**
