@@ -131,9 +131,9 @@ import { PropType, computed } from 'vue'
 
 import MeshesDetails from './MeshesDetails.vue'
 import ZoneControlPlanesDetails from './ZoneControlPlanesDetails.vue'
+import { mergeInsightsReducer } from '../data/mesh-insights'
 import { useCan } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { mergeInsightsReducer } from '@/store/reducers/mesh-insights'
 import { MeshInsight, ZoneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
