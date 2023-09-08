@@ -1,9 +1,4 @@
-type StorageKeyValues =
-  'dpVisibleTableHeaderKeys' |
-  'onboardingStep' |
-  'onboardingIsCompleted' |
-  'createMeshData' |
-  'codeBlockQueries'
+type StorageKeyValues = 'codeBlockQueries'
 
 /**
  * Utility object for accessing `window.localStorage` or `window.sessionStorage`.

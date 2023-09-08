@@ -2,9 +2,6 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
-import { useStore } from '@/utilities'
-
-const store = useStore()
 function renderComponent(props = {}) {
   return mount(OnboardingNavigation, {
     props: {
@@ -45,30 +42,5 @@ describe('OnboardingNavigation.vue', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.html()).not.toContain('Back')
-  })
-
-  test('changes step to previous', async () => {
-    store.state.onboarding.step = 'onboarding-deployment-types'
-    const wrapper = renderComponent({
-      previousStep: 'onboarding-welcome',
-    })
-
-    expect(store.state.onboarding.step).toBe('onboarding-deployment-types')
-
-    await wrapper.find('[data-testid="onboarding-previous-button"]').trigger('click')
-
-    expect(store.state.onboarding.step).toBe('onboarding-welcome')
-  })
-
-  test('calls skip onboarding', async () => {
-    const wrapper = renderComponent({
-      previousStep: 'onboarding-welcome',
-    })
-
-    expect(store.state.onboarding.isCompleted).toBe(false)
-
-    await wrapper.find('[data-testid="onboarding-skip-button"]').trigger('click')
-
-    expect(store.state.onboarding.isCompleted).toBe(true)
   })
 })
