@@ -74,6 +74,15 @@ zones:
     create: 'Create Zone'
   form:
     exit: 'Exit'
+    section:
+      name:
+        title: 'Zone name'
+      configuration:
+        title: 'Configuration'
+      connect_zone:
+        title: 'Connect Zone'
+      scanner:
+        title: 'Waiting for Zone to be connected …'
     nameLabel: 'Name'
     name_tooltip: "The name must be a valid RFC 1035 DNS name, which means it must start with a letter, be less than 64 characters long, and only contain lowercase letters, numbers, and '-'."
     createZoneButtonLabel: 'Create Zone & generate token'
@@ -84,7 +93,10 @@ zones:
     zoneIngressEnabledLabel: 'Enabled'
     zoneEgressLabel: 'Zone Egress'
     zoneEgressEnabledLabel: 'Enabled'
-    connectZone: 'Connect Zone'
+    confirm_modal:
+      action_button: 'Yes, exit'
+      title: 'Are you sure you want to exit?'
+      body: 'You’ve already created a Zone with a token. You won’t have access to the Zone’s token once you exit.'
     scan:
       waitTitle: 'Waiting for Zone to be connected …'
       completeTitle: 'Done!'

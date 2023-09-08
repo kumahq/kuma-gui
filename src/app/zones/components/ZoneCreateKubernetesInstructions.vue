@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h3>1. {{ i18n.t('zones.form.kubernetes.prerequisites.title') }}</h3>
+    <h3>
+      <span class="step-number">1</span>
+      {{ i18n.t('zones.form.kubernetes.prerequisites.title') }}
+    </h3>
 
     <ul>
       <li>
@@ -18,7 +21,10 @@
       </li>
     </ul>
 
-    <h3>2. {{ i18n.t('zones.form.kubernetes.helm.title') }}</h3>
+    <h3>
+      <span class="step-number">2</span>
+      {{ i18n.t('zones.form.kubernetes.helm.title') }}
+    </h3>
 
     <p>On your local machine, create a namespace in your Kubernetes cluster and pull down the kong Helm repo.</p>
 
@@ -57,7 +63,10 @@
       </li>
     </ol>
 
-    <h3>3. {{ i18n.t('zones.form.kubernetes.secret.title') }}</h3>
+    <h3>
+      <span class="step-number">3</span>
+      {{ i18n.t('zones.form.kubernetes.secret.title') }}
+    </h3>
 
     <p>{{ i18n.t('zones.form.kubernetes.secret.createSecretDescription') }}</p>
 
@@ -68,7 +77,10 @@
       language="bash"
     />
 
-    <h3>4. {{ i18n.t('zones.form.kubernetes.connectZone.title') }}</h3>
+    <h3>
+      <span class="step-number">4</span>
+      {{ i18n.t('zones.form.kubernetes.connectZone.title') }}
+    </h3>
 
     <p>{{ i18n.t('zones.form.kubernetes.connectZone.configDescription') }}</p>
 
@@ -155,3 +167,18 @@ const kubernetesConfig = computed(() => {
 })
 
 </script>
+
+<style lang="scss" scoped>
+.step-number {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: $kui-space-20;
+  color: $kui-color-text-inverse;
+  background-color: #169fcc;
+  border-radius: 50%;
+  font-size: $kui-font-size-40;
+}
+</style>

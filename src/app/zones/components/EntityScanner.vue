@@ -6,7 +6,7 @@
     <div class="scanner-content">
       <KEmptyState cta-is-hidden>
         <template #title>
-          <div class="mb-2">
+          <span class="mr-1">
             <KIcon
               v-if="isRunning"
               icon="spinner"
@@ -27,7 +27,7 @@
               :color="KUI_COLOR_TEXT_SUCCESS"
               :size="KUI_ICON_SIZE_50"
             />
-          </div>
+          </span>
 
           <slot
             v-if="isRunning"
