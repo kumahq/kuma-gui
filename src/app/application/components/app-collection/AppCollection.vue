@@ -92,11 +92,11 @@
   </KTable>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="Row extends {}">
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 import { KButton, KTable, TableHeader } from '@kong/kongponents'
-import { useSlots, ref, watch, computed } from 'vue'
+import { useSlots, ref, watch, Ref, computed } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
@@ -105,17 +105,17 @@ import { useI18n } from '@/utilities'
 
 type CellAttrParams = {
   headerKey: string
-  row: any
+  row: Row
   rowIndex: number
   colIndex: number
 }
 type FetcherParams = {
-  page: number,
-  pageSize: number,
+  page: number
+  pageSize: number
   query: string
 }
 type ChangeValue = {
-  page?: number,
+  page?: number
   size?: number
 }
 
@@ -124,12 +124,12 @@ const { t } = useI18n()
 const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
-  total?: number,
-  pageNumber?: number,
-  pageSize?: number,
-  items: unknown[] | undefined,
-  headers: TableHeader[],
-  error?: Error | undefined,
+  total?: number
+  pageNumber?: number
+  pageSize?: number
+  items: Row[] | undefined
+  headers: TableHeader[]
+  error?: Error | undefined
   emptyStateTitle?: string
   emptyStateMessage?: string
   emptyStateCtaTo?: string | RouteLocationRaw
@@ -151,7 +151,7 @@ const emit = defineEmits<{
 
 const slots = useSlots()
 
-const items = ref<unknown[] | undefined>(props.items)
+const items = ref(props.items) as Ref<typeof props.items>
 const cacheKey = ref<number>(0)
 /** Used as a means to instruct KTable to re-mount.
  *
