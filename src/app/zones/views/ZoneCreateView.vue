@@ -201,20 +201,31 @@
                   </div>
 
                   <div class="form-section__content">
-                    <ZoneCreateUniversalInstructions
-                      v-if="environment === 'universal'"
-                      :zone-name="name"
-                      :token="token"
-                    />
+                    <DataSource
+                      v-slot="{ data }: ControlPlaneAddressesSource"
+                      src="/control-plane/addresses"
+                    >
+                      <template
+                        v-if="(typeof data !== 'undefined')"
+                      >
+                        <ZoneCreateUniversalInstructions
+                          v-if="environment === 'universal'"
+                          :zone-name="name"
+                          :token="token"
+                          :global-kds-address="data.kds"
+                        />
 
-                    <ZoneCreateKubernetesInstructions
-                      v-else
-                      :zone-name="name"
-                      :zone-ingress-enabled="zoneIngressEnabled"
-                      :zone-egress-enabled="zoneEgressEnabled"
-                      :token="token"
-                      :base64-encoded-token="base64EncodedToken"
-                    />
+                        <ZoneCreateKubernetesInstructions
+                          v-else
+                          :zone-name="name"
+                          :zone-ingress-enabled="zoneIngressEnabled"
+                          :zone-egress-enabled="zoneEgressEnabled"
+                          :token="token"
+                          :base64-encoded-token="base64EncodedToken"
+                          :global-kds-address="data.kds"
+                        />
+                      </template>
+                    </DataSource>
                   </div>
                 </div>
 
@@ -317,6 +328,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'

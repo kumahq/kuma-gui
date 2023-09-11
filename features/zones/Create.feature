@@ -12,6 +12,8 @@ Feature: Zones: Create Zone flow
       | create-zone-link                    | [data-testid='create-zone-link']                     |
       | environment-universal-radio-button  | [data-testid='environment-universal-radio-button']   |
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button']  |
+      | environment-universal-config        | [data-testid='zone-universal-config']                |
+      | environment-kubernetes-config       | [data-testid='zone-kubernetes-config']               |
       | ingress-input-switch                | [for='zone-ingress-enabled']                         |
       | egress-input-switch                 | [for='zone-egress-enabled']                          |
       | zone-connected-scanner              | [data-testid='zone-connected-scanner']               |
@@ -90,6 +92,7 @@ Feature: Zones: Create Zone flow
     Then the "$environment-kubernetes-radio-button" element is checked
     Then the "$ingress-input-switch input" element is checked
     Then the "$egress-input-switch input" element is checked
+    Then the "$environment-kubernetes-config" element contains "kdsGlobalAddress: grpcs://<global-kds-address>:5685"
     Then the "$zone-connected-scanner[data-test-state='waiting']" element exists
 
     When I click the "$ingress-input-switch" element
@@ -103,6 +106,7 @@ Feature: Zones: Create Zone flow
     When I click the "$environment-universal-radio-button + label" element
     Then the "$ingress-input-switch input" element doesn't exist
     Then the "$egress-input-switch input" element doesn't exist
+    Then the "$environment-universal-config" element contains "globalAddress: grpcs://<global-kds-address>:5685"
 
     Given the environment
       """
