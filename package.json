@@ -30,7 +30,7 @@
     "docs:preview": "vitepress preview"
   },
   "engines": {
-    "node": ">=18.13",
+    "node": ">=18.17",
     "yarn": "^1.22.0"
   },
   "dependencies": {
