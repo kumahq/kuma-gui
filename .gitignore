@@ -22,3 +22,4 @@ yarn-error.log*
 
 # Yarn
 .yarn/*
+.vitepress/cache
