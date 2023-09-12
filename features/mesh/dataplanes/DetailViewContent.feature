@@ -52,7 +52,7 @@ Feature: Data Plane Proxies: Detail view content
                   kumaDpCompatible: false
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
-              disconnectTime: ''
+              disconnectTime: !!js/undefined
               status:
                 total:
                   responsesSent: '12'

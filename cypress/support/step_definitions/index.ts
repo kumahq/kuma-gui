@@ -1,11 +1,27 @@
 import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber-preprocessor'
-import YAML from 'js-yaml'
+import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
 import { useServer, useMock } from '@/services/e2e'
+import { undefinedSymbol } from '@/test-support'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
 }
+const YAML = {
+  parse: (str: string) => {
+    return jsYaml.load(str, {
+      schema: DEFAULT_SCHEMA.extend([
+        new Type('tag:yaml.org,2002:js/undefined', {
+          kind: 'scalar',
+          construct: () => {
+            return undefinedSymbol
+          },
+        }),
+      ]),
+    })
+  },
+}
+
 let env = {}
 let selectors: Record<string, string> = {}
 let urls = new Map()
@@ -49,7 +65,7 @@ Given('the CSS selectors', (table: DataTable) => {
 Given('the environment', (yaml: string) => {
   env = {
     ...env,
-    ...YAML.load(yaml) as object,
+    ...YAML.parse(yaml) as object,
   }
   Object.entries(env).forEach(([key, value]) => {
     cy.setCookie(key, String(value))
@@ -60,7 +76,12 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
   const mock = useMock()
   urls.set(url, `spy-${now}`)
   mock(url, env, (respond) => {
-    const response = respond((YAML.load(yaml) || {}) as { headers?: Record<string, string>, body?: Record<string, unknown> })
+    const response = respond(
+      (YAML.parse(yaml) || {}) as {
+        headers?: Record<string, string>,
+        body?: Record<string, unknown>
+      },
+    )
     return response
   }).as(urls.get(url))
 })
@@ -115,7 +136,7 @@ Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: st
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
   const bool = not.trim().length === 0
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
+    const data = YAML.parse(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
     Object.entries(data).forEach(
       ([key, value]) => {
         switch (key) {
@@ -149,7 +170,7 @@ Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: str
 })
 Then(/^the URL "(.*)" was requested with only$/, (url: string, exact: string, yaml: string) => {
   cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.load(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
+    const data = YAML.parse(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
     Object.entries(data).forEach(
       ([key, value]) => {
         switch (key) {

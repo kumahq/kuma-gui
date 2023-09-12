@@ -13,6 +13,8 @@ export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) 
 export type Options = Record<string, string>
 type Server = ReturnType<typeof setupServer>
 
+export const undefinedSymbol = Symbol('undefined')
+
 // merges objects in array positions rather than replacing
 const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
   const destination = target.slice()
@@ -30,7 +32,15 @@ const combineMerge = (target: object[], source: object[], options: ArrayMergeOpt
 }
 
 const noop: Callback = (_merge, _req, response) => response
-export const createMerge = (response: MockResponse): Merge => (obj) => deepmerge(response, obj, { arrayMerge: combineMerge })
+export const createMerge = (response: MockResponse): Merge => (obj) => {
+  const merged = deepmerge(response, obj, { arrayMerge: combineMerge })
+  return JSON.parse(JSON.stringify(merged, (_key, value) => {
+    if (value === undefinedSymbol) {
+      return
+    }
+    return value
+  }))
+}
 
 const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
   return (route: string, opts: Options = {}, cb: Callback = noop) => {
