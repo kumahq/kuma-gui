@@ -91,12 +91,12 @@ const props = defineProps({
   },
 })
 
-const routes = router.getRoutes().find((route) => route.name === 'data-plane-detail-tabs-view')?.children ?? []
+const routes = router.getRoutes().find((route) => route.name === `${props.isGatewayView ? 'gateway' : 'data-plane'}-detail-tabs-view`)?.children ?? []
 const tabs: NavTab[] = routes.map((route) => {
   const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
   const routeName = referenceRoute.name as string
   const module = referenceRoute.meta?.module ?? ''
-  const title = t(`data-planes.routes.item.navigation.${routeName}`)
+  const title = t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.navigation.${routeName}`)
 
   return { title, routeName, module }
 })

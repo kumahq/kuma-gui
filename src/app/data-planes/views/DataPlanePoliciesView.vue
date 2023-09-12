@@ -22,11 +22,11 @@
           >
             <DataSource
               v-slot="{ data, error }: SidecarDataplaneCollectionSource"
-              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.name}/sidecar-dataplanes-policies`"
+              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplanes-policies`"
             >
               <DataSource
                 v-slot="{ data: rulesData, error: rulesError }: DataplaneRulesCollectionSource"
-                :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.name}/rules`"
+                :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/rules`"
               >
                 <ErrorBlock
                   v-if="policyTypesError"
