@@ -11,7 +11,7 @@
         :src="`/meshes/${route.params.mesh}`"
       >
         <DataSource
-          v-slot="{ data: meshInsight, error: meshInsightError }: MeshInsightSource"
+          v-slot="{ data: meshInsight }: MeshInsightSource"
           :src="`/mesh-insights/${route.params.mesh}`"
         >
           <ErrorBlock
@@ -19,12 +19,7 @@
             :error="meshError"
           />
 
-          <ErrorBlock
-            v-else-if="meshInsightError"
-            :error="meshInsightError"
-          />
-
-          <LoadingBlock v-else-if="mesh === undefined || meshInsight === undefined" />
+          <LoadingBlock v-else-if="mesh === undefined" />
 
           <div
             v-else
@@ -35,7 +30,6 @@
               :mesh="mesh"
               :mesh-insight="meshInsight"
             />
-
             <div class="date-status-wrapper">
               <ResourceDateStatus
                 :creation-time="mesh.creationTime"
