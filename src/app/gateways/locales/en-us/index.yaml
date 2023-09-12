@@ -4,6 +4,11 @@ gateways:
       title: "{name}"
       breadcrumbs: Gateways
       navigation:
+        gateway-detail-view: 'Overview'
         gateway-policies-view: 'Policies'
+        gateway-xds-config-view: 'XDS Configuration'
+        gateway-stats-view: 'Stats'
+        gateway-clusters-view: 'Clusters'
+        gateway-config-view: 'YAML'
     items:
       title: Gateways
