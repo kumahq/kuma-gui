@@ -7,7 +7,7 @@
           style="--columns: 3;"
         >
           <ResourceStatus
-            :total="props.meshInsight.services.total ?? 0"
+            :total="props.meshInsight?.services.total ?? 0"
             data-testid="services-status"
           >
             <template #title>
@@ -16,7 +16,7 @@
           </ResourceStatus>
 
           <ResourceStatus
-            :total="props.meshInsight.dataplanesByType.standard.total ?? 0"
+            :total="props.meshInsight?.dataplanesByType.standard.total ?? 0"
             data-testid="data-plane-proxies-status"
           >
             <template #title>
@@ -111,7 +111,7 @@ const props = defineProps({
   },
 
   meshInsight: {
-    type: Object as PropType<MeshInsight>,
+    type: Object as PropType<MeshInsight | undefined>,
     required: true,
   },
 })
@@ -120,7 +120,7 @@ const mtls = computed(() => getBackendTypeAndName(props.mesh.mtls))
 const metrics = computed(() => getBackendTypeAndName(props.mesh.metrics))
 
 const totalPolicyCount = computed(() => {
-  return Object.values(props.meshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
+  return Object.values(props.meshInsight?.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
 })
 
 function getBackendTypeAndName(meshBackend?: MeshBackend): string {
