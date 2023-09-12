@@ -22,7 +22,7 @@
           >
             <DataSource
               v-slot="{ data, error }: MeshGatewayDataplaneSource"
-              :src="`/meshes/${route.params.mesh}/gateways/${route.params.name}/policies`"
+              :src="`/meshes/${route.params.mesh}/gateways/${route.params.dataPlane}/policies`"
             >
               <ErrorBlock
                 v-if="policyTypesError"
