@@ -43,7 +43,7 @@
             <div class="form">
               <div>
                 <h1 class="form-title">
-                  {{ t('zones.routes.create.title') }}
+                  <span class="text-gradient">{{ t('zones.routes.create.title') }}</span>
                 </h1>
               </div>
 

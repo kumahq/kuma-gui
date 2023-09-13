@@ -6,6 +6,13 @@
   text-align: center;
 }
 
+.text-gradient {
+  background: var(--TextGradientBackground, currentColor);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .cursor-help {
   cursor: help;
 }
