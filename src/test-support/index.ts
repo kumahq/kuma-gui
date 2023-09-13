@@ -7,6 +7,13 @@ import type { MockResponse, FS, AEnv, Env, AppEnvKeys, MockEnvKeys, RestRequest 
 import type { ArrayMergeOptions } from 'deepmerge'
 
 export type { FS, EndpointDependencies, MockResponder } from './fake'
+export type HistoryEntry = {
+  url: URL
+  request: {
+    method: string
+    body: Record<string, unknown>
+  }
+}
 
 export type Merge = (obj: Partial<MockResponse>) => MockResponse
 export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse

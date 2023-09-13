@@ -61,9 +61,6 @@ Feature: mesh / services / item
       Then the "[data-testid='k-filter-bar-filter-input']" element isn't disabled
       And I wait for 500 ms
       When I "type" "tag:version" into the "$input-search" element
-      And the URL "/meshes/default/dataplanes+insights" responds with
-        """
-        """
       And I click the "$button-search" element
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
@@ -80,9 +77,6 @@ Feature: mesh / services / item
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "tag:kuma.io/service:panel-2" into the "$input-search" element
-      And the URL "/meshes/default/dataplanes+insights" responds with
-        """
-        """
       And I click the "$button-search" element
       Then the URL "/meshes/default/dataplanes+insights" wasn't requested with
         """
@@ -96,23 +90,6 @@ Feature: mesh / services / item
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
-      And the URL "/meshes/default/dataplanes+insights" responds with
-        """
-        """
-      And I click the "$button-search" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
-        """
-        searchParams:
-          name: a-service
-          tag:
-            - "kuma.io/service:system-1"
-            - "kuma.io/protocol:tcp"
-          offset: 0
-          size: 50
-        """
-      And the URL "/meshes/default/dataplanes+insights" responds with
-        """
-        """
       And I click the "$button-clear-search" element
       Then the URL "/meshes/default/dataplanes+insights" wasn't requested with
         """
@@ -121,15 +98,18 @@ Feature: mesh / services / item
           tag:
             - "kuma.io/protocol:tcp"
         """
+      And the URL "/meshes/default/dataplanes+insights" was requested with
+        """
+        searchParams:
+          tag:
+            - "kuma.io/service:system-1"
+        """
 
     Scenario: The clear search button sends a new request with the correct service tag
       When I click the "$data-plane-proxies-tab" element
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
-      And the URL "/meshes/default/dataplanes+insights" responds with
-        """
-        """
       And I click the "$button-search" element
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
@@ -140,9 +120,6 @@ Feature: mesh / services / item
             - "kuma.io/protocol:tcp"
           offset: 0
           size: 50
-        """
-      And the URL "/meshes/default/dataplanes+insights" responds with
-        """
         """
       And I click the "$button-clear-search" element
       Then the URL "/meshes/default/dataplanes+insights" was requested with

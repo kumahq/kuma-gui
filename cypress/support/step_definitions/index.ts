@@ -1,8 +1,9 @@
 import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
-import { useServer, useMock } from '@/services/e2e'
+import { useServer, useMock, useClient } from '@/services/e2e'
 import { undefinedSymbol } from '@/test-support'
+import type { HistoryEntry } from '@/test-support'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
@@ -24,11 +25,11 @@ const YAML = {
 
 let env = {}
 let selectors: Record<string, string> = {}
-let urls = new Map()
+const client = useClient()
 Before(() => {
   env = {}
   selectors = {}
-  urls = new Map()
+  client.history = []
   useServer()
 })
 
@@ -72,9 +73,7 @@ Given('the environment', (yaml: string) => {
   })
 })
 Given('the URL {string} responds with', (url: string, yaml: string) => {
-  const now = new Date().getTime()
   const mock = useMock()
-  urls.set(url, `spy-${now}`)
   mock(url, env, (respond) => {
     const response = respond(
       (YAML.parse(yaml) || {}) as {
@@ -83,7 +82,7 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
       },
     )
     return response
-  }).as(urls.get(url))
+  })
 })
 
 // act
@@ -127,84 +126,57 @@ Then('the URL contains {string}', (str: string) => {
 })
 
 Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: string) => {
-  cy.get(`@${urls.get(url)}.all`)
-    .should('have.length', count)
+  const items = client.history.filter((item: HistoryEntry) => item.url.pathname === url)
+  expect(items.length).to.be(count)
 })
 
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
   const bool = not.trim().length === 0
-  cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.parse(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
-    Object.entries(data).forEach(
-      ([key, value]) => {
-        switch (key) {
-          case 'method':
-            expect(xhr.request[key]).to.equal(String(value))
-            break
-          case 'body':
-            Object.entries(data[key]).forEach(([prop, value]) => {
-              expect(xhr.request[key][prop]).to.equal(String(value))
-            })
-            break
-          case 'searchParams':
-            Object.entries(data[key]).forEach(([key, value]) => {
-              // convert everything to arrays
-              const params = Array.isArray(xhr.request.query[key])
-                ? (xhr.request.query[key] as unknown as (string | number)[])
-                : [(xhr.request.query[key] as unknown as (string | number))]
-              const values = Array.isArray(value)
-                ? (value as unknown as (string | number)[])
-                : [(value as unknown as (string | number))]
-              //
-              values.forEach((item) => {
-                expect(params.includes(String(item))).to.equal(bool)
+  const xhr = client.history.filter((item: HistoryEntry) => item.url.pathname === url)
+  // If we are asserting the URL _wasn't_ called, and we don't find it, exit early
+  if (xhr.length === 0 && !bool) {
+    expect(xhr.length).to.equal(0, `${url} wasn't requested`)
+    return
+  }
+  if (xhr.length > 0) {
+    const data = YAML.parse(yaml) as {
+      method: string,
+      searchParams: Record<string, string>,
+      body: Record<string, unknown>
+    }
+    const found = xhr.find((item: HistoryEntry) => {
+      return Object.entries(data).every(
+        ([key, value]) => {
+          switch (key) {
+            case 'method':
+              return item.request[key] === String(value)
+            case 'body':
+              return Object.entries(data[key]).every(([prop, value]) => {
+                return item.request[key][prop] === String(value)
               })
-            })
-            break
-        }
-      },
-    )
-  })
-})
-Then(/^the URL "(.*)" was requested with only$/, (url: string, exact: string, yaml: string) => {
-  cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.parse(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
-    Object.entries(data).forEach(
-      ([key, value]) => {
-        switch (key) {
-          case 'method':
-            expect(xhr.request[key]).to.equal(value)
-            break
-          case 'body': {
-            const bodyEntries = Object.entries(data[key])
-
-            bodyEntries.forEach(([prop, value]) => {
-              expect(xhr.request[key][prop]).to.equal(value)
-            })
-
-            // Asserts that the expected body data and the requested body data have the same amount of keys. If the previous assertion passed, that implies that the request body doesn’t have extraneous properties. This can be useful when utilizing PATCH requests.
-            if (exact) {
-              expect(Object.keys(xhr.request[key]).length).to.equal(bodyEntries.length)
-            }
-
-            break
+            case 'searchParams':
+              return Object.entries(data[key]).every(([key, value]) => {
+                const actual = item.url.searchParams.getAll(key)
+                // convert input to an array
+                const expected = Array.isArray(value) ? value : [value]
+                return expected.every((item) => {
+                  return actual.includes(String(item)) === true
+                })
+              })
           }
-          case 'searchParams': {
-            const searchParamsEntries = Object.entries(data[key])
-            searchParamsEntries.forEach(([key, value]) => {
-              expect(xhr.request.query[key]).to.equal(value)
-            })
-
-            if (exact) {
-              expect(Object.keys(xhr.request.query[key]).length).to.equal(searchParamsEntries.length)
-            }
-
-            break
-          }
-        }
-      },
-    )
-  })
+          return false
+        },
+      )
+    })
+    if (bool) {
+      expect(found).to.not.equal(undefined, `${url} was requested with params...`)
+    } else {
+      expect(found).to.equal(undefined, `${url} wasn't requested with params...`)
+    }
+  } else {
+    // If we are asserting the URL _was_ called, and we don't find it, fail
+    expect(xhr.length).to.not.equal(0, `${url} was requested`)
+  }
 })
 
 Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {

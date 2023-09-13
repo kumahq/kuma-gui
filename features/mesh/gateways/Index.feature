@@ -59,6 +59,7 @@ Feature: mesh / gateways / index
   Rule: The Gateway listing can filter gateways by type
 
     Scenario: No filtering
+      Then the "$item" element exists 2 times
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
