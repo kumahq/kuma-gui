@@ -76,7 +76,7 @@ zones:
     exit: 'Exit'
     title: 'Create & connect Zone'
     description: ' '
-    facts: ['One', 'Two', 'Three', 'Four']
+    facts: []
     section:
       name:
         title: 'Zone name'
