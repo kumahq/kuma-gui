@@ -1,16 +1,7 @@
-import { StoreOptions } from 'vuex'
+import type { StoreOptions } from 'vuex'
 
-import { OnboardingInterface } from './modules/onboarding/onboarding.types'
-import onboarding from '@/store/modules/onboarding/onboarding'
-
-export interface State {
-  onboarding: OnboardingInterface
-}
+export interface State {}
 
 export const storeConfig = (): StoreOptions<State> => {
-  return {
-    modules: {
-      onboarding,
-    },
-  }
+  return {}
 }

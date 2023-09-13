@@ -5,7 +5,6 @@
       appearance="secondary"
       :to="{ name: props.previousStep }"
       data-testid="onboarding-previous-button"
-      @click="changeStep(props.previousStep)"
     >
       Back
     </KButton>
@@ -16,7 +15,6 @@
         appearance="outline"
         data-testid="onboarding-skip-button"
         :to="{ name: 'home' }"
-        @click="skipOnboarding"
       >
         Skip setup
       </KButton>
@@ -26,7 +24,6 @@
         :appearance="props.lastStep ? 'creation' : 'primary'"
         :to="{ name: props.lastStep ? 'home' : props.nextStep }"
         data-testid="onboarding-next-button"
-        @click="props.lastStep ? skipOnboarding() : changeStep(props.nextStep)"
       >
         {{ props.nextStepTitle }}
       </KButton>
@@ -36,10 +33,6 @@
 
 <script lang="ts" setup>
 import { KButton } from '@kong/kongponents'
-
-import { useStore } from '@/store/store'
-
-const store = useStore()
 
 const props = defineProps({
   shouldAllowNext: {
@@ -78,13 +71,6 @@ const props = defineProps({
   },
 })
 
-function skipOnboarding(): void {
-  store.dispatch('onboarding/completeOnboarding')
-}
-
-function changeStep(step: string): void {
-  store.dispatch('onboarding/changeStep', step)
-}
 </script>
 
 <style lang="scss" scoped>

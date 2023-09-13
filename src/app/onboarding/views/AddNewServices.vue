@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ t }"
+  >
     <RouteTitle
       :title="t('onboarding.routes.add-services.title')"
     />
@@ -16,8 +18,9 @@
         <template #content>
           <div class="service-mode-list">
             <ServiceBox
-              :active="store.state.onboarding.mode === 'demo'"
-              @clicked="setMode('demo')"
+              data-testid="onboarding-demo"
+              :active="props.mode === 'demo'"
+              @clicked="emit('change', 'demo')"
             >
               <div class="service-box-content">
                 <img src="@/assets/images/new-service-demo.svg?url">
@@ -31,8 +34,9 @@
             </ServiceBox>
 
             <ServiceBox
-              :active="store.state.onboarding.mode === 'manually'"
-              @clicked="setMode('manually')"
+              data-testid="onboarding-manually"
+              :active="props.mode === 'manually'"
+              @clicked="emit('change', 'manually')"
             >
               <div class="service-box-content">
                 <img src="@/assets/images/new-service-manually.svg?url">
@@ -49,7 +53,7 @@
 
         <template #navigation>
           <OnboardingNavigation
-            :next-step="nextStep"
+            :next-step="props.mode === 'manually' ? 'onboarding-completed' : 'onboarding-add-services-code'"
             previous-step="onboarding-create-mesh"
           />
         </template>
@@ -59,8 +63,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
@@ -68,17 +70,14 @@ import ServiceBox from '../components/ServiceBox.vue'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useStore } from '@/store/store'
-import { useI18n } from '@/utilities'
 
-const store = useStore()
-const { t } = useI18n()
+const props = defineProps<{
+  mode: string
+}>()
+const emit = defineEmits<{
+  change: [value: 'demo' | 'manually']
+}>()
 
-const nextStep = computed(() => store.state.onboarding.mode === 'manually' ? 'onboarding-completed' : 'onboarding-add-services-code')
-
-function setMode(newMode: typeof store.state.onboarding.mode): void {
-  store.dispatch('onboarding/changeMode', newMode)
-}
 </script>
 
 <style lang="scss" scoped>
