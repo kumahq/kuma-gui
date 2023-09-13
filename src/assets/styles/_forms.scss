@@ -16,6 +16,25 @@
   padding-top: $kui-space-100;
 }
 
+.form-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fact-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 600px;
+}
+
+.fact-list__item {
+  display: flex;
+  align-items: center;
+  gap: $kui-space-20;
+  min-width: 300px;
+}
+
 .form-title {
   font-size: $kui-font-size-70;
 }

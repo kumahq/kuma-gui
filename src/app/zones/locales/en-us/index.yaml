@@ -74,15 +74,22 @@ zones:
     create: 'Create Zone'
   form:
     exit: 'Exit'
+    title: 'Create & connect Zone'
+    description: ' '
+    facts: []
     section:
       name:
         title: 'Zone name'
+        description: ' '
       configuration:
         title: 'Configuration'
+        description: ' '
       connect_zone:
         title: 'Connect Zone'
+        description: ' '
       scanner:
         title: 'Waiting for Zone to be connected …'
+        description: ' '
     nameLabel: 'Name'
     name_tooltip: "The name must be a valid RFC 1035 DNS name, which means it must start with a letter, be less than 64 characters long, and only contain lowercase letters, numbers, and '-'."
     createZoneButtonLabel: 'Create Zone & generate token'

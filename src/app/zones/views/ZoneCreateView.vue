@@ -41,10 +41,34 @@
         <KCard>
           <template #body>
             <div class="form">
-              <div>
-                <h1 class="form-title">
-                  <span class="text-gradient">{{ t('zones.routes.create.title') }}</span>
-                </h1>
+              <div class="form-header">
+                <div>
+                  <h1 class="form-title">
+                    <span class="text-gradient">{{ t('zones.form.title') }}</span>
+                  </h1>
+
+                  <p v-if="t('zones.form.description') !== ' '">
+                    {{ t('zones.form.description') }}
+                  </p>
+                </div>
+
+                <div
+                  v-if="tm('zones.form.facts').length > 0"
+                  class="fact-list"
+                >
+                  <div
+                    v-for="(fact, index) in tm('zones.form.facts')"
+                    :key="index"
+                    class="fact-list__item"
+                  >
+                    <KIcon
+                      icon="check"
+                      :color="KUI_COLOR_TEXT_SUCCESS"
+                    />
+
+                    {{ fact }}
+                  </div>
+                </div>
               </div>
 
               <div class="form-section">
@@ -52,6 +76,10 @@
                   <h2 class="form-section-title">
                     {{ t('zones.form.section.name.title') }}
                   </h2>
+
+                  <p v-if="t('zones.form.section.name.description') !== ' '">
+                    {{ t('zones.form.section.name.description') }}
+                  </p>
                 </div>
 
                 <div class="form-section__content">
@@ -122,6 +150,10 @@
                     <h2 class="form-section-title">
                       {{ t('zones.form.section.configuration.title') }}
                     </h2>
+
+                    <p v-if="t('zones.form.section.configuration.description') !== ' '">
+                      {{ t('zones.form.section.configuration.description') }}
+                    </p>
                   </div>
 
                   <div class="form-section__content">
@@ -198,6 +230,10 @@
                     <h2 class="form-section-title">
                       {{ t('zones.form.section.connect_zone.title') }}
                     </h2>
+
+                    <p v-if="t('zones.form.section.connect_zone.description') !== ' '">
+                      {{ t('zones.form.section.connect_zone.description') }}
+                    </p>
                   </div>
 
                   <div class="form-section__content">
@@ -234,6 +270,10 @@
                     <h2 class="form-section-title">
                       {{ t('zones.form.section.scanner.title') }}
                     </h2>
+
+                    <p v-if="t('zones.form.section.scanner.description') !== ' '">
+                      {{ t('zones.form.section.scanner.description') }}
+                    </p>
                   </div>
 
                   <div class="form-section__content">
@@ -317,6 +357,7 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_SUCCESS } from '@kong/design-tokens'
 import { type BadgeAppearance, KButton, KInput, KInputSwitch, KLabel, KModal, KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -341,7 +382,7 @@ type ErrorState = {
   badgeAppearance: BadgeAppearance
 }
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 const kumaApi = useKumaApi()
 const router = useRouter()
 
