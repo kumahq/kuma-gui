@@ -52,22 +52,21 @@
                   </p>
                 </div>
 
-                <div
-                  v-if="tm('zones.form.facts').length > 0"
-                  class="fact-list"
-                >
-                  <div
-                    v-for="(fact, index) in tm('zones.form.facts')"
-                    :key="index"
-                    class="fact-list__item"
-                  >
-                    <KIcon
-                      icon="check"
-                      :color="KUI_COLOR_TEXT_SUCCESS"
-                    />
+                <div v-if="tm('zones.form.facts').length > 0">
+                  <ul class="fact-list">
+                    <li
+                      v-for="(fact, index) in tm('zones.form.facts')"
+                      :key="index"
+                      class="fact-list__item"
+                    >
+                      <KIcon
+                        icon="check"
+                        :color="KUI_COLOR_TEXT_SUCCESS"
+                      />
 
-                    {{ fact }}
-                  </div>
+                      {{ fact }}
+                    </li>
+                  </ul>
                 </div>
               </div>
 
