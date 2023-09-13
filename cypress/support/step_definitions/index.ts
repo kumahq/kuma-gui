@@ -119,10 +119,8 @@ When('I go {string}', (direction: number | Cypress.HistoryDirection) => {
 
 // assert
 Then('the URL is {string}', (expected: string) => {
-  cy.url().then((url) => {
-    const actual = new URL(url).pathname.replace(/^\/gui/, '')
-    expect(expected).to.equal(actual)
-  })
+  const base = Cypress.env().KUMA_BASE_URL || 'http://localhost:5681/gui'
+  cy.url().should('eq', `${base}${expected}`)
 })
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
