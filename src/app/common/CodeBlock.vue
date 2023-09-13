@@ -9,6 +9,7 @@
     :is-searchable="isSearchable"
     :show-copy-button="showCopyButton"
     :query="query"
+    theme="dark"
     @code-block-render="handleCodeBlockRenderEvent"
     @query-change="updateStoredQuery"
   >
@@ -116,5 +117,9 @@ function updateStoredQuery(queryValue: string): void {
   position: sticky;
   z-index: 4;
   top: var(--AppHeaderHeight);
+}
+
+.code-block .k-highlighted-code-block {
+  border: none;
 }
 </style>
