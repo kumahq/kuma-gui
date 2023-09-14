@@ -33,14 +33,13 @@ Feature: Zones: Page navigation
       """
 
     When I visit the "/zones" URL
-    # This `cy.wait` stabilizes the test significantly. For some reason, it can happen that the subsequent navigation to via nav tab is never triggered.
-    Then I wait for 1000 milliseconds
+    # # This `cy.wait` stabilizes the test significantly. For some reason, it can happen that the subsequent navigation to via nav tab is never triggered.
+    # Then I wait for 1000 milliseconds
 
     When I click the "$nav-tabs #<RouteName>-tab a" element
     Then the page title contains "<ListViewTitle>"
 
     When I click the "<TableSelector> tbody tr:nth-child(1) [data-testid='detail-view-link']" element
-    Then I wait for 1000 milliseconds
     Then the page title contains "<DetailViewTitle>"
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(1) > a" element
