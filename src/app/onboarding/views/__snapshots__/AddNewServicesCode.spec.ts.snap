@@ -71,7 +71,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                    for the demo application: 
                 </p>
                 <div
-                  class="k-code-block theme-light code-block"
+                  class="k-code-block theme-dark code-block"
                   data-testid="k-code-block"
                   id="code-block-clone-command"
                   style="--maxLineNumberWidth: 1ch;"
