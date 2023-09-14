@@ -48,6 +48,7 @@ Feature: mesh / services / item
 
     Scenario: Internal services request the dataplanes for the service
       When I click the "$data-plane-proxies-tab" element
+      And the "$item" element exists
       Then the URL "/meshes/default/dataplanes+insights" was requested with
         """
         searchParams:
