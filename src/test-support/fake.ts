@@ -53,6 +53,7 @@ export type MockEnvKeys = keyof {
   KUMA_SUBSCRIPTION_COUNT: string
   KUMA_GLOBALSECRET_COUNT: string
   KUMA_MODE: string
+  KUMA_MTLS_ENABLED: string
   KUMA_LATENCY: string
 }
 export type AppEnvKeys = Parameters<AEnv>[0]
