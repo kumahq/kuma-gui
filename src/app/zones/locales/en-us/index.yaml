@@ -72,6 +72,9 @@ zones:
         zone-egress-list-view: Egresses
   index:
     create: 'Create Zone'
+  action_menu:
+    toggle_button: 'Zone Actions'
+    delete_button: 'Delete'
   form:
     exit: 'Exit'
     title: 'Create & connect Zone'
