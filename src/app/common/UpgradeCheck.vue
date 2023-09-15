@@ -1,7 +1,10 @@
 <template>
-  <div class="upgrade-check">
+  <div
+    class="upgrade-check"
+  >
     <KAlert
       v-if="showNotice"
+      data-testid="upgrade-check"
       class="upgrade-check-alert"
       appearance="warning"
       size="small"

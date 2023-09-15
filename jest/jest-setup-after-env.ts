@@ -1,9 +1,8 @@
-import { afterAll, afterEach, beforeAll, beforeEach, expect, jest } from '@jest/globals'
+import { afterAll, afterEach, beforeAll, beforeEach, jest } from '@jest/globals'
 // Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
 import { config } from '@vue/test-utils'
 
-import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { TOKENS as TEST, services as testing } from '../src/services/testing'
 import { services as onboarding } from '@/app/onboarding'
@@ -39,23 +38,6 @@ const $ = {
   * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
   */
   config.global.plugins.push(get($.router))
-
-  /**
-  * Kongponents uses generated UUIDs for several attribute values.
-  * This breaks the project’s snapshot tests since they’re based on fully-mounted components
-  * which also includes those from external sources like Kongponents.
-  *
-  * In order to stabilize the tests which otherwise fail because the attribute values are different every run,
-  * we use a custom snapshot serializer to replace those attribute values with one fixed value.
-  */
-  expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
-    'id',
-    'for',
-    'aria-describedby',
-    'aria-labelledby',
-    'aria-controls',
-    'data-tableid',
-  ]))
 
   // unless we actually use COMPONENT_TOKENS it won't actually get executed
   // probably due to tree shaking/rollup import ordering. This mixed with

@@ -1,4 +1,4 @@
-Feature: index
+Feature: application / loading
   Background:
     Given the CSS selectors
       | Alias   | Selector                         |
