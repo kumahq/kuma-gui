@@ -1,6 +1,9 @@
 <template>
   <div class="onboarding-heading">
-    <h1 class="onboarding-title">
+    <h1
+      class="onboarding-title"
+      data-testid="onboarding-header"
+    >
       <slot name="title" />
     </h1>
 

@@ -1,14 +1,19 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 
-export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
-  const total = fake.number.int(10)
+export default ({ fake, env, pager }: EndpointDependencies): MockResponder => (req) => {
+  const { offset, total, next, pageTotal } = pager(
+    env('KUMA_ZONE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
+    req,
+    '/zones',
+  )
 
   return {
     headers: {},
     body: {
       total,
-      items: Array.from({ length: total }).map((_, i) => {
-        const name = `${fake.hacker.noun()}-${i}`
+      items: Array.from({ length: pageTotal }).map((_, i) => {
+        const id = offset + i
+        const name = `${fake.hacker.noun()}-${id}`
         return {
           type: 'Zone',
           name,
@@ -17,7 +22,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
           enabled: true,
         }
       }),
-      next: null,
+      next,
     },
   }
 }

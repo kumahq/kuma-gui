@@ -83,6 +83,9 @@ ol {
     margin-top: $kui-space-50;
   }
 }
+p:empty {
+  display: none;
+}
 
 dl p:not(:first-child) {
   margin-top: $kui-space-10;

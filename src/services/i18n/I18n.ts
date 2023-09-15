@@ -28,6 +28,9 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
             throw new Error(`Missing message: "${key}" for locale "en-us", using id as fallback`)
           }
         }
+        if (get(strs, key).length === 0) {
+          return ''
+        }
         rest[1] = { KUMA_DOCS_URL: env('KUMA_DOCS_URL'), KUMA_UTM_QUERY_PARAMS: env('KUMA_UTM_QUERY_PARAMS'), ...rest[1] }
         return i18n.t(...rest)
       } catch (e: unknown) {
