@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h3>
-      <span class="step-number">1</span>
+    <h3 class="form-step-title">
+      <span class="form-step-number">1</span>
       {{ i18n.t('zones.form.kubernetes.prerequisites.title') }}
     </h3>
 
-    <ul>
+    <ul class="instruction-list">
       <li>
         <b>{{ i18n.t('zones.form.kubernetes.prerequisites.step1Label') }}{{ props.zoneIngressEnabled ? ' ' + i18n.t('zones.form.kubernetes.prerequisites.step1LabelAddendum') : '' }}</b>:
         {{ i18n.t('zones.form.kubernetes.prerequisites.step1Description', { productName: i18n.t('common.product.name') }) }}
@@ -21,50 +21,50 @@
       </li>
     </ul>
 
-    <h3>
-      <span class="step-number">2</span>
+    <h3 class="form-step-title">
+      <span class="form-step-number">2</span>
       {{ i18n.t('zones.form.kubernetes.helm.title') }}
     </h3>
 
     <p>On your local machine, create a namespace in your Kubernetes cluster and pull down the kong Helm repo.</p>
 
-    <ol>
+    <ol class="instruction-list">
       <li>
-        {{ i18n.t('zones.form.kubernetes.helm.step1Description') }}
+        <b>{{ i18n.t('zones.form.kubernetes.helm.step1Description') }}</b>
 
         <CodeBlock
           id="zone-kubernetes-create-namespace"
-          class="mt-4"
+          class="mt-2"
           :code="i18n.t('zones.form.kubernetes.helm.step1Command')"
           language="bash"
         />
       </li>
 
       <li>
-        {{ i18n.t('zones.form.kubernetes.helm.step2Description') }}
+        <b>{{ i18n.t('zones.form.kubernetes.helm.step2Description') }}</b>
 
         <CodeBlock
           id="zone-kubernetes-add-charts-repo"
-          class="mt-4"
+          class="mt-2"
           :code="i18n.t('zones.form.kubernetes.helm.step2Command')"
           language="bash"
         />
       </li>
 
       <li>
-        {{ i18n.t('zones.form.kubernetes.helm.step3Description') }}
+        <b>{{ i18n.t('zones.form.kubernetes.helm.step3Description') }}</b>
 
         <CodeBlock
           id="zone-kubernetes-repo-update"
-          class="mt-4"
+          class="mt-2"
           :code="i18n.t('zones.form.kubernetes.helm.step3Command')"
           language="bash"
         />
       </li>
     </ol>
 
-    <h3>
-      <span class="step-number">3</span>
+    <h3 class="form-step-title">
+      <span class="form-step-number">3</span>
       {{ i18n.t('zones.form.kubernetes.secret.title') }}
     </h3>
 
@@ -77,14 +77,14 @@
       language="bash"
     />
 
-    <h3>
-      <span class="step-number">4</span>
+    <h3 class="form-step-title">
+      <span class="form-step-number">4</span>
       {{ i18n.t('zones.form.kubernetes.connectZone.title') }}
     </h3>
 
     <p>{{ i18n.t('zones.form.kubernetes.connectZone.configDescription') }}</p>
 
-    <span class="k-input-label mt-4">
+    <span class="field-group-label mt-4">
       {{ i18n.t('zones.form.kubernetes.connectZone.configFileName') }}
     </span>
 
@@ -171,18 +171,3 @@ const kubernetesConfig = computed(() => {
 })
 
 </script>
-
-<style lang="scss" scoped>
-.step-number {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  margin-right: $kui-space-20;
-  color: $kui-color-text-inverse;
-  background-color: #169fcc;
-  border-radius: 50%;
-  font-size: $kui-font-size-40;
-}
-</style>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3>
-      <span class="step-number">1</span>
+    <h3 class="form-step-title">
+      <span class="form-step-number">1</span>
       {{ i18n.t('zones.form.universal.saveToken.title') }}
     </h3>
 
@@ -14,14 +14,14 @@
       language="bash"
     />
 
-    <h3>
-      <span class="step-number">2</span>
+    <h3 class="form-step-title">
+      <span class="form-step-number">2</span>
       {{ i18n.t('zones.form.universal.connectZone.title') }}
     </h3>
 
     <p>{{ i18n.t('zones.form.universal.connectZone.configDescription') }}</p>
 
-    <span class="k-input-label mt-4">
+    <span class="field-group-label mt-4">
       {{ i18n.t('zones.form.universal.connectZone.configFileName') }}
     </span>
 
@@ -87,18 +87,3 @@ const universalConfig = computed(() => {
   return i18n.t('zones.form.universal.connectZone.config', placeholders).trim()
 })
 </script>
-
-<style lang="scss" scoped>
-.step-number {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  margin-right: $kui-space-20;
-  color: $kui-color-text-inverse;
-  background-color: #169fcc;
-  border-radius: 50%;
-  font-size: $kui-font-size-40;
-}
-</style>

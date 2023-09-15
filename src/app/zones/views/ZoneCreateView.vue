@@ -38,7 +38,7 @@
       </template>
 
       <div class="form-wrapper">
-        <KCard>
+        <KCard class="form-card">
           <template #body>
             <div class="form">
               <div class="form-header">
@@ -156,71 +156,73 @@
                   </div>
 
                   <div class="form-section__content">
-                    <div>
-                      <span class="k-input-label">
-                        {{ t('zones.form.environmentLabel') }} *
-                      </span>
+                    <div class="field-group-list">
+                      <div class="field-group">
+                        <span class="field-group-label">
+                          {{ t('zones.form.environmentLabel') }} *
+                        </span>
 
-                      <div class="radio-button-group">
-                        <KRadio
-                          id="zone-environment-universal"
-                          v-model="environment"
-                          selected-value="universal"
-                          name="zone-environment"
-                          data-testid="environment-universal-radio-button"
-                        >
-                          {{ t('zones.form.universalLabel') }}
-                        </KRadio>
+                        <div class="radio-button-group">
+                          <KRadio
+                            id="zone-environment-universal"
+                            v-model="environment"
+                            selected-value="universal"
+                            name="zone-environment"
+                            data-testid="environment-universal-radio-button"
+                          >
+                            {{ t('zones.form.universalLabel') }}
+                          </KRadio>
 
-                        <KRadio
-                          id="zone-environment-kubernetes"
-                          v-model="environment"
-                          selected-value="kubernetes"
-                          name="zone-environment"
-                          data-testid="environment-kubernetes-radio-button"
-                        >
-                          {{ t('zones.form.kubernetesLabel') }}
-                        </KRadio>
+                          <KRadio
+                            id="zone-environment-kubernetes"
+                            v-model="environment"
+                            selected-value="kubernetes"
+                            name="zone-environment"
+                            data-testid="environment-kubernetes-radio-button"
+                          >
+                            {{ t('zones.form.kubernetesLabel') }}
+                          </KRadio>
+                        </div>
                       </div>
+
+                      <template v-if="environment === 'kubernetes'">
+                        <div class="field-group">
+                          <span class="field-group-label">
+                            {{ t('zones.form.zoneIngressLabel') }} *
+                          </span>
+
+                          <div class="radio-button-group">
+                            <KInputSwitch
+                              id="zone-ingress-enabled"
+                              v-model="zoneIngressEnabled"
+                              data-testid="ingress-input-switch"
+                            >
+                              <template #label>
+                                {{ t('zones.form.zoneIngressEnabledLabel') }}
+                              </template>
+                            </KInputSwitch>
+                          </div>
+                        </div>
+
+                        <div class="field-group">
+                          <span class="field-group-label">
+                            {{ t('zones.form.zoneEgressLabel') }} *
+                          </span>
+
+                          <div class="radio-button-group">
+                            <KInputSwitch
+                              id="zone-egress-enabled"
+                              v-model="zoneEgressEnabled"
+                              data-testid="egress-input-switch"
+                            >
+                              <template #label>
+                                {{ t('zones.form.zoneEgressEnabledLabel') }}
+                              </template>
+                            </KInputSwitch>
+                          </div>
+                        </div>
+                      </template>
                     </div>
-
-                    <template v-if="environment === 'kubernetes'">
-                      <div class="mt-4">
-                        <span class="k-input-label">
-                          {{ t('zones.form.zoneIngressLabel') }} *
-                        </span>
-
-                        <div class="radio-button-group">
-                          <KInputSwitch
-                            id="zone-ingress-enabled"
-                            v-model="zoneIngressEnabled"
-                            data-testid="ingress-input-switch"
-                          >
-                            <template #label>
-                              {{ t('zones.form.zoneIngressEnabledLabel') }}
-                            </template>
-                          </KInputSwitch>
-                        </div>
-                      </div>
-
-                      <div class="mt-4">
-                        <span class="k-input-label">
-                          {{ t('zones.form.zoneEgressLabel') }} *
-                        </span>
-
-                        <div class="radio-button-group">
-                          <KInputSwitch
-                            id="zone-egress-enabled"
-                            v-model="zoneEgressEnabled"
-                            data-testid="egress-input-switch"
-                          >
-                            <template #label>
-                              {{ t('zones.form.zoneEgressEnabledLabel') }}
-                            </template>
-                          </KInputSwitch>
-                        </div>
-                      </div>
-                    </template>
                   </div>
                 </div>
 

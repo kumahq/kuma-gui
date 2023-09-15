@@ -10,6 +10,11 @@
   }
 }
 
+.form-card .k-card-body:not(.increase-specificity) {
+  font-size: $kui-font-size-40;
+  line-height: 1.5;
+}
+
 .form>*+* {
   margin-top: $kui-space-100;
   border-top: $kui-border-width-10 solid $kui-color-border;
@@ -58,10 +63,47 @@
   font-size: $kui-font-size-50;
 }
 
+.field-group-list > *+* {
+  margin-top: $kui-space-80;
+}
+
+.field-group-label {
+  display: inline-flex;
+  margin-bottom: $kui-space-40;
+  font-size: $kui-font-size-30;
+  line-height: $kui-line-height-30;
+  font-weight: $kui-font-weight-semibold;
+}
+
 .radio-button-group>* {
   display: flex;
 }
 
 .radio-button-group>*+* {
   margin-block-start: $kui-space-40;
+}
+
+.instruction-list >*+* {
+  margin-top: $kui-space-50;
+}
+
+.form-step-title {
+  font-size: $kui-font-size-60;
+}
+
+.form-step-title:not(:first-child) {
+  margin-top: $kui-space-90;
+}
+
+.form-step-number {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: $kui-space-20;
+  color: $kui-color-text-inverse;
+  background-color: var(--StepBackground);
+  border-radius: 50%;
+  font-size: $kui-font-size-40;
 }
