@@ -83,9 +83,6 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
 })
 
 // act
-When('I wait for {int} milliseconds/ms', function (ms: number) {
-  cy.wait(ms)
-})
 
 When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
   const event = 'click'
@@ -188,6 +185,9 @@ Then('the page title contains {string}', function (title: string) {
 })
 
 // debug
+When('I wait for {int} milliseconds/ms', function (ms: number) {
+  cy.wait(ms)
+})
 Then('pause', function () {
   cy.pause()
 })
