@@ -1,42 +1,49 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ can, route }"
     name="zone-cp-detail-tabs-view"
     data-testid="zone-cp-detail-tabs-view"
   >
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'zone-cp-list-view',
-          },
-          text: t('zone-cps.routes.item.breadcrumbs')
-        },
-      ]"
+    <DataSource
+      v-slot="{ data, error }: ZoneOverviewSource"
+      :src="`/zone-cps/${route.params.zone}`"
     >
-      <template #title>
-        <h1>
-          <TextWithCopyButton :text="route.params.zone">
-            <RouteTitle
-              :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-              :render="true"
-            />
-          </TextWithCopyButton>
-        </h1>
-      </template>
+      <ErrorBlock
+        v-if="error !== undefined"
+        :error="error"
+      />
 
-      <DataSource
-        v-slot="{ data, error }: ZoneOverviewSource"
-        :src="`/zone-cps/${route.params.zone}`"
-      >
-        <ErrorBlock
-          v-if="error !== undefined"
-          :error="error"
-        />
+      <LoadingBlock v-else-if="data === undefined" />
 
-        <LoadingBlock v-else-if="data === undefined" />
+      <template v-else>
+        <AppView
+          :breadcrumbs="[
+            {
+              to: {
+                name: 'zone-cp-list-view',
+              },
+              text: t('zone-cps.routes.item.breadcrumbs')
+            },
+          ]"
+        >
+          <template #title>
+            <h1>
+              <TextWithCopyButton :text="route.params.zone">
+                <RouteTitle
+                  :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+                  :render="true"
+                />
+              </TextWithCopyButton>
+            </h1>
+          </template>
 
-        <template v-else>
+          <template
+            v-if="can('create zones')"
+            #actions
+          >
+            <ZoneActionMenu :zone-overview="data" />
+          </template>
+
           <NavTabs
             class="route-zone-detail-view-tabs"
             :tabs="tabs"
@@ -48,15 +55,16 @@
               :data="data"
             />
           </RouterView>
-        </template>
-      </DataSource>
-    </AppView>
+        </AppView>
+      </template>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
+import ZoneActionMenu from '../components/ZoneActionMenu.vue'
 import { ZoneOverviewSource } from '../sources'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
