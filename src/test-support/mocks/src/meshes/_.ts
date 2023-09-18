@@ -1,6 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
   const name = req.params.mesh
+  const mTLS = env('KUMA_MTLS_ENABLED', '')
 
   return {
     headers: {},
@@ -9,34 +10,35 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       type: 'Mesh',
       creationTime: '2020-06-19T12:18:02.097986-04:00',
       modificationTime: '2020-06-19T12:18:02.097986-04:00',
-      ...(fake.datatype.boolean() && {
-        mtls: {
-          enabledBackend: 'ca-1',
-          backends: [
-            {
-              name: 'ca-1',
-              type: 'provided',
-              dpCert: {
-                rotation: {
-                  expiration: '1d',
-                },
-              },
-              conf: {
-                cert: {
-                  secret: 'name-of-secret',
-                },
-                key: {
-                  secret: 'name-of-secret',
-                },
-              },
-            },
-            {
-              name: 'ca-2',
-              type: 'BUILTIN',
-            },
-          ],
-        },
-      }),
+      ...((mTLS.length > 0 ? !!JSON.parse(mTLS) : fake.datatype.boolean({ probability: 0.6 })) &&
+         {
+           mtls: {
+             enabledBackend: 'ca-1',
+             backends: [
+               {
+                 name: 'ca-1',
+                 type: 'provided',
+                 dpCert: {
+                   rotation: {
+                     expiration: '1d',
+                   },
+                 },
+                 conf: {
+                   cert: {
+                     secret: 'name-of-secret',
+                   },
+                   key: {
+                     secret: 'name-of-secret',
+                   },
+                 },
+               },
+               {
+                 name: 'ca-2',
+                 type: 'BUILTIN',
+               },
+             ],
+           },
+         }),
       ...(fake.datatype.boolean() && {
         logging: {
           backends: [
