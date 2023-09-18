@@ -80,7 +80,7 @@ export default class KumaApi extends Api {
   }
 
   getZoneIngress({ name }: { name: string }, params?: any): Promise<ZoneIngress> {
-    return this.client.get(`/zoneingresses/${name}`, { params })
+    return this.client.get(`/zone-ingresses/${name}`, { params })
   }
 
   /**
