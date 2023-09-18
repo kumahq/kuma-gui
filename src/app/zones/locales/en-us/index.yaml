@@ -77,19 +77,19 @@ zones:
     delete_button: 'Delete'
   form:
     exit: 'Exit'
-    title: 'Create & connect Zone'
-    description: ' '
-    facts: []
+    title: 'Create & Connect Zone'
+    description: 'Provision and connect a remote zone to your Kuma Global Control Plane.'
+    facts: ['Observe and manage zone workloads', 'Gain insight into service configuration and stats', 'View and modify mesh policies', '']
     section:
       name:
         title: 'Zone name'
-        description: ' '
+        description: 'Provide a name to identify this zone.'
       configuration:
         title: 'Configuration'
-        description: ' '
+        description: 'Select which environment this zone will be running in, and whether you want to provision zone ingress and / or egress proxies.'
       connect_zone:
         title: 'Connect Zone'
-        description: ' '
+        description: 'Establish a connection to your remote zone by following the instructions to setup dependencies and install the remote zone control plane.'
       scanner:
         title: 'Waiting for Zone to be connected …'
         description: ' '
@@ -106,7 +106,7 @@ zones:
     confirm_modal:
       action_button: 'Yes, exit'
       title: 'Are you sure you want to exit?'
-      body: 'You’ve already created a Zone with a token. You won’t have access to the Zone’s token once you exit.'
+      body: 'You’ve already created a Zone with a token. You won’t have access to the Zone’s token once you exit. If you lose access to this token you’ll need to delete the zone and re-create it.'
     scan:
       waitTitle: 'Waiting for Zone to be connected …'
       completeTitle: 'Done!'
