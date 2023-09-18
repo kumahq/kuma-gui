@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ can }"
+    name="onboarding-configuration-types"
   >
     <RouteTitle
       :title="t('onboarding.routes.configuration-types.title')"

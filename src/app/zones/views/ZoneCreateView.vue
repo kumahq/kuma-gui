@@ -1,5 +1,6 @@
 <template>
   <RouteView
+    name="zone-create-view"
     :attrs="{
       class: 'is-fullscreen'
     }"

@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="mesh-index-view"
+  >
     <AppView
       :breadcrumbs="[
         {

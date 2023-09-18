@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="onboarding"
+  >
     <AppView>
       <router-view
         v-slot="{ Component }"

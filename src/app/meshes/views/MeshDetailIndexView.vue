@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="mesh-detail-view"
+  >
     <AppView
       :breadcrumbs="[
         ...(route.name !== 'mesh-detail-view' ? [{

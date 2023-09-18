@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="onboarding-completed"
+  >
     <RouteTitle
       :title="t('onboarding.routes.completed.title')"
     />

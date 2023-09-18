@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
+    name="onboarding-dataplanes-overview"
   >
     <RouteTitle
       :title="t('onboarding.routes.dataplanes-overview.title')"

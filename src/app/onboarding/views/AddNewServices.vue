@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
+    name="onboarding-add-services"
   >
     <RouteTitle
       :title="t('onboarding.routes.add-services.title')"

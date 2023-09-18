@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="onboarding-multi-zone"
+  >
     <RouteTitle
       :title="t('onboarding.routes.multizone.title')"
     />

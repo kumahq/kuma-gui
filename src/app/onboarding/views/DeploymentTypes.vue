@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="onboarding-deployment-types"
+  >
     <RouteTitle
       :title="t('onboarding.routes.deployment-types.title')"
     />

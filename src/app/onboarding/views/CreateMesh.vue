@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ can }"
+    name="onboarding-create-mesh"
   >
     <RouteTitle
       :title="t('onboarding.routes.create-mesh.title')"

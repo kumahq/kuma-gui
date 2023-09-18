@@ -1,5 +1,8 @@
 <template>
-  <RouteView v-slot="{ route }">
+  <RouteView
+    v-slot="{ route }"
+    name="mesh-tabs-view"
+  >
     <AppView>
       <template #title>
         <h1>
