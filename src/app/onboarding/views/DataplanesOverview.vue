@@ -12,7 +12,7 @@
             v-for="item in [
               tableData.data.length > 0 ? 'success' : 'waiting'
             ]"
-            :key="item.title"
+            :key="item"
           >
             <OnboardingHeading :data-testid="`state-${item}`">
               <template #title>
