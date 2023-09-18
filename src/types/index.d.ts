@@ -460,7 +460,11 @@ export interface AvailableService {
   externalService?: boolean
 }
 
-export interface ZoneIngress extends MeshEntity {}
+export interface ZoneIngress extends MeshEntity {
+  zone?: string
+  networking?: ZoneIngressNetworking
+  availableServices?: AvailableService[]
+}
 
 export interface ZoneIngressOverview extends MeshEntity {
   type: 'ZoneIngressOverview'
@@ -477,7 +481,10 @@ export interface ZoneEgressNetworking {
   port?: string
 }
 
-export interface ZoneEgress extends MeshEntity {}
+export interface ZoneEgress extends MeshEntity {
+  zone?: string
+  networking?: ZoneEgressNetworking
+}
 
 export interface ZoneEgressOverview extends MeshEntity {
   type: 'ZoneEgressOverview'
