@@ -1,5 +1,3 @@
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
 export const routes = () => {
   const item = (prefix: string = 'data-plane'): RouteRecordRaw[] => {
@@ -70,10 +68,6 @@ export const routes = () => {
               name: `${prefix}-list-view`,
               props: (route) => ({
                 mesh: route.params.mesh,
-                page: getLastNumberParameter(route.query.page, 1),
-                size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-                query: decodeURIComponent(String(route.query.query || '')),
-                search: decodeURIComponent(String(route.query.s || '')),
               }),
               component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
               // children: [

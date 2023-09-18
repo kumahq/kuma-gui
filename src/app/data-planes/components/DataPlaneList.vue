@@ -182,9 +182,8 @@ type DataPlaneOverviewTableRow = {
 }
 
 type ChangeValue = {
-  page: number
-  size: number
-  s: string
+  page?: number
+  size?: number
 }
 
 const props = withDefaults(defineProps<{

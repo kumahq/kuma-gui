@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="props.name.length > 0"
     class="route-view"
   >
     <div
@@ -16,29 +17,15 @@
       :env="env"
       :can="can"
       :route="{
-        update: (params: Record<string, string | undefined>) => {
-          // Avoids `router.push` specifically in the case where we try to persist the `page` query parameter in the URL while there isn’t one already. This happens when navigating to a list view through the UI (i.e. without directly using the `page` query parameter). If we use `router.push`, this creates a second history entry after that navigation which makes it near impossible to navigate back through the history because the browser will be stuck in a loop.
-          const method = !Boolean(route.query.page) ? 'replace' : 'push'
-          router[method]({
-            name: props.name,
-            query: cleanQuery(params, route.query),
-          })
-        },
-        replace: (...args: Parameters<typeof router['push']>) => {
-          router.push(...args)
-        },
-        params: Object.fromEntries(Object.entries(route.params).map(([prop, value]) => {
-          return [
-            prop,
-            urlParam(value)
-          ]
-        }))
+        update: routeUpdate,
+        replace: routeReplace,
+        params: routeParams
       }"
     />
   </div>
 </template>
 <script lang="ts" setup>
-import { provide, inject, ref, watch, onBeforeUnmount } from 'vue'
+import { computed, provide, inject, ref, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT } from '.'
@@ -48,6 +35,7 @@ import {
   cleanQuery,
   createAttrsSetter,
   createTitleSetter,
+  beforePaint,
 } from '../../utilities'
 import { useI18n, useEnv } from '@/utilities'
 
@@ -91,16 +79,71 @@ export type RouteView = typeof routeView
 const props = defineProps({
   name: {
     type: String,
-    // once we have rolled out naming everywhere we can change this to required
-    required: false,
-    default: '',
+    required: true,
   },
   attrs: {
     type: Object,
     required: false,
     default: () => ({}),
   },
+  params: {
+    type: Object,
+    required: false,
+    default: () => ({}),
+  },
 })
+
+const routeParams = computed(() => {
+  const params = Object.fromEntries(Object.entries({
+    ...props.params,
+    ...route.params,
+    ...route.query,
+  }).map(([prop, value]) => {
+    let param = urlParam(value)
+    const def = props.params[prop]
+    switch (true) {
+      // if the defined param is a number check to see that the query param
+      // one can pass as a number and if not provide the default instead
+      case typeof def === 'number':
+        if (isNaN(Number(value))) {
+          param = String(def)
+        }
+        break
+    }
+    return [
+      prop,
+      decodeURIComponent(param),
+    ]
+  }))
+  return params
+})
+
+let newParams = {}
+const routerPush = beforePaint((params: Record<string, string | undefined>) => {
+  router.push({
+    name: props.name,
+    query: cleanQuery(params, route.query),
+  })
+  newParams = {}
+})
+const routeUpdate = (params: Record<string, string | undefined>) => {
+  newParams = {
+    ...newParams,
+    ...params,
+  }
+  routerPush(newParams)
+}
+const routeReplace = (...args: Parameters<typeof router['push']>) => {
+  router.push(...args)
+}
+watch(() => props.name, (name) => {
+  if (name !== '' && Object.keys(props.params).length > 0) {
+    router.replace({
+      name,
+      query: cleanQuery(props.params, route.query),
+    })
+  }
+}, { immediate: true })
 
 const hasParent: RouteView | undefined = inject(ROUTE_VIEW_PARENT, undefined)
 if (!hasParent) {

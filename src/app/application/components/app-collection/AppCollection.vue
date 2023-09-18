@@ -5,16 +5,22 @@
     :style="`--column-width: ${columnWidth}; --special-column-width: ${SPECIAL_COLUMN_WIDTH}%;`"
     :has-error="(typeof props.error !== 'undefined')"
     :pagination-total-items="props.total"
-    :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize ?? PAGE_SIZE_DEFAULT }"
+    :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
     :headers="props.headers"
     :fetcher-cache-key="String(cacheKey)"
     :fetcher="({ page, pageSize, query }: FetcherParams) => {
+      const value: ChangeValue = {}
+      if(lastPageNumber !== page) {
+        value.page = page;
+      }
+      if(lastPageSize !== pageSize) {
+        value.size = pageSize;
+      }
       lastPageNumber = page
-      emit('change', {
-        page: page,
-        size: pageSize,
-        s: query
-      })
+      lastPageSize = pageSize
+      if(Object.keys(value).length > 0) {
+        emit('change', value)
+      }
       return {data: items}
     }"
     :cell-attrs="({ headerKey }: CellAttrParams) => ({
@@ -92,7 +98,6 @@ import { RouteLocationRaw } from 'vue-router'
 
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { useI18n } from '@/utilities'
 
 type CellAttrParams = {
@@ -107,9 +112,8 @@ type FetcherParams = {
   query: string
 }
 type ChangeValue = {
-  page: number,
-  size: number
-  s: string
+  page?: number,
+  size?: number
 }
 
 const { t } = useI18n()
@@ -118,8 +122,8 @@ const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
   total?: number,
-  pageNumber?: number,
-  pageSize?: number,
+  pageNumber: number,
+  pageSize: number,
   items: unknown[] | undefined,
   headers: TableHeader[],
   error?: Error | undefined,
@@ -129,8 +133,6 @@ const props = withDefaults(defineProps<{
   emptyStateCtaText?: string
 }>(), {
   total: 0,
-  pageNumber: 1,
-  pageSize: 30,
   error: undefined,
   emptyStateTitle: undefined,
   emptyStateMessage: undefined,
@@ -146,17 +148,26 @@ const slots = useSlots()
 
 const items = ref<unknown[] | undefined>(props.items)
 const cacheKey = ref<number>(0)
-/**
- * Used as a means to instruct KTable to re-mount.
+/** Used as a means to instruct KTable to re-mount.
  *
- * This is a hack around the fact that there is no other way to tell KTable if the current page of a paginated view has changed. KTable assumes it’s the *sole* owner/maintainer of pagination-related state, but that’s a design flaw that doesn’t account for browser history navigation (e.g. pressing back to go from page 2 to page 1).
+ * This is a hack around the fact that there is no other way to tell KTable if
+ * the current page of a paginated view has changed. KTable assumes it’s the
+ * *sole* owner/maintainer of pagination-related state, but that’s a design
+ * flaw that doesn’t account for browser history navigation (e.g. pressing back
+ * to go from page 2 to page 1).
  *
- * Is triggered via a watcher whenever `props.pageNumber` changes while the last page number that was emitted by KTable (via calls to its `fetcher` prop) is different (i.e. the page number has changed independently of a KTable mechanism).
+ * Is triggered via a watcher whenever `props.pageNumber` changes while the
+ * last page number that was emitted by KTable (via calls to its `fetcher`
+ * prop) is different (i.e. the page number has changed independently of a
+ * KTable mechanism).
  *
- * TODO: If https://github.com/Kong/kongponents/pull/1631 is accepted, this hack can be removed in favor of setting the new prop whenever the page number changes externally.
+ * TODO: If https://github.com/Kong/kongponents/pull/1631 is accepted, this
+ * hack can be removed in favor of setting the new prop whenever the page
+ * number changes externally.
  */
 const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
+const lastPageSize = ref(props.pageSize)
 
 const columnWidth = computed(() => {
   const specialColumns = props.headers.filter((header) => ['warnings', 'actions'].includes(header.key))

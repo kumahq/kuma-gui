@@ -1,5 +1,7 @@
 <template>
-  <RouteView name="home">
+  <RouteView
+    name="home"
+  >
     <AppView>
       <template #title>
         <h1>

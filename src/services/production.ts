@@ -17,6 +17,7 @@ import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-pl
 import { routes as gatewayRoutes, services as gateways } from '@/app/gateways'
 import { getNavItems } from '@/app/getNavItems'
 import { services as mainOverviewModule } from '@/app/main-overview'
+import { services as me } from '@/app/me'
 import { routes as meshRoutes, services as meshes } from '@/app/meshes'
 import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
@@ -209,6 +210,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
 
   // Modules
   ...application($),
+  ...me($),
   ...mainOverviewModule($),
   ...zonesModule($),
   ...meshes($),

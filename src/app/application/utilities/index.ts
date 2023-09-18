@@ -1,4 +1,4 @@
-const beforePaint = function (fn: (...args: any[]) => void) {
+export const beforePaint = function (fn: (...args: any[]) => void) {
   let num: number
   return (...args: unknown[]) => {
     if (num) {

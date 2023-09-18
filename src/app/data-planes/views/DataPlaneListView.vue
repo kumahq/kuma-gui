@@ -2,10 +2,16 @@
   <RouteView
     v-slot="{ route }"
     name="data-planes-list-view"
+    :params="{
+      page: 1,
+      size: 50,
+      query: '',
+      s: ''
+    }"
   >
     <DataSource
       v-slot="{data, error}: DataPlaneCollectionSource"
-      :src="`/meshes/${props.mesh}/dataplanes?page=${props.page}&size=${size}&search=${props.search}`"
+      :src="`/meshes/${props.mesh}/dataplanes?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
     >
       <AppView>
         <template #title>
@@ -27,23 +33,18 @@
               v-else
               data-testid="data-plane-collection"
               class="data-plane-collection"
-              :page-number="props.page"
-              :page-size="props.size"
+              :page-number="parseInt(route.params.page)"
+              :page-size="parseInt(route.params.size)"
               :total="data?.total"
               :items="data?.items"
               :error="error"
-              @change="({page, size}) => {
-                route.update({
-                  page: String(page),
-                  size: String(size)
-                })
-              }"
+              @change="route.update"
             >
               <template #toolbar>
                 <KFilterBar
                   class="data-plane-proxy-filter"
                   :placeholder="`tag: 'kuma.io/protocol: http'`"
-                  :query="props.query"
+                  :query="route.params.query"
                   :fields="{
                     name: { description: 'filter by name or parts of a name' },
                     service: { description: 'filter by “kuma.io/service” value' },
@@ -65,14 +66,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
 
 import DataPlaneList from '../components/DataPlaneList.vue'
 import { DataPlaneCollectionSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
 import { useI18n } from '@/utilities'
@@ -80,11 +76,6 @@ import { useI18n } from '@/utilities'
 const { t } = useI18n()
 
 const props = defineProps<{
-  page: number
-  size: number
-  search: string
-  query: string
-  //
   mesh: string
 }>()
 </script>

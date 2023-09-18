@@ -204,9 +204,8 @@ import type { MeshInsight, PolicyType } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 type ChangeValue = {
-  page: number
-  size: number
-  s: string
+  page?: number
+  size?: number
 }
 
 const { t } = useI18n()

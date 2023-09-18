@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="app"
+  >
     <!-- whilst we don't use the addresses here, -->
     <!-- we want to make sure they are retrived/correctly set -->
     <DataSource

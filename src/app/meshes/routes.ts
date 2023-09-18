@@ -1,5 +1,3 @@
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {
@@ -17,10 +15,6 @@ export const routes = (
     {
       path: '/meshes',
       name: 'mesh-list-view',
-      props: (route) => ({
-        page: getLastNumberParameter(route.query.page, 1),
-        size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-      }),
       component: () => import('@/app/meshes/views/MeshListView.vue'),
     },
     {
