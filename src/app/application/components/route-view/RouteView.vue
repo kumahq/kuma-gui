@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="props.name.length > 0"
     class="route-view"
   >
     <div
@@ -137,7 +136,7 @@ const routeReplace = (...args: Parameters<typeof router['push']>) => {
   router.push(...args)
 }
 watch(() => props.name, (name) => {
-  if (name !== '' && Object.keys(props.params).length > 0) {
+  if (Object.keys(props.params).length > 0) {
     router.replace({
       name,
       query: cleanQuery(props.params, route.query),
