@@ -46,7 +46,7 @@
                   </PolicyTypeTag>
                 </h3>
 
-                <p>{{ t('policies.collection.description') }}</p>
+                <p>{{ t(`policies.type.${props.currentPolicyType.name}.description`, undefined, { fallback: t('policies.collection.description') }) }}</p>
               </div>
 
               <div class="description-actions">
