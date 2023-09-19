@@ -111,8 +111,9 @@ const props = defineProps({
   },
 
   meshInsight: {
-    type: Object as PropType<MeshInsight | undefined>,
-    required: true,
+    type: [Object] as PropType<MeshInsight | undefined>,
+    required: false,
+    default: undefined,
   },
 })
 
