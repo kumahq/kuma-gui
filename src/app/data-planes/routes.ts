@@ -66,9 +66,6 @@ export const routes = () => {
             {
               path: '',
               name: `${prefix}-list-view`,
-              props: (route) => ({
-                mesh: route.params.mesh,
-              }),
               component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
               // children: [
               //   ...(item(prefix)[0]).children ?? [],

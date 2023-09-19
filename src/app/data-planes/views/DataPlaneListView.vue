@@ -1,83 +1,84 @@
 <template>
-  <RouteView
-    v-slot="{ route }"
-    name="data-planes-list-view"
-    :params="{
-      page: 1,
-      size: 50,
-      query: '',
-      s: ''
-    }"
+  <DataSource
+    v-slot="{ data: me }: MeSource"
+    src="/me"
   >
-    <DataSource
-      v-slot="{data, error}: DataPlaneCollectionSource"
-      :src="`/meshes/${props.mesh}/dataplanes?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+    <RouteView
+      v-if="me"
+      v-slot="{ route, t }"
+      name="data-planes-list-view"
+      :params="{
+        page: 1,
+        size: 50,
+        query: '',
+        s: ''
+      }"
     >
-      <AppView>
-        <template #title>
-          <h2>
-            <RouteTitle
-              :title="t('data-planes.routes.items.title')"
-              :render="true"
-            />
-          </h2>
-        </template>
-        <KCard>
-          <template #body>
-            <ErrorBlock
-              v-if="error !== undefined"
-              :error="error"
-            />
-
-            <DataPlaneList
-              v-else
-              data-testid="data-plane-collection"
-              class="data-plane-collection"
-              :page-number="parseInt(route.params.page)"
-              :page-size="parseInt(route.params.size)"
-              :total="data?.total"
-              :items="data?.items"
-              :error="error"
-              @change="route.update"
-            >
-              <template #toolbar>
-                <KFilterBar
-                  class="data-plane-proxy-filter"
-                  :placeholder="`tag: 'kuma.io/protocol: http'`"
-                  :query="route.params.query"
-                  :fields="{
-                    name: { description: 'filter by name or parts of a name' },
-                    service: { description: 'filter by “kuma.io/service” value' },
-                    tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                    zone: { description: 'filter by “kuma.io/zone” value' },
-                  }"
-                  @fields-change="(val) => route.update({
-                    query: val.query,
-                    s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
-                  })"
-                />
-              </template>
-            </DataPlaneList>
+      <DataSource
+        v-slot="{data, error}: DataPlaneCollectionSource"
+        :src="`/meshes/${route.params.mesh}/dataplanes?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+      >
+        <AppView>
+          <template #title>
+            <h2>
+              <RouteTitle
+                :title="t('data-planes.routes.items.title')"
+                :render="true"
+              />
+            </h2>
           </template>
-        </KCard>
-      </AppView>
-    </DataSource>
-  </RouteView>
+          <KCard>
+            <template #body>
+              <ErrorBlock
+                v-if="error !== undefined"
+                :error="error"
+              />
+
+              <DataPlaneList
+                v-else
+                data-testid="data-plane-collection"
+                class="data-plane-collection"
+                :page-number="parseInt(route.params.page)"
+                :page-size="parseInt(route.params.size)"
+                :total="data?.total"
+                :items="data?.items"
+                :error="error"
+                @change="route.update"
+              >
+                <template #toolbar>
+                  <KFilterBar
+                    class="data-plane-proxy-filter"
+                    :placeholder="`tag: 'kuma.io/protocol: http'`"
+                    :query="route.params.query"
+                    :fields="{
+                      name: { description: 'filter by name or parts of a name' },
+                      service: { description: 'filter by “kuma.io/service” value' },
+                      tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                      zone: { description: 'filter by “kuma.io/zone” value' },
+                    }"
+                    @fields-change="(val) => route.update({
+                      query: val.query,
+                      s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
+                    })"
+                  />
+                </template>
+              </DataPlaneList>
+            </template>
+          </KCard>
+        </AppView>
+      </DataSource>
+    </RouteView>
+  </DataSource>
 </template>
 
 <script lang="ts" setup>
 
 import DataPlaneList from '../components/DataPlaneList.vue'
-import { DataPlaneCollectionSource } from '../sources'
+import type { DataPlaneCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
-import { useI18n } from '@/utilities'
+import type { MeSource } from '@/app/me/sources'
 
-const { t } = useI18n()
-
-const props = defineProps<{
-  mesh: string
-}>()
 </script>
 <style lang="scss" scoped>
 .data-plane-proxy-filter {

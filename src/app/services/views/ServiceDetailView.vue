@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="service-detail-view"
     data-testid="service-detail-view"
   >
@@ -45,16 +45,10 @@
 import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
 import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
 import type { ExternalServiceSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import type { ServiceInsight } from '@/types/index.d'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   data: ServiceInsight

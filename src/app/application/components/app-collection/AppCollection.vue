@@ -8,7 +8,7 @@
     :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
     :headers="props.headers"
     :fetcher-cache-key="String(cacheKey)"
-    :fetcher="({ page, pageSize, query }: FetcherParams) => {
+    :fetcher="({ page, pageSize, query: _query }: FetcherParams) => {
       const value: ChangeValue = {}
       if(lastPageNumber !== page) {
         value.page = page;
@@ -122,8 +122,8 @@ const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
   total?: number,
-  pageNumber: number,
-  pageSize: number,
+  pageNumber?: number,
+  pageSize?: number,
   items: unknown[] | undefined,
   headers: TableHeader[],
   error?: Error | undefined,
@@ -133,6 +133,8 @@ const props = withDefaults(defineProps<{
   emptyStateCtaText?: string
 }>(), {
   total: 0,
+  pageNumber: 1,
+  pageSize: 30,
   error: undefined,
   emptyStateTitle: undefined,
   emptyStateMessage: undefined,

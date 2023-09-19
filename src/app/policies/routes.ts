@@ -1,5 +1,3 @@
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = () => {
@@ -52,10 +50,6 @@ export const routes = () => {
                   path: ':policyPath',
                   name: `${prefix}-list-view`,
                   component: () => import('@/app/policies/views/PolicyListView.vue'),
-                  props: (route) => ({
-                    page: getLastNumberParameter(route.query.page, 1),
-                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-                  }),
                   // children: [
                   //   ...(item(prefix)[0]).children ?? [],
                   // ],

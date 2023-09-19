@@ -10,7 +10,7 @@ export const sources = () => {
   return {
     '/me': async (_params = {}, source: Closeable) => {
       source.close()
-      return { pageSize: 50 }
+      return Promise.resolve({ pageSize: 50 })
     },
   }
 }
