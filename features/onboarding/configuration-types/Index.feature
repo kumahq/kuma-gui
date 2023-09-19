@@ -10,7 +10,6 @@ Feature: onboarding / configuration-types / index
       """
     When I visit the "/onboarding/configuration-types" URL
     And I click the "$next-button" element
-    And I wait for 300 ms
     Then the URL is "<URL>"
     Examples:
       | Value      | URL                     |

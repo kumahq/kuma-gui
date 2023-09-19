@@ -1,4 +1,4 @@
-Feature: onboarding / add-services / index
+Feature: onboarding / add-new-services / index
   Background:
     Given the CSS selectors
       | Alias           | Selector                            |

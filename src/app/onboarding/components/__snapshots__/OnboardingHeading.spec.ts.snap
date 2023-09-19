@@ -6,6 +6,7 @@ exports[`OnboardingHeading.vue renders snapshot 1`] = `
 >
   <h1
     class="onboarding-title"
+    data-testid="onboarding-header"
   >
     
     title

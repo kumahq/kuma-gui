@@ -19,5 +19,12 @@ onboarding:
       title: Add new services
     dataplanes-overview:
       title: Data plane overview
+      header:
+        success:
+          title: Success
+          description: "The following data plane proxies (DPPs) are connected to the control plane:"
+        waiting:
+          title: Waiting for DPPs
+          description: ''
     completed:
       title: Completed

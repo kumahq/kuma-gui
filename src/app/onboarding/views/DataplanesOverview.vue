@@ -1,23 +1,31 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ t }"
+  >
     <RouteTitle
       :title="t('onboarding.routes.dataplanes-overview.title')"
     />
     <AppView>
       <OnboardingPage>
         <template #header>
-          <OnboardingHeading>
-            <template #title>
-              <p>{{ title }}</p>
-            </template>
+          <template
+            v-for="item in [
+              tableData.data.length > 0 ? 'success' : 'waiting'
+            ]"
+            :key="item"
+          >
+            <OnboardingHeading :data-testid="`state-${item}`">
+              <template #title>
+                {{ t(`onboarding.routes.dataplanes-overview.header.${item}.title`) }}
+              </template>
 
-            <template
-              v-if="description !== null"
-              #description
-            >
-              <p>{{ description }}</p>
-            </template>
-          </onboardingheading>
+              <template
+                #description
+              >
+                <p>{{ t(`onboarding.routes.dataplanes-overview.header.${item}.description`) }}</p>
+              </template>
+            </OnboardingHeading>
+          </template>
         </template>
 
         <template #content>
@@ -67,7 +75,7 @@
 
 <script lang="ts" setup>
 import { KTable } from '@kong/kongponents'
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 
 import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
@@ -77,11 +85,10 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { useKumaApi, useI18n } from '@/utilities'
+import { useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const kumaApi = useKumaApi()
-const { t } = useI18n()
 
 const TABLE_HEADERS = [
   { label: 'Mesh', key: 'mesh' },
@@ -94,9 +101,6 @@ const tableData = ref<{ total: number, data: any [] }>({
   data: [],
 })
 const timeout = ref<number | null>(null)
-
-const title = computed(() => tableData.value.data.length > 0 ? 'Success' : 'Waiting for DPPs')
-const description = computed(() => tableData.value.data.length > 0 ? 'The following data plane proxies (DPPs) are connected to the control plane:' : null)
 
 onBeforeUnmount(function () {
   clearTimeout()
@@ -117,7 +121,7 @@ async function getAllDataplanes() {
   try {
     const { items } = await kumaApi.getAllDataplanes({ size: 10 })
 
-    if (Array.isArray(items)) {
+    if (Array.isArray(items) && items.length > 0) {
       for (const dataPlane of items) {
         const { name, mesh } = dataPlane
 
@@ -134,6 +138,8 @@ async function getAllDataplanes() {
           mesh,
         })
       }
+    } else {
+      shouldRefetch = true
     }
   } catch (error) {
     console.error(error)
