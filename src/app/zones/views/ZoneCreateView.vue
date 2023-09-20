@@ -38,6 +38,32 @@
       </template>
 
       <div class="form-wrapper">
+        <KAlert
+          v-if="error !== null"
+          appearance="danger"
+          class="mb-4"
+          dismiss-type="icon"
+          data-testid="create-zone-error"
+        >
+          <template #alertMessage>
+            <template
+              v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
+            >
+              <p>{{ t(`zones.create.status_error.${error.status}.title`, { name }) }}</p>
+
+              <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
+            </template>
+
+            <template v-else-if="(error instanceof ApiError)">
+              <p>{{ t('common.error_state.api_error', { status: error.status, title: error.title }) }}</p>
+            </template>
+
+            <template v-else>
+              <p>{{ t('common.error_state.default_error') }}</p>
+            </template>
+          </template>
+        </KAlert>
+
         <KCard class="form-card">
           <template #body>
             <div class="form">
@@ -119,24 +145,6 @@
                   >
                     {{ t('zones.form.createZoneButtonLabel') }}
                   </KButton>
-
-                  <ErrorBlock
-                    v-if="errorState.error !== null"
-                    class="mt-4"
-                    :error="errorState.error"
-                    :badge-appearance="errorState.badgeAppearance"
-                    :icon="errorState.icon"
-                    data-testid="create-zone-error"
-                  >
-                    <p>{{ errorState.title }}</p>
-
-                    <template
-                      v-if="errorState.description"
-                      #message
-                    >
-                      <p>{{ errorState.description }}</p>
-                    </template>
-                  </ErrorBlock>
                 </div>
               </div>
 
@@ -359,7 +367,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_SUCCESS } from '@kong/design-tokens'
-import { type BadgeAppearance, KButton, KInput, KInputSwitch, KLabel, KModal, KRadio } from '@kong/kongponents'
+import { KAlert, KButton, KInput, KInputSwitch, KLabel, KModal, KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -369,19 +377,10 @@ import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalIn
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-
-type ErrorState = {
-  error: Error | null
-  title: string | null
-  description?: string
-  icon: string
-  badgeAppearance: BadgeAppearance
-}
 
 const { t, tm } = useI18n()
 const kumaApi = useKumaApi()
@@ -395,12 +394,7 @@ const NAME_REGEX = /^(?![-0-9])[a-z0-9-]{1,63}$/
 const zone = ref<{ token: string } | null>(null)
 const isChangingZone = ref(false)
 const isConfirmModalVisible = ref(false)
-const errorState = ref<ErrorState>({
-  error: null,
-  title: null,
-  icon: 'warning',
-  badgeAppearance: 'warning',
-})
+const error = ref<Error | null>(null)
 const frontendNameError = ref<string | null>(null)
 
 const isZoneConnected = ref(false)
@@ -427,8 +421,8 @@ const nameError = computed(() => {
   }
 
   // Reads server-side error
-  if (errorState.value.error instanceof ApiError) {
-    const nameError = errorState.value.error.invalidParameters.find((param) => param.field === 'name')
+  if (error.value instanceof ApiError) {
+    const nameError = error.value.invalidParameters.find((param) => param.field === 'name')
     if (nameError !== undefined) {
       return nameError.reason
     }
@@ -442,12 +436,7 @@ const nameError = computed(() => {
  */
 async function createZone() {
   isChangingZone.value = true
-  errorState.value = {
-    error: null,
-    title: null,
-    icon: 'warning',
-    badgeAppearance: 'warning',
-  }
+  error.value = null
 
   try {
     const isValidName = validateName(name.value)
@@ -457,22 +446,8 @@ async function createZone() {
 
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
-    if (err instanceof ApiError && [409, 500].includes(err.status)) {
-      errorState.value = {
-        error: err,
-        title: t(`zones.create.statusError.${err.status}.title`, { zoneName: name.value }),
-        description: t(`zones.create.statusError.${err.status}.description`).trim(),
-        icon: err.status === 500 ? 'warning' : 'errorFilled',
-        badgeAppearance: err.status === 500 ? 'warning' : 'danger',
-      }
-    } else if (err instanceof Error) {
-      errorState.value = {
-        error: err,
-        title: err instanceof ApiError ? err.title : t('zones.create.generalError.title'),
-        description: err instanceof ApiError && err.detail ? err.detail : undefined,
-        icon: 'errorFilled',
-        badgeAppearance: 'danger',
-      }
+    if (err instanceof Error) {
+      error.value = err
     } else {
       console.error(err)
     }

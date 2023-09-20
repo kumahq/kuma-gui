@@ -197,12 +197,12 @@ zones:
     generalError:
       title: 'Could not create the Zone'
     invalidNameError: "The name must be a valid RFC 1035 DNS name, which means it must start with a letter, be less than 64 characters long, and only contain lowercase letters, numbers, and '-'."
-    statusError:
+    status_error:
       409:
-        title: 'A Zone with the name {zoneName} already exists'
+        title: 'Error 409: A Zone with the name {name} already exists'
         description: 'If you want to connect a Zone with this name, you can delete the existing one and create a new one.'
       500:
-        title: 'An error occurred while creating the Zone {zoneName}'
+        title: 'Error 500: An error occurred while creating the Zone {name}'
         description: 'You may retry this operation.'
   delete:
     confirmModal:
