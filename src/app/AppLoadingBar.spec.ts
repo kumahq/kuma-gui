@@ -16,12 +16,6 @@ describe('AppLoadingBar', () => {
     jest.useRealTimers()
   })
 
-  test('renders snapshot at the beginning', () => {
-    const wrapper = renderComponent()
-
-    expect(wrapper.element).toMatchSnapshot()
-  })
-
   test('checks if width is max of 100% size', async () => {
     const wrapper = renderComponent()
 

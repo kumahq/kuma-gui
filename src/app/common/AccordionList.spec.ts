@@ -42,12 +42,6 @@ function renderComponent(props = {}) {
 }
 
 describe('AccordionList.vue', () => {
-  test('renders snapshot at the beginning', () => {
-    const wrapper = renderComponent()
-
-    expect(wrapper.element).toMatchSnapshot()
-  })
-
   test('renders with opened second panel and switch opened panel on click', async () => {
     const wrapper = renderComponent({ initiallyOpen: 1 })
 

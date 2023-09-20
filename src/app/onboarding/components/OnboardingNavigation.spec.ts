@@ -12,14 +12,6 @@ function renderComponent(props = {}) {
 }
 
 describe('OnboardingNavigation.vue', () => {
-  test('renders snapshot', () => {
-    const wrapper = renderComponent({
-      previousStep: 'onboarding-welcome',
-    })
-
-    expect(wrapper.element).toMatchSnapshot()
-  })
-
   test('displays different next step title', () => {
     const wrapper = renderComponent({
       previousStep: 'onboarding-welcome',

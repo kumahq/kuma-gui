@@ -1,4 +1,4 @@
-Feature: The HTML title is correct on each page
+Feature: application / titles
   Scenario Outline: Visiting the "<Title>" page
     When I visit the "<URL>" URL
     Then the page title contains "<Title>"

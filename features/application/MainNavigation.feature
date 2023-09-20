@@ -1,4 +1,4 @@
-Feature: MainNavigation
+Feature: application / MainNavigation
   Background:
     Given the CSS selectors
       | Alias    | Selector     |
