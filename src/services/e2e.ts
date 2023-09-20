@@ -1,6 +1,7 @@
 import type { EnvVars } from '@/services/env/Env'
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
-import type { Callback, HistoryEntry, Options } from '@/test-support'
+import type { Callback, Options } from '@/test-support'
+import getClient from '@/test-support/client'
 import { mocker } from '@/test-support/intercept'
 
 // this needs to come from testing
@@ -21,9 +22,7 @@ const $ = {
   mockServer: token('mockServer'),
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
-  client: token<{
-    history: HistoryEntry[]
-  }>('client'),
+  client: token<ReturnType<typeof getClient>>('client'),
 
   logger: token('logger'),
 }
@@ -45,17 +44,11 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
     constant: cy,
   }],
   [$.client, {
-    service: () => {
-      return {
-        history: [],
-      }
-    },
-    arguments: [
-    ],
+    service: getClient,
   }],
   [app.mockServer, {
     service: (mock: Mocker) => {
-      mock('*').as('request')
+      mock('*')
     },
     arguments: [
       app.mock,

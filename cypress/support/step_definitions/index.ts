@@ -3,7 +3,6 @@ import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
 import { useServer, useMock, useClient } from '@/services/e2e'
 import { undefinedSymbol } from '@/test-support'
-import type { HistoryEntry } from '@/test-support'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
@@ -27,9 +26,9 @@ let env = {}
 let selectors: Record<string, string> = {}
 const client = useClient()
 Before(() => {
+  client.reset()
   env = {}
   selectors = {}
-  client.history = []
   useServer()
 })
 
@@ -125,58 +124,22 @@ Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
 })
 
-Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: string) => {
-  const items = client.history.filter((item: HistoryEntry) => item.url.pathname === url)
-  expect(items.length).to.be(count)
-})
-
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
-  const bool = not.trim().length === 0
-  const xhr = client.history.filter((item: HistoryEntry) => item.url.pathname === url)
-  // If we are asserting the URL _wasn't_ called, and we don't find it, exit early
-  if (xhr.length === 0 && !bool) {
-    expect(xhr.length).to.equal(0, `${url} wasn't requested`)
-    return
-  }
-  if (xhr.length > 0) {
-    const data = YAML.parse(yaml) as {
+  cy.wrap({
+    url,
+    ...YAML.parse(yaml) as {
       method: string,
       searchParams: Record<string, string>,
       body: Record<string, unknown>
-    }
-    const found = xhr.find((item: HistoryEntry) => {
-      return Object.entries(data).every(
-        ([key, value]) => {
-          switch (key) {
-            case 'method':
-              return item.request[key] === String(value)
-            case 'body':
-              return Object.entries(data[key]).every(([prop, value]) => {
-                return item.request[key][prop] === String(value)
-              })
-            case 'searchParams':
-              return Object.entries(data[key]).every(([key, value]) => {
-                const actual = item.url.searchParams.getAll(key)
-                // convert input to an array
-                const expected = Array.isArray(value) ? value : [value]
-                return expected.every((item) => {
-                  return actual.includes(String(item)) === true
-                })
-              })
-          }
-          return false
-        },
-      )
-    })
-    if (bool) {
-      expect(found).to.not.equal(undefined, `${url} was requested with params...`)
+    },
+  }).then(async (request) => {
+    const found = await client.waitForRequest(request)
+    if (not.trim().length === 0) {
+      expect(found).to.equal(true, `${url} was requested with ...`)
     } else {
-      expect(found).to.equal(undefined, `${url} wasn't requested with params...`)
+      expect(found).to.equal(false, `${url} wasn't requested ...`)
     }
-  } else {
-    // If we are asserting the URL _was_ called, and we don't find it, fail
-    expect(xhr.length).to.not.equal(0, `${url} was requested`)
-  }
+  })
 })
 
 Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {

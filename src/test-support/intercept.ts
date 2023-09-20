@@ -79,7 +79,7 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
           }
           const _response = fetch(request)
           const response = cb(createMerge(_response), request, _response)
-          client.history.push({
+          client.request({
             url,
             request,
           })
