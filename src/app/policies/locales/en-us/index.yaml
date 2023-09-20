@@ -15,3 +15,6 @@ policies:
     outbound: 'Outbound'
   detail:
     affected_dpps: 'Affected Data Plane Proxies'
+  type:
+    # CircuitBreaker:
+    #   description: 'About CircuitBreaker ...'
