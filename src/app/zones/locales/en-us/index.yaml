@@ -79,7 +79,7 @@ zones:
     exit: 'Exit'
     title: 'Create & Connect Zone'
     description: 'Provision and connect a remote zone to your Kuma Global Control Plane.'
-    facts: ['Observe and manage zone workloads', 'Gain insight into service configuration and stats', 'View and modify mesh policies', '']
+    facts: ['Observe and manage zone workloads', 'Gain insight into service configuration and stats', 'View and modify mesh policies']
     section:
       name:
         title: 'Zone name'
