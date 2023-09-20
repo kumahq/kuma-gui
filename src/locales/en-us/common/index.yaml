@@ -16,6 +16,8 @@ common:
   copyKubernetesShortText: 'as k8s'
   documentation: 'Documentation'
   error_state:
+    api_error: 'Error {status}: {title}'
+    default_error: 'An unexpected error occurred'
     title: 'An error has occurred while trying to load this data.'
     details: 'Details'
     field: 'Field'
