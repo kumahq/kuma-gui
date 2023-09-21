@@ -1827,25 +1827,27 @@
   resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.11.10.tgz#e53bc7fd4e241473c5aa909f009469286e4a3d7b"
   integrity sha512-0ovN/48VgduW/FHQJ2ygHdrjW0mBrUu1GJptFYIzwL0MTRavBBfBQ5uq7NvYlsZWODgSnNh3N7RBwDO+LALvew==
 
-"@kong/icons@1.8.0":
+"@kong/icons@1.8.0", "@kong/icons@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.0.tgz#3fb6423fec31be4cc27af94f2912f52aee4f9077"
   integrity sha512-ynO3GXaJTh4yoJMZ7XeTbA+ZHvlrteleI+rWNGUbEr726Tw/jgHLdT6wZ1YWR65cA38FN0Q96vEX/7+6ExwaHA==
 
-"@kong/kongponents@8.126.2":
-  version "8.126.2"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.126.2.tgz#dcf337aeb8a7d623b03b0af8f4936d7a030e09a5"
-  integrity sha512-isTzDHB/21O+hMq+tMRH5A3WyOVC5FZqLs1YrfW8zb6VX9Xm1tmtVHO0Qtfo2DpMs2c9rNdl/yBa1vijkOSkHA==
+"@kong/kongponents@9.0.0-alpha.54":
+  version "9.0.0-alpha.54"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.54.tgz#c96721495c718719b3d7e3925e80b053cd21e479"
+  integrity sha512-mZ3qlsywpDskIoGvcPX+bxFD3F8guy3T57SOhdtL6v2XOPClvVgHVSwVY7/mxP2nB1ygrWoqnDc7GtvSq5EpmA==
   dependencies:
+    "@kong/icons" "^1.8.0"
+    "@popperjs/core" "^2.11.8"
     date-fns "^2.30.0"
     date-fns-tz "^2.0.0"
-    focus-trap "^7.5.2"
-    focus-trap-vue "^4.0.2"
+    focus-trap "^7.5.4"
+    focus-trap-vue "^4.0.3"
     popper.js "^1.16.1"
     sortablejs "^1.15.0"
     swrv "^1.0.4"
-    uuid "^9.0.0"
-    v-calendar "3.0.0-alpha.8"
+    uuid "^9.0.1"
+    v-calendar "^3.0.3"
     vue-draggable-next "^2.2.1"
 
 "@modyfi/vite-plugin-yaml@1.0.4":
@@ -1915,10 +1917,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@popperjs/core@2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.0.tgz#0e1bdf8d021e7ea58affade33d9d607e11365915"
-  integrity sha512-NMrDy6EWh9TPdSRiHmHH2ye1v5U0gBD7pRYwSwJvomx7Bm4GG04vu63dYiVzebLOx2obPpJugew06xVP0Nk7hA==
+"@popperjs/core@^2.11.8":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
 "@rollup/pluginutils@5.0.2":
   version "5.0.2"
@@ -2172,10 +2174,20 @@
   resolved "https://registry.yarnpkg.com/@types/prismjs/-/prismjs-1.26.3.tgz#47fe8e784c2dee24fe636cab82e090d3da9b7dec"
   integrity sha512-A0D0aTXvjlqJ5ZILMz3rNfDBOx9hHxLZYv2by47Sm/pqW35zzjusrZTryatjN/Rf8Us2gZrJD+KeHbUSTux1Cw==
 
-"@types/semver@7.5.5", "@types/semver@^7.5.0":
+"@types/resize-observer-browser@^0.1.7":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.8.tgz#db41a93f9f37dad8e6f0c7bd2f5bbc042bf714d1"
+  integrity sha512-OpjAd26fD1G2OWlYzkrapJ12n+kyi0znYgE2AHfNccHY/am3kG+lfJ5brfcZ7+1CIybkPWGKrW+Wm97kbcOQaQ==
+
+"@types/semver@7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.5.tgz#deed5ab7019756c9c90ea86139106b0346223f35"
   integrity sha512-+d+WYC1BxJ6yVOgUgzK8gWvp5qF8ssV5r4nsDcZWKRWcDQLQ619tvWAxJQYGgBrO1MnLJC7a5GtiYsAoQ47dJg==
+
+"@types/semver@^7.5.0":
+  version "7.5.3"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.3.tgz#9a726e116beb26c24f1ccd6850201e1246122e04"
+  integrity sha512-OxepLK9EuNEIPxWNME+C6WwbRAOOI2o2BaQEGzz5Lu2e4Z5eDnEo+/aVEDMIXywoJitJ7xWd641wrGLZdtwRyw==
 
 "@types/set-cookie-parser@^2.4.0":
   version "2.4.4"
@@ -4765,12 +4777,12 @@ flatted@^3.2.7, flatted@^3.2.9:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.9.tgz#7eb4c67ca1ba34232ca9d2d93e9886e611ad7daf"
   integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
 
-focus-trap-vue@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/focus-trap-vue/-/focus-trap-vue-4.0.2.tgz#c9cc4976b2625d5290a8263b4edea542559fdb1a"
-  integrity sha512-2iQN2xKCSCzyhcD90VpueQcTIAhaCRxxo67fkz7RSqLmEd16QKjfGslCr3KxvBx0LfpVN9j0IAyKKuJKw3Intg==
+focus-trap-vue@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/focus-trap-vue/-/focus-trap-vue-4.0.3.tgz#c13f19d94e666c5144498793e93e51e0c46c2660"
+  integrity sha512-cIX5rybkCAlNZ4IHYJ3nCFIsipDDljJHHjtTO2IgYWkVYg7X9ipUVdab3HzYp88kmHgMwjcB71LYnXRRsF6ZqQ==
 
-focus-trap@^7.5.2, focus-trap@^7.5.4:
+focus-trap@^7.5.4:
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.5.4.tgz#6c4e342fe1dae6add9c2aa332a6e7a0bbd495ba2"
   integrity sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w==
@@ -8443,21 +8455,22 @@ uuid@^8.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-uuid@^9.0.0, uuid@^9.0.1:
+uuid@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
-v-calendar@3.0.0-alpha.8:
-  version "3.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/v-calendar/-/v-calendar-3.0.0-alpha.8.tgz#3bc8c69f4788fb527c39706f41fd2a502a17c827"
-  integrity sha512-T23H5UbK0EomrwArlF/jrT2LFbV/lu+Bp9JroZ1paN6rPoaMyvE+HrLxvAmUgi+pODrdTURDMzM3+WPgeFKEBQ==
+v-calendar@^3.0.3:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/v-calendar/-/v-calendar-3.1.1.tgz#0fbda63f21463e939a87b00c205dfbaf77fc03b3"
+  integrity sha512-9ZgHOcbg97TGyokcFE8yVNwjzu8pUxSMnUMHh/1flSTM8Uof2GLqiu5f00+nl30hooK149ScdIb74VZebUfmvA==
   dependencies:
-    "@popperjs/core" "2.4.0"
     "@types/lodash" "^4.14.165"
+    "@types/resize-observer-browser" "^0.1.7"
     date-fns "^2.16.1"
     date-fns-tz "^1.0.12"
     lodash "^4.17.20"
+    vue-screen-utils "^1.0.0-beta.13"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
@@ -8698,6 +8711,11 @@ vue-router@4.2.5:
   integrity sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==
   dependencies:
     "@vue/devtools-api" "^6.5.0"
+
+vue-screen-utils@^1.0.0-beta.13:
+  version "1.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/vue-screen-utils/-/vue-screen-utils-1.0.0-beta.13.tgz#0c739e19f6ffbffab63184aba7b6d710b6a63681"
+  integrity sha512-EJ/8TANKhFj+LefDuOvZykwMr3rrLFPLNb++lNBqPOpVigT2ActRg6icH9RFQVm4nHwlHIHSGm5OY/Clar9yIg==
 
 vue-template-compiler@^2.7.14:
   version "2.7.14"
