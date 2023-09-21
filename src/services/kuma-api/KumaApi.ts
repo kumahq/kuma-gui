@@ -14,7 +14,7 @@ import type {
   DataPlaneOverview,
   DataplaneRule,
   ExternalService,
-  GlobalInsights,
+  GlobalInsight,
   Mesh,
   MeshGatewayDataplane,
   MeshInsight,
@@ -47,8 +47,8 @@ export default class KumaApi extends Api {
     return this.client.get('/policies')
   }
 
-  getGlobalInsights(): Promise<GlobalInsights> {
-    return this.client.get('/global-insights')
+  getGlobalInsight(): Promise<GlobalInsight> {
+    return this.client.get('/global-insight')
   }
 
   getZones(params?: PaginationParameters): Promise<PaginatedApiListResponse<Zone>> {

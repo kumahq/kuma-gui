@@ -3,7 +3,7 @@ import _1 from './src/config'
 import _3 from './src/dataplanes'
 import _4 from './src/dataplanes+insights'
 import _6 from './src/external-services'
-import _5 from './src/global-insights'
+import _5 from './src/global-insight'
 import _0 from './src/index'
 import _13 from './src/mesh-insights'
 import _14 from './src/mesh-insights/_'
@@ -69,7 +69,7 @@ export const fs: FS = {
   '/policies': _2,
   '/dataplanes': _3,
   '/dataplanes+insights': _4,
-  '/global-insights': _5,
+  '/global-insight': _5,
   '/external-services': _6,
   '/service-insights': _7,
   '/zones': _8,
