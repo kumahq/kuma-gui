@@ -27,7 +27,10 @@
 
             <LoadingBlock v-else-if="externalService === undefined" />
 
-            <EmptyBlock v-else-if="externalService === null">
+            <EmptyBlock
+              v-else-if="externalService === null"
+              data-testid="no-matching-external-service"
+            >
               <template #title>
                 <p>{{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}</p>
               </template>
