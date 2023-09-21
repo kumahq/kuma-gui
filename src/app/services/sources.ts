@@ -22,7 +22,7 @@ export type ServiceInsightSource = DataSourceResponse<ServiceInsight>
 export type ServiceInsightCollection = CollectionResponse<ServiceInsight>
 export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCollection>
 
-export type ExternalServiceSource = DataSourceResponse<ExternalService>
+export type ExternalServiceSource = DataSourceResponse<ExternalService | null>
 
 export const sources = (api: KumaApi) => {
   return {
@@ -43,12 +43,14 @@ export const sources = (api: KumaApi) => {
       return api.getServiceInsight({ mesh, name })
     },
 
-    '/meshes/:mesh/external-services/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/external-services/by/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
 
-      return api.getExternalServiceByServiceInsightName(mesh, name)
+      const { items } = await api.getExternalServicesByServiceInsightName({ mesh, name })
+
+      return items.length > 0 ? items[0] : null
     },
   }
 }
