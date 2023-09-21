@@ -21,6 +21,11 @@ common:
     title: 'An error has occurred while trying to load this data.'
     details: 'Details'
     field: 'Field'
+  delete_modal:
+    proceed_button: 'Yes, delete'
+    text1: 'Are you sure you want to delete the {type} {name}?'
+    text2: 'This action cannot be reversed.'
+    title: 'Delete {type}'
   emptyState:
     title: 'No data'
     message: 'There are no {type} present'
