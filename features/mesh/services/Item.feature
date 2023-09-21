@@ -165,7 +165,6 @@ Feature: mesh / services / item
       Then I click the "$button-view" element
       Then the URL contains "/mesh/default/data-plane/fake-dataplane"
 
-    @only
     Scenario Outline: Service without matching ExternalService shows empty state
       Given the environment
         """
