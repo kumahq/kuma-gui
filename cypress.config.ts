@@ -9,8 +9,18 @@ import fs from 'node:fs'
 
 const env = dotenv.config().parsed as {[key: string]: string}
 
+Object.entries({
+  // default base URL for testing against
+  KUMA_BASE_URL: 'http://localhost:5681/gui',
+}).forEach(([key, d]: [string, string]) => {
+  env[key] = process.env[key] ?? d
+})
+
 export default defineConfig({
+  viewportWidth: 1366,
+  viewportHeight: 768,
   e2e: {
+    baseUrl: env.KUMA_BASE_URL,
     specPattern: '**/*.feature',
     experimentalRunAllSpecs: true,
     // Can be turned on via CLI using `CYPRESS_video=true yarn test:browser`
@@ -19,14 +29,7 @@ export default defineConfig({
       // propagate env to Cypress.env
       Object.entries(env).forEach(([prop, value]) => {
         config.env[prop] = value
-      });
-      // additional non-dotenv environment vars
-      [
-        'KUMA_BASE_URL',
-      ].forEach(item => {
-        config.env[item] = process.env[item]
       })
-
       // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
       await addCucumberPreprocessorPlugin(on, config)
 
