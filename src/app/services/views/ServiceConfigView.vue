@@ -18,7 +18,7 @@
         <template #body>
           <DataSource
             v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
-            :src="`/meshes/${route.params.mesh}/external-services/by/${route.params.service}`"
+            :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
           >
             <ErrorBlock
               v-if="externalServiceError"

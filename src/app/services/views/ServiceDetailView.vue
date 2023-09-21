@@ -8,7 +8,7 @@
       <template v-if="props.data.serviceType === 'external'">
         <DataSource
           v-slot="{ data: externalService, error }: ExternalServiceSource"
-          :src="`/meshes/${route.params.mesh}/external-services/by/${route.params.service}`"
+          :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
         >
           <ErrorBlock
             v-if="error"

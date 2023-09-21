@@ -11,6 +11,10 @@ type DetailParams = CollectionParams & {
   name: string
 }
 
+type ExternalServiceParams = CollectionParams & {
+  service: string
+}
+
 type PaginationParams = {
   size: number
   page: number
@@ -43,12 +47,12 @@ export const sources = (api: KumaApi) => {
       return api.getServiceInsight({ mesh, name })
     },
 
-    '/meshes/:mesh/external-services/by/:name': async (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/external-services/for/:service': async (params: ExternalServiceParams, source: Closeable) => {
       source.close()
 
-      const { mesh, name } = params
+      const { mesh, service } = params
 
-      const { items } = await api.getExternalServicesByServiceInsightName({ mesh, name })
+      const { items } = await api.getExternalServicesByServiceInsightName({ mesh, service })
 
       return items.length > 0 ? items[0] : null
     },

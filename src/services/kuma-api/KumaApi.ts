@@ -197,9 +197,9 @@ export default class KumaApi extends Api {
   }
 
   // TODO: Replace this workaround once https://github.com/kumahq/kuma/issues/5908 was implemented with a standard API method.
-  async getExternalServicesByServiceInsightName({ mesh, name }: { mesh: string, name: string }): Promise<PaginatedApiListResponse<ExternalService>> {
-    const response = await this.getAllExternalServicesFromMesh({ mesh }, { name })
-    const items = response.items.filter((externalService) => externalService.tags['kuma.io/service'] === name)
+  async getExternalServicesByServiceInsightName({ mesh, service }: { mesh: string, service: string }): Promise<PaginatedApiListResponse<ExternalService>> {
+    const response = await this.getAllExternalServicesFromMesh({ mesh }, { name: service })
+    const items = response.items.filter((externalService) => externalService.tags['kuma.io/service'] === service)
 
     return {
       items,
