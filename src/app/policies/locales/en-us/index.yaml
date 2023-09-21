@@ -15,6 +15,7 @@ policies:
     outbound: 'Outbound'
   detail:
     affected_dpps: 'Affected Data Plane Proxies'
+    dataplane_input_placeholder: 'Filter by name'
   type:
     # CircuitBreaker:
     #   description: 'About CircuitBreaker ...'

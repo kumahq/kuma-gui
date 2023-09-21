@@ -76,7 +76,6 @@
         <template #icon>
           <KIcon
             icon="gearFilled"
-            class="k-button-icon"
             :size="KUI_ICON_SIZE_30"
             color="currentColor"
             hide-title
