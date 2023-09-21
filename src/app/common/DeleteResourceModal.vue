@@ -3,10 +3,8 @@
     :action-button-text="props.actionButtonText"
     :confirmation-text="props.confirmationText"
     :is-visible="props.isVisible"
-    :modal-id="props.modalId"
     :title="props.title"
     type="danger"
-    data-testid="delete-resource-modal"
     @canceled="emit('cancel')"
     @proceed="deleteResource"
   >
@@ -14,13 +12,31 @@
       <slot name="body-content" />
 
       <KAlert
-        v-if="hasError"
+        v-if="error !== null"
         class="mt-4"
         appearance="danger"
         is-dismissible
       >
         <template #alertMessage>
-          <slot name="error" />
+          <template v-if="(error instanceof ApiError)">
+            <p>{{ t('common.error_state.api_error', { status: error.status, title: error.title }) }}</p>
+
+            <ul
+              v-if="error.invalidParameters.length > 0"
+              :data-testid="`error-${error.status}`"
+            >
+              <li
+                v-for="(parameter, index) in error.invalidParameters"
+                :key="index"
+              >
+                <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
+              </li>
+            </ul>
+          </template>
+
+          <template v-else>
+            <p>{{ t('common.error_state.default_error') }}</p>
+          </template>
         </template>
       </KAlert>
     </template>
@@ -30,6 +46,11 @@
 <script lang="ts" setup>
 import { KAlert, KPrompt } from '@kong/kongponents'
 import { PropType, ref } from 'vue'
+
+import { ApiError } from '@/services/kuma-api/ApiError'
+import { useI18n } from '@/utilities'
+
+const { t } = useI18n()
 
 const props = defineProps({
   actionButtonText: {
@@ -59,11 +80,6 @@ const props = defineProps({
     required: true,
   },
 
-  modalId: {
-    type: String,
-    required: true,
-  },
-
   title: {
     type: String,
     required: false,
@@ -76,16 +92,20 @@ const emit = defineEmits<{
   (event: 'delete'): void
 }>()
 
-const hasError = ref(false)
+const error = ref<Error | null>(null)
 
 async function deleteResource() {
-  hasError.value = false
+  error.value = null
 
   try {
     await props.deleteFunction()
     emit('delete')
   } catch (err) {
-    hasError.value = true
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
   }
 }
 </script>

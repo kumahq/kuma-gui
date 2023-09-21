@@ -204,10 +204,3 @@ zones:
       500:
         title: 'Error 500: An error occurred while creating the Zone {name}'
         description: 'You may retry this operation.'
-  delete:
-    confirmModal:
-      text1: 'Are you sure you want to delete the Zone {zoneName}?'
-      text2: 'This action cannot be reversed.'
-      proceedText: 'Yes, delete'
-      title: 'Delete Zone'
-      errorText: 'An unexpected error occurred'

@@ -22,21 +22,17 @@
       v-if="isDeleteModalOpen"
       :confirmation-text="props.zoneOverview.name"
       :delete-function="deleteZone"
-      :is-visible="isDeleteModalOpen"
-      modal-id="delete-zone-modal"
-      :action-button-text="t('zones.delete.confirmModal.proceedText')"
-      :title="t('zones.delete.confirmModal.title')"
+      is-visible
+      :action-button-text="t('common.delete_modal.proceed_button')"
+      :title="t('common.delete_modal.title', { type: 'Zone' })"
+      data-testid="delete-zone-modal"
       @cancel="toggleDeleteModal"
       @delete="navigateToListView"
     >
       <template #body-content>
-        <p>{{ t('zones.delete.confirmModal.text1', { zoneName: props.zoneOverview.name }) }}</p>
+        <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: props.zoneOverview.name }) }}</p>
 
-        <p>{{ t('zones.delete.confirmModal.text2') }}</p>
-      </template>
-
-      <template #error>
-        {{ t('zones.delete.confirmModal.errorText') }}
+        <p>{{ t('common.delete_modal.text2') }}</p>
       </template>
     </DeleteResourceModal>
   </div>
