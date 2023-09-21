@@ -113,7 +113,7 @@
                 </div>
 
                 <div
-                  v-if="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' && zoneOverviewsData.items.length > 0"
+                  v-if="can('create zones') && zoneOverviewsData.items.length > 0"
                   class="card-actions"
                 >
                   <KButton
