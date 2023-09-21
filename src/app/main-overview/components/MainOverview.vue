@@ -184,10 +184,9 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { MeshInsightCollectionSource } from '@/app/meshes/sources'
 import { ZoneOverviewCollectionSource } from '@/app/zones/sources'
-import { useEnv, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
-const env = useEnv()
 const can = useCan()
 </script>
 
