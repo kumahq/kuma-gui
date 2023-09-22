@@ -11,7 +11,11 @@ const files = globSync('./src/**/README.md').map(item => {
     text: name,
     link: item
   }
-}).filter(Boolean)
+}).filter(notEmpty)
+
+function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
