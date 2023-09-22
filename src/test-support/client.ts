@@ -50,14 +50,14 @@ export default () => {
       listeners = []
     },
     request: (request: HistoryEntry) => {
-      const found = listeners.filter((item: Listener) => equals(item.request, request))
+      const found = listeners.filter((item) => equals(item.request, request))
       if (found.length > 0) {
         found.forEach((item) => item.resolve(true))
       }
       history.push(request)
     },
     waitForRequest: async (request: Request, options: { timeout?: number} = {}) => {
-      const found = history.find((item: HistoryEntry) => equals(request, item))
+      const found = history.find((item) => equals(request, item))
       if (typeof found !== 'undefined') {
         return true
       } else {
