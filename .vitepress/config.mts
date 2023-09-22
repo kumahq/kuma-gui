@@ -18,6 +18,10 @@ export default defineConfig({
   title: 'kuma-gui',
   description: '',
   cleanUrls: true,
+  ignoreDeadLinks: [
+    // ignore all localhost links
+    /^https?:\/\/localhost/,
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
