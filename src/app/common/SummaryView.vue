@@ -19,10 +19,11 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 .summary-slideout {
-  // TODO: Remove or replace these once we switch to Kongponents v9 which will deprecate these variables.
-  // Overrides KSlideout’s override.
-  --KCardPaddingX: #{$kui-space-80} !important;
-  --KCardPaddingY: #{$kui-space-80} !important;
+  :deep(.kong-card) {
+    // TODO: Remove these once those styles have been removed/fixed in Kongponents v9.
+    // Overrides KSlideout’s override.
+    padding: #{$kui-space-80} !important;
+  }
 
   :deep(.panel),
   :deep(.panel-background),
