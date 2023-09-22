@@ -21,7 +21,14 @@ class I18nError extends Error {
 }
 
 export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
-  const i18n = createI18n<typeof strs>('en-us', strs, true)
+  const i18n = createI18n<typeof strs>('en-us', strs, {
+    isGlobal: true,
+    onError: (e) => {
+      // TODO: change the below code that we used before we had onError to be
+      // here instead of just rethrowing
+      throw e
+    },
+  })
   return {
     ...i18n,
     t: function (...rest: Parameters<typeof i18n['t']>) {
