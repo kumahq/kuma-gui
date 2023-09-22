@@ -40,7 +40,6 @@ Feature: Zones: Page navigation
     Then the page title contains "<ListViewTitle>"
 
     When I click the "<TableSelector> tbody tr:nth-child(1) [data-testid='detail-view-link']" element
-    Then I wait for 1000 milliseconds
     Then the page title contains "<DetailViewTitle>"
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(1) > a" element

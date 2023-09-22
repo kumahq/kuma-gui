@@ -1,7 +1,7 @@
 import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
-import { useServer, useMock } from '@/services/e2e'
+import { useServer, useMock, useClient } from '@/services/e2e'
 import { undefinedSymbol } from '@/test-support'
 
 const console = {
@@ -24,11 +24,11 @@ const YAML = {
 
 let env = {}
 let selectors: Record<string, string> = {}
-let urls = new Map()
+const client = useClient()
 Before(() => {
+  client.reset()
   env = {}
   selectors = {}
-  urls = new Map()
   useServer()
 })
 
@@ -70,9 +70,7 @@ Given('the environment', (yaml: string) => {
   })
 })
 Given('the URL {string} responds with', (url: string, yaml: string) => {
-  const now = new Date().getTime()
   const mock = useMock()
-  urls.set(url, `spy-${now}`)
   mock(url, env, (respond) => {
     const response = respond(
       (YAML.parse(yaml) || {}) as {
@@ -81,7 +79,7 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
       },
     )
     return response
-  }).as(urls.get(url))
+  })
 })
 
 // act
@@ -126,84 +124,21 @@ Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
 })
 
-Then(/^the URL "(.*)" was requested ([0-9]*) time[s]?$/, (url: string, count: string) => {
-  cy.get(`@${urls.get(url)}.all`)
-    .should('have.length', count)
-})
-
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
-  const bool = not.trim().length === 0
-  cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.parse(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
-    Object.entries(data).forEach(
-      ([key, value]) => {
-        switch (key) {
-          case 'method':
-            expect(xhr.request[key]).to.equal(String(value))
-            break
-          case 'body':
-            Object.entries(data[key]).forEach(([prop, value]) => {
-              expect(xhr.request[key][prop]).to.equal(String(value))
-            })
-            break
-          case 'searchParams':
-            Object.entries(data[key]).forEach(([key, value]) => {
-              // convert everything to arrays
-              const params = Array.isArray(xhr.request.query[key])
-                ? (xhr.request.query[key] as unknown as (string | number)[])
-                : [(xhr.request.query[key] as unknown as (string | number))]
-              const values = Array.isArray(value)
-                ? (value as unknown as (string | number)[])
-                : [(value as unknown as (string | number))]
-              //
-              values.forEach((item) => {
-                expect(params.includes(String(item))).to.equal(bool)
-              })
-            })
-            break
-        }
-      },
-    )
-  })
-})
-Then(/^the URL "(.*)" was requested with only$/, (url: string, exact: string, yaml: string) => {
-  cy.wait(`@${urls.get(url)}`).then((xhr) => {
-    const data = YAML.parse(yaml) as {method: string, searchParams: Record<string, string>, body: Record<string, unknown>}
-    Object.entries(data).forEach(
-      ([key, value]) => {
-        switch (key) {
-          case 'method':
-            expect(xhr.request[key]).to.equal(value)
-            break
-          case 'body': {
-            const bodyEntries = Object.entries(data[key])
-
-            bodyEntries.forEach(([prop, value]) => {
-              expect(xhr.request[key][prop]).to.equal(value)
-            })
-
-            // Asserts that the expected body data and the requested body data have the same amount of keys. If the previous assertion passed, that implies that the request body doesn’t have extraneous properties. This can be useful when utilizing PATCH requests.
-            if (exact) {
-              expect(Object.keys(xhr.request[key]).length).to.equal(bodyEntries.length)
-            }
-
-            break
-          }
-          case 'searchParams': {
-            const searchParamsEntries = Object.entries(data[key])
-            searchParamsEntries.forEach(([key, value]) => {
-              expect(xhr.request.query[key]).to.equal(value)
-            })
-
-            if (exact) {
-              expect(Object.keys(xhr.request.query[key]).length).to.equal(searchParamsEntries.length)
-            }
-
-            break
-          }
-        }
-      },
-    )
+  cy.wrap({
+    url,
+    ...YAML.parse(yaml) as {
+      method: string,
+      searchParams: Record<string, string>,
+      body: Record<string, unknown>
+    },
+  }).then(async (request) => {
+    const found = await client.waitForRequest(request)
+    if (not.trim().length === 0) {
+      expect(found).to.equal(true, `${url} was requested with ...`)
+    } else {
+      expect(found).to.equal(false, `${url} wasn't requested ...`)
+    }
   })
 })
 
@@ -249,7 +184,6 @@ Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) =
 })
 
 Then('the page title contains {string}', function (title: string) {
-  cy.wait(1000)
   cy.title().should('contain', title)
 })
 

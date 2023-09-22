@@ -1,6 +1,7 @@
 import type { EnvVars } from '@/services/env/Env'
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
 import type { Callback, Options } from '@/test-support'
+import getClient from '@/test-support/client'
 import { mocker } from '@/test-support/intercept'
 
 // this needs to come from testing
@@ -21,6 +22,7 @@ const $ = {
   mockServer: token('mockServer'),
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
+  client: token<ReturnType<typeof getClient>>('client'),
 
   logger: token('logger'),
 }
@@ -41,9 +43,12 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
   [app.cy, {
     constant: cy,
   }],
+  [$.client, {
+    service: getClient,
+  }],
   [app.mockServer, {
     service: (mock: Mocker) => {
-      mock('*').as('request')
+      mock('*')
     },
     arguments: [
       app.mock,
@@ -70,4 +75,5 @@ export const TOKENS = $
 export const [
   useMock,
   useServer,
-] = createInjections($.mock, $.mockServer)
+  useClient,
+] = createInjections($.mock, $.mockServer, $.client)
