@@ -32,26 +32,24 @@ Before(() => {
   useServer()
 })
 
-const $ = (selector: string) => {
-  const resolvedSelector = resolveCustomAlias(selector)
+const negativeTimeout = parseInt(Cypress.env().KUMA_NEGATIVE_TIMEOUT) || 4000
+const timeout = (negative: boolean) => negative ? { timeout: negativeTimeout } : {}
 
-  return cy.get(resolvedSelector)
+const $ = (...args: Parameters<typeof cy.get>) => {
+  return cy.get(...resolveCustomAlias(...args))
 }
 
-function resolveCustomAlias(selector: string): string {
+function resolveCustomAlias(...args: Parameters<typeof cy.get>): Parameters<typeof cy.get> {
+  let selector = args[0]
   if (selector.startsWith('$')) {
     const alias = selector.split(/[: .[#]/).shift()!.substring(1)
-
     if (typeof selectors[alias] === 'undefined') {
       throw new Error(`Could not find alias $${alias}. Make sure you have defined the alias in a CSS selectors step`)
     }
-
     selector = selector.replace(`$${alias}`, selectors[alias])
-
-    return resolveCustomAlias(selector)
+    return resolveCustomAlias(selector, args[1])
   }
-
-  return selector
+  return args
 }
 
 // arrange
@@ -111,15 +109,17 @@ When('I clear the {string} element', (selector: string) => {
   $(selector).clear()
 })
 
-When('I go {string}', (direction: number | Cypress.HistoryDirection) => {
+When('I navigate {string}', (direction: Cypress.HistoryDirection) => {
   cy.go(direction)
 })
 
 // assert
+
 Then('the URL is {string}', (expected: string) => {
-  const base = Cypress.env().KUMA_BASE_URL || 'http://localhost:5681/gui'
+  const base = Cypress.config('baseUrl') || Cypress.env().KUMA_BASE_URL
   cy.url().should('eq', `${base}${expected}`)
 })
+
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
 })
@@ -142,22 +142,26 @@ Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: str
   })
 })
 
-Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {
-  const prefix = assertion === ' ' ? '' : 'not.'
-  const chainer = `${prefix}exist`
-
-  $(selector).should(chainer)
-})
-
 Then(/^the "(.*)" element[s]? exist[s]? ([0-9]*) time[s]?$/, (selector: string, count: string) => {
   $(selector).should('have.length', count)
 })
 
-Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(.*)$/, (selector: string, assertion: string, booleanAttribute: string) => {
-  const prefix = ['is', 'are'].includes(assertion.trim()) ? '' : 'not.'
-  const chainer = `${prefix}be.${booleanAttribute}`
+Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selector: string, assertion: string) {
+  const negative = assertion !== ' '
+  const prefix = negative ? 'not.' : ''
 
-  $(selector).should(chainer)
+  $(selector, {
+    ...timeout(negative),
+  }).should(`${prefix}exist`)
+})
+
+Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(.*)$/, (selector: string, assertion: string, booleanAttribute: string) => {
+  const negative = !['is', 'are'].includes(assertion.trim())
+  const prefix = negative ? 'not.' : ''
+
+  $(selector, {
+    ...timeout(negative),
+  }).should(`${prefix}be.${booleanAttribute}`)
 })
 
 Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', table: DataTable) => {

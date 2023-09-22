@@ -14,7 +14,7 @@ import type {
   DataPlaneOverview,
   DataplaneRule,
   ExternalService,
-  GlobalInsights,
+  GlobalInsight,
   Mesh,
   MeshGatewayDataplane,
   MeshInsight,
@@ -47,8 +47,8 @@ export default class KumaApi extends Api {
     return this.client.get('/policies')
   }
 
-  getGlobalInsights(): Promise<GlobalInsights> {
-    return this.client.get('/global-insights')
+  getGlobalInsight(): Promise<GlobalInsight> {
+    return this.client.get('/global-insight')
   }
 
   getZones(params?: PaginationParameters): Promise<PaginatedApiListResponse<Zone>> {
@@ -196,16 +196,15 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
-  // The following code is a hotfix for https://github.com/kumahq/kuma-gui/issues/599 until we implement the lookup of `ExternalService` resources by `ServiceInsight` name.
-  async getExternalServiceByServiceInsightName(mesh: string, name: string): Promise<ExternalService | null> {
-    const { items } = await this.getAllExternalServicesFromMesh({ mesh }, { name })
+  // TODO: Replace this workaround once https://github.com/kumahq/kuma/issues/5908 was implemented with a standard API method.
+  async getExternalServicesByServiceInsightName({ mesh, service }: { mesh: string, service: string }): Promise<PaginatedApiListResponse<ExternalService>> {
+    const response = await this.getAllExternalServicesFromMesh({ mesh }, { name: service })
+    const items = response.items.filter((externalService) => externalService.tags['kuma.io/service'] === service)
 
-    if (Array.isArray(items)) {
-      const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === name)
-
-      return foundExternalService ?? null
-    } else {
-      return null
+    return {
+      items,
+      total: items.length,
+      next: null,
     }
   }
 

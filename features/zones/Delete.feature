@@ -7,7 +7,7 @@ Feature: zones / delete
       | item           | $items tbody tr                                                |
       | actions-button | $item:nth-child(1) [data-testid="k-dropdown-trigger"] button   |
       | delete-button  | $item:nth-child(1) [data-testid="dropdown-delete-item"] button |
-      | delete-prompt  | [data-testid="delete-resource-modal"]                          |
+      | delete-prompt  | [data-testid="delete-zone-modal"]                              |
       | confirm-button | $delete-prompt .k-prompt-proceed                               |
       | confirm-input  | $delete-prompt .k-prompt-confirm-text .k-input                 |
 

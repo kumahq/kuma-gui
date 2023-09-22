@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t, can, env }"
+    v-slot="{ route, t, can }"
     name="zone-cp-list-view"
   >
     <AppView>
@@ -59,10 +59,10 @@
                 :total="data?.total"
                 :items="data ? transformToTableData(data.items) : undefined"
                 :error="error"
-                :empty-state-title="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.title') : undefined"
-                :empty-state-message="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.message') : undefined"
-                :empty-state-cta-to="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? { name: 'zone-create-view' } : undefined"
-                :empty-state-cta-text="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zones.index.create') : undefined"
+                :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
+                :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
+                :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
+                :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
                 @change="route.update"
               >
                 <template #name="{ row, rowValue }">
@@ -161,21 +161,17 @@
             v-if="isDeleteModalVisible"
             :confirmation-text="deleteZoneName"
             :delete-function="deleteZone"
-            :is-visible="isDeleteModalVisible"
-            modal-id="delete-zone-modal"
-            :action-button-text="t('zones.delete.confirmModal.proceedText')"
-            :title="t('zones.delete.confirmModal.title')"
+            is-visible
+            :action-button-text="t('common.delete_modal.proceed_button')"
+            :title="t('common.delete_modal.title', { type: 'Zone' })"
+            data-testid="delete-zone-modal"
             @cancel="toggleDeleteModal"
             @delete="() => { toggleDeleteModal(); refresh() }"
           >
             <template #body-content>
-              <p>{{ t('zones.delete.confirmModal.text1', { zoneName: deleteZoneName }) }}</p>
+              <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
 
-              <p>{{ t('zones.delete.confirmModal.text2') }}</p>
-            </template>
-
-            <template #error>
-              {{ t('zones.delete.confirmModal.errorText') }}
+              <p>{{ t('common.delete_modal.text2') }}</p>
             </template>
           </DeleteResourceModal>
         </DataSource>

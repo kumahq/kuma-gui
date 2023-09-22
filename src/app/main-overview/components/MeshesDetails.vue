@@ -49,8 +49,8 @@ const tableData = computed(() => props.meshInsights.map((meshInsight) => {
 
   return {
     name,
-    services: services.total ?? 0,
-    dataPlaneProxies: dataplanesByType.standard.total ?? 0,
+    services: services.internal ?? 0,
+    dataPlaneProxies: `${dataplanesByType.standard.online ?? 0}/${dataplanesByType.standard.total ?? 0}`,
   }
 }))
 </script>
