@@ -4,6 +4,7 @@
       v-for="(tag, index) in tagList"
       :key="index"
       class="tag-badge"
+      max-width="auto"
     >
       <component
         :is="tag.route ? 'RouterLink' : 'span'"

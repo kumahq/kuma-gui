@@ -26,8 +26,6 @@
   // KONGPONENTS
   // Reduces the excessive vertical padding.
   --KPopPaddingY: #{$kui-space-40};
-  // Removes the default max width of 200 pixels because badges should never be cut-off.
-  --KBadgeMaxWidth: auto;
   --KCardBorderRadius: 9px;
 
   // MISC
