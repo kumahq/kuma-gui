@@ -41,8 +41,8 @@
 
 // remove button default styles for elements that act like buttons, but don't look like them
 .non-visual-button {
-  font-weight: $kui-font-weight-regular;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+  background-color: transparent !important;
+  border: none !important;
+  color: currentColor !important;
+  cursor: pointer !important;
 }
