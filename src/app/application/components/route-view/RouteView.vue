@@ -109,6 +109,9 @@ const routeParams = computed(() => {
         }
         break
     }
+    if (param.length === 0) {
+      param = def
+    }
     return [
       prop,
       decodeURIComponent(param),
@@ -139,7 +142,7 @@ watch(() => props.name, (name) => {
   if (Object.keys(props.params).length > 0) {
     router.replace({
       name,
-      query: cleanQuery(props.params, route.query),
+      query: cleanQuery(routeParams.value, route.query),
     })
   }
 }, { immediate: true })
