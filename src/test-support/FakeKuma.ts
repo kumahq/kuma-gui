@@ -1,5 +1,7 @@
 import { Faker } from '@faker-js/faker'
 
+import type { DataPlaneProxyStatus, ServiceStatus } from '@/types/index.d'
+
 export class KumaModule {
   faker: Faker
   constructor(
@@ -88,8 +90,8 @@ export class KumaModule {
   /**
    * Returns a random DPP (or gateway) status object with self-consistent values (i.e. total = online + partiallyDegraded + offline).
    */
-  dataPlaneProxyStatus(maxTotal: number = 30) {
-    const total = this.faker.number.int({ min: 1, max: maxTotal })
+  healthStatus({ min = 0, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
+    const total = this.faker.number.int({ min, max })
     const online = this.faker.number.int({ min: 0, max: total })
     const partiallyDegraded = this.faker.number.int({ min: 0, max: total - online })
     const offline = total - online - partiallyDegraded
@@ -99,16 +101,16 @@ export class KumaModule {
       ['online', online],
       ['partiallyDegraded', partiallyDegraded],
       ['offline', offline],
-    ].filter(([_key, value]) => value !== 0)
+    ].filter(([_key, value]) => omitZeroValues ? value !== 0 : true)
 
-    return Object.fromEntries(values)
+    return Object.fromEntries(values) as DataPlaneProxyStatus
   }
 
   /**
    * Returns a random service status object with self-consistent values (i.e. total = internal + external).
    */
-  serviceStatus(maxTotal: number = 30) {
-    const total = this.faker.number.int({ min: 1, max: maxTotal })
+  serviceStatus({ min = 1, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
+    const total = this.faker.number.int({ min, max })
     const internal = this.faker.number.int({ min: 0, max: total })
     const external = total - internal
 
@@ -116,16 +118,34 @@ export class KumaModule {
       ['total', total],
       ['internal', internal],
       ['external', external],
-    ].filter(([_key, value]) => value !== 0)
+    ].filter(([_key, value]) => omitZeroValues ? value !== 0 : true)
 
-    return Object.fromEntries(values)
+    return Object.fromEntries(values) as ServiceStatus
+  }
+
+  globalInsightServices({ min = 1, max = 30 }: { min?: number, max?: number } = {}) {
+    const total = this.faker.number.int({ min, max })
+
+    const internalTotal = this.faker.number.int({ min: 0, max: total })
+    const externalTotal = this.faker.number.int({ min: 0, max: total - internalTotal })
+    const gatewayBuiltinTotal = this.faker.number.int({ min: 0, max: total - internalTotal - externalTotal })
+    const gatewayDelegatedTotal = total - internalTotal - externalTotal - gatewayBuiltinTotal
+
+    return {
+      external: {
+        total: externalTotal,
+      },
+      gatewayBuiltin: this.healthStatus({ max: gatewayBuiltinTotal, omitZeroValues: false }),
+      gatewayDelegated: this.healthStatus({ max: gatewayDelegatedTotal, omitZeroValues: false }),
+      internal: this.healthStatus({ max: internalTotal, omitZeroValues: false }),
+    }
   }
 
   /**
    * Returns a random policy type status object.
    */
-  policyTypeStatus(maxTotal: number = 10) {
-    const total = this.faker.number.int({ min: 0, max: maxTotal })
+  policyTypeStatus({ min = 0, max = 20 }: { min?: number, max?: number } = {}) {
+    const total = this.faker.number.int({ min, max })
 
     const values = [
       ['total', total],

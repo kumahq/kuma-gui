@@ -1,6 +1,6 @@
-import { describe, expect, jest, test } from '@jest/globals'
+import { describe, expect, test } from '@jest/globals'
 
-import { getZoneDpServerAuthType, fetchAllResources } from './helpers'
+import { getZoneDpServerAuthType } from './helpers'
 import { DISABLED } from '@/constants'
 import { ZoneOverview } from '@/types/index.d'
 
@@ -52,41 +52,6 @@ describe('helpers', () => {
           },
         } as unknown) as ZoneOverview),
       ).toBe(type)
-    })
-  })
-
-  describe('fetchAllResources', () => {
-    test('throws an error when broken call', () => {
-      const brokenRequest = jest.fn(() => {
-        throw new Error()
-      })
-
-      expect(() => fetchAllResources(brokenRequest)).rejects.toThrow(Error)
-    })
-
-    test('returns aggregared data', async () => {
-      const request = jest
-        .fn()
-        .mockReturnValueOnce(Promise.resolve({
-          next: true,
-          items: new Array(500).fill(''),
-          total: 501,
-        }))
-        .mockReturnValueOnce(Promise.resolve({
-          next: false,
-          items: [''],
-          total: 501,
-        }))
-
-      // @ts-expect-error
-      const response = await fetchAllResources(request)
-
-      expect(response.items.length).toBe(501)
-      expect(response.items[0]).toBe('')
-      expect(response.total).toBe(501)
-      expect(request).toHaveBeenCalledTimes(2)
-      expect(request).toHaveBeenNthCalledWith(1, { offset: 0, size: 500 })
-      expect(request).toHaveBeenNthCalledWith(2, { offset: 500, size: 500 })
     })
   })
 })

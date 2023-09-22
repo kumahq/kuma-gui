@@ -20,4 +20,4 @@ main-overview:
       table:
         name: 'Name'
         services: 'Services'
-        data_plane_proxies: 'Data Plane Proxies'
+        data_plane_proxies: 'Data Plane Proxies (online/total)'

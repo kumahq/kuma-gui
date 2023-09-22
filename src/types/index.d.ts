@@ -105,10 +105,80 @@ export interface ResourceStat {
   total: number
 }
 
-export interface GlobalInsights {
-  type: 'GlobalInsights'
-  creationTime: string
-  resources: Record<string, ResourceStat>
+export interface GlobalInsightDataPlaneProxies {
+  gatewayBuiltin: {
+    total: number
+    online: number
+    partiallyDegraded: number
+    offline: number
+  }
+  gatewayDelegated: {
+    total: number
+    online: number
+    partiallyDegraded: number
+    offline: number
+  }
+  standard: {
+    total: number
+    online: number
+    partiallyDegraded: number
+    offline: number
+  }
+}
+
+export interface GlobalInsightMeshes {
+  total: number
+}
+
+export interface GlobalInsightPolicies {
+  total: number
+}
+
+export interface GlobalInsightServices {
+  external: {
+    total: number
+  }
+  gatewayBuiltin: {
+    total: number
+    online: number
+    partiallyDegraded: number
+    offline: number
+  }
+  gatewayDelegated: {
+    total: number
+    online: number
+    partiallyDegraded: number
+    offline: number
+  }
+  internal: {
+    total: number
+    online: number
+    partiallyDegraded: number
+    offline: number
+  }
+}
+
+export interface GlobalInsightZones {
+  controlPlanes: {
+    total: number
+    online: number
+  }
+  zoneEgresses: {
+    total: number
+    online: number
+  }
+  zoneIngresses: {
+    total: number
+    online: number
+  }
+}
+
+export interface GlobalInsight {
+  dataplanes: GlobalInsightDataPlaneProxies
+  meshes: GlobalInsightMeshes
+  policies: GlobalInsightPolicies
+  services: GlobalInsightServices
+  zones: GlobalInsightZones
 }
 
 export interface KumaDpVersion {
@@ -537,6 +607,8 @@ export interface MeshInsight extends Entity {
   dataplanesByType: {
     standard: DataPlaneProxyStatus
     gateway: DataPlaneProxyStatus
+    gatewayBuiltin: DataPlaneProxyStatus
+    gatewayDelegated: DataPlaneProxyStatus
   }
   policies?: Record<string, ResourceStat>
   dpVersions: DpVersions

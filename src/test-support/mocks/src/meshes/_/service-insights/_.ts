@@ -15,7 +15,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   if (serviceType === 'internal') {
     serviceInsight.addressPort = `${name}.mesh:${fake.internet.port()}`
     serviceInsight.status = fake.kuma.status()
-    serviceInsight.dataplanes = fake.kuma.dataPlaneProxyStatus()
+    serviceInsight.dataplanes = fake.kuma.healthStatus()
   }
 
   return {

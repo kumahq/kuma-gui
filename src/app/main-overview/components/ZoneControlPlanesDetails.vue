@@ -9,8 +9,8 @@
     :items="tableData"
     :total="tableData.length"
     :empty-state-title="t('zone-cps.empty_state.title')"
-    :empty-state-message="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.message') : t('common.emptyState.message', { type: 'Zones' })"
-    :empty-state-cta-to="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? { name: 'zone-create-view' } : undefined"
+    :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : t('common.emptyState.message', { type: 'Zones' })"
+    :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
     :empty-state-cta-text="t('zones.index.create')"
   >
     <template #name="{ rowValue }">
@@ -42,14 +42,15 @@
 <script lang="ts" setup>
 import { PropType, computed } from 'vue'
 
+import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { getZoneControlPlaneStatus } from '@/app/zones/getZoneControlPlaneStatus'
 import type { ZoneOverview } from '@/types/index.d'
-import { useEnv, useI18n } from '@/utilities'
+import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
-const env = useEnv()
+const can = useCan()
 
 const props = defineProps({
   zoneOverviews: {

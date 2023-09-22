@@ -13,9 +13,22 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
         const name = `${fake.hacker.noun()}-${id}`
-        const dataPlaneProxyStatus = fake.kuma.dataPlaneProxyStatus()
-        const standardDataPlaneProxies = fake.kuma.dataPlaneProxyStatus(dataPlaneProxyStatus.total)
-        const gateways = fake.kuma.dataPlaneProxyStatus(standardDataPlaneProxies.total)
+
+        const standard = fake.kuma.healthStatus()
+        const gatewayBuiltin = fake.kuma.healthStatus()
+        const gatewayDelegated = fake.kuma.healthStatus()
+        const gateway = {
+          total: (gatewayBuiltin.total ?? 0) + (gatewayDelegated.total ?? 0),
+          online: (gatewayBuiltin.online ?? 0) + (gatewayDelegated.online ?? 0),
+          partiallyDegraded: (gatewayBuiltin.partiallyDegraded ?? 0) + (gatewayDelegated.partiallyDegraded ?? 0),
+          offline: (gatewayBuiltin.offline ?? 0) + (gatewayDelegated.offline ?? 0),
+        }
+        const dataplanes = {
+          total: (standard.total ?? 0) + (gateway.total ?? 0),
+          online: (standard.online ?? 0) + (gateway.online ?? 0),
+          partiallyDegraded: (standard.partiallyDegraded ?? 0) + (gateway.partiallyDegraded ?? 0),
+          offline: (standard.offline ?? 0) + (gateway.offline ?? 0),
+        }
 
         return {
           type: 'MeshInsight',
@@ -23,10 +36,12 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           creationTime: '2021-01-29T07:10:02.339031+01:00',
           modificationTime: '2021-01-29T07:29:02.314448+01:00',
           lastSync: '2021-01-29T06:29:02.314447Z',
-          dataplanes: dataPlaneProxyStatus,
+          dataplanes,
           dataplanesByType: {
-            standard: standardDataPlaneProxies,
-            gateway: gateways,
+            standard,
+            gateway,
+            gatewayBuiltin,
+            gatewayDelegated,
           },
           policies: {
             CircuitBreaker: fake.kuma.policyTypeStatus(),

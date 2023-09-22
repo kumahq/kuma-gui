@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t, can, env }"
+    v-slot="{ route, t, can }"
     name="zone-cp-list-view"
   >
     <AppView>
@@ -59,10 +59,10 @@
                 :total="data?.total"
                 :items="data ? transformToTableData(data.items) : undefined"
                 :error="error"
-                :empty-state-title="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.title') : undefined"
-                :empty-state-message="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zone-cps.empty_state.message') : undefined"
-                :empty-state-cta-to="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? { name: 'zone-create-view' } : undefined"
-                :empty-state-cta-text="env('KUMA_ZONE_CREATION_FLOW') === 'enabled' ? t('zones.index.create') : undefined"
+                :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
+                :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
+                :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
+                :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
                 @change="route.update"
               >
                 <template #name="{ row, rowValue }">
