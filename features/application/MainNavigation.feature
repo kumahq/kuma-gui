@@ -62,10 +62,10 @@ Feature: application / MainNavigation
     Then the page title contains "Meshes"
     And the "[data-testid='page-2-btn'].active" element exists
 
-    When I go "back"
+    When I navigate "back"
     Then the page title contains "Meshes"
     And the "[data-testid='page-1-btn'].active" element exists
 
-    When I go "back"
+    When I navigate "back"
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element exists
