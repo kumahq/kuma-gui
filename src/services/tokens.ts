@@ -4,7 +4,6 @@ import type DataSourceLifeCycle from '@/app/application/services/data-source/ind
 import type { getNavItems } from '@/app/getNavItems'
 import type { SplitRouteRecordRaw } from '@/app/meshes'
 import Env, { EnvVars } from '@/services/env/Env'
-import type I18n from '@/services/i18n/I18n'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { RestClient } from '@/services/kuma-api/RestClient'
 import type Logger from '@/services/logger/Logger'

@@ -5,7 +5,7 @@ import DataSource from './components/data-source/DataSource.vue'
 import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
 import can from './services/can'
-import I18n from '@/services/i18n/I18n'
+import I18n from './services/i18n/I18n'
 import { token, createInjections } from '@/services/utils'
 import type { ServiceDefinition } from '@/services/utils'
 
@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     DataSource: typeof DataSource
     RouteView: typeof RouteView
     RouteTitle: typeof RouteTitle
+    I18nT: ReturnType<typeof i18nTComponent>
   }
 }
 
