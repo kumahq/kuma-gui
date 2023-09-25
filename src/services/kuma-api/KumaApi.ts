@@ -196,18 +196,6 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
-  // TODO: Replace this workaround once https://github.com/kumahq/kuma/issues/5908 was implemented with a standard API method.
-  async getExternalServicesByServiceInsightName({ mesh, service }: { mesh: string, service: string }): Promise<PaginatedApiListResponse<ExternalService>> {
-    const response = await this.getAllExternalServicesFromMesh({ mesh }, { name: service })
-    const items = response.items.filter((externalService) => externalService.tags['kuma.io/service'] === service)
-
-    return {
-      items,
-      total: items.length,
-      next: null,
-    }
-  }
-
   getPolicyConnections({ mesh, path, name }: { mesh: string; path: string; name: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyDataplane>> {
     return this.client.get(`/meshes/${mesh}/${path}/${name}/dataplanes`, { params })
   }

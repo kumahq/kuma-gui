@@ -142,7 +142,7 @@ Feature: mesh / services / item
       Then I click the "$button-view" element
       Then the URL contains "/mesh/default/data-plane/fake-dataplane"
 
-    Scenario Outline: Service without matching ExternalService shows empty state
+    Scenario: Service with matching ExternalService doesn't show empty state
       Given the environment
         """
         KUMA_EXTERNALSERVICE_COUNT: 1
@@ -158,14 +158,24 @@ Feature: mesh / services / item
             items:
               - name: external-service-1
                 tags:
-                  kuma.io/service: <Service>
+                  kuma.io/service: service-1
         """
 
       When I visit the "/mesh/default/service/service-1" URL
 
-      Then the "[data-testid='no-matching-external-service']" element <ExistsAssertion>
+      Then the "[data-testid='no-matching-external-service']" element doesn't exist
 
-      Examples:
-        | Service   | ExistsAssertion |
-        | service-2 | exists          |
-        | service-1 | doesn't exist   |
+    Scenario: Service without matching ExternalService shows empty state
+      Given the environment
+        """
+        KUMA_EXTERNALSERVICE_COUNT: 0
+        """
+      And the URL "/meshes/default/service-insights/service-1" responds with
+        """
+          body:
+            serviceType: external
+        """
+
+      When I visit the "/mesh/default/service/service-1" URL
+
+      Then the "[data-testid='no-matching-external-service']" element exists
