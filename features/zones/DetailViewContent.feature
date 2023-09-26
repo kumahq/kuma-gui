@@ -14,7 +14,6 @@ Feature: Zones: Detail view content
       """
       KUMA_MODE: global
       """
-
   Scenario: Zone Ingress detail view has expected content
     And the URL "/zoneingresses+insights/zone-ingress-1" responds with
       """
@@ -27,11 +26,9 @@ Feature: Zones: Detail view content
             port: 20555
         zoneIngressInsight:
           subscriptions:
+            - connectTime: 2019-07-28T16:18:09.743141Z
+              disconnectTime: 2019-07-28T16:18:09.743141Z
             - connectTime: 2020-07-28T16:18:09.743141Z
-              disconnectTime: 2020-07-28T16:18:09.743141Z
-              status: {}
-            - connectTime: 2020-07-28T16:18:09.743141Z
-              status: {}
       """
 
     When I visit the "/zones/zone-ingresses/zone-ingress-1" URL
@@ -55,11 +52,9 @@ Feature: Zones: Detail view content
             port: 20555
         zoneEgressInsight:
           subscriptions:
+            - connectTime: 2019-07-28T16:18:09.743141Z
+              disconnectTime: 2019-07-28T16:18:09.743141Z
             - connectTime: 2020-07-28T16:18:09.743141Z
-              disconnectTime: 2020-07-28T16:18:09.743141Z
-              status: {}
-            - connectTime: 2020-07-28T16:18:09.743141Z
-              status: {}
       """
 
     When I visit the "/zones/zone-egresses/zone-egress-1" URL

@@ -12,9 +12,6 @@ Feature: onboarding / multi-zone / index
       """
       KUMA_ZONE_COUNT: 0
       """
-    And the URL "/zones" responds with
-      """
-      """
     When I visit the "/onboarding/multi-zone" URL
     Then the "$loading" element exists
     And the "$zone-connected" element doesn't exist

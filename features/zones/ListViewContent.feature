@@ -10,6 +10,7 @@ Feature: Zones: List view content
     Given the environment
       """
       KUMA_ZONE_COUNT: 3
+      KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_MODE: global
       """
     And the URL "/zones+insights" responds with
@@ -23,23 +24,16 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"universal"}'
-                  status: {}
+                  config: '{"environment":"kubernetes"}'
                   version:
                     kumaCp:
-                      version: 1.0.0-rc2-211-g823fe8ce
-                      gitTag: 1.0.0-rc2-211-g823fe8ce
-                      gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
-                      buildDate: 2021-02-18T13:22:30Z
+                      version: 1.0.0-rc2-211-not-the-version-i-want
                 - connectTime: 2020-07-28T16:18:09.743141Z
+                  disconnectTime: !!js/undefined
                   config: '{"environment":"universal"}'
-                  status: {}
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
-                      gitTag: 1.0.0-rc2-211-g823fe8ce
-                      gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
-                      buildDate: 2021-02-18T13:22:30Z
           - name: zone-cp-2
             zone:
               enabled: true
@@ -47,24 +41,15 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"kubernetes"}'
-                  status: {}
                   version:
                     kumaCp:
-                      version: 1.0.0-rc2-211-g823fe8ce
-                      gitTag: 1.0.0-rc2-211-g823fe8ce
-                      gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
-                      buildDate: 2021-02-18T13:22:30Z
+                      version: 1.0.0-rc2-211-not-the-version-i-want
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
                   config: '{"environment":"kubernetes"}'
-                  status: {}
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
-                      gitTag: 1.0.0-rc2-211-g823fe8ce
-                      gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
-                      buildDate: 2021-02-18T13:22:30Z
           - name: zone-cp-3
             zone:
               enabled: false
@@ -72,14 +57,6 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"kubernetes"}'
-                  status: {}
-                  version:
-                    kumaCp:
-                      version: 1.0.0-rc2-211-g823fe8ce
-                      gitTag: 1.0.0-rc2-211-g823fe8ce
-                      gitCommit: 823fe8cef6430a8f75e72a7224eb5a8ab571ec42
-                      buildDate: 2021-02-18T13:22:30Z
       """
 
     When I visit the "/zones/zone-cps" URL
@@ -102,6 +79,7 @@ Feature: Zones: List view content
     Given the environment
       """
       KUMA_ZONEINGRESS_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_MODE: global
       """
     And the URL "/zoneingresses+insights" responds with
@@ -115,9 +93,8 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
                 - connectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
+                  disconnectTime: !!js/undefined
           - name: zone-ingress-2
             zoneIngress:
               zone: zone-cp-2
@@ -125,10 +102,8 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
       """
 
     When I visit the "/zones/zone-ingresses" URL
@@ -144,6 +119,7 @@ Feature: Zones: List view content
     Given the environment
       """
       KUMA_ZONEEGRESS_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_MODE: global
       """
     And the URL "/zoneegressoverviews" responds with
@@ -157,9 +133,7 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
-                - connectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
+                - disconnectTime: !!js/undefined
           - name: zone-egress-2
             zoneEgress:
               zone: zone-cp-1
@@ -167,10 +141,8 @@ Feature: Zones: List view content
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  status: {}
       """
 
     When I visit the "/zones/zone-egresses" URL

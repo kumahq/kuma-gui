@@ -35,9 +35,6 @@ Feature: mesh / policies / data
       """
       KUMA_CIRCUITBREAKER_COUNT: 0
       """
-    And the URL "/meshes/default/circuit-breakers" responds with
-      """
-      """
     When I visit the "/mesh/default/policies/circuit-breakers" URL
     Then the "$state-empty" element exists
 

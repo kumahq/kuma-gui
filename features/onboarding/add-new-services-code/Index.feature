@@ -12,9 +12,6 @@ Feature: onboarding / dataplanes-overview / index
       """
       KUMA_DATAPLANE_COUNT: 0
       """
-    And the URL "/dataplanes" responds with
-      """
-      """
     When I visit the "/onboarding/add-services-code" URL
     Then the "$loading" element exists
     And the "$is-disconnected" element exists
