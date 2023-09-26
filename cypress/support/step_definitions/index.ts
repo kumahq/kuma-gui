@@ -117,8 +117,10 @@ Then('the URL is {string}', (expected: string) => {
   cy.url().should('eq', `${base}${expected}`)
 })
 
-Then('the URL contains {string}', (str: string) => {
-  cy.url().should('include', str)
+Then(/^the URL( doesn't | )contain[s]? "(.*)"$/, (assertion: string, str: string) => {
+  const negative = assertion !== ' '
+  const prefix = negative ? 'not.' : ''
+  cy.url().should(`${prefix}include`, str)
 })
 
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
