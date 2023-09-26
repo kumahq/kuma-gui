@@ -1,6 +1,7 @@
 <template>
   <div
     class="route-view"
+    :data-testid="name"
   >
     <div
       v-if="!hasParent"
@@ -23,7 +24,7 @@
     />
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends Record<string, string | number> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -37,23 +38,40 @@ import {
   beforePaint,
 } from '../../utilities'
 import { useI18n, useEnv } from '@/utilities'
+export type RouteView = {
+  addTitle: (item: string, sym: Symbol) => void
+  removeTitle: (sym: Symbol) => void
+  addAttrs: (item: Record<string, string>, sym: Symbol) => void
+  removeAttrs: (sym: Symbol) => void
+}
 
 const env = useEnv()
 const can = useCan()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const setTitle = createTitleSetter(document)
-const setAttrs = createAttrsSetter(document.documentElement)
 const sym = Symbol('route-view')
+
+const props = withDefaults(defineProps<{
+  name: string,
+  attrs?: Record<string, string>
+  params?: T
+}>(), {
+  attrs: () => ({}),
+  params: () => { return {} as T },
+})
+const name = computed(() => props.name)
 
 const title = ref<string>('')
 const titles = new Map<Symbol, string>()
 const attributes = new Map<Symbol, Record<string, string>>()
+const setTitle = createTitleSetter(document)
+const setAttrs = createAttrsSetter(document.documentElement)
 
 const joinTitle = (titles: string[]) => {
   return titles.reverse().concat(t('components.route-view.title', { name: t('common.product.name') })).join(' | ')
 }
+
 const routeView = {
   addTitle: (item: string, sym: Symbol) => {
     title.value = item
@@ -73,31 +91,18 @@ const routeView = {
     setAttrs([...attributes.values()])
   },
 }
-export type RouteView = typeof routeView
-
-const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-  attrs: {
-    type: Object,
-    required: false,
-    default: () => ({}),
-  },
-  params: {
-    type: Object,
-    required: false,
-    default: () => ({}),
-  },
-})
 
 const routeParams = computed(() => {
-  const params = Object.fromEntries(Object.entries({
+  const params = Object.entries({
     ...props.params,
-    ...route.params,
     ...route.query,
-  }).map(([prop, value]) => {
+    ...route.params,
+  }).reduce<Record<string, string>>((prev, [prop, value]) => {
+    // unless you explicitly specified a RouteView::param
+    // then don't add the param to route.params
+    if (typeof props.params[prop] === 'undefined') {
+      return prev
+    }
     let param = urlParam(value)
     const def = props.params[prop]
     switch (true) {
@@ -110,14 +115,14 @@ const routeParams = computed(() => {
         break
     }
     if (param.length === 0) {
-      param = def
+      param = String(def)
     }
-    return [
-      prop,
-      decodeURIComponent(param),
-    ]
-  }))
-  return params
+    prev[prop] = decodeURIComponent(param)
+    return prev
+  }, {})
+  return params as {
+    [K in keyof T]: string
+  }
 })
 
 let newParams = {}
@@ -139,10 +144,18 @@ const routeReplace = (...args: Parameters<typeof router['push']>) => {
   router.push(...args)
 }
 watch(() => props.name, (name) => {
-  if (Object.keys(props.params).length > 0) {
+  // we only want query params here
+  const params = Object.entries(routeParams.value || {}).reduce<Record<string, string>>((prev, [key, value]) => {
+    if (typeof route.params[key] === 'undefined') {
+      prev[key] = value
+    }
+    return prev
+  }, {})
+
+  if (Object.keys(params).length > 0) {
     router.replace({
       name,
-      query: cleanQuery(routeParams.value, route.query),
+      query: cleanQuery(params, route.query),
     })
   }
 }, { immediate: true })
