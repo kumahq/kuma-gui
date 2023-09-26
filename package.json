@@ -61,7 +61,7 @@
     "@modyfi/vite-plugin-yaml": "^1.0.4",
     "@types/js-yaml": "^4.0.6",
     "@types/marked": "^5.0.1",
-    "@types/prismjs": "^1.26.0",
+    "@types/prismjs": "^1.26.1",
     "@types/semver": "^7.5.3",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
