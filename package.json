@@ -64,7 +64,7 @@
     "@types/prismjs": "^1.26.0",
     "@types/semver": "^7.5.2",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
-    "@typescript-eslint/parser": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.3",
     "@vitejs/plugin-vue": "^4.3.4",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/test-utils": "^2.4.1",
