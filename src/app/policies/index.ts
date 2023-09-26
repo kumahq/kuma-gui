@@ -4,14 +4,10 @@ import { token } from '@/services/utils'
 export * from './routes'
 
 type Token = ReturnType<typeof token>
-type Sources = ReturnType<typeof sources>
 
-const $ = {
-  sources: token<Sources>('policy.sources'),
-}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.sources, {
+    [token('policies.sources'), {
       service: sources,
       arguments: [
         app.api,
@@ -22,4 +18,3 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
   ]
 }
-export const TOKENS = $

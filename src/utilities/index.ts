@@ -1,21 +1,16 @@
 import { TOKENS } from '@/services/tokens'
 import { createInjections } from '@/services/utils'
-export { useI18n } from '@/app/application'
+export { useEnv, useI18n, useDataSourcePool } from '@/app/application'
+export { useRouter } from '@/app/vue'
 
 export const [
-  useEnv,
   useNav,
   useKumaApi,
   useStore,
-  useRouter,
   useLogger,
-  useDataSourcePool,
 ] = createInjections(
-  TOKENS.env,
   TOKENS.nav,
   TOKENS.api,
   TOKENS.store,
-  TOKENS.router,
   TOKENS.logger,
-  TOKENS.dataSourcePool,
 )

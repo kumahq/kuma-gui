@@ -1,19 +1,20 @@
 import { features } from './features'
+import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
-type Sources = ReturnType<typeof sources>
-type Features = ReturnType<typeof features>
 
-const $ = {
-  sources: token<Sources>('control-planes.sources'),
-  features: token<Features>('control-planes.features'),
-}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.sources, {
+    [token('control-planes.routes'), {
+      service: routes,
+      labels: [
+        app.routes,
+      ],
+    }],
+    [token('control-planes.sources'), {
       service: sources,
       arguments: [
         app.api,
@@ -22,7 +23,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    [$.features, {
+    [token('control-planes.features'), {
       service: features,
       arguments: [
         app.env,
@@ -34,4 +35,3 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 
   ]
 }
-export const TOKENS = $

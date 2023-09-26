@@ -1,21 +1,26 @@
 import { features } from './features'
+import { routes, actions } from './routes'
 import { sources } from './sources'
+import type { Can } from '@/app/application/services/can'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
-export * from './routes'
 
 type Token = ReturnType<typeof token>
-type Sources = ReturnType<typeof sources>
-type Features = ReturnType<typeof features>
-
-const $ = {
-  sources: token<Sources>('zone.sources'),
-  features: token<Features>('zone.features'),
-}
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.sources, {
+    [token('zones.routes'), {
+      service: (can: Can) => {
+        return routes(can('create zones') ? actions() : [])
+      },
+      arguments: [
+        app.can,
+      ],
+      labels: [
+        app.routes,
+      ],
+    }],
+    [token('zone.sources'), {
       service: sources,
       arguments: [
         app.api,
@@ -24,7 +29,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    [$.features, {
+    [token('zone.features'), {
       service: features,
       arguments: [
         app.env,
@@ -35,5 +40,3 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
   ]
 }
-
-export const TOKENS = $
