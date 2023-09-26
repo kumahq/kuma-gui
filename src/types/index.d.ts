@@ -545,7 +545,7 @@ export interface ZoneEgress extends MeshEntity {
 
 export interface ZoneEgressOverview extends MeshEntity {
   type: 'ZoneEgressOverview'
-  zoneEgress?: {
+  zoneEgress: {
     zone?: string
     networking?: ZoneEgressNetworking
   }
