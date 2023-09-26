@@ -7,19 +7,6 @@ export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
 export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
 
-export type ChartDataPoint = {
-  title: string
-  data: number
-  statusKeyword?: StatusKeyword
-}
-
-export type DoughnutChartData = {
-  title: string
-  subtitle?: string
-  showTotal?: boolean // Default: `false`
-  dataPoints: ChartDataPoint[]
-}
-
 export type PathConfig = {
   /**
    * The base API URL. Won’t include a trailing slash.
