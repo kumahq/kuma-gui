@@ -1,10 +1,10 @@
 import { setupWorker, MockedRequest, rest } from 'msw'
 
 import Logger from './logger/Logger'
+import debugI18n from '@/app/application/services/i18n/DebugI18n'
 import { TOKENS as CONTROL_PLANES } from '@/app/control-planes'
 import cookied from '@/services/env/CookiedEnv'
 import type Env from '@/services/env/Env'
-import debugI18n from '@/services/i18n/DebugI18n'
 import type { ServiceConfigurator, Token, TokenType } from '@/services/utils'
 import { token, get } from '@/services/utils'
 import type { FS } from '@/test-support'

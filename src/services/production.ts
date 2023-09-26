@@ -24,7 +24,6 @@ import { routes as zoneRoutes, actions as zoneActionRoutes, services as zonesMod
 import i18nEnUs from '@/locales/en-us'
 import routes from '@/router/routes'
 import Env, { EnvArgs } from '@/services/env/Env'
-import I18n from '@/services/i18n/I18n'
 import KumaApi from '@/services/kuma-api/KumaApi'
 import { RestClient } from '@/services/kuma-api/RestClient'
 import type { Alias, ServiceConfigurator } from '@/services/utils'
@@ -60,13 +59,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: (): Alias<Env['var']> => (...rest) => get($.Env).var(...rest),
   }],
 
-  [$.i18n, {
-    service: I18n,
-    arguments: [
-      $.enUs,
-      $.env,
-    ],
-  }],
   [$.kumaEnUs, {
     constant: i18nEnUs,
     labels: [
