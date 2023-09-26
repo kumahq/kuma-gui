@@ -36,12 +36,16 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             },
           },
           dataplaneInsight: {
-            subscriptions: Array.from({ length: subscriptionCount }).map((_, i) => {
+            subscriptions: Array.from({ length: subscriptionCount }).map((_, i, arr) => {
               return {
                 id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
                 controlPlaneInstanceId: `${fake.hacker.noun()}-${i}`,
                 connectTime: '2021-02-17T07:33:36.412683Z',
-                disconnectTime: i < (subscriptionCount - 1) ? '2021-02-17T07:33:36.412683Z' : undefined,
+                ...(i === (arr.length - 1) || fake.datatype.boolean()
+                  ? {
+                    disconnectTime: '2021-02-17T07:33:36.412683Z',
+                  }
+                  : {}),
                 status: {
                   lastUpdateTime: '2021-02-17T10:48:03.638434Z',
                   total: {

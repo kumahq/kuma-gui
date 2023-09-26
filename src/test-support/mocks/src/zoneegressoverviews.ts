@@ -5,6 +5,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     req,
     '/zoneegressoverviews',
   )
+  const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   return {
     headers: {},
     body: {
@@ -30,30 +31,34 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             },
           },
           zoneEgressInsight: {
-            subscriptions: [
-              {
-                id: 'cc2743b5-43e0-45b6-be88-956ea91a4aad',
-                controlPlaneInstanceId: 'kuma-control-plane-84f5589874-nmspq-0867',
+            subscriptions: Array.from({ length: subscriptionCount }).map((_, i, arr) => {
+              return {
+                id: fake.string.uuid(),
+                controlPlaneInstanceId: fake.hacker.noun(),
                 connectTime: '2021-07-13T08:41:04.556796688Z',
-                disconnectTime: fake.datatype.boolean() ? '2021-02-17T07:33:36.412683Z' : undefined,
+                ...(i === (arr.length - 1) || fake.datatype.boolean()
+                  ? {
+                    disconnectTime: '2021-02-17T07:33:36.412683Z',
+                  }
+                  : {}),
                 generation: 409,
                 status: {
                   lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
                   total: {
-                    responsesSent: '8',
-                    responsesAcknowledged: '9',
+                    responsesSent: `${fake.number.int(30)}`,
+                    responsesAcknowledged: `${fake.number.int(30)}`,
                   },
                   cds: {
-                    responsesSent: '3',
-                    responsesAcknowledged: '3',
+                    responsesSent: `${fake.number.int(30)}`,
+                    responsesAcknowledged: `${fake.number.int(30)}`,
                   },
                   eds: {
-                    responsesSent: '2',
-                    responsesAcknowledged: '3',
+                    responsesSent: `${fake.number.int(30)}`,
+                    responsesAcknowledged: `${fake.number.int(30)}`,
                   },
                   lds: {
-                    responsesSent: '3',
-                    responsesAcknowledged: '3',
+                    responsesSent: `${fake.number.int(30)}`,
+                    responsesAcknowledged: `${fake.number.int(30)}`,
                   },
                   rds: {},
                 },
@@ -69,8 +74,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     build: '98c1c9e9a40804b93b074badad1cdf284b47d58b/1.18.3/Clean/RELEASE/BoringSSL',
                   },
                 },
-              },
-            ],
+
+              }
+            }),
           },
         }
       }),
