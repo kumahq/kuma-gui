@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { globSync } from 'glob'
+import { sync as globSync } from 'glob'
 
 const files = globSync('./src/**/README.md').map(item => {
   const parts = item.split('/')
