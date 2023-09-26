@@ -1,5 +1,6 @@
 <template>
   <RouteView
+    v-slot="{ t }"
     name="home"
   >
     <AppView>
@@ -18,12 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { useMainOverview } from '@/components'
-import { useI18n } from '@/utilities'
-
 const MainOverview = useMainOverview()
-const { t } = useI18n()
 </script>

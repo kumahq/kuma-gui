@@ -1,7 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="mesh-overview-view"
+    :params="{
+      mesh: ''
+    }"
   >
     <RouteTitle :title="t('meshes.routes.overview.title')" />
 
@@ -45,17 +48,11 @@
 
 <script lang="ts" setup>
 import type { MeshSource, MeshInsightSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
 import { useMeshDetails } from '@/components'
-import { useI18n } from '@/utilities'
 
-const { t } = useI18n()
 const MeshDetails = useMeshDetails()
 </script>
 

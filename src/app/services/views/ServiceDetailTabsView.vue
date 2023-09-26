@@ -2,7 +2,10 @@
   <RouteView
     v-slot="{ route }"
     name="service-detail-tabs-view"
-    data-testid="service-detail-tabs-view"
+    :params="{
+      mesh: '',
+      service: ''
+    }"
   >
     <AppView
       :breadcrumbs="[
@@ -70,10 +73,6 @@
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import type { ServiceInsightSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'

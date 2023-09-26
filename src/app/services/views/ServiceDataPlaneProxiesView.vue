@@ -7,12 +7,14 @@
       v-if="me"
       v-slot="{ route, t }"
       name="service-data-plane-proxies-view"
-      data-testid="service-data-plane-proxies-view"
       :params="{
         page: 1,
         size: me.pageSize,
         query: '',
-        s: ''
+        s: '',
+        mesh: '',
+        service: '',
+        gatewayType: ''
       }"
     >
       <AppView>
@@ -35,7 +37,6 @@
           >
             <KCard>
               <template #body>
-                {{ route.params.size }}
                 <DataPlaneList
                   data-testid="data-plane-collection"
                   class="data-plane-collection"

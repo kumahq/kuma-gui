@@ -11,7 +11,8 @@
         page: 1,
         size: 50,
         query: '',
-        s: ''
+        s: '',
+        mesh: '',
       }"
     >
       <DataSource
@@ -72,13 +73,11 @@
 </template>
 
 <script lang="ts" setup>
-
 import DataPlaneList from '../components/DataPlaneList.vue'
 import type { DataPlaneCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
 import type { MeSource } from '@/app/me/sources'
-
 </script>
 <style lang="scss" scoped>
 .data-plane-proxy-filter {

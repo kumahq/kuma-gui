@@ -117,7 +117,6 @@ import type { MeshCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import type { MeSource } from '@/app/me/sources'
-
 </script>
 
 <style lang="scss" scoped>

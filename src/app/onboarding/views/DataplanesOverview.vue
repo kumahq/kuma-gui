@@ -75,16 +75,12 @@
 </template>
 
 <script lang="ts" setup>
-import { KTable } from '@kong/kongponents'
 import { onBeforeUnmount, ref } from 'vue'
 
 import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'

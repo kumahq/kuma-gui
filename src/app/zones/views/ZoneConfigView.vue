@@ -1,8 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="zone-cp-config-view"
-    data-testid="zone-cp-config-view"
+    :params="{
+      zone: ''
+    }"
   >
     <AppView>
       <template #title>
@@ -61,20 +63,11 @@
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KCard } from '@kong/kongponents'
-
 import { ZoneOverviewSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { ZoneOverview } from '@/types'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 function getConfig(zoneOverview: ZoneOverview) {
   const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []

@@ -2,7 +2,10 @@
   <RouteView
     v-slot="{ route, t }"
     name="service-detail-view"
-    data-testid="service-detail-view"
+    :params="{
+      mesh: '',
+      service: ''
+    }"
   >
     <AppView>
       <template v-if="props.data.serviceType === 'external'">

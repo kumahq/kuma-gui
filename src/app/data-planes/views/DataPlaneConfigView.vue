@@ -1,8 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="data-plane-config-view"
-    data-testid="data-plane-config-view"
+    :params="{
+      mesh: '',
+      dataPlane: ''
+    }"
   >
     <AppView>
       <template #title>
@@ -42,18 +45,11 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
 import { DataplaneSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useI18n, useKumaApi } from '@/utilities'
+import { useKumaApi } from '@/utilities'
 
-const { t } = useI18n()
 const kumaApi = useKumaApi()
 </script>

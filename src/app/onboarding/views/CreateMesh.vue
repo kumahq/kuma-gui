@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ can }"
+    v-slot="{ can, t }"
     name="onboarding-create-mesh"
   >
     <RouteTitle
@@ -45,24 +45,17 @@
 </template>
 
 <script lang="ts" setup>
-import { KTable } from '@kong/kongponents'
 import { ref } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useI18n } from '@/utilities'
 
 const TABLE_HEADERS = [
   { label: 'Name', key: 'name' },
   { label: 'Services', key: 'servicesAmount' },
   { label: 'DPPs', key: 'dppsAmount' },
 ]
-
-const { t } = useI18n()
 
 const tableData = ref<{ total: number, data: any [] }>({
   total: 1,

@@ -12,7 +12,8 @@
         size: me.pageSize,
         gatewayType: 'all',
         query: '',
-        s: ''
+        s: '',
+        mesh: '',
       }"
     >
       <DataSource

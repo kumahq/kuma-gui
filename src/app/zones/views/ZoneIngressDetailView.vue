@@ -1,7 +1,7 @@
 <template>
   <RouteView
+    v-slot="{ t }"
     name="zone-ingress-detail-view"
-    data-testid="zone-ingress-detail-view"
   >
     <AppView>
       <div
@@ -74,17 +74,12 @@
 </template>
 
 <script lang="ts" setup>
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { ZoneIngressOverview } from '@/types/index.d'
-import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   data: ZoneIngressOverview

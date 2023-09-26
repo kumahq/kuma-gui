@@ -368,16 +368,12 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_SUCCESS } from '@kong/design-tokens'
-import { KAlert, KButton, KInput, KInputSwitch, KLabel, KModal, KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import EntityScanner from '../components/EntityScanner.vue'
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'

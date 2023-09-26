@@ -1,5 +1,6 @@
 <template>
   <RouteView
+    v-slot="{ t }"
     name="mesh-index-view"
   >
     <AppView
@@ -16,11 +17,3 @@
     </AppView>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-</script>

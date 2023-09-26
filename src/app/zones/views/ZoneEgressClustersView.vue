@@ -1,7 +1,10 @@
 <template>
   <RouteView
+    v-slot="{ route, t }"
     name="zone-egress-clusters-view"
-    data-testid="zone-egress-clusters-view"
+    :params="{
+      zoneEgress: ''
+    }"
   >
     <AppView>
       <template #title>
@@ -18,7 +21,7 @@
           <EnvoyData
             :status="getItemStatusFromInsight(props.data.zoneEgressInsight)"
             resource="Zone"
-            :src="`/zone-egresses/${props.data.name}/data-path/clusters`"
+            :src="`/zone-egresses/${route.params.zoneEgress}/data-path/clusters`"
             query-key="envoy-data-clusters-zone-egress"
           />
         </template>
@@ -28,17 +31,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import type { ZoneEgressOverview } from '@/types/index.d'
-import { useI18n } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   data: ZoneEgressOverview

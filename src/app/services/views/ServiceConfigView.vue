@@ -1,8 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="service-config-view"
-    data-testid="service-config-view"
+    :params="{
+      mesh: '',
+      service: ''
+    }"
   >
     <AppView>
       <template #title>
@@ -52,16 +55,11 @@
 
 <script lang="ts" setup>
 import type { ExternalServiceSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useI18n, useKumaApi } from '@/utilities'
+import { useKumaApi } from '@/utilities'
 
-const { t } = useI18n()
 const kumaApi = useKumaApi()
 </script>

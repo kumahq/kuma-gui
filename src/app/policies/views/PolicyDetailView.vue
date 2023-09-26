@@ -1,8 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="policy-detail-view"
-    data-testid="policy-detail-view"
+    :params="{
+      mesh: '',
+      policy: '',
+      policyPath: ''
+    }"
   >
     <DataSource
       v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
@@ -84,15 +88,8 @@
 <script lang="ts" setup>
 import PolicyDetails from '../components/PolicyDetails.vue'
 import type { PolicySource, PolicyTypeCollectionSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 </script>
