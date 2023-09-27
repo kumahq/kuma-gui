@@ -13,17 +13,12 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         enabled: fake.datatype.boolean(),
       },
       zoneInsight: {
-        subscriptions: Array.from({ length: subscriptionCount }).map((_, i, arr) => {
+        subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
           return {
             config: fake.kuma.subscriptionConfig(),
             id: fake.string.uuid(),
             globalInstanceId: fake.hacker.noun(),
-            connectTime: '2020-07-28T16:18:09.743141Z',
-            ...(i === (arr.length - 1) || fake.datatype.boolean()
-              ? {
-                disconnectTime: '2021-02-17T07:33:36.412683Z',
-              }
-              : {}),
+            ...fake.kuma.connection(item, i, arr),
             status: {
               lastUpdateTime: '2021-02-19T07:06:16.384057Z',
               total: {

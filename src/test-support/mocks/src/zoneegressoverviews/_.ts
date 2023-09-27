@@ -22,16 +22,11 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
         },
       },
       zoneEgressInsight: {
-        subscriptions: Array.from({ length: subscriptionCount }).map((_, i, arr) => {
+        subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
           return {
             id: fake.string.uuid(),
             controlPlaneInstanceId: fake.hacker.noun(),
-            connectTime: '2021-07-13T08:41:04.556796688Z',
-            ...(i === (arr.length - 1) || fake.datatype.boolean()
-              ? {
-                disconnectTime: '2021-02-17T07:33:36.412683Z',
-              }
-              : {}),
+            ...fake.kuma.connection(item, i, arr),
             generation: 409,
             status: {
               lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
