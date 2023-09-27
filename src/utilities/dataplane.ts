@@ -111,13 +111,14 @@ getStatus takes DataplaneInsight and returns map of versions
  */
 
 export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Record<string, string> | null {
-  if (dataPlaneInsight === undefined || dataPlaneInsight.subscriptions.length === 0) {
+  const subscriptions = dataPlaneInsight?.subscriptions || []
+  if (subscriptions.length === 0) {
     return null
   }
 
   const versions: Record<string, string> = {}
 
-  const lastSubscription = dataPlaneInsight.subscriptions[dataPlaneInsight.subscriptions.length - 1]
+  const lastSubscription = subscriptions[subscriptions.length - 1]
 
   if (lastSubscription.version === undefined) {
     return null

@@ -2,7 +2,7 @@ Feature: Data Plane Proxies: Detail view content
   Background:
     Given the CSS selectors
       | Alias                   | Selector                                                                        |
-      | detail-view             | [data-testid='data-plane-detail-view']                                          |
+      | detail-view             | [data-testid='data-plane-detail-tabs-view']                                     |
       | warnings                | [data-testid='data-plane-warnings']                                             |
       | overview-tab            | #data-plane-detail-view-tab a                                                   |
       | overview-content        | [data-testid='data-plane-detail-view']                                          |
@@ -26,10 +26,9 @@ Feature: Data Plane Proxies: Detail view content
       KUMA_MODE: global
       """
     # TODO: Use exact mocking here. It’s almost impossible to control the test data without exact mocking. For example, I need to set `disconnectTime: ''` just so that I don’t risk a faker-random disconnect time appearing in the last subscription.
-    And the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    And the URL "/meshes/default/dataplanes+insights/dpp-1-name-of-dataplane" responds with
       """
       body:
-        name: dpp-1
         mesh: default
         dataplane:
           networking:
@@ -74,14 +73,13 @@ Feature: Data Plane Proxies: Detail view content
                 envoy:
                   kumaDpCompatible: true
       """
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/mesh/default/data-plane/dpp-1-name-of-dataplane" URL
 
   Scenario: Data Plane Proxy detail view has expected content
-    Then the page title contains "dpp-1"
-    And the "$detail-view" element contains "dpp-1"
+    Then the page title contains "dpp-1-name-of-dataplane"
+    And the "$detail-view" element contains "dpp-1-name-of-dataplane"
 
     And the "$overview-content" element contains "online"
-    And the "$overview-content" element contains "dpp-1"
     And the "$overview-content" element contains "kuma.io/protocol:http"
     And the "$overview-content" element contains "kumaDp:1.0.8"
     And the "$warnings" element doesn't exist
@@ -114,7 +112,7 @@ Feature: Data Plane Proxies: Detail view content
     Then the "$policies-content" element contains "kuma.io/service:demo-app_kuma-demo_svc_5000"
 
   Scenario: Envoy data
-    Given the URL "/meshes/default/dataplanes/dpp-1/clusters" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with
       """
       body:
         access_log_sink::observability_name::access_log_sink
