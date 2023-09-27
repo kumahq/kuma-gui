@@ -13,15 +13,14 @@
     >
       <span class="visually-hidden">Focus filter</span>
 
-      <KIcon
-        aria-hidden="true"
-        class="k-filter-icon"
-        :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-        data-testid="k-filter-bar-filter-icon"
-        hide-title
-        icon="filter"
-        :size="KUI_ICON_SIZE_30"
-      />
+      <span class="k-filter-icon">
+        <FilterIcon
+          decorative
+          data-testid="k-filter-bar-filter-icon"
+          hide-title
+          :size="KUI_ICON_SIZE_30"
+        />
+      </span>
     </button>
 
     <label
@@ -89,11 +88,9 @@
           >
             <span class="visually-hidden">Add {{ fieldEntry.fieldName }}:</span>
 
-            <KIcon
-              aria-hidden="true"
-              color="currentColor"
+            <ChevronRightIcon
+              decorative
               hide-title
-              icon="chevronRight"
               :size="KUI_ICON_SIZE_30"
             />
           </button>
@@ -111,10 +108,8 @@
     >
       <span class="visually-hidden">Clear query</span>
 
-      <KIcon
-        aria-hidden="true"
-        color="currentColor"
-        icon="clear"
+      <ClearIcon
+        decorative
         hide-title
         :size="KUI_ICON_SIZE_30"
       />
@@ -123,8 +118,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { KIcon } from '@kong/kongponents'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { ChevronRightIcon, ClearIcon, FilterIcon } from '@kong/icons'
 import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 
 import { clamp } from '@/utilities/clamp'

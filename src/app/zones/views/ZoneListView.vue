@@ -28,10 +28,11 @@
         >
           <KButton
             appearance="primary"
-            icon="plus"
             :to="{ name: 'zone-create-view' }"
             data-testid="create-zone-link"
           >
+            <AddIcon :size="KUI_ICON_SIZE_30" />
+
             {{ t('zones.index.create') }}
           </KButton>
         </template>
@@ -150,11 +151,7 @@
                           size="small"
                         >
                           <template #icon>
-                            <KIcon
-                              :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                              icon="more"
-                              :size="KUI_ICON_SIZE_30"
-                            />
+                            <MoreIcon :size="KUI_ICON_SIZE_30" />
                           </template>
                         </KButton>
                       </template>
@@ -208,8 +205,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { MoreIcon, AddIcon } from '@kong/icons'
+import { KButton, KCard, KDropdownItem, KDropdownMenu, KTooltip } from '@kong/kongponents'
 import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 

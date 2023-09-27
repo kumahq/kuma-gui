@@ -27,10 +27,11 @@
         <div class="envoy-data-actions">
           <KButton
             appearance="primary"
-            icon="redo"
             data-testid="envoy-data-refresh-button"
             @click="refresh"
           >
+            <RefreshIcon :size="KUI_ICON_SIZE_30" />
+
             Refresh
           </KButton>
         </div>
@@ -48,6 +49,8 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { RefreshIcon } from '@kong/icons'
 import { KAlert, KButton } from '@kong/kongponents'
 import { PropType } from 'vue'
 

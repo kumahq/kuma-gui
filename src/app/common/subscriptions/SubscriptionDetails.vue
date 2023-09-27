@@ -5,7 +5,7 @@
       appearance="info"
     >
       <template #alertIcon>
-        <KIcon icon="portal" />
+        <PortalIcon />
       </template>
 
       <template #alertMessage>
@@ -45,7 +45,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KIcon } from '@kong/kongponents'
+import { PortalIcon } from '@kong/icons'
+import { KAlert } from '@kong/kongponents'
 import { PropType, computed } from 'vue'
 
 import type { DiscoveryServiceStats, DiscoverySubscription, KDSSubscription } from '@/types/index.d'

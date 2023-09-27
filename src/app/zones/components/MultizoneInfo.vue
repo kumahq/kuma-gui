@@ -1,11 +1,7 @@
 <template>
   <KEmptyState>
     <template #title>
-      <KIcon
-        class="mb-3"
-        icon="dangerCircleOutline"
-        :size="KUI_ICON_SIZE_50"
-      />
+      <DangerIcon class="mb-3" />
 
       <p>{{ t('common.product.name') }} is running in Standalone mode.</p>
     </template>
@@ -29,8 +25,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
-import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
+import { DangerIcon } from '@kong/icons'
+import { KButton, KEmptyState } from '@kong/kongponents'
 
 import { useI18n } from '@/utilities'
 

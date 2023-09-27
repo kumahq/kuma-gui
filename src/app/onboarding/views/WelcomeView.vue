@@ -65,11 +65,9 @@
                   :key="item.name"
                 >
                   <span class="circle mr-2">
-                    <KIcon
+                    <CheckIcon
                       v-if="item.status"
-                      icon="check"
                       :size="KUI_ICON_SIZE_30"
-                      color="currentColor"
                     />
                   </span>
 
@@ -92,6 +90,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { CheckIcon } from '@kong/icons'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'

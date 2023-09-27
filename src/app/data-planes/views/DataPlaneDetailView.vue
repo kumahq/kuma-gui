@@ -45,8 +45,7 @@
                       :label="statusWithReason.reason.join(', ')"
                       class="reason-tooltip"
                     >
-                      <KIcon
-                        icon="info"
+                      <InfoIcon
                         :size="KUI_ICON_SIZE_30"
                         hide-title
                       />
@@ -214,7 +213,8 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { KAlert, KCard, KIcon, KTooltip } from '@kong/kongponents'
+import { InfoIcon } from '@kong/icons'
+import { KAlert, KCard, KTooltip } from '@kong/kongponents'
 import { computed } from 'vue'
 
 import { useCan } from '@/app/application'

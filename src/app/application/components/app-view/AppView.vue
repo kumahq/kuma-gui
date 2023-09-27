@@ -20,10 +20,8 @@
         v-if="slots.title"
         class="app-view-title-bar"
       >
-        <KIcon
-          v-if="props.fullscreen"
-          icon="kong"
-        />
+        <KongIcon v-if="props.fullscreen" />
+
         <slot
           name="title"
         />
@@ -49,10 +47,8 @@
         v-if="slots.title"
         class="app-view-title-bar"
       >
-        <KIcon
-          v-if="props.fullscreen"
-          icon="kong"
-        />
+        <KongIcon v-if="props.fullscreen" />
+
         <slot
           name="title"
         />
@@ -84,11 +80,8 @@
   </template>
 </template>
 <script lang="ts" setup>
-import {
-  KBreadcrumbs,
-  BreadcrumbItem,
-  KIcon,
-} from '@kong/kongponents'
+import { KongIcon } from '@kong/icons'
+import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
 import { provide, inject, PropType, watch, ref, onBeforeUnmount, useSlots } from 'vue'
 
 import { useMainView } from '@/components'

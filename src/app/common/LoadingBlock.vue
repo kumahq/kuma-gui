@@ -4,11 +4,10 @@
     data-testid="loading-block"
   >
     <template #title>
-      <KIcon
+      <ProgressIcon
         class="mb-3"
-        icon="spinner"
-        color="rgba(0, 0, 0, 0.1)"
-        :size="KUI_ICON_SIZE_50"
+        :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+        display="inline-block"
       />
 
       <slot>
@@ -19,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
-import { KEmptyState, KIcon } from '@kong/kongponents'
+import { KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
+import { ProgressIcon } from '@kong/icons'
+import { KEmptyState } from '@kong/kongponents'
 </script>
