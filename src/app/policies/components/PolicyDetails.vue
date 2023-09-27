@@ -5,6 +5,7 @@
         <h2>{{ t('policies.detail.affected_dpps') }}</h2>
 
         <PolicyConnections
+          class="mt-4"
           :mesh="props.policy.mesh"
           :policy-name="props.policy.name"
           :policy-path="props.path"
