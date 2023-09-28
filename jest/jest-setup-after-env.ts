@@ -4,13 +4,14 @@ import 'isomorphic-fetch'
 import { config } from '@vue/test-utils'
 
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { TOKENS as TEST, services as testing } from '../src/services/testing'
+import { TOKENS as TEST, services as testing, useServer } from '../src/services/testing'
 import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as DEV, services as development } from '@/services/development'
 import CliEnv from '@/services/env/CliEnv'
 import { TOKENS as PROD, services as production } from '@/services/production'
-import { get, container, build, createInjections, token } from '@/services/utils'
+import { get, container, build, token } from '@/services/utils'
 
+export { useMock } from '../src/services/testing'
 // jest can't import this module properly due to transpiling issues
 // mock this out with a blank element
 jest.mock('vue-github-button', () => ({ template: '<span />' }))
@@ -55,7 +56,7 @@ const $ = {
   beforeEach(() => container.capture?.())
   afterEach(() => container.restore?.())
 
-  const server = get($.msw)
+  const server = useServer()
   beforeAll(() => server.listen())
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
@@ -93,8 +94,3 @@ export const withSources = (sources: any) => {
     ],
   )
 }
-
-export const [
-  useServer,
-  useMock,
-] = createInjections($.msw, $.mock)
