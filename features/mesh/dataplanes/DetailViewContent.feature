@@ -72,7 +72,7 @@ Feature: Data Plane Proxies: Detail view content
                 envoy:
                   kumaDpCompatible: true
       """
-    When I visit the "/mesh/default/data-plane/dpp-1-name-of-dataplane" URL
+    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
 
   Scenario: Data Plane Proxy detail view has expected content
     Then the page title contains "dpp-1-name-of-dataplane"

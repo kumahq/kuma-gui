@@ -54,7 +54,7 @@ Feature: Zones: Create Zone flow
     Then the page title contains "Create & connect Zone"
 
   Scenario: The form shows only the initial elements
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     Then the "$name-input" element exists
     Then the "$create-zone-button" element is disabled
 
@@ -68,7 +68,7 @@ Feature: Zones: Create Zone flow
       """
       KUMA_SUBSCRIPTION_COUNT: 0
       """
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     Then the "$create-zone-button" element is disabled
 
     When I "type" "test" into the "$name-input" element
@@ -127,7 +127,7 @@ Feature: Zones: Create Zone flow
         Status-Code: '409'
       """
 
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
@@ -149,7 +149,7 @@ Feature: Zones: Create Zone flow
             reason: "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols."
       """
 
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     # Note: We're deliberately using a valid name here in order to not trigger client-side validation.
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
@@ -158,7 +158,7 @@ Feature: Zones: Create Zone flow
     And the "$instructions" element doesn't exist
 
   Scenario: The form shows expected error for client-side name validation
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     And I "type" "zone.eu" into the "$name-input" element
     And I click the "$create-zone-button" element
 
@@ -192,7 +192,7 @@ Feature: Zones: Create Zone flow
               disconnectTime: !!js/undefined
       """
 
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
@@ -215,7 +215,7 @@ Feature: Zones: Create Zone flow
         token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
       """
 
-    When I visit the "/zones/create" URL
+    When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 

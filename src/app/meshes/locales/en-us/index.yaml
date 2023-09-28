@@ -6,10 +6,10 @@ meshes:
       navigation:
         mesh-detail-view: Overview
         mesh-config-view: YAML
-        services-abstract-view: Services
-        data-planes-abstract-view: Data Plane Proxies
-        gateways-abstract-view: Gateways
-        policies-abstract-view: Policies
+        service-list-view: Services
+        data-plane-list-view: Data Plane Proxies
+        gateway-list-view: Gateways
+        policy-list-index-view: Policies
 
     items:
       title: Meshes

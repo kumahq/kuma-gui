@@ -31,7 +31,7 @@ Feature: Policies: Detail view content
                 name: '192.168.0.1:80:81'
       """
 
-    When I visit the "/mesh/default/policy/circuit-breakers/cb-1" URL
+    When I visit the "/meshes/default/policies/circuit-breakers/cb-1/overview" URL
     Then the "$affected-dpps-item" element exists 3 times
     Then the "$affected-dpps" element contains "backend"
     Then the "$affected-dpps" element contains "db"

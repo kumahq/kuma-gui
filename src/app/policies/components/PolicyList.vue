@@ -16,7 +16,7 @@
           <RouterLink
             class="policy-type-link"
             :to="{
-              name: 'policies-list-view',
+              name: 'policy-list-view',
               params: {
                 mesh: route.params.mesh,
                 policyPath: policyType.path,

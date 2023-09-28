@@ -20,7 +20,7 @@
         },
         {
           to: {
-            name: `${props.isGatewayView ? 'gateways' : 'data-planes'}-list-view`,
+            name: `${props.isGatewayView ? 'gateway' : 'data-plane'}-list-view`,
             params: {
               mesh: route.params.mesh,
             },

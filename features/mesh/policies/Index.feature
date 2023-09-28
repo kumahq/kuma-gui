@@ -41,7 +41,7 @@ Feature: mesh / policies / index
         - name: fake-cb-1
         - name: fake-cb-2
       """
-    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    When I visit the "/meshes/default/policies/circuit-breakers" URL
 
   Scenario: We have a documentation link
     Then the "$button-docs" element exists
@@ -53,7 +53,7 @@ Feature: mesh / policies / index
       | Name  |
 
   Scenario: The items have the expected content and UI elements
-    Then the "#policies-abstract-view-tab.active" element exists
+    Then the "#policy-list-index-view-tab.active" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
@@ -80,7 +80,7 @@ Feature: mesh / policies / index
           - name: mfi-2
       """
 
-    When I visit the "/mesh/default/policies/circuit-breakers" URL
+    When I visit the "/meshes/default/policies/circuit-breakers" URL
     Then the "$item:nth-child(1)" element contains "fake-cb-1"
 
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element

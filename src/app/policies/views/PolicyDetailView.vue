@@ -39,7 +39,7 @@
               },
               {
                 to: {
-                  name: 'policies-list-view',
+                  name: 'policy-list-view',
                   params: {
                     mesh: route.params.mesh,
                     policyPath: route.params.policyPath,

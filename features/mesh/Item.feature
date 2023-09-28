@@ -12,7 +12,7 @@ Feature: mesh / item
         services:
           total: 11
       """
-    When I visit the "/mesh/default/overview" URL
+    When I visit the "/meshes/default/overview" URL
     And the "$service-count" element contains "11"
 
   Scenario: /mesh-insights/* is a 404
@@ -21,6 +21,6 @@ Feature: mesh / item
       headers:
         Status-Code: 404
       """
-    When I visit the "/mesh/default/overview" URL
+    When I visit the "/meshes/default/overview" URL
     Then the "$error" element doesn't exist
     And the "$service-count" element contains "0"

@@ -159,7 +159,7 @@ you can easily view empty states.
 At the time of writing the `req:Request` variables consist of:
 
 - `req.params`: an object containing the parameters from any dynamic URL
-    segments i.e. `/mesh/:mesh/dataplanes/:name` > `{mesh: 'default', name:
+    segments i.e. `/meshes/:mesh/dataplanes/:name` > `{mesh: 'default', name:
     'dp-name'}`
 - `req.url.searchParams`: A [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get)
     object for access to anything from the requests query parameters.

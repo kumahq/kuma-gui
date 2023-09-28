@@ -1,51 +1,41 @@
 import type { RouteRecordRaw } from 'vue-router'
 export const routes = () => {
-  const item = (prefix: string = 'data-plane'): RouteRecordRaw[] => {
+  const item = (): RouteRecordRaw[] => {
     return [
       {
-        path: `${prefix}`,
-        name: `${prefix}-abstract-view`,
-        meta: {
-          module: 'data-planes',
-        },
-        redirect: () => ({ name: 'data-planes-list-view' }),
+        path: 'data-planes/:dataPlane',
+        name: 'data-plane-detail-tabs-view',
+        component: () => import('@/app/data-planes/views/DataPlaneDetailTabsView.vue'),
         children: [
           {
-            path: ':dataPlane',
-            name: `${prefix}-detail-tabs-view`,
-            component: () => import('@/app/data-planes/views/DataPlaneDetailTabsView.vue'),
-            children: [
-              {
-                path: '',
-                name: `${prefix}-detail-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
-              },
-              {
-                path: 'policies',
-                name: `${prefix}-policies-view`,
-                component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
-              },
-              {
-                path: 'xds-config',
-                name: `${prefix}-xds-config-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneXdsConfigView.vue'),
-              },
-              {
-                path: 'stats',
-                name: `${prefix}-stats-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneStatsView.vue'),
-              },
-              {
-                path: 'clusters',
-                name: `${prefix}-clusters-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
-              },
-              {
-                path: 'config',
-                name: `${prefix}-config-view`,
-                component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
-              },
-            ],
+            path: 'overview',
+            name: 'data-plane-detail-view',
+            component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+          },
+          {
+            path: 'policies',
+            name: 'data-plane-policies-view',
+            component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
+          },
+          {
+            path: 'xds-config',
+            name: 'data-plane-xds-config-view',
+            component: () => import('@/app/data-planes/views/DataPlaneXdsConfigView.vue'),
+          },
+          {
+            path: 'stats',
+            name: 'data-plane-stats-view',
+            component: () => import('@/app/data-planes/views/DataPlaneStatsView.vue'),
+          },
+          {
+            path: 'clusters',
+            name: 'data-plane-clusters-view',
+            component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
+          },
+          {
+            path: 'config',
+            name: 'data-plane-config-view',
+            component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
           },
         ],
       },
@@ -53,25 +43,15 @@ export const routes = () => {
   }
 
   return {
-    items: (prefix: string = 'data-planes'): RouteRecordRaw[] => {
+    items: (): RouteRecordRaw[] => {
       return [
         {
-          path: `${prefix}`,
-          name: `${prefix}-abstract-view`,
+          path: 'data-planes',
+          name: 'data-plane-list-view',
           meta: {
             module: 'data-planes',
           },
-          redirect: () => ({ name: 'data-planes-list-view' }),
-          children: [
-            {
-              path: '',
-              name: `${prefix}-list-view`,
-              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-              // children: [
-              //   ...(item(prefix)[0]).children ?? [],
-              // ],
-            },
-          ],
+          component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
         },
       ]
     },

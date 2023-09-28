@@ -8,6 +8,6 @@ Feature: dataplanes / no-subscriptions
       """
       KUMA_SUBSCRIPTION_COUNT: 0
       """
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     And the "$detail-view" element contains "dpp-1"
     And the "$overview-content" element contains "offline"

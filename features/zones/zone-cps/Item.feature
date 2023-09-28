@@ -1,9 +1,9 @@
 Feature: zones / zone-cps / item
   Background:
     Given the CSS selectors
-      | Alias                    | Selector                                  |
-      | zone-detail-tabs-view    | [data-testid='zone-cp-detail-tabs-view']  |
-      | tab-overview             | [data-testid='zone-cp-detail-view']       |
+      | Alias                 | Selector                                 |
+      | zone-detail-tabs-view | [data-testid='zone-cp-detail-tabs-view'] |
+      | tab-overview          | [data-testid='zone-cp-detail-view']      |
     And the environment
       """
       KUMA_MODE: global
@@ -32,7 +32,7 @@ Feature: zones / zone-cps / item
                 { "environment": "universal", "store": {"type": "memory"}, "dpServer": { "auth": { "type": "dpToken" } } }
       """
 
-    When I visit the "/zones/zone-cps/zone-cp-1" URL
+    When I visit the "/zones/zone-cps/zone-cp-1/overview" URL
     Then the page title contains "zone-cp-1"
     Then the "$zone-detail-tabs-view" element contains "zone-cp-1"
 

@@ -6,7 +6,7 @@
     <RouteView
       v-if="me"
       v-slot="{ route, t }"
-      name="data-planes-list-view"
+      name="data-plane-list-view"
       :params="{
         page: 1,
         size: 50,

@@ -17,7 +17,7 @@ Feature: mesh / services / item
           serviceType: <ServiceType>
       """
 
-    When I visit the "/mesh/default/service/firewall-1" URL
+    When I visit the "/meshes/default/services/firewall-1/overview" URL
     Then the "$data-plane-proxies-tab" element <ExistsAssertion>
 
     Examples:
@@ -44,7 +44,7 @@ Feature: mesh / services / item
                   networking:
                     gateway: ~
         """
-      When I visit the "/mesh/default/service/system-1" URL
+      When I visit the "/meshes/default/services/system-1/overview" URL
 
     Scenario: Internal services request the dataplanes for the service
       When I click the "$data-plane-proxies-tab" element
@@ -133,14 +133,14 @@ Feature: mesh / services / item
       When I click the "$data-plane-proxies-tab" element
       Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
       And I click the "$item:nth-child(1) td:nth-child(1) a" element
-      Then the URL contains "/mesh/default/data-plane/fake-dataplane"
+      Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
 
     Scenario: Clicking an items view menu takes you to the correct page
       When I click the "$data-plane-proxies-tab" element
       Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
       And I click the "$button-actions" element
       Then I click the "$button-view" element
-      Then the URL contains "/mesh/default/data-plane/fake-dataplane"
+      Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
 
     Scenario: Service with matching ExternalService doesn't show empty state
       Given the environment
@@ -161,7 +161,7 @@ Feature: mesh / services / item
                   kuma.io/service: service-1
         """
 
-      When I visit the "/mesh/default/service/service-1" URL
+      When I visit the "/meshes/default/services/service-1/overview" URL
 
       Then the "[data-testid='no-matching-external-service']" element doesn't exist
 
@@ -176,6 +176,6 @@ Feature: mesh / services / item
             serviceType: external
         """
 
-      When I visit the "/mesh/default/service/service-1" URL
+      When I visit the "/meshes/default/services/service-1/overview" URL
 
       Then the "[data-testid='no-matching-external-service']" element exists

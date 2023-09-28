@@ -56,7 +56,7 @@ Feature: application / MainNavigation
     And the URL contains "page=2&size=50"
     And the "[data-testid='page-2-btn'].active" element exists
 
-    When I visit the "/mesh/default/data-planes" URL
+    When I visit the "/meshes/default/data-planes" URL
     And the URL contains "page=1&size=50"
     And the URL doesn't contain "mesh=default"
 
