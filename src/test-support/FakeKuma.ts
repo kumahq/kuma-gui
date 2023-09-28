@@ -61,6 +61,25 @@ export class KumaModule {
     return `${this.faker.hacker.noun()}-${deploymentId}-${podId}.${namespace}`
   }
 
+  connection<T>(_: T, i: number, arr: T[]) {
+    const connected = this.faker.date.past()
+    const times: {
+      connectTime: string,
+      disconnectTime?: string
+    } = {
+      connectTime: `${connected.toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 9999 })}Z`,
+      // connectTime: '2021-07-13T08:41:04.556796688Z',
+    }
+    if ((arr.length > 1 && i !== arr.length - 1) || this.faker.datatype.boolean({ probability: 0.3 })) {
+      times.disconnectTime = `${this.faker.date.between({
+        from: connected,
+        to: new Date(),
+      }).toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 9999 })}Z`
+      // times.disconnectTime = '2021-02-17T07:33:36.412683Z'
+    }
+    return times
+  }
+
   status() {
     return this.faker.helpers.arrayElement(
       [

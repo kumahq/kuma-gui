@@ -28,7 +28,7 @@ Feature: zones / zone-cps / item
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: 2020-07-28T16:18:09.743141Z
             - connectTime: 2020-07-28T16:18:09.743141Z
-              disconnectTime: ~
+              disconnectTime: !!js/undefined
               config: |
                 { "environment": "universal", "dpServer": { "auth": { "type": "dpToken" } } }
       """

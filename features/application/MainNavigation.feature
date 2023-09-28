@@ -45,11 +45,6 @@ Feature: application / MainNavigation
       """
       KUMA_MESH_COUNT: 60
       """
-    # This hack is necessary for the "the environment" population above to have an effect.
-    And the URL "/meshes" responds with
-      """
-      """
-
     When I visit the "/" URL
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element exists

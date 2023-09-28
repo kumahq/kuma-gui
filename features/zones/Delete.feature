@@ -30,9 +30,6 @@ Feature: zones / delete
     Then I click the "$actions-button" element
     And I click the "$delete-button" element
     Then I "type" "zone-1" into the "$confirm-input" element
-    And the URL "/zones/zone-1" responds with
-      """
-      """
     And I click the "$confirm-button" element
     Then the URL "/zones/zone-1" was requested with
       """

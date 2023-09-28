@@ -64,6 +64,10 @@ Feature: Zones: Create Zone flow
     Then the "$egress-input-switch" element doesn't exist
 
   Scenario: The form interactions behave correctly
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 0
+      """
     When I visit the "/zones/create" URL
     Then the "$create-zone-button" element is disabled
 
@@ -74,12 +78,6 @@ Feature: Zones: Create Zone flow
       """
       body:
         token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
-      """
-    And the URL "/zones+insights/test" responds with
-      """
-      body:
-        zoneInsight:
-          subscriptions: []
       """
     And I click the "$create-zone-button" element
     Then the URL "/provision-zone" was requested with
@@ -118,8 +116,7 @@ Feature: Zones: Create Zone flow
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
-              disconnectTime: ~
-              status: {}
+              disconnectTime: !!js/undefined
       """
     Then the "$zone-connected-scanner[data-test-state='success']" element exists
 
@@ -192,8 +189,7 @@ Feature: Zones: Create Zone flow
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
-              disconnectTime: ~
-              status: {}
+              disconnectTime: !!js/undefined
       """
 
     When I visit the "/zones/create" URL
@@ -217,12 +213,6 @@ Feature: Zones: Create Zone flow
       """
       body:
         token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
-      """
-    And the URL "/zones+insights/test" responds with
-      """
-      body:
-        zoneInsight:
-          subscriptions: []
       """
 
     When I visit the "/zones/create" URL

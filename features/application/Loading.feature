@@ -11,9 +11,6 @@ Feature: application / loading
       """
       KUMA_LATENCY: 1000
       """
-    And the URL "/meshes" responds with
-      """
-      """
     When I load the "/" URL
     Then the "$loading" element exists
     Then the "$loading" element doesn't exist
