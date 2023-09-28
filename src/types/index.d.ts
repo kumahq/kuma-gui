@@ -549,9 +549,7 @@ export interface ZoneEgressOverview extends MeshEntity {
     zone?: string
     networking?: ZoneEgressNetworking
   }
-  zoneEgressInsight?: {
-    subscriptions: DiscoverySubscription[]
-  }
+  zoneEgressInsight: any
 }
 
 export interface Backend {
