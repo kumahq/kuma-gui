@@ -1,4 +1,4 @@
-import { setupWorker, MockedRequest, rest } from 'msw'
+import { setupWorker, MockedRequest } from 'msw'
 
 import Logger from './logger/Logger'
 import debugI18n from '@/app/application/services/i18n/DebugI18n'
@@ -23,7 +23,7 @@ type Sources = TokenType<typeof CONTROL_PLANES.sources>
 type AEnv = Env['var']
 
 const $ = {
-  msw: token<Msw>('msw'),
+  msw: token<Promise<Msw>>('msw'),
   fakeFS: token<FS>('fake.fs'),
   kumaFS: token<FS>('fake.fs.kuma'),
   controlPlaneSources: CONTROL_PLANES.sources,
@@ -35,21 +35,17 @@ type SupportedTokens = typeof $ & {
   env: Token<AEnv>
 }
 
-let started = false
 export const services: ServiceConfigurator<SupportedTokens> = (app) => [
   [token<Sources>('control-planes.sources.with.mockServer'), {
     service: (target: () => Sources) => {
       const sources = target()
       const p = sources['/control-plane/addresses']
 
-      sources['/control-plane/addresses'] = (...args) => {
+      sources['/control-plane/addresses'] = async (...args) => {
         const result = p(...args)
         const env = get(app.env)
         if (env('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
-          if (!started) {
-            started = true
-            get($.msw)
-          }
+          await get($.msw)
         }
         return result
       }
@@ -94,7 +90,7 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
         'background: gray; color: white; display: block; padding: 0.25rem;',
       )
 
-      worker.start({
+      return worker.start({
         quiet: true,
         onUnhandledRequest(req: MockedRequest) {
           // Ignores warnings about unhandled requests.
@@ -110,7 +106,6 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
           console.warn('Found an unhandled %s request to %s', req.method, req.url.href)
         },
       })
-      return rest
     },
     arguments: [
       app.env,

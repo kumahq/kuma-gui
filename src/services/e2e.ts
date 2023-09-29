@@ -11,14 +11,13 @@ const env = (
   return env[key] || d
 }
 type AEnv = ReturnType<typeof env>
-type Server = typeof cy
 // temporary intercept returning Mocker
 type Mocker = (route: string, opts?: Options, cb?: Callback) => ReturnType<typeof cy['intercept']>
 const $ = {
   EnvVars: token<EnvVars>('EnvVars'),
   env: token<AEnv>('env'),
 
-  cy: token<Server>('cy'),
+  cy: token<typeof cy>('cy'),
   mockServer: token('mockServer'),
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
