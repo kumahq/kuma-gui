@@ -45,7 +45,7 @@ import { PropType, computed } from 'vue'
 import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { getZoneControlPlaneStatus } from '@/app/zones/getZoneControlPlaneStatus'
+import { getZoneControlPlaneStatus } from '@/app/zones/data'
 import type { ZoneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 

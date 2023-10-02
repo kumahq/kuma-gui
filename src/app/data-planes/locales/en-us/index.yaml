@@ -21,6 +21,7 @@ data-planes:
     version_mismatch: 'Version mismatch'
   detail:
     mtls: 'Certificate'
+    ca_backends: 'CA backends'
     subscriptions: 'XDS connections'
     no_mtls: 'This Data Plane Proxy does not have mTLS configured, yet'
     no_mtls_learn_more: 'Learn about certificates in {product}'

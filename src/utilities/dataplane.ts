@@ -2,7 +2,6 @@ import {
   Compatibility,
   DataPlaneInsight,
   DataPlaneNetworking,
-  DataPlaneOverview,
   DiscoverySubscription,
   KDSSubscription,
   LabelValue,
@@ -139,23 +138,6 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
   }
 
   return versions
-}
-
-export function parseMTLSData(dataPlaneOverview: DataPlaneOverview, formatIsoDate: (isoDate: string) => string) {
-  if (dataPlaneOverview.dataplaneInsight === undefined || dataPlaneOverview.dataplaneInsight.mTLS === undefined) {
-    return null
-  }
-
-  const { mTLS } = dataPlaneOverview.dataplaneInsight
-  const rawExpDate = new Date(mTLS.certificateExpirationTime)
-  // this prevents any weird date shifting
-  const fixedExpDate = new Date(rawExpDate.getTime() + rawExpDate.getTimezoneOffset() * 60000)
-
-  return {
-    certificateExpirationTime: formatIsoDate(fixedExpDate.toISOString()),
-    lastCertificateRegeneration: formatIsoDate(mTLS.lastCertificateRegeneration),
-    certificateRegenerations: mTLS.certificateRegenerations,
-  }
 }
 
 export function compatibilityKind(version: Version): Compatibility {

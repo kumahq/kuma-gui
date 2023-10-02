@@ -46,17 +46,23 @@
             <ZoneActionMenu :zone-overview="data" />
           </template>
 
-          <NavTabs
-            class="route-zone-detail-view-tabs"
-            :tabs="tabs"
-          />
-
-          <RouterView v-slot="child">
-            <component
-              :is="child.Component"
-              :data="data"
+          <DataSource
+            v-slot="{ data: config }: ConfigSource"
+            :src="`/config`"
+          >
+            <NavTabs
+              class="route-zone-detail-view-tabs"
+              :tabs="tabs"
             />
-          </RouterView>
+
+            <RouterView v-slot="child">
+              <component
+                :is="child.Component"
+                :data="data"
+                :config="config"
+              />
+            </RouterView>
+          </DataSource>
         </AppView>
       </template>
     </DataSource>
@@ -72,6 +78,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { ConfigSource } from '@/app/diagnostics/sources'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
@@ -86,4 +93,5 @@ const tabs: NavTab[] = routes.map((route) => {
 
   return { title, routeName, module }
 })
+
 </script>

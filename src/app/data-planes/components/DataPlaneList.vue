@@ -10,6 +10,7 @@
       ...(!props.gateways ? [{ label: 'Protocol', key: 'protocol' }] : []),
       ...(isMultiZoneMode ? [{ label: 'Zone', key: 'zone' }] : []),
       { label: 'Last Updated', key: 'lastUpdated' },
+      { label: 'Certificate Expiry', key: 'certificateExpiry' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
       { label: 'Actions', key: 'actions', hideLabel: true },
@@ -88,6 +89,13 @@
         &nbsp;
       </template>
     </template>
+    <template #certificateExpiry="{ row: item }">
+      {{
+        item.dataplaneInsight?.mTLS?.certificateExpirationTime ?
+          formatIsoDate(new Date(item.dataplaneInsight.mTLS.certificateExpirationTime).toUTCString()) :
+          t('common.collection.none')
+      }}
+    </template>
 
     <template #actions="{ row: item }">
       <KDropdownMenu
@@ -145,7 +153,7 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
-import { DataPlaneOverview, StatusKeyword, Version } from '@/types/index.d'
+import type { DataPlaneOverview, StatusKeyword, Version, DataPlaneInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
@@ -159,6 +167,7 @@ const { t, formatIsoDate } = useI18n()
 const can = useCan()
 
 type DataPlaneOverviewTableRow = {
+  dataplaneInsight: DataPlaneInsight | undefined,
   detailViewRoute: RouteLocationNamedRaw
   type: string
   name: string
@@ -303,6 +312,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
       name,
+      dataplaneInsight: dataPlaneOverview.dataplaneInsight,
       detailViewRoute,
       type,
       zone: { title: zone ?? t('common.collection.none'), route: zoneRoute },

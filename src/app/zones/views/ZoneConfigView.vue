@@ -1,84 +1,98 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ t }"
     name="zone-cp-config-view"
     :params="{
       zone: ''
     }"
   >
-    <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
-            :render="true"
-          />
-        </h2>
-      </template>
-
-      <KCard class="mt-4">
-        <template #body>
-          <DataSource
-            v-slot="{ data, error }: ZoneOverviewSource"
-            :src="`/zone-cps/${route.params.zone}`"
-          >
-            <ErrorBlock
-              v-if="error !== undefined"
-              :error="error"
+    <template
+      v-for="(warnings, index) in [[
+        ...(props.config?.store.type === 'memory' ? [
+          {
+            kind: 'STORE_TYPE_MEMORY',
+            payload: {}
+          }
+        ] : [])]]"
+      :key="index"
+    >
+      <AppView>
+        <template
+          v-if="warnings.length > 0"
+          #notifications
+        >
+          <ul>
+            <!-- eslint-disable vue/no-v-html  -->
+            <li
+              v-for="warning in warnings"
+              :key="warning.kind"
+              :data-testid="`warning-${warning.kind}`"
+              v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
             />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <template v-else>
-              <template
-                v-for="(config, index) in [getConfig(data)]"
-                :key="index"
-              >
-                <CodeBlock
-                  v-if="config !== null"
-                  id="code-block-zone-config"
-                  language="json"
-                  :code="config"
-                  is-searchable
-                  query-key="zone-config"
-                />
-
-                <KAlert
-                  v-else
-                  class="mt-4"
-                  data-testid="warning-no-subscriptions"
-                  appearance="warning"
-                >
-                  <template #alertMessage>
-                    {{ t('zone-cps.detail.no_subscriptions') }}
-                  </template>
-                </KAlert>
-              </template>
-            </template>
-          </DataSource>
+            <!-- eslint-enable -->
+          </ul>
         </template>
-      </KCard>
-    </AppView>
+
+        <template #title>
+          <h2>
+            <RouteTitle
+              :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
+              :render="true"
+            />
+          </h2>
+        </template>
+
+        <KCard class="mt-4">
+          <template #body>
+            <template
+              v-for="(conf, i) in [getConfig(props.data)]"
+              :key="i"
+            >
+              <CodeBlock
+                v-if="conf !== null"
+                id="code-block-zone-config"
+                language="json"
+                :code="conf"
+                is-searchable
+                query-key="zone-config"
+              />
+
+              <KAlert
+                v-else
+                class="mt-4"
+                data-testid="warning-no-subscriptions"
+                appearance="warning"
+              >
+                <template #alertMessage>
+                  {{ t('zone-cps.detail.no_subscriptions') }}
+                </template>
+              </KAlert>
+            </template>
+          </template>
+        </KCard>
+      </AppView>
+    </template>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { ZoneOverviewSource } from '../sources'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { ZoneOverview } from '@/types'
+import type { ZoneOverview } from '@/types'
+import type { Config } from '@/types/config.d'
+
+const props = defineProps<{
+  data: ZoneOverview
+  config: Config | undefined
+}>()
 
 function getConfig(zoneOverview: ZoneOverview) {
   const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
   if (subscriptions.length > 0) {
     const lastSubscription = subscriptions[subscriptions.length - 1]
-
     if (lastSubscription.config) {
       return JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
     }
   }
-
   return null
 }
 </script>

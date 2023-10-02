@@ -66,6 +66,21 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             },
           },
           dataplaneInsight: {
+            ...(
+              JSON.parse(env('KUMA_MTLS_ENABLED', 'false'))
+                ? {
+                  mTLS: {
+                    certificateExpirationTime: '2023-10-03T12:40:13Z',
+                    lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
+                    certificateRegenerations: 1,
+                    issuedBackend: 'ca-1',
+                    supportedBackends: [
+                      'ca-1',
+                    ],
+                  },
+                }
+                : {}
+            ),
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',

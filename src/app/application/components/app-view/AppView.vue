@@ -63,6 +63,22 @@
           <slot name="actions" />
         </div>
       </header>
+      <aside>
+        <template
+          v-if="slots.notifications"
+        >
+          <KAlert
+            class="mb-4"
+            appearance="warning"
+          >
+            <template #alertMessage>
+              <slot
+                name="notifications"
+              />
+            </template>
+          </KAlert>
+        </template>
+      </aside>
       <slot name="default" />
     </section>
   </template>

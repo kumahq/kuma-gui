@@ -88,11 +88,21 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             },
           }
         }),
-        mTLS: {
-          certificateExpirationTime: '2025-02-02T10:59:26.640498+01:00',
-          lastCertificateRegeneration: '2021-02-02T10:59:26.640498+01:00',
-          certificateRegenerations: fake.number.int({ min: 0, max: 5 }),
-        },
+        ...(
+          JSON.parse(env('KUMA_MTLS_ENABLED', 'false'))
+            ? {
+              mTLS: {
+                certificateExpirationTime: '2025-02-02T10:59:26.640498+01:00',
+                lastCertificateRegeneration: '2021-02-02T10:59:26.640498+01:00',
+                certificateRegenerations: fake.number.int({ min: 0, max: 5 }),
+                issuedBackend: 'ca-1',
+                supportedBackends: [
+                  'ca-1',
+                ],
+              },
+            }
+            : {}
+        ),
       },
     },
   }

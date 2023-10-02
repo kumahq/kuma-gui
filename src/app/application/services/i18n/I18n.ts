@@ -29,6 +29,11 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
       throw e
     },
   })
+  const globals = {
+    KUMA_VERSION: env('KUMA_VERSION'),
+    KUMA_DOCS_URL: env('KUMA_DOCS_URL'),
+    KUMA_UTM_QUERY_PARAMS: env('KUMA_UTM_QUERY_PARAMS'),
+  }
   return {
     ...i18n,
     t: function (...rest: Parameters<typeof i18n['t']>) {
@@ -44,7 +49,10 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
         if (get(strs, key).length === 0) {
           return ''
         }
-        rest[1] = { KUMA_DOCS_URL: env('KUMA_DOCS_URL'), KUMA_UTM_QUERY_PARAMS: env('KUMA_UTM_QUERY_PARAMS'), ...rest[1] }
+        rest[1] = {
+          ...globals,
+          ...rest[1],
+        }
         return i18n.t(...rest)
       } catch (e) {
         switch (true) {

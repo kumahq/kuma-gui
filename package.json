@@ -1,6 +1,6 @@
 {
   "name": "kuma-gui",
-  "version": "2.2.0",
+  "version": "2.4.0",
   "private": true,
   "description": "Kuma Manager",
   "author": "Kong",
@@ -112,8 +112,7 @@
     "vite-plugin-rewrite-all": "1.0.1",
     "vite-svg-loader": "4.0.0",
     "vitepress": "1.0.0-rc.20",
-    "vue-tsc": "1.8.15",
-    "yaml-jest": "1.2.0"
+    "vue-tsc": "1.8.15"
   },
   "browserslist": [
     "> 1%",
