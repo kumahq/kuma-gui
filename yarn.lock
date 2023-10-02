@@ -1706,7 +1706,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl@^2.9.2":
+"@formatjs/intl@^2.9.3":
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-2.9.3.tgz#e570c4b1afb173dfb1f80a42624425dde9841329"
   integrity sha512-hclPdyCF1zk2XmhgdXfl5Sd30QEdRBnIijH7Vc1AWz2K0/saVRrxuL3UYn+m3xEyfOa4yDbTWVbmXDL0XEzlsQ==
@@ -1998,14 +1998,14 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kong-ui-public/i18n@0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.8.3.tgz#f2168616b49106e7962acb9652c5e7bef43fd40a"
-  integrity sha512-0otgk0KkFDmEDzlBtX/7LxwlH6RIwkF7AuKuLO3PKcs7rtAlhCk0Ycy/yFl6EpXVOJOHgMGANR0RsoolkzCZqg==
+"@kong-ui-public/i18n@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.8.4.tgz#e8c556dd27d5efc224f36bbc5ac09f4ce2b00d84"
+  integrity sha512-Fk2RZPUDcKWh8lzpNWGFN9a4PmNpFM5iquf/AInMCRx2+4AFp8BEboozpv9N6uaN1dSIO0f424wp4lxetkUriw==
   dependencies:
-    "@formatjs/intl" "^2.9.2"
+    "@formatjs/intl" "^2.9.3"
     flat "^5.0.2"
-    intl-messageformat "^10.5.2"
+    intl-messageformat "^10.5.3"
 
 "@kong/design-tokens@1.10.2":
   version "1.10.2"
@@ -5699,7 +5699,7 @@ internal-slot@^1.0.5:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-intl-messageformat@10.5.3, intl-messageformat@^10.5.2:
+intl-messageformat@10.5.3, intl-messageformat@^10.5.3:
   version "10.5.3"
   resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-10.5.3.tgz#db0779d4a1988faa2977d76574489b7a25f0d5d0"
   integrity sha512-TzKn1uhJBMyuKTO4zUX47SU+d66fu1W9tVzIiZrQ6hBqQQeYscBMIzKL/qEXnFbJrH9uU5VV3+T5fWib4SIcKA==
@@ -9454,6 +9454,7 @@ workerpool@6.2.1:
   integrity sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
