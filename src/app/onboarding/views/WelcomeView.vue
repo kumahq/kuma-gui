@@ -1,6 +1,7 @@
 <template>
   <RouteView
     v-slot="{ env, t, can }"
+    name="onboarding-welcome"
   >
     <RouteTitle
       :title="t('onboarding.routes.welcome.title', {name: t('common.product.name')})"
@@ -91,15 +92,11 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { KIcon } from '@kong/kongponents'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 </script>
 
 <style lang="scss" scoped>

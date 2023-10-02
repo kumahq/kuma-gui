@@ -6,6 +6,7 @@ import NavTabs from '@/app/common/NavTabs.vue'
 <template>
   <RouteView
     v-slot="{ t, can }"
+    name="zone-tabs-view"
   >
     <AppView>
       <NavTabs

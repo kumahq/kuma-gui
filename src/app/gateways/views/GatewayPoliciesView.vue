@@ -1,8 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="gateway-policies-view"
-    data-testid="gateway-policies-view"
+    :params="{
+      mesh: '',
+      dataPlane: ''
+    }"
   >
     <AppView>
       <template #title>
@@ -50,18 +53,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
 import GatewayDataplanePolicyList from '../components/GatewayDataplanePolicyList.vue'
 import { MeshGatewayDataplaneSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { PolicyTypeCollectionSource } from '@/app/policies/sources'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 </script>

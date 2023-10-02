@@ -33,8 +33,6 @@ Feature: Zones: Page navigation
       """
 
     When I visit the "/zones" URL
-    # This `cy.wait` stabilizes the test significantly. For some reason, it can happen that the subsequent navigation to via nav tab is never triggered.
-    Then I wait for 1000 milliseconds
 
     When I click the "$nav-tabs #<RouteName>-tab a" element
     Then the page title contains "<ListViewTitle>"

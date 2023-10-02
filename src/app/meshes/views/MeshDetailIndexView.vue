@@ -1,5 +1,7 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="mesh-detail-view"
+  >
     <AppView
       :breadcrumbs="[
         ...(route.name !== 'mesh-detail-view' ? [{
@@ -20,9 +22,5 @@
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
-
 const route = useRoute()
 </script>

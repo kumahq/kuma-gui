@@ -2,7 +2,9 @@
   <RouteView
     v-slot="{ route }"
     name="zone-ingress-detail-tabs-view"
-    data-testid="zone-ingress-detail-tabs-view"
+    :params="{
+      zoneIngress: ''
+    }"
   >
     <AppView
       :breadcrumbs="[
@@ -58,10 +60,6 @@
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import { ZoneIngressOverviewSource } from '../sources'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'

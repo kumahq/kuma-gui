@@ -1,5 +1,8 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ t }"
+    name="onboarding-deployment-types"
+  >
     <RouteTitle
       :title="t('onboarding.routes.deployment-types.title')"
     />
@@ -55,21 +58,16 @@
 </template>
 
 <script lang="ts" setup>
-import { KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import { useCan } from '@/app/application'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import {
   useMultizoneGraph,
   useStandaloneGraph,
 } from '@/components'
-import { useI18n } from '@/utilities'
 
 const MultizoneGraph = useMultizoneGraph()
 const StandaloneGraph = useStandaloneGraph()
@@ -79,7 +77,6 @@ const componentMap: Record<string, any> = {
   'multi-zone': MultizoneGraph,
 }
 
-const { t } = useI18n()
 const can = useCan()
 
 const mode = ref<'standalone' | 'multi-zone'>(can('use zones') ? 'multi-zone' : 'standalone')

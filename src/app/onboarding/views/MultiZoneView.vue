@@ -1,5 +1,8 @@
 <template>
-  <RouteView>
+  <RouteView
+    v-slot="{ t }"
+    name="onboarding-multi-zone"
+  >
     <RouteTitle
       :title="t('onboarding.routes.multizone.title')"
     />
@@ -86,13 +89,9 @@ import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
-import { useKumaApi, useI18n } from '@/utilities'
+import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
-const { t } = useI18n()
 
 const LONG_POLLING_INTERVAL = 1000
 

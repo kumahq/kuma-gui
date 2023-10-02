@@ -1,7 +1,9 @@
 <template>
-  <RouteView>
+  <RouteView
+    name="onboarding"
+  >
     <AppView>
-      <router-view
+      <RouterView
         v-slot="{ Component }"
       >
         <component
@@ -16,7 +18,7 @@
           :is="Component"
           v-else
         />
-      </router-view>
+      </RouterView>
     </AppView>
   </RouteView>
 </template>
@@ -24,8 +26,6 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 type Mode = 'demo' | 'manually'
 const route = useRoute()
 const mode = ref<Mode>('demo')

@@ -1,5 +1,11 @@
 <template>
-  <RouteView v-slot="{ route }">
+  <RouteView
+    v-slot="{ route }"
+    name="mesh-tabs-view"
+    :params="{
+      mesh: ''
+    }"
+  >
     <AppView>
       <template #title>
         <h1>
@@ -25,9 +31,6 @@
 <script lang="ts" setup>
 import { useRouter, RouteRecordRaw } from 'vue-router'
 
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'

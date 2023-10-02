@@ -1,5 +1,3 @@
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const actions = (): RouteRecordRaw[] => {
@@ -38,10 +36,6 @@ export const routes = (
                 {
                   path: '',
                   name: 'zone-cp-list-view',
-                  props: (route) => ({
-                    page: getLastNumberParameter(route.query.page, 1),
-                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-                  }),
                   component: () => import('@/app/zones/views/ZoneListView.vue'),
                 },
               ],
@@ -80,10 +74,6 @@ export const routes = (
                 {
                   path: '',
                   name: 'zone-ingress-list-view',
-                  props: (route) => ({
-                    page: getLastNumberParameter(route.query.page, 1),
-                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-                  }),
                   component: () => import('@/app/zones/views/ZoneIngressListView.vue'),
                 },
               ],
@@ -137,10 +127,6 @@ export const routes = (
                 {
                   path: '',
                   name: 'zone-egress-list-view',
-                  props: (route) => ({
-                    page: getLastNumberParameter(route.query.page, 1),
-                    size: getLastNumberParameter(route.query.size, PAGE_SIZE_DEFAULT),
-                  }),
                   component: () => import('@/app/zones/views/ZoneEgressListView.vue'),
                 },
               ],

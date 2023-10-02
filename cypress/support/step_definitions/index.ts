@@ -83,9 +83,6 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
 })
 
 // act
-When('I wait for {int} milliseconds/ms', function (ms: number) {
-  cy.wait(ms)
-})
 
 When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
   const event = 'click'
@@ -120,8 +117,10 @@ Then('the URL is {string}', (expected: string) => {
   cy.url().should('eq', `${base}${expected}`)
 })
 
-Then('the URL contains {string}', (str: string) => {
-  cy.url().should('include', str)
+Then(/^the URL( doesn't | )contain[s]? "(.*)"$/, (assertion: string, str: string) => {
+  const negative = assertion !== ' '
+  const prefix = negative ? 'not.' : ''
+  cy.url().should(`${prefix}include`, str)
 })
 
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
@@ -188,6 +187,9 @@ Then('the page title contains {string}', function (title: string) {
 })
 
 // debug
+When('I wait for {int} milliseconds/ms', function (ms: number) {
+  cy.wait(ms)
+})
 Then('pause', function () {
   cy.pause()
 })

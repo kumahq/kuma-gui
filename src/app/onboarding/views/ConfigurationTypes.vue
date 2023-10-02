@@ -1,6 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ can }"
+    v-slot="{ can, t }"
+    name="onboarding-configuration-types"
   >
     <RouteTitle
       :title="t('onboarding.routes.configuration-types.title')"
@@ -69,23 +70,17 @@
 </template>
 
 <script lang="ts" setup>
-import { KRadio } from '@kong/kongponents'
 import { computed, ref } from 'vue'
 
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import AppView from '@/app/application/components/app-view/AppView.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
-import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
-import RouteView from '@/app/application/components/route-view/RouteView.vue'
 import type { ConfigSource, Config } from '@/app/diagnostics/sources'
 import {
   useKubernetesGraph,
   useMemoryGraph,
   usePostgresGraph,
 } from '@/components'
-import { useI18n } from '@/utilities'
 
 const KubernetesGraph = useKubernetesGraph()
 const MemoryGraph = useMemoryGraph()
@@ -96,8 +91,6 @@ const componentMap: Record<string, any> = {
   memory: MemoryGraph,
   kubernetes: KubernetesGraph,
 }
-
-const { t } = useI18n()
 
 const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
 
