@@ -22,13 +22,13 @@ Feature: zone-cps / index
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"kubernetes"}'
+                  config: '{"environment":"kubernetes", "store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-not-the-version-i-want
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: !!js/undefined
-                  config: '{"environment":"universal"}'
+                  config: '{"environment":"universal", "store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
@@ -44,7 +44,7 @@ Feature: zone-cps / index
                       version: 1.0.0-rc2-211-not-the-version-i-want
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"kubernetes"}'
+                  config: '{"environment":"kubernetes", "store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce

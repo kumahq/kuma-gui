@@ -17,7 +17,8 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
   const zoneIngressOnline = fake.number.int({ min: 0, max: zoneIngressTotal })
 
   return {
-    headers: {},
+    headers: {
+    },
     body: {
       dataplanes: {
         gatewayBuiltin: fake.kuma.healthStatus({ max: gatewayBuiltinTotal }),

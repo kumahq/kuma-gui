@@ -5,13 +5,13 @@
   >
     <AppView>
       <template
-        v-if="warnings.length > 0"
+        v-if="props.notifications.length > 0"
         #notifications
       >
         <ul>
           <!-- eslint-disable vue/no-v-html  -->
           <li
-            v-for="warning in warnings"
+            v-for="warning in props.notifications"
             :key="warning.kind"
             :data-testid="`warning-${warning.kind}`"
 
@@ -20,7 +20,6 @@
           <!-- eslint-enable -->
         </ul>
       </template>
-
       <div
         data-testid="detail-view-details"
         class="stack"
@@ -85,13 +84,14 @@ import { getZoneControlPlaneStatus, getZoneDpServerAuthType } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
-import type { Config } from '@/types/config.d'
 import type { ZoneOverview } from '@/types/index.d'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   data: ZoneOverview
-  config: Config | undefined
-}>()
+  notifications: { kind: string, payload: Record<string, string> }[]
+}>(), {
+  notifications: () => [],
+})
 
 const type = computed(() => {
   for (const subscription of props.data.zoneInsight?.subscriptions ?? []) {
@@ -103,33 +103,5 @@ const type = computed(() => {
 })
 const status = computed(() => getZoneControlPlaneStatus(props.data))
 const authenticationType = computed(() => getZoneDpServerAuthType(props.data))
-
-const warnings = computed(() => {
-  const warnings = []
-  const subscriptions = props.data.zoneInsight?.subscriptions ?? []
-
-  if (props.config?.store.type === 'memory') {
-    warnings.push({
-      kind: 'STORE_TYPE_MEMORY',
-      payload: {},
-    })
-  }
-  if (subscriptions.length > 0) {
-    const lastSubscription = subscriptions[subscriptions.length - 1]
-    const kumaCpVersion = lastSubscription.version.kumaCp.version || '-'
-    const { kumaCpGlobalCompatible = true } = lastSubscription.version.kumaCp
-
-    if (!kumaCpGlobalCompatible) {
-      warnings.push({
-        kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS',
-        payload: {
-          zoneCpVersion: kumaCpVersion,
-        },
-      })
-    }
-  }
-
-  return warnings
-})
 
 </script>

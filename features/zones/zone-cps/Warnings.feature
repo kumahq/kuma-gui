@@ -32,7 +32,6 @@ Feature: zones / zone-cps / warnings
     Then the "$warning-memory" element exists
     Examples:
       | URL                              |
-      | /zones/zone-cps                  |
       | /zones/zone-cps/zone-cp-1        |
       | /zones/zone-cps/zone-cp-1/config |
 
@@ -47,7 +46,6 @@ Feature: zones / zone-cps / warnings
     Then the "$warning-memory" element doesn't exist
     Examples:
       | URL                              |
-      | /zones/zone-cps                  |
       | /zones/zone-cps/zone-cp-1        |
       | /zones/zone-cps/zone-cp-1/config |
 

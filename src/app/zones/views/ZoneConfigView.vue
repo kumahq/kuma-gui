@@ -6,84 +6,75 @@
       zone: ''
     }"
   >
-    <template
-      v-for="(warnings, index) in [[
-        ...(props.config?.store.type === 'memory' ? [
-          {
-            kind: 'STORE_TYPE_MEMORY',
-            payload: {}
-          }
-        ] : [])]]"
-      :key="index"
-    >
-      <AppView>
-        <template
-          v-if="warnings.length > 0"
-          #notifications
-        >
-          <ul>
-            <!-- eslint-disable vue/no-v-html  -->
-            <li
-              v-for="warning in warnings"
-              :key="warning.kind"
-              :data-testid="`warning-${warning.kind}`"
-              v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
-            />
-            <!-- eslint-enable -->
-          </ul>
-        </template>
+    <AppView>
+      <template
+        v-if="props.notifications.length > 0"
+        #notifications
+      >
+        <ul>
+          <!-- eslint-disable vue/no-v-html  -->
+          <li
+            v-for="warning in props.notifications"
+            :key="warning.kind"
+            :data-testid="`warning-${warning.kind}`"
 
-        <template #title>
-          <h2>
-            <RouteTitle
-              :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
-              :render="true"
-            />
-          </h2>
-        </template>
+            v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
+          />
+          <!-- eslint-enable -->
+        </ul>
+      </template>
 
-        <KCard class="mt-4">
-          <template #body>
-            <template
-              v-for="(conf, i) in [getConfig(props.data)]"
-              :key="i"
+      <template #title>
+        <h2>
+          <RouteTitle
+            :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
+            :render="true"
+          />
+        </h2>
+      </template>
+
+      <KCard class="mt-4">
+        <template #body>
+          <template
+            v-for="(conf, i) in [getConfig(props.data)]"
+            :key="i"
+          >
+            <CodeBlock
+              v-if="conf !== null"
+              id="code-block-zone-config"
+              language="json"
+              :code="conf"
+              is-searchable
+              query-key="zone-config"
+            />
+
+            <KAlert
+              v-else
+              class="mt-4"
+              data-testid="warning-no-subscriptions"
+              appearance="warning"
             >
-              <CodeBlock
-                v-if="conf !== null"
-                id="code-block-zone-config"
-                language="json"
-                :code="conf"
-                is-searchable
-                query-key="zone-config"
-              />
-
-              <KAlert
-                v-else
-                class="mt-4"
-                data-testid="warning-no-subscriptions"
-                appearance="warning"
-              >
-                <template #alertMessage>
-                  {{ t('zone-cps.detail.no_subscriptions') }}
-                </template>
-              </KAlert>
-            </template>
+              <template #alertMessage>
+                {{ t('zone-cps.detail.no_subscriptions') }}
+              </template>
+            </KAlert>
           </template>
-        </KCard>
-      </AppView>
-    </template>
+        </template>
+      </KCard>
+    </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import type { ZoneOverview } from '@/types'
-import type { Config } from '@/types/config.d'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   data: ZoneOverview
-  config: Config | undefined
-}>()
+  notifications: { kind: string, payload: Record<string, string> }[]
+}>(), {
+  notifications: () => [],
+})
 
 function getConfig(zoneOverview: ZoneOverview) {
   const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []

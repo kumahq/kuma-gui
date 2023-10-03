@@ -12,212 +12,193 @@
         size: me.pageSize
       }"
     >
-      <DataSource
-        v-slot="{ data: config }: ConfigSource"
-        :src="can('use zones') ? `/config` : ''"
-      >
+      <AppView>
+        <template #title>
+          <h1>
+            <RouteTitle
+              :title="t('zone-cps.routes.items.title')"
+              :render="true"
+            />
+          </h1>
+        </template>
+
         <template
-          v-for="(warnings, index) in [[
-            ...(config?.store.type === 'memory' ? [
-              {
-                kind: 'STORE_TYPE_MEMORY',
-                payload: {}
-              }
-            ] : [])]]"
-          :key="index"
+          v-if="can('create zones') && isCreateZoneButtonVisible"
+          #actions
         >
-          <AppView>
-            <template
-              v-if="warnings.length > 0"
-              #notifications
-            >
-              <ul>
-                <!-- eslint-disable vue/no-v-html  -->
-                <li
-                  v-for="warning in warnings"
-                  :key="warning.kind"
-                  :data-testid="`warning-${warning.kind}`"
+          <KButton
+            appearance="primary"
+            icon="plus"
+            :to="{ name: 'zone-create-view' }"
+            data-testid="create-zone-link"
+          >
+            {{ t('zones.index.create') }}
+          </KButton>
+        </template>
 
-                  v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
+        <MultizoneInfo v-if="!can('use zones')" />
+
+        <template v-else>
+          <DataSource
+            v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
+            :src="`/zone-cps?page=${route.params.page}&size=${route.params.size}`"
+            @change="setIsCreateZoneButtonVisible"
+          >
+            <KCard>
+              <template #body>
+                <ErrorBlock
+                  v-if="error !== undefined"
+                  :error="error"
                 />
-                <!-- eslint-enable -->
-              </ul>
-            </template>
-            <template #title>
-              <h1>
-                <RouteTitle
-                  :title="t('zone-cps.routes.items.title')"
-                  :render="true"
-                />
-              </h1>
-            </template>
 
-            <template
-              v-if="can('create zones') && isCreateZoneButtonVisible"
-              #actions
-            >
-              <KButton
-                appearance="primary"
-                icon="plus"
-                :to="{ name: 'zone-create-view' }"
-                data-testid="create-zone-link"
-              >
-                {{ t('zones.index.create') }}
-              </KButton>
-            </template>
+                <AppCollection
+                  v-else
+                  class="zone-cp-collection"
+                  data-testid="zone-cp-collection"
+                  :headers="[
+                    { label: 'Name', key: 'name' },
+                    { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                    { label: 'Type', key: 'type' },
+                    { label: 'Status', key: 'status' },
+                    { label: 'Warnings', key: 'warnings', hideLabel: true },
+                    { label: 'Actions', key: 'actions', hideLabel: true },
+                  ]"
+                  :page-number="parseInt(route.params.page)"
+                  :page-size="parseInt(route.params.size)"
+                  :total="data?.total"
+                  :items="data ? transformToTableData(data.items) : undefined"
+                  :error="error"
+                  :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
+                  :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
+                  :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
+                  :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
+                  @change="route.update"
+                >
+                  <template #name="{ row, rowValue }">
+                    <RouterLink
+                      :to="row.detailViewRoute"
+                      data-testid="detail-view-link"
+                    >
+                      {{ rowValue }}
+                    </RouterLink>
+                  </template>
 
-            <MultizoneInfo v-if="!can('use zones')" />
+                  <template #zoneCpVersion="{ rowValue }">
+                    {{ rowValue || t('common.collection.none') }}
+                  </template>
 
-            <template v-else>
-              <DataSource
-                v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
-                :src="`/zone-cps?page=${route.params.page}&size=${route.params.size}`"
-                @change="setIsCreateZoneButtonVisible"
-              >
-                <KCard>
-                  <template #body>
-                    <ErrorBlock
-                      v-if="error !== undefined"
-                      :error="error"
+                  <template #type="{ rowValue }">
+                    {{ rowValue || t('common.collection.none') }}
+                  </template>
+
+                  <template #status="{ rowValue }">
+                    <StatusBadge
+                      v-if="rowValue"
+                      :status="rowValue"
                     />
 
-                    <AppCollection
-                      v-else
-                      class="zone-cp-collection"
-                      data-testid="zone-cp-collection"
-                      :headers="[
-                        { label: 'Name', key: 'name' },
-                        { label: 'Zone CP Version', key: 'zoneCpVersion' },
-                        { label: 'Type', key: 'type' },
-                        { label: 'Status', key: 'status' },
-                        { label: 'Warnings', key: 'warnings', hideLabel: true },
-                        { label: 'Actions', key: 'actions', hideLabel: true },
-                      ]"
-                      :page-number="parseInt(route.params.page)"
-                      :page-size="parseInt(route.params.size)"
-                      :total="data?.total"
-                      :items="data ? transformToTableData(data.items) : undefined"
-                      :error="error"
-                      :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
-                      :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
-                      :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
-                      :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
-                      @change="route.update"
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #warnings="{ row: item }">
+                    <KTooltip
+                      v-if="Object.values(item.warnings).some((item) => item)"
                     >
-                      <template #name="{ row, rowValue }">
-                        <RouterLink
-                          :to="row.detailViewRoute"
-                          data-testid="detail-view-link"
+                      <template
+                        #content
+                      >
+                        <ul>
+                          <template
+                            v-for="(warning, i) in item.warnings"
+                            :key="i"
+                          >
+                            <li v-if="warning">
+                              {{ t(`zone-cps.list.${i}`) }}
+                            </li>
+                          </template>
+                        </ul>
+                      </template>
+                      <WarningIcon
+                        class="mr-1"
+                        :size="KUI_ICON_SIZE_30"
+                        hide-title
+                      />
+                    </KTooltip>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #actions="{ row }">
+                    <KDropdownMenu
+                      class="actions-dropdown"
+                      data-testid="actions-dropdown"
+                      :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                      width="150"
+                    >
+                      <template #default>
+                        <KButton
+                          class="non-visual-button"
+                          appearance="secondary"
+                          size="small"
                         >
-                          {{ rowValue }}
-                        </RouterLink>
+                          <template #icon>
+                            <KIcon
+                              :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
+                              icon="more"
+                              :size="KUI_ICON_SIZE_30"
+                            />
+                          </template>
+                        </KButton>
                       </template>
 
-                      <template #zoneCpVersion="{ rowValue }">
-                        {{ rowValue || t('common.collection.none') }}
-                      </template>
-
-                      <template #type="{ rowValue }">
-                        {{ rowValue || t('common.collection.none') }}
-                      </template>
-
-                      <template #status="{ rowValue }">
-                        <StatusBadge
-                          v-if="rowValue"
-                          :status="rowValue"
+                      <template #items>
+                        <KDropdownItem
+                          :item="{
+                            to: row.detailViewRoute,
+                            label: t('common.collection.actions.view'),
+                          }"
                         />
 
-                        <template v-else>
-                          {{ t('common.collection.none') }}
-                        </template>
-                      </template>
-
-                      <template #warnings="{ rowValue }">
-                        <KTooltip
-                          v-if="rowValue"
-                          :label="t('zone-cps.list.version_mismatch')"
+                        <KDropdownItem
+                          v-if="can('create zones')"
+                          has-divider
+                          is-dangerous
+                          data-testid="dropdown-delete-item"
+                          @click="setDeleteZoneName(row.name)"
                         >
-                          <WarningIcon
-                            class="mr-1"
-                            :size="KUI_ICON_SIZE_30"
-                            hide-title
-                          />
-                        </KTooltip>
-
-                        <template v-else>
-                          {{ t('common.collection.none') }}
-                        </template>
+                          {{ t('common.collection.actions.delete') }}
+                        </KDropdownItem>
                       </template>
-
-                      <template #actions="{ row }">
-                        <KDropdownMenu
-                          class="actions-dropdown"
-                          data-testid="actions-dropdown"
-                          :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                          width="150"
-                        >
-                          <template #default>
-                            <KButton
-                              class="non-visual-button"
-                              appearance="secondary"
-                              size="small"
-                            >
-                              <template #icon>
-                                <KIcon
-                                  :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                                  icon="more"
-                                  :size="KUI_ICON_SIZE_30"
-                                />
-                              </template>
-                            </KButton>
-                          </template>
-
-                          <template #items>
-                            <KDropdownItem
-                              :item="{
-                                to: row.detailViewRoute,
-                                label: t('common.collection.actions.view'),
-                              }"
-                            />
-
-                            <KDropdownItem
-                              v-if="can('create zones')"
-                              has-divider
-                              is-dangerous
-                              data-testid="dropdown-delete-item"
-                              @click="setDeleteZoneName(row.name)"
-                            >
-                              {{ t('common.collection.actions.delete') }}
-                            </KDropdownItem>
-                          </template>
-                        </KDropdownMenu>
-                      </template>
-                    </AppCollection>
+                    </KDropdownMenu>
                   </template>
-                </KCard>
+                </AppCollection>
+              </template>
+            </KCard>
 
-                <DeleteResourceModal
-                  v-if="isDeleteModalVisible"
-                  :confirmation-text="deleteZoneName"
-                  :delete-function="deleteZone"
-                  is-visible
-                  :action-button-text="t('common.delete_modal.proceed_button')"
-                  :title="t('common.delete_modal.title', { type: 'Zone' })"
-                  data-testid="delete-zone-modal"
-                  @cancel="toggleDeleteModal"
-                  @delete="() => { toggleDeleteModal(); refresh() }"
-                >
-                  <template #body-content>
-                    <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
+            <DeleteResourceModal
+              v-if="isDeleteModalVisible"
+              :confirmation-text="deleteZoneName"
+              :delete-function="deleteZone"
+              is-visible
+              :action-button-text="t('common.delete_modal.proceed_button')"
+              :title="t('common.delete_modal.title', { type: 'Zone' })"
+              data-testid="delete-zone-modal"
+              @cancel="toggleDeleteModal"
+              @delete="() => { toggleDeleteModal(); refresh() }"
+            >
+              <template #body-content>
+                <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
 
-                    <p>{{ t('common.delete_modal.text2') }}</p>
-                  </template>
-                </DeleteResourceModal>
-              </DataSource>
-            </template>
-          </AppView>
+                <p>{{ t('common.delete_modal.text2') }}</p>
+              </template>
+            </DeleteResourceModal>
+          </DataSource>
         </template>
-      </DataSource>
+      </AppView>
     </RouteView>
   </DataSource>
 </template>
@@ -236,7 +217,6 @@ import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
-import type { ConfigSource } from '@/app/diagnostics/sources'
 import type { MeSource } from '@/app/me/sources'
 import { StatusKeyword, ZoneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
@@ -247,7 +227,10 @@ type ZoneOverviewTableRow = {
   status: StatusKeyword | 'disabled'
   zoneCpVersion: string
   type: string
-  warnings: boolean
+  warnings: {
+    version_mismatch: boolean
+    store_memory: boolean
+  }
 }
 
 const kumaApi = useKumaApi()
@@ -267,6 +250,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
     }
     let zoneCpVersion = ''
     let type = 'kubernetes'
+    let memoryStore = false
     let cpCompat = true
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
@@ -280,7 +264,9 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       }
 
       if (item.config) {
-        type = JSON.parse(item.config).environment
+        const data = JSON.parse(item.config)
+        type = data.environment
+        memoryStore = data.store.type === 'memory'
       }
     })
 
@@ -292,7 +278,10 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       status,
       zoneCpVersion,
       type,
-      warnings: !cpCompat,
+      warnings: {
+        version_mismatch: !cpCompat,
+        store_memory: memoryStore,
+      },
     }
   })
 }

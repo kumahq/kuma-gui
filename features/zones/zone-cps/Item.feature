@@ -29,7 +29,7 @@ Feature: zones / zone-cps / item
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: !!js/undefined
               config: |
-                { "environment": "universal", "dpServer": { "auth": { "type": "dpToken" } } }
+                { "environment": "universal", "store": {"type": "memory"}, "dpServer": { "auth": { "type": "dpToken" } } }
       """
 
     When I visit the "/zones/zone-cps/zone-cp-1" URL

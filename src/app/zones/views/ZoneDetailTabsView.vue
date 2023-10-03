@@ -9,6 +9,7 @@
     <DataSource
       v-slot="{ data, error }: ZoneOverviewSource"
       :src="`/zone-cps/${route.params.zone}`"
+      @change="change"
     >
       <ErrorBlock
         v-if="error !== undefined"
@@ -46,23 +47,18 @@
             <ZoneActionMenu :zone-overview="data" />
           </template>
 
-          <DataSource
-            v-slot="{ data: config }: ConfigSource"
-            :src="`/config`"
-          >
-            <NavTabs
-              class="route-zone-detail-view-tabs"
-              :tabs="tabs"
-            />
+          <NavTabs
+            class="route-zone-detail-view-tabs"
+            :tabs="tabs"
+          />
 
-            <RouterView v-slot="child">
-              <component
-                :is="child.Component"
-                :data="data"
-                :config="config"
-              />
-            </RouterView>
-          </DataSource>
+          <RouterView v-slot="child">
+            <component
+              :is="child.Component"
+              :data="data"
+              :notifications="notifications"
+            />
+          </RouterView>
         </AppView>
       </template>
     </DataSource>
@@ -70,15 +66,15 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import ZoneActionMenu from '../components/ZoneActionMenu.vue'
-import { ZoneOverviewSource } from '../sources'
+import { ZoneOverview, ZoneOverviewSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import type { ConfigSource } from '@/app/diagnostics/sources'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
@@ -93,5 +89,34 @@ const tabs: NavTab[] = routes.map((route) => {
 
   return { title, routeName, module }
 })
+const notifications = ref<{kind: string, payload: Record<string, string>}[]>([])
+
+const change = (data: ZoneOverview) => {
+  const warnings = []
+  const subscriptions = data.zoneInsight?.subscriptions ?? []
+
+  if (subscriptions.length > 0) {
+    const lastSubscription = subscriptions[subscriptions.length - 1]
+    const kumaCpVersion = lastSubscription.version.kumaCp.version || '-'
+    const { kumaCpGlobalCompatible = true } = lastSubscription.version.kumaCp
+
+    if (lastSubscription.config && JSON.parse(lastSubscription.config)?.store.type === 'memory') {
+      warnings.push({
+        kind: 'STORE_TYPE_MEMORY',
+        payload: {},
+      })
+    }
+    if (!kumaCpGlobalCompatible) {
+      warnings.push({
+        kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS',
+        payload: {
+          zoneCpVersion: kumaCpVersion,
+        },
+      })
+    }
+  }
+
+  notifications.value = warnings
+}
 
 </script>
