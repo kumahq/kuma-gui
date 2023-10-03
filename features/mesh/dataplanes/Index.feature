@@ -41,15 +41,15 @@ Feature: mesh / dataplanes / index
 
     Then the "$table-header" element exists 9 times
     And the "$table-header" elements contain
-      | Value              |
-      | Name               |
-      | Service            |
-      | Protocol           |
-      | Zone               |
-      | Last Updated       |
-      | Certificate Expiry |
-      | Status             |
-      | Warnings           |
+      | Value            |
+      | Name             |
+      | Service          |
+      | Protocol         |
+      | Zone             |
+      | Last Updated     |
+      | Certificate Info |
+      | Status           |
+      | Warnings         |
 
   Scenario: The Proxy listing table has the correct columns (mode: standalone)
     Given the environment
@@ -61,14 +61,14 @@ Feature: mesh / dataplanes / index
 
     Then the "$table-header" element exists 8 times
     And the "$table-header" elements contain
-      | Value              |
-      | Name               |
-      | Service            |
-      | Protocol           |
-      | Last Updated       |
-      | Certificate Expiry |
-      | Status             |
-      | Warnings           |
+      | Value            |
+      | Name             |
+      | Service          |
+      | Protocol         |
+      | Last Updated     |
+      | Certificate Info |
+      | Status           |
+      | Warnings         |
 
   Scenario: The Proxy listing has the expected content and UI elements
     When I visit the "/mesh/default/data-planes" URL
