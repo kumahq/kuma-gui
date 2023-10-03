@@ -10,7 +10,7 @@
       ...(!props.gateways ? [{ label: 'Protocol', key: 'protocol' }] : []),
       ...(isMultiZoneMode ? [{ label: 'Zone', key: 'zone' }] : []),
       { label: 'Last Updated', key: 'lastUpdated' },
-      { label: 'Certificate Expiry', key: 'certificateExpiry' },
+      { label: 'Certificate Info', key: 'certificate' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
       { label: 'Actions', key: 'actions', hideLabel: true },
@@ -89,11 +89,11 @@
         &nbsp;
       </template>
     </template>
-    <template #certificateExpiry="{ row: item }">
+    <template #certificate="{ row: item }">
       {{
         item.dataplaneInsight?.mTLS?.certificateExpirationTime ?
           formatIsoDate(new Date(item.dataplaneInsight.mTLS.certificateExpirationTime).toUTCString()) :
-          t('common.collection.none')
+          t('data-planes.components.data-plane-list.certificate.none')
       }}
     </template>
 

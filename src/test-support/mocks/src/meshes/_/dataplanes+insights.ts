@@ -67,7 +67,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           },
           dataplaneInsight: {
             ...(
-              JSON.parse(env('KUMA_MTLS_ENABLED', 'false'))
+              JSON.parse(env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])))
                 ? {
                   mTLS: {
                     certificateExpirationTime: '2023-10-03T12:40:13Z',

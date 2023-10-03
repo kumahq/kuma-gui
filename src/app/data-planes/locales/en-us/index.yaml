@@ -1,4 +1,8 @@
 data-planes:
+  components:
+    data-plane-list:
+      certificate:
+        none: No certificate
   routes:
     item:
       title: "{name}"

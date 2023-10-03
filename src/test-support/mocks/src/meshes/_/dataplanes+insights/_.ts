@@ -89,7 +89,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           }
         }),
         ...(
-          JSON.parse(env('KUMA_MTLS_ENABLED', 'false'))
+          JSON.parse(env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])))
             ? {
               mTLS: {
                 certificateExpirationTime: '2025-02-02T10:59:26.640498+01:00',
