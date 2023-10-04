@@ -164,7 +164,6 @@ import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
-import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import type { DataPlaneOverview, StatusKeyword, Version, DataPlaneInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
@@ -355,7 +354,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     }
 
     if (isMultiZoneMode && summary.dpVersion) {
-      const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
+      const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
         item.warnings.version_mismatch = true
