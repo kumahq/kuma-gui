@@ -58,4 +58,9 @@ export interface DataPlaneOverviewParameters extends PaginationParameters {
 
 export interface ExternalServicesParameters extends PaginationParameters {
   name?: string
+
+  /**
+   * **Example**: `?tag=kuma.io/service:foo&tag=version:v1`
+   */
+  tag?: string | string[]
 }

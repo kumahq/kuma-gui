@@ -52,7 +52,9 @@ export const sources = (api: KumaApi) => {
 
       const { mesh, service } = params
 
-      const { items } = await api.getExternalServicesByServiceInsightName({ mesh, service })
+      const { items } = await api.getAllExternalServicesFromMesh({ mesh }, {
+        tag: [`kuma.io/service:${service}`],
+      })
 
       return items.length > 0 ? items[0] : null
     },
