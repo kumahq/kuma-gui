@@ -173,7 +173,6 @@ import {
   dpTags,
   getStatusAndReason,
   COMPATIBLE,
-  INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
