@@ -73,11 +73,24 @@
       </template>
     </template>
 
-    <template #warnings="{ rowValue }">
+    <template #warnings="{ row: item }">
       <KTooltip
-        v-if="rowValue.length > 0"
-        :label="t('data-planes.list.version_mismatch')"
+        v-if="Object.values(item.warnings).some((item) => item)"
       >
+        <template
+          #content
+        >
+          <ul>
+            <template
+              v-for="(warning, i) in item.warnings"
+              :key="i"
+            >
+              <li v-if="warning">
+                {{ t(`data-planes.components.data-plane-list.${i}`) }}
+              </li>
+            </template>
+          </ul>
+        </template>
         <WarningIcon
           class="mr-1"
           :size="KUI_ICON_SIZE_30"
@@ -86,7 +99,7 @@
       </KTooltip>
 
       <template v-else>
-        &nbsp;
+        {{ t('common.collection.none') }}
       </template>
     </template>
     <template #certificate="{ row: item }">
@@ -184,7 +197,10 @@ type DataPlaneOverviewTableRow = {
   totalUpdates: number
   totalRejectedUpdates: number
   envoyVersion: string
-  warnings: string[]
+  warnings: {
+    version_mismatch: boolean
+    cert_expired: boolean
+  }
   lastUpdated: string
   lastConnected: string
   overview: DataPlaneOverview
@@ -322,7 +338,10 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       totalUpdates: summary.totalUpdates,
       totalRejectedUpdates: summary.totalRejectedUpdates,
       envoyVersion: summary.envoyVersion ?? t('common.collection.none'),
-      warnings: [],
+      warnings: {
+        version_mismatch: false,
+        cert_expired: false,
+      },
       lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
       lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
       overview: dataPlaneOverview,
@@ -332,7 +351,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       const { kind } = compatibilityKind(summary.version)
 
       if (kind !== COMPATIBLE) {
-        item.warnings.push(kind)
+        item.warnings.version_mismatch = true
       }
     }
 
@@ -340,8 +359,15 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
-        item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
+        item.warnings.version_mismatch = true
       }
+    }
+    const time = dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime
+    if (
+      time &&
+      (Date.now() > new Date(time).getTime())
+    ) {
+      item.warnings.cert_expired = true
     }
 
     return item

@@ -1,4 +1,6 @@
 common:
+  formats:
+    integer: '{value, number, integer}'
   product:
     name: Kuma
     href:
@@ -13,8 +15,10 @@ common:
   warnings:
     CA_EXPIRED: !!text/markdown |
       The CA for this dataplane has expired
-    STORE_TYPE_MEMORY: !!text/markdown |
-      When using the `memory` store type the state is not persisted. This store should only be used when trying things out. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+    ZONE_STORE_TYPE_MEMORY: !!text/markdown |
+      This zone is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+    GLOBAL_STORE_TYPE_MEMORY: !!text/markdown |
+      This control plane is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
     INCOMPATIBLE_UNSUPPORTED_ENVOY: !!text/markdown |
       Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
     INCOMPATIBLE_UNSUPPORTED_KUMA_DP: !!text/markdown |

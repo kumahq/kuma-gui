@@ -93,7 +93,7 @@
         </KCard>
 
         <div>
-          <h2>{{ t('data-planes.detail.mtls') }}</h2>
+          <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
 
           <KAlert
             v-if="mtlsData === null"
@@ -101,14 +101,9 @@
             appearance="warning"
           >
             <template #alertMessage>
-              {{ t('data-planes.detail.no_mtls') }} —
-              <a
-                :href="t('data-planes.href.docs.mutual-tls')"
-                class="external-link"
-                target="_blank"
-              >
-                {{ t('data-planes.detail.no_mtls_learn_more', { product: t('common.product.name') }) }}
-              </a>
+              <div
+                v-html="t('data-planes.routes.item.mtls.disabled')"
+              />
             </template>
           </KAlert>
 
@@ -119,11 +114,11 @@
             <template #body>
               <div
                 class="columns"
-                style="--columns: 3;"
+                style="--columns: 5;"
               >
                 <DefinitionCard>
                   <template #title>
-                    {{ t('http.api.property.certificateExpirationTime') }}
+                    {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
                   </template>
 
                   <template #body>
@@ -133,7 +128,7 @@
 
                 <DefinitionCard>
                   <template #title>
-                    {{ t('http.api.property.lastCertificateRegeneration') }}
+                    {{ t('data-planes.routes.item.mtls.generation_time.title') }}
                   </template>
 
                   <template #body>
@@ -143,33 +138,16 @@
 
                 <DefinitionCard>
                   <template #title>
-                    {{ t('http.api.property.certificateRegenerations') }}
+                    {{ t('data-planes.routes.item.mtls.regenerations.title') }}
                   </template>
 
                   <template #body>
-                    {{ mtlsData.certificateRegenerations }}
+                    {{ t('common.formats.integer', {value: mtlsData.certificateRegenerations}) }}
                   </template>
                 </DefinitionCard>
-              </div>
-            </template>
-          </KCard>
-        </div>
-        <div
-          v-if="mtlsData !== null"
-        >
-          <h2>{{ t('data-planes.detail.ca_backends') }}</h2>
-
-          <KCard
-            class="mt-4"
-          >
-            <template #body>
-              <div
-                class="columns"
-                style="--columns: 2;"
-              >
                 <DefinitionCard>
                   <template #title>
-                    {{ t('http.api.property.issuedBackend') }}
+                    {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
                   </template>
 
                   <template #body>
@@ -179,15 +157,15 @@
 
                 <DefinitionCard>
                   <template #title>
-                    {{ t('http.api.property.supportedBackends') }}
+                    {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
                   </template>
 
                   <template #body>
-                    <ul
-                      v-for="item in mtlsData.supportedBackends"
-                      :key="item"
-                    >
-                      <li>
+                    <ul>
+                      <li
+                        v-for="item in mtlsData.supportedBackends"
+                        :key="item"
+                      >
                         {{ item }}
                       </li>
                     </ul>
@@ -197,9 +175,8 @@
             </template>
           </KCard>
         </div>
-
         <div v-if="(props.data.dataplaneInsight?.subscriptions ?? []).length > 0">
-          <h2>{{ t('data-planes.detail.subscriptions') }}</h2>
+          <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
 
           <KCard class="mt-4">
             <template #body>

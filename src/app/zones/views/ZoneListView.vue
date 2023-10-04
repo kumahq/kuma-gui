@@ -114,13 +114,17 @@
                             v-for="(warning, i) in item.warnings"
                             :key="i"
                           >
-                            <li v-if="warning">
+                            <li
+                              v-if="warning"
+                              :data-testid="`warning-${i}`"
+                            >
                               {{ t(`zone-cps.list.${i}`) }}
                             </li>
                           </template>
                         </ul>
                       </template>
                       <WarningIcon
+                        data-testid="warning"
                         class="mr-1"
                         :size="KUI_ICON_SIZE_30"
                         hide-title

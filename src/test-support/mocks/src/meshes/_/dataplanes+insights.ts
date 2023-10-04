@@ -32,6 +32,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const name = `${_name || fake.kuma.dataPlaneProxyName()}${isGateway ? '-gateway' : '-proxy'}-${id}`
         const zone = isMultizone ? `${fake.hacker.noun()}-${id}` : undefined
 
+        const issuedBackend = fake.hacker.noun()
+        const supportedBackends = [issuedBackend].concat(fake.helpers.multiple(fake.hacker.noun))
+
         return {
           type: 'DataplaneOverview',
           mesh: params.mesh,
@@ -70,13 +73,11 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               JSON.parse(env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])))
                 ? {
                   mTLS: {
-                    certificateExpirationTime: '2023-10-03T12:40:13Z',
+                    certificateExpirationTime: fake.date.anytime(),
                     lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
-                    certificateRegenerations: 1,
-                    issuedBackend: 'ca-1',
-                    supportedBackends: [
-                      'ca-1',
-                    ],
+                    certificateRegenerations: fake.datatype.number(),
+                    issuedBackend,
+                    supportedBackends,
                   },
                 }
                 : {}

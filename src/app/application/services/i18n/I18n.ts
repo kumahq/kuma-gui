@@ -33,6 +33,7 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
     KUMA_VERSION: env('KUMA_VERSION'),
     KUMA_DOCS_URL: env('KUMA_DOCS_URL'),
     KUMA_UTM_QUERY_PARAMS: env('KUMA_UTM_QUERY_PARAMS'),
+    KUMA_PRODUCT_NAME: i18n.t('common.product.name'),
   }
   return {
     ...i18n,

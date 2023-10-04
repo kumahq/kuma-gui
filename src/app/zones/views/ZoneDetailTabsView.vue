@@ -102,7 +102,7 @@ const change = (data: ZoneOverview) => {
 
     if (lastSubscription.config && JSON.parse(lastSubscription.config)?.store.type === 'memory') {
       warnings.push({
-        kind: 'STORE_TYPE_MEMORY',
+        kind: 'ZONE_STORE_TYPE_MEMORY',
         payload: {},
       })
     }
