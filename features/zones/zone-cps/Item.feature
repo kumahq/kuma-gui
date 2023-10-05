@@ -38,7 +38,7 @@ Feature: zones / zone-cps / item
 
     Then the "$tab-overview" element contains
       | Value     |
-      | universal |
+      | Universal |
       | online    |
       | dpToken   |
 

@@ -26,3 +26,11 @@ export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): StatusKey
   const lastSubscription = subscriptions[subscriptions.length - 1]
   return lastSubscription.connectTime?.length && !lastSubscription.disconnectTime ? 'online' : 'offline'
 }
+export function getZoneControlPlaneEnvironment(zoneOverview: ZoneOverview): string {
+  for (const subscription of zoneOverview.zoneInsight?.subscriptions ?? []) {
+    if (subscription.config) {
+      return JSON.parse(subscription.config).environment
+    }
+  }
+  return ''
+}

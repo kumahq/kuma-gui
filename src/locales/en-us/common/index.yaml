@@ -10,6 +10,7 @@ common:
     environment:
       universal: Universal
       kubernetes: Kubernetes
+      unknown: '—'
     mode:
       standalone: Standalone
       global: Multi-Zone

@@ -46,7 +46,7 @@
                 </template>
 
                 <template #body>
-                  {{ type }}
+                  {{ t(`common.product.environment.${environment || 'unknown'}`) }}
                 </template>
               </DefinitionCard>
 
@@ -89,7 +89,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { getZoneControlPlaneStatus, getZoneDpServerAuthType } from '../data'
+import {
+  getZoneControlPlaneStatus,
+  getZoneDpServerAuthType,
+  getZoneControlPlaneEnvironment,
+} from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
@@ -102,14 +106,7 @@ const props = withDefaults(defineProps<{
   notifications: () => [],
 })
 
-const type = computed(() => {
-  for (const subscription of props.data.zoneInsight?.subscriptions ?? []) {
-    if (subscription.config) {
-      return JSON.parse(subscription.config).environment
-    }
-  }
-  return 'kubernetes'
-})
+const environment = computed(() => getZoneControlPlaneEnvironment(props.data))
 const status = computed(() => getZoneControlPlaneStatus(props.data))
 const authenticationType = computed(() => getZoneDpServerAuthType(props.data))
 
