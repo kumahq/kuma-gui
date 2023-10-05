@@ -200,7 +200,9 @@
 
             <KCard class="mt-4">
               <template #body>
-                <SubscriptionList :subscriptions="subscriptions" />
+                <SubscriptionList
+                  :subscriptions="subscriptions"
+                />
               </template>
             </KCard>
           </div>
