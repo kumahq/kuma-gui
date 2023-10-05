@@ -11,9 +11,12 @@
       :key="`${tab.routeName}-anchor`"
       #[`${tab.routeName}-anchor`]
     >
-      <router-link :to="{ name: tab.routeName }">
+      <RouterLink
+        :data-testid="`${tab.routeName}-tab`"
+        :to="{ name: tab.routeName }"
+      >
         {{ tab.title }}
-      </router-link>
+      </RouterLink>
     </template>
   </KTabs>
 </template>
