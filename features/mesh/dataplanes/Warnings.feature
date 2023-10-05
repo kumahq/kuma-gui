@@ -2,12 +2,12 @@ Feature: mesh / dataplanes / warnings
   Background:
     Given the CSS selectors
       | Alias                     | Selector                                                          |
-      | expired-ca-warning        | [data-testid='warning-CA_EXPIRED']                                |
+      | expired-cert-warning      | [data-testid='warning-CERT_EXPIRED']                              |
       | unsupported-kuma-warning  | [data-testid='warning-INCOMPATIBLE_UNSUPPORTED_KUMA_DP']          |
       | unsupported-envoy-warning | [data-testid='warning-INCOMPATIBLE_UNSUPPORTED_ENVOY']            |
       | unsupported-zone-warning  | [data-testid='warning-INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'] |
 
-  Scenario: With an expired CA a CA warning is shown
+  Scenario: With an expired certificate a cert warning is shown
     Given the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
       """
       body:
@@ -16,7 +16,7 @@ Feature: mesh / dataplanes / warnings
             certificateExpirationTime: 2022-10-03T12:40:13Z
       """
     When I visit the "/mesh/default/data-plane/dpp-1" URL
-    Then the "$expired-ca-warning" element exists
+    Then the "$expired-cert-warning" element exists
 
   Scenario: With an expired CA a CA warning isn't shown
     Given the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
@@ -27,9 +27,9 @@ Feature: mesh / dataplanes / warnings
             certificateExpirationTime: 3022-10-03T12:40:13Z
       """
     When I visit the "/mesh/default/data-plane/dpp-1" URL
-    Then the "$expired-ca-warning" element doesn't exist
+    Then the "$expired-cert-warning" element doesn't exist
 
-  Scenario: With no mTLS a CA warning isn't shown
+  Scenario: With no mTLS a certificate warning isn't shown
     Given the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
       """
       body:
@@ -37,7 +37,7 @@ Feature: mesh / dataplanes / warnings
           mTLS: !!js/undefined
       """
     When I visit the "/mesh/default/data-plane/dpp-1" URL
-    Then the "$expired-ca-warning" element doesn't exist
+    Then the "$expired-cert-warning" element doesn't exist
 
   Scenario: Unsupported zone warning is shown
     Given the environment

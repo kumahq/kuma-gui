@@ -251,7 +251,7 @@ const warnings = computed(() => {
     (Date.now() > new Date(mtlsData.value?.certificateExpirationTime).getTime())
   ) {
     warnings.push({
-      kind: 'CA_EXPIRED',
+      kind: 'CERT_EXPIRED',
       payload: {},
     })
   }

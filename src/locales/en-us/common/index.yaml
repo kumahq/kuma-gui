@@ -13,8 +13,8 @@ common:
       standalone: Standalone
       global: Multi-Zone
   warnings:
-    CA_EXPIRED: !!text/markdown |
-      The CA for this dataplane has expired
+    CERT_EXPIRED: !!text/markdown |
+      The certificate for this dataplane has expired
     ZONE_STORE_TYPE_MEMORY: !!text/markdown |
       This zone is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
     GLOBAL_STORE_TYPE_MEMORY: !!text/markdown |
