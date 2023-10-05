@@ -1,4 +1,5 @@
 common:
+  not_applicable: N/A
   formats:
     integer: '{value, number, integer}'
   product:

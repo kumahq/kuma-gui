@@ -7,10 +7,10 @@ export function getZoneDpServerAuthType(zone: ZoneOverview): string {
     const lastSubscription = subscriptions[subscriptions.length - 1]
     if (lastSubscription.config) {
       const parsedConfig = JSON.parse(lastSubscription.config)
-      return get(parsedConfig, 'dpServer.auth.type', 'disabled')
+      return get(parsedConfig, 'dpServer.auth.type', '')
     }
   }
-  return 'disabled'
+  return ''
 }
 
 export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): StatusKeyword | 'disabled' {

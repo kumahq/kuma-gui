@@ -56,7 +56,7 @@
                 </template>
 
                 <template #body>
-                  {{ authenticationType }}
+                  {{ authenticationType || t('common.not_applicable') }}
                 </template>
               </DefinitionCard>
             </div>
