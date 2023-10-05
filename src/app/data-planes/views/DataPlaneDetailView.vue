@@ -95,95 +95,116 @@
         <div>
           <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
 
-          <KAlert
-            v-if="mtlsData === null"
-            class="mt-4"
-            appearance="warning"
+          <template
+            v-if="props.data.dataplaneInsight?.mTLS"
           >
-            <template #alertMessage>
-              <div
-                v-html="t('data-planes.routes.item.mtls.disabled')"
-              />
-            </template>
-          </KAlert>
-
-          <KCard
-            v-else
-            class="mt-4"
-          >
-            <template #body>
-              <div
-                class="columns"
-                style="--columns: 5;"
+            <template
+              v-for="mTLS in [
+                props.data.dataplaneInsight.mTLS
+              ]"
+              :key="mTLS"
+            >
+              <KCard
+                class="mt-4"
               >
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
-                  </template>
+                <template #body>
+                  <div
+                    class="columns"
+                    style="--columns: 5;"
+                  >
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
+                      </template>
 
-                  <template #body>
-                    {{ formatIsoDate(mtlsData.certificateExpirationTime) }}
-                  </template>
-                </DefinitionCard>
+                      <template #body>
+                        {{ formatIsoDate(mTLS.certificateExpirationTime) }}
+                      </template>
+                    </DefinitionCard>
 
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('data-planes.routes.item.mtls.generation_time.title') }}
-                  </template>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.generation_time.title') }}
+                      </template>
 
-                  <template #body>
-                    {{ formatIsoDate(mtlsData.lastCertificateRegeneration) }}
-                  </template>
-                </DefinitionCard>
+                      <template #body>
+                        {{ formatIsoDate(mTLS.lastCertificateRegeneration) }}
+                      </template>
+                    </DefinitionCard>
 
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('data-planes.routes.item.mtls.regenerations.title') }}
-                  </template>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.regenerations.title') }}
+                      </template>
 
-                  <template #body>
-                    {{ t('common.formats.integer', {value: mtlsData.certificateRegenerations}) }}
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
-                  </template>
+                      <template #body>
+                        {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
+                      </template>
+                    </DefinitionCard>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
+                      </template>
 
-                  <template #body>
-                    {{ mtlsData.issuedBackend }}
-                  </template>
-                </DefinitionCard>
+                      <template #body>
+                        {{ mTLS.issuedBackend }}
+                      </template>
+                    </DefinitionCard>
 
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
-                  </template>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
+                      </template>
 
-                  <template #body>
-                    <ul>
-                      <li
-                        v-for="item in mtlsData.supportedBackends"
-                        :key="item"
-                      >
-                        {{ item }}
-                      </li>
-                    </ul>
-                  </template>
-                </DefinitionCard>
-              </div>
+                      <template #body>
+                        <ul>
+                          <li
+                            v-for="item in mTLS.supportedBackends"
+                            :key="item"
+                          >
+                            {{ item }}
+                          </li>
+                        </ul>
+                      </template>
+                    </DefinitionCard>
+                  </div>
+                </template>
+              </KCard>
             </template>
-          </KCard>
-        </div>
-        <div v-if="(props.data.dataplaneInsight?.subscriptions ?? []).length > 0">
-          <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
+          </template>
 
-          <KCard class="mt-4">
-            <template #body>
-              <SubscriptionList :subscriptions="props.data.dataplaneInsight?.subscriptions ?? []" />
-            </template>
-          </KCard>
+          <template
+            v-else
+          >
+            <KAlert
+              class="mt-4"
+              appearance="warning"
+            >
+              <template #alertMessage>
+                <div
+                  v-html="t('data-planes.routes.item.mtls.disabled')"
+                />
+              </template>
+            </KAlert>
+          </template>
         </div>
+
+        <template
+          v-for="subscriptions in [props.data.dataplaneInsight?.subscriptions ?? []]"
+          :key="subscriptions"
+        >
+          <div
+            v-if="subscriptions.length > 0"
+          >
+            <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
+
+            <KCard class="mt-4">
+              <template #body>
+                <SubscriptionList :subscriptions="subscriptions" />
+              </template>
+            </KCard>
+          </div>
+        </template>
       </div>
     </AppView>
   </RouteView>
@@ -199,9 +220,6 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import TagList from '@/app/common/TagList.vue'
-import {
-  parseMTLSData,
-} from '@/app/data-planes/data'
 import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import {
@@ -223,7 +241,6 @@ const props = defineProps<{
 const statusWithReason = computed(() => getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.data.dataplane))
 const dataPlaneVersions = computed(() => getVersions(props.data.dataplaneInsight))
-const mtlsData = computed(() => parseMTLSData(props.data))
 
 const warnings = computed(() => {
   const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
@@ -246,9 +263,10 @@ const warnings = computed(() => {
       warnings.push(compatibility)
     }
   }
+  const mTLS = props.data.dataplaneInsight?.mTLS
   if (
-    mtlsData.value &&
-    (Date.now() > new Date(mtlsData.value?.certificateExpirationTime).getTime())
+    mTLS &&
+    (Date.now() > new Date(mTLS?.certificateExpirationTime).getTime())
   ) {
     warnings.push({
       kind: 'CERT_EXPIRED',
