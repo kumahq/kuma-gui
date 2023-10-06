@@ -1,3 +1,6 @@
+import type { Can } from '@/app/application/services/can'
+import { routes as egresses } from '@/app/zone-egresses/routes'
+import { routes as ingresses } from '@/app/zone-ingresses/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const actions = (): RouteRecordRaw[] => {
@@ -7,165 +10,72 @@ export const actions = (): RouteRecordRaw[] => {
     meta: {
       isWizard: true,
     },
-    component: () => import('@/app/zones/views/ZoneCreateView.vue'),
+    component: () => import('@/app/zones/views/CreateView.vue'),
   }]
 }
-
 export const routes = (
   actions: RouteRecordRaw[],
+  can: Can,
 ): RouteRecordRaw[] => {
   return [
     ...actions,
     {
       path: '/zones',
-      name: 'zone-index-view',
       redirect: { name: 'zone-cp-list-view' },
-      children: [
+      ...(!can('use zones')
+        ? {
+          redirect: { name: 'zone-egress-list-view' },
+          children: [
+            ...egresses().items(),
+            ...egresses().item(),
+          ],
+        }
+        : {}),
+    },
+    ...(can('use zones')
+      ? [
         {
-          path: 'zone-cps',
-          name: 'zone-cps',
+          path: '/zones/zone-cps',
+          name: 'zone-index-view',
+          redirect: { name: 'zone-cp-list-view' },
           children: [
             {
               path: '',
-              name: 'zone-cp-tabs-view',
-              meta: {
-                module: 'zone-cps',
-              },
-              component: () => import('@/app/zones/views/ZoneTabsView.vue'),
-              children: [
-                {
-                  path: '',
-                  name: 'zone-cp-list-view',
-                  component: () => import('@/app/zones/views/ZoneListView.vue'),
-                },
-              ],
+              name: 'zone-cp-list-view',
+              component: () => import('@/app/zones/views/IndexView.vue'),
             },
             {
               path: ':zone',
-              name: 'zone-cp-detail-tabs-view',
-              component: () => import('@/app/zones/views/ZoneDetailTabsView.vue'),
-              children: [
-                {
-                  path: 'overview',
-                  name: 'zone-cp-detail-view',
-                  component: () => import('@/app/zones/views/ZoneDetailView.vue'),
-                },
-                {
-                  path: 'config',
-                  name: 'zone-cp-config-view',
-                  component: () => import('@/app/zones/views/ZoneConfigView.vue'),
-                },
-              ],
-            },
-          ],
-        },
-        {
-          path: 'zone-ingresses',
-          name: 'zone-ingresses',
-          children: [
-            {
-              path: '',
-              name: 'zone-ingress-tabs-view',
-              meta: {
-                module: 'zone-ingresses',
-              },
-              component: () => import('@/app/zones/views/ZoneTabsView.vue'),
+              name: 'zone-cp-detail-abstract-view',
               children: [
                 {
                   path: '',
-                  name: 'zone-ingress-list-view',
-                  component: () => import('@/app/zones/views/ZoneIngressListView.vue'),
+                  name: 'zone-cp-detail-tabs-view',
+                  component: () => import('@/app/zones/views/item/IndexView.vue'),
+                  redirect: { name: 'zone-cp-detail-view' },
+                  children: [
+                    {
+                      path: 'overview',
+                      name: 'zone-cp-detail-view',
+                      component: () => import('@/app/zones/views/item/DetailView.vue'),
+                    },
+                    {
+                      path: 'config',
+                      name: 'zone-cp-config-view',
+                      component: () => import('@/app/zones/views/item/ConfigView.vue'),
+                    },
+                    ...ingresses().items(),
+                    ...egresses().items(),
+                  ],
                 },
-              ],
-            },
-            {
-              path: ':zoneIngress',
-              name: 'zone-ingress-detail-tabs-view',
-              component: () => import('@/app/zones/views/ZoneIngressDetailTabsView.vue'),
-              children: [
-                {
-                  path: 'overview',
-                  name: 'zone-ingress-detail-view',
-                  component: () => import('@/app/zones/views/ZoneIngressDetailView.vue'),
-                },
-                {
-                  path: 'xds-config',
-                  name: 'zone-ingress-xds-config-view',
-                  component: () => import('@/app/zones/views/ZoneIngressXdsConfigView.vue'),
-                },
-                {
-                  path: 'stats',
-                  name: 'zone-ingress-stats-view',
-                  component: () => import('@/app/zones/views/ZoneIngressStatsView.vue'),
-                },
-                {
-                  path: 'clusters',
-                  name: 'zone-ingress-clusters-view',
-                  component: () => import('@/app/zones/views/ZoneIngressClustersView.vue'),
-                },
-                {
-                  path: 'config',
-                  name: 'zone-ingress-config-view',
-                  component: () => import('@/app/zones/views/ZoneIngressConfigView.vue'),
-                },
+                ...ingresses().item(),
+                ...egresses().item(),
               ],
             },
           ],
         },
-        {
-          path: 'zone-egresses',
-          name: 'zone-egresses',
-          children: [
-            {
-              path: '',
-              name: 'zone-egress-tabs-view',
-              meta: {
-                module: 'zone-egresses',
-              },
-              component: () => import('@/app/zones/views/ZoneTabsView.vue'),
-              children: [
-                {
-                  path: '',
-                  name: 'zone-egress-list-view',
-                  component: () => import('@/app/zones/views/ZoneEgressListView.vue'),
-                },
-              ],
-            },
-            {
-              path: ':zoneEgress',
-              name: 'zone-egress-detail-tabs-view',
-              component: () => import('@/app/zones/views/ZoneEgressDetailTabsView.vue'),
-              children: [
-                {
-                  path: 'overview',
-                  name: 'zone-egress-detail-view',
-                  component: () => import('@/app/zones/views/ZoneEgressDetailView.vue'),
-                },
-                {
-                  path: 'xds-config',
-                  name: 'zone-egress-xds-config-view',
-                  component: () => import('@/app/zones/views/ZoneEgressXdsConfigView.vue'),
-                },
-                {
-                  path: 'stats',
-                  name: 'zone-egress-stats-view',
-                  component: () => import('@/app/zones/views/ZoneEgressStatsView.vue'),
-                },
-                {
-                  path: 'clusters',
-                  name: 'zone-egress-clusters-view',
-                  component: () => import('@/app/zones/views/ZoneEgressClustersView.vue'),
-                },
-                {
-                  path: 'config',
-                  name: 'zone-egress-config-view',
-                  component: () => import('@/app/zones/views/ZoneEgressConfigView.vue'),
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
+
+      ]
+      : []),
   ]
 }

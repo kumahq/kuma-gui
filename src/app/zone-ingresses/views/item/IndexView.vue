@@ -10,6 +10,12 @@
       :breadcrumbs="[
         {
           to: {
+            name: 'zone-cp-list-view',
+          },
+          text: t('zone-cps.routes.item.breadcrumbs')
+        },
+        {
+          to: {
             name: 'zone-ingress-list-view',
           },
           text: t('zone-ingresses.routes.item.breadcrumbs')
@@ -59,7 +65,7 @@
 <script lang="ts" setup>
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
-import { ZoneIngressOverviewSource } from '../sources'
+import { ZoneIngressOverviewSource } from '../../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'

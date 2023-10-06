@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ZoneEgressSource } from '../sources'
+import { ZoneEgressSource } from '../../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'

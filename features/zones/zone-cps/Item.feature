@@ -9,7 +9,7 @@ Feature: zones / zone-cps / item
       KUMA_MODE: global
       """
 
-  Scenario: Zone CP detail view has expected content
+  Scenario: Detail view has expected content
     # We always use the final subscription
     # If the disconnectTime is empty then we are online
     Given the environment

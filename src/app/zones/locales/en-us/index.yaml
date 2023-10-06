@@ -6,6 +6,8 @@ zone-cps:
       navigation:
         zone-cp-detail-view: 'Overview'
         zone-cp-config-view: 'Config'
+        zone-ingress-list-view: 'Ingresses'
+        zone-egress-list-view: 'Egresses'
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
@@ -19,44 +21,6 @@ zone-cps:
   empty_state:
     title: 'No Zones yet …'
     message: 'Create your first Zone to start managing your Mesh'
-
-zone-ingresses:
-  routes:
-    item:
-      title: '{name}'
-      breadcrumbs: Ingresses
-      navigation:
-        zone-ingress-detail-view: 'Overview'
-        zone-ingress-xds-config-view: 'XDS Configuration'
-        zone-ingress-stats-view: 'Stats'
-        zone-ingress-clusters-view: 'Clusters'
-        zone-ingress-config-view: 'YAML'
-    items:
-      title: Ingresses
-      breadcrumbs: Ingresses
-  href:
-    docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'
-  detail:
-    subscriptions: 'XDS connections'
-
-zone-egresses:
-  routes:
-    item:
-      title: '{name}'
-      breadcrumbs: Egresses
-      navigation:
-        zone-egress-detail-view: 'Overview'
-        zone-egress-xds-config-view: 'XDS Configuration'
-        zone-egress-stats-view: 'Stats'
-        zone-egress-clusters-view: 'Clusters'
-        zone-egress-config-view: 'YAML'
-    items:
-      title: Egresses
-      breadcrumbs: Egresses
-  href:
-    docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'
-  detail:
-    subscriptions: 'XDS connections'
 
 zones:
   href:

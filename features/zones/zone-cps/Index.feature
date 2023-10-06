@@ -4,7 +4,7 @@ Feature: zone-cps / index
       | Alias                  | Selector                                         |
       | zone-cp-table-row      | [data-testid='zone-cp-collection'] tbody tr      |
 
-  Scenario: Zone CP list view has expected content
+  Scenario: List view has expected content
     Given the environment
       """
       KUMA_ZONE_COUNT: 3

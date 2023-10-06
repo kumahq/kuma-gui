@@ -1,6 +1,5 @@
 Feature: zones / delete
   Background:
-
     Given the CSS selectors
       | Alias          | Selector                                                       |
       | items          | [data-testid="zone-cp-collection"]                             |

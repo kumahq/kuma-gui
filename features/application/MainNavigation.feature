@@ -14,10 +14,8 @@ Feature: application / MainNavigation
     Examples:
       | RouteName              | Mode       | ExistsAssertion |
       | zone-cp-list-view      | global     | exists          |
-      | zone-ingress-list-view | global     | doesn't exists  |
-      | zone-egress-list-view  | global     | doesn't exists  |
+      | zone-egress-list-view  | global     | doesn't exist   |
       | zone-cp-list-view      | standalone | doesn't exist   |
-      | zone-ingress-list-view | standalone | doesn't exist   |
       | zone-egress-list-view  | standalone | exists          |
 
   Scenario Outline: Visiting the "<Title>" page

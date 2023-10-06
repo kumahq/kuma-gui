@@ -1,0 +1,20 @@
+zone-ingresses:
+  routes:
+    item:
+      title: '{name}'
+      breadcrumbs: Ingresses
+      navigation:
+        zone-ingress-detail-view: 'Overview'
+        zone-ingress-xds-config-view: 'XDS Configuration'
+        zone-ingress-stats-view: 'Stats'
+        zone-ingress-clusters-view: 'Clusters'
+        zone-ingress-config-view: 'YAML'
+      subscriptions:
+        title: 'XDS connections'
+    items:
+      title: Ingresses
+      breadcrumbs: Ingresses
+  href:
+    docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'
+
+

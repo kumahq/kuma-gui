@@ -1,5 +1,9 @@
 Feature: application / titles
-  Scenario Outline: Visiting the "<Title>" page
+  Scenario Outline: Visiting the "<Title>" page in "global" Mode
+    Given the environment
+      """
+      KUMA_MODE: global
+      """
     When I visit the "<URL>" URL
     Then the page title contains "<Title>"
 
@@ -18,13 +22,13 @@ Feature: application / titles
       | /onboarding/dataplanes-overview | Data plane overview |
       | /onboarding/completed           | Completed           |
 
-      | /zones/-create                                   | Create & connect Zone |
-      | /zones/zone-cps                                  | Zone Control Planes   |
-      | /zones/zone-cps/zone-cp-name/overview            | zone-cp-name          |
-      | /zones/zone-ingresses                            | Ingresses             |
-      | /zones/zone-ingresses/zone-ingress-name/overview | zone-ingress-name     |
-      | /zones/zone-egresses                             | Egresses              |
-      | /zones/zone-egresses/zone-egress-name/overview   | zone-egress-name      |
+      | /zones/-create                                                    | Create & connect Zone |
+      | /zones/zone-cps                                                   | Zone Control Planes   |
+      | /zones/zone-cps/zone-cp-name/overview                             | zone-cp-name          |
+      | /zones/zone-cps/zone-cp-name/ingresses                            | Ingresses             |
+      | /zones/zone-cps/zone-cp-name/ingresses/zone-ingress-name/overview | zone-ingress-name     |
+      | /zones/zone-cps/zone-cp-name/egresses                             | Egresses              |
+      | /zones/zone-cps/zone-cp-name/egresses/zone-egress-name/overview   | zone-egress-name      |
 
       | /meshes         | Meshes        |
       | /meshes/default | Mesh overview |
@@ -40,3 +44,17 @@ Feature: application / titles
 
       | /meshes/default/policies/circuit-breakers                    | Policies  |
       | /meshes/default/policies/circuit-breakers/program-0/overview | program-0 |
+
+  Scenario Outline: Visiting the "<Title>" page in "standalone" Mode
+    Given the environment
+      """
+      KUMA_MODE: standalone
+      """
+    When I visit the "<URL>" URL
+    Then the page title contains "<Title>"
+
+    Examples:
+      | URL                                       | Title            |
+      | /zones/egresses                           | Egresses         |
+      | /zones/egresses/zone-egress-name/overview | zone-egress-name |
+

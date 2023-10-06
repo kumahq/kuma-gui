@@ -1,0 +1,18 @@
+zone-egresses:
+  routes:
+    item:
+      title: '{name}'
+      breadcrumbs: Egresses
+      navigation:
+        zone-egress-detail-view: 'Overview'
+        zone-egress-xds-config-view: 'XDS Configuration'
+        zone-egress-stats-view: 'Stats'
+        zone-egress-clusters-view: 'Clusters'
+        zone-egress-config-view: 'YAML'
+      subscriptions:
+        title: 'XDS connections'
+    items:
+      title: Egresses
+      breadcrumbs: Egresses
+  href:
+    docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'
