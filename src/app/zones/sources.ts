@@ -2,6 +2,7 @@ import { DataSourceResponse } from '@/app/application/services/data-source/DataS
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type { ZoneOverview, ZoneIngressOverview, ZoneEgressOverview, ZoneIngress, ZoneEgress } from '@/types/index.d'
+export type { ZoneOverview } from '@/types/index.d'
 
 type PaginationParams = {
   size: number

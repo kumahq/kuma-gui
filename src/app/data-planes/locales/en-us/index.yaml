@@ -1,4 +1,10 @@
 data-planes:
+  components:
+    data-plane-list:
+      version_mismatch: Version mismatch
+      cert_expired: Certificate expired
+      certificate:
+        none: No certificate
   routes:
     item:
       title: "{name}"
@@ -10,18 +16,25 @@ data-planes:
         data-plane-stats-view: 'Stats'
         data-plane-clusters-view: 'Clusters'
         data-plane-config-view: 'YAML'
+      mtls:
+        title: 'TLS'
+        expiration_time:
+          title: Certificate expiration time
+        generation_time:
+          title: Certificate generation time
+        regenerations:
+          title: Generation
+        issued_backend:
+          title: Certificate issued by
+        supported_backends:
+          title: Supported CAs
+        disabled: !!text/markdown |
+          This Data Plane Proxy does not have mTLS configured, yet  — <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
+      subscriptions:
+        title: XDS Configurations
     items:
       title: Data Plane Proxies
   href:
     docs:
       data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'
       gateway: '{KUMA_DOCS_URL}/explore/gateway?{KUMA_UTM_QUERY_PARAMS}'
-      mutual-tls: '{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}'
-  list:
-    version_mismatch: 'Version mismatch'
-  detail:
-    mtls: 'Certificate'
-    subscriptions: 'XDS connections'
-    no_mtls: 'This Data Plane Proxy does not have mTLS configured, yet'
-    no_mtls_learn_more: 'Learn about certificates in {product}'
-    configuration: 'Configuration'

@@ -10,6 +10,7 @@
       ...(!props.gateways ? [{ label: 'Protocol', key: 'protocol' }] : []),
       ...(isMultiZoneMode ? [{ label: 'Zone', key: 'zone' }] : []),
       { label: 'Last Updated', key: 'lastUpdated' },
+      { label: 'Certificate Info', key: 'certificate' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
       { label: 'Actions', key: 'actions', hideLabel: true },
@@ -72,11 +73,24 @@
       </template>
     </template>
 
-    <template #warnings="{ rowValue }">
+    <template #warnings="{ row: item }">
       <KTooltip
-        v-if="rowValue.length > 0"
-        :label="t('data-planes.list.version_mismatch')"
+        v-if="Object.values(item.warnings).some((item) => item)"
       >
+        <template
+          #content
+        >
+          <ul>
+            <template
+              v-for="(warning, i) in item.warnings"
+              :key="i"
+            >
+              <li v-if="warning">
+                {{ t(`data-planes.components.data-plane-list.${i}`) }}
+              </li>
+            </template>
+          </ul>
+        </template>
         <WarningIcon
           class="mr-1"
           :size="KUI_ICON_SIZE_30"
@@ -85,8 +99,15 @@
       </KTooltip>
 
       <template v-else>
-        &nbsp;
+        {{ t('common.collection.none') }}
       </template>
+    </template>
+    <template #certificate="{ row: item }">
+      {{
+        item.dataplaneInsight?.mTLS?.certificateExpirationTime ?
+          formatIsoDate(new Date(item.dataplaneInsight.mTLS.certificateExpirationTime).toUTCString()) :
+          t('data-planes.components.data-plane-list.certificate.none')
+      }}
     </template>
 
     <template #actions="{ row: item }">
@@ -143,22 +164,21 @@ import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
-import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
-import { DataPlaneOverview, StatusKeyword, Version } from '@/types/index.d'
+import type { DataPlaneOverview, StatusKeyword, Version, DataPlaneInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
   dpTags,
   getStatusAndReason,
   COMPATIBLE,
-  INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
 const can = useCan()
 
 type DataPlaneOverviewTableRow = {
+  dataplaneInsight: DataPlaneInsight | undefined,
   detailViewRoute: RouteLocationNamedRaw
   type: string
   name: string
@@ -175,7 +195,10 @@ type DataPlaneOverviewTableRow = {
   totalUpdates: number
   totalRejectedUpdates: number
   envoyVersion: string
-  warnings: string[]
+  warnings: {
+    version_mismatch: boolean
+    cert_expired: boolean
+  }
   lastUpdated: string
   lastConnected: string
   overview: DataPlaneOverview
@@ -303,6 +326,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
       name,
+      dataplaneInsight: dataPlaneOverview.dataplaneInsight,
       detailViewRoute,
       type,
       zone: { title: zone ?? t('common.collection.none'), route: zoneRoute },
@@ -312,7 +336,10 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       totalUpdates: summary.totalUpdates,
       totalRejectedUpdates: summary.totalRejectedUpdates,
       envoyVersion: summary.envoyVersion ?? t('common.collection.none'),
-      warnings: [],
+      warnings: {
+        version_mismatch: false,
+        cert_expired: false,
+      },
       lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
       lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
       overview: dataPlaneOverview,
@@ -322,16 +349,23 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       const { kind } = compatibilityKind(summary.version)
 
       if (kind !== COMPATIBLE) {
-        item.warnings.push(kind)
+        item.warnings.version_mismatch = true
       }
     }
 
     if (isMultiZoneMode && summary.dpVersion) {
-      const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
+      const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
-        item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
+        item.warnings.version_mismatch = true
       }
+    }
+    const time = dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime
+    if (
+      time &&
+      (Date.now() > new Date(time).getTime())
+    ) {
+      item.warnings.cert_expired = true
     }
 
     return item

@@ -84,6 +84,7 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
 
 // act
 
+// TODO(jc): we can probably combine these 2 steps
 When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
   const event = 'click'
   if (value !== undefined) {
@@ -92,6 +93,16 @@ When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, v
     $(selector)[event]({ force: true })
   }
 })
+
+When(/^I (.*) on the "(.*)" element$/, (event: string, selector: string) => {
+  switch (event) {
+    case 'hover':
+      event = 'mouseenter'
+      break
+  }
+  $(selector).trigger(event, { force: true })
+})
+//
 
 When('I {string} {string} into the {string} element', (event: string, text: string, selector: string) => {
   switch (event) {

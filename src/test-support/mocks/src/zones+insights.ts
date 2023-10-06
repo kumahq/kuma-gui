@@ -28,7 +28,11 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             zoneInsight: {
               subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
                 return {
-                  config: fake.kuma.subscriptionConfig(),
+                  config: fake.kuma.subscriptionConfig({
+                    store: {
+                      type: fake.helpers.arrayElement(['memory', 'postgres', 'kubernetes']),
+                    },
+                  }),
                   id: fake.string.uuid(),
                   globalInstanceId: fake.hacker.noun(),
                   ...fake.kuma.connection(item, i, arr),

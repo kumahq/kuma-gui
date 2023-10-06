@@ -7,6 +7,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMultizone = true && fake.datatype.boolean()
   const zone = fake.hacker.noun()
 
+  const issuedBackend = fake.hacker.noun()
+  const supportedBackends = [issuedBackend].concat(fake.helpers.multiple(fake.hacker.noun))
+
   return {
     headers: {
     },
@@ -88,11 +91,19 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             },
           }
         }),
-        mTLS: {
-          certificateExpirationTime: '2025-02-02T10:59:26.640498+01:00',
-          lastCertificateRegeneration: '2021-02-02T10:59:26.640498+01:00',
-          certificateRegenerations: fake.number.int({ min: 0, max: 5 }),
-        },
+        ...(
+          JSON.parse(env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])))
+            ? {
+              mTLS: {
+                certificateExpirationTime: fake.date.anytime(),
+                lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
+                certificateRegenerations: fake.datatype.number(),
+                issuedBackend,
+                supportedBackends,
+              },
+            }
+            : {}
+        ),
       },
     },
   }

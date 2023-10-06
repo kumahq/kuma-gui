@@ -1,4 +1,7 @@
 common:
+  not_applicable: N/A
+  formats:
+    integer: '{value, number, integer}'
   product:
     name: Kuma
     href:
@@ -7,9 +10,25 @@ common:
     environment:
       universal: Universal
       kubernetes: Kubernetes
+      unknown: '—'
     mode:
       standalone: Standalone
       global: Multi-Zone
+  warnings:
+    CERT_EXPIRED: !!text/markdown |
+      The certificate for this dataplane has expired
+    ZONE_STORE_TYPE_MEMORY: !!text/markdown |
+      This zone is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+    GLOBAL_STORE_TYPE_MEMORY: !!text/markdown |
+      This control plane is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+    INCOMPATIBLE_UNSUPPORTED_ENVOY: !!text/markdown |
+      Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
+    INCOMPATIBLE_UNSUPPORTED_KUMA_DP: !!text/markdown |
+      Unsupported version of Kuma DP (**{ kumaDp }**)
+    INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS: !!text/markdown |
+      There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
+    INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: !!text/markdown |
+      There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ KUMA_VERSION }**)
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'

@@ -102,12 +102,29 @@
                     </template>
                   </template>
 
-                  <template #warnings="{ rowValue }">
+                  <template #warnings="{ row: item }">
                     <KTooltip
-                      v-if="rowValue"
-                      :label="t('zone-cps.list.version_mismatch')"
+                      v-if="Object.values(item.warnings).some((item) => item)"
                     >
+                      <template
+                        #content
+                      >
+                        <ul>
+                          <template
+                            v-for="(warning, i) in item.warnings"
+                            :key="i"
+                          >
+                            <li
+                              v-if="warning"
+                              :data-testid="`warning-${i}`"
+                            >
+                              {{ t(`zone-cps.list.${i}`) }}
+                            </li>
+                          </template>
+                        </ul>
+                      </template>
                       <WarningIcon
+                        data-testid="warning"
                         class="mr-1"
                         :size="KUI_ICON_SIZE_30"
                         hide-title
@@ -197,7 +214,7 @@ import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import MultizoneInfo from '../components/MultizoneInfo.vue'
-import { getZoneControlPlaneStatus } from '../getZoneControlPlaneStatus'
+import { getZoneControlPlaneStatus } from '../data'
 import type { ZoneOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
@@ -214,7 +231,10 @@ type ZoneOverviewTableRow = {
   status: StatusKeyword | 'disabled'
   zoneCpVersion: string
   type: string
-  warnings: boolean
+  warnings: {
+    version_mismatch: boolean
+    store_memory: boolean
+  }
 }
 
 const kumaApi = useKumaApi()
@@ -234,6 +254,7 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
     }
     let zoneCpVersion = ''
     let type = 'kubernetes'
+    let memoryStore = false
     let cpCompat = true
 
     const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
@@ -247,7 +268,9 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       }
 
       if (item.config) {
-        type = JSON.parse(item.config).environment
+        const data = JSON.parse(item.config)
+        type = data.environment
+        memoryStore = data.store.type === 'memory'
       }
     })
 
@@ -259,7 +282,10 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
       status,
       zoneCpVersion,
       type,
-      warnings: !cpCompat,
+      warnings: {
+        version_mismatch: !cpCompat,
+        store_memory: memoryStore,
+      },
     }
   })
 }
@@ -286,5 +312,9 @@ function setIsCreateZoneButtonVisible(data: any) {
 <style lang="scss" scoped>
 .actions-dropdown {
   display: inline-block;
+}
+.warning-type-memory {
+  margin-top: $kui-space-60;
+  margin-bottom: $kui-space-60;
 }
 </style>

@@ -11,6 +11,7 @@ zone-cps:
       breadcrumbs: Zone Control Planes
   list:
     version_mismatch: 'Version mismatch'
+    store_memory: 'Uses memory store'
   detail:
     subscriptions: 'KDS connections'
     configuration_title: 'Configuration'
