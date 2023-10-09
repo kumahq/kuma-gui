@@ -143,7 +143,6 @@
                     <ProgressIcon
                       v-if="isChangingZone"
                       :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-                      display="inline-block"
                       :size="KUI_ICON_SIZE_30"
                     />
 

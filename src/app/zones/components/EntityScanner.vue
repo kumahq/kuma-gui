@@ -10,7 +10,6 @@
             <ProgressIcon
               v-if="isRunning"
               :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-              display="inline-block"
             />
 
             <DangerIcon

@@ -110,10 +110,7 @@
                         appearance="secondary"
                         size="small"
                       >
-                        <MoreIcon
-                          :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                          :size="KUI_ICON_SIZE_30"
-                        />
+                        <MoreIcon :size="KUI_ICON_SIZE_30" />
                       </KButton>
                     </template>
                     <template #items>
@@ -141,7 +138,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
 
 import type { ServiceInsightCollectionSource } from '../sources'
