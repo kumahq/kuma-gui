@@ -1,21 +1,47 @@
+import { config } from '@vue/test-utils'
 import { setupServer } from 'msw/node'
 
 import createDisabledLogger from './logger/DisabledLogger'
 import { Alias, ServiceConfigurator, token, createInjections } from './utils'
+import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
 import CliEnv from '@/services/env/CliEnv'
 import Logger from '@/services/logger/Logger'
 import { mocker, fakeApi, FS } from '@/test-support'
 import type { Mocker } from '@/test-support'
+import type { Component } from 'vue'
 
 const $ = {
   mock: token<Mocker>('mocker'),
   server: token<ReturnType<typeof setupServer>>('server'),
 }
-
 export const services: ServiceConfigurator = (app) => [
+
   [token<Logger>('logger'), {
     service: createDisabledLogger,
     decorates: app.logger,
+  }],
+
+  [app.app, {
+    service: (
+      components: ComponentDefinition[],
+      plugins: PluginDefinition[],
+    ) => {
+      components.forEach(([name, component]: [string, Component]) => {
+        config.global.components[name] = component
+      })
+
+      plugins.forEach(([...args]) => {
+        config.global.plugins.push([...args])
+      })
+
+      return async () => {
+        throw new Error('You shouldn\'t be calling $.app during testing, just get(\'$.app\') is fine')
+      }
+    },
+    arguments: [
+      app.components,
+      app.plugins,
+    ],
   }],
 
   [$.server, {
@@ -28,6 +54,7 @@ export const services: ServiceConfigurator = (app) => [
       app.fakeFS,
     ],
   }],
+
   [$.mock, {
     service: mocker,
     arguments: [
@@ -36,6 +63,7 @@ export const services: ServiceConfigurator = (app) => [
       app.fakeFS,
     ],
   }],
+
   [app.Env, {
     service: CliEnv,
     arguments: [

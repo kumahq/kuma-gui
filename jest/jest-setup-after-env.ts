@@ -1,13 +1,11 @@
-import { afterAll, afterEach, beforeAll, beforeEach, jest } from '@jest/globals'
+import { afterEach, beforeAll, beforeEach, jest } from '@jest/globals'
 // Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
-import { config } from '@vue/test-utils'
 
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { TOKENS as TEST, services as testing, useServer } from '../src/services/testing'
+import { TOKENS as TEST, services as testing } from '../src/services/testing'
 import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as DEV, services as development } from '@/services/development'
-import CliEnv from '@/services/env/CliEnv'
 import { TOKENS as PROD, services as production } from '@/services/production'
 import { get, container, build, token } from '@/services/utils'
 
@@ -34,11 +32,8 @@ const $ = {
     development($),
     testing($),
   )
-
-  /**
-  * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
-  */
-  config.global.plugins.push(get($.router))
+  // initializes vue-test-utils with any global components and/or plugins etc
+  get($.app)
 
   // unless we actually use COMPONENT_TOKENS it won't actually get executed
   // probably due to tree shaking/rollup import ordering. This mixed with
@@ -55,32 +50,8 @@ const $ = {
   //
   beforeEach(() => container.capture?.())
   afterEach(() => container.restore?.())
-
-  const server = useServer()
-  beforeAll(() => server.listen())
-  afterEach(() => server.resetHandlers())
-  afterAll(() => server.close())
 })()
 
-export const withVersion = (v: string) => {
-  class TestEnv extends CliEnv {
-    var(...rest: Parameters<CliEnv['var']>) {
-      const key = rest[0]
-      if (key === 'KUMA_VERSION') {
-        return v
-      }
-      return super.var(...rest)
-    }
-  }
-  build(
-    [
-      [$.Env, {
-        service: TestEnv,
-        arguments: [$.EnvVars],
-      }],
-    ],
-  )
-}
 export const withSources = (sources: any) => {
   build(
     [

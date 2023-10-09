@@ -125,13 +125,18 @@ export const service = (t: Token, config: DependencyDefinition): void => {
         service(label, {
           service: () => {
             return labelMap.get(label).reduce((prev: unknown[], TOKEN: Token) => {
-              const service = get(TOKEN)
-              if (Array.isArray(service)) {
-                return prev.concat(service)
-              } else if (service instanceof Object) {
-                return deepmerge(prev, service)
-              } else {
-                return prev
+              try {
+                const service = get(TOKEN)
+                if (Array.isArray(service)) {
+                  return prev.concat(service)
+                } else if (service instanceof Object) {
+                  return deepmerge(prev, service)
+                } else {
+                  return prev
+                }
+              } catch (e) {
+                console.error(e)
+                throw e
               }
             }, [])
           },

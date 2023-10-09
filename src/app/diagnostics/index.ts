@@ -5,14 +5,9 @@ import { token } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
-const $ = {
-  sources: token<ReturnType<typeof sources>>('diagnostics.sources'),
-  routes: token<ReturnType<typeof routes>>('diagnostics.routes'),
-}
-
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.sources, {
+    [token('diagnostics.sources'), {
       service: sources,
       arguments: [
         app.api,
@@ -21,7 +16,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    [$.routes, {
+    [token('diagnostics.routes'), {
       service: routes,
       labels: [
         app.routes,
@@ -29,5 +24,3 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
   ]
 }
-
-export const TOKENS = $
