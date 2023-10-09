@@ -242,7 +242,7 @@ export default ({ env }: EndpointDependencies): MockResponder => (_req) => {
           },
           user: 'kuma',
         },
-        type: env('KUMA_STORE_TYPE', 'memory'),
+        type: env('KUMA_STORE_TYPE', 'postgres'),
         upsert: {
           conflictRetryBaseBackoff: '100ms',
           conflictRetryMaxTimes: 5,

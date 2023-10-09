@@ -17,45 +17,35 @@
         </template>
 
         <template #content>
-          <DataSource
-            v-slot="{ data }: ConfigSource"
-            :src="`/config`"
-            @change="change"
-          >
-            <template
-              v-if="(typeof data !== 'undefined')"
+          <div class="graph-list mb-6">
+            <component :is="currentGraphComponent" />
+          </div>
+
+          <div class="radio-button-group">
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="kubernetes"
             >
-              <div class="graph-list mb-6">
-                <component :is="currentGraphComponent" />
-              </div>
+              Kubernetes
+            </KRadio>
 
-              <div class="radio-button-group">
-                <KRadio
-                  v-model="mode"
-                  name="deployment"
-                  selected-value="kubernetes"
-                >
-                  Kubernetes
-                </KRadio>
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="postgres"
+            >
+              Postgres
+            </KRadio>
 
-                <KRadio
-                  v-model="mode"
-                  name="deployment"
-                  selected-value="postgres"
-                >
-                  Postgres
-                </KRadio>
-
-                <KRadio
-                  v-model="mode"
-                  name="deployment"
-                  selected-value="memory"
-                >
-                  Memory
-                </KRadio>
-              </div>
-            </template>
-          </DataSource>
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="memory"
+            >
+              Memory
+            </KRadio>
+          </div>
         </template>
 
         <template #navigation>
@@ -75,13 +65,14 @@ import { computed, ref } from 'vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import type { ConfigSource, Config } from '@/app/diagnostics/sources'
 import {
   useKubernetesGraph,
   useMemoryGraph,
   usePostgresGraph,
 } from '@/components'
+import { useEnv } from '@/utilities'
 
+const env = useEnv()
 const KubernetesGraph = useKubernetesGraph()
 const MemoryGraph = useMemoryGraph()
 const PostgresGraph = usePostgresGraph()
@@ -92,11 +83,7 @@ const componentMap: Record<string, any> = {
   kubernetes: KubernetesGraph,
 }
 
-const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
-
-const change = (e: Config) => {
-  mode.value = e.store.type
-}
+const mode = ref<string>(env('KUMA_STORE_TYPE'))
 
 const currentGraphComponent = computed(() => componentMap[mode.value])
 </script>

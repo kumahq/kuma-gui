@@ -2,7 +2,10 @@ import { readFile as read, stat } from 'fs/promises'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig, createLogger } from 'vite'
 
+import type { getPathConfigDefault } from '@/services/env/Env'
 import type { UserConfigFn } from 'vite'
+
+type PathConfig = ReturnType<typeof getPathConfigDefault>
 
 // https://vitejs.dev/config/
 const exists = async (path: string) => {
@@ -52,15 +55,18 @@ export const config: (context: PreviewConfigContext) => UserConfigFn = ({
             const body = template
               .replace('{{.BaseGuiPath}}', base)
               .replace('{{.}}', JSON.stringify(
-                {
-                  baseGuiPath: base,
-                  apiUrl: api,
-                  version,
-                  product: 'Kuma',
-                  mode: cookies.KUMA_MODE ?? 'global',
-                  environment: cookies.KUMA_ENVIRONMENT ?? 'universal',
-                  apiReadOnly: false,
-                },
+                ((config: PathConfig) => config)(
+                  {
+                    baseGuiPath: base,
+                    apiUrl: api,
+                    version,
+                    product: 'Kuma',
+                    mode: cookies.KUMA_MODE ?? 'global',
+                    environment: cookies.KUMA_ENVIRONMENT ?? 'universal',
+                    storeType: cookies.KUMA_STORE_TYPE ?? 'postgres',
+                    apiReadOnly: false,
+                  },
+                ),
               ))
             if ((req.originalUrl || '').startsWith(base) && !await exists(`${root}${req.originalUrl}`)) {
               res.end(body)

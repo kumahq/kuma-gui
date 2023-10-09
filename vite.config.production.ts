@@ -10,7 +10,7 @@ import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
 
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
-import { getPathConfigDefault } from './src/pathConfigDefault'
+import { getPathConfigDefault } from './src/services/env/Env'
 
 dotenv.config()
 
