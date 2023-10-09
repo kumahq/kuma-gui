@@ -7,7 +7,6 @@
       <ProgressIcon
         class="mb-3"
         :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-        display="inline-block"
       />
 
       <slot>
