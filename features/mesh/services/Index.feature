@@ -18,7 +18,7 @@ Feature: mesh / services / index
         - name: service-1
         - name: service-2
       """
-    When I visit the "/mesh/default/services" URL
+    When I visit the "/meshes/default/services" URL
 
   Scenario: The items have the correct columns
     Then the "$items-header" element exists 6 times
@@ -31,7 +31,7 @@ Feature: mesh / services / index
       | Status                      |
 
   Scenario: The items have the expected content and UI elements
-    Then the "#services-abstract-view-tab.active" element exists
+    Then the "#service-list-view-tab.active" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
@@ -49,7 +49,7 @@ Feature: mesh / services / index
       """
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1"
     When I click the "$item:nth-child(1) td:first-of-type a" element
-    Then the URL contains "service/service-1"
+    Then the URL contains "services/service-1/overview"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "external" shouldn't have a Data Plane Proxy table
     And the "#service-data-plane-proxies-view-tab a" element doesn't exists
@@ -58,7 +58,7 @@ Feature: mesh / services / index
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2"
     When I click the "$item:nth-child(2) td:first-of-type a" element
-    Then the URL contains "service/service-2"
+    Then the URL contains "services/service-2/overview"
     Then the "[data-testid='service-detail-tabs-view']" element contains "service-2"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "internal" should have a Data Plane Proxy table

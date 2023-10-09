@@ -18,25 +18,25 @@ Feature: application / titles
       | /onboarding/dataplanes-overview | Data plane overview |
       | /onboarding/completed           | Completed           |
 
-      | /zones/create                           | Create & connect Zone |
-      | /zones/zone-cps                         | Zone Control Planes   |
-      | /zones/zone-cps/zone-cp-name            | zone-cp-name          |
-      | /zones/zone-ingresses                   | Ingresses             |
-      | /zones/zone-ingresses/zone-ingress-name | zone-ingress-name     |
-      | /zones/zone-egresses                    | Egresses              |
-      | /zones/zone-egresses/zone-egress-name   | zone-egress-name      |
+      | /zones/-create                                   | Create & connect Zone |
+      | /zones/zone-cps                                  | Zone Control Planes   |
+      | /zones/zone-cps/zone-cp-name/overview            | zone-cp-name          |
+      | /zones/zone-ingresses                            | Ingresses             |
+      | /zones/zone-ingresses/zone-ingress-name/overview | zone-ingress-name     |
+      | /zones/zone-egresses                             | Egresses              |
+      | /zones/zone-egresses/zone-egress-name/overview   | zone-egress-name      |
 
-      | /mesh         | Meshes        |
-      | /mesh/default | Mesh overview |
+      | /meshes         | Meshes        |
+      | /meshes/default | Mesh overview |
 
-      | /mesh/default/services             | Services     |
-      | /mesh/default/service/service-name | service-name |
+      | /meshes/default/services                       | Services     |
+      | /meshes/default/services/service-name/overview | service-name |
 
-      | /mesh/default/gateways             | Gateways     |
-      | /mesh/default/gateway/gateway-name | gateway-name |
+      | /meshes/default/gateways                       | Gateways     |
+      | /meshes/default/gateways/gateway-name/overview | gateway-name |
 
-      | /mesh/default/data-planes                | Data Plane Proxies |
-      | /mesh/default/data-plane/data-plane-name | data-plane-name    |
+      | /meshes/default/data-planes                          | Data Plane Proxies |
+      | /meshes/default/data-planes/data-plane-name/overview | data-plane-name    |
 
-      | /mesh/default/policies/circuit-breakers         | Policies  |
-      | /mesh/default/policy/circuit-breakers/program-0 | program-0 |
+      | /meshes/default/policies/circuit-breakers                    | Policies  |
+      | /meshes/default/policies/circuit-breakers/program-0/overview | program-0 |

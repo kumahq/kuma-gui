@@ -15,7 +15,7 @@ Feature: mesh / dataplanes / warnings
           mTLS:
             certificateExpirationTime: 2022-10-03T12:40:13Z
       """
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$expired-cert-warning" element exists
 
   Scenario: With an expired CA a CA warning isn't shown
@@ -26,7 +26,7 @@ Feature: mesh / dataplanes / warnings
           mTLS:
             certificateExpirationTime: 3022-10-03T12:40:13Z
       """
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$expired-cert-warning" element doesn't exist
 
   Scenario: With no mTLS a certificate warning isn't shown
@@ -36,7 +36,7 @@ Feature: mesh / dataplanes / warnings
         dataplaneInsight:
           mTLS: !!js/undefined
       """
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$expired-cert-warning" element doesn't exist
 
   Scenario: Unsupported zone warning is shown
@@ -60,7 +60,7 @@ Feature: mesh / dataplanes / warnings
                   kuma.io/zone: zone
       """
 
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-zone-warning" element exists
 
   Scenario: Unsupported kuma warning is shown
@@ -80,7 +80,7 @@ Feature: mesh / dataplanes / warnings
                   kumaDpCompatible: true
       """
 
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-kuma-warning" element exists
 
   Scenario: Unsupported envoy warning is shown
@@ -100,6 +100,5 @@ Feature: mesh / dataplanes / warnings
                   kumaDpCompatible: false
       """
 
-    When I visit the "/mesh/default/data-plane/dpp-1" URL
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-envoy-warning" element exists
-

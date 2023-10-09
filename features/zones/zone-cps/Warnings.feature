@@ -1,12 +1,12 @@
 Feature: zones / zone-cps / warnings
   Background:
     Given the CSS selectors
-      | Alias                    | Selector                                  |
-      | warning-no-subscriptions | [data-testid='warning-no-subscriptions']  |
-      | warning-zone-memory           | [data-testid='warning-ZONE_STORE_TYPE_MEMORY'] |
-      | zone-cp-table-row      | [data-testid='zone-cp-collection'] tbody tr      |
-      | warning-trigger      | $zone-cp-table-row:nth-child(1) span[data-testid="warning"]    |
-      | warning-memory      | $zone-cp-table-row:nth-child(1) [data-testid="warning-store_memory"]    |
+      | Alias                    | Selector                                                             |
+      | warning-no-subscriptions | [data-testid='warning-no-subscriptions']                             |
+      | warning-zone-memory      | [data-testid='warning-ZONE_STORE_TYPE_MEMORY']                       |
+      | zone-cp-table-row        | [data-testid='zone-cp-collection'] tbody tr                          |
+      | warning-trigger          | $zone-cp-table-row:nth-child(1) span[data-testid="warning"]          |
+      | warning-memory           | $zone-cp-table-row:nth-child(1) [data-testid="warning-store_memory"] |
     And the environment
       """
       KUMA_ZONE_COUNT: 1
@@ -21,7 +21,7 @@ Feature: zones / zone-cps / warnings
         zoneInsight:
           subscriptions: ~
       """
-    When I visit the "/zones/zone-cps/zone-cp-1" URL
+    When I visit the "/zones/zone-cps/zone-cp-1/overview" URL
     And I click the "#zone-cp-config-view-tab a" element
     Then the "$warning-no-subscriptions" element exists
 
@@ -58,9 +58,9 @@ Feature: zones / zone-cps / warnings
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element exists
     Examples:
-      | URL                              |
-      | /zones/zone-cps/zone-cp-1        |
-      | /zones/zone-cps/zone-cp-1/config |
+      | URL                                |
+      | /zones/zone-cps/zone-cp-1/overview |
+      | /zones/zone-cps/zone-cp-1/config   |
 
   Scenario Outline: When store type is kubernetes a warning isn't shown at "<URL>"
     And the URL "/config" responds with
@@ -72,7 +72,6 @@ Feature: zones / zone-cps / warnings
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element doesn't exist
     Examples:
-      | URL                              |
-      | /zones/zone-cps/zone-cp-1        |
-      | /zones/zone-cps/zone-cp-1/config |
-
+      | URL                                |
+      | /zones/zone-cps/zone-cp-1/overview |
+      | /zones/zone-cps/zone-cp-1/config   |

@@ -31,7 +31,7 @@ Feature: Zones: Detail view content
             - connectTime: 2020-07-28T16:18:09.743141Z
       """
 
-    When I visit the "/zones/zone-ingresses/zone-ingress-1" URL
+    When I visit the "/zones/zone-ingresses/zone-ingress-1/overview" URL
     Then the page title contains "zone-ingress-1"
     Then the "$ingress-detail-tabs-view" element contains "zone-ingress-1"
     Then the "$ingress-detail-view" element contains "166.197.238.26:20555"
@@ -57,7 +57,7 @@ Feature: Zones: Detail view content
             - connectTime: 2020-07-28T16:18:09.743141Z
       """
 
-    When I visit the "/zones/zone-egresses/zone-egress-1" URL
+    When I visit the "/zones/zone-egresses/zone-egress-1/overview" URL
     Then the page title contains "zone-egress-1"
     Then the "$egress-detail-tabs-view" element contains "zone-egress-1"
     Then the "$egress-detail-view" element contains "166.197.238.26:20555"

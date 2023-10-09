@@ -24,7 +24,7 @@ Feature: mesh / index
   Scenario: Clicking a mesh and back again for <Mesh>
     Then the "$item" element exists 2 times
     Then I click the "<Selector>" element
-    Then the URL contains "/mesh/<Mesh>"
+    Then the URL contains "/meshes/<Mesh>"
     And the "$breadcrumbs" element contains "Meshes"
 
     Then I click the "$navigation li:nth-child(2) a" element

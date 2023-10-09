@@ -6,7 +6,7 @@
     <RouteView
       v-if="me"
       v-slot="{ route, can, t }"
-      name="gateways-list-view"
+      name="gateway-list-view"
       :params="{
         page: 1,
         size: me.pageSize,

@@ -20,7 +20,7 @@
         },
         {
           to: {
-            name: 'services-list-view',
+            name: 'service-list-view',
             params: {
               mesh: route.params.mesh,
             },

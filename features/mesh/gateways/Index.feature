@@ -29,7 +29,7 @@ Feature: mesh / gateways / index
               gateway:
                 type: 'BUILTIN'
       """
-    When I visit the "/mesh/default/gateways" URL
+    When I visit the "/meshes/default/gateways" URL
 
   Scenario: The Gateway listing table has the correct columns
     Then the "$item-header" elements contain

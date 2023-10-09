@@ -37,7 +37,7 @@ Feature: mesh / dataplanes / index
       KUMA_MODE: global
       """
 
-    When I visit the "/mesh/default/data-planes" URL
+    When I visit the "/meshes/default/data-planes" URL
 
     Then the "$table-header" element exists 9 times
     And the "$table-header" elements contain
@@ -57,7 +57,7 @@ Feature: mesh / dataplanes / index
       KUMA_MODE: standalone
       """
 
-    When I visit the "/mesh/default/data-planes" URL
+    When I visit the "/meshes/default/data-planes" URL
 
     Then the "$table-header" element exists 8 times
     And the "$table-header" elements contain
@@ -71,7 +71,7 @@ Feature: mesh / dataplanes / index
       | Warnings         |
 
   Scenario: The Proxy listing has the expected content and UI elements
-    When I visit the "/mesh/default/data-planes" URL
+    When I visit the "/meshes/default/data-planes" URL
 
     Then the "$table-row" element exists 9 times
     Then the "$table-row:nth-child(1)" element contains

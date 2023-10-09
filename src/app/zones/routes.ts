@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const actions = (): RouteRecordRaw[] => {
   return [{
-    path: '/zones/create',
+    path: '/zones/-create',
     name: 'zone-create-view',
     meta: {
       isWizard: true,
@@ -46,7 +46,7 @@ export const routes = (
               component: () => import('@/app/zones/views/ZoneDetailTabsView.vue'),
               children: [
                 {
-                  path: '',
+                  path: 'overview',
                   name: 'zone-cp-detail-view',
                   component: () => import('@/app/zones/views/ZoneDetailView.vue'),
                 },
@@ -84,7 +84,7 @@ export const routes = (
               component: () => import('@/app/zones/views/ZoneIngressDetailTabsView.vue'),
               children: [
                 {
-                  path: '',
+                  path: 'overview',
                   name: 'zone-ingress-detail-view',
                   component: () => import('@/app/zones/views/ZoneIngressDetailView.vue'),
                 },
@@ -137,7 +137,7 @@ export const routes = (
               component: () => import('@/app/zones/views/ZoneEgressDetailTabsView.vue'),
               children: [
                 {
-                  path: '',
+                  path: 'overview',
                   name: 'zone-egress-detail-view',
                   component: () => import('@/app/zones/views/ZoneEgressDetailView.vue'),
                 },

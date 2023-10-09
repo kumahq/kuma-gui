@@ -1,8 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {
-  items: (prefix: string) => RouteRecordRaw[]
-  item: (prefix: string) => RouteRecordRaw[]
+  items: () => RouteRecordRaw[]
+  item: () => RouteRecordRaw[]
 }
 
 export const routes = (
@@ -14,16 +14,15 @@ export const routes = (
   return [
     {
       path: '/meshes',
-      name: 'mesh-list-view',
-      component: () => import('@/app/meshes/views/MeshListView.vue'),
-    },
-    {
-      path: '/mesh',
       name: 'mesh-index-view',
-      // if no mesh is specified redirect to /meshes
       redirect: { name: 'mesh-list-view' },
       component: () => import('@/app/meshes/views/MeshIndexView.vue'),
       children: [
+        {
+          path: '',
+          name: 'mesh-list-view',
+          component: () => import('@/app/meshes/views/MeshListView.vue'),
+        },
         {
           path: ':mesh',
           name: 'mesh',
@@ -48,16 +47,16 @@ export const routes = (
                   name: 'mesh-config-view',
                   component: () => import('@/app/meshes/views/MeshConfigView.vue'),
                 },
-                ...services.items('services'),
-                ...gateways.items('gateways'),
-                ...dataplanes.items('data-planes'),
-                ...policies.items('policies'),
+                ...services.items(),
+                ...gateways.items(),
+                ...dataplanes.items(),
+                ...policies.items(),
               ],
             },
-            ...services.item('service'),
-            ...gateways.item('gateway'),
-            ...dataplanes.item('data-plane'),
-            ...policies.item('policy'),
+            ...services.item(),
+            ...gateways.item(),
+            ...dataplanes.item(),
+            ...policies.item(),
           ],
         },
       ],
