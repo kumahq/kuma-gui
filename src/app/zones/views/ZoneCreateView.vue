@@ -86,10 +86,7 @@
                       :key="index"
                       class="fact-list__item"
                     >
-                      <KIcon
-                        icon="check"
-                        :color="KUI_COLOR_TEXT_SUCCESS"
-                      />
+                      <CheckIcon :color="KUI_COLOR_TEXT_SUCCESS" />
 
                       {{ fact }}
                     </li>
@@ -139,11 +136,22 @@
                   <KButton
                     appearance="primary"
                     class="mt-4"
-                    :icon="isChangingZone ? 'spinner' : 'plus'"
                     :disabled="isCreateButtonDisabled"
                     data-testid="create-zone-button"
                     @click="createZone"
                   >
+                    <ProgressIcon
+                      v-if="isChangingZone"
+                      :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+                      display="inline-block"
+                      :size="KUI_ICON_SIZE_30"
+                    />
+
+                    <AddIcon
+                      v-else
+                      :size="KUI_ICON_SIZE_30"
+                    />
+
                     {{ t('zones.form.createZoneButtonLabel') }}
                   </KButton>
                 </div>
@@ -367,7 +375,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_SUCCESS } from '@kong/design-tokens'
+import { KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_30, KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
+import { AddIcon, CheckIcon, ProgressIcon } from '@kong/icons'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 

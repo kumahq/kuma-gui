@@ -58,9 +58,10 @@
           <KButton
             v-else
             appearance="primary"
-            icon="plus"
             :to="props.emptyStateCtaTo"
           >
+            <AddIcon :size="KUI_ICON_SIZE_30" />
+
             {{ props.emptyStateCtaText }}
           </KButton>
         </template>
@@ -92,6 +93,8 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { AddIcon } from '@kong/icons'
 import { KButton, KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, computed } from 'vue'
 import { RouteLocationRaw } from 'vue-router'

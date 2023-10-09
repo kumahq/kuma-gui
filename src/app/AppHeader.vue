@@ -41,11 +41,13 @@
         {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
       </p>
 
-      <KDropdownMenu
-        icon="help"
-        button-appearance="outline"
-        :kpop-attributes="{ placement: 'bottomEnd' }"
-      >
+      <KDropdownMenu :kpop-attributes="{ placement: 'bottomEnd' }">
+        <KButton appearance="outline">
+          <HelpIcon :size="KUI_ICON_SIZE_30" />
+
+          <span class="visually-hidden">Help</span>
+        </KButton>
+
         <template #items>
           <KDropdownItem>
             <a
@@ -67,20 +69,17 @@
           </KDropdownItem>
         </template>
       </KDropdownMenu>
+
       <KButton
         :to="{ name: 'diagnostics' }"
-        icon="gearFilled"
         button-appearance="btn-link"
         data-testid="nav-item-diagnostics"
       >
-        <template #icon>
-          <KIcon
-            icon="gearFilled"
-            :size="KUI_ICON_SIZE_30"
-            color="currentColor"
-            hide-title
-          />
-        </template>
+        <CogIcon
+          :size="KUI_ICON_SIZE_30"
+          hide-title
+        />
+
         <span class="visually-hidden">Diagnostics</span>
       </KButton>
     </div>
@@ -89,11 +88,11 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { CogIcon, HelpIcon } from '@kong/icons'
 import {
   KButton,
   KDropdownMenu,
   KDropdownItem,
-  KIcon,
   KPop,
 } from '@kong/kongponents'
 

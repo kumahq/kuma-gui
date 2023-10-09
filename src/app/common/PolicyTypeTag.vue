@@ -7,11 +7,7 @@
       alt=""
     >
 
-    <KIcon
-      v-else
-      icon="brain"
-      :size="KUI_ICON_SIZE_50"
-    />
+    <BrainIcon v-else />
 
     <slot>
       {{ props.policyType }}
@@ -20,8 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
-import { KIcon } from '@kong/kongponents'
+import { BrainIcon } from '@kong/icons'
 
 import CircuitBreakerIconUrl from '@/assets/images/policies/CircuitBreaker.png'
 import FaultInjectionIconUrl from '@/assets/images/policies/FaultInjection.png'

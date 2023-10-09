@@ -110,13 +110,10 @@
                         appearance="secondary"
                         size="small"
                       >
-                        <template #icon>
-                          <KIcon
-                            :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                            icon="more"
-                            :size="KUI_ICON_SIZE_30"
-                          />
-                        </template>
+                        <MoreIcon
+                          :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
+                          :size="KUI_ICON_SIZE_30"
+                        />
                       </KButton>
                     </template>
                     <template #items>
@@ -145,6 +142,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { MoreIcon } from '@kong/icons'
 
 import type { ServiceInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'

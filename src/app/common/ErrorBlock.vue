@@ -8,13 +8,7 @@
         <div class="error-block-header">
           <div class="error-block-title">
             <WarningIcon
-              v-if="props.icon === 'warning'"
-              :size="KUI_ICON_SIZE_50"
-            />
-
-            <KIcon
-              v-else
-              :icon="props.icon"
+              display="inline-block"
               :size="KUI_ICON_SIZE_50"
             />
 
@@ -83,7 +77,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
-import { type BadgeAppearance, KBadge, KEmptyState, KIcon } from '@kong/kongponents'
+import { type BadgeAppearance, KBadge, KEmptyState } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
@@ -97,12 +91,6 @@ const props = defineProps({
   error: {
     type: Error,
     required: true,
-  },
-
-  icon: {
-    type: String,
-    required: false,
-    default: 'warning',
   },
 
   badgeAppearance: {

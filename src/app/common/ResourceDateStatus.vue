@@ -2,14 +2,14 @@
   <span class="date-status">
     {{ t('common.detail.created') }}: {{ createdDate }}
 
-    <KIcon icon="arrowRight" />
+    <ArrowRightIcon />
 
     {{ t('common.detail.modified') }}: {{ modifiedDate }}
   </span>
 </template>
 
 <script lang="ts" setup>
-import { KIcon } from '@kong/kongponents'
+import { ArrowRightIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import { useI18n } from '@/utilities'

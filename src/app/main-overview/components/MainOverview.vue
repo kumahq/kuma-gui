@@ -118,9 +118,10 @@
                 >
                   <KButton
                     appearance="primary"
-                    icon="plus"
                     :to="{ name: 'zone-create-view' }"
                   >
+                    <AddIcon :size="KUI_ICON_SIZE_30" />
+
                     {{ t('zones.index.create') }}
                   </KButton>
                 </div>
@@ -172,6 +173,8 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { AddIcon } from '@kong/icons'
 import { KCard } from '@kong/kongponents'
 
 import MeshesDetails from './MeshesDetails.vue'

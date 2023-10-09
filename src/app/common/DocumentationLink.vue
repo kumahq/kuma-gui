@@ -4,9 +4,7 @@
     :href="props.href"
     target="_blank"
   >
-    <KIcon
-      icon="book"
-      color="currentColor"
+    <BookIcon
       :size="KUI_ICON_SIZE_30"
       :title="t('common.documentation')"
     />
@@ -17,6 +15,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { BookIcon } from '@kong/icons'
 
 import { useI18n } from '@/utilities'
 

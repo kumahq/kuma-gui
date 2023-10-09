@@ -7,25 +7,20 @@
       <KEmptyState cta-is-hidden>
         <template #title>
           <span class="mr-1">
-            <KIcon
+            <ProgressIcon
               v-if="isRunning"
-              icon="spinner"
               :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-              :size="KUI_ICON_SIZE_50"
+              display="inline-block"
             />
 
-            <KIcon
+            <DangerIcon
               v-else-if="hasError"
-              icon="errorFilled"
               :color="KUI_COLOR_TEXT_DANGER"
-              :size="KUI_ICON_SIZE_50"
             />
 
-            <KIcon
+            <CheckCircleIcon
               v-else
-              icon="circleCheck"
               :color="KUI_COLOR_TEXT_SUCCESS"
-              :size="KUI_ICON_SIZE_50"
             />
           </span>
 
@@ -67,8 +62,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_COLOR_TEXT_DANGER, KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
-import { KEmptyState, KIcon } from '@kong/kongponents'
+import { KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_COLOR_TEXT_DANGER, KUI_COLOR_TEXT_SUCCESS } from '@kong/design-tokens'
+import { ProgressIcon, CheckCircleIcon, DangerIcon } from '@kong/icons'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps({

@@ -148,13 +148,7 @@
                       appearance="secondary"
                       size="small"
                     >
-                      <template #icon>
-                        <KIcon
-                          :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                          icon="more"
-                          :size="KUI_ICON_SIZE_30"
-                        />
-                      </template>
+                      <MoreIcon :size="KUI_ICON_SIZE_30" />
                     </KButton>
                   </template>
 
@@ -184,14 +178,14 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { MoreIcon } from '@kong/icons'
 import {
   KBadge,
   KButton,
   KCard,
   KDropdownItem,
   KDropdownMenu,
-  KIcon,
 } from '@kong/kongponents'
 import { useRoute } from 'vue-router'
 

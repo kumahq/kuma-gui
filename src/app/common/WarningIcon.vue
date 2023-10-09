@@ -1,21 +1,21 @@
 <template>
-  <KIcon
-    icon="warning"
-    color="#0b172d"
-    secondary-color="#ffd68c"
-    :size="props.size"
+  <WarningIcon
+    color="var(--WarningIconBackground, currentColor)"
+    display="inline-block"
+    :size="props.size || KUI_ICON_SIZE_60"
     :hide-title="props.hideTitle"
   />
 </template>
 
 <script lang="ts" setup>
-import { KIcon } from '@kong/kongponents'
+import { KUI_ICON_SIZE_60 } from '@kong/design-tokens'
+import { WarningIcon } from '@kong/icons'
 
 const props = withDefaults(defineProps<{
   size?: string
   hideTitle?: boolean
 }>(), {
-  size: '64',
+  size: '',
   hideTitle: false,
 })
 </script>
