@@ -1,5 +1,4 @@
 import Kongponents from '@kong/kongponents'
-import { createStore, storeKey } from 'vuex'
 
 import createDisabledLogger from './logger/DisabledLogger'
 import { TOKENS as _TOKENS } from './tokens'
@@ -17,7 +16,6 @@ import KumaApi from '@/services/kuma-api/KumaApi'
 import { RestClient } from '@/services/kuma-api/RestClient'
 import type { ServiceConfigurator } from '@/services/utils'
 import { token } from '@/services/utils'
-import { storeConfig } from '@/store/storeConfig'
 
 const $ = {
   ...VUE,
@@ -60,23 +58,12 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     service: createDisabledLogger,
   }],
 
-  // Store
-  [$.store, {
-    service: () => {
-      return createStore(storeConfig())
-    },
-  }],
   [token('kong.plugins'), {
-    service: (store) => {
+    service: () => {
       return [
-        [store, storeKey],
         [Kongponents],
       ]
     },
-    arguments: [
-      $.store,
-      $.router,
-    ],
     labels: [
       $.plugins,
     ],
