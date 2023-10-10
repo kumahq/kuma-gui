@@ -29,7 +29,7 @@ Feature: zones / ingresses / item
               disconnectTime: !!js/undefined
       """
 
-    When I visit the "/zones/zone-cps/zone-cp-1/ingresses/item-1/overview" URL
+    When I visit the "/zones/zone-cp-1/ingresses/item-1/overview" URL
     Then the page title contains "item-1"
 
     Then the "$detail-tabs-view" element contains "item-1"

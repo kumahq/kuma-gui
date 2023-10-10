@@ -28,7 +28,7 @@ Feature: zones / egresses / item
               disconnectTime: !!js/undefined
       """
 
-    When I visit the "/zones/zone-cps/zone-cp-1/egresses/item-1/overview" URL
+    When I visit the "/zones/zone-cp-1/egresses/item-1/overview" URL
     Then the page title contains "item-1"
 
     Then the "$egress-detail-tabs-view" element contains "item-1"

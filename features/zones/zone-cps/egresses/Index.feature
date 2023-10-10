@@ -57,6 +57,6 @@ Feature: zones / egresses / index
     Then the "$item:nth-child(2) .name-column" element contains "zone-egress-2"
 
     Examples:
-      | Mode       | URL                                | Items |
-      | global     | /zones/zone-cps/zone-cp-1/egresses | 2     |
-      | standalone | /zones/egresses                    | 3     |
+      | Mode       | URL                       | Items |
+      | global     | /zones/zone-cp-1/egresses | 2     |
+      | standalone | /zones/egresses           | 3     |

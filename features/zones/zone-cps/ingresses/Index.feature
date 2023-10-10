@@ -46,7 +46,7 @@ Feature: zones / ingresses / index
                   disconnectTime: 2020-07-28T16:18:09.743141Z
       """
 
-    When I visit the "/zones/zone-cps/zone-cp-1/ingresses" URL
+    When I visit the "/zones/zone-cp-1/ingresses" URL
     Then the page title contains "Ingresses"
     And the "$item" element exists 2 times
 

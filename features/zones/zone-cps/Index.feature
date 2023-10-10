@@ -1,4 +1,4 @@
-Feature: zone-cps / index
+Feature: zones / index
   Background:
     Given the CSS selectors
       | Alias                  | Selector                                         |
@@ -57,7 +57,7 @@ Feature: zone-cps / index
                   disconnectTime: 2020-07-28T16:18:09.743141Z
       """
 
-    When I visit the "/zones/zone-cps" URL
+    When I visit the "/zones" URL
     Then the page title contains "Zone Control Planes"
 
     Then the "$zone-cp-table-row:nth-child(1) .status-column" element contains "online"

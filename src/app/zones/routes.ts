@@ -17,25 +17,13 @@ export const routes = (
   actions: RouteRecordRaw[],
   can: Can,
 ): RouteRecordRaw[] => {
+  const prefix = '/zones'
   return [
     ...actions,
-    {
-      path: '/zones',
-      redirect: { name: 'zone-cp-list-view' },
-      ...(!can('use zones')
-        ? {
-          redirect: { name: 'zone-egress-list-view' },
-          children: [
-            ...egresses().items(),
-            ...egresses().item(),
-          ],
-        }
-        : {}),
-    },
     ...(can('use zones')
       ? [
         {
-          path: '/zones/zone-cps',
+          path: `${prefix}`,
           name: 'zone-index-view',
           redirect: { name: 'zone-cp-list-view' },
           children: [
@@ -76,6 +64,15 @@ export const routes = (
         },
 
       ]
-      : []),
+      : [
+        {
+          path: `${prefix}`,
+          redirect: { name: 'zone-egress-list-view' },
+          children: [
+            ...egresses().items(),
+            ...egresses().item(),
+          ],
+        },
+      ]),
   ]
 }

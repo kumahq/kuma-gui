@@ -23,7 +23,7 @@ Feature: zones / delete
         - name: zone-3
       """
 
-    When I visit the "/zones/zone-cps" URL
+    When I visit the "/zones" URL
 
   Scenario: Clicking delete on an item from the listing page
     Then I click the "$actions-button" element

@@ -22,13 +22,13 @@ Feature: application / titles
       | /onboarding/dataplanes-overview | Data plane overview |
       | /onboarding/completed           | Completed           |
 
-      | /zones/-create                                                    | Create & connect Zone |
-      | /zones/zone-cps                                                   | Zone Control Planes   |
-      | /zones/zone-cps/zone-cp-name/overview                             | zone-cp-name          |
-      | /zones/zone-cps/zone-cp-name/ingresses                            | Ingresses             |
-      | /zones/zone-cps/zone-cp-name/ingresses/zone-ingress-name/overview | zone-ingress-name     |
-      | /zones/zone-cps/zone-cp-name/egresses                             | Egresses              |
-      | /zones/zone-cps/zone-cp-name/egresses/zone-egress-name/overview   | zone-egress-name      |
+      | /zones/-create                                           | Create & connect Zone |
+      | /zones                                                   | Zone Control Planes   |
+      | /zones/zone-cp-name/overview                             | zone-cp-name          |
+      | /zones/zone-cp-name/ingresses                            | Ingresses             |
+      | /zones/zone-cp-name/ingresses/zone-ingress-name/overview | zone-ingress-name     |
+      | /zones/zone-cp-name/egresses                             | Egresses              |
+      | /zones/zone-cp-name/egresses/zone-egress-name/overview   | zone-egress-name      |
 
       | /meshes         | Meshes        |
       | /meshes/default | Mesh overview |
