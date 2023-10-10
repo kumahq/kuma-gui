@@ -1,4 +1,17 @@
 meshes:
+  common:
+    name: Name
+    type: |
+      { count, plural,
+        =0 { Meshes }
+        =1 { Mesh }
+        other { Meshes }
+      }
+  components:
+    mesh-insights-list:
+      name: 'Name'
+      services: 'Services'
+      dataplanes: 'Data Plane Proxies (online/total)'
   routes:
     item:
       title: "{name}"
@@ -14,6 +27,10 @@ meshes:
     items:
       title: Meshes
       breadcrumbs: Meshes
+      collection:
+        services: 'Services'
+        dataplanes: 'Data Plane Proxies (online/total)'
+
     overview:
       title: Mesh overview
   href:

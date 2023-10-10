@@ -12,12 +12,5 @@ main-overview:
       data_plane_proxies: 'Data Plane Proxies'
     zone_control_planes:
       title: 'Zones'
-      table:
-        name: 'Name'
-        status: 'Status'
     meshes:
       title: 'Meshes'
-      table:
-        name: 'Name'
-        services: 'Services'
-        data_plane_proxies: 'Data Plane Proxies (online/total)'

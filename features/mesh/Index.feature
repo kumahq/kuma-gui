@@ -12,7 +12,7 @@ Feature: mesh / index
       """
       KUMA_MESH_COUNT: 2
       """
-    And the URL "/meshes" responds with
+    And the URL "/mesh-insights" responds with
       """
       body:
         items:

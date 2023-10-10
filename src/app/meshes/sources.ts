@@ -30,7 +30,7 @@ export const sources = (api: KumaApi) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
-      return api.getAllMeshes({ size, offset })
+      return api.getAllMeshInsights({ size, offset })
     },
 
     '/meshes/:name': (params: DetailParams, source: Closeable) => {
