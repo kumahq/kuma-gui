@@ -75,7 +75,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                   mTLS: {
                     certificateExpirationTime: fake.date.anytime(),
                     lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
-                    certificateRegenerations: fake.datatype.number(),
+                    certificateRegenerations: fake.number.int(),
                     issuedBackend,
                     supportedBackends,
                   },
