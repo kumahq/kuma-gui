@@ -89,3 +89,15 @@
   --docsearch-primary-color: var(--vp-c-brand) !important;
 }
 
+.logo {
+  background-color: #fff;
+}
+
+.badge:not(:first-child) {
+  margin-left: 4px;
+}
+
+.badge>img {
+  display: inline-block;
+  vertical-align: middle;
+}

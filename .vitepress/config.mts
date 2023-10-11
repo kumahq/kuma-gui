@@ -1,21 +1,5 @@
-import { defineConfig } from 'vitepress'
-import { globSync } from 'glob'
-
-const files = globSync('./src/**/README.md').map(item => {
-  const parts = item.split('/')
-  const name = parts[parts.length - 2]
-  if(['services', 'mocks'].includes(name)) {
-    return;
-  }
-  return {
-    text: name,
-    link: item
-  }
-}).filter(notEmpty)
-
-function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== null && value !== undefined
-}
+import { defineConfig, DefaultTheme } from 'vitepress'
+import { sync as globSync } from 'glob'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -27,32 +11,76 @@ export default defineConfig({
     /^https?:\/\/localhost/,
   ],
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-    ],
-
     sidebar: [
       {
         text: 'Overview',
         items: [
           {
+            text: 'Getting started',
+            link: 'docs/getting-started.md',
+          },
+          {
+            text: 'Modules',
+            link: 'docs/modules.md',
+          },
+          {
+            text: 'Routing',
+            link: 'docs/routing.md',
+          },
+          {
             text: 'Services',
-            link: 'src/services/README.md'
+            link: 'src/services/README.md',
           },
           {
             text: 'API Mocking',
-            link: 'src/test-support/mocks/README.md'
-          }
+            link: 'src/test-support/mocks/README.md',
+          },
+          {
+            text: 'Releasing a new Kuma version',
+            link: 'docs/releasing.md',
+          },
         ]
       },
       {
+        text: 'Components',
+        items: [
+          {
+            text: 'Index',
+            link: 'docs/components.md',
+          },
+          ...getSourceItems('src/**/{components,views}/**/README.md'),
+        ],
+      },
+      {
         text: 'Services',
-        items: files
-      }
+        items: getSourceItems('src/**/services/**/README.md', ['services']),
+      },
     ],
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/kumahq/kuma-gui' }
     ]
   }
 })
+
+function getSourceItems(pattern: string, excluded: string[] = []): DefaultTheme.SidebarItem[] {
+  const items: Array<{ text: string, link: string }> = globSync(pattern)
+    .map((link) => {
+      const parts = link.split('/')
+      const text = parts[parts.length - 2]
+
+      if (excluded.includes(text)) {
+        return null
+      }
+
+      return { text, link }
+    })
+    .filter(notEmpty)
+
+  items.sort((itemA, itemB) => itemA.text.localeCompare(itemB.text))
+
+  return items
+}
+
+function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined
+}

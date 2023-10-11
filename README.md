@@ -1,9 +1,9 @@
-[![][kuma-logo]][kuma-url]
+<a href="https://kuma.io/"><img class="logo" src="https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png"></a>
 
-[![Tests passing](https://github.com/kumahq/kuma-gui/workflows/main/badge.svg)](https://github.com/kumahq/kuma-gui/actions)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kumahq/kuma/blob/master/LICENSE)
-[![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack)](https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ)
-[![Twitter](https://img.shields.io/twitter/follow/KumaMesh.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=KumaMesh)
+<a class="badge" href="https://github.com/kumahq/kuma-gui/actions"><img alt="Tests passing" src="https://github.com/kumahq/kuma-gui/workflows/main/badge.svg"></a>
+<a class="badge" href="https://github.com/kumahq/kuma/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
+<a class="badge" href="https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ"><img alt="Slack" src="https://img.shields.io/badge/Slack-4A154B?logo=slack"></a>
+<a class="badge" href="https://twitter.com/intent/follow?screen_name=KumaMesh"><img alt="Twitter" src="https://img.shields.io/twitter/follow/KumaMesh.svg?style=social&label=Follow"></a>
 
 # Kuma GUI
 
@@ -32,38 +32,11 @@ Built by Envoy contributors at Kong 🦍.
 [Blog](https://konghq.com/blog) |
 [Kong](https://konghq.com)
 
-## Getting up and running
-
-### Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run dev
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn test
-```
-
 ## Development
 
 Kuma is under active development and production-ready.
 
-See [Developer Guide](DEVELOPER.md) for further details.
+See [DEVELOPER.md](DEVELOPER.md) for further details.
 
 ## License
 
