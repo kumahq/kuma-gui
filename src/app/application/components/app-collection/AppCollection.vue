@@ -26,9 +26,10 @@
     :cell-attrs="({ headerKey }: CellAttrParams) => ({
       class: `${headerKey}-column`
     })"
+    :row-attrs="getRowAttributes"
     disable-sorting
     hide-pagination-when-optional
-    @row:click="click"
+    @row:click="handleRowClickEvent"
   >
     <template
       v-if="props.items?.length === 0"
@@ -124,6 +125,7 @@ const { t } = useI18n()
 const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
+  isSelectedRow?: ((row: Row) => boolean) | null
   total?: number
   pageNumber?: number
   pageSize?: number
@@ -135,6 +137,7 @@ const props = withDefaults(defineProps<{
   emptyStateCtaTo?: string | RouteLocationRaw
   emptyStateCtaText?: string
 }>(), {
+  isSelectedRow: null,
   total: 0,
   pageNumber: 1,
   pageSize: 30,
@@ -147,13 +150,15 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
+  (event: 'row:click', row: Row): void
 }>()
 
 const slots = useSlots()
 
 const items = ref(props.items) as Ref<typeof props.items>
 const cacheKey = ref<number>(0)
-/** Used as a means to instruct KTable to re-mount.
+/**
+ * Used as a means to instruct KTable to re-mount.
  *
  * This is a hack around the fact that there is no other way to tell KTable if
  * the current page of a paginated view has changed. KTable assumes it’s the
@@ -165,10 +170,6 @@ const cacheKey = ref<number>(0)
  * last page number that was emitted by KTable (via calls to its `fetcher`
  * prop) is different (i.e. the page number has changed independently of a
  * KTable mechanism).
- *
- * TODO: If https://github.com/Kong/kongponents/pull/1631 is accepted, this
- * hack can be removed in favor of setting the new prop whenever the page
- * number changes externally.
  */
 const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
@@ -199,14 +200,22 @@ watch(() => props.pageNumber, function () {
   }
 })
 
-const click = (e: MouseEvent) => {
-  const $tr = (e.target as HTMLElement).closest('tr')
-  if ($tr) {
-    const $a = $tr.querySelector('a')
-    if ($a !== null) {
-      $a.click()
-    }
+function getRowAttributes(row: Row): Record<string, string> {
+  if (!row) {
+    return {}
   }
+
+  const attributes: Record<string, string> = {}
+
+  if (props.isSelectedRow !== null && props.isSelectedRow(row)) {
+    attributes.class = 'is-selected'
+  }
+
+  return attributes
+}
+
+function handleRowClickEvent(_event: unknown, row: Row) {
+  emit('row:click', row)
 }
 </script>
 
@@ -237,5 +246,9 @@ const click = (e: MouseEvent) => {
   width: var(--special-column-width, initial);
   min-width: 80px;
   text-align: end;
+}
+
+.app-collection .is-selected {
+  background-color: $kui-color-background-neutral-weakest;
 }
 </style>

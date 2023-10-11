@@ -50,6 +50,12 @@
                   :empty-state-cta-to="t('meshes.href.docs')"
                   :empty-state-cta-text="t('common.documentation')"
                   @change="route.update"
+                  @row:click="router.push({
+                    name: 'mesh-detail-view',
+                    params: {
+                      mesh: $event.name,
+                    },
+                  })"
                 >
                   <template #name="{ row: item }">
                     <RouterLink
@@ -108,11 +114,14 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
 import { KCard, KDropdownMenu, KDropdownItem, KButton } from '@kong/kongponents'
+import { useRouter } from 'vue-router'
 
 import type { MeshCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import type { MeSource } from '@/app/me/sources'
+
+const router = useRouter()
 </script>
 
 <style lang="scss" scoped>

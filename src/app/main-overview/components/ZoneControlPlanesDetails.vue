@@ -12,6 +12,12 @@
     :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : t('common.emptyState.message', { type: 'Zones' })"
     :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
     :empty-state-cta-text="t('zones.index.create')"
+    @row:click="router.push({
+      name: 'zone-cp-detail-view',
+      params: {
+        zone: $event.name,
+      },
+    })"
   >
     <template #name="{ rowValue }">
       <RouterLink
@@ -41,6 +47,7 @@
 
 <script lang="ts" setup>
 import { PropType, computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -51,6 +58,7 @@ import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 const can = useCan()
+const router = useRouter()
 
 const props = defineProps({
   zoneOverviews: {

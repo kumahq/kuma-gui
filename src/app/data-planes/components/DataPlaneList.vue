@@ -21,6 +21,12 @@
     :items="props.items ? transformToTableData(props.items) : undefined"
     :error="props.error"
     @change="emit('change', $event)"
+    @row:click="router.push({
+      name: props.gateways ? 'gateway-detail-view' : 'data-plane-detail-view',
+      params: {
+        dataPlane: $event.name,
+      },
+    })"
   >
     <template #toolbar>
       <slot name="toolbar" />
@@ -152,7 +158,7 @@ import {
   KButton,
   KTooltip,
 } from '@kong/kongponents'
-import { RouteLocationNamedRaw } from 'vue-router'
+import { RouteLocationNamedRaw, useRouter } from 'vue-router'
 
 import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -170,6 +176,7 @@ import {
 
 const { t, formatIsoDate } = useI18n()
 const can = useCan()
+const router = useRouter()
 
 type DataPlaneOverviewTableRow = {
   dataplaneInsight: DataPlaneInsight | undefined,
