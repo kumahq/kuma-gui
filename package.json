@@ -26,6 +26,7 @@
     "test:browser:view": "cross-env TZ=UTC KUMA_BASE_URL=http://localhost:8080/gui cypress open --e2e --browser chrome",
     "test:watch": "yarn run test --watch",
     "docs:dev": "vitepress dev",
+    "docs:generate": "rm -rf docs/components && vue-docgen src/**/*.vue",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },
@@ -112,6 +113,7 @@
     "vite-plugin-rewrite-all": "1.0.1",
     "vite-svg-loader": "4.0.0",
     "vitepress": "1.0.0-rc.20",
+    "vue-docgen-cli": "4.67.0",
     "vue-tsc": "1.8.18"
   },
   "browserslist": [

@@ -43,7 +43,13 @@ export default defineConfig({
       },
       {
         text: 'Components',
-        items: getSourceItems('src/**/{components,views}/**/README.md'),
+        items: [
+          {
+            text: 'Index',
+            link: 'docs/components.md',
+          },
+          ...getSourceItems('src/**/{components,views}/**/README.md'),
+        ],
       },
       {
         text: 'Services',
