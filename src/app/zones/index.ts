@@ -11,7 +11,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('zones.routes'), {
       service: (can: Can) => {
-        return routes(can('create zones') ? actions() : [])
+        return routes(can('create zones') ? actions() : [], can)
       },
       arguments: [
         app.can,

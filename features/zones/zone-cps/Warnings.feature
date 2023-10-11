@@ -1,4 +1,4 @@
-Feature: zones / zone-cps / warnings
+Feature: zones / warnings
   Background:
     Given the CSS selectors
       | Alias                    | Selector                                                             |
@@ -21,7 +21,7 @@ Feature: zones / zone-cps / warnings
         zoneInsight:
           subscriptions: ~
       """
-    When I visit the "/zones/zone-cps/zone-cp-1/overview" URL
+    When I visit the "/zones/zone-cp-1/overview" URL
     And I click the "#zone-cp-config-view-tab a" element
     Then the "$warning-no-subscriptions" element exists
 
@@ -44,7 +44,7 @@ Feature: zones / zone-cps / warnings
               subscriptions:
                 - config: '{"environment":"kubernetes", "store": {"type": "memory"}}'
       """
-    When I visit the "/zones/zone-cps" URL
+    When I visit the "/zones" URL
     And I hover on the "$warning-trigger" element
     Then the "$warning-memory" element exists
 
@@ -58,9 +58,9 @@ Feature: zones / zone-cps / warnings
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element exists
     Examples:
-      | URL                                |
-      | /zones/zone-cps/zone-cp-1/overview |
-      | /zones/zone-cps/zone-cp-1/config   |
+      | URL                       |
+      | /zones/zone-cp-1/overview |
+      | /zones/zone-cp-1/config   |
 
   Scenario Outline: When store type is kubernetes a warning isn't shown at "<URL>"
     And the URL "/config" responds with
@@ -72,6 +72,6 @@ Feature: zones / zone-cps / warnings
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element doesn't exist
     Examples:
-      | URL                                |
-      | /zones/zone-cps/zone-cp-1/overview |
-      | /zones/zone-cps/zone-cp-1/config   |
+      | URL                       |
+      | /zones/zone-cp-1/overview |
+      | /zones/zone-cp-1/config   |

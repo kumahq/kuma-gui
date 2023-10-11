@@ -1,4 +1,4 @@
-Feature: Zones: Create Zone flow
+Feature: zones / create
   Background:
     Given the CSS selectors
       | Alias                               | Selector                                             |

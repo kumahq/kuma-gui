@@ -9,6 +9,8 @@ import meshes from '@/app/meshes/locales/en-us/index.yaml'
 import onboarding from '@/app/onboarding/locales/en-us/index.yaml'
 import policies from '@/app/policies/locales/en-us/index.yaml'
 import services from '@/app/services/locales/en-us/index.yaml'
+import zoneEgresses from '@/app/zone-egresses/locales/en-us/index.yaml'
+import zoneIngresses from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import zones from '@/app/zones/locales/en-us/index.yaml'
 
 export default {
@@ -24,4 +26,6 @@ export default {
   ...dataplanes,
   ...gateways,
   ...zones,
+  ...zoneIngresses,
+  ...zoneEgresses,
 }

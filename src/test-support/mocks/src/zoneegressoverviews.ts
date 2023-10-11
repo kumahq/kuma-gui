@@ -13,7 +13,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
         const zoneEgressName = `${fake.hacker.noun()}-${id}`
-        const zoneName = `${fake.hacker.noun()}-${id}`
+        const zone = `${fake.hacker.noun()}-${id}`
+        const zoneName = fake.helpers.arrayElement([env('KUMA_ZONE_NAME', zone), zone])
 
         return {
           type: 'ZoneEgressOverview',

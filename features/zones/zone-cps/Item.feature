@@ -1,4 +1,4 @@
-Feature: zones / zone-cps / item
+Feature: zones / item
   Background:
     Given the CSS selectors
       | Alias                 | Selector                                 |
@@ -9,7 +9,7 @@ Feature: zones / zone-cps / item
       KUMA_MODE: global
       """
 
-  Scenario: Zone CP detail view has expected content
+  Scenario: Detail view has expected content
     # We always use the final subscription
     # If the disconnectTime is empty then we are online
     Given the environment
@@ -32,7 +32,7 @@ Feature: zones / zone-cps / item
                 { "environment": "universal", "store": {"type": "memory"}, "dpServer": { "auth": { "type": "dpToken" } } }
       """
 
-    When I visit the "/zones/zone-cps/zone-cp-1/overview" URL
+    When I visit the "/zones/zone-cp-1/overview" URL
     Then the page title contains "zone-cp-1"
     Then the "$zone-detail-tabs-view" element contains "zone-cp-1"
 

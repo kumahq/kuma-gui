@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, can }"
     name="zone-egress-detail-tabs-view"
     :params="{
       zoneEgress: ''
@@ -8,6 +8,12 @@
   >
     <AppView
       :breadcrumbs="[
+        ...(can('use zones') ? [{
+          to: {
+            name: 'zone-cp-list-view',
+          },
+          text: t('zone-cps.routes.item.breadcrumbs')
+        }] : []),
         {
           to: {
             name: 'zone-egress-list-view',
@@ -59,7 +65,7 @@
 <script lang="ts" setup>
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
-import { ZoneEgressOverviewSource } from '../sources'
+import { ZoneEgressOverviewSource } from '../../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'

@@ -6,25 +6,26 @@
     <RouteView
       v-if="me"
       v-slot="{ route, t }"
-      name="zone-egress-list-view"
+      name="zone-ingress-list-view"
       :params="{
-        page: 1,
-        size: me.pageSize
+        /* page: 1, */
+        /* size: me.pageSize, */
+        zone: ''
       }"
     >
       <AppView>
         <template #title>
-          <h1>
+          <h2>
             <RouteTitle
-              :title="t('zone-egresses.routes.items.title')"
+              :title="t('zone-ingresses.routes.items.title')"
               :render="true"
             />
-          </h1>
+          </h2>
         </template>
 
         <DataSource
-          v-slot="{ data, error }: ZoneEgressOverviewCollectionSource"
-          :src="`/zone-egress-overviews?page=${route.params.page}&size=${route.params.size}`"
+          v-slot="{ data, error }: ZoneIngressOverviewCollectionSource"
+          :src="`/zone-cps/${route.params.zone}/ingresses?page=${'1'}&size=${'100'}`"
         >
           <KCard>
             <template #body>
@@ -35,21 +36,22 @@
 
               <AppCollection
                 v-else
-                class="zone-egress-collection"
-                data-testid="zone-egress-collection"
+                class="zone-ingress-collection"
+                data-testid="zone-ingress-collection"
                 :headers="[
                   { label: 'Name', key: 'name' },
                   { label: 'Address', key: 'addressPort' },
+                  { label: 'Advertised address', key: 'advertisedAddressPort' },
                   { label: 'Status', key: 'status' },
                   { label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
-                :page-number="parseInt(route.params.page)"
-                :page-size="parseInt(route.params.size)"
+                :page-number="1"
+                :page-size="100"
                 :total="data?.total"
                 :items="data ? transformToTableData(data.items) : undefined"
                 :error="error"
-                :empty-state-message="t('common.emptyState.message', { type: 'Zone Egresses' })"
-                :empty-state-cta-to="t('zone-egresses.href.docs')"
+                :empty-state-message="t('common.emptyState.message', { type: 'Zone Ingresses' })"
+                :empty-state-cta-to="t('zone-ingresses.href.docs')"
                 :empty-state-cta-text="t('common.documentation')"
                 @change="route.update"
               >
@@ -63,6 +65,17 @@
                 </template>
 
                 <template #addressPort="{ rowValue }">
+                  <TextWithCopyButton
+                    v-if="rowValue"
+                    :text="rowValue"
+                  />
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #advertisedAddressPort="{ rowValue }">
                   <TextWithCopyButton
                     v-if="rowValue"
                     :text="rowValue"
@@ -97,7 +110,13 @@
                         appearance="secondary"
                         size="small"
                       >
-                        <MoreIcon :size="KUI_ICON_SIZE_30" />
+                        <template #icon>
+                          <KIcon
+                            :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
+                            icon="more"
+                            :size="KUI_ICON_SIZE_30"
+                          />
+                        </template>
                       </KButton>
                     </template>
 
@@ -121,49 +140,55 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { MoreIcon } from '@kong/icons'
+import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RouteLocationNamedRaw } from 'vue-router'
 
-import type { ZoneEgressOverviewCollectionSource } from '../sources'
+import type { ZoneIngressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-import { StatusKeyword, ZoneEgressOverview } from '@/types/index.d'
+import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
-type ZoneEgressOverviewTableRow = {
+type ZoneIngressOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
   name: string
   addressPort: string | undefined
+  advertisedAddressPort: string | undefined
   status: StatusKeyword
 }
 
-function transformToTableData(zoneEgressOverviews: ZoneEgressOverview[]): ZoneEgressOverviewTableRow[] {
-  return zoneEgressOverviews.map((entity) => {
+function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): ZoneIngressOverviewTableRow[] {
+  return zoneIngressOverviews.map((entity) => {
     const { name } = entity
     const detailViewRoute: RouteLocationNamedRaw = {
-      name: 'zone-egress-detail-view',
+      name: 'zone-ingress-detail-view',
       params: {
-        zoneEgress: name,
+        zoneIngress: name,
       },
     }
 
-    const { networking } = entity.zoneEgress
+    const { networking } = entity.zoneIngress
 
     let addressPort
     if (networking?.address && networking?.port) {
       addressPort = `${networking.address}:${networking.port}`
     }
 
-    const status = getItemStatusFromInsight(entity.zoneEgressInsight ?? {})
+    let advertisedAddressPort
+    if (networking?.advertisedAddress && networking?.advertisedPort) {
+      advertisedAddressPort = `${networking.advertisedAddress}:${networking.advertisedPort}`
+    }
+
+    const status = getItemStatusFromInsight(entity.zoneIngressInsight ?? {})
 
     return {
       detailViewRoute,
       name,
       addressPort,
+      advertisedAddressPort,
       status,
     }
   })
