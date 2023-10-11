@@ -15,6 +15,11 @@ export const routes = (prefix = 'ingresses') => {
             component: () => import('@/app/zone-ingresses/views/item/DetailView.vue'),
           },
           {
+            path: 'services',
+            name: 'zone-ingress-services-view',
+            component: () => import('@/app/zone-ingresses/views/item/ServicesView.vue'),
+          },
+          {
             path: 'xds-config',
             name: 'zone-ingress-xds-config-view',
             component: () => import('@/app/zone-ingresses/views/item/XdsConfigView.vue'),
