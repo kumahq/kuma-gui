@@ -5,12 +5,13 @@
   >
     <div
       v-if="!hasParent"
+      id="application-route-announcer"
+      ref="title"
       class="route-view-title visually-hidden"
       aria-live="assertive"
       aria-atomic="true"
-    >
-      {{ t('components.route-view.route-announcer', {title: title}) }}
-    </div>
+      :data-template="t('components.route-view.route-announcer')"
+    />
     <slot
       name="default"
       :t="t"
@@ -38,12 +39,15 @@ import {
   beforePaint,
 } from '../../utilities'
 import { useI18n, useEnv } from '@/utilities'
+import type { UnwrapRef } from 'vue'
 export type RouteView = {
   addTitle: (item: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
   addAttrs: (item: Record<string, string>, sym: Symbol) => void
   removeAttrs: (sym: Symbol) => void
 }
+
+type Params = { [K in keyof T]: string }
 
 const env = useEnv()
 const can = useCan()
@@ -62,7 +66,7 @@ const props = withDefaults(defineProps<{
 })
 const name = computed(() => props.name)
 
-const title = ref<string>('')
+const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<Symbol, string>()
 const attributes = new Map<Symbol, Record<string, string>>()
 const setTitle = createTitleSetter(document)
@@ -74,7 +78,11 @@ const joinTitle = (titles: string[]) => {
 
 const routeView = {
   addTitle: (item: string, sym: Symbol) => {
-    title.value = item
+    const $title = title.value
+    if ($title) {
+      $title.innerHTML = ($title.dataset.template ?? '%s').replace('%s', item)
+    }
+
     titles.set(sym, item)
     setTitle(joinTitle([...titles.values()]))
   },
@@ -91,8 +99,11 @@ const routeView = {
     setAttrs([...attributes.values()])
   },
 }
+const routeParams = ref<Params>(props.params as Params)
 
-const routeParams = computed(() => {
+watch(() => {
+  return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
+}, () => {
   const params = Object.entries({
     ...props.params,
     ...route.query,
@@ -120,10 +131,8 @@ const routeParams = computed(() => {
     prev[prop] = decodeURIComponent(param)
     return prev
   }, {})
-  return params as {
-    [K in keyof T]: string
-  }
-})
+  routeParams.value = params as UnwrapRef<Params>
+}, { immediate: true })
 
 let newParams = {}
 const routerPush = beforePaint((params: Record<string, string | undefined>) => {
@@ -147,7 +156,7 @@ watch(() => props.name, () => {
   // we only want query params here
   const params = Object.entries(routeParams.value || {}).reduce<Record<string, string>>((prev, [key, value]) => {
     if (typeof route.params[key] === 'undefined') {
-      prev[key] = value
+      prev[key] = value as string
     }
     return prev
   }, {})

@@ -3,8 +3,7 @@ import Kongponents from '@kong/kongponents'
 import createDisabledLogger from './logger/DisabledLogger'
 import { TOKENS as _TOKENS } from './tokens'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
-import type { Can } from '@/app/application/services/can'
-import { getNavItems } from '@/app/getNavItems'
+import { services as kuma } from '@/app/kuma'
 import { services as mainOverview } from '@/app/main-overview'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
@@ -68,27 +67,10 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.plugins,
     ],
   }],
-  [token('kuma.components.not-found'),
-    {
-      service: () => [
-        () => import('@/app/AppNotFoundView.vue'),
-      ],
-      labels: [
-        $.notFoundView,
-      ],
-    },
-  ],
   [token('kuma.i18n.en-us'), {
     constant: i18nEnUs,
     labels: [
       $.enUs,
-    ],
-  }],
-  // Nav
-  [$.nav, {
-    service: (can: Can) => getNavItems(can('use zones')),
-    arguments: [
-      $.can,
     ],
   }],
 
@@ -99,6 +81,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     routes: $.routesLabel,
   }),
   ...me($),
+  ...kuma($),
   //
 
   // service-mesh

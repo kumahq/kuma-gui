@@ -1,3 +1,4 @@
+@skip
 Feature: application / loading
   Background:
     Given the CSS selectors

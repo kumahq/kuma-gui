@@ -88,13 +88,17 @@ const refresh = (map: Breadcrumbs) => {
 const appView: AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: Symbol) => {
     if (typeof items !== 'undefined') {
-      map.set(sym, items)
-      refresh(map)
+      if (!map.has(sym)) {
+        map.set(sym, items)
+        refresh(map)
+      }
     }
   },
   removeBreadcrumbs: (sym: Symbol) => {
-    map.delete(sym)
-    refresh(map)
+    if (map.has(sym)) {
+      map.delete(sym)
+      refresh(map)
+    }
   },
 }
 const hasParent: AppView | undefined = inject('app-view-parent', undefined)
