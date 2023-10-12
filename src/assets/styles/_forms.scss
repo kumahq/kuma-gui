@@ -80,9 +80,6 @@
   display: flex;
 }
 
-.radio-button-group>*+* {
-  margin-block-start: $kui-space-40;
-}
 
 .instruction-list >*+* {
   margin-top: $kui-space-50;

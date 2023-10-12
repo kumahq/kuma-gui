@@ -7,35 +7,6 @@ export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
 export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
 
-export type PathConfig = {
-  /**
-   * The base API URL. Won’t include a trailing slash.
-   *
-   * **Example**: `'http://localhost:5681'`
-   */
-  apiUrl: string
-
-  /**
-   * The base GUI path. Will include a leading slash. Won’t include a trailing slash.
-   *
-   * **Example**: `'/gui'`
-   */
-  baseGuiPath: string
-
-  /**
-   * The version of the underlying host application (e.g. Kuma).
-   *
-   * **Example**: `'2.0.1'`
-   */
-  version: string
-
-  product: string,
-  mode: string,
-  environment: string,
-  apiReadOnly: boolean,
-
-}
-
 export type TableHeader = {
   key: string
   label: string

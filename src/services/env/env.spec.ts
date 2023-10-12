@@ -22,6 +22,7 @@ describe('env', () => {
           product: 'Kuma',
           mode: 'standalone',
           environment: 'universal',
+          storeType: 'postgres',
           apiReadOnly: false,
         }
       }

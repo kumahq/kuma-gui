@@ -498,3 +498,8 @@ function toggleConfirmModal() {
   isConfirmModalVisible.value = !isConfirmModalVisible.value
 }
 </script>
+<style lang="scss" scoped>
+.radio-button-group > * + * {
+  margin-block-start: $kui-space-40;
+}
+</style>

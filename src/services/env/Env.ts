@@ -1,5 +1,4 @@
-import { getPathConfigDefault } from '@/pathConfigDefault'
-import { PathConfig } from '@/types/index'
+type PathConfig = ReturnType<typeof getPathConfigDefault>
 
 export type EnvArgs = {
   KUMA_PRODUCT_NAME: string
@@ -18,6 +17,7 @@ type EnvProps = {
   KUMA_UTM_QUERY_PARAMS: string
   KUMA_MODE: string
   KUMA_ENVIRONMENT: string
+  KUMA_STORE_TYPE: string
 }
 export type EnvVars = EnvArgs & EnvProps
 
@@ -46,6 +46,7 @@ export default class Env {
       KUMA_BASE_PATH: env('KUMA_BASE_PATH') || config.baseGuiPath,
       KUMA_MODE: env('KUMA_MODE') || config.mode,
       KUMA_ENVIRONMENT: env('KUMA_ENVIRONMENT') || config.environment,
+      KUMA_STORE_TYPE: env('KUMA_STORE_TYPE') || config.storeType,
     }
   }
 
@@ -84,6 +85,28 @@ export default class Env {
     // can get
     config.apiUrl = normalizeBaseUrl(config.apiUrl)
     return config
+  }
+}
+export function getPathConfigDefault(apiUrlDefault: string = '') {
+  return {
+    /**
+     * The base GUI path. Will include a leading slash. Won’t include a trailing slash.
+     *
+     * **Example**: `'/gui'`
+    */
+    baseGuiPath: '/gui',
+    /**
+     * The base API URL. Won’t include a trailing slash.
+     *
+     * **Example**: `'http://localhost:5681'`
+    */
+    apiUrl: apiUrlDefault,
+    version: '2.4.0',
+    product: 'Kuma',
+    mode: 'global',
+    environment: 'universal',
+    storeType: 'postgres',
+    apiReadOnly: false,
   }
 }
 function stripTrailingSlashes(url: string): string {

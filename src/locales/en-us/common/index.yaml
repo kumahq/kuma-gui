@@ -18,9 +18,9 @@ common:
     CERT_EXPIRED: !!text/markdown |
       The certificate for this dataplane has expired
     ZONE_STORE_TYPE_MEMORY: !!text/markdown |
-      This zone is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+      This zone is using the `memory` store type. **Don't** use this store in production because the state isn't persisted. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
     GLOBAL_STORE_TYPE_MEMORY: !!text/markdown |
-      This control plane is using the `memory` store type, because the state is not persisted this store should **not** be used in production. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+      This control plane is using the `memory` store type. **Don't** use this store in production because the state isn't persisted. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
     INCOMPATIBLE_UNSUPPORTED_ENVOY: !!text/markdown |
       Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
     INCOMPATIBLE_UNSUPPORTED_KUMA_DP: !!text/markdown |

@@ -24,6 +24,23 @@
           <AppSidebar v-if="!isWizard" />
 
           <AppView>
+            <KAlert
+              v-if="!can('use state')"
+              class="mb-4"
+              appearance="warning"
+            >
+              <template #alertMessage>
+                <ul>
+                  <!-- eslint-disable vue/no-v-html  -->
+                  <li
+                    data-testid="warning-GLOBAL_STORE_TYPE_MEMORY"
+                    v-html="t('common.warnings.GLOBAL_STORE_TYPE_MEMORY')"
+                  />
+                <!-- eslint-enable -->
+                </ul>
+              </template>
+            </KAlert>
+
             <AppOnboardingNotification v-if="!isWizard" />
 
             <RouterView v-slot="{ Component }">
@@ -50,6 +67,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { useCan, useI18n } from '@/app/application'
 import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
@@ -79,6 +97,8 @@ const [
   useAppOnboardingNotification(),
 ]
 const route = useRoute()
+const can = useCan()
+const { t } = useI18n()
 
 const isWizard = computed(() => route.meta.isWizard === true)
 
