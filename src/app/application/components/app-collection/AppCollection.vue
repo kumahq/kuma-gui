@@ -29,7 +29,7 @@
     :row-attrs="getRowAttributes"
     disable-sorting
     hide-pagination-when-optional
-    @row:click="handleRowClickEvent"
+    @row:click="click"
   >
     <template
       v-if="props.items?.length === 0"
@@ -150,7 +150,6 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
-  (event: 'row:click', row: Row): void
 }>()
 
 const slots = useSlots()
@@ -214,8 +213,14 @@ function getRowAttributes(row: Row): Record<string, string> {
   return attributes
 }
 
-function handleRowClickEvent(_event: unknown, row: Row) {
-  emit('row:click', row)
+const click = (e: MouseEvent) => {
+  const $tr = (e.target as HTMLElement).closest('tr')
+  if ($tr) {
+    const $a = $tr.querySelector('a')
+    if ($a !== null) {
+      $a.click()
+    }
+  }
 }
 </script>
 

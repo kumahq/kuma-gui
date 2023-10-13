@@ -107,14 +107,6 @@
               :items="props.policyCollection?.items"
               :error="props.policyError"
               @change="emit('change', $event)"
-              @row:click="router.push({
-                name: 'policy-detail-view',
-                params: {
-                  mesh: route.params.mesh,
-                  policyPath: props.currentPolicyType.path,
-                  policy: $event.name,
-                },
-              })"
             >
               <template #name="{ rowValue }">
                 <RouterLink
@@ -195,7 +187,7 @@ import {
   KDropdownItem,
   KDropdownMenu,
 } from '@kong/kongponents'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import { PolicyCollection } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -212,7 +204,6 @@ type ChangeValue = {
 
 const { t } = useI18n()
 const route = useRoute()
-const router = useRouter()
 
 const props = defineProps<{
   pageNumber: number

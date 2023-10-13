@@ -52,12 +52,6 @@
                 :items="data?.items"
                 :error="error"
                 @change="route.update"
-                @row:click="router.push({
-                  name: 'service-detail-view',
-                  params: {
-                    service: $event.name,
-                  },
-                })"
               >
                 <template #name="{ row: item }">
                   <RouterLink
@@ -146,7 +140,6 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
-import { useRouter } from 'vue-router'
 
 import type { ServiceInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -154,8 +147,6 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-
-const router = useRouter()
 </script>
 
 <style lang="scss" scoped>

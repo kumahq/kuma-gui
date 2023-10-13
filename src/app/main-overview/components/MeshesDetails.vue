@@ -12,12 +12,6 @@
     :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
     :empty-state-cta-to="t('meshes.href.docs')"
     :empty-state-cta-text="t('common.documentation')"
-    @row:click="router.push({
-      name: 'mesh-detail-view',
-      params: {
-        mesh: $event.name,
-      },
-    })"
   >
     <template #name="{ rowValue }">
       <RouterLink
@@ -36,14 +30,12 @@
 
 <script lang="ts" setup>
 import { PropType, computed } from 'vue'
-import { useRouter } from 'vue-router'
 
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import type { MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
-const router = useRouter()
 
 const props = defineProps({
   meshInsights: {

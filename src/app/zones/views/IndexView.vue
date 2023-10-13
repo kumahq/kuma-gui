@@ -70,12 +70,6 @@
                 :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
                 :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
                 @change="route.update"
-                @row:click="router.push({
-                  name: 'zone-cp-detail-view',
-                  params: {
-                    zone: $event.name,
-                  },
-                })"
               >
                 <template #name="{ row, rowValue }">
                   <RouterLink
@@ -213,7 +207,7 @@
 import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
 import { ref } from 'vue'
-import { useRouter, type RouteLocationNamedRaw } from 'vue-router'
+import { type RouteLocationNamedRaw } from 'vue-router'
 
 import { getZoneControlPlaneStatus } from '../data'
 import type { ZoneOverviewCollectionSource } from '../sources'
@@ -239,7 +233,6 @@ type ZoneOverviewTableRow = {
 }
 
 const kumaApi = useKumaApi()
-const router = useRouter()
 
 const isDeleteModalVisible = ref(false)
 const isCreateZoneButtonVisible = ref(false)

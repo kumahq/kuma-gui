@@ -54,12 +54,6 @@
                 :empty-state-cta-to="t('zone-ingresses.href.docs')"
                 :empty-state-cta-text="t('common.documentation')"
                 @change="route.update"
-                @row:click="router.push({
-                  name: 'zone-ingress-detail-view',
-                  params: {
-                    zoneIngress: $event.name,
-                  },
-                })"
               >
                 <template #name="{ row, rowValue }">
                   <RouterLink
@@ -147,7 +141,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { useRouter, type RouteLocationNamedRaw } from 'vue-router'
+import { type RouteLocationNamedRaw } from 'vue-router'
 
 import type { ZoneIngressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -157,8 +151,6 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-
-const router = useRouter()
 
 type ZoneIngressOverviewTableRow = {
   detailViewRoute: RouteLocationNamedRaw
