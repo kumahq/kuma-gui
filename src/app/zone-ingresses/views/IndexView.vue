@@ -141,7 +141,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { RouteLocationNamedRaw } from 'vue-router'
+import { type RouteLocationNamedRaw } from 'vue-router'
 
 import type { ZoneIngressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'

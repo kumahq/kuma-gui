@@ -26,6 +26,7 @@
     :cell-attrs="({ headerKey }: CellAttrParams) => ({
       class: `${headerKey}-column`
     })"
+    :row-attrs="getRowAttributes"
     disable-sorting
     hide-pagination-when-optional
     @row:click="click"
@@ -92,11 +93,11 @@
   </KTable>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="Row extends {}">
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 import { KButton, KTable, TableHeader } from '@kong/kongponents'
-import { useSlots, ref, watch, computed } from 'vue'
+import { useSlots, ref, watch, Ref, computed } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
@@ -105,17 +106,17 @@ import { useI18n } from '@/utilities'
 
 type CellAttrParams = {
   headerKey: string
-  row: any
+  row: Row
   rowIndex: number
   colIndex: number
 }
 type FetcherParams = {
-  page: number,
-  pageSize: number,
+  page: number
+  pageSize: number
   query: string
 }
 type ChangeValue = {
-  page?: number,
+  page?: number
   size?: number
 }
 
@@ -124,17 +125,19 @@ const { t } = useI18n()
 const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
-  total?: number,
-  pageNumber?: number,
-  pageSize?: number,
-  items: unknown[] | undefined,
-  headers: TableHeader[],
-  error?: Error | undefined,
+  isSelectedRow?: ((row: Row) => boolean) | null
+  total?: number
+  pageNumber?: number
+  pageSize?: number
+  items: Row[] | undefined
+  headers: TableHeader[]
+  error?: Error | undefined
   emptyStateTitle?: string
   emptyStateMessage?: string
   emptyStateCtaTo?: string | RouteLocationRaw
   emptyStateCtaText?: string
 }>(), {
+  isSelectedRow: null,
   total: 0,
   pageNumber: 1,
   pageSize: 30,
@@ -151,9 +154,10 @@ const emit = defineEmits<{
 
 const slots = useSlots()
 
-const items = ref<unknown[] | undefined>(props.items)
+const items = ref(props.items) as Ref<typeof props.items>
 const cacheKey = ref<number>(0)
-/** Used as a means to instruct KTable to re-mount.
+/**
+ * Used as a means to instruct KTable to re-mount.
  *
  * This is a hack around the fact that there is no other way to tell KTable if
  * the current page of a paginated view has changed. KTable assumes it’s the
@@ -165,10 +169,6 @@ const cacheKey = ref<number>(0)
  * last page number that was emitted by KTable (via calls to its `fetcher`
  * prop) is different (i.e. the page number has changed independently of a
  * KTable mechanism).
- *
- * TODO: If https://github.com/Kong/kongponents/pull/1631 is accepted, this
- * hack can be removed in favor of setting the new prop whenever the page
- * number changes externally.
  */
 const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
@@ -198,6 +198,20 @@ watch(() => props.pageNumber, function () {
     kTableMountKey.value++
   }
 })
+
+function getRowAttributes(row: Row): Record<string, string> {
+  if (!row) {
+    return {}
+  }
+
+  const attributes: Record<string, string> = {}
+
+  if (props.isSelectedRow !== null && props.isSelectedRow(row)) {
+    attributes.class = 'is-selected'
+  }
+
+  return attributes
+}
 
 const click = (e: MouseEvent) => {
   const $tr = (e.target as HTMLElement).closest('tr')
@@ -237,5 +251,9 @@ const click = (e: MouseEvent) => {
   width: var(--special-column-width, initial);
   min-width: 80px;
   text-align: end;
+}
+
+.app-collection .is-selected {
+  background-color: $kui-color-background-neutral-weakest;
 }
 </style>

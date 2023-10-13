@@ -152,7 +152,7 @@ import {
   KButton,
   KTooltip,
 } from '@kong/kongponents'
-import { RouteLocationNamedRaw } from 'vue-router'
+import { type RouteLocationNamedRaw } from 'vue-router'
 
 import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'

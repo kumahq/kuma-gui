@@ -124,7 +124,7 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
-import { RouteLocationNamedRaw } from 'vue-router'
+import { type RouteLocationNamedRaw } from 'vue-router'
 
 import type { ZoneEgressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
