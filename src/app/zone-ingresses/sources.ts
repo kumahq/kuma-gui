@@ -1,7 +1,8 @@
+import { ZoneIngressOverview } from './data'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { ZoneIngressOverview, ZoneIngress } from '@/types/index.d'
+import type { ZoneIngress } from '@/types/index.d'
 
 type PaginationParams = {
   size: number
@@ -28,7 +29,7 @@ export type EnvoyDataSource = DataSourceResponse<object | string>
 export const sources = (api: KumaApi) => {
   return {
 
-    '/zone-cps/:name/ingresses': async (params: DetailParams & PaginationParams, source: Closeable) => {
+    '/zone-cps/:name/ingresses': async (params: DetailParams & PaginationParams, source: Closeable): Promise<ZoneIngressOverviewCollection> => {
       source.close()
 
       const { name, size, page } = params
@@ -38,8 +39,11 @@ export const sources = (api: KumaApi) => {
       res.items = res.items.filter((item) => {
         return item.zoneIngress.zone === name
       })
-      res.total = res.items.length
-      return res
+      return {
+        ...res,
+        total: res.items.length,
+        items: res.items.map(ZoneIngressOverview.fromObject),
+      }
     },
 
     '/zone-ingresses/:name': async (params: DetailParams, source: Closeable) => {
