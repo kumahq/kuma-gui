@@ -36,6 +36,9 @@ export const sources = (api: KumaApi) => {
       const offset = size * (page - 1)
 
       const res = await api.getAllZoneIngressOverviews({ size, offset })
+      // temporary frontend filtering until we have support for filtering
+      // 'gresses by zone in the backend. Until we have backend support its fine
+      // to assume we won't need to recreate paging for 'gresses
       res.items = res.items.filter((item) => {
         return item.zoneIngress.zone === name
       })
