@@ -1,88 +1,58 @@
 <template>
-  <MainView
-    v-if="!hasParent"
-    class="app-main-content"
+  <component
+    :is="!hasParent ? MainView : 'div'"
+    :class="{
+      'app-main-content': !hasParent,
+    }"
   >
     <nav
-      v-if="_breadcrumbs.length > 0"
+      v-if="!hasParent && _breadcrumbs.length > 0"
       aria-label="Breadcrumb"
     >
-      <KBreadcrumbs
-        :items="_breadcrumbs"
-      />
+      <KBreadcrumbs :items="_breadcrumbs" />
     </nav>
+
     <section
       :class="{
-        'is-fullscreen': props.fullscreen
+        'is-fullscreen': props.fullscreen,
       }"
     >
       <header
-        v-if="slots.title"
+        v-if="$slots.title"
         class="app-view-title-bar"
       >
         <KongIcon v-if="props.fullscreen" />
 
-        <slot
-          name="title"
-        />
+        <slot name="title" />
+
         <div
-          v-if="slots.actions"
+          v-if="$slots.actions"
           class="actions"
         >
           <slot name="actions" />
         </div>
       </header>
-      <slot name="default" />
-    </section>
-  </MainView>
-  <template
-    v-else
-  >
-    <section
-      :class="{
-        'is-fullscreen': props.fullscreen
-      }"
-    >
-      <header
-        v-if="slots.title"
-        class="app-view-title-bar"
-      >
-        <KongIcon v-if="props.fullscreen" />
 
-        <slot
-          name="title"
-        />
-        <div
-          v-if="slots.actions"
-          class="actions"
+      <aside v-if="$slots.notifications">
+        <KAlert
+          class="mb-4"
+          appearance="warning"
         >
-          <slot name="actions" />
-        </div>
-      </header>
-      <aside>
-        <template
-          v-if="slots.notifications"
-        >
-          <KAlert
-            class="mb-4"
-            appearance="warning"
-          >
-            <template #alertMessage>
-              <slot
-                name="notifications"
-              />
-            </template>
-          </KAlert>
-        </template>
+          <template #alertMessage>
+            <slot name="notifications" />
+          </template>
+        </KAlert>
       </aside>
-      <slot name="default" />
+
+      <slot />
     </section>
-  </template>
+  </component>
 </template>
+
 <script lang="ts" setup>
 import { KongIcon } from '@kong/icons'
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
-import { provide, inject, PropType, watch, ref, onBeforeUnmount, useSlots } from 'vue'
+import { provide, inject, PropType, watch, ref, onBeforeUnmount } from 'vue'
 
 import { useMainView } from '@/components'
 
@@ -92,7 +62,6 @@ type AppView = {
 }
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
 const MainView = useMainView()
-const slots = useSlots()
 
 const props = defineProps({
   breadcrumbs: {
@@ -147,8 +116,8 @@ watch(() => props.breadcrumbs, (items: BreadcrumbItem[] | null) => {
 onBeforeUnmount(() => {
   parent.removeBreadcrumbs(symbol)
 })
-
 </script>
+
 <style lang="scss">
 .app-view-title-bar {
   display: flex;
@@ -191,5 +160,4 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: $kui-space-60;
 }
-
 </style>
