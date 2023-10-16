@@ -45,6 +45,8 @@ common:
     text1: 'Are you sure you want to delete the {type} {name}?'
     text2: 'This action cannot be reversed.'
     title: 'Delete {type}'
+  tray:
+    close: 'Close'
   emptyState:
     title: 'No data'
     message: 'There are no {type} present'
