@@ -4,6 +4,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   const zoneName = fake.hacker.noun()
 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   return {
     headers: {},
     body: {
@@ -19,30 +20,20 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
           port: fake.internet.port(),
           advertisedPort: fake.internet.port(),
         },
-        availableServices: [
-          {
+        availableServices: Array.from({ length: serviceCount }).map(_ => {
+          const mesh = `${fake.hacker.noun()}-app`
+          return {
             tags: {
-              app: 'demo-app',
+              app: mesh,
               'kuma.io/protocol': fake.kuma.protocol(),
-              'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
+              'kuma.io/service': `${mesh}_${fake.hacker.noun()}_svc_${fake.number.int({ min: 0, max: 65535 })}`,
               'kuma.io/zone': zoneName,
-              'pod-template-hash': '5845d6447b',
+              'pod-template-hash': fake.string.alphanumeric({ casing: 'lower', length: 10 }),
             },
-            instances: 1,
-            mesh: 'default',
-          },
-          {
-            tags: {
-              app: 'redis',
-              'kuma.io/protocol': fake.kuma.protocol(),
-              'kuma.io/service': 'redis_kuma-demo_svc_6379',
-              'kuma.io/zone': zoneName,
-              'pod-template-hash': '59c9d56fc',
-            },
-            instances: 1,
-            mesh: 'default',
-          },
-        ],
+            instances: fake.number.int({ min: 1, max: 100 }),
+            mesh,
+          }
+        }),
       },
       zoneIngressInsight: {
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {

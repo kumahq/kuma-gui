@@ -16,6 +16,7 @@
       <KCard>
         <template #body>
           <AppCollection
+            data-testid="available-services-collection"
             :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
             :headers="[
               { label: 'Name', key: 'name' },
