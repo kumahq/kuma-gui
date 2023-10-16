@@ -1,72 +1,36 @@
 <template>
-  <div
-    class="tray"
+  <KSlideout
+    close-button-alignment="end"
+    :has-overlay="false"
+    is-visible
+    prevent-close-on-blur
     data-testid="tray"
+    @close="emit('close')"
   >
-    <header class="tray-header">
+    <template
+      v-if="$slots.icon"
+      #before-title
+    >
       <div class="tray-title-wrapper">
-        <span
-          v-if="$slots.icon"
-          class="tray-icon"
-        >
-          <slot name="icon" />
-        </span>
+        <slot name="icon" />
 
         <h2 class="tray-title">
           <slot name="title" />
         </h2>
       </div>
-
-      <KButton
-        appearance="btn-link"
-        class="non-visual-button"
-        data-testid="close-tray-button"
-        @click="emit('close')"
-      >
-        <CloseIcon aria-hidden="true" />
-
-        <span class="visually-hidden">{{ t('common.tray.close') }}</span>
-      </KButton>
-    </header>
+    </template>
 
     <slot />
-  </div>
+  </KSlideout>
 </template>
 
 <script lang="ts" setup>
-import { CloseIcon } from '@kong/icons'
-
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
 </script>
 
 <style lang="scss" scoped>
-.tray {
-  position: fixed;
-  z-index: 100;
-  top: var(--AppHeaderHeight);
-  bottom: 0;
-  right: 0;
-  width: 600px;
-  max-width: calc(100% - var(--AppSidebarWidth));
-  padding: $kui-space-70;
-  border-left: $kui-border-width-10 solid $kui-color-border;
-  background-color: $kui-color-background;
-  box-shadow: -6px 0px 15px 0px rgba(0, 0, 0, 0.04);
-}
-
-.tray-header {
-  display: flex;
-  align-items: center;
-  gap: $kui-space-50;
-  justify-content: space-between;
-  margin-bottom: $kui-space-50;
-}
 
 .tray-title-wrapper {
   display: flex;
@@ -76,5 +40,25 @@ const emit = defineEmits<{
 
 .tray-title {
   margin-top: 0;
+}
+</style>
+
+<style lang="scss">
+.k-slideout {
+  // Overrides KSlideout’s override.
+  --KCardPaddingX: #{$kui-space-80} !important;
+  --KCardPaddingY: #{$kui-space-80} !important;
+}
+
+.k-slideout .panel,
+.k-slideout .panel-background,
+.k-slideout .panel-background-transparent {
+  // Overrides KSlideout’s top offset. `props.offsetTop` doesn’t accept plain CSS values.
+  top: var(--AppHeaderHeight) !important;
+}
+
+.k-slideout-header-content {
+  padding-right: $kui-space-80;
+  padding-left: $kui-space-80;
 }
 </style>
