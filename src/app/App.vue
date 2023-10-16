@@ -110,8 +110,4 @@ const isWizard = computed(() => route.meta.isWizard === true)
   // Note: `minmax(0, 1fr)` is used because `1fr` implies `minmax(auto, 1fr)` which will allow grid items to grow beyond their container's size.
   grid-template-columns: var(--AppSidebarWidth) minmax(0, 1fr);
 }
-
-.app-main-content {
-  padding: var(--AppContentPadding);
-}
 </style>

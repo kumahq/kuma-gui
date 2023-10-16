@@ -52,7 +52,7 @@
 <script lang="ts" setup>
 import { KongIcon } from '@kong/icons'
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
-import { provide, inject, PropType, watch, ref, onBeforeUnmount } from 'vue'
+import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
 import { useMainView } from '@/components'
 
@@ -61,19 +61,15 @@ type AppView = {
   removeBreadcrumbs: (sym: Symbol) => void
 }
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
+
 const MainView = useMainView()
 
-const props = defineProps({
-  breadcrumbs: {
-    type: Array as PropType<BreadcrumbItem[]>,
-    required: false,
-    default: null,
-  },
-  fullscreen: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  breadcrumbs?: BreadcrumbItem[] | null
+  fullscreen?: boolean
+}>(), {
+  breadcrumbs: null,
+  fullscreen: false,
 })
 
 const map: Breadcrumbs = new Map()
@@ -153,6 +149,10 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss" scoped>
+.app-main-content {
+  padding: var(--AppContentPadding);
+}
+
 .actions {
   flex-grow: 1;
   display: flex;
