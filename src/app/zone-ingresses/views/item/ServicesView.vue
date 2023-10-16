@@ -27,28 +27,17 @@
             :items="props.data.zoneIngress.availableServices"
           >
             <template #name="{ row: item }: {row: AvailableService}">
-              <template
-                v-for="service in [item.tags?.['kuma.io/service'] ?? t('common.collection.none')]"
-                :key="service"
+              <RouterLink
+                :to="{
+                  name: 'service-detail-view',
+                  params: {
+                    mesh: item.mesh,
+                    service: item.tags['kuma.io/service'],
+                  },
+                }"
               >
-                <RouterLink
-                  v-if="service.length > 0"
-                  :to="{
-                    name: 'service-detail-view',
-                    params: {
-                      mesh: item.mesh,
-                      service: service,
-                    },
-                  }"
-                >
-                  {{ service }}
-                </RouterLink>
-                <template
-                  v-else
-                >
-                  {{ service }}
-                </template>
-              </template>
+                {{ item.tags['kuma.io/service'] }}
+              </RouterLink>
             </template>
 
             <template #mesh="{ row: item }: {row: AvailableService}">
@@ -65,7 +54,7 @@
             </template>
 
             <template #protocol="{ row: item }: {row: AvailableService}">
-              {{ item.tags?.['kuma.io/protocol'] ?? t('common.collection.none') }}
+              {{ item.tags['kuma.io/protocol'] ?? t('common.collection.none') }}
             </template>
 
             <template #instances="{ row: item }">
@@ -94,7 +83,7 @@
                         name: 'service-detail-view',
                         params: {
                           mesh: item.mesh,
-                          service: item.tags?.['kuma.io/service'] ?? t('common.collection.none'),
+                          service: item.tags['kuma.io/service'],
                         },
                       },
                       label: t('common.collection.actions.view'),
