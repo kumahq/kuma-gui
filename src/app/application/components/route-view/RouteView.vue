@@ -19,7 +19,7 @@
       :route="{
         update: routeUpdate,
         replace: routeReplace,
-        params: routeParams
+        params: routeParams,
       }"
     />
   </div>
@@ -143,7 +143,7 @@ const routeUpdate = (params: Record<string, string | undefined>) => {
 const routeReplace = (...args: Parameters<typeof router['push']>) => {
   router.push(...args)
 }
-watch(() => props.name, (name) => {
+watch(() => props.name, () => {
   // we only want query params here
   const params = Object.entries(routeParams.value || {}).reduce<Record<string, string>>((prev, [key, value]) => {
     if (typeof route.params[key] === 'undefined') {
@@ -154,7 +154,6 @@ watch(() => props.name, (name) => {
 
   if (Object.keys(params).length > 0) {
     router.replace({
-      name,
       query: cleanQuery(params, route.query),
     })
   }
