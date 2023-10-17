@@ -5,6 +5,7 @@ zone-ingresses:
       breadcrumbs: Ingresses
       navigation:
         zone-ingress-detail-view: 'Overview'
+        zone-ingress-services-view: 'Services'
         zone-ingress-xds-config-view: 'XDS Configuration'
         zone-ingress-stats-view: 'Stats'
         zone-ingress-clusters-view: 'Clusters'

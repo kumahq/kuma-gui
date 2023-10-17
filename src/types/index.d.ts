@@ -482,7 +482,7 @@ export interface ZoneIngressNetworking {
 }
 
 export interface AvailableService {
-  tags?: Record<string, string>
+  tags: Record<'kuma.io/service', string> & Record<string, string | undefined>
   instances?: number
   mesh?: string
   externalService?: boolean

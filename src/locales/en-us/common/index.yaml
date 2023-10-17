@@ -50,7 +50,7 @@ common:
     message: 'There are no {type} present'
     icon: 'stateNoData'
   collection:
-    none: ' '
+    none: ''
     actions:
       delete: 'Delete'
       edit: 'Edit'

@@ -17,7 +17,7 @@
         </h2>
       </template>
 
-      <KCard class="mt-4">
+      <KCard>
         <template #body>
           <DataSource
             v-slot="{ data, error }: MeshSource"

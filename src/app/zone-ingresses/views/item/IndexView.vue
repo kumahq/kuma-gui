@@ -65,7 +65,7 @@
 <script lang="ts" setup>
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
-import { ZoneIngressOverviewSource } from '../../sources'
+import type { ZoneIngressOverviewSource } from '../../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'

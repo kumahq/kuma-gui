@@ -33,7 +33,7 @@
         </h2>
       </template>
 
-      <KCard class="mt-4">
+      <KCard>
         <template #body>
           <template
             v-for="(conf, i) in [getConfig(props.data)]"
