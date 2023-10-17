@@ -2,10 +2,7 @@
   <KCard>
     <template #body>
       <div class="stack">
-        <div
-          class="columns"
-          style="--columns: 3;"
-        >
+        <div class="columns">
           <ResourceStatus
             :total="props.meshInsight?.services.total ?? 0"
             data-testid="services-status"
@@ -34,10 +31,7 @@
           </ResourceStatus>
         </div>
 
-        <div
-          class="columns"
-          style="--columns: 3;"
-        >
+        <div class="columns">
           <DefinitionCard>
             <template #title>
               {{ t('http.api.property.mtls') }}

@@ -2,10 +2,7 @@
   <div class="stack">
     <KCard>
       <template #body>
-        <div
-          class="columns"
-          style="--columns: 3;"
-        >
+        <div class="columns">
           <DefinitionCard>
             <template #title>
               {{ t('http.api.property.status') }}

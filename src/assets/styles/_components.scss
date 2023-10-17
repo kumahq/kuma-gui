@@ -19,8 +19,7 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 */
 
 .columns {
-  --threshold: 20rem;
-  --columns: 3;
+  --threshold: 40rem;
 
   display: flex;
   flex-wrap: wrap;
@@ -28,22 +27,7 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 }
 
 .columns>* {
-  min-inline-size: min(var(--threshold), 100%);
-  // Accounts for the gaps.
-  inline-size: calc((100% - ((var(--columns) - 1) * var(--AppGap))) / var(--columns));
-}
-
-
-/*
-.variable-columns
-*/
-
-.variable-columns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--AppGap);
-}
-
-.variable-columns>* {
   flex-grow: 1;
+  flex-basis: calc((var(--threshold) - 100%) * 999);
+  min-inline-size: 0;
 }
