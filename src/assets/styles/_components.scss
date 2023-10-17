@@ -31,18 +31,3 @@ Adapted from https://every-layout.dev/layouts/switcher/.
   flex-basis: calc((var(--threshold) - 100%) * 999);
   min-inline-size: 0;
 }
-
-
-/*
-.variable-columns
-*/
-
-.variable-columns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--AppGap);
-}
-
-.variable-columns>* {
-  flex-grow: 1;
-}
