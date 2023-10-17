@@ -73,3 +73,20 @@ const currentTabHash = computed(() => {
   margin-bottom: var(--AppGap);
 }
 </style>
+
+<style lang="scss">
+.nav-tabs {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.nav-tabs .tab-item {
+  white-space: nowrap;
+}
+
+// TODO: Remove this once https://github.com/Kong/kongponents/pull/1774 is available.
+// Prevents KTabs from trigger a vertical overflow of its container.
+.nav-tabs .tab-item::after {
+  content: none !important;
+}
+</style>
