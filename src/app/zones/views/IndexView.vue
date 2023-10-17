@@ -100,17 +100,17 @@
 
                 <template #ingress="{ row: item }">
                   <template
-                    v-for="gresses in [ingresses[item.name] || {online: [], offline: []}]"
+                    v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
                   >
-                    {{ gresses.online.length }} / {{ gresses.online.length + gresses.offline.length }}
+                    {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
                   </template>
                 </template>
 
                 <template #egress="{ row: item }">
                   <template
-                    v-for="gresses in [egresses[item.name] || {online: [], offline: []}]"
+                    v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
                   >
-                    {{ gresses.online.length }} / {{ gresses.online.length + gresses.offline.length }}
+                    {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
                   </template>
                 </template>
 
@@ -264,9 +264,9 @@ const isDeleteModalVisible = ref(false)
 const isCreateZoneButtonVisible = ref(false)
 const deleteZoneName = ref('')
 
-type Gresses<T> = Record<string, {online: T[], offline: T[]}>
-const ingresses = ref<Gresses<ZoneIngressOverview>>({})
-const egresses = ref<Gresses<ZoneEgressOverview>>({})
+type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
+const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})
+const egresses = ref<ZoneProxies<ZoneEgressOverview>>({})
 
 const getState = (subscriptions: DiscoverySubscription[]) => {
   let state: 'online' | 'offline' = 'offline'
@@ -296,7 +296,7 @@ const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
       prev[name][state].push(item)
     }
     return prev
-  }, {} as Gresses<ZoneIngressOverview>)
+  }, {} as ZoneProxies<ZoneIngressOverview>)
 }
 const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
   const prop = 'zoneEgress'
@@ -314,7 +314,7 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
       prev[name][state].push(item)
     }
     return prev
-  }, {} as Gresses<ZoneEgressOverview>)
+  }, {} as ZoneProxies<ZoneEgressOverview>)
 }
 
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
