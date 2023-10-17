@@ -50,7 +50,7 @@
     "vue-router": "4.2.5"
   },
   "devDependencies": {
-    "@babel/core": "7.23.0",
+    "@babel/core": "7.23.2",
     "@babel/preset-env": "7.23.2",
     "@babel/preset-typescript": "7.23.2",
     "@badeball/cypress-cucumber-preprocessor": "18.0.6",
