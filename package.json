@@ -55,7 +55,7 @@
     "@babel/preset-typescript": "7.23.2",
     "@badeball/cypress-cucumber-preprocessor": "18.0.6",
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.0",
-    "@faker-js/faker": "8.1.0",
+    "@faker-js/faker": "8.2.0",
     "@jest/globals": "29.7.0",
     "@kong/design-tokens": "1.11.3",
     "@modyfi/vite-plugin-yaml": "1.0.4",
