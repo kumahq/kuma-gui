@@ -23,10 +23,7 @@
               </div>
             </div>
 
-            <div
-              class="columns"
-              :style="`--columns: ${can('use zones') ? 4 : 3};`"
-            >
+            <div class="columns">
               <ResourceStatus
                 v-if="can('use zones')"
                 :total="data.zones.controlPlanes.total"
