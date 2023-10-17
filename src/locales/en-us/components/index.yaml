@@ -2,3 +2,7 @@ components:
   route-view:
     title: "{name} Manager"
     route-announcer: Navigated to {title}
+  status-badge:
+    tooltip:
+      not_available: |
+        The online or offline status of this entity is unknown

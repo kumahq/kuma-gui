@@ -1,21 +1,30 @@
 <template>
-  <KBadge
-    class="status"
-    :appearance="BADGE_APPEARANCE[props.status]"
-    data-testid="status-badge"
-  >
-    {{ i18n.t(`http.api.value.${props.status}`) }}
-  </KBadge>
+  <component :is="props.status === 'not_available' ? KTooltip : Anonymous">
+    <KBadge
+      class="status-badge"
+      :appearance="BADGE_APPEARANCE[props.status]"
+      data-testid="status-badge"
+    >
+      {{ t(`http.api.value.${props.status}`) }}
+    </KBadge>
+    <template
+      v-if="props.status === 'not_available'"
+      #content
+    >
+      {{ t('components.status-badge.tooltip.not_available') }}
+    </template>
+  </component>
 </template>
 
 <script lang="ts" setup>
-import { BadgeAppearance, KBadge } from '@kong/kongponents'
-import { PropType } from 'vue'
+import { KTooltip } from '@kong/kongponents'
 
+import Anonymous from '@/app/application/components/anonymous/Anonymous.vue'
 import { StatusKeyword } from '@/types/index.d'
 import { useI18n } from '@/utilities'
+import type { BadgeAppearance } from '@kong/kongponents'
 
-const i18n = useI18n()
+const { t } = useI18n()
 
 const BADGE_APPEARANCE: Record<StatusKeyword | 'disabled', BadgeAppearance> = {
   online: 'success',
@@ -25,12 +34,9 @@ const BADGE_APPEARANCE: Record<StatusKeyword | 'disabled', BadgeAppearance> = {
   disabled: 'neutral',
 }
 
-const props = defineProps({
-  status: {
-    type: String as PropType<StatusKeyword | 'disabled'>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  status: StatusKeyword | 'disabled'
+}>()
 </script>
 
 <style lang="scss" scoped>
