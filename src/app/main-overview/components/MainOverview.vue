@@ -85,7 +85,7 @@
       </template>
     </KCard>
 
-    <div class="variable-columns">
+    <div class="columns">
       <KCard v-if="can('use zones')">
         <template #body>
           <DataSource
