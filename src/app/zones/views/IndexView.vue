@@ -41,6 +41,14 @@
           :src="`/zone-cps?page=${route.params.page}&size=${route.params.size}`"
           @change="setIsCreateZoneButtonVisible"
         >
+          <DataSource
+            :src="`/zone-ingress-overviews?page=1&size=100`"
+            @change="getIngresses"
+          />
+          <DataSource
+            :src="`/zone-egress-overviews?page=1&size=100`"
+            @change="getEgresses"
+          />
           <KCard>
             <template #body>
               <ErrorBlock
@@ -56,6 +64,8 @@
                   { label: 'Name', key: 'name' },
                   { label: 'Zone CP Version', key: 'zoneCpVersion' },
                   { label: 'Type', key: 'type' },
+                  { label: 'Ingresses (online / total)', key: 'ingress' },
+                  { label: 'Egresses (online / total)', key: 'egress' },
                   { label: 'Status', key: 'status' },
                   { label: 'Warnings', key: 'warnings', hideLabel: true },
                   { label: 'Actions', key: 'actions', hideLabel: true },
@@ -86,6 +96,22 @@
 
                 <template #type="{ rowValue }">
                   {{ rowValue || t('common.collection.none') }}
+                </template>
+
+                <template #ingress="{ row: item }">
+                  <template
+                    v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
+                  >
+                    {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                  </template>
+                </template>
+
+                <template #egress="{ row: item }">
+                  <template
+                    v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
+                  >
+                    {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                  </template>
                 </template>
 
                 <template #status="{ rowValue }">
@@ -217,7 +243,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { MeSource } from '@/app/me/sources'
-import { StatusKeyword, ZoneOverview } from '@/types/index.d'
+import type { DiscoverySubscription, StatusKeyword, ZoneEgressOverview, ZoneIngressOverview, ZoneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 
 type ZoneOverviewTableRow = {
@@ -237,6 +263,59 @@ const kumaApi = useKumaApi()
 const isDeleteModalVisible = ref(false)
 const isCreateZoneButtonVisible = ref(false)
 const deleteZoneName = ref('')
+
+type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
+const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})
+const egresses = ref<ZoneProxies<ZoneEgressOverview>>({})
+
+const getState = (subscriptions: DiscoverySubscription[]) => {
+  let state: 'online' | 'offline' = 'offline'
+  if (subscriptions.length > 0) {
+    state = 'online'
+    const lastSubscription = subscriptions[subscriptions.length - 1]
+    if (typeof lastSubscription.disconnectTime !== 'undefined') {
+      state = 'offline'
+    }
+  }
+  return state
+}
+
+const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
+  const prop = 'zoneIngress'
+  ingresses.value = data.items.reduce((prev, item) => {
+    const name = item[prop]?.zone
+    if (typeof name !== 'undefined') {
+      if (typeof prev[name] === 'undefined') {
+        prev[name] = {
+          online: [],
+          offline: [],
+        }
+      }
+      const subscriptions = item[`${prop}Insight`].subscriptions || []
+      const state = getState(subscriptions)
+      prev[name][state].push(item)
+    }
+    return prev
+  }, {} as ZoneProxies<ZoneIngressOverview>)
+}
+const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
+  const prop = 'zoneEgress'
+  egresses.value = data.items.reduce((prev, item) => {
+    const name = item[prop]?.zone
+    if (typeof name !== 'undefined') {
+      if (typeof prev[name] === 'undefined') {
+        prev[name] = {
+          online: [],
+          offline: [],
+        }
+      }
+      const subscriptions = item[`${prop}Insight`].subscriptions || []
+      const state = getState(subscriptions)
+      prev[name][state].push(item)
+    }
+    return prev
+  }, {} as ZoneProxies<ZoneEgressOverview>)
+}
 
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
   return zoneOverviews.map((zoneOverview) => {
