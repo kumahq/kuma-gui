@@ -10,8 +10,6 @@
   <link rel="icon" href="/favicon.png" />
   <title>Manager</title>
 
-  <script type="application/json" id="kuma-config"><%- config %></script>
-  <script type="module" src="/src/main.ts"></script>
   <style type="text/css">
     html:not(.kuma-ready) {
       background-image: url('/kuma-loader-v1.gif');
@@ -50,6 +48,7 @@
       }
     }
   </style>
+  <script type="application/json" id="kuma-config"><%- config %></script>
 </head>
 
 <body>
@@ -60,6 +59,7 @@
   </noscript>
 
   <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
