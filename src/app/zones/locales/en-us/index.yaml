@@ -8,6 +8,7 @@ zone-cps:
         zone-cp-config-view: 'Config'
         zone-ingress-list-view: 'Ingresses'
         zone-egress-list-view: 'Egresses'
+      authentication_type: Dataplane authentication type
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes

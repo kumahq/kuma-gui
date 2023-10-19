@@ -49,7 +49,7 @@
 
               <DefinitionCard>
                 <template #title>
-                  {{ t('http.api.property.authenticationType') }}
+                  {{ t('zone-cps.routes.item.authentication_type') }}
                 </template>
 
                 <template #body>
