@@ -19,7 +19,6 @@
             <KButton
               class="warning-button"
               appearance="primary"
-              size="small"
               :to="env('KUMA_INSTALL_URL')"
             >
               Update

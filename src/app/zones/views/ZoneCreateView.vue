@@ -21,7 +21,7 @@
       <template #actions>
         <KButton
           v-if="token === '' || isZoneConnected"
-          appearance="outline"
+          appearance="tertiary"
           data-testid="exit-button"
           :to="{ name: 'zone-cp-list-view' }"
         >
@@ -30,7 +30,7 @@
 
         <KButton
           v-else
-          appearance="outline"
+          appearance="tertiary"
           data-testid="exit-button"
           @click="toggleConfirmModal"
         >

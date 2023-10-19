@@ -37,7 +37,7 @@
               width="280"
             >
               <KButton
-                appearance="outline"
+                appearance="tertiary"
               >
                 Info
               </KButton>
@@ -55,7 +55,10 @@
           </p>
 
           <KDropdownMenu :kpop-attributes="{ placement: 'bottomEnd' }">
-            <KButton appearance="outline">
+            <KButton
+              appearance="tertiary"
+              icon-only
+            >
               <HelpIcon :size="KUI_ICON_SIZE_30" />
 
               <span class="visually-hidden">Help</span>
@@ -92,7 +95,8 @@
 
           <KButton
             :to="{ name: 'diagnostics' }"
-            button-appearance="btn-link"
+            appearance="tertiary"
+            icon-only
             data-testid="nav-item-diagnostics"
           >
             <CogIcon

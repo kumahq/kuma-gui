@@ -2,14 +2,12 @@
   <KClipboardProvider v-slot="{ copyToClipboard }">
     <KButton
       v-bind="$attrs"
-      appearance="outline"
+      appearance="tertiary"
       class="copy-button"
       :class="{
         'non-visual-button': !props.hasBorder,
       }"
       data-testid="copy-button"
-      :is-rounded="false"
-      size="small"
       :title="!props.hideTitle ? props.copyText : undefined"
       type="button"
       @click="copy($event, copyToClipboard)"

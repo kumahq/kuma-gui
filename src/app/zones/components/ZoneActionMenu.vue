@@ -1,7 +1,7 @@
 <template>
   <div>
     <KDropdownMenu
-      button-appearance="creation"
+      button-appearance="primary"
       :kpop-attributes="props.kpopAttributes"
       :label="t('zones.action_menu.toggle_button')"
       show-caret
