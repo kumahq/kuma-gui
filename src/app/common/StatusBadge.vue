@@ -1,5 +1,5 @@
 <template>
-  <component :is="props.status === 'not_available' ? KTooltip : Anonymous">
+  <component :is="props.status === 'not_available' ? KTooltip : AnonymousComponent">
     <KBadge
       class="status-badge"
       :appearance="BADGE_APPEARANCE[props.status]"
@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { KTooltip } from '@kong/kongponents'
 
-import Anonymous from '@/app/application/components/anonymous/Anonymous.vue'
+import AnonymousComponent from '@/app/application/components/anonymous-component/AnonymousComponent.vue'
 import { StatusKeyword } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import type { BadgeAppearance } from '@kong/kongponents'
