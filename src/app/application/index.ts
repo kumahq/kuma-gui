@@ -7,13 +7,16 @@ import RouteView from './components/route-view/RouteView.vue'
 import { routes } from './routes'
 import can from './services/can'
 import I18n from './services/i18n/I18n'
+import DataSourceLifeCycle, { getSource } from '@/app/application/services/data-source'
+import type { Source } from '@/app/application/services/data-source'
 import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
-import DataSourceLifeCycle from '@/app/application/services/data-source/index'
 import type { EnvVars } from '@/services/env/Env'
 import Env from '@/services/env/Env'
 import type { ServiceDefinition } from '@/services/utils'
-import { token, createInjections } from '@/services/utils'
+import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
+
+export type { DataSourceResponse, Source } from './services/data-source'
 
 type Can = ReturnType<typeof can>
 type Token = ReturnType<typeof token>
@@ -39,6 +42,7 @@ const $ = {
   notFoundView: token<() => Promise<Component>>('application.not-found'),
   applicationComponents: token('application.components'),
 
+  source: token<Source>('data.source'),
   sources: token('data.sources'),
   dataSourcePool: token<DataSourcePool>('data.DataSourcePool'),
   dataSourceLifecycle: token<typeof DataSourceLifeCycle>('data.DataSourceLifecycle'),
@@ -112,6 +116,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 
     [$.dataSourceLifecycle, {
       constant: DataSourceLifeCycle,
+    }],
+
+    [$.source, {
+      service: getSource,
+      arguments: [constant(document, { description: 'dom.document' })],
     }],
 
     [$.getDataSourceCacheKeyPrefix, {

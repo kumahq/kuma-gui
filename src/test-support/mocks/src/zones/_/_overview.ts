@@ -3,7 +3,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const params = req.params
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   return {
-    headers: {},
+    headers: {
+      'Status-Code': env('KUMA_STATUS_CODE', '200'),
+    },
     body: {
       type: 'ZoneOverview',
       name: params.name,

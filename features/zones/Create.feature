@@ -16,7 +16,8 @@ Feature: zones / create
       | environment-kubernetes-config       | [data-testid='zone-kubernetes-config']               |
       | ingress-input-switch                | [for='zone-ingress-enabled']                         |
       | egress-input-switch                 | [for='zone-egress-enabled']                          |
-      | zone-connected-scanner              | [data-testid='zone-connected-scanner']               |
+      | waiting                             | [data-testid='waiting']                              |
+      | connected                           | [data-testid='connected']                            |
       | error                               | [data-testid='create-zone-error']                    |
       | instructions                        | [data-testid='connect-zone-instructions']            |
     And the environment
@@ -91,7 +92,7 @@ Feature: zones / create
     Then the "$ingress-input-switch input" element is checked
     Then the "$egress-input-switch input" element is checked
     Then the "$environment-kubernetes-config" element contains "kdsGlobalAddress: grpcs://<global-kds-address>:5685"
-    Then the "$zone-connected-scanner[data-test-state='waiting']" element exists
+    Then the "$waiting" element exists
 
     When I click the "$ingress-input-switch" element
     Then the "$ingress-input-switch input" element isn't checked
@@ -110,7 +111,7 @@ Feature: zones / create
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    When the URL "/zones/test/_overview" responds with
+    And the URL "/zones/test/_overview" responds with
       """
       body:
         zoneInsight:
@@ -118,7 +119,7 @@ Feature: zones / create
             - connectTime: '2020-07-28T16:18:09.743141Z'
               disconnectTime: !!js/undefined
       """
-    Then the "$zone-connected-scanner[data-test-state='success']" element exists
+    Then the "$connected" element exists
 
   Scenario: The form shows expected error for 409 response
     Given the URL "/provision-zone" responds with
@@ -197,7 +198,7 @@ Feature: zones / create
     And I click the "$create-zone-button" element
 
     Then the "$instructions" element exists
-    And the "$zone-connected-scanner[data-test-state='success']" element exists
+    And the "$connected" element exists
 
     When I click the "$exit-button" element
 
@@ -220,7 +221,7 @@ Feature: zones / create
     And I click the "$create-zone-button" element
 
     Then the "$instructions" element exists
-    And the "$zone-connected-scanner[data-test-state='waiting']" element exists
+    And the "$waiting" element exists
 
     When I click the "$exit-button" element
 

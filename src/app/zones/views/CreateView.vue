@@ -1,5 +1,6 @@
 <template>
   <RouteView
+    v-slot="{ route }"
     name="zone-create-view"
     :attrs="{
       class: 'is-fullscreen',
@@ -20,19 +21,15 @@
 
       <template #actions>
         <KButton
-          v-if="token === '' || isZoneConnected"
           appearance="outline"
           data-testid="exit-button"
-          :to="{ name: 'zone-cp-list-view' }"
-        >
-          {{ t('zones.form.exit') }}
-        </KButton>
-
-        <KButton
-          v-else
-          appearance="outline"
-          data-testid="exit-button"
-          @click="toggleConfirmModal"
+          @click="() => {
+            if(token === '' || isZoneConnected) {
+              route.replace({name: 'zone-cp-list-view'})
+            } else {
+              toggleConfirmModal()
+            }
+          }"
         >
           {{ t('zones.form.exit') }}
         </KButton>
@@ -294,48 +291,72 @@
                   </div>
 
                   <div class="form-section__content">
-                    <EntityScanner
-                      :loader-function="scanForEnabledZone"
-                      :has-error="scanError !== null"
-                      :can-complete="isZoneConnected"
-                      data-testid="zone-connected-scanner"
+                    <DataSource
+                      v-slot="{ data, error: scanError }: ZoneOverviewSource"
+                      :src="`/zone-cps/online/${name}?no-cache=${Date.now()}`"
+                      @change="success"
                     >
-                      <template #loading-title>
-                        {{ t('zones.form.scan.waitTitle') }}
-                      </template>
-
-                      <template #complete-title>
-                        {{ t('zones.form.scan.completeTitle') }}
-                      </template>
-
-                      <template #complete-content>
-                        <p>
-                          {{ t('zones.form.scan.completeDescription', { name }) }}
-                        </p>
-
-                        <p class="mt-2">
-                          <KButton
-                            appearance="primary"
-                            :to="{
-                              name: 'zone-cp-detail-view',
-                              params: {
-                                zone: name,
-                              },
-                            }"
+                      <KEmptyState cta-is-hidden>
+                        <template #title>
+                          <template
+                            v-if="scanError"
                           >
-                            {{ t('zones.form.scan.completeButtonLabel', { name }) }}
-                          </KButton>
-                        </p>
-                      </template>
-
-                      <template #error-title>
-                        <h3>{{ t('zones.form.scan.errorTitle') }}</h3>
-                      </template>
-
-                      <template #error-content>
-                        <p>{{ t('zones.form.scan.errorDescription') }}</p>
-                      </template>
-                    </EntityScanner>
+                            <DangerIcon
+                              display="inline-block"
+                              :color="KUI_COLOR_TEXT_DANGER"
+                            />
+                            <h3>{{ t('zones.form.scan.errorTitle') }}</h3>
+                          </template>
+                          <template
+                            v-else-if="(typeof data === 'undefined')"
+                          >
+                            <ProgressIcon
+                              data-testid="waiting"
+                              display="inline-block"
+                              :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+                            />
+                            {{ t('zones.form.scan.waitTitle') }}
+                          </template>
+                          <template
+                            v-else
+                          >
+                            <CheckCircleIcon
+                              data-testid="connected"
+                              display="inline-block"
+                              :color="KUI_COLOR_TEXT_SUCCESS"
+                            />
+                            {{ t('zones.form.scan.completeTitle') }}
+                          </template>
+                        </template>
+                        <template #message>
+                          <template
+                            v-if="scanError"
+                          >
+                            <p>{{ t('zones.form.scan.errorDescription') }}</p>
+                          </template>
+                          <template
+                            v-else-if="(typeof data !== 'undefined')"
+                          >
+                            <p>
+                              {{ t('zones.form.scan.completeDescription', { name }) }}
+                            </p>
+                            <p class="mt-2">
+                              <KButton
+                                appearance="primary"
+                                :to="{
+                                  name: 'zone-cp-detail-view',
+                                  params: {
+                                    zone: name
+                                  },
+                                }"
+                              >
+                                {{ t('zones.form.scan.completeButtonLabel', { name }) }}
+                              </KButton>
+                            </p>
+                          </template>
+                        </template>
+                      </KEmptyState>
+                    </DataSource>
                   </div>
                 </div>
               </template>
@@ -349,7 +370,7 @@
         :title="t('zones.form.confirm_modal.title')"
         data-testid="confirm-exit-modal"
         @canceled="toggleConfirmModal"
-        @proceed="router.push({ name: 'zone-cp-list-view' })"
+        @proceed="route.replace({ name: 'zone-cp-list-view' })"
       >
         <template #header-content>
           {{ t('zones.form.confirm_modal.title') }}
@@ -374,22 +395,19 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_30, KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
-import { AddIcon, CheckIcon, ProgressIcon } from '@kong/icons'
+import { KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_30, KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
+import { AddIcon, CheckIcon, ProgressIcon, DangerIcon, CheckCircleIcon } from '@kong/icons'
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
 
-import EntityScanner from '../components/EntityScanner.vue'
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
+import { ZoneOverviewSource } from '../sources'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const { t, tm } = useI18n()
 const kumaApi = useKumaApi()
-const router = useRouter()
 
 /**
  * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#rfc-1035-label-names
@@ -403,7 +421,6 @@ const error = ref<Error | null>(null)
 const frontendNameError = ref<string | null>(null)
 
 const isZoneConnected = ref(false)
-const scanError = ref<Error | null>(null)
 
 const name = ref('')
 const environment = ref<'universal' | 'kubernetes'>('kubernetes')
@@ -473,29 +490,11 @@ function validateName(name: string): boolean {
   return isValidName
 }
 
-/**
- * Polling callback function passed to the EntityScanner component used to determine whether a Zone was connected successfully.
- */
-async function scanForEnabledZone() {
-  isZoneConnected.value = false
-  scanError.value = null
-
-  try {
-    // The presence of a `ZoneOverview` object’s subscriptions with a connect time and without a disconnect time indicate a Zone to be online.
-    const zoneOverview = await kumaApi.getZoneOverview({ name: name.value })
-    const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
-    isZoneConnected.value = status === 'online'
-  } catch (err) {
-    if (err instanceof Error) {
-      scanError.value = err
-    } else {
-      console.error(err)
-    }
-  }
-}
-
 function toggleConfirmModal() {
   isConfirmModalVisible.value = !isConfirmModalVisible.value
+}
+function success() {
+  isZoneConnected.value = true
 }
 </script>
 <style lang="scss" scoped>
