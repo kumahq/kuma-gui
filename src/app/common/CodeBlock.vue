@@ -13,7 +13,10 @@
     @code-block-render="handleCodeBlockRenderEvent"
     @query-change="updateStoredQuery"
   >
-    <template #secondary-actions>
+    <template
+      v-if="$slots['secondary-actions']"
+      #secondary-actions
+    >
       <slot name="secondary-actions" />
     </template>
   </KCodeBlock>
