@@ -8,19 +8,6 @@
     data-testid="tray"
     @close="emit('close')"
   >
-    <template #before-title>
-      <div class="tray-title-wrapper">
-        <slot
-          v-if="$slots.icon"
-          name="icon"
-        />
-
-        <h2 class="tray-title">
-          <slot name="title" />
-        </h2>
-      </div>
-    </template>
-
     <slot />
   </KSlideout>
 </template>
@@ -32,17 +19,6 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-
-.tray-title-wrapper {
-  display: flex;
-  align-items: center;
-  gap: $kui-space-30;
-}
-
-.tray-title {
-  margin-top: 0;
-}
-
 .tray {
   // TODO: Remove or replace these once we switch to Kongponents v9 which will deprecate these variables.
   // Overrides KSlideout’s override.
