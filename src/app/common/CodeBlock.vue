@@ -20,51 +20,25 @@
 </template>
 
 <script lang="ts" setup>
-import { CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
-import { ref, PropType } from 'vue'
+import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
+import { ref } from 'vue'
 
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { highlightElement, AvailableLanguages } from '@/utilities/highlightElement'
+import { highlightElement, type AvailableLanguages } from '@/utilities/highlightElement'
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-
-  code: {
-    type: String,
-    required: true,
-  },
-
-  language: {
-    type: String as PropType<AvailableLanguages>,
-    required: true,
-  },
-
-  isSearchable: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  showCopyButton: {
-    type: Boolean,
-    required: false,
-    default: true,
-  },
-
-  queryKey: {
-    type: String,
-    required: false,
-    default: null,
-  },
-
-  codeMaxHeight: {
-    type: String,
-    required: false,
-    default: null,
-  },
+const props = withDefaults(defineProps<{
+  id: string
+  code: string
+  language: AvailableLanguages
+  isSearchable?: boolean
+  showCopyButton?: boolean
+  queryKey?: string | null
+  codeMaxHeight?: string | null
+}>(), {
+  isSearchable: false,
+  showCopyButton: true,
+  queryKey: null,
+  codeMaxHeight: null,
 })
 
 const query = getStoredQuery()
