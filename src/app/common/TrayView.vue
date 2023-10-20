@@ -7,12 +7,12 @@
     data-testid="tray"
     @close="emit('close')"
   >
-    <template
-      v-if="$slots.icon"
-      #before-title
-    >
+    <template #before-title>
       <div class="tray-title-wrapper">
-        <slot name="icon" />
+        <slot
+          v-if="$slots.icon"
+          name="icon"
+        />
 
         <h2 class="tray-title">
           <slot name="title" />
