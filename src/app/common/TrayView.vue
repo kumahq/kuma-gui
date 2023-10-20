@@ -4,7 +4,6 @@
     close-button-alignment="end"
     :has-overlay="false"
     is-visible
-    prevent-close-on-blur
     data-testid="tray"
     @close="emit('close')"
   >
