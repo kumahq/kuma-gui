@@ -38,4 +38,18 @@ const emit = defineEmits<{
   padding-right: $kui-space-80;
   padding-left: $kui-space-80;
 }
+
+// Aligns the position of the close button with the tray card’s content box.
+.tray :deep(.close-button-start),
+.tray :deep(.close-button-end) {
+  margin-top: $kui-space-80 !important;
+}
+
+.tray :deep(.close-button-start) {
+  margin-left: $kui-space-80 !important;
+}
+
+.tray :deep(.close-button-end) {
+  margin-right: $kui-space-80 !important;
+}
 </style>
