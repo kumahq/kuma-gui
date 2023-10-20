@@ -4,7 +4,6 @@
     language="yaml"
     :code="yamlUniversal"
     :is-searchable="props.isSearchable"
-    :query-key="props.id"
     :code-max-height="props.codeMaxHeight"
   >
     <template #secondary-actions>

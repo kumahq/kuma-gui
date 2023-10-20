@@ -35,12 +35,10 @@ const props = withDefaults(defineProps<{
   language: AvailableLanguages
   isSearchable?: boolean
   showCopyButton?: boolean
-  queryKey?: string | null
   codeMaxHeight?: string | null
 }>(), {
   isSearchable: false,
   showCopyButton: true,
-  queryKey: null,
   codeMaxHeight: null,
 })
 

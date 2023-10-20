@@ -22,7 +22,6 @@
             :status="getItemStatusFromInsight(props.data.zoneEgressInsight)"
             resource="Zone"
             :src="`/zone-egresses/${route.params.zoneEgress}/data-path/stats`"
-            query-key="envoy-data-stats-zone-egress"
           />
         </template>
       </KCard>

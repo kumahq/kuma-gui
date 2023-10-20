@@ -41,7 +41,6 @@
           language="json"
           :code="typeof data === 'string' ? data : JSON.stringify(data, null, 2)"
           is-searchable
-          :query-key="props.queryKey"
         />
       </template>
     </DataSource>
@@ -77,11 +76,6 @@ const props = defineProps({
   },
 
   src: {
-    type: String,
-    required: true,
-  },
-
-  queryKey: {
     type: String,
     required: true,
   },

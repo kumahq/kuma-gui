@@ -45,7 +45,6 @@
               language="json"
               :code="conf"
               is-searchable
-              query-key="zone-config"
             />
 
             <KAlert

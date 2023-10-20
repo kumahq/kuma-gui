@@ -22,7 +22,6 @@
             :status="getItemStatusFromInsight(props.data.zoneIngressInsight)"
             resource="Zone"
             :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/xds`"
-            query-key="envoy-data-xds-zone-ingress"
           />
         </template>
       </KCard>

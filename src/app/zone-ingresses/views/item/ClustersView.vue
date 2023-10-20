@@ -22,7 +22,6 @@
             :status="getItemStatusFromInsight(props.data.zoneIngressInsight)"
             resource="Zone"
             :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/clusters`"
-            query-key="envoy-data-clusters-zone-ingress"
           />
         </template>
       </KCard>

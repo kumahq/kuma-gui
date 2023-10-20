@@ -48,7 +48,6 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
               language="json"
               :code="JSON.stringify(data, null, 2)"
               is-searchable
-              query-key="diagnostics"
             />
           </template>
         </KCard>

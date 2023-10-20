@@ -23,7 +23,6 @@
             :status="getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight).status"
             resource="Data Plane Proxy"
             :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/xds`"
-            query-key="envoy-data-xds-data-plane"
           />
         </template>
       </KCard>

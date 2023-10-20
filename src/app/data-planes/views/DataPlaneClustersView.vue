@@ -23,7 +23,6 @@
             :status="getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight).status"
             resource="Data Plane Proxy"
             :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
-            query-key="envoy-data-clusters-data-plane"
           />
         </template>
       </KCard>
