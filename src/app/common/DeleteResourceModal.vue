@@ -19,7 +19,7 @@
       >
         <template #alertMessage>
           <template v-if="(error instanceof ApiError)">
-            <p>{{ t('common.error_state.api_error', { status: error.status, title: error.title }) }}</p>
+            <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
 
             <ul
               v-if="error.invalidParameters.length > 0"

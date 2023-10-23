@@ -56,7 +56,7 @@
             </template>
 
             <template v-else-if="(error instanceof ApiError)">
-              <p>{{ t('common.error_state.api_error', { status: error.status, title: error.title }) }}</p>
+              <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
             </template>
 
             <template v-else>
