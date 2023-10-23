@@ -1,44 +1,67 @@
 <template>
-  <div class="stack">
-    <KCard>
-      <template #body>
-        <div class="columns">
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.address') }}
-            </template>
+  <div>
+    <DataSource
+      v-slot="{ data: externalService, error }: ExternalServiceSource"
+      :src="`/meshes/${props.mesh}/external-services/for/${props.service}`"
+    >
+      <ErrorBlock
+        v-if="error"
+        :error="error"
+      />
 
-            <template #body>
-              {{ props.externalService.networking.address }}
-            </template>
-          </DefinitionCard>
+      <LoadingBlock v-else-if="externalService === undefined" />
 
-          <DefinitionCard v-if="props.externalService.tags !== null">
-            <template #title>
-              {{ t('http.api.property.tags') }}
-            </template>
+      <EmptyBlock
+        v-else-if="externalService === null"
+        data-testid="no-matching-external-service"
+      >
+        <template #title>
+          <p>{{ t('services.detail.no_matching_external_service', { name: props.service }) }}</p>
+        </template>
+      </EmptyBlock>
 
-            <template #body>
-              <TagList :tags="props.externalService.tags" />
-            </template>
-          </DefinitionCard>
-        </div>
-      </template>
-    </KCard>
+      <div
+        v-else
+        class="columns"
+      >
+        <DefinitionCard>
+          <template #title>
+            {{ t('http.api.property.address') }}
+          </template>
+
+          <template #body>
+            <TextWithCopyButton :text="externalService.networking.address" />
+          </template>
+        </DefinitionCard>
+
+        <DefinitionCard v-if="externalService.tags !== null">
+          <template #title>
+            {{ t('http.api.property.tags') }}
+          </template>
+
+          <template #body>
+            <TagList :tags="externalService.tags" />
+          </template>
+        </DefinitionCard>
+      </div>
+    </DataSource>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
+import type { ExternalServiceSource } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import TagList from '@/app/common/TagList.vue'
-import { ExternalService } from '@/types/index.d'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
 const props = defineProps<{
-  externalService: ExternalService
+  mesh: string
+  service: string
 }>()
 </script>

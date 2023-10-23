@@ -10,7 +10,8 @@
       :params="{
         page: 1,
         size: me.pageSize,
-        mesh: ''
+        mesh: '',
+        service: '',
       }"
     >
       <DataSource
@@ -26,6 +27,7 @@
               />
             </h2>
           </template>
+
           <KCard>
             <template #body>
               <ErrorBlock
@@ -51,14 +53,20 @@
                 :total="data?.total"
                 :items="data?.items"
                 :error="error"
+                :is-selected-row="(row) => row.name === route.params.service"
                 @change="route.update"
               >
                 <template #name="{ row: item }">
                   <RouterLink
                     :to="{
-                      name: 'service-detail-view',
+                      name: 'service-tray-view',
                       params: {
+                        mesh: item.mesh,
                         service: item.name,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
                       },
                     }"
                   >
@@ -113,6 +121,7 @@
                         <MoreIcon :size="KUI_ICON_SIZE_30" />
                       </KButton>
                     </template>
+
                     <template #items>
                       <KDropdownItem
                         :item="{
@@ -124,6 +133,7 @@
                           },
                           label: t('common.collection.actions.view'),
                         }"
+                        data-testid="dropdown-view-details-item"
                       />
                     </template>
                   </KDropdownMenu>
@@ -131,6 +141,34 @@
               </AppCollection>
             </template>
           </KCard>
+
+          <template
+            v-for="(selectedService, index) in [data?.items.find((item) => item.name === route.params.service)]"
+            :key="index"
+          >
+            <RouterView
+              v-if="selectedService"
+              v-slot="child"
+            >
+              <TrayView
+                @close="route.replace({
+                  name: 'service-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                  query: {
+                    page: route.params.page,
+                    size: route.params.size,
+                  }
+                })"
+              >
+                <component
+                  :is="child.Component"
+                  :data="selectedService"
+                />
+              </TrayView>
+            </RouterView>
+          </template>
         </AppView>
       </DataSource>
     </RouteView>
@@ -146,6 +184,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import TrayView from '@/app/common/TrayView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 

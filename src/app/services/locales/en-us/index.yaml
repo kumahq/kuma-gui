@@ -7,6 +7,8 @@ services:
         service-detail-view: 'Overview'
         service-data-plane-proxies-view: 'Data Plane Proxies'
         service-config-view: 'YAML'
+      overview: 'Overview'
+      config: 'YAML'
     items:
       title: Services
   detail:
