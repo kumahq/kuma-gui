@@ -57,7 +57,7 @@
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.0",
     "@faker-js/faker": "8.2.0",
     "@jest/globals": "29.7.0",
-    "@kong/design-tokens": "1.11.3",
+    "@kong/design-tokens": "1.11.6",
     "@modyfi/vite-plugin-yaml": "1.0.4",
     "@types/glob": "8.1.0",
     "@types/js-yaml": "4.0.7",
