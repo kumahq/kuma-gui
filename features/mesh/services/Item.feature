@@ -42,7 +42,7 @@ Feature: mesh / services / item
               - name: fake-dataplane
                 dataplane:
                   networking:
-                    gateway: ~
+                    gateway: !!js/undefined
         """
       When I visit the "/meshes/default/services/system-1/overview" URL
 

@@ -28,7 +28,7 @@
     <template #name="{ row: item }">
       <RouterLink
         :to="{
-          name: props.gateways ? 'gateway-detail-view' : 'data-plane-detail-view',
+          name: item.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
           params: {
             dataPlane: item.name
           }
@@ -129,7 +129,7 @@
           <KDropdownItem
             :item="{
               to: {
-                name: props.gateways ? 'gateway-detail-view' : 'data-plane-detail-view',
+                name: item.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
                 params: {
                   dataPlane: item.name,
                 },
@@ -196,6 +196,7 @@ type DataPlaneOverviewTableRow = {
   lastUpdated: string
   lastConnected: string
   overview: DataPlaneOverview
+  isGateway: boolean
 }
 
 type ChangeValue = {
@@ -337,6 +338,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
       lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
       overview: dataPlaneOverview,
+      isGateway: dataPlaneOverview.dataplane?.networking?.gateway !== undefined,
     }
 
     if (summary.version) {
