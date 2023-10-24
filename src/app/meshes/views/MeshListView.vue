@@ -13,7 +13,7 @@
       }"
     >
       <DataSource
-        v-slot="{data, error}: MeshCollectionSource"
+        v-slot="{data, error}: MeshInsightCollectionSource"
         :src="`/meshes?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
@@ -38,7 +38,9 @@
                   class="mesh-collection"
                   data-testid="mesh-collection"
                   :headers="[
-                    { label: 'Name', key: 'name' },
+                    { label: t('meshes.common.name'), key: 'name' },
+                    { label: t('meshes.routes.items.collection.services'), key: 'services'},
+                    { label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
                     { label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :page-number="parseInt(route.params.page)"
@@ -62,6 +64,12 @@
                     >
                       {{ item.name }}
                     </RouterLink>
+                  </template>
+                  <template #services="{ row: item }">
+                    {{ item.services.internal ?? '0' }}
+                  </template>
+                  <template #dataplanes="{ row: item }">
+                    {{ item.dataplanesByType.standard.online ?? '0' }} / {{ item.dataplanesByType.standard.total ?? '0' }}
                   </template>
                   <template #actions="{ row: item }">
                     <KDropdownMenu
@@ -107,9 +115,8 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
-import { KCard, KDropdownMenu, KDropdownItem, KButton } from '@kong/kongponents'
 
-import type { MeshCollectionSource } from '../sources'
+import type { MeshInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import type { MeSource } from '@/app/me/sources'

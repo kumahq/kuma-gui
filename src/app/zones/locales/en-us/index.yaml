@@ -1,4 +1,19 @@
 zone-cps:
+
+  common:
+    name: Name
+    type: |
+      { count, plural,
+        =0 { Zones }
+        =1 { Zone }
+        other { Zones }
+      }
+
+  components:
+    zone-control-planes-list:
+      name: 'Name'
+      status: 'Status'
+
   routes:
     item:
       title: '{name}'
