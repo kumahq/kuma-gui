@@ -101,7 +101,7 @@
     "postcss-html": "1.5.0",
     "sass": "1.69.4",
     "standard": "17.1.0",
-    "stylelint": "15.10.3",
+    "stylelint": "15.11.0",
     "stylelint-config-html": "1.1.0",
     "stylelint-config-recommended-scss": "13.0.0",
     "stylelint-config-recommended-vue": "1.5.0",
