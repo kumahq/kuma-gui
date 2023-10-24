@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@kong-ui-public/i18n": "0.8.5",
-    "@kong/icons": "1.7.3",
+    "@kong/icons": "1.7.7",
     "@kong/kongponents": "8.124.1",
     "brandi": "5.0.0",
     "chart.js": "4.4.0",
