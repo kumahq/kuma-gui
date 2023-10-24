@@ -32,7 +32,7 @@
           :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${'all'}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
         >
           <template
-            v-for="gateways in [typeof dataplanesData?.items?.[0]?.dataplane?.networking?.gateway === 'undefined']"
+            v-for="gateways in [dataplanesData?.items?.[0]?.dataplane?.networking?.gateway !== undefined]"
             :key="gateways"
           >
             <KCard>
