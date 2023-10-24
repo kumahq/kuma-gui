@@ -31,7 +31,7 @@
     "docs:preview": "vitepress preview"
   },
   "engines": {
-    "node": ">=18.17",
+    "node": ">=18.18",
     "yarn": "^1.22.0"
   },
   "dependencies": {
