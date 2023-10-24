@@ -62,7 +62,7 @@
             </template>
 
             <template #actions="{ row: item }: {row: AvailableService}">
-              <KDropdownMenu
+              <KDropdown
                 class="actions-dropdown"
                 :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
                 width="150"
@@ -90,7 +90,7 @@
                     }"
                   />
                 </template>
-              </KDropdownMenu>
+              </KDropdown>
             </template>
           </AppCollection>
         </template>

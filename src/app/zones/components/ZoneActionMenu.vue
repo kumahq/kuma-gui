@@ -1,22 +1,21 @@
 <template>
   <div>
-    <KDropdownMenu
-      button-appearance="primary"
+    <KDropdown
       :kpop-attributes="props.kpopAttributes"
-      :label="t('zones.action_menu.toggle_button')"
+      :trigger-text="t('zones.action_menu.toggle_button')"
       show-caret
       width="280"
     >
       <template #items>
         <KDropdownItem
-          is-dangerous
+          danger
           data-testid="delete-button"
           @click.prevent="toggleDeleteModal"
         >
           {{ t('zones.action_menu.delete_button') }}
         </KDropdownItem>
       </template>
-    </KDropdownMenu>
+    </KDropdown>
 
     <DeleteResourceModal
       v-if="isDeleteModalOpen"
@@ -39,7 +38,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 import { PropType, ref } from 'vue'
 import { useRouter } from 'vue-router'
 

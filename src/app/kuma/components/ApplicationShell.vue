@@ -54,7 +54,7 @@
             {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
           </p>
 
-          <KDropdownMenu :kpop-attributes="{ placement: 'bottomEnd' }">
+          <KDropdown :kpop-attributes="{ placement: 'bottomEnd' }">
             <KButton
               appearance="tertiary"
               icon-only
@@ -91,7 +91,7 @@
                 }"
               />
             </template>
-          </KDropdownMenu>
+          </KDropdown>
 
           <KButton
             :to="{ name: 'diagnostics' }"

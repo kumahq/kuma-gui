@@ -195,9 +195,8 @@
                   v-if="can('create zones')"
                   #actions="{ row }"
                 >
-                  <KDropdownMenu
+                  <KDropdown
                     class="actions-dropdown"
-                    data-testid="actions-dropdown"
                     :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
                     width="150"
                   >
@@ -214,14 +213,14 @@
                     <template #items>
                       <KDropdownItem
                         has-divider
-                        is-dangerous
+                        danger
                         data-testid="dropdown-delete-item"
                         @click="setDeleteZoneName(row.name)"
                       >
                         {{ t('common.collection.actions.delete') }}
                       </KDropdownItem>
                     </template>
-                  </KDropdownMenu>
+                  </KDropdown>
                 </template>
               </AppCollection>
             </template>
