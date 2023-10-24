@@ -60,7 +60,7 @@
     "@kong/design-tokens": "1.11.6",
     "@modyfi/vite-plugin-yaml": "1.0.4",
     "@types/glob": "8.1.0",
-    "@types/js-yaml": "4.0.7",
+    "@types/js-yaml": "4.0.8",
     "@types/marked": "6.0.0",
     "@types/prismjs": "1.26.1",
     "@types/semver": "7.5.3",
