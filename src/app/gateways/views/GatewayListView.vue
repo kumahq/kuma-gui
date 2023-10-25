@@ -49,7 +49,7 @@
                 @change="({page, size}) => {
                   route.update({
                     page: String(page),
-                    size: String(size)
+                    size: String(size),
                   })
                 }"
               >
@@ -64,11 +64,11 @@
                       tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
                       ...( can('use zones') ? {
                         zone: { description: 'filter by “kuma.io/zone” value' },
-                      } : {})
+                      } : {}),
                     }"
                     @fields-change="(val) => route.update({
                       query: val.query,
-                      s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
+                      s: val.query.length > 0 ? JSON.stringify(val.fields) : '',
                     })"
                   />
                   <KSelect
@@ -77,19 +77,19 @@
                     :items="[
                       {
                         label: 'All',
-                        value: 'all'
+                        value: 'all',
                       },
                       {
                         label: 'Builtin',
-                        value: 'builtin'
+                        value: 'builtin',
                       },
                       {
                         label: 'Delegated',
-                        value: 'delegated'
-                      }
+                        value: 'delegated',
+                      },
                     ].map(item => ({
                       ...item,
-                      selected: item.value === route.params.gatewayType
+                      selected: item.value === route.params.gatewayType,
                     }))"
                     appearance="select"
                     @selected="(item: SelectItem) => route.update({

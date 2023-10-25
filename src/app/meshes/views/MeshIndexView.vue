@@ -7,7 +7,7 @@
       :breadcrumbs="[
         {
           to: {
-            name: 'mesh-list-view'
+            name: 'mesh-list-view',
           },
           text: t('meshes.routes.item.breadcrumbs'),
         },

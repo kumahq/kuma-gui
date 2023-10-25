@@ -10,7 +10,7 @@
       :params="{
         /* page: 1, */
         /* size: me.pageSize, */
-        zone: ''
+        zone: '',
       }"
     >
       <AppView>

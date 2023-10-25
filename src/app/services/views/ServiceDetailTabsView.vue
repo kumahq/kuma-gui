@@ -4,7 +4,7 @@
     name="service-detail-tabs-view"
     :params="{
       mesh: '',
-      service: ''
+      service: '',
     }"
   >
     <AppView
@@ -25,7 +25,7 @@
               mesh: route.params.mesh,
             },
           },
-          text: t('services.routes.item.breadcrumbs')
+          text: t('services.routes.item.breadcrumbs'),
         },
       ]"
     >

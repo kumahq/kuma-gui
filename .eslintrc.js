@@ -103,6 +103,7 @@ const INLINE_NON_VOID_ELEMENTS = [
         'vue/no-setup-props-destructure': 'off',
         // Disallow Kongponents utility classes
         'vue/no-restricted-class': ['error', ...deprecatedUtilityClasses],
+        'vue/comma-dangle': ['error', 'always-multiline'],
       },
     },
     {

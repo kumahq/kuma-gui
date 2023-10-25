@@ -11,7 +11,7 @@
         page: 1,
         size: me.pageSize,
         mesh: '',
-        policyPath: ''
+        policyPath: '',
       }"
     >
       <AppView>

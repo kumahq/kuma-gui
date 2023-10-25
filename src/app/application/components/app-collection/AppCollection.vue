@@ -24,7 +24,7 @@
       return {data: items}
     }"
     :cell-attrs="({ headerKey }: CellAttrParams) => ({
-      class: `${headerKey}-column`
+      class: `${headerKey}-column`,
     })"
     :row-attrs="getRowAttributes"
     disable-sorting

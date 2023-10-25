@@ -3,7 +3,7 @@
     v-slot="{ t }"
     name="zone-cp-config-view"
     :params="{
-      zone: ''
+      zone: '',
     }"
   >
     <AppView>

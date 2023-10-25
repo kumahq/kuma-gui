@@ -3,7 +3,7 @@
     v-slot="{ route, t }"
     name="zone-ingress-xds-config-view"
     :params="{
-      zoneIngress: ''
+      zoneIngress: '',
     }"
   >
     <AppView>

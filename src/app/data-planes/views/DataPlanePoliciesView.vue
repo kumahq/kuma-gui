@@ -4,7 +4,7 @@
     name="data-plane-policies-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView>

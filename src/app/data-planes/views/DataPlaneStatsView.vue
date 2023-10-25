@@ -4,7 +4,7 @@
     name="data-plane-stats-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView>

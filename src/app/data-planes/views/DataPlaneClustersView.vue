@@ -4,7 +4,7 @@
     name="data-plane-clusters-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView>

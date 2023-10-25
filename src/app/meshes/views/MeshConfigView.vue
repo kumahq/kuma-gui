@@ -4,7 +4,7 @@
     name="mesh-config-view"
     data-testid="mesh-config-view"
     :params="{
-      mesh: ''
+      mesh: '',
     }"
   >
     <AppView>

@@ -3,7 +3,7 @@
     v-slot="{ can, route }"
     name="zone-cp-detail-tabs-view"
     :params="{
-      zone: ''
+      zone: '',
     }"
   >
     <DataSource
@@ -25,7 +25,7 @@
               to: {
                 name: 'zone-cp-list-view',
               },
-              text: t('zone-cps.routes.item.breadcrumbs')
+              text: t('zone-cps.routes.item.breadcrumbs'),
             },
           ]"
         >

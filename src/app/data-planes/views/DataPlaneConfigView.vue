@@ -4,7 +4,7 @@
     name="data-plane-config-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView>

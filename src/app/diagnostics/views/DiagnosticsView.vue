@@ -19,7 +19,7 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
             to: {
               name: 'diagnostics',
             },
-            text: t('diagnostics.routes.item.breadcrumbs')
+            text: t('diagnostics.routes.item.breadcrumbs'),
           },
         ]"
       >
