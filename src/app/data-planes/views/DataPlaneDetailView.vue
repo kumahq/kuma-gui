@@ -96,7 +96,7 @@
           >
             <template
               v-for="mTLS in [
-                props.data.dataplaneInsight.mTLS
+                props.data.dataplaneInsight.mTLS,
               ]"
               :key="mTLS"
             >

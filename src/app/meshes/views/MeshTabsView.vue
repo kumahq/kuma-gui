@@ -3,7 +3,7 @@
     v-slot="{ route }"
     name="mesh-tabs-view"
     :params="{
-      mesh: ''
+      mesh: '',
     }"
   >
     <AppView>

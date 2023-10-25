@@ -11,7 +11,7 @@
         <template #header>
           <template
             v-for="item in [
-              tableData.data.length > 0 ? 'success' : 'waiting'
+              tableData.data.length > 0 ? 'success' : 'waiting',
             ]"
             :key="item"
           >

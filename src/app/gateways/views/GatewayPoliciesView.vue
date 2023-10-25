@@ -4,7 +4,7 @@
     name="gateway-policies-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView>

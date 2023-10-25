@@ -59,7 +59,7 @@
                     }"
                     @fields-change="(val) => route.update({
                       query: val.query,
-                      s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
+                      s: val.query.length > 0 ? JSON.stringify(val.fields) : '',
                     })"
                   />
                 </template>

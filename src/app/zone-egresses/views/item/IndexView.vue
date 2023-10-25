@@ -3,7 +3,7 @@
     v-slot="{ route, can }"
     name="zone-egress-detail-tabs-view"
     :params="{
-      zoneEgress: ''
+      zoneEgress: '',
     }"
   >
     <AppView
@@ -12,13 +12,13 @@
           to: {
             name: 'zone-cp-list-view',
           },
-          text: t('zone-cps.routes.item.breadcrumbs')
+          text: t('zone-cps.routes.item.breadcrumbs'),
         }] : []),
         {
           to: {
             name: 'zone-egress-list-view',
           },
-          text: t('zone-egresses.routes.item.breadcrumbs')
+          text: t('zone-egresses.routes.item.breadcrumbs'),
         },
       ]"
     >

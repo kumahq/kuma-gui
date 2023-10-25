@@ -30,8 +30,8 @@
         :to="{
           name: item.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
           params: {
-            dataPlane: item.name
-          }
+            dataPlane: item.name,
+          },
         }"
         data-testid="detail-view-link"
       >

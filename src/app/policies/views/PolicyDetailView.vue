@@ -5,7 +5,7 @@
     :params="{
       mesh: '',
       policy: '',
-      policyPath: ''
+      policyPath: '',
     }"
   >
     <DataSource
@@ -45,7 +45,7 @@
                     policyPath: route.params.policyPath,
                   },
                 },
-                text: t('policies.routes.item.breadcrumbs')
+                text: t('policies.routes.item.breadcrumbs'),
               },
             ]"
           >

@@ -14,7 +14,7 @@
         s: '',
         mesh: '',
         service: '',
-        gatewayType: ''
+        gatewayType: '',
       }"
     >
       <AppView>
@@ -61,7 +61,7 @@
                       }"
                       @fields-change="(val) => route.update({
                         query: val.query,
-                        s: val.query.length > 0 ? JSON.stringify(val.fields) : ''
+                        s: val.query.length > 0 ? JSON.stringify(val.fields) : '',
                       })"
                     />
 
@@ -72,19 +72,19 @@
                       :items="[
                         {
                           label: 'All',
-                          value: 'all'
+                          value: 'all',
                         },
                         {
                           label: 'Builtin',
-                          value: 'builtin'
+                          value: 'builtin',
                         },
                         {
                           label: 'Delegated',
-                          value: 'delegated'
-                        }
+                          value: 'delegated',
+                        },
                       ].map(item => ({
                         ...item,
-                        selected: item.value === route.params.gatewayType
+                        selected: item.value === route.params.gatewayType,
                       }))"
                       appearance="select"
                       @selected="(item: SelectItem) => route.update({

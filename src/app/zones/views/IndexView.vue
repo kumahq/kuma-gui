@@ -9,7 +9,7 @@
       name="zone-cp-list-view"
       :params="{
         page: 1,
-        size: me.pageSize
+        size: me.pageSize,
       }"
     >
       <AppView>

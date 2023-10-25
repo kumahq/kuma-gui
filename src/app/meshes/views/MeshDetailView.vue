@@ -3,7 +3,7 @@
     v-slot="{ route, t }"
     name="mesh-overview-view"
     :params="{
-      mesh: ''
+      mesh: '',
     }"
   >
     <RouteTitle :title="t('meshes.routes.overview.title')" />

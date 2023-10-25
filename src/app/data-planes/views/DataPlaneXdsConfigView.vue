@@ -4,7 +4,7 @@
     name="data-plane-xds-config-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView>

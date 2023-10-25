@@ -3,7 +3,7 @@
     v-slot="{ route, t }"
     name="zone-egress-stats-view"
     :params="{
-      zoneEgress: ''
+      zoneEgress: '',
     }"
   >
     <AppView>

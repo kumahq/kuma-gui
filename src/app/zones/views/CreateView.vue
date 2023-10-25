@@ -2,7 +2,7 @@
   <RouteView
     name="zone-create-view"
     :attrs="{
-      class: 'is-fullscreen'
+      class: 'is-fullscreen',
     }"
   >
     <AppView
@@ -319,7 +319,7 @@
                             :to="{
                               name: 'zone-cp-detail-view',
                               params: {
-                                zone: name
+                                zone: name,
                               },
                             }"
                           >

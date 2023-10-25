@@ -3,7 +3,7 @@
     v-slot="{ route, t }"
     name="zone-egress-clusters-view"
     :params="{
-      zoneEgress: ''
+      zoneEgress: '',
     }"
   >
     <AppView>

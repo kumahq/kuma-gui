@@ -4,7 +4,7 @@
     name="data-plane-detail-tabs-view"
     :params="{
       mesh: '',
-      dataPlane: ''
+      dataPlane: '',
     }"
   >
     <AppView
@@ -25,7 +25,7 @@
               mesh: route.params.mesh,
             },
           },
-          text: t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.breadcrumbs`)
+          text: t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.breadcrumbs`),
         },
       ]"
     >
