@@ -13,10 +13,10 @@ export type RestRequest = {
 }
 
 type Pager = (total: string | number, req: RestRequest, self: string) => {
-  next: string | null,
-  pageTotal: number,
-  total: number,
-  offset: number,
+  next: string | null
+  pageTotal: number
+  total: number
+  offset: number
   size: number
 }
 const pager: Pager = (_total: string | number, req: RestRequest, self) => {

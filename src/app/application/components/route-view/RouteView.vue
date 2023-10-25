@@ -53,7 +53,7 @@ const router = useRouter()
 const sym = Symbol('route-view')
 
 const props = withDefaults(defineProps<{
-  name: string,
+  name: string
   attrs?: Record<string, string>
   params?: T
 }>(), {

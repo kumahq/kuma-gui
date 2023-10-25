@@ -65,7 +65,7 @@ export class KumaModule {
   connection<T>(_: T, i: number, arr: T[]) {
     const connected = this.faker.date.past()
     const times: {
-      connectTime: string,
+      connectTime: string
       disconnectTime?: string
     } = {
       connectTime: `${connected.toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 9999 })}Z`,

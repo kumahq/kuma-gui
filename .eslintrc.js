@@ -136,6 +136,15 @@ const INLINE_NON_VOID_ELEMENTS = [
             },
           },
         }],
+
+        '@typescript-eslint/member-delimiter-style': ['error', {
+          singleline: {
+            delimiter: 'comma',
+          },
+          multiline: {
+            delimiter: 'none',
+          },
+        }],
       },
     },
   ],

@@ -6,9 +6,9 @@ type HistoryEntry = {
   }
 }
 type Request = {
-  url: string,
-  method: string,
-  searchParams: Record<string, string>,
+  url: string
+  method: string
+  searchParams: Record<string, string>
   body: Record<string, unknown>
 }
 type Listener = {
