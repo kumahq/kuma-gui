@@ -159,7 +159,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
-import type { DataPlaneOverview, StatusKeyword, Version, DataPlaneInsight } from '@/types/index.d'
+import type { DataPlaneOverview, StatusKeyword, Version } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
@@ -172,30 +172,23 @@ const { t, formatIsoDate } = useI18n()
 const can = useCan()
 
 type DataPlaneOverviewTableRow = {
-  dataplaneInsight: DataPlaneInsight | undefined,
-  detailViewRoute: RouteLocationNamedRaw
   type: string
   name: string
   zone: {
-    title: string,
+    title: string
     route?: RouteLocationNamedRaw | undefined
   }
   service: {
-    title: string,
+    title: string
     route?: RouteLocationNamedRaw | undefined
   }
   protocol: string
   status: StatusKeyword
-  totalUpdates: number
-  totalRejectedUpdates: number
-  envoyVersion: string
   warnings: {
     version_mismatch: boolean
     cert_expired: boolean
   }
   lastUpdated: string
-  lastConnected: string
-  overview: DataPlaneOverview
   isGateway: boolean
 }
 
@@ -228,14 +221,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     const mesh = dataPlaneOverview.mesh
     const name = dataPlaneOverview.name
     const type = dataPlaneOverview.dataplane.networking.gateway?.type || 'STANDARD'
-
-    const detailViewRoute: RouteLocationNamedRaw = {
-      name: type === 'STANDARD' ? 'data-plane-detail-view' : 'gateway-detail-view',
-      params: {
-        mesh,
-        dataPlane: name,
-      },
-    }
 
     // Handles our tag collections based on the dataplane type.
     const importantDataPlaneTagLabels = [
@@ -272,32 +257,17 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
 
     const initialData: {
-      totalUpdates: number
-      totalRejectedUpdates: number
       dpVersion: string | null
-      envoyVersion: string | null
-      selectedTime: number
       selectedUpdateTime: number
       version: Version | null
     } = {
-      totalUpdates: 0,
-      totalRejectedUpdates: 0,
       dpVersion: null,
-      envoyVersion: null,
-      selectedTime: NaN,
       selectedUpdateTime: NaN,
       version: null,
     }
 
     const summary = subscriptions.reduce(
       (acc, subscription) => {
-        if (subscription.connectTime) {
-          const connectDate = Date.parse(subscription.connectTime)
-          if (!acc.selectedTime || connectDate > acc.selectedTime) {
-            acc.selectedTime = connectDate
-          }
-        }
-
         const lastUpdateDate = Date.parse(subscription.status.lastUpdateTime)
         if (lastUpdateDate) {
           if (!acc.selectedUpdateTime || lastUpdateDate > acc.selectedUpdateTime) {
@@ -306,11 +276,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
         }
 
         return {
-          totalUpdates: acc.totalUpdates + parseInt(subscription.status.total.responsesSent ?? '0', 10),
-          totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(subscription.status.total.responsesRejected ?? '0', 10),
           dpVersion: subscription.version?.kumaDp.version || acc.dpVersion,
-          envoyVersion: subscription.version?.envoy.version || acc.envoyVersion,
-          selectedTime: acc.selectedTime,
           selectedUpdateTime: acc.selectedUpdateTime,
           version: subscription.version || acc.version,
         }
@@ -321,23 +287,16 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
       name,
-      dataplaneInsight: dataPlaneOverview.dataplaneInsight,
-      detailViewRoute,
       type,
       zone: { title: zone ?? t('common.collection.none'), route: zoneRoute },
       service: { title: service ?? t('common.collection.none'), route: serviceInsightRoute },
       protocol: protocol ?? t('common.collection.none'),
       status,
-      totalUpdates: summary.totalUpdates,
-      totalRejectedUpdates: summary.totalRejectedUpdates,
-      envoyVersion: summary.envoyVersion ?? t('common.collection.none'),
       warnings: {
         version_mismatch: false,
         cert_expired: false,
       },
       lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
-      lastConnected: summary.selectedTime ? formatIsoDate(new Date(summary.selectedTime).toUTCString()) : t('common.collection.none'),
-      overview: dataPlaneOverview,
       isGateway: dataPlaneOverview.dataplane?.networking?.gateway !== undefined,
     }
 
