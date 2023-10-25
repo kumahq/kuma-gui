@@ -38,6 +38,13 @@ export const routes = () => {
             module: 'services',
           },
           component: () => import('@/app/services/views/ServiceListView.vue'),
+          children: [
+            {
+              path: ':service',
+              name: 'service-tray-view',
+              component: () => import('@/app/services/views/ServiceTrayView.vue'),
+            },
+          ],
         },
       ]
     },

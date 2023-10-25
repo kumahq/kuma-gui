@@ -36,7 +36,8 @@ Feature: mesh / services / index
     Then the "$item:nth-child(1)" element contains
       | Value     |
       | service-1 |
-  Scenario: Clicking the link goes to the detail page and back again
+
+  Scenario: Clicking View details goes to the detail page and back again
     Given the URL "/meshes/default/service-insights/service-1" responds with
       """
       body:
@@ -48,7 +49,10 @@ Feature: mesh / services / index
         serviceType: internal
       """
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1"
-    When I click the "$item:nth-child(1) td:first-of-type a" element
+
+    When I click the "$item:nth-child(1) [data-testid='k-dropdown-trigger'] button" element
+    And I click the "$item:nth-child(1) [data-testid='dropdown-view-details-item'] a" element
+
     Then the URL contains "services/service-1/overview"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "external" shouldn't have a Data Plane Proxy table
@@ -57,7 +61,10 @@ Feature: mesh / services / index
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2"
-    When I click the "$item:nth-child(2) td:first-of-type a" element
+
+    When I click the "$item:nth-child(2) [data-testid='k-dropdown-trigger'] button" element
+    And I click the "$item:nth-child(2) [data-testid='dropdown-view-details-item'] a" element
+
     Then the URL contains "services/service-2/overview"
     Then the "[data-testid='service-detail-tabs-view']" element contains "service-2"
     Then the "#service-detail-view-tab a" element exists
