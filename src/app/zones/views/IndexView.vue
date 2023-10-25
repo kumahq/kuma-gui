@@ -291,7 +291,7 @@ const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
           offline: [],
         }
       }
-      const subscriptions = item[`${prop}Insight`].subscriptions || []
+      const subscriptions = item[`${prop}Insight`]?.subscriptions || []
       const state = getState(subscriptions)
       prev[name][state].push(item)
     }
@@ -309,7 +309,7 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
           offline: [],
         }
       }
-      const subscriptions = item[`${prop}Insight`].subscriptions || []
+      const subscriptions = item[`${prop}Insight`]?.subscriptions || []
       const state = getState(subscriptions)
       prev[name][state].push(item)
     }
