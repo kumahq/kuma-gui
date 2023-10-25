@@ -209,7 +209,7 @@ export type DataPlaneNetworking = {
   gateway?: {
     tags: Record<string, string>
     type?: 'builtin' | 'delegated' | undefined
-  },
+  }
 }
 
 /**
@@ -295,7 +295,7 @@ export interface DataPlaneOverview extends MeshEntity {
 }
 
 export interface DataplaneRule {
-  type: 'ClientSubset' | 'DestinationSubset' | 'SingleItem',
+  type: 'ClientSubset' | 'DestinationSubset' | 'SingleItem'
   name: string
   service?: string
   addresses?: string[]

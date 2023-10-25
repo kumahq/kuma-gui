@@ -2,7 +2,7 @@ type Creator<K, T> = (key: K) => T
 type Destroyer<K, T> = (key: K, item: T) => void
 
 type Entry<T> = {
-  value: T,
+  value: T
   references: Set<symbol>
 }
 export default class SharedPool<K, T> {

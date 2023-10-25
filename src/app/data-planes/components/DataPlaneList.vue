@@ -198,11 +198,11 @@ type ChangeValue = {
 }
 
 const props = withDefaults(defineProps<{
-  total?: number,
-  pageNumber: number,
-  pageSize: number,
-  items: DataPlaneOverview[] | undefined,
-  error: Error | undefined,
+  total?: number
+  pageNumber: number
+  pageSize: number
+  items: DataPlaneOverview[] | undefined
+  error: Error | undefined
   gateways?: boolean
 }>(), {
   total: 0,

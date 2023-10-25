@@ -153,15 +153,15 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${name}`, { params })
   }
 
-  getSidecarDataplanePolicies({ mesh, name }: { mesh: string; name: string }, params?: any): Promise<ApiKindListResponse<SidecarDataplane>> {
+  getSidecarDataplanePolicies({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ApiKindListResponse<SidecarDataplane>> {
     return this.client.get(`/meshes/${mesh}/dataplanes/${name}/policies`, { params })
   }
 
-  getMeshGatewayDataplane({ mesh, name }: { mesh: string; name: string }, params?: any): Promise<MeshGatewayDataplane> {
+  getMeshGatewayDataplane({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<MeshGatewayDataplane> {
     return this.client.get(`/meshes/${mesh}/dataplanes/${name}/policies`, { params })
   }
 
-  getDataplaneRules({ mesh, name }: { mesh: string; name: string }, params?: any): Promise<ApiListResponse<DataplaneRule>> {
+  getDataplaneRules({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ApiListResponse<DataplaneRule>> {
     return this.client.get(`/meshes/${mesh}/dataplanes/${name}/rules`, { params })
   }
 
@@ -196,7 +196,7 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
-  getPolicyConnections({ mesh, path, name }: { mesh: string; path: string; name: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyDataplane>> {
+  getPolicyConnections({ mesh, path, name }: { mesh: string, path: string, name: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyDataplane>> {
     return this.client.get(`/meshes/${mesh}/${path}/${name}/dataplanes`, { params })
   }
 

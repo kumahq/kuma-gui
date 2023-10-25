@@ -74,7 +74,7 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
   mock(url, env, (respond) => {
     const response = respond(
       (YAML.parse(yaml) || {}) as {
-        headers?: Record<string, string>,
+        headers?: Record<string, string>
         body?: Record<string, unknown>
       },
     )
@@ -138,8 +138,8 @@ Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: str
   cy.wrap({
     url,
     ...YAML.parse(yaml) as {
-      method: string,
-      searchParams: Record<string, string>,
+      method: string
+      searchParams: Record<string, string>
       body: Record<string, unknown>
     },
   }).then(async (request) => {

@@ -19,7 +19,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (event: 'clicked'): void,
+  (event: 'clicked'): void
 }>()
 </script>
 
