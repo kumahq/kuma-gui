@@ -10,7 +10,6 @@
       class="route-view-title visually-hidden"
       aria-live="assertive"
       aria-atomic="true"
-      :data-template="t('components.route-view.route-announcer')"
     />
     <slot
       name="default"
@@ -80,7 +79,7 @@ const routeView = {
   addTitle: (item: string, sym: Symbol) => {
     const $title = title.value
     if ($title) {
-      $title.innerHTML = ($title.dataset.template ?? '%s').replace('%s', item)
+      $title.innerHTML = t('components.route-view.route-announcer', { title: item })
     }
 
     titles.set(sym, item)
