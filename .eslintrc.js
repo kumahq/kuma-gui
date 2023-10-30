@@ -104,6 +104,18 @@ const INLINE_NON_VOID_ELEMENTS = [
         // Disallow Kongponents utility classes
         'vue/no-restricted-class': ['error', ...deprecatedUtilityClasses],
         'vue/comma-dangle': ['error', 'always-multiline'],
+        'vue/no-restricted-static-attribute': ['error',
+          {
+            key: 'data-test-id',
+            message: 'Using "data-test-id" is not allowed. Use "data-testid" instead.',
+          },
+        ],
+        'vue/no-restricted-v-bind': ['error',
+          {
+            argument: 'data-test-id',
+            message: 'Using "data-test-id" is not allowed. Use "data-testid" instead.',
+          },
+        ],
       },
     },
     {
