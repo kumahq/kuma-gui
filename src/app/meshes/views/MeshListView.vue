@@ -10,6 +10,7 @@
       :params="{
         page: 1,
         size: me.pageSize,
+        mesh: '',
       }"
     >
       <DataSource
@@ -25,6 +26,7 @@
               />
             </h1>
           </template>
+
           <div class="stack">
             <KCard>
               <template #body>
@@ -51,29 +53,38 @@
                   :empty-state-message="t('common.emptyState.message', { type: 'Meshes' })"
                   :empty-state-cta-to="t('meshes.href.docs')"
                   :empty-state-cta-text="t('common.documentation')"
+                  :is-selected-row="(row) => row.name === route.params.mesh"
                   @change="route.update"
                 >
                   <template #name="{ row: item }">
                     <RouterLink
                       :to="{
-                        name: 'mesh-detail-view',
+                        name: 'mesh-tray-view',
                         params: {
                           mesh: item.name,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
                         },
                       }"
                     >
                       {{ item.name }}
                     </RouterLink>
                   </template>
+
                   <template #services="{ row: item }">
                     {{ item.services.internal ?? '0' }}
                   </template>
+
                   <template #dataplanes="{ row: item }">
                     {{ item.dataplanesByType.standard.online ?? '0' }} / {{ item.dataplanesByType.standard.total ?? '0' }}
                   </template>
+
                   <template #actions="{ row: item }">
                     <KDropdownMenu
                       class="actions-dropdown"
+                      data-testid="actions-dropdown"
                       :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
                       width="150"
                     >
@@ -98,6 +109,7 @@
                             },
                             label: t('common.collection.actions.view'),
                           }"
+                          data-testid="dropdown-view-details-item"
                         />
                       </template>
                     </KDropdownMenu>
@@ -105,6 +117,34 @@
                 </AppCollection>
               </template>
             </KCard>
+
+            <template
+              v-for="(selectedItem, index) in [data?.items.find((item) => item.name === route.params.mesh)]"
+              :key="index"
+            >
+              <RouterView
+                v-if="selectedItem"
+                v-slot="child"
+              >
+                <TrayView
+                  @close="route.replace({
+                    name: 'mesh-list-view',
+                    params: {
+                      mesh: route.params.mesh,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                    },
+                  })"
+                >
+                  <component
+                    :is="child.Component"
+                    :mesh-insight="selectedItem"
+                  />
+                </TrayView>
+              </RouterView>
+            </template>
           </div>
         </AppView>
       </DataSource>
@@ -119,6 +159,7 @@ import { MoreIcon } from '@kong/icons'
 import type { MeshInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import TrayView from '@/app/common/TrayView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 
