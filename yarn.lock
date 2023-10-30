@@ -1998,13 +1998,13 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kong-ui-public/i18n@0.8.5":
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.8.5.tgz#1a63c620ac43b21173a9d756b37374bc616922d9"
-  integrity sha512-jMW9T65hOb+tA3avZesutNAUy7/Zwe1wPieSqpbAnKSyzWiNZir5M90veYEgXywlfrW2W66HQm2LJOwhvG0FEw==
+"@kong-ui-public/i18n@0.8.6":
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.8.6.tgz#6774fe21626bcd014ef9b9d8a87bc950e28e0288"
+  integrity sha512-FPf5nfpJzjwvx5CQGXh7tjZqcy7IeRZyquoM6dsM+/O9wIlmr/PGfqVCiJwwdONgrkg/DCVuzm+qQBAjdaQlXQ==
   dependencies:
     "@formatjs/intl" "^2.9.3"
-    flat "^5.0.2"
+    flat "^6.0.1"
     intl-messageformat "^10.5.3"
 
 "@kong/design-tokens@1.11.6":
@@ -5183,6 +5183,11 @@ flat@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/flat/-/flat-5.0.2.tgz#8ca6fe332069ffa9d324c327198c598259ceb241"
   integrity sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==
+
+flat@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/flat/-/flat-6.0.1.tgz#09070cf918293b401577f20843edeadf4d3e8755"
+  integrity sha512-/3FfIa8mbrg3xE7+wAhWeV+bd7L2Mof+xtZb5dRDKZ+wDvYJK4WDYeIOuOhre5Yv5aQObZrlbRmk3RTSiuQBtw==
 
 flatted@^3.2.7, flatted@^3.2.9:
   version "3.2.9"
