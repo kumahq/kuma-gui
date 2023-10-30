@@ -12,7 +12,7 @@ Feature: zones / ingresses / item / services
       """
 
   Scenario: An ingress with 2 available services
-    Given the URL "/zoneingresses+insights/item-1" responds with
+    Given the URL "/zone-ingresses/item-1/_overview" responds with
       """
       body:
         zoneIngress:
@@ -25,4 +25,3 @@ Feature: zones / ingresses / item / services
       """
     When I visit the "/zones/zone-cp-1/ingresses/item-1/services" URL
     Then the "$item" element exists 2 times
-

@@ -8,7 +8,7 @@ Feature: mesh / dataplanes / warnings
       | unsupported-zone-warning  | [data-testid='warning-INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'] |
 
   Scenario: With an expired certificate a cert warning is shown
-    Given the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -19,7 +19,7 @@ Feature: mesh / dataplanes / warnings
     Then the "$expired-cert-warning" element exists
 
   Scenario: With an expired CA a CA warning isn't shown
-    Given the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -30,7 +30,7 @@ Feature: mesh / dataplanes / warnings
     Then the "$expired-cert-warning" element doesn't exist
 
   Scenario: With no mTLS a certificate warning isn't shown
-    Given the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -45,7 +45,7 @@ Feature: mesh / dataplanes / warnings
       KUMA_SUBSCRIPTION_COUNT: 1
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -68,7 +68,7 @@ Feature: mesh / dataplanes / warnings
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
         dataplaneInsight:
@@ -88,7 +88,7 @@ Feature: mesh / dataplanes / warnings
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes+insights/dpp-1" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
       """
       body:
         dataplaneInsight:

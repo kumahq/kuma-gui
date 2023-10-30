@@ -110,7 +110,7 @@ Feature: zones / create
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    When the URL "/zones+insights/test" responds with
+    When the URL "/zones/test/_overview" responds with
       """
       body:
         zoneInsight:
@@ -183,7 +183,7 @@ Feature: zones / create
       body:
         token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
       """
-    And the URL "/zones+insights/test" responds with
+    And the URL "/zones/test/_overview" responds with
       """
       body:
         zoneInsight:

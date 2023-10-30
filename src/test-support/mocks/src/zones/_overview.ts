@@ -3,7 +3,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_ZONE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
-    '/zones+insights',
+    '/zones/_overview',
   )
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 0, max: 10 })}`))
 

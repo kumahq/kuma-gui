@@ -11,7 +11,7 @@ Feature: mesh / dataplanes / index
       KUMA_DATAPLANE_COUNT: 9
       KUMA_SUBSCRIPTION_COUNT: 2
       """
-    And the URL "/meshes/default/dataplanes+insights" responds with
+    And the URL "/meshes/default/dataplanes/_overview" responds with
       """
       body:
         items:

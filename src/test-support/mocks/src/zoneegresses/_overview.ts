@@ -1,61 +1,37 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const { offset, total, next, pageTotal } = pager(
-    env('KUMA_ZONEINGRESS_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
+    env('KUMA_ZONEEGRESS_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
-    '/zoneingresses+insights',
+    '/zoneegresses/_overview',
   )
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-
   return {
     headers: {},
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const zoneIngressName = `${fake.hacker.noun()}-${id}`
+        const zoneEgressName = `${fake.hacker.noun()}-${id}`
         const zone = `${fake.hacker.noun()}-${id}`
         const zoneName = fake.helpers.arrayElement([env('KUMA_ZONE_NAME', zone), zone])
 
         return {
-          type: 'ZoneIngressOverview',
-          name: zoneIngressName,
+          type: 'ZoneEgressOverview',
+          name: zoneEgressName,
           creationTime: '2021-07-13T08:40:59Z',
           modificationTime: '2021-07-13T08:40:59Z',
-          zoneIngress: {
+          zoneEgress: {
             zone: zoneName,
             networking: {
               address: fake.internet.ip(),
-              advertisedAddress: fake.internet.ip(),
               port: fake.internet.port(),
-              advertisedPort: fake.internet.port(),
+              admin: {
+                port: fake.internet.port(),
+              },
             },
-            availableServices: [
-              {
-                tags: {
-                  app: 'demo-app',
-                  'kuma.io/protocol': fake.kuma.protocol(),
-                  'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
-                  'kuma.io/zone': zoneName,
-                  'pod-template-hash': '5845d6447b',
-                },
-                instances: 1,
-                mesh: 'default',
-              },
-              {
-                tags: {
-                  app: 'redis',
-                  'kuma.io/protocol': fake.kuma.protocol(),
-                  'kuma.io/service': 'redis_kuma-demo_svc_6379',
-                  'kuma.io/zone': zoneName,
-                  'pod-template-hash': '59c9d56fc',
-                },
-                instances: 1,
-                mesh: 'default',
-              },
-            ],
           },
-          zoneIngressInsight: {
+          zoneEgressInsight: {
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: fake.string.uuid(),

@@ -14,7 +14,7 @@ Feature: zones / warnings
       """
 
   Scenario: When subscriptions aren't set a warning is shown
-    And the URL "/zones+insights/zone-cp-1" responds with
+    And the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
         name: zone-cp-1
@@ -36,7 +36,7 @@ Feature: zones / warnings
         store:
           type: kubernetes
       """
-    And the URL "/zones+insights" responds with
+    And the URL "/zones/_overview" responds with
       """
       body:
         items:

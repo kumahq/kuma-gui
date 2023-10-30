@@ -11,7 +11,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
-    `/meshes/${params.mesh}/dataplanes+insights`,
+    `/meshes/${params.mesh}/dataplanes/_overview`,
   )
 
   const hasGateways = _gateway !== 'false'

@@ -26,7 +26,7 @@ Feature: onboarding / dataplanes-overview / index
         items:
           - name: dataplane-test
       """
-    And the URL "/meshes/default/dataplanes+insights/dataplane-test" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-test/_overview" responds with
       """
       body:
         dataplaneInsight:

@@ -284,7 +284,7 @@ export interface DataPlane extends MeshEntity {
 }
 
 /**
- * Overview entity as returned via the `/meshes/:mesh/dataplanes+insights/:dataPlane` endpoint.
+ * Overview entity as returned via the `/meshes/:mesh/dataplanes/:dataPlane/_overview` endpoint.
  */
 export interface DataPlaneOverview extends MeshEntity {
   type: 'DataplaneOverview'
@@ -466,7 +466,7 @@ export interface Zone {
 }
 
 /**
- * Overview entity as returned via the `/zones+insights/:zone` endpoint.
+ * Overview entity as returned via the `/zones/:zone/_overview` endpoint.
  */
 export interface ZoneOverview extends MeshEntity {
   type: 'ZoneOverview'

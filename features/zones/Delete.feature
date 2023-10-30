@@ -14,7 +14,7 @@ Feature: zones / delete
       """
       KUMA_ZONE_COUNT: 3
       """
-    And the URL "/zones+insights" responds with
+    And the URL "/zones/_overview" responds with
       """
       body:
         items:

@@ -1,8 +1,8 @@
 Feature: zones / index
   Background:
     Given the CSS selectors
-      | Alias                  | Selector                                         |
-      | zone-cp-table-row      | [data-testid='zone-cp-collection'] tbody tr      |
+      | Alias             | Selector                                    |
+      | zone-cp-table-row | [data-testid='zone-cp-collection'] tbody tr |
 
   Scenario: List view has expected content
     Given the environment
@@ -11,7 +11,7 @@ Feature: zones / index
       KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_MODE: global
       """
-    And the URL "/zones+insights" responds with
+    And the URL "/zones/_overview" responds with
       """
       body:
         items:
@@ -72,4 +72,3 @@ Feature: zones / index
 
     Then the "$zone-cp-table-row:nth-child(3) .status-column" element contains "disabled"
     Then the "$zone-cp-table-row:nth-child(3) .name-column" element contains "zone-cp-3"
-

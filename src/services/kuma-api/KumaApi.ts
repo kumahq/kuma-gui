@@ -72,11 +72,11 @@ export default class KumaApi extends Api {
   }
 
   getAllZoneOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneOverview>> {
-    return this.client.get('/zones+insights', { params })
+    return this.client.get('/zones/_overview', { params })
   }
 
   getZoneOverview({ name }: { name: string }, params?: any): Promise<ZoneOverview> {
-    return this.client.get(`/zones+insights/${name}`, { params })
+    return this.client.get(`/zones/${name}/_overview`, { params })
   }
 
   getZoneIngress({ name }: { name: string }, params?: any): Promise<ZoneIngress> {
@@ -91,11 +91,11 @@ export default class KumaApi extends Api {
   }
 
   getAllZoneIngressOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneIngressOverview>> {
-    return this.client.get('/zoneingresses+insights', { params })
+    return this.client.get('/zone-ingresses/_overview', { params })
   }
 
   getZoneIngressOverview({ name }: { name: string }, params?: any): Promise<ZoneIngressOverview> {
-    return this.client.get(`/zoneingresses+insights/${name}`, { params })
+    return this.client.get(`/zone-ingresses/${name}/_overview`, { params })
   }
 
   getZoneEgress({ name }: { name: string }, params?: any): Promise<ZoneEgress> {
@@ -110,11 +110,11 @@ export default class KumaApi extends Api {
   }
 
   getAllZoneEgressOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneEgressOverview>> {
-    return this.client.get('/zoneegressoverviews', { params })
+    return this.client.get('/zoneegresses/_overview', { params })
   }
 
   getZoneEgressOverview({ name }: { name: string }, params?: any): Promise<ZoneEgressOverview> {
-    return this.client.get(`/zoneegressoverviews/${name}`, { params })
+    return this.client.get(`/zoneegresses/${name}/_overview`, { params })
   }
 
   getAllMeshes(params?: PaginationParameters): Promise<PaginatedApiListResponse<Mesh>> {
@@ -142,15 +142,15 @@ export default class KumaApi extends Api {
   }
 
   getAllDataplaneOverviews(params?: DataPlaneOverviewParameters): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
-    return this.client.get('/dataplanes+insights', { params })
+    return this.client.get('/dataplanes/_overview', { params })
   }
 
   getAllDataplaneOverviewsFromMesh({ mesh }: { mesh: string }, params?: DataPlaneOverviewParameters): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
-    return this.client.get(`/meshes/${mesh}/dataplanes+insights`, { params })
+    return this.client.get(`/meshes/${mesh}/dataplanes/_overview`, { params })
   }
 
   getDataplaneOverviewFromMesh({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<DataPlaneOverview> {
-    return this.client.get(`/meshes/${mesh}/dataplanes+insights/${name}`, { params })
+    return this.client.get(`/meshes/${mesh}/dataplanes/${name}/_overview`, { params })
   }
 
   getSidecarDataplanePolicies({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ApiKindListResponse<SidecarDataplane>> {

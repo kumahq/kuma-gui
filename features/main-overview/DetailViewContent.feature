@@ -130,7 +130,7 @@ Feature: Overview: Detail view content
             total: 2
             online: 1
       """
-    And the URL "/zones+insights" responds with
+    And the URL "/zones/_overview" responds with
       """
       body:
         items:

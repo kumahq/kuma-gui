@@ -14,7 +14,7 @@ Feature: mesh / gateways / index
       """
         KUMA_DATAPLANE_COUNT: 2
       """
-    And the URL "/meshes/default/dataplanes+insights" responds with
+    And the URL "/meshes/default/dataplanes/_overview" responds with
       """
       body:
         items:
@@ -60,7 +60,7 @@ Feature: mesh / gateways / index
   Rule: The Gateway listing can filter gateways by type
 
     Scenario: No filtering
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           gateway: "true"
@@ -70,7 +70,7 @@ Feature: mesh / gateways / index
         """
         KUMA_DATAPLANE_COUNT: 1
         """
-      And the URL "/meshes/default/dataplanes+insights" responds with
+      And the URL "/meshes/default/dataplanes/_overview" responds with
         """
         body:
           items:
@@ -83,7 +83,7 @@ Feature: mesh / gateways / index
       When I click the "$select-type" element
       Then the "$select-option" element exists 3 times
       And I click the "$select-builtin" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           gateway: builtin
@@ -99,7 +99,7 @@ Feature: mesh / gateways / index
         """
         KUMA_DATAPLANE_COUNT: 1
         """
-      And the URL "/meshes/default/dataplanes+insights" responds with
+      And the URL "/meshes/default/dataplanes/_overview" responds with
         """
         body:
           items:
@@ -112,7 +112,7 @@ Feature: mesh / gateways / index
       When I click the "$select-type" element
       Then the "$select-option" element exists 3 times
       And I click the "$select-delegated" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           gateway: delegated
