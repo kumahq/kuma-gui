@@ -1,4 +1,4 @@
-import { getStatus } from './data'
+import { getZoneControlPlaneStatus } from './data'
 import type { DataSourceResponse, Source } from '@/app/application'
 import { sources as zoneEgresses } from '@/app/zone-egresses/sources'
 import { sources as zoneIngresses } from '@/app/zone-ingresses/sources'
@@ -43,7 +43,7 @@ export const sources = (source: Source, api: KumaApi) => {
       const { name } = params
       return source(async () => {
         const res = await api.getZoneOverview({ name })
-        if (getStatus(res.zoneInsight?.subscriptions) === 'online') {
+        if (getZoneControlPlaneStatus(res) === 'online') {
           return res
         } else {
           const e = new ApiError({
