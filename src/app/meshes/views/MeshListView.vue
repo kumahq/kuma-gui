@@ -118,33 +118,29 @@
               </template>
             </KCard>
 
-            <template
-              v-for="(selectedItem, index) in [data?.items.find((item) => item.name === route.params.mesh)]"
-              :key="index"
+            <RouterView
+              v-if="route.params.mesh"
+              v-slot="child"
             >
-              <RouterView
-                v-if="selectedItem"
-                v-slot="child"
+              <TrayView
+                @close="route.replace({
+                  name: 'mesh-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                  query: {
+                    page: route.params.page,
+                    size: route.params.size,
+                  },
+                })"
               >
-                <TrayView
-                  @close="route.replace({
-                    name: 'mesh-list-view',
-                    params: {
-                      mesh: route.params.mesh,
-                    },
-                    query: {
-                      page: route.params.page,
-                      size: route.params.size,
-                    },
-                  })"
-                >
-                  <component
-                    :is="child.Component"
-                    :mesh-insight="selectedItem"
-                  />
-                </TrayView>
-              </RouterView>
-            </template>
+                <component
+                  :is="child.Component"
+                  :name="route.params.mesh"
+                  :mesh-insight="data?.items.find((item) => item.name === route.params.mesh)"
+                />
+              </TrayView>
+            </RouterView>
           </div>
         </AppView>
       </DataSource>

@@ -13,12 +13,12 @@
               :to="{
                 name: 'mesh-detail-view',
                 params: {
-                  mesh: props.meshInsight.name,
+                  mesh: props.name,
                 },
               }"
             >
               <RouteTitle
-                :title="t('meshes.routes.item.title', { name: props.meshInsight.name })"
+                :title="t('meshes.routes.item.title', { name: props.name })"
                 :render="true"
               />
             </RouterLink>
@@ -26,7 +26,18 @@
         </div>
       </template>
 
-      <div class="stack">
+      <EmptyBlock v-if="props.meshInsight === undefined">
+        {{ t('common.collection.tray.empty_title') }}
+
+        <template #message>
+          <p>{{ t('common.collection.tray.empty_message') }}</p>
+        </template>
+      </EmptyBlock>
+
+      <div
+        v-else
+        class="stack"
+      >
         <div>
           <h3>{{ t('meshes.routes.item.overview') }}</h3>
 
@@ -57,15 +68,19 @@
 </template>
 
 <script lang="ts" setup>
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps<{
-  meshInsight: MeshInsight
-}>()
+const props = withDefaults(defineProps<{
+  name: string
+  meshInsight?: MeshInsight
+}>(), {
+  meshInsight: undefined,
+})
 </script>
 
 <style lang="scss" scoped>
