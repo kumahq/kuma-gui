@@ -4,7 +4,7 @@ export type { DataSourceResponse } from './DataSourcePool'
 
 type Configuration = {
   interval?: number
-  retry?: (e: any) => Promise<any> | undefined
+  retry?: (e: any) => Promise<void> | undefined
 }
 type RetryingEventSource = CallableEventSource<Configuration>
 type Hideable = EventTarget & { hidden: boolean }
