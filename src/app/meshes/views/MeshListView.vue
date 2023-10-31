@@ -43,7 +43,7 @@
                     { label: t('meshes.common.name'), key: 'name' },
                     { label: t('meshes.routes.items.collection.services'), key: 'services'},
                     { label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
-                    { label: 'Actions', key: 'actions', hideLabel: true },
+                    { label: 'Details', key: 'details', hideLabel: true },
                   ]"
                   :page-number="parseInt(route.params.page)"
                   :page-size="parseInt(route.params.size)"
@@ -81,38 +81,25 @@
                     {{ item.dataplanesByType.standard.online ?? '0' }} / {{ item.dataplanesByType.standard.total ?? '0' }}
                   </template>
 
-                  <template #actions="{ row: item }">
-                    <KDropdownMenu
-                      class="actions-dropdown"
-                      data-testid="actions-dropdown"
-                      :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                      width="150"
+                  <template #details="{ row }">
+                    <RouterLink
+                      class="details-link"
+                      data-testid="details-link"
+                      :to="{
+                        name: 'mesh-detail-view',
+                        params: {
+                          mesh: row.name,
+                        },
+                      }"
                     >
-                      <template #default>
-                        <KButton
-                          class="non-visual-button"
-                          appearance="secondary"
-                          size="small"
-                        >
-                          <MoreIcon :size="KUI_ICON_SIZE_30" />
-                        </KButton>
-                      </template>
+                      {{ t('common.collection.details_link') }}
 
-                      <template #items>
-                        <KDropdownItem
-                          :item="{
-                            to: {
-                              name: 'mesh-detail-view',
-                              params: {
-                                mesh: item.name,
-                              },
-                            },
-                            label: t('common.collection.actions.view'),
-                          }"
-                          data-testid="dropdown-view-details-item"
-                        />
-                      </template>
-                    </KDropdownMenu>
+                      <ArrowRightIcon
+                        display="inline-block"
+                        decorative
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                    </RouterLink>
                   </template>
                 </AppCollection>
               </template>
@@ -150,7 +137,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { MoreIcon } from '@kong/icons'
+import { ArrowRightIcon } from '@kong/icons'
 
 import type { MeshInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -160,7 +147,9 @@ import type { MeSource } from '@/app/me/sources'
 </script>
 
 <style lang="scss" scoped>
-.actions-dropdown {
-  display: inline-block;
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
 }
 </style>

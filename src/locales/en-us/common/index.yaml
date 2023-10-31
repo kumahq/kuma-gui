@@ -51,6 +51,7 @@ common:
     icon: 'stateNoData'
   collection:
     none: ''
+    details_link: 'Go to details'
     summary:
       empty_title: 'Couldn’t find the selected {type}'
       empty_message: 'The selected {type} either doesn’t exist or isn’t on the current page.'

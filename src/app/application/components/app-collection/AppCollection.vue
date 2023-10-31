@@ -175,7 +175,7 @@ const lastPageNumber = ref(props.pageNumber)
 const lastPageSize = ref(props.pageSize)
 
 const columnWidth = computed(() => {
-  const specialColumns = props.headers.filter((header) => ['warnings', 'actions'].includes(header.key))
+  const specialColumns = props.headers.filter((header) => ['details', 'warnings', 'actions'].includes(header.key))
 
   if (specialColumns.length > 4) {
     return 'initial'
@@ -247,6 +247,7 @@ const click = (e: MouseEvent) => {
   width: var(--column-width, initial);
 }
 
+.app-collection .details-column,
 .app-collection .warnings-column,
 .app-collection .actions-column {
   width: var(--special-column-width, initial);
