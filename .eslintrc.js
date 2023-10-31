@@ -116,6 +116,23 @@ const INLINE_NON_VOID_ELEMENTS = [
             message: 'Using "data-test-id" is not allowed. Use "data-testid" instead.',
           },
         ],
+        'vue/no-undef-components': ['error', {
+          // Globally-registered components must be ignored here (https://eslint.vuejs.org/rules/no-undef-components.html)
+          ignorePatterns: [
+            // vue-router
+            'RouterLink',
+            'RouterView',
+            // @kong/kongponents
+            'K[A-Z].*',
+            // @kong-ui-public/i18n
+            'I18nT',
+            // Application
+            'AppView',
+            'DataSource',
+            'RouteView',
+            'RouteTitle',
+          ],
+        }],
       },
     },
     {

@@ -106,6 +106,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import { MeshInsightCollectionSource } from '@/app/meshes/sources'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
