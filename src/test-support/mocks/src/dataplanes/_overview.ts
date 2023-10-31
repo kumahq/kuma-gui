@@ -4,7 +4,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
-    '/dataplanes+insights',
+    '/dataplanes/_overview',
   )
 
   return {

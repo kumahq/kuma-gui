@@ -35,7 +35,7 @@ Feature: mesh / services / item
         body:
           serviceType: "internal"
         """
-      And the URL "/meshes/default/dataplanes+insights" responds with
+      And the URL "/meshes/default/dataplanes/_overview" responds with
         """
           body:
             items:
@@ -48,7 +48,7 @@ Feature: mesh / services / item
 
     Scenario: Internal services request the dataplanes for the service
       When I click the "$data-plane-proxies-tab" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           tag: "kuma.io/service:system-1"
@@ -62,7 +62,7 @@ Feature: mesh / services / item
       And I wait for 500 ms
       When I "type" "tag:version" into the "$input-search" element
       And I click the "$button-search" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           tag:
@@ -78,7 +78,7 @@ Feature: mesh / services / item
       And I wait for 500 ms
       When I "type" "tag:kuma.io/service:panel-2" into the "$input-search" element
       And I click the "$button-search" element
-      Then the URL "/meshes/default/dataplanes+insights" wasn't requested with
+      Then the URL "/meshes/default/dataplanes/_overview" wasn't requested with
         """
         searchParams:
           tag:
@@ -91,14 +91,14 @@ Feature: mesh / services / item
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
       And I click the "$button-clear-search" element
-      Then the URL "/meshes/default/dataplanes+insights" wasn't requested with
+      Then the URL "/meshes/default/dataplanes/_overview" wasn't requested with
         """
         searchParams:
           name: a-service
           tag:
             - "kuma.io/protocol:tcp"
         """
-      And the URL "/meshes/default/dataplanes+insights" was requested with
+      And the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           tag:
@@ -111,7 +111,7 @@ Feature: mesh / services / item
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
       And I click the "$button-search" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           name: a-service
@@ -122,7 +122,7 @@ Feature: mesh / services / item
           size: 50
         """
       And I click the "$button-clear-search" element
-      Then the URL "/meshes/default/dataplanes+insights" was requested with
+      Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
           tag:

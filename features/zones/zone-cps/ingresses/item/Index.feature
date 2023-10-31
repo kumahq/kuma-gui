@@ -23,7 +23,7 @@ Feature: zones / ingresses / item
     Then I click the "$navigation li:nth-child(1) a" element
 
   Scenario: Detail view has expected content
-    And the URL "/zoneingresses+insights/item-1" responds with
+    And the URL "/zone-ingresses/item-1/_overview" responds with
       """
       body:
         zoneIngress:

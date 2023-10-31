@@ -11,7 +11,7 @@ Feature: zones / egresses / index
       KUMA_ZONEEGRESS_COUNT: 2
       KUMA_SUBSCRIPTION_COUNT: 2
       """
-    And the URL "/zoneegressoverviews" responds with
+    And the URL "/zoneegresses/_overview" responds with
       """
       body:
         items:

@@ -44,12 +44,12 @@ above, save the file to the correct place in the filesystem and update the
 (Support will be added at a later date to be able to add simple JSON files)
 
 If an endpoint includes a dynamic path segment (most do) such as
-`/meshes/default/dataplanes+insights`. This would equate to a 'route string' of
-`/meshes/:mesh/dataplanes+insights`, and a file system path of
-`/meshes/_/dataplanes+insights`.
+`/meshes/default/dataplanes/_overview`. This would equate to a 'route string' of
+`/meshes/:mesh/dataplanes/_overview`, and a file system path of
+`/meshes/_/dataplanes/_overview`.
 
 **In other words, replace any dynamic path segments in the URL/route with a `_`.
-This `_` could either be a folder as in `/meshes/_/dataplanes+insights` or a
+This `_` could either be a folder as in `/meshes/_/dataplanes/_overview` or a
 file as in `/meshes/_.ts`.**
 
 `headers` are the HTTP headers to use for the response, and these are usually
@@ -94,7 +94,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
 }
 ```
 
-A more complicated example can be seen at [./src/meshes/_/dataplanes+insights.ts](./src/meshes/_/dataplanes+insights.ts)
+A more complicated example can be seen at [./src/meshes/_/dataplanes/_overview.ts](./src/meshes/_/dataplanes/_overview.ts)
 
 The idea behind the approach is based on a traditional template engine and a set
 of JSON templates. The JSON templates also have access to a collection of helper

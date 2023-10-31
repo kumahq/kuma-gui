@@ -25,7 +25,7 @@ Feature: Data Plane Proxies: Detail view content
       KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_MODE: global
       """
-    And the URL "/meshes/default/dataplanes+insights/dpp-1-name-of-dataplane" responds with
+    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
       """
       body:
         mesh: default

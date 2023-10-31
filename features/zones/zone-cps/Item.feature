@@ -16,7 +16,7 @@ Feature: zones / item
       """
       KUMA_SUBSCRIPTION_COUNT: 2
       """
-    And the URL "/zones+insights/zone-cp-1" responds with
+    And the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
         name: zone-cp-1
