@@ -46,7 +46,7 @@
                   { label: 'Address', key: 'addressPort' },
                   { label: 'DP proxies (online / total)', key: 'online' },
                   { label: 'Status', key: 'status' },
-                  { label: 'Actions', key: 'actions', hideLabel: true },
+                  { label: 'Details', key: 'details', hideLabel: true },
                 ]"
                 :page-number="parseInt(route.params.page)"
                 :page-size="parseInt(route.params.size)"
@@ -59,7 +59,7 @@
                 <template #name="{ row: item }">
                   <RouterLink
                     :to="{
-                      name: 'service-tray-view',
+                      name: 'service-summary-view',
                       params: {
                         mesh: item.mesh,
                         service: item.name,
@@ -106,69 +106,54 @@
                   <StatusBadge :status="item.status || 'not_available'" />
                 </template>
 
-                <template #actions="{ row: item }">
-                  <KDropdownMenu
-                    class="actions-dropdown"
-                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                    width="150"
+                <template #details="{ row }">
+                  <RouterLink
+                    class="details-link"
+                    data-testid="details-link"
+                    :to="{
+                      name: 'service-detail-view',
+                      params: {
+                        mesh: row.mesh,
+                        service: row.name,
+                      },
+                    }"
                   >
-                    <template #default>
-                      <KButton
-                        class="non-visual-button"
-                        appearance="secondary"
-                        size="small"
-                      >
-                        <MoreIcon :size="KUI_ICON_SIZE_30" />
-                      </KButton>
-                    </template>
+                    {{ t('common.collection.details_link') }}
 
-                    <template #items>
-                      <KDropdownItem
-                        :item="{
-                          to: {
-                            name: 'service-detail-view',
-                            params: {
-                              service: item.name,
-                            },
-                          },
-                          label: t('common.collection.actions.view'),
-                        }"
-                        data-testid="dropdown-view-details-item"
-                      />
-                    </template>
-                  </KDropdownMenu>
+                    <ArrowRightIcon
+                      display="inline-block"
+                      decorative
+                      :size="KUI_ICON_SIZE_30"
+                    />
+                  </RouterLink>
                 </template>
               </AppCollection>
             </template>
           </KCard>
 
-          <template
-            v-for="(selectedService, index) in [data?.items.find((item) => item.name === route.params.service)]"
-            :key="index"
+          <RouterView
+            v-if="route.params.service"
+            v-slot="child"
           >
-            <RouterView
-              v-if="selectedService"
-              v-slot="child"
+            <SummaryView
+              @close="route.replace({
+                name: 'service-list-view',
+                params: {
+                  mesh: route.params.mesh,
+                },
+                query: {
+                  page: route.params.page,
+                  size: route.params.size,
+                },
+              })"
             >
-              <TrayView
-                @close="route.replace({
-                  name: 'service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                  query: {
-                    page: route.params.page,
-                    size: route.params.size,
-                  },
-                })"
-              >
-                <component
-                  :is="child.Component"
-                  :data="selectedService"
-                />
-              </TrayView>
-            </RouterView>
-          </template>
+              <component
+                :is="child.Component"
+                :name="route.params.service"
+                :service="data?.items.find((item) => item.name === route.params.service)"
+              />
+            </SummaryView>
+          </RouterView>
         </AppView>
       </DataSource>
     </RouteView>
@@ -177,19 +162,21 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { MoreIcon } from '@kong/icons'
+import { ArrowRightIcon } from '@kong/icons'
 
 import type { ServiceInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import TrayView from '@/app/common/TrayView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 
 <style lang="scss" scoped>
-.actions-dropdown {
-  display: inline-block;
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
 }
 </style>

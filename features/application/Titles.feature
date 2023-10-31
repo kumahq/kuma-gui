@@ -30,8 +30,8 @@ Feature: application / titles
       | /zones/zone-cp-name/egresses                             | Egresses              |
       | /zones/zone-cp-name/egresses/zone-egress-name/overview   | zone-egress-name      |
 
-      | /meshes         | Meshes        |
-      | /meshes/default | Mesh overview |
+      | /meshes                  | Meshes        |
+      | /meshes/default/overview | Mesh overview |
 
       | /meshes/default/services                       | Services     |
       | /meshes/default/services/service-name/overview | service-name |
@@ -57,4 +57,3 @@ Feature: application / titles
       | URL                                       | Title            |
       | /zones/egresses                           | Egresses         |
       | /zones/egresses/zone-egress-name/overview | zone-egress-name |
-

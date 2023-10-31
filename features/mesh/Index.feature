@@ -23,7 +23,7 @@ Feature: mesh / index
 
   Scenario: Clicking a mesh and back again for <Mesh>
     Then the "$item" element exists 2 times
-    Then I click the "<Selector>" element
+    When I click the "<Selector> [data-testid='details-link']" element
     Then the URL contains "/meshes/<Mesh>"
     And the "$breadcrumbs" element contains "Meshes"
 
@@ -37,6 +37,6 @@ Feature: mesh / index
     Then the "$item" element exists 2 times
 
     Examples:
-      | Mesh         | Selector                              |
-      | another-mesh | $item:nth-child(2) td:first-of-type a |
-      | default      | $item:nth-child(1) td:first-of-type a |
+      | Mesh         | Selector           |
+      | another-mesh | $item:nth-child(2) |
+      | default      | $item:nth-child(1) |

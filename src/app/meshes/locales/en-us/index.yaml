@@ -23,7 +23,7 @@ meshes:
         data-plane-list-view: Data Plane Proxies
         gateway-list-view: Gateways
         policy-list-index-view: Policies
-
+      overview: 'Overview'
     items:
       title: Meshes
       breadcrumbs: Meshes
