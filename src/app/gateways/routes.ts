@@ -50,6 +50,13 @@ export const routes = () => {
             module: 'gateways',
           },
           component: () => import('@/app/gateways/views/GatewayListView.vue'),
+          children: [
+            {
+              path: ':dataPlane',
+              name: 'gateway-summary-view',
+              component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+            },
+          ],
         },
       ]
     },

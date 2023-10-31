@@ -13,6 +13,7 @@
         query: '',
         s: '',
         mesh: '',
+        dataPlane: '',
       }"
     >
       <DataSource
@@ -28,6 +29,7 @@
               />
             </h2>
           </template>
+
           <KCard>
             <template #body>
               <ErrorBlock
@@ -44,6 +46,8 @@
                 :total="data?.total"
                 :items="data?.items"
                 :error="error"
+                :is-selected-row="(row) => row.name === route.params.dataPlane"
+                summary-route-name="data-plane-summary-view"
                 @change="route.update"
               >
                 <template #toolbar>
@@ -66,6 +70,30 @@
               </DataPlaneList>
             </template>
           </KCard>
+
+          <RouterView
+            v-if="route.params.dataPlane"
+            v-slot="child"
+          >
+            <SummaryView
+              @close="route.replace({
+                name: 'data-plane-list-view',
+                params: {
+                  mesh: route.params.mesh,
+                },
+                query: {
+                  page: route.params.page,
+                  size: route.params.size,
+                },
+              })"
+            >
+              <component
+                :is="child.Component"
+                :name="route.params.dataPlane"
+                :dataplane-overview="data?.items.find((item) => item.name === route.params.dataPlane)"
+              />
+            </SummaryView>
+          </RouterView>
         </AppView>
       </DataSource>
     </RouteView>
@@ -77,8 +105,10 @@ import DataPlaneList from '../components/DataPlaneList.vue'
 import type { DataPlaneCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
+
 <style lang="scss" scoped>
 .data-plane-proxy-filter {
   flex-basis: 350px;

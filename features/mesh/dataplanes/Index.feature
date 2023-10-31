@@ -22,12 +22,6 @@ Feature: mesh / dataplanes / index
               inbound:
               - tags:
                   kuma.io/protocol: http
-          dataplaneInsight:
-            subscriptions:
-            - status:
-                lastUpdateTime: 2021-02-16T08:33:36.442044+01:00
-            - status:
-                lastUpdateTime: 2021-02-18T08:33:36.442044+01:00
         - name: fake-frontend
       """
 
@@ -39,14 +33,13 @@ Feature: mesh / dataplanes / index
 
     When I visit the "/meshes/default/data-planes" URL
 
-    Then the "$table-header" element exists 9 times
+    Then the "$table-header" element exists 8 times
     And the "$table-header" elements contain
       | Value            |
       | Name             |
       | Service          |
       | Protocol         |
       | Zone             |
-      | Last Updated     |
       | Certificate Info |
       | Status           |
       | Warnings         |
@@ -59,13 +52,12 @@ Feature: mesh / dataplanes / index
 
     When I visit the "/meshes/default/data-planes" URL
 
-    Then the "$table-header" element exists 8 times
+    Then the "$table-header" element exists 7 times
     And the "$table-header" elements contain
       | Value            |
       | Name             |
       | Service          |
       | Protocol         |
-      | Last Updated     |
       | Certificate Info |
       | Status           |
       | Warnings         |
@@ -78,4 +70,3 @@ Feature: mesh / dataplanes / index
       | Value        |
       | fake-backend |
       | http         |
-      | Feb 18, 2021 |
