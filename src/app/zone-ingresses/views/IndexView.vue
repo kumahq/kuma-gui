@@ -3,6 +3,7 @@
     v-slot="{ data: me }: MeSource"
     src="/me"
   >
+    <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
     <RouteView
       v-if="me"
       v-slot="{ route, t }"
@@ -11,6 +12,7 @@
         /* page: 1, */
         /* size: me.pageSize, */
         zone: '',
+        zoneIngress: '',
       }"
     >
       <AppView>
@@ -23,6 +25,7 @@
           </h2>
         </template>
 
+        <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
         <DataSource
           v-slot="{ data, error }: ZoneIngressOverviewCollectionSource"
           :src="`/zone-cps/${route.params.zone}/ingresses?page=${'1'}&size=${'100'}`"
@@ -34,6 +37,7 @@
                 :error="error"
               />
 
+              <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
               <AppCollection
                 v-else
                 class="zone-ingress-collection"
@@ -43,7 +47,7 @@
                   { label: 'Address', key: 'addressPort' },
                   { label: 'Advertised address', key: 'advertisedAddressPort' },
                   { label: 'Status', key: 'status' },
-                  { label: 'Actions', key: 'actions', hideLabel: true },
+                  { label: 'Details', key: 'details', hideLabel: true },
                 ]"
                 :page-number="1"
                 :page-size="100"
@@ -53,14 +57,25 @@
                 :empty-state-message="t('common.emptyState.message', { type: 'Zone Ingresses' })"
                 :empty-state-cta-to="t('zone-ingresses.href.docs')"
                 :empty-state-cta-text="t('common.documentation')"
+                :is-selected-row="(row) => row.name === route.params.zoneIngress"
                 @change="route.update"
               >
-                <template #name="{ row, rowValue }">
+                <template #name="{ row }">
                   <RouterLink
-                    :to="row.detailViewRoute"
-                    data-testid="detail-view-link"
+                    :to="{
+                      name: 'zone-ingress-summary-view',
+                      params: {
+                        zone: route.params.zone,
+                        zoneIngress: row.name,
+                      },
+                      query: {
+                        // TODO: Update page & size once the list endpoint is being filtered by zone
+                        page: 1,
+                        size: 100,
+                      },
+                    }"
                   >
-                    {{ rowValue }}
+                    {{ row.name }}
                   </RouterLink>
                 </template>
 
@@ -97,42 +112,54 @@
                   </template>
                 </template>
 
-                <template #actions="{ row }">
-                  <KDropdownMenu
-                    class="actions-dropdown"
-                    data-testid="actions-dropdown"
-                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                    width="150"
+                <template #details="{ row }">
+                  <RouterLink
+                    class="details-link"
+                    data-testid="details-link"
+                    :to="{
+                      name: 'zone-ingress-detail-view',
+                      params: {
+                        zoneIngress: row.name,
+                      },
+                    }"
                   >
-                    <template #default>
-                      <KButton
-                        class="non-visual-button"
-                        appearance="secondary"
-                        size="small"
-                      >
-                        <template #icon>
-                          <KIcon
-                            :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                            icon="more"
-                            :size="KUI_ICON_SIZE_30"
-                          />
-                        </template>
-                      </KButton>
-                    </template>
+                    {{ t('common.collection.details_link') }}
 
-                    <template #items>
-                      <KDropdownItem
-                        :item="{
-                          to: row.detailViewRoute,
-                          label: t('common.collection.actions.view'),
-                        }"
-                      />
-                    </template>
-                  </KDropdownMenu>
+                    <ArrowRightIcon
+                      display="inline-block"
+                      decorative
+                      :size="KUI_ICON_SIZE_30"
+                    />
+                  </RouterLink>
                 </template>
               </AppCollection>
             </template>
           </KCard>
+
+          <RouterView
+            v-if="route.params.zoneIngress"
+            v-slot="child"
+          >
+            <SummaryView
+              @close="route.replace({
+                name: 'zone-ingress-list-view',
+                params: {
+                  zone: route.params.zone,
+                },
+                query: {
+                  // TODO: Update page & size once the list endpoint is being filtered by zone
+                  page: 1,
+                  size: 100,
+                },
+              })"
+            >
+              <component
+                :is="child.Component"
+                :name="route.params.zoneIngress"
+                :zone-ingress-overview="data?.items.find((item) => item.name === route.params.zoneIngress)"
+              />
+            </SummaryView>
+          </RouterView>
         </DataSource>
       </AppView>
     </RouteView>
@@ -140,13 +167,15 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { ArrowRightIcon } from '@kong/icons'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import type { ZoneIngressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
@@ -196,7 +225,9 @@ function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): Zone
 </script>
 
 <style lang="scss" scoped>
-.actions-dropdown {
-  display: inline-block;
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
 }
 </style>
