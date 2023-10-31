@@ -346,7 +346,7 @@
                                 :to="{
                                   name: 'zone-cp-detail-view',
                                   params: {
-                                    zone: name
+                                    zone: name,
                                   },
                                 }"
                               >

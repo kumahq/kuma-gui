@@ -22,7 +22,7 @@
         params: routeParams,
         back: () => {
           win.history.back()
-        }
+        },
       }"
     />
   </div>
