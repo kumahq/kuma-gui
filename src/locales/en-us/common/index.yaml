@@ -52,8 +52,8 @@ common:
   collection:
     none: ''
     summary:
-      empty_title: 'Couldn’t find the selected item'
-      empty_message: 'The selected item either doesn’t exist or isn’t on the current page.'
+      empty_title: 'Couldn’t find the selected {type}'
+      empty_message: 'The selected {type} either doesn’t exist or isn’t on the current page.'
     actions:
       delete: 'Delete'
       edit: 'Edit'

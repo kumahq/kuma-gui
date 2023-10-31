@@ -27,10 +27,10 @@
       </template>
 
       <EmptyBlock v-if="props.meshInsight === undefined">
-        {{ t('common.collection.summary.empty_title') }}
+        {{ t('common.collection.summary.empty_title', { type: 'Mesh' }) }}
 
         <template #message>
-          <p>{{ t('common.collection.summary.empty_message') }}</p>
+          <p>{{ t('common.collection.summary.empty_message', { type: 'Mesh' }) }}</p>
         </template>
       </EmptyBlock>
 
