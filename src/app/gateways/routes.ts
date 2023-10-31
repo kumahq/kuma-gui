@@ -35,6 +35,11 @@ export const routes = () => {
             name: 'gateway-clusters-view',
             component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
           },
+          {
+            path: 'config',
+            name: 'gateway-config-view',
+            component: () => import('@/app/data-planes/views/DataPlaneConfigView.vue'),
+          },
         ],
       },
     ]
