@@ -20,8 +20,16 @@
         update: routeUpdate,
         replace: routeReplace,
         params: routeParams,
-        back: () => {
-          win.history.back()
+        back: (...args: RouteReplaceParams) => {
+          try {
+            if(win.history.state.back !== null) {
+              win.history.back()
+              return
+            }
+          } catch(_) {
+            // passthrough
+          }
+          routeReplace(...args)
         },
       }"
     />
@@ -144,7 +152,8 @@ const routeUpdate = (params: Record<string, string | undefined>) => {
   }
   routerPush(newParams)
 }
-const routeReplace = (...args: Parameters<typeof router['push']>) => {
+type RouteReplaceParams = Parameters<typeof router['push']>
+const routeReplace = (...args: RouteReplaceParams) => {
   router.push(...args)
 }
 watch(() => props.name, () => {
