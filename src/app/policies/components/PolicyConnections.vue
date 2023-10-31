@@ -25,7 +25,7 @@
       <template v-else>
         <ul data-testid="affected-data-plane-proxies">
           <li
-            v-for="(policyDataplane, key) in data.items.filter((policyDataplane) => policyDataplane.dataplane.name.toLowerCase().includes(searchInput.toLowerCase()))"
+            v-for="(policyDataplane, key) in data.items.filter((policyDataplane) => policyDataplane.name.toLowerCase().includes(searchInput.toLowerCase()))"
             :key="key"
             data-testid="dataplane-name"
           >
@@ -33,12 +33,12 @@
               :to="{
                 name: 'data-plane-detail-view',
                 params: {
-                  mesh: policyDataplane.dataplane.mesh,
-                  dataPlane: policyDataplane.dataplane.name,
+                  mesh: policyDataplane.mesh,
+                  dataPlane: policyDataplane.name,
                 },
               }"
             >
-              {{ policyDataplane.dataplane.name }}
+              {{ policyDataplane.name }}
             </RouterLink>
           </li>
         </ul>

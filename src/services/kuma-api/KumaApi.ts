@@ -197,7 +197,7 @@ export default class KumaApi extends Api {
   }
 
   getPolicyConnections({ mesh, path, name }: { mesh: string, path: string, name: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyDataplane>> {
-    return this.client.get(`/meshes/${mesh}/${path}/${name}/dataplanes`, { params })
+    return this.client.get(`/meshes/${mesh}/${path}/${name}/_resources/dataplanes`, { params })
   }
 
   getAllPolicyEntitiesFromMesh({ mesh, path }: { mesh: string, path: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyEntity>> {
