@@ -14,3 +14,4 @@ Feature: Gateways: Page navigation
       | gateway-xds-config-view | /gateways/firewal-gateway-1/xds-config | XDS Configuration |
       | gateway-stats-view      | /gateways/firewal-gateway-1/stats      | Stats             |
       | gateway-clusters-view   | /gateways/firewal-gateway-1/clusters   | Clusters          |
+      | gateway-config-view     | /gateways/firewal-gateway-1/config     | YAML              |
