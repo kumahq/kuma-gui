@@ -7,7 +7,7 @@ Feature: Policies: Detail view content
       | affected-dpps-item | [data-testid='dataplane-name']              |
 
   Scenario: Affected DPPs can be filtered
-    Given the URL "/meshes/default/circuit-breakers/cp-1/dataplanes" responds with
+    Given the URL "/meshes/default/circuit-breakers/cp-1/_resources/dataplanes" responds with
       """
       body:
         items:

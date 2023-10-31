@@ -587,38 +587,8 @@ export interface PolicyEntity extends MeshEntity {
   }
 }
 
-export interface PolicyDataplaneAttachment {
-  type: string
-  name: string
-  service?: string
-}
-
-export interface PolicyDataplaneListenerHostRoute {
-  route: string
-  destinations?: Record<string, string>
-}
-
-export interface PolicyDataplaneListenerHost {
-  hostName: string
-  routes: PolicyDataplaneListenerHostRoute[]
-}
-
-export interface PolicyDataplaneListener {
-  port: number
-  protocol: string
-  host: PolicyDataplaneListenerHost[]
-}
-
 export interface PolicyDataplane {
-  kind: 'SidecarDataplane' | 'MeshGatewayDataplane'
-  dataplane: {
-    mesh: string
-    name: string
-  }
-  gateway?: {
-    mesh: string
-    name: string
-  }
-  attachments?: PolicyDataplaneAttachment[]
-  listeners?: PolicyDataplaneListener[]
+  type: 'Dataplane'
+  mesh: string
+  name: string
 }
