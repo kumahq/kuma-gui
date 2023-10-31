@@ -59,7 +59,7 @@
                   <template #name="{ row: item }">
                     <RouterLink
                       :to="{
-                        name: 'mesh-tray-view',
+                        name: 'mesh-summary-view',
                         params: {
                           mesh: item.name,
                         },
@@ -122,7 +122,7 @@
               v-if="route.params.mesh"
               v-slot="child"
             >
-              <TrayView
+              <SummaryView
                 @close="route.replace({
                   name: 'mesh-list-view',
                   params: {
@@ -139,7 +139,7 @@
                   :name="route.params.mesh"
                   :mesh-insight="data?.items.find((item) => item.name === route.params.mesh)"
                 />
-              </TrayView>
+              </SummaryView>
             </RouterView>
           </div>
         </AppView>
@@ -155,7 +155,7 @@ import { MoreIcon } from '@kong/icons'
 import type { MeshInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import TrayView from '@/app/common/TrayView.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 

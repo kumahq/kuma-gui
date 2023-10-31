@@ -25,8 +25,8 @@ export const routes = (
           children: [
             {
               path: ':mesh',
-              name: 'mesh-tray-view',
-              component: () => import('@/app/meshes/views/MeshTrayView.vue'),
+              name: 'mesh-summary-view',
+              component: () => import('@/app/meshes/views/MeshSummaryView.vue'),
             },
           ],
         },

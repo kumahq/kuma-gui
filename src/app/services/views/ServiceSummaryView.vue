@@ -1,14 +1,14 @@
 <template>
-  <RouteView name="service-tray-view">
+  <RouteView name="service-summary-view">
     <AppView>
       <template #title>
-        <div class="tray-title-wrapper">
+        <div class="summary-title-wrapper">
           <img
             aria-hidden="true"
             src="@/assets/images/icon-wifi-tethering.svg?url"
           >
 
-          <h2 class="tray-title">
+          <h2 class="summary-title">
             <RouterLink
               :to="{
                 name: 'service-detail-view',
@@ -73,7 +73,7 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.tray-title-wrapper {
+.summary-title-wrapper {
   display: flex;
   align-items: baseline;
   gap: $kui-space-30;
@@ -81,7 +81,7 @@ const props = defineProps<{
   margin-right: calc($kui-space-30 + 24px);
 }
 
-.tray-title {
+.summary-title {
   margin-top: 0;
 }
 </style>

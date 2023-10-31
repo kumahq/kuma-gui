@@ -41,8 +41,8 @@ export const routes = () => {
           children: [
             {
               path: ':service',
-              name: 'service-tray-view',
-              component: () => import('@/app/services/views/ServiceTrayView.vue'),
+              name: 'service-summary-view',
+              component: () => import('@/app/services/views/ServiceSummaryView.vue'),
             },
           ],
         },

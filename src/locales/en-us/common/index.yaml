@@ -51,7 +51,7 @@ common:
     icon: 'stateNoData'
   collection:
     none: ''
-    tray:
+    summary:
       empty_title: 'Couldn’t find the selected item'
       empty_message: 'The selected item either doesn’t exist or isn’t on the current page.'
     actions:

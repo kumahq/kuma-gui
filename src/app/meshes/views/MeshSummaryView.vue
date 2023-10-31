@@ -1,14 +1,14 @@
 <template>
-  <RouteView name="mesh-tray-view">
+  <RouteView name="mesh-summary-view">
     <AppView>
       <template #title>
-        <div class="tray-title-wrapper">
+        <div class="summary-title-wrapper">
           <img
             aria-hidden="true"
             src="@/assets/images/icon-circles-ext.svg?url"
           >
 
-          <h2 class="tray-title">
+          <h2 class="summary-title">
             <RouterLink
               :to="{
                 name: 'mesh-detail-view',
@@ -27,10 +27,10 @@
       </template>
 
       <EmptyBlock v-if="props.meshInsight === undefined">
-        {{ t('common.collection.tray.empty_title') }}
+        {{ t('common.collection.summary.empty_title') }}
 
         <template #message>
-          <p>{{ t('common.collection.tray.empty_message') }}</p>
+          <p>{{ t('common.collection.summary.empty_message') }}</p>
         </template>
       </EmptyBlock>
 
@@ -84,7 +84,7 @@ const props = withDefaults(defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.tray-title-wrapper {
+.summary-title-wrapper {
   display: flex;
   align-items: baseline;
   gap: $kui-space-30;
@@ -92,7 +92,7 @@ const props = withDefaults(defineProps<{
   margin-right: calc($kui-space-30 + 24px);
 }
 
-.tray-title {
+.summary-title {
   margin-top: 0;
 }
 </style>

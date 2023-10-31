@@ -59,7 +59,7 @@
                 <template #name="{ row: item }">
                   <RouterLink
                     :to="{
-                      name: 'service-tray-view',
+                      name: 'service-summary-view',
                       params: {
                         mesh: item.mesh,
                         service: item.name,
@@ -150,7 +150,7 @@
               v-if="selectedService"
               v-slot="child"
             >
-              <TrayView
+              <SummaryView
                 @close="route.replace({
                   name: 'service-list-view',
                   params: {
@@ -166,7 +166,7 @@
                   :is="child.Component"
                   :data="selectedService"
                 />
-              </TrayView>
+              </SummaryView>
             </RouterView>
           </template>
         </AppView>
@@ -184,7 +184,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import TrayView from '@/app/common/TrayView.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 
