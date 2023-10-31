@@ -30,7 +30,17 @@ export const routes = (
             {
               path: '',
               name: 'zone-cp-list-view',
+              meta: {
+                module: 'zone-cps',
+              },
               component: () => import('@/app/zones/views/IndexView.vue'),
+              children: [
+                {
+                  path: ':zone',
+                  name: 'zone-cp-summary-view',
+                  component: () => import('@/app/zones/views/ZoneSummaryView.vue'),
+                },
+              ],
             },
             {
               path: ':zone',

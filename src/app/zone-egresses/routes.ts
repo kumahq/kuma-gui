@@ -45,7 +45,17 @@ export const routes = (prefix = 'egresses') => {
         {
           path: `${prefix}`,
           name: 'zone-egress-list-view',
+          meta: {
+            module: 'zone-egresses',
+          },
           component: () => import('@/app/zone-egresses/views/IndexView.vue'),
+          children: [
+            {
+              path: ':zoneEgress',
+              name: 'zone-egress-summary-view',
+              component: () => import('@/app/zone-egresses/views/ZoneEgressSummaryView.vue'),
+            },
+          ],
         },
       ]
     },

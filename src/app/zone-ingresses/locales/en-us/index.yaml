@@ -10,6 +10,8 @@ zone-ingresses:
         zone-ingress-stats-view: 'Stats'
         zone-ingress-clusters-view: 'Clusters'
         zone-ingress-config-view: 'YAML'
+      overview: 'Overview'
+      config: 'YAML'
       subscriptions:
         title: 'XDS connections'
     items:
@@ -17,5 +19,3 @@ zone-ingresses:
       breadcrumbs: Ingresses
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'
-
-

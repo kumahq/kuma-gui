@@ -10,6 +10,7 @@
       :params="{
         page: 1,
         size: me.pageSize,
+        zone: '',
       }"
     >
       <AppView>
@@ -68,6 +69,7 @@
                   { label: 'Egresses (online / total)', key: 'egress' },
                   { label: 'Status', key: 'status' },
                   { label: 'Warnings', key: 'warnings', hideLabel: true },
+                  { label: 'Details', key: 'details', hideLabel: true },
                   { label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :page-number="parseInt(route.params.page)"
@@ -79,14 +81,23 @@
                 :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
                 :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
                 :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
+                :is-selected-row="(row) => row.name === route.params.zone"
                 @change="route.update"
               >
-                <template #name="{ row, rowValue }">
+                <template #name="{ row }">
                   <RouterLink
-                    :to="row.detailViewRoute"
-                    data-testid="detail-view-link"
+                    :to="{
+                      name: 'zone-cp-summary-view',
+                      params: {
+                        zone: row.name,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                      },
+                    }"
                   >
-                    {{ rowValue }}
+                    {{ row.name }}
                   </RouterLink>
                 </template>
 
@@ -159,7 +170,31 @@
                   </template>
                 </template>
 
-                <template #actions="{ row }">
+                <template #details="{ row }">
+                  <RouterLink
+                    class="details-link"
+                    data-testid="details-link"
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: row.name,
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.details_link') }}
+
+                    <ArrowRightIcon
+                      display="inline-block"
+                      decorative
+                      :size="KUI_ICON_SIZE_30"
+                    />
+                  </RouterLink>
+                </template>
+
+                <template
+                  v-if="can('create zones')"
+                  #actions="{ row }"
+                >
                   <KDropdownMenu
                     class="actions-dropdown"
                     data-testid="actions-dropdown"
@@ -172,26 +207,12 @@
                         appearance="secondary"
                         size="small"
                       >
-                        <template #icon>
-                          <KIcon
-                            :color="KUI_COLOR_TEXT_NEUTRAL_STRONGER"
-                            icon="more"
-                            :size="KUI_ICON_SIZE_30"
-                          />
-                        </template>
+                        <MoreIcon />
                       </KButton>
                     </template>
 
                     <template #items>
                       <KDropdownItem
-                        :item="{
-                          to: row.detailViewRoute,
-                          label: t('common.collection.actions.view'),
-                        }"
-                      />
-
-                      <KDropdownItem
-                        v-if="can('create zones')"
                         has-divider
                         is-dangerous
                         data-testid="dropdown-delete-item"
@@ -205,6 +226,27 @@
               </AppCollection>
             </template>
           </KCard>
+
+          <RouterView
+            v-if="route.params.zone"
+            v-slot="child"
+          >
+            <SummaryView
+              @close="route.replace({
+                name: 'zone-cp-list-view',
+                query: {
+                  page: route.params.page,
+                  size: route.params.size,
+                },
+              })"
+            >
+              <component
+                :is="child.Component"
+                :name="route.params.zone"
+                :zone-overview="data?.items.find((item) => item.name === route.params.zone)"
+              />
+            </SummaryView>
+          </RouterView>
 
           <DeleteResourceModal
             v-if="isDeleteModalVisible"
@@ -230,8 +272,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL_STRONGER, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { KButton, KCard, KDropdownItem, KDropdownMenu, KIcon, KTooltip } from '@kong/kongponents'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { ArrowRightIcon, MoreIcon } from '@kong/icons'
 import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
@@ -241,6 +283,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { MeSource } from '@/app/me/sources'
 import type { DiscoverySubscription, StatusKeyword, ZoneEgressOverview, ZoneIngressOverview, ZoneOverview } from '@/types/index.d'
@@ -384,9 +427,16 @@ function setIsCreateZoneButtonVisible(data: any) {
 </script>
 
 <style lang="scss" scoped>
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
+}
+
 .actions-dropdown {
   display: inline-block;
 }
+
 .warning-type-memory {
   margin-top: $kui-space-60;
   margin-bottom: $kui-space-60;

@@ -9,6 +9,8 @@ zone-egresses:
         zone-egress-stats-view: 'Stats'
         zone-egress-clusters-view: 'Clusters'
         zone-egress-config-view: 'YAML'
+      overview: 'Overview'
+      config: 'YAML'
       subscriptions:
         title: 'XDS connections'
     items:
