@@ -20,6 +20,9 @@
         update: routeUpdate,
         replace: routeReplace,
         params: routeParams,
+        back: () => {
+          win.history.back()
+        }
       }"
     />
   </div>
@@ -50,6 +53,7 @@ const can = useCan()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const win = window
 const sym = Symbol('route-view')
 
 const props = withDefaults(defineProps<{

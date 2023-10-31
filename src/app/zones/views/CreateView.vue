@@ -25,7 +25,7 @@
           data-testid="exit-button"
           @click="() => {
             if(token === '' || isZoneConnected) {
-              route.replace({name: 'zone-cp-list-view'})
+              route.back()
             } else {
               toggleConfirmModal()
             }
