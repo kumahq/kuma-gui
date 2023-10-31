@@ -99,23 +99,28 @@
               :headers="[
                 { label: 'Name', key: 'name' },
                 ...(props.currentPolicyType.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
-                { label: 'Actions', key: 'actions', hideLabel: true },
+                { label: 'Details', key: 'details', hideLabel: true },
               ]"
               :page-number="props.pageNumber"
               :page-size="props.pageSize"
               :total="props.policyCollection?.total"
               :items="props.policyCollection?.items"
               :error="props.policyError"
+              :is-selected-row="props.isSelectedRow"
               @change="emit('change', $event)"
             >
               <template #name="{ rowValue }">
                 <RouterLink
                   :to="{
-                    name: 'policy-detail-view',
+                    name: 'policy-summary-view',
                     params: {
                       mesh: route.params.mesh,
                       policyPath: props.currentPolicyType.path,
                       policy: rowValue,
+                    },
+                    query: {
+                      page: props.pageNumber,
+                      size: props.pageSize,
                     },
                   }"
                 >
@@ -126,8 +131,7 @@
               <template #targetRef="{ row }">
                 <template v-if="props.currentPolicyType.isTargetRefBased">
                   <KBadge appearance="neutral">
-                    {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b>
-                    </span>
+                    {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
                   </KBadge>
                 </template>
 
@@ -136,38 +140,27 @@
                 </template>
               </template>
 
-              <template #actions="{ row }">
-                <KDropdownMenu
-                  class="actions-dropdown"
-                  :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                  width="150"
+              <template #details="{ row }">
+                <RouterLink
+                  class="details-link"
+                  data-testid="details-link"
+                  :to="{
+                    name: 'policy-detail-view',
+                    params: {
+                      mesh: row.mesh,
+                      policyPath: props.currentPolicyType.path,
+                      policy: row.name,
+                    },
+                  }"
                 >
-                  <template #default>
-                    <KButton
-                      class="non-visual-button"
-                      appearance="secondary"
-                      size="small"
-                    >
-                      <MoreIcon :size="KUI_ICON_SIZE_30" />
-                    </KButton>
-                  </template>
+                  {{ t('common.collection.details_link') }}
 
-                  <template #items>
-                    <KDropdownItem
-                      :item="{
-                        to: {
-                          name: 'policy-detail-view',
-                          params: {
-                            mesh: route.params.mesh,
-                            policyPath: props.currentPolicyType.path,
-                            policy: row.name,
-                          },
-                        },
-                        label: t('common.collection.actions.view'),
-                      }"
-                    />
-                  </template>
-                </KDropdownMenu>
+                  <ArrowRightIcon
+                    display="inline-block"
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
+                  />
+                </RouterLink>
               </template>
             </AppCollection>
           </template>
@@ -179,14 +172,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { MoreIcon } from '@kong/icons'
-import {
-  KBadge,
-  KButton,
-  KCard,
-  KDropdownItem,
-  KDropdownMenu,
-} from '@kong/kongponents'
+import { ArrowRightIcon } from '@kong/icons'
 import { useRoute } from 'vue-router'
 
 import { PolicyCollection } from '../sources'
@@ -205,7 +191,7 @@ type ChangeValue = {
 const { t } = useI18n()
 const route = useRoute()
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   pageNumber: number
   pageSize: number
   policyTypes: PolicyType[]
@@ -213,7 +199,10 @@ const props = defineProps<{
   policyCollection: PolicyCollection | undefined
   policyError: Error | undefined
   meshInsight: MeshInsight | undefined
-}>()
+  isSelectedRow?: ((row: any) => boolean) | null
+}>(), {
+  isSelectedRow: null,
+})
 
 const emit = defineEmits<{
   (event: 'change', value: ChangeValue): void
@@ -275,7 +264,9 @@ const emit = defineEmits<{
   gap: $kui-space-40;
 }
 
-.actions-dropdown {
-  display: inline-block;
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
 }
 </style>

@@ -577,7 +577,15 @@ export interface MeshInsight extends Entity {
   services: ServiceStatus
 }
 
-export interface PolicyEntity extends MeshEntity {}
+export interface PolicyEntity extends MeshEntity {
+  spec?: {
+    // https://kuma.io/docs/2.4.x/policies/targetref/
+    targetRef?: {
+      name?: string
+      kind: string
+    }
+  }
+}
 
 export interface PolicyDataplaneAttachment {
   type: string

@@ -62,6 +62,7 @@ Feature: mesh / policies / index
   Scenario: Clicking the link goes to the detail page and back again
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
     When I click the "$item:nth-child(1) td:first-of-type a" element
+    Then I click the "$item:nth-child(1) [data-testid='details-link']" element
     Then the URL contains "circuit-breakers/fake-cb-1"
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
