@@ -1,14 +1,12 @@
 Feature: mesh / services / item
   Background:
     Given the CSS selectors
-      | Alias                  | Selector                                                                          |
-      | data-plane-proxies-tab | #service-data-plane-proxies-view-tab a                                            |
-      | item                   | [data-testid='data-plane-collection'] tbody tr                                    |
-      | input-search           | [data-testid='k-filter-bar-filter-input']                                         |
-      | button-search          | [data-testid='k-filter-bar-submit-query-button']                                  |
-      | button-clear-search    | [data-testid="k-filter-bar-clear-query-button"]                                   |
-      | button-actions         | $item:nth-child(1) .actions-column .dropdown-trigger button                       |
-      | button-view            | $item:nth-child(1) .actions-column [data-testid="k-dropdown-item-View-details"] a |
+      | Alias                  | Selector                                         |
+      | data-plane-proxies-tab | #service-data-plane-proxies-view-tab a           |
+      | item                   | [data-testid='data-plane-collection'] tbody tr   |
+      | input-search           | [data-testid='k-filter-bar-filter-input']        |
+      | button-search          | [data-testid='k-filter-bar-submit-query-button'] |
+      | button-clear-search    | [data-testid="k-filter-bar-clear-query-button"]  |
 
   Scenario Outline: Shows Data Plane Proxies for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
@@ -129,17 +127,10 @@ Feature: mesh / services / item
             - "kuma.io/service:system-1"
         """
 
-    Scenario: Clicking an item takes you to the correct page
-      When I click the "$data-plane-proxies-tab" element
-      Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
-      And I click the "$item:nth-child(1) td:nth-child(1) a" element
-      Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
-
     Scenario: Clicking an items view menu takes you to the correct page
       When I click the "$data-plane-proxies-tab" element
       Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
-      And I click the "$button-actions" element
-      Then I click the "$button-view" element
+      And I click the "$item:nth-child(1) [data-testid='details-link']" element
       Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
 
     Scenario: Service with matching ExternalService doesn't show empty state

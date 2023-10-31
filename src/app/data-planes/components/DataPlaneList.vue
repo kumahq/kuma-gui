@@ -9,35 +9,41 @@
       { label: 'Service', key: 'service' },
       ...(!props.gateways ? [{ label: 'Protocol', key: 'protocol' }] : []),
       ...(isMultiZoneMode ? [{ label: 'Zone', key: 'zone' }] : []),
-      { label: 'Last Updated', key: 'lastUpdated' },
       { label: 'Certificate Info', key: 'certificate' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
-      { label: 'Actions', key: 'actions', hideLabel: true },
+      { label: 'Details', key: 'details', hideLabel: true },
     ]"
     :page-number="props.pageNumber"
     :page-size="props.pageSize"
     :total="props.total"
     :items="props.items ? transformToTableData(props.items) : undefined"
     :error="props.error"
+    :is-selected-row="props.isSelectedRow"
     @change="emit('change', $event)"
   >
     <template #toolbar>
       <slot name="toolbar" />
     </template>
+
     <template #name="{ row: item }">
       <RouterLink
         :to="{
-          name: item.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
+          name: props.summaryRouteName,
           params: {
+            mesh: item.mesh,
             dataPlane: item.name,
           },
+          query: {
+            page: props.pageNumber,
+            size: props.pageSize,
+          },
         }"
-        data-testid="detail-view-link"
       >
         {{ item.name }}
       </RouterLink>
     </template>
+
     <template #service="{ rowValue }">
       <RouterLink
         v-if="rowValue.route"
@@ -102,56 +108,33 @@
         {{ t('common.collection.none') }}
       </template>
     </template>
-    <template #certificate="{ row: item }">
-      {{
-        item.dataplaneInsight?.mTLS?.certificateExpirationTime ?
-          formatIsoDate(new Date(item.dataplaneInsight.mTLS.certificateExpirationTime).toUTCString()) :
-          t('data-planes.components.data-plane-list.certificate.none')
-      }}
-    </template>
 
-    <template #actions="{ row: item }">
-      <KDropdownMenu
-        class="actions-dropdown"
-        :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-        width="150"
+    <template #details="{ row }">
+      <RouterLink
+        class="details-link"
+        data-testid="details-link"
+        :to="{
+          name: row.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
+          params: {
+            dataPlane: row.name,
+          },
+        }"
       >
-        <template #default>
-          <KButton
-            class="non-visual-button"
-            appearance="secondary"
-            size="small"
-          >
-            <MoreIcon :size="KUI_ICON_SIZE_30" />
-          </KButton>
-        </template>
-        <template #items>
-          <KDropdownItem
-            :item="{
-              to: {
-                name: item.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
-                params: {
-                  dataPlane: item.name,
-                },
-              },
-              label: t('common.collection.actions.view'),
-            }"
-          />
-        </template>
-      </KDropdownMenu>
+        {{ t('common.collection.details_link') }}
+
+        <ArrowRightIcon
+          display="inline-block"
+          decorative
+          :size="KUI_ICON_SIZE_30"
+        />
+      </RouterLink>
     </template>
   </AppCollection>
 </template>
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { MoreIcon } from '@kong/icons'
-import {
-  KDropdownItem,
-  KDropdownMenu,
-  KButton,
-  KTooltip,
-} from '@kong/kongponents'
+import { ArrowRightIcon } from '@kong/icons'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
 import { useCan } from '@/app/application'
@@ -188,8 +171,8 @@ type DataPlaneOverviewTableRow = {
     version_mismatch: boolean
     cert_expired: boolean
   }
-  lastUpdated: string
   isGateway: boolean
+  certificate: string
 }
 
 type ChangeValue = {
@@ -204,9 +187,12 @@ const props = withDefaults(defineProps<{
   items: DataPlaneOverview[] | undefined
   error: Error | undefined
   gateways?: boolean
+  isSelectedRow: ((row: any) => boolean) | null
+  summaryRouteName: string
 }>(), {
   total: 0,
   gateways: false,
+  isSelectedRow: null,
 })
 
 const emit = defineEmits<{
@@ -258,31 +244,28 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 
     const initialData: {
       dpVersion: string | null
-      selectedUpdateTime: number
       version: Version | null
     } = {
       dpVersion: null,
-      selectedUpdateTime: NaN,
       version: null,
     }
 
     const summary = subscriptions.reduce(
       (acc, subscription) => {
-        const lastUpdateDate = Date.parse(subscription.status.lastUpdateTime)
-        if (lastUpdateDate) {
-          if (!acc.selectedUpdateTime || lastUpdateDate > acc.selectedUpdateTime) {
-            acc.selectedUpdateTime = lastUpdateDate
-          }
-        }
-
         return {
           dpVersion: subscription.version?.kumaDp.version || acc.dpVersion,
-          selectedUpdateTime: acc.selectedUpdateTime,
           version: subscription.version || acc.version,
         }
       },
       initialData,
     )
+
+    let certificate
+    if (dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime) {
+      certificate = formatIsoDate(dataPlaneOverview.dataplaneInsight.mTLS.certificateExpirationTime)
+    } else {
+      certificate = t('data-planes.components.data-plane-list.certificate.none')
+    }
 
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
@@ -296,8 +279,8 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
         version_mismatch: false,
         cert_expired: false,
       },
-      lastUpdated: summary.selectedUpdateTime ? formatIsoDate(new Date(summary.selectedUpdateTime).toUTCString()) : t('common.collection.none'),
       isGateway: dataPlaneOverview.dataplane?.networking?.gateway !== undefined,
+      certificate,
     }
 
     if (summary.version) {
@@ -330,7 +313,9 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 </script>
 
 <style lang="scss" scoped>
-.actions-dropdown {
-  display: inline-block;
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
 }
 </style>

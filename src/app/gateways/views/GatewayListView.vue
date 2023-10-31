@@ -14,6 +14,7 @@
         query: '',
         s: '',
         mesh: '',
+        dataPlane: '',
       }"
     >
       <DataSource
@@ -29,6 +30,7 @@
               />
             </h2>
           </template>
+
           <KCard>
             <template #body>
               <ErrorBlock
@@ -46,6 +48,8 @@
                 :items="data?.items"
                 :error="error"
                 :gateways="true"
+                :is-selected-row="(row) => row.name === route.params.dataPlane"
+                summary-route-name="gateway-summary-view"
                 @change="({page, size}) => {
                   route.update({
                     page: String(page),
@@ -104,6 +108,30 @@
               </DataPlaneList>
             </template>
           </KCard>
+
+          <RouterView
+            v-if="route.params.dataPlane"
+            v-slot="child"
+          >
+            <SummaryView
+              @close="route.replace({
+                name: 'gateway-list-view',
+                params: {
+                  mesh: route.params.mesh,
+                },
+                query: {
+                  page: route.params.page,
+                  size: route.params.size,
+                },
+              })"
+            >
+              <component
+                :is="child.Component"
+                :name="route.params.dataPlane"
+                :dataplane-overview="data?.items.find((item) => item.name === route.params.dataPlane)"
+              />
+            </SummaryView>
+          </RouterView>
         </AppView>
       </DataSource>
     </RouteView>
@@ -114,11 +142,13 @@
 import type { GatewayCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
 import type { MeSource } from '@/app/me/sources'
 import type { SelectItem } from '@kong/kongponents'
 
 </script>
+
 <style lang="scss" scoped>
 .data-plane-proxy-filter {
   flex-basis: 350px;

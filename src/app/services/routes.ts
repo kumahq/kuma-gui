@@ -21,7 +21,17 @@ export const routes = () => {
           {
             path: 'data-plane-proxies',
             name: 'service-data-plane-proxies-view',
+            meta: {
+              module: 'service-data-planes',
+            },
             component: () => import('@/app/services/views/ServiceDataPlaneProxiesView.vue'),
+            children: [
+              {
+                path: ':dataPlane',
+                name: 'service-data-plane-summary-view',
+                component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+              },
+            ],
           },
         ],
       },

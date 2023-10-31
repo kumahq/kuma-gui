@@ -52,6 +52,13 @@ export const routes = () => {
             module: 'data-planes',
           },
           component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+          children: [
+            {
+              path: ':dataPlane',
+              name: 'data-plane-summary-view',
+              component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+            },
+          ],
         },
       ]
     },

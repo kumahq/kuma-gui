@@ -38,7 +38,6 @@ Feature: mesh / gateways / index
       | Type             |
       | Service          |
       | Zone             |
-      | Last Updated     |
       | Certificate Info |
       | Status           |
       | Warnings         |

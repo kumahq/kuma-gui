@@ -15,6 +15,7 @@
         mesh: '',
         service: '',
         gatewayType: '',
+        dataPlane: '',
       }"
     >
       <AppView>
@@ -46,6 +47,8 @@
                   :items="dataplanesData?.items"
                   :error="dataplanesError"
                   :gateways="gateways"
+                  :is-selected-row="(row) => row.name === route.params.dataPlane"
+                  summary-route-name="service-data-plane-summary-view"
                   @change="route.update"
                 >
                   <template #toolbar>
@@ -99,6 +102,30 @@
                 </DataPlaneList>
               </template>
             </KCard>
+
+            <RouterView
+              v-if="route.params.dataPlane"
+              v-slot="child"
+            >
+              <SummaryView
+                @close="route.replace({
+                  name: 'service-data-plane-proxies-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                  query: {
+                    page: route.params.page,
+                    size: route.params.size,
+                  },
+                })"
+              >
+                <component
+                  :is="child.Component"
+                  :name="route.params.dataPlane"
+                  :dataplane-overview="dataplanesData?.items.find((item) => item.name === route.params.dataPlane)"
+                />
+              </SummaryView>
+            </RouterView>
           </template>
         </DataSource>
       </AppView>
@@ -108,6 +135,7 @@
 
 <script lang="ts" setup>
 import KFilterBar from '@/app/common/KFilterBar.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
 import { DataPlaneCollectionSource } from '@/app/data-planes/sources'
 import type { MeSource } from '@/app/me/sources'

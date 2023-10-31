@@ -208,7 +208,6 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
-import { KAlert, KCard, KTooltip } from '@kong/kongponents'
 import { computed } from 'vue'
 
 import { useCan } from '@/app/application'
@@ -288,16 +287,15 @@ const warnings = computed(() => {
 })
 
 </script>
+
 <style lang="scss" scoped>
 .status-with-reason {
   display: flex;
   align-items: center;
   gap: $kui-space-50;
 }
-</style>
 
-<style lang="scss">
-.reason-tooltip .kong-icon {
+.reason-tooltip :deep(.kong-icon) {
   display: flex;
   align-items: center;
 }

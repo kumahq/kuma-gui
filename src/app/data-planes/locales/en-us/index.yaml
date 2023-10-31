@@ -16,6 +16,10 @@ data-planes:
         data-plane-stats-view: 'Stats'
         data-plane-clusters-view: 'Clusters'
         data-plane-config-view: 'YAML'
+      overview: 'Overview'
+      last_updated: 'Last updated'
+      certificate_info: 'Certificate info'
+      no_certificate: 'No certificate'
       mtls:
         title: 'TLS'
         expiration_time:
