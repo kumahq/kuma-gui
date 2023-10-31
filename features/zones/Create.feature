@@ -114,6 +114,8 @@ Feature: zones / create
     And the URL "/zones/test/_overview" responds with
       """
       body:
+        zone:
+          enabled: true
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
