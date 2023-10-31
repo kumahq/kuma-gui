@@ -13,12 +13,12 @@
               :to="{
                 name: 'service-detail-view',
                 params: {
-                  service: props.data.name,
+                  service: props.name,
                 },
               }"
             >
               <RouteTitle
-                :title="t('services.routes.item.title', { name: props.data.name })"
+                :title="t('services.routes.item.title', { name: props.name })"
                 :render="true"
               />
             </RouterLink>
@@ -26,31 +26,42 @@
         </div>
       </template>
 
-      <div class="stack">
+      <EmptyBlock v-if="props.service === undefined">
+        {{ t('common.collection.summary.empty_title', { type: 'Service' }) }}
+
+        <template #message>
+          <p>{{ t('common.collection.summary.empty_message', { type: 'Service' }) }}</p>
+        </template>
+      </EmptyBlock>
+
+      <div
+        v-else
+        class="stack"
+      >
         <div>
           <h3>{{ t('services.routes.item.overview') }}</h3>
 
           <div class="mt-4">
             <ExternalServiceDetails
-              v-if="props.data.serviceType === 'external'"
-              :mesh="props.data.mesh"
-              :service="props.data.name"
+              v-if="props.service.serviceType === 'external'"
+              :mesh="props.service.mesh"
+              :service="props.service.name"
             />
 
             <ServiceInsightDetails
               v-else
-              :service-insight="data"
+              :service-insight="props.service"
             />
           </div>
         </div>
 
-        <div v-if="props.data.serviceType === 'external'">
+        <div v-if="props.service.serviceType === 'external'">
           <h3>{{ t('services.routes.item.config') }}</h3>
 
           <ExternalServiceConfig
             class="mt-4"
-            :mesh="props.data.mesh"
-            :service="props.data.name"
+            :mesh="props.service.mesh"
+            :service="props.service.name"
           />
         </div>
       </div>
@@ -62,14 +73,18 @@
 import ExternalServiceConfig from '../components/ExternalServiceConfig.vue'
 import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
 import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { ServiceInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps<{
-  data: ServiceInsight
-}>()
+const props = withDefaults(defineProps<{
+  name: string
+  service?: ServiceInsight
+}>(), {
+  service: undefined,
+})
 </script>
 
 <style lang="scss" scoped>

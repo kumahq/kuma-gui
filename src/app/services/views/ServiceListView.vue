@@ -142,33 +142,29 @@
             </template>
           </KCard>
 
-          <template
-            v-for="(selectedService, index) in [data?.items.find((item) => item.name === route.params.service)]"
-            :key="index"
+          <RouterView
+            v-if="route.params.service"
+            v-slot="child"
           >
-            <RouterView
-              v-if="selectedService"
-              v-slot="child"
+            <SummaryView
+              @close="route.replace({
+                name: 'service-list-view',
+                params: {
+                  mesh: route.params.mesh,
+                },
+                query: {
+                  page: route.params.page,
+                  size: route.params.size,
+                },
+              })"
             >
-              <SummaryView
-                @close="route.replace({
-                  name: 'service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                  query: {
-                    page: route.params.page,
-                    size: route.params.size,
-                  },
-                })"
-              >
-                <component
-                  :is="child.Component"
-                  :data="selectedService"
-                />
-              </SummaryView>
-            </RouterView>
-          </template>
+              <component
+                :is="child.Component"
+                :name="route.params.service"
+                :service="data?.items.find((item) => item.name === route.params.service)"
+              />
+            </SummaryView>
+          </RouterView>
         </AppView>
       </DataSource>
     </RouteView>
@@ -183,8 +179,8 @@ import type { ServiceInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 
