@@ -12,6 +12,7 @@
         size: me.pageSize,
         mesh: '',
         policyPath: '',
+        policy: '',
       }"
     >
       <AppView>
@@ -25,10 +26,10 @@
         </template>
 
         <!--
-        Load in all the potential policy types.
-        This means we can find an valid 'selected' type.
-        It’s also used for the list of policy types.
-      -->
+          Load in all the potential policy types.
+          This means we can find an valid 'selected' type.
+          It’s also used for the list of policy types.
+        -->
         <DataSource
           v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
           :src="`/*/policy-types`"
@@ -60,8 +61,35 @@
                   :mesh-insight="meshInsight"
                   :policy-collection="data"
                   :policy-error="error"
+                  :is-selected-row="(row) => row.name === route.params.policy"
                   @change="route.update"
                 />
+
+                <RouterView
+                  v-if="route.params.policy"
+                  v-slot="child"
+                >
+                  <SummaryView
+                    @close="route.replace({
+                      name: 'policy-list-view',
+                      params: {
+                        mesh: route.params.mesh,
+                        policyPath: route.params.policyPath,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                      },
+                    })"
+                  >
+                    <component
+                      :is="child.Component"
+                      :name="route.params.policy"
+                      :policy="data?.items.find((item) => item.name === route.params.policy)"
+                      :policy-type="policyTypesData.policies.find((policyType) => policyType.path === route.params.policyPath)"
+                    />
+                  </SummaryView>
+                </RouterView>
               </DataSource>
             </DataSource>
           </template>
@@ -76,6 +104,7 @@ import PolicyList from '../components/PolicyList.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
 import type { MeshInsightSource } from '@/app/meshes/sources'
 import type { PolicyCollectionSource, PolicyTypeCollectionSource } from '@/app/policies/sources'

@@ -3,6 +3,8 @@ policies:
     item:
       title: "{name}"
       breadcrumbs: Policies
+      overview: 'Overview'
+      config: 'YAML'
     items:
       title: "Policies"
   href:

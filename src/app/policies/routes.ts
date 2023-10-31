@@ -35,6 +35,13 @@ export const routes = () => {
               path: ':policyPath',
               name: 'policy-list-view',
               component: () => import('@/app/policies/views/PolicyListView.vue'),
+              children: [
+                {
+                  path: ':policy',
+                  name: 'policy-summary-view',
+                  component: () => import('@/app/policies/views/PolicySummaryView.vue'),
+                },
+              ],
             },
           ],
         },
