@@ -228,13 +228,13 @@ nav ul {
   border-right: $kui-border-width-10 solid $kui-color-border;
   background-color:  $kui-color-background;
 }
-nav > ul > :deep(li) {
+nav :deep(.app-navigator) {
   margin-left: $kui-space-40;
 }
-nav > ul > :deep(li) + li {
+nav :deep(.app-navigator) + .app-navigator {
   margin-top: $kui-space-20;
 }
-nav > ul > :deep(li) > a {
+nav :deep(.app-navigator) > a {
   width: 100%;
   display: flex;
   justify-content: space-between;
