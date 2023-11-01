@@ -25,7 +25,6 @@ export function getZoneDpServerAuthType(zone: ZoneOverview): string {
 // TODO(jc): end
 
 export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): 'online' | 'offline' | 'disabled' {
-  // TODO(jc): should I check disabled for newly created zones for the purposes of this PR?
   if (zoneOverview.zone.enabled === false) {
     return 'disabled'
   }
