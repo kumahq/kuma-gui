@@ -8,10 +8,16 @@
     :is-processing="isProcessing"
     :is-searchable="isSearchable"
     :show-copy-button="showCopyButton"
-    :query="query"
+    :query="(router.currentRoute.value.query.codeSearch as string | null) || ''"
     theme="dark"
     @code-block-render="handleCodeBlockRenderEvent"
-    @query-change="updateStoredQuery"
+    @query-change="router.push({
+      query: {
+        ...router.currentRoute.value.query,
+        // Setting `undefined` for empty queries ensures the parameter is deleted from the URL.
+        codeSearch: $event || undefined,
+      },
+    })"
   >
     <template
       v-if="$slots['secondary-actions']"
@@ -25,9 +31,11 @@
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-import { ClientStorage } from '@/utilities/ClientStorage'
 import { highlightElement, type AvailableLanguages } from '@/utilities/highlightElement'
+
+const router = useRouter()
 
 const props = withDefaults(defineProps<{
   id: string
@@ -42,8 +50,6 @@ const props = withDefaults(defineProps<{
   codeMaxHeight: null,
 })
 
-const query = getStoredQuery()
-
 const isProcessing = ref(false)
 
 async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
@@ -56,26 +62,6 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
   highlightElement(preElement, codeElement, escapedCode, language as AvailableLanguages)
 
   isProcessing.value = false
-}
-
-function getStoredQuery(): string {
-  const queries = ClientStorage.get('codeBlockQueries')
-  const queryKey = props.queryKey ?? props.id
-
-  return queries?.[queryKey] ? queries[queryKey] : ''
-}
-
-function updateStoredQuery(queryValue: string): void {
-  const queries = ClientStorage.get('codeBlockQueries') ?? {}
-  const queryKey = props.queryKey ?? props.id
-
-  if (queryValue === '') {
-    delete queries[queryKey]
-  } else {
-    queries[queryKey] = queryValue
-  }
-
-  ClientStorage.set('codeBlockQueries', queries)
 }
 </script>
 

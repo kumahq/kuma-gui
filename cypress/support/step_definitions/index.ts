@@ -193,6 +193,10 @@ Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) =
   $(selector).contains(value)
 })
 
+Then(/^the "(.*)" element has value "(.*)"$/, (selector: string, value: string) => {
+  $(selector).should('have.value', value)
+})
+
 Then(/^the "(.*)" element is empty$/, (selector: string) => {
   $(selector).should('be.empty')
 })
