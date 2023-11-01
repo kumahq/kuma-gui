@@ -73,7 +73,9 @@
               <template #body>
                 <SubscriptionList
                   :subscriptions="subscriptions"
-                />
+                >
+                  <p>{{ t('zone-cps.routes.item.subscription_intro') }}</p>
+                </SubscriptionList>
               </template>
             </KCard>
           </div>

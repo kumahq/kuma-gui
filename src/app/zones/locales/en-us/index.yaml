@@ -25,6 +25,8 @@ zone-cps:
         zone-egress-list-view: 'Egresses'
       authentication_type: Dataplane authentication type
       overview: 'Overview'
+      subscription_intro: |
+        Statistics indicate requests and responses between global and zone only
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
