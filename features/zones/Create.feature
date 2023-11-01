@@ -16,7 +16,8 @@ Feature: zones / create
       | environment-kubernetes-config       | [data-testid='zone-kubernetes-config']               |
       | ingress-input-switch                | [for='zone-ingress-enabled']                         |
       | egress-input-switch                 | [for='zone-egress-enabled']                          |
-      | zone-connected-scanner              | [data-testid='zone-connected-scanner']               |
+      | waiting                             | [data-testid='waiting']                              |
+      | connected                           | [data-testid='connected']                            |
       | error                               | [data-testid='create-zone-error']                    |
       | instructions                        | [data-testid='connect-zone-instructions']            |
     And the environment
@@ -68,57 +69,59 @@ Feature: zones / create
       """
       KUMA_SUBSCRIPTION_COUNT: 0
       """
+    And the URL "/provision-zone" responds with
+      """
+      body:
+        token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
+      """
     When I visit the "/zones/-create" URL
     Then the "$create-zone-button" element is disabled
 
     When I "type" "test" into the "$name-input" element
     Then the "$create-zone-button" element isn't disabled
 
-    When the URL "/provision-zone" responds with
-      """
-      body:
-        token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
-      """
-    And I click the "$create-zone-button" element
+    When I click the "$create-zone-button" element
     Then the URL "/provision-zone" was requested with
       """
       method: POST
       body:
         name: test
       """
-    Then the "$environment-universal-radio-button" element isn't checked
-    Then the "$environment-kubernetes-radio-button" element is checked
-    Then the "$ingress-input-switch input" element is checked
-    Then the "$egress-input-switch input" element is checked
-    Then the "$environment-kubernetes-config" element contains "kdsGlobalAddress: grpcs://<global-kds-address>:5685"
-    Then the "$zone-connected-scanner[data-test-state='waiting']" element exists
+    And the "$environment-universal-radio-button" element isn't checked
+    And the "$environment-kubernetes-radio-button" element is checked
+    And the "$ingress-input-switch input" element is checked
+    And the "$egress-input-switch input" element is checked
+    And the "$environment-kubernetes-config" element contains "kdsGlobalAddress: grpcs://<global-kds-address>:5685"
+    And the "$waiting" element exists
 
     When I click the "$ingress-input-switch" element
     Then the "$ingress-input-switch input" element isn't checked
-    Then the "$egress-input-switch input" element is checked
+    And the "$egress-input-switch input" element is checked
 
     When I click the "$egress-input-switch" element
     Then the "$ingress-input-switch input" element isn't checked
-    Then the "$egress-input-switch input" element isn't checked
+    And the "$egress-input-switch input" element isn't checked
 
     When I click the "$environment-universal-radio-button + label" element
     Then the "$ingress-input-switch input" element doesn't exist
-    Then the "$egress-input-switch input" element doesn't exist
-    Then the "$environment-universal-config" element contains "globalAddress: grpcs://<global-kds-address>:5685"
+    And the "$egress-input-switch input" element doesn't exist
+    And the "$environment-universal-config" element contains "globalAddress: grpcs://<global-kds-address>:5685"
 
     Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 1
       """
-    When the URL "/zones/test/_overview" responds with
+    And the URL "/zones/test/_overview" responds with
       """
       body:
+        zone:
+          enabled: true
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
               disconnectTime: !!js/undefined
       """
-    Then the "$zone-connected-scanner[data-test-state='success']" element exists
+    Then the "$connected" element exists
 
   Scenario: The form shows expected error for 409 response
     Given the URL "/provision-zone" responds with
@@ -186,6 +189,8 @@ Feature: zones / create
     And the URL "/zones/test/_overview" responds with
       """
       body:
+        zone:
+          enabled: true
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
@@ -197,7 +202,7 @@ Feature: zones / create
     And I click the "$create-zone-button" element
 
     Then the "$instructions" element exists
-    And the "$zone-connected-scanner[data-test-state='success']" element exists
+    And the "$connected" element exists
 
     When I click the "$exit-button" element
 
@@ -220,7 +225,7 @@ Feature: zones / create
     And I click the "$create-zone-button" element
 
     Then the "$instructions" element exists
-    And the "$zone-connected-scanner[data-test-state='waiting']" element exists
+    And the "$waiting" element exists
 
     When I click the "$exit-button" element
 
