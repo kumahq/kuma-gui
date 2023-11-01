@@ -1,5 +1,12 @@
 <template>
-  <RouteView name="service-summary-view">
+  <RouteView
+    v-slot="{ route }"
+    name="service-summary-view"
+    :params="{
+      mesh: '',
+      service: '',
+    }"
+  >
     <AppView>
       <template #title>
         <div class="summary-title-wrapper">
@@ -13,12 +20,12 @@
               :to="{
                 name: 'service-detail-view',
                 params: {
-                  service: props.name,
+                  service: route.params.service,
                 },
               }"
             >
               <RouteTitle
-                :title="t('services.routes.item.title', { name: props.name })"
+                :title="t('services.routes.item.title', { name: route.params.service })"
                 :render="true"
               />
             </RouterLink>
@@ -136,11 +143,36 @@
         <div v-if="props.service.serviceType === 'external'">
           <h3>{{ t('services.routes.item.config') }}</h3>
 
-          <ExternalServiceConfig
-            class="mt-4"
-            :mesh="props.service.mesh"
-            :service="props.service.name"
-          />
+          <div class="mt-4">
+            <DataSource
+              v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
+              :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
+            >
+              <ErrorBlock
+                v-if="externalServiceError"
+                :error="externalServiceError"
+              />
+
+              <LoadingBlock v-else-if="externalService === undefined" />
+
+              <EmptyBlock
+                v-else-if="externalService === null"
+                data-testid="no-matching-external-service"
+              >
+                <template #title>
+                  <p>{{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}</p>
+                </template>
+              </EmptyBlock>
+
+              <ResourceCodeBlock
+                v-else
+                id="code-block-service"
+                :resource="externalService"
+                :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
+                is-searchable
+              />
+            </DataSource>
+          </div>
         </div>
       </div>
     </AppView>
@@ -148,23 +180,23 @@
 </template>
 
 <script lang="ts" setup>
-import ExternalServiceConfig from '../components/ExternalServiceConfig.vue'
 import type { ExternalServiceSource } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { ServiceInsight } from '@/types/index.d'
-import { useI18n } from '@/utilities'
+import { useI18n, useKumaApi } from '@/utilities'
 
 const { t } = useI18n()
+const kumaApi = useKumaApi()
 
 const props = withDefaults(defineProps<{
-  name: string
   service?: ServiceInsight
 }>(), {
   service: undefined,
