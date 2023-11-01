@@ -54,7 +54,8 @@ export const sources = (source: Source, api: KumaApi) => {
         }
       }, {
         retry: (e) => {
-          if (typeof e.status !== 'undefined') {
+          const hasStatus = <T extends {status: number}>(e: unknown): e is T => typeof (e as T).status !== 'undefined'
+          if (hasStatus(e)) {
             const status = e.status.toString()
             switch (true) {
               case status === '404':
