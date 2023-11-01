@@ -20,17 +20,6 @@
         update: routeUpdate,
         replace: routeReplace,
         params: routeParams,
-        back: (...args: RouteReplaceParams) => {
-          try {
-            if(win.history.state.back !== null) {
-              win.history.back()
-              return
-            }
-          } catch(_) {
-            // passthrough
-          }
-          routeReplace(...args)
-        },
       }"
     />
   </div>
@@ -61,7 +50,6 @@ const can = useCan()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const win = window
 const sym = Symbol('route-view')
 
 const props = withDefaults(defineProps<{
@@ -152,8 +140,7 @@ const routeUpdate = (params: Record<string, string | undefined>) => {
   }
   routerPush(newParams)
 }
-type RouteReplaceParams = Parameters<typeof router['push']>
-const routeReplace = (...args: RouteReplaceParams) => {
+const routeReplace = (...args: Parameters<typeof router['push']>) => {
   router.push(...args)
 }
 watch(() => props.name, () => {
