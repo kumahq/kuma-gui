@@ -15,6 +15,12 @@
 
     <template v-else>
       <div>
+        <div
+          v-if="$slots.default"
+          class="intro"
+        >
+          <slot name="default" />
+        </div>
         <div class="row">
           <div class="header">
             {{ t('common.detail.subscriptions.type') }}
@@ -101,10 +107,13 @@ const statuses = computed<StatusRow[]>(() => {
 </script>
 
 <style lang="scss" scoped>
+.intro,
+.row {
+  padding: $kui-space-40;
+}
 .row {
   display: grid;
   grid-template-columns: 30ch 1fr;
-  padding: $kui-space-40;
 }
 
 .header,

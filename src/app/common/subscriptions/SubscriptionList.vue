@@ -9,7 +9,15 @@
       </template>
 
       <template #accordion-content>
-        <SubscriptionDetails :subscription="subscription" />
+        <SubscriptionDetails
+          :subscription="subscription"
+        >
+          <template
+            v-if="$slots.default"
+          >
+            <slot name="default" />
+          </template>
+        </SubscriptionDetails>
       </template>
     </AccordionItem>
   </AccordionList>
