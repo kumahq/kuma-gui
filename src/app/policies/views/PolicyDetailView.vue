@@ -53,21 +53,48 @@
 
         <LoadingBlock v-else-if="data === undefined" />
 
-        <PolicyDetails
+        <div
           v-else
-          :policy="data"
-          :path="route.params.policyPath"
+          class="stack"
           data-testid="detail-view-details"
-        />
+        >
+          <KCard>
+            <template #body>
+              <h2>{{ t('policies.detail.affected_dpps') }}</h2>
+
+              <PolicyConnections
+                class="mt-4"
+                :mesh="route.params.mesh"
+                :policy-name="route.params.policy"
+                :policy-path="route.params.policyPath"
+              />
+            </template>
+          </KCard>
+
+          <ResourceCodeBlock
+            id="code-block-policy"
+            :resource="data"
+            :resource-fetcher="(params) => kumaApi.getSinglePolicyEntity({
+              name: route.params.policy,
+              mesh: route.params.mesh,
+              path: route.params.policyPath,
+            }, params)"
+            is-searchable
+          />
+        </div>
       </DataSource>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import PolicyDetails from '../components/PolicyDetails.vue'
+import PolicyConnections from '../components/PolicyConnections.vue'
 import type { PolicySource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 </script>
