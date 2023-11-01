@@ -87,7 +87,7 @@
                 <template #name="{ row }">
                   <RouterLink
                     :to="{
-                      name: 'zone-cp-summary-view',
+                      name: 'zone-cp-detail-view',
                       params: {
                         zone: row.name,
                       },
