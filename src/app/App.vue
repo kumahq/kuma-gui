@@ -63,12 +63,6 @@ import ZoneEgressNavigator from '@/app/zone-egresses/components/ZoneEgressNaviga
 import ZoneNavigator from '@/app/zones/components/ZoneNavigator.vue'
 </script>
 <style lang="scss" scoped>
-.app-content-container {
-  padding-top: var(--AppHeaderHeight, initial);
-  display: var(--AppDisplay);
-  // Note: `minmax(0, 1fr)` is used because `1fr` implies `minmax(auto, 1fr)` which will allow grid items to grow beyond their container's size.
-  grid-template-columns: var(--AppSidebarWidth) minmax(0, 1fr);
-}
 .logo {
   max-height: 36px;
 }
