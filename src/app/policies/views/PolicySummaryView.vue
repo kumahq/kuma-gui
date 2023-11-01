@@ -6,6 +6,7 @@
       mesh: '',
       policyPath: '',
       policy: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -83,6 +84,8 @@
                 path: route.params.policyPath,
               }, params)"
               is-searchable
+              :query="route.params.codeSearch"
+              @query-change="route.update({ codeSearch: $event })"
             />
           </div>
         </div>

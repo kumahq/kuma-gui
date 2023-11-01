@@ -5,6 +5,7 @@
     :params="{
       mesh: '',
       service: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -170,6 +171,8 @@
                 :resource="externalService"
                 :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
                 is-searchable
+                :query="route.params.codeSearch"
+                @query-change="route.update({ codeSearch: $event })"
               />
             </DataSource>
           </div>

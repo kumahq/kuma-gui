@@ -8,16 +8,10 @@
     :is-processing="isProcessing"
     :is-searchable="isSearchable"
     :show-copy-button="showCopyButton"
-    :query="(router.currentRoute.value.query.codeSearch as string | null) || ''"
+    :query="props.query"
     theme="dark"
     @code-block-render="handleCodeBlockRenderEvent"
-    @query-change="router.push({
-      query: {
-        ...router.currentRoute.value.query,
-        // Setting `undefined` for empty queries ensures the parameter is deleted from the URL.
-        codeSearch: $event || undefined,
-      },
-    })"
+    @query-change="emit('query-change', $event)"
   >
     <template
       v-if="$slots['secondary-actions']"
@@ -31,11 +25,8 @@
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 import { highlightElement, type AvailableLanguages } from '@/utilities/highlightElement'
-
-const router = useRouter()
 
 const props = withDefaults(defineProps<{
   id: string
@@ -44,11 +35,17 @@ const props = withDefaults(defineProps<{
   isSearchable?: boolean
   showCopyButton?: boolean
   codeMaxHeight?: string | null
+  query?: string
 }>(), {
   isSearchable: false,
   showCopyButton: true,
   codeMaxHeight: null,
+  query: '',
 })
+
+const emit = defineEmits<{
+  (event: 'query-change', query: string): void
+}>()
 
 const isProcessing = ref(false)
 

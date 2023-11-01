@@ -4,6 +4,7 @@
     name="zone-egress-clusters-view"
     :params="{
       zoneEgress: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -22,6 +23,8 @@
             :status="getItemStatusFromInsight(props.data.zoneEgressInsight)"
             resource="Zone"
             :src="`/zone-egresses/${route.params.zoneEgress}/data-path/clusters`"
+            :query="route.params.codeSearch"
+            @query-change="route.update({ codeSearch: $event })"
           />
         </template>
       </KCard>

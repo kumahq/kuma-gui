@@ -5,6 +5,7 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -36,6 +37,8 @@
               :resource="data"
               :resource-fetcher="(params) => kumaApi.getDataplaneFromMesh({ mesh: data.mesh, name: data.name }, params)"
               is-searchable
+              :query="route.params.codeSearch"
+              @query-change="route.update({ codeSearch: $event })"
             />
           </DataSource>
         </template>

@@ -5,6 +5,8 @@
     :code="yamlUniversal"
     :is-searchable="props.isSearchable"
     :code-max-height="props.codeMaxHeight"
+    :query="props.query"
+    @query-change="emit('query-change', $event)"
   >
     <template #secondary-actions>
       <KTooltip
@@ -49,10 +51,16 @@ const props = withDefaults(defineProps<{
   resourceFetcher: (params?: SingleResourceParameters) => Promise<Entity>
   codeMaxHeight?: string | null
   isSearchable?: boolean
+  query?: string
 }>(), {
   codeMaxHeight: null,
   isSearchable: false,
+  query: '',
 })
+
+const emit = defineEmits<{
+  (event: 'query-change', query: string): void
+}>()
 
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
 

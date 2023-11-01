@@ -5,6 +5,7 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -23,6 +24,8 @@
             :status="getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight).status"
             resource="Data Plane Proxy"
             :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
+            :query="route.params.codeSearch"
+            @query-change="route.update({ codeSearch: $event })"
           />
         </template>
       </KCard>
