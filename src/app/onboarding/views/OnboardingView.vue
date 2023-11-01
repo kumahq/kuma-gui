@@ -2,7 +2,7 @@
   <RouteView
     name="onboarding"
     :attrs="{
-      class: 'no-navigation'
+      class: 'no-navigation',
     }"
   >
     <AppView>
