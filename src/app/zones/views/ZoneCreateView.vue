@@ -502,8 +502,11 @@ function success() {
   isZoneConnected.value = true
 }
 </script>
+
 <style lang="scss" scoped>
-.radio-button-group > * + * {
-  margin-block-start: $kui-space-40;
+.radio-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: $kui-space-40;
 }
 </style>
