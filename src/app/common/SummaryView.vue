@@ -29,7 +29,7 @@ const emit = defineEmits<{
   :deep(.panel-background-transparent) {
     // TODO: Remove this in favor of setting KSlideout’s `props.offsetTop` to `var(--AppHeaderHeight)` once Kongponents v9 is available (which has https://github.com/Kong/kongponents/pull/1769).
     // Overrides KSlideout’s top offset. `props.offsetTop` doesn’t accept plain CSS values.
-    top: var(--slideout-offset-top) !important;
+    top: var(--app-slideout-offset-top) !important;
   }
 }
 
