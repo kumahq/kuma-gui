@@ -10,7 +10,7 @@
       v-slot="{ t, can }"
       name="app"
       :attrs="{
-        class: 'kuma-ready'
+        class: 'kuma-ready',
       }"
     >
       <ApplicationShell
@@ -18,6 +18,7 @@
       >
         <template #home>
           <img
+            class="logo"
             src="@/assets/images/product-logo.png"
             :alt="`${t('common.product.name')} Logo`"
             data-testid="logo"
@@ -68,7 +69,7 @@ import ZoneNavigator from '@/app/zones/components/ZoneNavigator.vue'
   // Note: `minmax(0, 1fr)` is used because `1fr` implies `minmax(auto, 1fr)` which will allow grid items to grow beyond their container's size.
   grid-template-columns: var(--AppSidebarWidth) minmax(0, 1fr);
 }
-img {
+.logo {
   max-height: 36px;
 }
 </style>
