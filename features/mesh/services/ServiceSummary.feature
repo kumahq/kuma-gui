@@ -18,8 +18,10 @@ Feature: Service summary
       KUMA_SERVICEINSIGHT_COUNT: 1
       """
 
-    When I visit the "/meshes/default/services" URL
-    And I click the "$item:nth-child(1) td:nth-child(2)" element
+    # TODO: Remove the following line and enable the next two lines again to turn summary trays back on.
+    When I visit the "/meshes/default/services/service-1" URL
+    # When I visit the "/meshes/default/services" URL
+    # And I click the "$item:nth-child(1) td:nth-child(2)" element
     Then the "$summary" element exists
     And the "$summary" element contains "service-1"
 

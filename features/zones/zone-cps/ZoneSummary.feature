@@ -18,8 +18,10 @@ Feature: Zone summary
       KUMA_ZONE_COUNT: 1
       """
 
-    When I visit the "/zones" URL
-    And I click the "$item:nth-child(1) td:nth-child(2)" element
+    # TODO: Remove the following line and enable the next two lines again to turn summary trays back on.
+    When I visit the "/zones/zone-1" URL
+    # When I visit the "/zones" URL
+    # And I click the "$item:nth-child(1) td:nth-child(2)" element
     Then the "$summary" element exists
     And the "$summary" element contains "zone-1"
 

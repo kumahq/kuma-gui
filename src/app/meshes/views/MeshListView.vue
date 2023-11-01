@@ -59,7 +59,7 @@
                   <template #name="{ row: item }">
                     <RouterLink
                       :to="{
-                        name: 'mesh-summary-view',
+                        name: 'mesh-detail-view',
                         params: {
                           mesh: item.name,
                         },

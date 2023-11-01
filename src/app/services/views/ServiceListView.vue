@@ -59,7 +59,7 @@
                 <template #name="{ row: item }">
                   <RouterLink
                     :to="{
-                      name: 'service-summary-view',
+                      name: 'service-detail-view',
                       params: {
                         mesh: item.mesh,
                         service: item.name,
