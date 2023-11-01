@@ -228,13 +228,13 @@ nav ul {
   border-right: $kui-border-width-10 solid $kui-color-border;
   background-color:  $kui-color-background;
 }
-nav > ul > :is(li) {
+nav > ul > :deep(li) {
   margin-left: $kui-space-40;
 }
-nav > ul > :is(li) + :is(li) {
+nav > ul > :deep(li) + li {
   margin-top: $kui-space-20;
 }
-nav > ul > :is(li) > :is(a) {
+nav > ul > :deep(li) > a {
   width: 100%;
   display: flex;
   justify-content: space-between;
