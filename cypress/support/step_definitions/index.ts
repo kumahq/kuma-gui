@@ -165,7 +165,7 @@ Then(/^the "(.*)" element[s]?( don't | doesn't | )exist[s]?$/, function (selecto
   }).should(`${prefix}exist`)
 })
 
-Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(.*)$/, (selector: string, assertion: string, booleanAttribute: string) => {
+Then(/^the "(.*)" element[s]?( isn't | aren't | is | are )(checked|disabled)$/, (selector: string, assertion: string, booleanAttribute: string) => {
   const negative = !['is', 'are'].includes(assertion.trim())
   const prefix = negative ? 'not.' : ''
 
@@ -191,6 +191,10 @@ Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', t
 })
 Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) => {
   $(selector).contains(value)
+})
+
+Then(/^the "(.*)" element is empty$/, (selector: string) => {
+  $(selector).should('be.empty')
 })
 
 Then('the page title contains {string}', function (title: string) {
