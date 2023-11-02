@@ -22,6 +22,9 @@ Feature: mesh / dataplanes / index
               inbound:
               - tags:
                   kuma.io/protocol: http
+          dataplaneInsight:
+            mTLS:
+              certificateExpirationTime: 2023-11-03T09:10:17Z
         - name: fake-frontend
       """
 
@@ -67,6 +70,7 @@ Feature: mesh / dataplanes / index
 
     Then the "$table-row" element exists 9 times
     Then the "$table-row:nth-child(1)" element contains
-      | Value        |
-      | fake-backend |
-      | http         |
+      | Value                |
+      | fake-backend         |
+      | http                 |
+      | Nov 3, 2023, 9:10 AM |
