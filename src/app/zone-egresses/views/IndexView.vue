@@ -105,9 +105,9 @@
                     class="details-link"
                     data-testid="details-link"
                     :to="{
-                      name: 'zone-ingress-detail-view',
+                      name: 'zone-egress-detail-view',
                       params: {
-                        zoneIngress: row.name,
+                        zoneEgress: row.name,
                       },
                     }"
                   >
