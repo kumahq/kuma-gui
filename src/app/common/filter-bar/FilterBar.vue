@@ -1,138 +1,125 @@
 <template>
   <div
     ref="filterBar"
-    class="k-filter-bar"
-    data-testid="k-filter-bar"
+    class="filter-bar"
+    data-testid="filter-bar"
   >
-    <button
-      class="k-focus-filter-input-button"
-      title="Focus filter"
-      type="button"
-      data-testid="k-filter-bar-focus-filter-input-button"
-      @click="focusFilterInput"
-    >
-      <span class="visually-hidden">Focus filter</span>
-
-      <span class="k-filter-icon">
-        <FilterIcon
-          decorative
-          data-testid="k-filter-bar-filter-icon"
-          hide-title
-          :size="KUI_ICON_SIZE_30"
-        />
-      </span>
-    </button>
-
-    <label
-      :for="`${props.id}-filter-bar-input`"
-      class="visually-hidden"
-    >
-      <slot>
-        {{ placeholderAndLabelFallback }}
-      </slot>
-    </label>
-
-    <input
-      :id="`${props.id}-filter-bar-input`"
-      ref="filterInput"
-      v-model="currentQuery"
-      class="k-filter-bar-input"
-      type="text"
-      :placeholder="currentPlaceholder"
-      data-testid="k-filter-bar-filter-input"
-      @focus="isShowingSuggestionBox = true"
-      @blur="closeSuggestionBoxIfCondition"
-      @change="handleQueryChangeEvent"
-    >
-
-    <div
-      v-if="isShowingSuggestionBox"
-      class="k-suggestion-box"
-      data-testid="k-filter-bar-suggestion-box"
-    >
-      <div class="k-suggestion-list">
-        <p
-          v-if="tokenizerError !== null"
-          class="k-filter-bar-error"
-        >
-          {{ tokenizerError.message }}
-        </p>
-
+    <search>
+      <form
+        @submit.prevent="change"
+      >
         <button
-          v-else
-          class="k-submit-query-button"
-          :class="{ 'k-submit-query-button-is-selected': selectedSuggestionItemIndex === -1 }"
-          title="Submit query"
+          class="focus-filter-input-button"
+          title="Focus filter"
           type="button"
-          data-testid="k-filter-bar-submit-query-button"
-          @click="submitQuery"
+          data-testid="filter-bar-focus-filter-input-button"
+          @click="focusFilterInput"
         >
-          Submit {{ currentQuery }}
-        </button>
+          <span class="visually-hidden">Focus filter</span>
 
-        <div
-          v-for="(fieldEntry, index) in fieldEntries"
-          :key="`${props.id}-${index}`"
-          class="k-suggestion-list-item"
-          :class="{ 'k-suggestion-list-item-is-selected': selectedSuggestionItemIndex === index }"
-        >
-          <b>{{ fieldEntry.fieldName }}</b><span v-if="fieldEntry.description !== ''">: {{ fieldEntry.description }}</span>
-
-          <button
-            class="k-apply-suggestion-button"
-            :title="`Add ${fieldEntry.fieldName}:`"
-            type="button"
-            :data-filter-field="fieldEntry.fieldName"
-            data-testid="k-filter-bar-apply-suggestion-button"
-            @click="applySuggestion"
-          >
-            <span class="visually-hidden">Add {{ fieldEntry.fieldName }}:</span>
-
-            <ChevronRightIcon
+          <span class="filter-bar-icon">
+            <FilterIcon
               decorative
+              data-testid="filter-bar-filter-icon"
               hide-title
               :size="KUI_ICON_SIZE_30"
             />
-          </button>
+          </span>
+        </button>
+
+        <label
+          :for="`${props.id}-filter-bar-input`"
+          class="visually-hidden"
+        >
+          <slot>
+            {{ placeholderAndLabelFallback }}
+          </slot>
+        </label>
+
+        <input
+          :id="`${props.id}-filter-bar-input`"
+          ref="filterInput"
+          v-model="currentQuery"
+          class="filter-bar-input"
+          type="search"
+          :placeholder="currentPlaceholder"
+          data-testid="filter-bar-filter-input"
+          name="s"
+          @focus="isShowingSuggestionBox = true"
+          @input="isShowingSuggestionBox = true"
+          @blur="closeSuggestionBoxIfCondition"
+          @search="(e: InputEvent) => {
+            const $el = e.target as HTMLInputElement
+            if($el.value.length === 0) {
+              isShowingSuggestionBox = true
+            }
+          }"
+        >
+
+        <div
+          v-if="isShowingSuggestionBox"
+          class="suggestion-box"
+          data-testid="filter-bar-suggestion-box"
+        >
+          <div class="suggestion-list">
+            <p
+              v-if="tokenizerError !== null"
+              class="filter-bar-error"
+            >
+              {{ tokenizerError.message }}
+            </p>
+
+            <button
+              v-else
+              type="submit"
+              class="submit-query-button"
+              :class="{ 'submit-query-button-is-selected': selectedSuggestionItemIndex === 0 }"
+              data-testid="filter-bar-submit-query-button"
+            >
+              Submit {{ currentQuery }}
+            </button>
+
+            <div
+              v-for="(fieldEntry, index) in fieldEntries"
+              :key="`${props.id}-${index}`"
+              class="suggestion-list-item"
+              :class="{ 'suggestion-list-item-is-selected': selectedSuggestionItemIndex === index + 1 }"
+            >
+              <b>{{ fieldEntry.fieldName }}</b><span v-if="fieldEntry.description !== ''">: {{ fieldEntry.description }}</span>
+
+              <button
+                class="apply-suggestion-button"
+                :title="`Add ${fieldEntry.fieldName}:`"
+                type="button"
+                :data-filter-field="fieldEntry.fieldName"
+                data-testid="filter-bar-apply-suggestion-button"
+                @click="applySuggestion"
+              >
+                <span class="visually-hidden">Add {{ fieldEntry.fieldName }}:</span>
+
+                <ChevronRightIcon
+                  decorative
+                  hide-title
+                  :size="KUI_ICON_SIZE_30"
+                />
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <button
-      v-if="currentQuery !== ''"
-      class="k-clear-query-button"
-      title="Clear query"
-      type="button"
-      data-testid="k-filter-bar-clear-query-button"
-      @click="clearQuery"
-    >
-      <span class="visually-hidden">Clear query</span>
-
-      <ClearIcon
-        decorative
-        hide-title
-        :size="KUI_ICON_SIZE_30"
-      />
-    </button>
+      </form>
+    </search>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ChevronRightIcon, ClearIcon, FilterIcon } from '@kong/icons'
-import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
+import { ChevronRightIcon, FilterIcon } from '@kong/icons'
+import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
 
-import { clamp } from './clamp'
 import { Command, ShortcutManager } from './ShortcutManager'
-import { tokenizeFieldFilterQuery } from './tokenizeFieldFilterQuery'
 import uniqueId from '@/utilities/uniqueId'
 
 export type Fields = [string, string][]
-
-export type FilterBarEventData = {
-  query: string
-  fields: Fields
-}
 
 export type FilterFieldDefinition = {
   description: string
@@ -141,35 +128,20 @@ export type FilterFieldDefinition = {
 export type FilterFields = Record<string, FilterFieldDefinition>
 
 const props = defineProps({
-  /**
-   * ID value used for form elements like the search input and its label.
-   */
   id: {
     type: String,
     required: false,
     default: () => uniqueId('k-filter-bar'),
   },
-
-  /**
-   * The fields that can be used with the filter bar. Providing an unknown field name will display an error.
-   */
   fields: {
     type: Object as PropType<FilterFields>,
     required: true,
   },
-
-  /**
-   * The filter input’s placeholder attribute value.
-   */
   placeholder: {
     type: String,
     required: false,
     default: null,
   },
-
-  /**
-   * Used as the initial value of the filter input. Can be used to initialize a filter bar with a query which was read from client storage. **Default: `''`**.
-   */
   query: {
     type: String,
     required: false,
@@ -178,22 +150,22 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  /**
-   * Fired when the fields change. Not fired again for inconsequential changes to the query (i.e. changes that would semantically produce the same set of entered fields emitted by the event).
-   */
-  (event: 'fields-change', data: FilterBarEventData): void
+  (event: 'change', data: FormData): void
 }>()
 
 const filterBar = ref<HTMLElement | null>(null)
 const filterInput = ref<HTMLInputElement | null>(null)
 const currentQuery = ref(props.query)
-const currentFields = ref<Fields>([])
 const tokenizerError = ref<Error | null>(null)
 const isShowingSuggestionBox = ref(false)
 /**
- * Keeps track of the selected suggestion item (from 0 to N-1 where N is the number of suggestion items shown). A special value is -1 which represents the “Submit” item for submitting a query. This is definitely slightly in the realm of “clever code”, but it’s just very convenient to cycle between highlighted items by tracking it with one index variable.
+ * Keeps track of the selected suggestion item (from 0 to N-1 where N is the
+ * number of suggestion items shown). A special value is -1 which represents
+ * the “Submit” item for submitting a query. This is definitely slightly in the
+ * realm of “clever code”, but it’s just very convenient to cycle between
+ * highlighted items by tracking it with one index variable.
  */
-const selectedSuggestionItemIndex = ref(-1)
+const selectedSuggestionItemIndex = ref(0)
 
 const allowedFields = computed(() => Object.keys(props.fields))
 
@@ -213,49 +185,15 @@ const placeholderAndLabelFallback = computed(() => {
 
 const currentPlaceholder = computed(() => props.placeholder ?? placeholderAndLabelFallback.value)
 
-watch(() => currentFields.value, function (newFields, oldFields) {
-  // Only emits the event if the fields have changed.
-  if (!areFieldsSemanticallyIdentical(newFields, oldFields)) {
-    tokenizerError.value = null
+type CommandKeywords = 'jumpToNextSuggestion' | 'jumpToPreviousSuggestion'
 
-    emit('fields-change', { fields: newFields, query: currentQuery.value })
-  }
-})
-
-watch(() => currentQuery.value, function () {
-  if (currentQuery.value === '') {
-    tokenizerError.value = null
-  }
-
-  isShowingSuggestionBox.value = true
-})
-
-type CommandKeywords = 'submitQuery' | 'jumpToNextSuggestion' | 'jumpToPreviousSuggestion' | 'closeSuggestionBox'
-
-/**
- * Maps shortcuts to their associated command keywords.
- */
 const keyMap: Record<string, CommandKeywords> = {
-  Enter: 'submitQuery',
-  Escape: 'closeSuggestionBox',
   ArrowDown: 'jumpToNextSuggestion',
   ArrowUp: 'jumpToPreviousSuggestion',
 }
-
-/**
- * Maps command keywords to their associated commands.
- */
 const commands: Record<CommandKeywords, Command> = {
-  submitQuery: {
-    trigger: submitQuery,
-    isAllowedContext(event: Event) {
-      return filterInput.value !== null && event.composedPath().includes(filterInput.value)
-    },
-    shouldPreventDefaultAction: true,
-  },
-
   jumpToNextSuggestion: {
-    trigger: jumpToNextSuggestion,
+    trigger: () => jumpToSuggestion(1),
     isAllowedContext(event: Event) {
       return filterInput.value !== null && event.composedPath().includes(filterInput.value)
     },
@@ -263,69 +201,38 @@ const commands: Record<CommandKeywords, Command> = {
   },
 
   jumpToPreviousSuggestion: {
-    trigger: jumpToPreviousSuggestion,
+    trigger: () => jumpToSuggestion(-1),
     isAllowedContext(event: Event) {
       return filterInput.value !== null && event.composedPath().includes(filterInput.value)
     },
     shouldPreventDefaultAction: true,
   },
-
-  closeSuggestionBox: {
-    trigger: closeSuggestionBox,
-    isAllowedContext(event: Event) {
-      return filterBar.value !== null && event.composedPath().includes(filterBar.value)
-    },
-  },
 }
 
-function start() {
-  const shortcutManager = new ShortcutManager(keyMap, commands)
+const shortcutManager = new ShortcutManager(keyMap, commands)
 
-  onMounted(function () {
-    shortcutManager.registerListener()
-  })
+onMounted(function () {
+  shortcutManager.registerListener()
+})
 
-  onBeforeUnmount(function () {
-    shortcutManager.unRegisterListener()
-  })
+onBeforeUnmount(function () {
+  shortcutManager.unRegisterListener()
+})
 
-  recomputeFields(currentQuery.value)
-}
-
-start()
-
-function handleQueryChangeEvent(event: Event): void {
-  const input = event.target as HTMLInputElement
-  recomputeFields(input.value)
-}
-
-function submitQuery(): void {
-  if (!(filterInput.value instanceof HTMLInputElement)) {
-    return
-  }
-
-  if (selectedSuggestionItemIndex.value === -1) {
-    recomputeFields(filterInput.value.value)
+function change(ev: Event): void {
+  if (ev?.target) {
+    emit('change', new FormData(ev.target as HTMLFormElement))
     isShowingSuggestionBox.value = false
-  } else {
-    const fieldName = fieldEntries.value[selectedSuggestionItemIndex.value].fieldName
-
-    if (fieldName) {
-      appendFieldSuggestionToFilterInput(filterInput.value, fieldName)
-    }
   }
-}
-
-function jumpToNextSuggestion(): void {
-  jumpToSuggestion(1)
-}
-
-function jumpToPreviousSuggestion(): void {
-  jumpToSuggestion(-1)
 }
 
 function jumpToSuggestion(direction: number): void {
-  selectedSuggestionItemIndex.value = clamp(selectedSuggestionItemIndex.value + direction, -1, fieldEntries.value.length - 1)
+  const len = fieldEntries.value.length
+  let num = selectedSuggestionItemIndex.value + direction
+  if (num === -1) {
+    num = len
+  }
+  selectedSuggestionItemIndex.value = num % (len + 1)
 }
 
 function focusFilterInput(): void {
@@ -347,107 +254,82 @@ function appendFieldSuggestionToFilterInput(input: HTMLInputElement, fieldName: 
   const delimitingSpace = currentQuery.value === '' || currentQuery.value.endsWith(' ') ? '' : ' '
   currentQuery.value += delimitingSpace + fieldName + ':'
   input.focus()
-  selectedSuggestionItemIndex.value = -1
-}
-
-function clearQuery(): void {
-  currentQuery.value = ''
-
-  if (filterInput.value instanceof HTMLInputElement) {
-    filterInput.value.value = ''
-    filterInput.value.focus()
-    recomputeFields('')
-  }
+  selectedSuggestionItemIndex.value = 0
 }
 
 function closeSuggestionBoxIfCondition(event: FocusEvent): void {
   if (event.relatedTarget === null) {
-    closeSuggestionBox()
+    isShowingSuggestionBox.value = false
   }
 
   if (filterBar.value instanceof HTMLElement && event.relatedTarget instanceof Node) {
     const isFocusTargetPartOfFilterBar = !filterBar.value.contains(event.relatedTarget)
 
     if (isFocusTargetPartOfFilterBar) {
-      closeSuggestionBox()
+      isShowingSuggestionBox.value = false
     }
   }
 }
 
-function closeSuggestionBox(): void {
-  isShowingSuggestionBox.value = false
-}
-
-/**
- * Recomputes the `fields` state based on `query`.
- */
-function recomputeFields(query: string): void {
-  tokenizerError.value = null
-
-  try {
-    const newFields = tokenizeFieldFilterQuery(query, allowedFields.value)
-
-    // Sorts fields by their names to ensure that semantically identical sets of fields can be identified (e.g. to avoid emitting redundant events).
-    // For example, the fields `[['a', 'a'], ['b', 'b']]` and `[['b', 'b'], ['a', 'a']]` should be considered semantically identical.
-    newFields.sort((newFieldsA, newFieldsB) => newFieldsA[0].localeCompare(newFieldsB[0]))
-
-    currentFields.value = newFields
-  } catch (error) {
-    if (error instanceof Error) {
-      tokenizerError.value = error
-      isShowingSuggestionBox.value = true
-    } else {
-      throw error
-    }
-  }
-}
-
-/**
- * @returns whether two sets of fields are semantically identical.
- */
-function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolean {
-  return JSON.stringify(fieldsA) === JSON.stringify(fieldB)
-}
 </script>
 
 <style lang="scss" scoped>
-.k-filter-bar {
+.filter-bar-input:focus {
+  // Focus styles are managed by `.filter-bar`
+  outline: none;
+}
+.filter-bar {
   position: relative;
-  display: inline-flex;
-  align-items: stretch;
   background-color: $kui-color-background;
   border: $kui-border-width-10 solid $kui-color-border;
   border-radius: 3px;
   transition: border 0.1s ease;
 }
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
 
-.k-filter-bar:focus-within {
-  border-color: $kui-color-border-primary-weak;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+
+  display: inline-flex;
+  background-color: #afb7c5;
+
+  --kong-clear-icon: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.4 17L12 13.4L15.6 17L17 15.6L13.4 12L17 8.4L15.6 7L12 10.6L8.4 7L7 8.4L10.6 12L7 15.6L8.4 17ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22Z" fill="black"/></svg>');
+  -webkit-mask-image: var(--kong-clear-icon);
+  mask-image: var(--kong-clear-icon);
+  width: 16px;
+  height: 16px;
 }
 
-.k-focus-filter-input-button {
+.filter-bar:focus-within {
+  border-color: $kui-color-border-primary-weak;
+}
+.filter-bar form {
+  display: inline-flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.focus-filter-input-button {
   display: inline-flex;
   align-items: center;
 }
 
-.k-filter-icon {
+.filter-bar-icon {
   display: inline-flex;
   align-items: center;
   padding: 0 $kui-space-40;
 }
 
-.k-filter-bar-input {
+.filter-bar-input {
   flex-grow: 1;
   width: 100%;
   border: none;
 }
 
-.k-filter-bar-input:focus {
-  // Focus styles are managed by `.filter-bar`
-  outline: none;
-}
-
-.k-suggestion-box {
+.suggestion-box {
   position: absolute;
   top: calc(100% + 4px);
   right: -1px;
@@ -459,46 +341,46 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   border-radius: 3px;
 }
 
-.k-filter-bar-error {
+.filter-bar-error {
   padding: $kui-space-20 $kui-space-40;
   color: $kui-color-text-danger;
 }
 
-.k-submit-query-button {
+.submit-query-button {
   align-self: stretch;
   text-align: left;
   padding: $kui-space-20 $kui-space-40;
   border-radius: 3px;
 }
 
-.k-filter-bar-error:not(:last-child),
-.k-submit-query-button:not(:last-child) {
+.filter-bar-error:not(:last-child),
+.submit-query-button:not(:last-child) {
   margin-bottom: $kui-space-20;
   border-bottom: $kui-border-width-10 solid $kui-color-border;
   padding-bottom: $kui-space-20;
 }
 
-.k-suggestion-list {
+.suggestion-list {
   display: flex;
   flex-direction: column;
   gap: $kui-space-20;
 }
 
-.k-suggestion-list-item {
+.suggestion-list-item {
   position: relative;
   display: flex;
   align-items: center;
   padding: $kui-space-20 0 $kui-space-20 $kui-space-40;
 }
 
-.k-submit-query-button-is-selected,
-.k-suggestion-list-item-is-selected {
+.submit-query-button-is-selected,
+.suggestion-list-item-is-selected {
   color: $kui-color-text-inverse;
   background-color: $kui-color-background-primary;
   border-radius: 3px;
 }
 
-.k-apply-suggestion-button {
+.apply-suggestion-button {
   align-self: stretch;
   display: inline-flex;
   align-items: center;
@@ -509,20 +391,20 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   color: $kui-color-text-neutral-weak;
 }
 
-.k-apply-suggestion-button:hover,
-.k-apply-suggestion-button:focus {
+.apply-suggestion-button:hover,
+.apply-suggestion-button:focus {
   color: $kui-color-text-inverse;
   background-color: $kui-color-background-primary;
 }
 
-.k-apply-suggestion-button::before {
+.apply-suggestion-button::before {
   content: '';
   position: absolute;
   z-index: 2;
   inset: 0;
 }
 
-.k-clear-query-button {
+.clear-query-button {
   display: inline-flex;
   align-items: center;
   padding: 0 $kui-space-40;
@@ -535,7 +417,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   appearance: none;
 }
 
-.k-clear-query-button:focus {
+.clear-query-button:focus {
   border-color: $kui-color-border-primary;
   outline: none;
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px $kui-color-border-primary;

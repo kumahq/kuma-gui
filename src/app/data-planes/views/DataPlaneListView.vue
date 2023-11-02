@@ -54,16 +54,15 @@
                   <FilterBar
                     class="data-plane-proxy-filter"
                     :placeholder="`tag: 'kuma.io/protocol: http'`"
-                    :query="route.params.query"
+                    :query="route.params.s"
                     :fields="{
                       name: { description: 'filter by name or parts of a name' },
                       service: { description: 'filter by “kuma.io/service” value' },
                       tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
                       zone: { description: 'filter by “kuma.io/zone” value' },
                     }"
-                    @fields-change="(val) => route.update({
-                      query: val.query,
-                      s: val.query.length > 0 ? JSON.stringify(val.fields) : '',
+                    @change="(e) => route.update({
+                      ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
                     })"
                   />
                 </template>

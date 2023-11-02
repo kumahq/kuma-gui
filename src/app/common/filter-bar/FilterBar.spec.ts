@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
-import KFilterBar from './FilterBar.vue'
+import FilterBar from './FilterBar.vue'
 
 const FIELDS = {
   name: { description: 'filter by name or parts of a name' },
@@ -10,7 +10,7 @@ const FIELDS = {
 }
 
 function renderComponent(props = {}) {
-  return mount(KFilterBar as any, {
+  return mount(FilterBar as any, {
     props: {
       fields: FIELDS,
       ...props,
@@ -18,27 +18,27 @@ function renderComponent(props = {}) {
   })
 }
 
-describe('KFilterBar', () => {
+describe('FilterBar', () => {
   test('has the right default content', async () => {
     const wrapper = renderComponent({ id: 'filter-bar' })
 
-    expect(wrapper.find('[data-testid="k-filter-bar-focus-filter-input-button"]').exists()).toBe(true)
-    expect(wrapper.find('[data-testid="k-filter-bar-suggestion-box"]').exists()).toBe(false)
+    expect(wrapper.find('[data-testid="filter-bar-focus-filter-input-button"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="filter-bar-suggestion-box"]').exists()).toBe(false)
 
-    const input = wrapper.find<HTMLInputElement>('[data-testid="k-filter-bar-filter-input"]')
+    const input = wrapper.find<HTMLInputElement>('[data-testid="filter-bar-filter-input"]')
     expect(input.attributes('placeholder')).toBe('Filter by name, protocol, tag')
 
     await input.trigger('focus')
 
-    expect(wrapper.find('[data-testid="k-filter-bar-suggestion-box"]').exists()).toBe(true)
-    expect(wrapper.find('[data-testid="k-filter-bar-submit-query-button"]').exists()).toBe(true)
-    expect(wrapper.findAll('[data-testid="k-filter-bar-apply-suggestion-button"]').length).toBe(3)
+    expect(wrapper.find('[data-testid="filter-bar-suggestion-box"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="filter-bar-submit-query-button"]').exists()).toBe(true)
+    expect(wrapper.findAll('[data-testid="filter-bar-apply-suggestion-button"]').length).toBe(3)
   })
 
   test('emits expected “fields-change” event when submitting queries', async () => {
     const wrapper = renderComponent({ id: 'filter-bar' })
 
-    const input = wrapper.find<HTMLInputElement>('[data-testid="k-filter-bar-filter-input"]')
+    const input = wrapper.find<HTMLInputElement>('[data-testid="filter-bar-filter-input"]')
 
     const expectedEventData1 = {
       fields: [['name', 'test']],

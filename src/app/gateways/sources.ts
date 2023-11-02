@@ -1,5 +1,5 @@
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
-import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
+import { search } from '@/app/data-planes/sources'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type {
   PaginatedApiListResponse as CollectionResponse,
@@ -50,7 +50,7 @@ export const sources = (api: KumaApi) => {
       return api.getAllDataplaneOverviewsFromMesh({
         mesh: params.mesh,
       }, {
-        ...Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]'))),
+        ...search(params.search),
         gateway: params.type === 'all' ? 'true' : params.type,
         offset,
         size: params.size,

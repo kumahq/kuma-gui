@@ -45,6 +45,40 @@ export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDatapla
 export type DataplaneRulesCollection = CollectionResponse<DataplaneRule>
 export type DataplaneRulesCollectionSource = DataSourceResponse<DataplaneRulesCollection>
 
+// any collection of non-spaces followed by a `:` or `: ` followed by a
+// collection of non-spaces
+// or
+// a collection of non-spaces
+//
+// Should match:
+// `kuma.io/service: name`
+// `kuma.io/service:name`
+// `version:1`
+// `dpp-name`
+const searchRe = /(\S+:\s*\S*)|(\S*)/g
+
+export const search = (search: string) => {
+  const map: Record<string, string> = {
+    service: 'kuma.io/service',
+    zone: 'kuma.io/zone',
+    protocol: 'kuma.io/protocol',
+  }
+  const terms = [...search.matchAll(searchRe)].filter(item => item[0].length > 0).map(item => item[0].trim())
+  return terms.reduce((prev, item) => {
+    return (function parse(prev, item) {
+      const [key, ...value] = item.split(':')
+      if (value.length === 0) {
+        prev.name = key.trim()
+      } else if (key === 'tag') {
+        return parse(prev, value.join(':').trim())
+      } else {
+        prev.tag.push(`${map[key] || key}:${value.join(':').trim()}`)
+      }
+      return prev
+    })(prev, item)
+  }, { tag: [] } as { tag: string[], name?: string}) || {}
+}
+
 export const sources = (api: KumaApi) => {
   return {
     '/meshes/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
@@ -53,10 +87,9 @@ export const sources = (api: KumaApi) => {
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
       const gateway = 'false'
-      const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
 
       return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
-        ...filterParams,
+        ...search(params.search),
         gateway,
         offset,
         size,
@@ -112,10 +145,8 @@ export const sources = (api: KumaApi) => {
       // here 'all' means both proxies/sidecars and gateways this currently fits
       // our usecases but we should probably include `gateway | sidecar` or
       // similar
-      const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
-      if (typeof filterParams.tag === 'undefined') {
-        filterParams.tag = []
-      }
+      const filterParams = search(params.search)
+
       filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/service:'))
       filterParams.tag.push(`kuma.io/service:${params.service}`)
       const gatewayParams = params.type !== 'all' ? { gateway: params.type } : {}
