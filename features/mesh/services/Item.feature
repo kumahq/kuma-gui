@@ -2,13 +2,14 @@ Feature: mesh / services / item
   Background:
     Given the CSS selectors
       | Alias                  | Selector                                         |
+      | config-tab             | #service-config-view-tab a                       |
       | data-plane-proxies-tab | #service-data-plane-proxies-view-tab a           |
       | item                   | [data-testid='data-plane-collection'] tbody tr   |
       | input-search           | [data-testid='k-filter-bar-filter-input']        |
       | button-search          | [data-testid='k-filter-bar-submit-query-button'] |
       | button-clear-search    | [data-testid="k-filter-bar-clear-query-button"]  |
 
-  Scenario Outline: Shows Data Plane Proxies for service type <ServiceType>
+  Scenario Outline: Shows correct tabs for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
       """
         body:
@@ -16,15 +17,30 @@ Feature: mesh / services / item
       """
 
     When I visit the "/meshes/default/services/firewall-1/overview" URL
-    Then the "$data-plane-proxies-tab" element <ExistsAssertion>
+    Then the "$config-tab" element doesn't exist
+    Then the "$data-plane-proxies-tab" element exists
 
     Examples:
-      | ServiceType       | ExistsAssertion |
-      | ~                 | exists          |
-      | internal          | exists          |
-      | gateway_builtin   | exists          |
-      | gateway_delegated | exists          |
-      | external          | doesn't exist   |
+      | ServiceType       |
+      | !!js/undefined    |
+      | internal          |
+      | gateway_builtin   |
+      | gateway_delegated |
+
+  Scenario Outline: Shows correct tabs for service type <ServiceType>
+    Given the URL "/meshes/default/service-insights/firewall-1" responds with
+      """
+        body:
+          serviceType: <ServiceType>
+      """
+
+    When I visit the "/meshes/default/services/firewall-1/overview" URL
+    Then the "$config-tab" element exists
+    Then the "$data-plane-proxies-tab" element doesn't exist
+
+    Examples:
+      | ServiceType |
+      | external    |
 
   Rule: With an internal service
     Background:

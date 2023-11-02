@@ -39,8 +39,8 @@ export class KumaModule {
       [
         'internal',
         'external',
-        // 'gateway_delegated',
-        // 'gateway_builtin',
+        'gateway_delegated',
+        'gateway_builtin',
       ],
     )
   }
