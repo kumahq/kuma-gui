@@ -108,13 +108,6 @@
         {{ t('common.collection.none') }}
       </template>
     </template>
-    <template #certificate="{ row: item }">
-      {{
-        item.dataplaneInsight?.mTLS?.certificateExpirationTime ?
-          formatIsoDate(new Date(item.dataplaneInsight.mTLS.certificateExpirationTime).toUTCString()) :
-          t('data-planes.components.data-plane-list.certificate.none')
-      }}
-    </template>
 
     <template #details="{ row }">
       <RouterLink
@@ -179,6 +172,7 @@ type DataPlaneOverviewTableRow = {
     cert_expired: boolean
   }
   isGateway: boolean
+  certificate: string
 }
 
 type ChangeValue = {
@@ -266,6 +260,13 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       initialData,
     )
 
+    let certificate
+    if (dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime) {
+      certificate = formatIsoDate(dataPlaneOverview.dataplaneInsight.mTLS.certificateExpirationTime)
+    } else {
+      certificate = t('data-planes.components.data-plane-list.certificate.none')
+    }
+
     // assemble the table data
     const item: DataPlaneOverviewTableRow = {
       name,
@@ -279,6 +280,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
         cert_expired: false,
       },
       isGateway: dataPlaneOverview.dataplane?.networking?.gateway !== undefined,
+      certificate,
     }
 
     if (summary.version) {
