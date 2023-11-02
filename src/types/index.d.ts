@@ -206,9 +206,17 @@ export type DataPlaneNetworking = {
     port: number
     tags: Record<string, string>
   }[]
+  /**
+   * The presence of the `gateway` field means one of two things:
+   *
+   * - The resource represents a builtin gateway (when `gateway.type === 'BUILTIN'`)
+   * - The resource represents a delegated gateway (when `gateway.type === 'DELEGATED'` or `gateway.type` is omitted)
+   *
+   * If the `gateway` field is absent, the resource represents a regular Data Plane Proxy.
+   */
   gateway?: {
     tags: Record<string, string>
-    type?: 'builtin' | 'delegated' | undefined
+    type?: 'BUILTIN' | 'DELEGATED'
   }
 }
 
