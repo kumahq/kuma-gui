@@ -19,10 +19,36 @@
 
       <KCard>
         <template #body>
-          <ExternalServiceConfig
-            :mesh="route.params.mesh"
-            :service="route.params.service"
-          />
+          <div>
+            <DataSource
+              v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
+              :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
+            >
+              <ErrorBlock
+                v-if="externalServiceError"
+                :error="externalServiceError"
+              />
+
+              <LoadingBlock v-else-if="externalService === undefined" />
+
+              <EmptyBlock
+                v-else-if="externalService === null"
+                data-testid="no-matching-external-service"
+              >
+                <template #title>
+                  <p>{{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}</p>
+                </template>
+              </EmptyBlock>
+
+              <ResourceCodeBlock
+                v-else
+                id="code-block-service"
+                :resource="externalService"
+                :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
+                is-searchable
+              />
+            </DataSource>
+          </div>
         </template>
       </KCard>
     </AppView>
@@ -30,5 +56,12 @@
 </template>
 
 <script lang="ts" setup>
-import ExternalServiceConfig from '../components/ExternalServiceConfig.vue'
+import type { ExternalServiceSource } from '../sources'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 </script>
