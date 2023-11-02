@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ route, t }"
-    name="mesh-overview-view"
+    name="mesh-detail-view"
     :params="{
       mesh: '',
     }"
