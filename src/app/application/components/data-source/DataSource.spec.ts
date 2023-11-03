@@ -1,8 +1,8 @@
-import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
+import { describe, expect, test } from 'vitest'
 
 import DataSource from './DataSource.vue'
-import { withSources } from '@/../jest/jest-setup-after-env'
+import { withSources } from '@/../test-support/main'
 
 describe('DataSourcePool', () => {
   test("passing an empty uri doesn't fire change", async () => {

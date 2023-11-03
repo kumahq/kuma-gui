@@ -26,3 +26,5 @@ yarn-error.log*
 # Vitepress
 .vitepress/cache
 .vitepress/dist
+
+coverage/*
