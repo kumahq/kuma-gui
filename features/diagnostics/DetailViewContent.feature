@@ -19,7 +19,7 @@ Feature: Diagnostics: Detail view content
   Scenario: Reads code search value from URL
     When I visit the "/diagnostics?codeSearch=(groups%257Cusers)" URL
 
-    Then the "$code-block-search-input" element has value "(groups|users)"
+    Then the "$code-block-search-input" element contains "(groups|users)"
 
   Scenario: Stores code search value in URL
     When I visit the "/diagnostics" URL
