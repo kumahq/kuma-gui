@@ -88,10 +88,18 @@ const refresh = (map: Breadcrumbs) => {
 const appView: AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: Symbol) => {
     if (typeof items !== 'undefined') {
-      if (!map.has(sym)) {
-        map.set(sym, items)
-        refresh(map)
+      if (map.has(sym)) {
+        const current = map.get(sym)
+        // if we already have a record for this component we might be mutating,
+        // so check for equality JSON.stringify is probably best/fastest/ok
+        // seeing as order of things is highly unlikely to change
+        if (JSON.stringify(current) === JSON.stringify(items)) {
+          // if they are the same, don't refresh
+          return
+        }
       }
+      map.set(sym, items)
+      refresh(map)
     }
   },
   removeBreadcrumbs: (sym: Symbol) => {
