@@ -4,6 +4,7 @@
     name="zone-ingress-stats-view"
     :params="{
       zoneIngress: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -22,7 +23,8 @@
             :status="getItemStatusFromInsight(props.data.zoneIngressInsight)"
             resource="Zone"
             :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/stats`"
-            query-key="envoy-data-stats-zone-ingress"
+            :query="route.params.codeSearch"
+            @query-change="route.update({ codeSearch: $event })"
           />
         </template>
       </KCard>

@@ -4,6 +4,7 @@
     name="zone-ingress-config-view"
     :params="{
       zoneIngress: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -35,6 +36,8 @@
                 :resource="data"
                 :resource-fetcher="(params) => kumaApi.getZoneIngress({ name: route.params.zoneIngress }, params)"
                 is-searchable
+                :query="route.params.codeSearch"
+                @query-change="route.update({ codeSearch: $event })"
               />
             </template>
           </DataSource>

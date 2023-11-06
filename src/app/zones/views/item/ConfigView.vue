@@ -1,9 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ t }"
+    v-slot="{ route, t }"
     name="zone-cp-config-view"
     :params="{
       zone: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -45,7 +46,8 @@
               language="json"
               :code="conf"
               is-searchable
-              query-key="zone-config"
+              :query="route.params.codeSearch"
+              @query-change="route.update({ codeSearch: $event })"
             />
 
             <KAlert

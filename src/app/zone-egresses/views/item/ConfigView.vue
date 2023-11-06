@@ -4,6 +4,7 @@
     name="zone-egress-config-view"
     :params="{
       zoneEgress: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -35,6 +36,8 @@
                 :resource="data"
                 :resource-fetcher="(params) => kumaApi.getZoneEgress({ name: route.params.zoneEgress }, params)"
                 is-searchable
+                :query="route.params.codeSearch"
+                @query-change="route.update({ codeSearch: $event })"
               />
             </template>
           </DataSource>

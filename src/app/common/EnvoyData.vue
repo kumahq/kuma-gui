@@ -41,7 +41,8 @@
           language="json"
           :code="typeof data === 'string' ? data : JSON.stringify(data, null, 2)"
           is-searchable
-          :query-key="props.queryKey"
+          :query="props.query"
+          @query-change="emit('query-change', $event)"
         />
       </template>
     </DataSource>
@@ -51,8 +52,6 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
-import { KAlert, KButton } from '@kong/kongponents'
-import { PropType } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
@@ -65,27 +64,18 @@ import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps({
-  status: {
-    type: String as PropType<StatusKeyword>,
-    required: true,
-  },
-
-  resource: {
-    type: String,
-    required: true,
-  },
-
-  src: {
-    type: String,
-    required: true,
-  },
-
-  queryKey: {
-    type: String,
-    required: true,
-  },
+const props = withDefaults(defineProps<{
+  status: StatusKeyword
+  resource: string
+  src: string
+  query?: string
+}>(), {
+  query: '',
 })
+
+const emit = defineEmits<{
+  (event: 'query-change', query: string): void
+}>()
 </script>
 
 <style lang="scss" scoped>

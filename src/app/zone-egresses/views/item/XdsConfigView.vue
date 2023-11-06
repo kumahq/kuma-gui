@@ -4,6 +4,7 @@
     name="zone-egress-xds-config-view"
     :params="{
       zoneEgress: '',
+      codeSearch: '',
     }"
   >
     <AppView>
@@ -22,7 +23,8 @@
             :status="getItemStatusFromInsight(props.data.zoneEgressInsight)"
             resource="Zone"
             :src="`/zone-egresses/${route.params.zoneEgress}/data-path/xds`"
-            query-key="envoy-data-xds-zone-egress"
+            :query="route.params.codeSearch"
+            @query-change="route.update({ codeSearch: $event })"
           />
         </template>
       </KCard>

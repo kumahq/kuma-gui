@@ -6,8 +6,11 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 </script>
 <template>
   <RouteView
-    v-slot="{ t }"
+    v-slot="{ route, t }"
     name="diagnostics"
+    :params="{
+      codeSearch: '',
+    }"
   >
     <DataSource
       v-slot="{ data, error }: ConfigSource"
@@ -48,7 +51,8 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
               language="json"
               :code="JSON.stringify(data, null, 2)"
               is-searchable
-              query-key="diagnostics"
+              :query="route.params.codeSearch"
+              @query-change="route.update({ codeSearch: $event })"
             />
           </template>
         </KCard>

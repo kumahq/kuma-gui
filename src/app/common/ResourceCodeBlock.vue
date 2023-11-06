@@ -4,8 +4,9 @@
     language="yaml"
     :code="yamlUniversal"
     :is-searchable="props.isSearchable"
-    :query-key="props.id"
     :code-max-height="props.codeMaxHeight"
+    :query="props.query"
+    @query-change="emit('query-change', $event)"
   >
     <template #secondary-actions>
       <KTooltip
@@ -29,8 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KTooltip } from '@kong/kongponents'
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
 import CopyButton from './CopyButton.vue'
@@ -41,37 +41,26 @@ import { toYaml } from '@/utilities/toYaml'
 
 const { t } = useI18n()
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-
-  resource: {
-    type: Object as PropType<Entity>,
-    required: true,
-  },
+const props = withDefaults(defineProps<{
+  id: string
+  resource: Entity
 
   /**
    * Function returning the resource.
    */
-  resourceFetcher: {
-    type: Function as PropType<(params?: SingleResourceParameters) => Promise<Entity>>,
-    required: true,
-  },
-
-  codeMaxHeight: {
-    type: String,
-    required: false,
-    default: null,
-  },
-
-  isSearchable: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
+  resourceFetcher: (params?: SingleResourceParameters) => Promise<Entity>
+  codeMaxHeight?: string | null
+  isSearchable?: boolean
+  query?: string
+}>(), {
+  codeMaxHeight: null,
+  isSearchable: false,
+  query: '',
 })
+
+const emit = defineEmits<{
+  (event: 'query-change', query: string): void
+}>()
 
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
 

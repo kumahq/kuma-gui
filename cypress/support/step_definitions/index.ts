@@ -190,7 +190,10 @@ Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', t
   }
 })
 Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) => {
-  $(selector).contains(value)
+  $(selector).then(($el) => {
+    const chainer = $el[0].tagName === 'INPUT' ? 'have.value' : 'contain'
+    cy.wrap($el).should(chainer, value)
+  })
 })
 
 Then(/^the "(.*)" element is empty$/, (selector: string) => {
