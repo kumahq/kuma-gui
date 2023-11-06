@@ -38,6 +38,12 @@ const emit = defineEmits<{
   padding-left: $kui-space-80;
 }
 
+.summary-slideout :deep(.panel) {
+  // TODO: Remove this once we switch to Kongponents v9 which will fix this issue (https://github.com/Kong/kongponents/pull/1822).
+  // Fixes the content being taller than the viewport when using `props.offsetHeight`.
+  height: calc(100vh - var(--app-slideout-offset-top)) !important;
+}
+
 // Aligns the position of the close button with the summary slideout card’s content box.
 .summary-slideout :deep(.close-button-start),
 .summary-slideout :deep(.close-button-end) {
