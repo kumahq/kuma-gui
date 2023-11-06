@@ -70,8 +70,8 @@
                   />
 
                   <KSelect
+                    class="filter-select"
                     label="Type"
-                    :overlay-label="true"
                     :items="['all', 'standard', 'builtin', 'delegated'].map((value) => ({
                       value,
                       label: t(`data-planes.type.${value}`),
@@ -131,5 +131,16 @@ import type { MeSource } from '@/app/me/sources'
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
+}
+
+.filter-select {
+  display: flex;
+  align-items: center;
+  gap: $kui-space-40;
+}
+
+.filter-select :deep(.k-label) {
+  // Removes the bottom margin as we’re aligning the label with the select in a horizontal layout.
+  margin-bottom: 0 !important;
 }
 </style>
