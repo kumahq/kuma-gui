@@ -126,7 +126,7 @@
                       name="zone-name"
                       data-testid="name-input"
                       :data-test-error-type="nameError !== null ? 'invalid-dns-name' : undefined"
-                      :has-error="nameError !== null"
+                      :error="nameError !== null"
                       :error-message="nameError ?? undefined"
                       :disabled="zone !== null"
                       @blur="validateName(name)"
