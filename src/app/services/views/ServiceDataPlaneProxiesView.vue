@@ -52,7 +52,7 @@
                   @change="route.update"
                 >
                   <template #toolbar>
-                    <KFilterBar
+                    <FilterBar
                       class="data-plane-proxy-filter"
                       :placeholder="`tag: 'kuma.io/protocol: http'`"
                       :query="route.params.query"
@@ -134,12 +134,13 @@
 </template>
 
 <script lang="ts" setup>
-import KFilterBar from '@/app/common/KFilterBar.vue'
+import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
 import { DataPlaneCollectionSource } from '@/app/data-planes/sources'
 import type { MeSource } from '@/app/me/sources'
 import type { SelectItem } from '@kong/kongponents'
+
 </script>
 
 <style lang="scss" scoped>

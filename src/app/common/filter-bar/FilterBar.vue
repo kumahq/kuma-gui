@@ -122,9 +122,9 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ChevronRightIcon, ClearIcon, FilterIcon } from '@kong/icons'
 import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 
-import { clamp } from '@/utilities/clamp'
-import { Command, ShortcutManager } from '@/utilities/ShortcutManager'
-import { tokenizeFieldFilterQuery } from '@/utilities/tokenizeFieldFilterQuery'
+import { clamp } from './clamp'
+import { Command, ShortcutManager } from './ShortcutManager'
+import { tokenizeFieldFilterQuery } from './tokenizeFieldFilterQuery'
 import uniqueId from '@/utilities/uniqueId'
 
 export type Fields = [string, string][]

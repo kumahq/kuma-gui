@@ -1,8 +1,8 @@
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
+import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, SidecarDataplane } from '@/types/index.d'
-import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 
 type CollectionParams = {
   mesh: string
