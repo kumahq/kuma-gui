@@ -1,11 +1,11 @@
-import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import * as MakeRequestModule from './makeRequest'
 import { RestClient } from './RestClient'
 
 describe('RestClient', () => {
   beforeEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   test.each([
@@ -66,7 +66,7 @@ describe('RestClient', () => {
       },
     ],
   ])('processes query parameters correctly', (params, expectedOptions) => {
-    jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
+    vi.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
       response: new Response(),
       data: null,
     }))
@@ -86,7 +86,7 @@ describe('RestClient', () => {
     ['http://example.org', '/', 'http://example.org/'],
     ['http://example.org', 'http://konghq.tech/path', 'http://konghq.tech/path'],
   ])('sends correct request URL', (baseUrlOrPath: string, requestPath: string, expectedRequestUrl: string) => {
-    jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
+    vi.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
       response: new Response(),
       data: null,
     }))

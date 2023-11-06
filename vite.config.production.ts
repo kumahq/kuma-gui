@@ -93,6 +93,37 @@ export const config: UserConfigFn = ({ mode }) => {
         resolveDependencies: () => [],
       },
     },
+
+    test: {
+      globals: false,
+      environment: 'jsdom',
+      setupFiles: [
+        './test-support/main.ts',
+      ],
+      coverage: {
+        provider: 'istanbul',
+        reporter: ['text', 'lcovonly'],
+        exclude: [
+          'cypress/**',
+          'src/test-support/mocks/**',
+        ],
+      },
+      deps: {
+        optimizer: {
+          web: {
+          // https://github.com/vitest-dev/vitest/issues/4074
+            exclude: ['vue'],
+          },
+        },
+      },
+      include: [
+        '**/src/**/*.spec.ts',
+      ],
+      exclude: [
+        '**/dist/**',
+        '**/node_modules/**',
+      ],
+    },
   }
 }
 export default defineConfig(config)

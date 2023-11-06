@@ -1,11 +1,11 @@
-import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { ApiError } from './ApiError'
 import { makeRequest } from './makeRequest'
 
 describe('makeRequest', () => {
   beforeEach(() => {
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
 
   test.each([
@@ -76,7 +76,7 @@ describe('makeRequest', () => {
       },
     ],
   ])('works for requests that succeed and return a success status', async (fetchMock, expectedData, expectedPartialResponse) => {
-    jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
+    vi.spyOn(global, 'fetch').mockImplementation(fetchMock)
 
     const { data, response } = await makeRequest('/')
 
@@ -100,7 +100,7 @@ describe('makeRequest', () => {
       new Error('An unknown network error occurred.'),
     ],
   ])('works for requests that fail with a network error', async (fetchMock, expectedError) => {
-    jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
+    vi.spyOn(global, 'fetch').mockImplementation(fetchMock)
 
     await expect(() => makeRequest('/')).rejects.toThrow(expectedError)
   })
@@ -219,7 +219,7 @@ describe('makeRequest', () => {
       }),
     ],
   ])('works for requests that succeed but return a failure statuses (%s)', async (title, fetchMock, expectedError) => {
-    jest.spyOn(global, 'fetch').mockImplementation(fetchMock)
+    vi.spyOn(global, 'fetch').mockImplementation(fetchMock)
 
     const call = () => makeRequest('/')
 
@@ -246,7 +246,7 @@ describe('makeRequest', () => {
       },
     ],
   ])('correctly sends JSON payloads', async (options, payload, expectedInitObject) => {
-    jest.spyOn(global, 'fetch').mockImplementation((_input: RequestInfo | URL, _init?: RequestInit) => Promise.resolve(new Response('OK')))
+    vi.spyOn(global, 'fetch').mockImplementation((_input: RequestInfo | URL, _init?: RequestInit) => Promise.resolve(new Response('OK')))
 
     await makeRequest('/', options, payload)
 

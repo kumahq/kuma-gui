@@ -1,19 +1,17 @@
-import { afterEach, beforeAll, beforeEach, jest } from '@jest/globals'
-// Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
-import 'isomorphic-fetch'
+// This is the `main`/entrypoint for our CLI unit tests
+// When running via vitest this file is added first using
+// vitest's `setupFiles` property, please see `/vite.config.production.ts`
 
+import { beforeEach, afterEach, beforeAll } from 'vitest'
+
+import { TOKENS as TEST, services as testing } from './index'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { TOKENS as TEST, services as testing } from '../src/services/testing'
 import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as DEV, services as development } from '@/services/development'
 import { TOKENS as PROD, services as production } from '@/services/production'
 import { get, container, build, token } from '@/services/utils'
 
-export { useMock } from '../src/services/testing'
-// jest can't import this module properly due to transpiling issues
-// mock this out with a blank element
-jest.mock('vue-github-button', () => ({ template: '<span />' }))
-//
+export { useMock } from './index'
 
 const $ = {
   ...PROD,
@@ -46,7 +44,7 @@ const $ = {
   // ever make a test mocking utility to mock out components (similar to
   // withVersion) will will then use COMPONENT_TOKENS here also, which means we
   // can remove the following line
-  beforeAll((_ = COMPONENT_TOKENS) => {})
+  beforeAll(() => (_ = COMPONENT_TOKENS) => {})
   //
   beforeEach(() => container.capture?.())
   afterEach(() => container.restore?.())

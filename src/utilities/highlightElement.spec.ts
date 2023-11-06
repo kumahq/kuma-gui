@@ -1,4 +1,5 @@
-import { describe, expect, test } from '@jest/globals'
+// @vitest-environment jsdom
+import { describe, expect, test } from 'vitest'
 
 import { _highlightCode, highlightElement, AvailableLanguages } from './highlightElement'
 

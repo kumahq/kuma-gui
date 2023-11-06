@@ -1,5 +1,5 @@
-import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
+import { describe, expect, test } from 'vitest'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
 import { createPolicyTypeEntries } from '@/test-data/createPolicyTypeEntries'

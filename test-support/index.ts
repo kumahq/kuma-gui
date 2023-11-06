@@ -1,11 +1,11 @@
 import { config } from '@vue/test-utils'
 import { setupServer } from 'msw/node'
 
-import createDisabledLogger from './logger/DisabledLogger'
-import { Alias, ServiceConfigurator, token, createInjections } from './utils'
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
 import CliEnv from '@/services/env/CliEnv'
+import createDisabledLogger from '@/services/logger/DisabledLogger'
 import Logger from '@/services/logger/Logger'
+import { Alias, ServiceConfigurator, token, createInjections } from '@/services/utils'
 import { mocker, fakeApi, FS } from '@/test-support'
 import type { Mocker } from '@/test-support'
 import type { Component } from 'vue'
