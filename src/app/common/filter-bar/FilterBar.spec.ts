@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
-import KFilterBar from './KFilterBar.vue'
+import KFilterBar from './FilterBar.vue'
 
 const FIELDS = {
   name: { description: 'filter by name or parts of a name' },
