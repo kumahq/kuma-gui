@@ -2,7 +2,7 @@ Feature: zones / create
   Background:
     Given the CSS selectors
       | Alias                               | Selector                                             |
-      | zone-nav-item                       | .app-sidebar > .nav-item:nth-child(2) > a            |
+      | zones-nav                           | [data-testid='zones-navigator'] a                    |
       | exit-button                         | [data-testid='exit-button']                          |
       | confirm-exit-modal                  | [data-testid='confirm-exit-modal']                   |
       | confirm-exit-button                 | [data-testid='confirm-exit-button']                  |
@@ -25,28 +25,10 @@ Feature: zones / create
       KUMA_MODE: global
       """
 
-  Scenario: Create Zone link doesn't exist in standalone mode
-    Given the environment
-      """
-      KUMA_MODE: standalone
-      """
-
-    When I visit the "/" URL
-    Then the "[data-testid='loading-block']" element doesn't exist
-    And I click the "$zone-nav-item" element
-
-    Then the page title contains "Egresses"
-    And the "$create-zone-link" element doesn't exist
-
   Scenario: Create Zone link exists in global mode
-    Given the environment
-      """
-      KUMA_MODE: global
-      """
-
-    When I visit the "/" URL
+    Given I visit the "/" URL
     Then the "[data-testid='loading-block']" element doesn't exist
-    And I click the "$zone-nav-item" element
+    And I click the "$zones-nav" element
 
     Then the page title contains "Zone Control Planes"
     And the "$create-zone-link" element exists

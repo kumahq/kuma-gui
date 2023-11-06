@@ -1,6 +1,9 @@
 <template>
   <RouteView
     name="onboarding"
+    :attrs="{
+      class: 'no-navigation',
+    }"
   >
     <AppView>
       <RouterView

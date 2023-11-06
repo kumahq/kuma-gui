@@ -50,11 +50,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KButton } from '@kong/kongponents'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import DataSource from './application/components/data-source/DataSource.vue'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

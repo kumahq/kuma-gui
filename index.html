@@ -10,8 +10,45 @@
   <link rel="icon" href="/favicon.png" />
   <title>Manager</title>
 
+  <style type="text/css">
+    html:not(.kuma-ready) {
+      background-image: url('/kuma-loader-v1.gif');
+      background-position: center center;
+      background-repeat: none;
+      background-repeat: no-repeat;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    html:not(.kuma-ready)::before,
+    html:not(.kuma-ready)::after {
+      position: absolute;
+      left: 50%;
+      margin-left: -125px;
+      margin-top: 170px;
+      display: block;
+      content: '';
+      height: 5px;
+      width: 250px;
+    }
+    html:not(.kuma-ready)::before {
+      background-color: #afb7c5 /*$kui-color-background-neutral-weak*/;
+    }
+    html:not(.kuma-ready)::after {
+      background-color: #5f9aff /*$kui-color-background-primary-weak*/;
+      animation: 1s ease-out infinite both load;
+    }
+    @keyframes load {
+      from {
+        width: 0;
+      }
+      to {
+        width: 250px;
+      }
+    }
+  </style>
   <script type="application/json" id="kuma-config"><%- config %></script>
-  <script type="module" src="/src/main.ts"></script>
 </head>
 
 <body>
@@ -22,6 +59,7 @@
   </noscript>
 
   <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>

@@ -1,8 +1,13 @@
 Feature: application / MainNavigation
   Background:
     Given the CSS selectors
-      | Alias    | Selector     |
-      | main-nav | .app-sidebar |
+      | Alias              | Selector                                   |
+      | main-nav           | .app-sidebar                               |
+      | control-planes-nav | [data-testid='control-planes-navigator'] a |
+      | meshes-nav         | [data-testid='meshes-navigator'] a         |
+      | zones-nav          | [data-testid='zones-navigator'] a          |
+      | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a  |
+      | diagnostics-nav    | [data-testid='nav-item-diagnostics']       |
 
   Scenario Outline: The navigation shows the correct nav for <Mode>
     Given the environment
@@ -10,13 +15,13 @@ Feature: application / MainNavigation
       KUMA_MODE: <Mode>
       """
     When I visit the "/" URL
-    Then the "$main-nav .nav-item-<RouteName>" element <ExistsAssertion>
+    Then the "<Element>" element <ExistsAssertion>
     Examples:
-      | RouteName              | Mode       | ExistsAssertion |
-      | zone-cp-list-view      | global     | exists          |
-      | zone-egress-list-view  | global     | doesn't exist   |
-      | zone-cp-list-view      | standalone | doesn't exist   |
-      | zone-egress-list-view  | standalone | exists          |
+      | Element            | Mode       | ExistsAssertion |
+      | $zones-nav         | global     | exists          |
+      | $zone-egresses-nav | global     | doesn't exist   |
+      | $zones-nav         | standalone | doesn't exist   |
+      | $zone-egresses-nav | standalone | exists          |
 
   Scenario Outline: Visiting the "<Title>" page
     Given the URL "/mesh-insights/default" responds with
@@ -33,10 +38,10 @@ Feature: application / MainNavigation
     Then the page title contains "<Title>"
 
     Examples:
-      | Selector                                | Title               |
-      | $main-nav .nav-item-home a              | Overview            |
-      | $main-nav .nav-item-zone-cp-list-view a | Zone Control Planes |
-      | [data-testid='nav-item-diagnostics']    | Diagnostics         |
+      | Selector            | Title               |
+      | $control-planes-nav | Overview            |
+      | $zones-nav          | Zone Control Planes |
+      | $diagnostics-nav    | Diagnostics         |
 
   Scenario: Pagination deeplinking
     Given the environment
@@ -68,7 +73,7 @@ Feature: application / MainNavigation
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element exists
 
-    When I click the "$main-nav .nav-item-mesh-list-view a" element
+    When I click the "$meshes-nav" element
     Then the page title contains "Meshes"
     And the "[data-testid='page-1-btn'].active" element exists
 

@@ -1,5 +1,5 @@
 Feature: dataplanes / no-subscriptions
-  Scenario:
+  Scenario: When there are no subscription I don't get an error
     Given the CSS selectors
       | Alias            | Selector                                    |
       | detail-view      | [data-testid='data-plane-detail-tabs-view'] |
