@@ -66,8 +66,8 @@
 <script lang="ts" setup>
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import type { ZoneEgressOverview } from '@/types/index.d'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
