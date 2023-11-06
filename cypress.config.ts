@@ -5,8 +5,23 @@ import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
 import cypressFailFast from 'cypress-fail-fast/plugin'
 import dotenv from 'dotenv'
+import esbuild from 'esbuild'
 import fs from 'node:fs'
 
+function createVuePlugin(
+): esbuild.Plugin {
+  return {
+    name: 'vue',
+    setup(build) {
+      build.onLoad({ filter: /\.vue$/ }, async () => {
+        return {
+          contents: 'export default ""',
+          loader: 'js',
+        }
+      })
+    },
+  }
+}
 const env = dotenv.config().parsed as {[key: string]: string}
 
 Object.entries({
@@ -43,7 +58,10 @@ export default defineConfig({
       on(
         'file:preprocessor',
         createBundler({
-          plugins: [createEsbuildPlugin(config)],
+          plugins: [
+            createEsbuildPlugin(config),
+            createVuePlugin(),
+          ],
         }),
       )
 

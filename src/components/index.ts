@@ -1,5 +1,4 @@
 import MainView from '@/app/application/components/app-view/MainView.vue'
-import MainOverview from '@/app/main-overview/components/MainOverview.vue'
 import MeshDetails from '@/app/meshes/components/MeshDetails.vue'
 import KubernetesGraph from '@/app/onboarding/components/graphs/KubernetesGraph.vue'
 import MemoryGraph from '@/app/onboarding/components/graphs/MemoryGraph.vue'
@@ -9,7 +8,6 @@ import StandaloneGraph from '@/app/onboarding/components/graphs/StandaloneGraph.
 import { constant, createInjections } from '@/services/utils'
 
 export const TOKENS = {
-  MainOverview: constant(MainOverview, { description: 'MainOverview' }),
   KubernetesGraph: constant(KubernetesGraph, { description: 'KubernetesGraph' }),
   PostgresGraph: constant(PostgresGraph, { description: 'PostgresGraph' }),
   MemoryGraph: constant(MemoryGraph, { description: 'MemoryGraph' }),
@@ -19,7 +17,6 @@ export const TOKENS = {
   MeshDetails: constant(MeshDetails, { description: 'MeshDetails' }),
 }
 export const [
-  useMainOverview,
   useKubernetesGraph,
   usePostgresGraph,
   useMemoryGraph,
@@ -28,7 +25,6 @@ export const [
   useMainView,
   useMeshDetails,
 ] = createInjections(
-  TOKENS.MainOverview,
   TOKENS.KubernetesGraph,
   TOKENS.PostgresGraph,
   TOKENS.MemoryGraph,

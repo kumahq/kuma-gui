@@ -4,7 +4,6 @@ import createDisabledLogger from './logger/DisabledLogger'
 import { TOKENS as _TOKENS } from './tokens'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as kuma } from '@/app/kuma'
-import { services as mainOverview } from '@/app/main-overview'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
@@ -85,10 +84,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   //
 
   // service-mesh
-  ...mainOverview({
-    ...$,
-    routes: $.routesLabel,
-  }),
   ...zones({
     ...$,
     routes: $.routesLabel,

@@ -1,5 +1,7 @@
-import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
+import type { DataSourceResponse } from '@/app/application'
 import type Env from '@/services/env/Env'
+import type KumaApi from '@/services/kuma-api/KumaApi'
+import type { GlobalInsight } from '@/types/index.d'
 
 export type ControlPlaneAddresses = {
   http: string
@@ -7,14 +9,18 @@ export type ControlPlaneAddresses = {
 }
 
 export type ControlPlaneAddressesSource = DataSourceResponse<ControlPlaneAddresses>
-export const sources = (env: Env['var']) => {
+export type GlobalInsightSource = DataSourceResponse<GlobalInsight>
+
+export const sources = (env: Env['var'], api: KumaApi) => {
   return {
-    '/control-plane/addresses': async (_params: {}, source: { close: () => void }): Promise<ControlPlaneAddresses> => {
-      source.close()
+    '/control-plane/addresses': async (): Promise<ControlPlaneAddresses> => {
       return {
         http: env('KUMA_API_URL'),
         kds: 'grpcs://<global-kds-address>:5685',
       }
+    },
+    '/global-insight': () => {
+      return api.getGlobalInsight()
     },
   }
 }

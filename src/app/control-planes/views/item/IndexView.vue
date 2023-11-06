@@ -17,7 +17,7 @@
         class="stack"
         data-testid="detail-view-details"
       >
-        <MainOverview />
+        <ControlPlaneStatus />
 
         <div class="columns">
           <KCard v-if="can('use zones')">
@@ -107,21 +107,23 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import { useControlPlaneStatus } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
-import { MeshInsightCollectionSource } from '@/app/meshes/sources'
+import type { MeshInsightCollectionSource } from '@/app/meshes/sources'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
-import { ZoneOverviewCollectionSource } from '@/app/zones/sources'
-import { useMainOverview } from '@/components'
-const MainOverview = useMainOverview()
+import type { ZoneOverviewCollectionSource } from '@/app/zones/sources'
+
+const ControlPlaneStatus = useControlPlaneStatus()
 </script>
 <style lang="scss" scoped>
 .card-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-bottom: $kui-space-50;
   // Makes card header the same height as buttons so that they align with or without buttons present.
-  height: 42px;
+  min-height: 42px;
 }
 
 .card-title {
