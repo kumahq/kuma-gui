@@ -103,7 +103,10 @@ export const config: UserConfigFn = ({ mode }) => {
       coverage: {
         provider: 'istanbul',
         reporter: ['text', 'lcovonly'],
-        exclude: ['cypress/**'],
+        exclude: [
+          'cypress/**',
+          'src/test-support/mocks/**',
+        ],
       },
       deps: {
         optimizer: {
@@ -113,12 +116,12 @@ export const config: UserConfigFn = ({ mode }) => {
           },
         },
       },
-      include: ['**/src/**/*.spec.ts'],
+      include: [
+        '**/src/**/*.spec.ts',
+      ],
       exclude: [
         '**/dist/**',
-        '**/__template__/**',
         '**/node_modules/**',
-        'apps/_cli/**',
       ],
     },
   }
