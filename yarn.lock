@@ -1799,10 +1799,10 @@
     flat "^6.0.1"
     intl-messageformat "^10.5.3"
 
-"@kong/design-tokens@1.11.6":
-  version "1.11.6"
-  resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.11.6.tgz#a5bdc240a2b935c329f81aa8117db7e20c2de35e"
-  integrity sha512-K09zObaYWD7rm9FrJCHI7muKI3npWeDeqdY64unAjmlFW17Ox+bFGsJkaJIOXzsssXMGspHqVkl41vmUEhY8OQ==
+"@kong/design-tokens@1.11.9":
+  version "1.11.9"
+  resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.11.9.tgz#d64bca714079c554a20b8da646e1f75be2f60640"
+  integrity sha512-e4q7yuPvZ3eB0eXGOg0o3h/ce3GIIdRtvCoRCZEA/d7R7MJfXrPa19H5VKy/khyhwEt2IjFJiDisImbfq+ApvQ==
 
 "@kong/icons@1.7.8":
   version "1.7.8"
