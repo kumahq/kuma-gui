@@ -176,7 +176,7 @@ zones:
           experimental:
             deltaKds: true
         connectDescription: 'Next, run the following command to connect the Zone.'
-        connectCommand: 'helm install -n kuma-system -f values.yaml kuma kuma/kuma'
+        connectCommand: 'helm upgrade --install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
     generalError:
       title: 'Could not create the Zone'
