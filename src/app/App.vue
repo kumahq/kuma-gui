@@ -37,23 +37,13 @@
         </template>
 
         <AppView>
-          <RouterView v-slot="{ Component }">
-            <transition
-              mode="out-in"
-              name="fade"
-            >
-              <div class="transition-root">
-                <component
-                  :is="Component"
-                />
-              </div>
-            </transition>
-          </RouterView>
+          <RouterView />
         </AppView>
       </ApplicationShell>
     </RouteView>
   </DataSource>
 </template>
+
 <script lang="ts" setup>
 import ControlPlaneNavigator from '@/app/control-planes/components/ControlPlaneNavigator.vue'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
@@ -62,6 +52,7 @@ import MeshNavigator from '@/app/meshes/components/MeshNavigator.vue'
 import ZoneEgressNavigator from '@/app/zone-egresses/components/ZoneEgressNavigator.vue'
 import ZoneNavigator from '@/app/zones/components/ZoneNavigator.vue'
 </script>
+
 <style lang="scss" scoped>
 .logo {
   max-height: 36px;
