@@ -42,6 +42,7 @@ export type AEnv = Alias<AppEnv['var']>
 export type MockEnvKeys = keyof {
   FAKE_SEED: string
   KUMA_DATAPLANE_COUNT: string
+  KUMA_DATAPLANEINBOUND_COUNT: string
   KUMA_CIRCUITBREAKER_COUNT: string
   KUMA_FAULTINJECTION_COUNT: string
   KUMA_MESHFAULTINJECTION_COUNT: string

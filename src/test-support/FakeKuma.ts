@@ -1,7 +1,14 @@
 import { Faker } from '@faker-js/faker'
 import deepmerge from 'deepmerge'
 
-import type { DataPlaneProxyStatus, ServiceStatus } from '@/types/index.d'
+import type {
+  DataPlaneNetworking as DataplaneNetworking,
+  DataPlaneProxyStatus,
+  DataplaneGateway,
+  DataplaneInbound,
+  DataplaneOutbound,
+  ServiceStatus,
+} from '@/types/index.d'
 
 export class KumaModule {
   faker: Faker
@@ -45,11 +52,11 @@ export class KumaModule {
     )
   }
 
-  serviceName(serviceType: string = 'internal') {
-    const prefix = `${this.faker.hacker.noun()}_`
+  serviceName(serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' = 'internal') {
+    const prefix = `${this.faker.hacker.noun()}-`
 
     if (serviceType === 'gateway_delegated' || serviceType === 'gateway_builtin') {
-      return prefix + 'gateway'
+      return prefix + serviceType
     } else {
       return prefix + `${this.faker.hacker.noun()}_svc.mesh:80_${serviceType}`
     }
@@ -174,22 +181,94 @@ export class KumaModule {
     return Object.fromEntries(values)
   }
 
-  inbound(service: string, zone?: string) {
+  dataplaneNetworking({ type = 'proxy', inbounds = 0, isMultizone = false, service }: { type?: 'gateway_builtin' | 'gateway_delegated' | 'proxy', inbounds?: number, isMultizone?: boolean, service?: string } = {}): DataplaneNetworking {
+    const address = this.faker.internet.ip()
+    const serviceName = service || (this.faker.datatype.boolean() ? this.serviceName(type === 'proxy' ? 'internal' : type) : undefined)
+    const zoneName = isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined
+
     return {
-      ...(this.faker.datatype.boolean() && {
+      address,
+      ...(type !== 'proxy'
+        ? {
+          gateway: this.dataplaneGateway({
+            type,
+            service: serviceName,
+            zone: zoneName,
+          }),
+        }
+        : {}),
+      ...(type === 'proxy'
+        ? {
+          inbound: Array.from({ length: inbounds })
+            .map(() => this.dataplaneInbound({
+              service: serviceName,
+              zone: zoneName,
+            })),
+        }
+        : {}),
+      outbound: [
+        this.dataplaneOutbound({ service: serviceName }),
+      ],
+    }
+  }
+
+  dataplaneGateway({ type = 'gateway_delegated', service, zone }: { type?: 'gateway_builtin' | 'gateway_delegated', service?: string, zone?: string } = {}): DataplaneGateway {
+    const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
+
+    return {
+      tags: {
+        'kuma.io/service': service ?? this.serviceName(type),
+        ...(zone && { 'kuma.io/zone': zone }),
+      },
+      ...(dataplaneType && { type: dataplaneType }),
+    }
+  }
+
+  dataplaneInbound({ service, zone }: { service?: string, zone?: string } = {}): DataplaneInbound {
+    const healthObject = this.faker.datatype.boolean()
+      ? {
         health: {
           ready: this.faker.datatype.boolean(),
         },
-      }),
-      port: this.faker.internet.port(),
-      servicePort: this.faker.internet.port(),
-      serviceAddress: this.faker.internet.ip(),
+      }
+      : {}
+    const port = this.faker.internet.port()
+    const servicePort = this.faker.internet.port()
+    const serviceAddress = this.faker.internet.ip()
+
+    return {
+      ...healthObject,
+      port,
+      servicePort,
+      serviceAddress,
       tags: {
+        'kuma.io/service': service ?? this.serviceName('internal'),
         'kuma.io/protocol': this.protocol(),
-        'kuma.io/service': service,
-        ...(zone && {
-          'kuma.io/zone': zone,
-        }),
+        ...(zone && { 'kuma.io/zone': zone }),
+      },
+    }
+  }
+
+  dataplaneOutbound({ service }: { service?: string }): DataplaneOutbound {
+    return {
+      port: this.faker.internet.port(),
+      tags: {
+        'kuma.io/service': service ?? this.serviceName('internal'),
+      },
+    }
+  }
+
+  dataplaneMtls() {
+    const issuedBackend = this.faker.hacker.noun()
+    const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(this.faker.hacker.noun))
+
+    return {
+      mTLS: {
+        certificateExpirationTime: this.faker.date.anytime(),
+        lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
+        certificateRegenerations: this.faker.number.int(),
+        issuedBackend,
+        supportedBackends,
       },
     }
   }
