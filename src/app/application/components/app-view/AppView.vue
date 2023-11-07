@@ -26,7 +26,6 @@
         <slot name="title" />
 
         <div
-          v-if="$slots.actions"
           class="actions"
         >
           <slot name="actions" />
