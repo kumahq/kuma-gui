@@ -18,6 +18,24 @@
     :items="props.items ? transformToTableData(props.items) : undefined"
     :error="props.error"
     :is-selected-row="props.isSelectedRow"
+    :get-detail-route="(row) => ({
+      name: 'data-plane-detail-view',
+      params: {
+        mesh: row.mesh,
+        dataPlane: row.name,
+      },
+    })"
+    :get-summary-route="(row) => ({
+      name: props.summaryRouteName,
+      params: {
+        mesh: row.mesh,
+        dataPlane: row.name,
+      },
+      query: {
+        page: props.pageNumber,
+        size: props.pageSize,
+      },
+    })"
     @change="emit('change', $event)"
   >
     <template
@@ -105,33 +123,11 @@
         {{ t('common.collection.none') }}
       </template>
     </template>
-
-    <template #details="{ row }: { row: DataPlaneOverviewTableRow }">
-      <RouterLink
-        class="details-link"
-        data-testid="details-link"
-        :to="{
-          name: 'data-plane-detail-view',
-          params: {
-            dataPlane: row.name,
-          },
-        }"
-      >
-        {{ t('common.collection.details_link') }}
-
-        <ArrowRightIcon
-          display="inline-block"
-          decorative
-          :size="KUI_ICON_SIZE_30"
-        />
-      </RouterLink>
-    </template>
   </AppCollection>
 </template>
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
 
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -263,11 +259,3 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
   })
 }
 </script>
-
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>

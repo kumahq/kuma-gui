@@ -25,22 +25,15 @@
               { label: 'No. Instances', key: 'instances' },
               { label: 'Actions', key: 'actions', hideLabel: true },
             ]"
-            :items="props.data.zoneIngress.availableServices"
+            :items="props.data.zoneIngress.availableServices.map((service) => ({ ...service, name: service.tags['kuma.io/service'] }))"
+            :get-detail-route="(row) => ({
+              name: 'service-detail-view',
+              params: {
+                mesh: row.mesh,
+                service: row.tags['kuma.io/service'],
+              },
+            })"
           >
-            <template #name="{ row: item }: {row: AvailableService}">
-              <RouterLink
-                :to="{
-                  name: 'service-detail-view',
-                  params: {
-                    mesh: item.mesh,
-                    service: item.tags['kuma.io/service'],
-                  },
-                }"
-              >
-                {{ item.tags['kuma.io/service'] }}
-              </RouterLink>
-            </template>
-
             <template #mesh="{ row: item }: {row: AvailableService}">
               <RouterLink
                 :to="{
@@ -110,3 +103,9 @@ const props = defineProps<{
   data: ZoneIngressOverview
 }>()
 </script>
+
+<style lang="scss" scoped>
+.actions-dropdown {
+  display: inline-block;
+}
+</style>

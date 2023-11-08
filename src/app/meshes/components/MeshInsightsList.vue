@@ -10,19 +10,13 @@
     :empty-state-message="t('common.emptyState.message', { type: t('meshes.common.type', {count: 2}) })"
     :empty-state-cta-to="t('meshes.href.docs')"
     :empty-state-cta-text="t('common.documentation')"
+    :get-detail-route="(row) => ({
+      name: 'mesh-detail-view',
+      params: {
+        mesh: row.name,
+      },
+    })"
   >
-    <template #name="{ row: item }">
-      <RouterLink
-        :to="{
-          name: 'mesh-detail-view',
-          params: {
-            mesh: item.name,
-          },
-        }"
-      >
-        {{ item.name }}
-      </RouterLink>
-    </template>
     <template #services="{ row: item }">
       {{ item.services.internal ?? '0' }}
     </template>

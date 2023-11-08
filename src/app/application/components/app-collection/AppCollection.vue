@@ -69,6 +69,43 @@
       </EmptyBlock>
     </template>
 
+    <!-- Wraps “name” cells with a link to a collection’s summary or detail route to ensure there is a keyboard-navigable element in each row. -->
+    <template
+      v-if="hasNameColumn"
+      #name="{ row, rowValue }"
+    >
+      <RouterLink
+        v-if="getRoute"
+        :to="getRoute(row)"
+      >
+        {{ rowValue }}
+      </RouterLink>
+
+      <template v-else>
+        {{ rowValue }}
+      </template>
+    </template>
+
+    <!-- Adds a “Go to details” link if a summary route is provided. If no summary route is provided, row clicks go to the detail route by default and this isn’t necessary. -->
+    <template
+      v-if="hasDetailsColumn && props.getDetailRoute"
+      #details="{ row }"
+    >
+      <RouterLink
+        class="details-link"
+        data-testid="details-link"
+        :to="props.getDetailRoute(row)"
+      >
+        {{ t('common.collection.details_link') }}
+
+        <ArrowRightIcon
+          decorative
+          display="inline-block"
+          :size="KUI_ICON_SIZE_30"
+        />
+      </RouterLink>
+    </template>
+
     <template
       v-for="key in Object.keys(slots)"
       :key="key"
@@ -95,14 +132,15 @@
 
 <script lang="ts" setup generic="Row extends {}">
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { AddIcon } from '@kong/icons'
+import { AddIcon, ArrowRightIcon } from '@kong/icons'
 import { KButton, KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, Ref, computed } from 'vue'
-import { RouteLocationRaw } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { useI18n } from '@/utilities'
+import type { RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 
 type CellAttrParams = {
   headerKey: string
@@ -121,11 +159,15 @@ type ChangeValue = {
 }
 
 const { t } = useI18n()
+const router = useRouter()
+const slots = useSlots()
 
 const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
   isSelectedRow?: ((row: Row) => boolean) | null
+  getDetailRoute?: ((row: Row) => RouteLocationNamedRaw) | null
+  getSummaryRoute?: ((row: Row) => RouteLocationNamedRaw) | null
   total?: number
   pageNumber?: number
   pageSize?: number
@@ -138,6 +180,8 @@ const props = withDefaults(defineProps<{
   emptyStateCtaText?: string
 }>(), {
   isSelectedRow: null,
+  getDetailRoute: null,
+  getSummaryRoute: null,
   total: 0,
   pageNumber: 1,
   pageSize: 30,
@@ -151,8 +195,6 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
 }>()
-
-const slots = useSlots()
 
 const items = ref(props.items) as Ref<typeof props.items>
 const cacheKey = ref<number>(0)
@@ -174,6 +216,9 @@ const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
 const lastPageSize = ref(props.pageSize)
 
+const getRoute = computed(() => props.getSummaryRoute ?? props.getDetailRoute)
+const hasNameColumn = computed(() => props.headers.some((header) => header.key === 'name'))
+const hasDetailsColumn = computed(() => props.headers.some((header) => header.key === 'details'))
 const columnWidth = computed(() => {
   const specialColumns = props.headers.filter((header) => ['details', 'warnings', 'actions'].includes(header.key))
 
@@ -213,13 +258,19 @@ function getRowAttributes(row: Row): Record<string, string> {
   return attributes
 }
 
-const click = (e: MouseEvent) => {
-  const $tr = (e.target as HTMLElement).closest('tr')
-  if ($tr) {
-    const $a = $tr.querySelector('a')
-    if ($a !== null) {
-      $a.click()
-    }
+const click = (event: MouseEvent, row: Row) => {
+  let getRoute
+
+  if (props.getSummaryRoute) {
+    // Otherwise, prioritizes a summary route (if present)
+    getRoute = props.getSummaryRoute
+  } else {
+    // Falls back to a detail route (if present)
+    getRoute = props.getDetailRoute
+  }
+
+  if (getRoute) {
+    router.push(getRoute(row))
   }
 }
 </script>

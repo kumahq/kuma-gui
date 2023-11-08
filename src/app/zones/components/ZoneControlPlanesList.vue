@@ -10,20 +10,13 @@
     :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : t('common.emptyState.message', { type: 'Zones' })"
     :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
     :empty-state-cta-text="t('zones.index.create')"
+    :get-detail-route="(row) => ({
+      name: 'zone-cp-detail-view',
+      params: {
+        zone: row.name,
+      },
+    })"
   >
-    <template #name="{ row: item }">
-      <RouterLink
-        :to="{
-          name: 'zone-cp-detail-view',
-          params: {
-            zone: item.name,
-          },
-        }"
-      >
-        {{ item.name }}
-      </RouterLink>
-    </template>
-
     <template #status="{ row: item }">
       <template
         v-for="status in [getZoneControlPlaneStatus(item)]"
