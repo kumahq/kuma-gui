@@ -71,7 +71,7 @@
               <!-- component to ensure that we share the API request -->
               <DataSource
                 v-slot="{ data, error }: MeshInsightCollectionSource"
-                src="/meshes?page=1&size=10"
+                src="/mesh-insights?page=1&size=10"
               >
                 <ErrorBlock
                   v-if="error"
