@@ -1,27 +1,29 @@
 <template>
-  <h2 class="visually-hidden">
-    Policies
-  </h2>
-
-  <PolicyTypeEntryList
-    id="policies"
-    :policy-type-entries="policyTypeEntries"
-    data-testid="policy-list"
-  />
-
-  <div
-    v-if="ruleEntries.length > 0"
-    class="mt-2"
-  >
-    <h2 class="mb-2">
-      Rules
+  <div data-testid="standard-dataplane-policies">
+    <h2 class="visually-hidden">
+      Policies
     </h2>
 
-    <RuleEntryList
-      id="rules"
-      :rule-entries="ruleEntries"
-      data-testid="rule-list"
+    <PolicyTypeEntryList
+      id="policies"
+      :policy-type-entries="policyTypeEntries"
+      data-testid="policy-list"
     />
+
+    <div
+      v-if="ruleEntries.length > 0"
+      class="mt-2"
+    >
+      <h2 class="mb-2">
+        Rules
+      </h2>
+
+      <RuleEntryList
+        id="rules"
+        :rule-entries="ruleEntries"
+        data-testid="rule-list"
+      />
+    </div>
   </div>
 </template>
 

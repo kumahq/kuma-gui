@@ -7,7 +7,6 @@ export type SplitRouteRecordRaw = {
 
 export const routes = (
   services: SplitRouteRecordRaw,
-  gateways: SplitRouteRecordRaw,
   dataplanes: SplitRouteRecordRaw,
   policies: SplitRouteRecordRaw,
 ): RouteRecordRaw[] => {
@@ -55,13 +54,11 @@ export const routes = (
                   component: () => import('@/app/meshes/views/MeshConfigView.vue'),
                 },
                 ...services.items(),
-                ...gateways.items(),
                 ...dataplanes.items(),
                 ...policies.items(),
               ],
             },
             ...services.item(),
-            ...gateways.item(),
             ...dataplanes.item(),
             ...policies.item(),
           ],

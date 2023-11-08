@@ -1,5 +1,8 @@
 <template>
-  <div class="policies-list">
+  <div
+    class="policies-list"
+    data-testid="builtin-gateway-dataplane-policies"
+  >
     <div class="mesh-gateway-policy-list">
       <h3 class="mb-2">
         Gateway policies
@@ -80,7 +83,7 @@
                       >
                         {{ policy.type }}:
 
-                        <router-link :to="policy.route">{{ policy.name }}</router-link>
+                        <RouterLink :to="policy.route">{{ policy.name }}</RouterLink>
                       </li>
                     </ul>
                   </template>

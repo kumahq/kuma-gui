@@ -1,8 +1,8 @@
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
 import type KumaApi from '@/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, SidecarDataplane } from '@/types/index.d'
+import type { PaginatedApiListResponse as CollectionResponse, DataPlaneOverviewParameters, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
+import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
 
 type CollectionParams = {
   mesh: string
@@ -27,7 +27,7 @@ type ServiceParams = {
 }
 
 type DataplaneTypeParams = {
-  type: 'all' | 'delegated' | 'builtin'
+  type: 'all' | 'standard' | 'delegated' | 'builtin'
 }
 
 type Closeable = { close: () => void }
@@ -42,27 +42,13 @@ export type EnvoyDataSource = DataSourceResponse<object | string>
 export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane>
 export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDataplaneCollection>
 
+export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
+
 export type DataplaneRulesCollection = CollectionResponse<DataplaneRule>
 export type DataplaneRulesCollectionSource = DataSourceResponse<DataplaneRulesCollection>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/meshes/:mesh/dataplanes': async (params: CollectionParams & PaginationParams, source: Closeable) => {
-      source.close()
-
-      const { mesh, size } = params
-      const offset = params.size * (params.page - 1)
-      const gateway = 'false'
-      const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
-
-      return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
-        ...filterParams,
-        gateway,
-        offset,
-        size,
-      })
-    },
-
     '/meshes/:mesh/dataplanes/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
@@ -79,7 +65,7 @@ export const sources = (api: KumaApi) => {
       return api.getDataplaneData({ mesh, dppName: name, dataPath })
     },
 
-    '/meshes/:mesh/dataplanes/:name/sidecar-dataplanes-policies': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
@@ -95,6 +81,14 @@ export const sources = (api: KumaApi) => {
       return api.getDataplaneRules({ mesh, name })
     },
 
+    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, name } = params
+
+      return api.getMeshGatewayDataplane({ mesh, name })
+    },
+
     '/meshes/:mesh/dataplane-overviews/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 
@@ -103,11 +97,34 @@ export const sources = (api: KumaApi) => {
       return api.getDataplaneOverviewFromMesh({ mesh, name })
     },
 
+    '/meshes/:mesh/dataplanes/of/:type': async (params: CollectionParams & DataplaneTypeParams & PaginationParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, size, type } = params
+      const offset = size * (params.page - 1)
+
+      const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
+
+      const gatewayParams: DataPlaneOverviewParameters = {}
+      if (type === 'standard') {
+        gatewayParams.gateway = 'false'
+      } else if (type !== 'all') {
+        gatewayParams.gateway = type
+      }
+
+      return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
+        ...filterParams,
+        ...gatewayParams,
+        offset,
+        size,
+      })
+    },
+
     '/meshes/:mesh/dataplanes/for/:service/of/:type': async (params: CollectionParams & ServiceParams & PaginationParams & DataplaneTypeParams, source: Closeable) => {
       source.close()
 
-      const { mesh, size } = params
-      const offset = params.size * (params.page - 1)
+      const { mesh, size, type } = params
+      const offset = size * (params.page - 1)
 
       // here 'all' means both proxies/sidecars and gateways this currently fits
       // our usecases but we should probably include `gateway | sidecar` or
@@ -118,7 +135,13 @@ export const sources = (api: KumaApi) => {
       }
       filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/service:'))
       filterParams.tag.push(`kuma.io/service:${params.service}`)
-      const gatewayParams = params.type !== 'all' ? { gateway: params.type } : {}
+
+      const gatewayParams: DataPlaneOverviewParameters = {}
+      if (type === 'standard') {
+        gatewayParams.gateway = 'false'
+      } else if (type !== 'all') {
+        gatewayParams.gateway = type
+      }
 
       return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...filterParams,

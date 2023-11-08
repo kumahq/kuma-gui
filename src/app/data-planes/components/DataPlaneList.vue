@@ -1,14 +1,12 @@
 <template>
   <AppCollection
-    :empty-state-message="t('common.emptyState.message', { type: props.gateways ? 'Gateways' : 'Data Plane Proxies' })"
-    :empty-state-cta-to="t(`data-planes.href.docs.${props.gateways ? 'gateway' : 'data_plane_proxy'}`)"
+    :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
+    :empty-state-cta-to="t('data-planes.href.docs.data_plane_proxy')"
     :empty-state-cta-text="t('common.documentation')"
     :headers="[
       { label: 'Name', key: 'name' },
-      ...(props.gateways ? [{ label: 'Type', key: 'type' }] : []),
-      { label: 'Service', key: 'service' },
-      ...(!props.gateways ? [{ label: 'Protocol', key: 'protocol' }] : []),
-      ...(isMultiZoneMode ? [{ label: 'Zone', key: 'zone' }] : []),
+      { label: 'Type', key: 'type' },
+      { label: 'Services', key: 'services' },
       { label: 'Certificate Info', key: 'certificate' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -22,11 +20,14 @@
     :is-selected-row="props.isSelectedRow"
     @change="emit('change', $event)"
   >
-    <template #toolbar>
+    <template
+      v-if="$slots.toolbar"
+      #toolbar
+    >
       <slot name="toolbar" />
     </template>
 
-    <template #name="{ row: item }">
+    <template #name="{ row: item }: { row: DataPlaneOverviewTableRow }">
       <RouterLink
         :to="{
           name: props.summaryRouteName,
@@ -44,42 +45,38 @@
       </RouterLink>
     </template>
 
-    <template #service="{ rowValue }">
-      <RouterLink
-        v-if="rowValue.route"
-        :to="rowValue.route"
-      >
-        {{ rowValue.title }}
-      </RouterLink>
-
-      <template v-else>
-        {{ rowValue.title }}
+    <template #services="{ row }: { row: DataPlaneOverviewTableRow }">
+      <template v-if="row.services.length > 0">
+        <KTruncate>
+          <KBadge
+            v-for="(service, index) in row.services"
+            :key="index"
+          >
+            <RouterLink
+              :to="{
+                name: 'service-detail-view',
+                params: {
+                  mesh: row.mesh,
+                  service: service.value,
+                },
+              }"
+            >
+              {{ service.value }}
+            </RouterLink>
+          </KBadge>
+        </KTruncate>
       </template>
-    </template>
-    <template #zone="{ rowValue }">
-      <RouterLink
-        v-if="rowValue.route"
-        :to="rowValue.route"
-      >
-        {{ rowValue.title }}
-      </RouterLink>
-
-      <template v-else>
-        {{ rowValue.title }}
-      </template>
-    </template>
-    <template #status="{ rowValue }">
-      <StatusBadge
-        v-if="rowValue"
-        :status="rowValue"
-      />
 
       <template v-else>
         {{ t('common.collection.none') }}
       </template>
     </template>
 
-    <template #warnings="{ row: item }">
+    <template #status="{ row }: { row: DataPlaneOverviewTableRow }">
+      <StatusBadge :status="row.status" />
+    </template>
+
+    <template #warnings="{ row: item }: { row: DataPlaneOverviewTableRow }">
       <KTooltip
         v-if="Object.values(item.warnings).some((item) => item)"
       >
@@ -109,12 +106,12 @@
       </template>
     </template>
 
-    <template #details="{ row }">
+    <template #details="{ row }: { row: DataPlaneOverviewTableRow }">
       <RouterLink
         class="details-link"
         data-testid="details-link"
         :to="{
-          name: row.isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
+          name: 'data-plane-detail-view',
           params: {
             dataPlane: row.name,
           },
@@ -135,14 +132,11 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
-import { type RouteLocationNamedRaw } from 'vue-router'
 
-import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
-import { DataPlaneOverviewParameters } from '@/types/api.d'
-import type { DataPlaneOverview, StatusKeyword, Version } from '@/types/index.d'
+import type { DataPlaneOverview, LabelValue, StatusKeyword, Version } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
@@ -152,26 +146,17 @@ import {
 } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
-const can = useCan()
 
 type DataPlaneOverviewTableRow = {
   type: string
   name: string
-  zone: {
-    title: string
-    route?: RouteLocationNamedRaw | undefined
-  }
-  service: {
-    title: string
-    route?: RouteLocationNamedRaw | undefined
-  }
-  protocol: string
+  mesh: string
+  services: LabelValue[]
   status: StatusKeyword
   warnings: {
     version_mismatch: boolean
     cert_expired: boolean
   }
-  isGateway: boolean
   certificate: string
 }
 
@@ -186,58 +171,27 @@ const props = withDefaults(defineProps<{
   pageSize: number
   items: DataPlaneOverview[] | undefined
   error: Error | undefined
-  gateways?: boolean
   isSelectedRow: ((row: any) => boolean) | null
   summaryRouteName: string
+  canUseZones: boolean
 }>(), {
   total: 0,
-  gateways: false,
   isSelectedRow: null,
 })
 
 const emit = defineEmits<{
-  (event: 'load-data', offset: number, params: DataPlaneOverviewParameters): void
-  (e: 'change', value: ChangeValue): void
+  (event: 'change', value: ChangeValue): void
 }>()
-
-const isMultiZoneMode = can('use zones')
 
 function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlaneOverviewTableRow[] {
   return dataPlaneOverviews.map((dataPlaneOverview) => {
-    const mesh = dataPlaneOverview.mesh
-    const name = dataPlaneOverview.name
-    const type = dataPlaneOverview.dataplane.networking.gateway?.type || 'STANDARD'
+    const { mesh, name } = dataPlaneOverview
+    const type = dataPlaneOverview.dataplane.networking.gateway?.type
+      ? t(`data-planes.type.${dataPlaneOverview.dataplane.networking.gateway.type.toLowerCase()}`)
+      : t('data-planes.type.standard')
 
-    // Handles our tag collections based on the dataplane type.
-    const importantDataPlaneTagLabels = [
-      'kuma.io/protocol',
-      'kuma.io/service',
-      'kuma.io/zone',
-    ]
-    const tags = dpTags(dataPlaneOverview.dataplane).filter((tag) => importantDataPlaneTagLabels.includes(tag.label))
-    const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value
-    const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
-    const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
-
-    let serviceInsightRoute: RouteLocationNamedRaw | undefined
-    if (service !== undefined) {
-      serviceInsightRoute = {
-        name: 'service-detail-view',
-        params: {
-          mesh,
-          service,
-        },
-      }
-    }
-    let zoneRoute: RouteLocationNamedRaw | undefined
-    if (zone !== undefined) {
-      zoneRoute = {
-        name: 'zone-cp-detail-view',
-        params: {
-          zone,
-        },
-      }
-    }
+    const tags = dpTags(dataPlaneOverview.dataplane)
+    const services = tags.filter((tag) => tag.label === 'kuma.io/service')
 
     const { status } = getStatusAndReason(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
     const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
@@ -271,15 +225,13 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     const item: DataPlaneOverviewTableRow = {
       name,
       type,
-      zone: { title: zone ?? t('common.collection.none'), route: zoneRoute },
-      service: { title: service ?? t('common.collection.none'), route: serviceInsightRoute },
-      protocol: protocol ?? t('common.collection.none'),
+      mesh,
+      services,
       status,
       warnings: {
         version_mismatch: false,
         cert_expired: false,
       },
-      isGateway: dataPlaneOverview.dataplane?.networking?.gateway !== undefined,
       certificate,
     }
 
@@ -291,13 +243,14 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       }
     }
 
-    if (isMultiZoneMode && summary.dpVersion) {
-      const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
+    if (props.canUseZones && summary.dpVersion) {
+      const zoneTag = tags.find((tag) => tag.label === 'kuma.io/zone')
 
       if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
         item.warnings.version_mismatch = true
       }
     }
+
     const time = dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime
     if (
       time &&
@@ -309,7 +262,6 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     return item
   })
 }
-
 </script>
 
 <style lang="scss" scoped>

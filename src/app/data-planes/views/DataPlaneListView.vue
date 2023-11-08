@@ -5,12 +5,13 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t }"
+      v-slot="{ can, route, t }"
       name="data-plane-list-view"
       :params="{
         page: 1,
-        size: 50,
+        size: me.pageSize,
         query: '',
+        dataplaneType: 'all',
         s: '',
         mesh: '',
         dataPlane: '',
@@ -18,7 +19,7 @@
     >
       <DataSource
         v-slot="{data, error}: DataPlaneCollectionSource"
-        :src="`/meshes/${route.params.mesh}/dataplanes?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+        :src="`/meshes/${route.params.mesh}/dataplanes/of/${route.params.dataplaneType}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
       >
         <AppView>
           <template #title>
@@ -48,24 +49,42 @@
                 :error="error"
                 :is-selected-row="(row) => row.name === route.params.dataPlane"
                 summary-route-name="data-plane-summary-view"
+                :can-use-zones="can('use zones')"
                 @change="route.update"
               >
                 <template #toolbar>
                   <FilterBar
                     class="data-plane-proxy-filter"
-                    :placeholder="`tag: 'kuma.io/protocol: http'`"
+                    :placeholder="`tag: 'kuma.io/service: backend'`"
                     :query="route.params.query"
                     :fields="{
                       name: { description: 'filter by name or parts of a name' },
+                      protocol: { description: 'filter by “kuma.io/protocol” value' },
                       service: { description: 'filter by “kuma.io/service” value' },
                       tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
                       zone: { description: 'filter by “kuma.io/zone” value' },
                     }"
-                    @fields-change="(val) => route.update({
-                      query: val.query,
-                      s: val.query.length > 0 ? JSON.stringify(val.fields) : '',
+                    @fields-change="route.update({
+                      query: $event.query,
+                      s: $event.query.length > 0 ? JSON.stringify($event.fields) : '',
                     })"
                   />
+
+                  <KSelect
+                    label="Type"
+                    :overlay-label="true"
+                    :items="['all', 'standard', 'builtin', 'delegated'].map((value) => ({
+                      value,
+                      label: t(`data-planes.type.${value}`),
+                      selected: value === route.params.dataplaneType,
+                    }))"
+                    appearance="select"
+                    @selected="route.update({ dataplaneType: String($event.value) })"
+                  >
+                    <template #item-template="{ item: value }">
+                      {{ value.label }}
+                    </template>
+                  </KSelect>
                 </template>
               </DataPlaneList>
             </template>
@@ -107,7 +126,6 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
-
 </script>
 
 <style lang="scss" scoped>

@@ -21,7 +21,6 @@ meshes:
         mesh-config-view: YAML
         service-list-view: Services
         data-plane-list-view: Data Plane Proxies
-        gateway-list-view: Gateways
         policy-list-index-view: Policies
       overview: 'Overview'
     items:

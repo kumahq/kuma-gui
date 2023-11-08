@@ -36,9 +36,6 @@ Feature: application / titles
       | /meshes/default/services                       | Services     |
       | /meshes/default/services/service-name/overview | service-name |
 
-      | /meshes/default/gateways                       | Gateways     |
-      | /meshes/default/gateways/gateway-name/overview | gateway-name |
-
       | /meshes/default/data-planes                          | Data Plane Proxies |
       | /meshes/default/data-planes/data-plane-name/overview | data-plane-name    |
 

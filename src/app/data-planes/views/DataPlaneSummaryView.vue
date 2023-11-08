@@ -11,7 +11,7 @@
           <h2 class="summary-title">
             <RouterLink
               :to="{
-                name: isGateway ? 'gateway-detail-view' : 'data-plane-detail-view',
+                name: 'data-plane-detail-view',
                 params: {
                   dataPlane: props.name,
                 },
@@ -27,10 +27,10 @@
       </template>
 
       <EmptyBlock v-if="props.dataplaneOverview === undefined">
-        {{ t('common.collection.summary.empty_title', { type: isGateway ? 'Gateway' : 'Dataplane' }) }}
+        {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
 
         <template #message>
-          <p>{{ t('common.collection.summary.empty_message', { type: isGateway ? 'Gateway' : 'Dataplane' }) }}</p>
+          <p>{{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}</p>
         </template>
       </EmptyBlock>
 
@@ -52,7 +52,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
@@ -69,8 +68,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   dataplaneOverview: undefined,
 })
-
-const isGateway = computed(() => props.dataplaneOverview?.dataplane?.networking?.gateway !== undefined)
 </script>
 
 <style lang="scss" scoped>
