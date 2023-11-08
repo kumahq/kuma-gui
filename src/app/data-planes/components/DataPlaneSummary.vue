@@ -13,6 +13,7 @@
             v-if="statusWithReason.reason.length > 0"
             :label="statusWithReason.reason.join(', ')"
             class="reason-tooltip"
+            position-fixed
           >
             <InfoIcon
               :size="KUI_ICON_SIZE_30"
