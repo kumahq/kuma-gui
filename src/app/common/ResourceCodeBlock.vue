@@ -14,6 +14,7 @@
         :label="t('common.copyKubernetesText')"
         placement="bottomEnd"
         max-width="200"
+        position-fixed
       >
         <CopyButton
           class="kubernetes-copy-button"
