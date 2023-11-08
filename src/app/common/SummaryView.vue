@@ -39,6 +39,8 @@ const emit = defineEmits<{
 }
 
 .summary-slideout :deep(.panel) {
+  // Increases width of the content area a little.
+  max-width: 560px;
   // TODO: Remove this once we switch to Kongponents v9 which will fix this issue (https://github.com/Kong/kongponents/pull/1822).
   // Fixes the content being taller than the viewport when using `props.offsetHeight`.
   height: calc(100vh - var(--app-slideout-offset-top)) !important;
