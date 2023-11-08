@@ -19,7 +19,7 @@ Feature: zones / warnings
       body:
         name: zone-cp-1
         zoneInsight:
-          subscriptions: ~
+          subscriptions: !!js/undefined
       """
     When I visit the "/zones/zone-cp-1/overview" URL
     And I click the "#zone-cp-config-view-tab a" element

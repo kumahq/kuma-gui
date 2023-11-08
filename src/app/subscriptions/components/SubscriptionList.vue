@@ -26,10 +26,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
+import SubscriptionDetails from './SubscriptionDetails.vue'
+import SubscriptionHeader from './SubscriptionHeader.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
-import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import type { DiscoverySubscription, KDSSubscription } from '@/types/index.d'
 
 const props = defineProps<{

@@ -95,7 +95,7 @@ import {
 } from '../../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import SubscriptionList from '@/app/common/subscriptions/SubscriptionList.vue'
+import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import type { ZoneOverview } from '@/types/index.d'
 
 const props = withDefaults(defineProps<{
