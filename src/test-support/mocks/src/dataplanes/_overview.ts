@@ -1,11 +1,40 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const query = req.url.searchParams
+  const _gateway = query.get('gateway') ?? ''
+  const _name = query.get('name') ?? ''
+  const _tags = query.get('tag') ?? ''
+
+  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])) === 'true'
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
     '/dataplanes/_overview',
   )
+
+  const tags = _tags !== ''
+    ? Object.fromEntries([_tags]
+      .filter((tag) => Boolean(tag))
+      .map(item => { const [key, ...rest] = item.split(':'); return [key, rest.join(':')] }))
+    : {}
+
+  let filterType: 'gateway_builtin' | 'gateway_delegated' | 'proxy' | undefined
+  if (_gateway === 'builtin' || _gateway === 'delegated') {
+    filterType = `gateway_${_gateway}`
+  } else if (_gateway === 'false') {
+    filterType = 'proxy'
+  } else if (tags['kuma.io/service']) {
+    if (tags['kuma.io/service'].includes('gateway_builtin')) {
+      filterType = 'gateway_builtin'
+    } else if (tags['kuma.io/service'].includes('gateway_delegated')) {
+      filterType = 'gateway_delegated'
+    } else {
+      filterType = 'proxy'
+    }
+  }
 
   return {
     headers: {},
@@ -13,29 +42,25 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
+
+        const isMultizone = true && fake.datatype.boolean()
+
+        const type = filterType ?? fake.helpers.arrayElement(['gateway_builtin', 'gateway_delegated', 'proxy'])
+        const mesh = `${fake.hacker.noun()}-${id}`
+        const name = `${_name || fake.kuma.dataPlaneProxyName()}-${type}-${id}`
+        const service = tags['kuma.io/service']
+
         return {
           type: 'DataplaneOverview',
-          mesh: `${fake.hacker.noun()}-${id}`,
-          name: `${fake.kuma.dataPlaneProxyName()}-${id}`,
+          mesh,
+          name,
           creationTime: '2021-02-17T08:33:36.442044+01:00',
           modificationTime: '2021-02-17T08:33:36.442044+01:00',
           dataplane: {
-            networking: {
-              address: '127.0.0.1',
-              inbound: [
-                fake.kuma.inbound(fake.kuma.serviceName()),
-              ],
-              outbound: [
-                {
-                  port: 10001,
-                  tags: {
-                    'kuma.io/service': 'frontend',
-                  },
-                },
-              ],
-            },
+            networking: fake.kuma.dataplaneNetworking({ type, inbounds, isMultizone, service }),
           },
           dataplaneInsight: {
+            ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',

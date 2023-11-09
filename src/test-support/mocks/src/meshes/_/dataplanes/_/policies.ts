@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default (_deps: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
-  if (params.name.includes('-gateway')) {
+  if (params.name.includes('-gateway_builtin')) {
     return {
       headers: {},
       body: {

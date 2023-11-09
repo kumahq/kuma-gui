@@ -191,33 +191,39 @@ export interface DataPlaneInsight {
   subscriptions: DiscoverySubscription[]
 }
 
+export type DataplaneGateway = {
+  tags: Record<string, string>
+  /**
+   * Type of the gateway. **Default**: `'DELEGATED'`
+   */
+  type?: 'BUILTIN' | 'DELEGATED'
+}
+
+export type DataplaneInbound = {
+  port: number
+  servicePort: number
+  serviceAddress: string
+  tags: Record<string, string>
+  health?: {
+    ready: boolean
+  }
+}
+
+export type DataplaneOutbound = {
+  port: number
+  tags: Record<string, string>
+}
+
 export type DataPlaneNetworking = {
   address: string
-  inbound?: {
-    port: number
-    servicePort: number
-    serviceAddress: string
-    tags: Record<string, string>
-    health?: {
-      ready: boolean
-    }
-  }[]
-  outbound?: {
-    port: number
-    tags: Record<string, string>
-  }[]
+  inbound?: DataplaneInbound[]
+  outbound?: DataplaneOutbound[]
   /**
-   * The presence of the `gateway` field means one of two things:
+   * The presence of the `gateway` field means the resource is a gateway. The `gateway.type` property indicates which type of gateway it is.
    *
-   * - The resource represents a builtin gateway (when `gateway.type === 'BUILTIN'`)
-   * - The resource represents a delegated gateway (when `gateway.type === 'DELEGATED'` or `gateway.type` is omitted)
-   *
-   * If the `gateway` field is absent, the resource represents a regular Data Plane Proxy.
+   * The absence of the `gateway` field means the resource is a regular Data Plane Proxy.
    */
-  gateway?: {
-    tags: Record<string, string>
-    type?: 'BUILTIN' | 'DELEGATED'
-  }
+  gateway?: DataplaneGateway
 }
 
 /**

@@ -16,7 +16,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const serviceType = fake.kuma.serviceType()
         const mesh = req.params.mesh
-        const name = `${fake.hacker.noun()}-${id}_${serviceType}`
+        const name = `${fake.hacker.noun()}-${id}-${serviceType}`
 
         const serviceInsight: any = {
           type: 'ServiceInsight',

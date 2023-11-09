@@ -1,18 +1,22 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh, name } = req.params
+
+  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])) === 'true'
 
-  const service = fake.kuma.serviceName()
+  let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
+  if (name.includes('-gateway_builtin')) {
+    type = 'gateway_builtin'
+  } else if (name.includes('-gateway_delegated')) {
+    type = 'gateway_delegated'
+  }
+
   const isMultizone = true && fake.datatype.boolean()
-  const zone = fake.hacker.noun()
-
-  const issuedBackend = fake.hacker.noun()
-  const supportedBackends = [issuedBackend].concat(fake.helpers.multiple(fake.hacker.noun))
 
   return {
-    headers: {
-    },
+    headers: {},
     body: {
       type: 'DataplaneOverview',
       mesh,
@@ -20,33 +24,10 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
       dataplane: {
-        networking: {
-          address: fake.internet.ip(),
-          ...(name.includes('-gateway') && {
-            gateway: {
-              tags: {
-                'kuma.io/service': service,
-                ...(isMultizone && {
-                  'kuma.io/zone': zone,
-                }),
-              },
-              type: 'BUILTIN',
-            },
-          }),
-          inbound: [
-            fake.kuma.inbound(service, isMultizone ? zone : undefined),
-          ],
-          outbound: [
-            {
-              port: fake.internet.port(),
-              tags: {
-                'kuma.io/service': fake.kuma.serviceName(),
-              },
-            },
-          ],
-        },
+        networking: fake.kuma.dataplaneNetworking({ type, inbounds, isMultizone }),
       },
       dataplaneInsight: {
+        ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
           return {
             id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
@@ -91,19 +72,6 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             },
           }
         }),
-        ...(
-          JSON.parse(env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])))
-            ? {
-              mTLS: {
-                certificateExpirationTime: fake.date.anytime(),
-                lastCertificateRegeneration: '2023-10-02T12:40:13.956741929Z',
-                certificateRegenerations: fake.number.int(),
-                issuedBackend,
-                supportedBackends,
-              },
-            }
-            : {}
-        ),
       },
     },
   }

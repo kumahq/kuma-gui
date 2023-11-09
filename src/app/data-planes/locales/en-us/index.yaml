@@ -42,3 +42,8 @@ data-planes:
     docs:
       data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'
       gateway: '{KUMA_DOCS_URL}/explore/gateway?{KUMA_UTM_QUERY_PARAMS}'
+  type:
+    all: 'All'
+    standard: 'Standard proxy'
+    builtin: 'Built-in gateway'
+    delegated: 'Delegated gateway'
