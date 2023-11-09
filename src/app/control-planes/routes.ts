@@ -5,7 +5,7 @@ export const routes = (): RouteRecordRaw[] => {
     {
       path: `${prefix}`,
       name: 'home',
-      component: () => import('@/app/control-planes/views/item/IndexView.vue'),
+      component: () => import('@/app/control-planes/views/ControlPlaneDetailView.vue'),
     },
   ]
 }
