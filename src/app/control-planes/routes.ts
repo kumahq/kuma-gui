@@ -5,7 +5,7 @@ export const routes = (): RouteRecordRaw[] => {
     {
       path: `${prefix}`,
       name: 'home',
-      component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
+      component: () => import('@/app/control-planes/views/ControlPlaneDetailView.vue'),
     },
   ]
 }

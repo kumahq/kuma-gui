@@ -85,14 +85,11 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
 import { GlobalInsightSource } from '../sources'
-import { useCan } from '@/app/application'
+import { useCan, useI18n } from '@/app/application'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 const can = useCan()
@@ -100,6 +97,6 @@ const can = useCan()
 <style lang="scss" scoped>
 .card-header {
   margin-bottom: $kui-space-50;
-  height: 42px;
+  min-height: 42px;
 }
 </style>
