@@ -16,7 +16,6 @@ export const getSource = (doc: Hideable) => {
     return new CallableEventSource<Configuration>(async function * (this: RetryingEventSource) {
       const self = this
       while (true) {
-        self.readyState = 1
         // this this isn't the first call then we should wait before calling again
         if (iterations > 0) {
           await new Promise((resolve) => setTimeout(resolve, self.configuration.interval ?? 1000))
@@ -34,7 +33,7 @@ export const getSource = (doc: Hideable) => {
         }
         let res
         try {
-          res = cb(self)
+          res = await cb(self)
           // if we aren't polling then immediately close after calling
           if (typeof self.configuration.interval === 'undefined') {
             self.close()
@@ -84,11 +83,9 @@ export const create: Creator = (src, router) => {
     // TODO(jc) Once we remove all the source.closes in the sources.ts files the
     // second argument here can go
     const init = route.route(params, { close: () => {} })
-    if (init instanceof CallableEventSource) {
-      return init
-    } else {
-      return source(() => Promise.resolve(init))
-    }
+    const eventSource = init instanceof CallableEventSource ? init : source(() => Promise.resolve(init))
+    eventSource.url = src
+    return eventSource
   } catch (e) {
     return source(() => Promise.reject(e))
   }

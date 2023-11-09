@@ -284,28 +284,29 @@
                 </div>
 
                 <div class="form-section">
-                  <div class="form-section__header">
-                    <h2 class="form-section-title">
-                      {{ t('zones.form.section.scanner.title') }}
-                    </h2>
-
-                    <p v-if="t('zones.form.section.scanner.description') !== ' '">
-                      {{ t('zones.form.section.scanner.description') }}
-                    </p>
-                  </div>
-
-                  <div class="form-section__content">
-                    <DataSource
-                      v-slot="{ data, error: scanError }: ZoneOverviewSource"
-                      :src="`/zone-cps/online/${name}?no-cache=${Date.now()}`"
-                      @change="success"
+                  <DataSource
+                    v-slot="{ data, error: scanError }: ZoneOverviewSource"
+                    :src="`/zone-cps/online/${name}?no-cache=${now}`"
+                    @change="success"
+                  >
+                    <div
+                      v-if="!scanError"
+                      class="form-section__header"
                     >
+                      <h2 class="form-section-title">
+                        {{ t('zones.form.section.scanner.title') }}
+                      </h2>
+                      <p>{{ t('zones.form.section.scanner.description') }}</p>
+                    </div>
+
+                    <div class="form-section__content">
                       <KEmptyState cta-is-hidden>
                         <template #title>
                           <template
                             v-if="scanError"
                           >
                             <DangerIcon
+                              data-testid="error"
                               display="inline-block"
                               :color="KUI_COLOR_TEXT_DANGER"
                             />
@@ -360,8 +361,8 @@
                           </template>
                         </template>
                       </KEmptyState>
-                    </DataSource>
-                  </div>
+                    </div>
+                  </DataSource>
                 </div>
               </template>
             </div>
@@ -425,6 +426,7 @@ const error = ref<Error | null>(null)
 const frontendNameError = ref<string | null>(null)
 
 const isZoneConnected = ref(false)
+const now = ref(new Date())
 
 const name = ref('')
 const environment = ref<'universal' | 'kubernetes'>('kubernetes')

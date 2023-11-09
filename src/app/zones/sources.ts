@@ -2,7 +2,6 @@ import { getZoneControlPlaneStatus } from './data'
 import type { DataSourceResponse, Source } from '@/app/application'
 import { sources as zoneEgresses } from '@/app/zone-egresses/sources'
 import { sources as zoneIngresses } from '@/app/zone-ingresses/sources'
-import { ApiError } from '@/services/kuma-api/ApiError'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type { ZoneOverview } from '@/types/index.d'
@@ -38,30 +37,22 @@ export const sources = (source: Source, api: KumaApi) => {
       return api.getZoneOverview({ name })
     },
     '/zone-cps/online/:name': (params: DetailParams) => {
-      // this source retries until we have a 200 and the zone found is online
-      // any non-404 errors will error as usual
+      const ZoneOfflineError = class extends Error {}
       const { name } = params
       return source(async () => {
         const res = await api.getZoneOverview({ name })
+        // The presence of a `ZoneOverview.zoneInsight` object's subscriptions
+        // with a connect time and without a disconnect time indicate a Zone to
+        // be connected and online.
         if (getZoneControlPlaneStatus(res) === 'online') {
           return res
         } else {
-          const e = new ApiError({
-            status: 404,
-            title: `The ${res.name} Zone is offline`,
-          })
-          throw e
+          throw new ZoneOfflineError()
         }
       }, {
         retry: (e) => {
-          const hasStatus = <T extends {status: number}>(e: unknown): e is T => typeof (e as T).status !== 'undefined'
-          if (hasStatus(e)) {
-            const status = e.status.toString()
-            switch (true) {
-              case status === '404':
-                // wait 2 seconds and try again
-                return new Promise((resolve) => setTimeout(resolve, 2000))
-            }
+          if (e instanceof ZoneOfflineError) {
+            return new Promise((resolve) => setTimeout(resolve, 2000))
           }
         },
       })

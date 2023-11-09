@@ -25,11 +25,12 @@ export default class CallableEventSource<T = {}> extends EventTarget {
     this._open()
   }
 
-  _open() {
+  protected _open() {
     (async function (self) {
       try {
-        self.readyState = 0
+        self.readyState = CONNECTING
         const source = self.source()
+        self.readyState = OPEN
         for await (const res of source) {
           self.dispatchEvent(new MessageEvent('message', {
             data: res,

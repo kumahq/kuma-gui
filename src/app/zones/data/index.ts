@@ -24,6 +24,9 @@ export function getZoneDpServerAuthType(zone: ZoneOverview): string {
 }
 // TODO(jc): end
 
+// The presence of a `ZoneOverview.zoneInsight` object's subscriptions
+// with a connect time and without a disconnect time indicate a Zone to
+// be connected and online.
 export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): 'online' | 'offline' | 'disabled' {
   if (zoneOverview.zone.enabled === false) {
     return 'disabled'
