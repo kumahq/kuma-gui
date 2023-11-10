@@ -134,6 +134,9 @@ Then(/^the URL( doesn't | )contain[s]? "(.*)"$/, (assertion: string, str: string
   cy.url().should(`${prefix}include`, str)
 })
 
+// whilst the response is sent after waitForRequest resolves the response itself
+// has been rendered on the server therefore any mocking done after this step
+// will apply to the following request
 Then(/^the URL "(.*)" was?(n't | not | )requested with$/, (url: string, not: string = '', yaml: string) => {
   cy.wrap({
     url,

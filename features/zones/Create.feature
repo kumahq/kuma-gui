@@ -133,6 +133,11 @@ Feature: zones / create
     When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
+    And the URL "/zones/test/_overview" was requested with
+      """
+      method: GET
+      """
+    And the "$waiting" element exists
     And the URL "/zones/test/_overview" responds with
       """
       headers:

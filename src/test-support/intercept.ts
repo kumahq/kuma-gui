@@ -79,6 +79,10 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
           }
           const _response = fetch(request)
           const response = cb(createMerge(_response), request, _response)
+          // once the response has been rendered but not sent resolve any
+          // waiting request assertions this means that any mocking done after
+          // awaiting the request will happen on the subsequent request not this
+          // one
           client.request({
             url,
             request,
