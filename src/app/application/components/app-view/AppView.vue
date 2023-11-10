@@ -1,10 +1,5 @@
 <template>
-  <component
-    :is="!hasParent ? MainView : 'div'"
-    :class="{
-      'app-main-content': !hasParent,
-    }"
-  >
+  <component :is="!hasParent ? MainView : 'div'">
     <nav
       v-if="!hasParent && _breadcrumbs.length > 0"
       aria-label="Breadcrumb"
@@ -160,10 +155,6 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss" scoped>
-.app-main-content {
-  padding: var(--AppContentPadding);
-}
-
 .actions {
   flex-grow: 1;
   display: flex;
