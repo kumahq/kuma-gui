@@ -16,10 +16,12 @@ Feature: zones / create
       | environment-kubernetes-config       | [data-testid='zone-kubernetes-config']               |
       | ingress-input-switch                | [for='zone-ingress-enabled']                         |
       | egress-input-switch                 | [for='zone-egress-enabled']                          |
+      | create-error                        | [data-testid='create-zone-error']                    |
       | waiting                             | [data-testid='waiting']                              |
       | connected                           | [data-testid='connected']                            |
-      | error                               | [data-testid='create-zone-error']                    |
+      | error                               | [data-testid='error']                                |
       | instructions                        | [data-testid='connect-zone-instructions']            |
+
     And the environment
       """
       KUMA_MODE: global
@@ -89,6 +91,19 @@ Feature: zones / create
     And the "$egress-input-switch input" element doesn't exist
     And the "$environment-universal-config" element contains "globalAddress: grpcs://<global-kds-address>:5685"
 
+  Scenario: The zone get connected successfully and shows the success
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 0
+      """
+    And the URL "/provision-zone" responds with
+      """
+      body:
+        token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
+      """
+    When I visit the "/zones/-create" URL
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
     Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 1
@@ -97,13 +112,38 @@ Feature: zones / create
       """
       body:
         zone:
-          enabled: true
+          enabled: !!js/undefined
         zoneInsight:
           subscriptions:
             - connectTime: '2020-07-28T16:18:09.743141Z'
               disconnectTime: !!js/undefined
       """
     Then the "$connected" element exists
+
+  Scenario: The zone is deleted whilst waiting to be connected and shows an error
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 0
+      """
+    And the URL "/provision-zone" responds with
+      """
+      body:
+        token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
+      """
+    When I visit the "/zones/-create" URL
+    And I "type" "test" into the "$name-input" element
+    And I click the "$create-zone-button" element
+    And the URL "/zones/test/_overview" was requested with
+      """
+      method: GET
+      """
+    And the "$waiting" element exists
+    And the URL "/zones/test/_overview" responds with
+      """
+      headers:
+        Status-Code: 404
+      """
+    Then the "$error" element exists
 
   Scenario: The form shows expected error for 409 response
     Given the URL "/provision-zone" responds with
@@ -116,7 +156,7 @@ Feature: zones / create
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
-    Then the "$error" element exists
+    Then the "$create-error" element exists
     Then the "$instructions" element doesn't exist
 
   Scenario: The form shows expected error for 400 response
@@ -147,7 +187,7 @@ Feature: zones / create
     And I "type" "zone.eu" into the "$name-input" element
     And I click the "$create-zone-button" element
 
-    Then the "$error" element doesn't exist
+    Then the "$create-error" element doesn't exist
     And the "$name-input-invalid-dns-name" element exists
     And the "$instructions" element doesn't exist
 
@@ -155,7 +195,7 @@ Feature: zones / create
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
-    Then the "$error" element doesn't exist
+    Then the "$create-error" element doesn't exist
     And the "$instructions" element exists
 
   Scenario: Exiting the form in a safe state without confirm dialog

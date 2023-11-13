@@ -76,7 +76,7 @@ zones:
         description: 'Establish a connection to your remote zone by following the instructions to setup dependencies and install the remote zone control plane.'
       scanner:
         title: 'Waiting for Zone to be connected …'
-        description: ' '
+        description: ''
     nameLabel: 'Name'
     name_tooltip: "The name must be a valid RFC 1035 DNS name, which means it must start with a letter, be less than 64 characters long, and only contain lowercase letters, numbers, and '-'."
     createZoneButtonLabel: 'Create Zone & generate token'
