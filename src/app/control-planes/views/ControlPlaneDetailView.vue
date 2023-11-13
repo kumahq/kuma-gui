@@ -68,6 +68,8 @@
 
           <KCard>
             <template #body>
+              <!-- This DataSource URL is currently shared with the OnboardingNotification -->
+              <!-- component to ensure that we share the API request -->
               <DataSource
                 v-slot="{ data, error }: MeshInsightCollectionSource"
                 src="/meshes?page=1&size=10"

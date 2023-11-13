@@ -12,11 +12,15 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = id === 0 ? 'default' : `${fake.hacker.noun()}-${id}`
 
-        const standard = fake.kuma.healthStatus()
-        const gatewayBuiltin = fake.kuma.healthStatus()
-        const gatewayDelegated = fake.kuma.healthStatus()
+        // TODO(jc) refactor this to use the partitioning so we can say how many
+        // DATAPLANES we have and get a spread of types totalling that number
+        const max = env('KUMA_DATAPLANE_COUNT', '30') === '0' ? 0 : 30
+        const standard = fake.kuma.healthStatus({ min: 0, max })
+        const gatewayBuiltin = fake.kuma.healthStatus({ min: 0, max })
+        const gatewayDelegated = fake.kuma.healthStatus({ min: 0, max })
+
         const gateway = {
           total: (gatewayBuiltin.total ?? 0) + (gatewayDelegated.total ?? 0),
           online: (gatewayBuiltin.online ?? 0) + (gatewayDelegated.online ?? 0),
@@ -29,6 +33,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           partiallyDegraded: (standard.partiallyDegraded ?? 0) + (gateway.partiallyDegraded ?? 0),
           offline: (standard.offline ?? 0) + (gateway.offline ?? 0),
         }
+        // end TODO
 
         return {
           type: 'MeshInsight',
