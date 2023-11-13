@@ -1,5 +1,8 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
+
+export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+  const { mesh } = req.params
+
   return {
     headers: {},
     body: {
@@ -28,7 +31,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -41,9 +44,9 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'demo-app.kuma-demo.svc.5000.mesh:80',
             '240.0.0.1:80',
           ],
-          service: 'demo-app_kuma-demo_svc_5000',
+          service: fake.kuma.serviceName(),
           tags: {
-            'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshCircuitBreaker',
           subset: {},
@@ -58,7 +61,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -69,14 +72,14 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           addresses: [
             '10.42.0.6:5000',
           ],
-          service: 'demo-app_kuma-demo_svc_5000',
+          service: fake.kuma.serviceName(),
           tags: {
             app: 'demo-app',
             'k8s.kuma.io/namespace': 'kuma-demo',
             'k8s.kuma.io/service-name': 'demo-app',
             'k8s.kuma.io/service-port': '5000',
             'kuma.io/protocol': 'http',
-            'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
+            'kuma.io/service': fake.kuma.serviceName(),
             'pod-template-hash': '7458cfdd75',
           },
           policyType: 'MeshCircuitBreaker',
@@ -92,7 +95,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -103,14 +106,14 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           addresses: [
             '10.42.0.6:5000',
           ],
-          service: 'demo-app_kuma-demo_svc_5000',
+          service: fake.kuma.serviceName(),
           tags: {
             app: 'demo-app',
             'k8s.kuma.io/namespace': 'kuma-demo',
             'k8s.kuma.io/service-name': 'demo-app',
             'k8s.kuma.io/service-port': '5000',
             'kuma.io/protocol': 'http',
-            'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
+            'kuma.io/service': fake.kuma.serviceName(),
             'pod-template-hash': '7458cfdd75',
           },
           policyType: 'MeshRateLimit',
@@ -137,7 +140,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -149,11 +152,11 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'demo-app.mesh:5000',
             '240.0.0.5:5000',
           ],
-          service: 'demo-app_kuma-demo_svc_5000',
+          service: fake.kuma.serviceName(),
           tags: {
             'k8s.kuma.io/service-name': 'demo-app',
             'k8s.kuma.io/service-port': '5000',
-            'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshCircuitBreaker',
           subset: {},
@@ -168,7 +171,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -181,13 +184,13 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'redis.kuma-demo.svc.6379.mesh:80',
             '240.0.0.0:80',
           ],
-          service: 'redis_kuma-demo_svc_6379',
+          service: fake.kuma.serviceName(),
           tags: {
-            'kuma.io/service': 'redis_kuma-demo_svc_6379',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshRetry',
           subset: {
-            'kuma.io/service': 'redis_kuma-demo_svc_6379',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           conf: {
             tcp: {
@@ -199,7 +202,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -212,9 +215,9 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'redis.kuma-demo.svc.6379.mesh:80',
             '240.0.0.0:80',
           ],
-          service: 'redis_kuma-demo_svc_6379',
+          service: fake.kuma.serviceName(),
           tags: {
-            'kuma.io/service': 'redis_kuma-demo_svc_6379',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshCircuitBreaker',
           subset: {},
@@ -229,7 +232,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -241,15 +244,15 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'redis.mesh:6379',
             '240.0.0.6:6379',
           ],
-          service: 'redis_kuma-demo_svc_6379',
+          service: fake.kuma.serviceName(),
           tags: {
             'k8s.kuma.io/service-name': 'redis',
             'k8s.kuma.io/service-port': '6379',
-            'kuma.io/service': 'redis_kuma-demo_svc_6379',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshRetry',
           subset: {
-            'kuma.io/service': 'redis_kuma-demo_svc_6379',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           conf: {
             tcp: {
@@ -261,7 +264,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -273,11 +276,11 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'redis.mesh:6379',
             '240.0.0.6:6379',
           ],
-          service: 'redis_kuma-demo_svc_6379',
+          service: fake.kuma.serviceName(),
           tags: {
             'k8s.kuma.io/service-name': 'redis',
             'k8s.kuma.io/service-port': '6379',
-            'kuma.io/service': 'redis_kuma-demo_svc_6379',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshCircuitBreaker',
           subset: {},
@@ -292,7 +295,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],
@@ -305,9 +308,9 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
             'svclb-demo-app-gateway.kuma-demo.svc.mesh:80',
             '240.0.0.2:80',
           ],
-          service: 'svclb-demo-app-gateway_kuma-demo_svc',
+          service: fake.kuma.serviceName(),
           tags: {
-            'kuma.io/service': 'svclb-demo-app-gateway_kuma-demo_svc',
+            'kuma.io/service': fake.kuma.serviceName(),
           },
           policyType: 'MeshCircuitBreaker',
           subset: {},
@@ -322,7 +325,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           },
           origins: [
             {
-              mesh: 'default',
+              mesh,
               name: 'all.kuma-system',
             },
           ],

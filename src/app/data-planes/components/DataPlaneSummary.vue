@@ -26,40 +26,6 @@
 
     <DefinitionCard>
       <template #title>
-        {{ t('http.api.property.tags') }}
-      </template>
-
-      <template #body>
-        <TagList
-          v-if="dataPlaneTags.length > 0"
-          :tags="dataPlaneTags"
-        />
-
-        <template v-else>
-          {{ t('common.detail.none') }}
-        </template>
-      </template>
-    </DefinitionCard>
-
-    <DefinitionCard>
-      <template #title>
-        {{ t('http.api.property.dependencies') }}
-      </template>
-
-      <template #body>
-        <TagList
-          v-if="dataPlaneVersions !== null"
-          :tags="dataPlaneVersions"
-        />
-
-        <template v-else>
-          {{ t('common.detail.none') }}
-        </template>
-      </template>
-    </DefinitionCard>
-
-    <DefinitionCard>
-      <template #title>
         {{ t('data-planes.routes.item.last_updated') }}
       </template>
 
@@ -74,21 +40,93 @@
       </template>
     </DefinitionCard>
 
-    <DefinitionCard>
-      <template #title>
-        {{ t('data-planes.routes.item.certificate_info') }}
-      </template>
+    <div v-if="props.dataplaneOverview.dataplane.networking.gateway">
+      <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
-      <template #body>
-        <template v-if="props.dataplaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime">
-          {{ formatIsoDate(props.dataplaneOverview.dataplaneInsight?.mTLS.certificateExpirationTime) }}
-        </template>
+      <div class="mt-4">
+        <div class="stack">
+          <DefinitionCard>
+            <template #title>
+              {{ t('http.api.property.address') }}
+            </template>
 
-        <template v-else>
-          {{ t('data-planes.routes.item.no_certificate') }}
-        </template>
-      </template>
-    </DefinitionCard>
+            <template #body>
+              <TextWithCopyButton :text="`${props.dataplaneOverview.dataplane.networking.address}`" />
+            </template>
+          </DefinitionCard>
+
+          <DefinitionCard>
+            <template #title>
+              {{ t('http.api.property.tags') }}
+            </template>
+
+            <template #body>
+              <TagList :tags="props.dataplaneOverview.dataplane.networking.gateway.tags" />
+            </template>
+          </DefinitionCard>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="props.dataplaneOverview.dataplane.networking.inbound">
+      <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
+
+      <div class="mt-4">
+        <div class="inbound-list">
+          <div
+            v-for="(inbound, index) in props.dataplaneOverview.dataplane.networking.inbound"
+            :key="index"
+            class="inbound"
+          >
+            <h4>{{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}</h4>
+
+            <div class="mt-2 stack">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
+
+                <template #body>
+                  <KBadge
+                    v-if="!inbound.health || inbound.health.ready"
+                    appearance="success"
+                  >
+                    {{ t('data-planes.routes.item.health.ready') }}
+                  </KBadge>
+
+                  <KBadge
+                    v-else
+                    appearance="danger"
+                  >
+                    {{ t('data-planes.routes.item.health.not_ready') }}
+                  </KBadge>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.address') }}
+                </template>
+
+                <template #body>
+                  <TextWithCopyButton :text="`${inbound.address ?? props.dataplaneOverview.dataplane.networking.advertisedAddress ?? props.dataplaneOverview.dataplane.networking.address}:${inbound.port}`" />
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.tags') }}
+                </template>
+
+                <template #body>
+                  <TagList :tags="inbound.tags" />
+                </template>
+              </DefinitionCard>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -100,9 +138,10 @@ import { computed } from 'vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
-import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'
+import { getStatusAndReason } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
 
@@ -111,8 +150,6 @@ const props = defineProps<{
 }>()
 
 const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
-const dataPlaneTags = computed(() => dpTags(props.dataplaneOverview.dataplane))
-const dataPlaneVersions = computed(() => getVersions(props.dataplaneOverview.dataplaneInsight))
 const lastUpdatedTime = computed(() => {
   const subscriptions = props.dataplaneOverview.dataplaneInsight?.subscriptions ?? []
 
@@ -136,5 +173,9 @@ const lastUpdatedTime = computed(() => {
 .reason-tooltip :deep(.kong-icon) {
   display: flex;
   align-items: center;
+}
+
+.inbound-list>*+* {
+  margin-block-start: $kui-space-60;
 }
 </style>

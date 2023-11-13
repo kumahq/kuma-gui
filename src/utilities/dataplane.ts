@@ -1,7 +1,7 @@
 import {
   Compatibility,
   DataPlaneInsight,
-  DataPlaneNetworking,
+  DataplaneNetworking,
   DiscoverySubscription,
   KDSSubscription,
   LabelValue,
@@ -42,7 +42,7 @@ import {
  * ]
  * ```
  */
-export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelValue[] {
+export function dpTags(dataplane: { networking: DataplaneNetworking }): LabelValue[] {
   let tags: string[] = []
 
   if (dataplane.networking.inbound) {
@@ -75,7 +75,7 @@ export function getItemStatusFromInsight(insight: { subscriptions?: DiscoverySub
 
 // getStatusAndReason takes Dataplane and DataplaneInsight and returns a
 // {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
-export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
+export function getStatusAndReason(dataplane: { networking: DataplaneNetworking }, insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
   const inbound = dataplane.networking.inbound ?? []
   const errors = inbound
     .filter(item => item.health && !item.health.ready)

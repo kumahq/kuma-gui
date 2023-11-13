@@ -200,6 +200,7 @@ export type DataplaneGateway = {
 }
 
 export type DataplaneInbound = {
+  address?: string
   port: number
   servicePort: number
   serviceAddress: string
@@ -214,8 +215,9 @@ export type DataplaneOutbound = {
   tags: Record<string, string>
 }
 
-export type DataPlaneNetworking = {
+export type DataplaneNetworking = {
   address: string
+  advertisedAddress?: string
   inbound?: DataplaneInbound[]
   outbound?: DataplaneOutbound[]
   /**
@@ -294,7 +296,7 @@ export interface MeshEntity extends Entity {
  */
 export interface DataPlane extends MeshEntity {
   type: 'Dataplane'
-  networking: DataPlaneNetworking
+  networking: DataplaneNetworking
 }
 
 /**
@@ -303,7 +305,7 @@ export interface DataPlane extends MeshEntity {
 export interface DataPlaneOverview extends MeshEntity {
   type: 'DataplaneOverview'
   dataplane: {
-    networking: DataPlaneNetworking
+    networking: DataplaneNetworking
   }
   dataplaneInsight?: DataPlaneInsight
 }

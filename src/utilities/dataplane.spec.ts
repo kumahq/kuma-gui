@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest'
 import { getStatusAndReason, getItemStatusFromInsight } from './dataplane'
 import {
   DiscoverySubscription,
-  DataPlaneNetworking,
+  DataplaneNetworking,
 } from '@/types/index.d'
 
 describe('utilities/dataplane', () => {
@@ -64,7 +64,7 @@ describe('utilities/dataplane', () => {
   })
 
   describe('getStatusAndReason', () => {
-    type TestCases = {message: string, args: [{ networking: DataPlaneNetworking }, { subscriptions?: DiscoverySubscription[] }], expected: any}[]
+    type TestCases = {message: string, args: [{ networking: DataplaneNetworking }, { subscriptions?: DiscoverySubscription[] }], expected: any}[]
     test.each(([
       {
         message: 'nothing defined is online',

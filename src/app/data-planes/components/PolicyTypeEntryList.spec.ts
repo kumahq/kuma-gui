@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { describe, expect, test } from 'vitest'
+import { beforeAll, describe, expect, test, vi } from 'vitest'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
 import { createPolicyTypeEntries } from '@/test-data/createPolicyTypeEntries'
@@ -12,10 +12,26 @@ function renderComponent(props = {}) {
       policyTypeEntries,
       ...props,
     },
+    global: {
+      stubs: {
+        RouterLink: {
+          template: '<span><slot /></span>',
+        },
+      },
+    },
   })
 }
 
 describe('PolicyTypeEntryList', () => {
+  beforeAll(() => {
+    const ResizeObserverMock = vi.fn(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
+    }))
+    vi.stubGlobal('ResizeObserver', ResizeObserverMock)
+  })
+
   test('works', async () => {
     const wrapper = renderComponent()
 

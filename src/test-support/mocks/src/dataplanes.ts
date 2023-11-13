@@ -11,7 +11,7 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
     '/dataplanes',
   )
 
-  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
 
   const tags = _tags !== ''
     ? Object.fromEntries([_tags]

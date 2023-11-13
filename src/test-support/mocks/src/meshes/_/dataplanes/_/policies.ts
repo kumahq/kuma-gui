@@ -1,13 +1,15 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (req) => {
-  const params = req.params
-  if (params.name.includes('-gateway_builtin')) {
+
+export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+  const { mesh } = req.params
+
+  if (req.params.name.includes('-gateway_builtin')) {
     return {
       headers: {},
       body: {
         kind: 'MeshGatewayDataplane',
         gateway: {
-          mesh: 'default',
+          mesh,
           name: 'edge-gateway',
         },
         listeners: [
@@ -23,26 +25,26 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                     destinations: [
                       {
                         tags: {
-                          'kuma.io/service': 'demo-app_kuma-demo_svc_5000',
+                          'kuma.io/service': fake.kuma.serviceName(),
                         },
                         policies: {
                           CircuitBreaker: {
                             type: 'CircuitBreaker',
-                            mesh: 'default',
+                            mesh,
                             name: 'cb1',
                             creationTime: '2022-10-18T08:32:15Z',
                             modificationTime: '2022-10-18T08:32:15Z',
                             sources: [
                               {
                                 match: {
-                                  'kuma.io/service': '*',
+                                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                                 },
                               },
                             ],
                             destinations: [
                               {
                                 match: {
-                                  'kuma.io/service': '*',
+                                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                                 },
                               },
                             ],
@@ -57,21 +59,21 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                           },
                           Retry: {
                             type: 'Retry',
-                            mesh: 'default',
+                            mesh,
                             name: 'retry-all-default',
                             creationTime: '2022-10-18T08:32:14Z',
                             modificationTime: '2022-10-18T08:32:14Z',
                             sources: [
                               {
                                 match: {
-                                  'kuma.io/service': '*',
+                                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                                 },
                               },
                             ],
                             destinations: [
                               {
                                 match: {
-                                  'kuma.io/service': '*',
+                                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                                 },
                               },
                             ],
@@ -99,21 +101,21 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                           },
                           Timeout: {
                             type: 'Timeout',
-                            mesh: 'default',
+                            mesh,
                             name: 'timeout-all-default',
                             creationTime: '2022-10-18T08:32:15Z',
                             modificationTime: '2022-10-18T08:32:15Z',
                             sources: [
                               {
                                 match: {
-                                  'kuma.io/service': '*',
+                                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                                 },
                               },
                             ],
                             destinations: [
                               {
                                 match: {
-                                  'kuma.io/service': '*',
+                                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                                 },
                               },
                             ],
@@ -141,35 +143,35 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         policies: {
           TrafficLog: {
             type: 'TrafficLog',
-            mesh: 'default',
+            mesh,
             name: 'tl-1',
             creationTime: '2022-03-03T22:24:14Z',
             modificationTime: '2022-03-03T22:24:14Z',
             sources: [
               {
                 match: {
-                  'kuma.io/service': '*',
+                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                 },
               },
             ],
             destinations: [
               {
                 match: {
-                  'kuma.io/service': '*',
+                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                 },
               },
             ],
           },
           TrafficTrace: {
             type: 'TrafficTrace',
-            mesh: 'default',
+            mesh,
             name: 'tt-1',
             creationTime: '2022-03-03T22:25:34Z',
             modificationTime: '2022-03-03T22:25:34Z',
             selectors: [
               {
                 match: {
-                  'kuma.io/service': '*',
+                  'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                 },
               },
             ],
@@ -190,33 +192,33 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
       items: [
         {
           type: 'inbound',
-          service: 'web',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           name: '192.168.0.1:80:81',
           matchedPolicies: {
             FaultInjection: [
               {
                 type: 'FaultInjection',
-                mesh: 'default',
+                mesh,
                 name: 'fi1.kuma-system',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
                 sources: [
                   {
                     match: {
-                      'kuma.io/service': 'service-a',
+                      'kuma.io/service': fake.kuma.serviceName(),
                     },
                   },
                   {
                     match: {
-                      'kuma.io/service': 'service-b',
+                      'kuma.io/service': fake.kuma.serviceName(),
                     },
                   },
                 ],
                 destinations: [
                   {
                     match: {
-                      'kuma.io/protocol': 'http',
-                      'kuma.io/service': 'backend',
+                      'kuma.io/protocol': fake.kuma.protocol(),
+                      'kuma.io/service': fake.kuma.serviceName(),
                     },
                   },
                 ],
@@ -229,14 +231,14 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
               },
               {
                 type: 'FaultInjection',
-                mesh: 'default',
+                mesh,
                 name: 'web-to-backend.kuma-system',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
                 sources: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
@@ -244,7 +246,7 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                   {
                     match: {
                       'kuma.io/protocol': 'http',
-                      'kuma.io/service': 'backend',
+                      'kuma.io/service': fake.kuma.serviceName(),
                     },
                   },
                 ],
@@ -259,21 +261,21 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
             TrafficPermission: [
               {
                 type: 'TrafficPermission',
-                mesh: 'default',
+                mesh,
                 name: 'tp-1',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
                 sources: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
                 destinations: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
@@ -284,26 +286,26 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         {
           type: 'outbound',
           name: '192.168.0.2:8080',
-          service: 'backend',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           matchedPolicies: {
             Timeout: [
               {
                 type: 'Timeout',
-                mesh: 'default',
+                mesh,
                 name: 'timeout-all-default',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
                 sources: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
                 destinations: [
                   {
                     match: {
-                      'kuma.io/service': 'redis',
+                      'kuma.io/service': fake.kuma.serviceName(),
                     },
                   },
                 ],
@@ -328,26 +330,26 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         {
           type: 'service',
           name: 'gateway',
-          service: 'gateway',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           matchedPolicies: {
             HealthCheck: [
               {
                 type: 'HealthCheck',
-                mesh: 'default',
+                mesh,
                 name: 'foo-bar-baz-123',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
                 sources: [
                   {
                     match: {
-                      'kuma.io/service': 'backend',
+                      'kuma.io/service': fake.kuma.serviceName(),
                     },
                   },
                 ],
                 destinations: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
@@ -364,12 +366,12 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         {
           type: 'service',
           name: 'postgres',
-          service: 'postgres',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           matchedPolicies: {
             HealthCheck: [
               {
                 type: 'HealthCheck',
-                mesh: 'default',
+                mesh,
                 name: 'foo-bar-baz-123',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
@@ -383,7 +385,7 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                 destinations: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
@@ -400,12 +402,12 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         {
           type: 'service',
           name: 'redis',
-          service: 'redis',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           matchedPolicies: {
             HealthCheck: [
               {
                 type: 'HealthCheck',
-                mesh: 'default',
+                mesh,
                 name: 'foo-bar-baz-123',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
@@ -419,7 +421,7 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                 destinations: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
@@ -436,12 +438,12 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         {
           type: 'service',
           name: 'web-api',
-          service: 'web-api',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           matchedPolicies: {
             HealthCheck: [
               {
                 type: 'HealthCheck',
-                mesh: 'default',
+                mesh,
                 name: 'foo-bar-baz-123',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
@@ -455,7 +457,7 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
                 destinations: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],
@@ -472,19 +474,19 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         {
           type: 'dataplane',
           name: '',
-          service: '',
+          service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           matchedPolicies: {
             TrafficTrace: [
               {
                 type: 'TrafficTrace',
-                mesh: 'default',
+                mesh,
                 name: 'foo-bar-baz-123',
                 creationTime: '0001-01-01T00:00:00Z',
                 modificationTime: '0001-01-01T00:00:00Z',
                 sources: [
                   {
                     match: {
-                      'kuma.io/service': '*',
+                      'kuma.io/service': fake.datatype.boolean() ? fake.kuma.serviceName() : '*',
                     },
                   },
                 ],

@@ -1,41 +1,34 @@
 <template>
-  <span class="tag-list">
+  <KTruncate>
     <KBadge
       v-for="(tag, index) in tagList"
       :key="index"
       class="tag-badge"
     >
       <component
-        :is="tag.route ? 'router-link' : 'span'"
+        :is="tag.route ? 'RouterLink' : 'span'"
         :to="tag.route"
       >
         {{ tag.label }}:<b>{{ tag.value }}</b>
       </component>
     </KBadge>
-  </span>
+  </KTruncate>
 </template>
 
 <script lang="ts" setup>
-import { KBadge } from '@kong/kongponents'
-import { computed, PropType } from 'vue'
-import { RouteLocation, useRoute, useRouter } from 'vue-router'
+import { computed } from 'vue'
 
 import { LabelValue } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
-
-const route = useRoute()
-const router = useRouter()
+import type { RouteLocationNamedRaw } from 'vue-router'
 
 interface LabelValueWithRoute extends LabelValue {
-  route: RouteLocation | undefined
+  route: RouteLocationNamedRaw | undefined
 }
 
-const props = defineProps({
-  tags: {
-    type: Object as PropType<LabelValue[] | Record<string, string> | null | undefined>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  tags: LabelValue[] | Record<string, string> | null | undefined
+}>()
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
   const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
@@ -48,7 +41,7 @@ const tagList = computed<LabelValueWithRoute[]>(() => {
   })
 })
 
-function getRoute(tag: LabelValue): RouteLocation | undefined {
+function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   // Wildcard tag values don’t refer to specific entities we can link to.
   if (tag.value === '*') {
     return undefined
@@ -57,27 +50,28 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
   try {
     switch (tag.label) {
       case 'kuma.io/zone': {
-        return router.resolve({
+        return {
           name: 'zone-cp-detail-view',
           params: {
             zone: tag.value,
           },
-        })
+        }
       }
       case 'kuma.io/service': {
-        // Annotations by themselves don’t have information about a service’s associated mesh. The easiest solution is to read this information from the current route. A better approach could be to provide the current mesh as an optional prop to `TagList`.
-        // TODO: Consider adding an optional `props.mesh` to this component and provide it whenever passing tags from a mesh resource. That would make this unambiguous.
-        if (!('mesh' in route.params)) {
-          return undefined
-        }
-
-        return router.resolve({
+        return {
           name: 'service-detail-view',
           params: {
-            mesh: route.params.mesh,
             service: tag.value,
           },
-        })
+        }
+      }
+      case 'kuma.io/mesh': {
+        return {
+          name: 'mesh-detail-view',
+          params: {
+            mesh: tag.value,
+          },
+        }
       }
       default: {
         return undefined
@@ -89,15 +83,3 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.tag-list {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: $kui-space-20;
-}
-
-.tag-badge a {
-  text-decoration: none;
-}
-</style>
