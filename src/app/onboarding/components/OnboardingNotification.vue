@@ -1,50 +1,48 @@
 <template>
+  <!-- As well as only showing the notification on the homepage -->
+  <!-- We also share the same datasource URL as the mesh listing on the homepage -->
   <DataSource
-    v-if="!route.meta.onboardingProcess"
+    v-if="route.name === 'home'"
     v-slot="{ data }"
-    :src="`/meshes?page=1&size=50`"
+    :src="`/meshes?page=1&size=10`"
   >
     <template
       v-if="data?.items.length === 1 && data.items[0].name === 'default'"
     >
-      <DataSource
-        v-slot="{ data: dataplaneData }"
-        :src="`/meshes/${data.items[0].name}/dataplanes?page=1&size=50&search=`"
+      <template
+        v-if="data.items[0].dataplanes.total === 0"
       >
-        <template
-          v-if="dataplaneData?.total === 0"
+        <div
+          v-if="alertClosed === false"
+          class="onboarding-check"
+          data-testid="onboarding-notification"
         >
-          <div
-            v-if="alertClosed === false"
-            class="onboarding-check"
+          <KAlert
+            appearance="success"
+            dismiss-type="icon"
+            @closed="closeAlert"
           >
-            <KAlert
-              appearance="success"
-              dismiss-type="icon"
-              @closed="closeAlert"
-            >
-              <template #alertMessage>
-                <div class="alert-content">
-                  <div>
-                    <strong>Welcome to {{ t('common.product.name') }}!</strong> We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
-                  </div>
-
-                  <div>
-                    <KButton
-                      appearance="primary"
-                      size="small"
-                      class="action-button"
-                      :to="{ name: 'onboarding-welcome' }"
-                    >
-                      Get started
-                    </KButton>
-                  </div>
+            <template #alertMessage>
+              <div class="alert-content">
+                <div>
+                  <strong>Welcome to {{ t('common.product.name') }}!</strong> We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
                 </div>
-              </template>
-            </KAlert>
-          </div>
-        </template>
-      </DataSource>
+
+                <div>
+                  <KButton
+                    appearance="primary"
+                    size="small"
+                    class="action-button"
+                    :to="{ name: 'onboarding-welcome' }"
+                  >
+                    Get started
+                  </KButton>
+                </div>
+              </div>
+            </template>
+          </KAlert>
+        </div>
+      </template>
     </template>
   </DataSource>
 </template>
