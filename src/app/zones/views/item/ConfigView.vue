@@ -29,7 +29,6 @@
         <h2>
           <RouteTitle
             :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
-            :render="true"
           />
         </h2>
       </template>

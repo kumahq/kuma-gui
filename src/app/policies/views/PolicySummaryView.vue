@@ -28,7 +28,6 @@
             >
               <RouteTitle
                 :title="t('policies.routes.item.title', { name: props.name })"
-                :render="true"
               />
             </RouterLink>
           </h2>

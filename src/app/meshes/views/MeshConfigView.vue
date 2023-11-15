@@ -12,7 +12,6 @@
         <h2>
           <RouteTitle
             :title="t('meshes.routes.item.navigation.mesh-config-view')"
-            :render="true"
           />
         </h2>
       </template>

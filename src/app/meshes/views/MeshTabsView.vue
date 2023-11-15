@@ -12,7 +12,6 @@
           <TextWithCopyButton :text="route.params.mesh">
             <RouteTitle
               :title="t('meshes.routes.item.title', { name: route.params.mesh })"
-              :render="true"
             />
           </TextWithCopyButton>
         </h1>

@@ -30,7 +30,6 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
           <h1>
             <RouteTitle
               :title="t('diagnostics.routes.item.title')"
-              :render="true"
             />
           </h1>
         </template>

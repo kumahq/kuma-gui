@@ -10,7 +10,6 @@
             <h1>
               <RouteTitle
                 title="Page Not Found"
-                :render="true"
               />
             </h1>
           </template>

@@ -23,7 +23,6 @@
             <h2>
               <RouteTitle
                 :title="t('services.routes.items.title')"
-                :render="true"
               />
             </h2>
           </template>

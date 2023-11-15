@@ -27,7 +27,6 @@
             >
               <RouteTitle
                 :title="t('services.routes.item.title', { name: route.params.service })"
-                :render="true"
               />
             </RouterLink>
           </h2>

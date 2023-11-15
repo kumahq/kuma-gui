@@ -5,6 +5,7 @@
   >
     <RouteTitle
       :title="t('onboarding.routes.add-services-code.title')"
+      :render="false"
     />
     <AppView>
       <OnboardingPage>

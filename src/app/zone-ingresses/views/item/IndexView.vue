@@ -27,7 +27,6 @@
           <TextWithCopyButton :text="route.params.zoneIngress">
             <RouteTitle
               :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
-              :render="true"
             />
           </TextWithCopyButton>
         </h1>

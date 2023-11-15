@@ -8,7 +8,6 @@
         <h1>
           <RouteTitle
             :title="t('main-overview.routes.item.title')"
-            :render="true"
           />
         </h1>
       </template>
