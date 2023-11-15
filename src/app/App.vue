@@ -15,6 +15,7 @@
     >
       <ApplicationShell
         class="kuma-application"
+        data-testid="application-root"
       >
         <template #home>
           <img
