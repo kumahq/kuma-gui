@@ -105,7 +105,11 @@
                   :key="index"
                   class="inbound"
                 >
-                  <h4>{{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}</h4>
+                  <h4>
+                    <TextWithCopyButton :text="inbound.tags['kuma.io/service']">
+                      {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
+                    </TextWithCopyButton>
+                  </h4>
 
                   <div class="mt-4 columns">
                     <DefinitionCard>
