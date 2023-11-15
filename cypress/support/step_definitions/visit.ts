@@ -30,7 +30,7 @@ When('I visit the {string} URL', function (path: string) {
     })
   })
   // currently use this to denote "the page has initially rendered"
-  cy.get('[data-testid="application-root"]').should('be.visible')
+  cy.get('.kuma-ready').should('be.visible')
 })
 When('I load the {string} URL', function (path: string) {
   cy.visit(`${path}`)
