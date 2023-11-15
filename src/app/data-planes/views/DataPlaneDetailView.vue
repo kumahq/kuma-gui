@@ -293,6 +293,7 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
+import { getFormattedLastUpdateTime } from '../data'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -318,17 +319,7 @@ const props = defineProps<{
 
 const statusWithReason = computed(() => getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight))
 
-const lastUpdatedTime = computed(() => {
-  const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
-
-  if (subscriptions.length === 0) {
-    return null
-  }
-
-  const lastSubscription = subscriptions[subscriptions.length - 1]
-
-  return formatIsoDate(lastSubscription.status.lastUpdateTime)
-})
+const lastUpdatedTime = computed(() => getFormattedLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? []))
 
 const warnings = computed(() => {
   const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
