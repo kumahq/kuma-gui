@@ -88,26 +88,36 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$warnings" element doesn't exist
     And the "$details" element contains "online"
-    And the "$inbounds" element contains "healthy"
-    And the "$inbounds" element contains "193.107.134.106:1328"
-    And the "$inbounds" element contains "44.167.201.218:62098"
-    And the "$inbounds" element contains "kuma.io/protocol:http"
-    And the "$inbounds" element contains "kuma.io/zone:zone-1"
+    And the "$inbounds" element contains
+      | Value                 |
+      | healthy               |
+      | 193.107.134.106:1328  |
+      | 44.167.201.218:62098  |
+      | kuma.io/protocol:http |
+      | kuma.io/zone:zone-1   |
     And the "$subscriptions" element contains "Connected: Feb 17, 2021, 7:33 AM"
     And the "$subscriptions" element contains "CP instance ID: dpp-1-cp-instance-id"
 
     When I click the ".accordion-item:nth-child(1) [data-testid='accordion-item-button']" element
 
-    Then the "$status-cds" element contains "CDS"
-    And the "$status-cds" element contains "1"
-    And the "$status-cds" element contains "2"
-    And the "$status-eds" element contains "EDS"
-    And the "$status-eds" element contains "3"
-    And the "$status-eds" element contains "4"
-    And the "$status-lds" element contains "LDS"
-    And the "$status-lds" element contains "6"
-    And the "$status-rds" element contains "RDS"
-    And the "$status-rds" element contains "0"
+    Then the "$status-cds" element contains
+      | Value |
+      | CDS   |
+      | 1     |
+      | 2     |
+    And the "$status-eds" element contains
+      | Value |
+      | EDS   |
+      | 3     |
+      | 4     |
+    And the "$status-lds" element contains
+      | Value |
+      | LDS   |
+      | 6     |
+    And the "$status-rds" element contains
+      | Value |
+      | RDS   |
+      | 0     |
 
   Scenario: Policies tab has expected content
     Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/policies" responds with

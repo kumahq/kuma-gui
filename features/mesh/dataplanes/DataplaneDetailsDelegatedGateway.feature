@@ -54,10 +54,12 @@ Feature: Dataplane details for delegated gateway
     Then the page title contains "dataplane-gateway_delegated-1"
     And the "$detail-view" element contains "dataplane-gateway_delegated-1"
     And the "$warnings" element doesn't exist
-    And the "$details" element contains "online"
-    And the "$details" element contains "193.107.134.106"
-    And the "$details" element contains "kuma.io/protocol:http"
-    And the "$details" element contains "kuma.io/zone:zone-1"
+    And the "$details" element contains
+      | Value                 |
+      | online                |
+      | 193.107.134.106       |
+      | kuma.io/protocol:http |
+      | kuma.io/zone:zone-1   |
     And the "$inbounds" element doesn't exist
 
   Scenario: Policies tab has expected content
