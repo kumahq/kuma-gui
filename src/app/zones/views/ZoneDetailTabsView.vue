@@ -68,8 +68,8 @@
 import { ref } from 'vue'
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
-import ZoneActionMenu from '../../components/ZoneActionMenu.vue'
-import { ZoneOverview, ZoneOverviewSource } from '../../sources'
+import ZoneActionMenu from '../components/ZoneActionMenu.vue'
+import { ZoneOverview, ZoneOverviewSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'

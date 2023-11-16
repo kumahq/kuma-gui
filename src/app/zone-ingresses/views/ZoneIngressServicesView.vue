@@ -103,7 +103,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
 
-import type { AvailableService, ZoneIngressOverview } from '../../data'
+import type { AvailableService, ZoneIngressOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 const props = defineProps<{
   data: ZoneIngressOverview

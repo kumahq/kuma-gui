@@ -6,33 +6,33 @@ export const routes = (prefix = 'egresses') => {
       {
         path: `${prefix}/:zoneEgress`,
         name: 'zone-egress-detail-tabs-view',
-        component: () => import('@/app/zone-egresses/views/item/IndexView.vue'),
+        component: () => import('@/app/zone-egresses/views/ZoneEgressDetailTabsView.vue'),
         redirect: { name: 'zone-egress-detail-view' },
         children: [
           {
             path: 'overview',
             name: 'zone-egress-detail-view',
-            component: () => import('@/app/zone-egresses/views/item/DetailView.vue'),
+            component: () => import('@/app/zone-egresses/views/ZoneEgressDetailView.vue'),
           },
           {
             path: 'xds-config',
             name: 'zone-egress-xds-config-view',
-            component: () => import('@/app/zone-egresses/views/item/XdsConfigView.vue'),
+            component: () => import('@/app/zone-egresses/views/ZoneEgressXdsConfigView.vue'),
           },
           {
             path: 'stats',
             name: 'zone-egress-stats-view',
-            component: () => import('@/app/zone-egresses/views/item/StatsView.vue'),
+            component: () => import('@/app/zone-egresses/views/ZoneEgressStatsView.vue'),
           },
           {
             path: 'clusters',
             name: 'zone-egress-clusters-view',
-            component: () => import('@/app/zone-egresses/views/item/ClustersView.vue'),
+            component: () => import('@/app/zone-egresses/views/ZoneEgressClustersView.vue'),
           },
           {
             path: 'config',
             name: 'zone-egress-config-view',
-            component: () => import('@/app/zone-egresses/views/item/ConfigView.vue'),
+            component: () => import('@/app/zone-egresses/views/ZoneEgressConfigView.vue'),
           },
         ],
       },
@@ -48,7 +48,7 @@ export const routes = (prefix = 'egresses') => {
           meta: {
             module: 'zone-egresses',
           },
-          component: () => import('@/app/zone-egresses/views/IndexView.vue'),
+          component: () => import('@/app/zone-egresses/views/ZoneEgressListView.vue'),
           children: [
             {
               path: ':zoneEgress',
