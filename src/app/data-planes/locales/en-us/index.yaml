@@ -19,7 +19,7 @@ data-planes:
       overview: 'Overview'
       gateway: 'Gateway'
       inbounds: 'Inbounds'
-      inbound_name: 'Service: {service}'
+      inbound_name: '{service}'
       last_updated: 'Last updated'
       certificate_info: 'Certificate info'
       no_certificate: 'No certificate'
