@@ -136,7 +136,7 @@ export class KumaModule {
   /**
    * Returns a random service status object with self-consistent values (i.e. total = internal + external).
    */
-  serviceStatus({ min = 1, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
+  serviceStatus({ min = 0, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
     const total = this.faker.number.int({ min, max })
     const internal = this.faker.number.int({ min: 0, max: total })
     const external = total - internal
@@ -150,7 +150,7 @@ export class KumaModule {
     return Object.fromEntries(values) as ServiceStatus
   }
 
-  globalInsightServices({ min = 1, max = 30 }: { min?: number, max?: number } = {}) {
+  globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {
     const total = this.faker.number.int({ min, max })
 
     const internalTotal = this.faker.number.int({ min: 0, max: total })

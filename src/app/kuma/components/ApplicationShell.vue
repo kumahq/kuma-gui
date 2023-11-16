@@ -80,6 +80,13 @@
                   Feedback
                 </a>
               </KDropdownItem>
+
+              <KDropdownItem
+                :item="{
+                  to: { name: 'onboarding-welcome' },
+                  label: 'Onboarding',
+                }"
+              />
             </template>
           </KDropdownMenu>
 
@@ -135,7 +142,6 @@
               </ul>
             </template>
           </KAlert>
-          <OnboardingNotification />
         </slot>
         <slot name="default" />
       </div>
@@ -149,7 +155,6 @@ import GithubButton from 'vue-github-button'
 
 import { useEnv, useI18n, useCan } from '@/app/application'
 import UpgradeCheck from '@/app/common/UpgradeCheck.vue'
-import OnboardingNotification from '@/app/onboarding/components/OnboardingNotification.vue'
 
 const env = useEnv()
 const can = useCan()

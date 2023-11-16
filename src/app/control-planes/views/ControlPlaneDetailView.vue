@@ -12,93 +12,111 @@
         </h1>
       </template>
 
-      <div
-        class="stack"
-        data-testid="detail-view-details"
+      <DataSource
+        v-slot="{ data: globalInsight, error: globalInsightError }: GlobalInsightSource"
+        src="/global-insight"
       >
-        <ControlPlaneStatus />
+        <ErrorBlock
+          v-if="globalInsightError"
+          :error="globalInsightError"
+        />
 
-        <div class="columns">
-          <KCard v-if="can('use zones')">
-            <template #body>
-              <DataSource
-                v-slot="{ data, error }: ZoneOverviewCollectionSource"
-                src="/zone-cps?page=1&size=10"
-              >
-                <ErrorBlock
-                  v-if="error"
-                  :error="error"
-                />
+        <LoadingBlock v-else-if="globalInsight === undefined" />
 
-                <template v-else>
-                  <div class="card-header">
-                    <div class="card-title">
-                      <h2>{{ t('main-overview.detail.zone_control_planes.title') }}</h2>
+        <template v-else>
+          <div
+            class="stack"
+            data-testid="detail-view-details"
+          >
+            <OnboardingAlert v-if="globalInsight.meshes.total === 1" />
 
-                      <RouterLink :to="{ name: 'zone-cp-list-view' }">
-                        {{ t('main-overview.detail.health.view_all') }}
-                      </RouterLink>
-                    </div>
-                    <!-- Here we check the length of the zones because if the length is zero then -->
-                    <!-- we show a create button in the empty state for the list therefore we don't need -->
-                    <!-- a repeated button here -->
-                    <div
-                      v-if="can('create zones') && (data?.items?.length ?? 0 > 0)"
-                      class="card-actions"
-                    >
-                      <KButton
-                        appearance="primary"
-                        :to="{ name: 'zone-create-view' }"
-                      >
-                        <AddIcon :size="KUI_ICON_SIZE_30" />
+            <ControlPlaneStatus
+              :can-use-zones="can('use zones')"
+              :global-insight="globalInsight"
+            />
 
-                        {{ t('zones.index.create') }}
-                      </KButton>
-                    </div>
-                  </div>
-                  <ZoneControlPlanesList
-                    data-testid="zone-control-planes-details"
-                    :items="data?.items"
-                  />
+            <div class="columns">
+              <KCard v-if="can('use zones')">
+                <template #body>
+                  <DataSource
+                    v-slot="{ data: data, error }: ZoneOverviewCollectionSource"
+                    src="/zone-cps?page=1&size=10"
+                  >
+                    <ErrorBlock
+                      v-if="error"
+                      :error="error"
+                    />
+
+                    <template v-else>
+                      <div class="card-header">
+                        <div class="card-title">
+                          <h2>{{ t('main-overview.detail.zone_control_planes.title') }}</h2>
+
+                          <RouterLink :to="{ name: 'zone-cp-list-view' }">
+                            {{ t('main-overview.detail.health.view_all') }}
+                          </RouterLink>
+                        </div>
+                        <!-- Here we check the length of the zones because if the length is zero then -->
+                        <!-- we show a create button in the empty state for the list therefore we don't need -->
+                        <!-- a repeated button here -->
+                        <div
+                          v-if="can('create zones') && (data?.items?.length ?? 0 > 0)"
+                          class="card-actions"
+                        >
+                          <KButton
+                            appearance="primary"
+                            :to="{ name: 'zone-create-view' }"
+                          >
+                            <AddIcon :size="KUI_ICON_SIZE_30" />
+
+                            {{ t('zones.index.create') }}
+                          </KButton>
+                        </div>
+                      </div>
+
+                      <ZoneControlPlanesList
+                        data-testid="zone-control-planes-details"
+                        :items="data?.items"
+                      />
+                    </template>
+                  </DataSource>
                 </template>
-              </DataSource>
-            </template>
-          </KCard>
+              </KCard>
 
-          <KCard>
-            <template #body>
-              <!-- This DataSource URL is currently shared with the OnboardingNotification -->
-              <!-- component to ensure that we share the API request -->
-              <DataSource
-                v-slot="{ data, error }: MeshInsightCollectionSource"
-                src="/mesh-insights?page=1&size=10"
-              >
-                <ErrorBlock
-                  v-if="error"
-                  :error="error"
-                />
+              <KCard>
+                <template #body>
+                  <DataSource
+                    v-slot="{ data: data, error }: MeshInsightCollectionSource"
+                    src="/mesh-insights?page=1&size=10"
+                  >
+                    <ErrorBlock
+                      v-if="error"
+                      :error="error"
+                    />
 
-                <template v-else>
-                  <div class="card-header">
-                    <div class="card-title">
-                      <h2>{{ t('main-overview.detail.meshes.title') }}</h2>
+                    <template v-else>
+                      <div class="card-header">
+                        <div class="card-title">
+                          <h2>{{ t('main-overview.detail.meshes.title') }}</h2>
 
-                      <RouterLink :to="{ name: 'mesh-list-view' }">
-                        {{ t('main-overview.detail.health.view_all') }}
-                      </RouterLink>
-                    </div>
-                  </div>
+                          <RouterLink :to="{ name: 'mesh-list-view' }">
+                            {{ t('main-overview.detail.health.view_all') }}
+                          </RouterLink>
+                        </div>
+                      </div>
 
-                  <MeshInsightsList
-                    data-testid="meshes-details"
-                    :items="data?.items"
-                  />
+                      <MeshInsightsList
+                        data-testid="meshes-details"
+                        :items="data?.items"
+                      />
+                    </template>
+                  </DataSource>
                 </template>
-              </DataSource>
-            </template>
-          </KCard>
-        </div>
-      </div>
+              </KCard>
+            </div>
+          </div>
+        </template>
+      </DataSource>
     </AppView>
   </RouteView>
 </template>
@@ -107,15 +125,19 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 
+import { GlobalInsightSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import { useControlPlaneStatus } from '@/app/control-planes'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { useControlPlaneStatus, useOnboardingAlert } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import type { MeshInsightCollectionSource } from '@/app/meshes/sources'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
 import type { ZoneOverviewCollectionSource } from '@/app/zones/sources'
 
+const OnboardingAlert = useOnboardingAlert()
 const ControlPlaneStatus = useControlPlaneStatus()
 </script>
+
 <style lang="scss" scoped>
 .card-header {
   display: flex;

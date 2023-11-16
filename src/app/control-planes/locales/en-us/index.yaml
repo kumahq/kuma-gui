@@ -3,6 +3,10 @@ main-overview:
     item:
       title: Overview
   detail:
+    onboarding:
+      message: !!text/markdown |
+        **Welcome to {name}!** We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
+      get_started_link: 'Get started'
     health:
       title: 'Global Control Plane health'
       view_all: '(view all)'
