@@ -30,7 +30,7 @@ When('I visit the {string} URL', function (path: string) {
     })
   })
   // currently use this to denote "the page has initially rendered"
-  cy.get('.app-main-content').should('be.visible')
+  cy.get('[data-testid-root="mesh-app"]').should('be.visible')
 })
 When('I load the {string} URL', function (path: string) {
   cy.visit(`${path}`)
