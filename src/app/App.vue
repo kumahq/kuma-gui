@@ -12,6 +12,7 @@
       :attrs="{
         class: 'kuma-ready',
       }"
+      data-testid-root="mesh-app"
     >
       <ApplicationShell
         class="kuma-application"
