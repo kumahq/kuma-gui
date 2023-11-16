@@ -36,7 +36,7 @@ export const routes = (
           children: [
             {
               path: '',
-              name: 'mesh-tabs-view',
+              name: 'mesh-detail-tabs-view',
               redirect: { name: 'mesh-detail-view' },
               component: () => import('@/app/meshes/views/MeshDetailTabsView.vue'),
               children: [
