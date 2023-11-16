@@ -128,14 +128,15 @@ import { AddIcon } from '@kong/icons'
 import { GlobalInsightSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { useControlPlaneStatus, useOnboardingAlert } from '@/app/control-planes'
+import { useControlPlaneStatus } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import type { MeshInsightCollectionSource } from '@/app/meshes/sources'
+import { useOnboardingAlert } from '@/app/onboarding'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
 import type { ZoneOverviewCollectionSource } from '@/app/zones/sources'
 
-const OnboardingAlert = useOnboardingAlert()
 const ControlPlaneStatus = useControlPlaneStatus()
+const OnboardingAlert = useOnboardingAlert()
 </script>
 
 <style lang="scss" scoped>
