@@ -13,7 +13,6 @@
         <h2>
           <RouteTitle
             :title="t('data-planes.routes.item.navigation.data-plane-stats-view')"
-            :render="true"
           />
         </h2>
       </template>

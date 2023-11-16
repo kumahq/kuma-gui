@@ -20,7 +20,7 @@ const props = defineProps({
   render: {
     type: Boolean,
     required: false,
-    default: false,
+    default: true,
   },
 })
 

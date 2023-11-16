@@ -5,6 +5,7 @@
   >
     <RouteTitle
       :title="t('onboarding.routes.multizone.title')"
+      :render="false"
     />
     <AppView>
       <OnboardingPage>

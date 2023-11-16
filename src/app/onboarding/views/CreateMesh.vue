@@ -5,6 +5,7 @@
   >
     <RouteTitle
       :title="t('onboarding.routes.create-mesh.title')"
+      :render="false"
     />
     <AppView>
       <OnboardingPage>

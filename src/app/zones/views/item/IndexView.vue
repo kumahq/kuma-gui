@@ -34,7 +34,6 @@
               <TextWithCopyButton :text="route.params.zone">
                 <RouteTitle
                   :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-                  :render="true"
                 />
               </TextWithCopyButton>
             </h1>

@@ -5,6 +5,7 @@
   >
     <RouteTitle
       :title="t('onboarding.routes.dataplanes-overview.title')"
+      :render="false"
     />
     <AppView>
       <OnboardingPage>

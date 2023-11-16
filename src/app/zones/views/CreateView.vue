@@ -14,7 +14,6 @@
         <h1>
           <RouteTitle
             :title="t('zones.routes.create.title')"
-            :render="true"
           />
         </h1>
       </template>

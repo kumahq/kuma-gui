@@ -13,7 +13,6 @@
         <h2>
           <RouteTitle
             :title="t('services.routes.item.navigation.service-config-view')"
-            :render="true"
           />
         </h2>
       </template>

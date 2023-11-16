@@ -34,7 +34,6 @@
           <TextWithCopyButton :text="route.params.dataPlane">
             <RouteTitle
               :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })"
-              :render="true"
             />
           </TextWithCopyButton>
         </h1>

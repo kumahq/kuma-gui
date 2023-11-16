@@ -12,7 +12,6 @@
         <h2>
           <RouteTitle
             :title="t('zone-ingresses.routes.item.navigation.zone-ingress-stats-view')"
-            :render="true"
           />
         </h2>
       </template>

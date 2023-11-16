@@ -5,6 +5,7 @@
   >
     <RouteTitle
       :title="t('onboarding.routes.configuration-types.title')"
+      :render="false"
     />
     <AppView>
       <OnboardingPage with-image>

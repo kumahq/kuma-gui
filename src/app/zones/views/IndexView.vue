@@ -18,7 +18,6 @@
           <h1>
             <RouteTitle
               :title="t('zone-cps.routes.items.title')"
-              :render="true"
             />
           </h1>
         </template>

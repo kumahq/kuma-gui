@@ -19,7 +19,6 @@
             >
               <RouteTitle
                 :title="t('data-planes.routes.item.title', { name: props.name })"
-                :render="true"
               />
             </RouterLink>
           </h2>

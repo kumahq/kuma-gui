@@ -26,7 +26,6 @@
             <h2>
               <RouteTitle
                 :title="t('data-planes.routes.items.title')"
-                :render="true"
               />
             </h2>
           </template>

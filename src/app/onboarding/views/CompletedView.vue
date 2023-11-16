@@ -5,6 +5,7 @@
   >
     <RouteTitle
       :title="t('onboarding.routes.completed.title')"
+      :render="false"
     />
     <AppView>
       <OnboardingPage>

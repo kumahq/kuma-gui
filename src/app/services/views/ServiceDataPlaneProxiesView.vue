@@ -23,7 +23,6 @@
           <h2>
             <RouteTitle
               :title="t('services.routes.item.navigation.service-data-plane-proxies-view')"
-              :render="true"
             />
           </h2>
         </template>

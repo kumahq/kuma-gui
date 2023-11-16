@@ -8,7 +8,6 @@
         <h2>
           <RouteTitle
             :title="t('zone-ingresses.routes.item.navigation.zone-ingress-services-view')"
-            :render="true"
           />
         </h2>
       </template>

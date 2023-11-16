@@ -6,7 +6,10 @@
       mesh: '',
     }"
   >
-    <RouteTitle :title="t('meshes.routes.overview.title')" />
+    <RouteTitle
+      :title="t('meshes.routes.overview.title')"
+      :render="false"
+    />
 
     <AppView>
       <DataSource

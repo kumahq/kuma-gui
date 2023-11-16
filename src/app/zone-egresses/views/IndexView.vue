@@ -20,7 +20,6 @@
           <h2>
             <RouteTitle
               :title="t('zone-egresses.routes.items.title')"
-              :render="true"
             />
           </h2>
         </template>

@@ -34,7 +34,6 @@
           <TextWithCopyButton :text="route.params.service">
             <RouteTitle
               :title="t('services.routes.item.title', { name: route.params.service })"
-              :render="true"
             />
           </TextWithCopyButton>
         </h1>

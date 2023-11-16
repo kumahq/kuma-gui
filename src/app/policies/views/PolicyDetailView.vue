@@ -37,7 +37,6 @@
           <TextWithCopyButton :text="route.params.policy">
             <RouteTitle
               :title="t('policies.routes.item.title', { name: route.params.policy })"
-              :render="true"
             />
           </TextWithCopyButton>
         </h1>

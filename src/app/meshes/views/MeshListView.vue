@@ -22,7 +22,6 @@
             <h1>
               <RouteTitle
                 :title="t('meshes.routes.items.title')"
-                :render="true"
               />
             </h1>
           </template>
