@@ -30,6 +30,7 @@ Feature: zones / ingresses / item
           zone: zone-cp-1
           networking:
             address: '166.197.238.26'
+            advertisedAddress: !!js/undefined
             port: 20555
         zoneIngressInsight:
           subscriptions:

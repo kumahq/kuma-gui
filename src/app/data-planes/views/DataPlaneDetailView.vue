@@ -8,13 +8,12 @@
         v-if="warnings.length > 0"
         #notifications
       >
-        <ul>
+        <ul data-testid="dataplane-warnings">
           <!-- eslint-disable vue/no-v-html  -->
           <li
             v-for="warning in warnings"
             :key="warning.kind"
             :data-testid="`warning-${warning.kind}`"
-
             v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
           />
           <!-- eslint-enable -->
@@ -23,7 +22,7 @@
 
       <div
         class="stack"
-        data-testid="detail-view-details"
+        data-testid="dataplane-details"
       >
         <KCard>
           <template #body>
@@ -53,14 +52,13 @@
 
               <DefinitionCard>
                 <template #title>
-                  {{ t('http.api.property.tags') }}
+                  {{ t('data-planes.routes.item.last_updated') }}
                 </template>
 
                 <template #body>
-                  <TagList
-                    v-if="dataPlaneTags.length > 0"
-                    :tags="dataPlaneTags"
-                  />
+                  <template v-if="lastUpdatedTime">
+                    {{ lastUpdatedTime }}
+                  </template>
 
                   <template v-else>
                     {{ t('common.detail.none') }}
@@ -68,27 +66,111 @@
                 </template>
               </DefinitionCard>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.dependencies') }}
-                </template>
-
-                <template #body>
-                  <TagList
-                    v-if="dataPlaneVersions !== null"
-                    :tags="dataPlaneVersions"
-                  />
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
+              <template v-if="props.data.dataplane.networking.gateway">
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.tags') }}
                   </template>
-                </template>
-              </DefinitionCard>
+
+                  <template #body>
+                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.address') }}
+                  </template>
+
+                  <template #body>
+                    <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                  </template>
+                </DefinitionCard>
+              </template>
             </div>
           </template>
         </KCard>
 
-        <div>
+        <div
+          v-if="props.data.dataplane.networking.inbound && props.data.dataplane.networking.inbound.length > 0"
+          data-testid="dataplane-inbounds"
+        >
+          <h2>{{ t('data-planes.routes.item.inbounds') }}</h2>
+
+          <KCard class="mt-4">
+            <template #body>
+              <div class="inbound-list">
+                <div
+                  v-for="(inbound, index) in props.data.dataplane.networking.inbound"
+                  :key="index"
+                  class="inbound"
+                >
+                  <h4>
+                    <TextWithCopyButton :text="inbound.tags['kuma.io/service']">
+                      {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
+                    </TextWithCopyButton>
+                  </h4>
+
+                  <div class="mt-4 columns">
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('http.api.property.status') }}
+                      </template>
+
+                      <template #body>
+                        <KBadge
+                          v-if="!inbound.health || inbound.health.ready"
+                          appearance="success"
+                        >
+                          {{ t('data-planes.routes.item.health.ready') }}
+                        </KBadge>
+
+                        <KBadge
+                          v-else
+                          appearance="danger"
+                        >
+                          {{ t('data-planes.routes.item.health.not_ready') }}
+                        </KBadge>
+                      </template>
+                    </DefinitionCard>
+
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('http.api.property.tags') }}
+                      </template>
+
+                      <template #body>
+                        <TagList :tags="inbound.tags" />
+                      </template>
+                    </DefinitionCard>
+
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('http.api.property.address') }}
+                      </template>
+
+                      <template #body>
+                        <TextWithCopyButton :text="`${inbound.address ?? props.data.dataplane.networking.advertisedAddress ?? props.data.dataplane.networking.address}:${inbound.port}`" />
+                      </template>
+                    </DefinitionCard>
+
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('http.api.property.serviceAddress') }}
+                      </template>
+
+                      <template #body>
+                        <TextWithCopyButton :text="`${inbound.serviceAddress}:${inbound.servicePort}`" />
+                      </template>
+                    </DefinitionCard>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </KCard>
+        </div>
+
+        <div data-testid="dataplane-mtls">
           <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
 
           <template
@@ -188,6 +270,7 @@
         >
           <div
             v-if="subscriptions.length > 0"
+            data-testid="dataplane-subscriptions"
           >
             <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
 
@@ -210,10 +293,12 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
+import { getFormattedLastUpdateTime } from '../data'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
@@ -222,7 +307,6 @@ import {
   COMPATIBLE,
   dpTags,
   getStatusAndReason,
-  getVersions,
   INCOMPATIBLE_WRONG_FORMAT,
 } from '@/utilities/dataplane'
 
@@ -234,8 +318,8 @@ const props = defineProps<{
 }>()
 
 const statusWithReason = computed(() => getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight))
-const dataPlaneTags = computed(() => dpTags(props.data.dataplane))
-const dataPlaneVersions = computed(() => getVersions(props.data.dataplaneInsight))
+
+const lastUpdatedTime = computed(() => getFormattedLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? []))
 
 const warnings = computed(() => {
   const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
@@ -298,5 +382,11 @@ const warnings = computed(() => {
 .reason-tooltip :deep(.kong-icon) {
   display: flex;
   align-items: center;
+}
+
+.inbound-list>*+* {
+  margin-block-start: $kui-space-60;
+  border-top: $kui-border-width-10 solid $kui-color-border;
+  padding-block-start: $kui-space-60;
 }
 </style>

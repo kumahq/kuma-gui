@@ -1,7 +1,9 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
   const name = req.params.mesh
-  const mTLS = env('KUMA_MTLS_ENABLED', '')
+
+  const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
+  const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
   return {
     headers: {},
@@ -10,7 +12,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
       type: 'Mesh',
       creationTime: '2020-06-19T12:18:02.097986-04:00',
       modificationTime: '2020-06-19T12:18:02.097986-04:00',
-      ...((mTLS.length > 0 ? !!JSON.parse(mTLS) : fake.datatype.boolean({ probability: 0.6 })) &&
+      ...(isMtlsEnabled &&
          {
            mtls: {
              enabledBackend: 'ca-1',

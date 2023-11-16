@@ -7,9 +7,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const _name = query.get('name') ?? ''
   const _tags = query.get('tag') ?? ''
 
-  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])) === 'true'
+  const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
@@ -45,6 +45,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
 
         const isMultizone = true && fake.datatype.boolean()
+        const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
         const type = filterType ?? fake.helpers.arrayElement(['gateway_builtin', 'gateway_delegated', 'proxy'])
         const name = `${_name || fake.kuma.dataPlaneProxyName()}-${type}-${id}`

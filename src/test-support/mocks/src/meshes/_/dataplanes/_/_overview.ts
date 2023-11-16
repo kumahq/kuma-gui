@@ -2,9 +2,9 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh, name } = req.params
 
-  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-  const isMtlsEnabled = env('KUMA_MTLS_ENABLED', fake.helpers.arrayElement(['false', 'true'])) === 'true'
+  const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
 
   let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
   if (name.includes('-gateway_builtin')) {
@@ -14,6 +14,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   }
 
   const isMultizone = true && fake.datatype.boolean()
+  const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
   return {
     headers: {},
