@@ -40,6 +40,6 @@ describe('Router', () => {
       },
     })
 
-    expect(() => router.match('/not-found/')).toThrow(Error)
+    expect(() => router.match('/kuma-not-found-view/')).toThrow(Error)
   })
 })

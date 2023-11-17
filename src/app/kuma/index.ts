@@ -8,7 +8,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('kuma.components.not-found'),
       {
         service: () => [
-          () => import('@/app/kuma/views/NotFoundView.vue'),
+          () => import('@/app/kuma/views/KumaNotFoundView.vue'),
         ],
         labels: [
           app.notFoundView,
