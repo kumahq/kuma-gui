@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ can, t }"
-    name="onboarding-create-mesh"
+    name="onboarding-create-mesh-view"
   >
     <RouteTitle
       :title="t('onboarding.routes.create-mesh.title')"
@@ -36,8 +36,8 @@
 
         <template #navigation>
           <OnboardingNavigation
-            next-step="onboarding-add-services"
-            :previous-step="can('use zones') ? 'onboarding-multi-zone' : 'onboarding-configuration-types'"
+            next-step="onboarding-add-new-services-view"
+            :previous-step="can('use zones') ? 'onboarding-multi-zone-view' : 'onboarding-configuration-types-view'"
           />
         </template>
       </OnboardingPage>

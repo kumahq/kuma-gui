@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
-    name="onboarding-completed"
+    name="onboarding-completed-view"
   >
     <RouteTitle
       :title="t('onboarding.routes.completed.title')"

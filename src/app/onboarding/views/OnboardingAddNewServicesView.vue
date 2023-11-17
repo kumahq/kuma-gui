@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
-    name="onboarding-add-services"
+    name="onboarding-add-new-services-view"
   >
     <RouteTitle
       :title="t('onboarding.routes.add-services.title')"
@@ -55,8 +55,8 @@
 
         <template #navigation>
           <OnboardingNavigation
-            :next-step="props.mode === 'manually' ? 'onboarding-completed' : 'onboarding-add-services-code'"
-            previous-step="onboarding-create-mesh"
+            :next-step="props.mode === 'manually' ? 'onboarding-completed-view' : 'onboarding-add-new-services-code-view'"
+            previous-step="onboarding-create-mesh-view"
           />
         </template>
       </OnboardingPage>

@@ -4,81 +4,54 @@ export const routes = (): RouteRecordRaw[] => {
     {
       path: '/onboarding',
       redirect: {
-        name: 'onboarding-welcome',
+        name: 'onboarding-welcome-view',
       },
-      component: () => import('@/app/onboarding/views/OnboardingView.vue'),
+      component: () => import('@/app/onboarding/views/OnboardingIndexView.vue'),
       children: [
         {
           path: 'welcome',
-          name: 'onboarding-welcome',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/WelcomeView.vue'),
+          name: 'onboarding-welcome-view',
+          component: () => import('@/app/onboarding/views/OnboardingWelcomeView.vue'),
         },
         {
           path: 'deployment-types',
-          name: 'onboarding-deployment-types',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/DeploymentTypes.vue'),
+          name: 'onboarding-deployment-types-view',
+          component: () => import('@/app/onboarding/views/OnboardingDeploymentTypesView.vue'),
         },
         {
           path: 'configuration-types',
-          name: 'onboarding-configuration-types',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/ConfigurationTypes.vue'),
+          name: 'onboarding-configuration-types-view',
+          component: () => import('@/app/onboarding/views/OnboardingConfigurationTypesView.vue'),
         },
         {
           path: 'multi-zone',
-          name: 'onboarding-multi-zone',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/MultiZoneView.vue'),
+          name: 'onboarding-multi-zone-view',
+          component: () => import('@/app/onboarding/views/OnboardingMultiZoneView.vue'),
         },
         {
           path: 'create-mesh',
-          name: 'onboarding-create-mesh',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/CreateMesh.vue'),
+          name: 'onboarding-create-mesh-view',
+          component: () => import('@/app/onboarding/views/OnboardingCreateMeshView.vue'),
         },
         {
           path: 'add-services',
-          name: 'onboarding-add-services',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/AddNewServices.vue'),
+          name: 'onboarding-add-new-services-view',
+          component: () => import('@/app/onboarding/views/OnboardingAddNewServicesView.vue'),
         },
         {
           path: 'add-services-code',
-          name: 'onboarding-add-services-code',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/AddNewServicesCode.vue'),
+          name: 'onboarding-add-new-services-code-view',
+          component: () => import('@/app/onboarding/views/OnboardingAddNewServicesCodeView.vue'),
         },
         {
           path: 'dataplanes-overview',
-          name: 'onboarding-dataplanes-overview',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/DataplanesOverview.vue'),
+          name: 'onboarding-dataplanes-view',
+          component: () => import('@/app/onboarding/views/OnboardingDataplanesView.vue'),
         },
         {
           path: 'completed',
-          name: 'onboarding-completed',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import('@/app/onboarding/views/CompletedView.vue'),
+          name: 'onboarding-completed-view',
+          component: () => import('@/app/onboarding/views/OnboardingCompletedView.vue'),
         },
       ],
     },

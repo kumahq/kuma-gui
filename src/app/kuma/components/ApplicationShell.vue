@@ -83,7 +83,7 @@
 
               <KDropdownItem
                 :item="{
-                  to: { name: 'onboarding-welcome' },
+                  to: { name: 'onboarding-welcome-view' },
                   label: 'Onboarding',
                 }"
               />

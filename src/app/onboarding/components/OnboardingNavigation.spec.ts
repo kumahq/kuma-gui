@@ -5,7 +5,7 @@ import OnboardingNavigation from './OnboardingNavigation.vue'
 function renderComponent(props = {}) {
   return mount(OnboardingNavigation, {
     props: {
-      nextStep: 'onboarding-configuration-types',
+      nextStep: 'onboarding-configuration-types-view',
       ...props,
     },
   })
@@ -14,7 +14,7 @@ function renderComponent(props = {}) {
 describe('OnboardingNavigation.vue', () => {
   test('displays different next step title', () => {
     const wrapper = renderComponent({
-      previousStep: 'onboarding-welcome',
+      previousStep: 'onboarding-welcome-view',
       nextStepTitle: 'nextStepTitle',
     })
 
@@ -23,7 +23,7 @@ describe('OnboardingNavigation.vue', () => {
 
   test('display disabled next button', () => {
     const wrapper = renderComponent({
-      previousStep: 'onboarding-welcome',
+      previousStep: 'onboarding-welcome-view',
       shouldAllowNext: false,
     })
 

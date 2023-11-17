@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ t }"
-    name="onboarding-deployment-types"
+    v-slot="{ can, t }"
+    name="onboarding-configuration-types-view"
   >
     <RouteTitle
-      :title="t('onboarding.routes.deployment-types.title')"
+      :title="t('onboarding.routes.configuration-types.title')"
       :render="false"
     />
     <AppView>
@@ -12,13 +12,9 @@
         <template #header>
           <OnboardingHeading>
             <template #title>
-              Learn about deployments
+              Learn about configuration storage
             </template>
-
-            <template #description>
-              <p>{{ t('common.product.name') }} can be deployed in standalone or multi-zone mode.</p>
-            </template>
-          </onboardingheading>
+          </OnboardingHeading>
         </template>
 
         <template #content>
@@ -29,28 +25,34 @@
           <div class="radio-button-group">
             <KRadio
               v-model="mode"
-              name="mode"
-              selected-value="standalone"
-              data-testid="onboarding-standalone-radio-button"
+              name="deployment"
+              selected-value="kubernetes"
             >
-              Standalone deployment
+              Kubernetes
             </KRadio>
 
             <KRadio
               v-model="mode"
-              name="mode"
-              selected-value="multi-zone"
-              data-testid="onboarding-multi-zone-radio-button"
+              name="deployment"
+              selected-value="postgres"
             >
-              Multi-zone deployment
+              Postgres
+            </KRadio>
+
+            <KRadio
+              v-model="mode"
+              name="deployment"
+              selected-value="memory"
+            >
+              Memory
             </KRadio>
           </div>
         </template>
 
         <template #navigation>
           <OnboardingNavigation
-            next-step="onboarding-configuration-types"
-            previous-step="onboarding-welcome"
+            :next-step="can('use zones') ? 'onboarding-multi-zone-view' : 'onboarding-create-mesh-view'"
+            previous-step="onboarding-deployment-types-view"
           />
         </template>
       </OnboardingPage>
@@ -64,26 +66,27 @@ import { computed, ref } from 'vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import { useCan } from '@/app/application'
 import {
-  useMultizoneGraph,
-  useStandaloneGraph,
+  useKubernetesGraph,
+  useMemoryGraph,
+  usePostgresGraph,
 } from '@/components'
+import { useEnv } from '@/utilities'
 
-const MultizoneGraph = useMultizoneGraph()
-const StandaloneGraph = useStandaloneGraph()
+const env = useEnv()
+const KubernetesGraph = useKubernetesGraph()
+const MemoryGraph = useMemoryGraph()
+const PostgresGraph = usePostgresGraph()
 
 const componentMap: Record<string, any> = {
-  standalone: StandaloneGraph,
-  'multi-zone': MultizoneGraph,
+  postgres: PostgresGraph,
+  memory: MemoryGraph,
+  kubernetes: KubernetesGraph,
 }
 
-const can = useCan()
-
-const mode = ref<'standalone' | 'multi-zone'>(can('use zones') ? 'multi-zone' : 'standalone')
+const mode = ref<string>(env('KUMA_STORE_TYPE'))
 
 const currentGraphComponent = computed(() => componentMap[mode.value])
-
 </script>
 
 <style lang="scss" scoped>

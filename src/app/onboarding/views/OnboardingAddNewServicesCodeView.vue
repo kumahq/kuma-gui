@@ -82,8 +82,8 @@
 
         <template #navigation>
           <OnboardingNavigation
-            next-step="onboarding-dataplanes-overview"
-            previous-step="onboarding-add-services"
+            next-step="onboarding-dataplanes-view"
+            previous-step="onboarding-add-new-services-view"
             :should-allow-next="hasDPPs"
           />
         </template>
