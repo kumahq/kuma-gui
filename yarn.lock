@@ -2407,7 +2407,7 @@
     "@vue/compiler-core" "3.3.8"
     "@vue/shared" "3.3.8"
 
-"@vue/compiler-sfc@3.3.8", "@vue/compiler-sfc@^3.2.0", "@vue/compiler-sfc@^3.2.20":
+"@vue/compiler-sfc@3.3.8", "@vue/compiler-sfc@^3.2.0":
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.3.8.tgz#40b18e48aa00260950964d1d72157668521be0e1"
   integrity sha512-WMzbUrlTjfYF8joyT84HfwwXo+8WPALuPxhy+BZ6R4Aafls+jDBnSz8PDz60uFhuqFbl3HxRfxvDzrUf3THwpA==
@@ -8522,12 +8522,11 @@ vite-plugin-rewrite-all@1.0.1:
   dependencies:
     connect-history-api-fallback "^1.6.0"
 
-vite-svg-loader@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/vite-svg-loader/-/vite-svg-loader-4.0.0.tgz#1cec4337dba3c23ab13bcabb111896e251b047ac"
-  integrity sha512-0MMf1yzzSYlV4MGePsLVAOqXsbF5IVxbn4EEzqRnWxTQl8BJg/cfwIzfQNmNQxZp5XXwd4kyRKF1LytuHZTnqA==
+vite-svg-loader@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/vite-svg-loader/-/vite-svg-loader-5.0.1.tgz#57660dbfe6c5f621796065f4fb473b7d469540d6"
+  integrity sha512-EUfcuqk1NomuacwiuL3mvCfinkm4XN0AHN8BXG737eDlhC0jnp5jxdCxakV+juP/YhhjV5tq/c/bLcm3waWv4Q==
   dependencies:
-    "@vue/compiler-sfc" "^3.2.20"
     svgo "^3.0.2"
 
 vite@4.5.0:
