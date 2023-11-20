@@ -1,33 +1,32 @@
-import OnboardingAlert from './components/OnboardingAlert.vue'
+import ControlPlaneStatusWithOnboarding from './components/ControlPlaneStatusWithOnboarding.vue'
 import { routes } from './routes'
 import type { ServiceDefinition } from '@/services/utils'
-import { token, createInjections } from '@/services/utils'
+import { token, service as set, createInjections } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
-const $ = {
-  OnboardingAlert: token<typeof OnboardingAlert>('control-planes.components.OnboardingAlert'),
-}
+const ControlPlaneStatus = token('onboarding.components.ControlPlaneStatus')
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.OnboardingAlert, {
-      service: () => {
-        return OnboardingAlert
-      },
-    }],
     [token('onboarding.routes'), {
       service: routes,
       labels: [
         app.routes,
       ],
     }],
+    [token('onboarding.components.ControlPlaneStatusWithOnboarding'), {
+      service: (service) => {
+        set(ControlPlaneStatus, { service })
+        return ControlPlaneStatusWithOnboarding
+      },
+      decorates: app.ControlPlaneStatus,
+    }],
   ]
 }
 
-export const TOKENS = $
 export const [
-  useOnboardingAlert,
+  useControlPlaneStatus,
 ] = createInjections(
-  $.OnboardingAlert,
+  ControlPlaneStatus,
 )

@@ -28,8 +28,6 @@
             class="stack"
             data-testid="detail-view-details"
           >
-            <OnboardingAlert v-if="globalInsight.meshes.total === 1" />
-
             <ControlPlaneStatus
               :can-use-zones="can('use zones')"
               :global-insight="globalInsight"
@@ -131,12 +129,10 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useControlPlaneStatus } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import type { MeshInsightCollectionSource } from '@/app/meshes/sources'
-import { useOnboardingAlert } from '@/app/onboarding'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
 import type { ZoneOverviewCollectionSource } from '@/app/zones/sources'
 
 const ControlPlaneStatus = useControlPlaneStatus()
-const OnboardingAlert = useOnboardingAlert()
 </script>
 
 <style lang="scss" scoped>
