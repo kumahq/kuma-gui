@@ -78,7 +78,7 @@
     "cypress-fail-fast": "7.0.3",
     "dotenv": "16.3.1",
     "esbuild": "0.19.6",
-    "eslint": "8.53.0",
+    "eslint": "8.54.0",
     "eslint-config-standard": "17.1.0",
     "eslint-friendly-formatter": "4.0.1",
     "eslint-import-resolver-alias": "1.1.2",
