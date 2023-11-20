@@ -6,7 +6,7 @@ export const routes = (): RouteRecordRaw[] => {
       redirect: {
         name: 'onboarding-welcome-view',
       },
-      component: () => import('@/app/onboarding/views/OnboardingIndexView.vue'),
+      component: () => import('@/app/onboarding/views/OnboardingRootView.vue'),
       children: [
         {
           path: 'welcome',
