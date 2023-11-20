@@ -1813,10 +1813,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kong-ui-public/i18n@0.8.6":
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-0.8.6.tgz#6774fe21626bcd014ef9b9d8a87bc950e28e0288"
-  integrity sha512-FPf5nfpJzjwvx5CQGXh7tjZqcy7IeRZyquoM6dsM+/O9wIlmr/PGfqVCiJwwdONgrkg/DCVuzm+qQBAjdaQlXQ==
+"@kong-ui-public/i18n@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.0.0.tgz#d36b5df36074ac0d55f7ed719e122ea0e76da144"
+  integrity sha512-n/fkoGmY9CG9tgMrBwxGCiI8M8x4KoUwwSL361gIs8E8ehbtfn0Tw3O9Tpwzq3JRqnzyYuTf/S4Z4ZaI5/SC9g==
   dependencies:
     "@formatjs/intl" "^2.9.3"
     flat "^6.0.1"
@@ -1832,10 +1832,10 @@
   resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.0.tgz#3fb6423fec31be4cc27af94f2912f52aee4f9077"
   integrity sha512-ynO3GXaJTh4yoJMZ7XeTbA+ZHvlrteleI+rWNGUbEr726Tw/jgHLdT6wZ1YWR65cA38FN0Q96vEX/7+6ExwaHA==
 
-"@kong/kongponents@9.0.0-alpha.54":
-  version "9.0.0-alpha.54"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.54.tgz#c96721495c718719b3d7e3925e80b053cd21e479"
-  integrity sha512-mZ3qlsywpDskIoGvcPX+bxFD3F8guy3T57SOhdtL6v2XOPClvVgHVSwVY7/mxP2nB1ygrWoqnDc7GtvSq5EpmA==
+"@kong/kongponents@9.0.0-alpha.55":
+  version "9.0.0-alpha.55"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.55.tgz#34eb59f2d26bdd002bc965493c5b8094f6418ad3"
+  integrity sha512-I20eS4x+gBaPG5x4gjHE3W24VMsRuQpQdiOe1uZGAZV6DJcpJZ1WYZCB7cmSgGU7swQmMt/+Co1WSE76NL5baQ==
   dependencies:
     "@kong/icons" "^1.8.0"
     "@popperjs/core" "^2.11.8"
