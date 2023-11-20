@@ -1,4 +1,4 @@
-type StorageKeyValues = 'codeBlockQueries'
+type StorageKeyValues = 'codeBlockQueries' | 'hasDismissedOnboardingAlert'
 
 /**
  * Utility object for accessing `window.localStorage` or `window.sessionStorage`.

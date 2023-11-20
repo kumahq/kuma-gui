@@ -14,6 +14,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const name = id === 0 ? 'default' : `${fake.hacker.noun()}-${id}`
 
+        const serviceTotal = parseInt(env('KUMA_SERVICEINSIGHT_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
+
         // TODO(jc) refactor this to use the partitioning so we can say how many
         // DATAPLANES we have and get a spread of types totalling that number
         const max = env('KUMA_DATAPLANE_COUNT', '30') === '0' ? 0 : 30
@@ -117,7 +119,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               },
             },
           },
-          services: fake.kuma.serviceStatus(),
+          services: fake.kuma.serviceStatus({ max: serviceTotal }),
         }
       }),
       next,

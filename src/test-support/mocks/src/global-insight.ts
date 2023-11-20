@@ -3,6 +3,8 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const policyTotal = fake.number.int({ min: 1, max: 100 })
 
+  const serviceTotal = parseInt(env('KUMA_SERVICEINSIGHT_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
+
   const dataplaneTotal = parseInt(env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const gatewayBuiltinTotal = fake.number.int({ min: 0, max: 20 })
   const gatewayDelegatedTotal = fake.number.int({ min: 0, max: 20 })
@@ -21,9 +23,9 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
     },
     body: {
       dataplanes: {
-        gatewayBuiltin: fake.kuma.healthStatus({ max: gatewayBuiltinTotal }),
-        gatewayDelegated: fake.kuma.healthStatus({ max: gatewayDelegatedTotal }),
-        standard: fake.kuma.healthStatus({ max: dataplaneTotal }),
+        gatewayBuiltin: fake.kuma.healthStatus({ max: gatewayBuiltinTotal, omitZeroValues: false }),
+        gatewayDelegated: fake.kuma.healthStatus({ max: gatewayDelegatedTotal, omitZeroValues: false }),
+        standard: fake.kuma.healthStatus({ max: dataplaneTotal, omitZeroValues: false }),
       },
       meshes: {
         total: meshTotal,
@@ -31,7 +33,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
       policies: {
         total: policyTotal,
       },
-      services: fake.kuma.globalInsightServices(),
+      services: fake.kuma.globalInsightServices({ max: serviceTotal }),
       zones: {
         controlPlanes: {
           total: zoneControlPlaneTotal,

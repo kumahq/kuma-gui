@@ -42,13 +42,12 @@ Feature: onboarding / index
     Then I click the "$skip-button" element
     Then the URL is "/"
     Examples:
-      | URL                 |
-      | /onboarding/welcome |
-      | /onboarding/deployment-types |
+      | URL                             |
+      | /onboarding/welcome             |
+      | /onboarding/deployment-types    |
       | /onboarding/configuration-types |
-      | /onboarding/multi-zone |
-      | /onboarding/create-mesh |
-      | /onboarding/add-services |
-      | /onboarding/add-services-code |
+      | /onboarding/multi-zone          |
+      | /onboarding/create-mesh         |
+      | /onboarding/add-services        |
+      | /onboarding/add-services-code   |
       | /onboarding/dataplanes-overview |
-

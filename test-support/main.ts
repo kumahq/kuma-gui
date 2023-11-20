@@ -6,7 +6,7 @@ import { beforeEach, afterEach, beforeAll } from 'vitest'
 
 import { TOKENS as TEST, services as testing } from './index'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { services as controlPlanes } from '@/app/control-planes'
+import { services as controlPlanes, TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
 import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as DEV, services as development } from '@/services/development'
 import { TOKENS as PROD, services as production } from '@/services/production'
@@ -29,6 +29,7 @@ const $ = {
     }),
     onboarding({
       ...$,
+      ControlPlaneStatus: CONTROL_PLANES_TOKENS.ControlPlaneStatus,
       routes: $.routesLabel,
     }),
 

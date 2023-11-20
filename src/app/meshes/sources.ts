@@ -15,8 +15,6 @@ type PaginationParams = {
 type Closeable = { close: () => void }
 
 export type MeshSource = DataSourceResponse<Mesh>
-export type MeshCollection = CollectionResponse<Mesh>
-export type MeshCollectionSource = DataSourceResponse<MeshCollection>
 
 export type MeshInsightSource = DataSourceResponse<MeshInsight>
 export type MeshInsightCollection = CollectionResponse<MeshInsight>
@@ -24,15 +22,6 @@ export type MeshInsightCollectionSource = DataSourceResponse<MeshInsightCollecti
 
 export const sources = (api: KumaApi) => {
   return {
-    '/meshes': async (params: PaginationParams, source: Closeable) => {
-      source.close()
-
-      const { size } = params
-      const offset = params.size * (params.page - 1)
-
-      return api.getAllMeshInsights({ size, offset })
-    },
-
     '/meshes/:name': (params: DetailParams, source: Closeable) => {
       source.close()
 

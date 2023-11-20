@@ -15,7 +15,7 @@
     >
       <DataSource
         v-slot="{data, error}: MeshInsightCollectionSource"
-        :src="`/meshes?page=${route.params.page}&size=${route.params.size}`"
+        :src="`/mesh-insights?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
           <template #title>
