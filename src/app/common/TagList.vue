@@ -1,5 +1,5 @@
 <template>
-  <KTruncate>
+  <KTruncate width="auto">
     <KBadge
       v-for="(tag, index) in tagList"
       :key="index"
