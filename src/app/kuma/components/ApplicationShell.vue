@@ -37,7 +37,7 @@
               width="280"
             >
               <KButton
-                appearance="outline"
+                appearance="tertiary"
               >
                 Info
               </KButton>
@@ -54,8 +54,11 @@
             {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
           </p>
 
-          <KDropdownMenu :kpop-attributes="{ placement: 'bottomEnd' }">
-            <KButton appearance="outline">
+          <KDropdown :kpop-attributes="{ placement: 'bottomEnd' }">
+            <KButton
+              appearance="tertiary"
+              icon-only
+            >
               <HelpIcon :size="KUI_ICON_SIZE_30" />
 
               <span class="visually-hidden">Help</span>
@@ -88,11 +91,12 @@
                 }"
               />
             </template>
-          </KDropdownMenu>
+          </KDropdown>
 
           <KButton
             :to="{ name: 'diagnostics' }"
-            button-appearance="btn-link"
+            appearance="tertiary"
+            icon-only
             data-testid="nav-item-diagnostics"
           >
             <CogIcon

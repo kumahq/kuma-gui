@@ -28,10 +28,11 @@
         >
           <KButton
             appearance="primary"
-            icon="plus"
             :to="{ name: 'zone-create-view' }"
             data-testid="create-zone-link"
           >
+            <AddIcon :size="KUI_ICON_SIZE_30" />
+
             {{ t('zones.index.create') }}
           </KButton>
         </template>
@@ -194,9 +195,8 @@
                   v-if="can('create zones')"
                   #actions="{ row }"
                 >
-                  <KDropdownMenu
+                  <KDropdown
                     class="actions-dropdown"
-                    data-testid="actions-dropdown"
                     :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
                     width="150"
                   >
@@ -204,7 +204,7 @@
                       <KButton
                         class="non-visual-button"
                         appearance="secondary"
-                        size="small"
+                        icon-only
                       >
                         <MoreIcon />
                       </KButton>
@@ -213,14 +213,14 @@
                     <template #items>
                       <KDropdownItem
                         has-divider
-                        is-dangerous
+                        danger
                         data-testid="dropdown-delete-item"
                         @click="setDeleteZoneName(row.name)"
                       >
                         {{ t('common.collection.actions.delete') }}
                       </KDropdownItem>
                     </template>
-                  </KDropdownMenu>
+                  </KDropdown>
                 </template>
               </AppCollection>
             </template>
@@ -272,7 +272,7 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon, MoreIcon } from '@kong/icons'
+import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
 import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 

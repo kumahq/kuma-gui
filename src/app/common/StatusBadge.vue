@@ -3,6 +3,7 @@
     <KBadge
       class="status-badge"
       :appearance="BADGE_APPEARANCE[props.status]"
+      max-width="auto"
       data-testid="status-badge"
     >
       {{ t(`http.api.value.${props.status}`) }}

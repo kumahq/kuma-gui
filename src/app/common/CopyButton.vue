@@ -2,21 +2,17 @@
   <KClipboardProvider v-slot="{ copyToClipboard }">
     <KButton
       v-bind="$attrs"
-      appearance="outline"
+      appearance="tertiary"
       class="copy-button"
       :class="{
         'non-visual-button': !props.hasBorder,
       }"
       data-testid="copy-button"
-      :is-rounded="false"
-      size="small"
       :title="!props.hideTitle ? props.copyText : undefined"
       type="button"
       @click="copy($event, copyToClipboard)"
     >
-      <KIcon
-        color="currentColor"
-        icon="copy"
+      <CopyIcon
         :size="KUI_ICON_SIZE_30"
         :title="!props.hideTitle ? props.copyText : undefined"
         :hide-title="props.hideTitle"
@@ -31,7 +27,8 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { KButton, KClipboardProvider, KIcon } from '@kong/kongponents'
+import { CopyIcon } from '@kong/icons'
+import { KButton, KClipboardProvider } from '@kong/kongponents'
 
 import type { PropType } from 'vue'
 

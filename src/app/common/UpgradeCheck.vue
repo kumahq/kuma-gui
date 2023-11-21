@@ -6,7 +6,7 @@
       v-if="showNotice"
       data-testid="upgrade-check"
       class="upgrade-check-alert"
-      appearance="warning"
+      appearance="info"
       size="small"
     >
       <template #alertMessage>
@@ -17,9 +17,7 @@
 
           <div>
             <KButton
-              class="warning-button"
               appearance="primary"
-              size="small"
               :to="env('KUMA_INSTALL_URL')"
             >
               Update
@@ -101,11 +99,5 @@ async function checkVersion(currentVersion: string): Promise<void> {
   > *:first-of-type {
     margin-right: $kui-space-50;
   }
-}
-
-.warning-button {
-  --KButtonPrimaryBase: #f2a230;
-  --KButtonPrimaryHover: #f2a230;
-  --KButtonPrimaryActive: #f2a230;
 }
 </style>

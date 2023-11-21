@@ -4,6 +4,7 @@
     close-button-alignment="end"
     :has-overlay="false"
     is-visible
+    offset-top="var(--app-slideout-offset-top, 0)"
     data-testid="summary"
     @close="emit('close')"
   >
@@ -18,19 +19,10 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-.summary-slideout {
-  // TODO: Remove or replace these once we switch to Kongponents v9 which will deprecate these variables.
+.summary-slideout :deep(.kong-card) {
+  // TODO: Remove these once those styles have been removed/fixed in Kongponents v9.
   // Overrides KSlideout’s override.
-  --KCardPaddingX: #{$kui-space-80} !important;
-  --KCardPaddingY: #{$kui-space-80} !important;
-
-  :deep(.panel),
-  :deep(.panel-background),
-  :deep(.panel-background-transparent) {
-    // TODO: Remove this in favor of setting KSlideout’s `props.offsetTop` to `var(--AppHeaderHeight)` once Kongponents v9 is available (which has https://github.com/Kong/kongponents/pull/1769).
-    // Overrides KSlideout’s top offset. `props.offsetTop` doesn’t accept plain CSS values.
-    top: var(--app-slideout-offset-top) !important;
-  }
+  padding: #{$kui-space-80} !important;
 }
 
 .summary-slideout :deep(.k-slideout-header-content) {
@@ -41,9 +33,12 @@ const emit = defineEmits<{
 .summary-slideout :deep(.panel) {
   // Increases width of the content area a little.
   max-width: 560px;
-  // TODO: Remove this once we switch to Kongponents v9 which will fix this issue (https://github.com/Kong/kongponents/pull/1822).
-  // Fixes the content being taller than the viewport when using `props.offsetHeight`.
-  height: calc(100vh - var(--app-slideout-offset-top)) !important;
+}
+
+.summary-slideout :deep(.border-styles) {
+  // TODO: Remove this override once KSlideout was updated in Kongponents v9’s alpha version.
+  // Overrides the left border color to the same value KCard uses for its borders.
+  border-left-color: rgba(0, 0, 0, 0.1);
 }
 
 // Aligns the position of the close button with the summary slideout card’s content box.

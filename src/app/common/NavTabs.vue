@@ -72,6 +72,12 @@ const currentTabHash = computed(() => {
 .nav-tabs {
   margin-bottom: var(--AppGap);
 }
+
+.nav-tabs :deep(ul) {
+  // TODO: Remove this override once KTabs was updated in Kongponents v9’s alpha version.
+  // Overrides the bottom border color to the same value KCard uses for its borders.
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
 </style>
 
 <style lang="scss">

@@ -86,7 +86,7 @@ Feature: zones / create
     Then the "$ingress-input-switch input" element isn't checked
     And the "$egress-input-switch input" element isn't checked
 
-    When I click the "$environment-universal-radio-button + label" element
+    When I click the "$environment-universal-radio-button" element
     Then the "$ingress-input-switch input" element doesn't exist
     And the "$egress-input-switch input" element doesn't exist
     And the "$environment-universal-config" element contains "globalAddress: grpcs://<global-kds-address>:5685"

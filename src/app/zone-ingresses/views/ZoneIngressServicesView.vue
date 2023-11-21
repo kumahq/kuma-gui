@@ -62,7 +62,7 @@
             </template>
 
             <template #actions="{ row: item }: {row: AvailableService}">
-              <KDropdownMenu
+              <KDropdown
                 class="actions-dropdown"
                 :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
                 width="150"
@@ -71,9 +71,9 @@
                   <KButton
                     class="non-visual-button"
                     appearance="secondary"
-                    size="small"
+                    icon-only
                   >
-                    <MoreIcon :size="KUI_ICON_SIZE_30" />
+                    <MoreIcon />
                   </KButton>
                 </template>
                 <template #items>
@@ -90,7 +90,7 @@
                     }"
                   />
                 </template>
-              </KDropdownMenu>
+              </KDropdown>
             </template>
           </AppCollection>
         </template>
@@ -100,7 +100,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { MoreIcon } from '@kong/icons'
 
 import type { AvailableService, ZoneIngressOverview } from '../data'

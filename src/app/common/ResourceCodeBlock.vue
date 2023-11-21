@@ -50,11 +50,11 @@ const props = withDefaults(defineProps<{
    * Function returning the resource.
    */
   resourceFetcher: (params?: SingleResourceParameters) => Promise<Entity>
-  codeMaxHeight?: string | null
+  codeMaxHeight?: string
   isSearchable?: boolean
   query?: string
 }>(), {
-  codeMaxHeight: null,
+  codeMaxHeight: undefined,
   isSearchable: false,
   query: '',
 })

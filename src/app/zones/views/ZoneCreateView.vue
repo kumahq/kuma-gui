@@ -21,7 +21,7 @@
       <template #actions>
         <KButton
           v-if="token === '' || isZoneConnected"
-          appearance="outline"
+          appearance="tertiary"
           data-testid="exit-button"
           :to="{ name: 'zone-cp-list-view' }"
         >
@@ -30,7 +30,7 @@
 
         <KButton
           v-else
-          appearance="outline"
+          appearance="tertiary"
           data-testid="exit-button"
           @click="toggleConfirmModal"
         >
@@ -126,7 +126,7 @@
                       name="zone-name"
                       data-testid="name-input"
                       :data-test-error-type="nameError !== null ? 'invalid-dns-name' : undefined"
-                      :has-error="nameError !== null"
+                      :error="nameError !== null"
                       :error-message="nameError ?? undefined"
                       :disabled="zone !== null"
                       @blur="validateName(name)"
@@ -502,8 +502,11 @@ function success() {
   isZoneConnected.value = true
 }
 </script>
+
 <style lang="scss" scoped>
-.radio-button-group > * + * {
-  margin-block-start: $kui-space-40;
+.radio-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: $kui-space-40;
 }
 </style>

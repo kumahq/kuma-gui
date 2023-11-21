@@ -23,13 +23,6 @@
   --graph-color-8: #fff182;
   --graph-color-9: #fff9ca;
 
-  // KONGPONENTS
-  // Reduces the excessive vertical padding.
-  --KPopPaddingY: #{$kui-space-40};
-  // Removes the default max width of 200 pixels because badges should never be cut-off.
-  --KBadgeMaxWidth: auto;
-  --KCardBorderRadius: 9px;
-
   // MISC
   --TextGradientBackground: linear-gradient(90deg, #473cfb 0%, #a300bd 33.17%);
   --StepBackground: #169fcc;

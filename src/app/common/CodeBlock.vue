@@ -2,7 +2,7 @@
   <KCodeBlock
     :id="id"
     class="code-block"
-    :style="props.codeMaxHeight ? `--KCodeBlockMaxHeight: ${props.codeMaxHeight}` : undefined"
+    :max-height="props.codeMaxHeight"
     :code="props.code"
     :language="language"
     :is-processing="isProcessing"
@@ -34,12 +34,12 @@ const props = withDefaults(defineProps<{
   language: AvailableLanguages
   isSearchable?: boolean
   showCopyButton?: boolean
-  codeMaxHeight?: string | null
+  codeMaxHeight?: string
   query?: string
 }>(), {
   isSearchable: false,
   showCopyButton: true,
-  codeMaxHeight: null,
+  codeMaxHeight: undefined,
   query: '',
 })
 

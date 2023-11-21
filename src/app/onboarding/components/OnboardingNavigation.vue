@@ -12,7 +12,7 @@
     <div class="button-list">
       <KButton
         v-if="props.showSkip"
-        appearance="outline"
+        appearance="tertiary"
         data-testid="onboarding-skip-button"
         :to="{ name: 'home' }"
       >
@@ -21,7 +21,7 @@
 
       <KButton
         :disabled="!props.shouldAllowNext"
-        :appearance="props.lastStep ? 'creation' : 'primary'"
+        appearance="primary"
         :to="{ name: props.lastStep ? 'home' : props.nextStep }"
         data-testid="onboarding-next-button"
       >
