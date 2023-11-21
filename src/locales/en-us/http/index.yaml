@@ -27,3 +27,6 @@ http:
       notAvailable: 'information not available'
       not_available: 'information not available'
       disabled: 'disabled'
+      grpc: gRPC
+      http2: HTTP2
+      http: HTTP

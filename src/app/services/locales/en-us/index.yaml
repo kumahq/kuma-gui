@@ -1,4 +1,10 @@
 services:
+  components:
+    service_traffic_card:
+      total: Total Requests
+      success: Successful Requests
+      protocol:
+        unknown: Passthrough
   routes:
     item:
       title: "{name}"

@@ -1,0 +1,55 @@
+<template>
+  <div class="service-traffic">
+    <DataCard
+      class="header"
+    >
+      <template #title>
+        <slot name="title" />
+      </template>
+      <slot name="data" />
+    </DataCard>
+    <slot name="default" />
+  </div>
+</template>
+<script lang="ts" setup>
+import DataCard from '@/app/common/data-card/DataCard.vue'
+</script>
+<style lang="scss" scoped>
+.service-traffic {
+  display: flex;
+  flex-direction: column;
+  gap: $kui-space-40;
+}
+.kong-card {
+  &:is(.header) {
+    border: 0;
+  }
+}
+.header :deep(.title) {
+  font-size: $kui-font-size-20;
+}
+.header > :deep(dt) {
+  & {
+    display: flex;
+    align-items: center;
+  }
+}
+.header :deep(.body dt)  {
+  &::before {
+    display: inline-block;
+    margin-right: $kui-space-20;
+    border: 4px solid;
+    border-radius: 50%;
+  }
+  &.passthrough::before {
+    content: '';
+    /* FIXME(jc): This color is in the design but doesn't seem to be in @kong/design-tokens */
+    border-color: #00D6A4;
+  }
+  &.outbounds::before {
+    content: '';
+    border-color: $kui-color-border-primary-weak;
+  }
+
+}
+</style>
