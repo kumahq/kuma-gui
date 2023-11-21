@@ -10,7 +10,7 @@ export const actions = (): RouteRecordRaw[] => {
     meta: {
       isWizard: true,
     },
-    component: () => import('@/app/zones/views/CreateView.vue'),
+    component: () => import('@/app/zones/views/ZoneCreateView.vue'),
   }]
 }
 export const routes = (
@@ -33,7 +33,7 @@ export const routes = (
               meta: {
                 module: 'zone-cps',
               },
-              component: () => import('@/app/zones/views/IndexView.vue'),
+              component: () => import('@/app/zones/views/ZoneListView.vue'),
               children: [
                 {
                   path: ':zone',
@@ -49,18 +49,18 @@ export const routes = (
                 {
                   path: '',
                   name: 'zone-cp-detail-tabs-view',
-                  component: () => import('@/app/zones/views/item/IndexView.vue'),
+                  component: () => import('@/app/zones/views/ZoneDetailTabsView.vue'),
                   redirect: { name: 'zone-cp-detail-view' },
                   children: [
                     {
                       path: 'overview',
                       name: 'zone-cp-detail-view',
-                      component: () => import('@/app/zones/views/item/DetailView.vue'),
+                      component: () => import('@/app/zones/views/ZoneDetailView.vue'),
                     },
                     {
                       path: 'config',
                       name: 'zone-cp-config-view',
-                      component: () => import('@/app/zones/views/item/ConfigView.vue'),
+                      component: () => import('@/app/zones/views/ZoneConfigView.vue'),
                     },
                     ...ingresses().items(),
                     ...egresses().items(),

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="app-not-found-view"
+    name="kuma-not-found-view"
   >
     <AppView>
       <div class="overview">

@@ -1,40 +1,40 @@
 <template>
   <RouteView
-    v-slot="{ route }"
-    name="zone-ingress-detail-tabs-view"
+    v-slot="{ route, can }"
+    name="zone-egress-detail-tabs-view"
     :params="{
-      zoneIngress: '',
+      zoneEgress: '',
     }"
   >
     <AppView
       :breadcrumbs="[
-        {
+        ...(can('use zones') ? [{
           to: {
             name: 'zone-cp-list-view',
           },
           text: t('zone-cps.routes.item.breadcrumbs'),
-        },
+        }] : []),
         {
           to: {
-            name: 'zone-ingress-list-view',
+            name: 'zone-egress-list-view',
           },
-          text: t('zone-ingresses.routes.item.breadcrumbs'),
+          text: t('zone-egresses.routes.item.breadcrumbs'),
         },
       ]"
     >
       <template #title>
         <h1>
-          <TextWithCopyButton :text="route.params.zoneIngress">
+          <TextWithCopyButton :text="route.params.zoneEgress">
             <RouteTitle
-              :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
+              :title="t('zone-egresses.routes.item.title', { name: route.params.zoneEgress })"
             />
           </TextWithCopyButton>
         </h1>
       </template>
 
       <DataSource
-        v-slot="{ data, error }: ZoneIngressOverviewSource"
-        :src="`/zone-ingress-overviews/${route.params.zoneIngress}`"
+        v-slot="{ data, error }: ZoneEgressOverviewSource"
+        :src="`/zone-egress-overviews/${route.params.zoneEgress}`"
       >
         <ErrorBlock
           v-if="error !== undefined"
@@ -45,7 +45,7 @@
 
         <template v-else>
           <NavTabs
-            class="route-zone-ingress-detail-view-tabs"
+            class="route-zone-egress-detail-view-tabs"
             :tabs="tabs"
           />
 
@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { RouteRecordRaw, useRouter } from 'vue-router'
 
-import type { ZoneIngressOverviewSource } from '../../sources'
+import { ZoneEgressOverviewSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
@@ -74,12 +74,12 @@ import { useI18n } from '@/utilities'
 const { t } = useI18n()
 const router = useRouter()
 
-const routes = router.getRoutes().find((route) => route.name === 'zone-ingress-detail-tabs-view')?.children ?? []
+const routes = router.getRoutes().find((route) => route.name === 'zone-egress-detail-tabs-view')?.children ?? []
 const tabs: NavTab[] = routes.map((route) => {
   const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
   const routeName = referenceRoute.name as string
   const module = referenceRoute.meta?.module ?? ''
-  const title = t(`zone-ingresses.routes.item.navigation.${routeName}`)
+  const title = t(`zone-egresses.routes.item.navigation.${routeName}`)
 
   return { title, routeName, module }
 })

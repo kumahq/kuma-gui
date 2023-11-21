@@ -15,7 +15,7 @@ export const routes = (
       path: '/meshes',
       name: 'mesh-index-view',
       redirect: { name: 'mesh-list-view' },
-      component: () => import('@/app/meshes/views/MeshIndexView.vue'),
+      component: () => import('@/app/meshes/views/MeshRootView.vue'),
       children: [
         {
           path: '',
@@ -36,9 +36,9 @@ export const routes = (
           children: [
             {
               path: '',
-              name: 'mesh-tabs-view',
+              name: 'mesh-detail-tabs-view',
               redirect: { name: 'mesh-detail-view' },
-              component: () => import('@/app/meshes/views/MeshTabsView.vue'),
+              component: () => import('@/app/meshes/views/MeshDetailTabsView.vue'),
               children: [
                 {
                   path: 'overview',

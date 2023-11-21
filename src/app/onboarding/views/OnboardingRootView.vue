@@ -11,7 +11,7 @@
       >
         <component
           :is="Component"
-          v-if="route.name === 'onboarding-add-services'"
+          v-if="route.name === 'onboarding-add-new-services-view'"
           :mode="mode"
           @change="(val: Mode) => {
             mode = val

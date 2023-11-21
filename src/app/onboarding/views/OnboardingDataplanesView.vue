@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
-    name="onboarding-dataplanes-overview"
+    name="onboarding-dataplanes-view"
   >
     <RouteTitle
       :title="t('onboarding.routes.dataplanes-overview.title')"
@@ -65,8 +65,8 @@
 
         <template #navigation>
           <OnboardingNavigation
-            next-step="onboarding-completed"
-            previous-step="onboarding-add-services-code"
+            next-step="onboarding-completed-view"
+            previous-step="onboarding-add-new-services-code-view"
             :should-allow-next="tableData.data.length > 0"
           />
         </template>

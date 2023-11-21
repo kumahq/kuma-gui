@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ route }"
-    name="mesh-tabs-view"
+    name="mesh-detail-tabs-view"
     :params="{
       mesh: '',
     }"
@@ -37,7 +37,7 @@ import { useI18n } from '@/utilities'
 const { t } = useI18n()
 const router = useRouter()
 
-const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-tabs-view')?.children ?? []
+const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-detail-tabs-view')?.children ?? []
 const tabs: NavTab[] = meshRoutes.map((route) => {
   const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
   const routeName = referenceRoute.name as string

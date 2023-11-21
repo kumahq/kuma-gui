@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
-    name="onboarding-multi-zone"
+    name="onboarding-multi-zone-view"
   >
     <RouteTitle
       :title="t('onboarding.routes.multizone.title')"
@@ -73,8 +73,8 @@
 
         <template #navigation>
           <OnboardingNavigation
-            next-step="onboarding-create-mesh"
-            previous-step="onboarding-configuration-types"
+            next-step="onboarding-create-mesh-view"
+            previous-step="onboarding-configuration-types-view"
             :should-allow-next="hasZones && hasZoneIngresses"
           />
         </template>

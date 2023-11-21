@@ -4,7 +4,7 @@ export const routes = (): RouteRecordRaw[] => {
     {
       path: '/diagnostics',
       name: 'diagnostics',
-      component: () => import('@/app/diagnostics/views/DiagnosticsView.vue'),
+      component: () => import('@/app/diagnostics/views/DiagnosticsDetailView.vue'),
     },
 
   ]

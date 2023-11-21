@@ -1,9 +1,9 @@
 <template>
   <RouteView
     v-slot="{ route, t }"
-    name="zone-egress-config-view"
+    name="zone-ingress-config-view"
     :params="{
-      zoneEgress: '',
+      zoneIngress: '',
       codeSearch: '',
     }"
   >
@@ -11,7 +11,7 @@
       <template #title>
         <h2>
           <RouteTitle
-            :title="t('zone-egresses.routes.item.navigation.zone-egress-config-view')"
+            :title="t('zone-ingresses.routes.item.navigation.zone-ingress-config-view')"
           />
         </h2>
       </template>
@@ -19,8 +19,8 @@
       <KCard>
         <template #body>
           <DataSource
-            v-slot="{ data, error }: ZoneEgressSource"
-            :src="`/zone-egresses/${route.params.zoneEgress}`"
+            v-slot="{ data, error }: ZoneIngressSource"
+            :src="`/zone-ingresses/${route.params.zoneIngress}`"
           >
             <ErrorBlock
               v-if="error !== undefined"
@@ -31,9 +31,9 @@
 
             <template v-else>
               <ResourceCodeBlock
-                id="code-block-zone-egress"
+                id="code-block-zone-ingress"
                 :resource="data"
-                :resource-fetcher="(params) => kumaApi.getZoneEgress({ name: route.params.zoneEgress }, params)"
+                :resource-fetcher="(params) => kumaApi.getZoneIngress({ name: route.params.zoneIngress }, params)"
                 is-searchable
                 :query="route.params.codeSearch"
                 @query-change="route.update({ codeSearch: $event })"
@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ZoneEgressSource } from '../../sources'
+import { ZoneIngressSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'

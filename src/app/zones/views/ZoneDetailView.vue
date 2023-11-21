@@ -92,7 +92,7 @@ import {
   getZoneControlPlaneStatus,
   getZoneDpServerAuthType,
   getZoneControlPlaneEnvironment,
-} from '../../data'
+} from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'

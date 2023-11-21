@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ env, t, can }"
-    name="onboarding-welcome"
+    name="onboarding-welcome-view"
   >
     <RouteTitle
       :title="t('onboarding.routes.welcome.title', {name: t('common.product.name')})"
@@ -79,7 +79,7 @@
           </template>
 
           <template #navigation>
-            <OnboardingNavigation next-step="onboarding-deployment-types" />
+            <OnboardingNavigation next-step="onboarding-deployment-types-view" />
           </template>
         </OnboardingPage>
 
