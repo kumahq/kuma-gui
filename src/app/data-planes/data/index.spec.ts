@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { getFormattedLastUpdateTime } from './data'
+import { getFormattedLastUpdateTime } from './index'
 import type { DiscoverySubscription } from '@/types/index.d'
 
 type LastUpdateTimeTestCase = {
