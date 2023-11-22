@@ -26,7 +26,7 @@ describe('dataplanes data transformations', () => {
             },
           },
         ],
-        expected: 'Jul 13, 2021, 9:03 AM',
+        expected: '2021-07-13T09:03:11.614941842Z',
       },
       {
         message: 'multiple subscriptions',
@@ -42,7 +42,7 @@ describe('dataplanes data transformations', () => {
             },
           },
         ],
-        expected: 'Jul 13, 2021, 9:03 AM',
+        expected: '2021-07-13T09:03:11.614941842Z',
       },
     ] as LastUpdateTimeTestCase[])('$message', (item) => {
       expect(getFormattedLastUpdateTime(item.subscriptions)).toStrictEqual(item.expected)

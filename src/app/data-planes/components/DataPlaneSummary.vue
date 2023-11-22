@@ -30,13 +30,7 @@
       </template>
 
       <template #body>
-        <template v-if="lastUpdatedTime">
-          {{ lastUpdatedTime }}
-        </template>
-
-        <template v-else>
-          {{ t('common.detail.none') }}
-        </template>
+        {{ formattedLastUpdatedTime }}
       </template>
     </DefinitionCard>
 
@@ -148,14 +142,17 @@ import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { getStatusAndReason } from '@/utilities/dataplane'
 
-const { t } = useI18n()
+const { t, formatIsoDate } = useI18n()
 
 const props = defineProps<{
   dataplaneOverview: DataPlaneOverview
 }>()
 
 const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
-const lastUpdatedTime = computed(() => getFormattedLastUpdateTime(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? []))
+const formattedLastUpdatedTime = computed(() => {
+  const lastUpdatedTime = getFormattedLastUpdateTime(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? [])
+  return lastUpdatedTime !== null ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
+})
 </script>
 
 <style lang="scss" scoped>

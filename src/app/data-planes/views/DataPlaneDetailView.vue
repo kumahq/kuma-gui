@@ -1,8 +1,5 @@
 <template>
-  <RouteView
-    v-slot="{ t }"
-    name="data-plane-detail-view"
-  >
+  <RouteView name="data-plane-detail-view">
     <AppView>
       <template
         v-if="warnings.length > 0"
@@ -56,13 +53,7 @@
                 </template>
 
                 <template #body>
-                  <template v-if="lastUpdatedTime">
-                    {{ lastUpdatedTime }}
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
+                  {{ formattedLastUpdatedTime }}
                 </template>
               </DefinitionCard>
 
@@ -310,7 +301,7 @@ import {
   INCOMPATIBLE_WRONG_FORMAT,
 } from '@/utilities/dataplane'
 
-const { formatIsoDate } = useI18n()
+const { t, formatIsoDate } = useI18n()
 const can = useCan()
 
 const props = defineProps<{
@@ -319,7 +310,10 @@ const props = defineProps<{
 
 const statusWithReason = computed(() => getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight))
 
-const lastUpdatedTime = computed(() => getFormattedLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? []))
+const formattedLastUpdatedTime = computed(() => {
+  const lastUpdatedTime = getFormattedLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? [])
+  return lastUpdatedTime !== null ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
+})
 
 const warnings = computed(() => {
   const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
