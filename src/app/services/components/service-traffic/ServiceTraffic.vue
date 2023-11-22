@@ -29,10 +29,8 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   font-size: $kui-font-size-20;
 }
 .header > :deep(dt) {
-  & {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
 }
 .header :deep(.body dt)  {
   &::before {

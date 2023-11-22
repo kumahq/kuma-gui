@@ -39,9 +39,7 @@
   font-size: $kui-font-size-60;
 }
 .body > :deep(dl) {
-  & {
-    gap: $kui-space-80;
-  }
+  gap: $kui-space-80;
   > div {
     > dt {
       color: $kui-color-text-disabled;
@@ -51,9 +49,7 @@
     }
     > dt::after {
       display: inline;
-    }
-    /*[lang="en"]*/
-    > dt::after {
+      /*[lang="en"]*/
       content: ': ';
     }
   }

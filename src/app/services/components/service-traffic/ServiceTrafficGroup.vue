@@ -33,7 +33,7 @@ const props = defineProps<{
   }
   &:is(.type-outbound) {
     border-color: $kui-color-border-primary-weak;
-    background-color: $kui-color-border-primary-weakest;
+    background-color: $kui-color-background-primary-weakest;
   }
   &:is(.type-inbound) {
     padding: 0;
