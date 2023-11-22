@@ -202,8 +202,8 @@ export type DataplaneGateway = {
 export type DataplaneInbound = {
   address?: string
   port: number
-  servicePort: number
-  serviceAddress: string
+  servicePort?: number
+  serviceAddress?: string
   tags: Record<string, string>
   health?: {
     ready: boolean
