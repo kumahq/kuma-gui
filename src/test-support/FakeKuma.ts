@@ -227,16 +227,17 @@ export class KumaModule {
       : {}
     const address = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
     const port = this.faker.internet.port()
-    const servicePort = this.faker.internet.port()
-    const serviceAddress = this.faker.internet.ipv4()
+    const hasServiceAddress = this.faker.datatype.boolean({ probability: 0.25 })
+    const serviceAddress = hasServiceAddress ? this.faker.internet.ipv4() : undefined
+    const servicePort = hasServiceAddress ? this.faker.internet.port() : undefined
     const zone = isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined
 
     return {
       ...healthObject,
       ...(address && { address }),
       port,
-      servicePort,
-      serviceAddress,
+      ...(serviceAddress && { serviceAddress }),
+      ...(servicePort && { servicePort }),
       tags: {
         'kuma.io/service': service ?? this.serviceName(),
         'kuma.io/protocol': this.protocol(),

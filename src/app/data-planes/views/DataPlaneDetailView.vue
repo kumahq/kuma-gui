@@ -160,7 +160,7 @@
                       </template>
 
                       <template #body>
-                        <TextWithCopyButton :text="`${inbound.serviceAddress}:${inbound.servicePort}`" />
+                        <TextWithCopyButton :text="`${inbound.serviceAddress ?? inbound.address ?? props.data.dataplane.networking.address}:${inbound.servicePort ?? inbound.port}`" />
                       </template>
                     </DefinitionCard>
                   </div>
