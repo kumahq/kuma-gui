@@ -9,7 +9,9 @@
     <KBadge
       v-for="(tag, index) in tagList"
       :key="index"
-      class="tag-badge"
+      :class="{
+        'kuma-badge': tag.isKuma,
+      }"
       max-width="auto"
     >
       <component
@@ -31,6 +33,7 @@ import type { RouteLocationNamedRaw } from 'vue-router'
 
 interface LabelValueWithRoute extends LabelValue {
   route: RouteLocationNamedRaw | undefined
+  isKuma: boolean
 }
 
 const props = withDefaults(defineProps<{
@@ -46,8 +49,9 @@ const tagList = computed<LabelValueWithRoute[]>(() => {
   return labels.map((tag) => {
     const { label, value } = tag
     const route = getRoute(tag)
+    const isKuma = label.includes('kuma.io/')
 
-    return { label, value, route }
+    return { label, value, route, isKuma }
   })
 })
 
@@ -99,5 +103,14 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   display: inline-flex;
   flex-wrap: wrap;
   gap: $kui-space-40;
+}
+
+.kuma-badge {
+  background-color: $kui-color-background-decorative-purple-weakest !important;
+}
+
+.kuma-badge,
+.kuma-badge a {
+  color: $kui-color-text-decorative-purple !important;
 }
 </style>
