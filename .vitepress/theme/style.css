@@ -1,3 +1,8 @@
+iframe {
+  width: 100%;
+  border: 1px solid #CCC;
+  padding: 50px;
+}
 /**
  * Customize default theme styling by overriding CSS variables:
  * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css

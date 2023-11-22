@@ -49,6 +49,7 @@ export default defineConfig({
             link: 'docs/components.md',
           },
           ...getSourceItems('src/**/{components,views}/**/README.md'),
+          ...getSourceItems('src/app/common/**/README.md'),
         ],
       },
       {
