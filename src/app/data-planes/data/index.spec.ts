@@ -6,7 +6,7 @@ import type { DiscoverySubscription } from '@/types/index.d'
 type LastUpdateTimeTestCase = {
   message: string
   subscriptions: DiscoverySubscription[]
-  expected: string | null
+  expected: string | undefined
 }
 
 describe('dataplanes data transformations', () => {
@@ -15,14 +15,21 @@ describe('dataplanes data transformations', () => {
       {
         message: 'empty subscriptions',
         subscriptions: [],
-        expected: null,
+        expected: undefined,
       },
       {
         message: 'single subscription',
         subscriptions: [
           {
+            id: '',
+            controlPlaneInstanceId: '',
             status: {
               lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+              total: {},
+              cds: {},
+              eds: {},
+              lds: {},
+              rds: {},
             },
           },
         ],
@@ -32,19 +39,33 @@ describe('dataplanes data transformations', () => {
         message: 'multiple subscriptions',
         subscriptions: [
           {
+            id: '',
+            controlPlaneInstanceId: '',
             status: {
               lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
+              total: {},
+              cds: {},
+              eds: {},
+              lds: {},
+              rds: {},
             },
           },
           {
+            id: '',
+            controlPlaneInstanceId: '',
             status: {
               lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+              total: {},
+              cds: {},
+              eds: {},
+              lds: {},
+              rds: {},
             },
           },
         ],
         expected: '2021-07-13T09:03:11.614941842Z',
       },
-    ] as LastUpdateTimeTestCase[])('$message', (item) => {
+    ])('$message', (item: LastUpdateTimeTestCase) => {
       expect(getFormattedLastUpdateTime(item.subscriptions)).toStrictEqual(item.expected)
     })
   })
