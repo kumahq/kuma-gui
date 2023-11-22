@@ -29,6 +29,7 @@
               <TagList
                 v-if="rowValue.length > 0"
                 class="tag-list"
+                should-truncate
                 :tags="rowValue"
               />
 
@@ -41,6 +42,7 @@
               <TagList
                 v-if="rowValue.length > 0"
                 class="tag-list"
+                should-truncate
                 :tags="rowValue"
               />
 

@@ -39,6 +39,7 @@
 
                   <TagList
                     class="tag-list"
+                    should-truncate
                     :tags="rowValue.sourceTags"
                   />
                 </div>
@@ -48,6 +49,7 @@
 
                   <TagList
                     class="tag-list"
+                    should-truncate
                     :tags="rowValue.destinationTags"
                   />
                 </div>

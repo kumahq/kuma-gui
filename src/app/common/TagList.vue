@@ -1,5 +1,11 @@
 <template>
-  <KTruncate>
+  <component
+    :is="props.shouldTruncate ? 'KTruncate' : 'div'"
+    :width="props.shouldTruncate ? 'auto' : undefined"
+    :class="{
+      'tag-list': !props.shouldTruncate,
+    }"
+  >
     <KBadge
       v-for="(tag, index) in tagList"
       :key="index"
@@ -13,7 +19,7 @@
         {{ tag.label }}:<b>{{ tag.value }}</b>
       </component>
     </KBadge>
-  </KTruncate>
+  </component>
 </template>
 
 <script lang="ts" setup>
@@ -27,9 +33,12 @@ interface LabelValueWithRoute extends LabelValue {
   route: RouteLocationNamedRaw | undefined
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   tags: LabelValue[] | Record<string, string> | null | undefined
-}>()
+  shouldTruncate?: boolean
+}>(), {
+  shouldTruncate: false,
+})
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
   const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
@@ -84,3 +93,11 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.tag-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: $kui-space-40;
+}
+</style>
