@@ -151,7 +151,7 @@ const props = defineProps<{
 const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
 const formattedLastUpdatedTime = computed(() => {
   const lastUpdatedTime = getFormattedLastUpdateTime(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? [])
-  return lastUpdatedTime !== null ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
+  return lastUpdatedTime !== undefined ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
 })
 </script>
 

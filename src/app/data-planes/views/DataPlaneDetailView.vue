@@ -312,7 +312,7 @@ const statusWithReason = computed(() => getStatusAndReason(props.data.dataplane,
 
 const formattedLastUpdatedTime = computed(() => {
   const lastUpdatedTime = getFormattedLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? [])
-  return lastUpdatedTime !== null ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
+  return lastUpdatedTime !== undefined ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
 })
 
 const warnings = computed(() => {

@@ -1,8 +1,8 @@
 import type { DiscoverySubscription } from '@/types/index.d'
 
-export function getFormattedLastUpdateTime(subscriptions: DiscoverySubscription[]): string | null {
+export function getFormattedLastUpdateTime(subscriptions: DiscoverySubscription[]): string | undefined {
   if (subscriptions.length === 0) {
-    return null
+    return undefined
   }
 
   const lastSubscription = subscriptions[subscriptions.length - 1]
