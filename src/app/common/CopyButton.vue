@@ -113,6 +113,7 @@ export default {
 }
 
 .copy-button {
+  position: relative;
   --tooltip-background-color: #{$kui-color-background-neutral-stronger};
 }
 
