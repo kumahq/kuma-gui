@@ -70,7 +70,7 @@ const currentTabHash = computed(() => {
 
 <style lang="scss" scoped>
 .nav-tabs {
-  margin-bottom: var(--AppGap);
+  margin-bottom: $kui-space-80;
 }
 
 .nav-tabs :deep(ul) {

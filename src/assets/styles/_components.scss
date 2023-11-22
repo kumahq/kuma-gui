@@ -7,7 +7,18 @@ Adapted from https://every-layout.dev/layouts/stack/.
 */
 
 .stack>*+* {
-  margin-block-start: var(--AppGap);
+  margin-block-start: $kui-space-80;
+}
+
+/*
+.stack-with-borders
+
+Variant of .stack with a horizontal border in the center of the gap.
+*/
+.stack-with-borders>*+* {
+  margin-block-start: $kui-space-40;
+  border-block-start: $kui-border-width-10 solid $kui-color-border;
+  padding-block-start: $kui-space-40;
 }
 
 /*
@@ -23,7 +34,7 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 
   display: flex;
   flex-wrap: wrap;
-  gap: var(--AppGap);
+  gap: $kui-space-80;
 }
 
 .columns>* {

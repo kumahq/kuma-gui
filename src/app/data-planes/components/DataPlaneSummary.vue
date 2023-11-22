@@ -1,55 +1,53 @@
 <template>
   <div class="stack">
-    <DefinitionCard>
-      <template #title>
-        {{ t('http.api.property.status') }}
-      </template>
+    <div class="stack-with-borders">
+      <HorizontalDefinitionCard>
+        <template #title>
+          {{ t('http.api.property.status') }}
+        </template>
 
-      <template #body>
-        <div class="status-with-reason">
-          <StatusBadge :status="statusWithReason.status" />
+        <template #body>
+          <div class="status-with-reason">
+            <StatusBadge :status="statusWithReason.status" />
 
-          <KTooltip
-            v-if="statusWithReason.reason.length > 0"
-            :label="statusWithReason.reason.join(', ')"
-            class="reason-tooltip"
-            position-fixed
-          >
-            <InfoIcon
-              :size="KUI_ICON_SIZE_30"
-              hide-title
-            />
-          </KTooltip>
-        </div>
-      </template>
-    </DefinitionCard>
+            <KTooltip
+              v-if="statusWithReason.reason.length > 0"
+              :label="statusWithReason.reason.join(', ')"
+              class="reason-tooltip"
+              position-fixed
+            >
+              <InfoIcon
+                :size="KUI_ICON_SIZE_30"
+                hide-title
+              />
+            </KTooltip>
+          </div>
+        </template>
+      </HorizontalDefinitionCard>
 
-    <DefinitionCard>
-      <template #title>
-        {{ t('data-planes.routes.item.last_updated') }}
-      </template>
+      <HorizontalDefinitionCard>
+        <template #title>
+          {{ t('data-planes.routes.item.last_updated') }}
+        </template>
 
-      <template #body>
-        {{ formattedLastUpdateTime }}
-      </template>
-    </DefinitionCard>
+        <template #body>
+          <template v-if="formattedLastUpdateTime">
+            {{ formattedLastUpdateTime }}
+          </template>
+
+          <template v-else>
+            {{ t('common.detail.none') }}
+          </template>
+        </template>
+      </HorizontalDefinitionCard>
+    </div>
 
     <div v-if="props.dataplaneOverview.dataplane.networking.gateway">
       <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
       <div class="mt-4">
-        <div class="stack">
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.address') }}
-            </template>
-
-            <template #body>
-              <TextWithCopyButton :text="`${props.dataplaneOverview.dataplane.networking.address}`" />
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
+        <div class="stack-with-borders">
+          <HorizontalDefinitionCard>
             <template #title>
               {{ t('http.api.property.tags') }}
             </template>
@@ -57,7 +55,17 @@
             <template #body>
               <TagList :tags="props.dataplaneOverview.dataplane.networking.gateway.tags" />
             </template>
-          </DefinitionCard>
+          </HorizontalDefinitionCard>
+
+          <HorizontalDefinitionCard>
+            <template #title>
+              {{ t('http.api.property.address') }}
+            </template>
+
+            <template #body>
+              <TextWithCopyButton :text="`${props.dataplaneOverview.dataplane.networking.address}`" />
+            </template>
+          </HorizontalDefinitionCard>
         </div>
       </div>
     </div>
@@ -66,7 +74,7 @@
       <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
 
       <div class="mt-4">
-        <div class="inbound-list">
+        <div class="stack">
           <div
             v-for="(inbound, index) in props.dataplaneOverview.dataplane.networking.inbound"
             :key="index"
@@ -78,8 +86,8 @@
               </TextWithCopyButton>
             </h4>
 
-            <div class="mt-2 stack">
-              <DefinitionCard>
+            <div class="mt-2 stack-with-borders">
+              <HorizontalDefinitionCard>
                 <template #title>
                   {{ t('http.api.property.status') }}
                 </template>
@@ -99,9 +107,23 @@
                     {{ t('data-planes.routes.item.health.not_ready') }}
                   </KBadge>
                 </template>
-              </DefinitionCard>
+              </HorizontalDefinitionCard>
 
-              <DefinitionCard>
+              <HorizontalDefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.tags') }}
+                </template>
+
+                <template #body>
+                  <TagList
+                    class="dataplane-tag-list"
+                    :tags="inbound.tags"
+                    should-truncate
+                  />
+                </template>
+              </HorizontalDefinitionCard>
+
+              <HorizontalDefinitionCard>
                 <template #title>
                   {{ t('http.api.property.address') }}
                 </template>
@@ -109,17 +131,7 @@
                 <template #body>
                   <TextWithCopyButton :text="`${inbound.address ?? props.dataplaneOverview.dataplane.networking.advertisedAddress ?? props.dataplaneOverview.dataplane.networking.address}:${inbound.port}`" />
                 </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
-
-                <template #body>
-                  <TagList :tags="inbound.tags" />
-                </template>
-              </DefinitionCard>
+              </HorizontalDefinitionCard>
             </div>
           </div>
         </div>
@@ -134,7 +146,7 @@ import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import { getLastUpdateTime } from '../data'
-import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import HorizontalDefinitionCard from '@/app/common/HorizontalDefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
@@ -167,7 +179,7 @@ const formattedLastUpdateTime = computed(() => {
   align-items: center;
 }
 
-.inbound-list>*+* {
-  margin-block-start: $kui-space-60;
+.dataplane-tag-list :deep(.k-truncate-container) {
+  justify-content: flex-end;
 }
 </style>
