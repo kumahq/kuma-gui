@@ -105,12 +105,12 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   gap: $kui-space-40;
 }
 
-.kuma-badge {
-  background-color: $kui-color-background-decorative-purple-weakest !important;
-}
+.kuma-badge:not(.increase-specificity) {
+  background-color: $kui-color-background-decorative-purple-weakest;
 
-.kuma-badge,
-.kuma-badge a {
-  color: $kui-color-text-decorative-purple !important;
+  &,
+  & a {
+    color: $kui-color-text-decorative-purple;
+  }
 }
 </style>
