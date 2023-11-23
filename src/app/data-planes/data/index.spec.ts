@@ -1,51 +1,72 @@
 import { describe, expect, test } from 'vitest'
 
-import { getFormattedLastUpdateTime } from './data'
+import { getLastUpdateTime } from './index'
 import type { DiscoverySubscription } from '@/types/index.d'
 
 type LastUpdateTimeTestCase = {
   message: string
   subscriptions: DiscoverySubscription[]
-  expected: string | null
+  expected: string | undefined
 }
 
 describe('dataplanes data transformations', () => {
-  describe('getFormattedLastUpdateTime', () => {
+  describe('getLastUpdateTime', () => {
     test.each([
       {
         message: 'empty subscriptions',
         subscriptions: [],
-        expected: null,
+        expected: undefined,
       },
       {
         message: 'single subscription',
         subscriptions: [
           {
+            id: '',
+            controlPlaneInstanceId: '',
             status: {
               lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+              total: {},
+              cds: {},
+              eds: {},
+              lds: {},
+              rds: {},
             },
           },
         ],
-        expected: 'Jul 13, 2021, 9:03 AM',
+        expected: '2021-07-13T09:03:11.614941842Z',
       },
       {
         message: 'multiple subscriptions',
         subscriptions: [
           {
+            id: '',
+            controlPlaneInstanceId: '',
             status: {
               lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
+              total: {},
+              cds: {},
+              eds: {},
+              lds: {},
+              rds: {},
             },
           },
           {
+            id: '',
+            controlPlaneInstanceId: '',
             status: {
               lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+              total: {},
+              cds: {},
+              eds: {},
+              lds: {},
+              rds: {},
             },
           },
         ],
-        expected: 'Jul 13, 2021, 9:03 AM',
+        expected: '2021-07-13T09:03:11.614941842Z',
       },
-    ] as LastUpdateTimeTestCase[])('$message', (item) => {
-      expect(getFormattedLastUpdateTime(item.subscriptions)).toStrictEqual(item.expected)
+    ])('$message', (item: LastUpdateTimeTestCase) => {
+      expect(getLastUpdateTime(item.subscriptions)).toStrictEqual(item.expected)
     })
   })
 })

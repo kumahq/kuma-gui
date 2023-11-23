@@ -1,8 +1,5 @@
 <template>
-  <RouteView
-    v-slot="{ t }"
-    name="data-plane-detail-view"
-  >
+  <RouteView name="data-plane-detail-view">
     <AppView>
       <template
         v-if="warnings.length > 0"
@@ -56,13 +53,7 @@
                 </template>
 
                 <template #body>
-                  <template v-if="lastUpdatedTime">
-                    {{ lastUpdatedTime }}
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
+                  {{ formattedLastUpdateTime }}
                 </template>
               </DefinitionCard>
 
@@ -293,7 +284,7 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import { getFormattedLastUpdateTime } from '../data'
+import { getLastUpdateTime } from '../data'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -310,7 +301,7 @@ import {
   INCOMPATIBLE_WRONG_FORMAT,
 } from '@/utilities/dataplane'
 
-const { formatIsoDate } = useI18n()
+const { t, formatIsoDate } = useI18n()
 const can = useCan()
 
 const props = defineProps<{
@@ -319,7 +310,10 @@ const props = defineProps<{
 
 const statusWithReason = computed(() => getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight))
 
-const lastUpdatedTime = computed(() => getFormattedLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? []))
+const formattedLastUpdateTime = computed(() => {
+  const lastUpdateTime = getLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? [])
+  return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
+})
 
 const warnings = computed(() => {
   const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
