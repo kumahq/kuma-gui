@@ -19,7 +19,6 @@
       <KCard>
         <template #body>
           <EnvoyData
-            :status="getItemStatusFromInsight(props.data.zoneEgressInsight)"
             resource="Zone"
             :src="`/zone-egresses/${route.params.zoneEgress}/data-path/xds`"
             :query="route.params.codeSearch"
@@ -33,10 +32,4 @@
 
 <script lang="ts" setup>
 import EnvoyData from '@/app/common/EnvoyData.vue'
-import type { ZoneEgressOverview } from '@/types/index.d'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
-
-const props = defineProps<{
-  data: ZoneEgressOverview
-}>()
 </script>
