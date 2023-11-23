@@ -1,9 +1,10 @@
 <template>
   <component
-    :is="props.shouldTruncate ? 'KTruncate' : 'div'"
-    :width="props.shouldTruncate ? 'auto' : undefined"
+    :is="shouldTruncate ? 'KTruncate' : 'div'"
+    :width="shouldTruncate ? 'auto' : undefined"
     :class="{
-      'tag-list': !props.shouldTruncate,
+      'tag-list': !shouldTruncate,
+      'tag-list--align-right': props.alignment === 'right',
     }"
   >
     <KBadge
@@ -45,9 +46,11 @@ const props = withDefaults(defineProps<{
   tags: LabelValue[] | Record<string, string> | null | undefined
   shouldTruncate?: boolean
   hideLabelKey?: boolean
+  alignment?: 'left' | 'right'
 }>(), {
   shouldTruncate: false,
   hideLabelKey: false,
+  alignment: 'left',
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
@@ -61,6 +64,7 @@ const tagList = computed<LabelValueWithRoute[]>(() => {
     return { label, value, route, isKuma }
   })
 })
+const shouldTruncate = computed(() => props.shouldTruncate || Object.keys(tagList.value).length > 10)
 
 function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   // Wildcard tag values don’t refer to specific entities we can link to.
@@ -110,6 +114,11 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   display: inline-flex;
   flex-wrap: wrap;
   gap: $kui-space-40;
+}
+
+.tag-list--align-right,
+.tag-list--align-right :deep(.k-truncate-container) {
+  justify-content: flex-end;
 }
 
 .tag :deep(a) {

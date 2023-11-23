@@ -54,7 +54,10 @@
             </template>
 
             <template #body>
-              <TagList :tags="props.dataplaneOverview.dataplane.networking.gateway.tags" />
+              <TagList
+                alignment="right"
+                :tags="props.dataplaneOverview.dataplane.networking.gateway.tags"
+              />
             </template>
           </DefinitionCard>
 
@@ -117,9 +120,8 @@
 
                 <template #body>
                   <TagList
-                    class="dataplane-tag-list"
+                    alignment="right"
                     :tags="inbound.tags"
-                    should-truncate
                   />
                 </template>
               </DefinitionCard>
@@ -178,9 +180,5 @@ const formattedLastUpdateTime = computed(() => {
 .reason-tooltip :deep(.kong-icon) {
   display: flex;
   align-items: center;
-}
-
-.dataplane-tag-list :deep(.k-truncate-container) {
-  justify-content: flex-end;
 }
 </style>
