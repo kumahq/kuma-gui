@@ -1,21 +1,21 @@
-# ServiceTraffic
+# DataPlaneTraffic
 
 Component for displaying `inbounds` or `outbounds`.
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ForwardIcon, GatewayIcon } from '@kong/icons'
-import ServiceTraffic from '@/app/services/components/service-traffic/ServiceTraffic.vue'
-import ServiceTrafficCard from '@/app/services/components/service-traffic/ServiceTrafficCard.vue'
-import ServiceTrafficGroup from '@/app/services/components/service-traffic/ServiceTrafficGroup.vue'
+import DataPlaneTraffic from './DataPlaneTraffic.vue'
+import ServiceTrafficCard from './ServiceTrafficCard.vue'
+import ServiceTrafficGroup from './ServiceTrafficGroup.vue'
 </script>
 
 <iframe
   height="800"
   data-why
-  title="service-traffic"
+  title="data-plane-traffic"
 >
-  <ServiceTraffic>
+  <DataPlaneTraffic>
     <template #title>
       <ForwardIcon
         display="inline-block"
@@ -50,9 +50,9 @@ import ServiceTrafficGroup from '@/app/services/components/service-traffic/Servi
         backend demo
       </ServiceTrafficCard>
     </ServiceTrafficGroup>
-  </ServiceTraffic>
+  </DataPlaneTraffic>
 <p>---</p>
-  <ServiceTraffic>
+  <DataPlaneTraffic>
     <template #title>
       <GatewayIcon
         display="inline-block"
@@ -106,5 +106,5 @@ import ServiceTrafficGroup from '@/app/services/components/service-traffic/Servi
         backend demo
       </ServiceTrafficCard>
     </ServiceTrafficGroup>
-  </ServiceTraffic>
+  </DataPlaneTraffic>
 </iframe>
