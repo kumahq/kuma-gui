@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { getFormattedLastUpdateTime } from './index'
+import { getLastUpdateTime } from './index'
 import type { DiscoverySubscription } from '@/types/index.d'
 
 type LastUpdateTimeTestCase = {
@@ -10,7 +10,7 @@ type LastUpdateTimeTestCase = {
 }
 
 describe('dataplanes data transformations', () => {
-  describe('getFormattedLastUpdateTime', () => {
+  describe('getLastUpdateTime', () => {
     test.each([
       {
         message: 'empty subscriptions',
@@ -66,7 +66,7 @@ describe('dataplanes data transformations', () => {
         expected: '2021-07-13T09:03:11.614941842Z',
       },
     ])('$message', (item: LastUpdateTimeTestCase) => {
-      expect(getFormattedLastUpdateTime(item.subscriptions)).toStrictEqual(item.expected)
+      expect(getLastUpdateTime(item.subscriptions)).toStrictEqual(item.expected)
     })
   })
 })

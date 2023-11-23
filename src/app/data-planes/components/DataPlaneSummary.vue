@@ -30,7 +30,7 @@
       </template>
 
       <template #body>
-        {{ formattedLastUpdatedTime }}
+        {{ formattedLastUpdateTime }}
       </template>
     </DefinitionCard>
 
@@ -133,7 +133,7 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import { getFormattedLastUpdateTime } from '../data'
+import { getLastUpdateTime } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
@@ -149,9 +149,9 @@ const props = defineProps<{
 }>()
 
 const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
-const formattedLastUpdatedTime = computed(() => {
-  const lastUpdatedTime = getFormattedLastUpdateTime(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? [])
-  return lastUpdatedTime !== undefined ? formatIsoDate(lastUpdatedTime) : t('common.detail.none')
+const formattedLastUpdateTime = computed(() => {
+  const lastUpdateTime = getLastUpdateTime(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? [])
+  return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
 })
 </script>
 
