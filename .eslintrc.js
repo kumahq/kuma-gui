@@ -62,11 +62,8 @@ const INLINE_NON_VOID_ELEMENTS = [
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript', 'plugin:import/recommended', 'plugin:import/typescript'],
   settings: {
     'import/resolver': {
-      typescript: true,
-      alias: {
-        map: [
-          ['@', './src'],
-        ],
+      typescript: {
+        project: 'tsconfig.json',
       },
     },
   },
