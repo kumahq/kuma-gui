@@ -20,6 +20,7 @@
         update: routeUpdate,
         replace: routeReplace,
         params: routeParams,
+        back: routerBack,
       }"
     />
   </div>
@@ -46,14 +47,16 @@ export type RouteView = {
   removeAttrs: (sym: Symbol) => void
 }
 
-type Params = { [K in keyof T]: string }
-
+const win = window
 const env = useEnv()
 const can = useCan()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const sym = Symbol('route-view')
+
+type Params = { [K in keyof T]: string }
+type RouteReplaceParams = Parameters<typeof router['push']>
 
 const props = withDefaults(defineProps<{
   name: string
@@ -148,9 +151,21 @@ const routeUpdate = (params: Record<string, string | undefined>) => {
   }
   routerPush(newParams)
 }
-const routeReplace = (...args: Parameters<typeof router['push']>) => {
+const routeReplace = (...args: RouteReplaceParams) => {
   router.push(...args)
 }
+const routerBack = (...args: RouteReplaceParams) => {
+  try {
+    if (win.history.state.back !== null) {
+      router.back()
+      return
+    }
+  } catch (_) {
+    // passthrough
+  }
+  routeReplace(...args)
+}
+
 watch(() => props.name, () => {
   // we only want query params here
   const params = Object.entries(routeParams.value || {}).reduce<Record<string, string>>((prev, [key, value]) => {

@@ -20,19 +20,17 @@
 
       <template #actions>
         <KButton
-          v-if="token === '' || isZoneConnected"
           appearance="tertiary"
           data-testid="exit-button"
-          :to="{ name: 'zone-cp-list-view' }"
-        >
-          {{ t('zones.form.exit') }}
-        </KButton>
-
-        <KButton
-          v-else
-          appearance="tertiary"
-          data-testid="exit-button"
-          @click="toggleConfirmModal"
+          @click="() => {
+            if(token === '' || isZoneConnected) {
+              route.back({
+                name: 'zone-cp-list-view',
+              })
+            } else {
+              toggleConfirmModal()
+            }
+          }"
         >
           {{ t('zones.form.exit') }}
         </KButton>
