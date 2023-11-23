@@ -49,7 +49,7 @@ const tagList = computed<LabelValueWithRoute[]>(() => {
   return labels.map((tag) => {
     const { label, value } = tag
     const route = getRoute(tag)
-    const isKuma = label.includes('kuma.io/')
+    const isKuma = label.includes('.kuma.io/') || label.startsWith('kuma.io/')
 
     return { label, value, route, isKuma }
   })
