@@ -1,7 +1,7 @@
 <template>
   <div class="stack">
     <div class="stack-with-borders">
-      <HorizontalDefinitionCard>
+      <DefinitionCard layout="horizontal">
         <template #title>
           {{ t('http.api.property.status') }}
         </template>
@@ -23,9 +23,9 @@
             </KTooltip>
           </div>
         </template>
-      </HorizontalDefinitionCard>
+      </DefinitionCard>
 
-      <HorizontalDefinitionCard>
+      <DefinitionCard layout="horizontal">
         <template #title>
           {{ t('data-planes.routes.item.last_updated') }}
         </template>
@@ -39,7 +39,7 @@
             {{ t('common.detail.none') }}
           </template>
         </template>
-      </HorizontalDefinitionCard>
+      </DefinitionCard>
     </div>
 
     <div v-if="props.dataplaneOverview.dataplane.networking.gateway">
@@ -47,7 +47,7 @@
 
       <div class="mt-4">
         <div class="stack-with-borders">
-          <HorizontalDefinitionCard>
+          <DefinitionCard layout="horizontal">
             <template #title>
               {{ t('http.api.property.tags') }}
             </template>
@@ -55,9 +55,9 @@
             <template #body>
               <TagList :tags="props.dataplaneOverview.dataplane.networking.gateway.tags" />
             </template>
-          </HorizontalDefinitionCard>
+          </DefinitionCard>
 
-          <HorizontalDefinitionCard>
+          <DefinitionCard layout="horizontal">
             <template #title>
               {{ t('http.api.property.address') }}
             </template>
@@ -65,7 +65,7 @@
             <template #body>
               <TextWithCopyButton :text="`${props.dataplaneOverview.dataplane.networking.address}`" />
             </template>
-          </HorizontalDefinitionCard>
+          </DefinitionCard>
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
             </h4>
 
             <div class="mt-2 stack-with-borders">
-              <HorizontalDefinitionCard>
+              <DefinitionCard layout="horizontal">
                 <template #title>
                   {{ t('http.api.property.status') }}
                 </template>
@@ -107,9 +107,9 @@
                     {{ t('data-planes.routes.item.health.not_ready') }}
                   </KBadge>
                 </template>
-              </HorizontalDefinitionCard>
+              </DefinitionCard>
 
-              <HorizontalDefinitionCard>
+              <DefinitionCard layout="horizontal">
                 <template #title>
                   {{ t('http.api.property.tags') }}
                 </template>
@@ -121,9 +121,9 @@
                     should-truncate
                   />
                 </template>
-              </HorizontalDefinitionCard>
+              </DefinitionCard>
 
-              <HorizontalDefinitionCard>
+              <DefinitionCard layout="horizontal">
                 <template #title>
                   {{ t('http.api.property.address') }}
                 </template>
@@ -131,7 +131,7 @@
                 <template #body>
                   <TextWithCopyButton :text="`${inbound.address ?? props.dataplaneOverview.dataplane.networking.advertisedAddress ?? props.dataplaneOverview.dataplane.networking.address}:${inbound.port}`" />
                 </template>
-              </HorizontalDefinitionCard>
+              </DefinitionCard>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import { getLastUpdateTime } from '../data'
-import HorizontalDefinitionCard from '@/app/common/HorizontalDefinitionCard.vue'
+import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
