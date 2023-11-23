@@ -82,25 +82,14 @@
                 :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
                 :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
                 :is-selected-row="(row) => row.name === route.params.zone"
+                :get-detail-route="(row) => ({
+                  name: 'zone-cp-detail-view',
+                  params: {
+                    zone: row.name,
+                  },
+                })"
                 @change="route.update"
               >
-                <template #name="{ row }">
-                  <RouterLink
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.name,
-                      },
-                      query: {
-                        page: route.params.page,
-                        size: route.params.size,
-                      },
-                    }"
-                  >
-                    {{ row.name }}
-                  </RouterLink>
-                </template>
-
                 <template #zoneCpVersion="{ rowValue }">
                   {{ rowValue || t('common.collection.none') }}
                 </template>
@@ -170,57 +159,18 @@
                   </template>
                 </template>
 
-                <template #details="{ row }">
-                  <RouterLink
-                    class="details-link"
-                    data-testid="details-link"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.name,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.details_link') }}
-
-                    <ArrowRightIcon
-                      display="inline-block"
-                      decorative
-                      :size="KUI_ICON_SIZE_30"
-                    />
-                  </RouterLink>
-                </template>
-
                 <template
                   v-if="can('create zones')"
-                  #actions="{ row }"
+                  #actions-items="{ row }"
                 >
-                  <KDropdown
-                    class="actions-dropdown"
-                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                    width="150"
+                  <KDropdownItem
+                    has-divider
+                    danger
+                    data-testid="dropdown-delete-item"
+                    @click="setDeleteZoneName(row.name)"
                   >
-                    <template #default>
-                      <KButton
-                        class="non-visual-button"
-                        appearance="secondary"
-                        icon-only
-                      >
-                        <MoreIcon />
-                      </KButton>
-                    </template>
-
-                    <template #items>
-                      <KDropdownItem
-                        has-divider
-                        danger
-                        data-testid="dropdown-delete-item"
-                        @click="setDeleteZoneName(row.name)"
-                      >
-                        {{ t('common.collection.actions.delete') }}
-                      </KDropdownItem>
-                    </template>
-                  </KDropdown>
+                    {{ t('common.collection.actions.delete') }}
+                  </KDropdownItem>
                 </template>
               </AppCollection>
             </template>
@@ -272,9 +222,8 @@
 
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
+import { AddIcon } from '@kong/icons'
 import { ref } from 'vue'
-import { type RouteLocationNamedRaw } from 'vue-router'
 
 import { getZoneControlPlaneStatus } from '../data'
 import type { ZoneOverviewCollectionSource } from '../sources'
@@ -289,7 +238,6 @@ import type { DiscoverySubscription, StatusKeyword, ZoneEgressOverview, ZoneIngr
 import { useKumaApi } from '@/utilities'
 
 type ZoneOverviewTableRow = {
-  detailViewRoute: RouteLocationNamedRaw
   name: string
   status: StatusKeyword | 'disabled'
   zoneCpVersion: string
@@ -362,12 +310,6 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
 function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
   return zoneOverviews.map((zoneOverview) => {
     const { name } = zoneOverview
-    const detailViewRoute: RouteLocationNamedRaw = {
-      name: 'zone-cp-detail-view',
-      params: {
-        zone: name,
-      },
-    }
     let zoneCpVersion = ''
     let type = 'kubernetes'
     let memoryStore = false
@@ -393,7 +335,6 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
     const status = getZoneControlPlaneStatus(zoneOverview)
 
     return {
-      detailViewRoute,
       name,
       status,
       zoneCpVersion,
@@ -424,20 +365,3 @@ function setIsCreateZoneButtonVisible(data: any) {
   isCreateZoneButtonVisible.value = data?.items.length > 0
 }
 </script>
-
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-
-.actions-dropdown {
-  display: inline-block;
-}
-
-.warning-type-memory {
-  margin-top: $kui-space-60;
-  margin-bottom: $kui-space-60;
-}
-</style>

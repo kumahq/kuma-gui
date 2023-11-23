@@ -69,6 +69,43 @@
       </EmptyBlock>
     </template>
 
+    <!-- Wraps “name” cells with a link to a collection’s summary or detail route to ensure there is a keyboard-navigable element in each row. -->
+    <template
+      v-if="hasNameColumn"
+      #name="{ row, rowValue }"
+    >
+      <RouterLink
+        v-if="getRoute"
+        :to="getRoute(row)"
+      >
+        {{ rowValue }}
+      </RouterLink>
+
+      <template v-else>
+        {{ rowValue }}
+      </template>
+    </template>
+
+    <!-- Adds a “Go to details” link if a detail route is provided. -->
+    <template
+      v-if="hasDetailsColumn && props.getDetailRoute"
+      #details="{ row }"
+    >
+      <RouterLink
+        class="details-link"
+        data-testid="details-link"
+        :to="props.getDetailRoute(row)"
+      >
+        {{ t('common.collection.details_link') }}
+
+        <ArrowRightIcon
+          decorative
+          display="inline-block"
+          :size="KUI_ICON_SIZE_30"
+        />
+      </RouterLink>
+    </template>
+
     <template
       v-for="key in Object.keys(slots)"
       :key="key"
@@ -90,19 +127,50 @@
         />
       </template>
     </template>
+
+    <template
+      v-if="hasActionsColumn && $slots['actions-items']"
+      #actions="{ row, rowValue }"
+    >
+      <KDropdown
+        class="actions-dropdown"
+        data-testid="actions-dropdown"
+        :kpop-attributes="{ placement: 'bottomEnd' }"
+        width="150"
+      >
+        <template #default>
+          <KButton
+            class="non-visual-button"
+            appearance="secondary"
+            icon-only
+          >
+            <MoreIcon />
+          </KButton>
+        </template>
+
+        <template #items>
+          <slot
+            name="actions-items"
+            :row="row"
+            :row-value="rowValue"
+          />
+        </template>
+      </KDropdown>
+    </template>
   </KTable>
 </template>
 
 <script lang="ts" setup generic="Row extends {}">
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { AddIcon } from '@kong/icons'
-import { KButton, KTable, TableHeader } from '@kong/kongponents'
+import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
 import { useSlots, ref, watch, Ref, computed } from 'vue'
-import { RouteLocationRaw } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { useI18n } from '@/utilities'
+import type { TableHeader } from '@kong/kongponents'
+import type { RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 
 type CellAttrParams = {
   headerKey: string
@@ -121,11 +189,15 @@ type ChangeValue = {
 }
 
 const { t } = useI18n()
+const router = useRouter()
+const slots = useSlots()
 
 const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
   isSelectedRow?: ((row: Row) => boolean) | null
+  getDetailRoute?: ((row: Row) => RouteLocationNamedRaw) | null
+  getSummaryRoute?: ((row: Row) => RouteLocationNamedRaw) | null
   total?: number
   pageNumber?: number
   pageSize?: number
@@ -138,6 +210,8 @@ const props = withDefaults(defineProps<{
   emptyStateCtaText?: string
 }>(), {
   isSelectedRow: null,
+  getDetailRoute: null,
+  getSummaryRoute: null,
   total: 0,
   pageNumber: 1,
   pageSize: 30,
@@ -151,8 +225,6 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
 }>()
-
-const slots = useSlots()
 
 const items = ref(props.items) as Ref<typeof props.items>
 const cacheKey = ref<number>(0)
@@ -174,6 +246,10 @@ const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
 const lastPageSize = ref(props.pageSize)
 
+const getRoute = computed(() => props.getSummaryRoute ?? props.getDetailRoute)
+const hasNameColumn = computed(() => props.headers.some((header) => header.key === 'name'))
+const hasDetailsColumn = computed(() => props.headers.some((header) => header.key === 'details'))
+const hasActionsColumn = computed(() => props.headers.some((header) => header.key === 'actions'))
 const columnWidth = computed(() => {
   const specialColumns = props.headers.filter((header) => ['details', 'warnings', 'actions'].includes(header.key))
 
@@ -213,13 +289,19 @@ function getRowAttributes(row: Row): Record<string, string> {
   return attributes
 }
 
-const click = (e: MouseEvent) => {
-  const $tr = (e.target as HTMLElement).closest('tr')
-  if ($tr) {
-    const $a = $tr.querySelector('a')
-    if ($a !== null) {
-      $a.click()
-    }
+const click = (event: MouseEvent, row: Row) => {
+  let getRoute
+
+  if (props.getSummaryRoute) {
+    // Otherwise, prioritizes a summary route (if present)
+    getRoute = props.getSummaryRoute
+  } else {
+    // Falls back to a detail route (if present)
+    getRoute = props.getDetailRoute
+  }
+
+  if (getRoute) {
+    router.push(getRoute(row))
   }
 }
 </script>
@@ -240,22 +322,24 @@ const click = (e: MouseEvent) => {
   gap: $kui-space-60;
   font-size: $kui-font-size-40;
 }
-</style>
 
-<style lang="scss">
-.app-collection td {
+.actions-dropdown {
+  display: inline-block;
+}
+
+.app-collection :deep(td) {
   width: var(--column-width, initial);
 }
 
-.app-collection .details-column,
-.app-collection .warnings-column,
-.app-collection .actions-column {
+.app-collection :deep(.details-column),
+.app-collection :deep(.warnings-column),
+.app-collection :deep(.actions-column) {
   width: var(--special-column-width, initial);
   min-width: 80px;
   text-align: end;
 }
 
-.app-collection .is-selected {
+.app-collection :deep(.is-selected) {
   background-color: $kui-color-background-neutral-weakest;
 }
 </style>

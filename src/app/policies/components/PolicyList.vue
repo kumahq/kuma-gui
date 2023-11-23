@@ -107,27 +107,28 @@
               :items="props.policyCollection?.items"
               :error="props.policyError"
               :is-selected-row="props.isSelectedRow"
+              :get-detail-route="(row) => ({
+                name: 'policy-detail-view',
+                params: {
+                  mesh: row.mesh,
+                  policyPath: props.currentPolicyType.path,
+                  policy: row.name,
+                },
+              })"
+              :get-summary-route="(row) => ({
+                name: 'policy-summary-view',
+                params: {
+                  mesh: row.mesh,
+                  policyPath: props.currentPolicyType.path,
+                  policy: row.name,
+                },
+                query: {
+                  page: props.pageNumber,
+                  size: props.pageSize,
+                },
+              })"
               @change="emit('change', $event)"
             >
-              <template #name="{ rowValue }">
-                <RouterLink
-                  :to="{
-                    name: 'policy-summary-view',
-                    params: {
-                      mesh: route.params.mesh,
-                      policyPath: props.currentPolicyType.path,
-                      policy: rowValue,
-                    },
-                    query: {
-                      page: props.pageNumber,
-                      size: props.pageSize,
-                    },
-                  }"
-                >
-                  {{ rowValue }}
-                </RouterLink>
-              </template>
-
               <template #targetRef="{ row }">
                 <template v-if="props.currentPolicyType.isTargetRefBased">
                   <KBadge appearance="neutral">
@@ -139,29 +140,6 @@
                   {{ t('common.detail.none') }}
                 </template>
               </template>
-
-              <template #details="{ row }">
-                <RouterLink
-                  class="details-link"
-                  data-testid="details-link"
-                  :to="{
-                    name: 'policy-detail-view',
-                    params: {
-                      mesh: row.mesh,
-                      policyPath: props.currentPolicyType.path,
-                      policy: row.name,
-                    },
-                  }"
-                >
-                  {{ t('common.collection.details_link') }}
-
-                  <ArrowRightIcon
-                    display="inline-block"
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                </RouterLink>
-              </template>
             </AppCollection>
           </template>
         </KCard>
@@ -171,8 +149,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
 import { useRoute } from 'vue-router'
 
 import { PolicyCollection } from '../sources'
@@ -262,11 +238,5 @@ const emit = defineEmits<{
   display: flex;
   align-items: flex-start;
   gap: $kui-space-40;
-}
-
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
 }
 </style>

@@ -145,8 +145,9 @@ Feature: mesh / services / item
 
     Scenario: Clicking an items view menu takes you to the correct page
       When I click the "$data-plane-proxies-tab" element
-      Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
-      And I click the "$item:nth-child(1) [data-testid='details-link']" element
+      Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-dataplane"
+
+      When I click the "$item:nth-child(1) [data-testid='details-link']" element
       Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
 
     Scenario: Service with matching ExternalService doesn't show empty state

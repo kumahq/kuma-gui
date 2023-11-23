@@ -24,22 +24,15 @@
               { label: 'No. Instances', key: 'instances' },
               { label: 'Actions', key: 'actions', hideLabel: true },
             ]"
-            :items="props.data.zoneIngress.availableServices"
+            :items="props.data.zoneIngress.availableServices.map((service) => ({ ...service, name: service.tags['kuma.io/service'] }))"
+            :get-detail-route="(row) => ({
+              name: 'service-detail-view',
+              params: {
+                mesh: row.mesh,
+                service: row.tags['kuma.io/service'],
+              },
+            })"
           >
-            <template #name="{ row: item }: {row: AvailableService}">
-              <RouterLink
-                :to="{
-                  name: 'service-detail-view',
-                  params: {
-                    mesh: item.mesh,
-                    service: item.tags['kuma.io/service'],
-                  },
-                }"
-              >
-                {{ item.tags['kuma.io/service'] }}
-              </RouterLink>
-            </template>
-
             <template #mesh="{ row: item }: {row: AvailableService}">
               <RouterLink
                 :to="{
@@ -60,38 +53,6 @@
             <template #instances="{ row: item }">
               {{ item.instances }}
             </template>
-
-            <template #actions="{ row: item }: {row: AvailableService}">
-              <KDropdown
-                class="actions-dropdown"
-                :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                width="150"
-              >
-                <template #default>
-                  <KButton
-                    class="non-visual-button"
-                    appearance="secondary"
-                    icon-only
-                  >
-                    <MoreIcon />
-                  </KButton>
-                </template>
-                <template #items>
-                  <KDropdownItem
-                    :item="{
-                      to: {
-                        name: 'service-detail-view',
-                        params: {
-                          mesh: item.mesh,
-                          service: item.tags['kuma.io/service'],
-                        },
-                      },
-                      label: t('common.collection.actions.view'),
-                    }"
-                  />
-                </template>
-              </KDropdown>
-            </template>
           </AppCollection>
         </template>
       </KCard>
@@ -100,10 +61,9 @@
 </template>
 
 <script lang="ts" setup>
-import { MoreIcon } from '@kong/icons'
-
 import type { AvailableService, ZoneIngressOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+
 const props = defineProps<{
   data: ZoneIngressOverview
 }>()
