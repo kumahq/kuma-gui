@@ -9,10 +9,9 @@
     <KBadge
       v-for="(tag, index) in tagList"
       :key="index"
-      :class="{
-        'kuma-badge': tag.isKuma,
-      }"
       max-width="auto"
+      class="tag"
+      :appearance="tag.isKuma ? 'default' : 'neutral'"
     >
       <component
         :is="tag.route ? 'RouterLink' : 'span'"
@@ -105,12 +104,7 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   gap: $kui-space-40;
 }
 
-.kuma-badge:not(.increase-specificity) {
-  background-color: $kui-color-background-decorative-purple-weakest;
-
-  &,
-  & a {
-    color: $kui-color-text-decorative-purple;
-  }
+.tag :deep(a) {
+  color: currentColor;
 }
 </style>
