@@ -17,7 +17,13 @@
         :is="tag.route ? 'RouterLink' : 'span'"
         :to="tag.route"
       >
-        {{ tag.label }}:<b>{{ tag.value }}</b>
+        <template v-if="props.hideLabelKey">
+          {{ tag.value }}
+        </template>
+
+        <template v-else>
+          {{ tag.label }}:<b>{{ tag.value }}</b>
+        </template>
       </component>
     </KBadge>
   </component>
@@ -38,8 +44,10 @@ interface LabelValueWithRoute extends LabelValue {
 const props = withDefaults(defineProps<{
   tags: LabelValue[] | Record<string, string> | null | undefined
   shouldTruncate?: boolean
+  hideLabelKey?: boolean
 }>(), {
   shouldTruncate: false,
+  hideLabelKey: false,
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
