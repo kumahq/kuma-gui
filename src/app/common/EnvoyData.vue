@@ -1,16 +1,6 @@
 <template>
   <div>
-    <KAlert
-      v-if="props.status !== 'online'"
-      appearance="info"
-    >
-      <template #alertMessage>
-        <p>{{ t('common.detail.no_envoy_data', { resource: props.resource }) }}</p>
-      </template>
-    </KAlert>
-
     <DataSource
-      v-else
       v-slot="{ data, error, refresh }: EnvoyDataSource"
       :src="props.src"
     >
@@ -59,13 +49,8 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { EnvoyDataSource } from '@/app/zones/sources'
-import { StatusKeyword } from '@/types'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  status: StatusKeyword
   resource: string
   src: string
   query?: string

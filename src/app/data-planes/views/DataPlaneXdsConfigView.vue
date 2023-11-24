@@ -20,7 +20,6 @@
       <KCard>
         <template #body>
           <EnvoyData
-            :status="getStatusAndReason(props.data.dataplane, props.data.dataplaneInsight).status"
             resource="Data Plane Proxy"
             :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/xds`"
             :query="route.params.codeSearch"
@@ -34,10 +33,4 @@
 
 <script lang="ts" setup>
 import EnvoyData from '@/app/common/EnvoyData.vue'
-import type { DataPlaneOverview } from '@/types/index.d'
-import { getStatusAndReason } from '@/utilities/dataplane'
-
-const props = defineProps<{
-  data: DataPlaneOverview
-}>()
 </script>
