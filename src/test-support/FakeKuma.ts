@@ -4,9 +4,6 @@ import deepmerge from 'deepmerge'
 import type {
   DataplaneNetworking,
   DataPlaneProxyStatus,
-  DataplaneGateway,
-  DataplaneInbound,
-  DataplaneOutbound,
   ServiceStatus,
 } from '@/types/index.d'
 
@@ -195,72 +192,59 @@ export class KumaModule {
   dataplaneNetworking({ type = 'proxy', inbounds = 0, isMultizone = false, service }: { type?: 'gateway_builtin' | 'gateway_delegated' | 'proxy', inbounds?: number, isMultizone?: boolean, service?: string } = {}): DataplaneNetworking {
     const address = this.faker.internet.ipv4()
     const advertisedAddress = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
+    const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
 
     return {
       address,
       ...(advertisedAddress && { advertisedAddress }),
       ...(type !== 'proxy'
         ? {
-          gateway: this.dataplaneGateway({ type, service, isMultizone }),
+          gateway: {
+            tags: this.tags({
+              service: service ?? this.serviceName(type),
+              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
+            }),
+            ...(dataplaneType && { type: dataplaneType }),
+          },
         }
         : {}),
       ...(type === 'proxy'
         ? {
-          inbound: Array.from({ length: inbounds }).map(() => this.dataplaneInbound({ service, isMultizone })),
+          inbound: Array.from({ length: inbounds }).map(() => {
+            const address = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
+            const port = this.faker.internet.port()
+            const hasServiceAddress = this.faker.datatype.boolean({ probability: 0.25 })
+            const serviceAddress = hasServiceAddress ? this.faker.internet.ipv4() : undefined
+            const servicePort = hasServiceAddress ? this.faker.internet.port() : undefined
+            const tags = this.tags({
+              protocol: this.protocol(),
+              service: service ?? this.serviceName(),
+              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
+            })
+
+            return {
+              port,
+              tags,
+              ...(this.faker.datatype.boolean()
+                ? {
+                  health: {
+                    ready: this.faker.datatype.boolean(),
+                  },
+                }
+                : {}),
+              ...(address && { address }),
+              ...(serviceAddress && { serviceAddress }),
+              ...(servicePort && { servicePort }),
+            }
+          }),
         }
         : {}),
       outbound: [
-        this.dataplaneOutbound({ service }),
-      ],
-    }
-  }
-
-  dataplaneGateway({ type = 'gateway_delegated', service, isMultizone = false }: { type?: 'gateway_builtin' | 'gateway_delegated', service?: string, isMultizone?: boolean } = {}): DataplaneGateway {
-    const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
-
-    return {
-      tags: this.tags({
-        service: service ?? this.serviceName(type),
-        zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
-      }),
-      ...(dataplaneType && { type: dataplaneType }),
-    }
-  }
-
-  dataplaneInbound({ service, isMultizone = false }: { service?: string, isMultizone?: boolean } = {}): DataplaneInbound {
-    const healthObject = this.faker.datatype.boolean()
-      ? {
-        health: {
-          ready: this.faker.datatype.boolean(),
+        {
+          port: this.faker.internet.port(),
+          tags: this.tags({ service }),
         },
-      }
-      : {}
-    const address = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
-    const port = this.faker.internet.port()
-    const hasServiceAddress = this.faker.datatype.boolean({ probability: 0.25 })
-    const serviceAddress = hasServiceAddress ? this.faker.internet.ipv4() : undefined
-    const servicePort = hasServiceAddress ? this.faker.internet.port() : undefined
-
-    return {
-      ...healthObject,
-      ...(address && { address }),
-      port,
-      ...(serviceAddress && { serviceAddress }),
-      ...(servicePort && { servicePort }),
-      tags: this.tags({
-        protocol: this.protocol(),
-        service: service ?? this.serviceName(),
-        zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
-      }),
-    }
-  }
-
-  dataplaneOutbound({ service }: { service?: string }): DataplaneOutbound {
-    return {
-      port: this.faker.internet.port(),
-      tags: this.tags({
-        service: service ?? this.serviceName(),
-      }),
+      ],
     }
   }
 
