@@ -212,7 +212,7 @@ const emit = defineEmits<{
 <style lang="scss" scoped>
 .policy-list-content {
   display: flex;
-  gap: var(--AppGap);
+  gap: $kui-space-80;
 }
 
 .policy-type-list {

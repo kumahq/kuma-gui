@@ -39,6 +39,7 @@
                       class="reason-tooltip"
                     >
                       <InfoIcon
+                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
                         :size="KUI_ICON_SIZE_30"
                         hide-title
                       />
@@ -280,7 +281,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 

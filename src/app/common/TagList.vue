@@ -1,22 +1,30 @@
 <template>
   <component
-    :is="props.shouldTruncate ? 'KTruncate' : 'div'"
-    :width="props.shouldTruncate ? 'auto' : undefined"
+    :is="shouldTruncate ? 'KTruncate' : 'div'"
+    :width="shouldTruncate ? 'auto' : undefined"
     :class="{
-      'tag-list': !props.shouldTruncate,
+      'tag-list': !shouldTruncate,
+      'tag-list--align-right': props.alignment === 'right',
     }"
   >
     <KBadge
       v-for="(tag, index) in tagList"
       :key="index"
-      class="tag-badge"
       max-width="auto"
+      class="tag"
+      :appearance="tag.isKuma ? 'default' : 'neutral'"
     >
       <component
         :is="tag.route ? 'RouterLink' : 'span'"
         :to="tag.route"
       >
-        {{ tag.label }}:<b>{{ tag.value }}</b>
+        <template v-if="props.hideLabelKey">
+          {{ tag.value }}
+        </template>
+
+        <template v-else>
+          {{ tag.label }}:<b>{{ tag.value }}</b>
+        </template>
       </component>
     </KBadge>
   </component>
@@ -31,13 +39,18 @@ import type { RouteLocationNamedRaw } from 'vue-router'
 
 interface LabelValueWithRoute extends LabelValue {
   route: RouteLocationNamedRaw | undefined
+  isKuma: boolean
 }
 
 const props = withDefaults(defineProps<{
   tags: LabelValue[] | Record<string, string> | null | undefined
   shouldTruncate?: boolean
+  hideLabelKey?: boolean
+  alignment?: 'left' | 'right'
 }>(), {
   shouldTruncate: false,
+  hideLabelKey: false,
+  alignment: 'left',
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
@@ -46,10 +59,12 @@ const tagList = computed<LabelValueWithRoute[]>(() => {
   return labels.map((tag) => {
     const { label, value } = tag
     const route = getRoute(tag)
+    const isKuma = label.includes('.kuma.io/') || label.startsWith('kuma.io/')
 
-    return { label, value, route }
+    return { label, value, route, isKuma }
   })
 })
+const shouldTruncate = computed(() => props.shouldTruncate || Object.keys(tagList.value).length > 10)
 
 function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   // Wildcard tag values don’t refer to specific entities we can link to.
@@ -99,5 +114,14 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   display: inline-flex;
   flex-wrap: wrap;
   gap: $kui-space-40;
+}
+
+.tag-list--align-right,
+.tag-list--align-right :deep(.k-truncate-container) {
+  justify-content: flex-end;
+}
+
+.tag :deep(a) {
+  color: currentColor;
 }
 </style>

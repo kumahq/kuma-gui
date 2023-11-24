@@ -207,11 +207,13 @@ export class KumaModule {
   dataplaneGateway({ type = 'gateway_delegated', service, isMultizone = false }: { type?: 'gateway_builtin' | 'gateway_delegated', service?: string, isMultizone?: boolean } = {}): DataplaneGateway {
     const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
     const zone = isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined
+    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
 
     return {
       tags: {
         'kuma.io/service': service ?? this.serviceName(type),
         ...(zone && { 'kuma.io/zone': zone }),
+        ...additionalTags,
       },
       ...(dataplaneType && { type: dataplaneType }),
     }
@@ -231,6 +233,7 @@ export class KumaModule {
     const serviceAddress = hasServiceAddress ? this.faker.internet.ipv4() : undefined
     const servicePort = hasServiceAddress ? this.faker.internet.port() : undefined
     const zone = isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined
+    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
 
     return {
       ...healthObject,
@@ -242,15 +245,19 @@ export class KumaModule {
         'kuma.io/service': service ?? this.serviceName(),
         'kuma.io/protocol': this.protocol(),
         ...(zone && { 'kuma.io/zone': zone }),
+        ...additionalTags,
       },
     }
   }
 
   dataplaneOutbound({ service }: { service?: string }): DataplaneOutbound {
+    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
+
     return {
       port: this.faker.internet.port(),
       tags: {
         'kuma.io/service': service ?? this.serviceName(),
+        ...additionalTags,
       },
     }
   }

@@ -1,61 +1,73 @@
 <template>
   <div class="stack">
-    <DefinitionCard>
-      <template #title>
-        {{ t('http.api.property.status') }}
-      </template>
+    <div class="stack-with-borders">
+      <DefinitionCard layout="horizontal">
+        <template #title>
+          {{ t('http.api.property.status') }}
+        </template>
 
-      <template #body>
-        <div class="status-with-reason">
-          <StatusBadge :status="statusWithReason.status" />
+        <template #body>
+          <div class="status-with-reason">
+            <StatusBadge :status="statusWithReason.status" />
 
-          <KTooltip
-            v-if="statusWithReason.reason.length > 0"
-            :label="statusWithReason.reason.join(', ')"
-            class="reason-tooltip"
-            position-fixed
-          >
-            <InfoIcon
-              :size="KUI_ICON_SIZE_30"
-              hide-title
-            />
-          </KTooltip>
-        </div>
-      </template>
-    </DefinitionCard>
+            <KTooltip
+              v-if="statusWithReason.reason.length > 0"
+              :label="statusWithReason.reason.join(', ')"
+              class="reason-tooltip"
+              position-fixed
+            >
+              <InfoIcon
+                :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                :size="KUI_ICON_SIZE_30"
+                hide-title
+              />
+            </KTooltip>
+          </div>
+        </template>
+      </DefinitionCard>
 
-    <DefinitionCard>
-      <template #title>
-        {{ t('data-planes.routes.item.last_updated') }}
-      </template>
+      <DefinitionCard layout="horizontal">
+        <template #title>
+          {{ t('data-planes.routes.item.last_updated') }}
+        </template>
 
-      <template #body>
-        {{ formattedLastUpdateTime }}
-      </template>
-    </DefinitionCard>
+        <template #body>
+          <template v-if="formattedLastUpdateTime">
+            {{ formattedLastUpdateTime }}
+          </template>
+
+          <template v-else>
+            {{ t('common.detail.none') }}
+          </template>
+        </template>
+      </DefinitionCard>
+    </div>
 
     <div v-if="props.dataplaneOverview.dataplane.networking.gateway">
       <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
       <div class="mt-4">
-        <div class="stack">
-          <DefinitionCard>
+        <div class="stack-with-borders">
+          <DefinitionCard layout="horizontal">
+            <template #title>
+              {{ t('http.api.property.tags') }}
+            </template>
+
+            <template #body>
+              <TagList
+                alignment="right"
+                :tags="props.dataplaneOverview.dataplane.networking.gateway.tags"
+              />
+            </template>
+          </DefinitionCard>
+
+          <DefinitionCard layout="horizontal">
             <template #title>
               {{ t('http.api.property.address') }}
             </template>
 
             <template #body>
               <TextWithCopyButton :text="`${props.dataplaneOverview.dataplane.networking.address}`" />
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard>
-            <template #title>
-              {{ t('http.api.property.tags') }}
-            </template>
-
-            <template #body>
-              <TagList :tags="props.dataplaneOverview.dataplane.networking.gateway.tags" />
             </template>
           </DefinitionCard>
         </div>
@@ -66,7 +78,7 @@
       <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
 
       <div class="mt-4">
-        <div class="inbound-list">
+        <div class="stack">
           <div
             v-for="(inbound, index) in props.dataplaneOverview.dataplane.networking.inbound"
             :key="index"
@@ -78,8 +90,8 @@
               </TextWithCopyButton>
             </h4>
 
-            <div class="mt-2 stack">
-              <DefinitionCard>
+            <div class="mt-2 stack-with-borders">
+              <DefinitionCard layout="horizontal">
                 <template #title>
                   {{ t('http.api.property.status') }}
                 </template>
@@ -101,23 +113,26 @@
                 </template>
               </DefinitionCard>
 
-              <DefinitionCard>
+              <DefinitionCard layout="horizontal">
+                <template #title>
+                  {{ t('http.api.property.tags') }}
+                </template>
+
+                <template #body>
+                  <TagList
+                    alignment="right"
+                    :tags="inbound.tags"
+                  />
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard layout="horizontal">
                 <template #title>
                   {{ t('http.api.property.address') }}
                 </template>
 
                 <template #body>
                   <TextWithCopyButton :text="`${inbound.address ?? props.dataplaneOverview.dataplane.networking.advertisedAddress ?? props.dataplaneOverview.dataplane.networking.address}:${inbound.port}`" />
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
-
-                <template #body>
-                  <TagList :tags="inbound.tags" />
                 </template>
               </DefinitionCard>
             </div>
@@ -129,7 +144,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
@@ -165,9 +180,5 @@ const formattedLastUpdateTime = computed(() => {
 .reason-tooltip :deep(.kong-icon) {
   display: flex;
   align-items: center;
-}
-
-.inbound-list>*+* {
-  margin-block-start: $kui-space-60;
 }
 </style>

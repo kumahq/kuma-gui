@@ -37,14 +37,10 @@
         v-else
         class="stack"
       >
-        <div>
-          <h3>{{ t('data-planes.routes.item.overview') }}</h3>
-
-          <DataPlaneSummary
-            class="mt-4"
-            :dataplane-overview="props.dataplaneOverview"
-          />
-        </div>
+        <DataPlaneSummary
+          class="mt-4"
+          :dataplane-overview="props.dataplaneOverview"
+        />
       </div>
     </AppView>
   </RouteView>
