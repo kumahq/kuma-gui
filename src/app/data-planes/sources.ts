@@ -88,7 +88,7 @@ export const sources = (api: KumaApi) => {
       filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/service:'))
       filterParams.tag.push(`kuma.io/service:${params.service}`)
 
-      // we use `all` in code to mean "don't specify ?gateway=0 at all" i.e.
+      // we use `all` in code to mean "don't specify `?gateway` in the API URL" i.e.
       // both gateway and sidecars
       const type = params.type === 'standard' ? 'false' : params.type
       const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
