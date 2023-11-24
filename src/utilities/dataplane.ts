@@ -73,38 +73,6 @@ export function getItemStatusFromInsight(insight: { subscriptions?: DiscoverySub
   return proxyOnline ? 'online' : 'offline'
 }
 
-// getStatusAndReason takes Dataplane and DataplaneInsight and returns a
-// {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
-export function getStatusAndReason(dataplane: { networking: DataplaneNetworking }, insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
-  const inbound = dataplane.networking.inbound ?? []
-  const errors = inbound
-    .filter(item => item.health && !item.health.ready)
-    .map(item => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
-
-  let status: StatusKeyword
-  switch (true) {
-    case inbound.length === 0:
-      status = 'online'
-      break
-    // if errors and inbounds are equal, even if they are both 0
-    // then we are offline
-    case errors.length === inbound.length:
-      status = 'offline'
-      break
-    // otherwise any errors at all, we are degraded
-    case errors.length > 0:
-      status = 'partially_degraded'
-      break
-    default:
-      // otherwise run the normal getter
-      status = getItemStatusFromInsight(insight)
-  }
-  return {
-    status,
-    reason: errors,
-  }
-}
-
 /*
 getStatus takes DataplaneInsight and returns map of versions
  */

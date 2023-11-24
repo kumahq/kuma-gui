@@ -122,6 +122,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
+import { getStatusAndReason } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
@@ -131,7 +132,6 @@ import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
   dpTags,
-  getStatusAndReason,
   COMPATIBLE,
 } from '@/utilities/dataplane'
 
@@ -183,7 +183,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
     const tags = dpTags(dataPlaneOverview.dataplane)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service')
 
-    const { status } = getStatusAndReason(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
+    const { status } = getStatusAndReason(dataPlaneOverview)
     const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
 
     const initialData: {

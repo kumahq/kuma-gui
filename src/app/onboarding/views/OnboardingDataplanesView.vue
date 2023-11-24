@@ -83,8 +83,8 @@ import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import { getStatusAndReason } from '@/app/data-planes/data'
 import { useKumaApi } from '@/utilities'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const kumaApi = useKumaApi()
 
@@ -124,7 +124,7 @@ async function getAllDataplanes() {
         const { name, mesh } = dataPlane
 
         const dataPlaneOverview = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
-        const status = getItemStatusFromInsight(dataPlaneOverview.dataplaneInsight)
+        const { status } = getStatusAndReason(dataPlaneOverview)
 
         if (status === 'offline') {
           shouldRefetch = true

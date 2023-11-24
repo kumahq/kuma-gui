@@ -148,14 +148,13 @@ import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tok
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import { getLastUpdateTime } from '../data'
+import { getLastUpdateTime, getStatusAndReason } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
-import { getStatusAndReason } from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
 
@@ -163,7 +162,7 @@ const props = defineProps<{
   dataplaneOverview: DataPlaneOverview
 }>()
 
-const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview.dataplane, props.dataplaneOverview.dataplaneInsight))
+const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview))
 const formattedLastUpdateTime = computed(() => {
   const lastUpdateTime = getLastUpdateTime(props.dataplaneOverview.dataplaneInsight?.subscriptions ?? [])
   return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
