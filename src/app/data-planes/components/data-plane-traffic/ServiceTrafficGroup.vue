@@ -1,13 +1,14 @@
 <template>
-  <div class="service-traffic-group">
-    <KCard
-      :class="`type-${props.type}`"
-    >
-      <template #body>
+  <KCard
+    class="service-traffic-group"
+    :class="`type-${props.type}`"
+  >
+    <template #body>
+      <div class="body">
         <slot name="default" />
-      </template>
-    </KCard>
-  </div>
+      </div>
+    </template>
+  </KCard>
 </template>
 <script lang="ts" setup>
 const props = defineProps<{
@@ -15,7 +16,7 @@ const props = defineProps<{
 }>()
 </script>
 <style lang="scss" scoped>
-.service-traffic-group :deep(.k-card-body) {
+.service-traffic-group .body {
   display: flex;
   flex-direction: column;
   gap: $kui-space-40;
@@ -25,17 +26,17 @@ const props = defineProps<{
   padding: $kui-space-40;
   border-radius: $kui-border-radius-40;
 }
-.kong-card {
-  &:is(.type-passthrough) {
+.service-traffic-group {
+  &.type-passthrough {
     /* FIXME(jc): These colors is in the design but don't seem to be in @kong/design-tokens */
     border-color: #00D6A4;
     background-color: #ECFFFB;
   }
-  &:is(.type-outbound) {
+  &.type-outbound {
     border-color: $kui-color-border-primary-weak;
     background-color: $kui-color-background-primary-weakest;
   }
-  &:is(.type-inbound) {
+  &.type-inbound {
     padding: 0;
     border-radius: 0;
     border: 0;

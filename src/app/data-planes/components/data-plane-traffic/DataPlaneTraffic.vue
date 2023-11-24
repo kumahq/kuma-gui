@@ -20,10 +20,8 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   flex-direction: column;
   gap: $kui-space-40;
 }
-.kong-card {
-  &:is(.header) {
-    border: 0;
-  }
+.data-card.header {
+  border: 0;
 }
 .header :deep(.title) {
   font-size: $kui-font-size-20;
