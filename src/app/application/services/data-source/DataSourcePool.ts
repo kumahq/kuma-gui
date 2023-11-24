@@ -43,19 +43,19 @@ export class DataSourcePool {
 
   source(src: string, ref: symbol): CallableEventSource {
     const cacheKey = this.getCacheKeyPrefix() + src
-    const _source = this.pool.acquire(src, ref)
-    _source.addEventListener('message', (e: Event) => {
+    const source = this.pool.acquire(src, ref)
+    source.addEventListener('message', (e: Event) => {
       // always fill the cache on a successful response
       this.cache.set(cacheKey, (e as MessageEvent).data)
     })
     if (this.cache.has(cacheKey)) {
       Promise.resolve().then(() => {
-        _source?.dispatchEvent(
+        source?.dispatchEvent(
           new MessageEvent('message', { data: this.cache.get(cacheKey) }),
         )
       })
     }
-    return _source
+    return source
   }
 
   close(src: string, ref: symbol) {
