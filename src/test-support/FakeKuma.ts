@@ -181,6 +181,17 @@ export class KumaModule {
     return Object.fromEntries(values)
   }
 
+  tags({ protocol, service, zone }: { protocol?: string, service?: string, zone?: string } = {}): Record<string, string> {
+    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
+
+    return {
+      ...(protocol && { 'kuma.io/protocol': protocol }),
+      ...(service && { 'kuma.io/service': service }),
+      ...(zone && { 'kuma.io/zone': zone }),
+      ...additionalTags,
+    }
+  }
+
   dataplaneNetworking({ type = 'proxy', inbounds = 0, isMultizone = false, service }: { type?: 'gateway_builtin' | 'gateway_delegated' | 'proxy', inbounds?: number, isMultizone?: boolean, service?: string } = {}): DataplaneNetworking {
     const address = this.faker.internet.ipv4()
     const advertisedAddress = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
@@ -206,15 +217,12 @@ export class KumaModule {
 
   dataplaneGateway({ type = 'gateway_delegated', service, isMultizone = false }: { type?: 'gateway_builtin' | 'gateway_delegated', service?: string, isMultizone?: boolean } = {}): DataplaneGateway {
     const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
-    const zone = isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined
-    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
 
     return {
-      tags: {
-        'kuma.io/service': service ?? this.serviceName(type),
-        ...(zone && { 'kuma.io/zone': zone }),
-        ...additionalTags,
-      },
+      tags: this.tags({
+        service: service ?? this.serviceName(type),
+        zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
+      }),
       ...(dataplaneType && { type: dataplaneType }),
     }
   }
@@ -232,8 +240,6 @@ export class KumaModule {
     const hasServiceAddress = this.faker.datatype.boolean({ probability: 0.25 })
     const serviceAddress = hasServiceAddress ? this.faker.internet.ipv4() : undefined
     const servicePort = hasServiceAddress ? this.faker.internet.port() : undefined
-    const zone = isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined
-    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
 
     return {
       ...healthObject,
@@ -241,24 +247,20 @@ export class KumaModule {
       port,
       ...(serviceAddress && { serviceAddress }),
       ...(servicePort && { servicePort }),
-      tags: {
-        'kuma.io/service': service ?? this.serviceName(),
-        'kuma.io/protocol': this.protocol(),
-        ...(zone && { 'kuma.io/zone': zone }),
-        ...additionalTags,
-      },
+      tags: this.tags({
+        protocol: this.protocol(),
+        service: service ?? this.serviceName(),
+        zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
+      }),
     }
   }
 
   dataplaneOutbound({ service }: { service?: string }): DataplaneOutbound {
-    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
-
     return {
       port: this.faker.internet.port(),
-      tags: {
-        'kuma.io/service': service ?? this.serviceName(),
-        ...additionalTags,
-      },
+      tags: this.tags({
+        service: service ?? this.serviceName(),
+      }),
     }
   }
 
