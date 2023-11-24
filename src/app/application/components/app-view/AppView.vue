@@ -127,13 +127,11 @@ onBeforeUnmount(() => {
   margin-bottom: 20px; /* 2rem */
 
   h1, h2, h3, h4, h5, h6  {
-    line-height: 36px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 .app-view-title-bar h1 {
-  line-height: 1.3;
   font-weight: $kui-font-weight-semibold;
   font-size: $kui-font-size-80;
 }

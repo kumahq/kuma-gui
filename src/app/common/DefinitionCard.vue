@@ -55,7 +55,6 @@ const props = withDefaults(defineProps<{
 .definition-card--vertical .definition-card-container {
   flex-grow: 1;
   font-size: $kui-font-size-60;
-  line-height: 1.5;
 }
 </style>
 

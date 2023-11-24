@@ -66,8 +66,6 @@ const props = defineProps({
   align-items: center;
   justify-content: center;
   min-height: 500px;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .onboarding-container__content--with-image {

@@ -4,6 +4,26 @@
   box-sizing: border-box;
 }
 
+:root.kuma-ready {
+  // TODO(jc) ideally --kui-line-height would be set to $kui-line-height-20;
+  // $kui-line-height is currently 16px, but 1.3 gives the same relative height
+  // across font-sizing, which resolves all our line-height issues
+  --kui-line-height-20: 1.3;
+  // we set the base font-size for our rems here incase it ever gets set to
+  // something other than 16px
+  font-size: $kui-font-size-40;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: var(--kui-line-height-20);
+}
+
 body {
   margin: 0;
   tab-size: 2;
@@ -11,7 +31,6 @@ body {
   font-family: $kui-font-family-text;
   font-weight: $kui-font-weight-regular;
   font-size: $kui-font-size-40;
-  line-height: 1.5;
 }
 
 blockquote,
@@ -38,7 +57,6 @@ h3,
 h4,
 h5,
 h6 {
-  line-height: 1.3;
   font-weight: $kui-font-weight-semibold;
 }
 
@@ -174,7 +192,6 @@ select {
   border: $kui-border-width-10 solid $kui-color-border;
   border-radius: 3px;
   font-size: $kui-font-size-40;
-  line-height: $kui-line-height-30;
   padding: 10px 30px 10px 13px;
   background-color: $kui-color-background;
   background-image: url('@/assets/images/chevron-down.svg?url');

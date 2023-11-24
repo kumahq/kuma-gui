@@ -31,8 +31,6 @@ const slots = useSlots()
   padding-top: $kui-space-20;
   padding-bottom: $kui-space-20;
   text-align: center;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
   font-weight: $kui-font-weight-semibold;
   color: transparent;
   background-image: linear-gradient(to right, var(--onboarding-heading-1), var(--onboarding-heading-2));
@@ -43,7 +41,6 @@ const slots = useSlots()
 .onboarding-description {
   margin-top: $kui-space-50;
   text-align: center;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+  font-size: $kui-font-size-60;
 }
 </style>
