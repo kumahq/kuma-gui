@@ -29,8 +29,8 @@ const props = defineProps<{
 .service-traffic-group {
   &.type-passthrough {
     /* FIXME(jc): These colors is in the design but don't seem to be in @kong/design-tokens */
-    border-color: #00D6A4;
-    background-color: #ECFFFB;
+    border-color: #00D6A4; // $kui-color-green-40;
+    background-color: $kui-color-background-success-weakest;
   }
   &.type-outbound {
     border-color: $kui-color-border-primary-weak;
