@@ -5,6 +5,8 @@
     :max-height="props.codeMaxHeight"
     :code="props.code"
     :language="language"
+    :initial-filter-mode="props.isFilterMode"
+    :initial-reg-exp-mode="props.isRegExpMode"
     :is-processing="isProcessing"
     :is-searchable="isSearchable"
     :show-copy-button="showCopyButton"
@@ -12,6 +14,8 @@
     theme="dark"
     @code-block-render="handleCodeBlockRenderEvent"
     @query-change="emit('query-change', $event)"
+    @filter-mode-change="emit('filter-mode-change', $event)"
+    @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
   >
     <template
       v-if="$slots['secondary-actions']"
@@ -36,15 +40,21 @@ const props = withDefaults(defineProps<{
   showCopyButton?: boolean
   codeMaxHeight?: string
   query?: string
+  isFilterMode?: boolean
+  isRegExpMode?: boolean
 }>(), {
   isSearchable: false,
   showCopyButton: true,
   codeMaxHeight: undefined,
   query: '',
+  isFilterMode: false,
+  isRegExpMode: false,
 })
 
 const emit = defineEmits<{
   (event: 'query-change', query: string): void
+  (event: 'filter-mode-change', isFilterMode: boolean): void
+  (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
 const isProcessing = ref(false)

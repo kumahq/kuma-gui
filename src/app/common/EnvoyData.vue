@@ -32,7 +32,11 @@
           :code="typeof data === 'string' ? data : JSON.stringify(data, null, 2)"
           is-searchable
           :query="props.query"
+          :is-filter-mode="props.isFilterMode"
+          :is-reg-exp-mode="props.isRegExpMode"
           @query-change="emit('query-change', $event)"
+          @filter-mode-change="emit('filter-mode-change', $event)"
+          @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
         />
       </template>
     </DataSource>
@@ -54,12 +58,18 @@ const props = withDefaults(defineProps<{
   resource: string
   src: string
   query?: string
+  isFilterMode?: boolean
+  isRegExpMode?: boolean
 }>(), {
   query: '',
+  isFilterMode: false,
+  isRegExpMode: false,
 })
 
 const emit = defineEmits<{
   (event: 'query-change', query: string): void
+  (event: 'filter-mode-change', isFilterMode: boolean): void
+  (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 </script>
 

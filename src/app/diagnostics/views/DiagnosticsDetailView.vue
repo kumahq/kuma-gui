@@ -10,6 +10,8 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
     name="diagnostics"
     :params="{
       codeSearch: '',
+      codeFilter: false,
+      codeRegExp: false,
     }"
   >
     <DataSource
@@ -51,7 +53,11 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
               :code="JSON.stringify(data, null, 2)"
               is-searchable
               :query="route.params.codeSearch"
+              :is-filter-mode="route.params.codeFilter === 'true'"
+              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
               @query-change="route.update({ codeSearch: $event })"
+              @filter-mode-change="route.update({ codeFilter: $event })"
+              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
             />
           </template>
         </KCard>

@@ -5,6 +5,8 @@
     :params="{
       zone: '',
       codeSearch: '',
+      codeFilter: false,
+      codeRegExp: false,
     }"
   >
     <AppView>
@@ -46,7 +48,11 @@
               :code="conf"
               is-searchable
               :query="route.params.codeSearch"
+              :is-filter-mode="route.params.codeFilter === 'true'"
+              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
               @query-change="route.update({ codeSearch: $event })"
+              @filter-mode-change="route.update({ codeFilter: $event })"
+              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
             />
 
             <KAlert
