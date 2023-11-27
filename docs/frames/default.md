@@ -12,6 +12,7 @@ import { build, token } from '@/services/utils'
 import Kongponents from '@kong/kongponents'
 import CliEnv from '@/services/env/CliEnv'
 import i18nEnUs from '@/locales/en-us'
+import '../../src/assets/styles/main.scss'
 
 const el = ref()
 const $ = {

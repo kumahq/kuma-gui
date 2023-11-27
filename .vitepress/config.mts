@@ -57,9 +57,6 @@ export default defineConfig({
         items: getSourceItems('src/**/services/**/README.md', ['services']),
       },
     ],
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/kumahq/kuma-gui' }
-    ]
   }
 })
 
