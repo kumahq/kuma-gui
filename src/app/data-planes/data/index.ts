@@ -2,6 +2,7 @@ import { getIsConnected } from '@/app/subscriptions/data'
 import type {
   DataPlaneOverview as DataplaneOverview,
   DiscoverySubscription,
+  LabelValue,
   StatusKeyword,
 } from '@/types/index.d'
 
@@ -51,4 +52,29 @@ export function getStatusAndReason(dataplaneOverview: DataplaneOverview): { stat
     status,
     reason: unhealthyInbounds,
   }
+}
+
+export function getTags(dataplaneOverview: DataplaneOverview): LabelValue[] {
+  let tags: string[] = []
+  const separator = '='
+  const { gateway, inbound } = dataplaneOverview.dataplane.networking
+
+  if (inbound) {
+    tags = inbound
+      .flatMap((inbound) => Object.entries(inbound.tags))
+      .map(([key, value]) => key + separator + value)
+  }
+
+  if (gateway) {
+    tags = Object.entries(gateway.tags).map(([key, value]) => key + separator + value)
+  }
+
+  const uniqueTags = Array.from(new Set(tags))
+
+  uniqueTags.sort((tagPairA, tagPairB) => tagPairA.localeCompare(tagPairB))
+
+  return uniqueTags.map((tagPair) => {
+    const [label, value] = tagPair.split(separator)
+    return { label, value }
+  })
 }
