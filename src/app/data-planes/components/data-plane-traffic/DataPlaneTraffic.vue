@@ -39,7 +39,7 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   }
   &.passthrough::before {
     content: '';
-    /* FIXME(jc): This color is in the design but doesn't seem to be in @kong/design-tokens */
+    /* TODO(jc): This border color is in the design but doesn't seem to be in @kong/design-tokens */
     border-color: #00D6A4; // $kui-color-green-40;
   }
   &.outbounds::before {

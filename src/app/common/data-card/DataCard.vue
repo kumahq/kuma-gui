@@ -32,8 +32,7 @@
   flex-direction: column;
 }
 .title {
-  /* FIXME(jc): Usually this is 1.5 but that looks way to large */
-  line-height: 1.2;
+  line-height: 1.3;
 
   font-weight: $kui-font-weight-semibold;
   font-size: $kui-font-size-60;
