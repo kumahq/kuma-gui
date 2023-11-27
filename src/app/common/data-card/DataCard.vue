@@ -32,7 +32,7 @@
   flex-direction: column;
 }
 .title {
-  line-height: 1.3;
+  line-height: $kui-line-height-20;
 
   font-weight: $kui-font-weight-semibold;
   font-size: $kui-font-size-60;
