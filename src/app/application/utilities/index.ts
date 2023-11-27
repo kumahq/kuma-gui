@@ -38,12 +38,13 @@ export const createAttrsSetter = ($el = document.documentElement) => {
   })
 }
 // when used with router.push, prevents things like `q=` (i.e. key= but with no value)
-export const cleanQuery = <T extends Record<string, unknown>>(params: Record<string, string | undefined>, originalQuery: T) => {
+export const cleanQuery = <T extends Record<string, unknown>>(params: Record<string, string | boolean | undefined>, originalQuery: T) => {
   const query = {
     ...originalQuery as Record<string, string | undefined>,
   }
   const processed = Object.entries(params).reduce((prev, [key, value]) => {
-    if (String(value).length > 0) {
+    // Only add parameters for non-empty strings or non-false boolean
+    if (String(value).length > 0 && value !== false) {
       prev[key] = encodeURIComponent(String(value))
     } else {
       prev[key] = undefined
