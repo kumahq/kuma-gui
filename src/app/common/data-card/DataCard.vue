@@ -25,8 +25,15 @@
 .body > :deep(dl),
 .body > :deep(dl) > div {
   display: flex;
+  flex-wrap: wrap;
   gap: $kui-space-40;
   align-items: flex-start;
+}
+.body > :deep(dl) {
+  column-gap: $kui-space-80;
+}
+.body > :deep(dl) > div {
+  column-gap: $kui-space-20;
 }
 .card {
   flex-direction: column;
@@ -38,7 +45,6 @@
   font-size: $kui-font-size-60;
 }
 .body > :deep(dl) {
-  gap: $kui-space-80;
   > div {
     > dt {
       color: $kui-color-text-disabled;

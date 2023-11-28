@@ -6,7 +6,7 @@
       <template #title>
         <slot name="title" />
       </template>
-      <slot name="data" />
+    <!-- <slot name="data" /> -->
     </DataCard>
     <slot name="default" />
   </div>
