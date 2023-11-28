@@ -3620,10 +3620,10 @@ csstype@^3.1.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
 
-cypress-fail-fast@7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/cypress-fail-fast/-/cypress-fail-fast-7.0.3.tgz#85ac2861c155611939f0bad03a09e561891f9ddf"
-  integrity sha512-IYVDZ+ykfTd2DFBK3N6NnWXc2gix7VwSi9Vg4zv40jm6PLknZTD4cZoRmh7uvpoQAIKNIFbx5V81qQD5pLHLSQ==
+cypress-fail-fast@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/cypress-fail-fast/-/cypress-fail-fast-7.1.0.tgz#36e28e39fffaacf852b4866c8459e5274eb8326d"
+  integrity sha512-OnN5WqSP49yHKoitq+FmMG/+nUvat6NdFLNUQgVJYbmDdgyiiS1aI33S8+AuRb4zRZR5+5/eq53p/oL+a/m2Tw==
   dependencies:
     chalk "4.1.2"
 
