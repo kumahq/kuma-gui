@@ -4,6 +4,7 @@
     close-button-alignment="end"
     :has-overlay="false"
     is-visible
+    max-width="560px"
     offset-top="var(--app-slideout-offset-top, 0)"
     data-testid="summary"
     @close="emit('close')"
@@ -28,11 +29,6 @@ const emit = defineEmits<{
 .summary-slideout :deep(.k-slideout-header-content) {
   padding-right: $kui-space-80;
   padding-left: $kui-space-80;
-}
-
-.summary-slideout :deep(.panel) {
-  // Increases width of the content area a little.
-  max-width: 560px;
 }
 
 .summary-slideout :deep(.border-styles) {
