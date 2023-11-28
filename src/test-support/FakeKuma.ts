@@ -59,11 +59,14 @@ export class KumaModule {
     }
   }
 
-  dataPlaneProxyName() {
-    const namespace = this.faker.hacker.noun()
+  dataPlaneProxyName({ zone }: { zone?: string } = {}) {
+    const shortServiceName = this.faker.helpers.arrayElement(['redis', 'frontend', 'backend', 'demo-app', 'gateway', 'postgres', 'api'])
     const deploymentId = this.faker.string.hexadecimal({ length: 10, casing: 'lower', prefix: '' })
-    const podId = this.faker.string.hexadecimal({ length: 5, casing: 'lower', prefix: '' })
-    return `${this.faker.hacker.noun()}-${deploymentId}-${podId}.${namespace}`
+    const podId = this.faker.string.alpha({ length: 5, casing: 'lower' })
+    const zoneControlPlaneNamespace = this.faker.hacker.noun()
+    const systemNamespace = this.faker.helpers.arrayElement(['kuma-system'])
+
+    return (zone ? `${zone}.` : '') + `${shortServiceName}-${deploymentId}-${podId}.${zoneControlPlaneNamespace}.${systemNamespace}`
   }
 
   connection<T>(_: T, i: number, arr: T[]) {

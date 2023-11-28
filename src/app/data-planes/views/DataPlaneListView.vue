@@ -40,7 +40,6 @@
               <DataPlaneList
                 v-else
                 data-testid="data-plane-collection"
-                class="data-plane-collection"
                 :page-number="parseInt(route.params.page)"
                 :page-size="parseInt(route.params.size)"
                 :total="data?.total"
