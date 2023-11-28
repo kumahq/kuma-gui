@@ -2420,13 +2420,21 @@
     estree-walker "^2.0.2"
     source-map-js "^1.0.2"
 
-"@vue/compiler-dom@3.3.9", "@vue/compiler-dom@^3.2.0", "@vue/compiler-dom@^3.3.0":
+"@vue/compiler-dom@3.3.9":
   version "3.3.9"
   resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.3.9.tgz#67315ea4193d9d18c7a710889b8f90f7aa3914d2"
   integrity sha512-nfWubTtLXuT4iBeDSZ5J3m218MjOy42Vp2pmKVuBKo2/BLcrFUX8nCSr/bKRFiJ32R8qbdnnnBgRn9AdU5v0Sg==
   dependencies:
     "@vue/compiler-core" "3.3.9"
     "@vue/shared" "3.3.9"
+
+"@vue/compiler-dom@^3.2.0", "@vue/compiler-dom@^3.2.47", "@vue/compiler-dom@^3.3.0":
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.3.8.tgz#09d832514b9b8d9415a3816b065d69dbefcc7e9b"
+  integrity sha512-+PPtv+p/nWDd0AvJu3w8HS0RIm/C6VGBIRe24b9hSyNWOAPEUosFZ5diwawwP8ip5sJ8n0Pe87TNNNHnvjs0FQ==
+  dependencies:
+    "@vue/compiler-core" "3.3.8"
+    "@vue/shared" "3.3.8"
 
 "@vue/compiler-sfc@3.3.9", "@vue/compiler-sfc@^3.2.0", "@vue/compiler-sfc@^3.2.20":
   version "3.3.9"
@@ -2566,6 +2574,19 @@
   integrity sha512-TECVDTIedFlL0NUfHWncf3zF9Gc4VfdxfQc8JFwoVZQmxpONhLxFrlm0eHQeidHj4rdTPL3KXJa0TZCk1wnc5Q==
   dependencies:
     vue-demi ">=0.14.6"
+
+"@whyframe/core@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@whyframe/core/-/core-0.1.10.tgz#7563ac84cbdaf2dba255a7c1c74501058344aa69"
+  integrity sha512-6MT3O3YGqk6rbp08cHGheYFh7mawFqz1OKcNXhsDJYi4/H9nIU7sBNijEdssmNyINThBt7UoS2PUj5Bxv8FInQ==
+
+"@whyframe/vue@0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@whyframe/vue/-/vue-0.1.6.tgz#486b6231b25577dd5e5ceecc02825874c0e1b85d"
+  integrity sha512-YHr622VtCq0WRB3rqIuDRYewALdV/q7+Bxxwc7t/Anmeo6LQqWQDrlGjohW8eBI+gj5JqsI4uNW7n/b9mHBpFA==
+  dependencies:
+    "@vue/compiler-dom" "^3.2.47"
+    magic-string "^0.30.0"
 
 "@xmldom/xmldom@^0.8.3":
   version "0.8.10"
@@ -6253,7 +6274,7 @@ luxon@3.2.1:
   resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.2.1.tgz#14f1af209188ad61212578ea7e3d518d18cee45f"
   integrity sha512-QrwPArQCNLAKGO/C+ZIilgIuDnEnKx5QYODdDtbFaxzsbZcc/a7WFq7MhsVYgRlwawLtvOUESTlfJ+hc/USqPg==
 
-magic-string@^0.30.1, magic-string@^0.30.5:
+magic-string@^0.30.0, magic-string@^0.30.1, magic-string@^0.30.5:
   version "0.30.5"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.5.tgz#1994d980bd1c8835dc6e78db7cbd4ae4f24746f9"
   integrity sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==
