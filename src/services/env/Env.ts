@@ -14,6 +14,7 @@ type EnvProps = {
   KUMA_VERSION: string
   KUMA_BASE_PATH: string
   KUMA_API_URL: string
+  KUMA_KDS_URL: string
   KUMA_UTM_QUERY_PARAMS: string
   KUMA_MODE: string
   KUMA_ENVIRONMENT: string
@@ -47,6 +48,7 @@ export default class Env {
       KUMA_MODE: env('KUMA_MODE') || config.mode,
       KUMA_ENVIRONMENT: env('KUMA_ENVIRONMENT') || config.environment,
       KUMA_STORE_TYPE: env('KUMA_STORE_TYPE') || config.storeType,
+      KUMA_KDS_URL: 'grpcs://<global-kds-address>:5685',
     }
   }
 

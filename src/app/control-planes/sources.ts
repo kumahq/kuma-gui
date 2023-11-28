@@ -16,7 +16,7 @@ export const sources = (env: Env['var'], api: KumaApi) => {
     '/control-plane/addresses': async (): Promise<ControlPlaneAddresses> => {
       return {
         http: env('KUMA_API_URL'),
-        kds: 'grpcs://<global-kds-address>:5685',
+        kds: env('KUMA_KDS_URL'),
       }
     },
     '/global-insight': () => {
