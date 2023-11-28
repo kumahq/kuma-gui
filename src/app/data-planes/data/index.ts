@@ -1,7 +1,6 @@
 import { getIsConnected } from '@/app/subscriptions/data'
 import type {
   DataPlaneOverview as DataplaneOverview,
-  DiscoverySubscription,
   LabelValue,
   StatusKeyword,
 } from '@/types/index.d'
@@ -14,7 +13,8 @@ export type DataplaneWarning = {
   }
 }
 
-export function getLastUpdateTime(subscriptions: DiscoverySubscription[]): string | undefined {
+export function getLastUpdateTime(dataplaneOverview: DataplaneOverview): string | undefined {
+  const subscriptions = dataplaneOverview.dataplaneInsight?.subscriptions ?? []
   if (subscriptions.length === 0) {
     return undefined
   }

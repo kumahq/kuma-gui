@@ -304,7 +304,7 @@ const props = defineProps<{
 
 const statusWithReason = computed(() => getStatusAndReason(props.data))
 const formattedLastUpdateTime = computed(() => {
-  const lastUpdateTime = getLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? [])
+  const lastUpdateTime = getLastUpdateTime(props.data)
   return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
 })
 const warnings = computed(() => {

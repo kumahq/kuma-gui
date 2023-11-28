@@ -13,55 +13,94 @@ describe('dataplanes data transformations', () => {
     test.each<TestCase<typeof getLastUpdateTime>>([
       {
         message: 'empty subscriptions',
-        parameters: [[]],
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+            },
+          },
+        }],
         expected: undefined,
       },
       {
         message: 'single subscription',
-        parameters: [[
-          {
-            id: '',
-            controlPlaneInstanceId: '',
-            status: {
-              lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-              total: {},
-              cds: {},
-              eds: {},
-              lds: {},
-              rds: {},
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
             },
           },
-        ]],
+          dataplaneInsight: {
+            subscriptions: [
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                status: {
+                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+              },
+            ],
+          },
+        }],
         expected: '2021-07-13T09:03:11.614941842Z',
       },
       {
         message: 'multiple subscriptions',
-        parameters: [[
-          {
-            id: '',
-            controlPlaneInstanceId: '',
-            status: {
-              lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
-              total: {},
-              cds: {},
-              eds: {},
-              lds: {},
-              rds: {},
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
             },
           },
-          {
-            id: '',
-            controlPlaneInstanceId: '',
-            status: {
-              lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-              total: {},
-              cds: {},
-              eds: {},
-              lds: {},
-              rds: {},
-            },
+          dataplaneInsight: {
+            subscriptions: [
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                status: {
+                  lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+              },
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                status: {
+                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+              },
+            ],
           },
-        ]],
+        }],
         expected: '2021-07-13T09:03:11.614941842Z',
       },
     ])('$message', ({ parameters, expected }) => {
