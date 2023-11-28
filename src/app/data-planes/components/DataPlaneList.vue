@@ -122,17 +122,13 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
-import { getStatusAndReason, getTags } from '../data'
+import { getDataplaneType, getIsCertExpired, getStatusAndReason, getTags, getWarnings } from '../data/index'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
-import type { DataPlaneOverview, LabelValue, StatusKeyword, Version } from '@/types/index.d'
+import type { DataPlaneOverview, LabelValue, StatusKeyword } from '@/types/index.d'
 import { useI18n } from '@/utilities'
-import {
-  compatibilityKind,
-  COMPATIBLE,
-} from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
 
@@ -175,33 +171,12 @@ const emit = defineEmits<{
 function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlaneOverviewTableRow[] {
   return dataPlaneOverviews.map((dataPlaneOverview) => {
     const { mesh, name } = dataPlaneOverview
-    const type = dataPlaneOverview.dataplane.networking.gateway?.type
-      ? t(`data-planes.type.${dataPlaneOverview.dataplane.networking.gateway.type.toLowerCase()}`)
-      : t('data-planes.type.standard')
+    const type = t(`data-planes.type.${getDataplaneType(dataPlaneOverview)}`)
 
     const tags = getTags(dataPlaneOverview)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service')
 
     const { status } = getStatusAndReason(dataPlaneOverview)
-    const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
-
-    const initialData: {
-      dpVersion: string | null
-      version: Version | null
-    } = {
-      dpVersion: null,
-      version: null,
-    }
-
-    const summary = subscriptions.reduce(
-      (acc, subscription) => {
-        return {
-          dpVersion: subscription.version?.kumaDp.version || acc.dpVersion,
-          version: subscription.version || acc.version,
-        }
-      },
-      initialData,
-    )
 
     let certificate
     if (dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime) {
@@ -210,45 +185,21 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
       certificate = t('data-planes.components.data-plane-list.certificate.none')
     }
 
-    // assemble the table data
-    const item: DataPlaneOverviewTableRow = {
+    const warnings = getWarnings(dataPlaneOverview, props.canUseZones)
+    const isCertExpired = getIsCertExpired(dataPlaneOverview)
+
+    return {
       name,
       type,
       mesh,
       services,
       status,
       warnings: {
-        version_mismatch: false,
-        cert_expired: false,
+        version_mismatch: warnings.length > 0,
+        cert_expired: isCertExpired,
       },
       certificate,
     }
-
-    if (summary.version) {
-      const { kind } = compatibilityKind(summary.version)
-
-      if (kind !== COMPATIBLE) {
-        item.warnings.version_mismatch = true
-      }
-    }
-
-    if (props.canUseZones && summary.dpVersion) {
-      const zoneTag = tags.find((tag) => tag.label === 'kuma.io/zone')
-
-      if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
-        item.warnings.version_mismatch = true
-      }
-    }
-
-    const time = dataPlaneOverview.dataplaneInsight?.mTLS?.certificateExpirationTime
-    if (
-      time &&
-      (Date.now() > new Date(time).getTime())
-    ) {
-      item.warnings.cert_expired = true
-    }
-
-    return item
   })
 }
 </script>

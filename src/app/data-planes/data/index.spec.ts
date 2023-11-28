@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'vitest'
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
 
-import { getLastUpdateTime, getStatusAndReason, getTags } from './index'
+import { getDataplaneType, getIsCertExpired, getLastUpdateTime, getStatusAndReason, getTags, getWarnings } from './index'
 
 type TestCase<T extends (...args: any) => any> = {
   message: string
@@ -415,6 +415,287 @@ describe('dataplanes data transformations', () => {
       },
     ])('$message', ({ parameters, expected }) => {
       expect(getTags(...parameters)).toStrictEqual(expected)
+    })
+  })
+
+  describe('getIsCertExpired', () => {
+    beforeAll(() => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date('2023-11-28T13:00:00Z'))
+    })
+
+    afterAll(() => {
+      vi.useRealTimers()
+    })
+
+    test.each<TestCase<typeof getIsCertExpired>>([
+      {
+        message: 'no mTLS',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+            },
+          },
+        }],
+        expected: false,
+      },
+      {
+        message: 'mTLS cert expired',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+            },
+          },
+          dataplaneInsight: {
+            mTLS: {
+              certificateExpirationTime: '2023-11-27T13:00:00Z',
+              lastCertificateRegeneration: '',
+              certificateRegenerations: 0,
+              issuedBackend: '',
+              supportedBackends: [],
+            },
+            subscriptions: [],
+          },
+        }],
+        expected: true,
+      },
+      {
+        message: 'mTLS cert not expired',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+            },
+          },
+          dataplaneInsight: {
+            mTLS: {
+              certificateExpirationTime: '2023-11-29T13:00:00Z',
+              lastCertificateRegeneration: '',
+              certificateRegenerations: 0,
+              issuedBackend: '',
+              supportedBackends: [],
+            },
+            subscriptions: [],
+          },
+        }],
+        expected: false,
+      },
+    ])('$message', (item) => {
+      expect(getIsCertExpired(...item.parameters)).toStrictEqual(item.expected)
+    })
+  })
+
+  describe('getWarnings', () => {
+    test.each<TestCase<typeof getWarnings>>([
+      {
+        message: 'no insights',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+            },
+          },
+        }, false],
+        expected: [],
+      },
+      {
+        message: 'all warnings',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+              inbound: [
+                {
+                  health: {
+                    ready: true,
+                  },
+                  tags: {
+                    'kuma.io/service': '',
+                    'kuma.io/zone': 'zone-1',
+                  },
+                  port: 1,
+                },
+              ],
+            },
+          },
+          dataplaneInsight: {
+            mTLS: {
+              certificateExpirationTime: '2023-11-29T13:00:00Z',
+              lastCertificateRegeneration: '',
+              certificateRegenerations: 0,
+              issuedBackend: '',
+              supportedBackends: [],
+            },
+            subscriptions: [
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                status: {
+                  lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+                version: {
+                  kumaDp: {
+                    version: '1.2.3',
+                    gitTag: '',
+                    gitCommit: '',
+                    buildDate: '',
+                    kumaCpCompatible: false,
+                  },
+                  envoy: {
+                    version: '4.5.6',
+                    build: '',
+                    kumaDpCompatible: false,
+                  },
+                  dependencies: {},
+                },
+              },
+            ],
+          },
+        }, true],
+        expected: [
+          {
+            kind: 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP',
+            payload: {
+              kumaDp: '1.2.3',
+            },
+          },
+          {
+            kind: 'INCOMPATIBLE_UNSUPPORTED_ENVOY',
+            payload: {
+              envoy: '4.5.6',
+              kumaDp: '1.2.3',
+            },
+          },
+          {
+            kind: 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS',
+            payload: {
+              kumaDp: '1.2.3',
+            },
+          },
+        ],
+      },
+    ])('$message', ({ parameters, expected }) => {
+      expect(getWarnings(...parameters)).toStrictEqual(expected)
+    })
+  })
+
+  describe('getDataplaneType', () => {
+    test.each<TestCase<typeof getDataplaneType>>([
+      {
+        message: 'Standard proxy',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+            },
+          },
+        }],
+        expected: 'standard',
+      },
+      {
+        message: 'Built-in gateway',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+              gateway: {
+                type: 'BUILTIN',
+                tags: {
+                  'kuma.io/service': '',
+                },
+              },
+            },
+          },
+        }],
+        expected: 'builtin',
+      },
+      {
+        message: 'Delegated gateway (explicit)',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+              gateway: {
+                type: 'DELEGATED',
+                tags: {
+                  'kuma.io/service': '',
+                },
+              },
+            },
+          },
+        }],
+        expected: 'delegated',
+      },
+      {
+        message: 'Delegated gateway (implicit)',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+              gateway: {
+                tags: {
+                  'kuma.io/service': '',
+                },
+              },
+            },
+          },
+        }],
+        expected: 'delegated',
+      },
+    ])('$message', ({ parameters, expected }) => {
+      expect(getDataplaneType(...parameters)).toStrictEqual(expected)
     })
   })
 })

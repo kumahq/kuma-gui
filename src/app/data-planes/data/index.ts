@@ -6,6 +6,14 @@ import type {
   StatusKeyword,
 } from '@/types/index.d'
 
+export type DataplaneWarning = {
+  kind: string
+  payload?: {
+    kumaDp: string
+    envoy?: string
+  }
+}
+
 export function getLastUpdateTime(subscriptions: DiscoverySubscription[]): string | undefined {
   if (subscriptions.length === 0) {
     return undefined
@@ -77,4 +85,81 @@ export function getTags(dataplaneOverview: DataplaneOverview): LabelValue[] {
     const [label, value] = tagPair.split(separator)
     return { label, value }
   })
+}
+
+export function getIsCertExpired(dataplaneOverview: DataplaneOverview): boolean {
+  const mTLS = dataplaneOverview.dataplaneInsight?.mTLS
+
+  if (mTLS === undefined) {
+    return false
+  }
+
+  return Date.now() > new Date(mTLS.certificateExpirationTime).getTime()
+}
+
+export function getWarnings(dataplaneOverview: DataplaneOverview, canUseZones: boolean): DataplaneWarning[] {
+  const subscriptions = dataplaneOverview.dataplaneInsight?.subscriptions ?? []
+  if (subscriptions.length === 0) {
+    return []
+  }
+
+  const lastSubscription = subscriptions[subscriptions.length - 1]
+  if (!('version' in lastSubscription) || !lastSubscription.version) {
+    return []
+  }
+
+  const warnings: DataplaneWarning[] = []
+  const version = lastSubscription.version
+  if (version.kumaDp && version.envoy) {
+    const isKumaCpCompatible = version.kumaDp?.kumaCpCompatible ?? true
+    if (!isKumaCpCompatible) {
+      warnings.push({
+        kind: 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP',
+        payload: {
+          kumaDp: version.kumaDp.version,
+        },
+      })
+    }
+
+    const isKumaDpCompatible = version.envoy?.kumaDpCompatible ?? true
+    if (!isKumaDpCompatible) {
+      warnings.push({
+        kind: 'INCOMPATIBLE_UNSUPPORTED_ENVOY',
+        payload: {
+          envoy: version.envoy.version,
+          kumaDp: version.kumaDp.version,
+        },
+      })
+    }
+  }
+
+  if (canUseZones) {
+    const tags = getTags(dataplaneOverview)
+    const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
+
+    if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
+      warnings.push({
+        kind: 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS',
+        payload: {
+          kumaDp: version.kumaDp.version,
+        },
+      })
+    }
+  }
+
+  return warnings
+}
+
+export function getDataplaneType(dataplaneOverview: DataplaneOverview): 'standard' | 'builtin' | 'delegated' {
+  const { gateway } = dataplaneOverview.dataplane.networking
+  if (gateway) {
+    if (gateway.type) {
+      return gateway.type.toLowerCase() as 'builtin' | 'delegated'
+    } else {
+      // Dataplanes with a gateway property but without a type are delegated gateways.
+      return 'delegated'
+    }
+  }
+
+  return 'standard'
 }
