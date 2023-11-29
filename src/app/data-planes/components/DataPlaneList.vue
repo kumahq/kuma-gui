@@ -1,5 +1,6 @@
 <template>
   <AppCollection
+    class="data-plane-collection"
     :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
     :empty-state-cta-to="t('data-planes.href.docs.data_plane_proxy')"
     :empty-state-cta-text="t('common.documentation')"
@@ -29,6 +30,8 @@
 
     <template #name="{ row: item }: { row: DataPlaneOverviewTableRow }">
       <RouterLink
+        class="name-link"
+        :title="item.name"
         :to="{
           name: props.summaryRouteName,
           params: {
@@ -252,9 +255,21 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
 </script>
 
 <style lang="scss" scoped>
+.name-link {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .details-link {
   display: inline-flex;
   align-items: center;
   gap: $kui-space-20;
+}
+
+.data-plane-collection :deep(.name-column) {
+  max-width: 400px;
 }
 </style>
