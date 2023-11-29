@@ -1,4 +1,4 @@
-import { getStatus } from '@/app/subscriptions/data'
+import { getIsConnected } from '@/app/subscriptions/data'
 import type { ZoneOverview } from '@/types/index.d'
 import { get } from '@/utilities/get'
 
@@ -32,5 +32,5 @@ export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): 'online' 
   if (zoneOverview.zone.enabled === false) {
     return 'disabled'
   }
-  return getStatus(zoneOverview.zoneInsight?.subscriptions)
+  return getIsConnected(zoneOverview.zoneInsight?.subscriptions) ? 'online' : 'offline'
 }

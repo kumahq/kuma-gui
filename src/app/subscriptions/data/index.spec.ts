@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { getStatus } from './index'
+import { getIsConnected } from './index'
 
 type TestCase<T extends (...args: any) => any> = {
   message: string
@@ -9,20 +9,20 @@ type TestCase<T extends (...args: any) => any> = {
 }
 
 describe('subscriptions data transformations', () => {
-  describe('getStatus', () => {
-    test.each<TestCase<typeof getStatus>>([
+  describe('getIsConnected', () => {
+    test.each<TestCase<typeof getIsConnected>>([
       {
-        message: 'no subscriptions means not connected, yet, i.e. offline (omitted array)',
+        message: 'no subscriptions means not connected (omitted array)',
         parameters: [undefined],
-        expected: 'offline',
+        expected: false,
       },
       {
-        message: 'no subscriptions means not connected, yet, i.e. offline (empty array)',
+        message: 'no subscriptions means not connected (empty array)',
         parameters: [[]],
-        expected: 'offline',
+        expected: false,
       },
       {
-        message: 'last subscription without disconnect time means offline',
+        message: 'last subscription without disconnect time means connected',
         parameters: [[
           {
             connectTime: '2021-07-13T09:03:11.614941842Z',
@@ -32,10 +32,10 @@ describe('subscriptions data transformations', () => {
             connectTime: '2021-07-13T09:03:11.614941842Z',
           },
         ]],
-        expected: 'online',
+        expected: true,
       },
       {
-        message: 'last subscription with disconnect time means offline',
+        message: 'last subscription with disconnect time means not connected',
         parameters: [[
           {
             connectTime: '2021-07-13T09:03:11.614941842Z',
@@ -46,10 +46,10 @@ describe('subscriptions data transformations', () => {
             disconnectTime: '2021-07-13T09:03:11.614941842Z',
           },
         ]],
-        expected: 'offline',
+        expected: false,
       },
     ])('$message', ({ parameters, expected }) => {
-      expect(getStatus(...parameters)).toStrictEqual(expected)
+      expect(getIsConnected(...parameters)).toStrictEqual(expected)
     })
   })
 })

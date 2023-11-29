@@ -72,7 +72,7 @@ describe('dataplanes data transformations', () => {
   describe('getStatusAndReason', () => {
     test.each<TestCase<typeof getStatusAndReason>>([
       {
-        message: 'nothing defined is online',
+        message: 'Built-in gateway: status determination based on subscriptions (online)',
         parameters: [{
           mesh: 'default',
           name: 'dataplane',
@@ -82,7 +82,30 @@ describe('dataplanes data transformations', () => {
           dataplane: {
             networking: {
               address: '',
+              gateway: {
+                type: 'BUILTIN',
+                tags: {
+                  'kuma.io/service': '',
+                },
+              },
             },
+          },
+          dataplaneInsight: {
+            subscriptions: [
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                connectTime: '1',
+                status: {
+                  lastUpdateTime: '',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+              },
+            ],
           },
         }],
         expected: {
@@ -91,7 +114,7 @@ describe('dataplanes data transformations', () => {
         },
       },
       {
-        message: 'empty inbounds is online',
+        message: 'Built-in gateway: status determination based on subscriptions (offline)',
         parameters: [{
           mesh: 'default',
           name: 'dataplane',
@@ -101,17 +124,40 @@ describe('dataplanes data transformations', () => {
           dataplane: {
             networking: {
               address: '',
-              inbound: [],
+              gateway: {
+                type: 'BUILTIN',
+                tags: {
+                  'kuma.io/service': '',
+                },
+              },
             },
+          },
+          dataplaneInsight: {
+            subscriptions: [
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                connectTime: '1',
+                disconnectTime: '1',
+                status: {
+                  lastUpdateTime: '',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+              },
+            ],
           },
         }],
         expected: {
-          status: 'online',
+          status: 'offline',
           reason: [],
         },
       },
       {
-        message: 'single healthy inbound defers to getItemStatusFromInsight (online)',
+        message: 'Standard proxy: status determination based on subscriptions (online)',
         parameters: [{
           mesh: 'default',
           name: 'dataplane',
@@ -158,7 +204,55 @@ describe('dataplanes data transformations', () => {
         },
       },
       {
-        message: 'single unhealthy inbound is offline with a single reason',
+        message: 'Standard proxy: status determination based on subscriptions (offline)',
+        parameters: [{
+          mesh: 'default',
+          name: 'dataplane',
+          type: 'DataplaneOverview',
+          creationTime: '',
+          modificationTime: '',
+          dataplane: {
+            networking: {
+              address: '',
+              inbound: [
+                {
+                  health: {
+                    ready: true,
+                  },
+                  tags: {
+                    'kuma.io/service': '',
+                  },
+                  port: 1,
+                },
+              ],
+            },
+          },
+          dataplaneInsight: {
+            subscriptions: [
+              {
+                id: '',
+                controlPlaneInstanceId: '',
+                connectTime: '1',
+                disconnectTime: '1',
+                status: {
+                  lastUpdateTime: '',
+                  total: {},
+                  cds: {},
+                  eds: {},
+                  lds: {},
+                  rds: {},
+                },
+              },
+            ],
+          },
+        }],
+        expected: {
+          status: 'offline',
+          reason: [],
+        },
+      },
+      {
+        message: 'Standard proxy: one unhealthy inbound out of one inbound means offline',
         parameters: [{
           mesh: 'default',
           name: 'dataplane',
@@ -188,7 +282,7 @@ describe('dataplanes data transformations', () => {
         },
       },
       {
-        message: 'single unhealthy inbound out of multiple is partially_degraded',
+        message: 'Standard proxy: one unhealthy inbound out of two inbounds means partially_degraded',
         parameters: [{
           mesh: 'default',
           name: 'dataplane',
