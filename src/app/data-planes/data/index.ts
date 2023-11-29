@@ -1,3 +1,4 @@
+import { getStatus } from '@/app/subscriptions/data'
 import type {
   DataPlaneOverview as DataplaneOverview,
   DiscoverySubscription,
@@ -32,16 +33,8 @@ export function getStatusAndReason(dataplaneOverview: DataplaneOverview): { stat
     case errors.length > 0:
       status = 'partially_degraded'
       break
-    default: {
-      const subscriptions = dataplaneOverview.dataplaneInsight?.subscriptions ?? []
-
-      if (subscriptions.length === 0) {
-        status = 'offline'
-      } else {
-        const lastSubscription = subscriptions[subscriptions.length - 1]
-        status = lastSubscription.connectTime?.length && !lastSubscription.disconnectTime ? 'online' : 'offline'
-      }
-    }
+    default:
+      status = getStatus(dataplaneOverview.dataplaneInsight?.subscriptions)
   }
 
   return {
