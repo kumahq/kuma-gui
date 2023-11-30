@@ -9,35 +9,33 @@
         data-testid="detail-view-details"
       >
         <KCard>
-          <template #body>
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
+          <div class="columns">
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.status') }}
+              </template>
+
+              <template #body>
+                <StatusBadge :status="getItemStatusFromInsight(props.data.zoneEgressInsight)" />
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.address') }}
+              </template>
+
+              <template #body>
+                <template v-if="props.data.zoneEgress.networking?.address && props.data.zoneEgress.networking?.port">
+                  <TextWithCopyButton :text="`${props.data.zoneEgress.networking.address}:${props.data.zoneEgress.networking.port}`" />
                 </template>
 
-                <template #body>
-                  <StatusBadge :status="getItemStatusFromInsight(props.data.zoneEgressInsight)" />
+                <template v-else>
+                  {{ t('common.detail.none') }}
                 </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
-
-                <template #body>
-                  <template v-if="props.data.zoneEgress.networking?.address && props.data.zoneEgress.networking?.port">
-                    <TextWithCopyButton :text="`${props.data.zoneEgress.networking.address}:${props.data.zoneEgress.networking.port}`" />
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-              </DefinitionCard>
-            </div>
-          </template>
+              </template>
+            </DefinitionCard>
+          </div>
         </KCard>
 
         <template
@@ -50,11 +48,9 @@
             <h2>{{ t('zone-egresses.routes.item.subscriptions.title') }}</h2>
 
             <KCard class="mt-4">
-              <template #body>
-                <SubscriptionList
-                  :subscriptions="subscriptions"
-                />
-              </template>
+              <SubscriptionList
+                :subscriptions="subscriptions"
+              />
             </KCard>
           </div>
         </template>

@@ -31,61 +31,59 @@
           </template>
 
           <KCard>
-            <template #body>
-              <ErrorBlock
-                v-if="error !== undefined"
-                :error="error"
-              />
+            <ErrorBlock
+              v-if="error !== undefined"
+              :error="error"
+            />
 
-              <DataPlaneList
-                v-else
-                data-testid="data-plane-collection"
-                :page-number="parseInt(route.params.page)"
-                :page-size="parseInt(route.params.size)"
-                :total="data?.total"
-                :items="data?.items"
-                :error="error"
-                :is-selected-row="(row) => row.name === route.params.dataPlane"
-                summary-route-name="data-plane-summary-view"
-                :can-use-zones="can('use zones')"
-                @change="route.update"
-              >
-                <template #toolbar>
-                  <FilterBar
-                    class="data-plane-proxy-filter"
-                    :placeholder="`tag: 'kuma.io/service: backend'`"
-                    :query="route.params.query"
-                    :fields="{
-                      name: { description: 'filter by name or parts of a name' },
-                      protocol: { description: 'filter by “kuma.io/protocol” value' },
-                      service: { description: 'filter by “kuma.io/service” value' },
-                      tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                      zone: { description: 'filter by “kuma.io/zone” value' },
-                    }"
-                    @fields-change="route.update({
-                      query: $event.query,
-                      s: $event.query.length > 0 ? JSON.stringify($event.fields) : '',
-                    })"
-                  />
+            <DataPlaneList
+              v-else
+              data-testid="data-plane-collection"
+              :page-number="parseInt(route.params.page)"
+              :page-size="parseInt(route.params.size)"
+              :total="data?.total"
+              :items="data?.items"
+              :error="error"
+              :is-selected-row="(row) => row.name === route.params.dataPlane"
+              summary-route-name="data-plane-summary-view"
+              :can-use-zones="can('use zones')"
+              @change="route.update"
+            >
+              <template #toolbar>
+                <FilterBar
+                  class="data-plane-proxy-filter"
+                  :placeholder="`tag: 'kuma.io/service: backend'`"
+                  :query="route.params.query"
+                  :fields="{
+                    name: { description: 'filter by name or parts of a name' },
+                    protocol: { description: 'filter by “kuma.io/protocol” value' },
+                    service: { description: 'filter by “kuma.io/service” value' },
+                    tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                    zone: { description: 'filter by “kuma.io/zone” value' },
+                  }"
+                  @fields-change="route.update({
+                    query: $event.query,
+                    s: $event.query.length > 0 ? JSON.stringify($event.fields) : '',
+                  })"
+                />
 
-                  <KSelect
-                    class="filter-select"
-                    label="Type"
-                    :items="['all', 'standard', 'builtin', 'delegated'].map((value) => ({
-                      value,
-                      label: t(`data-planes.type.${value}`),
-                      selected: value === route.params.dataplaneType,
-                    }))"
-                    appearance="select"
-                    @selected="route.update({ dataplaneType: String($event.value) })"
-                  >
-                    <template #item-template="{ item: value }">
-                      {{ value.label }}
-                    </template>
-                  </KSelect>
-                </template>
-              </DataPlaneList>
-            </template>
+                <KSelect
+                  class="filter-select"
+                  label="Type"
+                  :items="['all', 'standard', 'builtin', 'delegated'].map((value) => ({
+                    value,
+                    label: t(`data-planes.type.${value}`),
+                    selected: value === route.params.dataplaneType,
+                  }))"
+                  appearance="select"
+                  @selected="route.update({ dataplaneType: String($event.value) })"
+                >
+                  <template #item-template="{ item: value }">
+                    {{ value.label }}
+                  </template>
+                </KSelect>
+              </template>
+            </DataPlaneList>
           </KCard>
 
           <RouterView

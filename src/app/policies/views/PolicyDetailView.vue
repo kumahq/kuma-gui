@@ -61,16 +61,14 @@
           data-testid="detail-view-details"
         >
           <KCard>
-            <template #body>
-              <h2>{{ t('policies.detail.affected_dpps') }}</h2>
+            <h2>{{ t('policies.detail.affected_dpps') }}</h2>
 
-              <PolicyConnections
-                class="mt-4"
-                :mesh="route.params.mesh"
-                :policy-name="route.params.policy"
-                :policy-path="route.params.policyPath"
-              />
-            </template>
+            <PolicyConnections
+              class="mt-4"
+              :mesh="route.params.mesh"
+              :policy-name="route.params.policy"
+              :policy-path="route.params.policyPath"
+            />
           </KCard>
 
           <ResourceCodeBlock

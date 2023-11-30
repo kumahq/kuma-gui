@@ -20,44 +20,42 @@
       </template>
 
       <KCard>
-        <template #body>
-          <div>
-            <DataSource
-              v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
-              :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
+        <div>
+          <DataSource
+            v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
+            :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
+          >
+            <ErrorBlock
+              v-if="externalServiceError"
+              :error="externalServiceError"
+            />
+
+            <LoadingBlock v-else-if="externalService === undefined" />
+
+            <EmptyBlock
+              v-else-if="externalService === null"
+              data-testid="no-matching-external-service"
             >
-              <ErrorBlock
-                v-if="externalServiceError"
-                :error="externalServiceError"
-              />
+              <template #title>
+                <p>{{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}</p>
+              </template>
+            </EmptyBlock>
 
-              <LoadingBlock v-else-if="externalService === undefined" />
-
-              <EmptyBlock
-                v-else-if="externalService === null"
-                data-testid="no-matching-external-service"
-              >
-                <template #title>
-                  <p>{{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}</p>
-                </template>
-              </EmptyBlock>
-
-              <ResourceCodeBlock
-                v-else
-                id="code-block-service"
-                :resource="externalService"
-                :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter === 'true'"
-                :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              />
-            </DataSource>
-          </div>
-        </template>
+            <ResourceCodeBlock
+              v-else
+              id="code-block-service"
+              :resource="externalService"
+              :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
+              is-searchable
+              :query="route.params.codeSearch"
+              :is-filter-mode="route.params.codeFilter === 'true'"
+              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+              @query-change="route.update({ codeSearch: $event })"
+              @filter-mode-change="route.update({ codeFilter: $event })"
+              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+            />
+          </DataSource>
+        </div>
       </KCard>
     </AppView>
   </RouteView>

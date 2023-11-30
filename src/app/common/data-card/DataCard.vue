@@ -2,18 +2,16 @@
   <KCard
     class="data-card"
   >
-    <template #body>
-      <dl>
-        <div class="card">
-          <dt class="title">
-            <slot name="title" />
-          </dt>
-          <dd class="body">
-            <slot name="default" />
-          </dd>
-        </div>
-      </dl>
-    </template>
+    <dl>
+      <div class="card">
+        <dt class="title">
+          <slot name="title" />
+        </dt>
+        <dd class="body">
+          <slot name="default" />
+        </dd>
+      </div>
+    </dl>
   </KCard>
 </template>
 <style lang="scss" scoped>

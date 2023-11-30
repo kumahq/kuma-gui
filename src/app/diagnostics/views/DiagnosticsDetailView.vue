@@ -37,29 +37,27 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
         </template>
 
         <KCard>
-          <template #body>
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
+          <ErrorBlock
+            v-if="error"
+            :error="error"
+          />
 
-            <LoadingBlock v-else-if="data === undefined" />
+          <LoadingBlock v-else-if="data === undefined" />
 
-            <CodeBlock
-              v-else
-              id="code-block-diagnostics"
-              data-testid="code-block-diagnostics"
-              language="json"
-              :code="JSON.stringify(data, null, 2)"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter === 'true'"
-              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
-          </template>
+          <CodeBlock
+            v-else
+            id="code-block-diagnostics"
+            data-testid="code-block-diagnostics"
+            language="json"
+            :code="JSON.stringify(data, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter === 'true'"
+            :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
         </KCard>
       </AppView>
     </DataSource>

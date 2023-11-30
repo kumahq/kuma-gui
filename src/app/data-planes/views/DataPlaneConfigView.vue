@@ -20,33 +20,31 @@
       </template>
 
       <KCard>
-        <template #body>
-          <DataSource
-            v-slot="{ data, error }: DataplaneSource"
-            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
-          >
-            <ErrorBlock
-              v-if="error"
-              :error="error"
-            />
+        <DataSource
+          v-slot="{ data, error }: DataplaneSource"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
+        >
+          <ErrorBlock
+            v-if="error"
+            :error="error"
+          />
 
-            <LoadingBlock v-else-if="data === undefined" />
+          <LoadingBlock v-else-if="data === undefined" />
 
-            <ResourceCodeBlock
-              v-else
-              id="code-block-data-plane"
-              :resource="data"
-              :resource-fetcher="(params) => kumaApi.getDataplaneFromMesh({ mesh: data.mesh, name: data.name }, params)"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter === 'true'"
-              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
-          </DataSource>
-        </template>
+          <ResourceCodeBlock
+            v-else
+            id="code-block-data-plane"
+            :resource="data"
+            :resource-fetcher="(params) => kumaApi.getDataplaneFromMesh({ mesh: data.mesh, name: data.name }, params)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter === 'true'"
+            :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
+        </DataSource>
       </KCard>
     </AppView>
   </RouteView>

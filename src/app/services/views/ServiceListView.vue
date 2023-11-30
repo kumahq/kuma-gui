@@ -28,106 +28,104 @@
           </template>
 
           <KCard>
-            <template #body>
-              <ErrorBlock
-                v-if="error !== undefined"
-                :error="error"
-              />
+            <ErrorBlock
+              v-if="error !== undefined"
+              :error="error"
+            />
 
-              <AppCollection
-                v-else
-                class="service-collection"
-                data-testid="service-collection"
-                :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
-                :headers="[
-                  { label: 'Name', key: 'name' },
-                  { label: 'Type', key: 'serviceType' },
-                  { label: 'Address', key: 'addressPort' },
-                  { label: 'DP proxies (online / total)', key: 'online' },
-                  { label: 'Status', key: 'status' },
-                  { label: 'Details', key: 'details', hideLabel: true },
-                ]"
-                :page-number="parseInt(route.params.page)"
-                :page-size="parseInt(route.params.size)"
-                :total="data?.total"
-                :items="data?.items"
-                :error="error"
-                :is-selected-row="(row) => row.name === route.params.service"
-                @change="route.update"
-              >
-                <template #name="{ row: item }">
-                  <RouterLink
-                    :to="{
-                      name: 'service-detail-view',
-                      params: {
-                        mesh: item.mesh,
-                        service: item.name,
-                      },
-                      query: {
-                        page: route.params.page,
-                        size: route.params.size,
-                      },
-                    }"
-                  >
-                    {{ item.name }}
-                  </RouterLink>
+            <AppCollection
+              v-else
+              class="service-collection"
+              data-testid="service-collection"
+              :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Type', key: 'serviceType' },
+                { label: 'Address', key: 'addressPort' },
+                { label: 'DP proxies (online / total)', key: 'online' },
+                { label: 'Status', key: 'status' },
+                { label: 'Details', key: 'details', hideLabel: true },
+              ]"
+              :page-number="parseInt(route.params.page)"
+              :page-size="parseInt(route.params.size)"
+              :total="data?.total"
+              :items="data?.items"
+              :error="error"
+              :is-selected-row="(row) => row.name === route.params.service"
+              @change="route.update"
+            >
+              <template #name="{ row: item }">
+                <RouterLink
+                  :to="{
+                    name: 'service-detail-view',
+                    params: {
+                      mesh: item.mesh,
+                      service: item.name,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                    },
+                  }"
+                >
+                  {{ item.name }}
+                </RouterLink>
+              </template>
+
+              <template #serviceType="{ rowValue }">
+                {{ rowValue || 'internal' }}
+              </template>
+
+              <template #addressPort="{ rowValue }">
+                <TextWithCopyButton
+                  v-if="rowValue"
+                  :text="rowValue"
+                />
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
                 </template>
+              </template>
 
-                <template #serviceType="{ rowValue }">
-                  {{ rowValue || 'internal' }}
+              <template #online="{ row: item }">
+                <template
+                  v-if="item.dataplanes"
+                >
+                  {{ item.dataplanes.online || 0 }} / {{ item.dataplanes.total || 0 }}
                 </template>
+                <template
+                  v-else
+                >
+                  {{ t('common.collection.none') }}
+                </template>
+              </template>
 
-                <template #addressPort="{ rowValue }">
-                  <TextWithCopyButton
-                    v-if="rowValue"
-                    :text="rowValue"
+              <template #status="{ row: item }">
+                <StatusBadge :status="item.status || 'not_available'" />
+              </template>
+
+              <template #details="{ row }">
+                <RouterLink
+                  class="details-link"
+                  data-testid="details-link"
+                  :to="{
+                    name: 'service-detail-view',
+                    params: {
+                      mesh: row.mesh,
+                      service: row.name,
+                    },
+                  }"
+                >
+                  {{ t('common.collection.details_link') }}
+
+                  <ArrowRightIcon
+                    display="inline-block"
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
                   />
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #online="{ row: item }">
-                  <template
-                    v-if="item.dataplanes"
-                  >
-                    {{ item.dataplanes.online || 0 }} / {{ item.dataplanes.total || 0 }}
-                  </template>
-                  <template
-                    v-else
-                  >
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #status="{ row: item }">
-                  <StatusBadge :status="item.status || 'not_available'" />
-                </template>
-
-                <template #details="{ row }">
-                  <RouterLink
-                    class="details-link"
-                    data-testid="details-link"
-                    :to="{
-                      name: 'service-detail-view',
-                      params: {
-                        mesh: row.mesh,
-                        service: row.name,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.details_link') }}
-
-                    <ArrowRightIcon
-                      display="inline-block"
-                      decorative
-                      :size="KUI_ICON_SIZE_30"
-                    />
-                  </RouterLink>
-                </template>
-              </AppCollection>
-            </template>
+                </RouterLink>
+              </template>
+            </AppCollection>
           </KCard>
 
           <RouterView

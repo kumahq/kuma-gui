@@ -30,97 +30,95 @@
           :src="`/zone-cps/${route.params.zone || '*'}/egresses?page=${'1'}&size=${'100'}`"
         >
           <KCard>
-            <template #body>
-              <ErrorBlock
-                v-if="error !== undefined"
-                :error="error"
-              />
+            <ErrorBlock
+              v-if="error !== undefined"
+              :error="error"
+            />
 
-              <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
-              <AppCollection
-                v-else
-                class="zone-egress-collection"
-                data-testid="zone-egress-collection"
-                :headers="[
-                  { label: 'Name', key: 'name' },
-                  { label: 'Address', key: 'addressPort' },
-                  { label: 'Status', key: 'status' },
-                  { label: 'Details', key: 'details', hideLabel: true },
-                ]"
-                :page-number="1"
-                :page-size="100"
-                :total="data?.total"
-                :items="data ? transformToTableData(data.items) : undefined"
-                :error="error"
-                :empty-state-message="t('common.emptyState.message', { type: 'Zone Egresses' })"
-                :empty-state-cta-to="t('zone-egresses.href.docs')"
-                :empty-state-cta-text="t('common.documentation')"
-                :is-selected-row="(row) => row.name === route.params.zoneEgress"
-                @change="route.update"
-              >
-                <template #name="{ row }">
-                  <RouterLink
-                    :to="{
-                      name: 'zone-egress-summary-view',
-                      params: {
-                        zone: route.params.zone,
-                        zoneEgress: row.name,
-                      },
-                      query: {
-                        // TODO: Update page & size once the list endpoint is being filtered by zone
-                        page: 1,
-                        size: 100,
-                      },
-                    }"
-                  >
-                    {{ row.name }}
-                  </RouterLink>
+            <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
+            <AppCollection
+              v-else
+              class="zone-egress-collection"
+              data-testid="zone-egress-collection"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Address', key: 'addressPort' },
+                { label: 'Status', key: 'status' },
+                { label: 'Details', key: 'details', hideLabel: true },
+              ]"
+              :page-number="1"
+              :page-size="100"
+              :total="data?.total"
+              :items="data ? transformToTableData(data.items) : undefined"
+              :error="error"
+              :empty-state-message="t('common.emptyState.message', { type: 'Zone Egresses' })"
+              :empty-state-cta-to="t('zone-egresses.href.docs')"
+              :empty-state-cta-text="t('common.documentation')"
+              :is-selected-row="(row) => row.name === route.params.zoneEgress"
+              @change="route.update"
+            >
+              <template #name="{ row }">
+                <RouterLink
+                  :to="{
+                    name: 'zone-egress-summary-view',
+                    params: {
+                      zone: route.params.zone,
+                      zoneEgress: row.name,
+                    },
+                    query: {
+                      // TODO: Update page & size once the list endpoint is being filtered by zone
+                      page: 1,
+                      size: 100,
+                    },
+                  }"
+                >
+                  {{ row.name }}
+                </RouterLink>
+              </template>
+
+              <template #addressPort="{ rowValue }">
+                <TextWithCopyButton
+                  v-if="rowValue"
+                  :text="rowValue"
+                />
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
                 </template>
+              </template>
 
-                <template #addressPort="{ rowValue }">
-                  <TextWithCopyButton
-                    v-if="rowValue"
-                    :text="rowValue"
+              <template #status="{ rowValue }">
+                <StatusBadge
+                  v-if="rowValue"
+                  :status="rowValue"
+                />
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
+                </template>
+              </template>
+
+              <template #details="{ row }">
+                <RouterLink
+                  class="details-link"
+                  data-testid="details-link"
+                  :to="{
+                    name: 'zone-egress-detail-view',
+                    params: {
+                      zoneEgress: row.name,
+                    },
+                  }"
+                >
+                  {{ t('common.collection.details_link') }}
+
+                  <ArrowRightIcon
+                    display="inline-block"
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
                   />
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #status="{ rowValue }">
-                  <StatusBadge
-                    v-if="rowValue"
-                    :status="rowValue"
-                  />
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #details="{ row }">
-                  <RouterLink
-                    class="details-link"
-                    data-testid="details-link"
-                    :to="{
-                      name: 'zone-egress-detail-view',
-                      params: {
-                        zoneEgress: row.name,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.details_link') }}
-
-                    <ArrowRightIcon
-                      display="inline-block"
-                      decorative
-                      :size="KUI_ICON_SIZE_30"
-                    />
-                  </RouterLink>
-                </template>
-              </AppCollection>
-            </template>
+                </RouterLink>
+              </template>
+            </AppCollection>
           </KCard>
 
           <RouterView

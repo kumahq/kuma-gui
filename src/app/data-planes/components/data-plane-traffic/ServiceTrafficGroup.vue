@@ -3,11 +3,9 @@
     class="service-traffic-group"
     :class="`type-${props.type}`"
   >
-    <template #body>
-      <div class="body">
-        <slot name="default" />
-      </div>
-    </template>
+    <div class="body">
+      <slot name="default" />
+    </div>
   </KCard>
 </template>
 <script lang="ts" setup>

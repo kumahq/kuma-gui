@@ -22,65 +22,63 @@
         data-testid="dataplane-details"
       >
         <KCard>
-          <template #body>
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
-                </template>
-
-                <template #body>
-                  <div class="status-with-reason">
-                    <StatusBadge :status="statusWithReason.status" />
-
-                    <KTooltip
-                      v-if="statusWithReason.reason.length > 0"
-                      :label="statusWithReason.reason.join(', ')"
-                      class="reason-tooltip"
-                    >
-                      <InfoIcon
-                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                        :size="KUI_ICON_SIZE_30"
-                        hide-title
-                      />
-                    </KTooltip>
-                  </div>
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('data-planes.routes.item.last_updated') }}
-                </template>
-
-                <template #body>
-                  {{ formattedLastUpdateTime }}
-                </template>
-              </DefinitionCard>
-
-              <template v-if="props.data.dataplane.networking.gateway">
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.tags') }}
-                  </template>
-
-                  <template #body>
-                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.address') }}
-                  </template>
-
-                  <template #body>
-                    <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
-                  </template>
-                </DefinitionCard>
+          <div class="columns">
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.status') }}
               </template>
-            </div>
-          </template>
+
+              <template #body>
+                <div class="status-with-reason">
+                  <StatusBadge :status="statusWithReason.status" />
+
+                  <KTooltip
+                    v-if="statusWithReason.reason.length > 0"
+                    :label="statusWithReason.reason.join(', ')"
+                    class="reason-tooltip"
+                  >
+                    <InfoIcon
+                      :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                      :size="KUI_ICON_SIZE_30"
+                      hide-title
+                    />
+                  </KTooltip>
+                </div>
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('data-planes.routes.item.last_updated') }}
+              </template>
+
+              <template #body>
+                {{ formattedLastUpdateTime }}
+              </template>
+            </DefinitionCard>
+
+            <template v-if="props.data.dataplane.networking.gateway">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.tags') }}
+                </template>
+
+                <template #body>
+                  <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.address') }}
+                </template>
+
+                <template #body>
+                  <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                </template>
+              </DefinitionCard>
+            </template>
+          </div>
         </KCard>
 
         <div
@@ -90,75 +88,73 @@
           <h2>{{ t('data-planes.routes.item.inbounds') }}</h2>
 
           <KCard class="mt-4">
-            <template #body>
-              <div class="inbound-list">
-                <div
-                  v-for="(inbound, index) in props.data.dataplane.networking.inbound"
-                  :key="index"
-                  class="inbound"
-                >
-                  <h4>
-                    <TextWithCopyButton :text="inbound.tags['kuma.io/service']">
-                      {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
-                    </TextWithCopyButton>
-                  </h4>
+            <div class="inbound-list">
+              <div
+                v-for="(inbound, index) in props.data.dataplane.networking.inbound"
+                :key="index"
+                class="inbound"
+              >
+                <h4>
+                  <TextWithCopyButton :text="inbound.tags['kuma.io/service']">
+                    {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
+                  </TextWithCopyButton>
+                </h4>
 
-                  <div class="mt-4 columns">
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('http.api.property.status') }}
-                      </template>
+                <div class="mt-4 columns">
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('http.api.property.status') }}
+                    </template>
 
-                      <template #body>
-                        <KBadge
-                          v-if="!inbound.health || inbound.health.ready"
-                          appearance="success"
-                        >
-                          {{ t('data-planes.routes.item.health.ready') }}
-                        </KBadge>
+                    <template #body>
+                      <KBadge
+                        v-if="!inbound.health || inbound.health.ready"
+                        appearance="success"
+                      >
+                        {{ t('data-planes.routes.item.health.ready') }}
+                      </KBadge>
 
-                        <KBadge
-                          v-else
-                          appearance="danger"
-                        >
-                          {{ t('data-planes.routes.item.health.not_ready') }}
-                        </KBadge>
-                      </template>
-                    </DefinitionCard>
+                      <KBadge
+                        v-else
+                        appearance="danger"
+                      >
+                        {{ t('data-planes.routes.item.health.not_ready') }}
+                      </KBadge>
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('http.api.property.tags') }}
-                      </template>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('http.api.property.tags') }}
+                    </template>
 
-                      <template #body>
-                        <TagList :tags="inbound.tags" />
-                      </template>
-                    </DefinitionCard>
+                    <template #body>
+                      <TagList :tags="inbound.tags" />
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('http.api.property.address') }}
-                      </template>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('http.api.property.address') }}
+                    </template>
 
-                      <template #body>
-                        <TextWithCopyButton :text="`${inbound.address ?? props.data.dataplane.networking.advertisedAddress ?? props.data.dataplane.networking.address}:${inbound.port}`" />
-                      </template>
-                    </DefinitionCard>
+                    <template #body>
+                      <TextWithCopyButton :text="`${inbound.address ?? props.data.dataplane.networking.advertisedAddress ?? props.data.dataplane.networking.address}:${inbound.port}`" />
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('http.api.property.serviceAddress') }}
-                      </template>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('http.api.property.serviceAddress') }}
+                    </template>
 
-                      <template #body>
-                        <TextWithCopyButton :text="`${inbound.serviceAddress ?? inbound.address ?? props.data.dataplane.networking.address}:${inbound.servicePort ?? inbound.port}`" />
-                      </template>
-                    </DefinitionCard>
-                  </div>
+                    <template #body>
+                      <TextWithCopyButton :text="`${inbound.serviceAddress ?? inbound.address ?? props.data.dataplane.networking.address}:${inbound.servicePort ?? inbound.port}`" />
+                    </template>
+                  </DefinitionCard>
                 </div>
               </div>
-            </template>
+            </div>
           </KCard>
         </div>
 
@@ -177,65 +173,63 @@
               <KCard
                 class="mt-4"
               >
-                <template #body>
-                  <div class="columns">
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
-                      </template>
+                <div class="columns">
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
+                    </template>
 
-                      <template #body>
-                        {{ formatIsoDate(mTLS.certificateExpirationTime) }}
-                      </template>
-                    </DefinitionCard>
+                    <template #body>
+                      {{ formatIsoDate(mTLS.certificateExpirationTime) }}
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('data-planes.routes.item.mtls.generation_time.title') }}
-                      </template>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('data-planes.routes.item.mtls.generation_time.title') }}
+                    </template>
 
-                      <template #body>
-                        {{ formatIsoDate(mTLS.lastCertificateRegeneration) }}
-                      </template>
-                    </DefinitionCard>
+                    <template #body>
+                      {{ formatIsoDate(mTLS.lastCertificateRegeneration) }}
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('data-planes.routes.item.mtls.regenerations.title') }}
-                      </template>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('data-planes.routes.item.mtls.regenerations.title') }}
+                    </template>
 
-                      <template #body>
-                        {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
-                      </template>
-                    </DefinitionCard>
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
-                      </template>
+                    <template #body>
+                      {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
+                    </template>
 
-                      <template #body>
-                        {{ mTLS.issuedBackend }}
-                      </template>
-                    </DefinitionCard>
+                    <template #body>
+                      {{ mTLS.issuedBackend }}
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
-                      </template>
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
+                    </template>
 
-                      <template #body>
-                        <ul>
-                          <li
-                            v-for="item in mTLS.supportedBackends"
-                            :key="item"
-                          >
-                            {{ item }}
-                          </li>
-                        </ul>
-                      </template>
-                    </DefinitionCard>
-                  </div>
-                </template>
+                    <template #body>
+                      <ul>
+                        <li
+                          v-for="item in mTLS.supportedBackends"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </li>
+                      </ul>
+                    </template>
+                  </DefinitionCard>
+                </div>
               </KCard>
             </template>
           </template>
@@ -267,11 +261,9 @@
             <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
 
             <KCard class="mt-4">
-              <template #body>
-                <SubscriptionList
-                  :subscriptions="subscriptions"
-                />
-              </template>
+              <SubscriptionList
+                :subscriptions="subscriptions"
+              />
             </KCard>
           </div>
         </template>
