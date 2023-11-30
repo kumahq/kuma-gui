@@ -1,3 +1,4 @@
+import { getIsConnected } from '@/app/subscriptions/data'
 import type { ZoneOverview } from '@/types/index.d'
 import { get } from '@/utilities/get'
 
@@ -31,9 +32,5 @@ export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): 'online' 
   if (zoneOverview.zone.enabled === false) {
     return 'disabled'
   }
-  return getStatus(zoneOverview.zoneInsight?.subscriptions)
-}
-export function getStatus(subscriptions: {connectTime?: string, disconnectTime?: string}[] | undefined = []): 'online' | 'offline' {
-  const proxyOnline = subscriptions.length > 0 && [subscriptions[subscriptions.length - 1]].every((item) => item.connectTime?.length && !item.disconnectTime)
-  return proxyOnline ? 'online' : 'offline'
+  return getIsConnected(zoneOverview.zoneInsight?.subscriptions) ? 'online' : 'offline'
 }
