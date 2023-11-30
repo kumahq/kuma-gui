@@ -393,6 +393,11 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.23.3.tgz#0ce0be31a4ca4f1884b5786057cadcb6c3be58f9"
   integrity sha512-uVsWNvlVsIninV2prNz/3lHCb+5CJ+e+IUBfbjToAHODtfGYLfCFuY4AU7TskI+dAKk+njsPiBjq1gKTvZOBaw==
 
+"@babel/parser@^7.23.0":
+  version "7.23.5"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.23.5.tgz#37dee97c4752af148e1d38c34b856b2507660563"
+  integrity sha512-hOOqoiNXrmGdFbhgCzu6GiURxUgM27Xwd/aPuu8RfHEZPBzL1Z54okAHAQjXfcQNwvrlkAmAp4SlRTZ45vlthQ==
+
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.23.3":
   version "7.23.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/-/plugin-bugfix-safari-id-destructuring-collision-in-function-expression-7.23.3.tgz#5cd1c87ba9380d0afb78469292c954fee5d2411a"
@@ -1827,17 +1832,22 @@
   resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.11.11.tgz#b0e5525891b5124d07dc2f492a515fb6ed6bd661"
   integrity sha512-8GDGuknXpBAVGzvH5wI8oMUyfYBLL5L3sL4MTcYc+8EJxyjIWCLgaef3CMsgZdSbqqyArPKc4n7neKg/QraV5g==
 
-"@kong/icons@1.8.0", "@kong/icons@^1.8.0":
+"@kong/icons@1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.0.tgz#3fb6423fec31be4cc27af94f2912f52aee4f9077"
   integrity sha512-ynO3GXaJTh4yoJMZ7XeTbA+ZHvlrteleI+rWNGUbEr726Tw/jgHLdT6wZ1YWR65cA38FN0Q96vEX/7+6ExwaHA==
 
-"@kong/kongponents@9.0.0-alpha.63":
-  version "9.0.0-alpha.63"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.63.tgz#98e54c6377e471a73caf03c43b373fbc5eb50913"
-  integrity sha512-7HIkjWkaw63YgfGy/BZGFuk7X0Tq5VYAJXN8xNO0yy5xNIZUAALZn7sfcXUp1mrGNX2p95IjhqOi+ioFyZGDow==
+"@kong/icons@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.1.tgz#4ea19758013ec5f1aaa3578a3302b29c4311776a"
+  integrity sha512-60Ud+nahbJ7zc1tsKuDpSZgVZrEXM+VHvnoC82aK3C8hMeFlNwi4XeVe8+Rf9fvVCZdFosMDuAa3J0xdzCF2jQ==
+
+"@kong/kongponents@9.0.0-pr.1886.4c499324.0":
+  version "9.0.0-pr.1886.4c499324.0"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-pr.1886.4c499324.0.tgz#57f2eddd5d916b2e15538f6bf6859dad59749c47"
+  integrity sha512-u+uGZlhPLJGcI6BMw5E551Yf0MWePp55es5T+Mbw2agEmyHM263Dy/xydNMz+l0Qcx+VgOhTnvlJqs1IbXWh1A==
   dependencies:
-    "@kong/icons" "^1.8.0"
+    "@kong/icons" "^1.8.1"
     "@popperjs/core" "^2.11.8"
     date-fns "^2.30.0"
     date-fns-tz "^2.0.0"
@@ -2410,6 +2420,16 @@
     "@volar/language-core" "1.10.9"
     path-browserify "^1.0.1"
 
+"@vue/compiler-core@3.3.8":
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.3.8.tgz#301bb60d0245265a88ed5b30e200fbf223acb313"
+  integrity sha512-hN/NNBUECw8SusQvDSqqcVv6gWq8L6iAktUR0UF3vGu2OhzRqcOiAno0FmBJWwxhYEXRlQJT5XnoKsVq1WZx4g==
+  dependencies:
+    "@babel/parser" "^7.23.0"
+    "@vue/shared" "3.3.8"
+    estree-walker "^2.0.2"
+    source-map-js "^1.0.2"
+
 "@vue/compiler-core@3.3.9":
   version "3.3.9"
   resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.3.9.tgz#df1fc7947dcef5c2e12d257eae540057707f47d1"
@@ -2530,6 +2550,11 @@
   dependencies:
     "@vue/compiler-ssr" "3.3.9"
     "@vue/shared" "3.3.9"
+
+"@vue/shared@3.3.8":
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.3.8.tgz#f044942142e1d3a395f24132e6203a784838542d"
+  integrity sha512-8PGwybFwM4x8pcfgqEQFy70NaQxASvOC5DJwLQfpArw1UDfUXrJkdxD3BhVTMS+0Lef/TU7YO0Jvr0jJY8T+mw==
 
 "@vue/shared@3.3.9", "@vue/shared@^3.3.0":
   version "3.3.9"
