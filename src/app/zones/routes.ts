@@ -34,13 +34,6 @@ export const routes = (
                 module: 'zone-cps',
               },
               component: () => import('@/app/zones/views/ZoneListView.vue'),
-              children: [
-                {
-                  path: ':zone',
-                  name: 'zone-cp-summary-view',
-                  component: () => import('@/app/zones/views/ZoneSummaryView.vue'),
-                },
-              ],
             },
             {
               path: ':zone',

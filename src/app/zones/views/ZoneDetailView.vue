@@ -31,9 +31,8 @@
                 <template #title>
                   {{ t('http.api.property.status') }}
                 </template>
-
                 <template #body>
-                  <StatusBadge :status="status" />
+                  <StatusBadge :status="props.data.state" />
                 </template>
               </DefinitionCard>
 
@@ -43,7 +42,7 @@
                 </template>
 
                 <template #body>
-                  {{ t(`common.product.environment.${environment || 'unknown'}`) }}
+                  {{ t(`common.product.environment.${props.data.zoneInsight?.environment || 'unknown'}`) }}
                 </template>
               </DefinitionCard>
 
@@ -53,7 +52,7 @@
                 </template>
 
                 <template #body>
-                  {{ authenticationType || t('common.not_applicable') }}
+                  {{ props.data.zoneInsight?.authenticationType || t('common.not_applicable') }}
                 </template>
               </DefinitionCard>
             </div>
@@ -86,17 +85,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
-import {
-  getZoneControlPlaneStatus,
-  getZoneDpServerAuthType,
-  getZoneControlPlaneEnvironment,
-} from '../data'
+import type { ZoneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
-import type { ZoneOverview } from '@/types/index.d'
 
 const props = withDefaults(defineProps<{
   data: ZoneOverview
@@ -104,9 +96,4 @@ const props = withDefaults(defineProps<{
 }>(), {
   notifications: () => [],
 })
-
-const environment = computed(() => getZoneControlPlaneEnvironment(props.data))
-const status = computed(() => getZoneControlPlaneStatus(props.data))
-const authenticationType = computed(() => getZoneDpServerAuthType(props.data))
-
 </script>
