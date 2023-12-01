@@ -25,7 +25,7 @@
     />
   </div>
 </template>
-<script lang="ts" setup generic="T extends Record<string, string | number> = {}">
+<script lang="ts" setup generic="T extends Record<string, string | number | boolean> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -130,21 +130,27 @@ watch(() => {
     if (param.length === 0) {
       param = String(def)
     }
+
+    // Change `param` to the empty string for boolean parameters that are `false` so that it’s omitted in the URL.
+    if (typeof def === 'boolean' && String(param) === 'false') {
+      param = ''
+    }
+
     prev[prop] = decodeURIComponent(param)
     return prev
   }, {})
   routeParams.value = params as UnwrapRef<Params>
 }, { immediate: true })
 
-let newParams = {}
-const routerPush = beforePaint((params: Record<string, string | undefined>) => {
+let newParams: Record<string, string | boolean | undefined> = {}
+const routerPush = beforePaint((params: Record<string, string | boolean | undefined>) => {
   router.push({
     name: props.name,
     query: cleanQuery(params, route.query),
   })
   newParams = {}
 })
-const routeUpdate = (params: Record<string, string | undefined>) => {
+const routeUpdate = (params: Record<string, string | boolean | undefined>) => {
   newParams = {
     ...newParams,
     ...params,

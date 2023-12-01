@@ -6,7 +6,11 @@
     :is-searchable="props.isSearchable"
     :code-max-height="props.codeMaxHeight"
     :query="props.query"
+    :is-filter-mode="props.isFilterMode"
+    :is-reg-exp-mode="props.isRegExpMode"
     @query-change="emit('query-change', $event)"
+    @filter-mode-change="emit('filter-mode-change', $event)"
+    @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
   >
     <template #secondary-actions>
       <KTooltip
@@ -53,14 +57,20 @@ const props = withDefaults(defineProps<{
   codeMaxHeight?: string
   isSearchable?: boolean
   query?: string
+  isFilterMode?: boolean
+  isRegExpMode?: boolean
 }>(), {
   codeMaxHeight: undefined,
   isSearchable: false,
   query: '',
+  isFilterMode: false,
+  isRegExpMode: false,
 })
 
 const emit = defineEmits<{
   (event: 'query-change', query: string): void
+  (event: 'filter-mode-change', isFilterMode: boolean): void
+  (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
