@@ -62,11 +62,11 @@ export function getTags(dataplaneOverview: DataplaneOverview): LabelValue[] {
   if (inbound) {
     tags = inbound
       .flatMap((inbound) => Object.entries(inbound.tags))
-      .map(([key, value]) => key + separator + value)
+      .map(([key, value]) => `${key}${separator}${value}`)
   }
 
   if (gateway) {
-    tags = Object.entries(gateway.tags).map(([key, value]) => key + separator + value)
+    tags = Object.entries(gateway.tags).map(([key, value]) => `${key}${separator}${value}`)
   }
 
   const uniqueTags = Array.from(new Set(tags))
