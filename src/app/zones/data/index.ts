@@ -47,7 +47,9 @@ export const ZoneInsight = {
           const str = isSet<string>(connectedSubscription?.config) ? connectedSubscription.config : '{}'
           try {
             return JSON.parse(str)
-          } catch (e) { }
+          } catch (e) {
+            console.error(e)
+          }
           return {}
         })()
 
