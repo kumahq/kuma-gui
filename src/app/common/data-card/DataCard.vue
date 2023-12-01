@@ -18,6 +18,11 @@
 .data-card {
   padding: $kui-space-50;
 }
+
+.data-card :deep(.card-content) {
+  font-size: $kui-font-size-20;
+}
+
 .card,
 .title,
 .body > :deep(dl),
