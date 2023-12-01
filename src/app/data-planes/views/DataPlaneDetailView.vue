@@ -285,7 +285,7 @@ import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tok
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import { getLastUpdateTime, getStatusAndReason } from '../data'
+import { getLastUpdateTime, getStatusAndReason, getTags } from '../data'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -297,7 +297,6 @@ import { useI18n } from '@/utilities'
 import {
   compatibilityKind,
   COMPATIBLE,
-  dpTags,
   INCOMPATIBLE_WRONG_FORMAT,
 } from '@/utilities/dataplane'
 
@@ -348,8 +347,8 @@ const warnings = computed(() => {
   }
 
   if (can('use zones')) {
-    const tags = dpTags(props.data.dataplane)
-    const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
+    const tags = getTags(props.data)
+    const zoneTag = tags.find((tag) => tag.label === 'kuma.io/zone')
 
     if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
       warnings.push({

@@ -1,70 +1,11 @@
 import {
   Compatibility,
   DataPlaneInsight,
-  DataplaneNetworking,
   DiscoverySubscription,
   KDSSubscription,
-  LabelValue,
   StatusKeyword,
   Version,
 } from '@/types/index.d'
-
-/**
- * Takes a data plane and constructs the list of tags. It removes duplicate tags so we don't display them twice. Note that tags are only considered a duplicate if both their key and their value are the same.
- *
- * **Example**:
- *
- * Data plane:
- *
- * ```yaml
- * type: Dataplane
- * mesh: default
- * name: cluster-1.ingress-01
- * networking:
- *   inbound:
- *     - port: 1234
- *       tags:
- *         kuma.io/service: backend
- *         version: 1
- *     - port: 1235
- *       tags:
- *         kuma.io/service: backend-api
- *         version: 1
- * ```
- *
- * Output:
- *
- * ```js
- * [
- *   { label: 'kuma.io/service', value: 'backend'},
- *   { label: 'kuma.io/service', value: 'backend-api'},
- *   { label: 'version', value: '1'},
- * ]
- * ```
- */
-export function dpTags(dataplane: { networking: DataplaneNetworking }): LabelValue[] {
-  let tags: string[] = []
-
-  if (dataplane.networking.inbound) {
-    tags = dataplane.networking.inbound
-      .filter((inbound) => 'tags' in inbound)
-      .flatMap((inbound) => Object.entries(inbound.tags))
-      .map(([key, value]) => `${key}=${value}`)
-  }
-
-  if (dataplane.networking.gateway) {
-    // gateway data plane has no inbounds, but has tags embedded in gateway branch
-    tags = Object.entries(dataplane.networking.gateway.tags).map(([key, value]) => `${key}=${value}`)
-  }
-
-  const uniqueTags = Array.from(new Set(tags))
-
-  uniqueTags.sort((tagPairA, tagPairB) => tagPairA.localeCompare(tagPairB))
-
-  return uniqueTags
-    .map((tagPair) => tagPair.split('='))
-    .map(([label, value]) => ({ label, value }))
-}
 
 // getItemStatusFromInsight takes object with subscriptions and returns a
 // status 'online' | 'offline'
