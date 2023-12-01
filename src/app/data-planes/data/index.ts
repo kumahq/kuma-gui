@@ -40,9 +40,6 @@ export function getStatusAndReason(dataplaneOverview: DataplaneOverview): { stat
 
   let status: StatusKeyword
   switch (true) {
-    case inbounds.length === 0:
-      status = 'online'
-      break
     case unhealthyInbounds.length === inbounds.length:
       // All inbounds being unhealthy means the Dataplane is offline.
       status = 'offline'
