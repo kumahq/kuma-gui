@@ -16,7 +16,7 @@
               </template>
 
               <template #body>
-                <StatusBadge :status="getItemStatusFromInsight(props.data.zoneIngressInsight)" />
+                <StatusBadge :status="props.data.state" />
               </template>
             </DefinitionCard>
 
@@ -26,8 +26,8 @@
               </template>
 
               <template #body>
-                <template v-if="props.data.zoneIngress.networking?.address && props.data.zoneIngress.networking?.port">
-                  <TextWithCopyButton :text="`${props.data.zoneIngress.networking.address}:${props.data.zoneIngress.networking.port}`" />
+                <template v-if="props.data.zoneIngress.socketAddress.length > 0">
+                  <TextWithCopyButton :text="props.data.zoneIngress.socketAddress" />
                 </template>
 
                 <template v-else>
@@ -42,8 +42,8 @@
               </template>
 
               <template #body>
-                <template v-if="props.data.zoneIngress.networking?.advertisedAddress && props.data.zoneIngress.networking?.advertisedPort">
-                  <TextWithCopyButton :text="`${props.data.zoneIngress.networking.advertisedAddress}:${props.data.zoneIngress.networking.advertisedPort}`" />
+                <template v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0">
+                  <TextWithCopyButton :text="props.data.zoneIngress.advertisedSocketAddress" />
                 </template>
 
                 <template v-else>
@@ -76,12 +76,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { ZoneIngressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
-import type { ZoneIngressOverview } from '@/types/index.d'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const props = defineProps<{
   data: ZoneIngressOverview
