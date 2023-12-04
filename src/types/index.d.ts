@@ -259,16 +259,8 @@ export type PolicyType = {
 
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
 
-export type Compatibility = {
-  kind: 'COMPATIBLE' | 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP' | 'INCOMPATIBLE_UNSUPPORTED_ENVOY' | 'INCOMPATIBLE_WRONG_FORMAT' | 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'
-  payload?: {
-    kumaDp: string
-    envoy?: string
-  }
-}
-
 export type ZoneCompatibility = {
-  kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS
+  kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS'
   payload?: {
     zoneCpVersion: string
     globalCpVersion: string

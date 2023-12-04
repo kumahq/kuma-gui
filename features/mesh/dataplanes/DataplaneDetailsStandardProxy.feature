@@ -46,6 +46,7 @@ Feature: Dataplane details for standard Data Plane Proxy
                   kuma.io/protocol: http
                   kuma.io/zone: zone-1
         dataplaneInsight:
+          mTLS: !!js/undefined
           subscriptions:
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
@@ -86,7 +87,6 @@ Feature: Dataplane details for standard Data Plane Proxy
   Scenario: Overview tab has expected content
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
-    And the "$warnings" element doesn't exist
     And the "$details" element contains "online"
     And the "$inbounds" element contains
       | Value                 |
@@ -95,6 +95,7 @@ Feature: Dataplane details for standard Data Plane Proxy
       | 44.167.201.218:62098  |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
+    And the "$warnings" element doesn't exist
     And the "$subscriptions" element contains "Connected: Feb 17, 2021, 7:33 AM"
     And the "$subscriptions" element contains "CP instance ID: dpp-1-cp-instance-id"
 

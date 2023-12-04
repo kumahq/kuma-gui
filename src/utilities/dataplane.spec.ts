@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest'
 
 import { getItemStatusFromInsight } from './dataplane'
-import type { DiscoverySubscription } from '@/types/index.d'
+import type { KDSSubscription } from '@/types/index.d'
 
 describe('utilities/dataplane', () => {
   describe('getItemStatusFromInsight', () => {
-    type TestCases = {message: string, args: [{ subscriptions?: DiscoverySubscription[] }], expected: string}[]
+    type TestCases = {message: string, args: [{ subscriptions?: KDSSubscription[] }], expected: string}[]
     test.each(([
       {
         message: 'undefined insight is offline',

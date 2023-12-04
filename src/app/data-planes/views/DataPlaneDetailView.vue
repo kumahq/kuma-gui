@@ -285,7 +285,7 @@ import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tok
 import { InfoIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import { getLastUpdateTime, getStatusAndReason, getTags } from '../data'
+import { getLastUpdateTime, getIsCertExpired, getStatusAndReason, getWarnings } from '../data'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -294,11 +294,6 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
-import {
-  compatibilityKind,
-  COMPATIBLE,
-  INCOMPATIBLE_WRONG_FORMAT,
-} from '@/utilities/dataplane'
 
 const { t, formatIsoDate } = useI18n()
 const can = useCan()
@@ -308,61 +303,19 @@ const props = defineProps<{
 }>()
 
 const statusWithReason = computed(() => getStatusAndReason(props.data))
-
 const formattedLastUpdateTime = computed(() => {
-  const lastUpdateTime = getLastUpdateTime(props.data.dataplaneInsight?.subscriptions ?? [])
+  const lastUpdateTime = getLastUpdateTime(props.data)
   return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
 })
-
 const warnings = computed(() => {
-  const subscriptions = props.data.dataplaneInsight?.subscriptions ?? []
-  if (subscriptions.length === 0) {
-    return []
-  }
+  const warnings = getWarnings(props.data, can('use zones'))
 
-  const lastSubscription = subscriptions[subscriptions.length - 1]
-  if (!('version' in lastSubscription) || !lastSubscription.version) {
-    return []
-  }
-
-  const version = lastSubscription.version
-
-  const warnings: { kind: string, payload?: any }[] = []
-  if (version.kumaDp && version.envoy) {
-    const compatibility = compatibilityKind(version)
-
-    if (compatibility.kind !== COMPATIBLE && compatibility.kind !== INCOMPATIBLE_WRONG_FORMAT) {
-      warnings.push(compatibility)
-    }
-  }
-  const mTLS = props.data.dataplaneInsight?.mTLS
-  if (
-    mTLS &&
-    (Date.now() > new Date(mTLS?.certificateExpirationTime).getTime())
-  ) {
-    warnings.push({
-      kind: 'CERT_EXPIRED',
-      payload: {},
-    })
-  }
-
-  if (can('use zones')) {
-    const tags = getTags(props.data)
-    const zoneTag = tags.find((tag) => tag.label === 'kuma.io/zone')
-
-    if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
-      warnings.push({
-        kind: 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS',
-        payload: {
-          kumaDp: version.kumaDp.version,
-        },
-      })
-    }
+  if (getIsCertExpired(props.data)) {
+    warnings.push({ kind: 'CERT_EXPIRED' })
   }
 
   return warnings
 })
-
 </script>
 
 <style lang="scss" scoped>

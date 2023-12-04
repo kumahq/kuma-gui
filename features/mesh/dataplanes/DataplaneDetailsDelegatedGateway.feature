@@ -33,6 +33,7 @@ Feature: Dataplane details for delegated gateway
                 kuma.io/zone: zone-1
             inbound: !!js/undefined
         dataplaneInsight:
+          mTLS: !!js/undefined
           subscriptions:
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
@@ -53,13 +54,13 @@ Feature: Dataplane details for delegated gateway
   Scenario: Overview tab has expected content
     Then the page title contains "dataplane-gateway_delegated-1"
     And the "$detail-view" element contains "dataplane-gateway_delegated-1"
-    And the "$warnings" element doesn't exist
     And the "$details" element contains
       | Value                 |
       | online                |
       | 193.107.134.106       |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
+    And the "$warnings" element doesn't exist
     And the "$inbounds" element doesn't exist
 
   Scenario: Policies tab has expected content
