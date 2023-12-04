@@ -15,7 +15,8 @@ export type ZoneInsight = PartialZoneInsight & {
   config: Record<string, unknown>
   authenticationType: string
   environment: string
-}
+} & Required<Pick<PartialZoneInsight, 'subscriptions'>> & PartialZoneInsight
+
 export type ZoneOverview = PartialZoneOverview & {
   zoneInsight?: ZoneInsight
   zone: Zone
@@ -30,17 +31,16 @@ export const Zone = {
     }
   },
 }
+
 export const ZoneInsight = {
   fromObject: (item?: PartialZoneInsight): ZoneInsight | undefined => {
     // if item isn't set don't even try augmenting things
     return isSet<PartialZoneInsight>(item)
       ? ((item) => {
+        item.subscriptions = !Array.isArray(item.subscriptions) ? [] : item.subscriptions
         // figure out the connectedSubscription by looking at the connectTime
         // and disconnectTime of the last subscription
-        const connectedSubscription: KDSSubscription | undefined = !Array.isArray(item.subscriptions)
-          ? undefined
-          : [item.subscriptions[item.subscriptions.length - 1]].find((item) => item.connectTime?.length && !item.disconnectTime)
-
+        const connectedSubscription = item.subscriptions.slice(-1).find((item) => item.connectTime?.length && !item.disconnectTime)
         // using the connectedSubscription find the config for the zone if it exists, is valid JSON and is not null and
         // turn it into an object
         const config: Record<string, unknown> = (() => {
