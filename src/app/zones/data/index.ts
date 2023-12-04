@@ -37,10 +37,10 @@ export const ZoneInsight = {
     // if item isn't set don't even try augmenting things
     return isSet<PartialZoneInsight>(item)
       ? ((item) => {
-        item.subscriptions = !Array.isArray(item.subscriptions) ? [] : item.subscriptions
+        const subscriptions = Array.isArray(item.subscriptions) ? item.subscriptions : []
         // figure out the connectedSubscription by looking at the connectTime
         // and disconnectTime of the last subscription
-        const connectedSubscription = item.subscriptions.slice(-1).find((item) => item.connectTime?.length && !item.disconnectTime)
+        const connectedSubscription = subscriptions.slice(-1).find((item) => item.connectTime?.length && !item.disconnectTime)
         // using the connectedSubscription find the config for the zone if it exists, is valid JSON and is not null and
         // turn it into an object
         const config: Record<string, unknown> = (() => {
@@ -56,6 +56,7 @@ export const ZoneInsight = {
         // set the extra stuff
         return {
           ...item,
+          subscriptions,
           connectedSubscription,
           config,
           authenticationType: get(config, 'dpServer.auth.type', ''),
@@ -73,7 +74,7 @@ export const ZoneOverview = {
       ...item,
       zoneInsight: insight,
       zone,
-      // first check see if the zone is disabled, if not look for the connectSubscription
+      // first check see if the zone is disabled, if not look for the connectedSubscription
       state: !zone.enabled ? 'disabled' : typeof insight?.connectedSubscription !== 'undefined' ? 'online' : 'offline',
     }
   },
