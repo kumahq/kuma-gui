@@ -9,9 +9,8 @@ updates:
       - "dependencies"
     ignore:
       # TODO: Remove this once Kongponents v9 is used from a mainline release again (i.e. neither alpha or beta).
-      # Ignores Kongponents updates while on the v9 alpha and beta branches. This is necessary because Kongponents publishes prerelease versions for each pull request. Dependabot then creates PRs updating to `-pr.X.Y` which we definitely need to prevent. There doesn’t seem to be a way to update only the alpha version.
+      # Ignores Kongponents updates. This is necessary because Kongponents publishes prerelease versions for each pull request. Dependabot then creates PRs updating to `-pr.X.Y` which we definitely need to prevent. There doesn’t seem to be a way to update only the alpha version.
       - dependency-name: "@kong/kongponents"
-        versions: ["9.x"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
