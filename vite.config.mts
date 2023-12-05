@@ -23,8 +23,8 @@ export default defineConfig({
         schema: DEFAULT_SCHEMA.extend(
           new Type('tag:yaml.org,2002:text/markdown', {
             kind: 'scalar',
-            construct: (data) => {
-              return marked(data).replace(/</g, "'<'")
+            construct: async (data) => {
+              return (await marked(data)).replace(/</g, "'<'")
                 .replace(/%7B/g, '{')
                 .replace(/%7D/g, '}')
             },
