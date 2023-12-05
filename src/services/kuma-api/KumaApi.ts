@@ -1,7 +1,6 @@
 import { Api } from './Api'
 import type {
   ApiKindListResponse,
-  ApiListResponse,
   DataPlaneOverviewParameters,
   ExternalServicesParameters,
   PaginatedApiListResponse,
@@ -12,9 +11,9 @@ import type { Config } from '@/types/config.d'
 import type {
   DataPlane,
   DataPlaneOverview,
-  DataplaneRule,
   ExternalService,
   GlobalInsight,
+  InspectRulesForDataplane,
   Mesh,
   MeshGatewayDataplane,
   MeshInsight,
@@ -161,8 +160,8 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/dataplanes/${name}/policies`, { params })
   }
 
-  getDataplaneRules({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ApiListResponse<DataplaneRule>> {
-    return this.client.get(`/meshes/${mesh}/dataplanes/${name}/rules`, { params })
+  getDataplaneRules({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<InspectRulesForDataplane> {
+    return this.client.get(`/meshes/${mesh}/dataplanes/${name}/_rules`, { params })
   }
 
   /**
