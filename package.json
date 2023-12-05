@@ -39,7 +39,7 @@
   "dependencies": {
     "@kong-ui-public/i18n": "2.0.0",
     "@kong/icons": "1.8.3",
-    "@kong/kongponents": "9.0.0-alpha.63",
+    "@kong/kongponents": "9.0.0-pr.1881.60541b69.0",
     "brandi": "5.0.0",
     "deepmerge": "4.3.1",
     "js-yaml": "4.1.0",
