@@ -19,34 +19,32 @@
       </template>
 
       <KCard>
-        <template #body>
-          <DataSource
-            v-slot="{ data, error }: ZoneIngressSource"
-            :src="`/zone-ingresses/${route.params.zoneIngress}`"
-          >
-            <ErrorBlock
-              v-if="error !== undefined"
-              :error="error"
+        <DataSource
+          v-slot="{ data, error }: ZoneIngressSource"
+          :src="`/zone-ingresses/${route.params.zoneIngress}`"
+        >
+          <ErrorBlock
+            v-if="error !== undefined"
+            :error="error"
+          />
+
+          <LoadingBlock v-else-if="data === undefined" />
+
+          <template v-else>
+            <ResourceCodeBlock
+              id="code-block-zone-ingress"
+              :resource="data"
+              :resource-fetcher="(params) => kumaApi.getZoneIngress({ name: route.params.zoneIngress }, params)"
+              is-searchable
+              :query="route.params.codeSearch"
+              :is-filter-mode="route.params.codeFilter === 'true'"
+              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+              @query-change="route.update({ codeSearch: $event })"
+              @filter-mode-change="route.update({ codeFilter: $event })"
+              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
             />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <template v-else>
-              <ResourceCodeBlock
-                id="code-block-zone-ingress"
-                :resource="data"
-                :resource-fetcher="(params) => kumaApi.getZoneIngress({ name: route.params.zoneIngress }, params)"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter === 'true'"
-                :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              />
-            </template>
-          </DataSource>
-        </template>
+          </template>
+        </DataSource>
       </KCard>
     </AppView>
   </RouteView>

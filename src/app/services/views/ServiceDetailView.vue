@@ -10,18 +10,16 @@
     <AppView>
       <div class="stack">
         <KCard>
-          <template #body>
-            <ExternalServiceDetails
-              v-if="props.data.serviceType === 'external'"
-              :mesh="route.params.mesh"
-              :service="route.params.service"
-            />
+          <ExternalServiceDetails
+            v-if="props.data.serviceType === 'external'"
+            :mesh="route.params.mesh"
+            :service="route.params.service"
+          />
 
-            <ServiceInsightDetails
-              v-else
-              :service-insight="data"
-            />
-          </template>
+          <ServiceInsightDetails
+            v-else
+            :service-insight="data"
+          />
         </KCard>
       </div>
     </AppView>

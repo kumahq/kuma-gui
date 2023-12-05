@@ -20,12 +20,6 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-.summary-slideout :deep(.kong-card) {
-  // TODO: Remove these once those styles have been removed/fixed in Kongponents v9.
-  // Overrides KSlideout’s override.
-  padding: #{$kui-space-80} !important;
-}
-
 .summary-slideout :deep(.k-slideout-header-content) {
   padding-right: $kui-space-80;
   padding-left: $kui-space-80;

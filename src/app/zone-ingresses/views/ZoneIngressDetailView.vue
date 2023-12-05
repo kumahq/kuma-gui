@@ -9,51 +9,49 @@
         data-testid="detail-view-details"
       >
         <KCard>
-          <template #body>
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
+          <div class="columns">
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.status') }}
+              </template>
+
+              <template #body>
+                <StatusBadge :status="getItemStatusFromInsight(props.data.zoneIngressInsight)" />
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.address') }}
+              </template>
+
+              <template #body>
+                <template v-if="props.data.zoneIngress.networking?.address && props.data.zoneIngress.networking?.port">
+                  <TextWithCopyButton :text="`${props.data.zoneIngress.networking.address}:${props.data.zoneIngress.networking.port}`" />
                 </template>
 
-                <template #body>
-                  <StatusBadge :status="getItemStatusFromInsight(props.data.zoneIngressInsight)" />
+                <template v-else>
+                  {{ t('common.detail.none') }}
                 </template>
-              </DefinitionCard>
+              </template>
+            </DefinitionCard>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.advertisedAddress') }}
+              </template>
 
-                <template #body>
-                  <template v-if="props.data.zoneIngress.networking?.address && props.data.zoneIngress.networking?.port">
-                    <TextWithCopyButton :text="`${props.data.zoneIngress.networking.address}:${props.data.zoneIngress.networking.port}`" />
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.advertisedAddress') }}
+              <template #body>
+                <template v-if="props.data.zoneIngress.networking?.advertisedAddress && props.data.zoneIngress.networking?.advertisedPort">
+                  <TextWithCopyButton :text="`${props.data.zoneIngress.networking.advertisedAddress}:${props.data.zoneIngress.networking.advertisedPort}`" />
                 </template>
 
-                <template #body>
-                  <template v-if="props.data.zoneIngress.networking?.advertisedAddress && props.data.zoneIngress.networking?.advertisedPort">
-                    <TextWithCopyButton :text="`${props.data.zoneIngress.networking.advertisedAddress}:${props.data.zoneIngress.networking.advertisedPort}`" />
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
+                <template v-else>
+                  {{ t('common.detail.none') }}
                 </template>
-              </DefinitionCard>
-            </div>
-          </template>
+              </template>
+            </DefinitionCard>
+          </div>
         </KCard>
 
         <template
@@ -66,11 +64,9 @@
             <h2>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h2>
 
             <KCard class="mt-4">
-              <template #body>
-                <SubscriptionList
-                  :subscriptions="subscriptions"
-                />
-              </template>
+              <SubscriptionList
+                :subscriptions="subscriptions"
+              />
             </KCard>
           </div>
         </template>

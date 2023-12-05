@@ -17,27 +17,25 @@
       </template>
 
       <KCard>
-        <template #body>
-          <DataSource
-            v-slot="{ data, error }: MeshSource"
-            :src="`/meshes/${route.params.mesh}`"
-          >
-            <ErrorBlock
-              v-if="error !== undefined"
-              :error="error"
+        <DataSource
+          v-slot="{ data, error }: MeshSource"
+          :src="`/meshes/${route.params.mesh}`"
+        >
+          <ErrorBlock
+            v-if="error !== undefined"
+            :error="error"
+          />
+
+          <LoadingBlock v-else-if="data === undefined" />
+
+          <template v-else>
+            <ResourceCodeBlock
+              id="code-block-mesh"
+              :resource="data"
+              :resource-fetcher="(params) => kumaApi.getMesh({ name: route.params.mesh }, params)"
             />
-
-            <LoadingBlock v-else-if="data === undefined" />
-
-            <template v-else>
-              <ResourceCodeBlock
-                id="code-block-mesh"
-                :resource="data"
-                :resource-fetcher="(params) => kumaApi.getMesh({ name: route.params.mesh }, params)"
-              />
-            </template>
-          </DataSource>
-        </template>
+          </template>
+        </DataSource>
       </KCard>
     </AppView>
   </RouteView>

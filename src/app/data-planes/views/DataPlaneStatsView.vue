@@ -20,18 +20,16 @@
       </template>
 
       <KCard>
-        <template #body>
-          <EnvoyData
-            resource="Data Plane Proxy"
-            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/stats`"
-            :query="route.params.codeSearch"
-            :is-filter-mode="route.params.codeFilter === 'true'"
-            :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-            @query-change="route.update({ codeSearch: $event })"
-            @filter-mode-change="route.update({ codeFilter: $event })"
-            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-          />
-        </template>
+        <EnvoyData
+          resource="Data Plane Proxy"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/stats`"
+          :query="route.params.codeSearch"
+          :is-filter-mode="route.params.codeFilter === 'true'"
+          :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+          @query-change="route.update({ codeSearch: $event })"
+          @filter-mode-change="route.update({ codeFilter: $event })"
+          @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+        />
       </KCard>
     </AppView>
   </RouteView>

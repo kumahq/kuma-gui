@@ -36,32 +36,30 @@
       </template>
 
       <KCard>
-        <template #body>
-          <CodeBlock
-            v-if="Object.keys(props.data.zoneInsight?.config ?? {}).length > 0"
-            id="code-block-zone-config"
-            language="json"
-            :code="JSON.stringify(props.data.zoneInsight?.config ?? {}, null, 2)"
-            is-searchable
-            :query="route.params.codeSearch"
-            :is-filter-mode="route.params.codeFilter === 'true'"
-            :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-            @query-change="route.update({ codeSearch: $event })"
-            @filter-mode-change="route.update({ codeFilter: $event })"
-            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-          />
+        <CodeBlock
+          v-if="Object.keys(props.data.zoneInsight?.config ?? {}).length > 0"
+          id="code-block-zone-config"
+          language="json"
+          :code="JSON.stringify(props.data.zoneInsight?.config ?? {}, null, 2)"
+          is-searchable
+          :query="route.params.codeSearch"
+          :is-filter-mode="route.params.codeFilter === 'true'"
+          :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+          @query-change="route.update({ codeSearch: $event })"
+          @filter-mode-change="route.update({ codeFilter: $event })"
+          @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+        />
 
-          <KAlert
-            v-else
-            class="mt-4"
-            data-testid="warning-no-subscriptions"
-            appearance="warning"
-          >
-            <template #alertMessage>
-              {{ t('zone-cps.detail.no_subscriptions') }}
-            </template>
-          </KAlert>
-        </template>
+        <KAlert
+          v-else
+          class="mt-4"
+          data-testid="warning-no-subscriptions"
+          appearance="warning"
+        >
+          <template #alertMessage>
+            {{ t('zone-cps.detail.no_subscriptions') }}
+          </template>
+        </KAlert>
       </KCard>
     </AppView>
   </RouteView>

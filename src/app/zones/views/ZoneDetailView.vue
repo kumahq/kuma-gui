@@ -25,38 +25,37 @@
         class="stack"
       >
         <KCard>
-          <template #body>
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
-                </template>
-                <template #body>
-                  <StatusBadge :status="props.data.state" />
-                </template>
-              </DefinitionCard>
+          <div class="columns">
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.status') }}
+              </template>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.type') }}
-                </template>
+              <template #body>
+                <StatusBadge :status="props.data.state" />
+              </template>
+            </DefinitionCard>
 
-                <template #body>
-                  {{ t(`common.product.environment.${props.data.zoneInsight?.environment || 'unknown'}`) }}
-                </template>
-              </DefinitionCard>
+            <DefinitionCard>
+              <template #title>
+                {{ t('http.api.property.type') }}
+              </template>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('zone-cps.routes.item.authentication_type') }}
-                </template>
+              <template #body>
+                {{ t(`common.product.environment.${props.data.zoneInsight?.environment || 'unknown'}`) }}
+              </template>
+            </DefinitionCard>
 
-                <template #body>
-                  {{ props.data.zoneInsight?.authenticationType || t('common.not_applicable') }}
-                </template>
-              </DefinitionCard>
-            </div>
-          </template>
+            <DefinitionCard>
+              <template #title>
+                {{ t('zone-cps.routes.item.authentication_type') }}
+              </template>
+
+              <template #body>
+                {{ props.data.zoneInsight?.authenticationType || t('common.not_applicable') }}
+              </template>
+            </DefinitionCard>
+          </div>
         </KCard>
 
         <template
@@ -69,13 +68,11 @@
             <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
 
             <KCard class="mt-4">
-              <template #body>
-                <SubscriptionList
-                  :subscriptions="subscriptions"
-                >
-                  <p>{{ t('zone-cps.routes.item.subscription_intro') }}</p>
-                </SubscriptionList>
-              </template>
+              <SubscriptionList
+                :subscriptions="subscriptions"
+              >
+                <p>{{ t('zone-cps.routes.item.subscription_intro') }}</p>
+              </SubscriptionList>
             </KCard>
           </div>
         </template>

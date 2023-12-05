@@ -51,174 +51,172 @@
             @change="getEgresses"
           />
           <KCard>
-            <template #body>
-              <ErrorBlock
-                v-if="error !== undefined"
-                :error="error"
-              />
+            <ErrorBlock
+              v-if="error !== undefined"
+              :error="error"
+            />
 
-              <AppCollection
-                v-else
-                class="zone-cp-collection"
-                data-testid="zone-cp-collection"
-                :headers="[
-                  { label: 'Name', key: 'name' },
-                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
-                  { label: 'Type', key: 'type' },
-                  { label: 'Ingresses (online / total)', key: 'ingress' },
-                  { label: 'Egresses (online / total)', key: 'egress' },
-                  { label: 'Status', key: 'status' },
-                  { label: 'Warnings', key: 'warnings', hideLabel: true },
-                  { label: 'Details', key: 'details', hideLabel: true },
-                  { label: 'Actions', key: 'actions', hideLabel: true },
-                ]"
-                :page-number="parseInt(route.params.page)"
-                :page-size="parseInt(route.params.size)"
-                :total="data?.total"
-                :items="data ? transformToTableData(data.items) : undefined"
-                :error="error"
-                :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
-                :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
-                :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
-                :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
-                :is-selected-row="(row) => row.name === route.params.zone"
-                @change="route.update"
-              >
-                <template #name="{ row }">
-                  <RouterLink
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.name,
-                      },
-                      query: {
-                        page: route.params.page,
-                        size: route.params.size,
-                      },
-                    }"
-                  >
-                    {{ row.name }}
-                  </RouterLink>
-                </template>
-
-                <template #zoneCpVersion="{ rowValue }">
-                  {{ rowValue || t('common.collection.none') }}
-                </template>
-
-                <template #type="{ rowValue }">
-                  {{ rowValue || t('common.collection.none') }}
-                </template>
-
-                <template #ingress="{ row: item }">
-                  <template
-                    v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
-                  >
-                    {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                  </template>
-                </template>
-
-                <template #egress="{ row: item }">
-                  <template
-                    v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
-                  >
-                    {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                  </template>
-                </template>
-
-                <template #status="{ rowValue }">
-                  <StatusBadge
-                    :status="rowValue"
-                  />
-                </template>
-
-                <template #warnings="{ row: item }">
-                  <KTooltip
-                    v-if="Object.values(item.warnings).some((item) => item)"
-                  >
-                    <template
-                      #content
-                    >
-                      <ul>
-                        <template
-                          v-for="(warning, i) in item.warnings"
-                          :key="i"
-                        >
-                          <li
-                            v-if="warning"
-                            :data-testid="`warning-${i}`"
-                          >
-                            {{ t(`zone-cps.list.${i}`) }}
-                          </li>
-                        </template>
-                      </ul>
-                    </template>
-                    <WarningIcon
-                      data-testid="warning"
-                      class="mr-1"
-                      :size="KUI_ICON_SIZE_30"
-                      hide-title
-                    />
-                  </KTooltip>
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #details="{ row }">
-                  <RouterLink
-                    class="details-link"
-                    data-testid="details-link"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.name,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.details_link') }}
-
-                    <ArrowRightIcon
-                      display="inline-block"
-                      decorative
-                      :size="KUI_ICON_SIZE_30"
-                    />
-                  </RouterLink>
-                </template>
-
-                <template
-                  v-if="can('create zones')"
-                  #actions="{ row }"
+            <AppCollection
+              v-else
+              class="zone-cp-collection"
+              data-testid="zone-cp-collection"
+              :headers="[
+                { label: 'Name', key: 'name' },
+                { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                { label: 'Type', key: 'type' },
+                { label: 'Ingresses (online / total)', key: 'ingress' },
+                { label: 'Egresses (online / total)', key: 'egress' },
+                { label: 'Status', key: 'status' },
+                { label: 'Warnings', key: 'warnings', hideLabel: true },
+                { label: 'Details', key: 'details', hideLabel: true },
+                { label: 'Actions', key: 'actions', hideLabel: true },
+              ]"
+              :page-number="parseInt(route.params.page)"
+              :page-size="parseInt(route.params.size)"
+              :total="data?.total"
+              :items="data ? transformToTableData(data.items) : undefined"
+              :error="error"
+              :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
+              :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
+              :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
+              :empty-state-cta-text="can('create zones') ? t('zones.index.create') : undefined"
+              :is-selected-row="(row) => row.name === route.params.zone"
+              @change="route.update"
+            >
+              <template #name="{ row }">
+                <RouterLink
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: row.name,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                    },
+                  }"
                 >
-                  <KDropdown
-                    class="actions-dropdown"
-                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                    width="150"
-                  >
-                    <template #default>
-                      <KButton
-                        class="non-visual-button"
-                        appearance="secondary"
-                        icon-only
-                      >
-                        <MoreIcon />
-                      </KButton>
-                    </template>
+                  {{ row.name }}
+                </RouterLink>
+              </template>
 
-                    <template #items>
-                      <KDropdownItem
-                        has-divider
-                        danger
-                        data-testid="dropdown-delete-item"
-                        @click="setDeleteZoneName(row.name)"
-                      >
-                        {{ t('common.collection.actions.delete') }}
-                      </KDropdownItem>
-                    </template>
-                  </KDropdown>
+              <template #zoneCpVersion="{ rowValue }">
+                {{ rowValue || t('common.collection.none') }}
+              </template>
+
+              <template #type="{ rowValue }">
+                {{ rowValue || t('common.collection.none') }}
+              </template>
+
+              <template #ingress="{ row: item }">
+                <template
+                  v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
+                >
+                  {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
                 </template>
-              </AppCollection>
-            </template>
+              </template>
+
+              <template #egress="{ row: item }">
+                <template
+                  v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
+                >
+                  {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                </template>
+              </template>
+
+              <template #status="{ rowValue }">
+                <StatusBadge
+                  :status="rowValue"
+                />
+              </template>
+
+              <template #warnings="{ row: item }">
+                <KTooltip
+                  v-if="Object.values(item.warnings).some((item) => item)"
+                >
+                  <template
+                    #content
+                  >
+                    <ul>
+                      <template
+                        v-for="(warning, i) in item.warnings"
+                        :key="i"
+                      >
+                        <li
+                          v-if="warning"
+                          :data-testid="`warning-${i}`"
+                        >
+                          {{ t(`zone-cps.list.${i}`) }}
+                        </li>
+                      </template>
+                    </ul>
+                  </template>
+                  <WarningIcon
+                    data-testid="warning"
+                    class="mr-1"
+                    :size="KUI_ICON_SIZE_30"
+                    hide-title
+                  />
+                </KTooltip>
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
+                </template>
+              </template>
+
+              <template #details="{ row }">
+                <RouterLink
+                  class="details-link"
+                  data-testid="details-link"
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: row.name,
+                    },
+                  }"
+                >
+                  {{ t('common.collection.details_link') }}
+
+                  <ArrowRightIcon
+                    display="inline-block"
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
+                  />
+                </RouterLink>
+              </template>
+
+              <template
+                v-if="can('create zones')"
+                #actions="{ row }"
+              >
+                <KDropdown
+                  class="actions-dropdown"
+                  :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
+                  width="150"
+                >
+                  <template #default>
+                    <KButton
+                      class="non-visual-button"
+                      appearance="secondary"
+                      icon-only
+                    >
+                      <MoreIcon />
+                    </KButton>
+                  </template>
+
+                  <template #items>
+                    <KDropdownItem
+                      has-divider
+                      danger
+                      data-testid="dropdown-delete-item"
+                      @click="setDeleteZoneName(row.name)"
+                    >
+                      {{ t('common.collection.actions.delete') }}
+                    </KDropdownItem>
+                  </template>
+                </KDropdown>
+              </template>
+            </AppCollection>
           </KCard>
 
           <RouterView
