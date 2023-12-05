@@ -36,6 +36,7 @@ describe('env', () => {
         KUMA_VERSION_URL: 'http://version.fake',
         KUMA_DOCS_URL: 'http://docs.fake',
         KUMA_MOCK_API_ENABLED: 'false',
+        KUMA_TRAFFIC_ENABLED: 'false',
         KUMA_ZONE_CREATION_FLOW: 'enabled',
       },
     )

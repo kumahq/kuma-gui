@@ -1,5 +1,12 @@
 <template>
-  <RouteView name="data-plane-detail-view">
+  <RouteView
+    v-slot="{ route }"
+    :params="{
+      mesh: '',
+      dataPlane: '',
+    }"
+    name="data-plane-detail-view"
+  >
     <AppView>
       <template
         v-if="warnings.length > 0"
@@ -81,6 +88,145 @@
           </div>
         </KCard>
 
+        <DataSource
+          v-if="can('read traffic') && typeof props.data.dataplane.networking.gateway === 'undefined'"
+          v-slot="{ data: traffic, error }: TrafficSource"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/traffic`"
+        >
+          <ErrorBlock
+            v-if="error"
+            :error="error"
+          />
+
+          <LoadingBlock v-else-if="traffic === undefined" />
+
+          <KCard
+            v-else
+            class="traffic"
+          >
+            <div class="columns">
+              <DataPlaneTraffic>
+                <template #title>
+                  <ForwardIcon
+                    display="inline-block"
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
+                  />
+                  Inbounds
+                </template>
+                <template #data>
+                  <dl>
+                    <div>
+                      <dt>{{ t('services.components.service_traffic.inbound', {}, {defaultMessage: 'Requests'}) }}</dt>
+                      <dd>{{ t('common.formats.integer', {value: 1000}) }}</dd>
+                    </div>
+                  </dl>
+                </template>
+                <ServiceTrafficGroup
+                  type="inbound"
+                >
+                  <template
+                    v-for="item in traffic.inbounds"
+                    :key="`${item.name}`"
+                  >
+                    <template
+                      v-for="meta in [
+                        {
+                          protocol: (typeof item.http !== 'undefined' ? 'http' : 'tcp') as 'http' | 'tcp',
+                          direction: 'downstream',
+                        },
+                      ]"
+                      :key="meta.protocol"
+                    >
+                      <ServiceTrafficCard
+                        :protocol="meta.protocol"
+                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
+                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
+                        :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
+                      >
+                        {{ item.name }}
+                      </ServiceTrafficCard>
+                    </template>
+                  </template>
+                </ServiceTrafficGroup>
+              </DataPlaneTraffic>
+              <DataPlaneTraffic>
+                <template #title>
+                  <GatewayIcon
+                    display="inline-block"
+                    decorative
+                    :size="KUI_ICON_SIZE_30"
+                  />
+                  <span>Outbounds</span>
+                </template>
+                <template #data>
+                  <dl>
+                    <div>
+                      <dt class="passthrough">
+                        {{ t('services.components.service_traffic.passthrough', {}, {defaultMessage: 'Passthrough Requests'}) }}
+                      </dt>
+                      <dd>{{ t('common.formats.integer', {value: 1000}) }}</dd>
+                    </div>
+                    <div>
+                      <dt class="outbounds">
+                        {{ t('services.components.service_traffic.mesh', {}, {defaultMessage: 'Mesh Requests'}) }}
+                      </dt>
+                      <dd>{{ t('common.formats.integer', {value: 1000}) }}</dd>
+                    </div>
+                  </dl>
+                </template>
+                <ServiceTrafficGroup
+                  type="passthrough"
+                >
+                  <template
+                    v-for="meta in [
+                      {
+                        protocol: 'cluster',
+                        direction: 'downstream',
+                      },
+                    ]"
+                    :key="meta.protocol"
+                  >
+                    <ServiceTrafficCard
+                      :protocol="`unknown`"
+                      :tx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] ?? 0), 0)"
+                      :rx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] ?? 0), 0)"
+                    >
+                      Non mesh traffic
+                    </ServiceTrafficCard>
+                  </template>
+                </ServiceTrafficGroup>
+                <ServiceTrafficGroup
+                  type="outbound"
+                >
+                  <template
+                    v-for="item in traffic.outbounds"
+                    :key="`${item.name}`"
+                  >
+                    <template
+                      v-for="meta in [
+                        {
+                          protocol: (typeof item.http !== 'undefined' ? 'http' : 'tcp') as 'http' | 'tcp',
+                          direction: 'downstream',
+                        },
+                      ]"
+                      :key="meta.protocol"
+                    >
+                      <ServiceTrafficCard
+                        :protocol="meta.protocol"
+                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
+                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
+                        :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
+                      >
+                        {{ item.name }}
+                      </ServiceTrafficCard>
+                    </template>
+                  </template>
+                </ServiceTrafficGroup>
+              </DataPlaneTraffic>
+            </div>
+          </KCard>
+        </DataSource>
         <div
           v-if="props.data.dataplane.networking.inbound && props.data.dataplane.networking.inbound.length > 0"
           data-testid="dataplane-inbounds"
@@ -274,15 +420,21 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon } from '@kong/icons'
+import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import { getLastUpdateTime, getIsCertExpired, getStatusAndReason, getWarnings } from '../data'
 import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import DataPlaneTraffic from '@/app/data-planes/components/data-plane-traffic/DataPlaneTraffic.vue'
+import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficCard.vue'
+import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
+import type { TrafficSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
@@ -311,6 +463,24 @@ const warnings = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+.traffic {
+  padding: 0;
+  container-type: inline-size;
+  container-name: traffic;
+  .columns {
+    padding: $kui-space-40;
+    background: linear-gradient(90deg, rgba(0, 0, 0, .1) 1px, transparent 1px);
+    background-position: 100% 0;
+    background-repeat: repeat-y;
+    background-size: 50%;
+  }
+}
+@container traffic (max-width: 40.95rem) {
+  .traffic .columns {
+    background: none;
+  }
+}
+
 .status-with-reason {
   display: flex;
   align-items: center;
