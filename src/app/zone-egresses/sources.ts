@@ -1,7 +1,7 @@
+import { ZoneEgressOverview, ZoneEgress } from './data'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { ZoneEgressOverview, ZoneEgress } from '@/types/index.d'
 type PaginationParams = {
   size: number
   page: number
@@ -42,7 +42,7 @@ export const sources = (api: KumaApi) => {
         })
         res.total = res.items.length
       }
-      return res
+      return ZoneEgressOverview.fromCollection(res)
     },
 
     '/zone-egresses/:name': async (params: DetailParams, source: Closeable) => {
@@ -50,7 +50,7 @@ export const sources = (api: KumaApi) => {
 
       const { name } = params
 
-      return await api.getZoneEgress({ name })
+      return ZoneEgress.fromObject(await api.getZoneEgress({ name }))
     },
 
     '/zone-egresses/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
@@ -67,7 +67,7 @@ export const sources = (api: KumaApi) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
-      return await api.getAllZoneEgressOverviews({ size, offset })
+      return ZoneEgressOverview.fromCollection(await api.getAllZoneEgressOverviews({ size, offset }))
     },
 
     '/zone-egress-overviews/:name': async (params: DetailParams, source: Closeable) => {
@@ -75,7 +75,7 @@ export const sources = (api: KumaApi) => {
 
       const { name } = params
 
-      return await api.getZoneEgressOverview({ name })
+      return ZoneEgressOverview.fromObject(await api.getZoneEgressOverview({ name }))
     },
   }
 }

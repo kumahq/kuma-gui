@@ -52,8 +52,8 @@
 
 <script lang="ts" setup>
 import ZoneEgressSummary from '../components/ZoneEgressSummary.vue'
+import type { ZoneEgressOverview } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import type { ZoneEgressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
