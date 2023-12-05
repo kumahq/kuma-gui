@@ -6,11 +6,15 @@ layout: false
 import { ref, onMounted } from 'vue'
 import { createApp } from 'whyframe:app'
 import { TOKENS as APP, services as application } from '@/app/application'
+import { TOKENS as DEV, services as development } from '@/services/development'
+import { services as dataplanes } from '@/app/data-planes'
 import { TOKENS as VUE, services as vue } from '@/app/vue'
 import { services as kuma } from '@/app/kuma'
 import { build, token } from '@/services/utils'
 import Kongponents from '@kong/kongponents'
 import CliEnv from '@/services/env/CliEnv'
+import KumaApi from '@/services/kuma-api/KumaApi'
+import { RestClient } from '@/services/kuma-api/RestClient'
 import i18nEnUs from '@/locales/en-us'
 import '../../src/assets/styles/main.scss'
 
@@ -18,7 +22,10 @@ const el = ref()
 const $ = {
   ...VUE,
   ...APP,
+  ...DEV,
   globals: token('vue.globals'),
+  httpClient: token('httpClient'),
+  api: token<KumaApi>('KumaApi'),
 }
 
 onMounted(async () => {
@@ -27,7 +34,9 @@ onMounted(async () => {
       const get = build(
         vue($),
         application($),
+        development($),
         kuma($),
+        dataplanes($),
         [
           // temporary $.app replacement
           [$.app, {
@@ -96,7 +105,19 @@ onMounted(async () => {
               $.EnvVars,
             ],
           }],
-
+          [$.httpClient, {
+            service: RestClient,
+            arguments: [
+              $.env,
+            ],
+          }],
+          [$.api, {
+            service: KumaApi,
+            arguments: [
+              $.httpClient,
+              $.env,
+            ],
+          }],
           [$.EnvVars, {
             constant: {
               KUMA_PRODUCT_NAME: '',
@@ -106,6 +127,7 @@ onMounted(async () => {
               KUMA_VERSION_URL: '',
               KUMA_DOCS_URL: '',
               KUMA_MOCK_API_ENABLED: '',
+              KUMA_API_URL: 'http://localhost:5681',
               KUMA_ZONE_CREATION_FLOW: '',
             },
           }],
@@ -117,6 +139,7 @@ onMounted(async () => {
           }],
         ],
       )
+      get($.msw)
       get($.app)(app)
     }
   })

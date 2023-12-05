@@ -25,8 +25,12 @@
 .body > :deep(dl),
 .body > :deep(dl) > div {
   display: flex;
+  flex-wrap: wrap;
   gap: $kui-space-40;
   align-items: flex-start;
+}
+.body > :deep(dl) {
+  column-gap: $kui-space-80;
 }
 .card {
   flex-direction: column;
@@ -37,20 +41,18 @@
   font-weight: $kui-font-weight-semibold;
   font-size: $kui-font-size-60;
 }
-.body > :deep(dl) {
-  gap: $kui-space-80;
-  > div {
-    > dt {
-      color: $kui-color-text-disabled;
-    }
-    > dd  {
-      color: $kui-color-text;
-    }
-    > dt::after {
-      display: inline;
-      /*[lang="en"]*/
-      content: ': ';
-    }
+.body > :deep(dl) > div {
+  column-gap: $kui-space-20;
+  > dt {
+    color: $kui-color-text-disabled;
+  }
+  > dd  {
+    color: $kui-color-text;
+  }
+  > dt::after {
+    display: inline;
+    /*[lang="en"]*/
+    content: ': ';
   }
 }
 

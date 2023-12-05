@@ -1,6 +1,8 @@
 import { defineSources } from '@/app/application/services/data-source'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
+import { parse, getTraffic } from '@/app/data-planes/data/stats'
+import type { TrafficEntry } from '@/app/data-planes/data/stats'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
@@ -19,6 +21,11 @@ export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane
 
 export type DataplaneRulesCollection = CollectionResponse<DataplaneRule>
 export type DataplaneRulesCollectionSource = DataSourceResponse<DataplaneRulesCollection>
+export type TrafficSource = DataSourceResponse<{
+  inbounds: TrafficEntry[]
+  outbounds: TrafficEntry[]
+  passthrough: TrafficEntry[]
+}>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -28,6 +35,48 @@ export const sources = (api: KumaApi) => {
   return defineSources({
     '/meshes/:mesh/dataplanes/:name': async (params) => {
       return api.getDataplaneFromMesh(params)
+    },
+    '/meshes/:mesh/dataplanes/:name/traffic': async (params) => {
+      const { mesh, name } = params
+      const res = await api.getDataplaneData({
+        mesh,
+        dppName: name,
+        dataPath: 'stats',
+      })
+
+      // parse the stuff
+      const json = parse(res)
+
+      // inbounds is anything starting with `localhost_`
+      const inbounds = getTraffic(json, (key) => key.startsWith('localhost_'))
+
+      // outbounds are anything else unless it starts with something in the below list
+      const outbounds = getTraffic(json, (key) => {
+        return ![
+          'admin',
+          'async-client',
+          'kuma_envoy_admin',
+          'probe_listener',
+          'localhost_',
+          'inbound_passthrough',
+          'outbound_passthrough',
+          'access_log_sink',
+          'ads_cluster',
+        ].some(item => key.startsWith(item))
+      })
+
+      // passthrough traffic is anything that starts with this list
+      const passthrough = getTraffic(json, (key) => [
+        'outbound_passthrough_',
+      ].some(item => key.startsWith(item)))
+
+      return {
+        passthrough,
+        inbounds,
+        outbounds,
+        $raw: res,
+        config: res,
+      }
     },
 
     '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': async (params) => {

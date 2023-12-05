@@ -30,3 +30,4 @@ http:
       grpc: gRPC
       http2: HTTP2
       http: HTTP
+      tcp: TCP
