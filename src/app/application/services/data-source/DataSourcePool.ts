@@ -3,7 +3,7 @@ import Router from './Router'
 import SharedPool from './SharedPool'
 
 // The user definable 'Sources' themselves i.e. `/uri/:param` => HTTP call
-export type Source = (params: Record<string, unknown>, source: {close: () => void}) => Promise<unknown>
+export type Source = (params: Record<string, unknown>, source: { close: () => void }) => Promise<unknown>
 export type Sources = Record<string, Source>
 // reusable Type Utility for easy to use Types within Vue templates
 export type DataSourceResponse<T> = {
@@ -26,7 +26,7 @@ export class DataSourcePool {
 
   getCacheKeyPrefix: () => string
 
-  constructor(requests: Sources, { create, destroy }: {create: Creator, destroy: Destroyer}, getCacheKeyPrefix: () => string) {
+  constructor(requests: Sources, { create, destroy }: { create: Creator, destroy: Destroyer }, getCacheKeyPrefix: () => string) {
     const requestRouter: Router<Source> = new Router(requests)
 
     this.pool = new SharedPool<string, CallableEventSource>(
@@ -45,8 +45,11 @@ export class DataSourcePool {
     const cacheKey = this.getCacheKeyPrefix() + src
     const source = this.pool.acquire(src, ref)
     source.addEventListener('message', (e: Event) => {
-      // always fill the cache on a successful response
-      this.cache.set(cacheKey, (e as MessageEvent).data)
+      const target = e.target as CallableEventSource<{ cacheControl?: string }>
+      // always fill the cache on a successful response and `?no-store` isn't set
+      if (target?.configuration.cacheControl !== 'no-store') {
+        this.cache.set(cacheKey, (e as MessageEvent).data)
+      }
     })
     if (this.cache.has(cacheKey)) {
       Promise.resolve().then(() => {

@@ -6,9 +6,9 @@ type ExtractRouteParams<T extends string> =
   string extends T
     ? Record<string, string>
     : T extends `${infer _Start}:${infer Param}/${infer Rest}`
-      ? {[k in Param | keyof ExtractRouteParams<Rest>]: string}
+      ? { [k in Param | keyof ExtractRouteParams<Rest>]: string }
       : T extends `${infer _Start}:${infer Param}`
-        ? {[k in Param]: string}
+        ? { [k in Param]: string }
         : {};
 
 type PaginationParams = {
@@ -27,6 +27,7 @@ export const defineSources = <T extends string>(sources: ExtractSources<T, Pagin
 
 type Configuration = {
   interval?: number
+  cacheControl?: string
   retry?: (e: unknown) => Promise<void> | undefined
 }
 type RetryingEventSource = CallableEventSource<Configuration>
@@ -86,7 +87,7 @@ export const getSource = (doc: Hideable) => {
 export type Source = ReturnType<typeof getSource>
 
 // its fine to not wait for an unfocussed tab for promise returning sources
-const source = getSource(new (class extends EventTarget {hidden = false})())
+const source = getSource(new (class extends EventTarget { hidden = false })())
 
 export const create: Creator = (src, router) => {
   const [path, query] = src.split('?')
@@ -99,14 +100,15 @@ export const create: Creator = (src, router) => {
       size: parseInt(queryParams.get('size') || '0'),
       page: parseInt(queryParams.get('page') || '0'),
       search: queryParams.get('search') || '',
+      cacheControl: queryParams.has('no-store') ? 'no-store' : undefined,
     },
     ...route.params,
   }
   try {
     // TODO(jc) Once we remove all the source.closes in the sources.ts files the
     // second argument here can go
-    const init = route.route(params, { close: () => {} })
-    const eventSource = init instanceof CallableEventSource ? init : source(() => Promise.resolve(init))
+    const init = route.route(params, { close: () => { } })
+    const eventSource = init instanceof CallableEventSource ? init : source(() => Promise.resolve(init), { cacheControl: params.cacheControl })
     eventSource.url = src
     return eventSource
   } catch (e) {

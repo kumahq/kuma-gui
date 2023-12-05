@@ -1,41 +1,60 @@
 <template>
-  <CodeBlock
-    :id="id"
-    language="yaml"
-    :code="yamlUniversal"
-    :is-searchable="props.isSearchable"
-    :code-max-height="props.codeMaxHeight"
-    :query="props.query"
-    :is-filter-mode="props.isFilterMode"
-    :is-reg-exp-mode="props.isRegExpMode"
-    @query-change="emit('query-change', $event)"
-    @filter-mode-change="emit('filter-mode-change', $event)"
-    @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+  <KToggle
+    v-slot="{ isToggled, toggle }"
+    :toggled="false"
   >
-    <template #secondary-actions>
-      <KTooltip
-        class="kubernetes-copy-button-tooltip"
-        :label="t('common.copyKubernetesText')"
-        placement="bottomEnd"
-        max-width="200"
-        position-fixed
-      >
-        <CopyButton
-          class="kubernetes-copy-button"
-          :get-text="getYamlAsKubernetes"
-          :copy-text="t('common.copyKubernetesText')"
-          has-border
-          hide-title
+    <CodeBlock
+      :id="id"
+      language="yaml"
+      :code="yamlUniversal"
+      :is-searchable="props.isSearchable"
+      :code-max-height="props.codeMaxHeight"
+      :query="props.query"
+      :is-filter-mode="props.isFilterMode"
+      :is-reg-exp-mode="props.isRegExpMode"
+      @query-change="emit('query-change', $event)"
+      @filter-mode-change="emit('filter-mode-change', $event)"
+      @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+    >
+      <template #secondary-actions>
+        <KTooltip
+          class="kubernetes-copy-button-tooltip"
+          :label="t('common.copyKubernetesText')"
+          placement="bottomEnd"
+          max-width="200"
+          position-fixed
         >
-          {{ t('common.copyKubernetesShortText') }}
-        </CopyButton>
-      </KTooltip>
-    </template>
-  </CodeBlock>
+          <CopyButton
+            class="kubernetes-copy-button"
+            :get-text="getYamlAsKubernetes"
+            :copy-text="t('common.copyKubernetesText')"
+            has-border
+            hide-title
+            @click="() => {
+              if(isToggled.value === false) {
+                toggle()
+              }
+            }"
+          >
+            {{ t('common.copyKubernetesShortText') }}
+          </CopyButton>
+        </KTooltip>
+      </template>
+    </CodeBlock>
+    <slot
+      :copy="(cb: CopyCallback) => {
+        if(isToggled.value !== false) {
+          toggle()
+        }
+        copy(cb)
+      }"
+      :copying="isToggled.value"
+    />
+  </KToggle>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
 import CopyButton from './CopyButton.vue'
@@ -43,23 +62,30 @@ import type { SingleResourceParameters } from '@/types/api.d'
 import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { toYaml } from '@/utilities/toYaml'
+import uniqueId from '@/utilities/uniqueId'
+
+type Resolve = (data: Entity) => void
+type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
+type Copy = (cb: CopyCallback) => void
 
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  id: string
+  id?: string
   resource: Entity
 
   /**
    * Function returning the resource.
    */
-  resourceFetcher: (params?: SingleResourceParameters) => Promise<Entity>
+  resourceFetcher?: (params?: SingleResourceParameters) => Promise<Entity>
   codeMaxHeight?: string
   isSearchable?: boolean
   query?: string
   isFilterMode?: boolean
   isRegExpMode?: boolean
 }>(), {
+  resourceFetcher: undefined,
+  id: () => uniqueId('resource-code-block'),
   codeMaxHeight: undefined,
   isSearchable: false,
   query: '',
@@ -75,8 +101,23 @@ const emit = defineEmits<{
 
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
 
+const noop: Copy = () => {}
+
+const copy = ref<Copy>(noop)
+let p = new Promise((resolve: Resolve, reject) => { copy.value = (cb) => cb(resolve, reject) })
+
+const fetcher = async (_params?: SingleResourceParameters): Promise<Entity> => {
+  let res: Entity
+  try {
+    res = await p
+  } finally {
+    p = new Promise((resolve, reject) => { copy.value = (cb) => cb(resolve, reject) })
+  }
+  return res
+}
+
 async function getYamlAsKubernetes() {
-  const resourceKubernetes = await props.resourceFetcher({ format: 'kubernetes' })
+  const resourceKubernetes = await (typeof props.resourceFetcher !== 'undefined' ? props.resourceFetcher({ format: 'kubernetes' }) : fetcher())
 
   return toYamlRepresentation(resourceKubernetes)
 }

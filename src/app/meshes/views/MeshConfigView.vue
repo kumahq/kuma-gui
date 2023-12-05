@@ -30,10 +30,20 @@
 
           <template v-else>
             <ResourceCodeBlock
-              id="code-block-mesh"
+              v-slot="{ copy, copying }"
               :resource="data.config"
-              :resource-fetcher="(params) => kumaApi.getMesh({ name: route.params.mesh }, params)"
-            />
+            >
+              <DataSource
+                v-if="copying"
+                :src="`/meshes/${route.params.mesh}/as/kubernetes?no-store`"
+                @change="(data) => {
+                  copy((resolve) => resolve(data))
+                }"
+                @error="(e) => {
+                  copy((_resolve, reject) => reject(e))
+                }"
+              />
+            </ResourceCodeBlock>
           </template>
         </DataSource>
       </KCard>
@@ -46,7 +56,4 @@ import { MeshSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useKumaApi } from '@/utilities'
-
-const kumaApi = useKumaApi()
 </script>
