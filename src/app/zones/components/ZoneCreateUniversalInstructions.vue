@@ -2,10 +2,10 @@
   <div>
     <h3 class="form-step-title">
       <span class="form-step-number">1</span>
-      {{ i18n.t('zones.form.universal.saveToken.title') }}
+      {{ t('zones.form.universal.saveToken.title') }}
     </h3>
 
-    <p>{{ i18n.t('zones.form.universal.saveToken.saveTokenDescription') }}</p>
+    <p>{{ t('zones.form.universal.saveToken.saveTokenDescription') }}</p>
 
     <CodeBlock
       id="zone-kubernetes-token"
@@ -16,13 +16,13 @@
 
     <h3 class="form-step-title">
       <span class="form-step-number">2</span>
-      {{ i18n.t('zones.form.universal.connectZone.title') }}
+      {{ t('zones.form.universal.connectZone.title') }}
     </h3>
 
-    <p>{{ i18n.t('zones.form.universal.connectZone.configDescription') }}</p>
+    <p>{{ t('zones.form.universal.connectZone.configDescription') }}</p>
 
     <span class="field-group-label mt-4">
-      {{ i18n.t('zones.form.universal.connectZone.configFileName') }}
+      {{ t('zones.form.universal.connectZone.configFileName') }}
     </span>
 
     <CodeBlock
@@ -34,13 +34,13 @@
     />
 
     <p class="mt-4">
-      {{ i18n.t('zones.form.universal.connectZone.connectDescription') }}
+      {{ t('zones.form.universal.connectZone.connectDescription') }}
     </p>
 
     <CodeBlock
       id="zone-universal-connect-command-code-block"
       class="mt-4"
-      :code="i18n.t('zones.form.universal.connectZone.connectCommand').trim()"
+      :code="t('zones.form.universal.connectZone.connectCommand').trim()"
       language="bash"
     />
   </div>
@@ -50,10 +50,10 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { useI18n } from '@/app/application'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import { useI18n } from '@/utilities'
 
-const i18n = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 
 const props = defineProps({
@@ -73,7 +73,7 @@ const props = defineProps({
   },
 })
 
-const saveTokenCommand = computed(() => i18n.t('zones.form.universal.saveToken.saveTokenCommand', { token: props.token }).trim())
+const saveTokenCommand = computed(() => t('zones.form.universal.saveToken.saveTokenCommand', { token: props.token }).trim())
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
@@ -84,6 +84,6 @@ const universalConfig = computed(() => {
     placeholders.controlPlaneId = route.params.virtualControlPlaneId
   }
 
-  return i18n.t('zones.form.universal.connectZone.config', placeholders).trim()
+  return t('zones.form.universal.connectZone.config', placeholders).trim()
 })
 </script>

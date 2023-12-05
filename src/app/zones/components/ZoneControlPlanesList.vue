@@ -25,39 +25,24 @@
     </template>
 
     <template #status="{ row: item }">
-      <template
-        v-for="status in [getZoneControlPlaneStatus(item)]"
-        :key="status"
-      >
-        <StatusBadge
-          v-if="status"
-          :status="status"
-        />
-
-        <template v-else>
-          {{ t('common.collection.none') }}
-        </template>
-      </template>
+      <StatusBadge
+        :status="item.state"
+      />
     </template>
   </AppCollection>
 </template>
 
 <script lang="ts" setup>
 
-import { useCan } from '@/app/application'
+import type { ZoneOverview } from '../data'
+import { useCan, useI18n } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { getZoneControlPlaneStatus } from '@/app/zones/data'
-import type { ZoneOverview } from '@/types/index.d'
-import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 const can = useCan()
 
-const props = defineProps<
-{
+const props = defineProps<{
   items?: ZoneOverview[]
-}
->()
-
+}>()
 </script>

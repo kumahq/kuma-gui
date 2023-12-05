@@ -127,13 +127,8 @@
 
                 <template #status="{ rowValue }">
                   <StatusBadge
-                    v-if="rowValue"
                     :status="rowValue"
                   />
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
                 </template>
 
                 <template #warnings="{ row: item }">
@@ -276,8 +271,7 @@ import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
 import { ref } from 'vue'
 import { type RouteLocationNamedRaw } from 'vue-router'
 
-import { getZoneControlPlaneStatus } from '../data'
-import type { ZoneOverviewCollectionSource } from '../sources'
+import type { ZoneOverviewCollectionSource, ZoneOverview } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -285,7 +279,7 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { MeSource } from '@/app/me/sources'
-import type { DiscoverySubscription, StatusKeyword, ZoneEgressOverview, ZoneIngressOverview, ZoneOverview } from '@/types/index.d'
+import type { DiscoverySubscription, StatusKeyword, ZoneEgressOverview, ZoneIngressOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 
 type ZoneOverviewTableRow = {
@@ -389,13 +383,10 @@ function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableR
         memoryStore = data.store.type === 'memory'
       }
     })
-
-    const status = getZoneControlPlaneStatus(zoneOverview)
-
     return {
       detailViewRoute,
       name,
-      status,
+      status: zoneOverview.state,
       zoneCpVersion,
       type,
       warnings: {

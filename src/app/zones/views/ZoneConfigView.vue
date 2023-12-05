@@ -37,35 +37,30 @@
 
       <KCard>
         <template #body>
-          <template
-            v-for="(conf, i) in [getConfig(props.data)]"
-            :key="i"
-          >
-            <CodeBlock
-              v-if="conf !== null"
-              id="code-block-zone-config"
-              language="json"
-              :code="conf"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter === 'true'"
-              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+          <CodeBlock
+            v-if="Object.keys(props.data.zoneInsight?.config ?? {}).length > 0"
+            id="code-block-zone-config"
+            language="json"
+            :code="JSON.stringify(props.data.zoneInsight?.config ?? {}, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter === 'true'"
+            :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
 
-            <KAlert
-              v-else
-              class="mt-4"
-              data-testid="warning-no-subscriptions"
-              appearance="warning"
-            >
-              <template #alertMessage>
-                {{ t('zone-cps.detail.no_subscriptions') }}
-              </template>
-            </KAlert>
-          </template>
+          <KAlert
+            v-else
+            class="mt-4"
+            data-testid="warning-no-subscriptions"
+            appearance="warning"
+          >
+            <template #alertMessage>
+              {{ t('zone-cps.detail.no_subscriptions') }}
+            </template>
+          </KAlert>
         </template>
       </KCard>
     </AppView>
@@ -73,8 +68,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { ZoneOverview } from '../data'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import type { ZoneOverview } from '@/types'
 
 const props = withDefaults(defineProps<{
   data: ZoneOverview
@@ -82,15 +77,4 @@ const props = withDefaults(defineProps<{
 }>(), {
   notifications: () => [],
 })
-
-function getConfig(zoneOverview: ZoneOverview) {
-  const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
-  if (subscriptions.length > 0) {
-    const lastSubscription = subscriptions[subscriptions.length - 1]
-    if (lastSubscription.config) {
-      return JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
-    }
-  }
-  return null
-}
 </script>

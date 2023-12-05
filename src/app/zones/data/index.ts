@@ -1,36 +1,90 @@
-import { getIsConnected } from '@/app/subscriptions/data'
-import type { ZoneOverview } from '@/types/index.d'
+import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type {
+  ZoneOverview as PartialZoneOverview,
+  ZoneInsight as PartialZoneInsight,
+  Zone as PartialZone,
+  KDSSubscription,
+} from '@/types/index.d'
 import { get } from '@/utilities/get'
 
-// TODO(jc): These two are extremely similar, see if we can merge
-export function getZoneControlPlaneEnvironment(zoneOverview: ZoneOverview): string {
-  // TODO(jc): is it ok to use the config from the first subscription we find here?
-  for (const subscription of zoneOverview.zoneInsight?.subscriptions ?? []) {
-    if (subscription.config) {
-      return JSON.parse(subscription.config).environment
-    }
-  }
-  return ''
+export type Zone = PartialZone & {
+  enabled: boolean
 }
-export function getZoneDpServerAuthType(zone: ZoneOverview): string {
-  const subscriptions = zone.zoneInsight?.subscriptions ?? []
-  if (subscriptions.length > 0) {
-    const lastSubscription = subscriptions[subscriptions.length - 1]
-    if (lastSubscription.config) {
-      const parsedConfig = JSON.parse(lastSubscription.config)
-      return get(parsedConfig, 'dpServer.auth.type', '')
-    }
-  }
-  return ''
-}
-// TODO(jc): end
+export type ZoneInsight = PartialZoneInsight & {
+  connectedSubscription?: KDSSubscription
+  config: Record<string, unknown>
+  authenticationType: string
+  environment: string
+} & Required<Pick<PartialZoneInsight, 'subscriptions'>> & PartialZoneInsight
 
-// The presence of a `ZoneOverview.zoneInsight` object's subscriptions
-// with a connect time and without a disconnect time indicate a Zone to
-// be connected and online.
-export function getZoneControlPlaneStatus(zoneOverview: ZoneOverview): 'online' | 'offline' | 'disabled' {
-  if (zoneOverview.zone.enabled === false) {
-    return 'disabled'
-  }
-  return getIsConnected(zoneOverview.zoneInsight?.subscriptions) ? 'online' : 'offline'
+export type ZoneOverview = PartialZoneOverview & {
+  zoneInsight?: ZoneInsight
+  zone: Zone
+  state: 'online' | 'offline' | 'disabled'
+}
+
+export const Zone = {
+  fromObject: (item: PartialZone): Zone => {
+    return {
+      ...item,
+      enabled: !(item.enabled === false),
+    }
+  },
+}
+
+export const ZoneInsight = {
+  fromObject: (item?: PartialZoneInsight): ZoneInsight | undefined => {
+    // if item isn't set don't even try augmenting things
+    return isSet<PartialZoneInsight>(item)
+      ? ((item) => {
+        const subscriptions = Array.isArray(item.subscriptions) ? item.subscriptions : []
+        // figure out the connectedSubscription by looking at the connectTime
+        // and disconnectTime of the last subscription
+        const connectedSubscription = subscriptions.slice(-1).find((item) => item.connectTime?.length && !item.disconnectTime)
+        // using the connectedSubscription find the config for the zone if it exists, is valid JSON and is not null and
+        // turn it into an object
+        const config: Record<string, unknown> = (() => {
+          const str = isSet<string>(connectedSubscription?.config) ? connectedSubscription.config : '{}'
+          try {
+            return JSON.parse(str)
+          } catch (e) {
+            console.error(e)
+          }
+          return {}
+        })()
+
+        // set the extra stuff
+        return {
+          ...item,
+          subscriptions,
+          connectedSubscription,
+          config,
+          authenticationType: get(config, 'dpServer.auth.type', ''),
+          environment: String(config.environment ?? ''),
+        }
+      })(item)
+      : undefined
+  },
+}
+export const ZoneOverview = {
+  fromObject: (item: PartialZoneOverview): ZoneOverview => {
+    const insight = ZoneInsight.fromObject(item.zoneInsight)
+    const zone = Zone.fromObject(item.zone)
+    return {
+      ...item,
+      zoneInsight: insight,
+      zone,
+      // first check see if the zone is disabled, if not look for the connectedSubscription
+      state: !zone.enabled ? 'disabled' : typeof insight?.connectedSubscription !== 'undefined' ? 'online' : 'offline',
+    }
+  },
+  fromCollection: (collection: CollectionResponse<PartialZoneOverview>): CollectionResponse<ZoneOverview> => {
+    return {
+      ...collection,
+      items: Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : [],
+    }
+  },
+}
+function isSet<T>(value: T | null | undefined): value is T {
+  return value !== null && typeof value !== 'undefined'
 }
