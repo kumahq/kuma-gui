@@ -49,9 +49,9 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 
+import type { DataplaneOverview } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import DataPlaneSummary from '@/app/data-planes/components/DataPlaneSummary.vue'
-import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
@@ -59,7 +59,7 @@ const route = useRoute()
 
 const props = withDefaults(defineProps<{
   name: string
-  dataplaneOverview?: DataPlaneOverview
+  dataplaneOverview?: DataplaneOverview
 }>(), {
   dataplaneOverview: undefined,
 })

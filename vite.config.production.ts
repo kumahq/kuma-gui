@@ -104,10 +104,8 @@ export const config: UserConfigFn = ({ mode }) => {
       coverage: {
         provider: 'istanbul',
         reporter: ['text', 'lcovonly'],
-        exclude: [
-          'cypress/**',
-          'src/test-support/mocks/**',
-        ],
+        include: ['src'],
+        exclude: ['src/test-support/mocks/**'],
       },
       deps: {
         optimizer: {

@@ -16,7 +16,7 @@
         </h2>
       </template>
 
-      <template v-if="props.data.dataplane?.networking?.gateway?.type === 'BUILTIN'">
+      <template v-if="props.data.dataplaneType === 'builtin'">
         <DataSource
           v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
           :src="`/*/policy-types`"
@@ -95,13 +95,13 @@
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import StandardDataplanePolicies from '../components/StandardDataplanePolicies.vue'
-import { DataplaneRulesSource, MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
+import type { DataplaneOverview } from '../data'
+import type { DataplaneRulesSource, MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { PolicyTypeCollectionSource } from '@/app/policies/sources'
-import type { DataPlaneOverview } from '@/types/index.d'
+import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 
 const props = defineProps<{
-  data: DataPlaneOverview
+  data: DataplaneOverview
 }>()
 </script>

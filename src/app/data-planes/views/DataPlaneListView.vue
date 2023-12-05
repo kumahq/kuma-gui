@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ can, route, t }"
+      v-slot="{ route, t }"
       name="data-plane-list-view"
       :params="{
         page: 1,
@@ -46,7 +46,6 @@
               :error="error"
               :is-selected-row="(row) => row.name === route.params.dataPlane"
               summary-route-name="data-plane-summary-view"
-              :can-use-zones="can('use zones')"
               @change="route.update"
             >
               <template #toolbar>
