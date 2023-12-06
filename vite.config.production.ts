@@ -51,7 +51,8 @@ export const config: UserConfigFn = ({ mode }) => {
                 // for which we use FormatJS under the hood. FormatJS requires you to escape any XML/HTML looking
                 // things, plus ICU '{' and '}', hence this replace.
                 // If we ever need !!text/markdown for anything else we should do something like !!text/icu+markdown
-                return marked(data).replace(/</g, "'<'")
+                const str = marked(data) as string
+                return str.replace(/</g, "'<'")
                   .replace(/%7B/g, '{')
                   .replace(/%7D/g, '}')
               },
