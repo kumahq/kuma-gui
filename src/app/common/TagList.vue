@@ -12,7 +12,7 @@
       :key="index"
       max-width="auto"
       class="tag"
-      :appearance="tag.isKuma ? 'default' : 'neutral'"
+      :appearance="tag.isKuma ? 'info' : 'neutral'"
     >
       <component
         :is="tag.route ? 'RouterLink' : 'span'"
@@ -119,6 +119,10 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
 .tag-list--align-right,
 .tag-list--align-right :deep(.k-truncate-container) {
   justify-content: flex-end;
+}
+
+.tag {
+  font-weight: $kui-font-weight-regular;
 }
 
 .tag :deep(a) {
