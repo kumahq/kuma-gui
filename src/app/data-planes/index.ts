@@ -1,3 +1,4 @@
+import { features } from './features'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
@@ -14,6 +15,15 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.sources,
+      ],
+    }],
+    [token('data-planes.features'), {
+      service: features,
+      arguments: [
+        app.env,
+      ],
+      labels: [
+        app.features,
       ],
     }],
   ]
