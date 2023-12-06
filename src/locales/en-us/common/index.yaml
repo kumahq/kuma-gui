@@ -14,6 +14,7 @@ common:
     mode:
       standalone: Standalone
       global: Multi-Zone
+      zone: Zone
   warnings:
     CERT_EXPIRED: !!text/markdown |
       The certificate for this dataplane has expired
