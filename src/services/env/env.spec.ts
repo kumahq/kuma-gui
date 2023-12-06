@@ -30,9 +30,6 @@ describe('env', () => {
     const env = new MockEnv(
       {
         KUMA_PRODUCT_NAME: 'product',
-        KUMA_FEEDBACK_URL: 'http://feedback.fake',
-        KUMA_CHAT_URL: 'http://chat.fake',
-        KUMA_INSTALL_URL: 'http://install.fake',
         KUMA_VERSION_URL: 'http://version.fake',
         KUMA_DOCS_URL: 'http://docs.fake',
         KUMA_MOCK_API_ENABLED: 'false',
@@ -40,12 +37,10 @@ describe('env', () => {
       },
     )
     expect(env.var('KUMA_DOCS_URL')).toBe('http://docs.fake/110.127.x')
-    expect(env.var('KUMA_INSTALL_URL')).toBe('http://install.fake?utm_source=product&utm_medium=product')
     expect(env.var('KUMA_VERSION')).toBe('110.127.30')
     expect(env.var('KUMA_API_URL')).toBe('/somewhere/else')
     expect(env.var('KUMA_BASE_PATH')).toBe('/not/gui')
     expect(env.var('KUMA_PRODUCT_NAME')).toBe('product')
-    expect(env.var('KUMA_FEEDBACK_URL')).toBe('http://feedback.fake')
   })
 
   test.each([

@@ -26,9 +26,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   [$.EnvVars, {
     constant: {
       KUMA_PRODUCT_NAME: import.meta.env.VITE_NAMESPACE,
-      KUMA_FEEDBACK_URL: import.meta.env.VITE_FEEDBACK_URL,
-      KUMA_CHAT_URL: import.meta.env.VITE_CHAT_URL,
-      KUMA_INSTALL_URL: import.meta.env.VITE_INSTALL_URL,
       KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
       KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
       KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,

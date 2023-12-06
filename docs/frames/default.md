@@ -121,9 +121,6 @@ onMounted(async () => {
           [$.EnvVars, {
             constant: {
               KUMA_PRODUCT_NAME: '',
-              KUMA_FEEDBACK_URL: '',
-              KUMA_CHAT_URL: '',
-              KUMA_INSTALL_URL: '',
               KUMA_VERSION_URL: '',
               KUMA_DOCS_URL: '',
               KUMA_MOCK_API_ENABLED: '',

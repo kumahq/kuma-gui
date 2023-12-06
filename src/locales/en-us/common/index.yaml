@@ -7,6 +7,8 @@ common:
     href:
       docs:
         index: '{KUMA_DOCS_URL}/'
+      feedback: 'https://github.com/kumahq/kuma/issues/new/choose'
+      install: 'https://kuma.io/install/latest/?{KUMA_UTM_QUERY_PARAMS}'
     environment:
       universal: Universal
       kubernetes: Kubernetes

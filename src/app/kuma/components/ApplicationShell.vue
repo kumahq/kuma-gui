@@ -76,7 +76,7 @@
               </KDropdownItem>
               <KDropdownItem>
                 <a
-                  :href="env('KUMA_FEEDBACK_URL')"
+                  :href="t('common.product.href.feedback')"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

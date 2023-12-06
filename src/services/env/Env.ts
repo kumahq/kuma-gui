@@ -2,9 +2,6 @@ type PathConfig = ReturnType<typeof getPathConfigDefault>
 
 export type EnvArgs = {
   KUMA_PRODUCT_NAME: string
-  KUMA_FEEDBACK_URL: string
-  KUMA_CHAT_URL: string
-  KUMA_INSTALL_URL: string
   KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
   KUMA_MOCK_API_ENABLED: string
@@ -39,7 +36,6 @@ export default class Env {
     }
     this.env = {
       ..._env as EnvVars,
-      KUMA_INSTALL_URL: `${env('KUMA_INSTALL_URL')}?${env('KUMA_UTM_QUERY_PARAMS')}`,
       // TODO(jc): not totally sure we need to use a regex here, maybe just split and join if not
       KUMA_DOCS_URL: `${env('KUMA_DOCS_URL')}/${version.patch === '0.0.0' ? 'dev' : version.patch.replace(/\.\d+$/, '.x')}`,
       KUMA_VERSION: version.pre,

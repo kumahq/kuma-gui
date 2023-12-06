@@ -31,9 +31,6 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
     constant: {
       KUMA_API_URL: Cypress.env('VITE_KUMA_API_SERVER_URL'),
       KUMA_PRODUCT_NAME: Cypress.env('VITE_NAMESPACE'),
-      KUMA_FEEDBACK_URL: Cypress.env('VITE_FEEDBACK_URL'),
-      KUMA_CHAT_URL: Cypress.env('VITE_CHAT_URL'),
-      KUMA_INSTALL_URL: Cypress.env('VITE_INSTALL_URL'),
       KUMA_VERSION_URL: Cypress.env('VITE_VERSION_URL'),
       KUMA_DOCS_URL: Cypress.env('VITE_DOCS_BASE_URL'),
       KUMA_MOCK_API_ENABLED: Cypress.env('VITE_MOCK_API_ENABLED'),

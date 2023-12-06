@@ -18,7 +18,7 @@
           <div>
             <KButton
               appearance="primary"
-              :to="env('KUMA_INSTALL_URL')"
+              :to="t('common.product.href.install')"
             >
               Update
             </KButton>
