@@ -24,7 +24,8 @@ export default defineConfig({
           new Type('tag:yaml.org,2002:text/markdown', {
             kind: 'scalar',
             construct: (data) => {
-              return marked(data).replace(/</g, "'<'")
+              const str = marked(data) as string
+              return str.replace(/</g, "'<'")
                 .replace(/%7B/g, '{')
                 .replace(/%7D/g, '}')
             },
