@@ -48,7 +48,7 @@
             <template
               v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
             >
-              <p>{{ t(`zones.create.status_error.${error.status}.title`, { name }) }}</p>
+              <p>{{ t(`zones.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
 
               <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
             </template>
@@ -419,6 +419,7 @@ const isChangingZone = ref(false)
 const isConfirmModalVisible = ref(false)
 const error = ref<Error | null>(null)
 const frontendNameError = ref<string | null>(null)
+const zoneNameWithError = ref('')
 
 const isZoneConnected = ref(false)
 const now = ref(new Date())
@@ -460,6 +461,7 @@ const nameError = computed(() => {
 async function createZone() {
   isChangingZone.value = true
   error.value = null
+  zoneNameWithError.value = ''
 
   try {
     const isValidName = validateName(name.value)
@@ -470,6 +472,7 @@ async function createZone() {
     zone.value = await kumaApi.createZone({ name: name.value })
   } catch (err) {
     if (err instanceof Error) {
+      zoneNameWithError.value = name.value
       error.value = err
     } else {
       console.error(err)
