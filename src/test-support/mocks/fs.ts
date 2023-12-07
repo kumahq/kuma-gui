@@ -20,6 +20,7 @@ import _20 from './src/meshes/_/dataplanes/_/policies'
 import _121 from './src/meshes/_/dataplanes/_/stats'
 import _120 from './src/meshes/_/dataplanes/_/xds'
 import _21 from './src/meshes/_/dataplanes/_overview'
+import _129 from './src/meshes/_/dataplanes/test-dataplane/_rules'
 import _23 from './src/meshes/_/external-services'
 import _24 from './src/meshes/_/external-services/_'
 import _27 from './src/meshes/_/fault-injections'
@@ -93,6 +94,7 @@ export const fs: FS = {
   '/meshes/:mesh/dataplanes/_overview': _21,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
+  '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
   '/meshes/:mesh/dataplanes/:name/_rules': _128,
   '/meshes/:mesh/dataplanes/:name/policies': _20,
   '/meshes/:mesh/dataplanes/:name/xds': _120,
