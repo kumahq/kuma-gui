@@ -156,8 +156,13 @@ Feature: zones / create
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
 
-    Then the "$create-error" element exists
-    Then the "$instructions" element doesn't exist
+    Then the "$create-error" element contains "test"
+    And the "$instructions" element doesn't exist
+
+    When I clear the "$name-input" element
+    And I "type" "different-name" into the "$name-input" element
+
+    Then the "$create-error" element contains "test"
 
   Scenario: The form shows expected error for 400 response
     Given the URL "/provision-zone" responds with
