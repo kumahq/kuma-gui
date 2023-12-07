@@ -10,7 +10,7 @@
       <template #accordion-header>
         <h3 class="policy-type-heading">
           <PolicyTypeTag :policy-type="ruleEntry.type">
-            {{ ruleEntry.type }} ({{ ruleEntry.connections.length }})
+            {{ ruleEntry.type }}
           </PolicyTypeTag>
         </h3>
       </template>
@@ -19,87 +19,74 @@
         <div class="policy-list">
           <KTable
             class="policy-type-table"
-            :fetcher="() => ({ data: ruleEntry.connections, total: ruleEntry.connections.length })"
-            :headers="tableHeaders"
+            :class="{
+              'policy-type-table--with-matchers': props.showMatchers,
+            }"
+            :fetcher="() => ({ data: ruleEntry.rules, total: ruleEntry.rules.length })"
+            :headers="[
+              ...(props.showMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
+              { label: 'Origin policies', key: 'origins' },
+              { label: 'Conf', key: 'config' },
+            ]"
             :cell-attrs="getCellAttributes"
             disable-pagination
-            is-clickable
           >
-            <template #type="{ rowValue }">
-              <template v-if="rowValue.sourceTags.length === 0 && rowValue.destinationTags.length === 0">
-                —
-              </template>
-
-              <div
-                v-else
-                class="tag-list-wrapper"
+            <template
+              v-if="props.showMatchers"
+              #matchers="{ row }: { row: RuleEntryRule }"
+            >
+              <span
+                v-if="row.matchers && row.matchers.length > 0"
+                class="matcher"
               >
-                <div v-if="rowValue.sourceTags.length > 0">
-                  From
-
-                  <TagList
-                    class="tag-list"
-                    should-truncate
-                    :tags="rowValue.sourceTags"
-                  />
-                </div>
-
-                <div v-if="rowValue.destinationTags.length > 0">
-                  To
-
-                  <TagList
-                    class="tag-list"
-                    should-truncate
-                    :tags="rowValue.destinationTags"
-                  />
-                </div>
-              </div>
-            </template>
-
-            <template #addresses="{ rowValue }">
-              <ul v-if="rowValue.length > 0">
-                <li
-                  v-for="(address, addressIndex) in rowValue"
-                  :key="`${index}-${addressIndex}`"
+                <template
+                  v-for="({ key, value, not }, matcherIndex) in row.matchers"
+                  :key="matcherIndex"
                 >
-                  {{ address }}
-                </li>
-              </ul>
+                  <span
+                    v-if="matcherIndex > 0"
+                    class="matcher__and"
+                  > and </span><span
+                    v-if="not"
+                    class="matcher__not"
+                  >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
+                </template>
+              </span>
 
               <template v-else>
-                —
+                <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
               </template>
             </template>
 
-            <template #origins="{ rowValue }">
-              <ul v-if="rowValue.length > 0">
+            <template #origins="{ row }: { row: RuleEntryRule }">
+              <ul v-if="row.origins.length > 0">
                 <li
-                  v-for="(origin, originIndex) in rowValue"
+                  v-for="(origin, originIndex) in row.origins"
                   :key="`${index}-${originIndex}`"
                 >
-                  <router-link :to="origin.route">
+                  <RouterLink :to="origin.route">
                     {{ origin.name }}
-                  </router-link>
+                  </RouterLink>
                 </li>
               </ul>
 
               <template v-else>
-                —
+                {{ t('common.collection.none') }}
               </template>
             </template>
 
-            <template #config="{ rowValue, rowKey }">
-              <template v-if="rowValue !== null">
+            <template #config="{ row, rowKey }: { row: RuleEntryRule, rowKey: number }">
+              <template v-if="row.config !== undefined">
                 <CodeBlock
                   :id="`${props.id}-${index}-${rowKey}-code-block`"
-                  :code="rowValue"
+                  :code="row.config"
                   language="yaml"
                   :show-copy-button="false"
                 />
               </template>
 
               <template v-else>
-                —
+                {{ t('common.collection.none') }}
               </template>
             </template>
           </KTable>
@@ -110,34 +97,33 @@
 </template>
 
 <script lang="ts" setup>
-import { KTable } from '@kong/kongponents'
-import { PropType } from 'vue'
-
+import { useI18n } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import TagList from '@/app/common/TagList.vue'
-import { RuleEntry, TableHeader } from '@/types/index'
+import type { InspectRuleMatcher } from '@/types/index.d'
+import type { RouteLocationNamedRaw } from 'vue-router'
 
-const tableHeaders: TableHeader[] = [
-  { label: 'Type', key: 'type' },
-  { label: 'Addresses', key: 'addresses' },
-  { label: 'Conf', key: 'config' },
-  { label: 'Origin policies', key: 'origins' },
-]
+export type RuleEntryRule = {
+  config: string | undefined
+  matchers?: InspectRuleMatcher[]
+  origins: Array<{ name: string, route: RouteLocationNamedRaw }>
+}
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: false,
-    default: 'entry-list',
-  },
+export type RuleEntry = {
+  type: string
+  rules: RuleEntryRule[]
+}
 
-  ruleEntries: {
-    type: Object as PropType<RuleEntry[]>,
-    required: true,
-  },
+const { t } = useI18n()
+
+const props = withDefaults(defineProps<{
+  id: string
+  ruleEntries: RuleEntry[]
+  showMatchers?: boolean
+}>(), {
+  showMatchers: true,
 })
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {
@@ -157,25 +143,41 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   gap: $kui-space-40;
 }
 
-.tag-list-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: $kui-space-40;
+.policy-type-table {
+  :deep(td) {
+    vertical-align: top;
+  }
+
+  :deep(.cell-origins) {
+    width: 65%;
+  }
+
+  :deep(.cell-config) {
+    width: 35%;
+  }
 }
 
-.tag-list {
-  display: flex;
-  margin-top: $kui-space-20;
-}
-</style>
+.policy-type-table--with-matchers {
+  :deep(.cell-formattedMatchers) {
+    width: 50%;
+  }
 
-<style lang="scss">
-.policy-type-table.policy-type-table td {
-  vertical-align: top;
+  :deep(.cell-origins) {
+    width: 15%;
+  }
 }
 
-.cell-type { width: 35%; }
-.cell-name { width: 15%; }
-.cell-config { width: 35%; }
-.cell-origins { width: 15%; }
+.matcher__not {
+  color: $kui-color-text-danger;
+  font-weight: $kui-font-weight-semibold;
+}
+
+.matcher__and {
+  color: $kui-color-text-neutral-stronger;
+}
+
+.matcher__not,
+.matcher__term {
+  font-family: $kui-font-family-code;
+}
 </style>

@@ -1,59 +1,181 @@
 <template>
-  <div data-testid="standard-dataplane-policies">
-    <h2 class="visually-hidden">
-      Policies
-    </h2>
+  <div
+    data-testid="standard-dataplane-policies"
+    class="stack"
+  >
+    <KCard v-if="props.showPoliciesSection">
+      <PolicyTypeEntryList
+        id="policies"
+        :policy-type-entries="policyTypeEntries"
+        data-testid="policy-list"
+      />
+    </KCard>
 
-    <PolicyTypeEntryList
-      id="policies"
-      :policy-type-entries="policyTypeEntries"
-      data-testid="policy-list"
-    />
-
-    <div
-      v-if="ruleEntries.length > 0"
-      class="mt-2"
-    >
-      <h2 class="mb-2">
-        Rules
-      </h2>
+    <KCard v-if="proxyRule">
+      <h3>{{ t('data-planes.routes.item.proxy_rule') }}</h3>
 
       <RuleEntryList
-        id="rules"
-        :rule-entries="ruleEntries"
-        data-testid="rule-list"
+        id="proxy-rules"
+        class="mt-2"
+        :rule-entries="[proxyRule]"
+        :show-matchers="false"
+        data-testid="proxy-rule-list"
       />
-    </div>
+    </KCard>
+
+    <KCard v-if="toRuleEntries.length > 0">
+      <h3>{{ t('data-planes.routes.item.to_rules') }}</h3>
+
+      <RuleEntryList
+        id="to-rules"
+        class="mt-2"
+        :rule-entries="toRuleEntries"
+        data-testid="to-rule-list"
+      />
+    </KCard>
+
+    <KCard v-if="fromRuleInbounds.length > 0">
+      <h3 class="mb-2">
+        {{ t('data-planes.routes.item.from_rules') }}
+      </h3>
+
+      <div
+        v-for="(fromRule, index) in fromRuleInbounds"
+        :key="index"
+      >
+        <h4>{{ t('data-planes.routes.item.port', { port: fromRule.port }) }}</h4>
+
+        <RuleEntryList
+          :id="`from-rules-${index}`"
+          class="mt-2"
+          :rule-entries="fromRule.ruleEntries"
+          :data-testid="`from-rule-list-${index}`"
+        />
+      </div>
+    </KCard>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
-import RuleEntryList from './RuleEntryList.vue'
+import PolicyTypeEntryList, { type PolicyTypeEntry, type PolicyTypeEntryConnection } from './PolicyTypeEntryList.vue'
+import RuleEntryList, { type RuleEntry, type RuleEntryRule } from './RuleEntryList.vue'
+import { useI18n } from '@/app/application'
 import {
-  DataplaneRule,
+  InspectBaseRule,
+  InspectRulesForDataplane,
   LabelValue,
   MatchedPolicyType,
   PolicyType,
-  PolicyTypeEntry,
-  PolicyTypeEntryConnection,
-  PolicyTypeEntryOrigin,
-  RuleEntry,
-  RuleEntryConnection,
   SidecarDataplane,
 } from '@/types/index.d'
 import { toYaml } from '@/utilities/toYaml'
+import type { RouteLocationNamedRaw } from 'vue-router'
+
+const { t } = useI18n()
 
 const props = defineProps<{
   sidecarDataplanes: SidecarDataplane[]
-  rules: DataplaneRule[]
+  inspectRulesForDataplane: InspectRulesForDataplane
   policyTypesByName: Record<string, PolicyType | undefined>
+  showPoliciesSection: boolean
 }>()
 
 const policyTypeEntries = computed(() => getPolicyTypeEntries(props.sidecarDataplanes))
-const ruleEntries = computed(() => getRuleEntries(props.rules))
+
+const proxyRule = computed<RuleEntry | null>(() => {
+  // Note, there can only be one proxy rule.
+  const rule = props.inspectRulesForDataplane.rules.find((rule) => rule.proxyRule)
+  if (!rule || !rule.proxyRule) {
+    return null
+  }
+
+  const { type, proxyRule } = rule
+
+  const config = proxyRule.conf && Object.keys(proxyRule.conf).length > 0 ? toYaml(proxyRule.conf) : undefined
+  const origins = proxyRule.origin.map((origin) => {
+    const policyType = props.policyTypesByName[origin.type]!
+
+    return {
+      name: origin.name,
+      route: {
+        name: 'policy-detail-view',
+        params: {
+          mesh: origin.mesh,
+          policyPath: policyType.path,
+          policy: origin.name,
+        },
+      },
+    }
+  })
+
+  return {
+    type,
+    rules: [
+      {
+        config,
+        origins,
+      },
+    ],
+  }
+})
+
+/**
+ * The to rule entries are grouped by policy type.
+ */
+const toRuleEntries = computed<RuleEntry[]>(() => {
+  const ruleEntries: RuleEntry[] = []
+
+  for (const rule of props.inspectRulesForDataplane.rules) {
+    const toRules = rule.toRules ?? []
+
+    if (toRules.length > 0) {
+      ruleEntries.push({
+        type: rule.type,
+        rules: getRules(toRules),
+      })
+    }
+  }
+
+  ruleEntries.sort((ruleEntryA, ruleEntryB) => ruleEntryA.type.localeCompare(ruleEntryB.type))
+
+  return ruleEntries
+})
+
+const fromRuleInbounds = computed<Array<{ port: number, ruleEntries: RuleEntry[] }>>(() => {
+  // Group rule entries by inbound
+  const ruleEntriesByInbound = new Map<number, RuleEntry[]>()
+
+  for (const rule of props.inspectRulesForDataplane.rules) {
+    const fromRules = rule.fromRules ?? []
+    if (fromRules.length === 0) {
+      continue
+    }
+
+    for (const fromRule of fromRules) {
+      if (!ruleEntriesByInbound.has(fromRule.inbound.port)) {
+        ruleEntriesByInbound.set(fromRule.inbound.port, [])
+      }
+
+      // This access is safe because we previously ensured this Map item exists.
+      const ruleEntries = ruleEntriesByInbound.get(fromRule.inbound.port)!
+      ruleEntries.push({
+        type: rule.type,
+        rules: getRules(fromRule.rules),
+      })
+    }
+  }
+
+  for (const [, ruleEntries] of ruleEntriesByInbound) {
+    ruleEntries.sort((ruleEntryA, ruleEntryB) => ruleEntryA.type.localeCompare(ruleEntryB.type))
+  }
+
+  const fromRules = Array.from(ruleEntriesByInbound)
+  fromRules.sort(([portA], [portB]) => portB - portA)
+
+  return fromRules.map(([port, ruleEntries]) => ({ port, ruleEntries }))
+})
 
 /**
  * Transforms `SidecarDataplane` objects into policy type entries which are going to be displayed in this view.
@@ -97,7 +219,7 @@ function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyType
 
 function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: PolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
   const config = policy.conf && Object.keys(policy.conf).length > 0 ? toYaml(policy.conf) : null
-  const origin: PolicyTypeEntryOrigin = {
+  const origin: { name: string, route: RouteLocationNamedRaw } = {
     name: policy.name,
     route: {
       name: 'policy-detail-view',
@@ -108,7 +230,7 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: Po
       },
     },
   }
-  const origins: PolicyTypeEntryOrigin[] = [origin]
+  const origins = [origin]
 
   const policyTypeEntryConnections: PolicyTypeEntryConnection[] = []
 
@@ -129,116 +251,30 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: Po
   return policyTypeEntryConnections
 }
 
-/**
- * Transforms `DataplaneRule` objects into rule entries which are going to be displayed in this view.
- */
-function getRuleEntries(rules: DataplaneRule[]): RuleEntry[] {
-  // Uses a `Map` to store entries by type so they can be retrieved and updated while iterating over the rules.
-  const policyTypeEntriesByType = new Map<string, RuleEntry>()
+function getRules(rules: InspectBaseRule[]): RuleEntryRule[] {
+  return rules.map(({ conf, matchers, origin }) => {
+    const config = conf && Object.keys(conf).length > 0 ? toYaml(conf) : undefined
+    const origins = origin.map((origin) => {
+      const policyType = props.policyTypesByName[origin.type]!
 
-  for (const rule of rules) {
-    if (!policyTypeEntriesByType.has(rule.policyType)) {
-      policyTypeEntriesByType.set(rule.policyType, {
-        type: rule.policyType,
-        connections: [],
-      })
-    }
-
-    const policyTypeEntry = policyTypeEntriesByType.get(rule.policyType) as RuleEntry
-    const policyType = props.policyTypesByName[rule.policyType] as PolicyType
-    const connections = getRuleEntryConnections(rule, policyType)
-
-    policyTypeEntry.connections.push(...connections)
-  }
-
-  const policyTypeEntries = Array.from(policyTypeEntriesByType.values())
-
-  policyTypeEntries.sort((policyTypeEntryA, policyTypeEntryB) => policyTypeEntryA.type.localeCompare(policyTypeEntryB.type))
-
-  return policyTypeEntries
-}
-
-function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): RuleEntryConnection[] {
-  const { type, service, subset, conf } = rule
-
-  // Guards against likely API changes. The response currently contains `"subset": {}` instead of omitting the value or setting it to `null`, but that might change in the future.
-  const subsetEntries = subset ? Object.entries(subset) : []
-  let sourceTags: LabelValue[]
-  let destinationTags: LabelValue[]
-
-  // Determines source tags.
-  if (type === 'ClientSubset') {
-    if (subsetEntries.length > 0) {
-    // For client subsets, the source is represented by `subset` (i.e. tags)
-      sourceTags = subsetEntries.map(([label, value]) => ({ label, value }))
-    } else {
-      // Sets the wildcard service tag for client subsets without subset values.
-      sourceTags = [
-        {
-          label: 'kuma.io/service',
-          value: '*',
+      return {
+        name: origin.name,
+        route: {
+          name: 'policy-detail-view',
+          params: {
+            mesh: origin.mesh,
+            policyPath: policyType.path,
+            policy: origin.name,
+          },
         },
-      ]
-    }
-  } else {
-    // For destination subsets and single items, the source is the DPP for which we don’t want to show anything.
-    sourceTags = []
-  }
-
-  // Determines destination tags.
-  if (type === 'DestinationSubset') {
-    // For destination subsets, the destination is represented by either `subset` (which has priority) or `service`. `subset` is more specific than `service` so it needs to be handled first.
-    if (subsetEntries.length > 0) {
-      destinationTags = subsetEntries.map(([label, value]) => ({ label, value }))
-    } else if (typeof service === 'string' && service !== '') {
-      // The `service` field, when set, represents the name of the destination service of traffic.
-      destinationTags = [
-        {
-          label: 'kuma.io/service',
-          value: service,
-        },
-      ]
-    } else {
-      // For destination subsets with empty or absent `subset` field and empty or absent `service`, we can set the wildcard service tag to indicate that the traffic goes to all services.
-      destinationTags = [
-        {
-          label: 'kuma.io/service',
-          value: '*',
-        },
-      ]
-    }
-  } else if (type === 'ClientSubset' && typeof service === 'string' && service !== '') {
-    // The `service` field, when set, represents the name of the destination service of traffic.
-    destinationTags = [
-      {
-        label: 'kuma.io/service',
-        value: service,
-      },
-    ]
-  } else {
-    destinationTags = []
-  }
-
-  const addresses = rule.addresses ?? []
-  const config = conf && Object.keys(conf).length > 0 ? toYaml(conf) : null
-  const origins: PolicyTypeEntryOrigin[] = []
-
-  for (const ruleOrigin of rule.origins) {
-    origins.push({
-      name: ruleOrigin.name,
-      route: {
-        name: 'policy-detail-view',
-        params: {
-          mesh: ruleOrigin.mesh,
-          policyPath: policyType.path,
-          policy: ruleOrigin.name,
-        },
-      },
+      }
     })
-  }
 
-  const connection: RuleEntryConnection = { type: { sourceTags, destinationTags }, addresses, config, origins }
-
-  return [connection]
+    return {
+      config,
+      matchers,
+      origins,
+    }
+  })
 }
 </script>

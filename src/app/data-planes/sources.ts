@@ -5,7 +5,7 @@ import { parse, getTraffic } from '@/app/data-planes/data/stats'
 import type { TrafficEntry } from '@/app/data-planes/data/stats'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { DataPlane, DataPlaneOverview as DataplaneOverview, DataplaneRule, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
+import type { DataPlane, DataPlaneOverview as DataplaneOverview, InspectRulesForDataplane, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
 
 export type DataplaneSource = DataSourceResponse<DataPlane>
 export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
@@ -19,8 +19,8 @@ export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDatapla
 
 export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
 
-export type DataplaneRulesCollection = CollectionResponse<DataplaneRule>
-export type DataplaneRulesCollectionSource = DataSourceResponse<DataplaneRulesCollection>
+export type DataplaneRulesSource = DataSourceResponse<InspectRulesForDataplane>
+
 export type TrafficSource = DataSourceResponse<{
   inbounds: TrafficEntry[]
   outbounds: TrafficEntry[]

@@ -1,25 +1,19 @@
 Feature: Dataplane details for standard Data Plane Proxy
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                                        |
-      | detail-view        | [data-testid='data-plane-detail-tabs-view']                     |
-      | policies-view      | [data-testid='data-plane-policies-view']                        |
-      | clusters-view      | [data-testid='data-plane-clusters-view']                        |
-      | overview-tab       | #data-plane-detail-view-tab a                                   |
-      | policies-tab       | #data-plane-policies-view-tab a                                 |
-      | clusters-tab       | #data-plane-clusters-view-tab a                                 |
-      | warnings           | [data-testid='dataplane-warnings']                              |
-      | details            | [data-testid='dataplane-details']                               |
-      | inbounds           | [data-testid='dataplane-inbounds']                              |
-      | subscriptions      | [data-testid='dataplane-subscriptions']                         |
-      | status-cds         | [data-testid='subscription-status-cds']                         |
-      | status-eds         | [data-testid='subscription-status-eds']                         |
-      | status-lds         | [data-testid='subscription-status-lds']                         |
-      | status-rds         | [data-testid='subscription-status-rds']                         |
-      | policy-item        | [data-testid='policy-list'] .accordion-item                     |
-      | policy-item-button | $policy-item:nth-child(1) [data-testid='accordion-item-button'] |
-      | rule-item          | [data-testid='rule-list'] .accordion-item                       |
-      | rule-item-button   | $rule-item:nth-child(1) [data-testid='accordion-item-button']   |
+      | Alias         | Selector                                    |
+      | detail-view   | [data-testid='data-plane-detail-tabs-view'] |
+      | clusters-view | [data-testid='data-plane-clusters-view']    |
+      | overview-tab  | #data-plane-detail-view-tab a               |
+      | clusters-tab  | #data-plane-clusters-view-tab a             |
+      | warnings      | [data-testid='dataplane-warnings']          |
+      | details       | [data-testid='dataplane-details']           |
+      | inbounds      | [data-testid='dataplane-inbounds']          |
+      | subscriptions | [data-testid='dataplane-subscriptions']     |
+      | status-cds    | [data-testid='subscription-status-cds']     |
+      | status-eds    | [data-testid='subscription-status-eds']     |
+      | status-lds    | [data-testid='subscription-status-lds']     |
+      | status-rds    | [data-testid='subscription-status-rds']     |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
@@ -119,37 +113,6 @@ Feature: Dataplane details for standard Data Plane Proxy
       | Value |
       | RDS   |
       | 0     |
-
-  Scenario: Policies tab has expected content
-    Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/policies" responds with
-      """
-      body:
-        items:
-          - matchedPolicies:
-              FaultInjection:
-                - sources:
-                   - match:
-                      kuma.io/service: service-a
-      """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/rules" responds with
-      """
-      body:
-        items:
-          - name: ''
-          - name: demo-app_kuma-demo_svc_5000
-            service: demo-app_kuma-demo_svc_5000
-            tags:
-              kuma.io/service: demo-app_kuma-demo_svc_5000
-      """
-
-    When I click the "$policies-tab" element
-    And I click the "$policy-item-button" element
-
-    Then the "$policies-view" element contains "kuma.io/service:service-a"
-
-    When I click the "$rule-item-button" element
-
-    Then the "$policies-view" element contains "kuma.io/service:demo-app_kuma-demo_svc_5000"
 
   Scenario: Clusters tab has expected content
     Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with

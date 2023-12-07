@@ -314,6 +314,57 @@ export interface DataplaneRule {
   origins: Array<{ mesh: string, name: string }>
 }
 
+export interface Meta<Type extends string = string> {
+  type: Type
+  mesh: string
+  name: string
+}
+
+export type Conf = object
+
+export interface InspectRuleMatcher {
+  key: string
+  value: string
+  not: boolean
+}
+
+export interface InspectBaseRule {
+  matchers: InspectRuleMatcher[]
+  conf: Conf
+  origin: Meta[]
+}
+
+export interface InspectProxyRule {
+  conf: Conf
+  origin: Meta[]
+}
+
+export interface InspectInbound {
+  tags: Record<string, string>
+  port: number
+}
+
+export interface InspectFromRule {
+  inbound: InspectInbound
+  rules: InspectBaseRule[]
+}
+
+export interface InspectRule {
+  /**
+   * Policy type
+   */
+  type: string
+  proxyRule?: InspectProxyRule
+  toRules?: InspectBaseRule[]
+  fromRules?: InspectFromRule[]
+  warnings?: string[]
+}
+
+export interface InspectRulesForDataplane {
+  resource: Meta<'Dataplane'>
+  rules: InspectRule[]
+}
+
 export type PolicyMatch = {
   match: {
     'kuma.io/service': string
@@ -366,39 +417,6 @@ export interface MeshGatewayDataplane {
   }
   listeners: MeshGatewayDataplaneListener[] | null
   policies?: Record<string, MatchedPolicyType>
-}
-
-export type PolicyTypeEntryOrigin = {
-  name: string
-  route: RouteLocationNamedRaw
-}
-
-export type PolicyTypeEntryConnection = {
-  sourceTags: LabelValue[]
-  destinationTags: LabelValue[]
-  name: string | null
-  origins: PolicyTypeEntryOrigin[]
-  config: string | null
-}
-
-export type PolicyTypeEntry = {
-  type: string
-  connections: PolicyTypeEntryConnection[]
-}
-
-export type RuleEntryConnection = {
-  type: {
-    sourceTags: LabelValue[]
-    destinationTags: LabelValue[]
-  }
-  addresses: string[]
-  origins: PolicyTypeEntryOrigin[]
-  config: string | null
-}
-
-export type RuleEntry = {
-  type: string
-  connections: RuleEntryConnection[]
 }
 
 export type SidecarDataplaneRuleEntry = {

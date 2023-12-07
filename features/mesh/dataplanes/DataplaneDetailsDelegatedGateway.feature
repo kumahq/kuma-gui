@@ -3,16 +3,12 @@ Feature: Dataplane details for delegated gateway
     Given the CSS selectors
       | Alias              | Selector                                                        |
       | detail-view        | [data-testid='data-plane-detail-tabs-view']                     |
-      | policies-view      | [data-testid='data-plane-policies-view']                        |
       | overview-tab       | #data-plane-detail-view-tab a                                   |
-      | policies-tab       | #data-plane-policies-view-tab a                                 |
       | warnings           | [data-testid='dataplane-warnings']                              |
       | details            | [data-testid='dataplane-details']                               |
       | inbounds           | [data-testid='dataplane-inbounds']                              |
       | policy-item        | [data-testid='policy-list'] .accordion-item                     |
       | policy-item-button | $policy-item:nth-child(1) [data-testid='accordion-item-button'] |
-      | rule-item          | [data-testid='rule-list'] .accordion-item                       |
-      | rule-item-button   | $rule-item:nth-child(1) [data-testid='accordion-item-button']   |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
@@ -62,34 +58,3 @@ Feature: Dataplane details for delegated gateway
       | kuma.io/zone:zone-1   |
     And the "$warnings" element doesn't exist
     And the "$inbounds" element doesn't exist
-
-  Scenario: Policies tab has expected content
-    Given the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1/policies" responds with
-      """
-      body:
-        items:
-          - matchedPolicies:
-              FaultInjection:
-                - sources:
-                   - match:
-                      kuma.io/service: service-a
-      """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1/rules" responds with
-      """
-      body:
-        items:
-          - name: ''
-          - name: demo-app_kuma-demo_svc_5000
-            service: demo-app_kuma-demo_svc_5000
-            tags:
-              kuma.io/service: demo-app_kuma-demo_svc_5000
-      """
-
-    When I click the "$policies-tab" element
-    And I click the "$policy-item-button" element
-
-    Then the "$policies-view" element contains "kuma.io/service:service-a"
-
-    When I click the "$rule-item-button" element
-
-    Then the "$policies-view" element contains "kuma.io/service:demo-app_kuma-demo_svc_5000"

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ can, route, t }"
     name="data-plane-policies-view"
     :params="{
       mesh: '',
@@ -16,15 +16,49 @@
         </h2>
       </template>
 
-      <KCard>
-        <template v-if="props.data.dataplane?.networking?.gateway?.type === 'BUILTIN'">
+      <template v-if="props.data.dataplane?.networking?.gateway?.type === 'BUILTIN'">
+        <DataSource
+          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
+          :src="`/*/policy-types`"
+        >
           <DataSource
-            v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
-            :src="`/*/policy-types`"
+            v-slot="{ data: gatewayDataplane, error }: MeshGatewayDataplaneSource"
+            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies`"
+          >
+            <ErrorBlock
+              v-if="policyTypesError"
+              :error="policyTypesError"
+            />
+
+            <ErrorBlock
+              v-else-if="error"
+              :error="error"
+            />
+
+            <LoadingBlock v-else-if="gatewayDataplane === undefined || policyTypesData === undefined" />
+
+            <KCard v-else>
+              <BuiltinGatewayPolicies
+                :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
+                :gateway-dataplane="gatewayDataplane"
+              />
+            </KCard>
+          </DataSource>
+        </DataSource>
+      </template>
+
+      <template v-else>
+        <DataSource
+          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
+          :src="`/*/policy-types`"
+        >
+          <DataSource
+            v-slot="{ data: sidecarDataplaneData, error }: SidecarDataplaneCollectionSource"
+            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
           >
             <DataSource
-              v-slot="{ data: gatewayDataplane, error }: MeshGatewayDataplaneSource"
-              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies`"
+              v-slot="{ data: rulesData, error: rulesError }: DataplaneRulesSource"
+              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/rules`"
             >
               <ErrorBlock
                 v-if="policyTypesError"
@@ -36,58 +70,24 @@
                 :error="error"
               />
 
-              <LoadingBlock v-else-if="gatewayDataplane === undefined || policyTypesData === undefined" />
+              <ErrorBlock
+                v-else-if="rulesError"
+                :error="rulesError"
+              />
 
-              <BuiltinGatewayPolicies
+              <LoadingBlock v-else-if="policyTypesData === undefined || sidecarDataplaneData === undefined || rulesData === undefined" />
+
+              <StandardDataplanePolicies
                 v-else
                 :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                :gateway-dataplane="gatewayDataplane"
+                :sidecar-dataplanes="sidecarDataplaneData.items"
+                :inspect-rules-for-dataplane="rulesData"
+                :show-policies-section="!can('use zones')"
               />
             </DataSource>
           </DataSource>
-        </template>
-
-        <template v-else>
-          <DataSource
-            v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
-            :src="`/*/policy-types`"
-          >
-            <DataSource
-              v-slot="{ data: sidecarDataplaneData, error }: SidecarDataplaneCollectionSource"
-              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
-            >
-              <DataSource
-                v-slot="{ data: rulesData, error: rulesError }: DataplaneRulesCollectionSource"
-                :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/rules`"
-              >
-                <ErrorBlock
-                  v-if="policyTypesError"
-                  :error="policyTypesError"
-                />
-
-                <ErrorBlock
-                  v-else-if="error"
-                  :error="error"
-                />
-
-                <ErrorBlock
-                  v-else-if="rulesError"
-                  :error="rulesError"
-                />
-
-                <LoadingBlock v-else-if="policyTypesData === undefined || sidecarDataplaneData === undefined || rulesData === undefined" />
-
-                <StandardDataplanePolicies
-                  v-else
-                  :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                  :sidecar-dataplanes="sidecarDataplaneData.items"
-                  :rules="rulesData.items"
-                />
-              </DataSource>
-            </DataSource>
-          </DataSource>
-        </template>
-      </KCard>
+        </DataSource>
+      </template>
     </AppView>
   </RouteView>
 </template>
@@ -95,7 +95,7 @@
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import StandardDataplanePolicies from '../components/StandardDataplanePolicies.vue'
-import { DataplaneRulesCollectionSource, MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
+import { DataplaneRulesSource, MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { PolicyTypeCollectionSource } from '@/app/policies/sources'

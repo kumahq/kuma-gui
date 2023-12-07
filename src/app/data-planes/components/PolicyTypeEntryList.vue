@@ -100,15 +100,26 @@
 </template>
 
 <script lang="ts" setup>
-import { KTable } from '@kong/kongponents'
-import { PropType } from 'vue'
-
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
-import { PolicyTypeEntry, TableHeader } from '@/types/index'
+import type { LabelValue, TableHeader } from '@/types/index.d'
+import type { RouteLocationNamedRaw } from 'vue-router'
+
+export type PolicyTypeEntryConnection = {
+  sourceTags: LabelValue[]
+  destinationTags: LabelValue[]
+  name: string | null
+  origins: Array<{ name: string, route: RouteLocationNamedRaw }>
+  config: string | null
+}
+
+export type PolicyTypeEntry = {
+  type: string
+  connections: PolicyTypeEntryConnection[]
+}
 
 const tableHeaders: TableHeader[] = [
   { label: 'From', key: 'sourceTags' },
@@ -118,18 +129,10 @@ const tableHeaders: TableHeader[] = [
   { label: 'Origin policies', key: 'origins' },
 ]
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: false,
-    default: 'entry-list',
-  },
-
-  policyTypeEntries: {
-    type: Object as PropType<PolicyTypeEntry[]>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  id: string
+  policyTypeEntries: PolicyTypeEntry[]
+}>()
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {
   return { class: `cell-${headerKey}` }
