@@ -55,21 +55,23 @@
               @change="route.update"
             >
               <template #name="{ row: item }">
-                <RouterLink
-                  :to="{
-                    name: 'service-detail-view',
-                    params: {
-                      mesh: item.mesh,
-                      service: item.name,
-                    },
-                    query: {
-                      page: route.params.page,
-                      size: route.params.size,
-                    },
-                  }"
-                >
-                  {{ item.name }}
-                </RouterLink>
+                <TextWithCopyButton :text="item.name">
+                  <RouterLink
+                    :to="{
+                      name: 'service-detail-view',
+                      params: {
+                        mesh: item.mesh,
+                        service: item.name,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                      },
+                    }"
+                  >
+                    {{ item.name }}
+                  </RouterLink>
+                </TextWithCopyButton>
               </template>
 
               <template #serviceType="{ rowValue }">
