@@ -96,7 +96,7 @@ export default {
 
 .copy-button[data-tooltip-text]::after {
   background-color: var(--tooltip-background-color);
-  border-radius: $kui-border-radius-20;
+  border-radius: $kui-border-radius-10;
   color: $kui-color-text-inverse;
   content: attr(data-tooltip-text);
   font-weight: $kui-font-weight-regular;
