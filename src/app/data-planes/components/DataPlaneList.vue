@@ -211,6 +211,7 @@ function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlan
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 .details-link {
