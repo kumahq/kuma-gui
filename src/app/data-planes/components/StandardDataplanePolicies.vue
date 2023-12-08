@@ -3,56 +3,62 @@
     data-testid="standard-dataplane-policies"
     class="stack"
   >
-    <KCard v-if="props.showPoliciesSection">
-      <PolicyTypeEntryList
-        id="policies"
-        :policy-type-entries="policyTypeEntries"
-        data-testid="policy-list"
-      />
+    <KCard v-if="(props.showPoliciesSection ? props.sidecarDataplanes.length === 0 : true) && props.inspectRulesForDataplane.rules.length === 0">
+      <EmptyBlock />
     </KCard>
 
-    <KCard v-if="proxyRule">
-      <h3>{{ t('data-planes.routes.item.proxy_rule') }}</h3>
+    <template v-else>
+      <KCard v-if="props.showPoliciesSection">
+        <PolicyTypeEntryList
+          id="policies"
+          :policy-type-entries="policyTypeEntries"
+          data-testid="policy-list"
+        />
+      </KCard>
 
-      <RuleEntryList
-        id="proxy-rules"
-        class="mt-2"
-        :rule-entries="[proxyRule]"
-        :show-matchers="false"
-        data-testid="proxy-rule-list"
-      />
-    </KCard>
-
-    <KCard v-if="toRuleEntries.length > 0">
-      <h3>{{ t('data-planes.routes.item.to_rules') }}</h3>
-
-      <RuleEntryList
-        id="to-rules"
-        class="mt-2"
-        :rule-entries="toRuleEntries"
-        data-testid="to-rule-list"
-      />
-    </KCard>
-
-    <KCard v-if="fromRuleInbounds.length > 0">
-      <h3 class="mb-2">
-        {{ t('data-planes.routes.item.from_rules') }}
-      </h3>
-
-      <div
-        v-for="(fromRule, index) in fromRuleInbounds"
-        :key="index"
-      >
-        <h4>{{ t('data-planes.routes.item.port', { port: fromRule.port }) }}</h4>
+      <KCard v-if="proxyRule">
+        <h3>{{ t('data-planes.routes.item.proxy_rule') }}</h3>
 
         <RuleEntryList
-          :id="`from-rules-${index}`"
+          id="proxy-rules"
           class="mt-2"
-          :rule-entries="fromRule.ruleEntries"
-          :data-testid="`from-rule-list-${index}`"
+          :rule-entries="[proxyRule]"
+          :show-matchers="false"
+          data-testid="proxy-rule-list"
         />
-      </div>
-    </KCard>
+      </KCard>
+
+      <KCard v-if="toRuleEntries.length > 0">
+        <h3>{{ t('data-planes.routes.item.to_rules') }}</h3>
+
+        <RuleEntryList
+          id="to-rules"
+          class="mt-2"
+          :rule-entries="toRuleEntries"
+          data-testid="to-rule-list"
+        />
+      </KCard>
+
+      <KCard v-if="fromRuleInbounds.length > 0">
+        <h3 class="mb-2">
+          {{ t('data-planes.routes.item.from_rules') }}
+        </h3>
+
+        <div
+          v-for="(fromRule, index) in fromRuleInbounds"
+          :key="index"
+        >
+          <h4>{{ t('data-planes.routes.item.port', { port: fromRule.port }) }}</h4>
+
+          <RuleEntryList
+            :id="`from-rules-${index}`"
+            class="mt-2"
+            :rule-entries="fromRule.ruleEntries"
+            :data-testid="`from-rule-list-${index}`"
+          />
+        </div>
+      </KCard>
+    </template>
   </div>
 </template>
 
@@ -62,6 +68,7 @@ import { computed } from 'vue'
 import PolicyTypeEntryList, { type PolicyTypeEntry, type PolicyTypeEntryConnection } from './PolicyTypeEntryList.vue'
 import RuleEntryList, { type RuleEntry, type RuleEntryRule } from './RuleEntryList.vue'
 import { useI18n } from '@/app/application'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import {
   InspectBaseRule,
   InspectRulesForDataplane,
