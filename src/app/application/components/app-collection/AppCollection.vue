@@ -232,6 +232,7 @@ const click = (e: MouseEvent) => {
 
 .app-collection :deep(td:first-child a) {
   color: currentColor;
+  text-decoration: none;
 }
 
 .app-collection-toolbar {
