@@ -13,7 +13,7 @@
       @click="copy($event, copyToClipboard)"
     >
       <CopyIcon
-        :size="KUI_ICON_SIZE_30"
+        :color="KUI_COLOR_TEXT_NEUTRAL"
         :title="!props.hideTitle ? props.copyText : undefined"
         :hide-title="props.hideTitle"
       />
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_COLOR_TEXT_NEUTRAL } from '@kong/design-tokens'
 import { CopyIcon } from '@kong/icons'
 import { KButton, KClipboardProvider } from '@kong/kongponents'
 
