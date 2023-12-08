@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 import ErrorBlock from './ErrorBlock.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
@@ -9,6 +9,13 @@ function renderComponent(props: any = {}) {
     props,
   })
 }
+
+// Addresses “ReferenceError: ResizeObserver is not defined” error in this test.
+vi.stubGlobal('ResizeObserver', vi.fn(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+})))
 
 describe('ErrorBlock.vue', () => {
   test.each([

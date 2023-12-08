@@ -14,8 +14,10 @@ Feature: zones / create
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button']  |
       | environment-universal-config        | [data-testid='zone-universal-config']                |
       | environment-kubernetes-config       | [data-testid='zone-kubernetes-config']               |
-      | ingress-input-switch                | [for='zone-ingress-enabled']                         |
-      | egress-input-switch                 | [for='zone-egress-enabled']                          |
+      | ingress-input-switch-label          | [for='zone-ingress-enabled']                         |
+      | egress-input-switch-label           | [for='zone-egress-enabled']                          |
+      | ingress-input-switch-input          | #zone-ingress-enabled                                |
+      | egress-input-switch-input           | #zone-egress-enabled                                 |
       | create-error                        | [data-testid='create-zone-error']                    |
       | waiting                             | [data-testid='waiting']                              |
       | connected                           | [data-testid='connected']                            |
@@ -45,8 +47,8 @@ Feature: zones / create
 
     Then the "$environment-universal-radio-button" element doesn't exist
     Then the "$environment-kubernetes-radio-button" element doesn't exist
-    Then the "$ingress-input-switch" element doesn't exist
-    Then the "$egress-input-switch" element doesn't exist
+    Then the "$ingress-input-switch-label" element doesn't exist
+    Then the "$egress-input-switch-label" element doesn't exist
 
   Scenario: The form interactions behave correctly
     Given the environment
@@ -73,22 +75,22 @@ Feature: zones / create
       """
     And the "$environment-universal-radio-button" element isn't checked
     And the "$environment-kubernetes-radio-button" element is checked
-    And the "$ingress-input-switch input" element is checked
-    And the "$egress-input-switch input" element is checked
+    And the "$ingress-input-switch-input" element is checked
+    And the "$egress-input-switch-input" element is checked
     And the "$environment-kubernetes-config" element contains "kdsGlobalAddress: grpcs://<global-kds-address>:5685"
     And the "$waiting" element exists
 
-    When I click the "$ingress-input-switch" element
-    Then the "$ingress-input-switch input" element isn't checked
-    And the "$egress-input-switch input" element is checked
+    When I click the "$ingress-input-switch-label" element
+    Then the "$ingress-input-switch-input" element isn't checked
+    And the "$egress-input-switch-input" element is checked
 
-    When I click the "$egress-input-switch" element
-    Then the "$ingress-input-switch input" element isn't checked
-    And the "$egress-input-switch input" element isn't checked
+    When I click the "$egress-input-switch-label" element
+    Then the "$ingress-input-switch-input" element isn't checked
+    And the "$egress-input-switch-input" element isn't checked
 
     When I click the "$environment-universal-radio-button" element
-    Then the "$ingress-input-switch input" element doesn't exist
-    And the "$egress-input-switch input" element doesn't exist
+    Then the "$ingress-input-switch-input" element doesn't exist
+    And the "$egress-input-switch-input" element doesn't exist
     And the "$environment-universal-config" element contains "globalAddress: grpcs://<global-kds-address>:5685"
 
   Scenario: The zone get connected successfully and shows the success

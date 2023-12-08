@@ -3,7 +3,7 @@
     class="service-traffic-card"
   >
     <template #title>
-      <KBadge :appearance="props.protocol === 'unknown' ? 'success' : 'default'">
+      <KBadge :appearance="props.protocol === 'unknown' ? 'success' : 'info'">
         {{ t(
           `data-planes.components.service_traffic_card.protocol.${props.protocol}`,
           {},
