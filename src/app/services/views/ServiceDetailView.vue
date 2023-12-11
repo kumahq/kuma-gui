@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
 import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
-import type { ServiceInsight } from '@/types/index.d'
+import type { ServiceInsight } from '@/app/services/data'
 
 const props = defineProps<{
   data: ServiceInsight

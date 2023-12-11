@@ -74,14 +74,14 @@
                 </TextWithCopyButton>
               </template>
 
-              <template #serviceType="{ rowValue }">
-                {{ rowValue || 'internal' }}
+              <template #serviceType="{ row }">
+                {{ row.serviceType }}
               </template>
 
-              <template #addressPort="{ rowValue }">
+              <template #addressPort="{ row }">
                 <TextWithCopyButton
-                  v-if="rowValue"
-                  :text="rowValue"
+                  v-if="row.addressPort"
+                  :text="row.addressPort"
                 />
 
                 <template v-else>
@@ -103,7 +103,7 @@
               </template>
 
               <template #status="{ row: item }">
-                <StatusBadge :status="item.status || 'not_available'" />
+                <StatusBadge :status="item.status" />
               </template>
 
               <template #details="{ row }">

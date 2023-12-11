@@ -76,7 +76,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import type { ServiceInsight } from '@/types/index.d'
+import type { ServiceInsight } from '@/app/services/data'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

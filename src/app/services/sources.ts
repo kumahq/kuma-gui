@@ -1,7 +1,9 @@
+import { ExternalService, ServiceInsight } from './data'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { ExternalService, ServiceInsight } from '@/types/index.d'
+
+export type { ExternalService, ServiceInsight } from './data'
 
 type CollectionParams = {
   mesh: string
@@ -30,21 +32,21 @@ export type ExternalServiceSource = DataSourceResponse<ExternalService | null>
 
 export const sources = (api: KumaApi) => {
   return {
-    '/meshes/:mesh/service-insights': (params: CollectionParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
-      return api.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
+      return ServiceInsight.fromCollection(await api.getAllServiceInsightsFromMesh({ mesh }, { size, offset }))
     },
 
-    '/meshes/:mesh/service-insights/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/service-insights/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, name } = params
 
-      return api.getServiceInsight({ mesh, name })
+      return ServiceInsight.fromObject(await api.getServiceInsight({ mesh, name }))
     },
 
     '/meshes/:mesh/external-services/for/:service': async (params: ExternalServiceParams, source: Closeable) => {
@@ -56,7 +58,7 @@ export const sources = (api: KumaApi) => {
         tag: [`kuma.io/service:${service}`],
       })
 
-      return items.length > 0 ? items[0] : null
+      return items.length > 0 ? ExternalService.fromObject(items[0]) : null
     },
   }
 }
