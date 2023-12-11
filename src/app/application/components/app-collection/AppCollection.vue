@@ -85,7 +85,7 @@
       <template v-else>
         <slot
           :name="key"
-          :row="row"
+          :row="row as Row"
           :row-value="rowValue"
         />
       </template>
