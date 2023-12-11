@@ -124,7 +124,7 @@
             </template>
 
             <template #targetRef="{ row }">
-              <template v-if="props.currentPolicyType.isTargetRefBased">
+              <template v-if="props.currentPolicyType.isTargetRefBased && typeof row.spec?.targetRef !== 'undefined'">
                 <KBadge appearance="neutral">
                   {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
                 </KBadge>
