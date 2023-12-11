@@ -54,7 +54,9 @@
             {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
           </p>
 
-          <KDropdown :kpop-attributes="{ placement: 'bottomEnd' }">
+          <KDropdown
+            :kpop-attributes="{ placement: 'bottomEnd' }"
+          >
             <KButton
               appearance="tertiary"
               icon-only
@@ -65,31 +67,34 @@
             </KButton>
 
             <template #items>
-              <KDropdownItem>
-                <a
-                  :href="t('common.product.href.docs.index')"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Documentation
-                </a>
+              <KDropdownItem
+                :item="{
+                  to: t('common.product.href.docs.index'),
+                  label: '',
+                }"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Documentation
               </KDropdownItem>
-              <KDropdownItem>
-                <a
-                  :href="t('common.product.href.feedback')"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Feedback
-                </a>
+              <KDropdownItem
+                :item="{
+                  to: t('common.product.href.feedback'),
+                  label: '',
+                }"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Feedback
               </KDropdownItem>
-
               <KDropdownItem
                 :item="{
                   to: { name: 'onboarding-welcome-view' },
-                  label: 'Onboarding',
+                  label: '',
                 }"
-              />
+              >
+                Onboarding
+              </KDropdownItem>
             </template>
           </KDropdown>
 
@@ -286,5 +291,4 @@ nav :deep(.app-navigator) > a {
     display: none;
   }
 }
-
 </style>
