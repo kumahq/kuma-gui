@@ -20,7 +20,7 @@
           <KTable
             class="policy-type-table"
             :class="{
-              'policy-type-table--with-matchers': props.showMatchers,
+              'has-matchers': props.showMatchers,
             }"
             :fetcher="() => ({ data: ruleEntry.rules, total: ruleEntry.rules.length })"
             :headers="[
@@ -46,7 +46,7 @@
                   <span
                     v-if="matcherIndex > 0"
                     class="matcher__and"
-                  > and </span><span
+                  > and<br></span><span
                     v-if="not"
                     class="matcher__not"
                   >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
@@ -144,36 +144,55 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 }
 
 .policy-type-table {
+  :deep(table){
+    table-layout: fixed;
+  }
+
   :deep(td) {
     vertical-align: top;
   }
 
-  :deep(.cell-origins) {
-    width: 65%;
+  &:not(.has-matchers) {
+    :deep(th:nth-child(1)),
+    :deep(td:nth-child(1)) {
+      width: 65%;
+    }
+
+    :deep(th:nth-child(2)),
+    :deep(td:nth-child(2)) {
+      width: 35%;
+    }
   }
 
-  :deep(.cell-config) {
-    width: 35%;
+  &.has-matchers {
+    :deep(th:nth-child(1)),
+    :deep(td:nth-child(1)) {
+      width: 50%;
+    }
+
+    :deep(th:nth-child(2)),
+    :deep(td:nth-child(2)) {
+      width: 15%;
+    }
+
+    :deep(th:nth-child(3)),
+    :deep(td:nth-child(3)) {
+      width: 35%;
+    }
   }
 }
 
-.policy-type-table--with-matchers {
-  :deep(.cell-formattedMatchers) {
-    width: 50%;
-  }
-
-  :deep(.cell-origins) {
-    width: 15%;
-  }
+.matcher {
+  white-space: normal;
+  word-break: break-word;
 }
 
 .matcher__not {
   color: $kui-color-text-danger;
-  font-weight: $kui-font-weight-semibold;
 }
 
 .matcher__and {
-  color: $kui-color-text-neutral-stronger;
+  font-weight: $kui-font-weight-semibold;
 }
 
 .matcher__not,

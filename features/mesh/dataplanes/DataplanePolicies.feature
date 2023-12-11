@@ -115,13 +115,15 @@ Feature: Dataplane policies
 
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
 
-      Then the "$policies-view" element contains "kuma.io/service:other-svc"
-      And the "$policies-view" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
+      Then the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:other-svc"
+      And the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
 
       When I click the "$to-rule-item:nth-child(2) [data-testid='accordion-item-button']" element
 
-      Then the "$policies-view" element contains "__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and kuma.io/service:backend_kuma-demo_svc_3001"
-      And the "$policies-view" element contains "!__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and kuma.io/service:backend_kuma-demo_svc_3001"
+      Then the "$to-rule-item:nth-child(2)" element contains "__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and"
+      Then the "$to-rule-item:nth-child(2)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
+      And the "$to-rule-item:nth-child(2)" element contains "!__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and"
+      And the "$to-rule-item:nth-child(2)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
 
     Scenario: Policies tab has expected content (MeshTimeout with from & to rules)
       Given the environment
@@ -218,12 +220,13 @@ Feature: Dataplane policies
 
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
 
-      Then the "$policies-view" element contains "kuma.io/service:foo"
-      And the "$policies-view" element contains "kuma.io/service:bar"
+      Then the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:foo"
+      And the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:bar"
 
       When I click the "$from-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
 
-      Then the "$policies-view" element contains "kuma.io/service:one and !kuma.io/service:two"
+      Then the "$from-rule-item:nth-child(1)" element contains "kuma.io/service:one and"
+      Then the "$from-rule-item:nth-child(1)" element contains "!kuma.io/service:two"
 
     Scenario: Policies tab has expected content (MeshTimeout with proxy & to rule)
       Given the environment
@@ -274,11 +277,11 @@ Feature: Dataplane policies
 
       When I click the "$proxy-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
 
-      Then the "$policies-view" element contains "mpp-on-gateway"
+      Then the "$proxy-rule-item:nth-child(1)" element contains "mpp-on-gateway"
 
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
 
-      Then the "$policies-view" element contains "!kuma.io/service:bar"
+      Then the "$to-rule-item:nth-child(1)" element contains "!kuma.io/service:bar"
 
   Rule: Delegated gateway
     Background:
