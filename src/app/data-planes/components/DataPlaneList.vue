@@ -49,12 +49,28 @@
     </template>
 
     <template #services="{ row }: { row: DataPlaneOverviewTableRow }">
-      <TagList
+      <KTruncate
         v-if="row.services.length > 0"
-        :tags="row.services"
-        should-truncate
-        hide-label-key
-      />
+        width="auto"
+      >
+        <div
+          v-for="(tag, index) in row.services"
+          :key="index"
+        >
+          <TextWithCopyButton :text="tag.value">
+            <RouterLink
+              :to="{
+                name: 'service-detail-view',
+                params: {
+                  service: tag.value,
+                },
+              }"
+            >
+              {{ tag.value }}
+            </RouterLink>
+          </TextWithCopyButton>
+        </div>
+      </KTruncate>
 
       <template v-else>
         {{ t('common.collection.none') }}
@@ -125,7 +141,7 @@ import { ArrowRightIcon } from '@kong/icons'
 import { getDataplaneType, getIsCertExpired, getStatusAndReason, getTags, getWarnings } from '../data/index'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { DataPlaneOverview, LabelValue, StatusKeyword } from '@/types/index.d'
 import { useI18n } from '@/utilities'

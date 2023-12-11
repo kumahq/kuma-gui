@@ -16,12 +16,9 @@ import { useI18n } from '@/utilities'
 
 const i18n = useI18n()
 
-const props = defineProps({
-  text: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  text: string
+}>()
 </script>
 
 <style lang="scss" scoped>

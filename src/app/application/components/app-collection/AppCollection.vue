@@ -226,7 +226,7 @@ const click = (e: MouseEvent) => {
 
 <style lang="scss" scoped>
 .app-collection :deep(td:first-child),
-.app-collection :deep(td:first-child > *) {
+.app-collection :deep(td:first-child *) {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;

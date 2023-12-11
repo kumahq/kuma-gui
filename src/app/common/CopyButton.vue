@@ -28,50 +28,23 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { CopyIcon } from '@kong/icons'
-import { KButton, KClipboardProvider } from '@kong/kongponents'
 
-import type { PropType } from 'vue'
-
-const props = defineProps({
-  text: {
-    type: String,
-    required: false,
-    default: '',
-  },
-
-  getText: {
-    type: Function as PropType<() => string | Promise<string>>,
-    required: false,
-    default: null,
-  },
-
-  copyText: {
-    type: String,
-    required: false,
-    default: 'Copy',
-  },
-
-  tooltipSuccessText: {
-    type: String,
-    required: false,
-    default: 'Copied code!',
-  },
-
-  tooltipFailText: {
-    type: String,
-    required: false,
-    default: 'Failed to copy!',
-  },
-
-  hasBorder: {
-    type: Boolean,
-    default: false,
-  },
-
-  hideTitle: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<{
+  text?: string
+  getText?: (() => string | Promise<string>) | null
+  copyText?: string
+  tooltipSuccessText?: string
+  tooltipFailText?: string
+  hasBorder?: boolean
+  hideTitle?: boolean
+}>(), {
+  text: '',
+  getText: null,
+  copyText: 'Copy',
+  tooltipSuccessText: 'Copied code!',
+  tooltipFailText: 'Failed to copy!',
+  hasBorder: false,
+  hideTitle: false,
 })
 
 async function copy(event: Event, copyToClipboard: (text: string) => Promise<boolean>) {
@@ -123,7 +96,7 @@ export default {
 
 .copy-button[data-tooltip-text]::after {
   background-color: var(--tooltip-background-color);
-  border-radius: $kui-border-radius-20;
+  border-radius: $kui-border-radius-10;
   color: $kui-color-text-inverse;
   content: attr(data-tooltip-text);
   font-weight: $kui-font-weight-regular;
