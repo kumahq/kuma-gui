@@ -32,6 +32,7 @@
               v-if="error.type"
               appearance="neutral"
               data-testid="error-type"
+              max-width="auto"
             >
               type: {{ error.type }}
             </KBadge>
@@ -40,6 +41,7 @@
               v-if="error.instance"
               appearance="neutral"
               data-testid="error-trace"
+              max-width="auto"
             >
               trace: <TextWithCopyButton :text="error.instance" />
             </KBadge>
