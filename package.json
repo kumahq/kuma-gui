@@ -53,7 +53,7 @@
     "@babel/core": "7.23.5",
     "@babel/preset-env": "7.23.5",
     "@babel/preset-typescript": "7.23.3",
-    "@badeball/cypress-cucumber-preprocessor": "19.1.0",
+    "@badeball/cypress-cucumber-preprocessor": "19.2.0",
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.0",
     "@faker-js/faker": "8.3.1",
     "@kong/design-tokens": "1.12.1",
