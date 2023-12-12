@@ -42,7 +42,7 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   services: string[]
 }
 
-export const DataplaneNetworking = {
+const DataplaneNetworking = {
   fromObject(partialDataplaneNetworking: PartialDataplaneNetworking): DataplaneNetworking {
     // TODO: Normalize inbound and outbound omitempty arrays.
     // TODO: Consider to determine inbound address and service address here.
@@ -63,7 +63,7 @@ export const Dataplane = {
   },
 }
 
-export const DataplaneInsight = {
+const DataplaneInsight = {
   fromObject(partialDataplaneInsight: PartialDataplaneInsight | undefined): DataplaneInsight {
     const subscriptions = Array.isArray(partialDataplaneInsight?.subscriptions) ? partialDataplaneInsight.subscriptions : []
     const connectedSubscription = subscriptions.find((subscription) => !subscription.disconnectTime)

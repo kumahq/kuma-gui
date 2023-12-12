@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
 
-import { Dataplane, DataplaneInsight, DataplaneNetworking, DataplaneOverview } from './index'
+import { Dataplane, DataplaneOverview } from './index'
 
 type TestCase<T extends (...args: any) => any> = {
   message: string
@@ -9,22 +9,6 @@ type TestCase<T extends (...args: any) => any> = {
 }
 
 describe('dataplanes data transformations', () => {
-  describe('DataplaneNetworking', () => {
-    test.each<TestCase<typeof DataplaneNetworking.fromObject>>([
-      {
-        message: 'minimal',
-        parameters: [{
-          address: '',
-        }],
-        expected: {
-          address: '',
-        },
-      },
-    ])('.fromObject: $message', ({ parameters, expected }) => {
-      expect(DataplaneNetworking.fromObject(...parameters)).toStrictEqual(expected)
-    })
-  })
-
   describe('Dataplane', () => {
     test.each<TestCase<typeof Dataplane.fromObject>>([
       {
@@ -52,121 +36,6 @@ describe('dataplanes data transformations', () => {
       },
     ])('.fromObject: $message', ({ parameters, expected }) => {
       expect(Dataplane.fromObject(...parameters)).toStrictEqual(expected)
-    })
-  })
-
-  describe('DataplaneInsight', () => {
-    test.each<TestCase<typeof DataplaneInsight.fromObject>>([
-      {
-        message: 'no insight',
-        parameters: [undefined],
-        expected: {
-          subscriptions: [],
-          connectedSubscription: undefined,
-        },
-      },
-      {
-        message: 'empty subscriptions',
-        parameters: [{
-          subscriptions: [],
-        }],
-        expected: {
-          subscriptions: [],
-          connectedSubscription: undefined,
-        },
-      },
-      {
-        message: 'connected subscription',
-        parameters: [{
-          subscriptions: [
-            {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-            },
-          ],
-        }],
-        expected: {
-          subscriptions: [
-            {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-            },
-          ],
-          connectedSubscription: {
-            id: '',
-            controlPlaneInstanceId: '',
-            status: {
-              lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-              total: {},
-              cds: {},
-              eds: {},
-              lds: {},
-              rds: {},
-            },
-            connectTime: '2021-07-13T09:03:11.614941842Z',
-          },
-        },
-      },
-      {
-        message: 'disconnected subscription',
-        parameters: [{
-          subscriptions: [
-            {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-              disconnectTime: '2021-07-14T09:03:11.614941842Z',
-            },
-          ],
-        }],
-        expected: {
-          subscriptions: [
-            {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-              disconnectTime: '2021-07-14T09:03:11.614941842Z',
-            },
-          ],
-          connectedSubscription: undefined,
-        },
-      },
-    ])('.fromObject: $message', ({ parameters, expected }) => {
-      expect(DataplaneInsight.fromObject(...parameters)).toStrictEqual(expected)
     })
   })
 
