@@ -109,7 +109,7 @@
                 </template>
 
                 <template #body>
-                  <StatusBadge :status="props.service.status ?? 'not_available'" />
+                  <StatusBadge :status="props.service.status" />
                 </template>
               </DefinitionCard>
 
@@ -198,7 +198,7 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { ServiceInsight } from '@/types/index.d'
+import type { ServiceInsight } from '@/app/services/data'
 import { useI18n, useKumaApi } from '@/utilities'
 
 const { t } = useI18n()

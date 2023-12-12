@@ -6,7 +6,7 @@
       </template>
 
       <template #body>
-        <StatusBadge :status="props.serviceInsight.status ?? 'not_available'" />
+        <StatusBadge :status="props.serviceInsight.status" />
       </template>
     </DefinitionCard>
 
@@ -43,7 +43,7 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { ServiceInsight } from '@/types/index.d'
+import type { ServiceInsight } from '@/app/services/data'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
