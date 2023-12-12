@@ -169,12 +169,13 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 import { useRoute } from 'vue-router'
 
+import type { PolicyType } from '../data'
 import { PolicyCollection } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import type { MeshInsight, PolicyType } from '@/types/index.d'
+import type { MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 type ChangeValue = {
