@@ -1,7 +1,8 @@
+import { Policy, PolicyDataplane } from './data'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { PolicyEntity as Policy, PolicyDataplane, PolicyType } from '@/types/index.d'
+import type { PolicyType } from '@/types/index.d'
 
 type CollectionParams = {
   mesh: string
@@ -36,29 +37,29 @@ export const sources = (api: KumaApi) => {
       return api.getPolicyTypes()
     },
 
-    '/meshes/:mesh/policy-path/:path': (params: CollectionParams & PaginationParams, source: Closeable) => {
+    '/meshes/:mesh/policy-path/:path': async (params: CollectionParams & PaginationParams, source: Closeable) => {
       source.close()
 
       const { mesh, path, size } = params
       const offset = params.size * (params.page - 1)
 
-      return api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size })
+      return Policy.fromCollection(await api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size }))
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/policy-path/:path/policy/:name': async (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, path, name } = params
 
-      return api.getSinglePolicyEntity({ mesh, path, name })
+      return Policy.fromObject(await api.getSinglePolicyEntity({ mesh, path, name }))
     },
 
-    '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params: DetailParams, source: Closeable) => {
       source.close()
 
       const { mesh, path, name } = params
 
-      return api.getPolicyConnections({ mesh, path, name })
+      return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }))
     },
   }
 }

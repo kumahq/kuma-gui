@@ -100,10 +100,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { Policy, PolicyType } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import type { PolicyEntity, PolicyType } from '@/types/index.d'
 import { useI18n, useKumaApi } from '@/utilities'
 
 const { t } = useI18n()
@@ -111,7 +111,7 @@ const kumaApi = useKumaApi()
 
 const props = withDefaults(defineProps<{
   name: string
-  policy?: PolicyEntity
+  policy?: Policy
   policyType: PolicyType
 }>(), {
   policy: undefined,
