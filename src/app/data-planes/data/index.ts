@@ -7,6 +7,8 @@ import type {
   DataPlaneOverview as PartialDataplaneOverview,
   DiscoverySubscription,
   LabelValue,
+  DataplaneInbound as PartialDataplaneInbound,
+  DataplaneOutbound as PartialDataplaneOutbound,
 } from '@/types/index.d'
 
 export type DataplaneWarning = {
@@ -17,7 +19,20 @@ export type DataplaneWarning = {
   }
 }
 
-export type DataplaneNetworking = PartialDataplaneNetworking
+export type DataplaneInbound = PartialDataplaneInbound & {
+  health: {
+    ready: boolean
+  }
+  addressPort: string
+  serviceAddressPort: string
+}
+
+export type DataplaneOutbound = PartialDataplaneOutbound
+
+export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
+  inbounds: DataplaneInbound[]
+  outbounds: DataplaneOutbound[]
+}
 
 export type Dataplane = PartialDataplane & {
   networking: DataplaneNetworking
@@ -44,12 +59,28 @@ export type DataplaneOverview = PartialDataplaneOverview & {
 
 const DataplaneNetworking = {
   fromObject(partialDataplaneNetworking: PartialDataplaneNetworking): DataplaneNetworking {
-    // TODO: Normalize inbound and outbound omitempty arrays.
-    // TODO: Consider to determine inbound address and service address here.
-    // Address: `${inbound.address ?? props.data.dataplane.networking.advertisedAddress ?? props.data.dataplane.networking.address}:${inbound.port}`
-    // Service address: `${inbound.serviceAddress ?? inbound.address ?? props.data.dataplane.networking.address}:${inbound.servicePort ?? inbound.port}`
+    const { inbound, outbound, ...rest } = partialDataplaneNetworking
+
+    const inbounds: DataplaneInbound[] = (inbound ?? []).map((inbound) => {
+      // An inbound without a health property is considered healthy.
+      const health = { ready: !inbound.health || inbound.health.ready }
+      const addressPort = `${inbound.address ?? partialDataplaneNetworking.advertisedAddress ?? partialDataplaneNetworking.address}:${inbound.port}`
+      const serviceAddressPort = `${inbound.serviceAddress ?? inbound.address ?? partialDataplaneNetworking.address}:${inbound.servicePort ?? inbound.port}`
+
+      return {
+        ...inbound,
+        health,
+        addressPort,
+        serviceAddressPort,
+      }
+    })
+
+    const outbounds: DataplaneOutbound[] = outbound ?? []
+
     return {
-      ...partialDataplaneNetworking,
+      ...rest,
+      inbounds,
+      outbounds,
     }
   },
 }
@@ -124,6 +155,7 @@ export function getStatus(dataplaneOverview: PartialDataplaneOverview): 'online'
     return isConnected ? 'online' : 'offline'
   }
 
+  // TODO: Update this to use the transformed inbounds property instead and check for `!inbound.isHealthy`.
   const inbounds = dataplaneOverview.dataplane.networking.inbound ?? []
   const unhealthyInbounds = inbounds.filter((inbound) => inbound.health && !inbound.health.ready)
 
@@ -140,18 +172,18 @@ export function getStatus(dataplaneOverview: PartialDataplaneOverview): 'online'
   }
 }
 
-function getUnhealthyInbounds({ inbound }: DataplaneNetworking): Array<{ service: string, port: number }> {
-  return (inbound ?? [])
-    .filter((inbound) => inbound.health && !inbound.health.ready)
+function getUnhealthyInbounds({ inbounds }: DataplaneNetworking): Array<{ service: string, port: number }> {
+  return inbounds
+    .filter((inbound) => !inbound.health.ready)
     .map(({ tags, port }) => ({ service: tags['kuma.io/service'], port }))
 }
 
-function getTags({ gateway, inbound }: DataplaneNetworking): LabelValue[] {
+function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
   let tags: string[] = []
   const separator = '='
 
-  if (inbound) {
-    tags = inbound
+  if (inbounds.length > 0) {
+    tags = inbounds
       .flatMap((inbound) => Object.entries(inbound.tags))
       .map(([key, value]) => `${key}${separator}${value}`)
   }
