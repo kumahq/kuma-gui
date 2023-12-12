@@ -33,7 +33,7 @@
           <template v-else>
             <ResourceCodeBlock
               id="code-block-zone-egress"
-              :resource="data"
+              :resource="data.config"
               :resource-fetcher="(params) => kumaApi.getZoneEgress({ name: route.params.zoneEgress }, params)"
               is-searchable
               :query="route.params.codeSearch"

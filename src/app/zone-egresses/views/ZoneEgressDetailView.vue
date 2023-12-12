@@ -16,7 +16,7 @@
               </template>
 
               <template #body>
-                <StatusBadge :status="getItemStatusFromInsight(props.data.zoneEgressInsight)" />
+                <StatusBadge :status="props.data.state" />
               </template>
             </DefinitionCard>
 
@@ -26,8 +26,8 @@
               </template>
 
               <template #body>
-                <template v-if="props.data.zoneEgress.networking?.address && props.data.zoneEgress.networking?.port">
-                  <TextWithCopyButton :text="`${props.data.zoneEgress.networking.address}:${props.data.zoneEgress.networking.port}`" />
+                <template v-if="props.data.zoneEgress.socketAddress.length > 0">
+                  <TextWithCopyButton :text="props.data.zoneEgress.socketAddress" />
                 </template>
 
                 <template v-else>
@@ -60,12 +60,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { ZoneEgressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
-import type { ZoneEgressOverview } from '@/types/index.d'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const props = defineProps<{
   data: ZoneEgressOverview
