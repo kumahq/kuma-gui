@@ -5,16 +5,17 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     req,
     '/zones/_overview',
   )
-  const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 0, max: 10 })}`))
 
   return {
     headers: {},
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
+        const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 0, max: 10 })}`))
+        const shouldHaveZoneInsight = subscriptionCount === 0 || fake.datatype.boolean()
+
         const id = offset + i
         const name = `${fake.hacker.noun()}-${id}`
-        const shouldHaveZoneInsight = subscriptionCount === 0 || fake.datatype.boolean()
 
         return {
           type: 'ZoneOverview',

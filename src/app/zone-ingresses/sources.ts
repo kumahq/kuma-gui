@@ -1,8 +1,7 @@
-import { ZoneIngressOverview } from './data'
+import { ZoneIngressOverview, ZoneIngress } from './data'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { ZoneIngress } from '@/types/index.d'
 
 type PaginationParams = {
   size: number
@@ -17,8 +16,6 @@ type EnvoyDataParams = DetailParams & {
   dataPath: 'xds' | 'clusters' | 'stats'
 }
 
-type Closeable = { close: () => void }
-
 export type ZoneIngressSource = DataSourceResponse<ZoneIngress>
 export type ZoneIngressOverviewCollection = CollectionResponse<ZoneIngressOverview>
 export type ZoneIngressOverviewSource = DataSourceResponse<ZoneIngressOverview>
@@ -29,9 +26,7 @@ export type EnvoyDataSource = DataSourceResponse<object | string>
 export const sources = (api: KumaApi) => {
   return {
 
-    '/zone-cps/:name/ingresses': async (params: DetailParams & PaginationParams, source: Closeable): Promise<ZoneIngressOverviewCollection> => {
-      source.close()
-
+    '/zone-cps/:name/ingresses': async (params: DetailParams & PaginationParams): Promise<ZoneIngressOverviewCollection> => {
       const { name, size, page } = params
       const offset = size * (page - 1)
 
@@ -42,44 +37,31 @@ export const sources = (api: KumaApi) => {
       res.items = res.items.filter((item) => {
         return item.zoneIngress.zone === name
       })
-      return {
-        ...res,
-        total: res.items.length,
-        items: res.items.map(ZoneIngressOverview.fromObject),
-      }
+      return ZoneIngressOverview.fromCollection(res)
     },
 
-    '/zone-ingresses/:name': async (params: DetailParams, source: Closeable) => {
-      source.close()
-
+    '/zone-ingresses/:name': async (params: DetailParams) => {
       const { name } = params
 
-      return await api.getZoneIngress({ name })
+      return ZoneIngress.fromObject(await api.getZoneIngress({ name }))
     },
 
-    '/zone-ingresses/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
-      source.close()
-
+    '/zone-ingresses/:name/data-path/:dataPath': (params: EnvoyDataParams) => {
       const { name, dataPath } = params
-
       return api.getZoneIngressData({ zoneIngressName: name, dataPath })
     },
 
-    '/zone-ingress-overviews': async (params: PaginationParams, source: Closeable) => {
-      source.close()
-
+    '/zone-ingress-overviews': async (params: PaginationParams) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
-      return await api.getAllZoneIngressOverviews({ size, offset })
+      return ZoneIngressOverview.fromCollection(await api.getAllZoneIngressOverviews({ size, offset }))
     },
 
-    '/zone-ingress-overviews/:name': async (params: DetailParams, source: Closeable) => {
-      source.close()
-
+    '/zone-ingress-overviews/:name': async (params: DetailParams) => {
       const { name } = params
 
-      return await api.getZoneIngressOverview({ name })
+      return ZoneIngressOverview.fromObject(await api.getZoneIngressOverview({ name }))
     },
   }
 }

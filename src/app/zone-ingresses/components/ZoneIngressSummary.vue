@@ -6,7 +6,7 @@
       </template>
 
       <template #body>
-        <StatusBadge :status="status" />
+        <StatusBadge :status="props.zoneIngressOverview.state" />
       </template>
     </DefinitionCard>
 
@@ -16,8 +16,8 @@
       </template>
 
       <template #body>
-        <template v-if="address">
-          <TextWithCopyButton :text="address" />
+        <template v-if="props.zoneIngressOverview.zoneIngress.socketAddress.length > 0">
+          <TextWithCopyButton :text="props.zoneIngressOverview.zoneIngress.socketAddress" />
         </template>
 
         <template v-else>
@@ -32,8 +32,8 @@
       </template>
 
       <template #body>
-        <template v-if="advertisedAddress">
-          <TextWithCopyButton :text="advertisedAddress" />
+        <template v-if="props.zoneIngressOverview.zoneIngress.advertisedSocketAddress.length > 0">
+          <TextWithCopyButton :text="props.zoneIngressOverview.zoneIngress.advertisedSocketAddress" />
         </template>
 
         <template v-else>
@@ -45,38 +45,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
+import type { ZoneIngressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import type { ZoneIngressOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const { t } = useI18n()
 
 const props = defineProps<{
   zoneIngressOverview: ZoneIngressOverview
 }>()
-
-const status = computed(() => getItemStatusFromInsight(props.zoneIngressOverview.zoneIngressInsight))
-const address = computed(() => {
-  const { networking } = props.zoneIngressOverview.zoneIngress
-
-  if (networking?.address && networking?.port) {
-    return `${networking.address}:${networking.port}`
-  }
-
-  return null
-})
-const advertisedAddress = computed(() => {
-  const { networking } = props.zoneIngressOverview.zoneIngress
-
-  if (networking?.advertisedAddress && networking?.advertisedPort) {
-    return `${networking.advertisedAddress}:${networking.advertisedPort}`
-  }
-
-  return null
-})
 </script>

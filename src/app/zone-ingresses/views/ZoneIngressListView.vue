@@ -42,15 +42,15 @@
               data-testid="zone-ingress-collection"
               :headers="[
                 { label: 'Name', key: 'name' },
-                { label: 'Address', key: 'addressPort' },
-                { label: 'Advertised address', key: 'advertisedAddressPort' },
+                { label: 'Address', key: 'socketAddress' },
+                { label: 'Advertised address', key: 'advertisedSocketAddress' },
                 { label: 'Status', key: 'status' },
                 { label: 'Details', key: 'details', hideLabel: true },
               ]"
               :page-number="1"
               :page-size="100"
               :total="data?.total"
-              :items="data ? transformToTableData(data.items) : undefined"
+              :items="data?.items"
               :error="error"
               :empty-state-message="t('common.emptyState.message', { type: 'Zone Ingresses' })"
               :empty-state-cta-to="t('zone-ingresses.href.docs')"
@@ -58,13 +58,13 @@
               :is-selected-row="(row) => row.name === route.params.zoneIngress"
               @change="route.update"
             >
-              <template #name="{ row }">
+              <template #name="{ row: item }">
                 <RouterLink
                   :to="{
                     name: 'zone-ingress-summary-view',
                     params: {
                       zone: route.params.zone,
-                      zoneIngress: row.name,
+                      zoneIngress: item.name,
                     },
                     query: {
                       // TODO: Update page & size once the list endpoint is being filtered by zone
@@ -73,51 +73,44 @@
                     },
                   }"
                 >
-                  {{ row.name }}
+                  {{ item.name }}
                 </RouterLink>
               </template>
 
-              <template #addressPort="{ rowValue }">
+              <template #socketAddress="{ row: item }">
                 <TextWithCopyButton
-                  v-if="rowValue"
-                  :text="rowValue"
+                  v-if="item.zoneIngress.socketAddress.length > 0"
+                  :text="item.zoneIngress.socketAddress"
                 />
-
                 <template v-else>
                   {{ t('common.collection.none') }}
                 </template>
               </template>
 
-              <template #advertisedAddressPort="{ rowValue }">
+              <template #advertisedSocketAddress="{ row: item }">
                 <TextWithCopyButton
-                  v-if="rowValue"
-                  :text="rowValue"
+                  v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
+                  :text="item.zoneIngress.advertisedSocketAddress"
                 />
-
                 <template v-else>
                   {{ t('common.collection.none') }}
                 </template>
               </template>
 
-              <template #status="{ rowValue }">
+              <template #status="{ row: item }">
                 <StatusBadge
-                  v-if="rowValue"
-                  :status="rowValue"
+                  :status="item.state"
                 />
-
-                <template v-else>
-                  {{ t('common.collection.none') }}
-                </template>
               </template>
 
-              <template #details="{ row }">
+              <template #details="{ row: item }">
                 <RouterLink
                   class="details-link"
                   data-testid="details-link"
                   :to="{
                     name: 'zone-ingress-detail-view',
                     params: {
-                      zoneIngress: row.name,
+                      zoneIngress: item.name,
                     },
                   }"
                 >
@@ -166,7 +159,6 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
-import { type RouteLocationNamedRaw } from 'vue-router'
 
 import type { ZoneIngressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -175,50 +167,6 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-import { StatusKeyword, ZoneIngressOverview } from '@/types/index.d'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
-
-type ZoneIngressOverviewTableRow = {
-  detailViewRoute: RouteLocationNamedRaw
-  name: string
-  addressPort: string | undefined
-  advertisedAddressPort: string | undefined
-  status: StatusKeyword
-}
-
-function transformToTableData(zoneIngressOverviews: ZoneIngressOverview[]): ZoneIngressOverviewTableRow[] {
-  return zoneIngressOverviews.map((entity) => {
-    const { name } = entity
-    const detailViewRoute: RouteLocationNamedRaw = {
-      name: 'zone-ingress-detail-view',
-      params: {
-        zoneIngress: name,
-      },
-    }
-
-    const { networking } = entity.zoneIngress
-
-    let addressPort
-    if (networking?.address && networking?.port) {
-      addressPort = `${networking.address}:${networking.port}`
-    }
-
-    let advertisedAddressPort
-    if (networking?.advertisedAddress && networking?.advertisedPort) {
-      advertisedAddressPort = `${networking.advertisedAddress}:${networking.advertisedPort}`
-    }
-
-    const status = getItemStatusFromInsight(entity.zoneIngressInsight ?? {})
-
-    return {
-      detailViewRoute,
-      name,
-      addressPort,
-      advertisedAddressPort,
-      status,
-    }
-  })
-}
 </script>
 
 <style lang="scss" scoped>
