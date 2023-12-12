@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KInput } from '@kong/kongponents'
 import { ref } from 'vue'
 
 import type { PolicyDataplaneCollectionSource } from '../sources'
@@ -60,22 +59,11 @@ import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps({
-  mesh: {
-    type: String,
-    required: true,
-  },
-
-  policyPath: {
-    type: String,
-    required: true,
-  },
-
-  policyName: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  mesh: string
+  policyPath: string
+  policyName: string
+}>()
 
 const searchInput = ref('')
 </script>
