@@ -1,8 +1,12 @@
 import { getIsConnected } from '@/app/subscriptions/data'
+import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
-  DataPlaneOverview as DataplaneOverview,
+  DataPlane as PartialDataplane,
+  DataPlaneInsight as PartialDataplaneInsight,
+  DataplaneNetworking as PartialDataplaneNetworking,
+  DataPlaneOverview as PartialDataplaneOverview,
+  DiscoverySubscription,
   LabelValue,
-  StatusKeyword,
 } from '@/types/index.d'
 
 export type DataplaneWarning = {
@@ -13,56 +17,138 @@ export type DataplaneWarning = {
   }
 }
 
-export function getLastUpdateTime(dataplaneOverview: DataplaneOverview): string | undefined {
-  const subscriptions = dataplaneOverview.dataplaneInsight?.subscriptions ?? []
-  if (subscriptions.length === 0) {
-    return undefined
-  }
+export type DataplaneNetworking = PartialDataplaneNetworking
 
-  const lastSubscription = subscriptions[subscriptions.length - 1]
-  return lastSubscription.status.lastUpdateTime
+export type Dataplane = PartialDataplane & {
+  networking: DataplaneNetworking
 }
 
-export function getStatusAndReason(dataplaneOverview: DataplaneOverview): { status: StatusKeyword, reason: string[] } {
+export type DataplaneInsight = PartialDataplaneInsight & {
+  subscriptions: DiscoverySubscription[]
+  connectedSubscription?: DiscoverySubscription
+}
+
+export type DataplaneOverview = PartialDataplaneOverview & {
+  dataplane: {
+    networking: DataplaneNetworking
+  }
+  dataplaneInsight: DataplaneInsight
+  dataplaneType: 'standard' | 'builtin' | 'delegated'
+  status: 'online' | 'offline' | 'partially_degraded'
+  unhealthyInbounds: Array<{ service: string, port: number }>
+  lastUpdateTime?: string | undefined
+  warnings: DataplaneWarning[]
+  isCertExpired: boolean
+  services: string[]
+}
+
+const DataplaneNetworking = {
+  fromObject(partialDataplaneNetworking: PartialDataplaneNetworking): DataplaneNetworking {
+    // TODO: Normalize inbound and outbound omitempty arrays.
+    // TODO: Consider to determine inbound address and service address here.
+    // Address: `${inbound.address ?? props.data.dataplane.networking.advertisedAddress ?? props.data.dataplane.networking.address}:${inbound.port}`
+    // Service address: `${inbound.serviceAddress ?? inbound.address ?? props.data.dataplane.networking.address}:${inbound.servicePort ?? inbound.port}`
+    return {
+      ...partialDataplaneNetworking,
+    }
+  },
+}
+
+export const Dataplane = {
+  fromObject(partialDataplane: PartialDataplane): Dataplane {
+    return {
+      ...partialDataplane,
+      networking: DataplaneNetworking.fromObject(partialDataplane.networking),
+    }
+  },
+}
+
+const DataplaneInsight = {
+  fromObject(partialDataplaneInsight: PartialDataplaneInsight | undefined): DataplaneInsight {
+    const subscriptions = Array.isArray(partialDataplaneInsight?.subscriptions) ? partialDataplaneInsight.subscriptions : []
+    const connectedSubscription = subscriptions.find((subscription) => !subscription.disconnectTime)
+
+    return {
+      ...partialDataplaneInsight,
+      connectedSubscription,
+      subscriptions,
+    }
+  },
+}
+
+export const DataplaneOverview = {
+  fromObject(partialDataplaneOverview: PartialDataplaneOverview, canUseZones: boolean): DataplaneOverview {
+    const dataplaneInsight = DataplaneInsight.fromObject(partialDataplaneOverview.dataplaneInsight)
+    const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking)
+
+    const dataplaneType = getDataplaneType(networking)
+    const status = getStatus(partialDataplaneOverview)
+    const unhealthyInbounds = getUnhealthyInbounds(networking)
+    const lastUpdateTime = dataplaneInsight.subscriptions.at(-1)?.status.lastUpdateTime
+    const tags = getTags(networking)
+    const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
+    const warnings = getWarnings(dataplaneInsight, tags, canUseZones)
+    const isCertExpired = getIsCertExpired(dataplaneInsight)
+
+    return {
+      ...partialDataplaneOverview,
+      dataplane: {
+        networking,
+      },
+      dataplaneInsight,
+      dataplaneType,
+      status,
+      unhealthyInbounds,
+      lastUpdateTime,
+      warnings,
+      isCertExpired,
+      services,
+    }
+  },
+
+  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>, canUseZones: boolean): PaginatedApiListResponse<DataplaneOverview> {
+    return {
+      ...partialDataplaneOverviews,
+      items: Array.isArray(partialDataplaneOverviews.items)
+        ? partialDataplaneOverviews.items.map((partialDataplaneOverview) => DataplaneOverview.fromObject(partialDataplaneOverview, canUseZones))
+        : [],
+    }
+  },
+}
+
+// TODO: Update the implementation once OnboardingDataplanesView no longer uses this function and remove the export.
+export function getStatus(dataplaneOverview: PartialDataplaneOverview): 'online' | 'offline' | 'partially_degraded' {
   const isConnected = getIsConnected(dataplaneOverview.dataplaneInsight?.subscriptions)
   // For gateways, the only relevant status criteria are subscriptions.
   if (dataplaneOverview.dataplane.networking.gateway) {
-    return {
-      status: isConnected ? 'online' : 'offline',
-      reason: [],
-    }
+    return isConnected ? 'online' : 'offline'
   }
 
   const inbounds = dataplaneOverview.dataplane.networking.inbound ?? []
-  const unhealthyInbounds = inbounds
-    .filter((inbound) => inbound.health && !inbound.health.ready)
-    .map((inbound) => `Inbound on port ${inbound.port} is not ready (kuma.io/service: ${inbound.tags['kuma.io/service']})`)
+  const unhealthyInbounds = inbounds.filter((inbound) => inbound.health && !inbound.health.ready)
 
-  let status: StatusKeyword
   switch (true) {
     case unhealthyInbounds.length === inbounds.length:
       // All inbounds being unhealthy means the Dataplane is offline.
-      status = 'offline'
-      break
+      return 'offline'
     case unhealthyInbounds.length > 0:
       // Some inbounds being unhealthy means the Dataplane is partially degraded.
-      status = 'partially_degraded'
-      break
+      return 'partially_degraded'
     default:
       // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
-      status = isConnected ? 'online' : 'offline'
-  }
-
-  return {
-    status,
-    reason: unhealthyInbounds,
+      return isConnected ? 'online' : 'offline'
   }
 }
 
-export function getTags(dataplaneOverview: DataplaneOverview): LabelValue[] {
+function getUnhealthyInbounds({ inbound }: DataplaneNetworking): Array<{ service: string, port: number }> {
+  return (inbound ?? [])
+    .filter((inbound) => inbound.health && !inbound.health.ready)
+    .map(({ tags, port }) => ({ service: tags['kuma.io/service'], port }))
+}
+
+function getTags({ gateway, inbound }: DataplaneNetworking): LabelValue[] {
   let tags: string[] = []
   const separator = '='
-  const { gateway, inbound } = dataplaneOverview.dataplane.networking
 
   if (inbound) {
     tags = inbound
@@ -84,24 +170,13 @@ export function getTags(dataplaneOverview: DataplaneOverview): LabelValue[] {
   })
 }
 
-export function getIsCertExpired(dataplaneOverview: DataplaneOverview): boolean {
-  const mTLS = dataplaneOverview.dataplaneInsight?.mTLS
-
-  if (mTLS === undefined) {
-    return false
-  }
-
-  return Date.now() > new Date(mTLS.certificateExpirationTime).getTime()
+function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
+  return mTLS ? Date.now() > new Date(mTLS.certificateExpirationTime).getTime() : false
 }
 
-export function getWarnings(dataplaneOverview: DataplaneOverview, canUseZones: boolean): DataplaneWarning[] {
-  const subscriptions = dataplaneOverview.dataplaneInsight?.subscriptions ?? []
-  if (subscriptions.length === 0) {
-    return []
-  }
-
-  const lastSubscription = subscriptions[subscriptions.length - 1]
-  if (!('version' in lastSubscription) || !lastSubscription.version) {
+function getWarnings({ subscriptions }: DataplaneInsight, tags: LabelValue[], canUseZones: boolean): DataplaneWarning[] {
+  const lastSubscription = subscriptions.at(-1)
+  if (!lastSubscription || !lastSubscription.version) {
     return []
   }
 
@@ -131,7 +206,6 @@ export function getWarnings(dataplaneOverview: DataplaneOverview, canUseZones: b
   }
 
   if (canUseZones) {
-    const tags = getTags(dataplaneOverview)
     const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
 
     if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
@@ -147,8 +221,7 @@ export function getWarnings(dataplaneOverview: DataplaneOverview, canUseZones: b
   return warnings
 }
 
-export function getDataplaneType(dataplaneOverview: DataplaneOverview): 'standard' | 'builtin' | 'delegated' {
-  const { gateway } = dataplaneOverview.dataplane.networking
+function getDataplaneType({ gateway }: DataplaneNetworking): 'standard' | 'builtin' | 'delegated' {
   if (gateway) {
     if (gateway.type) {
       return gateway.type.toLowerCase() as 'builtin' | 'delegated'

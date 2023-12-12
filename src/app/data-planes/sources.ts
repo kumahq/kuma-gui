@@ -1,3 +1,5 @@
+import { Dataplane, DataplaneOverview } from './data'
+import type { Can } from '../application/services/can'
 import { defineSources } from '@/app/application/services/data-source'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
 import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
@@ -5,9 +7,11 @@ import { parse, getTraffic } from '@/app/data-planes/data/stats'
 import type { TrafficEntry } from '@/app/data-planes/data/stats'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { DataPlane, DataPlaneOverview as DataplaneOverview, InspectRulesForDataplane, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
+import type { InspectRulesForDataplane, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
 
-export type DataplaneSource = DataSourceResponse<DataPlane>
+export type { Dataplane, DataplaneOverview } from './data'
+
+export type DataplaneSource = DataSourceResponse<Dataplane>
 export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
 export type DataPlaneCollection = CollectionResponse<DataplaneOverview>
 export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
@@ -31,10 +35,10 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 
-export const sources = (api: KumaApi) => {
+export const sources = (api: KumaApi, can: Can) => {
   return defineSources({
     '/meshes/:mesh/dataplanes/:name': async (params) => {
-      return api.getDataplaneFromMesh(params)
+      return Dataplane.fromObject(await api.getDataplaneFromMesh(params))
     },
     '/meshes/:mesh/dataplanes/:name/traffic': async (params) => {
       const { mesh, name } = params
@@ -103,7 +107,7 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/dataplane-overviews/:name': async (params) => {
-      return api.getDataplaneOverviewFromMesh(params)
+      return DataplaneOverview.fromObject(await api.getDataplaneOverviewFromMesh(params), can('use zones'))
     },
 
     '/meshes/:mesh/dataplanes/of/:type': async (params) => {
@@ -117,12 +121,12 @@ export const sources = (api: KumaApi) => {
         ? { gateway: type }
         : {}
 
-      return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
+      return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...filterParams,
         ...gatewayParams,
         offset,
         size,
-      })
+      }), can('use zones'))
     },
 
     '/meshes/:mesh/dataplanes/for/:service/of/:type': async (params) => {
@@ -144,12 +148,12 @@ export const sources = (api: KumaApi) => {
         ? { gateway: type }
         : {}
 
-      return api.getAllDataplaneOverviewsFromMesh({ mesh }, {
+      return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...filterParams,
         ...gatewayParams,
         offset,
         size,
-      })
+      }), can('use zones'))
     },
   })
 }

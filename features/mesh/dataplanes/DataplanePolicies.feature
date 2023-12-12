@@ -299,6 +299,8 @@ Feature: Dataplane policies
             networking:
               gateway:
                 type: DELEGATED
+                tags:
+                  kuma.io/service: service-1
         """
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
@@ -314,6 +316,8 @@ Feature: Dataplane policies
             networking:
               gateway:
                 type: !!js/undefined
+                tags:
+                  kuma.io/service: service-1
         """
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
@@ -335,6 +339,8 @@ Feature: Dataplane policies
             networking:
               gateway:
                 type: BUILTIN
+                tags:
+                  kuma.io/service: service-1
         """
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL

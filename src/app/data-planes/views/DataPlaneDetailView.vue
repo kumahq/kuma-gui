@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ can, route }"
     :params="{
       mesh: '',
       dataPlane: '',
@@ -37,11 +37,11 @@
 
               <template #body>
                 <div class="status-with-reason">
-                  <StatusBadge :status="statusWithReason.status" />
+                  <StatusBadge :status="props.data.status" />
 
                   <KTooltip
-                    v-if="statusWithReason.reason.length > 0"
-                    :label="statusWithReason.reason.join(', ')"
+                    v-if="props.data.unhealthyInbounds.length > 0"
+                    :label="props.data.unhealthyInbounds.map((inbound) => t('data-planes.routes.item.unhealthy_inbound', inbound)).join(', ')"
                     class="reason-tooltip"
                   >
                     <InfoIcon
@@ -60,7 +60,13 @@
               </template>
 
               <template #body>
-                {{ formattedLastUpdateTime }}
+                <template v-if="props.data.lastUpdateTime">
+                  {{ formatIsoDate(props.data.lastUpdateTime) }}
+                </template>
+
+                <template v-else>
+                  {{ t('common.detail.none') }}
+                </template>
               </template>
             </DefinitionCard>
 
@@ -89,7 +95,7 @@
         </KCard>
 
         <DataSource
-          v-if="can('read traffic') && typeof props.data.dataplane.networking.gateway === 'undefined'"
+          v-if="can('read traffic') && props.data.dataplaneType === 'standard'"
           v-slot="{ data: traffic, error }: TrafficSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/traffic`"
         >
@@ -308,7 +314,7 @@
           <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
 
           <template
-            v-if="props.data.dataplaneInsight?.mTLS"
+            v-if="props.data.dataplaneInsight.mTLS"
           >
             <template
               v-for="mTLS in [
@@ -396,23 +402,16 @@
           </template>
         </div>
 
-        <template
-          v-for="subscriptions in [props.data.dataplaneInsight?.subscriptions ?? []]"
-          :key="subscriptions"
+        <div
+          v-if="props.data.dataplaneInsight.subscriptions.length > 0"
+          data-testid="dataplane-subscriptions"
         >
-          <div
-            v-if="subscriptions.length > 0"
-            data-testid="dataplane-subscriptions"
-          >
-            <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
+          <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
 
-            <KCard class="mt-4">
-              <SubscriptionList
-                :subscriptions="subscriptions"
-              />
-            </KCard>
-          </div>
-        </template>
+          <KCard class="mt-4">
+            <SubscriptionList :subscriptions="props.data.dataplaneInsight.subscriptions" />
+          </KCard>
+        </div>
       </div>
     </AppView>
   </RouteView>
@@ -423,8 +422,7 @@ import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tok
 import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import { getLastUpdateTime, getIsCertExpired, getStatusAndReason, getWarnings } from '../data'
-import { useCan } from '@/app/application'
+import type { DataplaneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
@@ -436,30 +434,15 @@ import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/
 import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
 import type { TrafficSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
-import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t, formatIsoDate } = useI18n()
-const can = useCan()
 
 const props = defineProps<{
-  data: DataPlaneOverview
+  data: DataplaneOverview
 }>()
 
-const statusWithReason = computed(() => getStatusAndReason(props.data))
-const formattedLastUpdateTime = computed(() => {
-  const lastUpdateTime = getLastUpdateTime(props.data)
-  return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
-})
-const warnings = computed(() => {
-  const warnings = getWarnings(props.data, can('use zones'))
-
-  if (getIsCertExpired(props.data)) {
-    warnings.push({ kind: 'CERT_EXPIRED' })
-  }
-
-  return warnings
-})
+const warnings = computed(() => props.data.warnings.concat(...(props.data.isCertExpired ? [{ kind: 'CERT_EXPIRED' }] : [])))
 </script>
 
 <style lang="scss" scoped>

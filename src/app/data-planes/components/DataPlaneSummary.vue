@@ -8,11 +8,11 @@
 
         <template #body>
           <div class="status-with-reason">
-            <StatusBadge :status="statusWithReason.status" />
+            <StatusBadge :status="props.dataplaneOverview.status" />
 
             <KTooltip
-              v-if="statusWithReason.reason.length > 0"
-              :label="statusWithReason.reason.join(', ')"
+              v-if="props.dataplaneOverview.unhealthyInbounds.length > 0"
+              :label="props.dataplaneOverview.unhealthyInbounds.map((inbound) => t('data-planes.routes.item.unhealthy_inbound', inbound)).join(', ')"
               class="reason-tooltip"
               position-fixed
             >
@@ -32,8 +32,8 @@
         </template>
 
         <template #body>
-          <template v-if="formattedLastUpdateTime">
-            {{ formattedLastUpdateTime }}
+          <template v-if="props.dataplaneOverview.lastUpdateTime">
+            {{ formatIsoDate(props.dataplaneOverview.lastUpdateTime) }}
           </template>
 
           <template v-else>
@@ -146,27 +146,19 @@
 <script lang="ts" setup>
 import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon } from '@kong/icons'
-import { computed } from 'vue'
 
-import { getLastUpdateTime, getStatusAndReason } from '../data'
+import type { DataplaneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import type { DataPlaneOverview } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t, formatIsoDate } = useI18n()
 
 const props = defineProps<{
-  dataplaneOverview: DataPlaneOverview
+  dataplaneOverview: DataplaneOverview
 }>()
-
-const statusWithReason = computed(() => getStatusAndReason(props.dataplaneOverview))
-const formattedLastUpdateTime = computed(() => {
-  const lastUpdateTime = getLastUpdateTime(props.dataplaneOverview)
-  return lastUpdateTime !== undefined ? formatIsoDate(lastUpdateTime) : t('common.detail.none')
-})
 </script>
 
 <style lang="scss" scoped>
