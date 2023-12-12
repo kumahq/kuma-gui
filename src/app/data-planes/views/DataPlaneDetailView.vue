@@ -233,8 +233,9 @@
             </div>
           </KCard>
         </DataSource>
+
         <div
-          v-if="props.data.dataplane.networking.inbound && props.data.dataplane.networking.inbound.length > 0"
+          v-if="props.data.dataplane.networking.inbounds.length > 0"
           data-testid="dataplane-inbounds"
         >
           <h2>{{ t('data-planes.routes.item.inbounds') }}</h2>
@@ -242,7 +243,7 @@
           <KCard class="mt-4">
             <div class="inbound-list">
               <div
-                v-for="(inbound, index) in props.data.dataplane.networking.inbound"
+                v-for="(inbound, index) in props.data.dataplane.networking.inbounds"
                 :key="index"
                 class="inbound"
               >
@@ -260,7 +261,7 @@
 
                     <template #body>
                       <KBadge
-                        v-if="!inbound.health || inbound.health.ready"
+                        v-if="inbound.health.ready"
                         appearance="success"
                       >
                         {{ t('data-planes.routes.item.health.ready') }}
@@ -291,7 +292,7 @@
                     </template>
 
                     <template #body>
-                      <TextWithCopyButton :text="`${inbound.address ?? props.data.dataplane.networking.advertisedAddress ?? props.data.dataplane.networking.address}:${inbound.port}`" />
+                      <TextWithCopyButton :text="inbound.addressPort" />
                     </template>
                   </DefinitionCard>
 
@@ -301,7 +302,7 @@
                     </template>
 
                     <template #body>
-                      <TextWithCopyButton :text="`${inbound.serviceAddress ?? inbound.address ?? props.data.dataplane.networking.address}:${inbound.servicePort ?? inbound.port}`" />
+                      <TextWithCopyButton :text="inbound.serviceAddressPort" />
                     </template>
                   </DefinitionCard>
                 </div>

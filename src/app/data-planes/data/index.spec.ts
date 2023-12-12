@@ -20,7 +20,7 @@ describe('dataplanes data transformations', () => {
           creationTime: '',
           modificationTime: '',
           networking: {
-            address: '',
+            address: 'http://example.org',
           },
         }],
         expected: {
@@ -30,7 +30,9 @@ describe('dataplanes data transformations', () => {
           creationTime: '',
           modificationTime: '',
           networking: {
-            address: '',
+            address: 'http://example.org',
+            inbounds: [],
+            outbounds: [],
           },
         },
       },
@@ -62,7 +64,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
               },
             },
           },
@@ -76,7 +78,9 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
+              address: 'http://example.org',
+              inbounds: [],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -103,7 +107,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 inbound: [
                   {
                     health: {
@@ -168,8 +172,8 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
-              inbound: [
+              address: 'http://example.org',
+              inbounds: [
                 {
                   health: {
                     ready: true,
@@ -179,8 +183,11 @@ describe('dataplanes data transformations', () => {
                     'kuma.io/zone': '',
                   },
                   port: 1,
+                  addressPort: 'http://example.org:1',
+                  serviceAddressPort: 'http://example.org:1',
                 },
               ],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -290,7 +297,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 inbound: [
                   {
                     health: {
@@ -340,8 +347,8 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
-              inbound: [
+              address: 'http://example.org',
+              inbounds: [
                 {
                   health: {
                     ready: true,
@@ -350,8 +357,11 @@ describe('dataplanes data transformations', () => {
                     'kuma.io/service': '',
                   },
                   port: 1,
+                  addressPort: 'http://example.org:1',
+                  serviceAddressPort: 'http://example.org:1',
                 },
               ],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -400,7 +410,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 inbound: [
                   {
                     health: {
@@ -442,8 +452,8 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
-              inbound: [
+              address: 'http://example.org',
+              inbounds: [
                 {
                   health: {
                     ready: false,
@@ -452,8 +462,11 @@ describe('dataplanes data transformations', () => {
                     'kuma.io/service': '',
                   },
                   port: 1,
+                  addressPort: 'http://example.org:1',
+                  serviceAddressPort: 'http://example.org:1',
                 },
               ],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -509,7 +522,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 inbound: [
                   {
                     health: {
@@ -522,9 +535,6 @@ describe('dataplanes data transformations', () => {
                     },
                   },
                   {
-                    health: {
-                      ready: true,
-                    },
                     port: 1,
                     tags: {
                       'kuma.io/service': 'service-2',
@@ -562,29 +572,34 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
-              inbound: [
+              address: 'http://example.org',
+              inbounds: [
                 {
                   health: {
                     ready: false,
                   },
-                  port: 1,
                   tags: {
                     'kuma.io/service': 'service-1',
                     'kuma.io/zone': 'zone-1',
                   },
+                  port: 1,
+                  addressPort: 'http://example.org:1',
+                  serviceAddressPort: 'http://example.org:1',
                 },
                 {
                   health: {
                     ready: true,
                   },
-                  port: 1,
                   tags: {
                     'kuma.io/service': 'service-2',
                     'kuma.io/zone': 'zone-1',
                   },
+                  port: 1,
+                  addressPort: 'http://example.org:1',
+                  serviceAddressPort: 'http://example.org:1',
                 },
               ],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -640,7 +655,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 gateway: {
                   type: 'DELEGATED',
                   tags: {
@@ -679,7 +694,7 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
+              address: 'http://example.org',
               gateway: {
                 type: 'DELEGATED',
                 tags: {
@@ -688,6 +703,8 @@ describe('dataplanes data transformations', () => {
                   'kuma.io/protocol': 'http',
                 },
               },
+              inbounds: [],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -740,7 +757,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 gateway: {
                   tags: {
                     'kuma.io/service': 'service-1',
@@ -778,7 +795,7 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
+              address: 'http://example.org',
               gateway: {
                 tags: {
                   'kuma.io/service': 'service-1',
@@ -786,6 +803,8 @@ describe('dataplanes data transformations', () => {
                   'kuma.io/protocol': 'http',
                 },
               },
+              inbounds: [],
+              outbounds: [],
             },
           },
           dataplaneInsight: {
@@ -838,7 +857,7 @@ describe('dataplanes data transformations', () => {
             modificationTime: '',
             dataplane: {
               networking: {
-                address: '',
+                address: 'http://example.org',
                 gateway: {
                   type: 'BUILTIN',
                   tags: {
@@ -890,13 +909,15 @@ describe('dataplanes data transformations', () => {
           modificationTime: '',
           dataplane: {
             networking: {
-              address: '',
+              address: 'http://example.org',
               gateway: {
                 type: 'BUILTIN',
                 tags: {
                   'kuma.io/service': '',
                 },
               },
+              inbounds: [],
+              outbounds: [],
             },
           },
           dataplaneInsight: {

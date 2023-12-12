@@ -74,13 +74,13 @@
       </div>
     </div>
 
-    <div v-if="props.dataplaneOverview.dataplane.networking.inbound">
+    <div v-if="props.dataplaneOverview.dataplane.networking.inbounds.length > 0">
       <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
 
       <div class="mt-4">
         <div class="stack">
           <div
-            v-for="(inbound, index) in props.dataplaneOverview.dataplane.networking.inbound"
+            v-for="(inbound, index) in props.dataplaneOverview.dataplane.networking.inbounds"
             :key="index"
             class="inbound"
           >
@@ -98,7 +98,7 @@
 
                 <template #body>
                   <KBadge
-                    v-if="!inbound.health || inbound.health.ready"
+                    v-if="inbound.health.ready"
                     appearance="success"
                   >
                     {{ t('data-planes.routes.item.health.ready') }}
@@ -132,7 +132,7 @@
                 </template>
 
                 <template #body>
-                  <TextWithCopyButton :text="`${inbound.address ?? props.dataplaneOverview.dataplane.networking.advertisedAddress ?? props.dataplaneOverview.dataplane.networking.address}:${inbound.port}`" />
+                  <TextWithCopyButton :text="inbound.addressPort" />
                 </template>
               </DefinitionCard>
             </div>
