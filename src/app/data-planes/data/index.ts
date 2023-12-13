@@ -1,23 +1,29 @@
 import { getIsConnected } from '@/app/subscriptions/data'
-import type { PaginatedApiListResponse } from '@/types/api.d'
+import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlane as PartialDataplane,
+  DataplaneInbound as PartialDataplaneInbound,
   DataPlaneInsight as PartialDataplaneInsight,
   DataplaneNetworking as PartialDataplaneNetworking,
-  DataPlaneOverview as PartialDataplaneOverview,
-  DiscoverySubscription,
-  LabelValue,
-  DataplaneInbound as PartialDataplaneInbound,
   DataplaneOutbound as PartialDataplaneOutbound,
+  DataPlaneOverview as PartialDataplaneOverview,
+  DataplaneWarning,
+  DiscoverySubscription,
+  InspectBaseRule,
+  InspectRule,
+  InspectRulesForDataplane as PartialInspectRulesForDataplane,
+  LabelValue,
+  MatchedPolicyType,
+  MeshGatewayDataplane as PartialMeshGatewayDataplane,
+  MeshGatewayListenerEntry,
+  MeshGatewayRouteEntry,
+  Meta,
+  PolicyTypeEntry,
+  PolicyTypeEntryConnection,
+  RuleEntry,
+  RuleEntryRule,
+  SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
-
-export type DataplaneWarning = {
-  kind: string
-  payload?: {
-    kumaDp: string
-    envoy?: string
-  }
-}
 
 export type DataplaneInbound = PartialDataplaneInbound & {
   health: {
@@ -55,6 +61,19 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   warnings: DataplaneWarning[]
   isCertExpired: boolean
   services: string[]
+}
+
+export type SidecarDataplane = PartialSidecarDataplane
+
+export type InspectRulesForDataplane = PartialInspectRulesForDataplane & {
+  proxyRule: RuleEntry | undefined
+  toRules: RuleEntry[]
+  fromRuleInbounds: Array<{ port: number, ruleEntries: RuleEntry[] }>
+}
+
+export type MeshGatewayDataplane = PartialMeshGatewayDataplane & {
+  listenerEntries: MeshGatewayListenerEntry[]
+  routePolicies: Meta[]
 }
 
 const DataplaneNetworking = {
@@ -143,6 +162,49 @@ export const DataplaneOverview = {
       items: Array.isArray(partialDataplaneOverviews.items)
         ? partialDataplaneOverviews.items.map((partialDataplaneOverview) => DataplaneOverview.fromObject(partialDataplaneOverview, canUseZones))
         : [],
+    }
+  },
+}
+
+export const SidecarDataplane = {
+  fromCollection(partialSidecarDataplanes: ApiKindListResponse<PartialSidecarDataplane>): ApiKindListResponse<SidecarDataplane> & { policyTypeEntries: PolicyTypeEntry[] } {
+    const items = Array.isArray(partialSidecarDataplanes.items) ? partialSidecarDataplanes.items : []
+    const policyTypeEntries = getPolicyTypeEntries(items)
+
+    return {
+      ...partialSidecarDataplanes,
+      items,
+      policyTypeEntries,
+    }
+  },
+}
+
+export const InspectRules = {
+  fromCollection(partialInspectRules: PartialInspectRulesForDataplane): InspectRulesForDataplane & {} {
+    const rules = Array.isArray(partialInspectRules.rules) ? partialInspectRules.rules : []
+    const proxyRule = getProxyRule(rules)
+    const toRules = getToRules(rules)
+    const fromRuleInbounds = getFromRuleInbounds(rules)
+
+    return {
+      ...partialInspectRules,
+      rules,
+      proxyRule,
+      toRules,
+      fromRuleInbounds,
+    }
+  },
+}
+
+export const MeshGatewayDataplane = {
+  fromObject(partialMeshGatewayDataplane: PartialMeshGatewayDataplane): MeshGatewayDataplane {
+    const listenerEntries = getListenerEntries(partialMeshGatewayDataplane)
+    const routePolicies = Object.values(partialMeshGatewayDataplane.policies ?? {}).map(({ mesh, name, type }) => ({ mesh, name, type }))
+
+    return {
+      ...partialMeshGatewayDataplane,
+      listenerEntries,
+      routePolicies,
     }
   },
 }
@@ -264,4 +326,194 @@ function getDataplaneType({ gateway }: DataplaneNetworking): 'standard' | 'built
   }
 
   return 'standard'
+}
+
+/**
+ * Transforms `SidecarDataplane` objects into policy type entries which are going to be displayed in this view.
+ */
+function getPolicyTypeEntries(sidecarDataplanes: PartialSidecarDataplane[]): PolicyTypeEntry[] {
+  // Uses a `Map` to store entries by type so they can be retrieved and updated while iterating over the `SidecarDataplane` objects.
+  const policyTypeEntriesByType = new Map<string, PolicyTypeEntry>()
+
+  for (const sidecarDataplane of sidecarDataplanes) {
+    const { type, service } = sidecarDataplane
+
+    // The `service` field, when set, represents the name of the destination service of traffic.
+    const destinationTags: LabelValue[] = typeof service === 'string' && service !== '' ? [{ label: 'kuma.io/service', value: service }] : []
+    const name = type === 'inbound' || type === 'outbound' ? sidecarDataplane.name : null
+
+    for (const [policyTypeName, policies] of Object.entries(sidecarDataplane.matchedPolicies)) {
+      if (!policyTypeEntriesByType.has(policyTypeName)) {
+        policyTypeEntriesByType.set(policyTypeName, {
+          type: policyTypeName,
+          connections: [],
+        })
+      }
+
+      const policyTypeEntry = policyTypeEntriesByType.get(policyTypeName)!
+
+      for (const policy of policies) {
+        const connections = getPolicyTypeEntryConnections(policy, sidecarDataplane, destinationTags, name)
+
+        policyTypeEntry.connections.push(...connections)
+      }
+    }
+  }
+
+  const policyTypeEntries = Array.from(policyTypeEntriesByType.values())
+
+  policyTypeEntries.sort((policyTypeEntryA, policyTypeEntryB) => policyTypeEntryA.type.localeCompare(policyTypeEntryB.type))
+
+  return policyTypeEntries
+}
+
+function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
+  const config = policy.conf && Object.keys(policy.conf).length > 0 ? policy.conf : undefined
+  const origins = [{
+    name: policy.name,
+    mesh: policy.mesh,
+    type: policy.type,
+  }]
+
+  const policyTypeEntryConnections: PolicyTypeEntryConnection[] = []
+
+  if (sidecarDataplane.type === 'inbound' && Array.isArray(policy.sources)) {
+    for (const { match } of policy.sources) {
+      const sourceTags: LabelValue[] = [{ label: 'kuma.io/service', value: match['kuma.io/service'] }]
+      const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
+
+      policyTypeEntryConnections.push(connection)
+    }
+  } else {
+    const sourceTags: LabelValue[] = []
+    const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
+
+    policyTypeEntryConnections.push(connection)
+  }
+
+  return policyTypeEntryConnections
+}
+
+function getProxyRule(rules: InspectRule[]): RuleEntry | undefined {
+  // Note, there can only be one proxy rule.
+  const rule = rules.find((rule) => rule.proxyRule)
+  if (!rule || !rule.proxyRule) {
+    return undefined
+  }
+
+  const { type, proxyRule } = rule
+
+  const config = proxyRule.conf && Object.keys(proxyRule.conf).length > 0 ? proxyRule.conf : undefined
+  const origins = proxyRule.origin
+
+  return {
+    type,
+    rules: [
+      {
+        config,
+        origins,
+      },
+    ],
+  }
+}
+
+function getToRules(rules: InspectRule[]): RuleEntry[] {
+  const ruleEntries: RuleEntry[] = []
+
+  for (const rule of rules) {
+    const toRules = rule.toRules ?? []
+
+    if (toRules.length > 0) {
+      ruleEntries.push({
+        type: rule.type,
+        rules: getRules(toRules),
+      })
+    }
+  }
+
+  ruleEntries.sort((ruleEntryA, ruleEntryB) => ruleEntryA.type.localeCompare(ruleEntryB.type))
+
+  return ruleEntries
+}
+
+function getFromRuleInbounds(rules: InspectRule[]): Array<{ port: number, ruleEntries: RuleEntry[] }> {
+  // Group rule entries by inbound
+  const ruleEntriesByInbound = new Map<number, RuleEntry[]>()
+
+  for (const rule of rules) {
+    const fromRules = rule.fromRules ?? []
+    if (fromRules.length === 0) {
+      continue
+    }
+
+    for (const fromRule of fromRules) {
+      if (!ruleEntriesByInbound.has(fromRule.inbound.port)) {
+        ruleEntriesByInbound.set(fromRule.inbound.port, [])
+      }
+
+      // This access is safe because we previously ensured this Map item exists.
+      const ruleEntries = ruleEntriesByInbound.get(fromRule.inbound.port)!
+      ruleEntries.push({
+        type: rule.type,
+        rules: getRules(fromRule.rules),
+      })
+    }
+  }
+
+  for (const [, ruleEntries] of ruleEntriesByInbound) {
+    ruleEntries.sort((ruleEntryA, ruleEntryB) => ruleEntryA.type.localeCompare(ruleEntryB.type))
+  }
+
+  const fromRules = Array.from(ruleEntriesByInbound)
+  fromRules.sort(([portA], [portB]) => portB - portA)
+
+  return fromRules.map(([port, ruleEntries]) => ({ port, ruleEntries }))
+}
+
+function getRules(rules: InspectBaseRule[]): RuleEntryRule[] {
+  return rules.map(({ conf, matchers, origin: origins }) => {
+    const config = conf && Object.keys(conf).length > 0 ? conf : undefined
+
+    return {
+      config,
+      matchers,
+      origins,
+    }
+  })
+}
+
+function getListenerEntries(meshGatewayDataplane: PartialMeshGatewayDataplane): MeshGatewayListenerEntry[] {
+  const meshGatewayListenerEntries: MeshGatewayListenerEntry[] = []
+
+  const listeners = meshGatewayDataplane.listeners ?? []
+  for (const listener of listeners) {
+    for (const host of listener.hosts) {
+      for (const route of host.routes) {
+        const routeEntries: MeshGatewayRouteEntry[] = []
+
+        for (const destination of route.destinations) {
+          const origins = Object.values(destination.policies ?? {}).map(({ mesh, name, type }) => ({ mesh, name, type }))
+
+          routeEntries.push({
+            route: {
+              mesh: meshGatewayDataplane.gateway.mesh,
+              name: route.route,
+              type: 'MeshGatewayRoute',
+            },
+            service: destination.tags['kuma.io/service'],
+            origins,
+          })
+        }
+
+        meshGatewayListenerEntries.push({
+          protocol: listener.protocol,
+          port: listener.port,
+          hostName: host.hostName,
+          routeEntries,
+        })
+      }
+    }
+  }
+
+  return meshGatewayListenerEntries
 }

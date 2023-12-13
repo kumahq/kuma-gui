@@ -1,4 +1,11 @@
-import { Dataplane, DataplaneOverview } from './data'
+import {
+  Dataplane,
+  DataplaneOverview,
+  InspectRules,
+  InspectRulesForDataplane,
+  MeshGatewayDataplane,
+  SidecarDataplane,
+} from './data'
 import type { Can } from '../application/services/can'
 import { defineSources } from '@/app/application/services/data-source'
 import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
@@ -7,7 +14,7 @@ import { parse, getTraffic } from '@/app/data-planes/data/stats'
 import type { TrafficEntry } from '@/app/data-planes/data/stats'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { InspectRulesForDataplane, MeshGatewayDataplane, SidecarDataplane } from '@/types/index.d'
+import type { PolicyTypeEntry } from '@/types/index.d'
 
 export type { Dataplane, DataplaneOverview } from './data'
 
@@ -18,7 +25,7 @@ export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
-export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane>
+export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane> & { policyTypeEntries: PolicyTypeEntry[] }
 export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDataplaneCollection>
 
 export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
@@ -40,6 +47,7 @@ export const sources = (api: KumaApi, can: Can) => {
     '/meshes/:mesh/dataplanes/:name': async (params) => {
       return Dataplane.fromObject(await api.getDataplaneFromMesh(params))
     },
+
     '/meshes/:mesh/dataplanes/:name/traffic': async (params) => {
       const { mesh, name } = params
       const res = await api.getDataplaneData({
@@ -95,15 +103,15 @@ export const sources = (api: KumaApi, can: Can) => {
     },
 
     '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': async (params) => {
-      return api.getSidecarDataplanePolicies(params)
+      return SidecarDataplane.fromCollection(await api.getSidecarDataplanePolicies(params))
     },
 
     '/meshes/:mesh/dataplanes/:name/rules': async (params) => {
-      return api.getDataplaneRules(params)
+      return InspectRules.fromCollection(await api.getDataplaneRules(params))
     },
 
-    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': (params) => {
-      return api.getMeshGatewayDataplane(params)
+    '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {
+      return MeshGatewayDataplane.fromObject(await api.getMeshGatewayDataplane(params))
     },
 
     '/meshes/:mesh/dataplane-overviews/:name': async (params) => {

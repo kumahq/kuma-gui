@@ -20,17 +20,23 @@
           <KTable
             class="policy-type-table"
             :fetcher="() => ({ data: policyTypeEntry.connections, total: policyTypeEntry.connections.length })"
-            :headers="tableHeaders"
+            :headers="[
+              { label: 'From', key: 'sourceTags' },
+              { label: 'To', key: 'destinationTags' },
+              { label: 'On', key: 'name' },
+              { label: 'Conf', key: 'config' },
+              { label: 'Origin policies', key: 'origins' },
+            ]"
             :cell-attrs="getCellAttributes"
             disable-pagination
             is-clickable
           >
-            <template #sourceTags="{ rowValue }">
+            <template #sourceTags="{ row }: { row: PolicyTypeEntryConnection }">
               <TagList
-                v-if="rowValue.length > 0"
+                v-if="row.sourceTags.length > 0"
                 class="tag-list"
                 should-truncate
-                :tags="rowValue"
+                :tags="row.sourceTags"
               />
 
               <template v-else>
@@ -38,12 +44,12 @@
               </template>
             </template>
 
-            <template #destinationTags="{ rowValue }">
+            <template #destinationTags="{ row }: { row: PolicyTypeEntryConnection }">
               <TagList
-                v-if="rowValue.length > 0"
+                v-if="row.destinationTags.length > 0"
                 class="tag-list"
                 should-truncate
-                :tags="rowValue"
+                :tags="row.destinationTags"
               />
 
               <template v-else>
@@ -51,9 +57,9 @@
               </template>
             </template>
 
-            <template #name="{ rowValue }">
-              <template v-if="rowValue !== null">
-                {{ rowValue }}
+            <template #name="{ row }: { row: PolicyTypeEntryConnection }">
+              <template v-if="row.name !== null">
+                {{ row.name }}
               </template>
 
               <template v-else>
@@ -61,15 +67,24 @@
               </template>
             </template>
 
-            <template #origins="{ rowValue }">
-              <ul v-if="rowValue.length > 0">
+            <template #origins="{ row }: { row: PolicyTypeEntryConnection }">
+              <ul v-if="row.origins.length > 0">
                 <li
-                  v-for="(origin, originIndex) in rowValue"
+                  v-for="(origin, originIndex) in row.origins"
                   :key="`${index}-${originIndex}`"
                 >
-                  <router-link :to="origin.route">
+                  <RouterLink
+                    :to="{
+                      name: 'policy-detail-view',
+                      params: {
+                        mesh: origin.mesh,
+                        policyPath: props.policyTypesByName[origin.type]!.path,
+                        policy: origin.name,
+                      },
+                    }"
+                  >
                     {{ origin.name }}
-                  </router-link>
+                  </RouterLink>
                 </li>
               </ul>
 
@@ -78,11 +93,11 @@
               </template>
             </template>
 
-            <template #config="{ rowValue, rowKey }">
-              <template v-if="rowValue !== null">
+            <template #config="{ row, rowKey }: { row: PolicyTypeEntryConnection, rowKey: number }">
+              <template v-if="row.config">
                 <CodeBlock
                   :id="`${props.id}-${index}-${rowKey}-code-block`"
-                  :code="rowValue"
+                  :code="toYaml(row.config)"
                   language="yaml"
                   :show-copy-button="false"
                 />
@@ -105,33 +120,13 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
-import type { LabelValue, TableHeader } from '@/types/index.d'
-import type { RouteLocationNamedRaw } from 'vue-router'
-
-export type PolicyTypeEntryConnection = {
-  sourceTags: LabelValue[]
-  destinationTags: LabelValue[]
-  name: string | null
-  origins: Array<{ name: string, route: RouteLocationNamedRaw }>
-  config: string | null
-}
-
-export type PolicyTypeEntry = {
-  type: string
-  connections: PolicyTypeEntryConnection[]
-}
-
-const tableHeaders: TableHeader[] = [
-  { label: 'From', key: 'sourceTags' },
-  { label: 'To', key: 'destinationTags' },
-  { label: 'On', key: 'name' },
-  { label: 'Conf', key: 'config' },
-  { label: 'Origin policies', key: 'origins' },
-]
+import type { PolicyType, PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
+import { toYaml } from '@/utilities/toYaml'
 
 const props = defineProps<{
   id: string
   policyTypeEntries: PolicyTypeEntry[]
+  policyTypesByName: Record<string, PolicyType | undefined>
 }>()
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {

@@ -1,5 +1,3 @@
-import { RouteLocationNamedRaw } from 'vue-router'
-
 /**
  * Creates an “unsaved” variant of a resource type which is missing the fields that are only present on an object once its saved in the database.
  */
@@ -197,6 +195,14 @@ export type DataplaneGateway = {
    * Type of the gateway. **Default**: `'DELEGATED'`
    */
   type?: 'BUILTIN' | 'DELEGATED'
+}
+
+export type DataplaneWarning = {
+  kind: string
+  payload?: {
+    kumaDp: string
+    envoy?: string
+  }
 }
 
 export type DataplaneInbound = {
@@ -419,22 +425,34 @@ export interface MeshGatewayDataplane {
   policies?: Record<string, MatchedPolicyType>
 }
 
-export type SidecarDataplaneRuleEntry = {
-  rule: DataplaneRule
-  policyRoutes: Map<{ name: string, route: RouteLocationNamedRaw }>
+export type PolicyTypeEntryConnection = {
+  sourceTags: LabelValue[]
+  destinationTags: LabelValue[]
+  name: string | null
+  origins: Meta[]
+  config: string | undefined
 }
 
-export type MeshGatewayRoutePolicy = {
+export type PolicyTypeEntry = {
   type: string
-  name: string
-  route: RouteLocationNamedRaw
+  connections: PolicyTypeEntryConnection[]
+}
+
+export type RuleEntryRule = {
+  config: object | undefined
+  matchers?: InspectRuleMatcher[]
+  origins: Meta[]
+}
+
+export type RuleEntry = {
+  type: string
+  rules: RuleEntryRule[]
 }
 
 export type MeshGatewayRouteEntry = {
-  route: RouteLocationNamedRaw
-  routeName: string
+  route: Meta
   service: string
-  policies: MeshGatewayRoutePolicy[]
+  origins: Meta[]
 }
 
 export type MeshGatewayListenerEntry = {
