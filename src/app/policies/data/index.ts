@@ -4,7 +4,7 @@ import type {
   PolicyEntity as PartialPolicy,
 } from '@/types/index.d'
 
-export { PolicyType } from '@/types/index.d'
+export type { PolicyType } from '@/types/index.d'
 
 export type PolicyDataplane = PartialPolicyDataplane
 
