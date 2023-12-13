@@ -42,7 +42,7 @@
 
           <div class="mt-4 stack">
             <ResourceStatus
-              :total="props.meshInsight.services.total ?? 0"
+              :total="props.meshInsight.services.total"
               data-testid="services-status"
             >
               <template #title>
@@ -51,8 +51,8 @@
             </ResourceStatus>
 
             <ResourceStatus
-              :online="props.meshInsight.dataplanesByType.standard.online ?? 0"
-              :total="props.meshInsight.dataplanesByType.standard.total ?? 0"
+              :online="props.meshInsight.dataplanesByType.standard.online"
+              :total="props.meshInsight.dataplanesByType.standard.total"
               data-testid="data-plane-proxies-status"
             >
               <template #title>
@@ -67,9 +67,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { MeshInsight } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import type { MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

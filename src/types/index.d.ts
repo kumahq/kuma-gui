@@ -326,7 +326,7 @@ export interface Meta<Type extends string = string> {
   name: string
 }
 
-export type Conf = object
+export type Conf = Record<string, unknown>
 
 export interface InspectRuleMatcher {
   key: string
@@ -567,10 +567,18 @@ export interface ZoneEgressOverview extends MeshEntity {
   zoneEgressInsight: any
 }
 
+export interface DpCert {
+  rotation?: {
+    expiration?: string
+  }
+  requestTimeout?: string
+}
+
 export interface Backend {
   name: string
   type: string
-  conf?: Record<string, string | number>
+  conf?: Conf
+  dpCert?: DpCert
 }
 
 export interface MeshBackend {
