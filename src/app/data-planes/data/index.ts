@@ -1,4 +1,4 @@
-import { getIsConnected, SubscriptionCollection } from '@/app/subscriptions/data'
+import { SubscriptionCollection } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlane as PartialDataplane,
@@ -59,7 +59,6 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   dataplaneType: 'standard' | 'builtin' | 'delegated'
   status: 'online' | 'offline' | 'partially_degraded'
   unhealthyInbounds: Array<{ service: string, port: number }>
-  lastUpdateTime?: string | undefined
   warnings: DataplaneWarning[]
   isCertExpired: boolean
   services: string[]
@@ -135,9 +134,8 @@ export const DataplaneOverview = {
     const dataplaneInsight = DataplaneInsight.fromObject(partialDataplaneOverview.dataplaneInsight)
     const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking)
 
-    const lastUpdateTime = dataplaneInsight.latestSubscription?.status.lastUpdateTime
     const dataplaneType = getDataplaneType(networking)
-    const status = getStatus(partialDataplaneOverview)
+    const status = getStatus(partialDataplaneOverview.dataplane.networking, dataplaneInsight.connectedSubscription)
     const unhealthyInbounds = getUnhealthyInbounds(networking)
     const tags = getTags(networking)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
@@ -153,7 +151,6 @@ export const DataplaneOverview = {
       dataplaneType,
       status,
       unhealthyInbounds,
-      lastUpdateTime,
       warnings,
       isCertExpired,
       services,
@@ -213,16 +210,15 @@ export const MeshGatewayDataplane = {
   },
 }
 
-// TODO: Update the implementation once OnboardingDataplanesView no longer uses this function and remove the export.
-export function getStatus(dataplaneOverview: PartialDataplaneOverview): 'online' | 'offline' | 'partially_degraded' {
-  const isConnected = getIsConnected(dataplaneOverview.dataplaneInsight?.subscriptions)
-  // For gateways, the only relevant status criteria are subscriptions.
-  if (dataplaneOverview.dataplane.networking.gateway) {
-    return isConnected ? 'online' : 'offline'
+function getStatus(networking: PartialDataplaneNetworking, connectedSubscription?: DiscoverySubscription): 'online' | 'offline' | 'partially_degraded' {
+  const state = typeof connectedSubscription !== 'undefined' ? 'online' : 'offline'
+  // For gateways, the only relevant status criteria is the connectSubscription.
+  if (networking.gateway) {
+    return state
   }
 
   // TODO: Update this to use the transformed inbounds property instead and check for `!inbound.isHealthy`.
-  const inbounds = dataplaneOverview.dataplane.networking.inbound ?? []
+  const inbounds = networking.inbound ?? []
   const unhealthyInbounds = inbounds.filter((inbound) => inbound.health && !inbound.health.ready)
 
   switch (true) {
@@ -234,7 +230,7 @@ export function getStatus(dataplaneOverview: PartialDataplaneOverview): 'online'
       return 'partially_degraded'
     default:
       // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
-      return isConnected ? 'online' : 'offline'
+      return state
   }
 }
 
