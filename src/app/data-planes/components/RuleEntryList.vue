@@ -64,7 +64,16 @@
                   v-for="(origin, originIndex) in row.origins"
                   :key="`${index}-${originIndex}`"
                 >
-                  <RouterLink :to="origin.route">
+                  <RouterLink
+                    :to="{
+                      name: 'policy-detail-view',
+                      params: {
+                        mesh: origin.mesh,
+                        policyPath: props.policyTypesByName[origin.type]!.path,
+                        policy: origin.name,
+                      },
+                    }"
+                  >
                     {{ origin.name }}
                   </RouterLink>
                 </li>
@@ -76,10 +85,10 @@
             </template>
 
             <template #config="{ row, rowKey }: { row: RuleEntryRule, rowKey: number }">
-              <template v-if="row.config !== undefined">
+              <template v-if="row.config">
                 <CodeBlock
                   :id="`${props.id}-${index}-${rowKey}-code-block`"
-                  :code="row.config"
+                  :code="toYaml(row.config)"
                   language="yaml"
                   :show-copy-button="false"
                 />
@@ -102,25 +111,14 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import type { InspectRuleMatcher } from '@/types/index.d'
-import type { RouteLocationNamedRaw } from 'vue-router'
-
-export type RuleEntryRule = {
-  config: string | undefined
-  matchers?: InspectRuleMatcher[]
-  origins: Array<{ name: string, route: RouteLocationNamedRaw }>
-}
-
-export type RuleEntry = {
-  type: string
-  rules: RuleEntryRule[]
-}
-
+import type { PolicyType, RuleEntry, RuleEntryRule } from '@/types/index.d'
+import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
   id: string
   ruleEntries: RuleEntry[]
+  policyTypesByName: Record<string, PolicyType | undefined>
   showMatchers?: boolean
 }>(), {
   showMatchers: true,
