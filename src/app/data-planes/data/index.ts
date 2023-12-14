@@ -1,4 +1,4 @@
-import { getIsConnected } from '@/app/subscriptions/data'
+import { getIsConnected, SubscriptionCollection } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlane as PartialDataplane,
@@ -26,6 +26,9 @@ import type {
   SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
 
+type DiscoverySubscriptionCollection = {
+} & SubscriptionCollection<DiscoverySubscription>
+
 export type DataplaneInbound = PartialDataplaneInbound & {
   health: {
     ready: boolean
@@ -46,10 +49,7 @@ export type Dataplane = PartialDataplane & {
   networking: DataplaneNetworking
 }
 
-export type DataplaneInsight = PartialDataplaneInsight & {
-  subscriptions: DiscoverySubscription[]
-  connectedSubscription?: DiscoverySubscription
-}
+export type DataplaneInsight = PartialDataplaneInsight & DiscoverySubscriptionCollection & {}
 
 export type DataplaneOverview = PartialDataplaneOverview & {
   dataplane: {
@@ -116,15 +116,16 @@ export const Dataplane = {
   },
 }
 
+const DiscoverySubscriptionCollection = {
+  fromArray: (items?: DiscoverySubscription[]): DiscoverySubscriptionCollection => {
+    return SubscriptionCollection.fromArray(items)
+  },
+}
 const DataplaneInsight = {
-  fromObject(partialDataplaneInsight: PartialDataplaneInsight | undefined): DataplaneInsight {
-    const subscriptions = Array.isArray(partialDataplaneInsight?.subscriptions) ? partialDataplaneInsight.subscriptions : []
-    const connectedSubscription = subscriptions.find((subscription) => !subscription.disconnectTime)
-
+  fromObject(item: PartialDataplaneInsight | undefined): DataplaneInsight {
     return {
-      ...partialDataplaneInsight,
-      connectedSubscription,
-      subscriptions,
+      ...item,
+      ...DiscoverySubscriptionCollection.fromArray(item?.subscriptions),
     }
   },
 }
@@ -134,10 +135,10 @@ export const DataplaneOverview = {
     const dataplaneInsight = DataplaneInsight.fromObject(partialDataplaneOverview.dataplaneInsight)
     const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking)
 
+    const lastUpdateTime = dataplaneInsight.latestSubscription?.status.lastUpdateTime
     const dataplaneType = getDataplaneType(networking)
     const status = getStatus(partialDataplaneOverview)
     const unhealthyInbounds = getUnhealthyInbounds(networking)
-    const lastUpdateTime = dataplaneInsight.subscriptions.at(-1)?.status.lastUpdateTime
     const tags = getTags(networking)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
     const warnings = getWarnings(dataplaneInsight, tags, canUseZones)

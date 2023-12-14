@@ -1,3 +1,4 @@
+import { SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   ZoneOverview as PartialZoneOverview,
@@ -7,18 +8,22 @@ import type {
 } from '@/types/index.d'
 import { get } from '@/utilities/get'
 
+type KDSSubscriptionCollection = {
+  config: Record<string, unknown>
+} & SubscriptionCollection<KDSSubscription>
+
 export type Zone = PartialZone & {
   enabled: boolean
 }
-export type ZoneInsight = PartialZoneInsight & {
-  connectedSubscription?: KDSSubscription
-  config: Record<string, unknown>
+
+export type ZoneInsight = {
   authenticationType: string
   environment: string
-} & Required<Pick<PartialZoneInsight, 'subscriptions'>> & PartialZoneInsight
+  store: string
+} & KDSSubscriptionCollection & PartialZoneInsight
 
 export type ZoneOverview = PartialZoneOverview & {
-  zoneInsight?: ZoneInsight
+  zoneInsight: ZoneInsight
   zone: Zone
   state: 'online' | 'offline' | 'disabled'
 }
@@ -32,40 +37,42 @@ export const Zone = {
   },
 }
 
-export const ZoneInsight = {
-  fromObject: (item?: PartialZoneInsight): ZoneInsight | undefined => {
-    // if item isn't set don't even try augmenting things
-    return isSet<PartialZoneInsight>(item)
-      ? ((item) => {
-        const subscriptions = Array.isArray(item.subscriptions) ? item.subscriptions : []
-        // figure out the connectedSubscription by looking at the connectTime
-        // and disconnectTime of the last subscription
-        const connectedSubscription = subscriptions.slice(-1).find((item) => item.connectTime?.length && !item.disconnectTime)
-        // using the connectedSubscription find the config for the zone if it exists, is valid JSON and is not null and
-        // turn it into an object
-        const config: Record<string, unknown> = (() => {
-          const str = isSet<string>(connectedSubscription?.config) ? connectedSubscription.config : '{}'
-          try {
-            return JSON.parse(str)
-          } catch (e) {
-            console.error(e)
-          }
-          return {}
-        })()
-
-        // set the extra stuff
-        return {
-          ...item,
-          subscriptions,
-          connectedSubscription,
-          config,
-          authenticationType: get(config, 'dpServer.auth.type', ''),
-          environment: String(config.environment ?? ''),
-        }
-      })(item)
-      : undefined
+const KDSSubscriptionCollection = {
+  fromArray: (items?: KDSSubscription[]): KDSSubscriptionCollection => {
+    const collection = SubscriptionCollection.fromArray(items)
+    // find the first subscription in the list for a config
+    // if its valid JSON and is not null, turn it into an object
+    const config: Record<string, unknown> = (() => {
+      // just find the first that has a config
+      const withConfig = collection.subscriptions.find(item => typeof item.config !== 'undefined')
+      const str = isSet<string>(withConfig?.config) ? withConfig.config : '{}'
+      try {
+        return JSON.parse(str)
+      } catch (e) {
+        console.error(e)
+      }
+      return {}
+    })()
+    return {
+      ...collection,
+      config,
+    }
   },
 }
+
+export const ZoneInsight = {
+  fromObject: (item?: PartialZoneInsight): ZoneInsight => {
+    const subs = KDSSubscriptionCollection.fromArray(item?.subscriptions)
+    return {
+      ...item,
+      ...subs,
+      authenticationType: get(subs.config, 'dpServer.auth.type', ''),
+      environment: String(subs.config.environment ?? ''),
+      store: get(subs.config, 'store.type', ''),
+    }
+  },
+}
+
 export const ZoneOverview = {
   fromObject: (item: PartialZoneOverview): ZoneOverview => {
     const insight = ZoneInsight.fromObject(item.zoneInsight)

@@ -96,6 +96,8 @@ describe('dataplanes data transformations', () => {
           dataplaneInsight: {
             subscriptions: [],
             connectedSubscription: undefined,
+            latestSubscription: undefined,
+            version: undefined,
           },
           dataplaneType: 'standard',
           status: 'offline',
@@ -238,7 +240,50 @@ describe('dataplanes data transformations', () => {
                 },
               },
             ],
+            version: {
+              kumaDp: {
+                version: '1.2.3',
+                gitTag: '',
+                gitCommit: '',
+                buildDate: '',
+                kumaCpCompatible: false,
+              },
+              envoy: {
+                version: '4.5.6',
+                build: '',
+                kumaDpCompatible: false,
+              },
+              dependencies: {},
+            },
             connectedSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+              version: {
+                kumaDp: {
+                  version: '1.2.3',
+                  gitTag: '',
+                  gitCommit: '',
+                  buildDate: '',
+                  kumaCpCompatible: false,
+                },
+                envoy: {
+                  version: '4.5.6',
+                  build: '',
+                  kumaDpCompatible: false,
+                },
+                dependencies: {},
+              },
+            },
+            latestSubscription: {
               id: '',
               controlPlaneInstanceId: '',
               status: {
@@ -398,7 +443,22 @@ describe('dataplanes data transformations', () => {
                 disconnectTime: '2021-07-13T09:03:11.614941842Z',
               },
             ],
+            version: undefined,
             connectedSubscription: undefined,
+            latestSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+              disconnectTime: '2021-07-13T09:03:11.614941842Z',
+            },
           },
           dataplaneType: 'standard',
           status: 'offline',
@@ -495,7 +555,21 @@ describe('dataplanes data transformations', () => {
                 connectTime: '2021-07-13T09:03:11.614941842Z',
               },
             ],
+            version: undefined,
             connectedSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+            },
+            latestSubscription: {
               id: '',
               controlPlaneInstanceId: '',
               status: {
@@ -628,7 +702,21 @@ describe('dataplanes data transformations', () => {
                 connectTime: '2021-07-13T09:03:11.614941842Z',
               },
             ],
+            version: undefined,
             connectedSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+            },
+            latestSubscription: {
               id: '',
               controlPlaneInstanceId: '',
               status: {
@@ -733,7 +821,21 @@ describe('dataplanes data transformations', () => {
                 connectTime: '2021-07-13T09:03:11.614941842Z',
               },
             ],
+            version: undefined,
             connectedSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+            },
+            latestSubscription: {
               id: '',
               controlPlaneInstanceId: '',
               status: {
@@ -833,7 +935,21 @@ describe('dataplanes data transformations', () => {
                 connectTime: '2021-07-13T09:03:11.614941842Z',
               },
             ],
+            version: undefined,
             connectedSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+            },
+            latestSubscription: {
               id: '',
               controlPlaneInstanceId: '',
               status: {
@@ -961,7 +1077,22 @@ describe('dataplanes data transformations', () => {
                 disconnectTime: '2021-07-13T09:03:11.614941842Z',
               },
             ],
+            version: undefined,
             connectedSubscription: undefined,
+            latestSubscription: {
+              id: '',
+              controlPlaneInstanceId: '',
+              status: {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: {},
+                cds: {},
+                eds: {},
+                lds: {},
+                rds: {},
+              },
+              connectTime: '2021-07-13T09:03:11.614941842Z',
+              disconnectTime: '2021-07-13T09:03:11.614941842Z',
+            },
           },
           dataplaneType: 'builtin',
           status: 'offline',

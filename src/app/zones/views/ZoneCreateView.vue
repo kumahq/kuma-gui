@@ -97,9 +97,7 @@
                   {{ t('zones.form.section.name.title') }}
                 </h2>
 
-                <p v-if="t('zones.form.section.name.description') !== ' '">
-                  {{ t('zones.form.section.name.description') }}
-                </p>
+                <p>{{ t('zones.form.section.name.description') }}</p>
               </div>
 
               <div class="form-section__content">
@@ -163,9 +161,7 @@
                     {{ t('zones.form.section.configuration.title') }}
                   </h2>
 
-                  <p v-if="t('zones.form.section.configuration.description') !== ' '">
-                    {{ t('zones.form.section.configuration.description') }}
-                  </p>
+                  <p>{{ t('zones.form.section.configuration.description') }}</p>
                 </div>
 
                 <div class="form-section__content">
@@ -245,9 +241,7 @@
                     {{ t('zones.form.section.connect_zone.title') }}
                   </h2>
 
-                  <p v-if="t('zones.form.section.connect_zone.description') !== ' '">
-                    {{ t('zones.form.section.connect_zone.description') }}
-                  </p>
+                  <p>{{ t('zones.form.section.connect_zone.description') }}</p>
                 </div>
 
                 <div class="form-section__content">

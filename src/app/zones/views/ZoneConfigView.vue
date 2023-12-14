@@ -37,10 +37,10 @@
 
       <KCard>
         <CodeBlock
-          v-if="Object.keys(props.data.zoneInsight?.config ?? {}).length > 0"
+          v-if="Object.keys(props.data.zoneInsight.config).length > 0"
           id="code-block-zone-config"
           language="json"
-          :code="JSON.stringify(props.data.zoneInsight?.config ?? {}, null, 2)"
+          :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
           is-searchable
           :query="route.params.codeSearch"
           :is-filter-mode="route.params.codeFilter === 'true'"
