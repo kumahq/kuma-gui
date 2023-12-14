@@ -175,7 +175,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import type { MeshInsight } from '@/types/index.d'
+import type { MeshInsight } from '@/app/meshes/data'
 import { useI18n } from '@/utilities'
 
 type ChangeValue = {

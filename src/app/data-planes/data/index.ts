@@ -7,6 +7,7 @@ import type {
   DataplaneNetworking as PartialDataplaneNetworking,
   DataplaneOutbound as PartialDataplaneOutbound,
   DataPlaneOverview as PartialDataplaneOverview,
+  DataPlaneProxyStatus as DataplaneStatusCount,
   DataplaneWarning,
   DiscoverySubscription,
   InspectBaseRule,
@@ -516,4 +517,13 @@ function getListenerEntries(meshGatewayDataplane: PartialMeshGatewayDataplane): 
   }
 
   return meshGatewayListenerEntries
+}
+
+export function getDataplaneStatusCounts({ total = 0, online = 0, partiallyDegraded = 0, offline = 0 }: DataplaneStatusCount): Required<DataplaneStatusCount> {
+  return {
+    total,
+    online,
+    partiallyDegraded,
+    offline,
+  }
 }

@@ -21,7 +21,7 @@
         </ResourceStatus>
 
         <ResourceStatus
-          :total="totalPolicyCount"
+          :total="props.meshInsight?.totalPolicyCount ?? 0"
           data-testid="policies-status"
         >
           <template #title>
@@ -38,14 +38,14 @@
 
           <template #body>
             <KBadge
-              v-if="mtls === ''"
+              v-if="!props.mesh.mtlsBackend"
               appearance="neutral"
             >
               {{ t('meshes.detail.disabled') }}
             </KBadge>
 
             <template v-else>
-              {{ mtls }}
+              {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
             </template>
           </template>
         </DefinitionCard>
@@ -57,14 +57,14 @@
 
           <template #body>
             <KBadge
-              v-if="metrics === ''"
+              v-if="!props.mesh.metricsBackend"
               appearance="neutral"
             >
               {{ t('meshes.detail.disabled') }}
             </KBadge>
 
             <template v-else>
-              {{ metrics }}
+              {{ props.mesh.metricsBackend.type }} / {{ props.mesh.metricsBackend.name }}
             </template>
           </template>
         </DefinitionCard>
@@ -86,45 +86,17 @@
 </template>
 
 <script lang="ts" setup>
-import { KBadge, KCard } from '@kong/kongponents'
-import { PropType, computed } from 'vue'
-
+import type { Mesh, MeshInsight } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import type { Mesh, MeshBackend, MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps({
-  mesh: {
-    type: Object as PropType<Mesh>,
-    required: true,
-  },
-
-  meshInsight: {
-    type: [Object] as PropType<MeshInsight | undefined>,
-    required: false,
-    default: undefined,
-  },
+const props = withDefaults(defineProps<{
+  mesh: Mesh
+  meshInsight?: MeshInsight
+}>(), {
+  meshInsight: undefined,
 })
-
-const mtls = computed(() => getBackendTypeAndName(props.mesh.mtls))
-const metrics = computed(() => getBackendTypeAndName(props.mesh.metrics))
-
-const totalPolicyCount = computed(() => {
-  return Object.values(props.meshInsight?.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
-})
-
-function getBackendTypeAndName(meshBackend?: MeshBackend): string {
-  if (meshBackend?.enabledBackend && Array.isArray(meshBackend.backends)) {
-    const enabledBackend = meshBackend.backends.find((backend) => backend.name === meshBackend.enabledBackend)
-
-    if (enabledBackend !== undefined) {
-      return `${enabledBackend.type} / ${enabledBackend.name}`
-    }
-  }
-
-  return ''
-}
 </script>

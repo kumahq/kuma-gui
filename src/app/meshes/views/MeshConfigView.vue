@@ -31,7 +31,7 @@
           <template v-else>
             <ResourceCodeBlock
               id="code-block-mesh"
-              :resource="data"
+              :resource="data.config"
               :resource-fetcher="(params) => kumaApi.getMesh({ name: route.params.mesh }, params)"
             />
           </template>

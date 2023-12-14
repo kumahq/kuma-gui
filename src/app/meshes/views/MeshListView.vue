@@ -72,11 +72,11 @@
                 </template>
 
                 <template #services="{ row: item }">
-                  {{ item.services.internal ?? '0' }}
+                  {{ item.services.internal }}
                 </template>
 
                 <template #dataplanes="{ row: item }">
-                  {{ item.dataplanesByType.standard.online ?? '0' }} / {{ item.dataplanesByType.standard.total ?? '0' }}
+                  {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
                 </template>
 
                 <template #details="{ row }">

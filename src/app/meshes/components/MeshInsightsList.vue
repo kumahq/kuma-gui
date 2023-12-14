@@ -23,18 +23,20 @@
         {{ item.name }}
       </RouterLink>
     </template>
+
     <template #services="{ row: item }">
-      {{ item.services.internal ?? '0' }}
+      {{ item.services.internal }}
     </template>
+
     <template #dataplanes="{ row: item }">
-      {{ item.dataplanesByType.standard.online ?? '0' }} / {{ item.dataplanesByType.standard.total ?? '0' }}
+      {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
     </template>
   </AppCollection>
 </template>
 
 <script lang="ts" setup>
+import type { MeshInsight } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import type { MeshInsight } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
