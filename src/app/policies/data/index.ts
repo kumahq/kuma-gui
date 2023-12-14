@@ -8,7 +8,9 @@ export type { PolicyType } from '@/types/index.d'
 
 export type PolicyDataplane = PartialPolicyDataplane
 
-export type Policy = PartialPolicy
+export type Policy = PartialPolicy & {
+  config: PartialPolicy
+}
 
 export const PolicyDataplane = {
   fromObject(partialPolicyDataplane: PartialPolicyDataplane): PolicyDataplane {
@@ -27,7 +29,10 @@ export const PolicyDataplane = {
 
 export const Policy = {
   fromObject(partialPolicy: PartialPolicy): Policy {
-    return partialPolicy
+    return {
+      ...partialPolicy,
+      config: partialPolicy,
+    }
   },
 
   fromCollection(partialPolicies: PaginatedApiListResponse<PartialPolicy>): PaginatedApiListResponse<Policy> {

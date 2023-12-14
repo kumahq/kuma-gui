@@ -38,6 +38,19 @@ describe('services data transformations', () => {
           tags: {
             'kuma.io/service': 'service',
           },
+          config: {
+            type: 'ExternalService',
+            mesh: 'default',
+            name: 'service',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'service.mesh:26986',
+            },
+            tags: {
+              'kuma.io/service': 'service',
+            },
+          },
         },
       },
     ])('.fromObject: $message', ({ parameters, expected }) => {

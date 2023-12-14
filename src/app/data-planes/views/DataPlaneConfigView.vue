@@ -34,7 +34,7 @@
           <ResourceCodeBlock
             v-else
             id="code-block-data-plane"
-            :resource="data"
+            :resource="data.config"
             :resource-fetcher="(params) => kumaApi.getDataplaneFromMesh({ mesh: data.mesh, name: data.name }, params)"
             is-searchable
             :query="route.params.codeSearch"
