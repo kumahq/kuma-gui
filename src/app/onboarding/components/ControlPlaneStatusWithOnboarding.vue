@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import OnboardingAlert from './OnboardingAlert.vue'
 import { useControlPlaneStatus } from '../'
-import type { GlobalInsight } from '@/types/index.d'
+import type { GlobalInsight } from '@/app/control-planes/data'
 
 const ControlPlaneStatus = useControlPlaneStatus()
 
