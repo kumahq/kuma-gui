@@ -78,7 +78,7 @@
           <div class="mt-4">
             <ResourceCodeBlock
               id="code-block-policy"
-              :resource="props.policy"
+              :resource="props.policy.config"
               :resource-fetcher="(params) => kumaApi.getSinglePolicyEntity({
                 name: route.params.policy,
                 mesh: route.params.mesh,

@@ -34,6 +34,16 @@ describe('dataplanes data transformations', () => {
             inbounds: [],
             outbounds: [],
           },
+          config: {
+            mesh: 'default',
+            name: 'dataplane',
+            type: 'Dataplane',
+            creationTime: '',
+            modificationTime: '',
+            networking: {
+              address: 'http://example.org',
+            },
+          },
         },
       },
     ])('.fromObject: $message', ({ parameters, expected }) => {

@@ -73,7 +73,7 @@
 
           <ResourceCodeBlock
             id="code-block-policy"
-            :resource="data"
+            :resource="data.config"
             :resource-fetcher="(params) => kumaApi.getSinglePolicyEntity({
               name: route.params.policy,
               mesh: route.params.mesh,

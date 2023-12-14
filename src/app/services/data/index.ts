@@ -5,7 +5,9 @@ import type {
   ServiceStatus as ServiceTypeCount,
 } from '@/types/index.d'
 
-export type ExternalService = PartialExternalService
+export type ExternalService = PartialExternalService & {
+  config: PartialExternalService
+}
 
 export type ServiceInsight = PartialServiceInsight & {
   serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
@@ -14,7 +16,10 @@ export type ServiceInsight = PartialServiceInsight & {
 
 export const ExternalService = {
   fromObject(partialExternalService: PartialExternalService): ExternalService {
-    return partialExternalService
+    return {
+      ...partialExternalService,
+      config: partialExternalService,
+    }
   },
 }
 

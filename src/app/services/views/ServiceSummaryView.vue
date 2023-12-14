@@ -169,7 +169,7 @@
               <ResourceCodeBlock
                 v-else
                 id="code-block-service"
-                :resource="externalService"
+                :resource="externalService.config"
                 :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
                 is-searchable
                 :query="route.params.codeSearch"
