@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { ConfigSource } from '../sources'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
 </script>
 <template>
   <RouteView
@@ -15,7 +15,7 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
     }"
   >
     <DataSource
-      v-slot="{ data, error }: ConfigSource"
+      v-slot="{ data, error }: ControlPlaneConfigSource"
       :src="`/config`"
     >
       <AppView

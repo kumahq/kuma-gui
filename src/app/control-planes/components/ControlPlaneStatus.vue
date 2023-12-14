@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 import { useI18n } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import type { GlobalInsight } from '@/types/index.d'
+import type { GlobalInsight } from '@/app/control-planes/data'
 
 const { t } = useI18n()
 
