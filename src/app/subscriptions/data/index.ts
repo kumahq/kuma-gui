@@ -21,12 +21,13 @@ export const SubscriptionCollection = {
     // make a copy of the subscriptions and then sort with the latest one first
     // so we don't change the order of the original array, plus any finding we
     // do will always gives us the latest subscription if there are multiple
-    subscriptions.slice().sort((a, b) => Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime))
+    const subs = subscriptions.slice()
+    subs.sort((a, b) => Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime))
     // find a version
-    const withVersion = subscriptions.find((item) => typeof item.version !== 'undefined')
+    const withVersion = subs.find((item) => typeof item.version !== 'undefined')
     // figure out the connectedSubscription by looking for any subscriptions
     // without a disconnectTime
-    const connected = subscriptions.find((item) => !item.disconnectTime)
+    const connected = subs.find((item) => !item.disconnectTime)
 
     return {
       subscriptions,
