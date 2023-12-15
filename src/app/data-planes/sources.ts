@@ -7,8 +7,8 @@ import {
   SidecarDataplane,
 } from './data'
 import type { Can } from '../application/services/can'
-import { defineSources } from '@/app/application/services/data-source'
-import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
+import type { DataSourceResponse } from '@/app/application'
+import { defineSources, type Source } from '@/app/application/services/data-source'
 import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
 import { parse, getTraffic } from '@/app/data-planes/data/stats'
 import type { TrafficEntry } from '@/app/data-planes/data/stats'
@@ -19,9 +19,10 @@ import type { PolicyTypeEntry } from '@/types/index.d'
 export type { Dataplane, DataplaneOverview } from './data'
 
 export type DataplaneSource = DataSourceResponse<Dataplane>
+
 export type DataplaneOverviewSource = DataSourceResponse<DataplaneOverview>
-export type DataPlaneCollection = CollectionResponse<DataplaneOverview>
-export type DataPlaneCollectionSource = DataSourceResponse<DataPlaneCollection>
+export type DataplaneOverviewCollection = CollectionResponse<DataplaneOverview>
+export type DataplaneOverviewCollectionSource = DataSourceResponse<DataplaneOverviewCollection>
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
@@ -42,8 +43,18 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 
-export const sources = (api: KumaApi, can: Can) => {
+export const sources = (source: Source, api: KumaApi, can: Can) => {
   return defineSources({
+    '/dataplanes': (params) => {
+      const { size, page } = params
+      const offset = size * (page - 1)
+      const canUseZones = can('use zones')
+
+      return source(async () => {
+        return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }), canUseZones)
+      }, { interval: 1000 })
+    },
+
     '/meshes/:mesh/dataplanes/:name': async (params) => {
       return Dataplane.fromObject(await api.getDataplaneFromMesh(params))
     },

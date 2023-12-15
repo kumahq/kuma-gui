@@ -28,7 +28,7 @@
         </template>
 
         <DataSource
-          v-slot="{ data: dataplanesData, error: dataplanesError }: DataPlaneCollectionSource"
+          v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}/of/${route.params.dataplaneType}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
         >
           <KCard>
@@ -119,7 +119,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
-import { DataPlaneCollectionSource } from '@/app/data-planes/sources'
+import { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { MeSource } from '@/app/me/sources'
 </script>
 

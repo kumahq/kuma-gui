@@ -18,7 +18,7 @@
       }"
     >
       <DataSource
-        v-slot="{data, error}: DataPlaneCollectionSource"
+        v-slot="{data, error}: DataplaneOverviewCollectionSource"
         :src="`/meshes/${route.params.mesh}/dataplanes/of/${route.params.dataplaneType}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
       >
         <AppView>
@@ -116,7 +116,7 @@
 
 <script lang="ts" setup>
 import DataPlaneList from '../components/DataPlaneList.vue'
-import type { DataPlaneCollectionSource } from '../sources'
+import type { DataplaneOverviewCollectionSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
