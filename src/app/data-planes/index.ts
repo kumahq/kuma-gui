@@ -11,6 +11,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('data-planes.sources'), {
       service: sources,
       arguments: [
+        app.source,
         app.api,
         app.can,
       ],
