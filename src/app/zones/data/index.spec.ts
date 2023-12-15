@@ -29,7 +29,7 @@ describe('ZoneOverview', () => {
             KUMA_SUBSCRIPTION_COUNT: '1',
           },
         })
-        expect(Object.keys(actual.zoneInsight?.config || {}).length > 0).toStrictEqual(true)
+        expect(Object.keys(actual.zoneInsight.config).length > 0).toStrictEqual(true)
       },
     )
   })
@@ -111,7 +111,7 @@ describe('ZoneOverview', () => {
           delete item.zoneInsight
           return item
         })
-        expect(actual.zoneInsight).toBeUndefined()
+        expect(actual.zoneInsight).toBeDefined()
       },
     )
 
@@ -125,14 +125,14 @@ describe('ZoneOverview', () => {
           return item
         })
         expect(actual.zoneInsight).toBeDefined()
-        expect(actual.zoneInsight?.subscriptions.length).toStrictEqual(0)
-        expect(actual.zoneInsight?.connectedSubscription).toBeUndefined()
-        expect(actual.zoneInsight?.config).toStrictEqual({})
+        expect(actual.zoneInsight.subscriptions.length).toStrictEqual(0)
+        expect(actual.zoneInsight.connectedSubscription).toBeUndefined()
+        expect(actual.zoneInsight.config).toStrictEqual({})
       },
     )
 
     test(
-      'all disconnected subscriptions, connectedSubscription remains undefined, config={}',
+      'all disconnected subscriptions, connectedSubscription remains undefined',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.zoneInsight !== 'undefined') {
@@ -148,9 +148,8 @@ describe('ZoneOverview', () => {
           },
         })
         expect(actual.zoneInsight).toBeDefined()
-        expect(actual.zoneInsight?.subscriptions.length).toStrictEqual(10)
-        expect(actual.zoneInsight?.connectedSubscription).toBeUndefined()
-        expect(actual.zoneInsight?.config).toStrictEqual({})
+        expect(actual.zoneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.zoneInsight.connectedSubscription).toBeUndefined()
       },
     )
   })
