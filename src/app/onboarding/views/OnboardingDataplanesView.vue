@@ -55,6 +55,7 @@
 
               <KTable
                 class="mb-4"
+                data-testid="dataplanes-table"
                 :fetcher-cache-key="String(cacheKey)"
                 :fetcher="() => ({
                   data: dataplanes,

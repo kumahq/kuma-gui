@@ -1,10 +1,11 @@
 Feature: onboarding / dataplanes-overview / index
   Background:
     Given the CSS selectors
-      | Alias         | Selector                               |
-      | next-button   | [data-testid='onboarding-next-button'] |
-      | state-success | [data-testid='state-success']          |
-      | state-waiting | [data-testid='state-waiting']          |
+      | Alias            | Selector                               |
+      | next-button      | [data-testid='onboarding-next-button'] |
+      | state-success    | [data-testid='state-success']          |
+      | state-waiting    | [data-testid='state-waiting']          |
+      | dataplanes-table | [data-testid='dataplanes-table']       |
 
   Scenario: Next button is disabled if there are no Dataplanes
     Given the environment
@@ -40,6 +41,7 @@ Feature: onboarding / dataplanes-overview / index
     Given the environment
       """
       KUMA_DATAPLANE_COUNT: 1
+      KUMA_DATAPLANEINBOUND_COUNT: 0
       KUMA_SUBSCRIPTION_COUNT: 1
       """
     And the URL "/dataplanes/_overview" responds with
@@ -56,6 +58,8 @@ Feature: onboarding / dataplanes-overview / index
     When I visit the "/onboarding/dataplanes-overview" URL
 
     Then the "$state-waiting" element exists
+    And the "$dataplanes-table" element contains "dataplane-test"
+    And the "$dataplanes-table" element contains "offline"
 
     When the URL "/dataplanes/_overview" responds with
       """
@@ -69,3 +73,5 @@ Feature: onboarding / dataplanes-overview / index
       """
 
     Then the "$state-success" element exists
+    And the "$dataplanes-table" element contains "dataplane-test"
+    And the "$dataplanes-table" element contains "online"
