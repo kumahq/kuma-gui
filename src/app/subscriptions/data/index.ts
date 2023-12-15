@@ -3,15 +3,7 @@ import type {
 } from '@/types/index.d'
 
 const lastUpdateTimeDesc = <T extends { status: { lastUpdateTime: string } }>(a: T, b: T): number => {
-  const y = Date.parse(a.status.lastUpdateTime)
-  const z = Date.parse(b.status.lastUpdateTime)
-  switch (true) {
-    case y > z:
-      return -1
-    case z > y:
-      return 1
-  }
-  return 0
+  return Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime)
 }
 export type Version = PartialVersion
 export type Subscription = {
