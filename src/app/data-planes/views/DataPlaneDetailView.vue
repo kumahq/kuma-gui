@@ -60,13 +60,7 @@
               </template>
 
               <template #body>
-                <template v-if="props.data.lastUpdateTime">
-                  {{ formatIsoDate(props.data.lastUpdateTime) }}
-                </template>
-
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
+                {{ formatIsoDate(props.data.modificationTime) }}
               </template>
             </DefinitionCard>
 

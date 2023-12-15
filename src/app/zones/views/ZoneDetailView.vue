@@ -42,7 +42,7 @@
               </template>
 
               <template #body>
-                {{ t(`common.product.environment.${props.data.zoneInsight?.environment || 'unknown'}`) }}
+                {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
               </template>
             </DefinitionCard>
 
@@ -52,30 +52,25 @@
               </template>
 
               <template #body>
-                {{ props.data.zoneInsight?.authenticationType || t('common.not_applicable') }}
+                {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
               </template>
             </DefinitionCard>
           </div>
         </KCard>
 
-        <template
-          v-for="subscriptions in [props.data.zoneInsight?.subscriptions ?? []]"
-          :key="subscriptions"
+        <div
+          v-if="props.data.zoneInsight.subscriptions.length > 0"
         >
-          <div
-            v-if="subscriptions.length > 0"
-          >
-            <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
+          <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
 
-            <KCard class="mt-4">
-              <SubscriptionList
-                :subscriptions="subscriptions"
-              >
-                <p>{{ t('zone-cps.routes.item.subscription_intro') }}</p>
-              </SubscriptionList>
-            </KCard>
-          </div>
-        </template>
+          <KCard class="mt-4">
+            <SubscriptionList
+              :subscriptions="props.data.zoneInsight.subscriptions"
+            >
+              <p>{{ t('zone-cps.routes.item.subscription_intro') }}</p>
+            </SubscriptionList>
+          </KCard>
+        </div>
       </div>
     </AppView>
   </RouteView>

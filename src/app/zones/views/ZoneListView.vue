@@ -66,7 +66,7 @@
                 { label: 'Type', key: 'type' },
                 { label: 'Ingresses (online / total)', key: 'ingress' },
                 { label: 'Egresses (online / total)', key: 'egress' },
-                { label: 'Status', key: 'status' },
+                { label: 'Status', key: 'state' },
                 { label: 'Warnings', key: 'warnings', hideLabel: true },
                 { label: 'Details', key: 'details', hideLabel: true },
                 { label: 'Actions', key: 'actions', hideLabel: true },
@@ -74,7 +74,7 @@
               :page-number="parseInt(route.params.page)"
               :page-size="parseInt(route.params.size)"
               :total="data?.total"
-              :items="data ? transformToTableData(data.items) : undefined"
+              :items="data?.items"
               :error="error"
               :empty-state-title="can('create zones') ? t('zone-cps.empty_state.title') : undefined"
               :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : undefined"
@@ -83,12 +83,12 @@
               :is-selected-row="(row) => row.name === route.params.zone"
               @change="route.update"
             >
-              <template #name="{ row }">
+              <template #name="{ row: item }">
                 <RouterLink
                   :to="{
                     name: 'zone-cp-detail-view',
                     params: {
-                      zone: row.name,
+                      zone: item.name,
                     },
                     query: {
                       page: route.params.page,
@@ -96,16 +96,16 @@
                     },
                   }"
                 >
-                  {{ row.name }}
+                  {{ item.name }}
                 </RouterLink>
               </template>
 
-              <template #zoneCpVersion="{ rowValue }">
-                {{ rowValue || t('common.collection.none') }}
+              <template #zoneCpVersion="{ row: item }">
+                {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
               </template>
 
-              <template #type="{ rowValue }">
-                {{ rowValue || t('common.collection.none') }}
+              <template #type="{ row: item }">
+                {{ item.zoneInsight.environment.length > 0 ? item.zoneInsight.environment : 'kubernetes' }}
               </template>
 
               <template #ingress="{ row: item }">
@@ -124,43 +124,51 @@
                 </template>
               </template>
 
-              <template #status="{ rowValue }">
+              <template #state="{ row: item }">
                 <StatusBadge
-                  :status="rowValue"
+                  :status="item.state"
                 />
               </template>
 
               <template #warnings="{ row: item }">
-                <KTooltip
-                  v-if="Object.values(item.warnings).some((item) => item)"
+                <template
+                  v-for="warnings in [{
+                    version_mismatch: !get(item.zoneInsight, 'version.kumaCp.kumaCpGlobalCompatible', 'true'),
+                    store_memory: item.zoneInsight.store === 'memory',
+                  }]"
+                  :key="`${warnings.version_mismatch}-${warnings.store_memory}`"
                 >
-                  <template
-                    #content
+                  <KTooltip
+                    v-if="Object.values(warnings).some((item) => item)"
                   >
-                    <ul>
-                      <template
-                        v-for="(warning, i) in item.warnings"
-                        :key="i"
-                      >
-                        <li
-                          v-if="warning"
-                          :data-testid="`warning-${i}`"
+                    <template
+                      #content
+                    >
+                      <ul>
+                        <template
+                          v-for="(warning, i) in warnings"
+                          :key="i"
                         >
-                          {{ t(`zone-cps.list.${i}`) }}
-                        </li>
-                      </template>
-                    </ul>
-                  </template>
-                  <WarningIcon
-                    data-testid="warning"
-                    class="mr-1"
-                    :size="KUI_ICON_SIZE_30"
-                    hide-title
-                  />
-                </KTooltip>
+                          <li
+                            v-if="warning"
+                            :data-testid="`warning-${i}`"
+                          >
+                            {{ t(`zone-cps.list.${i}`) }}
+                          </li>
+                        </template>
+                      </ul>
+                    </template>
+                    <WarningIcon
+                      data-testid="warning"
+                      class="mr-1"
+                      :size="KUI_ICON_SIZE_30"
+                      hide-title
+                    />
+                  </KTooltip>
 
-                <template v-else>
-                  {{ t('common.collection.none') }}
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
                 </template>
               </template>
 
@@ -267,9 +275,8 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
 import { ref } from 'vue'
-import { type RouteLocationNamedRaw } from 'vue-router'
 
-import type { ZoneOverviewCollectionSource, ZoneOverview } from '../sources'
+import type { ZoneOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -277,20 +284,11 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { MeSource } from '@/app/me/sources'
-import type { DiscoverySubscription, StatusKeyword, ZoneEgressOverview, ZoneIngressOverview } from '@/types/index.d'
+import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
+import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
+import type { DiscoverySubscription } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
-
-type ZoneOverviewTableRow = {
-  detailViewRoute: RouteLocationNamedRaw
-  name: string
-  status: StatusKeyword | 'disabled'
-  zoneCpVersion: string
-  type: string
-  warnings: {
-    version_mismatch: boolean
-    store_memory: boolean
-  }
-}
+import { get } from '@/utilities/get'
 
 const kumaApi = useKumaApi()
 
@@ -349,50 +347,6 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
     }
     return prev
   }, {} as ZoneProxies<ZoneEgressOverview>)
-}
-
-function transformToTableData(zoneOverviews: ZoneOverview[]): ZoneOverviewTableRow[] {
-  return zoneOverviews.map((zoneOverview) => {
-    const { name } = zoneOverview
-    const detailViewRoute: RouteLocationNamedRaw = {
-      name: 'zone-cp-detail-view',
-      params: {
-        zone: name,
-      },
-    }
-    let zoneCpVersion = ''
-    let type = 'kubernetes'
-    let memoryStore = false
-    let cpCompat = true
-
-    const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
-
-    subscriptions.forEach((item) => {
-      if (item.version && item.version.kumaCp) {
-        zoneCpVersion = item.version.kumaCp.version
-        const { kumaCpGlobalCompatible = true } = item.version.kumaCp
-
-        cpCompat = kumaCpGlobalCompatible
-      }
-
-      if (item.config) {
-        const data = JSON.parse(item.config)
-        type = data.environment
-        memoryStore = data.store.type === 'memory'
-      }
-    })
-    return {
-      detailViewRoute,
-      name,
-      status: zoneOverview.state,
-      zoneCpVersion,
-      type,
-      warnings: {
-        version_mismatch: !cpCompat,
-        store_memory: memoryStore,
-      },
-    }
-  })
 }
 
 async function deleteZone() {

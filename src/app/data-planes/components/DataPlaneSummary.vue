@@ -32,13 +32,7 @@
         </template>
 
         <template #body>
-          <template v-if="props.dataplaneOverview.lastUpdateTime">
-            {{ formatIsoDate(props.dataplaneOverview.lastUpdateTime) }}
-          </template>
-
-          <template v-else>
-            {{ t('common.detail.none') }}
-          </template>
+          {{ formatIsoDate(props.dataplaneOverview.modificationTime) }}
         </template>
       </DefinitionCard>
     </div>

@@ -82,11 +82,13 @@ import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import { useCan } from '@/app/application'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { getStatus } from '@/app/data-planes/data'
+import { DataplaneOverview } from '@/app/data-planes/data'
 import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
+const can = useCan()
 
 const TABLE_HEADERS = [
   { label: 'Mesh', key: 'mesh' },
@@ -123,15 +125,14 @@ async function getAllDataplanes() {
       for (const dataPlane of items) {
         const { name, mesh } = dataPlane
 
-        const dataPlaneOverview = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
-        const status = getStatus(dataPlaneOverview)
+        const dataPlaneOverview = DataplaneOverview.fromObject(await kumaApi.getDataplaneOverviewFromMesh({ mesh, name }), can('use zones'))
 
-        if (status === 'offline') {
+        if (dataPlaneOverview.status === 'offline') {
           shouldRefetch = true
         }
 
         result.push({
-          status,
+          status: dataPlaneOverview.status,
           name,
           mesh,
         })
