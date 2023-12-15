@@ -45,7 +45,7 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
 
 export const sources = (source: Source, api: KumaApi, can: Can) => {
   return defineSources({
-    '/dataplanes': (params) => {
+    '/dataplanes/poll': (params) => {
       const { size, page } = params
       const offset = size * (page - 1)
       const canUseZones = can('use zones')

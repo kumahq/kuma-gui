@@ -10,7 +10,7 @@
     <AppView>
       <DataSource
         v-slot="{ error }: DataplaneOverviewCollectionSource"
-        :src="hasOfflineDataplanes ? `/dataplanes?page=1&size=10` : ''"
+        :src="hasOfflineDataplanes ? `/dataplanes/poll?page=1&size=10` : ''"
         @change="setDataplanes"
       >
         <ErrorBlock
