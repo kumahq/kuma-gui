@@ -2,9 +2,6 @@ import type {
   Version as PartialVersion,
 } from '@/types/index.d'
 
-const lastUpdateTimeDesc = <T extends { status: { lastUpdateTime: string } }>(a: T, b: T): number => {
-  return Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime)
-}
 export type Version = PartialVersion
 export type Subscription = {
   disconnectTime?: string
@@ -21,14 +18,14 @@ export type SubscriptionCollection<T extends { version?: any }> = {
 export const SubscriptionCollection = {
   fromArray: <T extends Subscription>(items?: T[]): SubscriptionCollection<T> => {
     const subscriptions = Array.isArray(items) ? items : []
-    subscriptions.sort(lastUpdateTimeDesc)
-    // figure out the version by looking for any subscriptions
-    // with a version and sort the result to put the latest one first in
-    // case there are multiple, then use the first, which could be undefined
+    // make a copy of the subscriptions and then sort with the latest one first
+    // so we don't change the order of the original array, plus any finding we
+    // do will always gives us the latest subscription if there are multiple
+    subscriptions.slice().sort((a, b) => Date.parse(b.status.lastUpdateTime) - Date.parse(a.status.lastUpdateTime))
+    // find a version
     const withVersion = subscriptions.find((item) => typeof item.version !== 'undefined')
     // figure out the connectedSubscription by looking for any subscriptions
-    // without a disconnectTime and sort the result to put the latest one first
-    // in case there are multiple, then use the first, which could be undefined
+    // without a disconnectTime
     const connected = subscriptions.find((item) => !item.disconnectTime)
 
     return {
