@@ -62,7 +62,10 @@ export const sources = (api: KumaApi, can: Can) => {
       // inbounds is anything starting with `localhost_`
       const inbounds = getTraffic(json, (key) => key.startsWith('localhost_'))
 
-      // outbounds are anything else unless it starts with something in the below list
+      // outbounds are anything else unless it starts with something in the
+      // below list these are likely to follow a pattern at some point at which
+      // point this list can be removed and replaced by something that exludes
+      // the pattern
       const outbounds = getTraffic(json, (key) => {
         return ![
           'admin',
@@ -74,6 +77,7 @@ export const sources = (api: KumaApi, can: Can) => {
           'outbound_passthrough',
           'access_log_sink',
           'ads_cluster',
+          'meshtrace_zipkin',
         ].some(item => key.startsWith(item))
       })
 

@@ -138,10 +138,11 @@
                       ]"
                       :key="meta.protocol"
                     >
+                      <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
                       <ServiceTrafficCard
                         :protocol="meta.protocol"
-                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
-                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
+                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
+                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
                         :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
                       >
                         {{ item.name }}
@@ -187,10 +188,11 @@
                     ]"
                     :key="meta.protocol"
                   >
+                    <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
                     <ServiceTrafficCard
                       :protocol="`unknown`"
-                      :tx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] ?? 0), 0)"
-                      :rx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] ?? 0), 0)"
+                      :rx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] ?? 0), 0)"
+                      :tx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] ?? 0), 0)"
                     >
                       Non mesh traffic
                     </ServiceTrafficCard>
@@ -212,10 +214,11 @@
                       ]"
                       :key="meta.protocol"
                     >
+                      <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
                       <ServiceTrafficCard
                         :protocol="meta.protocol"
-                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
-                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
+                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
+                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
                         :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
                       >
                         {{ item.name }}
