@@ -210,7 +210,10 @@ export type DataplaneInbound = {
   port: number
   servicePort?: number
   serviceAddress?: string
-  tags: Record<string, string>
+  tags: {
+    'kuma.io/service': string
+    [key: string]: string
+  }
   health?: {
     ready: boolean
   }
@@ -218,7 +221,10 @@ export type DataplaneInbound = {
 
 export type DataplaneOutbound = {
   port: number
-  tags: Record<string, string>
+  tags: {
+    'kuma.io/service': string
+    [key: string]: string
+  }
 }
 
 export type DataplaneNetworking = {

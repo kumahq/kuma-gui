@@ -41,7 +41,7 @@
 
                   <KTooltip
                     v-if="props.data.unhealthyInbounds.length > 0"
-                    :label="props.data.unhealthyInbounds.map((inbound) => t('data-planes.routes.item.unhealthy_inbound', inbound)).join(', ')"
+                    :label="props.data.unhealthyInbounds.map((inbound) => t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port })).join(', ')"
                     class="reason-tooltip"
                   >
                     <InfoIcon
