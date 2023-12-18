@@ -106,7 +106,7 @@ jobs:
         run: |
           yarn preview:built &
           CYPRESS_video=true yarn run test:browser --spec $(echo $SPEC_GROUPS | jq -cMr '.[${{ matrix.container }}]')
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-artifacts
