@@ -37,7 +37,7 @@
     "yarn": "^1.22.0"
   },
   "dependencies": {
-    "@kong-ui-public/i18n": "2.0.0",
+    "@kong-ui-public/i18n": "2.0.1",
     "@kong/icons": "1.8.3",
     "@kong/kongponents": "9.0.0-alpha.73",
     "brandi": "5.0.0",
