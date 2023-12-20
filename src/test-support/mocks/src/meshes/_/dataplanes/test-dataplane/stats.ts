@@ -1,12 +1,12 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (deps: EndpointDependencies): MockResponder => (_req) => {
+export default (_deps: EndpointDependencies): MockResponder => (_req) => {
   return {
     headers: {},
-    body: stats(deps),
+    body: stats(),
   }
 }
 
-function stats({ fake }: EndpointDependencies) {
+function stats() {
   return `cluster.api-play-000_microservice-mesh_svc_8080.version_text: "a82b5279-497d-43ad-a5d6-2913957629a5"
 cluster.api-play-001_microservice-mesh_svc_8080.version_text: "a82b5279-497d-43ad-a5d6-2913957629a5"
 cluster.api-play-002_microservice-mesh_svc_8080.version_text: "a82b5279-497d-43ad-a5d6-2913957629a5"
@@ -1520,7 +1520,7 @@ http.api-play-001_microservice-mesh_svc_8080.downstream_rq_active: 0
 http.api-play-001_microservice-mesh_svc_8080.downstream_rq_completed: 41601
 http.api-play-001_microservice-mesh_svc_8080.downstream_rq_failed_path_normalization: 0
 http.api-play-001_microservice-mesh_svc_8080.downstream_rq_header_timeout: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http1_total: ${fake.number.int({ min: 0, max: 1000000 })}
+http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http1_total: 41601
 http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http2_total: 0
 http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http3_total: 0
 http.api-play-001_microservice-mesh_svc_8080.downstream_rq_idle_timeout: 0

@@ -90,7 +90,7 @@
 
         <DataSource
           v-if="can('read traffic') && props.data.dataplaneType === 'standard'"
-          v-slot="{ data: traffic, error }: TrafficSource"
+          v-slot="{ data: traffic, error, refresh }: TrafficSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/traffic`"
         >
           <ErrorBlock
@@ -151,6 +151,16 @@
                 </ServiceTrafficGroup>
               </DataPlaneTraffic>
               <DataPlaneTraffic>
+                <template #actions>
+                  <KButton
+                    appearance="primary"
+                    @click="refresh"
+                  >
+                    <RefreshIcon :size="KUI_ICON_SIZE_30" />
+
+                    Refresh
+                  </KButton>
+                </template>
                 <template #title>
                   <GatewayIcon
                     display="inline-block"
@@ -414,7 +424,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
+import { InfoIcon, ForwardIcon, GatewayIcon, RefreshIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import type { DataplaneOverview } from '../data'

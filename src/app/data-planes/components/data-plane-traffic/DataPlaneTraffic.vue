@@ -1,5 +1,9 @@
 <template>
   <div class="service-traffic">
+    <div class="actions">
+      <slot name="actions" />
+    </div>
+
     <DataCard
       class="header"
     >
@@ -16,9 +20,14 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
 </script>
 <style lang="scss" scoped>
 .service-traffic {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: $kui-space-40;
+}
+.actions {
+  position: absolute;
+  right: 0;
 }
 .data-card.header {
   border: 0;
