@@ -82,8 +82,6 @@
             <OnboardingNavigation next-step="onboarding-deployment-types-view" />
           </template>
         </OnboardingPage>
-
-        <WelcomeAnimationSvg :longer="can('use zones')" />
       </div>
     </AppView>
   </RouteView>
@@ -96,7 +94,6 @@ import { CheckIcon } from '@kong/icons'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
 </script>
 
 <style lang="scss" scoped>
