@@ -192,6 +192,7 @@ describe('dataplanes data transformations', () => {
                     'kuma.io/service': '',
                     'kuma.io/zone': '',
                   },
+                  service: '',
                   port: 1,
                   addressPort: 'http://example.org:1',
                   serviceAddressPort: 'http://example.org:1',
@@ -380,6 +381,7 @@ describe('dataplanes data transformations', () => {
                   tags: {
                     'kuma.io/service': '',
                   },
+                  service: '',
                   port: 1,
                   addressPort: 'http://example.org:1',
                   serviceAddressPort: 'http://example.org:1',
@@ -485,6 +487,7 @@ describe('dataplanes data transformations', () => {
                   tags: {
                     'kuma.io/service': '',
                   },
+                  service: '',
                   port: 1,
                   addressPort: 'http://example.org:1',
                   serviceAddressPort: 'http://example.org:1',
@@ -526,10 +529,20 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'offline',
-          unhealthyInbounds: [{
-            port: 1,
-            service: '',
-          }],
+          unhealthyInbounds: [
+            {
+              health: {
+                ready: false,
+              },
+              tags: {
+                'kuma.io/service': '',
+              },
+              service: '',
+              port: 1,
+              addressPort: 'http://example.org:1',
+              serviceAddressPort: 'http://example.org:1',
+            },
+          ],
           warnings: [],
           isCertExpired: false,
           services: [''],
@@ -606,6 +619,7 @@ describe('dataplanes data transformations', () => {
                     'kuma.io/service': 'service-1',
                     'kuma.io/zone': 'zone-1',
                   },
+                  service: 'service-1',
                   port: 1,
                   addressPort: 'http://example.org:1',
                   serviceAddressPort: 'http://example.org:1',
@@ -618,6 +632,7 @@ describe('dataplanes data transformations', () => {
                     'kuma.io/service': 'service-2',
                     'kuma.io/zone': 'zone-1',
                   },
+                  service: 'service-2',
                   port: 1,
                   addressPort: 'http://example.org:1',
                   serviceAddressPort: 'http://example.org:1',
@@ -659,10 +674,21 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'partially_degraded',
-          unhealthyInbounds: [{
-            port: 1,
-            service: 'service-1',
-          }],
+          unhealthyInbounds: [
+            {
+              health: {
+                ready: false,
+              },
+              tags: {
+                'kuma.io/service': 'service-1',
+                'kuma.io/zone': 'zone-1',
+              },
+              service: 'service-1',
+              port: 1,
+              addressPort: 'http://example.org:1',
+              serviceAddressPort: 'http://example.org:1',
+            },
+          ],
           warnings: [],
           isCertExpired: false,
           services: ['service-1', 'service-2'],

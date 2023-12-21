@@ -192,7 +192,19 @@ export class KumaModule {
     }
   }
 
-  dataplaneNetworking({ type = 'proxy', inbounds = 0, isMultizone = false, service }: { type?: 'gateway_builtin' | 'gateway_delegated' | 'proxy', inbounds?: number, isMultizone?: boolean, service?: string } = {}): DataplaneNetworking {
+  dataplaneNetworking(
+    {
+      type = 'proxy',
+      inbounds = 0,
+      isMultizone = false,
+      service,
+    }: {
+      type?: 'gateway_builtin' | 'gateway_delegated' | 'proxy'
+      inbounds?: number
+      isMultizone?: boolean
+      service?: string
+    } = {},
+  ): DataplaneNetworking {
     const address = this.faker.internet.ipv4()
     const advertisedAddress = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
     const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
@@ -223,7 +235,10 @@ export class KumaModule {
               protocol: this.protocol(),
               service: service ?? this.serviceName(),
               zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
-            })
+            }) as {
+              'kuma.io/service': string
+              [key: string]: string
+            }
 
             return {
               port,
@@ -245,7 +260,10 @@ export class KumaModule {
       outbound: [
         {
           port: this.faker.internet.port(),
-          tags: this.tags({ service }),
+          tags: this.tags({ service }) as {
+            'kuma.io/service': string
+            [key: string]: string
+          },
         },
       ],
     }

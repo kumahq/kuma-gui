@@ -33,11 +33,14 @@ export type DataplaneInbound = PartialDataplaneInbound & {
   health: {
     ready: boolean
   }
+  service: string
   addressPort: string
   serviceAddressPort: string
 }
 
-export type DataplaneOutbound = PartialDataplaneOutbound
+export type DataplaneOutbound = PartialDataplaneOutbound & {
+  service: string
+}
 
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
   inbounds: DataplaneInbound[]
@@ -58,7 +61,7 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   dataplaneInsight: DataplaneInsight
   dataplaneType: 'standard' | 'builtin' | 'delegated'
   status: 'online' | 'offline' | 'partially_degraded'
-  unhealthyInbounds: Array<{ service: string, port: number }>
+  unhealthyInbounds: DataplaneInbound[]
   warnings: DataplaneWarning[]
   isCertExpired: boolean
   services: string[]
@@ -78,29 +81,31 @@ export type MeshGatewayDataplane = PartialMeshGatewayDataplane & {
 }
 
 const DataplaneNetworking = {
-  fromObject(partialDataplaneNetworking: PartialDataplaneNetworking): DataplaneNetworking {
-    const { inbound, outbound, ...rest } = partialDataplaneNetworking
+  fromObject(networking: PartialDataplaneNetworking): DataplaneNetworking {
+    // remove singular inbound/outbound to be replaced with plural versions
+    const { inbound, outbound, ...rest } = networking
 
-    const inbounds: DataplaneInbound[] = (inbound ?? []).map((inbound) => {
-      // An inbound without a health property is considered healthy.
-      const health = { ready: !inbound.health || inbound.health.ready }
-      const addressPort = `${inbound.address ?? partialDataplaneNetworking.advertisedAddress ?? partialDataplaneNetworking.address}:${inbound.port}`
-      const serviceAddressPort = `${inbound.serviceAddress ?? inbound.address ?? partialDataplaneNetworking.address}:${inbound.servicePort ?? inbound.port}`
-
-      return {
-        ...inbound,
-        health,
-        addressPort,
-        serviceAddressPort,
-      }
-    })
-
-    const outbounds: DataplaneOutbound[] = outbound ?? []
+    const inbounds = Array.isArray(inbound) ? inbound : []
+    const outbounds = Array.isArray(outbound) ? outbound : []
 
     return {
       ...rest,
-      inbounds,
-      outbounds,
+      inbounds: inbounds.map((item) => {
+        return {
+          ...item,
+          // If a health property is unset the inbound is considered healthy
+          health: { ready: !isSet(item.health) ? true : item.health.ready },
+          service: item.tags['kuma.io/service'],
+          addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
+          serviceAddressPort: `${item.serviceAddress ?? item.address ?? networking.address}:${item.servicePort ?? item.port}`,
+        }
+      }),
+      outbounds: outbounds.map((item) => {
+        return {
+          ...item,
+          service: item.tags['kuma.io/service'],
+        }
+      }),
     }
   },
 }
@@ -135,12 +140,13 @@ export const DataplaneOverview = {
     const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking)
 
     const dataplaneType = getDataplaneType(networking)
-    const status = getStatus(partialDataplaneOverview.dataplane.networking, dataplaneInsight.connectedSubscription)
-    const unhealthyInbounds = getUnhealthyInbounds(networking)
     const tags = getTags(networking)
-    const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
     const warnings = getWarnings(dataplaneInsight, tags, canUseZones)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
+
+    const state = isSet(dataplaneInsight.connectedSubscription) ? 'online' : 'offline'
+    const unhealthyInbounds = networking.inbounds.filter((inbound) => !inbound.health.ready)
+    const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
 
     return {
       ...partialDataplaneOverview,
@@ -149,7 +155,23 @@ export const DataplaneOverview = {
       },
       dataplaneInsight,
       dataplaneType,
-      status,
+      status: networking.gateway
+        ? state
+        : (() => {
+          switch (true) {
+            case unhealthyInbounds.length === networking.inbounds.length:
+              // All inbounds being unhealthy means the Dataplane is offline.
+              return 'offline'
+            case unhealthyInbounds.length > 0:
+              // Some inbounds being unhealthy means the Dataplane is partially
+              // degraded.
+              return 'partially_degraded'
+            default:
+              // All inbounds being healthy means the Dataplane’s status is
+              // determined by whether it’s connected to a control plane.
+              return state
+          }
+        })(),
       unhealthyInbounds,
       warnings,
       isCertExpired,
@@ -208,36 +230,6 @@ export const MeshGatewayDataplane = {
       routePolicies,
     }
   },
-}
-
-function getStatus(networking: PartialDataplaneNetworking, connectedSubscription?: DiscoverySubscription): 'online' | 'offline' | 'partially_degraded' {
-  const state = typeof connectedSubscription !== 'undefined' ? 'online' : 'offline'
-  // For gateways, the only relevant status criteria is the connectSubscription.
-  if (networking.gateway) {
-    return state
-  }
-
-  // TODO: Update this to use the transformed inbounds property instead and check for `!inbound.isHealthy`.
-  const inbounds = networking.inbound ?? []
-  const unhealthyInbounds = inbounds.filter((inbound) => inbound.health && !inbound.health.ready)
-
-  switch (true) {
-    case unhealthyInbounds.length === inbounds.length:
-      // All inbounds being unhealthy means the Dataplane is offline.
-      return 'offline'
-    case unhealthyInbounds.length > 0:
-      // Some inbounds being unhealthy means the Dataplane is partially degraded.
-      return 'partially_degraded'
-    default:
-      // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
-      return state
-  }
-}
-
-function getUnhealthyInbounds({ inbounds }: DataplaneNetworking): Array<{ service: string, port: number }> {
-  return inbounds
-    .filter((inbound) => !inbound.health.ready)
-    .map(({ tags, port }) => ({ service: tags['kuma.io/service'], port }))
 }
 
 function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
@@ -525,4 +517,7 @@ export function getDataplaneStatusCounts({ total = 0, online = 0, partiallyDegra
     partiallyDegraded,
     offline,
   }
+}
+function isSet<T>(value: T | null | undefined): value is T {
+  return value !== null && typeof value !== 'undefined'
 }
