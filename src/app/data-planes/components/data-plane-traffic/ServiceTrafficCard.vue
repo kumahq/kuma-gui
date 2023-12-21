@@ -16,6 +16,12 @@
         <slot name="default" />
       </span>
     </template>
+
+    <TagList
+      v-if="props.tags.length > 0"
+      :tags="props.tags"
+    />
+
     <dl>
       <div>
         <dt>{{ t('data-planes.components.service_traffic_card.tx') }}</dt>
@@ -37,13 +43,16 @@
 <script lang="ts" setup>
 import { useI18n } from '@/app/application'
 import DataCard from '@/app/common/data-card/DataCard.vue'
+import TagList from '@/app/common/TagList.vue'
 const { t } = useI18n()
 const props = withDefaults(defineProps<{
   protocol: string
+  tags?: ({ label: string, value: string })[]
   requests?: number
   rx: number
   tx: number
 }>(), {
+  tags: () => [],
   requests: undefined,
   rx: 0,
   tx: 0,

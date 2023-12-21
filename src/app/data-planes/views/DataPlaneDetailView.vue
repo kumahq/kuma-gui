@@ -138,29 +138,31 @@
                       ]"
                       :key="meta.protocol"
                     >
-                      <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
-                      <ServiceTrafficCard
-                        :protocol="meta.protocol"
-                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
-                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
-                        :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
+                      <template
+                        v-for="port in [
+                          item.name.split('_')[1],
+                        ]"
+                        :key="port"
                       >
                         <template
-                          v-for="port in [
-                            item.name.split('_')[1],
+                          v-for="inbound in [
+                            props.data.dataplane.networking.inbounds.find(item => `${item.port}` === `${port}`),
                           ]"
-                          :key="port"
+                          :key="inbound"
                         >
-                          <template
-                            v-for="inbound in [
-                              props.data.dataplane.networking.inbounds.find(item => `${item.port}` === `${port}`),
-                            ]"
-                            :key="inbound"
+                          <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
+                          <ServiceTrafficCard
+                            v-if="inbound"
+                            :protocol="meta.protocol"
+                            :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
+                            :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
+                            :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
+                            :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
                           >
-                            {{ inbound?.tags['kuma.io/service'] ?? `` }}:{{ port }}
-                          </template>
+                            :{{ inbound.port }}
+                          </ServiceTrafficCard>
                         </template>
-                      </ServiceTrafficCard>
+                      </template>
                     </template>
                   </template>
                 </ServiceTrafficGroup>

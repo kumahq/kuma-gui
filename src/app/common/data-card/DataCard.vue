@@ -25,6 +25,7 @@
 
 .card,
 .title,
+.body,
 .body > :deep(dl),
 .body > :deep(dl) > div {
   display: flex;
@@ -35,6 +36,7 @@
 .body > :deep(dl) {
   column-gap: $kui-space-80;
 }
+.body,
 .card {
   flex-direction: column;
 }
