@@ -43,6 +43,7 @@
 .title {
   font-weight: $kui-font-weight-semibold;
   font-size: $kui-font-size-60;
+  width: 100%;
 }
 .body > :deep(dl) > div {
   column-gap: $kui-space-20;

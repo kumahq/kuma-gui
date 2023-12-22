@@ -154,12 +154,14 @@
                           <ServiceTrafficCard
                             v-if="inbound"
                             :protocol="meta.protocol"
-                            :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
                             :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
                             :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
                             :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
                           >
                             :{{ inbound.port }}
+                            <TagList
+                              :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
+                            />
                           </ServiceTrafficCard>
                         </template>
                       </template>
@@ -486,6 +488,9 @@ const warnings = computed(() => props.data.warnings.concat(...(props.data.isCert
     background-repeat: repeat-y;
     background-size: 50%;
   }
+}
+.traffic .tag-list {
+  margin-left: auto;
 }
 @container traffic (max-width: 40.95rem) {
   .traffic .columns {
