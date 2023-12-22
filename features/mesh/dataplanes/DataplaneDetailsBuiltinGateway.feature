@@ -36,6 +36,7 @@ Feature: Dataplane details for built-in gateway
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
               disconnectTime: 2021-02-17T07:33:36.412683Z
+              version: !!js/undefined
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
               disconnectTime: !!js/undefined
