@@ -85,7 +85,7 @@
     "eslint-import-resolver-alias": "1.1.2",
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-n": "16.4.0",
+    "eslint-plugin-n": "16.6.0",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-vue": "9.19.2",
     "glob": "10.3.10",
