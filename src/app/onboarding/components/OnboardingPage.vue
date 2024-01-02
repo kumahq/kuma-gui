@@ -44,13 +44,12 @@ const props = defineProps({
   @media (min-width: 768px) {
     max-width: 1075px;
   }
-
-  @media (min-height: 950px) {
-    width: 100%;
     position: absolute;
-    top: 50%;
     left: 0;
     right: 0;
+
+  @media (min-height: 950px) {
+    top: 50%;
     transform: translateY(-50%);
   }
 }
