@@ -3,7 +3,6 @@ interface MetricRecord {
 }
 export type TrafficEntry = {
   name: string
-  cluster?: MetricRecord
   http?: MetricRecord
   tcp?: MetricRecord
 }
@@ -13,7 +12,7 @@ export const parse = (lines: string) => {
   // for each line
   return lines.trim().split('\n').filter((item) => {
     // only use data prefixed with either cluster. http. or tcp.
-    return ['cluster.', 'http.', 'tcp.'].some(prop => item.startsWith(prop))
+    return ['http.', 'tcp.'].some(prop => item.startsWith(prop))
   }).reduce((prev, item) => {
     // split the `key: values` on the `:` and normalize the value
     const [key, ...value] = item.trim().split(':')
@@ -50,7 +49,7 @@ export const parse = (lines: string) => {
 
 // lets you specify the things you are interested in
 export const getTraffic = (json: ReturnType<typeof parse>, filter: (key: string) => boolean): TrafficEntry[] => {
-  const protocols = ['cluster', 'http', 'tcp'] as const
+  const protocols = ['http', 'tcp'] as const
   const traffic: Record<string, TrafficEntry> = {}
   protocols.map((item) => {
     return Object.entries(json[item]).filter(([key, _value]) => {

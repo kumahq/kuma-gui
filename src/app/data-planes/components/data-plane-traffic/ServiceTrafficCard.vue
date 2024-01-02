@@ -12,10 +12,11 @@
           },
         ) }}
       </KBadge>
-      <span class="title">
+      <div class="title">
         <slot name="default" />
-      </span>
+      </div>
     </template>
+
     <dl>
       <div>
         <dt>{{ t('data-planes.components.service_traffic_card.tx') }}</dt>
@@ -53,6 +54,8 @@ const props = withDefaults(defineProps<{
 <style lang="scss" scoped>
 .title {
   font-size: $kui-font-size-40;
+  display: flex;
+  flex: 1 1 auto;
 }
 
 </style>

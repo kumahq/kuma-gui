@@ -1,16 +1,70 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (deps: EndpointDependencies): MockResponder => (_req) => {
+export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
+  const { name } = req.params
+  // sync the seed by name (temp use length until we get seed(str))
+  fake.seed(name.length)
+
+  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
+  const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
+  const minMax = {
+    min: 0,
+    max: 1000000,
+  }
+  const direction = 'downstream'
+  const inbounds = ports.map(port => {
+    const service = `localhost_${port}`
+    const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
+    if (fake.datatype.boolean()) {
+      // inbounds are in cluster. but we don't use that data
+      return `http.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_rq_http1_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_rq_http2_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_rq_http3_total: ${fake.number.int(_minMax)}`
+    } else {
+      return `tcp.${service}.${direction}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
+    }
+  }).join('\n')
+
+  const outbounds = Array.from({ length: serviceCount }).map(_ => {
+    const port = fake.number.int({ min: 1, max: 65535 })
+    const service = `${fake.hacker.noun()}_svc_${port}`
+    const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
+    if (fake.datatype.boolean()) {
+      return `http.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_rq_http1_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_rq_http2_total: ${fake.number.int(_minMax)}
+http.${service}.${direction}_rq_http3_total: ${fake.number.int(_minMax)}`
+    } else {
+      return `tcp.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
+    }
+  }).join('\n')
+
+  const passthrough = ['outbound_passthrough_ipv4', 'outbound_passthrough_ipv6'].map(service => {
+    return `http.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(minMax)}
+http.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}
+http.${service}.${direction}_rq_http1_total: ${fake.number.int(minMax)}
+http.${service}.${direction}_rq_http2_total: ${fake.number.int(minMax)}
+http.${service}.${direction}_rq_http3_total: ${fake.number.int(minMax)}
+tcp.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(minMax)}
+tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
+  }).join('\n')
+
   return {
     headers: {},
-    body: stats(deps),
+    body: `${outbounds}
+${inbounds}
+${passthrough}
+${stats()}`,
   }
 }
 
-function stats({ fake }: EndpointDependencies) {
-  return `cluster.api-play-000_microservice-mesh_svc_8080.version_text: "a82b5279-497d-43ad-a5d6-2913957629a5"
-cluster.api-play-001_microservice-mesh_svc_8080.version_text: "a82b5279-497d-43ad-a5d6-2913957629a5"
-cluster.api-play-002_microservice-mesh_svc_8080.version_text: "a82b5279-497d-43ad-a5d6-2913957629a5"
-cluster_manager.cds.version_text: "e8085539-7a9a-4cd0-86c1-9a273b942300"
+function stats() {
+  return `cluster_manager.cds.version_text: "e8085539-7a9a-4cd0-86c1-9a273b942300"
 control_plane.identifier: "kuma-control-plane-7c7758fb79-xt5wj-7061"
 listener_manager.lds.version_text: "27b92292-381e-40c2-83c8-b3d434b887a7"
 cluster.access_log_sink.assignment_stale: 0
@@ -263,406 +317,6 @@ cluster.ads_cluster.upstream_rq_total: 1
 cluster.ads_cluster.upstream_rq_tx_reset: 0
 cluster.ads_cluster.version: 0
 cluster.ads_cluster.warming_state: 0
-cluster.api-play-000_microservice-mesh_svc_8080.assignment_stale: 0
-cluster.api-play-000_microservice-mesh_svc_8080.assignment_timeout_received: 0
-cluster.api-play-000_microservice-mesh_svc_8080.assignment_use_cached: 0
-cluster.api-play-000_microservice-mesh_svc_8080.bind_errors: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.default.cx_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.default.cx_pool_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.default.rq_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.default.rq_pending_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.default.rq_retry_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.high.cx_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.high.cx_pool_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.high.rq_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.high.rq_pending_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.circuit_breakers.high.rq_retry_open: 0
-cluster.api-play-000_microservice-mesh_svc_8080.default.total_match_count: 13
-cluster.api-play-000_microservice-mesh_svc_8080.init_fetch_timeout: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_healthy_panic: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_local_cluster_not_ok: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_recalculate_zone_structures: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_subsets_active: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_subsets_created: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_subsets_fallback: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_subsets_fallback_panic: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_subsets_removed: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_subsets_selected: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_zone_cluster_too_small: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_zone_no_capacity_left: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_zone_number_differs: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_zone_routing_all_directly: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_zone_routing_cross_zone: 0
-cluster.api-play-000_microservice-mesh_svc_8080.lb_zone_routing_sampled: 0
-cluster.api-play-000_microservice-mesh_svc_8080.max_host_weight: 1
-cluster.api-play-000_microservice-mesh_svc_8080.membership_change: 2
-cluster.api-play-000_microservice-mesh_svc_8080.membership_degraded: 0
-cluster.api-play-000_microservice-mesh_svc_8080.membership_excluded: 0
-cluster.api-play-000_microservice-mesh_svc_8080.membership_healthy: 2
-cluster.api-play-000_microservice-mesh_svc_8080.membership_total: 2
-cluster.api-play-000_microservice-mesh_svc_8080.original_dst_host_invalid: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_active: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_consecutive_5xx: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_5xx: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_gateway_failure: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_local_origin_failure: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_failure_percentage: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_local_origin_failure_percentage: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_local_origin_success_rate: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_detected_success_rate: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_5xx: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_gateway_failure: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_local_origin_failure: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_failure_percentage: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_local_origin_failure_percentage: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_local_origin_success_rate: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_success_rate: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_overflow: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_success_rate: 0
-cluster.api-play-000_microservice-mesh_svc_8080.outlier_detection.ejections_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.retry_or_shadow_abandoned: 0
-cluster.api-play-000_microservice-mesh_svc_8080.update_attempt: 13
-cluster.api-play-000_microservice-mesh_svc_8080.update_empty: 0
-cluster.api-play-000_microservice-mesh_svc_8080.update_failure: 0
-cluster.api-play-000_microservice-mesh_svc_8080.update_no_rebuild: 9
-cluster.api-play-000_microservice-mesh_svc_8080.update_rejected: 0
-cluster.api-play-000_microservice-mesh_svc_8080.update_success: 11
-cluster.api-play-000_microservice-mesh_svc_8080.update_time: 1700739308511
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_active: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_close_notify: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_connect_attempts_exceeded: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_connect_fail: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_connect_timeout: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_connect_with_0_rtt: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_destroy: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_destroy_local: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_destroy_local_with_active_rq: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_destroy_remote: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_destroy_remote_with_active_rq: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_destroy_with_active_rq: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_http1_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_http2_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_http3_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_idle_timeout: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_max_duration_reached: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_max_requests: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_none_healthy: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_overflow: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_pool_overflow: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_protocol_error: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_rx_bytes_buffered: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_rx_bytes_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_tx_bytes_buffered: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_tx_bytes_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_flow_control_backed_up_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_flow_control_drained_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_flow_control_paused_reading_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_flow_control_resumed_reading_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_http3_broken: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_internal_redirect_failed_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_internal_redirect_succeeded_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_0rtt: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_active: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_cancelled: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_completed: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_maintenance_mode: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_max_duration_reached: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_pending_active: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_pending_failure_eject: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_pending_overflow: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_pending_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_per_try_idle_timeout: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_per_try_timeout: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_retry: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_retry_backoff_exponential: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_retry_backoff_ratelimited: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_retry_limit_exceeded: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_retry_overflow: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_retry_success: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_rx_reset: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_timeout: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_total: 0
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_rq_tx_reset: 0
-cluster.api-play-000_microservice-mesh_svc_8080.version: 15841689351362573818
-cluster.api-play-000_microservice-mesh_svc_8080.warming_state: 0
-cluster.api-play-001_microservice-mesh_svc_8080.assignment_stale: 0
-cluster.api-play-001_microservice-mesh_svc_8080.assignment_timeout_received: 0
-cluster.api-play-001_microservice-mesh_svc_8080.assignment_use_cached: 0
-cluster.api-play-001_microservice-mesh_svc_8080.bind_errors: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.default.cx_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.default.cx_pool_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.default.rq_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.default.rq_pending_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.default.rq_retry_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.high.cx_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.high.cx_pool_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.high.rq_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.high.rq_pending_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.circuit_breakers.high.rq_retry_open: 0
-cluster.api-play-001_microservice-mesh_svc_8080.default.total_match_count: 10
-cluster.api-play-001_microservice-mesh_svc_8080.external.upstream_rq_200: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.external.upstream_rq_2xx: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.external.upstream_rq_completed: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.http2.deferred_stream_close: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.dropped_headers_with_underscores: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.goaway_sent: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.header_overflow: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.headers_cb_no_stream: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.inbound_empty_frames_flood: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.inbound_priority_frames_flood: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.inbound_window_update_frames_flood: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.keepalive_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.metadata_empty_frames: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.outbound_control_flood: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.outbound_control_frames_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.outbound_flood: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.outbound_frames_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.pending_send_bytes: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.requests_rejected_with_underscores_in_headers: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.rx_messaging_error: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.rx_reset: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.stream_refused_errors: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.streams_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.trailers: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.tx_flush_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.http2.tx_reset: 0
-cluster.api-play-001_microservice-mesh_svc_8080.init_fetch_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_healthy_panic: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_local_cluster_not_ok: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_recalculate_zone_structures: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_subsets_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_subsets_created: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_subsets_fallback: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_subsets_fallback_panic: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_subsets_removed: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_subsets_selected: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_zone_cluster_too_small: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_zone_no_capacity_left: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_zone_number_differs: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_zone_routing_all_directly: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_zone_routing_cross_zone: 0
-cluster.api-play-001_microservice-mesh_svc_8080.lb_zone_routing_sampled: 0
-cluster.api-play-001_microservice-mesh_svc_8080.max_host_weight: 1
-cluster.api-play-001_microservice-mesh_svc_8080.membership_change: 2
-cluster.api-play-001_microservice-mesh_svc_8080.membership_degraded: 0
-cluster.api-play-001_microservice-mesh_svc_8080.membership_excluded: 0
-cluster.api-play-001_microservice-mesh_svc_8080.membership_healthy: 2
-cluster.api-play-001_microservice-mesh_svc_8080.membership_total: 2
-cluster.api-play-001_microservice-mesh_svc_8080.original_dst_host_invalid: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_consecutive_5xx: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_5xx: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_gateway_failure: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_local_origin_failure: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_failure_percentage: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_local_origin_failure_percentage: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_local_origin_success_rate: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_detected_success_rate: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_5xx: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_gateway_failure: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_local_origin_failure: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_failure_percentage: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_local_origin_failure_percentage: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_local_origin_success_rate: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_success_rate: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_overflow: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_success_rate: 0
-cluster.api-play-001_microservice-mesh_svc_8080.outlier_detection.ejections_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.retry_or_shadow_abandoned: 0
-cluster.api-play-001_microservice-mesh_svc_8080.update_attempt: 13
-cluster.api-play-001_microservice-mesh_svc_8080.update_empty: 0
-cluster.api-play-001_microservice-mesh_svc_8080.update_failure: 0
-cluster.api-play-001_microservice-mesh_svc_8080.update_no_rebuild: 9
-cluster.api-play-001_microservice-mesh_svc_8080.update_rejected: 0
-cluster.api-play-001_microservice-mesh_svc_8080.update_success: 11
-cluster.api-play-001_microservice-mesh_svc_8080.update_time: 1700739308511
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_active: 4
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_close_notify: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_connect_attempts_exceeded: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_connect_fail: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_connect_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_connect_with_0_rtt: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_destroy: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_destroy_local: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_destroy_local_with_active_rq: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_destroy_remote: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_destroy_remote_with_active_rq: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_destroy_with_active_rq: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_http1_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_http2_total: 4
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_http3_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_idle_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_max_duration_reached: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_max_requests: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_none_healthy: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_overflow: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_pool_overflow: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_protocol_error: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_rx_bytes_buffered: 3509
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_rx_bytes_total: 13315712
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_total: 4
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_tx_bytes_buffered: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_tx_bytes_total: 3071604
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_flow_control_backed_up_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_flow_control_drained_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_flow_control_paused_reading_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_flow_control_resumed_reading_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_http3_broken: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_internal_redirect_failed_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_internal_redirect_succeeded_total: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_0rtt: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_200: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_2xx: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_cancelled: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_completed: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_maintenance_mode: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_max_duration_reached: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_pending_active: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_pending_failure_eject: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_pending_overflow: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_pending_total: 4
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_per_try_idle_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_per_try_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_retry: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_retry_backoff_exponential: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_retry_backoff_ratelimited: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_retry_limit_exceeded: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_retry_overflow: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_retry_success: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_rx_reset: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_timeout: 0
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_total: 41601
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_tx_reset: 0
-cluster.api-play-001_microservice-mesh_svc_8080.version: 15841689351362573818
-cluster.api-play-001_microservice-mesh_svc_8080.warming_state: 0
-cluster.api-play-002_microservice-mesh_svc_8080.assignment_stale: 0
-cluster.api-play-002_microservice-mesh_svc_8080.assignment_timeout_received: 0
-cluster.api-play-002_microservice-mesh_svc_8080.assignment_use_cached: 0
-cluster.api-play-002_microservice-mesh_svc_8080.bind_errors: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.default.cx_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.default.cx_pool_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.default.rq_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.default.rq_pending_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.default.rq_retry_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.high.cx_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.high.cx_pool_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.high.rq_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.high.rq_pending_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.circuit_breakers.high.rq_retry_open: 0
-cluster.api-play-002_microservice-mesh_svc_8080.default.total_match_count: 14
-cluster.api-play-002_microservice-mesh_svc_8080.init_fetch_timeout: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_healthy_panic: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_local_cluster_not_ok: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_recalculate_zone_structures: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_subsets_active: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_subsets_created: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_subsets_fallback: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_subsets_fallback_panic: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_subsets_removed: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_subsets_selected: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_zone_cluster_too_small: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_zone_no_capacity_left: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_zone_number_differs: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_zone_routing_all_directly: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_zone_routing_cross_zone: 0
-cluster.api-play-002_microservice-mesh_svc_8080.lb_zone_routing_sampled: 0
-cluster.api-play-002_microservice-mesh_svc_8080.max_host_weight: 1
-cluster.api-play-002_microservice-mesh_svc_8080.membership_change: 4
-cluster.api-play-002_microservice-mesh_svc_8080.membership_degraded: 0
-cluster.api-play-002_microservice-mesh_svc_8080.membership_excluded: 0
-cluster.api-play-002_microservice-mesh_svc_8080.membership_healthy: 2
-cluster.api-play-002_microservice-mesh_svc_8080.membership_total: 2
-cluster.api-play-002_microservice-mesh_svc_8080.original_dst_host_invalid: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_active: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_consecutive_5xx: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_5xx: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_gateway_failure: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_consecutive_local_origin_failure: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_failure_percentage: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_local_origin_failure_percentage: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_local_origin_success_rate: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_detected_success_rate: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_5xx: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_gateway_failure: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_consecutive_local_origin_failure: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_failure_percentage: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_local_origin_failure_percentage: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_local_origin_success_rate: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_success_rate: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_enforced_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_overflow: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_success_rate: 0
-cluster.api-play-002_microservice-mesh_svc_8080.outlier_detection.ejections_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.retry_or_shadow_abandoned: 0
-cluster.api-play-002_microservice-mesh_svc_8080.update_attempt: 14
-cluster.api-play-002_microservice-mesh_svc_8080.update_empty: 0
-cluster.api-play-002_microservice-mesh_svc_8080.update_failure: 0
-cluster.api-play-002_microservice-mesh_svc_8080.update_no_rebuild: 6
-cluster.api-play-002_microservice-mesh_svc_8080.update_rejected: 0
-cluster.api-play-002_microservice-mesh_svc_8080.update_success: 11
-cluster.api-play-002_microservice-mesh_svc_8080.update_time: 1700739308511
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_active: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_close_notify: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_connect_attempts_exceeded: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_connect_fail: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_connect_timeout: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_connect_with_0_rtt: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_destroy: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_destroy_local: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_destroy_local_with_active_rq: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_destroy_remote: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_destroy_remote_with_active_rq: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_destroy_with_active_rq: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_http1_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_http2_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_http3_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_idle_timeout: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_max_duration_reached: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_max_requests: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_none_healthy: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_overflow: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_pool_overflow: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_protocol_error: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_rx_bytes_buffered: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_rx_bytes_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_tx_bytes_buffered: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_tx_bytes_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_flow_control_backed_up_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_flow_control_drained_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_flow_control_paused_reading_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_flow_control_resumed_reading_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_http3_broken: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_internal_redirect_failed_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_internal_redirect_succeeded_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_0rtt: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_active: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_cancelled: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_completed: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_maintenance_mode: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_max_duration_reached: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_pending_active: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_pending_failure_eject: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_pending_overflow: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_pending_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_per_try_idle_timeout: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_per_try_timeout: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_retry: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_retry_backoff_exponential: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_retry_backoff_ratelimited: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_retry_limit_exceeded: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_retry_overflow: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_retry_success: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_rx_reset: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_timeout: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_total: 0
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_rq_tx_reset: 0
-cluster.api-play-002_microservice-mesh_svc_8080.version: 15841689351362573818
-cluster.api-play-002_microservice-mesh_svc_8080.warming_state: 0
 cluster.inbound_passthrough_ipv4.assignment_stale: 0
 cluster.inbound_passthrough_ipv4.assignment_timeout_received: 0
 cluster.inbound_passthrough_ipv4.assignment_use_cached: 0
@@ -975,116 +629,6 @@ cluster.kuma_envoy_admin.upstream_rq_total: 209
 cluster.kuma_envoy_admin.upstream_rq_tx_reset: 0
 cluster.kuma_envoy_admin.version: 0
 cluster.kuma_envoy_admin.warming_state: 0
-cluster.localhost_8080.assignment_stale: 0
-cluster.localhost_8080.assignment_timeout_received: 0
-cluster.localhost_8080.assignment_use_cached: 0
-cluster.localhost_8080.bind_errors: 0
-cluster.localhost_8080.circuit_breakers.default.cx_open: 0
-cluster.localhost_8080.circuit_breakers.default.cx_pool_open: 0
-cluster.localhost_8080.circuit_breakers.default.rq_open: 0
-cluster.localhost_8080.circuit_breakers.default.rq_pending_open: 0
-cluster.localhost_8080.circuit_breakers.default.rq_retry_open: 0
-cluster.localhost_8080.circuit_breakers.high.cx_open: 0
-cluster.localhost_8080.circuit_breakers.high.cx_pool_open: 0
-cluster.localhost_8080.circuit_breakers.high.rq_open: 0
-cluster.localhost_8080.circuit_breakers.high.rq_pending_open: 0
-cluster.localhost_8080.circuit_breakers.high.rq_retry_open: 0
-cluster.localhost_8080.default.total_match_count: 1
-cluster.localhost_8080.external.upstream_rq_200: 109
-cluster.localhost_8080.external.upstream_rq_2xx: 109
-cluster.localhost_8080.external.upstream_rq_completed: 109
-cluster.localhost_8080.http1.dropped_headers_with_underscores: 0
-cluster.localhost_8080.http1.metadata_not_supported_error: 0
-cluster.localhost_8080.http1.requests_rejected_with_underscores_in_headers: 0
-cluster.localhost_8080.http1.response_flood: 0
-cluster.localhost_8080.lb_healthy_panic: 0
-cluster.localhost_8080.lb_local_cluster_not_ok: 0
-cluster.localhost_8080.lb_recalculate_zone_structures: 0
-cluster.localhost_8080.lb_subsets_active: 0
-cluster.localhost_8080.lb_subsets_created: 0
-cluster.localhost_8080.lb_subsets_fallback: 0
-cluster.localhost_8080.lb_subsets_fallback_panic: 0
-cluster.localhost_8080.lb_subsets_removed: 0
-cluster.localhost_8080.lb_subsets_selected: 0
-cluster.localhost_8080.lb_zone_cluster_too_small: 0
-cluster.localhost_8080.lb_zone_no_capacity_left: 0
-cluster.localhost_8080.lb_zone_number_differs: 0
-cluster.localhost_8080.lb_zone_routing_all_directly: 0
-cluster.localhost_8080.lb_zone_routing_cross_zone: 0
-cluster.localhost_8080.lb_zone_routing_sampled: 0
-cluster.localhost_8080.max_host_weight: 0
-cluster.localhost_8080.membership_change: 1
-cluster.localhost_8080.membership_degraded: 0
-cluster.localhost_8080.membership_excluded: 0
-cluster.localhost_8080.membership_healthy: 1
-cluster.localhost_8080.membership_total: 1
-cluster.localhost_8080.original_dst_host_invalid: 0
-cluster.localhost_8080.retry_or_shadow_abandoned: 0
-cluster.localhost_8080.update_attempt: 0
-cluster.localhost_8080.update_empty: 0
-cluster.localhost_8080.update_failure: 0
-cluster.localhost_8080.update_no_rebuild: 0
-cluster.localhost_8080.update_success: 0
-cluster.localhost_8080.upstream_cx_active: 4
-cluster.localhost_8080.upstream_cx_close_notify: 0
-cluster.localhost_8080.upstream_cx_connect_attempts_exceeded: 0
-cluster.localhost_8080.upstream_cx_connect_fail: 0
-cluster.localhost_8080.upstream_cx_connect_timeout: 0
-cluster.localhost_8080.upstream_cx_connect_with_0_rtt: 0
-cluster.localhost_8080.upstream_cx_destroy: 0
-cluster.localhost_8080.upstream_cx_destroy_local: 0
-cluster.localhost_8080.upstream_cx_destroy_local_with_active_rq: 0
-cluster.localhost_8080.upstream_cx_destroy_remote: 0
-cluster.localhost_8080.upstream_cx_destroy_remote_with_active_rq: 0
-cluster.localhost_8080.upstream_cx_destroy_with_active_rq: 0
-cluster.localhost_8080.upstream_cx_http1_total: 4
-cluster.localhost_8080.upstream_cx_http2_total: 0
-cluster.localhost_8080.upstream_cx_http3_total: 0
-cluster.localhost_8080.upstream_cx_idle_timeout: 0
-cluster.localhost_8080.upstream_cx_max_duration_reached: 0
-cluster.localhost_8080.upstream_cx_max_requests: 0
-cluster.localhost_8080.upstream_cx_none_healthy: 0
-cluster.localhost_8080.upstream_cx_overflow: 0
-cluster.localhost_8080.upstream_cx_pool_overflow: 0
-cluster.localhost_8080.upstream_cx_protocol_error: 0
-cluster.localhost_8080.upstream_cx_rx_bytes_buffered: 552
-cluster.localhost_8080.upstream_cx_rx_bytes_total: 15042
-cluster.localhost_8080.upstream_cx_total: 4
-cluster.localhost_8080.upstream_cx_tx_bytes_buffered: 0
-cluster.localhost_8080.upstream_cx_tx_bytes_total: 26268
-cluster.localhost_8080.upstream_flow_control_backed_up_total: 0
-cluster.localhost_8080.upstream_flow_control_drained_total: 0
-cluster.localhost_8080.upstream_flow_control_paused_reading_total: 0
-cluster.localhost_8080.upstream_flow_control_resumed_reading_total: 0
-cluster.localhost_8080.upstream_http3_broken: 0
-cluster.localhost_8080.upstream_internal_redirect_failed_total: 0
-cluster.localhost_8080.upstream_internal_redirect_succeeded_total: 0
-cluster.localhost_8080.upstream_rq_0rtt: 0
-cluster.localhost_8080.upstream_rq_200: 109
-cluster.localhost_8080.upstream_rq_2xx: 109
-cluster.localhost_8080.upstream_rq_active: 0
-cluster.localhost_8080.upstream_rq_cancelled: 0
-cluster.localhost_8080.upstream_rq_completed: 109
-cluster.localhost_8080.upstream_rq_maintenance_mode: 0
-cluster.localhost_8080.upstream_rq_max_duration_reached: 0
-cluster.localhost_8080.upstream_rq_pending_active: 0
-cluster.localhost_8080.upstream_rq_pending_failure_eject: 0
-cluster.localhost_8080.upstream_rq_pending_overflow: 0
-cluster.localhost_8080.upstream_rq_pending_total: 4
-cluster.localhost_8080.upstream_rq_per_try_idle_timeout: 0
-cluster.localhost_8080.upstream_rq_per_try_timeout: 0
-cluster.localhost_8080.upstream_rq_retry: 0
-cluster.localhost_8080.upstream_rq_retry_backoff_exponential: 0
-cluster.localhost_8080.upstream_rq_retry_backoff_ratelimited: 0
-cluster.localhost_8080.upstream_rq_retry_limit_exceeded: 0
-cluster.localhost_8080.upstream_rq_retry_overflow: 0
-cluster.localhost_8080.upstream_rq_retry_success: 0
-cluster.localhost_8080.upstream_rq_rx_reset: 0
-cluster.localhost_8080.upstream_rq_timeout: 0
-cluster.localhost_8080.upstream_rq_total: 109
-cluster.localhost_8080.upstream_rq_tx_reset: 0
-cluster.localhost_8080.version: 0
-cluster.localhost_8080.warming_state: 0
 cluster.outbound_passthrough_ipv4.assignment_stale: 0
 cluster.outbound_passthrough_ipv4.assignment_timeout_received: 0
 cluster.outbound_passthrough_ipv4.assignment_use_cached: 0
@@ -1406,154 +950,6 @@ http.admin.downstream_rq_total: 209
 http.admin.downstream_rq_tx_reset: 0
 http.admin.downstream_rq_ws_on_non_ws_route: 0
 http.admin.rs_too_large: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_delayed_close_timeout: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_destroy: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_destroy_active_rq: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_destroy_local: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_destroy_local_active_rq: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_destroy_remote: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_destroy_remote_active_rq: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_drain_close: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_http1_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_http1_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_http2_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_http2_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_http3_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_http3_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_idle_timeout: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_max_duration_reached: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_max_requests_reached: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_overload_disable_keepalive: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_protocol_error: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_rx_bytes_buffered: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_rx_bytes_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_ssl_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_ssl_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_tx_bytes_buffered: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_tx_bytes_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_upgrades_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_upgrades_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_flow_control_paused_reading_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_flow_control_resumed_reading_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_1xx: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_2xx: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_3xx: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_4xx: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_5xx: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_active: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_completed: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_failed_path_normalization: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_header_timeout: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_http1_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_http2_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_http3_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_idle_timeout: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_max_duration_reached: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_non_relative_path: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_overload_close: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_redirected_with_normalized_path: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_rejected_via_ip_detection: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_response_before_rq_complete: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_rx_reset: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_timeout: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_too_large: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_too_many_premature_resets: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_total: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_tx_reset: 0
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_ws_on_non_ws_route: 0
-http.api-play-000_microservice-mesh_svc_8080.no_cluster: 0
-http.api-play-000_microservice-mesh_svc_8080.no_route: 0
-http.api-play-000_microservice-mesh_svc_8080.passthrough_internal_redirect_bad_location: 0
-http.api-play-000_microservice-mesh_svc_8080.passthrough_internal_redirect_no_route: 0
-http.api-play-000_microservice-mesh_svc_8080.passthrough_internal_redirect_predicate: 0
-http.api-play-000_microservice-mesh_svc_8080.passthrough_internal_redirect_too_many_redirects: 0
-http.api-play-000_microservice-mesh_svc_8080.passthrough_internal_redirect_unsafe_scheme: 0
-http.api-play-000_microservice-mesh_svc_8080.rq_direct_response: 0
-http.api-play-000_microservice-mesh_svc_8080.rq_redirect: 0
-http.api-play-000_microservice-mesh_svc_8080.rq_reset_after_downstream_response_started: 0
-http.api-play-000_microservice-mesh_svc_8080.rq_total: 0
-http.api-play-000_microservice-mesh_svc_8080.rs_too_large: 0
-http.api-play-000_microservice-mesh_svc_8080.tracing.client_enabled: 0
-http.api-play-000_microservice-mesh_svc_8080.tracing.health_check: 0
-http.api-play-000_microservice-mesh_svc_8080.tracing.not_traceable: 0
-http.api-play-000_microservice-mesh_svc_8080.tracing.random_sampling: 0
-http.api-play-000_microservice-mesh_svc_8080.tracing.service_forced: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_active: 2
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_delayed_close_timeout: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_destroy: 39638
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_destroy_active_rq: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_destroy_local: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_destroy_local_active_rq: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_destroy_remote: 39638
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_destroy_remote_active_rq: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_drain_close: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_http1_active: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_http1_total: 37572
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_http2_active: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_http2_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_http3_active: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_http3_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_idle_timeout: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_max_duration_reached: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_max_requests_reached: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_overload_disable_keepalive: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_protocol_error: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_rx_bytes_buffered: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_rx_bytes_total: 5283327
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_ssl_active: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_ssl_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_total: 39640
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_tx_bytes_buffered: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_tx_bytes_total: 18954988
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_upgrades_active: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_upgrades_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_flow_control_paused_reading_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_flow_control_resumed_reading_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_1xx: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_2xx: 41601
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_3xx: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_4xx: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_5xx: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_active: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_completed: 41601
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_failed_path_normalization: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_header_timeout: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http1_total: ${fake.number.int({ min: 0, max: 1000000 })}
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http2_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_http3_total: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_idle_timeout: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_max_duration_reached: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_non_relative_path: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_overload_close: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_redirected_with_normalized_path: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_rejected_via_ip_detection: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_response_before_rq_complete: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_rx_reset: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_timeout: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_too_large: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_too_many_premature_resets: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_total: 41601
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_tx_reset: 0
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_ws_on_non_ws_route: 0
-http.api-play-001_microservice-mesh_svc_8080.no_cluster: 0
-http.api-play-001_microservice-mesh_svc_8080.no_route: 0
-http.api-play-001_microservice-mesh_svc_8080.passthrough_internal_redirect_bad_location: 0
-http.api-play-001_microservice-mesh_svc_8080.passthrough_internal_redirect_no_route: 0
-http.api-play-001_microservice-mesh_svc_8080.passthrough_internal_redirect_predicate: 0
-http.api-play-001_microservice-mesh_svc_8080.passthrough_internal_redirect_too_many_redirects: 0
-http.api-play-001_microservice-mesh_svc_8080.passthrough_internal_redirect_unsafe_scheme: 0
-http.api-play-001_microservice-mesh_svc_8080.rq_direct_response: 0
-http.api-play-001_microservice-mesh_svc_8080.rq_redirect: 0
-http.api-play-001_microservice-mesh_svc_8080.rq_reset_after_downstream_response_started: 0
-http.api-play-001_microservice-mesh_svc_8080.rq_total: 41601
-http.api-play-001_microservice-mesh_svc_8080.rs_too_large: 0
-http.api-play-001_microservice-mesh_svc_8080.tracing.client_enabled: 0
-http.api-play-001_microservice-mesh_svc_8080.tracing.health_check: 0
-http.api-play-001_microservice-mesh_svc_8080.tracing.not_traceable: 0
-http.api-play-001_microservice-mesh_svc_8080.tracing.random_sampling: 0
-http.api-play-001_microservice-mesh_svc_8080.tracing.service_forced: 0
 http.async-client.no_cluster: 0
 http.async-client.no_route: 0
 http.async-client.passthrough_internal_redirect_bad_location: 0
@@ -1639,80 +1035,6 @@ http.kuma_envoy_admin.tracing.health_check: 0
 http.kuma_envoy_admin.tracing.not_traceable: 0
 http.kuma_envoy_admin.tracing.random_sampling: 0
 http.kuma_envoy_admin.tracing.service_forced: 0
-http.localhost_8080.downstream_cx_active: 0
-http.localhost_8080.downstream_cx_delayed_close_timeout: 0
-http.localhost_8080.downstream_cx_destroy: 0
-http.localhost_8080.downstream_cx_destroy_active_rq: 0
-http.localhost_8080.downstream_cx_destroy_local: 0
-http.localhost_8080.downstream_cx_destroy_local_active_rq: 0
-http.localhost_8080.downstream_cx_destroy_remote: 0
-http.localhost_8080.downstream_cx_destroy_remote_active_rq: 0
-http.localhost_8080.downstream_cx_drain_close: 0
-http.localhost_8080.downstream_cx_http1_active: 0
-http.localhost_8080.downstream_cx_http1_total: 0
-http.localhost_8080.downstream_cx_http2_active: 0
-http.localhost_8080.downstream_cx_http2_total: 0
-http.localhost_8080.downstream_cx_http3_active: 0
-http.localhost_8080.downstream_cx_http3_total: 0
-http.localhost_8080.downstream_cx_idle_timeout: 0
-http.localhost_8080.downstream_cx_max_duration_reached: 0
-http.localhost_8080.downstream_cx_max_requests_reached: 0
-http.localhost_8080.downstream_cx_overload_disable_keepalive: 0
-http.localhost_8080.downstream_cx_protocol_error: 0
-http.localhost_8080.downstream_cx_rx_bytes_buffered: 0
-http.localhost_8080.downstream_cx_rx_bytes_total: 0
-http.localhost_8080.downstream_cx_ssl_active: 0
-http.localhost_8080.downstream_cx_ssl_total: 0
-http.localhost_8080.downstream_cx_total: 0
-http.localhost_8080.downstream_cx_tx_bytes_buffered: 0
-http.localhost_8080.downstream_cx_tx_bytes_total: 0
-http.localhost_8080.downstream_cx_upgrades_active: 0
-http.localhost_8080.downstream_cx_upgrades_total: 0
-http.localhost_8080.downstream_flow_control_paused_reading_total: 0
-http.localhost_8080.downstream_flow_control_resumed_reading_total: 0
-http.localhost_8080.downstream_rq_1xx: 0
-http.localhost_8080.downstream_rq_2xx: 0
-http.localhost_8080.downstream_rq_3xx: 0
-http.localhost_8080.downstream_rq_4xx: 0
-http.localhost_8080.downstream_rq_5xx: 0
-http.localhost_8080.downstream_rq_active: 0
-http.localhost_8080.downstream_rq_completed: 0
-http.localhost_8080.downstream_rq_failed_path_normalization: 0
-http.localhost_8080.downstream_rq_header_timeout: 0
-http.localhost_8080.downstream_rq_http1_total: 0
-http.localhost_8080.downstream_rq_http2_total: 0
-http.localhost_8080.downstream_rq_http3_total: 0
-http.localhost_8080.downstream_rq_idle_timeout: 0
-http.localhost_8080.downstream_rq_max_duration_reached: 0
-http.localhost_8080.downstream_rq_non_relative_path: 0
-http.localhost_8080.downstream_rq_overload_close: 0
-http.localhost_8080.downstream_rq_redirected_with_normalized_path: 0
-http.localhost_8080.downstream_rq_rejected_via_ip_detection: 0
-http.localhost_8080.downstream_rq_response_before_rq_complete: 0
-http.localhost_8080.downstream_rq_rx_reset: 0
-http.localhost_8080.downstream_rq_timeout: 0
-http.localhost_8080.downstream_rq_too_large: 0
-http.localhost_8080.downstream_rq_too_many_premature_resets: 0
-http.localhost_8080.downstream_rq_total: 0
-http.localhost_8080.downstream_rq_tx_reset: 0
-http.localhost_8080.downstream_rq_ws_on_non_ws_route: 0
-http.localhost_8080.no_cluster: 0
-http.localhost_8080.no_route: 0
-http.localhost_8080.passthrough_internal_redirect_bad_location: 0
-http.localhost_8080.passthrough_internal_redirect_no_route: 0
-http.localhost_8080.passthrough_internal_redirect_predicate: 0
-http.localhost_8080.passthrough_internal_redirect_too_many_redirects: 0
-http.localhost_8080.passthrough_internal_redirect_unsafe_scheme: 0
-http.localhost_8080.rq_direct_response: 0
-http.localhost_8080.rq_redirect: 0
-http.localhost_8080.rq_reset_after_downstream_response_started: 0
-http.localhost_8080.rq_total: 0
-http.localhost_8080.rs_too_large: 0
-http.localhost_8080.tracing.client_enabled: 0
-http.localhost_8080.tracing.health_check: 0
-http.localhost_8080.tracing.not_traceable: 0
-http.localhost_8080.tracing.random_sampling: 0
-http.localhost_8080.tracing.service_forced: 0
 http.probe_listener.downstream_cx_active: 0
 http.probe_listener.downstream_cx_delayed_close_timeout: 0
 http.probe_listener.downstream_cx_destroy: 109
@@ -2183,18 +1505,6 @@ server.worker_0.watchdog_mega_miss: 0
 server.worker_0.watchdog_miss: 0
 server.worker_1.watchdog_mega_miss: 0
 server.worker_1.watchdog_miss: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_cx_no_route: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_cx_rx_bytes_buffered: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_cx_rx_bytes_total: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_cx_total: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_cx_tx_bytes_buffered: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_cx_tx_bytes_total: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_flow_control_paused_reading_total: 0
-tcp.api-play-002_microservice-mesh_svc_8080.downstream_flow_control_resumed_reading_total: 0
-tcp.api-play-002_microservice-mesh_svc_8080.idle_timeout: 0
-tcp.api-play-002_microservice-mesh_svc_8080.max_downstream_connection_duration: 0
-tcp.api-play-002_microservice-mesh_svc_8080.upstream_flush_active: 0
-tcp.api-play-002_microservice-mesh_svc_8080.upstream_flush_total: 0
 tcp.inbound_passthrough_ipv4.downstream_cx_no_route: 0
 tcp.inbound_passthrough_ipv4.downstream_cx_rx_bytes_buffered: 0
 tcp.inbound_passthrough_ipv4.downstream_cx_rx_bytes_total: 0
@@ -2219,30 +1529,6 @@ tcp.inbound_passthrough_ipv6.idle_timeout: 0
 tcp.inbound_passthrough_ipv6.max_downstream_connection_duration: 0
 tcp.inbound_passthrough_ipv6.upstream_flush_active: 0
 tcp.inbound_passthrough_ipv6.upstream_flush_total: 0
-tcp.outbound_passthrough_ipv4.downstream_cx_no_route: 0
-tcp.outbound_passthrough_ipv4.downstream_cx_rx_bytes_buffered: 0
-tcp.outbound_passthrough_ipv4.downstream_cx_rx_bytes_total: 0
-tcp.outbound_passthrough_ipv4.downstream_cx_total: 0
-tcp.outbound_passthrough_ipv4.downstream_cx_tx_bytes_buffered: 0
-tcp.outbound_passthrough_ipv4.downstream_cx_tx_bytes_total: 0
-tcp.outbound_passthrough_ipv4.downstream_flow_control_paused_reading_total: 0
-tcp.outbound_passthrough_ipv4.downstream_flow_control_resumed_reading_total: 0
-tcp.outbound_passthrough_ipv4.idle_timeout: 0
-tcp.outbound_passthrough_ipv4.max_downstream_connection_duration: 0
-tcp.outbound_passthrough_ipv4.upstream_flush_active: 0
-tcp.outbound_passthrough_ipv4.upstream_flush_total: 0
-tcp.outbound_passthrough_ipv6.downstream_cx_no_route: 0
-tcp.outbound_passthrough_ipv6.downstream_cx_rx_bytes_buffered: 0
-tcp.outbound_passthrough_ipv6.downstream_cx_rx_bytes_total: 0
-tcp.outbound_passthrough_ipv6.downstream_cx_total: 0
-tcp.outbound_passthrough_ipv6.downstream_cx_tx_bytes_buffered: 0
-tcp.outbound_passthrough_ipv6.downstream_cx_tx_bytes_total: 0
-tcp.outbound_passthrough_ipv6.downstream_flow_control_paused_reading_total: 0
-tcp.outbound_passthrough_ipv6.downstream_flow_control_resumed_reading_total: 0
-tcp.outbound_passthrough_ipv6.idle_timeout: 0
-tcp.outbound_passthrough_ipv6.max_downstream_connection_duration: 0
-tcp.outbound_passthrough_ipv6.upstream_flush_active: 0
-tcp.outbound_passthrough_ipv6.upstream_flush_total: 0
 thread_local_cluster_manager.main_thread.clusters_inflated: 11
 thread_local_cluster_manager.worker_0.clusters_inflated: 11
 thread_local_cluster_manager.worker_1.clusters_inflated: 11
@@ -2259,17 +1545,6 @@ cluster.access_log_sink.upstream_cx_connect_ms: No recorded values
 cluster.access_log_sink.upstream_cx_length_ms: No recorded values
 cluster.ads_cluster.upstream_cx_connect_ms: P0(nan,4) P25(nan,4.025) P50(nan,4.05) P75(nan,4.075) P90(nan,4.09) P95(nan,4.095) P99(nan,4.099) P99.5(nan,4.0995) P99.9(nan,4.0999) P100(nan,4.1)
 cluster.ads_cluster.upstream_cx_length_ms: No recorded values
-cluster.api-play-000_microservice-mesh_svc_8080.update_duration: P0(nan,0) P25(nan,0) P50(nan,0) P75(nan,0) P90(nan,0) P95(nan,0) P99(nan,0) P99.5(nan,0) P99.9(nan,0) P100(nan,0)
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_connect_ms: No recorded values
-cluster.api-play-000_microservice-mesh_svc_8080.upstream_cx_length_ms: No recorded values
-cluster.api-play-001_microservice-mesh_svc_8080.external.upstream_rq_time: P0(1,0) P25(7.034782608695652,7.087369109947644) P50(11.507246376811594,12.0734785615491) P75(13.826923076923077,15.859252738654147) P90(15.76923076923077,19.571471172962227) P95(16.655172413793103,22.61247240618101) P99(18.6,33.2080555555555) P99.5(19.166666666666668,57.24500000000262) P99.9(19.833333333333332,230.40818181818227) P100(20,310)
-cluster.api-play-001_microservice-mesh_svc_8080.update_duration: P0(nan,0) P25(nan,0) P50(nan,0) P75(nan,0) P90(nan,0) P95(nan,0) P99(nan,0) P99.5(nan,0) P99.9(nan,0) P100(nan,0)
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_connect_ms: P0(nan,0) P25(nan,0) P50(nan,0) P75(nan,0) P90(nan,3.06) P95(nan,3.08) P99(nan,3.096) P99.5(nan,3.098) P99.9(nan,3.0996) P100(nan,3.1)
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_cx_length_ms: No recorded values
-cluster.api-play-001_microservice-mesh_svc_8080.upstream_rq_time: P0(1,0) P25(7.034782608695652,7.087369109947644) P50(11.507246376811594,12.0734785615491) P75(13.826923076923077,15.859252738654147) P90(15.76923076923077,19.571471172962227) P95(16.655172413793103,22.61247240618101) P99(18.6,33.2080555555555) P99.5(19.166666666666668,57.24500000000262) P99.9(19.833333333333332,230.40818181818227) P100(20,310)
-cluster.api-play-002_microservice-mesh_svc_8080.update_duration: P0(nan,0) P25(nan,0) P50(nan,0) P75(nan,0) P90(nan,0) P95(nan,0) P99(nan,0) P99.5(nan,0) P99.9(nan,0) P100(nan,0)
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_connect_ms: No recorded values
-cluster.api-play-002_microservice-mesh_svc_8080.upstream_cx_length_ms: No recorded values
 cluster.inbound_passthrough_ipv4.upstream_cx_connect_ms: No recorded values
 cluster.inbound_passthrough_ipv4.upstream_cx_length_ms: No recorded values
 cluster.inbound_passthrough_ipv6.upstream_cx_connect_ms: No recorded values
@@ -2278,10 +1553,6 @@ cluster.kuma_envoy_admin.external.upstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P7
 cluster.kuma_envoy_admin.upstream_cx_connect_ms: P0(nan,0) P25(nan,0) P50(nan,0) P75(nan,0) P90(nan,0) P95(nan,0) P99(nan,0) P99.5(nan,0) P99.9(nan,0) P100(nan,0)
 cluster.kuma_envoy_admin.upstream_cx_length_ms: No recorded values
 cluster.kuma_envoy_admin.upstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P75(0,0) P90(0,1.0710000000000002) P95(0,2.051111111111111) P99(0,5.095999999999999) P99.5(0,6.096000000000001) P99.9(0,12.792000000000002) P100(0,13)
-cluster.localhost_8080.external.upstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P75(0,1.007608695652174) P90(0,1.078695652173913) P95(0,2.018333333333333) P99(0,5.090999999999999) P99.5(0,7.0455) P99.9(0,7.0891) P100(0,7.1)
-cluster.localhost_8080.upstream_cx_connect_ms: P0(nan,0) P25(nan,0) P50(nan,0) P75(nan,0) P90(nan,0) P95(nan,0) P99(nan,0) P99.5(nan,0) P99.9(nan,0) P100(nan,0)
-cluster.localhost_8080.upstream_cx_length_ms: No recorded values
-cluster.localhost_8080.upstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P75(0,1.007608695652174) P90(0,1.078695652173913) P95(0,2.018333333333333) P99(0,5.090999999999999) P99.5(0,7.0455) P99.9(0,7.0891) P100(0,7.1)
 cluster.outbound_passthrough_ipv4.upstream_cx_connect_ms: No recorded values
 cluster.outbound_passthrough_ipv4.upstream_cx_length_ms: No recorded values
 cluster.outbound_passthrough_ipv6.upstream_cx_connect_ms: No recorded values
@@ -2292,14 +1563,8 @@ dns_filter.kuma_dns.downstream_rx_query_latency: No recorded values
 dns_filter.kuma_dns.downstream_tx_bytes: P0(66,66) P25(66.25,66.25) P50(66.5,66.5) P75(66.75,66.75) P90(66.9,66.9) P95(66.95,66.95) P99(66.99,66.99) P99.5(66.995,66.995) P99.9(66.999,66.999) P100(67,67)
 http.admin.downstream_cx_length_ms: No recorded values
 http.admin.downstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P75(0,0) P90(0,0) P95(0,0) P99(0,0) P99.5(0,1.0480000000000005) P99.9(0,1.0896000000000001) P100(0,1.1)
-http.api-play-000_microservice-mesh_svc_8080.downstream_cx_length_ms: No recorded values
-http.api-play-000_microservice-mesh_svc_8080.downstream_rq_time: No recorded values
-http.api-play-001_microservice-mesh_svc_8080.downstream_cx_length_ms: P0(0,0) P25(9.09142857142857,11.578663793103448) P50(14.285714285714286,15.663051897753679) P75(16.534246575342465,19.684458398744113) P90(17.82608695652174,25.668993839835736) P95(19.25,37.28524590163937) P99(516.3999999999999,519.4223175965665) P99.5(1020.0000000000008,537.4000000000002) P99.9(1083.9999999999993,1082.445528455287) P100(1100,23000)
-http.api-play-001_microservice-mesh_svc_8080.downstream_rq_time: P0(1,0) P25(7.041666666666667,7.093151945320715) P50(11.56338028169014,12.122942386831276) P75(13.851851851851851,15.90224171539961) P90(15.8,19.61970297029703) P95(16.666666666666668,22.667653508771924) P99(18.6,33.35341463414629) P99.5(19.166666666666668,57.62250000000131) P99.9(19.833333333333332,231.2075000000004) P100(20,310)
 http.kuma_envoy_admin.downstream_cx_length_ms: P0(0,0) P25(0,0) P50(0,0) P75(0,1.041279069767442) P90(0,2.034375) P95(0,2.0984375) P99(0,6.0649999999999995) P99.5(0,6.099166666666666) P99.9(0,13.794999999999987) P100(0,14)
 http.kuma_envoy_admin.downstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P75(0,0) P90(0,1.085925925925926) P95(0,2.0733333333333333) P99(0,5.097333333333333) P99.5(0,6.096000000000001) P99.9(0,12.792000000000002) P100(0,13)
-http.localhost_8080.downstream_cx_length_ms: No recorded values
-http.localhost_8080.downstream_rq_time: No recorded values
 http.probe_listener.downstream_cx_length_ms: P0(0,0) P25(0,0) P50(0,1.0359649122807018) P75(0,1.0837719298245614) P90(0,2.071) P95(0,4.0275) P99(0,5.0969999999999995) P99.5(0,8.0455) P99.9(0,8.0891) P100(0,8.1)
 http.probe_listener.downstream_rq_time: P0(0,0) P25(0,0) P50(0,0) P75(0,1.0324074074074074) P90(0,1.092962962962963) P95(0,2.0709999999999997) P99(0,5.090999999999999) P99.5(0,8.0455) P99.9(0,8.0891) P100(0,8.1)
 listener.0.0.0.0_15001.connections_accepted_per_socket_event: P0(1,1) P25(1.1,2.0087853773584907) P50(4.08,4.026709401709402) P75(17.666666666666668,9.060596026490066) P90(23.700000000000003,18.69428571428572) P95(25.133333333333333,23.302985074626868) P99(25.826666666666664,27.97944444444445) P99.5(25.913333333333334,29.52739130434783) P99.9(25.982666666666667,32.01299999999992) P100(26,34)

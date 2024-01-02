@@ -138,15 +138,33 @@
                       ]"
                       :key="meta.protocol"
                     >
-                      <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
-                      <ServiceTrafficCard
-                        :protocol="meta.protocol"
-                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
-                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
-                        :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
+                      <template
+                        v-for="port in [
+                          item.name.split('_')[1],
+                        ]"
+                        :key="port"
                       >
-                        {{ item.name }}
-                      </ServiceTrafficCard>
+                        <template
+                          v-for="inbound in [
+                            props.data.dataplane.networking.inbounds.find(item => `${item.port}` === `${port}`),
+                          ]"
+                          :key="inbound"
+                        >
+                          <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
+                          <ServiceTrafficCard
+                            v-if="inbound"
+                            :protocol="meta.protocol"
+                            :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
+                            :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
+                            :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
+                          >
+                            :{{ inbound.port }}
+                            <TagList
+                              :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
+                            />
+                          </ServiceTrafficCard>
+                        </template>
+                      </template>
                     </template>
                   </template>
                 </ServiceTrafficGroup>
@@ -190,19 +208,24 @@
                   type="passthrough"
                 >
                   <template
-                    v-for="meta in [
-                      {
-                        protocol: 'cluster',
-                        direction: 'downstream',
-                      },
+                    v-for="(item, key) in [
+                      (['http', 'tcp'] as const).reduce((prev, protocol) => {
+                        const direction = 'downstream'
+                        // sum both the properties we need from both protocols
+                        return Object.entries(traffic.passthrough[protocol] || {}).reduce((prev, [key, value]) => {
+                          return [`${direction}_cx_tx_bytes_total`, `${direction}_cx_rx_bytes_total`].includes(key) ?
+                            { ...prev, [key]: (value as number) + (prev[key] ?? 0) } :
+                            prev
+                        }, prev)
+                      }, {} as Record<string, number>),
                     ]"
-                    :key="meta.protocol"
+                    :key="key"
                   >
                     <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
                     <ServiceTrafficCard
                       :protocol="`unknown`"
-                      :rx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] ?? 0), 0)"
-                      :tx="traffic.passthrough.reduce((prev: number, item: any) => prev + (item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] ?? 0), 0)"
+                      :rx="item.downstream_cx_tx_bytes_total"
+                      :tx="item.downstream_cx_rx_bytes_total"
                     >
                       Non mesh traffic
                     </ServiceTrafficCard>
@@ -465,6 +488,9 @@ const warnings = computed(() => props.data.warnings.concat(...(props.data.isCert
     background-repeat: repeat-y;
     background-size: 50%;
   }
+}
+.traffic .tag-list {
+  margin-left: auto;
 }
 @container traffic (max-width: 40.95rem) {
   .traffic .columns {

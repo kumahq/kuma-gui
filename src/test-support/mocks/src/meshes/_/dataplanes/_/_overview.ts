@@ -1,8 +1,12 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh, name } = req.params
+  // sync the seed by name (temp use length until we get seed(str))
+  fake.seed(name.length)
 
-  const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
+
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
 
@@ -16,6 +20,15 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMultizone = true && fake.datatype.boolean()
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
+  // temporarily overwrite the result of dataplaneNetworking as it doesn't
+  // currently accept port plus we need to keep our ports synced. Also, I'm not
+  // totally sure on the pattern for the service name
+  const networking = fake.kuma.dataplaneNetworking({ type, inbounds: ports.length, isMultizone });
+  (networking.inbound ?? []).forEach((inbound, i) => {
+    inbound.port = ports[i]
+    inbound.tags['kuma.io/service'] = `${fake.hacker.noun()}_svc_${inbound.port}`
+  })
+  //
   return {
     headers: {},
     body: {
@@ -25,7 +38,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       creationTime: '2021-02-17T08:33:36.442044+01:00',
       modificationTime: '2021-02-17T08:33:36.442044+01:00',
       dataplane: {
-        networking: fake.kuma.dataplaneNetworking({ type, inbounds, isMultizone }),
+        networking,
       },
       dataplaneInsight: {
         ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),

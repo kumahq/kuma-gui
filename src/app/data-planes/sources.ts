@@ -36,7 +36,7 @@ export type DataplaneRulesSource = DataSourceResponse<InspectRulesForDataplane>
 export type TrafficSource = DataSourceResponse<{
   inbounds: TrafficEntry[]
   outbounds: TrafficEntry[]
-  passthrough: TrafficEntry[]
+  passthrough: TrafficEntry
 }>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
@@ -95,7 +95,21 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       // passthrough traffic is anything that starts with this list
       const passthrough = getTraffic(json, (key) => [
         'outbound_passthrough_',
-      ].some(item => key.startsWith(item)))
+      ].some(item => key.startsWith(item))).reduce((entry, item) => {
+        return {
+          ...entry,
+          // combine/sum both http and tcp protocols of anything prefixed outbound_passthrough_
+          ...(['http', 'tcp'] as const).reduce((prev, protocol) => {
+            prev[protocol] = Object.entries(item[protocol] || {}).reduce((prev, [key, value]) => {
+              // sum the current loop property with the previous one
+              return { ...prev, [key]: (value as number) + ((prev[key] as number) ?? 0) }
+            }, prev[protocol] || {})
+            return prev
+          }, entry),
+        }
+      }, {
+        name: 'outbound_passthrough',
+      } as TrafficEntry)
 
       return {
         passthrough,
