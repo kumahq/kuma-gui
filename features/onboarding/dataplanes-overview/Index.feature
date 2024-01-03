@@ -66,6 +66,11 @@ Feature: onboarding / dataplanes-overview / index
       body:
         items:
           - name: dataplane-test
+            dataplane:
+              networking:
+                inbounds:
+                  - health:
+                      ready: true
             dataplaneInsight:
               subscriptions:
                 - connectTime: 2021-02-17T07:33:36.412683Z

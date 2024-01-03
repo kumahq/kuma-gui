@@ -45,6 +45,8 @@ Feature: Dataplane details for standard Data Plane Proxy
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
               disconnectTime: 2021-02-17T07:33:36.412683Z
+              status:
+                lastUpdateTime: 2021-02-17T07:33:36.412683Z
               version:
                 kumaDp:
                   version: 1.0.7
@@ -52,9 +54,10 @@ Feature: Dataplane details for standard Data Plane Proxy
                 envoy:
                   kumaDpCompatible: false
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
-              connectTime: 2021-02-17T07:33:36.412683Z
+              connectTime: 2021-02-17T07:33:37.412683Z
               disconnectTime: !!js/undefined
               status:
+                lastUpdateTime: 2021-02-17T07:33:37.412683Z
                 total:
                   responsesSent: '12'
                   responsesAcknowledged: '10'

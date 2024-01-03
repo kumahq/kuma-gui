@@ -100,7 +100,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'offline',
-          unhealthyInbounds: [],
           warnings: [],
           isCertExpired: false,
           services: [],
@@ -285,7 +284,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'online',
-          unhealthyInbounds: [],
           warnings: [
             {
               kind: 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP',
@@ -419,7 +417,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'offline',
-          unhealthyInbounds: [],
           warnings: [],
           isCertExpired: false,
           services: [''],
@@ -529,20 +526,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'offline',
-          unhealthyInbounds: [
-            {
-              health: {
-                ready: false,
-              },
-              tags: {
-                'kuma.io/service': '',
-              },
-              service: '',
-              port: 1,
-              addressPort: 'http://example.org:1',
-              serviceAddressPort: 'http://example.org:1',
-            },
-          ],
           warnings: [],
           isCertExpired: false,
           services: [''],
@@ -674,21 +657,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'standard',
           status: 'partially_degraded',
-          unhealthyInbounds: [
-            {
-              health: {
-                ready: false,
-              },
-              tags: {
-                'kuma.io/service': 'service-1',
-                'kuma.io/zone': 'zone-1',
-              },
-              service: 'service-1',
-              port: 1,
-              addressPort: 'http://example.org:1',
-              serviceAddressPort: 'http://example.org:1',
-            },
-          ],
           warnings: [],
           isCertExpired: false,
           services: ['service-1', 'service-2'],
@@ -790,7 +758,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'delegated',
           status: 'online',
-          unhealthyInbounds: [],
           warnings: [],
           isCertExpired: false,
           services: ['service-1'],
@@ -890,7 +857,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'delegated',
           status: 'online',
-          unhealthyInbounds: [],
           warnings: [],
           isCertExpired: false,
           services: ['service-1'],
@@ -1006,7 +972,6 @@ describe('dataplanes data transformations', () => {
           },
           dataplaneType: 'builtin',
           status: 'offline',
-          unhealthyInbounds: [],
           warnings: [],
           isCertExpired: false,
           services: [''],

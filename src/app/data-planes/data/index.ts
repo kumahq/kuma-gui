@@ -61,7 +61,6 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   dataplaneInsight: DataplaneInsight
   dataplaneType: 'standard' | 'builtin' | 'delegated'
   status: 'online' | 'offline' | 'partially_degraded'
-  unhealthyInbounds: DataplaneInbound[]
   warnings: DataplaneWarning[]
   isCertExpired: boolean
   services: string[]
@@ -86,6 +85,9 @@ const DataplaneNetworking = {
     const { inbound, outbound, ...rest } = networking
 
     const inbounds = Array.isArray(inbound) ? inbound : []
+
+    // outbounds are only present here on a universal DDP without transparent
+    // proxying
     const outbounds = Array.isArray(outbound) ? outbound : []
 
     return {
@@ -145,7 +147,6 @@ export const DataplaneOverview = {
     const isCertExpired = getIsCertExpired(dataplaneInsight)
 
     const state = isSet(dataplaneInsight.connectedSubscription) ? 'online' : 'offline'
-    const unhealthyInbounds = networking.inbounds.filter((inbound) => !inbound.health.ready)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
 
     return {
@@ -158,6 +159,7 @@ export const DataplaneOverview = {
       status: networking.gateway
         ? state
         : (() => {
+          const unhealthyInbounds = networking.inbounds.filter((inbound) => !inbound.health.ready)
           switch (true) {
             case unhealthyInbounds.length === networking.inbounds.length:
               // All inbounds being unhealthy means the Dataplane is offline.
@@ -172,7 +174,6 @@ export const DataplaneOverview = {
               return state
           }
         })(),
-      unhealthyInbounds,
       warnings,
       isCertExpired,
       services,
@@ -260,14 +261,12 @@ function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
   return mTLS ? Date.now() > new Date(mTLS.certificateExpirationTime).getTime() : false
 }
 
-function getWarnings({ subscriptions }: DataplaneInsight, tags: LabelValue[], canUseZones: boolean): DataplaneWarning[] {
-  const lastSubscription = subscriptions.at(-1)
-  if (!lastSubscription || !lastSubscription.version) {
+function getWarnings({ version }: DataplaneInsight, tags: LabelValue[], canUseZones: boolean): DataplaneWarning[] {
+  if (!isSet(version)) {
     return []
   }
 
   const warnings: DataplaneWarning[] = []
-  const version = lastSubscription.version
   if (version.kumaDp && version.envoy) {
     const isKumaCpCompatible = version.kumaDp?.kumaCpCompatible ?? true
     if (!isKumaCpCompatible) {

@@ -39,17 +39,32 @@
                 <div class="status-with-reason">
                   <StatusBadge :status="props.data.status" />
 
-                  <KTooltip
-                    v-if="props.data.unhealthyInbounds.length > 0"
-                    :label="props.data.unhealthyInbounds.map((inbound) => t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port })).join(', ')"
-                    class="reason-tooltip"
+                  <template
+                    v-for="inbounds in [props.data.dataplane.networking.inbounds.filter(item => !item.health.ready)]"
+                    :key="inbounds"
                   >
-                    <InfoIcon
-                      :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                      :size="KUI_ICON_SIZE_30"
-                      hide-title
-                    />
-                  </KTooltip>
+                    <KTooltip
+                      v-if="inbounds.length > 0"
+                      class="reason-tooltip"
+                      position-fixed
+                    >
+                      <InfoIcon
+                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                        :size="KUI_ICON_SIZE_30"
+                        hide-title
+                      />
+                      <template #content>
+                        <ul>
+                          <li
+                            v-for="inbound in inbounds"
+                            :key="`${inbound.service}:${inbound.port}`"
+                          >
+                            {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                          </li>
+                        </ul>
+                      </template>
+                    </KTooltip>
+                  </template>
                 </div>
               </template>
             </DefinitionCard>
