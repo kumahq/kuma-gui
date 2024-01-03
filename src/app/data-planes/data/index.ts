@@ -85,8 +85,9 @@ const DataplaneNetworking = {
     const { inbound, outbound, ...rest } = networking
 
     const inbounds = Array.isArray(inbound) ? inbound : []
-    // TODO(jc): Confirm whether we still ever get outbounds, from what I understand
-    // we no longer get this property
+
+    // outbounds are only present here on a universal DDP without transparent
+    // proxying
     const outbounds = Array.isArray(outbound) ? outbound : []
 
     return {
