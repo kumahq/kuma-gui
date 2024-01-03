@@ -145,40 +145,29 @@
                     :key="`${item.name}`"
                   >
                     <template
-                      v-for="meta in [
-                        {
-                          protocol: (typeof item.http !== 'undefined' ? 'http' : 'tcp') as 'http' | 'tcp',
-                          direction: 'downstream',
-                        },
+                      v-for="port in [
+                        item.name.split('_').at(-1),
                       ]"
-                      :key="meta.protocol"
+                      :key="port"
                     >
+                      <!-- the finding here would be expensive if inbounds was commonly large -->
+                      <!-- inbounds are mostly singular and even when they are not they are small -->
                       <template
-                        v-for="port in [
-                          item.name.split('_')[1],
+                        v-for="inbound in [
+                          props.data.dataplane.networking.inbounds.find(item => `${item.port}` === `${port}`),
                         ]"
-                        :key="port"
+                        :key="inbound"
                       >
-                        <template
-                          v-for="inbound in [
-                            props.data.dataplane.networking.inbounds.find(item => `${item.port}` === `${port}`),
-                          ]"
-                          :key="inbound"
+                        <ServiceTrafficCard
+                          v-if="inbound"
+                          :protocol="typeof item.http !== 'undefined' ? 'http' : 'tcp'"
+                          :traffic="item"
                         >
-                          <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
-                          <ServiceTrafficCard
-                            v-if="inbound"
-                            :protocol="meta.protocol"
-                            :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
-                            :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
-                            :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
-                          >
-                            :{{ inbound.port }}
-                            <TagList
-                              :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
-                            />
-                          </ServiceTrafficCard>
-                        </template>
+                          :{{ inbound.port }}
+                          <TagList
+                            :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
+                          />
+                        </ServiceTrafficCard>
                       </template>
                     </template>
                   </template>
@@ -222,29 +211,12 @@
                 <ServiceTrafficGroup
                   type="passthrough"
                 >
-                  <template
-                    v-for="(item, key) in [
-                      (['http', 'tcp'] as const).reduce((prev, protocol) => {
-                        const direction = 'downstream'
-                        // sum both the properties we need from both protocols
-                        return Object.entries(traffic.passthrough[protocol] || {}).reduce((prev, [key, value]) => {
-                          return [`${direction}_cx_tx_bytes_total`, `${direction}_cx_rx_bytes_total`].includes(key) ?
-                            { ...prev, [key]: (value as number) + (prev[key] ?? 0) } :
-                            prev
-                        }, prev)
-                      }, {} as Record<string, number>),
-                    ]"
-                    :key="key"
+                  <ServiceTrafficCard
+                    :protocol="`passthrough`"
+                    :traffic="traffic.passthrough"
                   >
-                    <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
-                    <ServiceTrafficCard
-                      :protocol="`unknown`"
-                      :rx="item.downstream_cx_tx_bytes_total"
-                      :tx="item.downstream_cx_rx_bytes_total"
-                    >
-                      Non mesh traffic
-                    </ServiceTrafficCard>
-                  </template>
+                    Non mesh traffic
+                  </ServiceTrafficCard>
                 </ServiceTrafficGroup>
                 <ServiceTrafficGroup
                   type="outbound"
@@ -254,20 +226,13 @@
                     :key="`${item.name}`"
                   >
                     <template
-                      v-for="meta in [
-                        {
-                          protocol: (typeof item.http !== 'undefined' ? 'http' : 'tcp') as 'http' | 'tcp',
-                          direction: 'downstream',
-                        },
-                      ]"
-                      :key="meta.protocol"
+                      v-for="protocol in [typeof item.http !== 'undefined' ? 'http' : 'tcp']"
+                      :key="protocol"
                     >
-                      <!-- rx and tx are purposefully reversed to rx=tx and tx=rx here due to the direction of the traffic (downstream) -->
                       <ServiceTrafficCard
-                        :protocol="meta.protocol"
-                        :rx="item[meta.protocol]?.[`${meta.direction}_cx_tx_bytes_total`] as (number | undefined)"
-                        :tx="item[meta.protocol]?.[`${meta.direction}_cx_rx_bytes_total`] as (number | undefined)"
-                        :requests="meta.protocol === 'http' ? ['http1_total', 'http2_total', 'http3_total'].reduce((prev, key) => prev + (item.http?.[`${meta.direction}_rq_${key}`] as (number | undefined) ?? 0), 0) : undefined"
+                        v-if="(protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0"
+                        :protocol="protocol"
+                        :traffic="item"
                       >
                         {{ item.name }}
                       </ServiceTrafficCard>
