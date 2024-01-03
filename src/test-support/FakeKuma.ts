@@ -15,6 +15,11 @@ export class KumaModule {
     this.faker = faker
   }
 
+  seed(str: string) {
+    // sync the seed by name (temp use length until we convert strings to numbers differently)
+    return this.faker.seed(str.length)
+  }
+
   partition(min: number, max: number, length: number, sum: number): number[] {
     return Array.from(
       { length },
@@ -31,11 +36,12 @@ export class KumaModule {
     )
   }
 
-  partitionInto(props: string[], total: number) {
-    return this.partition(1, total, props.length, total).reduce((prev: Record<string, unknown>, item, i) => {
+  partitionInto(skeleton: Record<string, number>, total: number) {
+    const props = Object.entries(skeleton).filter(([_key, value]) => isNaN(value)).map(([key, _value]) => key)
+    return this.partition(0, total, props.length, total).reduce((prev, item, i) => {
       prev[props[i]] = item
       return prev
-    }, {})
+    }, skeleton)
   }
 
   serviceType() {
