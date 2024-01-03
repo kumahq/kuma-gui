@@ -1,11 +1,15 @@
 data-planes:
   components:
     service_traffic_card:
-      requests: Total Requests
+      1xx: 1xx
+      2xx: 2xx
+      3xx: 3xx
+      4xx: 4xx
+      5xx: 5xx
       tx: Bytes sent
       rx: Bytes received
       protocol:
-        unknown: Passthrough
+        passthrough: Passthrough
     data-plane-list:
       version_mismatch: Version mismatch
       cert_expired: Certificate expired
