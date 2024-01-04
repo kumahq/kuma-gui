@@ -1,11 +1,13 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const { name } = req.params
-  // sync the seed by name (temp use length until we get seed(str))
-  fake.seed(name.length)
 
+  // use seed to sync the ports in stats.ts with the ports in _overview.ts
+  fake.kuma.seed(name as string)
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
+  //
+
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   const minMax = {
     min: 0,
@@ -16,15 +18,35 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     const service = `localhost_${port}`
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
     if (fake.datatype.boolean()) {
-      // inbounds are in cluster. but we don't use that data
-      return `http.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_rq_http1_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_rq_http2_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_rq_http3_total: ${fake.number.int(_minMax)}`
+      const prefix = `http.${service}.${direction}`
+      const totalRequests = fake.number.int(_minMax)
+      const req = fake.kuma.partitionInto({
+        _1xx: fake.helpers.arrayElement([NaN, 0]),
+        _2xx: NaN,
+        _3xx: fake.helpers.arrayElement([NaN, 0]),
+        _4xx: NaN,
+        _5xx: NaN,
+      }, totalRequests)
+      const total = fake.kuma.partitionInto({
+        http1: NaN,
+        http2: NaN,
+        http3: NaN,
+      }, totalRequests)
+      return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+${prefix}_rq_1xx: ${req._1xx}
+${prefix}_rq_2xx: ${req._2xx}
+${prefix}_rq_3xx: ${req._3xx}
+${prefix}_rq_4xx: ${req._4xx}
+${prefix}_rq_5xx: ${req._5xx}
+${prefix}_rq_http1_total: ${total.http1}
+${prefix}_rq_http2_total: ${total.http2}
+${prefix}_rq_http3_total: ${total.http3}
+${prefix}_rq_total: ${totalRequests}`
     } else {
-      return `tcp.${service}.${direction}_cx_tx_bytes_total:${fake.number.int(_minMax)}
-tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
+      const prefix = `tcp.${service}.${direction}`
+      return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
     }
   }).join('\n')
 
@@ -33,14 +55,35 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
     const service = `${fake.hacker.noun()}_svc_${port}`
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
     if (fake.datatype.boolean()) {
-      return `http.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_rq_http1_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_rq_http2_total: ${fake.number.int(_minMax)}
-http.${service}.${direction}_rq_http3_total: ${fake.number.int(_minMax)}`
+      const prefix = `http.${service}.${direction}`
+      const totalRequests = fake.number.int(_minMax)
+      const req = fake.kuma.partitionInto({
+        _1xx: fake.helpers.arrayElement([NaN, 0]),
+        _2xx: NaN,
+        _3xx: fake.helpers.arrayElement([NaN, 0]),
+        _4xx: NaN,
+        _5xx: NaN,
+      }, totalRequests)
+      const total = fake.kuma.partitionInto({
+        http1: NaN,
+        http2: NaN,
+        http3: NaN,
+      }, totalRequests)
+      return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+${prefix}_rq_1xx: ${req._1xx}
+${prefix}_rq_2xx: ${req._2xx}
+${prefix}_rq_3xx: ${req._3xx}
+${prefix}_rq_4xx: ${req._4xx}
+${prefix}_rq_5xx: ${req._5xx}
+${prefix}_rq_http1_total: ${total.http1}
+${prefix}_rq_http2_total: ${total.http2}
+${prefix}_rq_http3_total: ${total.http3}
+${prefix}_rq_total: ${totalRequests}`
     } else {
-      return `tcp.${service}.${direction}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
-tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
+      const prefix = `tcp.${service}.${direction}`
+      return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
     }
   }).join('\n')
 

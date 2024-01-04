@@ -2,6 +2,7 @@ common:
   not_applicable: N/A
   formats:
     integer: '{value, number, integer}'
+    bytes: '{value, number, integer}'
   product:
     name: Kuma
     href:
