@@ -60,5 +60,12 @@ export const sources = (api: KumaApi) => {
 
       return items.length > 0 ? ExternalService.fromObject(items[0]) : null
     },
+
+    '/meshes/:mesh/external-service/:name/as/kubernetes': async (params: CollectionParams & { name: string }) => {
+      const { mesh, name } = params
+      return api.getExternalService({ mesh, name }, {
+        format: 'kubernetes',
+      })
+    },
   }
 }

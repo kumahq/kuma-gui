@@ -4,7 +4,6 @@
     :toggled="false"
   >
     <CodeBlock
-      :id="id"
       language="yaml"
       :code="yamlUniversal"
       :is-searchable="props.isSearchable"
@@ -62,7 +61,6 @@ import type { SingleResourceParameters } from '@/types/api.d'
 import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { toYaml } from '@/utilities/toYaml'
-import uniqueId from '@/utilities/uniqueId'
 
 type Resolve = (data: Entity) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
@@ -71,21 +69,13 @@ type Copy = (cb: CopyCallback) => void
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  id?: string
   resource: Entity
-
-  /**
-   * Function returning the resource.
-   */
-  resourceFetcher?: (params?: SingleResourceParameters) => Promise<Entity>
   codeMaxHeight?: string
   isSearchable?: boolean
   query?: string
   isFilterMode?: boolean
   isRegExpMode?: boolean
 }>(), {
-  resourceFetcher: undefined,
-  id: () => uniqueId('resource-code-block'),
   codeMaxHeight: undefined,
   isSearchable: false,
   query: '',
@@ -117,9 +107,7 @@ const fetcher = async (_params?: SingleResourceParameters): Promise<Entity> => {
 }
 
 async function getYamlAsKubernetes() {
-  const resourceKubernetes = await (typeof props.resourceFetcher !== 'undefined' ? props.resourceFetcher({ format: 'kubernetes' }) : fetcher())
-
-  return toYamlRepresentation(resourceKubernetes)
+  return toYamlRepresentation(await fetcher())
 }
 
 function toYamlRepresentation(resource: Entity): string {

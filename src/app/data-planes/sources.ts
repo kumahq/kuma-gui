@@ -59,6 +59,10 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       return Dataplane.fromObject(await api.getDataplaneFromMesh(params))
     },
 
+    '/meshes/:mesh/dataplanes/:name/as/kubernetes': async (params) => {
+      return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
+    },
+
     '/meshes/:mesh/dataplanes/:name/traffic': async (params) => {
       const { mesh, name } = params
       const res = await api.getDataplaneData({

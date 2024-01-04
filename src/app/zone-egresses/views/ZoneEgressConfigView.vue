@@ -32,9 +32,8 @@
 
           <template v-else>
             <ResourceCodeBlock
-              id="code-block-zone-egress"
+              v-slot="{ copy, copying }"
               :resource="data.config"
-              :resource-fetcher="(params) => kumaApi.getZoneEgress({ name: route.params.zoneEgress }, params)"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter === 'true'"
@@ -42,7 +41,18 @@
               @query-change="route.update({ codeSearch: $event })"
               @filter-mode-change="route.update({ codeFilter: $event })"
               @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            >
+              <DataSource
+                v-if="copying"
+                :src="`/zone-egresses/${route.params.zoneEgress}/as/kubernetes?no-store`"
+                @change="(data) => {
+                  copy((resolve) => resolve(data))
+                }"
+                @error="(e) => {
+                  copy((_resolve, reject) => reject(e))
+                }"
+              />
+            </ResourceCodeBlock>
           </template>
         </DataSource>
       </KCard>
@@ -55,7 +65,4 @@ import { ZoneEgressSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useKumaApi } from '@/utilities'
-
-const kumaApi = useKumaApi()
 </script>

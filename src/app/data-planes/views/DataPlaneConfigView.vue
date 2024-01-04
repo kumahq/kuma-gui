@@ -33,9 +33,8 @@
 
           <ResourceCodeBlock
             v-else
-            id="code-block-data-plane"
+            v-slot="{ copy, copying }"
             :resource="data.config"
-            :resource-fetcher="(params) => kumaApi.getDataplaneFromMesh({ mesh: data.mesh, name: data.name }, params)"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter === 'true'"
@@ -43,7 +42,18 @@
             @query-change="route.update({ codeSearch: $event })"
             @filter-mode-change="route.update({ codeFilter: $event })"
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-          />
+          >
+            <DataSource
+              v-if="copying"
+              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/as/kubernetes?no-store`"
+              @change="(data) => {
+                copy((resolve) => resolve(data))
+              }"
+              @error="(e) => {
+                copy((_resolve, reject) => reject(e))
+              }"
+            />
+          </ResourceCodeBlock>
         </DataSource>
       </KCard>
     </AppView>
@@ -55,7 +65,4 @@ import { DataplaneSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useKumaApi } from '@/utilities'
-
-const kumaApi = useKumaApi()
 </script>

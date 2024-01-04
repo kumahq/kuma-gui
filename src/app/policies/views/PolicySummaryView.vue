@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="policy-summary-view"
     :params="{
       mesh: '',
@@ -77,13 +77,8 @@
 
           <div class="mt-4">
             <ResourceCodeBlock
-              id="code-block-policy"
+              v-slot="{ copy, copying }"
               :resource="props.policy.config"
-              :resource-fetcher="(params) => kumaApi.getSinglePolicyEntity({
-                name: route.params.policy,
-                mesh: route.params.mesh,
-                path: route.params.policyPath,
-              }, params)"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter === 'true'"
@@ -91,7 +86,18 @@
               @query-change="route.update({ codeSearch: $event })"
               @filter-mode-change="route.update({ codeFilter: $event })"
               @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            >
+              <DataSource
+                v-if="copying"
+                :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}/as/kubernetes?no-store`"
+                @change="(data) => {
+                  copy((resolve) => resolve(data))
+                }"
+                @error="(e) => {
+                  copy((_resolve, reject) => reject(e))
+                }"
+              />
+            </ResourceCodeBlock>
           </div>
         </div>
       </div>
@@ -104,10 +110,6 @@ import type { Policy, PolicyType } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useI18n, useKumaApi } from '@/utilities'
-
-const { t } = useI18n()
-const kumaApi = useKumaApi()
 
 const props = withDefaults(defineProps<{
   name: string

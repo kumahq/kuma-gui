@@ -61,5 +61,14 @@ export const sources = (api: KumaApi) => {
 
       return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }))
     },
+
+    '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { mesh, path, name } = params
+
+      return api.getSinglePolicyEntity({ mesh, path, name }, { format: 'kubernetes' })
+    },
+
   }
 }

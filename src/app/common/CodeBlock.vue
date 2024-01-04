@@ -31,9 +31,10 @@ import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { ref } from 'vue'
 
 import { highlightElement, type AvailableLanguages } from '@/utilities/highlightElement'
+import uniqueId from '@/utilities/uniqueId'
 
 const props = withDefaults(defineProps<{
-  id: string
+  id?: string
   code: string
   language: AvailableLanguages
   isSearchable?: boolean
@@ -43,6 +44,7 @@ const props = withDefaults(defineProps<{
   isFilterMode?: boolean
   isRegExpMode?: boolean
 }>(), {
+  id: () => uniqueId('code-block'),
   isSearchable: false,
   showCopyButton: true,
   codeMaxHeight: undefined,

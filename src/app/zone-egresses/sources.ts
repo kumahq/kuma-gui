@@ -53,6 +53,14 @@ export const sources = (api: KumaApi) => {
       return ZoneEgress.fromObject(await api.getZoneEgress({ name }))
     },
 
+    '/zone-egresses/:name/as/kubernetes': async (params: DetailParams, source: Closeable) => {
+      source.close()
+
+      const { name } = params
+
+      return await api.getZoneEgress({ name }, { format: 'kubernetes' })
+    },
+
     '/zone-egresses/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
       source.close()
 
