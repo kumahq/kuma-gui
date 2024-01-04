@@ -26,6 +26,8 @@ import DataCard from '@/app/common/data-card/DataCard.vue'
   gap: $kui-space-40;
 }
 .actions {
+  display: flex;
+  gap: $kui-space-40;
   position: absolute;
   right: 0;
 }
