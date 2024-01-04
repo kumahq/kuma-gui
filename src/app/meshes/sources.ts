@@ -26,6 +26,11 @@ export const sources = (api: KumaApi) => {
       return Mesh.fromObject(await api.getMesh({ name }))
     },
 
+    '/meshes/:name/as/kubernetes': (params: DetailParams) => {
+      const { name } = params
+      return api.getMesh({ name }, { format: 'kubernetes' })
+    },
+
     '/mesh-insights': async (params: PaginationParams) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
