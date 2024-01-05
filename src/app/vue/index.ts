@@ -35,12 +35,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         return async (App: Component) => {
           const app = createApp(App)
 
-          components.forEach(([name, component]: [string, Component]) => {
-            app.component(name, component)
-          })
-
           plugins.forEach(([...args]) => {
             app.use(...args)
+          })
+
+          components.forEach(([name, component]: [string, Component]) => {
+            app.component(name, component)
           })
 
           return app

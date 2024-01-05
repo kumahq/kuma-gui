@@ -16,6 +16,9 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   return {
     headers: {},
     body: {
+      ...(req.url.searchParams.get('format') === 'kubernetes' && {
+        apiVersion: 'kuma.io/v1alpha1',
+      }),
       type: 'Dataplane',
       mesh,
       name,

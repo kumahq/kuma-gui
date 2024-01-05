@@ -8,6 +8,9 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   return {
     headers: {},
     body: {
+      ...(req.url.searchParams.get('format') === 'kubernetes' && {
+        apiVersion: 'kuma.io/v1alpha1',
+      }),
       name,
       type: 'Mesh',
       creationTime: '2020-06-19T12:18:02.097986-04:00',

@@ -26,12 +26,12 @@ export const services: ServiceConfigurator = (app) => [
       components: ComponentDefinition[],
       plugins: PluginDefinition[],
     ) => {
-      components.forEach(([name, component]: [string, Component]) => {
-        config.global.components[name] = component
-      })
-
       plugins.forEach(([...args]) => {
         config.global.plugins.push([...args])
+      })
+
+      components.forEach(([name, component]: [string, Component]) => {
+        config.global.components[name] = component
       })
 
       return async () => {

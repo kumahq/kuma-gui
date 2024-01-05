@@ -1,6 +1,7 @@
 import { setupWorker, MockedRequest } from 'msw'
 
 import Logger from './logger/Logger'
+import DebugKClipboardProvider from '@/app/application/components/debug-k-clipboard-provider/DebugKClipboardProvider.vue'
 import debugI18n from '@/app/application/services/i18n/DebugI18n'
 import { TOKENS as CONTROL_PLANES } from '@/app/control-planes'
 import cookied from '@/services/env/CookiedEnv'
@@ -31,6 +32,7 @@ const $ = {
 
 type SupportedTokens = typeof $ & {
   i18n: Token
+  components: Token
   logger: Token
   env: Token<AEnv>
 }
@@ -65,6 +67,17 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
       return i18n()
     },
     decorates: app.i18n,
+  }],
+
+  [token('development.components'), {
+    service: () => {
+      return [
+        ['KClipboardProvider', DebugKClipboardProvider],
+      ]
+    },
+    labels: [
+      app.components,
+    ],
   }],
 
   [token<AEnv>('env.debug'), {
