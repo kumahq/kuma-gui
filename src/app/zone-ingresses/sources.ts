@@ -51,6 +51,12 @@ export const sources = (api: KumaApi) => {
       return api.getZoneIngressData({ zoneIngressName: name, dataPath })
     },
 
+    '/zone-ingresses/:name/as/kubernetes': async (params: DetailParams) => {
+      const { name } = params
+
+      return await api.getZoneIngress({ name }, { format: 'kubernetes' })
+    },
+
     '/zone-ingress-overviews': async (params: PaginationParams) => {
       const { size } = params
       const offset = params.size * (params.page - 1)

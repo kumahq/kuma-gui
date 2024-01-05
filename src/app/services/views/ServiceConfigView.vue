@@ -43,9 +43,8 @@
 
             <ResourceCodeBlock
               v-else
-              id="code-block-service"
+              v-slot="{ copy, copying }"
               :resource="externalService.config"
-              :resource-fetcher="(params) => kumaApi.getExternalService({ mesh: externalService.mesh, name: externalService.name }, params)"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter === 'true'"
@@ -53,7 +52,18 @@
               @query-change="route.update({ codeSearch: $event })"
               @filter-mode-change="route.update({ codeFilter: $event })"
               @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            />
+            >
+              <DataSource
+                v-if="copying"
+                :src="`/meshes/${externalService.mesh}/external-service/${externalService.name}/as/kubernetes?no-store`"
+                @change="(data) => {
+                  copy((resolve) => resolve(data))
+                }"
+                @error="(e) => {
+                  copy((_resolve, reject) => reject(e))
+                }"
+              />
+            </ResourceCodeBlock>
           </DataSource>
         </div>
       </KCard>
@@ -67,7 +77,4 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
-import { useKumaApi } from '@/utilities'
-
-const kumaApi = useKumaApi()
 </script>
