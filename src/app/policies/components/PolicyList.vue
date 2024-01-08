@@ -212,6 +212,7 @@ const emit = defineEmits<{
 
 .policy-type-list {
   align-self: flex-start;
+  max-width: 500px;
 }
 
 .policy-type-link-wrapper {
