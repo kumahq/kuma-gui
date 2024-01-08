@@ -47,8 +47,8 @@
               :resource="externalService.config"
               is-searchable
               :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter === 'true'"
-              :is-reg-exp-mode="route.params.codeRegExp === 'true'"
+              :is-filter-mode="route.params.codeFilter"
+              :is-reg-exp-mode="route.params.codeRegExp"
               @query-change="route.update({ codeSearch: $event })"
               @filter-mode-change="route.update({ codeFilter: $event })"
               @reg-exp-mode-change="route.update({ codeRegExp: $event })"
