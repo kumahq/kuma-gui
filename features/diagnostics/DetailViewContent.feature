@@ -19,7 +19,7 @@ Feature: Diagnostics: Detail view content
     Then the "$details" element contains ""environment": "universal""
 
   Scenario: Reads code search value from URL
-    When I visit the "/diagnostics?codeSearch=(groups%257Cusers)&codeRegExp=true&codeFilter=true" URL
+    When I visit the "/diagnostics?codeSearch=(groups%257Cusers)&codeRegExp&codeFilter" URL
 
     Then the "$code-block-search-input" element contains "(groups|users)"
     And the "$code-block-regexp-mode-button[aria-pressed='true']" element exists
@@ -37,8 +37,8 @@ Feature: Diagnostics: Detail view content
 
     When I click the "$code-block-regexp-mode-button" element
 
-    Then the URL contains "/diagnostics?codeSearch=(groups%257Cusers)&codeRegExp=true"
+    Then the URL contains "/diagnostics?codeSearch=(groups%257Cusers)&codeRegExp"
 
     When I click the "$code-block-filter-mode-button" element
 
-    Then the URL contains "/diagnostics?codeSearch=(groups%257Cusers)&codeRegExp=true&codeFilter=true"
+    Then the URL contains "/diagnostics?codeSearch=(groups%257Cusers)&codeRegExp&codeFilter"
