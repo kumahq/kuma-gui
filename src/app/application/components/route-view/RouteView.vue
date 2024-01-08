@@ -26,20 +26,20 @@
   </div>
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean> = {}">
-import { computed, provide, inject, ref, watch, onBeforeUnmount } from 'vue'
+import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT } from '.'
-import { useCan } from '../../index'
+import { useCan, useI18n } from '../../index'
 import {
   urlParam,
+  normalizeUrlParam,
   cleanQuery,
   createAttrsSetter,
   createTitleSetter,
   beforePaint,
 } from '../../utilities'
-import { useI18n, useEnv } from '@/utilities'
-import type { UnwrapRef } from 'vue'
+import { useEnv } from '@/utilities'
 export type RouteView = {
   addTitle: (item: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
@@ -55,7 +55,7 @@ const route = useRoute()
 const router = useRouter()
 const sym = Symbol('route-view')
 
-type Params = { [K in keyof T]: string }
+type Params = { [P in keyof T]: T[P] }
 type RouteReplaceParams = Parameters<typeof router['push']>
 
 const props = withDefaults(defineProps<{
@@ -66,6 +66,7 @@ const props = withDefaults(defineProps<{
   attrs: () => ({}),
   params: () => { return {} as T },
 })
+
 const name = computed(() => props.name)
 
 const title = ref<HTMLDivElement | null>(null)
@@ -101,45 +102,48 @@ const routeView = {
     setAttrs([...attributes.values()])
   },
 }
-const routeParams = ref<Params>(props.params as Params)
+const routeParams = reactive<Params>(structuredClone(props.params) as Params)
 
+// Updates the URL for route params if used as a modelValue (for boolean props only)
+watch(routeParams, (val) => {
+  const booleans = Object.fromEntries(Object.entries(val).filter(([key, _value]) => {
+    return typeof props.params[key] === 'boolean'
+  }))
+  if (Object.keys(booleans).length > 0) {
+    routeUpdate(booleans)
+  }
+})
+
+// when any URL params change, normalize/validate/default and reset our actual application params
 watch(() => {
   return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
 }, () => {
-  const params = Object.entries({
-    ...props.params,
+  const params = {
     ...route.query,
     ...route.params,
-  }).reduce<Record<string, string>>((prev, [prop, value]) => {
-    // unless you explicitly specified a RouteView::param
-    // then don't add the param to route.params
-    if (typeof props.params[prop] === 'undefined') {
-      return prev
-    }
-    let param = urlParam(value)
-    const def = props.params[prop]
-    switch (true) {
-      // if the defined param is a number check to see that the query param
-      // one can pass as a number and if not provide the default instead
-      case typeof def === 'number':
-        if (isNaN(Number(value))) {
-          param = String(def)
-        }
-        break
-    }
-    if (param.length === 0) {
-      param = String(def)
-    }
-
-    // Change `param` to the empty string for boolean parameters that are `false` so that it’s omitted in the URL.
-    if (typeof def === 'boolean' && String(param) === 'false') {
-      param = ''
-    }
-
-    prev[prop] = decodeURIComponent(param)
+  }
+  Object.entries({
+    ...props.params,
+  }).reduce((prev, [prop, def]) => {
+    const param = urlParam(typeof params[prop] === 'undefined' ? '' : params[prop])
+    prev[prop] = normalizeUrlParam(param, def)
     return prev
-  }, {})
-  routeParams.value = params as UnwrapRef<Params>
+  }, routeParams as Record<string, string | number | boolean>)
+}, { immediate: true })
+
+watch(() => props.name, () => {
+  // we only want query params here
+  const params = Object.entries(routeParams || {}).reduce((prev, [key, value]) => {
+    if (typeof route.params[key] === 'undefined') {
+      prev[key] = value
+    }
+    return prev
+  }, {} as Record<string, string | boolean | undefined>)
+  if (Object.keys(params).length > 0) {
+    router.replace({
+      query: cleanQuery(params, route.query),
+    })
+  }
 }, { immediate: true })
 
 let newParams: Record<string, string | boolean | undefined> = {}
@@ -171,22 +175,6 @@ const routerBack = (...args: RouteReplaceParams) => {
   }
   routeReplace(...args)
 }
-
-watch(() => props.name, () => {
-  // we only want query params here
-  const params = Object.entries(routeParams.value || {}).reduce<Record<string, string>>((prev, [key, value]) => {
-    if (typeof route.params[key] === 'undefined') {
-      prev[key] = value as string
-    }
-    return prev
-  }, {})
-
-  if (Object.keys(params).length > 0) {
-    router.replace({
-      query: cleanQuery(params, route.query),
-    })
-  }
-}, { immediate: true })
 
 const hasParent: RouteView | undefined = inject(ROUTE_VIEW_PARENT, undefined)
 if (!hasParent) {
