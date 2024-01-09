@@ -180,7 +180,7 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   }
 }
 
-.matcher {
+.policy-type-table :deep(td *) {
   white-space: normal;
   word-break: break-word;
 }
