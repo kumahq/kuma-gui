@@ -4,6 +4,7 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      inactive: false,
     }"
     name="data-plane-detail-view"
   >
@@ -175,6 +176,14 @@
               </DataPlaneTraffic>
               <DataPlaneTraffic>
                 <template #actions>
+                  <KInputSwitch
+                    v-model="route.params.inactive"
+                  >
+                    <template #label>
+                      Show inactive
+                    </template>
+                  </KInputSwitch>
+
                   <KButton
                     appearance="primary"
                     @click="refresh"
@@ -230,7 +239,7 @@
                       :key="protocol"
                     >
                       <ServiceTrafficCard
-                        v-if="(protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0"
+                        v-if="route.params.inactive || ((protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
                         :protocol="protocol"
                         :traffic="item"
                       >
