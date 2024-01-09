@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t }"
+      v-slot="{ can, route, t }"
       name="service-data-plane-proxies-view"
       :params="{
         page: 1,
@@ -47,6 +47,7 @@
               :error="dataplanesError"
               :is-selected-row="(row) => row.name === route.params.dataPlane"
               summary-route-name="service-data-plane-summary-view"
+              :is-global-mode="can('use zones')"
               @change="route.update"
             >
               <template #toolbar>

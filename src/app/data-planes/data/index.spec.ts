@@ -103,6 +103,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: [],
+          zone: undefined,
         },
       },
       {
@@ -307,6 +308,7 @@ describe('dataplanes data transformations', () => {
           ],
           isCertExpired: true,
           services: [''],
+          zone: '',
         },
       },
       {
@@ -420,6 +422,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: [''],
+          zone: undefined,
         },
       },
       {
@@ -529,6 +532,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: [''],
+          zone: undefined,
         },
       },
       {
@@ -660,6 +664,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: ['service-1', 'service-2'],
+          zone: 'zone-1',
         },
       },
       {
@@ -761,6 +766,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: ['service-1'],
+          zone: 'zone-1',
         },
       },
       {
@@ -860,6 +866,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: ['service-1'],
+          zone: 'zone-1',
         },
       },
       {
@@ -975,6 +982,7 @@ describe('dataplanes data transformations', () => {
           warnings: [],
           isCertExpired: false,
           services: [''],
+          zone: undefined,
         },
       },
     ])('.fromObject: $message', ({ parameters, expected }) => {
