@@ -54,7 +54,7 @@
         >
           <DataSource
             v-slot="{ data: sidecarDataplaneData, error }: SidecarDataplaneCollectionSource"
-            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
+            :src="!can('use zones') ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies` : ''"
           >
             <DataSource
               v-slot="{ data: rulesData, error: rulesError }: DataplaneRulesSource"
@@ -75,14 +75,14 @@
                 :error="rulesError"
               />
 
-              <LoadingBlock v-else-if="policyTypesData === undefined || sidecarDataplaneData === undefined || rulesData === undefined" />
+              <LoadingBlock v-else-if="policyTypesData === undefined || (!can('use zones') && sidecarDataplaneData === undefined) || rulesData === undefined" />
 
               <StandardDataplanePolicies
                 v-else
                 :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                :policy-type-entries="sidecarDataplaneData.policyTypeEntries"
+                :policy-type-entries="sidecarDataplaneData?.policyTypeEntries ?? []"
                 :inspect-rules-for-dataplane="rulesData"
-                :show-policies-section="!can('use zones')"
+                :show-legacy-policies="!can('use zones')"
               />
             </DataSource>
           </DataSource>
