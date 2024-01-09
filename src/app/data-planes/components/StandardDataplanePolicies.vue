@@ -3,20 +3,11 @@
     data-testid="standard-dataplane-policies"
     class="stack"
   >
-    <KCard v-if="(props.showPoliciesSection ? props.policyTypeEntries.length === 0 : true) && props.inspectRulesForDataplane.rules.length === 0">
+    <KCard v-if="(props.showLegacyPolicies ? props.policyTypeEntries.length === 0 : true) && props.inspectRulesForDataplane.rules.length === 0">
       <EmptyBlock />
     </KCard>
 
     <template v-else>
-      <KCard v-if="props.showPoliciesSection">
-        <PolicyTypeEntryList
-          id="policies"
-          :policy-type-entries="props.policyTypeEntries"
-          :policy-types-by-name="props.policyTypesByName"
-          data-testid="policy-list"
-        />
-      </KCard>
-
       <KCard v-if="props.inspectRulesForDataplane.proxyRule">
         <h3>{{ t('data-planes.routes.item.proxy_rule') }}</h3>
 
@@ -62,6 +53,19 @@
           />
         </div>
       </KCard>
+
+      <div v-if="props.showLegacyPolicies">
+        <h3>{{ t('data-planes.routes.item.legacy_policies') }}</h3>
+
+        <KCard class="mt-4">
+          <PolicyTypeEntryList
+            id="policies"
+            :policy-type-entries="props.policyTypeEntries"
+            :policy-types-by-name="props.policyTypesByName"
+            data-testid="policy-list"
+          />
+        </KCard>
+      </div>
     </template>
   </div>
 </template>
@@ -80,6 +84,6 @@ const props = defineProps<{
   policyTypeEntries: PolicyTypeEntry[]
   inspectRulesForDataplane: InspectRulesForDataplane
   policyTypesByName: Record<string, PolicyType | undefined>
-  showPoliciesSection: boolean
+  showLegacyPolicies: boolean
 }>()
 </script>

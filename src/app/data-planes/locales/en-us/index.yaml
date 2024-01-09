@@ -56,6 +56,7 @@ data-planes:
       proxy_rule: Proxy rule
       to_rules: To rules
       from_rules: From rules
+      legacy_policies: Legacy policies
       matches_everything: 'Matches everything'
     items:
       title: Data Plane Proxies

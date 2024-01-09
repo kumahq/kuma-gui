@@ -82,7 +82,7 @@
                 :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
                 :policy-type-entries="sidecarDataplaneData.policyTypeEntries"
                 :inspect-rules-for-dataplane="rulesData"
-                :show-policies-section="!can('use zones')"
+                :show-legacy-policies="!can('use zones')"
               />
             </DataSource>
           </DataSource>
