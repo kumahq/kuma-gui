@@ -4,6 +4,7 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      inactive: false,
     }"
     name="data-plane-detail-view"
   >
@@ -176,7 +177,7 @@
               <DataPlaneTraffic>
                 <template #actions>
                   <KInputSwitch
-                    v-model="showInactive"
+                    v-model="route.params.inactive"
                   >
                     <template #label>
                       Show inactive
@@ -238,7 +239,7 @@
                       :key="protocol"
                     >
                       <ServiceTrafficCard
-                        v-if="showInactive || ((protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
+                        v-if="route.params.inactive || ((protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
                         :protocol="protocol"
                         :traffic="item"
                       >
@@ -439,7 +440,7 @@
 <script lang="ts" setup>
 import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { InfoIcon, ForwardIcon, GatewayIcon, RefreshIcon } from '@kong/icons'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 import type { DataplaneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
@@ -460,8 +461,6 @@ const { t, formatIsoDate } = useI18n()
 const props = defineProps<{
   data: DataplaneOverview
 }>()
-
-const showInactive = ref(false)
 
 const warnings = computed(() => props.data.warnings.concat(...(props.data.isCertExpired ? [{ kind: 'CERT_EXPIRED' }] : [])))
 </script>
