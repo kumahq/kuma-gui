@@ -8,6 +8,7 @@
       { label: 'Name', key: 'name' },
       { label: 'Type', key: 'type' },
       { label: 'Services', key: 'services' },
+      ...(props.isGlobalMode ? [{ label: 'Zone', key: 'zone' }] : []),
       { label: 'Certificate Info', key: 'certificate' },
       { label: 'Status', key: 'status' },
       { label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -75,6 +76,24 @@
           </TextWithCopyButton>
         </div>
       </KTruncate>
+
+      <template v-else>
+        {{ t('common.collection.none') }}
+      </template>
+    </template>
+
+    <template #zone="{ row }">
+      <RouterLink
+        v-if="row.zone"
+        :to="{
+          name: 'zone-cp-detail-view',
+          params: {
+            zone: row.zone,
+          },
+        }"
+      >
+        {{ row.zone }}
+      </RouterLink>
 
       <template v-else>
         {{ t('common.collection.none') }}
@@ -170,6 +189,7 @@ const props = withDefaults(defineProps<{
   error: Error | undefined
   isSelectedRow: ((row: any) => boolean) | null
   summaryRouteName: string
+  isGlobalMode: boolean
 }>(), {
   total: 0,
   isSelectedRow: null,

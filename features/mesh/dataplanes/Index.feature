@@ -32,6 +32,7 @@ Feature: mesh / dataplanes / index
                     ready: true
                   tags:
                     kuma.io/service: service-1
+                    kuma.io/zone: zone-1
           dataplaneInsight:
             mTLS:
               certificateExpirationTime: 2023-11-03T09:10:17Z
@@ -46,12 +47,13 @@ Feature: mesh / dataplanes / index
   Scenario: The Proxy listing table has the correct columns
     When I visit the "/meshes/default/data-planes" URL
 
-    Then the "$table-header" element exists 7 times
+    Then the "$table-header" element exists 8 times
     And the "$table-header" elements contain
       | Value            |
       | Name             |
       | Type             |
       | Service          |
+      | Zone             |
       | Certificate Info |
       | Status           |
       | Warnings         |
@@ -65,6 +67,7 @@ Feature: mesh / dataplanes / index
       | fake-backend         |
       | Standard proxy       |
       | service-1            |
+      | zone-1               |
       | Nov 3, 2023, 9:10 AM |
       | online               |
 

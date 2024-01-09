@@ -63,6 +63,7 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   status: 'online' | 'offline' | 'partially_degraded'
   warnings: DataplaneWarning[]
   isCertExpired: boolean
+  zone: string | undefined
   services: string[]
 }
 
@@ -148,6 +149,7 @@ export const DataplaneOverview = {
 
     const state = isSet(dataplaneInsight.connectedSubscription) ? 'online' : 'offline'
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
+    const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
 
     return {
       ...partialDataplaneOverview,
@@ -177,6 +179,7 @@ export const DataplaneOverview = {
       warnings,
       isCertExpired,
       services,
+      zone,
     }
   },
 
