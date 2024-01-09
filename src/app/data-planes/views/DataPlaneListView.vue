@@ -35,12 +35,11 @@
               v-if="error !== undefined"
               :error="error"
             />
-
             <DataPlaneList
               v-else
               data-testid="data-plane-collection"
-              :page-number="parseInt(route.params.page)"
-              :page-size="parseInt(route.params.size)"
+              :page-number="route.params.page"
+              :page-size="route.params.size"
               :total="data?.total"
               :items="data?.items"
               :error="error"

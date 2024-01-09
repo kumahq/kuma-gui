@@ -46,8 +46,8 @@
                 { label: 'Status', key: 'status' },
                 { label: 'Details', key: 'details', hideLabel: true },
               ]"
-              :page-number="parseInt(route.params.page)"
-              :page-size="parseInt(route.params.size)"
+              :page-number="route.params.page"
+              :page-size="route.params.size"
               :total="data?.total"
               :items="data?.items"
               :error="error"
