@@ -4,8 +4,6 @@ Feature: Dataplane details for standard Data Plane Proxy
       | Alias         | Selector                                    |
       | detail-view   | [data-testid='data-plane-detail-tabs-view'] |
       | clusters-view | [data-testid='data-plane-clusters-view']    |
-      | overview-tab  | #data-plane-detail-view-tab a               |
-      | clusters-tab  | #data-plane-clusters-view-tab a             |
       | warnings      | [data-testid='dataplane-warnings']          |
       | details       | [data-testid='dataplane-details']           |
       | inbounds      | [data-testid='dataplane-inbounds']          |
@@ -14,7 +12,9 @@ Feature: Dataplane details for standard Data Plane Proxy
       | status-eds    | [data-testid='subscription-status-eds']     |
       | status-lds    | [data-testid='subscription-status-lds']     |
       | status-rds    | [data-testid='subscription-status-rds']     |
-    And the environment
+
+  Scenario: Overview tab has expected content
+    Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_DATAPLANEINBOUND_COUNT: 1
@@ -81,7 +81,6 @@ Feature: Dataplane details for standard Data Plane Proxy
 
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
 
-  Scenario: Overview tab has expected content
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$details" element contains "online"
@@ -127,6 +126,6 @@ Feature: Dataplane details for standard Data Plane Proxy
         access_log_sink::default_priority::max_requests::1024
       """
 
-    When I click the "$clusters-tab" element
+    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/clusters" URL
 
     Then the "$clusters-view" element contains "access_log_sink::observability_name::access_log_sink"

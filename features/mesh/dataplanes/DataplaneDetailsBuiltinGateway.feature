@@ -4,14 +4,14 @@ Feature: Dataplane details for built-in gateway
       | Alias             | Selector                                                           |
       | detail-view       | [data-testid='data-plane-detail-tabs-view']                        |
       | policies-view     | [data-testid='data-plane-policies-view']                           |
-      | overview-tab      | #data-plane-detail-view-tab a                                      |
-      | policies-tab      | #data-plane-policies-view-tab a                                    |
       | warnings          | [data-testid='dataplane-warnings']                                 |
       | details           | [data-testid='dataplane-details']                                  |
       | inbounds          | [data-testid='dataplane-inbounds']                                 |
       | route-item        | [data-testid='builtin-gateway-dataplane-policies'] .accordion-item |
       | route-item-button | $route-item:nth-child(1) [data-testid='accordion-item-button']     |
-    And the environment
+
+  Scenario: Overview tab has expected content
+    Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_DATAPLANEINBOUND_COUNT: 0
@@ -50,7 +50,6 @@ Feature: Dataplane details for built-in gateway
 
     When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
 
-  Scenario: Overview tab has expected content
     Then the page title contains "dataplane-gateway_builtin-1"
     And the "$detail-view" element contains "dataplane-gateway_builtin-1"
     And the "$details" element contains
@@ -82,7 +81,7 @@ Feature: Dataplane details for built-in gateway
             name: traffic-trace-1
       """
 
-    When I click the "$policies-tab" element
+    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
 
     Then the "$policies-view" element contains "traffic-log-1"
     And the "$policies-view" element contains "traffic-trace-1"
