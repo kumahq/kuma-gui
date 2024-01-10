@@ -145,7 +145,6 @@
             >
               <component
                 :is="child.Component"
-                :name="route.params.zoneIngress"
                 :zone-ingress-overview="data?.items.find((item) => item.name === route.params.zoneIngress)"
               />
             </SummaryView>

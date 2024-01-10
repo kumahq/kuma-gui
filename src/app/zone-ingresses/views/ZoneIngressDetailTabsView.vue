@@ -3,6 +3,7 @@
     v-slot="{ route }"
     name="zone-ingress-detail-tabs-view"
     :params="{
+      zone: '',
       zoneIngress: '',
     }"
   >
@@ -17,6 +18,9 @@
         {
           to: {
             name: 'zone-ingress-list-view',
+            params: {
+              zone: route.params.zone,
+            },
           },
           text: t('zone-ingresses.routes.item.breadcrumbs'),
         },

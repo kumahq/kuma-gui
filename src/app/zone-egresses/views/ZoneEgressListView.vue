@@ -134,7 +134,6 @@
             >
               <component
                 :is="child.Component"
-                :name="route.params.zoneEgress"
                 :zone-egress-overview="data?.items.find((item) => item.name === route.params.zoneEgress)"
               />
             </SummaryView>
