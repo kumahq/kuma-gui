@@ -26,6 +26,8 @@ data-planes:
         data-plane-stats-view: 'Stats'
         data-plane-clusters-view: 'Clusters'
         data-plane-config-view: 'YAML'
+        data-plane-inbound-summary-overview-view: 'Overview'
+        data-plane-outbound-summary-overview-view: 'Overview'
       gateway: 'Gateway'
       inbounds: 'Inbounds'
       inbound_name: '{service}'

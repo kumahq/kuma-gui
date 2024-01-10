@@ -1,6 +1,7 @@
 <template>
   <DataCard
     class="service-traffic-card"
+    @click="click"
   >
     <template #title>
       <KBadge :appearance="props.protocol === 'passthrough' ? 'success' : 'info'">
@@ -102,6 +103,15 @@ const props = defineProps<{
     tcp?: Record<string, unknown>
   }
 }>()
+const click = (e: MouseEvent) => {
+  const $el = (e.target as HTMLElement).closest('.service-traffic-card')
+  if ($el) {
+    const $a = $el.querySelector('a')
+    if ($a !== null) {
+      $a.click()
+    }
+  }
+}
 
 </script>
 <style lang="scss" scoped>
@@ -110,5 +120,11 @@ const props = defineProps<{
   display: flex;
   flex: 1 1 auto;
 }
-
+.title :deep(> a) {
+  text-decoration: none;
+  color: inherit;
+}
+.data-card:has(a) {
+  cursor: pointer;
+}
 </style>

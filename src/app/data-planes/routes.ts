@@ -11,6 +11,32 @@ export const routes = () => {
             path: 'overview',
             name: 'data-plane-detail-view',
             component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+            children: [
+              {
+                path: 'inbound/:service',
+                name: 'data-plane-inbound-summary-view',
+                component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryView.vue'),
+                children: [
+                  {
+                    path: 'overview',
+                    name: 'data-plane-inbound-summary-overview-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
+                  },
+                ],
+              },
+              {
+                path: 'outbound/:service',
+                name: 'data-plane-outbound-summary-view',
+                component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryView.vue'),
+                children: [
+                  {
+                    path: 'overview',
+                    name: 'data-plane-outbound-summary-overview-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                  },
+                ],
+              },
+            ],
           },
           {
             path: 'policies',

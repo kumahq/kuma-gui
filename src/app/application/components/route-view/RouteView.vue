@@ -106,11 +106,13 @@ const routeParams = reactive<Params>(structuredClone(props.params) as Params)
 
 // Updates the URL for route params if used as a modelValue (for boolean props only)
 watch(routeParams, (val) => {
-  const booleans = Object.fromEntries(Object.entries(val).filter(([key, _value]) => {
-    return typeof props.params[key] === 'boolean'
-  }))
-  if (Object.keys(booleans).length > 0) {
-    routeUpdate(booleans)
+  if (route.name === props.name) {
+    const booleans = Object.fromEntries(Object.entries(val).filter(([key, _value]) => {
+      return typeof props.params[key] === 'boolean'
+    }))
+    if (Object.keys(booleans).length > 0) {
+      routeUpdate(booleans)
+    }
   }
 })
 

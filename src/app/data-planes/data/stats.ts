@@ -3,6 +3,7 @@ interface MetricRecord {
 }
 export type TrafficEntry = {
   name: string
+  protocol: string
   http?: MetricRecord
   tcp?: MetricRecord
 }
@@ -58,6 +59,7 @@ export const getTraffic = (json: ReturnType<typeof parse>, filter: (key: string)
       if (typeof traffic[key] === 'undefined') {
         traffic[key] = {
           name: key,
+          protocol: item,
         }
       }
       traffic[key][item] = value

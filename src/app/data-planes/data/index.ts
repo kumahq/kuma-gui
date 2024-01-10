@@ -26,6 +26,8 @@ import type {
   SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
 
+export type { TrafficEntry } from './stats'
+
 type DiscoverySubscriptionCollection = {
 } & SubscriptionCollection<DiscoverySubscription>
 
@@ -36,10 +38,12 @@ export type DataplaneInbound = PartialDataplaneInbound & {
   service: string
   addressPort: string
   serviceAddressPort: string
+  protocol: string
 }
 
 export type DataplaneOutbound = PartialDataplaneOutbound & {
   service: string
+  protocol: string
 }
 
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
@@ -99,6 +103,7 @@ const DataplaneNetworking = {
           // If a health property is unset the inbound is considered healthy
           health: { ready: !isSet(item.health) ? true : item.health.ready },
           service: item.tags['kuma.io/service'],
+          protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
           addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
           serviceAddressPort: `${item.serviceAddress ?? item.address ?? networking.address}:${item.servicePort ?? item.port}`,
         }
@@ -107,6 +112,7 @@ const DataplaneNetworking = {
         return {
           ...item,
           service: item.tags['kuma.io/service'],
+          protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
         }
       }),
     }
