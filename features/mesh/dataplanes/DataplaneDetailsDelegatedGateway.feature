@@ -3,13 +3,14 @@ Feature: Dataplane details for delegated gateway
     Given the CSS selectors
       | Alias              | Selector                                                        |
       | detail-view        | [data-testid='data-plane-detail-tabs-view']                     |
-      | overview-tab       | #data-plane-detail-view-tab a                                   |
       | warnings           | [data-testid='dataplane-warnings']                              |
       | details            | [data-testid='dataplane-details']                               |
       | inbounds           | [data-testid='dataplane-inbounds']                              |
       | policy-item        | [data-testid='policy-list'] .accordion-item                     |
       | policy-item-button | $policy-item:nth-child(1) [data-testid='accordion-item-button'] |
-    And the environment
+
+  Scenario: Overview tab has expected content
+    Given the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
       KUMA_DATAPLANEINBOUND_COUNT: 0
@@ -48,7 +49,6 @@ Feature: Dataplane details for delegated gateway
 
     When I visit the "/meshes/default/data-planes/dataplane-gateway_delegated-1/overview" URL
 
-  Scenario: Overview tab has expected content
     Then the page title contains "dataplane-gateway_delegated-1"
     And the "$detail-view" element contains "dataplane-gateway_delegated-1"
     And the "$details" element contains
