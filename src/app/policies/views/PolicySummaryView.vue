@@ -24,12 +24,14 @@
               :to="{
                 name: 'policy-detail-view',
                 params: {
-                  policy: props.name,
+                  mesh: route.params.mesh,
+                  policyPath: route.params.policyPath,
+                  policy: route.params.policy,
                 },
               }"
             >
               <RouteTitle
-                :title="t('policies.routes.item.title', { name: props.name })"
+                :title="t('policies.routes.item.title', { name: route.params.policy })"
               />
             </RouterLink>
           </h2>
@@ -112,7 +114,6 @@ import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 
 const props = withDefaults(defineProps<{
-  name: string
   policy?: Policy
   policyType: PolicyType
 }>(), {

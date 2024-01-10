@@ -83,7 +83,6 @@
                   >
                     <component
                       :is="child.Component"
-                      :name="route.params.policy"
                       :policy="data?.items.find((item) => item.name === route.params.policy)"
                       :policy-type="policyTypesData.policies.find((policyType) => policyType.path === route.params.policyPath)"
                     />
