@@ -41,31 +41,34 @@ Feature: mesh / policies / index
         - name: fake-cb-1
         - name: fake-cb-2
       """
+
+  Scenario: Listing has expected content
     When I visit the "/meshes/default/policies/circuit-breakers" URL
 
-  Scenario: We have a documentation link
     Then the "$button-docs" element exists
 
-  Scenario: The items have the correct columns
-    Then the "$items-header" element exists 2 times
-    Then the "$items-header" elements contain
+    And the "$items-header" element exists 2 times
+    And the "$items-header" elements contain
       | Value |
       | Name  |
 
-  Scenario: The items have the expected content and UI elements
-    Then the "#policy-list-index-view-tab.active" element exists
-    Then the "$item" element exists 2 times
-    Then the "$item:nth-child(1)" element contains
+    And the "#policy-list-index-view-tab.active" element exists
+    And the "$item" element exists 2 times
+    And the "$item:nth-child(1)" element contains
       | Value     |
       | fake-cb-1 |
 
   Scenario: Clicking the link goes to the detail page and back again
+    When I visit the "/meshes/default/policies/circuit-breakers" URL
+
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
-    When I click the "$item:nth-child(1) td:first-of-type a" element
-    Then I click the "$item:nth-child(1) [data-testid='details-link']" element
-    Then the URL contains "circuit-breakers/fake-cb-1"
+
+    When I click the "$item:nth-child(1) [data-testid='details-link']" element
+
+    Then the URL contains "circuit-breakers/fake-cb-1/overview"
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
+
     Then the "$item" element exists 2 times
 
   Scenario: Clicking policy types in the sidebar switches listing
@@ -82,8 +85,10 @@ Feature: mesh / policies / index
       """
 
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$item:nth-child(1)" element contains "fake-cb-1"
+
+    Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
 
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
-    Then the "$item:nth-child(1)" element contains "mfi-1"
+
+    Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
     And the "$item:nth-child(1)" element contains "MeshService:service-1"
