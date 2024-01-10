@@ -1,5 +1,12 @@
 <template>
-  <RouteView name="zone-egress-summary-view">
+  <RouteView
+    v-slot="{ route }"
+    name="zone-egress-summary-view"
+    :params="{
+      zone: '',
+      zoneEgress: '',
+    }"
+  >
     <AppView>
       <template #title>
         <div class="summary-title-wrapper">
@@ -13,12 +20,13 @@
               :to="{
                 name: 'zone-egress-detail-view',
                 params: {
-                  zone: props.name,
+                  zone: route.params.zone,
+                  zoneEgress: route.params.zoneEgress,
                 },
               }"
             >
               <RouteTitle
-                :title="t('zone-egresses.routes.item.title', { name: props.name })"
+                :title="t('zone-egresses.routes.item.title', { name: route.params.zoneEgress })"
               />
             </RouterLink>
           </h2>
@@ -59,7 +67,6 @@ import { useI18n } from '@/utilities'
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  name: string
   zoneEgressOverview?: ZoneEgressOverview
 }>(), {
   zoneEgressOverview: undefined,
