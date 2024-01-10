@@ -1833,10 +1833,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kong-ui-public/i18n@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.0.4.tgz#9bc5b4a5371a5028375889796395cb045a93d97c"
-  integrity sha512-C7UI7K7kZSh5drL9az5irup6a1yzEytUTTVfMN1Gg7b15cRfIuV9NsdmicAfsCGpICjekNPQDPlCIhuq6KI8sA==
+"@kong-ui-public/i18n@2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.0.5.tgz#92c73df000ddbd5c37d0154d3e686335d8c11d9a"
+  integrity sha512-tbLSiOjdlmLyE1ly4qpB3iLDUL0lqhstkKy8pg7E596M1l13kBNFA9Da/QOIZTURJnIwp6Crz8dXoJNp+5mWCw==
   dependencies:
     "@formatjs/intl" "^2.9.9"
     flat "^6.0.1"
@@ -1847,24 +1847,24 @@
   resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.12.4.tgz#3469d408f8af42c71f03646eb741e666bdf72911"
   integrity sha512-ldBWJbpNLU34OR0d+ptErp/FJrwc8GK8nUZjUmu9zy69ebjztcNAoULgc8MXS+bjzwGZ8U/v8Vmbhh3WFQq0gA==
 
-"@kong/icons@1.8.8", "@kong/icons@^1.8.3":
-  version "1.8.8"
-  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.8.tgz#08bd0ef7e16744f8cfec5713e74811790b8f7071"
-  integrity sha512-TFBSTxnjmot6IBmHNpGcpJreB/ki5gi6GUY2Oy/snLdIkV3r50jnniz5w/DhA2+PsmjUsvwQ4hzbdyKqeXTZ3A==
+"@kong/icons@1.8.10", "@kong/icons@^1.8.10":
+  version "1.8.10"
+  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.10.tgz#2a29df63bf6bfcdd517df1341d78cee3c3442a12"
+  integrity sha512-t/LhFqjLMJvbl0qC5X8oQumduuD4ye4Lpyf+zGIcKxbTb+H41d6CV1kdGDJ5obWDrl4n2Zdv4ahWvrd+PnKDLA==
 
-"@kong/kongponents@9.0.0-alpha.73":
-  version "9.0.0-alpha.73"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.73.tgz#5bd50c256da7ad33aae09165cccb0c4c62ffca22"
-  integrity sha512-61jSUBHPignrr60gvrUfxgrRVTXEts0073tBrqTFk2rlmpSRHl/eEHTVXDFy8V1DtdL+AUz8uSY3xyoLUFZrgA==
+"@kong/kongponents@9.0.0-alpha.82":
+  version "9.0.0-alpha.82"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.82.tgz#a46202fc06c83450471ca32e0829e40fbdeaf984"
+  integrity sha512-o3X3xUwHAIrzpnwCpN12ZI9b4QjIo0DsUcNQWtjB16RWPbsQuULWiq86a71VVNGe+46oxjDtfMokF7x9EhEojQ==
   dependencies:
-    "@kong/icons" "^1.8.3"
+    "@kong/icons" "^1.8.10"
     "@popperjs/core" "^2.11.8"
     date-fns "^2.30.0"
     date-fns-tz "^2.0.0"
     focus-trap "^7.5.4"
     focus-trap-vue "^4.0.3"
     popper.js "^1.16.1"
-    sortablejs "^1.15.0"
+    sortablejs "^1.15.1"
     swrv "^1.0.4"
     uuid "^9.0.1"
     v-calendar "^3.1.2"
@@ -7716,10 +7716,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-sortablejs@^1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.0.tgz#53230b8aa3502bb77a29e2005808ffdb4a5f7e2a"
-  integrity sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==
+sortablejs@^1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.1.tgz#9a35f52cdff449fb42ea8ecf222f3468d76e0a47"
+  integrity sha512-P5Cjvb0UG1ZVNiDPj/n4V+DinttXG6K8n7vM/HQf0C25K3YKQTQY6fsr/sEGsJGpQ9exmPxluHxKBc0mLKU1lQ==
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"
