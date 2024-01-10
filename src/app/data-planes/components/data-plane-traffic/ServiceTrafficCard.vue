@@ -104,11 +104,16 @@ const props = defineProps<{
   }
 }>()
 const click = (e: MouseEvent) => {
+  if (!e.isTrusted) {
+    return
+  }
   const $el = (e.target as HTMLElement).closest('.service-traffic-card')
   if ($el) {
     const $a = $el.querySelector('a')
     if ($a !== null) {
-      $a.click()
+      window.requestAnimationFrame(() => {
+        $a.click()
+      })
     }
   }
 }

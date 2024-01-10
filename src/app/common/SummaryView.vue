@@ -1,7 +1,6 @@
 <template>
   <KSlideout
     ref="slideOutRef"
-    prevent-close-on-blur
     class="summary-slideout"
     close-button-alignment="end"
     :has-overlay="false"
@@ -16,21 +15,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onClickOutside, useThrottleFn } from '@vueuse/core'
-import { ref } from 'vue'
-
-// recreates KSlideOuts close on blur, but ignores clicks on any anchors
-const slideOutRef = ref(null)
-onClickOutside(
-  // @ts-ignore CI only ts error
-  slideOutRef,
-  useThrottleFn((event: PointerEvent) => {
-    const $el = event.target as HTMLElement
-    if (event.isTrusted && $el.nodeName.toLowerCase() !== 'a') {
-      emit('close')
-    }
-  }, 1, true, false),
-)
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
