@@ -21,6 +21,9 @@ on:
       # See “Filter pattern cheat sheet” https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
     branches: [master, 'release-[0-9]+.[0-9]+']
 
+permissions:
+  contents: read # needed for actions/checkout
+
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
 concurrency:
@@ -38,41 +41,34 @@ jobs:
       SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
       BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
     steps:
-      - name: Check-out GUI
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: ${{ env.BRANCH }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         id: node-modules-cache
         with:
           path: |
             **/node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install dependencies
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+      - if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
-      - name: Build dist
-        run: yarn run build
+      - run: yarn run build
 
-      - name: Generate GitHub app token
-        # https://github.com/tibdex/github-app-token
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a
+      # https://github.com/tibdex/github-app-token
+      - uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a
         id: github-app-token
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - name: Check-out main application
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           # This needs to be a token that grants read access to `HOST_REPOSITORY`. If that repository is private, it needs general access to the `repo` scope which grants access to read private repositories. Otherwise, you will run into an error telling you that the checkout actions can’t determine the repository’s default branch. This is on account of a lack of access not because it can’t determine the default branch.
           token: ${{ steps.github-app-token.outputs.token }}
@@ -80,15 +76,13 @@ jobs:
           ref: ${{ env.BRANCH }}
           path: main-application
 
-      - name: Copy dist into main application
-        run: |
+      - run: |
           cd main-application
           rm -rf ${{ vars.HOST_DIST_DIRECTORY }}
           cp -r ../${{ vars.DIST_DIRECTORY }}/ ${{ vars.HOST_DIST_DIRECTORY }}
 
-      - name: Create pull request
-        # https://github.com/peter-evans/create-pull-request
-        uses: peter-evans/create-pull-request@v5
+      # https://github.com/peter-evans/create-pull-request
+      - uses: peter-evans/create-pull-request@v5
         with:
           # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
           token: ${{ steps.github-app-token.outputs.token }}
