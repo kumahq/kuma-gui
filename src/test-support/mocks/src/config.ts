@@ -1,5 +1,11 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default ({ env }: EndpointDependencies): MockResponder => (_req) => {
+
+export default ({ env, fake }: EndpointDependencies): MockResponder => (_req) => {
+  const mode = env('KUMA_MODE', 'global') === 'global' ? 'global' : 'zone'
+  // TODO: Enable this once https://github.com/kumahq/kuma/issues/8767 has been merged and remove the line below.
+  // const zoneName = mode === 'zone' ? env('KUMA_ZONE', fake.hacker.noun()) : undefined
+  const zoneName = mode === 'zone' ? fake.hacker.noun() : undefined
+
   return {
     headers: {},
     body: {
@@ -114,7 +120,7 @@ export default ({ env }: EndpointDependencies): MockResponder => (_req) => {
           subscriptionLimit: 10,
         },
       },
-      mode: env('KUMA_MODE', 'global') === 'global' ? 'global' : 'standalone',
+      mode,
       monitoringAssignmentServer: {
         apiVersions: ['v1'],
         assignmentRefreshInterval: '1s',
@@ -134,11 +140,13 @@ export default ({ env }: EndpointDependencies): MockResponder => (_req) => {
           },
         },
         zone: {
+          globalAddress: fake.datatype.boolean() ? 'grpcs://localhost:35685' : '',
           kds: {
             maxMsgSize: 10485760,
             refreshInterval: '1s',
             rootCaFile: '',
           },
+          ...(zoneName ? { name: zoneName } : {}),
         },
       },
       reports: {

@@ -42,10 +42,10 @@ Feature: application / titles
       | /meshes/default/policies/circuit-breakers                    | Policies  |
       | /meshes/default/policies/circuit-breakers/program-0/overview | program-0 |
 
-  Scenario Outline: Visiting the "<Title>" page in "standalone" Mode
+  Scenario Outline: Visiting the "<Title>" page in "zone" Mode
     Given the environment
       """
-      KUMA_MODE: standalone
+      KUMA_MODE: zone
       """
     When I visit the "<URL>" URL
     Then the page title contains "<Title>"

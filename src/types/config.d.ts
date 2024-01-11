@@ -164,6 +164,8 @@ export interface Kds2 {
 
 export interface Zone2 {
   kds: Kds2
+  globalAddress?: string
+  name?: string
 }
 
 export interface Multizone {

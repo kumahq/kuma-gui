@@ -20,7 +20,7 @@ describe('env', () => {
           apiUrl: '/somewhere/else',
           version: '110.127.30',
           product: 'Kuma',
-          mode: 'standalone',
+          mode: 'zone',
           environment: 'universal',
           storeType: 'postgres',
           apiReadOnly: false,
