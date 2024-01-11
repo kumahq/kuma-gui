@@ -17,22 +17,48 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const inbounds = ports.map(port => {
     const service = `localhost_${port}`
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
-    if (fake.datatype.boolean()) {
-      const prefix = `http.${service}.${direction}`
-      const totalRequests = fake.number.int(_minMax)
-      const req = fake.kuma.partitionInto({
-        _1xx: fake.helpers.arrayElement([NaN, 0]),
-        _2xx: NaN,
-        _3xx: fake.helpers.arrayElement([NaN, 0]),
-        _4xx: NaN,
-        _5xx: NaN,
-      }, totalRequests)
-      const total = fake.kuma.partitionInto({
-        http1: NaN,
-        http2: NaN,
-        http3: NaN,
-      }, totalRequests)
-      return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+    switch (fake.helpers.arrayElement(['grpc', 'http', 'tcp'])) {
+      case 'grpc': {
+        const prefix = `http.${service}.${direction}`
+        const totalRequests = fake.number.int(_minMax)
+        const req = fake.kuma.partitionInto({
+          success: Number,
+          failure: Number,
+        }, totalRequests)
+        return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+cluster.${service}.grpc.0: ${totalRequests}
+cluster.${service}.grpc.request_message_count: ${totalRequests}
+cluster.${service}.grpc.response_message_count: ${req.success}
+cluster.${service}.grpc.failure: ${req.failure}
+cluster.${service}.grpc.success: ${req.success}
+cluster.${service}.grpc.total: ${totalRequests}
+${prefix}_rq_1xx: 0
+${prefix}_rq_2xx: ${totalRequests}
+${prefix}_rq_3xx: 0
+${prefix}_rq_4xx: 0
+${prefix}_rq_5xx: 0
+${prefix}_rq_http1_total: 0
+${prefix}_rq_http2_total: ${totalRequests}
+${prefix}_rq_http3_total: 0
+${prefix}_rq_total: ${totalRequests}`
+      }
+      case 'http': {
+        const prefix = `http.${service}.${direction}`
+        const totalRequests = fake.number.int(_minMax)
+        const req = fake.kuma.partitionInto({
+          _1xx: fake.helpers.arrayElement([Number, 0]),
+          _2xx: Number,
+          _3xx: fake.helpers.arrayElement([Number, 0]),
+          _4xx: Number,
+          _5xx: Number,
+        }, totalRequests)
+        const total = fake.kuma.partitionInto({
+          http1: Number,
+          http2: Number,
+          http3: Number,
+        }, totalRequests)
+        return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_rq_1xx: ${req._1xx}
 ${prefix}_rq_2xx: ${req._2xx}
@@ -43,33 +69,62 @@ ${prefix}_rq_http1_total: ${total.http1}
 ${prefix}_rq_http2_total: ${total.http2}
 ${prefix}_rq_http3_total: ${total.http3}
 ${prefix}_rq_total: ${totalRequests}`
-    } else {
-      const prefix = `tcp.${service}.${direction}`
-      return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+      }
+      case 'tcp': {
+        const prefix = `tcp.${service}.${direction}`
+        return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
+      }
     }
+    return ''
   }).join('\n')
 
   const outbounds = Array.from({ length: serviceCount }).map(_ => {
     const port = fake.number.int({ min: 1, max: 65535 })
     const service = `${fake.hacker.noun()}_svc_${port}`
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
-    if (fake.datatype.boolean()) {
-      const prefix = `http.${service}.${direction}`
-      const totalRequests = fake.number.int(_minMax)
-      const req = fake.kuma.partitionInto({
-        _1xx: fake.helpers.arrayElement([NaN, 0]),
-        _2xx: NaN,
-        _3xx: fake.helpers.arrayElement([NaN, 0]),
-        _4xx: NaN,
-        _5xx: NaN,
-      }, totalRequests)
-      const total = fake.kuma.partitionInto({
-        http1: NaN,
-        http2: NaN,
-        http3: NaN,
-      }, totalRequests)
-      return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+    switch (fake.helpers.arrayElement(['grpc', 'http', 'tcp'])) {
+      case 'grpc': {
+        const prefix = `http.${service}.${direction}`
+        const totalRequests = fake.number.int(_minMax)
+        const req = fake.kuma.partitionInto({
+          success: Number,
+          failure: Number,
+        }, totalRequests)
+        return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+cluster.${service}.grpc.0: ${totalRequests}
+cluster.${service}.grpc.request_message_count: ${totalRequests}
+cluster.${service}.grpc.response_message_count: ${req.success}
+cluster.${service}.grpc.failure: ${req.failure}
+cluster.${service}.grpc.success: ${req.success}
+cluster.${service}.grpc.total: ${totalRequests}
+${prefix}_rq_1xx: 0
+${prefix}_rq_2xx: ${totalRequests}
+${prefix}_rq_3xx: 0
+${prefix}_rq_4xx: 0
+${prefix}_rq_5xx: 0
+${prefix}_rq_http1_total: 0
+${prefix}_rq_http2_total: ${totalRequests}
+${prefix}_rq_http3_total: 0
+${prefix}_rq_total: ${totalRequests}`
+      }
+      case 'http': {
+        const prefix = `http.${service}.${direction}`
+        const totalRequests = fake.number.int(_minMax)
+        const req = fake.kuma.partitionInto({
+          _1xx: fake.helpers.arrayElement([Number, 0]),
+          _2xx: Number,
+          _3xx: fake.helpers.arrayElement([Number, 0]),
+          _4xx: Number,
+          _5xx: Number,
+        }, totalRequests)
+        const total = fake.kuma.partitionInto({
+          http1: Number,
+          http2: Number,
+          http3: Number,
+        }, totalRequests)
+        return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_rq_1xx: ${req._1xx}
 ${prefix}_rq_2xx: ${req._2xx}
@@ -80,11 +135,14 @@ ${prefix}_rq_http1_total: ${total.http1}
 ${prefix}_rq_http2_total: ${total.http2}
 ${prefix}_rq_http3_total: ${total.http3}
 ${prefix}_rq_total: ${totalRequests}`
-    } else {
-      const prefix = `tcp.${service}.${direction}`
-      return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+      }
+      case 'tcp': {
+        const prefix = `tcp.${service}.${direction}`
+        return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
+      }
     }
+    return ''
   }).join('\n')
 
   const passthrough = ['outbound_passthrough_ipv4', 'outbound_passthrough_ipv6'].map(service => {
