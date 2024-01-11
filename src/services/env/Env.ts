@@ -1,4 +1,14 @@
-type PathConfig = ReturnType<typeof getPathConfigDefault>
+type PathConfig = {
+  baseGuiPath: string
+  apiUrl: string
+  version: string
+  product: string
+  mode: string
+  zone?: string
+  environment: string
+  storeType: string
+  apiReadOnly: boolean
+}
 
 export type EnvArgs = {
   KUMA_PRODUCT_NAME: string
@@ -15,6 +25,8 @@ type EnvProps = {
   KUMA_KDS_URL: string
   KUMA_UTM_QUERY_PARAMS: string
   KUMA_MODE: string
+  // TODO: Enable this once https://github.com/kumahq/kuma/issues/8767 has been merged.
+  // KUMA_ZONE: string | undefined
   KUMA_ENVIRONMENT: string
   KUMA_STORE_TYPE: string
 }
@@ -28,6 +40,7 @@ export default class Env {
     const env = (str: keyof EnvInternal, d: string = '') => this.var(str, _env?.[str] ?? d)
 
     const config = this.getConfig()
+    const mode = env('KUMA_MODE') || config.mode
     const version = semver(env('KUMA_VERSION', config.version))
 
     const productName = encodeURIComponent(env('KUMA_PRODUCT_NAME'))
@@ -42,7 +55,9 @@ export default class Env {
       KUMA_VERSION: version.pre,
       KUMA_API_URL: env('KUMA_API_URL') || config.apiUrl,
       KUMA_BASE_PATH: env('KUMA_BASE_PATH') || config.baseGuiPath,
-      KUMA_MODE: env('KUMA_MODE') || config.mode,
+      KUMA_MODE: mode,
+      // TODO: Enable this once https://github.com/kumahq/kuma/issues/8767 has been merged.
+      // KUMA_ZONE: mode === 'zone' ? config.zone || 'default' : undefined,
       KUMA_ENVIRONMENT: env('KUMA_ENVIRONMENT') || config.environment,
       KUMA_STORE_TYPE: env('KUMA_STORE_TYPE') || config.storeType,
       KUMA_KDS_URL: 'grpcs://<global-kds-address>:5685',
@@ -86,7 +101,7 @@ export default class Env {
     return config
   }
 }
-export function getPathConfigDefault(apiUrlDefault: string = '') {
+export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
   return {
     /**
      * The base GUI path. Will include a leading slash. Won’t include a trailing slash.
@@ -102,7 +117,8 @@ export function getPathConfigDefault(apiUrlDefault: string = '') {
     apiUrl: apiUrlDefault,
     version: '2.4.0',
     product: 'Kuma',
-    mode: 'global',
+    mode: 'zone',
+    zone: 'default',
     environment: 'universal',
     storeType: 'postgres',
     apiReadOnly: false,

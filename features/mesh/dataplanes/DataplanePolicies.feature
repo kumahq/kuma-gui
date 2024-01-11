@@ -31,10 +31,10 @@ Feature: Dataplane policies
       Then the "$standard-dataplane-policies" element exists
       And the "$policy-list" element doesn't exist
 
-    Scenario: Dataplane policies view shows expected content for standard proxy (mode: standalone)
+    Scenario: Dataplane policies view shows expected content for standard proxy (mode: zone)
       Given the environment
         """
-        KUMA_MODE: standalone
+        KUMA_MODE: zone
         """
       And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
         """

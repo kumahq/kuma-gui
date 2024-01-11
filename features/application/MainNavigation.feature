@@ -17,11 +17,11 @@ Feature: application / MainNavigation
     When I visit the "/" URL
     Then the "<Element>" element <ExistsAssertion>
     Examples:
-      | Element            | Mode       | ExistsAssertion |
-      | $zones-nav         | global     | exists          |
-      | $zone-egresses-nav | global     | doesn't exist   |
-      | $zones-nav         | standalone | doesn't exist   |
-      | $zone-egresses-nav | standalone | exists          |
+      | Element            | Mode   | ExistsAssertion |
+      | $zones-nav         | global | exists          |
+      | $zone-egresses-nav | global | doesn't exist   |
+      | $zones-nav         | zone   | doesn't exist   |
+      | $zone-egresses-nav | zone   | exists          |
 
   Scenario Outline: Visiting the "<Title>" page
     Given the URL "/mesh-insights/default" responds with

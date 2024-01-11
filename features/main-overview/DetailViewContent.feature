@@ -56,11 +56,11 @@ Feature: Overview: Detail view content
                 offline: 0
       """
 
-  Scenario: Shows expected content in standalone mode
+  Scenario: Shows expected content in zone mode
     Given the environment
       """
       KUMA_MESH_COUNT: 3
-      KUMA_MODE: standalone
+      KUMA_MODE: zone
       """
     And the URL "/global-insight" responds with
       """
