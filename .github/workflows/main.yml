@@ -7,6 +7,9 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
+permissions:
+  contents: read # for checking out the repository (e.g. actions/checkout)
+
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest

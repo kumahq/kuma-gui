@@ -22,7 +22,7 @@ on:
     branches: [master, 'release-[0-9]+.[0-9]+']
 
 permissions:
-  contents: read # needed for actions/checkout
+  contents: read # for checking out the repository (e.g. actions/checkout)
 
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
@@ -34,7 +34,7 @@ jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
     # Only runs this job when the triggering workflow run was a success (i.e. the “Tests” workflow passes).
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch'  || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     name: Create GUI update PR
     runs-on: ubuntu-latest
     env:
