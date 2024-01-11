@@ -1,6 +1,5 @@
 <template>
   <KSlideout
-    ref="slideOutRef"
     class="summary-slideout"
     close-button-alignment="end"
     :has-overlay="false"
