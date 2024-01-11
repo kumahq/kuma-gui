@@ -41,20 +41,4 @@ async function mountVueApplication() {
   app.mount('#app')
 }
 
-const pathConfigNode = document.querySelector('#kuma-config')
-let isUiDisabled = false
-if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
-  try {
-    const config = JSON.parse(pathConfigNode.textContent.trim())
-    isUiDisabled = config.disabled === true
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-// If the UI is disabled, there is no point in mounting the Vue application.
-if (isUiDisabled) {
-  document.documentElement.classList.add('ui-disabled')
-} else {
-  mountVueApplication()
-}
+mountVueApplication()

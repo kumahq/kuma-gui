@@ -11,27 +11,7 @@
   <title>Manager</title>
 
   <style type="text/css">
-    html:not(.ui-disabled) .disabled-ui-message {
-      display: none;
-    }
-
-    .disabled-ui-message {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .message {
-      max-width: 40em;
-    }
-
-    .logo {
-      max-height: 36px;
-      margin-bottom: 12px;
-    }
-
-    html:not(.ui-disabled):not(.kuma-ready) {
+    html:not(.kuma-ready) {
       background-image: url('/kuma-loader-v1.gif');
       background-position: center center;
       background-repeat: none;
@@ -41,8 +21,8 @@
       align-items: center;
     }
 
-    html:not(.ui-disabled):not(.kuma-ready)::before,
-    html:not(.ui-disabled):not(.kuma-ready)::after {
+    html:not(.kuma-ready)::before,
+    html:not(.kuma-ready)::after {
       position: absolute;
       left: 50%;
       margin-left: -125px;
@@ -52,10 +32,10 @@
       height: 5px;
       width: 250px;
     }
-    html:not(.ui-disabled):not(.kuma-ready)::before {
+    html:not(.kuma-ready)::before {
       background-color: #afb7c5 /*$kui-color-background-neutral-weak*/;
     }
-    html:not(.ui-disabled):not(.kuma-ready)::after {
+    html:not(.kuma-ready)::after {
       background-color: #5f9aff /*$kui-color-background-primary-weak*/;
       animation: 1s ease-out infinite both load;
     }
@@ -77,18 +57,6 @@
       We're sorry but this site doesn't work properly without JavaScript enabled. Please enable it to continue.
     </strong>
   </noscript>
-
-  <div class="disabled-ui-message">
-    <div class="message">
-      <img class="logo" src="/product-logo.png" alt="Kuma logo">
-
-      <h1>The GUI is disabled</h1>
-
-      <p>If this is a Zone CP, please check the GUI on the Global CP.</p>
-
-      <p>If this isn’t a Zone CP, the GUI can be enabled by setting the configuration <code>KUMA_API_SERVER_GUI_ENABLED=true</code>.</p>
-    </div>
-  </div>
 
   <div id="app"></div>
   <script type="module" src="/src/main.ts"></script>
