@@ -1,4 +1,5 @@
 name: project-lifecycle
+
 on:
   schedule:
     - cron: 0 8 * * *
@@ -8,6 +9,10 @@ on:
       - reopened
       - opened
       - labeled
+
+permissions:
+  contents: read # for checking out the repository (e.g. actions/checkout)
+  issues: write # for editing issues (e.g. adding labels)
 
 jobs:
   lifecycle:

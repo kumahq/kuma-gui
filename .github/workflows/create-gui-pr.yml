@@ -22,7 +22,7 @@ on:
     branches: [master, 'release-[0-9]+.[0-9]+']
 
 permissions:
-  contents: read # needed for actions/checkout
+  contents: read # for checking out the repository (e.g. actions/checkout)
 
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.

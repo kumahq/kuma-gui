@@ -8,33 +8,24 @@ on:
   schedule:
     - cron: '31 11 * * 4'
 
+permissions:
+  contents: read # for checking out the repository (e.g. actions/checkout)
+  security-events: write # for adding code alert statuses
+
 jobs:
   analyze:
     name: Run CodeQL
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
     strategy:
       fail-fast: false
       matrix:
         language: [javascript]
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
-
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: '/language:${{matrix.language}}'
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:${{matrix.language}}'
