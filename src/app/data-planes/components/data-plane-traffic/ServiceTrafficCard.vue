@@ -129,7 +129,4 @@ const click = (e: MouseEvent) => {
   text-decoration: none;
   color: inherit;
 }
-.data-card:has(a) {
-  cursor: pointer;
-}
 </style>

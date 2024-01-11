@@ -520,6 +520,9 @@ const warnings = computed(() => props.data.warnings.concat(...(props.data.isCert
 </script>
 
 <style lang="scss" scoped>
+.service-traffic-group:not(.type-passthrough) .service-traffic-card {
+  cursor: pointer;
+}
 .traffic {
   padding: 0;
   container-type: inline-size;
