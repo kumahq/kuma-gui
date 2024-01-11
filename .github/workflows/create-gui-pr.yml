@@ -34,7 +34,7 @@ jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
     # Only runs this job when the triggering workflow run was a success (i.e. the “Tests” workflow passes).
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch'  || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     name: Create GUI update PR
     runs-on: ubuntu-latest
     env:
