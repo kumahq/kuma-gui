@@ -2,8 +2,10 @@ import { readFile as read, stat } from 'fs/promises'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig, createLogger } from 'vite'
 
-import type { PathConfig } from '@/services/env/Env'
+import type { getPathConfigDefault } from '@/services/env/Env'
 import type { UserConfigFn } from 'vite'
+
+type PathConfig = ReturnType<typeof getPathConfigDefault>
 
 // https://vitejs.dev/config/
 const exists = async (path: string) => {

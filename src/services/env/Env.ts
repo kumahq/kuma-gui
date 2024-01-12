@@ -1,4 +1,4 @@
-export type PathConfig = {
+type PathConfig = {
   baseGuiPath: string
   apiUrl: string
   version: string
