@@ -36,12 +36,15 @@ export class KumaModule {
     )
   }
 
-  partitionInto(skeleton: Record<string, number>, total: number) {
-    const props = Object.entries(skeleton).filter(([_key, value]) => isNaN(value)).map(([key, _value]) => key)
-    return this.partition(0, total, props.length, total).reduce((prev, item, i) => {
-      prev[props[i]] = item
-      return prev
-    }, skeleton)
+  partitionInto<T extends Record<string, typeof Number | number>>(skeleton: T, total: number): { [K in keyof T]: number } {
+    const props = Object.entries(skeleton).filter(([_key, value]) => value === Number || isNaN(Number(value))).map(([key, _value]) => key)
+    return {
+      ...skeleton,
+      ...this.partition(0, total, props.length, total).reduce((prev, item, i) => {
+        prev[props[i]] = item
+        return prev
+      }, {} as Record<string, number>),
+    }
   }
 
   serviceType() {
