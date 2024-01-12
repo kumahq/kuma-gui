@@ -8,6 +8,8 @@ data-planes:
       5xx: 5xx
       tx: Bytes sent
       rx: Bytes received
+      grpc_success: Successful
+      grpc_failure: Failed
       protocol:
         passthrough: Passthrough
     data-plane-list:
