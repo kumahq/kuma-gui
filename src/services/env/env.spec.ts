@@ -24,7 +24,6 @@ describe('env', () => {
           environment: 'universal',
           storeType: 'postgres',
           apiReadOnly: false,
-          disabled: false,
         }
       }
     }

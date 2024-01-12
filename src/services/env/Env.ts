@@ -8,7 +8,6 @@ export type PathConfig = {
   environment: string
   storeType: string
   apiReadOnly: boolean
-  disabled: boolean
 }
 
 export type EnvArgs = {
@@ -123,7 +122,6 @@ export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
     environment: 'universal',
     storeType: 'postgres',
     apiReadOnly: false,
-    disabled: false,
   }
 }
 function stripTrailingSlashes(url: string): string {

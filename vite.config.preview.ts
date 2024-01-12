@@ -63,7 +63,6 @@ export const config: (context: PreviewConfigContext) => UserConfigFn = ({
                     environment: cookies.KUMA_ENVIRONMENT ?? 'universal',
                     storeType: cookies.KUMA_STORE_TYPE ?? 'postgres',
                     apiReadOnly: false,
-                    disabled: false,
                   },
                 ),
               ))
