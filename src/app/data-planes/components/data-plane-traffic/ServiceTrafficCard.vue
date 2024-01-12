@@ -114,16 +114,14 @@ const props = defineProps<{
   traffic: TrafficEntry
 }>()
 const click = (e: MouseEvent) => {
-  if (!e.isTrusted) {
-    return
-  }
-  const $el = (e.target as HTMLElement).closest('.service-traffic-card')
-  if ($el) {
-    const $a = $el.querySelector('a')
-    if ($a !== null) {
-      window.requestAnimationFrame(() => {
+  const $target = e.target as HTMLElement
+  if ($target.nodeName.toLowerCase() !== 'a') {
+    const $el = $target.closest('.service-traffic-card')
+    if ($el) {
+      const $a = $el.querySelector('a')
+      if ($a !== null) {
         $a.click()
-      })
+      }
     }
   }
 }
