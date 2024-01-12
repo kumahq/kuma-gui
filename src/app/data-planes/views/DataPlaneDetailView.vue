@@ -4,6 +4,7 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      service: '',
       inactive: false,
     }"
     name="data-plane-detail-view"
@@ -161,10 +162,22 @@
                       >
                         <ServiceTrafficCard
                           v-if="inbound"
-                          :protocol="typeof item.http !== 'undefined' ? 'http' : 'tcp'"
+                          :protocol="item.protocol"
                           :traffic="item"
                         >
-                          :{{ inbound.port }}
+                          <RouterLink
+                            :to="{
+                              name: 'data-plane-inbound-summary-overview-view',
+                              params: {
+                                service: inbound.port,
+                              },
+                              query: {
+                                inactive: route.params.inactive ? null : undefined,
+                              },
+                            }"
+                          >
+                            :{{ inbound.port }}
+                          </RouterLink>
                           <TagList
                             :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
                           />
@@ -234,23 +247,63 @@
                     v-for="item in traffic.outbounds"
                     :key="`${item.name}`"
                   >
-                    <template
-                      v-for="protocol in [typeof item.http !== 'undefined' ? 'http' : 'tcp']"
-                      :key="protocol"
+                    <ServiceTrafficCard
+                      v-if="route.params.inactive || ((item.protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
+                      :protocol="item.protocol"
+                      :traffic="item"
                     >
-                      <ServiceTrafficCard
-                        v-if="route.params.inactive || ((protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
-                        :protocol="protocol"
-                        :traffic="item"
+                      <RouterLink
+                        :to="{
+                          name: 'data-plane-outbound-summary-overview-view',
+                          params: {
+                            service: item.name,
+                          },
+                          query: {
+                            inactive: route.params.inactive ? null : undefined,
+                          },
+                        }"
                       >
                         {{ item.name }}
-                      </ServiceTrafficCard>
-                    </template>
+                      </RouterLink>
+                    </ServiceTrafficCard>
                   </template>
                 </ServiceTrafficGroup>
               </DataPlaneTraffic>
             </div>
           </KCard>
+          <RouterView
+            v-if="route.params.service && [
+              traffic?.outbounds,
+              props.data.dataplane.networking.inbounds,
+            ].every(item => typeof item !== 'undefined')"
+            v-slot="child"
+          >
+            <SummaryView
+              @close="function (e) {
+                route.replace({
+                  name: 'data-plane-detail-view',
+                  params: {
+                    mesh: route.params.mesh,
+                    dataPlane: route.params.dataPlane,
+                  },
+                  query: {
+                    inactive: route.params.inactive ? null : undefined,
+                  },
+                })
+
+              }"
+            >
+              <component
+                :is="child.Component"
+                :data="child.route.name === 'data-plane-inbound-summary-overview-view' ?
+                  props.data.dataplane.networking.inbounds.find((item) => `${item.port}` === route.params.service) :
+                  traffic!.outbounds.find((item) => {
+                    return item.name === route.params.service
+                  })
+                "
+              />
+            </SummaryView>
+          </RouterView>
         </DataSource>
 
         <div
@@ -447,6 +500,7 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import DataPlaneTraffic from '@/app/data-planes/components/data-plane-traffic/DataPlaneTraffic.vue'
@@ -466,6 +520,9 @@ const warnings = computed(() => props.data.warnings.concat(...(props.data.isCert
 </script>
 
 <style lang="scss" scoped>
+.service-traffic-group:not(.type-passthrough) .service-traffic-card {
+  cursor: pointer;
+}
 .traffic {
   padding: 0;
   container-type: inline-size;
