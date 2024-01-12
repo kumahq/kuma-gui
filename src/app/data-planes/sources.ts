@@ -83,6 +83,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       // the pattern
       const outbounds = getTraffic(json, (key) => {
         return ![
+          '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
           'admin',
           'async-client',
           'kuma_envoy_admin',

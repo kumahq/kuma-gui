@@ -48,6 +48,18 @@
         </template>
       </template>
       <template
+        v-else-if="props.protocol === 'grpc'"
+      >
+        <div>
+          <dt>{{ t('data-planes.components.service_traffic_card.grpc_success') }}</dt>
+          <dd>{{ t('common.formats.integer', { value: props.traffic.grpc?.success as (number | undefined) ?? 0 }) }}</dd>
+        </div>
+        <div>
+          <dt>{{ t('data-planes.components.service_traffic_card.grpc_failure') }}</dt>
+          <dd>{{ t('common.formats.integer', { value: props.traffic.grpc?.failure as (number | undefined) ?? 0 }) }}</dd>
+        </div>
+      </template>
+      <template
         v-else-if="props.protocol === 'http'"
       >
         <div
@@ -93,15 +105,13 @@
   </DataCard>
 </template>
 <script lang="ts" setup>
+import type { TrafficEntry } from '../../data'
 import { useI18n } from '@/app/application'
 import DataCard from '@/app/common/data-card/DataCard.vue'
 const { t } = useI18n()
 const props = defineProps<{
   protocol: string
-  traffic: {
-    http?: Record<string, unknown>
-    tcp?: Record<string, unknown>
-  }
+  traffic: TrafficEntry
 }>()
 const click = (e: MouseEvent) => {
   if (!e.isTrusted) {

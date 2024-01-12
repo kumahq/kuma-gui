@@ -240,34 +240,38 @@
                     Non mesh traffic
                   </ServiceTrafficCard>
                 </ServiceTrafficGroup>
-                <ServiceTrafficGroup
-                  type="outbound"
+                <template
+                  v-if="traffic.outbounds.length > 0"
                 >
-                  <template
-                    v-for="item in traffic.outbounds"
-                    :key="`${item.name}`"
+                  <ServiceTrafficGroup
+                    type="outbound"
                   >
-                    <ServiceTrafficCard
-                      v-if="route.params.inactive || ((item.protocol !== 'http' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
-                      :protocol="item.protocol"
-                      :traffic="item"
+                    <template
+                      v-for="item in traffic.outbounds"
+                      :key="`${item.name}`"
                     >
-                      <RouterLink
-                        :to="{
-                          name: 'data-plane-outbound-summary-overview-view',
-                          params: {
-                            service: item.name,
-                          },
-                          query: {
-                            inactive: route.params.inactive ? null : undefined,
-                          },
-                        }"
+                      <ServiceTrafficCard
+                        v-if="route.params.inactive || ((item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
+                        :protocol="item.protocol"
+                        :traffic="item"
                       >
-                        {{ item.name }}
-                      </RouterLink>
-                    </ServiceTrafficCard>
-                  </template>
-                </ServiceTrafficGroup>
+                        <RouterLink
+                          :to="{
+                            name: 'data-plane-outbound-summary-overview-view',
+                            params: {
+                              service: item.name,
+                            },
+                            query: {
+                              inactive: route.params.inactive ? null : undefined,
+                            },
+                          }"
+                        >
+                          {{ item.name }}
+                        </RouterLink>
+                      </ServiceTrafficCard>
+                    </template>
+                  </ServiceTrafficGroup>
+                </template>
               </DataPlaneTraffic>
             </div>
           </KCard>

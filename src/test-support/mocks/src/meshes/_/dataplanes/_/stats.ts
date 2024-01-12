@@ -91,6 +91,7 @@ ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
           success: Number,
           failure: Number,
         }, totalRequests)
+        // https://grpc.github.io/grpc/core/md_doc_statuscodes.html
         return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
 cluster.${service}.grpc.0: ${totalRequests}

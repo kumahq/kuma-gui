@@ -6,14 +6,21 @@ export type TrafficEntry = {
   protocol: string
   http?: MetricRecord
   tcp?: MetricRecord
+  grpc?: MetricRecord
+}
+
+type EnvoyStats = {
+  cluster?: Record<string, any>
+  http?: Record<string, any>
+  tcp?: Record<string, any>
 }
 
 // just does the inital response to JSON parsing
-export const parse = (lines: string) => {
+export const parse = (lines: string): EnvoyStats => {
   // for each line
   return lines.trim().split('\n').filter((item) => {
     // only use data prefixed with either cluster. http. or tcp.
-    return ['http.', 'tcp.'].some(prop => item.startsWith(prop))
+    return ['http.', 'tcp.', 'cluster.'].some(prop => item.startsWith(prop))
   }).reduce((prev, item) => {
     // split the `key: values` on the `:` and normalize the value
     const [key, ...value] = item.trim().split(':')
@@ -49,11 +56,11 @@ export const parse = (lines: string) => {
 }
 
 // lets you specify the things you are interested in
-export const getTraffic = (json: ReturnType<typeof parse>, filter: (key: string) => boolean): TrafficEntry[] => {
-  const protocols = ['http', 'tcp'] as const
+export const getTraffic = (json: EnvoyStats, filter: (key: string) => boolean): TrafficEntry[] => {
+  const protocols = ['http', 'tcp', 'cluster'] as const
   const traffic: Record<string, TrafficEntry> = {}
   protocols.map((item) => {
-    return Object.entries(json[item]).filter(([key, _value]) => {
+    return Object.entries(json[item] || {}).filter(([key, _value]) => {
       return filter(key)
     }).forEach(([key, value]) => {
       if (typeof traffic[key] === 'undefined') {
@@ -61,6 +68,17 @@ export const getTraffic = (json: ReturnType<typeof parse>, filter: (key: string)
           name: key,
           protocol: item,
         }
+      }
+      // we only look at cluster to find the grpc stats
+      if (item === 'cluster') {
+        if (typeof value.grpc !== 'undefined') {
+          // move it from cluster.service-name.grpc.* to service-name.grpc.* if we find it
+          // the entry will already have a http protocol and a .http prop
+          // so change the protocol and add the grpc stats (additional to `.http` stats)
+          traffic[key].protocol = 'grpc'
+          traffic[key].grpc = value
+        }
+        return
       }
       traffic[key][item] = value
     })
