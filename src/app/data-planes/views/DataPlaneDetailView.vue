@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ can, route }"
+    v-slot="{ route }"
     :params="{
       mesh: '',
       dataPlane: '',
@@ -9,117 +9,116 @@
     }"
     name="data-plane-detail-view"
   >
-    <AppView>
-      <template
-        v-if="warnings.length > 0"
-        #notifications
-      >
-        <ul data-testid="dataplane-warnings">
-          <!-- eslint-disable vue/no-v-html  -->
-          <li
-            v-for="warning in warnings"
-            :key="warning.kind"
-            :data-testid="`warning-${warning.kind}`"
-            v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
-          />
-          <!-- eslint-enable -->
-        </ul>
-      </template>
-
-      <div
-        class="stack"
-        data-testid="dataplane-details"
-      >
-        <KCard>
-          <div class="columns">
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.status') }}
-              </template>
-
-              <template #body>
-                <div class="status-with-reason">
-                  <StatusBadge :status="props.data.status" />
-
-                  <template
-                    v-for="inbounds in [props.data.dataplane.networking.inbounds.filter(item => !item.health.ready)]"
-                    :key="inbounds"
-                  >
-                    <KTooltip
-                      v-if="inbounds.length > 0"
-                      class="reason-tooltip"
-                      position-fixed
-                    >
-                      <InfoIcon
-                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                        :size="KUI_ICON_SIZE_30"
-                        hide-title
-                      />
-                      <template #content>
-                        <ul>
-                          <li
-                            v-for="inbound in inbounds"
-                            :key="`${inbound.service}:${inbound.port}`"
-                          >
-                            {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                          </li>
-                        </ul>
-                      </template>
-                    </KTooltip>
-                  </template>
-                </div>
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard>
-              <template #title>
-                {{ t('data-planes.routes.item.last_updated') }}
-              </template>
-
-              <template #body>
-                {{ formatIsoDate(props.data.modificationTime) }}
-              </template>
-            </DefinitionCard>
-
-            <template v-if="props.data.dataplane.networking.gateway">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
-
-                <template #body>
-                  <TagList :tags="props.data.dataplane.networking.gateway.tags" />
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
-
-                <template #body>
-                  <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
-                </template>
-              </DefinitionCard>
-            </template>
-          </div>
-        </KCard>
-
-        <DataSource
-          v-if="can('read traffic') && props.data.dataplaneType === 'standard'"
-          v-slot="{ data: traffic, error, refresh }: TrafficSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/traffic`"
+    <DataSource
+      v-slot="{ data: traffic, error, refresh }: TrafficSource"
+      :src="props.data.dataplaneType === 'standard' ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/traffic` : ''"
+    >
+      <AppView>
+        <template
+          v-if="warnings.length > 0"
+          #notifications
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
+          <ul data-testid="dataplane-warnings">
+            <!-- eslint-disable vue/no-v-html  -->
+            <li
+              v-for="warning in warnings"
+              :key="warning.kind"
+              :data-testid="`warning-${warning.kind}`"
+              v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
+            />
+            <li
+              v-if="error"
+              :data-testid="`warning-stats-loading`"
+            >
+              Error loading outbound stats: <strong>{{ (error as ApiError).status }} {{ error.message }}</strong>
+            </li>
+          <!-- eslint-enable -->
+          </ul>
+        </template>
 
-          <LoadingBlock v-else-if="traffic === undefined" />
+        <div
+          class="stack"
+          data-testid="dataplane-details"
+        >
+          <KCard>
+            <div class="columns">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
+
+                <template #body>
+                  <div class="status-with-reason">
+                    <StatusBadge :status="props.data.status" />
+
+                    <template
+                      v-for="inbounds in [props.data.dataplane.networking.inbounds.filter(item => !item.health.ready)]"
+                      :key="inbounds"
+                    >
+                      <KTooltip
+                        v-if="inbounds.length > 0"
+                        class="reason-tooltip"
+                        position-fixed
+                      >
+                        <InfoIcon
+                          :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                          :size="KUI_ICON_SIZE_30"
+                          hide-title
+                        />
+                        <template #content>
+                          <ul>
+                            <li
+                              v-for="inbound in inbounds"
+                              :key="`${inbound.service}:${inbound.port}`"
+                            >
+                              {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                            </li>
+                          </ul>
+                        </template>
+                      </KTooltip>
+                    </template>
+                  </div>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('data-planes.routes.item.last_updated') }}
+                </template>
+
+                <template #body>
+                  {{ formatIsoDate(props.data.modificationTime) }}
+                </template>
+              </DefinitionCard>
+
+              <template v-if="props.data.dataplane.networking.gateway">
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.tags') }}
+                  </template>
+
+                  <template #body>
+                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.address') }}
+                  </template>
+
+                  <template #body>
+                    <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                  </template>
+                </DefinitionCard>
+              </template>
+            </div>
+          </KCard>
 
           <KCard
-            v-else
+            v-if="props.data.dataplaneType === 'standard'"
             class="traffic"
+            data-testid="dataplane-traffic"
           >
             <div class="columns">
               <DataPlaneTraffic>
@@ -143,52 +142,48 @@
                   type="inbound"
                 >
                   <template
-                    v-for="item in traffic.inbounds"
-                    :key="`${item.name}`"
+                    v-for="item in props.data.dataplane.networking.inbounds"
+                    :key="`${item.port}`"
                   >
+                    <!-- the finding here would be expensive if inbounds was commonly large -->
+                    <!-- inbounds are mostly singular and even when they are not they are small -->
                     <template
-                      v-for="port in [
-                        item.name.split('_').at(-1),
+                      v-for="inbound in [
+                        (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.port}` === `${item.port}`),
                       ]"
-                      :key="port"
+                      :key="inbound"
                     >
-                      <!-- the finding here would be expensive if inbounds was commonly large -->
-                      <!-- inbounds are mostly singular and even when they are not they are small -->
-                      <template
-                        v-for="inbound in [
-                          props.data.dataplane.networking.inbounds.find(item => `${item.port}` === `${port}`),
-                        ]"
-                        :key="inbound"
+                      <ServiceTrafficCard
+                        :protocol="item.protocol"
+                        :traffic="inbound"
                       >
-                        <ServiceTrafficCard
-                          v-if="inbound"
-                          :protocol="item.protocol"
-                          :traffic="item"
+                        <RouterLink
+                          :to="{
+                            name: 'data-plane-inbound-summary-overview-view',
+                            params: {
+                              service: item.port,
+                            },
+                            query: {
+                              inactive: route.params.inactive ? null : undefined,
+                            },
+                          }"
                         >
-                          <RouterLink
-                            :to="{
-                              name: 'data-plane-inbound-summary-overview-view',
-                              params: {
-                                service: inbound.port,
-                              },
-                              query: {
-                                inactive: route.params.inactive ? null : undefined,
-                              },
-                            }"
-                          >
-                            :{{ inbound.port }}
-                          </RouterLink>
-                          <TagList
-                            :tags="[{label: 'kuma.io/service', value: inbound.tags['kuma.io/service']}]"
-                          />
-                        </ServiceTrafficCard>
-                      </template>
+                          :{{ item.port }}
+                        </RouterLink>
+                        <TagList
+                          :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
+                        />
+                      </ServiceTrafficCard>
                     </template>
                   </template>
                 </ServiceTrafficGroup>
               </DataPlaneTraffic>
+
               <DataPlaneTraffic>
-                <template #actions>
+                <template
+                  v-if="traffic"
+                  #actions
+                >
                   <KInputSwitch
                     v-model="route.params.inactive"
                   >
@@ -214,63 +209,51 @@
                   />
                   <span>Outbounds</span>
                 </template>
-                <template #data>
-                  <dl>
-                    <div>
-                      <dt class="passthrough">
-                        {{ t('services.components.service_traffic.passthrough', {}, {defaultMessage: 'Passthrough Requests'}) }}
-                      </dt>
-                      <dd>{{ t('common.formats.integer', {value: 1000}) }}</dd>
-                    </div>
-                    <div>
-                      <dt class="outbounds">
-                        {{ t('services.components.service_traffic.mesh', {}, {defaultMessage: 'Mesh Requests'}) }}
-                      </dt>
-                      <dd>{{ t('common.formats.integer', {value: 1000}) }}</dd>
-                    </div>
-                  </dl>
-                </template>
-                <ServiceTrafficGroup
-                  type="passthrough"
-                >
-                  <ServiceTrafficCard
-                    :protocol="`passthrough`"
-                    :traffic="traffic.passthrough"
-                  >
-                    Non mesh traffic
-                  </ServiceTrafficCard>
-                </ServiceTrafficGroup>
                 <template
-                  v-if="traffic.outbounds.length > 0"
+                  v-if="traffic"
                 >
                   <ServiceTrafficGroup
-                    type="outbound"
+                    type="passthrough"
                   >
-                    <template
-                      v-for="item in traffic.outbounds"
-                      :key="`${item.name}`"
+                    <ServiceTrafficCard
+                      :protocol="`passthrough`"
+                      :traffic="traffic.passthrough"
                     >
-                      <ServiceTrafficCard
-                        v-if="route.params.inactive || ((item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
-                        :protocol="item.protocol"
-                        :traffic="item"
-                      >
-                        <RouterLink
-                          :to="{
-                            name: 'data-plane-outbound-summary-overview-view',
-                            params: {
-                              service: item.name,
-                            },
-                            query: {
-                              inactive: route.params.inactive ? null : undefined,
-                            },
-                          }"
-                        >
-                          {{ item.name }}
-                        </RouterLink>
-                      </ServiceTrafficCard>
-                    </template>
+                      Non mesh traffic
+                    </ServiceTrafficCard>
                   </ServiceTrafficGroup>
+                  <template
+                    v-if="traffic.outbounds.length > 0"
+                  >
+                    <ServiceTrafficGroup
+                      type="outbound"
+                    >
+                      <template
+                        v-for="item in traffic.outbounds"
+                        :key="`${item.name}`"
+                      >
+                        <ServiceTrafficCard
+                          v-if="route.params.inactive || ((item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
+                          :protocol="item.protocol"
+                          :traffic="item"
+                        >
+                          <RouterLink
+                            :to="{
+                              name: 'data-plane-outbound-summary-overview-view',
+                              params: {
+                                service: item.name,
+                              },
+                              query: {
+                                inactive: route.params.inactive ? null : undefined,
+                              },
+                            }"
+                          >
+                            {{ item.name }}
+                          </RouterLink>
+                        </ServiceTrafficCard>
+                      </template>
+                    </ServiceTrafficGroup>
+                  </template>
                 </template>
               </DataPlaneTraffic>
             </div>
@@ -283,7 +266,7 @@
             v-slot="child"
           >
             <SummaryView
-              @close="function (e) {
+              @close="function (_e) {
                 route.replace({
                   name: 'data-plane-detail-view',
                   params: {
@@ -308,189 +291,112 @@
               />
             </SummaryView>
           </RouterView>
-        </DataSource>
 
-        <div
-          v-if="props.data.dataplane.networking.inbounds.length > 0"
-          data-testid="dataplane-inbounds"
-        >
-          <h2>{{ t('data-planes.routes.item.inbounds') }}</h2>
+          <div data-testid="dataplane-mtls">
+            <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
 
-          <KCard class="mt-4">
-            <div class="inbound-list">
-              <div
-                v-for="(inbound, index) in props.data.dataplane.networking.inbounds"
-                :key="index"
-                class="inbound"
-              >
-                <h4>
-                  <TextWithCopyButton :text="inbound.tags['kuma.io/service']">
-                    {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
-                  </TextWithCopyButton>
-                </h4>
-
-                <div class="mt-4 columns">
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.status') }}
-                    </template>
-
-                    <template #body>
-                      <KBadge
-                        v-if="inbound.health.ready"
-                        appearance="success"
-                      >
-                        {{ t('data-planes.routes.item.health.ready') }}
-                      </KBadge>
-
-                      <KBadge
-                        v-else
-                        appearance="danger"
-                      >
-                        {{ t('data-planes.routes.item.health.not_ready') }}
-                      </KBadge>
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.tags') }}
-                    </template>
-
-                    <template #body>
-                      <TagList :tags="inbound.tags" />
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.address') }}
-                    </template>
-
-                    <template #body>
-                      <TextWithCopyButton :text="inbound.addressPort" />
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.serviceAddress') }}
-                    </template>
-
-                    <template #body>
-                      <TextWithCopyButton :text="inbound.serviceAddressPort" />
-                    </template>
-                  </DefinitionCard>
-                </div>
-              </div>
-            </div>
-          </KCard>
-        </div>
-
-        <div data-testid="dataplane-mtls">
-          <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
-
-          <template
-            v-if="props.data.dataplaneInsight.mTLS"
-          >
             <template
-              v-for="mTLS in [
-                props.data.dataplaneInsight.mTLS,
-              ]"
-              :key="mTLS"
+              v-if="props.data.dataplaneInsight.mTLS"
             >
-              <KCard
-                class="mt-4"
+              <template
+                v-for="mTLS in [
+                  props.data.dataplaneInsight.mTLS,
+                ]"
+                :key="mTLS"
               >
-                <div class="columns">
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
-                    </template>
+                <KCard
+                  class="mt-4"
+                >
+                  <div class="columns">
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
+                      </template>
 
-                    <template #body>
-                      {{ formatIsoDate(mTLS.certificateExpirationTime) }}
-                    </template>
-                  </DefinitionCard>
+                      <template #body>
+                        {{ formatIsoDate(mTLS.certificateExpirationTime) }}
+                      </template>
+                    </DefinitionCard>
 
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('data-planes.routes.item.mtls.generation_time.title') }}
-                    </template>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.generation_time.title') }}
+                      </template>
 
-                    <template #body>
-                      {{ formatIsoDate(mTLS.lastCertificateRegeneration) }}
-                    </template>
-                  </DefinitionCard>
+                      <template #body>
+                        {{ formatIsoDate(mTLS.lastCertificateRegeneration) }}
+                      </template>
+                    </DefinitionCard>
 
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('data-planes.routes.item.mtls.regenerations.title') }}
-                    </template>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.regenerations.title') }}
+                      </template>
 
-                    <template #body>
-                      {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
-                    </template>
-                  </DefinitionCard>
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
-                    </template>
+                      <template #body>
+                        {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
+                      </template>
+                    </DefinitionCard>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
+                      </template>
 
-                    <template #body>
-                      {{ mTLS.issuedBackend }}
-                    </template>
-                  </DefinitionCard>
+                      <template #body>
+                        {{ mTLS.issuedBackend }}
+                      </template>
+                    </DefinitionCard>
 
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
-                    </template>
+                    <DefinitionCard>
+                      <template #title>
+                        {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
+                      </template>
 
-                    <template #body>
-                      <ul>
-                        <li
-                          v-for="item in mTLS.supportedBackends"
-                          :key="item"
-                        >
-                          {{ item }}
-                        </li>
-                      </ul>
-                    </template>
-                  </DefinitionCard>
-                </div>
-              </KCard>
-            </template>
-          </template>
-
-          <template
-            v-else
-          >
-            <KAlert
-              class="mt-4"
-              appearance="warning"
-            >
-              <template #alertMessage>
-                <div
-                  v-html="t('data-planes.routes.item.mtls.disabled')"
-                />
+                      <template #body>
+                        <ul>
+                          <li
+                            v-for="item in mTLS.supportedBackends"
+                            :key="item"
+                          >
+                            {{ item }}
+                          </li>
+                        </ul>
+                      </template>
+                    </DefinitionCard>
+                  </div>
+                </KCard>
               </template>
-            </KAlert>
-          </template>
-        </div>
+            </template>
 
-        <div
-          v-if="props.data.dataplaneInsight.subscriptions.length > 0"
-          data-testid="dataplane-subscriptions"
-        >
-          <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
+            <template
+              v-else
+            >
+              <KAlert
+                class="mt-4"
+                appearance="warning"
+              >
+                <template #alertMessage>
+                  <div
+                    v-html="t('data-planes.routes.item.mtls.disabled')"
+                  />
+                </template>
+              </KAlert>
+            </template>
+          </div>
 
-          <KCard class="mt-4">
-            <SubscriptionList :subscriptions="props.data.dataplaneInsight.subscriptions" />
-          </KCard>
+          <div
+            v-if="props.data.dataplaneInsight.subscriptions.length > 0"
+            data-testid="dataplane-subscriptions"
+          >
+            <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
+
+            <KCard class="mt-4">
+              <SubscriptionList :subscriptions="props.data.dataplaneInsight.subscriptions" />
+            </KCard>
+          </div>
         </div>
-      </div>
-    </AppView>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 
@@ -501,8 +407,6 @@ import { computed } from 'vue'
 
 import type { DataplaneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
@@ -512,6 +416,7 @@ import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/
 import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
 import type { TrafficSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
+import type { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n } from '@/utilities'
 
 const { t, formatIsoDate } = useI18n()
