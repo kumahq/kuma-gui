@@ -22,8 +22,6 @@ const $ = {
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
   client: token<ReturnType<typeof getClient>>('client'),
-
-  logger: token('logger'),
 }
 type Token = ReturnType<typeof token>
 export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [

@@ -1,6 +1,5 @@
 import Kongponents from '@kong/kongponents'
 
-import createDisabledLogger from './logger/DisabledLogger'
 import { TOKENS as _TOKENS } from './tokens'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as kuma } from '@/app/kuma'
@@ -46,11 +45,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       $.httpClient,
       $.env,
     ],
-  }],
-
-  // Logger
-  [$.logger, {
-    service: createDisabledLogger,
   }],
 
   [token('kong.plugins'), {

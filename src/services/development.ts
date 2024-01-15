@@ -1,6 +1,5 @@
 import { setupWorker, MockedRequest } from 'msw'
 
-import Logger from './logger/Logger'
 import DebugKClipboardProvider from '@/app/application/components/debug-k-clipboard-provider/DebugKClipboardProvider.vue'
 import debugI18n from '@/app/application/services/i18n/DebugI18n'
 import { TOKENS as CONTROL_PLANES } from '@/app/control-planes'
@@ -33,7 +32,6 @@ const $ = {
 type SupportedTokens = typeof $ & {
   i18n: Token
   components: Token
-  logger: Token
   env: Token<AEnv>
 }
 
@@ -90,11 +88,6 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
       return cookied(env())
     },
     decorates: app.env,
-  }],
-
-  [token<Logger>('logger'), {
-    service: Logger,
-    decorates: app.logger,
   }],
 
   // Mock Service Worker
