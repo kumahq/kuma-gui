@@ -71,9 +71,14 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
 
   [token('development.components'), {
     service: () => {
-      return [
-        ['KClipboardProvider', DebugKClipboardProvider],
-      ]
+      // unit testing is likely to have process
+      // no matter which runner is used
+      // if we are unit testing don't decorate KClipboardProvider
+      return typeof process === 'undefined'
+        ? [
+          ['KClipboardProvider', DebugKClipboardProvider],
+        ]
+        : []
     },
     labels: [
       app.components,
