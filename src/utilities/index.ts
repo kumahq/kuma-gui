@@ -5,8 +5,6 @@ export { useRouter } from '@/app/vue'
 
 export const [
   useKumaApi,
-  useLogger,
 ] = createInjections(
   TOKENS.api,
-  TOKENS.logger,
 )

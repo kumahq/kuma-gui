@@ -3,8 +3,6 @@ import { setupServer } from 'msw/node'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
 import CliEnv from '@/services/env/CliEnv'
-import createDisabledLogger from '@/services/logger/DisabledLogger'
-import Logger from '@/services/logger/Logger'
 import { Alias, ServiceConfigurator, token, createInjections } from '@/services/utils'
 import { mocker, fakeApi, FS } from '@/test-support'
 import type { Mocker } from '@/test-support'
@@ -15,12 +13,6 @@ const $ = {
   server: token<ReturnType<typeof setupServer>>('server'),
 }
 export const services: ServiceConfigurator = (app) => [
-
-  [token<Logger>('logger'), {
-    service: createDisabledLogger,
-    decorates: app.logger,
-  }],
-
   [app.app, {
     service: (
       components: ComponentDefinition[],
