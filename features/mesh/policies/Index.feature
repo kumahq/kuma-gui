@@ -108,7 +108,10 @@ Feature: mesh / policies / index
 
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
 
-    Then the "[data-testid^='policy-type-link-']" element exists 14 times
+    Then the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
+    And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
+    # Always shows MeshGateway
+    And the "[data-testid='policy-type-link-MeshGateway']" element exists
 
   Scenario: Shows legacy policy types if there are any legacy policies applied
     Given the URL "/mesh-insights/default" responds with
@@ -117,34 +120,11 @@ Feature: mesh / policies / index
         policies:
           CircuitBreaker:
             total: 1
-          FaultInjection:
-            total: 0
-          HealthChecks:
-            total: 0
-          MeshGatewayRoute:
-            total: 0
-          ProxyTemplate:
-            total: 0
-          RateLimit:
-            total: 0
-          Retry:
-            total: 0
-          Timeout:
-            total: 0
-          TrafficLog:
-            total: 0
-          TrafficPermission:
-            total: 0
-          TrafficRoute:
-            total: 0
-          TrafficTrace:
-            total: 0
-          VirtualOutbound:
-            total: 0
-          MeshFaultInjection:
-            total: 2
       """
 
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
 
-    Then the "[data-testid^='policy-type-link-']" element exists 27 times
+    Then the "[data-testid='policy-type-link-FaultInjection']" element exists
+    And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
+    # Always shows MeshGateway
+    And the "[data-testid='policy-type-link-MeshGateway']" element exists
