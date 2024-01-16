@@ -93,6 +93,7 @@
             :empty-state-cta-text="t('common.documentation')"
             :headers="[
               { label: 'Name', key: 'name' },
+              ...(props.currentPolicyType.isTargetRefBased ? [{ label: 'Zone', key: 'zone' }] : []),
               ...(props.currentPolicyType.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
               { label: 'Details', key: 'details', hideLabel: true },
             ]"
@@ -128,6 +129,25 @@
                 <KBadge appearance="neutral">
                   {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
                 </KBadge>
+              </template>
+
+              <template v-else>
+                {{ t('common.detail.none') }}
+              </template>
+            </template>
+
+            <template #zone="{ row }">
+              <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
+                <RouterLink
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: row.labels['kuma.io/zone'],
+                    },
+                  }"
+                >
+                  {{ row.labels['kuma.io/zone'] }}
+                </RouterLink>
               </template>
 
               <template v-else>
