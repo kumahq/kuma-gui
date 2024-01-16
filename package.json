@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@kong-ui-public/i18n": "2.0.7",
-    "@kong/icons": "1.8.10",
+    "@kong/icons": "1.8.12",
     "@kong/kongponents": "9.0.0-alpha.82",
     "@vueuse/core": "10.7.2",
     "brandi": "5.0.0",

@@ -1847,10 +1847,10 @@
   resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.12.4.tgz#3469d408f8af42c71f03646eb741e666bdf72911"
   integrity sha512-ldBWJbpNLU34OR0d+ptErp/FJrwc8GK8nUZjUmu9zy69ebjztcNAoULgc8MXS+bjzwGZ8U/v8Vmbhh3WFQq0gA==
 
-"@kong/icons@1.8.10", "@kong/icons@^1.8.10":
-  version "1.8.10"
-  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.10.tgz#2a29df63bf6bfcdd517df1341d78cee3c3442a12"
-  integrity sha512-t/LhFqjLMJvbl0qC5X8oQumduuD4ye4Lpyf+zGIcKxbTb+H41d6CV1kdGDJ5obWDrl4n2Zdv4ahWvrd+PnKDLA==
+"@kong/icons@1.8.12", "@kong/icons@^1.8.10":
+  version "1.8.12"
+  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.12.tgz#4432f4b5dbc75537ac16db20fae486838a808f44"
+  integrity sha512-UV9+Oq7Rum7VFuLb3KfTI0Nka4Y30vSjpXygz9y+DWGIO04M84QkC/iNLPY7Y8yA79h3BIXaMB2vL75Diyn2Gg==
 
 "@kong/kongponents@9.0.0-alpha.82":
   version "9.0.0-alpha.82"
