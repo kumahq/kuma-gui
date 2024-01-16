@@ -1833,10 +1833,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kong-ui-public/i18n@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.0.5.tgz#92c73df000ddbd5c37d0154d3e686335d8c11d9a"
-  integrity sha512-tbLSiOjdlmLyE1ly4qpB3iLDUL0lqhstkKy8pg7E596M1l13kBNFA9Da/QOIZTURJnIwp6Crz8dXoJNp+5mWCw==
+"@kong-ui-public/i18n@2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.0.7.tgz#a483ddfb01bc6ed7900be8dd22e4846e43c03cd2"
+  integrity sha512-BuFHdYVjflUaSp6rMoEMGr0OVFICbWgrnXYMaBLY7MtkAE8Fszc+JdP7F1di2uTCEDO9GwvOExQD5JgnVVkCkA==
   dependencies:
     "@formatjs/intl" "^2.9.9"
     flat "^6.0.1"
