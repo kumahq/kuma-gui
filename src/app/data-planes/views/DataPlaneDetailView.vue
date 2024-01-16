@@ -30,7 +30,7 @@
               v-if="error"
               :data-testid="`warning-stats-loading`"
             >
-              Error loading outbound stats: <strong>{{ (error as ApiError).status }} {{ error.message }}</strong>
+              Error loading outbound stats: <strong>{{ error.toString() }}</strong>
             </li>
           <!-- eslint-enable -->
           </ul>
@@ -416,7 +416,6 @@ import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/
 import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
 import type { TrafficSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
-import type { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n } from '@/utilities'
 
 const { t, formatIsoDate } = useI18n()

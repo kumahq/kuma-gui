@@ -54,4 +54,8 @@ export class ApiError extends Error {
       invalidParameters: this.invalidParameters,
     }
   }
+
+  toString() {
+    return `${this.status}: ${this.message}`
+  }
 }
