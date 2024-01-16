@@ -9,6 +9,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      dataplane: '',
     }"
   >
     <AppView
@@ -68,6 +69,8 @@
               :mesh="route.params.mesh"
               :policy-name="route.params.policy"
               :policy-path="route.params.policyPath"
+              :query="route.params.dataplane"
+              @query-change="route.update({ dataplane: $event })"
             />
           </KCard>
 

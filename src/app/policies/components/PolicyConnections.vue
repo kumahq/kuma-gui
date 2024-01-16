@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import type { PolicyDataplaneCollectionSource } from '../sources'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
@@ -63,7 +63,16 @@ const props = defineProps<{
   mesh: string
   policyPath: string
   policyName: string
+  query: string
 }>()
 
-const searchInput = ref('')
+const emit = defineEmits<{
+  (event: 'query-change', query: string): void
+}>()
+
+const searchInput = ref(props.query)
+
+watch(() => searchInput.value, () => {
+  emit('query-change', searchInput.value)
+})
 </script>
