@@ -64,14 +64,53 @@
           <KCard>
             <h2>{{ t('policies.detail.affected_dpps') }}</h2>
 
-            <PolicyConnections
-              class="mt-4"
-              :mesh="route.params.mesh"
-              :policy-name="route.params.policy"
-              :policy-path="route.params.policyPath"
-              :query="route.params.dataplane"
-              @query-change="route.update({ dataplane: $event })"
-            />
+            <div class="mt-4">
+              <KInput
+                id="dataplane-search"
+                :model-value="route.params.dataplane"
+                type="text"
+                :placeholder="t('policies.detail.dataplane_input_placeholder')"
+                required
+                data-testid="dataplane-search-input"
+                @input="route.update({ dataplane: $event })"
+              />
+
+              <DataSource
+                v-slot="{ data: dataplanesData, error: dataplanesError }: PolicyDataplaneCollectionSource"
+                :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}/dataplanes`"
+              >
+                <ErrorBlock
+                  v-if="dataplanesError"
+                  :error="dataplanesError"
+                />
+
+                <LoadingBlock v-else-if="dataplanesData === undefined" />
+
+                <EmptyBlock v-else-if="dataplanesData.items.length === 0" />
+
+                <template v-else>
+                  <ul data-testid="affected-data-plane-proxies">
+                    <li
+                      v-for="(policyDataplane, key) in dataplanesData.items.filter((policyDataplane) => policyDataplane.name.toLowerCase().includes(route.params.dataplane.toLowerCase()))"
+                      :key="key"
+                      data-testid="dataplane-name"
+                    >
+                      <RouterLink
+                        :to="{
+                          name: 'data-plane-detail-view',
+                          params: {
+                            mesh: policyDataplane.mesh,
+                            dataPlane: policyDataplane.name,
+                          },
+                        }"
+                      >
+                        {{ policyDataplane.name }}
+                      </RouterLink>
+                    </li>
+                  </ul>
+                </template>
+              </DataSource>
+            </div>
           </KCard>
 
           <ResourceCodeBlock
@@ -103,8 +142,8 @@
 </template>
 
 <script lang="ts" setup>
-import PolicyConnections from '../components/PolicyConnections.vue'
-import type { PolicySource } from '../sources'
+import type { PolicyDataplaneCollectionSource, PolicySource } from '../sources'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
