@@ -1847,17 +1847,17 @@
   resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.12.4.tgz#3469d408f8af42c71f03646eb741e666bdf72911"
   integrity sha512-ldBWJbpNLU34OR0d+ptErp/FJrwc8GK8nUZjUmu9zy69ebjztcNAoULgc8MXS+bjzwGZ8U/v8Vmbhh3WFQq0gA==
 
-"@kong/icons@1.8.12", "@kong/icons@^1.8.10":
+"@kong/icons@1.8.12", "@kong/icons@^1.8.12":
   version "1.8.12"
   resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.12.tgz#4432f4b5dbc75537ac16db20fae486838a808f44"
   integrity sha512-UV9+Oq7Rum7VFuLb3KfTI0Nka4Y30vSjpXygz9y+DWGIO04M84QkC/iNLPY7Y8yA79h3BIXaMB2vL75Diyn2Gg==
 
-"@kong/kongponents@9.0.0-alpha.82":
-  version "9.0.0-alpha.82"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.82.tgz#a46202fc06c83450471ca32e0829e40fbdeaf984"
-  integrity sha512-o3X3xUwHAIrzpnwCpN12ZI9b4QjIo0DsUcNQWtjB16RWPbsQuULWiq86a71VVNGe+46oxjDtfMokF7x9EhEojQ==
+"@kong/kongponents@9.0.0-alpha.84":
+  version "9.0.0-alpha.84"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.84.tgz#07077dde50e6e61de1126a2581de1b292619014c"
+  integrity sha512-5qSn1/jt782UqRP6kOGlv6UWBr82wPJWhvrmX5f2jVagWpDy7TAPTdecvEdLjT8pxT/wDqUqTGYH6NyEgKfn9g==
   dependencies:
-    "@kong/icons" "^1.8.10"
+    "@kong/icons" "^1.8.12"
     "@popperjs/core" "^2.11.8"
     date-fns "^2.30.0"
     date-fns-tz "^2.0.0"
