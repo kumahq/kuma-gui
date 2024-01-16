@@ -12,28 +12,6 @@ Feature: mesh / policies / index
       """
       KUMA_CIRCUITBREAKER_COUNT: 2
       """
-    # Makes ure that we only have CircuitBreakers so clicking back on the tabs
-    # Always takes us to the CircuitBreaker listing
-    And the URL "/mesh-insights/default" responds with
-      """
-      body:
-        policies:
-          CircuitBreaker:
-            - total: 2
-          FaultInjection: ~
-          HealthChecks: ~
-          MeshGatewayRoute: ~
-          MeshGateway: ~
-          ProxyTemplate: ~
-          RateLimit: ~
-          Retry: ~
-          Timeout: ~
-          TrafficLog: ~
-          TrafficPermission: ~
-          TrafficRoute: ~
-          TrafficTrace: ~
-          VirtualOutbound: ~
-      """
     And the URL "/meshes/default/circuit-breakers" responds with
       """
       body:
@@ -92,3 +70,61 @@ Feature: mesh / policies / index
 
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
     And the "$item:nth-child(1)" element contains "MeshService:service-1"
+
+  Scenario: Hides legacy policy types if there are no legacy policies applied
+    Given the URL "/mesh-insights/default" responds with
+      """
+      body:
+        policies:
+          CircuitBreaker:
+            total: 0
+          FaultInjection:
+            total: 0
+          HealthChecks:
+            total: 0
+          MeshGatewayRoute:
+            total: 0
+          ProxyTemplate:
+            total: 0
+          RateLimit:
+            total: 0
+          Retry:
+            total: 0
+          Timeout:
+            total: 0
+          TrafficLog:
+            total: 0
+          TrafficPermission:
+            total: 0
+          TrafficRoute:
+            total: 0
+          TrafficTrace:
+            total: 0
+          VirtualOutbound:
+            total: 0
+          MeshFaultInjection:
+            total: 2
+      """
+
+    When I visit the "/meshes/default/policies/meshfaultinjections" URL
+
+    Then the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
+    And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
+    # Always shows MeshGateway
+    And the "[data-testid='policy-type-link-MeshGateway']" element exists
+
+  Scenario: Shows legacy policy types if there are any legacy policies applied
+    Given the URL "/mesh-insights/default" responds with
+      """
+      body:
+        policies:
+          CircuitBreaker:
+            total: 1
+      """
+
+    When I visit the "/meshes/default/policies/meshfaultinjections" URL
+
+    Then the "[data-testid='policy-type-link-FaultInjection']" element exists
+    And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
+    # Always shows MeshGateway
+    And the "[data-testid='policy-type-link-MeshGateway']" element exists

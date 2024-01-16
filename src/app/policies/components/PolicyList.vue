@@ -5,7 +5,7 @@
       data-testid="policy-type-list"
     >
       <div
-        v-for="(policyType, index) in props.policyTypes"
+        v-for="(policyType, index) in visiblePolicyTypes"
         :key="index"
         class="policy-type-link-wrapper"
         :class="{
@@ -167,6 +167,7 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import type { PolicyType } from '../data'
@@ -202,6 +203,22 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (event: 'change', value: ChangeValue): void
 }>()
+
+const visiblePolicyTypes = computed(() => {
+  const hasAnyLegacyPolicies = props.policyTypes
+    // Consider only legacy policy types. Ignore MeshGateway because we’ll always show it in the list. Therefore, its policies shouldn’t influence whether we show _legacy_ policy types.
+    .filter((policyType) => !policyType.isTargetRefBased || policyType.name !== 'MeshGateway')
+    .some((policyType) => (props.meshInsight?.policies?.[policyType.name]?.total ?? 0) > 0)
+
+  return props.policyTypes.filter((policyType) => {
+    if (policyType.isTargetRefBased || policyType.name === 'MeshGateway') {
+      return true
+    }
+
+    // Show _all_ legacy policy types if _at least one_ has a policy
+    return hasAnyLegacyPolicies
+  })
+})
 </script>
 
 <style lang="scss" scoped>
