@@ -1,13 +1,11 @@
 Feature: Dataplane details for delegated gateway
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                                        |
-      | detail-view        | [data-testid='data-plane-detail-tabs-view']                     |
-      | warnings           | [data-testid='dataplane-warnings']                              |
-      | details            | [data-testid='dataplane-details']                               |
-      | inbounds           | [data-testid='dataplane-inbounds']                              |
-      | policy-item        | [data-testid='policy-list'] .accordion-item                     |
-      | policy-item-button | $policy-item:nth-child(1) [data-testid='accordion-item-button'] |
+      | Alias       | Selector                                    |
+      | detail-view | [data-testid='data-plane-detail-tabs-view'] |
+      | warnings    | [data-testid='dataplane-warnings']          |
+      | details     | [data-testid='dataplane-details']           |
+      | inbounds    | [data-testid='dataplane-inbounds']          |
 
   Scenario: Overview tab has expected content
     Given the environment

@@ -62,7 +62,11 @@ Feature: Dataplane details for built-in gateway
     And the "$inbounds" element doesn't exist
 
   Scenario: Policies tab has expected content
-    Given the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/policies" responds with
+    Given the environment
+      """
+      KUMA_MODE: zone
+      """
+    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/policies" responds with
       """
       body:
         listeners:
