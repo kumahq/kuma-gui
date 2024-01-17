@@ -1,36 +1,49 @@
 <template>
-  <KCodeBlock
-    :id="id"
+  <div
     class="code-block"
-    :max-height="props.codeMaxHeight"
-    :code="props.code"
-    :language="language"
-    :initial-filter-mode="props.isFilterMode"
-    :initial-reg-exp-mode="props.isRegExpMode"
-    :is-processing="isProcessing"
-    :is-searchable="isSearchable"
-    :show-copy-button="showCopyButton"
-    :query="props.query"
-    theme="dark"
-    @code-block-render="handleCodeBlockRenderEvent"
-    @query-change="emit('query-change', $event)"
-    @filter-mode-change="emit('filter-mode-change', $event)"
-    @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
   >
     <template
-      v-if="$slots['secondary-actions']"
-      #secondary-actions
+      v-if="$slots['primary-actions']"
     >
-      <slot name="secondary-actions" />
+      <div
+        class="toolbar"
+      >
+        <slot name="primary-actions" />
+      </div>
     </template>
-  </KCodeBlock>
+    <KCodeBlock
+      :id="id"
+      class="code"
+      :max-height="props.codeMaxHeight"
+      :code="props.code"
+      :language="language"
+      :initial-filter-mode="props.isFilterMode"
+      :initial-reg-exp-mode="props.isRegExpMode"
+      :is-processing="isProcessing"
+      :is-searchable="isSearchable"
+      :show-copy-button="showCopyButton"
+      :query="props.query"
+      theme="dark"
+      @code-block-render="handleCodeBlockRenderEvent"
+      @query-change="emit('query-change', $event)"
+      @filter-mode-change="emit('filter-mode-change', $event)"
+      @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+    >
+      <template
+        v-if="$slots['secondary-actions']"
+        #secondary-actions
+      >
+        <slot name="secondary-actions" />
+      </template>
+    </KCodeBlock>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { ref } from 'vue'
 
-import { highlightElement, type AvailableLanguages } from '@/utilities/highlightElement'
+import { highlightElement, type AvailableLanguages } from './code-block/highlightElement'
 import uniqueId from '@/utilities/uniqueId'
 
 const props = withDefaults(defineProps<{
@@ -74,22 +87,21 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
 }
 </script>
 
-<style lang="scss">
-.code-block code {
-  // DO NOT REMOVE OR OVERRIDE THIS.
-  // Believe it or not, this avoids a critical performance issue with highlighting code and specifically highlighting lines using Prism’s line-highlight plugin.
-  // https://github.com/PrismJS/prism/issues/2062
-  display: block !important;
+<style lang="scss" scoped>
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: $kui-space-60;
+  margin-bottom: $kui-space-60;
 }
-
 // Makes code block actions sticky
-.code-block .k-code-block-actions {
+:deep(.k-code-block-actions) {
   position: sticky;
   z-index: 4;
   top: var(--AppHeaderHeight);
 }
-
-.code-block .k-highlighted-code-block {
+:deep(.k-highlighted-code-block) {
   border: none;
 }
 </style>
