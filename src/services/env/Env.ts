@@ -25,8 +25,6 @@ type EnvProps = {
   KUMA_KDS_URL: string
   KUMA_UTM_QUERY_PARAMS: string
   KUMA_MODE: string
-  // TODO: Enable this once https://github.com/kumahq/kuma/issues/8767 has been merged.
-  // KUMA_ZONE: string | undefined
   KUMA_ENVIRONMENT: string
   KUMA_STORE_TYPE: string
 }
@@ -56,8 +54,6 @@ export default class Env {
       KUMA_API_URL: env('KUMA_API_URL') || config.apiUrl,
       KUMA_BASE_PATH: env('KUMA_BASE_PATH') || config.baseGuiPath,
       KUMA_MODE: mode,
-      // TODO: Enable this once https://github.com/kumahq/kuma/issues/8767 has been merged.
-      // KUMA_ZONE: mode === 'zone' ? config.zone || 'default' : undefined,
       KUMA_ENVIRONMENT: env('KUMA_ENVIRONMENT') || config.environment,
       KUMA_STORE_TYPE: env('KUMA_STORE_TYPE') || config.storeType,
       KUMA_KDS_URL: 'grpcs://<global-kds-address>:5685',
@@ -117,8 +113,7 @@ export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
     apiUrl: apiUrlDefault,
     version: '2.4.0',
     product: 'Kuma',
-    mode: 'zone',
-    zone: 'default',
+    mode: 'global',
     environment: 'universal',
     storeType: 'postgres',
     apiReadOnly: false,

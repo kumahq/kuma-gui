@@ -22,6 +22,12 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           name,
           creationTime: '2022-01-25T13:58:29.381342+01:00',
           modificationTime: '2022-01-25T13:58:29.381342+01:00',
+          ...(fake.datatype.boolean() && {
+            labels: {
+              'kuma.io/origin': 'zone',
+              'kuma.io/zone': fake.hacker.noun(),
+            },
+          }),
           spec: {
             targetRef: {
               kind: 'MeshService',

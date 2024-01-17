@@ -10,6 +10,7 @@ Feature: mesh / policies / index
       | breadcrumbs      | .k-breadcrumbs                            |
     And the environment
       """
+      KUMA_MODE: global
       KUMA_CIRCUITBREAKER_COUNT: 2
       """
     And the URL "/meshes/default/circuit-breakers" responds with
@@ -55,10 +56,6 @@ Feature: mesh / policies / index
       body:
         items:
           - name: mfi-1
-            spec:
-              targetRef:
-                kind: MeshService
-                name: service-1
           - name: mfi-2
       """
 
@@ -69,7 +66,27 @@ Feature: mesh / policies / index
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
 
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
-    And the "$item:nth-child(1)" element contains "MeshService:service-1"
+
+  Scenario: TargetRef-based policies show Zone and targetRef columns
+    Given the URL "/meshes/default/meshfaultinjections" responds with
+      """
+      body:
+        items:
+          - name: mfi-1
+            labels:
+              kuma.io/origin: zone
+              kuma.io/zone: zone-1
+            spec:
+              targetRef:
+                kind: MeshService
+                name: service-1
+      """
+
+    When I visit the "/meshes/default/policies/meshfaultinjections" URL
+
+    Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
+    And the "$item:nth-child(1) td:nth-child(2)" element contains "zone-1"
+    And the "$item:nth-child(1) td:nth-child(3)" element contains "MeshService:service-1"
 
   Scenario: Hides legacy policy types if there are no legacy policies applied
     Given the URL "/mesh-insights/default" responds with

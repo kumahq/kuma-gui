@@ -2,8 +2,6 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 
 export default ({ env, fake }: EndpointDependencies): MockResponder => (_req) => {
   const mode = env('KUMA_MODE', 'global') === 'global' ? 'global' : 'zone'
-  // TODO: Enable this once https://github.com/kumahq/kuma/issues/8767 has been merged and remove the line below.
-  // const zoneName = mode === 'zone' ? env('KUMA_ZONE', fake.hacker.noun()) : undefined
   const zoneName = mode === 'zone' ? fake.hacker.noun() : undefined
 
   return {

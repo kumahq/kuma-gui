@@ -636,6 +636,10 @@ export interface MeshInsight extends Entity {
 }
 
 export interface PolicyEntity extends MeshEntity {
+  labels?: {
+    'kuma.io/origin'?: string
+    'kuma.io/zone'?: string
+  }
   spec?: {
     // https://kuma.io/docs/2.4.x/policies/targetref/
     targetRef?: {
