@@ -7,7 +7,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'CircuitBreaker',
           path: 'circuit-breakers',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -16,7 +16,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'FaultInjection',
           path: 'fault-injections',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -25,7 +25,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'HealthCheck',
           path: 'health-checks',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -34,7 +34,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshAccessLog',
           path: 'meshaccesslogs',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: true,
@@ -43,7 +43,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshCircuitBreaker',
           path: 'meshcircuitbreakers',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: true,
@@ -52,17 +52,17 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshFaultInjection',
           path: 'meshfaultinjections',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: true,
-          isOutbound: false,
+          isOutbound: true,
         },
         {
           name: 'MeshGateway',
           path: 'meshgateways',
-          readOnly: false,
-          isExperimental: true,
+          readOnly: true,
+          isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
           isOutbound: false,
@@ -70,8 +70,8 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshGatewayRoute',
           path: 'meshgatewayroutes',
-          readOnly: false,
-          isExperimental: true,
+          readOnly: true,
+          isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
           isOutbound: false,
@@ -79,7 +79,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshHTTPRoute',
           path: 'meshhttproutes',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
@@ -88,7 +88,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshHealthCheck',
           path: 'meshhealthchecks',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
@@ -97,16 +97,25 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshLoadBalancingStrategy',
           path: 'meshloadbalancingstrategies',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
           isOutbound: true,
         },
         {
+          name: 'MeshMetric',
+          path: 'meshmetrics',
+          readOnly: true,
+          isExperimental: false,
+          isTargetRefBased: true,
+          isInbound: false,
+          isOutbound: false,
+        },
+        {
           name: 'MeshProxyPatch',
           path: 'meshproxypatches',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
@@ -115,16 +124,16 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshRateLimit',
           path: 'meshratelimits',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: true,
-          isOutbound: false,
+          isOutbound: true,
         },
         {
           name: 'MeshRetry',
           path: 'meshretries',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
@@ -133,7 +142,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshTCPRoute',
           path: 'meshtcproutes',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
@@ -142,7 +151,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshTimeout',
           path: 'meshtimeouts',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: true,
@@ -151,7 +160,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshTrace',
           path: 'meshtraces',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: false,
@@ -160,7 +169,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'MeshTrafficPermission',
           path: 'meshtrafficpermissions',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: true,
           isInbound: true,
@@ -169,7 +178,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'ProxyTemplate',
           path: 'proxytemplates',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -178,7 +187,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'RateLimit',
           path: 'rate-limits',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -187,7 +196,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'Retry',
           path: 'retries',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -196,7 +205,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'Timeout',
           path: 'timeouts',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -205,7 +214,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'TrafficLog',
           path: 'traffic-logs',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -214,7 +223,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'TrafficPermission',
           path: 'traffic-permissions',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -223,7 +232,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'TrafficRoute',
           path: 'traffic-routes',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -232,7 +241,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'TrafficTrace',
           path: 'traffic-traces',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
@@ -241,7 +250,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
         {
           name: 'VirtualOutbound',
           path: 'virtual-outbounds',
-          readOnly: false,
+          readOnly: true,
           isExperimental: false,
           isTargetRefBased: false,
           isInbound: false,
