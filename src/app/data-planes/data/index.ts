@@ -74,7 +74,7 @@ export type DataplaneOverview = PartialDataplaneOverview & {
 export type SidecarDataplane = PartialSidecarDataplane
 
 export type InspectRulesForDataplane = PartialInspectRulesForDataplane & {
-  proxyRule: RuleEntry | undefined
+  proxyRules: RuleEntry[]
   toRules: RuleEntry[]
   fromRuleInbounds: Array<{ port: number, ruleEntries: RuleEntry[] }>
 }
@@ -215,14 +215,14 @@ export const SidecarDataplane = {
 export const InspectRules = {
   fromCollection(partialInspectRules: PartialInspectRulesForDataplane): InspectRulesForDataplane & {} {
     const rules = Array.isArray(partialInspectRules.rules) ? partialInspectRules.rules : []
-    const proxyRule = getProxyRule(rules)
+    const proxyRules = getProxyRules(rules)
     const toRules = getToRules(rules)
     const fromRuleInbounds = getFromRuleInbounds(rules)
 
     return {
       ...partialInspectRules,
       rules,
-      proxyRule,
+      proxyRules,
       toRules,
       fromRuleInbounds,
     }
@@ -394,27 +394,29 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDatapla
   return policyTypeEntryConnections
 }
 
-function getProxyRule(rules: InspectRule[]): RuleEntry | undefined {
-  // Note, there can only be one proxy rule.
-  const rule = rules.find((rule) => rule.proxyRule)
-  if (!rule || !rule.proxyRule) {
-    return undefined
-  }
+function getProxyRules(rules: InspectRule[]): RuleEntry[] {
+  return rules
+    .map((rule) => {
+      const { type, proxyRule } = rule
 
-  const { type, proxyRule } = rule
+      if (proxyRule === undefined) {
+        return null
+      }
 
-  const config = proxyRule.conf && Object.keys(proxyRule.conf).length > 0 ? proxyRule.conf : undefined
-  const origins = proxyRule.origin
+      const config = proxyRule.conf && Object.keys(proxyRule.conf).length > 0 ? proxyRule.conf : undefined
+      const origins = proxyRule.origin
 
-  return {
-    type,
-    rules: [
-      {
-        config,
-        origins,
-      },
-    ],
-  }
+      return {
+        type,
+        rules: [
+          {
+            config,
+            origins,
+          },
+        ],
+      }
+    })
+    .filter(<T>(rule: T | null): rule is T => rule !== null)
 }
 
 function getToRules(rules: InspectRule[]): RuleEntry[] {
