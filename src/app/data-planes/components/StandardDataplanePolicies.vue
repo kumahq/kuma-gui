@@ -8,13 +8,13 @@
     </KCard>
 
     <template v-else>
-      <KCard v-if="props.inspectRulesForDataplane.proxyRule">
+      <KCard v-if="props.inspectRulesForDataplane.proxyRules.length > 0">
         <h3>{{ t('data-planes.routes.item.proxy_rule') }}</h3>
 
         <RuleEntryList
           id="proxy-rules"
           class="mt-2"
-          :rule-entries="[props.inspectRulesForDataplane.proxyRule]"
+          :rule-entries="props.inspectRulesForDataplane.proxyRules"
           :policy-types-by-name="props.policyTypesByName"
           :show-matchers="false"
           data-testid="proxy-rule-list"
