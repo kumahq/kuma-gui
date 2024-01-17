@@ -81,6 +81,7 @@ ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
     return ''
   }).join('\n')
 
+  fake.kuma.seed(name as string)
   const outbounds = Array.from({ length: serviceCount }).map(_ => {
     const port = fake.number.int({ min: 1, max: 65535 })
     const service = `${fake.hacker.noun()}_svc_${port}`

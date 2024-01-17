@@ -1,8 +1,82 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
+export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
+  const { name } = req.params
+  // use seed to sync the ports in stats.ts with the ports in _overview.ts
+  fake.kuma.seed(name as string)
+  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
+  //
+  const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
+
+  const inbounds = ports.map(port => {
+    const service = `localhost:${port}`
+    return `${service}::observability_name:${service}
+${service}::default_priority::max_connections::${fake.number.int({ min: 1, max: Date.now() })}
+${service}::default_priority::max_pending_requests::${fake.number.int({ min: 1, max: Date.now() })}
+${service}::default_priority::max_requests::${fake.number.int({ min: 1, max: Date.now() })}
+${service}::default_priority::max_retries::3
+${service}::high_priority::max_connections::1024
+${service}::high_priority::max_pending_requests::1024
+${service}::high_priority::max_requests::1024
+${service}::high_priority::max_retries::3
+${service}::added_via_api::true
+${service}::10.244.0.2:8080::cx_active::0
+${service}::10.244.0.2:8080::cx_connect_fail::0
+${service}::10.244.0.2:8080::cx_total::0
+${service}::10.244.0.2:8080::rq_active::0
+${service}::10.244.0.2:8080::rq_error::0
+${service}::10.244.0.2:8080::rq_success::0
+${service}::10.244.0.2:8080::rq_timeout::0
+${service}::10.244.0.2:8080::rq_total::0
+${service}::10.244.0.2:8080::hostname::
+${service}::10.244.0.2:8080::health_flags::healthy
+${service}::10.244.0.2:8080::weight::1
+${service}::10.244.0.2:8080::region::
+${service}::10.244.0.2:8080::zone::
+${service}::10.244.0.2:8080::sub_zone::
+${service}::10.244.0.2:8080::canary::false
+${service}::10.244.0.2:8080::priority::0
+${service}::10.244.0.2:8080::success_rate::-1
+${service}::10.244.0.2:8080::local_origin_success_rate::-1`
+  })
+  fake.kuma.seed(name as string)
+  const outbounds = Array.from({ length: serviceCount }).map(_ => {
+    const port = fake.number.int({ min: 1, max: 65535 })
+    const service = `${fake.hacker.noun()}_svc_${port}`
+    return `${service}::observability_name:${service}
+${service}::default_priority::max_connections::${fake.number.int({ min: 1, max: Date.now() })}
+${service}::default_priority::max_pending_requests::${fake.number.int({ min: 1, max: Date.now() })}
+${service}::default_priority::max_requests::${fake.number.int({ min: 1, max: Date.now() })}
+${service}::default_priority::max_retries::3
+${service}::high_priority::max_connections::1024
+${service}::high_priority::max_pending_requests::1024
+${service}::high_priority::max_requests::1024
+${service}::high_priority::max_retries::3
+${service}::added_via_api::true
+${service}::10.244.0.2:8080::cx_active::0
+${service}::10.244.0.2:8080::cx_connect_fail::0
+${service}::10.244.0.2:8080::cx_total::0
+${service}::10.244.0.2:8080::rq_active::0
+${service}::10.244.0.2:8080::rq_error::0
+${service}::10.244.0.2:8080::rq_success::0
+${service}::10.244.0.2:8080::rq_timeout::0
+${service}::10.244.0.2:8080::rq_total::0
+${service}::10.244.0.2:8080::hostname::
+${service}::10.244.0.2:8080::health_flags::healthy
+${service}::10.244.0.2:8080::weight::1
+${service}::10.244.0.2:8080::region::
+${service}::10.244.0.2:8080::zone::
+${service}::10.244.0.2:8080::sub_zone::
+${service}::10.244.0.2:8080::canary::false
+${service}::10.244.0.2:8080::priority::0
+${service}::10.244.0.2:8080::success_rate::-1
+${service}::10.244.0.2:8080::local_origin_success_rate::-1`
+  })
   return {
     headers: {},
-    body: `access_log_sink::observability_name::access_log_sink
+    body: `${inbounds}
+${outbounds}
+access_log_sink::observability_name::access_log_sink
 access_log_sink::default_priority::max_connections::1024
 access_log_sink::default_priority::max_pending_requests::1024
 access_log_sink::default_priority::max_requests::1024
