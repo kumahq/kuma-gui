@@ -375,7 +375,7 @@ Feature: Dataplane policies
         """
         KUMA_MODE: global
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
         """
         body:
           mesh: default
@@ -387,7 +387,7 @@ Feature: Dataplane policies
                   kuma.io/service: service-1
         """
 
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
 
       Then the "$legacy-policies" element doesn't exist
       And the "$sidecar-dataplane-policies" element doesn't exist
@@ -398,7 +398,7 @@ Feature: Dataplane policies
         """
         KUMA_MODE: zone
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
         """
         body:
           mesh: default
@@ -409,8 +409,26 @@ Feature: Dataplane policies
                 tags:
                   kuma.io/service: service-1
         """
+      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/policies" responds with
+        """
+        body:
+          listeners:
+            - hosts:
+                - routes:
+                  - destinations:
+                      - tags:
+                          kuma.io/service: demo-app_kuma-demo_svc_5000
+                        policies:
+                          CircuitBreaker:
+                            name: circuit-breaker-1
+          policies:
+            TrafficLog:
+              name: traffic-log-1
+            TrafficTrace:
+              name: traffic-trace-1
+        """
 
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
 
       Then the "$legacy-policies" element exists
       And the "$sidecar-dataplane-policies" element doesn't exist

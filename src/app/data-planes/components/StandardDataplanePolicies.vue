@@ -45,48 +45,19 @@
         />
       </div>
     </KCard>
-
-    <div
-      v-if="props.showLegacyPolicies"
-      data-testid="legacy-policies"
-    >
-      <h3>{{ t('data-planes.routes.item.legacy_policies') }}</h3>
-
-      <KCard class="mt-4">
-        <PolicyTypeEntryList
-          v-if="props.policyTypeEntries.length > 0"
-          id="policies"
-          :policy-type-entries="props.policyTypeEntries"
-          :policy-types-by-name="props.policyTypesByName"
-          data-testid="sidecar-dataplane-policies"
-        />
-
-        <BuiltinGatewayPolicies
-          v-if="props.gatewayDataplane !== undefined"
-          :policy-types-by-name="props.policyTypesByName"
-          :gateway-dataplane="props.gatewayDataplane"
-          data-testid="builtin-gateway-dataplane-policies"
-        />
-      </KCard>
-    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
 import RuleEntryList from './RuleEntryList.vue'
-import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
-import type { InspectRulesForDataplane, MeshGatewayDataplane } from '../data'
+import type { InspectRulesForDataplane } from '../data'
 import { useI18n } from '@/app/application'
-import type { PolicyType, PolicyTypeEntry } from '@/types/index.d'
+import type { PolicyType } from '@/types/index.d'
 
 const { t } = useI18n()
 
 const props = defineProps<{
-  policyTypeEntries: PolicyTypeEntry[]
-  gatewayDataplane: MeshGatewayDataplane | undefined
   inspectRulesForDataplane: InspectRulesForDataplane
   policyTypesByName: Record<string, PolicyType | undefined>
-  showLegacyPolicies: boolean
 }>()
 </script>
