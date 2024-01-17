@@ -9,10 +9,12 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   //
 
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
+  fake.kuma.seed()
   const minMax = {
     min: 0,
-    max: 1000000,
+    max: fake.number.int({ max: 100000 }),
   }
+  fake.kuma.seed(name as string)
   const direction = 'downstream'
   const inbounds = ports.map(port => {
     const service = `localhost_${port}`
@@ -72,7 +74,7 @@ ${prefix}_rq_total: ${totalRequests}`
       }
       case 'tcp': {
         const prefix = `tcp.${service}.${direction}`
-        return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+        return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
       }
     }
@@ -139,7 +141,7 @@ ${prefix}_rq_total: ${totalRequests}`
       }
       case 'tcp': {
         const prefix = `tcp.${service}.${direction}`
-        return `${prefix}_cx_tx_bytes_total:${fake.number.int(_minMax)}
+        return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
       }
     }

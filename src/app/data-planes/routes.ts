@@ -22,6 +22,11 @@ export const routes = () => {
                     name: 'data-plane-inbound-summary-overview-view',
                     component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
                   },
+                  {
+                    path: 'stats',
+                    name: 'data-plane-inbound-summary-stats-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryStatsView.vue'),
+                  },
                 ],
               },
               {
@@ -34,6 +39,12 @@ export const routes = () => {
                     name: 'data-plane-outbound-summary-overview-view',
                     component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
                   },
+                  {
+                    path: 'stats',
+                    name: 'data-plane-outbound-summary-stats-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryStatsView.vue'),
+                  },
+
                 ],
               },
             ],
