@@ -263,6 +263,7 @@
             v-slot="child"
           >
             <SummaryView
+              width="670px"
               @close="function (_e) {
                 route.replace({
                   name: 'data-plane-detail-view',
