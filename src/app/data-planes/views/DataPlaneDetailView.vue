@@ -15,7 +15,7 @@
     >
       <AppView>
         <template
-          v-if="warnings.length > 0"
+          v-if="warnings.length > 0 || error"
           #notifications
         >
           <ul data-testid="dataplane-warnings">
@@ -30,7 +30,7 @@
               v-if="error"
               :data-testid="`warning-stats-loading`"
             >
-              Error loading outbound stats: <strong>{{ error.toString() }}</strong>
+              The below view is not enhanced with runtime stats (Error loading stats: <strong>{{ error.toString() }}</strong>)
             </li>
           <!-- eslint-enable -->
           </ul>
