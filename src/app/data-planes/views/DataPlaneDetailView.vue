@@ -151,7 +151,7 @@
                       >
                         <RouterLink
                           :to="{
-                            name: 'data-plane-inbound-summary-overview-view',
+                            name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
                             params: {
                               service: item.port,
                             },
@@ -236,7 +236,7 @@
                         >
                           <RouterLink
                             :to="{
-                              name: 'data-plane-outbound-summary-overview-view',
+                              name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
                               params: {
                                 service: item.name,
                               },
@@ -414,9 +414,11 @@ import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/
 import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
 import type { TrafficSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
+import { useRoute } from '@/app/vue'
 import { useI18n } from '@/utilities'
 
 const { t, formatIsoDate } = useI18n()
+const _route = useRoute()
 
 const props = defineProps<{
   data: DataplaneOverview
