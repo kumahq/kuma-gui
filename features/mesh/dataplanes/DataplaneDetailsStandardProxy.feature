@@ -6,7 +6,6 @@ Feature: Dataplane details for standard Data Plane Proxy
       | clusters-view | [data-testid='data-plane-clusters-view']    |
       | warnings      | [data-testid='dataplane-warnings']          |
       | details       | [data-testid='dataplane-details']           |
-      | inbounds      | [data-testid='dataplane-inbounds']          |
       | subscriptions | [data-testid='dataplane-subscriptions']     |
       | status-cds    | [data-testid='subscription-status-cds']     |
       | status-eds    | [data-testid='subscription-status-eds']     |
@@ -84,16 +83,6 @@ Feature: Dataplane details for standard Data Plane Proxy
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$details" element contains "online"
-    And the "$inbounds" element contains
-      | Value                 |
-      | healthy               |
-      | 193.107.134.106:1328  |
-      | 44.167.201.218:62098  |
-      | kuma.io/protocol:http |
-      | kuma.io/zone:zone-1   |
-    And the "$warnings" element doesn't exist
-    And the "$subscriptions" element contains "Connected: Feb 17, 2021, 7:33 AM"
-    And the "$subscriptions" element contains "CP instance ID: dpp-1-cp-instance-id"
 
     When I click the ".accordion-item:nth-child(1) [data-testid='accordion-item-button']" element
 

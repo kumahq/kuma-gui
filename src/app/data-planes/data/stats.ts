@@ -4,6 +4,7 @@ interface MetricRecord {
 export type TrafficEntry = {
   name: string
   protocol: string
+  port: string
   http?: MetricRecord
   tcp?: MetricRecord
   grpc?: MetricRecord
@@ -66,6 +67,7 @@ export const getTraffic = (json: EnvoyStats, filter: (key: string) => boolean): 
       if (typeof traffic[key] === 'undefined') {
         traffic[key] = {
           name: key,
+          port: key.split('_').at(-1) ?? '',
           protocol: item,
         }
       }

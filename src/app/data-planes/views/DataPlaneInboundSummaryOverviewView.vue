@@ -7,6 +7,18 @@
       <div class="stack-with-borders">
         <DefinitionCard layout="horizontal">
           <template #title>
+            Tags
+          </template>
+
+          <template #body>
+            <TagList
+              :tags="props.data.tags"
+              alignment="right"
+            />
+          </template>
+        </DefinitionCard>
+        <DefinitionCard layout="horizontal">
+          <template #title>
             Status
           </template>
 
@@ -31,6 +43,28 @@
             </KBadge>
           </template>
         </DefinitionCard>
+        <DefinitionCard layout="horizontal">
+          <template #title>
+            Address
+          </template>
+
+          <template #body>
+            <TextWithCopyButton
+              :text="`${props.data.addressPort}`"
+            />
+          </template>
+        </DefinitionCard>
+        <DefinitionCard layout="horizontal">
+          <template #title>
+            Service Address
+          </template>
+
+          <template #body>
+            <TextWithCopyButton
+              :text="`${props.data.serviceAddressPort}`"
+            />
+          </template>
+        </DefinitionCard>
       </div>
     </AppView>
   </RouteView>
@@ -38,6 +72,8 @@
 <script lang="ts" setup>
 import type { DataplaneInbound } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import TagList from '@/app/common/TagList.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 const props = defineProps<{
   data: DataplaneInbound
 }>()
