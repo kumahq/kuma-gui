@@ -66,6 +66,9 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          # Access to kuma needs to be explicitly included here so that a pull request can be opened in that repository.
+          owner: ${{ github.repository_owner }}
+          repositories: "kuma-gui,kuma"
 
       - uses: actions/checkout@v4
         with:
