@@ -27,7 +27,6 @@
         </div>
 
         <CodeBlock
-          id="code-block-envoy-data"
           language="json"
           :code="typeof data === 'string' ? data : JSON.stringify(data, null, 2)"
           is-searchable
@@ -48,7 +47,6 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
 import CodeBlock from './CodeBlock.vue'
-import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'

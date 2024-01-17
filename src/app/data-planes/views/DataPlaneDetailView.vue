@@ -130,14 +130,6 @@
                   />
                   Inbounds
                 </template>
-                <template #data>
-                  <dl>
-                    <div>
-                      <dt>{{ t('services.components.service_traffic.inbound', {}, {defaultMessage: 'Requests'}) }}</dt>
-                      <dd>{{ t('common.formats.integer', {value: 1000}) }}</dd>
-                    </div>
-                  </dl>
-                </template>
                 <ServiceTrafficGroup
                   type="inbound"
                 >
@@ -186,6 +178,7 @@
                 >
                   <KInputSwitch
                     v-model="route.params.inactive"
+                    data-testid="dataplane-outbounds-inactive-toggle"
                   >
                     <template #label>
                       Show inactive
@@ -223,17 +216,21 @@
                     </ServiceTrafficCard>
                   </ServiceTrafficGroup>
                   <template
-                    v-if="traffic.outbounds.length > 0"
+                    v-for="outbounds in [
+                      route.params.inactive ? traffic.outbounds : traffic.outbounds.filter(item => (item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined) ?? 0 > 0),
+                    ]"
+                    :key="outbounds"
                   >
                     <ServiceTrafficGroup
+                      v-if="outbounds.length > 0"
                       type="outbound"
+                      data-testid="dataplane-outbounds"
                     >
                       <template
-                        v-for="item in traffic.outbounds"
+                        v-for="item in outbounds"
                         :key="`${item.name}`"
                       >
                         <ServiceTrafficCard
-                          v-if="route.params.inactive || ((item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined ) ?? 0 > 0)"
                           :protocol="item.protocol"
                           :traffic="item"
                         >
@@ -282,7 +279,7 @@
             >
               <component
                 :is="child.Component"
-                :data="child.route.name === 'data-plane-inbound-summary-overview-view' ?
+                :data="String(child.route.name).includes('-inbound-') ?
                   props.data.dataplane.networking.inbounds.find((item) => `${item.port}` === route.params.service) :
                   traffic!.outbounds.find((item) => {
                     return item.name === route.params.service

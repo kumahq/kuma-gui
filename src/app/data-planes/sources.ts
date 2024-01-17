@@ -25,6 +25,7 @@ export type DataplaneOverviewCollection = CollectionResponse<DataplaneOverview>
 export type DataplaneOverviewCollectionSource = DataSourceResponse<DataplaneOverviewCollection>
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
+export type StatsDataSource = DataSourceResponse<string>
 
 export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane> & { policyTypeEntries: PolicyTypeEntry[] }
 export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDataplaneCollection>

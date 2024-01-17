@@ -15,9 +15,9 @@ export class KumaModule {
     this.faker = faker
   }
 
-  seed(str: string) {
+  seed(str: string = '') {
     // sync the seed by name (temp use length until we convert strings to numbers differently)
-    return this.faker.seed(str.length)
+    return this.faker.seed(str.length > 0 ? str.length : undefined)
   }
 
   partition(min: number, max: number, length: number, sum: number): number[] {
