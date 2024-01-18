@@ -61,6 +61,7 @@ ${prefix}_rq_total: ${totalRequests}`
           http3: Number,
         }, totalRequests)
         return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
+
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_rq_1xx: ${req._1xx}
 ${prefix}_rq_2xx: ${req._2xx}
@@ -97,6 +98,9 @@ ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
         // https://grpc.github.io/grpc/core/md_doc_statuscodes.html
         return `${prefix}_cx_tx_bytes_total: ${fake.number.int(_minMax)}
 ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}
+cluster.${service}.original_dst_host_invalid: 0
+cluster.${service}.outlier_detection.ejections_active: 0
+cluster.${service}.outlier_detection.ejections_detected_consecutive_local_origin_failure: 0
 cluster.${service}.grpc.0: ${totalRequests}
 cluster.${service}.grpc.request_message_count: ${totalRequests}
 cluster.${service}.grpc.response_message_count: ${req.success}

@@ -46,7 +46,12 @@
               </div>
               <CodeBlock
                 language="json"
-                :code="`${data.split('\n').filter(item => item.startsWith(`localhost:${route.params.service}::`)).join('\n')}`"
+                :code="(() => `${
+                  data.split('\n')
+                    .filter(item => item.startsWith(`localhost:${route.params.service}::`))
+                    .map(item => item.replace(`localhost:${route.params.service}::`, ''))
+                    .join('\n')
+                }`)()"
                 is-searchable
                 :query="route.params.codeSearch"
                 :is-filter-mode="route.params.codeFilter"

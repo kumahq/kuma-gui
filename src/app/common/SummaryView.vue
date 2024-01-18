@@ -6,7 +6,7 @@
     close-button-alignment="end"
     :has-overlay="false"
     is-visible
-    max-width="560px"
+    :max-width="props.width"
     offset-top="var(--app-slideout-offset-top, 0)"
     data-testid="summary"
     @close="emit('close')"
@@ -30,6 +30,11 @@ onClickOutside(
     }
   }, 1, true, false),
 )
+const props = withDefaults(defineProps<{
+  width?: string
+}>(), {
+  width: '560px',
+})
 const emit = defineEmits<{
   (event: 'close'): void
 }>()
