@@ -43,6 +43,7 @@
               v-else
               :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
               :inspect-rules-for-dataplane="rulesData"
+              data-testid="rules-based-policies"
             />
           </DataSource>
 
@@ -55,7 +56,7 @@
                 v-slot="{ data: gatewayDataplane, error: gatewayDataplaneError }: MeshGatewayDataplaneSource"
                 :src="props.data.dataplaneType === 'builtin' ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies` : ''"
               >
-                <div data-testid="legacy-policies">
+                <div>
                   <h3>{{ t('data-planes.routes.item.legacy_policies') }}</h3>
 
                   <ErrorBlock

@@ -4,7 +4,7 @@ Feature: Dataplane policies
       Given the CSS selectors
         | Alias                              | Selector                                                            |
         | policies-view                      | [data-testid='data-plane-policies-view']                            |
-        | legacy-policies                    | [data-testid='legacy-policies']                                     |
+        | rules-based-policies               | [data-testid='rules-based-policies']                                |
         | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']                          |
         | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies']                  |
         | proxy-rule-item                    | [data-testid='proxy-rule-list'] .accordion-item                     |
@@ -29,7 +29,7 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$legacy-policies" element doesn't exist
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element doesn't exist
       And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
@@ -48,7 +48,7 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$legacy-policies" element exists
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element exists
       And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
@@ -290,7 +290,7 @@ Feature: Dataplane policies
     Background:
       Given the CSS selectors
         | Alias                              | Selector                                           |
-        | legacy-policies                    | [data-testid='legacy-policies']                    |
+        | rules-based-policies               | [data-testid='rules-based-policies']               |
         | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
         | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
 
@@ -313,7 +313,7 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$legacy-policies" element doesn't exist
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element doesn't exist
       And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
@@ -336,7 +336,7 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$legacy-policies" element doesn't exist
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element doesn't exist
       And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
@@ -359,14 +359,15 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$legacy-policies" element exists
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element exists
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
   Rule: Built-in gateway
     Background:
       Given the CSS selectors
         | Alias                              | Selector                                           |
-        | legacy-policies                    | [data-testid='legacy-policies']                    |
+        | rules-based-policies               | [data-testid='rules-based-policies']               |
         | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
         | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
 
@@ -389,7 +390,7 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
 
-      Then the "$legacy-policies" element doesn't exist
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element doesn't exist
       And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
@@ -430,6 +431,6 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
 
-      Then the "$legacy-policies" element exists
+      Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element doesn't exist
       And the "$builtin-gateway-dataplane-policies" element exists
