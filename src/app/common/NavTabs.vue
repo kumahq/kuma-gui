@@ -12,7 +12,6 @@
       #[`${tab.routeName}-anchor`]
     >
       <RouterLink
-        class="nav-tab-link"
         :data-testid="`${tab.routeName}-tab`"
         :to="{ name: tab.routeName }"
       >
@@ -77,18 +76,5 @@ const currentTabHash = computed(() => {
 
 .nav-tabs :deep(.tab-item) {
   white-space: nowrap;
-  // TODO: Remove this if it’s fixed in Kongponents.
-  // Avoids animating between 1px and 2px which causes layout shift.
-  transition: none !important;
-}
-
-.nav-tabs :deep(.tab-link) {
-  // TODO: Remove this if it’s fixed in Kongponents.
-  // Resets the padding so that we can shift it onto the actual link inside the tabs making it take up the entire click target area of the tab.
-  padding: 0 !important;
-}
-
-.nav-tab-link {
-  padding: $kui-space-30 $kui-space-50;
 }
 </style>
