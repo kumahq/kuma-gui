@@ -57,6 +57,7 @@ Feature: Dataplane traffic
     Given the environment
       """
       KUMA_DATAPLANEINBOUND_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
       """
     And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
       """
@@ -64,6 +65,14 @@ Feature: Dataplane traffic
         dataplane:
           networking:
             gateway: !!js/undefined
+        dataplaneInsight:
+          mTLS: !!js/undefined
+          subscriptions:
+            - version:
+                kumaDp:
+                  kumaCpCompatible: true
+                envoy:
+                  kumaDpCompatible: true
       """
     And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/stats" responds with
       """
