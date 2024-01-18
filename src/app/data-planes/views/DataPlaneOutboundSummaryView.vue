@@ -28,9 +28,8 @@
         </template>
       </EmptyBlock>
 
-      <div
+      <template
         v-else
-        class="stack"
       >
         <NavTabs
           :tabs="tabs"
@@ -41,7 +40,7 @@
             :data="props.data"
           />
         </RouterView>
-      </div>
+      </template>
     </AppView>
   </RouteView>
 </template>
