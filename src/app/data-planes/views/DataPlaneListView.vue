@@ -74,7 +74,6 @@
                     label: t(`data-planes.type.${value}`),
                     selected: value === route.params.dataplaneType,
                   }))"
-                  appearance="select"
                   @selected="route.update({ dataplaneType: String($event.value) })"
                 >
                   <template #item-template="{ item: value }">
@@ -130,7 +129,9 @@ import type { MeSource } from '@/app/me/sources'
 }
 
 .filter-select {
+  flex-basis: 205px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: $kui-space-40;
 }

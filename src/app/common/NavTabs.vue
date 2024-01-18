@@ -2,7 +2,7 @@
   <KTabs
     :tabs="kTabs"
     :model-value="currentTabHash"
-    :has-panels="false"
+    :show-panels="false"
     class="nav-tabs"
     data-testid="nav-tabs"
   >
@@ -70,29 +70,11 @@ const currentTabHash = computed(() => {
 
 <style lang="scss" scoped>
 .nav-tabs {
-  margin-bottom: $kui-space-80;
-}
-
-.nav-tabs :deep(ul) {
-  // TODO: Remove this override once KTabs was updated in Kongponents v9’s alpha version.
-  // Overrides the bottom border color to the same value KCard uses for its borders.
-  border-bottom-color: rgba(0, 0, 0, 0.1);
-}
-</style>
-
-<style lang="scss">
-.nav-tabs {
   overflow-x: auto;
   width: 100%;
 }
 
-.nav-tabs .tab-item {
+.nav-tabs :deep(.tab-item) {
   white-space: nowrap;
-}
-
-// TODO: Remove this once https://github.com/Kong/kongponents/pull/1774 is available.
-// Prevents KTabs from trigger a vertical overflow of its container.
-.nav-tabs .tab-item::after {
-  content: none !important;
 }
 </style>

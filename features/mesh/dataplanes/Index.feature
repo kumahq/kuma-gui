@@ -1,16 +1,16 @@
 Feature: mesh / dataplanes / index
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                |
-      | table            | [data-testid='data-plane-collection']   |
-      | table-header     | $table th                               |
-      | item             | $table tbody tr                         |
-      | service-cell     | $item:nth-child(1) td:nth-child(3)      |
-      | select-type      | [data-testid='k-select-input']          |
-      | select-option    | .k-select-item                          |
-      | select-standard  | [data-testid='k-select-item-standard']  |
-      | select-builtin   | [data-testid='k-select-item-builtin']   |
-      | select-delegated | [data-testid='k-select-item-delegated'] |
+      | Alias            | Selector                              |
+      | table            | [data-testid='data-plane-collection'] |
+      | table-header     | $table th                             |
+      | item             | $table tbody tr                       |
+      | service-cell     | $item:nth-child(1) td:nth-child(3)    |
+      | select-type      | [data-testid='select-input']          |
+      | select-option    | .select-item                          |
+      | select-standard  | [data-testid='select-item-standard']  |
+      | select-builtin   | [data-testid='select-item-builtin']   |
+      | select-delegated | [data-testid='select-item-delegated'] |
     And the environment
       """
       KUMA_MODE: global
