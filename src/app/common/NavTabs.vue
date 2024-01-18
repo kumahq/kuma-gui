@@ -2,7 +2,7 @@
   <KTabs
     :tabs="kTabs"
     :model-value="currentTabHash"
-    :show-panels="false"
+    hide-panels
     class="nav-tabs"
     data-testid="nav-tabs"
   >
