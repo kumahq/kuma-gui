@@ -2,16 +2,17 @@ Feature: Dataplane policies
   Rule: Standard proxy
     Background:
       Given the CSS selectors
-        | Alias                       | Selector                                                            |
-        | policies-view               | [data-testid='data-plane-policies-view']                            |
-        | standard-dataplane-policies | [data-testid='standard-dataplane-policies']                         |
-        | policy-list                 | [data-testid='policy-list']                                         |
-        | proxy-rule-item             | [data-testid='proxy-rule-list'] .accordion-item                     |
-        | proxy-rule-item-button      | $proxy-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
-        | to-rule-item                | [data-testid='to-rule-list'] .accordion-item                        |
-        | to-rule-item-button         | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
-        | from-rule-item              | [data-testid='from-rule-list-0'] .accordion-item                    |
-        | from-rule-item-button       | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
+        | Alias                              | Selector                                                            |
+        | policies-view                      | [data-testid='data-plane-policies-view']                            |
+        | rules-based-policies               | [data-testid='rules-based-policies']                                |
+        | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']                          |
+        | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies']                  |
+        | proxy-rule-item                    | [data-testid='proxy-rule-list'] .accordion-item                     |
+        | proxy-rule-item-button             | $proxy-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
+        | to-rule-item                       | [data-testid='to-rule-list'] .accordion-item                        |
+        | to-rule-item-button                | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
+        | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                    |
+        | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
 
     Scenario: Dataplane policies view shows expected content for standard proxy (mode: global)
       Given the environment
@@ -28,8 +29,9 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$standard-dataplane-policies" element exists
-      And the "$policy-list" element doesn't exist
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element doesn't exist
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
     Scenario: Dataplane policies view shows expected content for standard proxy (mode: zone)
       Given the environment
@@ -46,8 +48,9 @@ Feature: Dataplane policies
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$standard-dataplane-policies" element exists
-      And the "$policy-list" element exists
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element exists
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
       Given the environment
@@ -286,12 +289,17 @@ Feature: Dataplane policies
   Rule: Delegated gateway
     Background:
       Given the CSS selectors
-        | Alias                          | Selector                                    |
-        | standard-dataplane-policies    | [data-testid='standard-dataplane-policies'] |
-        | standard-dataplane-policy-list | [data-testid='policy-list']                 |
+        | Alias                              | Selector                                           |
+        | rules-based-policies               | [data-testid='rules-based-policies']               |
+        | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
+        | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
 
-    Scenario: Dataplane policies view shows expected content for delegated gateway
-      Given the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+    Scenario: Dataplane policies view shows expected content for delegated gateway (mode: global)
+      Given the environment
+        """
+        KUMA_MODE: global
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
         """
         body:
           mesh: default
@@ -305,10 +313,16 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$standard-dataplane-policies" element exists
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element doesn't exist
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
-    Scenario: Dataplane policies view shows expected content for delegated gateway (with omitted type field)
-      Given the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+    Scenario: Dataplane policies view shows expected content for delegated gateway (mode: global + omitted Dataplane type)
+      Given the environment
+        """
+        KUMA_MODE: global
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
         """
         body:
           mesh: default
@@ -322,16 +336,47 @@ Feature: Dataplane policies
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
 
-      Then the "$standard-dataplane-policies" element exists
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element doesn't exist
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
+
+    Scenario: Dataplane policies view shows expected content for delegated gateway (mode: zone)
+      Given the environment
+        """
+        KUMA_MODE: zone
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+        """
+        body:
+          mesh: default
+          dataplane:
+            networking:
+              gateway:
+                type: DELEGATED
+                tags:
+                  kuma.io/service: service-1
+        """
+
+      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element exists
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
 
   Rule: Built-in gateway
     Background:
       Given the CSS selectors
         | Alias                              | Selector                                           |
+        | rules-based-policies               | [data-testid='rules-based-policies']               |
+        | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
         | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
 
-    Scenario: Dataplane policies view shows expected content for built-in gateway
-      Given the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
+    Scenario: Dataplane policies view shows expected content for built-in gateway (mode: global)
+      Given the environment
+        """
+        KUMA_MODE: global
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
         """
         body:
           mesh: default
@@ -343,6 +388,49 @@ Feature: Dataplane policies
                   kuma.io/service: service-1
         """
 
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
 
-      Then the "$builtin-gateway-dataplane-policies" element exists
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element doesn't exist
+      And the "$builtin-gateway-dataplane-policies" element doesn't exist
+
+    Scenario: Dataplane policies view shows expected content for built-in gateway (mode: zone)
+      Given the environment
+        """
+        KUMA_MODE: zone
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+        """
+        body:
+          mesh: default
+          dataplane:
+            networking:
+              gateway:
+                type: BUILTIN
+                tags:
+                  kuma.io/service: service-1
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/policies" responds with
+        """
+        body:
+          listeners:
+            - hosts:
+                - routes:
+                  - destinations:
+                      - tags:
+                          kuma.io/service: demo-app_kuma-demo_svc_5000
+                        policies:
+                          CircuitBreaker:
+                            name: circuit-breaker-1
+          policies:
+            TrafficLog:
+              name: traffic-log-1
+            TrafficTrace:
+              name: traffic-trace-1
+        """
+
+      When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
+
+      Then the "$rules-based-policies" element exists
+      And the "$sidecar-dataplane-policies" element doesn't exist
+      And the "$builtin-gateway-dataplane-policies" element exists

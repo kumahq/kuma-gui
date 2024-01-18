@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="policies-list"
-    data-testid="builtin-gateway-dataplane-policies"
-  >
+  <div class="policies-list">
     <div class="mesh-gateway-policy-list">
       <h3 class="mb-2">
         Gateway policies
