@@ -13,7 +13,7 @@
       @click="copy($event, copyToClipboard)"
     >
       <CopyIcon
-        :color="KUI_COLOR_TEXT_NEUTRAL"
+        :color="props.iconColor"
         :title="!props.hideTitle ? props.copyText : undefined"
         :hide-title="props.hideTitle"
       />
@@ -37,6 +37,7 @@ const props = withDefaults(defineProps<{
   tooltipFailText?: string
   hasBorder?: boolean
   hideTitle?: boolean
+  iconColor?: string
 }>(), {
   text: '',
   getText: null,
@@ -45,6 +46,7 @@ const props = withDefaults(defineProps<{
   tooltipFailText: 'Failed to copy!',
   hasBorder: false,
   hideTitle: false,
+  iconColor: KUI_COLOR_TEXT_NEUTRAL,
 })
 
 async function copy(event: Event, copyToClipboard: (text: string) => Promise<boolean>) {
