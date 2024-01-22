@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
 import { dependencies, escapeRoute } from './fake'
-import type { MockResponse, FS, AEnv, Env, AppEnvKeys, MockEnvKeys, RestRequest } from './fake'
+import type { FakeEndpoint, MockResponse, FS, AEnv, Env, AppEnvKeys, MockEnvKeys, RestRequest } from './fake'
 import type { ArrayMergeOptions } from 'deepmerge'
 
 export type { FS, EndpointDependencies, MockResponder } from './fake'
@@ -42,7 +42,7 @@ export const createMerge = (response: MockResponse): Merge => (obj) => {
   }))
 }
 
-const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
+export const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
   return (route: string, opts: Options = {}, cb: Callback = noop) => {
     const mockEnv: Env = (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d)
     if (route !== '*') {
@@ -77,6 +77,28 @@ export const handler = (fs: FS, env: AEnv) => {
     })
   }
 }
+export const server = (mock: FakeEndpoint, options: {
+  env?: Record<AppEnvKeys, string>
+  params?: Record<string, string>
+}) => {
+  return async (env: Record<string, string>) => {
+    const responder = useResponder({
+      _: mock,
+    }, (key: AppEnvKeys, d = '') => env[key] ?? d)
+    const request = responder('_')
+    return (await request(
+      {
+        method: 'GET',
+        body: {},
+        url: {
+          searchParams: new URLSearchParams(),
+        },
+        params: options.params ?? {},
+      },
+    )).body
+  }
+}
+
 export const fakeApi = (env: AEnv, fs: FS) => {
   const handlerFor = handler(fs, env)
 
