@@ -10,12 +10,13 @@ on:
 
 permissions:
   contents: read # for checking out the repository (e.g. actions/checkout)
-  security-events: write # for adding code alert statuses
 
 jobs:
   analyze:
     name: Run CodeQL
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write # for adding code alert statuses
     strategy:
       fail-fast: false
       matrix:
