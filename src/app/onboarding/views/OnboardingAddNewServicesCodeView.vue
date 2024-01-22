@@ -99,7 +99,7 @@ import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()

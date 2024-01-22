@@ -35,5 +35,5 @@
 </template>
 
 <script lang="ts" setup>
-import EnvoyData from '@/app/common/EnvoyData.vue'
+import EnvoyData from '@/app/common/code-block/EnvoyData.vue'
 </script>

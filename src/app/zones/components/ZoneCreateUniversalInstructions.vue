@@ -51,7 +51,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useI18n } from '@/app/application'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 
 const { t } = useI18n()
 const route = useRoute()

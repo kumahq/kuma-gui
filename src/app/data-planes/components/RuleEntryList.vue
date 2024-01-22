@@ -109,7 +109,7 @@
 import { useI18n } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { PolicyType, RuleEntry, RuleEntryRule } from '@/types/index.d'
 import { toYaml } from '@/utilities/toYaml'

@@ -117,7 +117,7 @@
 <script lang="ts" setup>
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import type { PolicyType, PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'

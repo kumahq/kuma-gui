@@ -43,7 +43,7 @@
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { ref } from 'vue'
 
-import { highlightElement, type AvailableLanguages } from './code-block/highlightElement'
+import { highlightElement, type AvailableLanguages } from './highlightElement'
 import uniqueId from '@/utilities/uniqueId'
 
 const props = withDefaults(defineProps<{

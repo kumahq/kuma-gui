@@ -68,7 +68,7 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
 import type { StatsDataSource } from '../sources'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 </script>
