@@ -72,7 +72,7 @@
     "@vue/test-utils": "2.4.3",
     "@whyframe/core": "0.1.10",
     "@whyframe/vue": "0.1.6",
-    "autoprefixer": "10.4.16",
+    "autoprefixer": "10.4.17",
     "babel-plugin-transform-import-meta": "2.2.1",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "cross-env": "7.0.3",
