@@ -12,10 +12,11 @@ on:
 
 permissions:
   contents: read # for checking out the repository (e.g. actions/checkout)
-  issues: write # for editing issues (e.g. adding labels)
 
 jobs:
   lifecycle:
     uses: kumahq/.github/.github/workflows/wfc_lifecycle.yml@main
+    permissions:
+      issues: write # for editing issues (e.g. adding labels)
     with:
       filesToIgnore: CODEOWNERS
