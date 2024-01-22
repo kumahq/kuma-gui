@@ -57,7 +57,7 @@
 import { computed, ref } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import CopyButton from './CopyButton.vue'
+import CopyButton from '@/app/common/CopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'

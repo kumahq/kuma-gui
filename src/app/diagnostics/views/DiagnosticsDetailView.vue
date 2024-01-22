@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'

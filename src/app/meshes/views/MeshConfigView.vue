@@ -53,7 +53,7 @@
 
 <script lang="ts" setup>
 import { MeshSource } from '../sources'
+import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 </script>

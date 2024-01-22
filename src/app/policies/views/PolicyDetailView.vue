@@ -143,9 +143,9 @@
 
 <script lang="ts" setup>
 import type { PolicyDataplaneCollectionSource, PolicySource } from '../sources'
+import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

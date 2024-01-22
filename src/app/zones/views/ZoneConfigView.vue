@@ -67,7 +67,7 @@
 
 <script lang="ts" setup>
 import type { ZoneOverview } from '../data'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 
 const props = withDefaults(defineProps<{
   data: ZoneOverview

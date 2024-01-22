@@ -109,9 +109,9 @@
 
 <script lang="ts" setup>
 import type { Policy, PolicyType } from '../data'
+import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import ResourceCodeBlock from '@/app/common/ResourceCodeBlock.vue'
 
 const props = withDefaults(defineProps<{
   policy?: Policy
