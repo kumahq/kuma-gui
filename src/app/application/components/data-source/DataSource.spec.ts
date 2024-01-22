@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest'
 import DataSource from './DataSource.vue'
 import { withSources } from '@/../test-support/main'
 
-describe('DataSourcePool', () => {
+describe('DataSource', () => {
   test("passing an empty uri doesn't fire change", async () => {
     const wrapper = mount(DataSource, {
       props: {

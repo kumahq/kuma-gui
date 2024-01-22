@@ -1,4 +1,4 @@
-import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
+import type { DataSourceResponse } from '@/app/application'
 
 type Closeable = { close: () => void }
 

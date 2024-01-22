@@ -7,9 +7,8 @@ import RouteView from './components/route-view/RouteView.vue'
 import { routes } from './routes'
 import can from './services/can'
 import I18n from './services/i18n/I18n'
-import DataSourceLifeCycle, { getSource } from '@/app/application/services/data-source'
 import type { Source } from '@/app/application/services/data-source'
-import { DataSourcePool } from '@/app/application/services/data-source/DataSourcePool'
+import { create, destroy, getSource, DataSourcePool } from '@/app/application/services/data-source'
 import type { EnvVars } from '@/services/env/Env'
 import Env from '@/services/env/Env'
 import type { ServiceDefinition } from '@/services/utils'
@@ -17,6 +16,7 @@ import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
 
 export type { DataSourceResponse, Source } from './services/data-source'
+type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
 type Can = ReturnType<typeof can>
 type Token = ReturnType<typeof token>
@@ -45,7 +45,6 @@ const $ = {
   source: token<Source>('data.source'),
   sources: token('data.sources'),
   dataSourcePool: token<DataSourcePool>('data.DataSourcePool'),
-  dataSourceLifecycle: token<typeof DataSourceLifeCycle>('data.DataSourceLifecycle'),
   getDataSourceCacheKeyPrefix: token<() => string>('data.getDataSourceCacheKeyPrefix'),
 
   i18n: token<ReturnType<typeof I18n>>('i18n'),
@@ -114,10 +113,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
-    [$.dataSourceLifecycle, {
-      constant: DataSourceLifeCycle,
-    }],
-
     [$.source, {
       service: getSource,
       arguments: [constant(document, { description: 'dom.document' })],
@@ -131,10 +126,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
 
     [$.dataSourcePool, {
-      service: DataSourcePool,
+      service: (sources: Sources, getKey: () => string) => {
+        return new DataSourcePool(sources, { create, destroy }, getKey)
+      },
       arguments: [
         app.sources,
-        $.dataSourceLifecycle,
         $.getDataSourceCacheKeyPrefix,
       ],
     }],

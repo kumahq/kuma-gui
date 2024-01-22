@@ -5,7 +5,7 @@ export const isClosed = (source: { readyState: number }) => source.readyState ==
 // CallableEventSource turns a Promise returning function into an EventTarget,
 // making it act like a standard EventSource.
 
-export default class CallableEventSource<T = {}> extends EventTarget {
+export default class CallableEventSource<T extends {} = {}> extends EventTarget {
   url = ''
   withCredentials = false
   readonly CONNECTING = CONNECTING
@@ -22,7 +22,7 @@ export default class CallableEventSource<T = {}> extends EventTarget {
     public configuration: T,
   ) {
     super()
-    this._open()
+    this.open()
   }
 
   protected _open() {
@@ -41,9 +41,6 @@ export default class CallableEventSource<T = {}> extends EventTarget {
         }
         self.readyState = CLOSED
       } catch (e) {
-        // temporarily commented until we can avoid console.errors being
-        // reported in environments where we don't want to see them
-        // console.error(e)
         self.close()
         self.dispatchEvent(new ErrorEvent('error', {
           error: e,
@@ -53,7 +50,7 @@ export default class CallableEventSource<T = {}> extends EventTarget {
   }
 
   open(): void {
-    if (this.readyState !== CLOSED) {
+    if (this.readyState === CLOSED) {
       this._open()
     }
   }

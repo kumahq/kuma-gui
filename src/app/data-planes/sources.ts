@@ -25,7 +25,6 @@ export type DataplaneOverviewCollection = CollectionResponse<DataplaneOverview>
 export type DataplaneOverviewCollectionSource = DataSourceResponse<DataplaneOverviewCollection>
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
-export type StatsDataSource = DataSourceResponse<string>
 export type ClustersDataSource = DataSourceResponse<string>
 
 export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane> & { policyTypeEntries: PolicyTypeEntry[] }
@@ -35,10 +34,11 @@ export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane
 
 export type DataplaneRulesSource = DataSourceResponse<InspectRulesForDataplane>
 
-export type TrafficSource = DataSourceResponse<{
+export type StatsSource = DataSourceResponse<{
   inbounds: TrafficEntry[]
   outbounds: TrafficEntry[]
   passthrough: TrafficEntry
+  raw: string
 }>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
@@ -65,7 +65,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
     },
 
-    '/meshes/:mesh/dataplanes/:name/traffic': async (params) => {
+    '/meshes/:mesh/dataplanes/:name/stats': async (params) => {
       const { mesh, name } = params
       const res = await api.getDataplaneData({
         mesh,
@@ -123,7 +123,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         inbounds,
         outbounds,
         $raw: res,
-        config: res,
+        raw: res,
       }
     },
 

@@ -1,5 +1,5 @@
 import { Policy, PolicyDataplane } from './data'
-import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
+import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type { PolicyType } from '@/types/index.d'

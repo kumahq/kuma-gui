@@ -1,6 +1,12 @@
 import CallableEventSource from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
-export type { DataSourceResponse } from './DataSourcePool'
+export { default as DataSourcePool } from './DataSourcePool'
+// reusable Type Utility for easy to use Types within Vue templates
+export type DataSourceResponse<T> = {
+  data: T | undefined
+  error: Error | undefined
+  refresh: () => void
+}
 
 type ExtractRouteParams<T extends string> =
   string extends T
@@ -15,10 +21,11 @@ type PaginationParams = {
   size: number
   page: number
   search: string
+  cacheControl: string
 }
 
 type ExtractSources<T extends string, K> = {
-  [Route in T]: (params: ExtractRouteParams<Route> & K, source: { close: () => void }) => void
+  [Route in T]: (params: ExtractRouteParams<Route> & K, source: { close: () => void }) => unknown
 }
 
 export const defineSources = <T extends string>(sources: ExtractSources<T, PaginationParams>) => {
@@ -35,12 +42,12 @@ type Hideable = EventTarget & { hidden: boolean }
 
 export const getSource = (doc: Hideable) => {
   return (cb: (source: RetryingEventSource) => Promise<unknown>, config: Configuration = {}) => {
-    let attempts = 0
-    let iterations = 0
     return new CallableEventSource<Configuration>(async function * (this: RetryingEventSource) {
       const self = this
+      let attempts = 0
+      let iterations = 0
       while (true) {
-        // this this isn't the first call then we should wait before calling again
+        // if this isn't the first call then we should wait before calling again
         if (iterations > 0) {
           await new Promise((resolve) => setTimeout(resolve, self.configuration.interval ?? 1000))
         }
@@ -96,11 +103,10 @@ export const create: Creator = (src, router) => {
   const route = router.match(path)
   const params = {
     ...{
-      offset: parseInt(queryParams.get('offset') || '0'),
       size: parseInt(queryParams.get('size') || '0'),
       page: parseInt(queryParams.get('page') || '0'),
       search: queryParams.get('search') || '',
-      cacheControl: queryParams.has('no-store') ? 'no-store' : undefined,
+      cacheControl: ['no-store', 'no-cache'].reduce((prev, item) => queryParams.has(item) ? item : prev, ''),
     },
     ...route.params,
   }
@@ -108,7 +114,19 @@ export const create: Creator = (src, router) => {
     // TODO(jc) Once we remove all the source.closes in the sources.ts files the
     // second argument here can go
     const init = route.route(params, { close: () => { } })
-    const eventSource = init instanceof CallableEventSource ? init : source(() => Promise.resolve(init), { cacheControl: params.cacheControl })
+    let inited = false
+    const eventSource = init instanceof CallableEventSource
+      ? init
+      : source(() => {
+        if (inited) {
+          return Promise.resolve(route.route(params, { close: () => { } }))
+        } else {
+          inited = true
+          return Promise.resolve(init)
+        }
+      }, {
+        cacheControl: params.cacheControl.length > 0 ? params.cacheControl : undefined,
+      })
     eventSource.url = src
     return eventSource
   } catch (e) {
@@ -119,9 +137,4 @@ export const destroy: Destroyer = (_src, source) => {
   if (source) {
     source.close()
   }
-}
-
-export default {
-  create,
-  destroy,
 }
