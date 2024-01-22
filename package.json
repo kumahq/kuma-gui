@@ -107,7 +107,7 @@
     "vite-plugin-html": "3.2.2",
     "vite-plugin-rewrite-all": "1.0.1",
     "vite-svg-loader": "4.0.0",
-    "vitepress": "1.0.0-rc.37",
+    "vitepress": "1.0.0-rc.39",
     "vitest": "1.2.1",
     "vue-docgen-cli": "4.67.0",
     "vue-tsc": "1.8.27"
