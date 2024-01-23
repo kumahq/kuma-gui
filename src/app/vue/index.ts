@@ -8,6 +8,7 @@ import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
 import type { Component } from 'vue'
 import type { Router, RouteRecordRaw, NavigationGuard } from 'vue-router'
+export { useRoute } from 'vue-router'
 
 type Token = ReturnType<typeof token>
 
