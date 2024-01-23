@@ -1,5 +1,6 @@
 import type {
   Version as PartialVersion,
+  DiscoverySubscription as PartialDiscoverySubscription,
 } from '@/types/index.d'
 
 export type Version = PartialVersion
@@ -10,10 +11,18 @@ export type Subscription = {
   }
   version?: Version
 }
+export type DiscoverySubscription = PartialDiscoverySubscription
 export type SubscriptionCollection<T extends { version?: any }> = {
   subscriptions: T[]
   connectedSubscription?: T
   version?: T['version']
+}
+export type DiscoverySubscriptionCollection = SubscriptionCollection<DiscoverySubscription>
+
+export const DiscoverySubscriptionCollection = {
+  fromArray: (items?: DiscoverySubscription[]): DiscoverySubscriptionCollection => {
+    return SubscriptionCollection.fromArray(items)
+  },
 }
 export const SubscriptionCollection = {
   fromArray: <T extends Subscription>(items?: T[]): SubscriptionCollection<T> => {

@@ -4,6 +4,14 @@ import { ZoneIngressOverview } from './'
 import { plugin, server } from '@/test-support/data'
 import mock from '@/test-support/mocks/src/zone-ingresses/_/_overview'
 
+// zoneIngress tests are very similar to zoneEgress tests
+// so anything you amend here you should consider also amending in
+// the zoneEgress tests
+//
+// Extra things here that DO NOT exist on zoneEgress:
+// - advertisedSocketAddress
+// - availableServices
+
 describe('ZoneIngressOverview', () => {
   const test = _test.extend(plugin<typeof ZoneIngressOverview>(
     ZoneIngressOverview,
@@ -22,7 +30,7 @@ describe('ZoneIngressOverview', () => {
           delete item.zoneIngressInsight
           return item
         })
-        expect(actual.zoneIngressInsight).toBeUndefined()
+        expect(actual.zoneIngressInsight).toBeDefined()
       },
     )
 
@@ -36,8 +44,8 @@ describe('ZoneIngressOverview', () => {
           return item
         })
         expect(actual.zoneIngressInsight).toBeDefined()
-        expect(actual.zoneIngressInsight?.subscriptions.length).toStrictEqual(0)
-        expect(actual.zoneIngressInsight?.connectedSubscription).toBeUndefined()
+        expect(actual.zoneIngressInsight.subscriptions.length).toStrictEqual(0)
+        expect(actual.zoneIngressInsight.connectedSubscription).toBeUndefined()
       },
     )
 
@@ -58,8 +66,8 @@ describe('ZoneIngressOverview', () => {
           },
         })
         expect(actual.zoneIngressInsight).toBeDefined()
-        expect(actual.zoneIngressInsight?.subscriptions.length).toStrictEqual(10)
-        expect(actual.zoneIngressInsight?.connectedSubscription).toBeUndefined()
+        expect(actual.zoneIngressInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.zoneIngressInsight.connectedSubscription).toBeUndefined()
       },
     )
   })

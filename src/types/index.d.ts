@@ -544,6 +544,10 @@ export interface ZoneIngress extends MeshEntity {
   availableServices?: AvailableService[]
 }
 
+export interface ZoneIngressInsight {
+  subscriptions: DiscoverySubscription[]
+}
+
 export interface ZoneIngressOverview extends MeshEntity {
   type: 'ZoneIngressOverview'
   zoneIngress: {
@@ -551,7 +555,7 @@ export interface ZoneIngressOverview extends MeshEntity {
     networking?: ZoneIngressNetworking
     availableServices?: AvailableService[]
   }
-  zoneIngressInsight: any
+  zoneIngressInsight?: ZoneIngressInsight
 }
 
 export interface ZoneEgressNetworking {
@@ -563,6 +567,9 @@ export interface ZoneEgress extends MeshEntity {
   zone?: string
   networking?: ZoneEgressNetworking
 }
+export interface ZoneEgressInsight {
+  subscriptions: DiscoverySubscription[]
+}
 
 export interface ZoneEgressOverview extends MeshEntity {
   type: 'ZoneEgressOverview'
@@ -570,7 +577,7 @@ export interface ZoneEgressOverview extends MeshEntity {
     zone?: string
     networking?: ZoneEgressNetworking
   }
-  zoneEgressInsight: any
+  zoneEgressInsight?: ZoneEgressInsight
 }
 
 export interface DpCert {

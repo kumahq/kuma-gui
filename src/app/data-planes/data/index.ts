@@ -1,4 +1,4 @@
-import { SubscriptionCollection } from '@/app/subscriptions/data'
+import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlane as PartialDataplane,
@@ -9,7 +9,6 @@ import type {
   DataPlaneOverview as PartialDataplaneOverview,
   DataPlaneProxyStatus as DataplaneStatusCount,
   DataplaneWarning,
-  DiscoverySubscription,
   InspectBaseRule,
   InspectRule,
   InspectRulesForDataplane as PartialInspectRulesForDataplane,
@@ -27,9 +26,6 @@ import type {
 } from '@/types/index.d'
 
 export type { TrafficEntry } from './stats'
-
-type DiscoverySubscriptionCollection = {
-} & SubscriptionCollection<DiscoverySubscription>
 
 export type DataplaneInbound = PartialDataplaneInbound & {
   health: {
@@ -129,11 +125,6 @@ export const Dataplane = {
   },
 }
 
-const DiscoverySubscriptionCollection = {
-  fromArray: (items?: DiscoverySubscription[]): DiscoverySubscriptionCollection => {
-    return SubscriptionCollection.fromArray(items)
-  },
-}
 const DataplaneInsight = {
   fromObject(item: PartialDataplaneInsight | undefined): DataplaneInsight {
     return {

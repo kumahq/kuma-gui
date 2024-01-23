@@ -8,7 +8,7 @@ Feature: zones / egresses / index
     Given the environment
       """
       KUMA_MODE: <Mode>
-      KUMA_ZONEEGRESS_COUNT: 2
+      KUMA_ZONEEGRESS_COUNT: 3
       KUMA_SUBSCRIPTION_COUNT: 2
       """
     And the URL "/zoneegresses/_overview" responds with

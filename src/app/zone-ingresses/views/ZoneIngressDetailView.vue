@@ -54,22 +54,18 @@
           </div>
         </KCard>
 
-        <template
-          v-for="subscriptions in [props.data.zoneIngressInsight?.subscriptions ?? []]"
-          :key="subscriptions"
+        <div
+          v-if="props.data.zoneIngressInsight.subscriptions.length > 0"
+          data-testid="zone-ingress-subscriptions"
         >
-          <div
-            v-if="subscriptions.length > 0"
-          >
-            <h2>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h2>
+          <h2>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h2>
 
-            <KCard class="mt-4">
-              <SubscriptionList
-                :subscriptions="subscriptions"
-              />
-            </KCard>
-          </div>
-        </template>
+          <KCard class="mt-4">
+            <SubscriptionList
+              :subscriptions="props.data.zoneIngressInsight.subscriptions"
+            />
+          </KCard>
+        </div>
       </div>
     </AppView>
   </RouteView>
