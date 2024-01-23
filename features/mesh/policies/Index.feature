@@ -124,6 +124,10 @@ Feature: mesh / policies / index
       """
 
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
+    And the URL "/mesh-insights/default" was requested with
+      """
+      method: GET
+      """
 
     Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
     # Always shows MeshGateway
@@ -140,6 +144,10 @@ Feature: mesh / policies / index
       """
 
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
+    And the URL "/mesh-insights/default" was requested with
+      """
+      method: GET
+      """
 
     Then the "[data-testid='policy-type-link-FaultInjection']" element exists
     And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
