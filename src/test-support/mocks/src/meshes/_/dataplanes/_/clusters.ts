@@ -38,7 +38,7 @@ ${service}::10.244.0.2:8080::canary::false
 ${service}::10.244.0.2:8080::priority::0
 ${service}::10.244.0.2:8080::success_rate::-1
 ${service}::10.244.0.2:8080::local_origin_success_rate::-1`
-  })
+  }).join('\n')
   fake.kuma.seed(name as string)
   const outbounds = Array.from({ length: serviceCount }).map(_ => {
     const port = fake.number.int({ min: 1, max: 65535 })
@@ -71,7 +71,7 @@ ${service}::10.244.0.2:8080::canary::false
 ${service}::10.244.0.2:8080::priority::0
 ${service}::10.244.0.2:8080::success_rate::-1
 ${service}::10.244.0.2:8080::local_origin_success_rate::-1`
-  })
+  }).join('\n')
   return {
     headers: {},
     body: `${inbounds}
