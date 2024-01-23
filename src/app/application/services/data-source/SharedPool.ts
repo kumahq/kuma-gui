@@ -1,22 +1,20 @@
-type Creator<K, T> = (key: K) => T
-type Destroyer<K, T> = (key: K, item: T) => void
-
+type Transition<K, T> = (state: 'creating' | 'acquiring' | 'releasing' | 'destroying', key: K, item: T) => T
 type Entry<T> = {
   value: T
   references: Set<symbol>
 }
 export default class SharedPool<K, T> {
-  pool: Map<K, Entry<T>> = new Map()
+  protected pool: Map<K, Entry<T>> = new Map()
   constructor(
-    protected create: Creator<K, T>,
-    protected destroy: Destroyer<K, T>,
+    protected transition: Transition<K, T>,
   ) {}
 
   // getter, not init
   acquire(key: K, ref: symbol): T {
-    if (!this.pool.has(key)) {
+    const create = !this.pool.has(key)
+    if (create) {
       const references = {
-        value: this.create(key),
+        value: this.transition('creating', key, {} as T),
         references: new Set<symbol>(),
       }
       this.pool.set(key, references)
@@ -24,6 +22,9 @@ export default class SharedPool<K, T> {
     // there is no way pool/usage.get(item) can be undefined due to using has
     // above hence we use ! to avoid typescript
     const item = this.pool.get(key)!
+    if (!create) {
+      this.transition('acquiring', key, item.value)
+    }
     item.references.add(ref)
     return item.value
   }
@@ -31,14 +32,24 @@ export default class SharedPool<K, T> {
   // deleter
   release(key: K, ref: symbol) {
     if (this.pool.has(key)) {
-    // there is no way pool/usage.get(item) can be undefined due to using has
-    // above hence we use ! to avoid typescript
+      // there is no way pool/usage.get(item) can be undefined due to using has
+      // above hence we use ! to avoid typescript
       const item = this.pool.get(key)!
       item.references.delete(ref)
       if (item.references.size === 0) {
         this.pool.delete(key)
-        this.destroy(key, item.value)
+        this.transition('destroying', key, item.value)
+      } else {
+        this.transition('releasing', key, item.value)
       }
     }
+  }
+
+  destroy() {
+    Array.from(this.pool.entries()).forEach(([key, item]) => {
+      Array.from(item.references).forEach((ref) => {
+        this.release(key, ref)
+      })
+    })
   }
 }

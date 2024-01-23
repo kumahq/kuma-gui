@@ -10,8 +10,8 @@
     name="data-plane-detail-view"
   >
     <DataSource
-      v-slot="{ data: traffic, error, refresh }: TrafficSource"
-      :src="props.data.dataplaneType === 'standard' ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/traffic` : ''"
+      v-slot="{ data: traffic, error, refresh }: StatsSource"
+      :src="props.data.dataplaneType === 'standard' ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats` : ''"
     >
       <AppView>
         <template
@@ -412,7 +412,7 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import DataPlaneTraffic from '@/app/data-planes/components/data-plane-traffic/DataPlaneTraffic.vue'
 import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficCard.vue'
 import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
-import type { TrafficSource } from '@/app/data-planes/sources'
+import type { StatsSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import { useRoute } from '@/app/vue'
 import { useI18n } from '@/utilities'

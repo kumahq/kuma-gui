@@ -21,8 +21,8 @@
       </template>
       <div>
         <DataSource
-          v-slot="{ data, error, refresh }: StatsDataSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/stats`"
+          v-slot="{ data, error, refresh }: StatsSource"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats`"
         >
           <ErrorBlock
             v-if="error"
@@ -35,7 +35,7 @@
             v-else
             language="json"
             :code="(() => `${
-              data.split('\n')
+              data.raw.split('\n')
                 .filter(item => item.includes(`.localhost_${route.params.service}.`))
                 .map(item => item.replace(`localhost_${route.params.service}.`, ''))
                 .join('\n')
@@ -67,7 +67,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
-import type { StatsDataSource } from '../sources'
+import { StatsSource } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'

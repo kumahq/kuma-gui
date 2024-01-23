@@ -1,5 +1,5 @@
 import { ZoneEgressOverview, ZoneEgress } from './data'
-import { DataSourceResponse } from '@/app/application/services/data-source/DataSourcePool'
+import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 type PaginationParams = {
