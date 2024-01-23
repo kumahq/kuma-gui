@@ -8,6 +8,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
   //
 
+  fake.kuma.seed()
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
 

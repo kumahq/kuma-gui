@@ -5,9 +5,11 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   fake.kuma.seed(name as string)
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
-  //
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
+  const services = Array.from({ length: serviceCount }).map(() => `${fake.hacker.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`)
+  //
 
+  fake.kuma.seed()
   const inbounds = ports.map(port => {
     const service = `localhost:${port}`
     return `${service}::observability_name:${service}
@@ -39,10 +41,9 @@ ${service}::10.244.0.2:8080::priority::0
 ${service}::10.244.0.2:8080::success_rate::-1
 ${service}::10.244.0.2:8080::local_origin_success_rate::-1`
   }).join('\n')
-  fake.kuma.seed(name as string)
-  const outbounds = Array.from({ length: serviceCount }).map(_ => {
-    const port = fake.number.int({ min: 1, max: 65535 })
-    const service = `${fake.hacker.noun()}_svc_${port}`
+
+  const outbounds = services.map(item => {
+    const service = item
     return `${service}::observability_name:${service}
 ${service}::default_priority::max_connections::${fake.number.int({ min: 1, max: Date.now() })}
 ${service}::default_priority::max_pending_requests::${fake.number.int({ min: 1, max: Date.now() })}
