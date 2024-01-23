@@ -6,9 +6,10 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   fake.kuma.seed(name as string)
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
+  const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
+  const services = Array.from({ length: serviceCount }).map(() => `${fake.hacker.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`)
   //
 
-  const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   fake.kuma.seed()
   const minMax = {
     min: 0,
@@ -82,10 +83,8 @@ ${prefix}_cx_rx_bytes_total: ${fake.number.int(_minMax)}`
     return ''
   }).join('\n')
 
-  fake.kuma.seed(name as string)
-  const outbounds = Array.from({ length: serviceCount }).map(_ => {
-    const port = fake.number.int({ min: 1, max: 65535 })
-    const service = `${fake.hacker.noun()}_svc_${port}`
+  const outbounds = services.map(item => {
+    const service = item
     const _minMax = fake.datatype.boolean() ? minMax : { min: 0, max: 0 }
     switch (fake.helpers.arrayElement(['grpc', 'http', 'tcp'])) {
       case 'grpc': {
