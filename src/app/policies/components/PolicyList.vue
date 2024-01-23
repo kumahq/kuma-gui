@@ -227,7 +227,7 @@ const emit = defineEmits<{
 const visiblePolicyTypes = computed(() => {
   const hasAnyLegacyPolicies = props.policyTypes
     // Consider only legacy policy types. Ignore MeshGateway because we’ll always show it in the list. Therefore, its policies shouldn’t influence whether we show _legacy_ policy types.
-    .filter((policyType) => !policyType.isTargetRefBased || policyType.name !== 'MeshGateway')
+    .filter((policyType) => !policyType.isTargetRefBased && policyType.name !== 'MeshGateway')
     .some((policyType) => (props.meshInsight?.policies?.[policyType.name]?.total ?? 0) > 0)
 
   return props.policyTypes.filter((policyType) => {
