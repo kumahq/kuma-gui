@@ -97,7 +97,7 @@ Feature: mesh / policies / index
             total: 0
           FaultInjection:
             total: 0
-          HealthChecks:
+          HealthCheck:
             total: 0
           MeshGatewayRoute:
             total: 0
@@ -125,10 +125,10 @@ Feature: mesh / policies / index
 
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
 
-    Then the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
-    And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
+    Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
     # Always shows MeshGateway
     And the "[data-testid='policy-type-link-MeshGateway']" element exists
+    And the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
 
   Scenario: Shows legacy policy types if there are any legacy policies applied
     Given the URL "/mesh-insights/default" responds with
