@@ -110,7 +110,7 @@
     </template>
     <template v-else>
       <KSkeletonBox
-        :width="10"
+        width="10"
       />
     </template>
   </DataCard>
