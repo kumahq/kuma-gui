@@ -1,6 +1,7 @@
 import { i18nTComponent } from '@kong-ui-public/i18n'
 
 import AppView from './components/app-view/AppView.vue'
+import DataCollection from './components/data-collection/DataCollection.vue'
 import DataSource from './components/data-source/DataSource.vue'
 import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
@@ -25,6 +26,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppView: typeof AppView
     DataSource: typeof DataSource
+    DataCollection: typeof DataCollection
     RouteView: typeof RouteView
     RouteTitle: typeof RouteTitle
     I18nT: ReturnType<typeof i18nTComponent>
@@ -58,6 +60,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         return [
           ['AppView', AppView],
           ['DataSource', DataSource],
+          ['DataCollection', DataCollection],
           ['RouteView', RouteView],
           ['RouteTitle', RouteTitle],
           ['I18nT', i18nTComponent(i18n)],
