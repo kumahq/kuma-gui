@@ -17,6 +17,7 @@
       :env="env"
       :can="can"
       :route="{
+        name: props.name,
         update: routeUpdate,
         replace: routeReplace,
         params: routeParams,
