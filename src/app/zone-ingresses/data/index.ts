@@ -1,12 +1,12 @@
+import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   ZoneIngressOverview as PartialZoneIngressOverview,
   ZoneIngress as PartialZoneIngress,
-  KDSSubscription,
+  ZoneIngressInsight as PartialZoneIngressInsight,
 } from '@/types/index.d'
 export type { AvailableService } from '@/types/index.d'
 
-type PartialZoneIngressInsight = any
 type PartialInternalZoneIngress = PartialZoneIngressOverview['zoneIngress']
 
 // TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
@@ -22,15 +22,11 @@ export type ZoneIngress = {
 } & Required<Pick<PartialZoneIngress, 'availableServices'>> & PartialZoneIngress
 // end TODO
 
-// TODO(jc) currently in our manually written types ZoneIngressInsight is any therefore
-// we have no Partial*
-export type ZoneIngressInsight = {
-  connectedSubscription?: KDSSubscription
-  subscriptions: KDSSubscription[]
-}
+export type ZoneIngressInsight = PartialZoneIngressInsight & DiscoverySubscriptionCollection & {}
+
 export type ZoneIngressOverview = PartialZoneIngressOverview & {
   zoneIngress: InternalZoneIngress
-  zoneIngressInsight?: ZoneIngressInsight
+  zoneIngressInsight: ZoneIngressInsight
   state: 'online' | 'offline'
 }
 // TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
@@ -58,34 +54,24 @@ export const ZoneIngress = {
 }
 // end TODO
 export const ZoneIngressInsight = {
-  fromObject: (item?: PartialZoneIngressInsight): ZoneIngressInsight | undefined => {
-    // if item isn't set don't even try augmenting things
-    return isSet<PartialZoneIngressInsight>(item)
-      ? ((item) => {
-        const subscriptions: KDSSubscription[] = Array.isArray(item.subscriptions) ? item.subscriptions : []
-        // figure out the connectedSubscription by looking at the connectTime
-        // and disconnectTime of the last subscription
-        const connectedSubscription = subscriptions.slice(-1).find((item) => item.connectTime?.length && !item.disconnectTime)
-        return {
-          ...item,
-          subscriptions,
-          connectedSubscription,
-        }
-      })(item)
-      : undefined
+  fromObject: (item: PartialZoneIngressInsight | undefined): ZoneIngressInsight => {
+    return {
+      ...item,
+      ...DiscoverySubscriptionCollection.fromArray(item?.subscriptions),
+    }
   },
 }
 export const ZoneIngressOverview = {
   fromObject: (item: PartialZoneIngressOverview): ZoneIngressOverview => {
-    const insight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
+    const zoneIngressInsight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
     const zoneIngress = InternalZoneIngress.fromObject(item.zoneIngress)
     return {
       ...item,
-      zoneIngressInsight: insight,
+      zoneIngressInsight,
       zoneIngress,
       // it is possible to have zoneIngresses on a 'disabled' zone but we don't
       // want to do anything special about that just now at least
-      state: typeof insight?.connectedSubscription !== 'undefined' ? 'online' : 'offline',
+      state: typeof zoneIngressInsight.connectedSubscription !== 'undefined' ? 'online' : 'offline',
     }
   },
   fromCollection: (collection: CollectionResponse<PartialZoneIngressOverview>): CollectionResponse<ZoneIngressOverview> => {
@@ -94,7 +80,4 @@ export const ZoneIngressOverview = {
       items: Array.isArray(collection.items) ? collection.items.map(ZoneIngressOverview.fromObject) : [],
     }
   },
-}
-function isSet<T>(value: T | null | undefined): value is T {
-  return value !== null && typeof value !== 'undefined'
 }
