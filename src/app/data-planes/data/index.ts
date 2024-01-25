@@ -1,4 +1,4 @@
-import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
+import { DiscoverySubscriptionCollection, type DiscoverySubscription } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlane as PartialDataplane,
@@ -24,6 +24,7 @@ import type {
   RuleEntryRule,
   SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
+import { isSet } from '@/utilities/isSet'
 
 export type { TrafficEntry } from './stats'
 
@@ -140,11 +141,10 @@ export const DataplaneOverview = {
     const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking)
 
     const dataplaneType = getDataplaneType(networking)
+    const status = getStatus(networking, dataplaneInsight.connectedSubscription)
     const tags = getTags(networking)
     const warnings = getWarnings(dataplaneInsight, tags, canUseZones)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
-
-    const state = isSet(dataplaneInsight.connectedSubscription) ? 'online' : 'offline'
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
     const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
 
@@ -155,24 +155,7 @@ export const DataplaneOverview = {
       },
       dataplaneInsight,
       dataplaneType,
-      status: networking.gateway
-        ? state
-        : (() => {
-          const unhealthyInbounds = networking.inbounds.filter((inbound) => !inbound.health.ready)
-          switch (true) {
-            case unhealthyInbounds.length === networking.inbounds.length:
-              // All inbounds being unhealthy means the Dataplane is offline.
-              return 'offline'
-            case unhealthyInbounds.length > 0:
-              // Some inbounds being unhealthy means the Dataplane is partially
-              // degraded.
-              return 'partially_degraded'
-            default:
-              // All inbounds being healthy means the Dataplane’s status is
-              // determined by whether it’s connected to a control plane.
-              return state
-          }
-        })(),
+      status,
       warnings,
       isCertExpired,
       services,
@@ -519,6 +502,25 @@ export function getDataplaneStatusCounts({ total = 0, online = 0, partiallyDegra
     offline,
   }
 }
-function isSet<T>(value: T | null | undefined): value is T {
-  return value !== null && typeof value !== 'undefined'
+
+function getStatus({ gateway, inbounds }: DataplaneNetworking, connectedSubscription: DiscoverySubscription | undefined): 'online' | 'offline' | 'partially_degraded' {
+  const state = isSet(connectedSubscription) ? 'online' : 'offline'
+
+  if (gateway) {
+    return state
+  }
+
+  const unhealthyInbounds = inbounds.filter((inbound) => !inbound.health.ready)
+
+  switch (true) {
+    case unhealthyInbounds.length === inbounds.length:
+      // All inbounds being unhealthy means the Dataplane is offline.
+      return 'offline'
+    case unhealthyInbounds.length > 0:
+      // Some inbounds being unhealthy means the Dataplane is partially degraded.
+      return 'partially_degraded'
+    default:
+      // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
+      return state
+  }
 }
