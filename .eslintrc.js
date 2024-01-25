@@ -126,6 +126,7 @@ const INLINE_NON_VOID_ELEMENTS = [
             // Application
             'AppView',
             'DataSource',
+            'DataCollection',
             'RouteView',
             'RouteTitle',
           ],
