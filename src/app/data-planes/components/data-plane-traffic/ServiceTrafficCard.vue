@@ -119,11 +119,11 @@ const props = defineProps<{
 }>()
 const click = (e: MouseEvent) => {
   const $target = e.target as HTMLElement
-  if ($target.nodeName.toLowerCase() !== 'a') {
-    const $el = $target.closest('.service-traffic-card')
+  if (e.isTrusted && $target.nodeName.toLowerCase() !== 'a') {
+    const $el = $target.closest('.service-traffic-card, a')
     if ($el) {
-      const $a = $el.querySelector('a')
-      if ($a !== null) {
+      const $a = $el.nodeName.toLowerCase() === 'a' ? $el : $el.querySelector('a')
+      if ($a !== null && 'click' in $a && typeof $a.click === 'function') {
         $a.click()
       }
     }
