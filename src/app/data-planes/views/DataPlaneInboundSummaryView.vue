@@ -20,27 +20,22 @@
         </div>
       </template>
 
-      <EmptyBlock v-if="typeof props.data === 'undefined'">
-        {{ t('common.collection.summary.empty_title', { type: 'Inbound' }) }}
-
-        <template #message>
-          <p>{{ t('common.collection.summary.empty_message', { type: 'Inbound' }) }}</p>
-        </template>
-      </EmptyBlock>
-
-      <template
-        v-else
-      >
-        <NavTabs
-          :tabs="tabs"
-        />
-        <RouterView v-slot="child">
+      <NavTabs
+        :tabs="tabs"
+      />
+      <RouterView v-slot="child">
+        <DataCollection
+          v-slot="{ items }"
+          :items="props.data"
+          :predicate="(item) => `${item.port}` === route.params.service"
+          :find="true"
+        >
           <component
             :is="child.Component"
-            :data="props.data"
+            :data="items[0]"
           />
-        </RouterView>
-      </template>
+        </DataCollection>
+      </RouterView>
     </AppView>
   </RouteView>
 </template>
@@ -50,14 +45,13 @@ import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import type { DataplaneInbound } from '../data'
 import { useI18n } from '@/app/application'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
 
 const { t } = useI18n()
 
 const router = useRouter()
 const props = defineProps<{
-  data?: DataplaneInbound
+  data: DataplaneInbound[]
 }>()
 const routes = router.getRoutes().find((route) => route.name === 'data-plane-inbound-summary-view')?.children ?? []
 const tabs: NavTab[] = routes.map((route) => {

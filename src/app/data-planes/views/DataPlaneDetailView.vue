@@ -4,7 +4,6 @@
     :params="{
       mesh: '',
       dataPlane: '',
-      service: '',
       inactive: false,
     }"
     name="data-plane-detail-view"
@@ -133,41 +132,53 @@
                 <ServiceTrafficGroup
                   type="inbound"
                 >
-                  <template
-                    v-for="item in props.data.dataplane.networking.inbounds"
-                    :key="`${item.port}`"
+                  <DataCollection
+                    v-slot="{ items: inbounds }"
+                    :items="props.data.dataplane.networking.inbounds"
                   >
-                    <!-- the finding here would be expensive if inbounds was commonly large -->
-                    <!-- inbounds are mostly singular and even when they are not they are small -->
                     <template
-                      v-for="inbound in [
-                        (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.port}` === `${item.port}`),
-                      ]"
-                      :key="inbound"
+                      v-for="item in inbounds"
+                      :key="`${item.port}`"
                     >
-                      <ServiceTrafficCard
-                        :protocol="item.protocol"
-                        :traffic="inbound"
+                      <!-- the finding here would be expensive if inbounds was commonly large -->
+                      <!-- inbounds are mostly singular and even when they are not they are small -->
+                      <template
+                        v-for="inbound in [
+                          (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.port}` === `${item.port}`),
+                        ]"
+                        :key="inbound"
                       >
-                        <RouterLink
-                          :to="{
-                            name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
-                            params: {
-                              service: item.port,
-                            },
-                            query: {
-                              inactive: route.params.inactive ? null : undefined,
-                            },
-                          }"
+                        <ServiceTrafficCard
+                          :protocol="item.protocol"
+                          :traffic="typeof error === 'undefined' ?
+                            inbound :
+                            {
+                              name: '',
+                              protocol: item.protocol,
+                              port: `${item.port}`,
+                            }
+                          "
                         >
-                          :{{ item.port }}
-                        </RouterLink>
-                        <TagList
-                          :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
-                        />
-                      </ServiceTrafficCard>
+                          <RouterLink
+                            :to="{
+                              name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
+                              params: {
+                                service: item.port,
+                              },
+                              query: {
+                                inactive: route.params.inactive ? null : undefined,
+                              },
+                            }"
+                          >
+                            :{{ item.port }}
+                          </RouterLink>
+                          <TagList
+                            :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
+                          />
+                        </ServiceTrafficCard>
+                      </template>
                     </template>
-                  </template>
+                  </DataCollection>
                 </ServiceTrafficGroup>
               </DataPlaneTraffic>
 
@@ -202,67 +213,71 @@
                   />
                   <span>Outbounds</span>
                 </template>
-                <template
-                  v-if="traffic"
-                >
-                  <ServiceTrafficGroup
-                    type="passthrough"
-                  >
-                    <ServiceTrafficCard
-                      :protocol="`passthrough`"
-                      :traffic="traffic.passthrough"
-                    >
-                      Non mesh traffic
-                    </ServiceTrafficCard>
-                  </ServiceTrafficGroup>
+                <!-- we don't want to show an error here -->
+                <!-- instead we show a No Data EmptyBlock -->
+                <template v-if="typeof error === 'undefined'">
+                  <LoadingBlock v-if="typeof traffic === 'undefined'" />
                   <template
-                    v-for="outbounds in [
-                      route.params.inactive ? traffic.outbounds : traffic.outbounds.filter(item => (item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined) ?? 0 > 0),
-                    ]"
-                    :key="outbounds"
+                    v-else
                   >
                     <ServiceTrafficGroup
-                      v-if="outbounds.length > 0"
-                      type="outbound"
-                      data-testid="dataplane-outbounds"
+                      type="passthrough"
                     >
-                      <template
-                        v-for="item in outbounds"
-                        :key="`${item.name}`"
+                      <ServiceTrafficCard
+                        :protocol="`passthrough`"
+                        :traffic="traffic.passthrough"
                       >
-                        <ServiceTrafficCard
-                          :protocol="item.protocol"
-                          :traffic="item"
-                        >
-                          <RouterLink
-                            :to="{
-                              name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
-                              params: {
-                                service: item.name,
-                              },
-                              query: {
-                                inactive: route.params.inactive ? null : undefined,
-                              },
-                            }"
-                          >
-                            {{ item.name }}
-                          </RouterLink>
-                        </ServiceTrafficCard>
-                      </template>
+                        Non mesh traffic
+                      </ServiceTrafficCard>
                     </ServiceTrafficGroup>
+                    <DataCollection
+                      v-slot="{ items }"
+                      :predicate="route.params.inactive ? undefined : (item) => ((item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined) ?? 0) > 0"
+                      :items="traffic.outbounds"
+                    >
+                      <ServiceTrafficGroup
+                        v-if="items.length > 0"
+                        type="outbound"
+                        data-testid="dataplane-outbounds"
+                      >
+                        <template
+                          v-for="item in items"
+                          :key="`${item.name}`"
+                        >
+                          <ServiceTrafficCard
+                            :protocol="item.protocol"
+                            :traffic="item"
+                          >
+                            <RouterLink
+                              :to="{
+                                name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
+                                params: {
+                                  service: item.name,
+                                },
+                                query: {
+                                  inactive: route.params.inactive ? null : undefined,
+                                },
+                              }"
+                            >
+                              {{ item.name }}
+                            </RouterLink>
+                          </ServiceTrafficCard>
+                        </template>
+                      </ServiceTrafficGroup>
+                    </DataCollection>
                   </template>
+                </template>
+                <template v-else>
+                  <EmptyBlock />
                 </template>
               </DataPlaneTraffic>
             </div>
           </KCard>
           <RouterView
-            v-if="route.params.service && [
-              traffic?.outbounds,
-              props.data.dataplane.networking.inbounds,
-            ].every(item => typeof item !== 'undefined')"
             v-slot="child"
           >
             <SummaryView
+              v-if="child.route.name !== route.name"
               width="670px"
               @close="function (_e) {
                 route.replace({
@@ -281,10 +296,8 @@
               <component
                 :is="child.Component"
                 :data="String(child.route.name).includes('-inbound-') ?
-                  props.data.dataplane.networking.inbounds.find((item) => `${item.port}` === route.params.service) :
-                  traffic!.outbounds.find((item) => {
-                    return item.name === route.params.service
-                  })
+                  props.data.dataplane.networking.inbounds || [] :
+                  traffic?.outbounds || []
                 "
               />
             </SummaryView>
@@ -405,6 +418,8 @@ import { computed } from 'vue'
 
 import type { DataplaneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'

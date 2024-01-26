@@ -163,7 +163,9 @@ tcp.${service}.${direction}_cx_rx_bytes_total: ${fake.number.int(minMax)}`
   }).join('\n')
 
   return {
-    headers: {},
+    headers: {
+      // 'Status-Code': '500',
+    },
     body: `${outbounds}
 ${inbounds}
 ${passthrough}
