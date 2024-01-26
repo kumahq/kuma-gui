@@ -195,6 +195,34 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           service: fake.datatype.boolean() ? fake.kuma.serviceName() : '',
           name: '192.168.0.1:80:81',
           matchedPolicies: {
+            MeshCircuitBreaker: [
+              {
+                type: 'MeshCircuitBreaker',
+                mesh,
+                name: 'mesh-circuit-breaker-all-default.kuma-system',
+                creationTime: '2024-01-26T11:40:20Z',
+                modificationTime: '2024-01-26T11:40:20Z',
+                labels: {
+                  'k8s.kuma.io/namespace': 'kuma-system',
+                  'kuma.io/display-name': 'mesh-circuit-breaker-all-default',
+                  'kuma.io/mesh': mesh,
+                },
+              },
+            ],
+            MeshFaultInjection: [
+              {
+                type: 'MeshFaultInjection',
+                mesh,
+                name: 'default.kuma-system',
+                creationTime: '2024-01-26T11:49:50Z',
+                modificationTime: '2024-01-26T11:49:50Z',
+                labels: {
+                  'k8s.kuma.io/namespace': 'kuma-system',
+                  'kuma.io/display-name': 'default',
+                  'kuma.io/mesh': mesh,
+                },
+              },
+            ],
             FaultInjection: [
               {
                 type: 'FaultInjection',
