@@ -7,6 +7,7 @@ import type {
   KDSSubscription,
 } from '@/types/index.d'
 import { get } from '@/utilities/get'
+import { isSet } from '@/utilities/isSet'
 
 type KDSSubscriptionCollection = {
   config: Record<string, unknown>
@@ -45,7 +46,7 @@ const KDSSubscriptionCollection = {
     const config: Record<string, unknown> = (() => {
       // just find the first that has a config
       const withConfig = collection.subscriptions.find(item => typeof item.config !== 'undefined')
-      const str = isSet<string>(withConfig?.config) ? withConfig.config : '{}'
+      const str = isSet(withConfig?.config) ? withConfig.config : '{}'
       try {
         return JSON.parse(str)
       } catch (e) {
@@ -91,7 +92,4 @@ export const ZoneOverview = {
       items: Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : [],
     }
   },
-}
-function isSet<T>(value: T | null | undefined): value is T {
-  return value !== null && typeof value !== 'undefined'
 }
