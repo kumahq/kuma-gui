@@ -43,11 +43,11 @@
             >
               <div>
                 <dt>{{ t('data-planes.components.service_traffic_card.tx') }}</dt>
-                <dd>{{ t('common.formats.bytes', { value: item.downstream_cx_rx_bytes_total as (number | undefined) ?? 0 }) }}</dd>
+                <dd>{{ formatBytes(item.downstream_cx_rx_bytes_total as (number | undefined) ?? 0) }}</dd>
               </div>
               <div>
                 <dt>{{ t('data-planes.components.service_traffic_card.rx') }}</dt>
-                <dd>{{ t('common.formats.bytes', { value: item.downstream_cx_tx_bytes_total as (number | undefined) ?? 0 }) }}</dd>
+                <dd>{{ formatBytes(item.downstream_cx_tx_bytes_total as (number | undefined) ?? 0) }}</dd>
               </div>
             </template>
           </template>
@@ -98,11 +98,11 @@
           >
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.tx') }}</dt>
-              <dd>{{ t('common.formats.bytes', { value: props.traffic.tcp?.downstream_cx_rx_bytes_total as (number | undefined) ?? 0 }) }}</dd>
+              <dd>{{ formatBytes(props.traffic.tcp?.downstream_cx_rx_bytes_total as (number | undefined) ?? 0) }}</dd>
             </div>
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.rx') }}</dt>
-              <dd>{{ t('common.formats.bytes', { value: props.traffic.tcp?.downstream_cx_tx_bytes_total as (number | undefined) ?? 0 }) }}</dd>
+              <dd>{{ formatBytes(props.traffic.tcp?.downstream_cx_tx_bytes_total as (number | undefined) ?? 0) }}</dd>
             </div>
           </template>
         </dl>
@@ -116,6 +116,8 @@
   </DataCard>
 </template>
 <script lang="ts" setup>
+import formatBytes from 'pretty-bytes'
+
 import type { TrafficEntry } from '../../data'
 import { useI18n } from '@/app/application'
 import DataCard from '@/app/common/data-card/DataCard.vue'
