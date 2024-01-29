@@ -10,7 +10,7 @@ describe('makeRequest', () => {
 
   test.each([
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('{"items":[{"key":"value"}]}', {
           status: 200,
           statusText: 'Super duper!',
@@ -34,7 +34,7 @@ describe('makeRequest', () => {
       },
     ],
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('{"items":[{"key":"value"}]}', {
           status: 200,
           statusText: 'Super duper!',
@@ -58,7 +58,7 @@ describe('makeRequest', () => {
       },
     ],
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('OK', {
           status: 200,
           statusText: 'Super duper!',
@@ -86,13 +86,13 @@ describe('makeRequest', () => {
 
   test.each([
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         return Promise.reject(new Error('A most terrible error'))
       },
       new Error('A most terrible error'),
     ],
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         // We specifically want to test this edge case.
         // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject('Now that’s just great')
@@ -108,7 +108,7 @@ describe('makeRequest', () => {
   test.each([
     [
       'minimal error response format',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('{"type":"great_misfortune","detail":"A most terrible error"}', {
           status: 400,
           statusText: 'Oh no!',
@@ -128,7 +128,7 @@ describe('makeRequest', () => {
     ],
     [
       'complete error response format',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('{"type":"great_misfortune","title":"Validation error","detail":"A most terrible error"}', {
           status: 400,
           statusText: 'Oh no!',
@@ -148,7 +148,7 @@ describe('makeRequest', () => {
     ],
     [
       'complete error response format with causes',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response(
           `
             {
@@ -191,7 +191,7 @@ describe('makeRequest', () => {
     ],
     [
       'unknown error response format',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('{"items":[]}', {
           status: 400,
           headers: {
@@ -208,7 +208,7 @@ describe('makeRequest', () => {
     ],
     [
       'plain text response',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function () {
         const response = new Response('Not found!', { status: 404 })
 
         return Promise.resolve(response)
@@ -246,7 +246,7 @@ describe('makeRequest', () => {
       },
     ],
   ])('correctly sends JSON payloads', async (options, payload, expectedInitObject) => {
-    vi.spyOn(global, 'fetch').mockImplementation((_input: RequestInfo | URL, _init?: RequestInit) => Promise.resolve(new Response('OK')))
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response('OK')))
 
     await makeRequest('/', options, payload)
 

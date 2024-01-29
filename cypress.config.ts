@@ -1,6 +1,5 @@
 import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor'
-// eslint-disable-next-line import/no-named-as-default
-import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild'
+import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import { defineConfig } from 'cypress'
 import cypressFailFast from 'cypress-fail-fast/plugin'

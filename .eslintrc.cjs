@@ -1,6 +1,6 @@
 /** @typedef {import('eslint').ESLint.ConfigData} Config */
 
-const deprecatedUtilityClasses = require('./dev-utilities/deprecatedUtilityClasses')
+const deprecatedUtilityClasses = require('./dev-utilities/deprecatedUtilityClasses.cjs')
 
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
