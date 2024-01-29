@@ -3,7 +3,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const policyTotal = fake.number.int({ min: 1, max: 100 })
 
-  const serviceTotal = parseInt(env('KUMA_SERVICEINSIGHT_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
+  const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 
   const dataplaneTotal = parseInt(env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const gatewayBuiltinTotal = fake.number.int({ min: 0, max: 20 })

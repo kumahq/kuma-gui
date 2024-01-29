@@ -220,3 +220,22 @@ Then(/^(everything is )?ok$/, function () {
 Then('log {string}', function (message: string) {
   console.log(message)
 })
+Then(/^screenshot the "(.*)" element to "(.*)"$/, function (selector: string, path: string) {
+  const $cy = $(selector)
+  $cy.then(($jQuery) => {
+    const $el: HTMLElement | null = $jQuery.get(0)
+    const rect = $el.getBoundingClientRect()
+    const win = $el.ownerDocument.defaultView!
+    $cy.screenshot(
+      path,
+      {
+        capture: 'viewport',
+        clip: {
+          x: 0,
+          y: 0,
+          width: Math.min(rect.width, win.innerWidth),
+          height: Math.min(rect.height, win.innerHeight),
+        },
+      })
+  })
+})

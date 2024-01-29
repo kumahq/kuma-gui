@@ -18,7 +18,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     'VirtualOutbound',
   ]
 
-  const serviceTotal = parseInt(env('KUMA_SERVICEINSIGHT_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
+  const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 
   const standard = fake.kuma.healthStatus()
   const gatewayBuiltin = fake.kuma.healthStatus()
