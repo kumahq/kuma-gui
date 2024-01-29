@@ -1,6 +1,8 @@
 type URLParamDefault = string | number | boolean
 type URLParamValue = string | null
 
+const difference = <T>(a: T[], b: T[]): T[] => a.filter(item => !b.includes(item))
+
 export const beforePaint = function (fn: (...args: any[]) => void) {
   let num: number
   return (...args: unknown[]) => {
@@ -27,9 +29,12 @@ export const createAttrsSetter = ($el = document.documentElement) => {
         }, prev,
       )
     }, {})
-
-    $el.classList.remove(...[...$el.classList].filter(item => !originalClasses.includes(item)))
-    $el.classList.add(...(flat.class || []))
+    // omit any classes that were on the node previous to our application starting
+    const currentClasses = difference([...$el.classList], originalClasses)
+    // anything in currentClasses that isn't in our tree of attrs, remove
+    $el.classList.remove(...difference(currentClasses, flat.class))
+    // anything in our tree of attrs that isn't in currentClasses, add
+    $el.classList.add(...difference(flat.class, currentClasses))
   })
 }
 // normalizes url params from "value or array of values" to value
