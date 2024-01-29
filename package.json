@@ -95,7 +95,7 @@
     "jsdom": "24.0.0",
     "lockfile-lint": "4.12.1",
     "marked": "11.2.0",
-    "msw": "1.3.2",
+    "msw": "2.1.5",
     "postcss-html": "1.6.0",
     "sass": "1.70.0",
     "standard": "17.1.0",

@@ -1,6 +1,5 @@
 import deepmerge from 'deepmerge'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
+import { http, HttpResponse } from 'msw'
 
 import { dependencies, escapeRoute } from './fake'
 import type { FakeEndpoint, MockResponse, FS, AEnv, Env, AppEnvKeys, MockEnvKeys, RestRequest } from './fake'
@@ -11,7 +10,6 @@ export type { FS, EndpointDependencies, MockResponder } from './fake'
 export type Merge = (obj: Partial<MockResponse>) => MockResponse
 export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
 export type Options = Record<string, string>
-type Server = ReturnType<typeof setupServer>
 
 export const undefinedSymbol = Symbol('undefined')
 
@@ -42,7 +40,7 @@ export const createMerge = (response: MockResponse): Merge => (obj) => {
   }))
 }
 
-export const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
+export const useResponder = (fs: FS, env: AEnv) => {
   return (route: string, opts: Options = {}, cb: Callback = noop) => {
     const mockEnv: Env = (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d)
     if (route !== '*') {
@@ -53,7 +51,7 @@ export const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
       ...dependencies,
       env: mockEnv,
     })
-    return async (req: T): Promise<MockResponse> => {
+    return async (req: RestRequest): Promise<MockResponse> => {
       const _response = fetch(req)
       const latency = parseInt(mockEnv('KUMA_LATENCY', '0'))
       if (latency !== 0) {
@@ -65,15 +63,19 @@ export const useResponder = <T extends RestRequest>(fs: FS, env: AEnv) => {
 }
 export const handler = (fs: FS, env: AEnv) => {
   const baseUrl = env('KUMA_API_URL')
-  const responder = useResponder<RestRequest>(fs, env)
+  const responder = useResponder(fs, env)
   return (route: string, opts: Options = {}, cb: Callback = noop) => {
     const respond = responder(route, opts, cb)
-    return rest.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {
-      const response = await respond(req)
-      return res(
-        ctx.status(parseInt(response.headers['Status-Code'] ?? '200')),
-        ctx.json(response.body),
-      )
+    return http.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async ({ request, params }) => {
+      const response = await respond({
+        method: request.method,
+        url: new URL(request.url),
+        body: request.body,
+        params,
+      })
+      return HttpResponse.json(response.body, {
+        status: parseInt(response.headers['Status-Code'] ?? '200'),
+      })
     })
   }
 }
@@ -112,13 +114,4 @@ export const fakeApi = (env: AEnv, fs: FS) => {
     }
   }
 }
-export const mocker = (env: AEnv, server: Server, fs: FS) => {
-  const handlerFor = handler(fs, env)
-
-  return (route: string, opts: Options = {}, cb: Callback = noop) => {
-    return server.use(
-      handlerFor(route, opts, cb),
-    )
-  }
-}
-export type Mocker = ReturnType<typeof mocker>
+export type Mocker = (route: string, opts: Options, cb: Callback) => void
