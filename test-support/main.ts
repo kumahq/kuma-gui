@@ -4,21 +4,12 @@
 
 import { beforeEach, afterEach, beforeAll } from 'vitest'
 
-import { TOKENS as TEST, services as testing } from './index'
+import { services as testing } from './index'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { services as controlPlanes, TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
 import { services as onboarding } from '@/app/onboarding'
-import { TOKENS as DEV, services as development } from '@/services/development'
-import { TOKENS as PROD, services as production } from '@/services/production'
+import { TOKENS as $, services as production } from '@/services/production'
 import { get, container, build, token } from '@/services/utils'
-
-export { useMock } from './index'
-
-const $ = {
-  ...PROD,
-  ...DEV,
-  ...TEST,
-};
 
 (async () => {
   build(
@@ -33,7 +24,6 @@ const $ = {
       routes: $.routesLabel,
     }),
 
-    development($),
     testing($),
   )
   // initializes vue-test-utils with any global components and/or plugins etc

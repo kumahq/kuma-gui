@@ -1,17 +1,10 @@
 import { config } from '@vue/test-utils'
-import { setupServer } from 'msw/node'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
 import CliEnv from '@/services/env/CliEnv'
-import { Alias, ServiceConfigurator, token, createInjections } from '@/services/utils'
-import { mocker, fakeApi, FS } from '@/test-support'
-import type { Mocker } from '@/test-support'
+import { ServiceConfigurator } from '@/services/utils'
 import type { Component } from 'vue'
 
-const $ = {
-  mock: token<Mocker>('mocker'),
-  server: token<ReturnType<typeof setupServer>>('server'),
-}
 export const services: ServiceConfigurator = (app) => [
   [app.app, {
     service: (
@@ -36,26 +29,6 @@ export const services: ServiceConfigurator = (app) => [
     ],
   }],
 
-  [$.server, {
-    service: (env: Alias<CliEnv['var']>, fs: FS) => {
-      const mock = fakeApi(env, fs)
-      return setupServer(...mock('*'))
-    },
-    arguments: [
-      app.env,
-      app.fakeFS,
-    ],
-  }],
-
-  [$.mock, {
-    service: mocker,
-    arguments: [
-      app.env,
-      app.server,
-      app.fakeFS,
-    ],
-  }],
-
   [app.Env, {
     service: CliEnv,
     arguments: [
@@ -63,8 +36,3 @@ export const services: ServiceConfigurator = (app) => [
     ],
   }],
 ]
-export const TOKENS = $
-export const [
-  useMock,
-  useServer,
-] = createInjections($.mock, $.server)

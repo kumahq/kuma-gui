@@ -1,4 +1,4 @@
-import { setupWorker, MockedRequest } from 'msw'
+import { setupWorker } from 'msw/browser'
 
 import DebugKClipboardProvider from '@/app/application/components/debug-k-clipboard-provider/DebugKClipboardProvider.vue'
 import debugI18n from '@/app/application/services/i18n/DebugI18n'
@@ -69,14 +69,9 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
 
   [token('development.components'), {
     service: () => {
-      // unit testing is likely to have process
-      // no matter which runner is used
-      // if we are unit testing don't decorate KClipboardProvider
-      return typeof process === 'undefined'
-        ? [
-          ['KClipboardProvider', DebugKClipboardProvider],
-        ]
-        : []
+      return [
+        ['KClipboardProvider', DebugKClipboardProvider],
+      ]
     },
     labels: [
       app.components,
@@ -103,18 +98,19 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
 
       return worker.start({
         quiet: true,
-        onUnhandledRequest(req: MockedRequest) {
+        onUnhandledRequest(req: Request) {
           // Ignores warnings about unhandled requests.
+          const { pathname, href } = new URL(req.url)
           if (
-            req.url.pathname.startsWith('/@fs') ||
-            req.url.pathname.startsWith('/node_modules') ||
-            req.url.pathname.startsWith('/src/assets') ||
-            req.url.href.match(/\.(vue|ts|js|json)(\?.*)?$/)
+            pathname.startsWith('/@fs') ||
+            pathname.startsWith('/node_modules') ||
+            pathname.startsWith('/src/assets') ||
+            href.match(/\.(vue|ts|js|json)(\?.*)?$/)
           ) {
             return
           }
 
-          console.warn('Found an unhandled %s request to %s', req.method, req.url.href)
+          console.warn('Found an unhandled %s request to %s', req.method, href)
         },
       })
     },
