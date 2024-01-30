@@ -41,15 +41,15 @@ jobs:
       SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
       BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ env.BRANCH }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
           node-version-file: '.nvmrc'
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
         id: node-modules-cache
         with:
           path: |
@@ -70,7 +70,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: "kuma-gui,kuma"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           # This needs to be a token that grants read access to `HOST_REPOSITORY`. If that repository is private, it needs general access to the `repo` scope which grants access to read private repositories. Otherwise, you will run into an error telling you that the checkout actions can’t determine the repository’s default branch. This is on account of a lack of access not because it can’t determine the default branch.
           token: ${{ steps.github-app-token.outputs.token }}
@@ -84,7 +84,7 @@ jobs:
           cp -r ../${{ vars.DIST_DIRECTORY }}/ ${{ vars.HOST_DIST_DIRECTORY }}
 
       # https://github.com/peter-evans/create-pull-request
-      - uses: peter-evans/create-pull-request@v5
+      - uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5.0.2
         with:
           # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
           token: ${{ steps.github-app-token.outputs.token }}

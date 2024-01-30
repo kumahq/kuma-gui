@@ -17,11 +17,11 @@ jobs:
       spec_groups: ${{ steps.set-groups.outputs.groups }}
       spec_group_ids: ${{ steps.set-group-ids.outputs.group_ids }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
           node-version-file: '.nvmrc'
-      - uses: actions/cache@v4
+      - uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
         id: node-modules-cache
         with:
           path: |
@@ -46,11 +46,11 @@ jobs:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
           node-version-file: '.nvmrc'
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
         id: node-modules-cache
         with:
           path: |
@@ -68,11 +68,11 @@ jobs:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
           node-version-file: '.nvmrc'
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
         id: node-modules-cache
         with:
           path: |
@@ -91,11 +91,11 @@ jobs:
       matrix:
         container: ${{ fromJSON(needs.install-dependencies.outputs.spec_group_ids) }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4.0.1
         with:
           node-version-file: '.nvmrc'
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
         id: node-modules-cache
         with:
           path: |
@@ -109,7 +109,7 @@ jobs:
         run: |
           yarn preview:built &
           CYPRESS_video=true yarn run test:browser --spec $(echo $SPEC_GROUPS | jq -cMr '.[${{ matrix.container }}]')
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.3.0
         if: failure()
         with:
           name: cypress-artifacts
