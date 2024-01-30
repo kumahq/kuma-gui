@@ -41,6 +41,31 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
+.summary-slideout :deep(.app-view-title-bar) {
+  display: flex;
+  // Accounts for the absolutely-positioned close button
+  margin-right: calc($kui-space-30 + 24px);
+  h1, h2, h3, h4, h5, h6 {
+    --icon-before: url('@/assets/images/icon-wifi-tethering.svg');
+    &::before {
+      color: $kui-color-text-neutral;
+      mask-repeat: no-repeat;
+      -webkit-mask-repeat: no-repeat;
+      mask-position: center;
+      -webkit-mask-position: center;
+      content: '';
+      display: inline-flex;
+      background-color: currentColor;
+
+      mask-image: var(--icon-before);
+      -webkit-mask-image: var(--icon-before);
+      width: 16px;
+      height: 16px;
+      margin-right: $kui-space-30;
+    }
+
+  }
+}
 .summary-slideout :deep(.k-slideout-header-content) {
   padding-right: $kui-space-80;
   padding-left: $kui-space-80;

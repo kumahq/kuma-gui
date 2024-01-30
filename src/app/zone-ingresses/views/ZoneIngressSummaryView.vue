@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="zone-ingress-summary-view"
     :params="{
       zone: '',
@@ -9,28 +9,21 @@
   >
     <AppView>
       <template #title>
-        <div class="summary-title-wrapper">
-          <img
-            aria-hidden="true"
-            src="@/assets/images/icon-location-on.svg?url"
+        <h2 :style="`--icon-before: url('${icon}')`">
+          <RouterLink
+            :to="{
+              name: 'zone-ingress-detail-view',
+              params: {
+                zone: route.params.zone,
+                zoneIngress: route.params.zoneIngress,
+              },
+            }"
           >
-
-          <h2 class="summary-title">
-            <RouterLink
-              :to="{
-                name: 'zone-ingress-detail-view',
-                params: {
-                  zone: route.params.zone,
-                  zoneIngress: route.params.zoneIngress,
-                },
-              }"
-            >
-              <RouteTitle
-                :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
-              />
-            </RouterLink>
-          </h2>
-        </div>
+            <RouteTitle
+              :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
+            />
+          </RouterLink>
+        </h2>
       </template>
 
       <EmptyBlock v-if="props.zoneIngressOverview === undefined">
@@ -62,9 +55,7 @@
 import ZoneIngressSummary from '../components/ZoneIngressSummary.vue'
 import type { ZoneIngressOverview } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
+import icon from '@/assets/images/icon-location-on.svg?inline'
 
 const props = withDefaults(defineProps<{
   zoneIngressOverview?: ZoneIngressOverview
@@ -72,17 +63,3 @@ const props = withDefaults(defineProps<{
   zoneIngressOverview: undefined,
 })
 </script>
-
-<style lang="scss" scoped>
-.summary-title-wrapper {
-  display: flex;
-  align-items: baseline;
-  gap: $kui-space-30;
-  // Accounts for the absolutely-positioned close button
-  margin-right: calc($kui-space-30 + 24px);
-}
-
-.summary-title {
-  margin-top: 0;
-}
-</style>

@@ -8,22 +8,15 @@
   >
     <AppView>
       <template #title>
-        <div class="summary-title-wrapper">
-          <img
-            aria-hidden="true"
-            src="@/assets/images/icon-wifi-tethering.svg?url"
-          >
+        <h2>
+          <template v-if="props.gateway">
+            {{ route.params.service }}
+          </template>
 
-          <h2 class="summary-title">
-            <template v-if="props.gateway">
-              {{ route.params.service }}
-            </template>
-
-            <template v-else>
-              Inbound :{{ route.params.service.replace('localhost_', '') }}
-            </template>
-          </h2>
-        </div>
+          <template v-else>
+            Inbound :{{ route.params.service.replace('localhost_', '') }}
+          </template>
+        </h2>
       </template>
 
       <NavTabs
@@ -81,17 +74,3 @@ const tabs: NavTab[] = routes.map((route) => {
 })
 
 </script>
-
-<style lang="scss" scoped>
-.summary-title-wrapper {
-  display: flex;
-  align-items: baseline;
-  gap: $kui-space-30;
-  // Accounts for the absolutely-positioned close button
-  margin-right: calc($kui-space-30 + 24px);
-}
-
-.summary-title {
-  margin-top: 0;
-}
-</style>

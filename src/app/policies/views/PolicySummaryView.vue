@@ -13,29 +13,22 @@
   >
     <AppView>
       <template #title>
-        <div class="summary-title-wrapper">
-          <img
-            aria-hidden="true"
-            src="@/assets/images/icon-circles-ext.svg?url"
+        <h2 :style="`--icon-before: url('${icon}')`">
+          <RouterLink
+            :to="{
+              name: 'policy-detail-view',
+              params: {
+                mesh: route.params.mesh,
+                policyPath: route.params.policyPath,
+                policy: route.params.policy,
+              },
+            }"
           >
-
-          <h2 class="summary-title">
-            <RouterLink
-              :to="{
-                name: 'policy-detail-view',
-                params: {
-                  mesh: route.params.mesh,
-                  policyPath: route.params.policyPath,
-                  policy: route.params.policy,
-                },
-              }"
-            >
-              <RouteTitle
-                :title="t('policies.routes.item.title', { name: route.params.policy })"
-              />
-            </RouterLink>
-          </h2>
-        </div>
+            <RouteTitle
+              :title="t('policies.routes.item.title', { name: route.params.policy })"
+            />
+          </RouterLink>
+        </h2>
       </template>
 
       <EmptyBlock v-if="props.policy === undefined">
@@ -112,6 +105,7 @@ import type { Policy, PolicyType } from '../data'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import icon from '@/assets/images/icon-circles-ext.svg?inline'
 
 const props = withDefaults(defineProps<{
   policy?: Policy
@@ -120,17 +114,3 @@ const props = withDefaults(defineProps<{
   policy: undefined,
 })
 </script>
-
-<style lang="scss" scoped>
-.summary-title-wrapper {
-  display: flex;
-  align-items: baseline;
-  gap: $kui-space-30;
-  // Accounts for the absolutely-positioned close button
-  margin-right: calc($kui-space-30 + 24px);
-}
-
-.summary-title {
-  margin-top: 0;
-}
-</style>

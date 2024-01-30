@@ -1,28 +1,26 @@
 <template>
   <span class="date-status">
-    {{ t('common.detail.created') }}: {{ createdDate }}
+    {{ t('common.detail.created') }}: {{ t('common.formats.datetime', { value: Date.parse(props.creationTime) }) }}
 
+    {{ }}
     <ArrowRightIcon />
 
-    {{ t('common.detail.modified') }}: {{ modifiedDate }}
+    {{ t('common.detail.modified') }}:{{ t('common.formats.datetime', { value: Date.parse(props.modificationTime) }) }}
   </span>
 </template>
 
 <script lang="ts" setup>
 import { ArrowRightIcon } from '@kong/icons'
-import { computed } from 'vue'
 
 import { useI18n } from '@/utilities'
 
-const { t, formatIsoDate } = useI18n()
+const { t } = useI18n()
 
 const props = defineProps<{
   creationTime: string
   modificationTime: string
 }>()
 
-const createdDate = computed(() => formatIsoDate(props.creationTime))
-const modifiedDate = computed(() => formatIsoDate(props.modificationTime))
 </script>
 
 <style lang="scss" scoped>

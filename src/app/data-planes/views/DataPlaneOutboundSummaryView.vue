@@ -8,16 +8,9 @@
   >
     <AppView>
       <template #title>
-        <div class="summary-title-wrapper">
-          <img
-            aria-hidden="true"
-            src="@/assets/images/icon-wifi-tethering.svg?url"
-          >
-
-          <h2 class="summary-title">
-            {{ route.params.service }}
-          </h2>
-        </div>
+        <h2>
+          {{ route.params.service }}
+        </h2>
       </template>
 
       <NavTabs
@@ -62,19 +55,4 @@ const tabs: NavTab[] = routes.map((route) => {
 
   return { title, routeName, module }
 })
-
 </script>
-
-<style lang="scss" scoped>
-.summary-title-wrapper {
-  display: flex;
-  align-items: baseline;
-  gap: $kui-space-30;
-  // Accounts for the absolutely-positioned close button
-  margin-right: calc($kui-space-30 + 24px);
-}
-
-.summary-title {
-  margin-top: 0;
-}
-</style>

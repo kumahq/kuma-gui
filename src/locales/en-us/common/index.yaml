@@ -2,7 +2,12 @@ common:
   not_applicable: N/A
   formats:
     integer: '{value, number, integer}'
-    bytes: '{value, number, integer}'
+    datetime: |
+      { value, select,
+        0 { Invalid Date }
+        undefined { Invalid Date }
+        other { { value, date, datetime } }
+      }
   product:
     name: Kuma
     href:
