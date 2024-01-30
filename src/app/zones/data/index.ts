@@ -7,7 +7,6 @@ import type {
   KDSSubscription,
 } from '@/types/index.d'
 import { get } from '@/utilities/get'
-import { isSet } from '@/utilities/isSet'
 
 type KDSSubscriptionCollection = {
   config: Record<string, unknown>
@@ -46,7 +45,7 @@ const KDSSubscriptionCollection = {
     const config: Record<string, unknown> = (() => {
       // just find the first that has a config
       const withConfig = collection.subscriptions.find(item => typeof item.config !== 'undefined')
-      const str = isSet(withConfig?.config) ? withConfig.config : '{}'
+      const str = typeof withConfig?.config !== 'undefined' ? withConfig.config : '{}'
       try {
         return JSON.parse(str)
       } catch (e) {
@@ -83,7 +82,7 @@ export const ZoneOverview = {
       zoneInsight: insight,
       zone,
       // first check see if the zone is disabled, if not look for the connectedSubscription
-      state: !zone.enabled ? 'disabled' : typeof insight?.connectedSubscription !== 'undefined' ? 'online' : 'offline',
+      state: !zone.enabled ? 'disabled' : typeof insight.connectedSubscription !== 'undefined' ? 'online' : 'offline',
     }
   },
   fromCollection: (collection: CollectionResponse<PartialZoneOverview>): CollectionResponse<ZoneOverview> => {

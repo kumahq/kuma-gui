@@ -286,7 +286,6 @@ import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { MeSource } from '@/app/me/sources'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
-import type { DiscoverySubscription } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 import { get } from '@/utilities/get'
 
@@ -300,18 +299,6 @@ type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
 const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})
 const egresses = ref<ZoneProxies<ZoneEgressOverview>>({})
 
-const getState = (subscriptions: DiscoverySubscription[]) => {
-  let state: 'online' | 'offline' = 'offline'
-  if (subscriptions.length > 0) {
-    state = 'online'
-    const lastSubscription = subscriptions[subscriptions.length - 1]
-    if (typeof lastSubscription.disconnectTime !== 'undefined') {
-      state = 'offline'
-    }
-  }
-  return state
-}
-
 const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
   const prop = 'zoneIngress'
   ingresses.value = data.items.reduce((prev, item) => {
@@ -323,8 +310,7 @@ const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
           offline: [],
         }
       }
-      const subscriptions = item[`${prop}Insight`]?.subscriptions || []
-      const state = getState(subscriptions)
+      const state = typeof item[`${prop}Insight`].connectedSubscription !== 'undefined' ? 'online' : 'offline'
       prev[name][state].push(item)
     }
     return prev
@@ -341,8 +327,7 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
           offline: [],
         }
       }
-      const subscriptions = item[`${prop}Insight`]?.subscriptions || []
-      const state = getState(subscriptions)
+      const state = typeof item[`${prop}Insight`].connectedSubscription !== 'undefined' ? 'online' : 'offline'
       prev[name][state].push(item)
     }
     return prev
