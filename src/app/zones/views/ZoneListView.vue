@@ -259,11 +259,9 @@
             @cancel="toggleDeleteModal"
             @delete="() => { toggleDeleteModal(); refresh() }"
           >
-            <template #body-content>
-              <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
+            <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
 
-              <p>{{ t('common.delete_modal.text2') }}</p>
-            </template>
+            <p>{{ t('common.delete_modal.text2') }}</p>
           </DeleteResourceModal>
         </DataSource>
       </AppView>

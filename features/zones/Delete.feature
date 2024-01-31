@@ -7,8 +7,8 @@ Feature: zones / delete
       | actions-button | $item:nth-child(1) [data-testid='dropdown-trigger'] button     |
       | delete-button  | $item:nth-child(1) [data-testid='dropdown-delete-item'] button |
       | delete-prompt  | [data-testid="delete-zone-modal"]                              |
-      | confirm-button | $delete-prompt .k-prompt-proceed                               |
-      | confirm-input  | $delete-prompt .k-prompt-confirm-text .k-input                 |
+      | confirm-button | $delete-prompt [data-testid='modal-action-button']             |
+      | confirm-input  | $delete-prompt [data-testid='confirmation-input']              |
 
     And the environment
       """
