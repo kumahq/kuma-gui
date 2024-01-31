@@ -6,24 +6,12 @@ import { beforeEach, afterEach, beforeAll } from 'vitest'
 
 import { services as testing } from './index'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { services as controlPlanes, TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
-import { services as onboarding } from '@/app/onboarding'
 import { TOKENS as $, services as production } from '@/services/production'
 import { get, container, build, token } from '@/services/utils'
 
 (async () => {
   build(
     production($),
-    controlPlanes({
-      ...$,
-      routes: $.routesLabel,
-    }),
-    onboarding({
-      ...$,
-      ControlPlaneStatus: CONTROL_PLANES_TOKENS.ControlPlaneStatus,
-      routes: $.routesLabel,
-    }),
-
     testing($),
   )
   // initializes vue-test-utils with any global components and/or plugins etc
