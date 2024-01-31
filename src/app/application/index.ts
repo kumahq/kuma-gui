@@ -137,6 +137,18 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.getDataSourceCacheKeyPrefix,
       ],
     }],
+    [token('application.datasource.data-uri'), {
+      service: () => {
+        return {
+          'data:application/json,:uri': async ({ uri }: { uri: string }) => {
+            return JSON.parse(uri)
+          },
+        }
+      },
+      labels: [
+        app.sources,
+      ],
+    }],
 
   ]
 }

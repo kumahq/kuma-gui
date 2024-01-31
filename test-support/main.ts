@@ -7,7 +7,7 @@ import { beforeEach, afterEach, beforeAll } from 'vitest'
 import { services as testing } from './index'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { TOKENS as $, services as production } from '@/services/production'
-import { get, container, build, token } from '@/services/utils'
+import { get, container, build } from '@/services/utils'
 
 (async () => {
   build(
@@ -33,17 +33,3 @@ import { get, container, build, token } from '@/services/utils'
   beforeEach(() => container.capture?.())
   afterEach(() => container.restore?.())
 })()
-
-export const withSources = (sources: any) => {
-  build(
-    [
-      [token('sources'), {
-        service: sources,
-        arguments: [$.httpClient],
-        labels: [
-          $.sources,
-        ],
-      }],
-    ],
-  )
-}

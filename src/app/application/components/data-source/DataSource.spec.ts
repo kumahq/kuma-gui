@@ -2,7 +2,6 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, test } from 'vitest'
 
 import DataSource from './DataSource.vue'
-import { withSources } from '@/../test-support/main'
 
 describe('DataSource', () => {
   test("passing an empty uri doesn't fire change", async () => {
@@ -17,52 +16,40 @@ describe('DataSource', () => {
     expect(wrapper.emitted('change')).toBeFalsy()
   })
   test('cached responses and errors work', async () => {
-    const err = new Error('error')
-    const SUCCESS = 'one'
-    const REFRESHED = 'two'
-    let res = SUCCESS
-    withSources(() => {
-      return {
-        '/success': (_params: any, source: any) => {
-          source.close()
-          return Promise.resolve(res)
-        },
-        '/error': (_params: any, source: any) => {
-          source.close()
-          throw err
-        },
-      }
-    })
-
     // change
     const wrapper = mount(DataSource, {
       props: {
-        src: '/success',
+        src: 'data:application/json,"one"',
       },
     })
 
     await flushPromises()
-    expect(wrapper.emitted('change')?.[0]).toEqual([SUCCESS])
+    expect(wrapper.emitted('change')?.[0][0]).toEqual('one')
 
-    // error
     wrapper.setProps({
-      src: '/error',
+      src: 'data:application/json,"two"',
     })
 
     await flushPromises()
-    expect(wrapper.emitted('error')?.[0]).toEqual([err])
+    expect(wrapper.emitted('change')?.[1][0]).toEqual('two')
 
-    // refresh the data so we can test we get the previous cached response
-    // first
-    res = REFRESHED
     wrapper.setProps({
-      src: '/success',
+      src: 'data:application/json,"one"',
     })
 
     await flushPromises()
-    // cached
-    expect(wrapper.emitted('change')?.[1]).toEqual([SUCCESS])
-    // refreshed
-    expect(wrapper.emitted('change')?.[2]).toEqual([REFRESHED])
+    // this time we get two
+    // the first one comes from the cache
+    expect(wrapper.emitted('change')?.[2][0]).toEqual('one')
+    //  and this is the fresh uncached call
+    expect(wrapper.emitted('change')?.[3][0]).toEqual('one')
+
+    wrapper.setProps({
+      src: 'data:application/json,try with unparsable json',
+    })
+
+    await flushPromises()
+    const error = wrapper.emitted('error')?.[0][0]
+    expect(error instanceof Error && error.message).toContain('is not valid JSON')
   })
 })
