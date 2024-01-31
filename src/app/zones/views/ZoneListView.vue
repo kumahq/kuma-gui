@@ -214,7 +214,6 @@
 
                   <template #items>
                     <KDropdownItem
-                      has-divider
                       danger
                       data-testid="dropdown-delete-item"
                       @click="setDeleteZoneName(row.name)"
