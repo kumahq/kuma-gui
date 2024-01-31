@@ -4,6 +4,7 @@ Feature: mesh / policies / index
       | Alias            | Selector                                  |
       | policy-type-list | [data-testid='policy-type-list']          |
       | items            | [data-testid='policy-collection']         |
+      | detail-view      | [data-testid='policy-detail-view']        |
       | items-header     | $items th                                 |
       | item             | $items tbody tr                           |
       | button-docs      | [data-testid='policy-documentation-link'] |
@@ -45,6 +46,7 @@ Feature: mesh / policies / index
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
 
     Then the URL contains "circuit-breakers/fake-cb-1/overview"
+    And the "$detail-view" element contains "fake-cb-1"
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
 
