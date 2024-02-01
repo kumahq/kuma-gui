@@ -46,7 +46,6 @@ import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
 
           <CodeBlock
             v-else
-            id="code-block-diagnostics"
             data-testid="code-block-diagnostics"
             language="json"
             :code="JSON.stringify(data, null, 2)"

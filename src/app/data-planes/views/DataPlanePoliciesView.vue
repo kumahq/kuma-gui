@@ -103,7 +103,6 @@
                       class="mt-4"
                     >
                       <PolicyTypeEntryList
-                        id="policies"
                         :policy-type-entries="sidecarDataplaneData.policyTypeEntries"
                         :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
                         data-testid="sidecar-dataplane-policies"

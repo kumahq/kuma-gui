@@ -14,10 +14,10 @@ Feature: zones / create
       | environment-kubernetes-radio-button | [data-testid='environment-kubernetes-radio-button']  |
       | environment-universal-config        | [data-testid='zone-universal-config']                |
       | environment-kubernetes-config       | [data-testid='zone-kubernetes-config']               |
-      | ingress-input-switch-label          | [for='zone-ingress-enabled']                         |
-      | egress-input-switch-label           | [for='zone-egress-enabled']                          |
-      | ingress-input-switch-input          | #zone-ingress-enabled                                |
-      | egress-input-switch-input           | #zone-egress-enabled                                 |
+      | ingress-input-switch-label          | [data-testid='ingress-input-switch'] label           |
+      | egress-input-switch-label           | [data-testid='egress-input-switch'] label            |
+      | ingress-input-switch-input          | [data-testid='ingress-input-switch'] input           |
+      | egress-input-switch-input           | [data-testid='egress-input-switch'] input            |
       | create-error                        | [data-testid='create-zone-error']                    |
       | waiting                             | [data-testid='waiting']                              |
       | connected                           | [data-testid='connected']                            |

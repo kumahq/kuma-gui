@@ -93,10 +93,9 @@
               </template>
             </template>
 
-            <template #config="{ row, rowKey }: { row: PolicyTypeEntryConnection, rowKey: number }">
+            <template #config="{ row }: { row: PolicyTypeEntryConnection, rowKey: number }">
               <template v-if="row.config">
                 <CodeBlock
-                  :id="`${props.id}-${index}-${rowKey}-code-block`"
                   :code="toYaml(row.config)"
                   language="yaml"
                   :show-copy-button="false"
@@ -126,7 +125,6 @@ import type { PolicyType, PolicyTypeEntry, PolicyTypeEntryConnection } from '@/t
 import { toYaml } from '@/utilities/toYaml'
 
 const props = defineProps<{
-  id: string
   policyTypeEntries: PolicyTypeEntry[]
   policyTypesByName: Record<string, PolicyType | undefined>
 }>()

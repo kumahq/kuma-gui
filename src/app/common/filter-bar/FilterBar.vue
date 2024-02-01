@@ -125,7 +125,7 @@ import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 import { clamp } from './clamp'
 import { Command, ShortcutManager } from './ShortcutManager'
 import { tokenizeFieldFilterQuery } from './tokenizeFieldFilterQuery'
-import uniqueId from '@/utilities/uniqueId'
+import { uniqueId } from '@/app/application'
 
 export type Fields = [string, string][]
 

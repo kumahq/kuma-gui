@@ -33,7 +33,6 @@
         <b>{{ t('zones.form.kubernetes.helm.step1Description') }}</b>
 
         <CodeBlock
-          id="zone-kubernetes-create-namespace"
           class="mt-2"
           :code="t('zones.form.kubernetes.helm.step1Command')"
           language="bash"
@@ -44,7 +43,6 @@
         <b>{{ t('zones.form.kubernetes.helm.step2Description') }}</b>
 
         <CodeBlock
-          id="zone-kubernetes-add-charts-repo"
           class="mt-2"
           :code="t('zones.form.kubernetes.helm.step2Command')"
           language="bash"
@@ -55,7 +53,6 @@
         <b>{{ t('zones.form.kubernetes.helm.step3Description') }}</b>
 
         <CodeBlock
-          id="zone-kubernetes-repo-update"
           class="mt-2"
           :code="t('zones.form.kubernetes.helm.step3Command')"
           language="bash"
@@ -71,7 +68,6 @@
     <p>{{ t('zones.form.kubernetes.secret.createSecretDescription') }}</p>
 
     <CodeBlock
-      id="zone-kubernetes-create-secret"
       class="mt-4"
       :code="kubernetesCreateSecretCommand"
       language="bash"
@@ -89,7 +85,6 @@
     </span>
 
     <CodeBlock
-      id="zone-kubernetes-config-code-block"
       data-testid="zone-kubernetes-config"
       :code="kubernetesConfig"
       language="yaml"
@@ -100,7 +95,6 @@
     </p>
 
     <CodeBlock
-      id="zone-kubernetes-command-code-block"
       class="mt-4"
       :code="t('zones.form.kubernetes.connectZone.connectCommand').trim()"
       language="bash"
