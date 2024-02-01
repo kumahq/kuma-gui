@@ -22,7 +22,32 @@
           </GithubButton>
 
           <div class="upgrade-check-wrapper">
-            <UpgradeCheck />
+            <DataSource
+              v-slot="{ data }"
+              :src="`/control-plane/version/latest`"
+            >
+              <KAlert
+                v-if="env('KUMA_VERSION') !== data?.version"
+                data-testid="upgrade-check"
+                appearance="info"
+                size="small"
+              >
+                <template #alertMessage>
+                  <div class="alert-content">
+                    <p>
+                      {{ t('common.product.name') }} update available
+                    </p>
+
+                    <KButton
+                      appearance="primary"
+                      :to="t('common.product.href.install')"
+                    >
+                      Update
+                    </KButton>
+                  </div>
+                </template>
+              </KAlert>
+            </DataSource>
           </div>
         </slot>
       </div>
@@ -163,7 +188,6 @@ import { CogIcon, HelpIcon } from '@kong/icons'
 import GithubButton from 'vue-github-button'
 
 import { useEnv, useI18n, useCan } from '@/app/application'
-import UpgradeCheck from '@/app/common/UpgradeCheck.vue'
 
 const env = useEnv()
 const can = useCan()
@@ -289,6 +313,17 @@ nav :deep(.app-navigator) > a {
 .upgrade-check-wrapper {
   @media screen and (max-width: 800px) {
     display: none;
+  }
+  .k-alert.small {
+    // Uses smaller paddings for this particular alert.
+    padding: $kui-space-20 $kui-space-40;
+  }
+
+  .alert-content {
+    display: flex;
+    align-items: center;
+    font-size: $kui-font-size-30;
+    gap: $kui-space-50;
   }
 }
 </style>
