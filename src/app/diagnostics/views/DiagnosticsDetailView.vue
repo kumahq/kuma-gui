@@ -1,9 +1,3 @@
-<script lang="ts" setup>
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
-</script>
 <template>
   <RouteView
     v-slot="{ route, t }"
@@ -14,38 +8,30 @@ import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
       codeRegExp: false,
     }"
   >
-    <DataSource
-      v-slot="{ data, error }: ControlPlaneConfigSource"
-      :src="`/config`"
-    >
-      <AppView
-        :breadcrumbs="[
-          {
-            to: {
-              name: 'diagnostics',
-            },
-            text: t('diagnostics.routes.item.breadcrumbs'),
+    <AppView
+      :breadcrumbs="[
+        {
+          to: {
+            name: 'diagnostics',
           },
-        ]"
-      >
-        <template #title>
-          <h1>
-            <RouteTitle
-              :title="t('diagnostics.routes.item.title')"
-            />
-          </h1>
-        </template>
-
-        <KCard>
-          <ErrorBlock
-            v-if="error"
-            :error="error"
+          text: t('diagnostics.routes.item.breadcrumbs'),
+        },
+      ]"
+    >
+      <template #title>
+        <h1>
+          <RouteTitle
+            :title="t('diagnostics.routes.item.title')"
           />
+        </h1>
+      </template>
 
-          <LoadingBlock v-else-if="data === undefined" />
-
+      <KCard>
+        <DataLoader
+          v-slot="{ data }: ControlPlaneConfigSource"
+          :src="`/config`"
+        >
           <CodeBlock
-            v-else
             data-testid="code-block-diagnostics"
             language="json"
             :code="JSON.stringify(data, null, 2)"
@@ -57,8 +43,12 @@ import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
             @filter-mode-change="route.update({ codeFilter: $event })"
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           />
-        </KCard>
-      </AppView>
-    </DataSource>
+        </DataLoader>
+      </KCard>
+    </AppView>
   </RouteView>
 </template>
+<script lang="ts" setup>
+import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
+import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
+</script>

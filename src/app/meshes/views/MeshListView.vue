@@ -13,28 +13,23 @@
         mesh: '',
       }"
     >
-      <DataSource
-        v-slot="{data, error}: MeshInsightCollectionSource"
-        :src="`/mesh-insights?page=${route.params.page}&size=${route.params.size}`"
-      >
-        <AppView>
-          <template #title>
-            <h1>
-              <RouteTitle
-                :title="t('meshes.routes.items.title')"
-              />
-            </h1>
-          </template>
+      <AppView>
+        <template #title>
+          <h1>
+            <RouteTitle
+              :title="t('meshes.routes.items.title')"
+            />
+          </h1>
+        </template>
 
-          <div class="stack">
-            <KCard>
-              <ErrorBlock
-                v-if="error !== undefined"
-                :error="error"
-              />
-
+        <div class="stack">
+          <KCard>
+            <DataLoader
+              v-slot="{ data, error }: MeshInsightCollectionSource"
+              :src="`/mesh-insights?page=${route.params.page}&size=${route.params.size}`"
+              :loader="false"
+            >
               <AppCollection
-                v-else
                 class="mesh-collection"
                 data-testid="mesh-collection"
                 :headers="[
@@ -100,34 +95,10 @@
                   </RouterLink>
                 </template>
               </AppCollection>
-            </KCard>
-
-            <RouterView
-              v-if="route.params.mesh"
-              v-slot="child"
-            >
-              <SummaryView
-                @close="route.replace({
-                  name: 'mesh-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                  query: {
-                    page: route.params.page,
-                    size: route.params.size,
-                  },
-                })"
-              >
-                <component
-                  :is="child.Component"
-                  :name="route.params.mesh"
-                  :mesh-insight="data?.items.find((item) => item.name === route.params.mesh)"
-                />
-              </SummaryView>
-            </RouterView>
-          </div>
-        </AppView>
-      </DataSource>
+            </DataLoader>
+          </KCard>
+        </div>
+      </AppView>
     </RouteView>
   </DataSource>
 </template>
@@ -138,8 +109,6 @@ import { ArrowRightIcon } from '@kong/icons'
 
 import type { MeshInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
 
