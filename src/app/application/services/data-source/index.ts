@@ -7,8 +7,14 @@ export type DataSourceResponse<T> = {
   error: Error | undefined
   refresh: () => void
 }
+type PaginationParams = {
+  size: number
+  page: number
+  search: string
+  cacheControl: string
+}
 
-type ExtractRouteParams<T extends string> =
+type ExtractRouteParams<T extends PropertyKey> =
   string extends T
     ? Record<string, string>
     : T extends `${infer _Start}:${infer Param}/${infer Rest}`
@@ -17,18 +23,11 @@ type ExtractRouteParams<T extends string> =
         ? { [k in Param]: string }
         : {};
 
-type PaginationParams = {
-  size: number
-  page: number
-  search: string
-  cacheControl: string
+export type ExtractSources<T extends Record<PropertyKey, unknown>> = {
+  [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams, source: { close: () => void }) => T[Route]
 }
 
-type ExtractSources<T extends string, K> = {
-  [Route in T]: (params: ExtractRouteParams<Route> & K, source: { close: () => void }) => unknown
-}
-
-export const defineSources = <T extends string>(sources: ExtractSources<T, PaginationParams>) => {
+export const defineSources = <T extends Record<PropertyKey, unknown>>(sources: ExtractSources<T>) => {
   return sources
 }
 
