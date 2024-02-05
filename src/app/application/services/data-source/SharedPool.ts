@@ -4,9 +4,9 @@ type Entry<T> = {
   references: Set<symbol>
 }
 export default class SharedPool<K, T> {
-  protected pool: Map<K, Entry<T>> = new Map()
   constructor(
     protected transition: Transition<K, T>,
+    protected pool: Map<K, Entry<T>> = new Map(),
   ) {}
 
   // getter, not init
