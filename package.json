@@ -90,7 +90,7 @@
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-promise": "6.1.1",
-    "eslint-plugin-vue": "9.20.1",
+    "eslint-plugin-vue": "9.21.1",
     "glob": "10.3.10",
     "jsdom": "24.0.0",
     "lockfile-lint": "4.12.1",
