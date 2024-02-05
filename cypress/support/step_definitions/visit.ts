@@ -15,6 +15,9 @@ When('I visit the {string} URL', function (path: string) {
       const config = JSON.parse(node.textContent)
       cookies.forEach(item => {
         switch (item.name) {
+          case 'KUMA_VERSION':
+            config.version = item.value
+            break
           case 'KUMA_MODE':
             config.mode = item.value
             break
