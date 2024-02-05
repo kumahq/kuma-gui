@@ -21,6 +21,7 @@ Feature: onboarding / dataplanes-overview / index
     Given the environment
       """
       KUMA_DATAPLANE_COUNT: 1
+      KUMA_SUBSCRIPTION_COUNT: 1
       """
     And the URL "/dataplanes/_overview" responds with
       """

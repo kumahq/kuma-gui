@@ -9,6 +9,7 @@ Feature: zones / egresses / item
     And the environment
       """
       KUMA_MODE: global
+      KUMA_SUBSCRIPTION_COUNT: 2
       """
 
   Scenario: Detail view has expected content
