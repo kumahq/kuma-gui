@@ -214,7 +214,6 @@
 
                   <template #items>
                     <KDropdownItem
-                      has-divider
                       danger
                       data-testid="dropdown-delete-item"
                       @click="setDeleteZoneName(row.name)"
@@ -259,11 +258,9 @@
             @cancel="toggleDeleteModal"
             @delete="() => { toggleDeleteModal(); refresh() }"
           >
-            <template #body-content>
-              <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
+            <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: deleteZoneName }) }}</p>
 
-              <p>{{ t('common.delete_modal.text2') }}</p>
-            </template>
+            <p>{{ t('common.delete_modal.text2') }}</p>
           </DeleteResourceModal>
         </DataSource>
       </AppView>

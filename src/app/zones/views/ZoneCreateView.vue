@@ -360,21 +360,15 @@
       </div>
 
       <KModal
-        :is-visible="isConfirmModalVisible"
+        :visible="isConfirmModalVisible"
         :title="t('zones.form.confirm_modal.title')"
         data-testid="confirm-exit-modal"
-        @canceled="toggleConfirmModal"
+        @cancel="toggleConfirmModal"
         @proceed="route.replace({ name: 'zone-cp-list-view' })"
       >
-        <template #header-content>
-          {{ t('zones.form.confirm_modal.title') }}
-        </template>
+        {{ t('zones.form.confirm_modal.body') }}
 
-        <template #body-content>
-          {{ t('zones.form.confirm_modal.body') }}
-        </template>
-
-        <template #action-buttons>
+        <template #footer-actions>
           <KButton
             appearance="primary"
             :to="{ name: 'zone-cp-list-view' }"

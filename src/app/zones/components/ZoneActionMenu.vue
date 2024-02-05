@@ -28,11 +28,9 @@
       @cancel="toggleDeleteModal"
       @delete="navigateToListView"
     >
-      <template #body-content>
-        <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: props.zoneOverview.name }) }}</p>
+      <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: props.zoneOverview.name }) }}</p>
 
-        <p>{{ t('common.delete_modal.text2') }}</p>
-      </template>
+      <p>{{ t('common.delete_modal.text2') }}</p>
     </DeleteResourceModal>
   </div>
 </template>
