@@ -1,7 +1,8 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
+export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
+  fake.kuma.seed('')
   return {
     headers: {},
-    body: '5.1.0',
+    body: fake.helpers.arrayElement(['2.1.0', '5.1.0']),
   }
 }
