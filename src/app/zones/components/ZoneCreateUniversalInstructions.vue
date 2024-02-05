@@ -55,7 +55,6 @@ import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 
 const { t } = useI18n()
 const route = useRoute()
-
 const props = defineProps({
   zoneName: {
     type: String,
@@ -78,10 +77,7 @@ const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
     globalKdsAddress: props.globalKdsAddress,
-  }
-
-  if (typeof route.params.virtualControlPlaneId === 'string') {
-    placeholders.controlPlaneId = route.params.virtualControlPlaneId
+    controlPlaneId: typeof route.params.virtualControlPlaneId === 'string' ? route.params.virtualControlPlaneId : '',
   }
 
   return t('zones.form.universal.connectZone.config', placeholders).trim()
