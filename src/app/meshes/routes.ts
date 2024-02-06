@@ -48,11 +48,6 @@ export const routes = (
                   name: 'mesh-detail-view',
                   component: () => import('@/app/meshes/views/MeshDetailView.vue'),
                 },
-                {
-                  path: 'config',
-                  name: 'mesh-config-view',
-                  component: () => import('@/app/meshes/views/MeshConfigView.vue'),
-                },
                 ...services.items(),
                 ...dataplanes.items(),
                 ...policies.items(),

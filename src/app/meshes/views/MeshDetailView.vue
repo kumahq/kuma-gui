@@ -36,6 +36,23 @@
               :mesh="mesh"
               :mesh-insight="meshInsight"
             />
+
+            <ResourceCodeBlock
+              v-slot="{ copy, copying }"
+              :resource="mesh.config"
+            >
+              <DataSource
+                v-if="copying"
+                :src="`/meshes/${route.params.mesh}/as/kubernetes?no-store`"
+                @change="(data) => {
+                  copy((resolve) => resolve(data))
+                }"
+                @error="(e) => {
+                  copy((_resolve, reject) => reject(e))
+                }"
+              />
+            </ResourceCodeBlock>
+
             <div class="date-status-wrapper">
               <ResourceDateStatus
                 :creation-time="mesh.creationTime"
@@ -51,6 +68,7 @@
 
 <script lang="ts" setup>
 import type { MeshSource, MeshInsightSource } from '../sources'
+import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
