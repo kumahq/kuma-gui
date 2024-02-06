@@ -65,8 +65,8 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
     },
 
-    '/meshes/:mesh/dataplanes/:name/stats': async (params) => {
-      const { mesh, name } = params
+    '/meshes/:mesh/dataplanes/:name/stats/:service': async (params) => {
+      const { mesh, name, service } = params
       const res = await api.getDataplaneData({
         mesh,
         dppName: name,
@@ -76,8 +76,8 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       // parse the stuff
       const json = parse(res)
 
-      // inbounds is anything starting with `localhost_`
-      const inbounds = getTraffic(json, (key) => key.startsWith('localhost_'))
+      // inbounds is anything starting with `service`
+      const inbounds = getTraffic(json, (key) => key.startsWith(service))
 
       // outbounds are anything else unless it starts with something in the
       // below list these are likely to follow a pattern at some point at which
@@ -85,12 +85,12 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       // the pattern
       const outbounds = getTraffic(json, (key) => {
         return ![
+          service, // Removes inbounds
           '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
           'admin',
           'async-client',
           'kuma_envoy_admin',
           'probe_listener',
-          'localhost_',
           'inbound_passthrough',
           'outbound_passthrough',
           'access_log_sink',

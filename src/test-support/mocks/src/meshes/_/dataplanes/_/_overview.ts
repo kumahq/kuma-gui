@@ -22,15 +22,18 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMultizone = true && fake.datatype.boolean()
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
+  // Allows the service tag to be synchronized between overview and stats.
+  fake.kuma.seed(name as string)
+  const service = fake.hacker.noun()
+  const networking = fake.kuma.dataplaneNetworking({ type, inbounds: ports.length, isMultizone, service })
+
   // temporarily overwrite the result of dataplaneNetworking as it doesn't
-  // currently accept port plus we need to keep our ports synced. Also, I'm not
-  // totally sure on the pattern for the service name
-  const networking = fake.kuma.dataplaneNetworking({ type, inbounds: ports.length, isMultizone });
-  (networking.inbound ?? []).forEach((inbound, i) => {
+  // currently accept port plus we need to keep our ports synced.
+  ;(networking.inbound ?? []).forEach((inbound, i) => {
     inbound.port = ports[i]
-    inbound.tags['kuma.io/service'] = `${fake.hacker.noun()}_svc_${inbound.port}`
   })
   //
+
   return {
     headers: {},
     body: {
