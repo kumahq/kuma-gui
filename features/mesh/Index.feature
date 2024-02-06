@@ -30,7 +30,6 @@ Feature: mesh / index
     Then I click the "$navigation li:nth-child(2) a" element
     Then I click the "$navigation li:nth-child(3) a" element
     Then I click the "$navigation li:nth-child(4) a" element
-    Then I click the "$navigation li:nth-child(5) a" element
     Then I click the "$navigation li:nth-child(1) a" element
 
     And I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(1) > a" element

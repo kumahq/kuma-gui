@@ -18,7 +18,6 @@ meshes:
       breadcrumbs: Meshes
       navigation:
         mesh-detail-view: Overview
-        mesh-config-view: YAML
         service-list-view: Services
         data-plane-list-view: Data Plane Proxies
         policy-list-index-view: Policies
