@@ -110,7 +110,7 @@ export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
      * **Example**: `'http://localhost:5681'`
     */
     apiUrl: apiUrlDefault,
-    version: '2.4.0',
+    version: '2.6.0',
     product: 'Kuma',
     mode: 'global',
     environment: 'universal',

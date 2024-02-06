@@ -26,8 +26,9 @@
               v-slot="{ data }"
               :src="`/control-plane/version/latest`"
             >
+              <!-- make sure we have data but don't show errors or loaders -->
               <KAlert
-                v-if="env('KUMA_VERSION') !== data?.version"
+                v-if="data && env('KUMA_VERSION') !== data.version"
                 data-testid="upgrade-check"
                 appearance="info"
                 size="small"
