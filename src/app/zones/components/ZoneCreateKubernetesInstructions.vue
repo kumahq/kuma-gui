@@ -155,16 +155,14 @@ const props = defineProps({
 const kubernetesCreateSecretCommand = computed(() => t('zones.form.kubernetes.secret.createSecretCommand', {
   token: props.base64EncodedToken,
 }).trim())
+
 const kubernetesConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
     globalKdsAddress: props.globalKdsAddress,
     zoneIngressEnabled: String(props.zoneIngressEnabled),
     zoneEgressEnabled: String(props.zoneEgressEnabled),
-  }
-
-  if (typeof route.params.virtualControlPlaneId === 'string') {
-    placeholders.controlPlaneId = route.params.virtualControlPlaneId
+    controlPlaneId: typeof route.params.virtualControlPlaneId === 'string' ? route.params.virtualControlPlaneId : '',
   }
 
   return t('zones.form.kubernetes.connectZone.config', placeholders).trim()
