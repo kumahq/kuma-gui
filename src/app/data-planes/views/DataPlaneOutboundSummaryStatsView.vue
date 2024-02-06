@@ -22,7 +22,7 @@
       <div>
         <DataSource
           v-slot="{ data, error, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats`"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${route.params.service}`"
         >
           <ErrorBlock
             v-if="error"
@@ -34,12 +34,11 @@
           <CodeBlock
             v-else
             language="json"
-            :code="(() => `${
-              data.raw.split('\n')
-                .filter(item => item.includes(`.${route.params.service}.`))
-                .map(item => item.replace(`${route.params.service}.`, ''))
-                .join('\n')
-            }`)()"
+            :code="(() => data.raw.split('\n')
+              .filter((item) => item.includes(`.${route.params.service}.`))
+              .map((item) => item.replace(`${route.params.service}.`, ''))
+              .join('\n')
+            )()"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"

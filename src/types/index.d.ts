@@ -190,7 +190,10 @@ export interface DataPlaneInsight {
 }
 
 export type DataplaneGateway = {
-  tags: Record<string, string>
+  tags: {
+    'kuma.io/service': string
+    [key: string]: string
+  }
   /**
    * Type of the gateway. **Default**: `'DELEGATED'`
    */

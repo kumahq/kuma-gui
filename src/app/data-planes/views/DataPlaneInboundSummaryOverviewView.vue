@@ -4,7 +4,10 @@
     name="data-plane-inbound-summary-overview-view"
   >
     <AppView>
-      <div class="stack-with-borders">
+      <div
+        v-if="props.gateway"
+        class="stack-with-borders"
+      >
         <DefinitionCard layout="horizontal">
           <template #title>
             Tags
@@ -12,7 +15,25 @@
 
           <template #body>
             <TagList
-              :tags="props.data.tags"
+              :tags="props.gateway.tags"
+              alignment="right"
+            />
+          </template>
+        </DefinitionCard>
+      </div>
+
+      <div
+        v-else-if="props.inbound"
+        class="stack-with-borders"
+      >
+        <DefinitionCard layout="horizontal">
+          <template #title>
+            Tags
+          </template>
+
+          <template #body>
+            <TagList
+              :tags="props.inbound.tags"
               alignment="right"
             />
           </template>
@@ -24,9 +45,9 @@
 
           <template #body>
             <KBadge
-              :appearance="props.data.health.ready ? 'success' : 'danger'"
+              :appearance="props.inbound.health.ready ? 'success' : 'danger'"
             >
-              {{ props.data.health.ready ? 'Healthy' : 'Unhealthy' }}
+              {{ props.inbound.health.ready ? 'Healthy' : 'Unhealthy' }}
             </KBadge>
           </template>
         </DefinitionCard>
@@ -39,7 +60,7 @@
             <KBadge
               appearance="info"
             >
-              {{ t(`http.api.value.${props.data.protocol}`) }}
+              {{ t(`http.api.value.${props.inbound.protocol}`) }}
             </KBadge>
           </template>
         </DefinitionCard>
@@ -50,7 +71,7 @@
 
           <template #body>
             <TextWithCopyButton
-              :text="`${props.data.addressPort}`"
+              :text="`${props.inbound.addressPort}`"
             />
           </template>
         </DefinitionCard>
@@ -61,7 +82,7 @@
 
           <template #body>
             <TextWithCopyButton
-              :text="`${props.data.serviceAddressPort}`"
+              :text="`${props.inbound.serviceAddressPort}`"
             />
           </template>
         </DefinitionCard>
@@ -69,12 +90,15 @@
     </AppView>
   </RouteView>
 </template>
+
 <script lang="ts" setup>
-import type { DataplaneInbound } from '../data'
+import type { DataplaneGateway, DataplaneInbound } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+
 const props = defineProps<{
-  data: DataplaneInbound
+  inbound?: DataplaneInbound
+  gateway?: DataplaneGateway
 }>()
 </script>

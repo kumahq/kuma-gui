@@ -7,6 +7,11 @@ import type {
   ServiceStatus,
 } from '@/types/index.d'
 
+type Tags<T extends { service?: string }> =
+  T extends { service: string }
+    ? { 'kuma.io/service': string, [key: string]: string }
+    : { [key: string]: string }
+
 export class KumaModule {
   faker: Faker
   constructor(
@@ -190,12 +195,13 @@ export class KumaModule {
     return Object.fromEntries(values)
   }
 
-  tags({ protocol, service, zone }: { protocol?: string, service?: string, zone?: string } = {}): Record<string, string> {
+  tags<T extends { protocol?: string, service?: string, zone?: string }>({ protocol, service, zone }: T): Tags<T> {
     const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
 
+    // @ts-ignore TS isn’t happy when the service tag is not always provided, but I don’t know how to type this out better.
     return {
-      ...(protocol && { 'kuma.io/protocol': protocol }),
       ...(service && { 'kuma.io/service': service }),
+      ...(protocol && { 'kuma.io/protocol': protocol }),
       ...(zone && { 'kuma.io/zone': zone }),
       ...additionalTags,
     }
@@ -244,10 +250,7 @@ export class KumaModule {
               protocol: this.protocol(),
               service: service ?? this.serviceName(),
               zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
-            }) as {
-              'kuma.io/service': string
-              [key: string]: string
-            }
+            })
 
             return {
               port,
@@ -269,10 +272,7 @@ export class KumaModule {
       outbound: [
         {
           port: this.faker.internet.port(),
-          tags: this.tags({ service }) as {
-            'kuma.io/service': string
-            [key: string]: string
-          },
+          tags: this.tags({ service: service ?? this.serviceName() }),
         },
       ],
     }

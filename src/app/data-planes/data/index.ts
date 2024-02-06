@@ -2,6 +2,7 @@ import { DiscoverySubscriptionCollection, type DiscoverySubscription } from '@/a
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlane as PartialDataplane,
+  DataplaneGateway as PartialDataplaneGateway,
   DataplaneInbound as PartialDataplaneInbound,
   DataPlaneInsight as PartialDataplaneInsight,
   DataplaneNetworking as PartialDataplaneNetworking,
@@ -42,6 +43,8 @@ export type DataplaneOutbound = PartialDataplaneOutbound & {
   service: string
   protocol: string
 }
+
+export type DataplaneGateway = PartialDataplaneGateway & {}
 
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
   inbounds: DataplaneInbound[]
