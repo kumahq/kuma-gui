@@ -65,8 +65,11 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
     },
 
-    '/meshes/:mesh/dataplanes/:name/stats/:service': async (params) => {
-      const { mesh, name, service } = params
+    '/meshes/:mesh/dataplanes/:name/stats/:inbound': async (params) => {
+      const { mesh, name } = params
+      // if the inbound name is exactly localhost, append `_` to avoid any
+      // services that happen to be prefixed with `localhost`
+      const inbound = params.inbound === 'localhost' ? `${params.inbound}_` : params.inbound
       const res = await api.getDataplaneData({
         mesh,
         dppName: name,
@@ -76,8 +79,9 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       // parse the stuff
       const json = parse(res)
 
-      // inbounds is anything starting with `service`
-      const inbounds = getTraffic(json, (key) => key.startsWith(service))
+      // inbounds are anything starting with the `inbound` we've passed in
+      // we use `~` to equal "there are no inbounds", but we might not need that
+      const inbounds = inbound !== '~' ? getTraffic(json, (key) => key.startsWith(inbound)) : []
 
       // outbounds are anything else unless it starts with something in the
       // below list these are likely to follow a pattern at some point at which
@@ -85,7 +89,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       // the pattern
       const outbounds = getTraffic(json, (key) => {
         return ![
-          service, // Removes inbounds
+          ...(inbound !== '~' ? [inbound] : []), // removes inbounds if we've asked for them
           '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
           'admin',
           'async-client',
@@ -96,6 +100,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
           'access_log_sink',
           'ads_cluster',
           'meshtrace_zipkin',
+          'meshtrace_opentelemetry',
         ].some(item => key.startsWith(item))
       })
 

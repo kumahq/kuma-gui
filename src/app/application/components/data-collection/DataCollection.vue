@@ -4,7 +4,7 @@
     name="empty"
     :items="items"
   >
-    <EmptyBlock />
+    <EmptyBlock v-if="props.empty" />
   </slot>
   <slot
     v-else
@@ -47,6 +47,7 @@ const props = withDefaults(defineProps<{
   predicate?: (item: T) => boolean
   comparator?: ((item: T) => number) | undefined
   find?: boolean
+  empty?: boolean
 }>(), {
   // type: '',
   paginationType: 'server',
@@ -55,6 +56,7 @@ const props = withDefaults(defineProps<{
   predicate: () => true,
   comparator: undefined,
   find: false,
+  empty: true,
 })
 const emit = defineEmits<{
   (e: 'change', value: {page: number, pageSize: number}): void

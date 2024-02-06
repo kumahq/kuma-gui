@@ -68,7 +68,11 @@ export const getTraffic = (json: EnvoyStats, filter: (key: string) => boolean): 
         traffic[key] = {
           name: key,
           port: key.split('_').at(-1) ?? '',
-          protocol: item,
+          // TODO(jc): Not totally sure how we are going to get the protocol
+          // from the outbounds for gateways (these only have `cluster.`) so
+          // lets set it to `tcp` for now so as to now show `Cluster` as the
+          // protocol
+          protocol: item === 'cluster' ? 'tcp' : item,
         }
       }
       // we only look at cluster to find the grpc stats
