@@ -105,6 +105,7 @@ Feature: Overview: Detail view content
       KUMA_ZONE_COUNT: 2
       KUMA_MESH_COUNT: 3
       KUMA_MODE: global
+      KUMA_SUBSCRIPTION_COUNT: 2
       """
     And the URL "/global-insight" responds with
       """

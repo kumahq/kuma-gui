@@ -11,6 +11,7 @@ Feature: zones / ingresses / item
     And the environment
       """
       KUMA_MODE: global
+      KUMA_SUBSCRIPTION_COUNT: 2
       """
 
   Scenario: Clicking through the secondary navigation
