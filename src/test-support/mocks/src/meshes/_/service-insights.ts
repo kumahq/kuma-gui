@@ -2,7 +2,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const { offset, total, next, pageTotal } = pager(
-    env('KUMA_SERVICEINSIGHT_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
+    env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
     req,
     `/meshes/${req.params.mesh}/service-insights`,
   )

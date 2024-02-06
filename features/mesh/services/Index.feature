@@ -9,7 +9,7 @@ Feature: mesh / services / index
       | breadcrumbs  | .k-breadcrumbs                        |
     And the environment
       """
-      KUMA_SERVICEINSIGHT_COUNT: 2
+      KUMA_SERVICE_COUNT: 2
       """
     And the URL "/meshes/default/service-insights" responds with
       """
