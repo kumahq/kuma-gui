@@ -1,19 +1,11 @@
 import { ZoneIngressOverview, ZoneIngress } from './data'
 import type { DataSourceResponse } from '@/app/application'
+import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 
-type PaginationParams = {
-  size: number
-  page: number
-}
-
-type DetailParams = {
-  name: string
-}
-
-type EnvoyDataParams = DetailParams & {
-  dataPath: 'xds' | 'clusters' | 'stats'
+const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
+  return arr.includes(item as T[number])
 }
 
 export type ZoneIngressSource = DataSourceResponse<ZoneIngress>
@@ -24,9 +16,9 @@ export type ZoneIngressOverviewCollectionSource = DataSourceResponse<ZoneIngress
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
 export const sources = (api: KumaApi) => {
-  return {
+  return defineSources({
 
-    '/zone-cps/:name/ingresses': async (params: DetailParams & PaginationParams): Promise<ZoneIngressOverviewCollection> => {
+    '/zone-cps/:name/ingresses': async (params): Promise<ZoneIngressOverviewCollection> => {
       const { name, size, page } = params
       const offset = size * (page - 1)
 
@@ -40,34 +32,35 @@ export const sources = (api: KumaApi) => {
       return ZoneIngressOverview.fromCollection(res)
     },
 
-    '/zone-ingresses/:name': async (params: DetailParams) => {
+    '/zone-ingresses/:name': async (params) => {
       const { name } = params
 
       return ZoneIngress.fromObject(await api.getZoneIngress({ name }))
     },
 
-    '/zone-ingresses/:name/data-path/:dataPath': (params: EnvoyDataParams) => {
-      const { name, dataPath } = params
+    '/zone-ingresses/:name/data-path/:dataPath': (params) => {
+      const { name } = params
+      const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
       return api.getZoneIngressData({ zoneIngressName: name, dataPath })
     },
 
-    '/zone-ingresses/:name/as/kubernetes': async (params: DetailParams) => {
+    '/zone-ingresses/:name/as/kubernetes': async (params) => {
       const { name } = params
 
       return await api.getZoneIngress({ name }, { format: 'kubernetes' })
     },
 
-    '/zone-ingress-overviews': async (params: PaginationParams) => {
+    '/zone-ingress-overviews': async (params) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
       return ZoneIngressOverview.fromCollection(await api.getAllZoneIngressOverviews({ size, offset }))
     },
 
-    '/zone-ingress-overviews/:name': async (params: DetailParams) => {
+    '/zone-ingress-overviews/:name': async (params) => {
       const { name } = params
 
       return ZoneIngressOverview.fromObject(await api.getZoneIngressOverview({ name }))
     },
-  }
+  })
 }

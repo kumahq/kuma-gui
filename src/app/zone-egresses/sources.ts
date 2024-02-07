@@ -1,21 +1,8 @@
 import { ZoneEgressOverview, ZoneEgress } from './data'
 import type { DataSourceResponse } from '@/app/application'
+import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-type PaginationParams = {
-  size: number
-  page: number
-}
-
-type DetailParams = {
-  name: string
-}
-
-type EnvoyDataParams = DetailParams & {
-  dataPath: 'xds' | 'clusters' | 'stats'
-}
-
-type Closeable = { close: () => void }
 
 export type ZoneEgressSource = DataSourceResponse<ZoneEgress>
 export type ZoneEgressOverviewCollection = CollectionResponse<ZoneEgressOverview>
@@ -24,11 +11,12 @@ export type ZoneEgressOverviewCollectionSource = DataSourceResponse<ZoneEgressOv
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
+const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
+  return arr.includes(item as T[number])
+}
 export const sources = (api: KumaApi) => {
-  return {
-    '/zone-cps/:name/egresses': async (params: DetailParams & PaginationParams, source: Closeable) => {
-      source.close()
-
+  return defineSources({
+    '/zone-cps/:name/egresses': async (params) => {
       const { name, size, page } = params
       const offset = size * (page - 1)
 
@@ -45,45 +33,36 @@ export const sources = (api: KumaApi) => {
       return ZoneEgressOverview.fromCollection(res)
     },
 
-    '/zone-egresses/:name': async (params: DetailParams, source: Closeable) => {
-      source.close()
-
+    '/zone-egresses/:name': async (params) => {
       const { name } = params
 
       return ZoneEgress.fromObject(await api.getZoneEgress({ name }))
     },
 
-    '/zone-egresses/:name/as/kubernetes': async (params: DetailParams, source: Closeable) => {
-      source.close()
-
+    '/zone-egresses/:name/as/kubernetes': async (params) => {
       const { name } = params
 
       return await api.getZoneEgress({ name }, { format: 'kubernetes' })
     },
 
-    '/zone-egresses/:name/data-path/:dataPath': (params: EnvoyDataParams, source: Closeable) => {
-      source.close()
-
-      const { name, dataPath } = params
+    '/zone-egresses/:name/data-path/:dataPath': (params) => {
+      const { name } = params
+      const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
 
       return api.getZoneEgressData({ zoneEgressName: name, dataPath })
     },
 
-    '/zone-egress-overviews': async (params: PaginationParams, source: Closeable) => {
-      source.close()
-
+    '/zone-egress-overviews': async (params) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
       return ZoneEgressOverview.fromCollection(await api.getAllZoneEgressOverviews({ size, offset }))
     },
 
-    '/zone-egress-overviews/:name': async (params: DetailParams, source: Closeable) => {
-      source.close()
-
+    '/zone-egress-overviews/:name': async (params) => {
       const { name } = params
 
       return ZoneEgressOverview.fromObject(await api.getZoneEgressOverview({ name }))
     },
-  }
+  })
 }
