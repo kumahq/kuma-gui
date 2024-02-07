@@ -52,15 +52,8 @@ export class KumaModule {
     }
   }
 
-  serviceType() {
-    return this.faker.helpers.arrayElement(
-      [
-        'internal',
-        'external',
-        'gateway_delegated',
-        'gateway_builtin',
-      ],
-    )
+  serviceType({ serviceTypes = ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }: { serviceTypes?: string[] } = { serviceTypes: ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }) {
+    return this.faker.helpers.arrayElement(serviceTypes)
   }
 
   serviceName(serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' = 'internal') {

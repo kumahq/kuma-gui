@@ -19,6 +19,7 @@ meshes:
       navigation:
         mesh-detail-view: Overview
         service-list-view: Services
+        external-service-list-view: External Services
         data-plane-list-view: Data Plane Proxies
         policy-list-index-view: Policies
       overview: 'Overview'

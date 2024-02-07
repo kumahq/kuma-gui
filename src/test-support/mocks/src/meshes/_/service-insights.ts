@@ -7,6 +7,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     `/meshes/${req.params.mesh}/service-insights`,
   )
 
+  const serviceType = req.url.searchParams.get('serviceType')
+  const serviceTypes = serviceType ? serviceType.split(',') : undefined
+
   return {
     headers: {},
     body: {
@@ -14,7 +17,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const serviceType = fake.kuma.serviceType()
+        const serviceType = fake.kuma.serviceType({ serviceTypes })
         const mesh = req.params.mesh
         const name = `${fake.hacker.noun()}-${id}-${serviceType}`
 

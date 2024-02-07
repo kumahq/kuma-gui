@@ -56,6 +56,17 @@ export interface DataPlaneOverviewParameters extends PaginationParameters {
   tag?: string | string[]
 }
 
+export interface ServiceInsightsParameters extends PaginationParameters {
+  name?: string
+
+  /**
+   * Filters objects by service type.
+   *
+   * **Example**: `?serviceType=internal,gateway_builtin,gateway_delegated`
+   */
+  serviceType?: string
+}
+
 export interface ExternalServicesParameters extends PaginationParameters {
   name?: string
 

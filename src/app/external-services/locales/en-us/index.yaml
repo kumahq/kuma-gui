@@ -1,0 +1,12 @@
+external-services:
+  routes:
+    item:
+      title: "{name}"
+      breadcrumbs: External Services
+      navigation:
+        external-service-detail-view: 'Overview'
+        external-service-config-view: 'YAML'
+      overview: 'Overview'
+      config: 'YAML'
+    items:
+      title: External Services

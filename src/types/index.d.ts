@@ -486,31 +486,32 @@ export interface ServiceInsight extends MeshEntity {
   }
 }
 
-/**
- * Entity of type `ExternalService` as returned via the `/meshes/:mesh/external-service/:service` endpoint.
- */
+type ByteDataSource = {
+  secret?: string
+  file?: string
+  inline?: string
+  inlineString?: string
+}
+
 export interface ExternalService extends MeshEntity {
   type: 'ExternalService'
   networking: {
     address: string
     tls?: {
       enabled: boolean
+      caCert?: ByteDataSource
+      clientCert?: ByteDataSource
+      clientKey?: ByteDataSource
       allowRenegotiation: boolean
-      caCert?: {
-        secret?: string
-        inline?: string
-      }
-      clientCert?: {
-        secret?: string
-        inline?: string
-      }
-      clientKey?: {
-        secret?: string
-        inline?: string
-      }
+      serverName?: string
+      skipHostnameVerification?: boolean
     }
+    disableHostDNSEntry?: boolean
   }
-  tags: Record<string, string>
+  tags: {
+    'kuma.io/service': string
+    [key: string]: string
+  }
 }
 
 export interface Zone {
