@@ -105,7 +105,7 @@ describe('ZoneOverview', () => {
   })
   describe('zoneInsight.subscriptions', () => {
     test(
-      'absent zoneInsight remains undefined',
+      'absent zoneInsight remains defined',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           delete item.zoneInsight
