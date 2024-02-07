@@ -12,6 +12,7 @@
       aria-atomic="true"
     />
     <slot
+      :id="UniqueId"
       name="default"
       :t="t"
       :env="env"
@@ -31,7 +32,7 @@ import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive } from
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT } from '.'
-import { useCan, useI18n } from '../../index'
+import { useCan, useI18n, uniqueId } from '../../index'
 import {
   urlParam,
   normalizeUrlParam,
@@ -67,7 +68,16 @@ const props = withDefaults(defineProps<{
   attrs: () => ({}),
   params: () => { return {} as T },
 })
+const _id = uniqueId(props.name)
+class UniqueId {
+  static toString() {
+    return _id
+  }
 
+  toString() {
+    return uniqueId(props.name)
+  }
+}
 const name = computed(() => props.name)
 
 const title = ref<HTMLDivElement | null>(null)

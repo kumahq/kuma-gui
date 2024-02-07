@@ -8,7 +8,6 @@
     <p>{{ t('zones.form.universal.saveToken.saveTokenDescription') }}</p>
 
     <CodeBlock
-      id="zone-kubernetes-token"
       class="mt-4"
       :code="saveTokenCommand"
       language="bash"
@@ -26,7 +25,6 @@
     </span>
 
     <CodeBlock
-      id="zone-universal-config-code-block"
       data-testid="zone-universal-config"
       class="mt-4"
       :code="universalConfig"
@@ -38,7 +36,6 @@
     </p>
 
     <CodeBlock
-      id="zone-universal-connect-command-code-block"
       class="mt-4"
       :code="t('zones.form.universal.connectZone.connectCommand').trim()"
       language="bash"

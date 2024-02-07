@@ -3,6 +3,16 @@ type URLParamValue = string | null
 
 const difference = <T>(a: T[], b: T[]): T[] => a.filter(item => !b.includes(item))
 
+const createUniqueId = (j = 0) => {
+  let i = j
+  return (prefix = 'unique') => {
+    i++
+    return `${prefix}-${i}`
+  }
+}
+
+export const uniqueId = createUniqueId()
+
 export const beforePaint = function (fn: (...args: any[]) => void) {
   let num: number
   return (...args: unknown[]) => {

@@ -66,7 +66,6 @@
 
             <div class="mt-4">
               <KInput
-                id="dataplane-search"
                 :model-value="route.params.dataplane"
                 type="text"
                 :placeholder="t('policies.detail.dataplane_input_placeholder')"

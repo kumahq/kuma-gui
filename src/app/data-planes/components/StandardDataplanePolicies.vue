@@ -4,7 +4,6 @@
       <h3>{{ t('data-planes.routes.item.proxy_rule') }}</h3>
 
       <RuleEntryList
-        id="proxy-rules"
         class="mt-2"
         :rule-entries="props.inspectRulesForDataplane.proxyRules"
         :policy-types-by-name="props.policyTypesByName"
@@ -17,7 +16,6 @@
       <h3>{{ t('data-planes.routes.item.to_rules') }}</h3>
 
       <RuleEntryList
-        id="to-rules"
         class="mt-2"
         :rule-entries="props.inspectRulesForDataplane.toRules"
         :policy-types-by-name="props.policyTypesByName"
@@ -37,7 +35,6 @@
         <h4>{{ t('data-planes.routes.item.port', { port: fromRule.port }) }}</h4>
 
         <RuleEntryList
-          :id="`from-rules-${index}`"
           class="mt-2"
           :rule-entries="fromRule.ruleEntries"
           :policy-types-by-name="props.policyTypesByName"

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, id }"
     name="zone-create-view"
     :attrs="{
       class: 'is-fullscreen',
@@ -103,7 +103,7 @@
               <div class="form-section__content">
                 <div>
                   <KLabel
-                    for="zone-name"
+                    :for="id"
                     required
                     :tooltip-attributes="{ placement: 'right'}"
                   >
@@ -115,7 +115,7 @@
                   </KLabel>
 
                   <KInput
-                    id="zone-name"
+                    :id="id"
                     v-model="name"
                     type="text"
                     name="zone-name"
@@ -173,7 +173,6 @@
 
                       <div class="radio-button-group">
                         <KRadio
-                          id="zone-environment-universal"
                           v-model="environment"
                           selected-value="universal"
                           name="zone-environment"
@@ -183,7 +182,6 @@
                         </KRadio>
 
                         <KRadio
-                          id="zone-environment-kubernetes"
                           v-model="environment"
                           selected-value="kubernetes"
                           name="zone-environment"
@@ -200,11 +198,12 @@
                           {{ t('zones.form.zoneIngressLabel') }} *
                         </span>
 
-                        <div class="radio-button-group">
+                        <div
+                          class="radio-button-group"
+                          data-testid="ingress-input-switch"
+                        >
                           <KInputSwitch
-                            id="zone-ingress-enabled"
                             v-model="zoneIngressEnabled"
-                            data-testid="ingress-input-switch"
                           >
                             <template #label>
                               {{ t('zones.form.zoneIngressEnabledLabel') }}
@@ -218,11 +217,12 @@
                           {{ t('zones.form.zoneEgressLabel') }} *
                         </span>
 
-                        <div class="radio-button-group">
+                        <div
+                          class="radio-button-group"
+                          data-testid="egress-input-switch"
+                        >
                           <KInputSwitch
-                            id="zone-egress-enabled"
                             v-model="zoneEgressEnabled"
-                            data-testid="egress-input-switch"
                           >
                             <template #label>
                               {{ t('zones.form.zoneEgressEnabledLabel') }}

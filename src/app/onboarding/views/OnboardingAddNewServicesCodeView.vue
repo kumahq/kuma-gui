@@ -26,7 +26,6 @@
             <p>To run execute the following command:</p>
 
             <CodeBlock
-              id="code-block-kubernetes-command"
               language="bash"
               :code="k8sRunCommand"
             />
@@ -41,7 +40,6 @@
             </p>
 
             <CodeBlock
-              id="code-block-clone-command"
               language="bash"
               :code="`git clone ${githubLink}`"
             />

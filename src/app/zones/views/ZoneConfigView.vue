@@ -38,7 +38,6 @@
       <KCard>
         <CodeBlock
           v-if="Object.keys(props.data.zoneInsight.config).length > 0"
-          id="code-block-zone-config"
           language="json"
           :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
           is-searchable

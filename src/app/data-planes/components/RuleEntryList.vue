@@ -84,10 +84,9 @@
               </template>
             </template>
 
-            <template #config="{ row, rowKey }: { row: RuleEntryRule, rowKey: number }">
+            <template #config="{ row }: { row: RuleEntryRule, rowKey: number }">
               <template v-if="row.config">
                 <CodeBlock
-                  :id="`${props.id}-${index}-${rowKey}-code-block`"
                   :code="toYaml(row.config)"
                   language="yaml"
                   :show-copy-button="false"
@@ -116,7 +115,6 @@ import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  id: string
   ruleEntries: RuleEntry[]
   policyTypesByName: Record<string, PolicyType | undefined>
   showMatchers?: boolean

@@ -173,3 +173,4 @@ export const [
   $.i18n,
   $.dataSourcePool,
 )
+export { uniqueId } from './utilities'
