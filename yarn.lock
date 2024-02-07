@@ -1849,10 +1849,10 @@
   resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.14.tgz#3219563df669b8bb3e260df12ac211a5072938e6"
   integrity sha512-nJUTtLpqelKCTY8lS8VByWaHYUq1CuB5cBUX/q2FEDu5o6IKH/B7fEDQpb/pB1lLRYTqZXneHR/lGYjxy4u8eQ==
 
-"@kong/kongponents@9.0.0-alpha.101":
-  version "9.0.0-alpha.101"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.101.tgz#f239a3a480e118337475813ce767c2e0900c6580"
-  integrity sha512-ZSOuLVFd8NajbuPjynk7EhvCbv5VtZmwxjOELPZCVnRHuUIkhVnz8znN+jtlHf0MCyX5fMCBuhxf5SA/sAeaSw==
+"@kong/kongponents@9.0.0-alpha.105":
+  version "9.0.0-alpha.105"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.105.tgz#446e13004e9199e1c821ad8ad356d50e6aa29217"
+  integrity sha512-ZCoA3RxtzHUAvBVcxmMvG7gF0nnlmj/pM+/ZvnVgOydfOIhgMPZ6Ou19XQa10gcGD+h90BhBJR4+TXAamkb/OQ==
   dependencies:
     "@kong/icons" "^1.8.14"
     "@popperjs/core" "^2.11.8"
@@ -1861,7 +1861,7 @@
     focus-trap "^7.5.4"
     focus-trap-vue "^4.0.3"
     popper.js "^1.16.1"
-    sortablejs "^1.15.1"
+    sortablejs "^1.15.2"
     swrv "^1.0.4"
     uuid "^9.0.1"
     v-calendar "^3.1.2"
@@ -5932,14 +5932,7 @@ luxon@3.2.1:
   resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.2.1.tgz#14f1af209188ad61212578ea7e3d518d18cee45f"
   integrity sha512-QrwPArQCNLAKGO/C+ZIilgIuDnEnKx5QYODdDtbFaxzsbZcc/a7WFq7MhsVYgRlwawLtvOUESTlfJ+hc/USqPg==
 
-magic-string@^0.30.0, magic-string@^0.30.5:
-  version "0.30.5"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.5.tgz#1994d980bd1c8835dc6e78db7cbd4ae4f24746f9"
-  integrity sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==
-  dependencies:
-    "@jridgewell/sourcemap-codec" "^1.4.15"
-
-magic-string@^0.30.6:
+magic-string@^0.30.0, magic-string@^0.30.5, magic-string@^0.30.6:
   version "0.30.7"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.7.tgz#0cecd0527d473298679da95a2d7aeb8c64048505"
   integrity sha512-8vBuFF/I/+OSLRmdf2wwFCJCz+nSn0m6DPvGH1fS/KiQoSaR+sETbov0eIk9KhEKy8CYqIkIAnbohxT/4H0kuA==
@@ -7358,10 +7351,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-sortablejs@^1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.1.tgz#9a35f52cdff449fb42ea8ecf222f3468d76e0a47"
-  integrity sha512-P5Cjvb0UG1ZVNiDPj/n4V+DinttXG6K8n7vM/HQf0C25K3YKQTQY6fsr/sEGsJGpQ9exmPxluHxKBc0mLKU1lQ==
+sortablejs@^1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.2.tgz#4e9f7bda4718bd1838add9f1866ec77169149809"
+  integrity sha512-FJF5jgdfvoKn1MAKSdGs33bIqLi3LmsgVTliuX6iITj834F+JRQZN90Z93yql8h0K2t0RwDPBmxwlbZfDcxNZA==
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"
