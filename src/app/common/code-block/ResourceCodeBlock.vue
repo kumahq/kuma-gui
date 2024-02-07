@@ -18,10 +18,9 @@
       <template #secondary-actions>
         <KTooltip
           class="kubernetes-copy-button-tooltip"
-          :label="t('common.copyKubernetesText')"
+          :text="t('common.copyKubernetesText')"
           placement="bottomEnd"
           max-width="200"
-          position-fixed
         >
           <CopyButton
             class="kubernetes-copy-button"
