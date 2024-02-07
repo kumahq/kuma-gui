@@ -4,7 +4,7 @@
     :src="`/control-plane/version/latest`"
   >
     <KAlert
-      v-if="env('KUMA_VERSION') !== data?.version"
+      v-if="data && env('KUMA_VERSION') !== data.version"
       data-testid="upgrade-check"
       class="upgrade-check-alert"
       appearance="info"
