@@ -16,6 +16,15 @@ import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
 
+// temporary simple "JSON data only" structuredClone polyfill for cloning JSON
+// data
+// TODO(jc): delete this once we get to 2025
+if (!('structuredClone' in globalThis)) {
+  globalThis.structuredClone = <T>(obj: T): T => {
+    return JSON.parse(JSON.stringify(obj))
+  }
+}
+
 export type { DataSourceResponse, Source } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
