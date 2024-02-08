@@ -13,9 +13,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
 
   let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
-  if (name.includes('-gateway_builtin')) {
+  if (name.includes('-gateway_builtin') || env('KUMA_DATAPLANE_TYPE', 'standard') === 'builtin') {
     type = 'gateway_builtin'
-  } else if (name.includes('-gateway_delegated')) {
+  } else if (name.includes('-gateway_delegated') || env('KUMA_DATAPLANE_TYPE', 'standard') === 'delegated') {
     type = 'gateway_delegated'
   }
 

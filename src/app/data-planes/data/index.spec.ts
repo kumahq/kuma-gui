@@ -1,1002 +1,341 @@
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
+import { describe, expect, test as _test } from 'vitest'
 
-import { Dataplane, DataplaneOverview } from './index'
+import { Dataplane, DataplaneOverview } from './'
+import { plugin, server } from '@/test-support/data'
+import dataplaneMock from '@/test-support/mocks/src/meshes/_/dataplanes/_'
+import mock from '@/test-support/mocks/src/meshes/_/dataplanes/_/_overview'
 
-type TestCase<T extends (...args: any) => any> = {
-  message: string
-  parameters: Parameters<T>
-  expected: ReturnType<T>
-}
-
-describe('dataplanes data transformations', () => {
-  describe('Dataplane', () => {
-    test.each<TestCase<typeof Dataplane.fromObject>>([
-      {
-        message: 'minimal',
-        parameters: [{
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'Dataplane',
-          creationTime: '',
-          modificationTime: '',
-          networking: {
-            address: 'http://example.org',
-          },
-        }],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'Dataplane',
-          creationTime: '',
-          modificationTime: '',
-          networking: {
-            address: 'http://example.org',
-            inbounds: [],
-            outbounds: [],
-          },
-          config: {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'Dataplane',
-            creationTime: '',
-            modificationTime: '',
-            networking: {
-              address: 'http://example.org',
-            },
-          },
-        },
+describe('Dataplane', () => {
+  const test = _test.extend(plugin<typeof Dataplane>(
+    Dataplane,
+    server(dataplaneMock, {
+      params: {
+        mesh: 'default',
+        name: 'dataplane',
       },
-    ])('.fromObject: $message', ({ parameters, expected }) => {
-      expect(Dataplane.fromObject(...parameters)).toStrictEqual(expected)
-    })
+    }),
+  ))
+  describe('dataplane.config', () => {
+    test(
+      'config is the same as the original API object',
+      async ({ fixture }) => {
+        let expected
+        const actual = await fixture.setup((item) => {
+          expected = item
+          return item
+        })
+        expect(actual.config).toStrictEqual(expected)
+      },
+    )
   })
+  describe('dataplane.networking.inbounds', () => {
+    test(
+      'absent inbound, inbounds remains defined',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          delete item.networking.inbound
+          return item
+        })
+        expect(actual.networking.inbounds).toBeDefined()
+      },
+    )
+    test(
+      'dataplane.networking.inbound.service is set',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANEINBOUND_COUNT: '1',
+          },
+        })
+        expect(actual.networking.inbounds[0].service).toStrictEqual(actual.networking.inbounds[0].tags['kuma.io/service'])
+      },
+    )
+  })
+  describe('dataplane.networking.outbounds', () => {
+    test(
+      'absent outbound, outbounds remains defined',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          delete item.networking.outbound
+          return item
+        })
+        expect(actual.networking.outbounds).toBeDefined()
+      }, {
 
-  describe('DataplaneOverview', () => {
-    beforeAll(() => {
-      vi.useFakeTimers()
-      // Needed to test certificate expiration.
-      vi.setSystemTime(new Date('2023-11-28T13:00:00Z'))
-    })
-
-    afterAll(() => {
-      vi.useRealTimers()
-    })
-
-    test.each<TestCase<typeof DataplaneOverview.fromObject>>([
-      {
-        message: 'Standard proxy: empty subscriptions -> offline',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-              },
-            },
-          },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              inbounds: [],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            subscriptions: [],
-            connectedSubscription: undefined,
-            version: undefined,
-          },
-          dataplaneType: 'standard',
-          status: 'offline',
-          warnings: [],
-          isCertExpired: false,
-          services: [],
-          zone: undefined,
-        },
       },
-      {
-        message: 'Standard proxy: healthy inbounds + connected subscription -> online',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                inbound: [
-                  {
-                    health: {
-                      ready: true,
-                    },
-                    tags: {
-                      'kuma.io/service': '',
-                      'kuma.io/zone': '',
-                    },
-                    port: 1,
-                  },
-                ],
-              },
-            },
-            dataplaneInsight: {
-              mTLS: {
-                certificateExpirationTime: '2023-11-27T13:00:00Z',
-                lastCertificateRegeneration: '',
-                certificateRegenerations: 0,
-                issuedBackend: '',
-                supportedBackends: [],
-              },
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                  version: {
-                    kumaDp: {
-                      version: '1.2.3',
-                      gitTag: '',
-                      gitCommit: '',
-                      buildDate: '',
-                      kumaCpCompatible: false,
-                    },
-                    envoy: {
-                      version: '4.5.6',
-                      build: '',
-                      kumaDpCompatible: false,
-                    },
-                    dependencies: {},
-                  },
-                },
-              ],
-            },
-          },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              inbounds: [
-                {
-                  health: {
-                    ready: true,
-                  },
-                  tags: {
-                    'kuma.io/service': '',
-                    'kuma.io/zone': '',
-                  },
-                  service: '',
-                  protocol: 'tcp',
-                  port: 1,
-                  addressPort: 'http://example.org:1',
-                  serviceAddressPort: 'http://example.org:1',
-                },
-              ],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            mTLS: {
-              certificateExpirationTime: '2023-11-27T13:00:00Z',
-              lastCertificateRegeneration: '',
-              certificateRegenerations: 0,
-              issuedBackend: '',
-              supportedBackends: [],
-            },
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-                version: {
-                  kumaDp: {
-                    version: '1.2.3',
-                    gitTag: '',
-                    gitCommit: '',
-                    buildDate: '',
-                    kumaCpCompatible: false,
-                  },
-                  envoy: {
-                    version: '4.5.6',
-                    build: '',
-                    kumaDpCompatible: false,
-                  },
-                  dependencies: {},
-                },
-              },
-            ],
-            version: {
-              kumaDp: {
-                version: '1.2.3',
-                gitTag: '',
-                gitCommit: '',
-                buildDate: '',
-                kumaCpCompatible: false,
-              },
-              envoy: {
-                version: '4.5.6',
-                build: '',
-                kumaDpCompatible: false,
-              },
-              dependencies: {},
-            },
-            connectedSubscription: {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-              version: {
-                kumaDp: {
-                  version: '1.2.3',
-                  gitTag: '',
-                  gitCommit: '',
-                  buildDate: '',
-                  kumaCpCompatible: false,
-                },
-                envoy: {
-                  version: '4.5.6',
-                  build: '',
-                  kumaDpCompatible: false,
-                },
-                dependencies: {},
-              },
-            },
-          },
-          dataplaneType: 'standard',
-          status: 'online',
-          warnings: [
-            {
-              kind: 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP',
-              payload: {
-                kumaDp: '1.2.3',
-              },
-            },
-            {
-              kind: 'INCOMPATIBLE_UNSUPPORTED_ENVOY',
-              payload: {
-                envoy: '4.5.6',
-                kumaDp: '1.2.3',
-              },
-            },
-            {
-              kind: 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS',
-              payload: {
-                kumaDp: '1.2.3',
-              },
-            },
-          ],
-          isCertExpired: true,
-          services: [''],
-          zone: '',
-        },
+    )
+  })
+})
+describe('DataplaneOverview', () => {
+  const test = _test.extend(plugin<typeof DataplaneOverview>(
+    DataplaneOverview,
+    server(mock, {
+      params: {
+        name: 'zone',
       },
-      {
-        message: 'Standard proxy: healthy inbounds + disconnected subscription -> offline',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                inbound: [
-                  {
-                    health: {
-                      ready: true,
-                    },
-                    tags: {
-                      'kuma.io/service': '',
-                    },
-                    port: 1,
-                  },
-                ],
-              },
-            },
-            dataplaneInsight: {
-              mTLS: {
-                certificateExpirationTime: '2023-11-29T13:00:00Z',
-                lastCertificateRegeneration: '',
-                certificateRegenerations: 0,
-                issuedBackend: '',
-                supportedBackends: [],
-              },
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                  disconnectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-              ],
-            },
-          },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              inbounds: [
-                {
-                  health: {
-                    ready: true,
-                  },
-                  tags: {
-                    'kuma.io/service': '',
-                  },
-                  service: '',
-                  protocol: 'tcp',
-                  port: 1,
-                  addressPort: 'http://example.org:1',
-                  serviceAddressPort: 'http://example.org:1',
-                },
-              ],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            mTLS: {
-              certificateExpirationTime: '2023-11-29T13:00:00Z',
-              lastCertificateRegeneration: '',
-              certificateRegenerations: 0,
-              issuedBackend: '',
-              supportedBackends: [],
-            },
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-                disconnectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-            ],
-            version: undefined,
-            connectedSubscription: undefined,
-          },
-          dataplaneType: 'standard',
-          status: 'offline',
-          warnings: [],
-          isCertExpired: false,
-          services: [''],
-          zone: undefined,
-        },
+    }),
+  ))
+  describe('dataplaneInsight.subscriptions', () => {
+    test(
+      'absent dataplaneInsight remains defined',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          delete item.dataplaneInsight
+          return item
+        })
+        expect(actual.dataplaneInsight).toBeDefined()
       },
-      {
-        message: 'Standard proxy: only unhealthy inbounds -> offline',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                inbound: [
-                  {
-                    health: {
-                      ready: false,
-                    },
-                    tags: {
-                      'kuma.io/service': '',
-                    },
-                    port: 1,
-                  },
-                ],
-              },
-            },
-            dataplaneInsight: {
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-              ],
-            },
-          },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              inbounds: [
-                {
-                  health: {
-                    ready: false,
-                  },
-                  tags: {
-                    'kuma.io/service': '',
-                  },
-                  service: '',
-                  protocol: 'tcp',
-                  port: 1,
-                  addressPort: 'http://example.org:1',
-                  serviceAddressPort: 'http://example.org:1',
-                },
-              ],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-            ],
-            version: undefined,
-            connectedSubscription: {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-            },
-          },
-          dataplaneType: 'standard',
-          status: 'offline',
-          warnings: [],
-          isCertExpired: false,
-          services: [''],
-          zone: undefined,
-        },
+    )
+    test(
+      'no subscriptions, connectedSubscription remains undefined, status = offline',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions = []
+          }
+          item.dataplane.networking.inbound = []
+          return item
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(0)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
+        expect(actual.status).toStrictEqual('offline')
       },
-      {
-        message: 'Standard proxy: partially unhealthy inbounds -> partially degraded',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                inbound: [
-                  {
-                    health: {
-                      ready: false,
-                    },
-                    port: 1,
-                    tags: {
-                      'kuma.io/service': 'service-1',
-                      'kuma.io/zone': 'zone-1',
-                    },
-                  },
-                  {
-                    port: 1,
-                    tags: {
-                      'kuma.io/service': 'service-2',
-                      'kuma.io/zone': 'zone-1',
-                    },
-                  },
-                ],
-              },
-            },
-            dataplaneInsight: {
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-              ],
-            },
+    )
+    test(
+      'all disconnected subscriptions, connectedSubscription remains undefined, status = offline',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions.forEach((item) => {
+              item.connectTime = '2021-02-19T07:06:16.384057Z'
+              item.disconnectTime = '2021-03-19T07:06:16.384057Z'
+            })
+          }
+          // take inbounds out of the equation
+          if (item.dataplane.networking.inbound?.length === 1) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: true,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_SUBSCRIPTION_COUNT: '10',
+            KUMA_DATAPLANEINBOUND_COUNT: '1',
           },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              inbounds: [
-                {
-                  health: {
-                    ready: false,
-                  },
-                  tags: {
-                    'kuma.io/service': 'service-1',
-                    'kuma.io/zone': 'zone-1',
-                  },
-                  service: 'service-1',
-                  protocol: 'tcp',
-                  port: 1,
-                  addressPort: 'http://example.org:1',
-                  serviceAddressPort: 'http://example.org:1',
-                },
-                {
-                  health: {
-                    ready: true,
-                  },
-                  tags: {
-                    'kuma.io/service': 'service-2',
-                    'kuma.io/zone': 'zone-1',
-                  },
-                  service: 'service-2',
-                  protocol: 'tcp',
-                  port: 1,
-                  addressPort: 'http://example.org:1',
-                  serviceAddressPort: 'http://example.org:1',
-                },
-              ],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-            ],
-            version: undefined,
-            connectedSubscription: {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-            },
-          },
-          dataplaneType: 'standard',
-          status: 'partially_degraded',
-          warnings: [],
-          isCertExpired: false,
-          services: ['service-1', 'service-2'],
-          zone: 'zone-1',
-        },
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeUndefined()
+        expect(actual.status).toStrictEqual('offline')
       },
-      {
-        message: 'Delegated gateway + single subscription + online',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                gateway: {
-                  type: 'DELEGATED',
-                  tags: {
-                    'kuma.io/service': 'service-1',
-                    'kuma.io/zone': 'zone-1',
-                    'kuma.io/protocol': 'http',
-                  },
-                },
-              },
-            },
-            dataplaneInsight: {
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-              ],
-            },
+    )
+    test(
+      'one connected subscription, connectedSubscription is set, status = online',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+              item.connectTime = '2021-02-19T07:06:16.384057Z'
+              item.disconnectTime = '2021-03-19T07:06:16.384057Z'
+              if (i === 5) {
+                delete item.disconnectTime
+              }
+            })
+          }
+          // take inbounds out of the equation
+          if (item.dataplane.networking.inbound?.length === 1) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: true,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_SUBSCRIPTION_COUNT: '10',
+            KUMA_DATAPLANEINBOUND_COUNT: '1',
           },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              gateway: {
-                type: 'DELEGATED',
-                tags: {
-                  'kuma.io/service': 'service-1',
-                  'kuma.io/zone': 'zone-1',
-                  'kuma.io/protocol': 'http',
-                },
-              },
-              inbounds: [],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-            ],
-            version: undefined,
-            connectedSubscription: {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-            },
-          },
-          dataplaneType: 'delegated',
-          status: 'online',
-          warnings: [],
-          isCertExpired: false,
-          services: ['service-1'],
-          zone: 'zone-1',
-        },
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeDefined()
+        expect(actual.status).toStrictEqual('online')
       },
-      {
-        message: 'Delegated gateway + single subscription + online',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                gateway: {
-                  tags: {
-                    'kuma.io/service': 'service-1',
-                    'kuma.io/zone': 'zone-1',
-                    'kuma.io/protocol': 'http',
-                  },
-                },
-              },
-            },
-            dataplaneInsight: {
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-              ],
-            },
+    )
+    test(
+      'one connected subscription, 1 unhealthy inbound, status = partially_degraded',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+              item.connectTime = '2021-02-19T07:06:16.384057Z'
+              item.disconnectTime = '2021-03-19T07:06:16.384057Z'
+              if (i === 5) {
+                delete item.disconnectTime
+              }
+            })
+          }
+          if (item.dataplane.networking.inbound?.length === 2) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: true,
+            }
+            item.dataplane.networking.inbound[1].health = {
+              ready: false,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_SUBSCRIPTION_COUNT: '10',
+            KUMA_DATAPLANEINBOUND_COUNT: '2',
           },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              gateway: {
-                tags: {
-                  'kuma.io/service': 'service-1',
-                  'kuma.io/zone': 'zone-1',
-                  'kuma.io/protocol': 'http',
-                },
-              },
-              inbounds: [],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-            ],
-            version: undefined,
-            connectedSubscription: {
-              id: '',
-              controlPlaneInstanceId: '',
-              status: {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                total: {},
-                cds: {},
-                eds: {},
-                lds: {},
-                rds: {},
-              },
-              connectTime: '2021-07-13T09:03:11.614941842Z',
-            },
-          },
-          dataplaneType: 'delegated',
-          status: 'online',
-          warnings: [],
-          isCertExpired: false,
-          services: ['service-1'],
-          zone: 'zone-1',
-        },
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeDefined()
+        expect(actual.status).toStrictEqual('partially_degraded')
       },
-      {
-        message: 'Built-in gateway + multiple subscriptions + offline',
-        parameters: [
-          {
-            mesh: 'default',
-            name: 'dataplane',
-            type: 'DataplaneOverview',
-            creationTime: '',
-            modificationTime: '',
-            dataplane: {
-              networking: {
-                address: 'http://example.org',
-                gateway: {
-                  type: 'BUILTIN',
-                  tags: {
-                    'kuma.io/service': '',
-                  },
-                },
-              },
-            },
-            dataplaneInsight: {
-              subscriptions: [
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                  disconnectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-                {
-                  id: '',
-                  controlPlaneInstanceId: '',
-                  status: {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                    total: {},
-                    cds: {},
-                    eds: {},
-                    lds: {},
-                    rds: {},
-                  },
-                  connectTime: '2021-07-13T09:03:11.614941842Z',
-                  disconnectTime: '2021-07-13T09:03:11.614941842Z',
-                },
-              ],
-            },
+    )
+    test(
+      'one connected subscription, all unhealthy inbounds, status = offline',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+              item.connectTime = '2021-02-19T07:06:16.384057Z'
+              item.disconnectTime = '2021-03-19T07:06:16.384057Z'
+              if (i === 5) {
+                delete item.disconnectTime
+              }
+            })
+          }
+          if (item.dataplane.networking.inbound?.length === 2) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: false,
+            }
+            item.dataplane.networking.inbound[1].health = {
+              ready: false,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_SUBSCRIPTION_COUNT: '10',
+            KUMA_DATAPLANEINBOUND_COUNT: '2',
           },
-          true,
-        ],
-        expected: {
-          mesh: 'default',
-          name: 'dataplane',
-          type: 'DataplaneOverview',
-          creationTime: '',
-          modificationTime: '',
-          dataplane: {
-            networking: {
-              address: 'http://example.org',
-              gateway: {
-                type: 'BUILTIN',
-                tags: {
-                  'kuma.io/service': '',
-                },
-              },
-              inbounds: [],
-              outbounds: [],
-            },
-          },
-          dataplaneInsight: {
-            subscriptions: [
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2020-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-                disconnectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-              {
-                id: '',
-                controlPlaneInstanceId: '',
-                status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                  total: {},
-                  cds: {},
-                  eds: {},
-                  lds: {},
-                  rds: {},
-                },
-                connectTime: '2021-07-13T09:03:11.614941842Z',
-                disconnectTime: '2021-07-13T09:03:11.614941842Z',
-              },
-            ],
-            version: undefined,
-            connectedSubscription: undefined,
-          },
-          dataplaneType: 'builtin',
-          status: 'offline',
-          warnings: [],
-          isCertExpired: false,
-          services: [''],
-          zone: undefined,
-        },
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeDefined()
+        expect(actual.status).toStrictEqual('offline')
       },
-    ])('.fromObject: $message', ({ parameters, expected }) => {
-      expect(DataplaneOverview.fromObject(...parameters)).toStrictEqual(expected)
-    })
-
-    test.each<TestCase<typeof DataplaneOverview.fromCollection>>([
-    ])('.fromCollection: $message', ({ parameters, expected }) => {
-      expect(DataplaneOverview.fromCollection(...parameters)).toStrictEqual(expected)
-    })
+    )
+    test(
+      'one connected subscription, all unhealthy inbounds, but builtin gateway, status = online',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+              item.connectTime = '2021-02-19T07:06:16.384057Z'
+              item.disconnectTime = '2021-03-19T07:06:16.384057Z'
+              if (i === 5) {
+                delete item.disconnectTime
+              }
+            })
+          }
+          if (item.dataplane.networking.inbound?.length === 2) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: false,
+            }
+            item.dataplane.networking.inbound[1].health = {
+              ready: false,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANE_TYPE: 'builtin',
+            KUMA_SUBSCRIPTION_COUNT: '10',
+            KUMA_DATAPLANEINBOUND_COUNT: '2',
+          },
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeDefined()
+        expect(actual.status).toStrictEqual('online')
+      },
+    )
+    test(
+      'one connected subscription, all unhealthy inbounds, but delegated gateway, status = online',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplaneInsight !== 'undefined') {
+            item.dataplaneInsight.subscriptions.forEach((item, i) => {
+              item.connectTime = '2021-02-19T07:06:16.384057Z'
+              item.disconnectTime = '2021-03-19T07:06:16.384057Z'
+              if (i === 5) {
+                delete item.disconnectTime
+              }
+            })
+          }
+          if (item.dataplane.networking.inbound?.length === 2) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: false,
+            }
+            item.dataplane.networking.inbound[1].health = {
+              ready: false,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANE_TYPE: 'delegated',
+            KUMA_SUBSCRIPTION_COUNT: '10',
+            KUMA_DATAPLANEINBOUND_COUNT: '2',
+          },
+        })
+        expect(actual.dataplaneInsight.subscriptions.length).toStrictEqual(10)
+        expect(actual.dataplaneInsight.connectedSubscription).toBeDefined()
+        expect(actual.status).toStrictEqual('online')
+      },
+    )
+  })
+  describe('dataplane.inbounds', () => {
+    test(
+      "if health isn't set we default it to true",
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (item.dataplane.networking.inbound?.length === 1) {
+            item.dataplane.networking.inbound[0] = {
+              port: 1,
+              tags: {
+                'kuma.io/service': 'service-name',
+              },
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANEINBOUND_COUNT: '1',
+          },
+        })
+        expect(actual.dataplane.networking.inbounds[0].health.ready).toStrictEqual(true)
+      },
+    )
+    test(
+      "if health is set we don't overwrite it",
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (item.dataplane.networking.inbound?.length === 1) {
+            item.dataplane.networking.inbound[0].health = {
+              ready: false,
+            }
+          }
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANEINBOUND_COUNT: '1',
+          },
+        })
+        expect(actual.dataplane.networking.inbounds[0].health.ready).toStrictEqual(false)
+      },
+    )
   })
 })
