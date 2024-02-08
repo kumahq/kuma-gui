@@ -17,7 +17,7 @@
           :to="{
             name: 'policy-list-view',
             params: {
-              mesh: route.params.mesh,
+              mesh: props.mesh,
               policyPath: policyType.path,
             },
           }"
@@ -189,7 +189,6 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
 import type { PolicyType } from '../data'
 import { PolicyCollection } from '../sources'
@@ -206,11 +205,11 @@ type ChangeValue = {
 }
 
 const { t } = useI18n()
-const route = useRoute()
 
 const props = withDefaults(defineProps<{
   pageNumber: number
   pageSize: number
+  mesh: string
   policyTypes: PolicyType[]
   currentPolicyType: PolicyType
   policyCollection: PolicyCollection | undefined
