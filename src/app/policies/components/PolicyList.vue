@@ -86,6 +86,7 @@
 
           <AppCollection
             v-else
+            :key="currentPolicyType.path"
             class="policy-collection"
             data-testid="policy-collection"
             :empty-state-message="t('common.emptyState.message', { type: `${props.currentPolicyType.name} policies` })"
