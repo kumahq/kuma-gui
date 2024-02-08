@@ -1,4 +1,5 @@
 name: 'Create GUI update PR'
+run-name: 'Create GUI update PR (branch: ${{ github.event.workflow_run.head_branch || inputs.branch }})'
 
 # **Note 1**: You can merge a pull request into a release branch of the form “release-$MAJOR.$MINOR” (e.g. “release-2.1”) in order to create the GUI update PR in the matching release branch of the host repository. For this to work, the name of this repository’s release branch must match that of the host repository exactly.
 # **Note 2**: Since this workflow can be triggered using the `workflow_run` event type, one needs to pay special attention to the context in which runs will be executed based on this workflow. Most importantly, runs will be using the workflow file found **in the project’s default branch**. This means that context variables like `github.ref` and `github.ref_name` will refer to the default branch **and not the branch that caused the workflow_run event to trigger**. Also, it likely means that to change the behavior of the workflow in a release branch, one will actually have to update the workflow file in the default branch, too.
@@ -33,8 +34,9 @@ concurrency:
 jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
+    timeout-minutes: 10
     # Only runs this job when the triggering workflow run was a success (i.e. the “Tests” workflow passes).
-    if: ${{ github.event_name == 'workflow_dispatch'  || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     name: Create GUI update PR
     runs-on: ubuntu-latest
     env:
@@ -49,15 +51,13 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
-        id: node-modules-cache
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
 
-      - if: steps.node-modules-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+      - uses: Kong/public-shared-actions/security-actions/sca@4119b418bba4462593b5238718772356f84f67ee
+        id: sbom
+        with:
+          asset_prefix: kuma-gui
+          dir: '.'
 
       - run: yarn run build
 
@@ -80,6 +80,18 @@ jobs:
 
       - run: |
           cd main-application
+
+          echo 'Copying Grype and SBOM reports ...'
+          mkdir -p ${{ vars.HOST_REPORTS_DIRECTORY }}
+          rm -f ${{ vars.HOST_REPORTS_DIRECTORY }}/{${{ steps.sbom.outputs.grype-json-report }},${{ steps.sbom.outputs.grype-sarif-report }},${{ steps.sbom.outputs.sbom-spdx-report }},${{ steps.sbom.outputs.sbom-cyclonedx-report }}}
+          mv \
+            ../${{ steps.sbom.outputs.grype-json-report }} \
+            ../${{ steps.sbom.outputs.grype-sarif-report }} \
+            ../${{ steps.sbom.outputs.sbom-spdx-report }} \
+            ../${{ steps.sbom.outputs.sbom-cyclonedx-report }} \
+            ${{ vars.HOST_REPORTS_DIRECTORY }}
+
+          echo 'Replacing GUI dist files ...'
           rm -rf ${{ vars.HOST_DIST_DIRECTORY }}
           cp -r ../${{ vars.DIST_DIRECTORY }}/ ${{ vars.HOST_DIST_DIRECTORY }}
 
@@ -100,7 +112,7 @@ jobs:
           branch: chore/update-gui-in-${{ env.BRANCH }}
           delete-branch: true
           title: 'chore(deps): bump ${{ github.repository }} to ${{ env.SHA }}'
-          labels: ci/skip-e2e-test,ci/auto-merge
+          labels: ci/skip-e2e-test,${{ env.BRANCH }},ci/auto-merge
           body: |
             Bumps ${{ github.repository }} to version  [${{ env.BRANCH }}@${{ env.SHA }}](https://github.com/${{ github.repository }}/tree/${{ env.SHA }})
 
