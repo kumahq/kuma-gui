@@ -147,3 +147,12 @@ Feature: mesh / policies / index
     And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
     # Always shows MeshGateway
     And the "[data-testid='policy-type-link-MeshGateway']" element exists
+
+  Scenario: Regression test: Zone column is visible when navigating from legacy policy type
+    When I visit the "/meshes/default/policies/circuit-breakers" URL
+
+    Then the "$items-header" element exists 2 times
+
+    When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
+
+    Then the "$items-header" element exists 4 times
