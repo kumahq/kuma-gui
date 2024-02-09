@@ -27,6 +27,35 @@
             </h2>
           </template>
 
+          <template
+            v-if="can('use gateways ui')"
+            #actions
+          >
+            <LinkBox>
+              <RouterLink
+                :to="{
+                  name: 'service-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                }"
+              >
+                <b>Internal</b>
+              </RouterLink>
+
+              <RouterLink
+                :to="{
+                  name: 'external-service-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                }"
+              >
+                External
+              </RouterLink>
+            </LinkBox>
+          </template>
+
           <KCard>
             <ErrorBlock
               v-if="error !== undefined"
@@ -167,6 +196,7 @@ import type { ServiceInsightCollectionSource } from '../sources'
 import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LinkBox from '@/app/common/LinkBox.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'

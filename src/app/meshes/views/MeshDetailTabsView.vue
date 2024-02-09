@@ -38,12 +38,14 @@ const { t } = useI18n()
 const router = useRouter()
 
 const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = meshRoutes.map((route) => {
-  const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-  const routeName = referenceRoute.name as string
-  const module = referenceRoute.meta?.module ?? ''
-  const title = t(`meshes.routes.item.navigation.${routeName}`)
+const tabs: NavTab[] = meshRoutes
+  .filter((route) => !route.meta?.shouldIgnoreInNavTabs)
+  .map((route) => {
+    const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
+    const routeName = referenceRoute.name as string
+    const module = referenceRoute.meta?.module ?? ''
+    const title = t(`meshes.routes.item.navigation.${routeName}`)
 
-  return { title, routeName, module }
-})
+    return { title, routeName, module }
+  })
 </script>

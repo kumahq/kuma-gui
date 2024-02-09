@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t }"
+      v-slot="{ can, route, t }"
       name="external-service-list-view"
       :params="{
         page: 1,
@@ -24,6 +24,35 @@
                 :title="t('external-services.routes.items.title')"
               />
             </h2>
+          </template>
+
+          <template
+            v-if="can('use gateways ui')"
+            #actions
+          >
+            <LinkBox>
+              <RouterLink
+                :to="{
+                  name: 'service-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                }"
+              >
+                Internal
+              </RouterLink>
+
+              <RouterLink
+                :to="{
+                  name: 'external-service-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                }"
+              >
+                <b>External</b>
+              </RouterLink>
+            </LinkBox>
           </template>
 
           <KCard>
@@ -116,6 +145,7 @@ import { ArrowRightIcon } from '@kong/icons'
 import type { ExternalServiceCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LinkBox from '@/app/common/LinkBox.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
