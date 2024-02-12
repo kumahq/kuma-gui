@@ -27,6 +27,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
+import { useCan } from '@/app/application'
 import { LabelValue } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -44,6 +45,7 @@ const props = withDefaults(defineProps<{
   shouldTruncate: false,
   alignment: 'left',
 })
+const can = useCan()
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
   const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
@@ -67,6 +69,9 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   try {
     switch (tag.label) {
       case 'kuma.io/zone': {
+        if (!can('use zones')) {
+          return undefined
+        }
         return {
           name: 'zone-cp-detail-view',
           params: {
