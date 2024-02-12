@@ -27,17 +27,22 @@
 
 .fact-list {
   padding-left: 0;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: $kui-space-20;
 }
 
 .fact-list__item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: $kui-space-20;
-  min-width: 300px;
+  flex-basis: 0;
+  min-width: 50%;
+}
+
+.fact-list__icon {
+  flex-shrink: 0;
 }
 
 .form-title {
