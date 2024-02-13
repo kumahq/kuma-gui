@@ -30,7 +30,8 @@
             <template
               v-for="(item, key) in [
                 (['http', 'tcp'] as const).reduce((prev, protocol) => {
-                  const direction = 'downstream'
+                  // FIXME: confirm this can change to upstream
+                  const direction = props.direction
                   // sum both the properties we need from both protocols
                   return Object.entries(props.traffic?.[protocol] || {}).reduce((prev, [key, value]) => {
                     return [`${direction}_cx_tx_bytes_total`, `${direction}_cx_rx_bytes_total`].includes(key) ?
@@ -67,7 +68,7 @@
             v-else-if="props.protocol === 'http'"
           >
             <div
-              v-for="value in [props.traffic.http?.downstream_rq_1xx as (number | undefined) ?? 0].filter(item => item !== 0)"
+              v-for="value in [props.traffic.http?.[`${props.direction}_rq_1xx`] as (number | undefined) ?? 0].filter(item => item !== 0)"
               :key="value"
             >
               <dt>{{ t('data-planes.components.service_traffic_card.1xx') }}</dt>
@@ -75,10 +76,10 @@
             </div>
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.2xx') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: props.traffic.http?.downstream_rq_2xx as (number | undefined) ?? 0 }) }}</dd>
+              <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_2xx`] as (number | undefined) ?? 0 }) }}</dd>
             </div>
             <div
-              v-for="value in [props.traffic.http?.downstream_rq_3xx as (number | undefined) ?? 0].filter(item => item !== 0)"
+              v-for="value in [props.traffic.http?.[`${props.direction}_rq_3xx`] as (number | undefined) ?? 0].filter(item => item !== 0)"
               :key="value"
             >
               <dt>{{ t('data-planes.components.service_traffic_card.3xx') }}</dt>
@@ -86,11 +87,11 @@
             </div>
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.4xx') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: props.traffic.http?.downstream_rq_4xx as (number | undefined) ?? 0 }) }}</dd>
+              <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_4xx`] as (number | undefined) ?? 0 }) }}</dd>
             </div>
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.5xx') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: props.traffic.http?.downstream_rq_5xx as (number | undefined) ?? 0 }) }}</dd>
+              <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_5xx`] as (number | undefined) ?? 0 }) }}</dd>
             </div>
           </template>
           <template
@@ -98,11 +99,11 @@
           >
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.tx') }}</dt>
-              <dd>{{ formatBytes(props.traffic.tcp?.downstream_cx_rx_bytes_total as (number | undefined) ?? 0) }}</dd>
+              <dd>{{ formatBytes(props.traffic.tcp?.[`${props.direction}_cx_rx_bytes_total`] as (number | undefined) ?? 0) }}</dd>
             </div>
             <div>
               <dt>{{ t('data-planes.components.service_traffic_card.rx') }}</dt>
-              <dd>{{ formatBytes(props.traffic.tcp?.downstream_cx_tx_bytes_total as (number | undefined) ?? 0) }}</dd>
+              <dd>{{ formatBytes(props.traffic.tcp?.[`${props.direction}_cx_tx_bytes_total`] as (number | undefined) ?? 0) }}</dd>
             </div>
           </template>
         </dl>
@@ -122,10 +123,14 @@ import type { TrafficEntry } from '../../data'
 import { useI18n } from '@/app/application'
 import DataCard from '@/app/common/data-card/DataCard.vue'
 const { t } = useI18n()
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   protocol: string
   traffic?: TrafficEntry
-}>()
+  direction?: 'upstream' | 'downstream'
+}>(), {
+  traffic: undefined,
+  direction: 'downstream',
+})
 const click = (e: MouseEvent) => {
   const $target = e.target as HTMLElement
   if (e.isTrusted && $target.nodeName.toLowerCase() !== 'a') {

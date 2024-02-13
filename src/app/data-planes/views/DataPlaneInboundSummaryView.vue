@@ -14,7 +14,7 @@
           </template>
 
           <template v-else>
-            Inbound :{{ route.params.service.replace('localhost_', '') }}
+            Inbound {{ route.params.service.replace('localhost_', '') }}
           </template>
         </h2>
       </template>
@@ -33,7 +33,7 @@
           v-else
           v-slot="{ items }"
           :items="props.inbounds"
-          :predicate="(item) => `localhost_${item.port}` === route.params.service"
+          :predicate="(item) => `${item.port}` === route.params.service.split(':')[1]"
           :find="true"
         >
           <component

@@ -30,15 +30,41 @@
           />
 
           <LoadingBlock v-else-if="data === undefined" />
-
           <CodeBlock
             v-else
             language="json"
-            :code="(() => data.raw.split('\n')
-              .filter((item) => item.includes(`.${route.params.service}.`))
-              .map((item) => item.replace(`${route.params.service}.`, ''))
-              .join('\n')
-            )()"
+            :code="(() => {
+              if(props.gateway) {
+                const parts = route.params.service.split(':')
+                return data.raw.split('\n')
+                  .filter((item) => item.includes(`.${parts[0]}.`))
+                  .filter((item) => {
+                    return !item.startsWith('listener.') || item.includes(`_${parts[1]}.`)
+                  })
+                  .filter((item) => {
+                    return !item.includes('.rds.') || item.includes(`_${parts[1]}_*.`)
+                  })
+                  .map((item) => item.replace(`${parts[0]}.`, ''))
+                  .map((item) => item.replace(`_${parts[1]}.`, '.'))
+                  .map((item) => {
+                    if(item.includes('.rds.')) {
+                      const tmp = item.split('.')
+                      tmp.splice(2, 1)
+                      return tmp.join('.')
+                    } else {
+                      return item;
+                    }
+                  })
+                  .join('\n')
+
+              } else {
+                const name = `localhost_${route.params.service.split(':')[1]}`
+                return data.raw.split('\n')
+                  .filter((item) => item.includes(`.${name}.`))
+                  .map((item) => item.replace(`${name}.`, ''))
+                  .join('\n')
+              }
+            })()"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -66,8 +92,13 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
+import type { DataplaneInbound, DataplaneGateway } from '../data'
 import { StatsSource } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+const props = defineProps<{
+  inbound?: DataplaneInbound
+  gateway?: DataplaneGateway
+}>()
 </script>

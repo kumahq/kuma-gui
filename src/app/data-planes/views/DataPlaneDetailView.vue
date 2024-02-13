@@ -134,7 +134,14 @@
                 >
                   <DataCollection
                     v-slot="{ items: inbounds }"
-                    :items="props.data.dataplane.networking.inbounds"
+                    :items="props.data.dataplane.networking.gateway ? (traffic?.inbounds ?? []).map((inbound): DataplaneInbound => {
+                      return {
+                        ...props.data.dataplane.networking.inbounds[0],
+                        name: inbound.name,
+                        port: Number(inbound.port),
+                        protocol: inbound.protocol,
+                      }
+                    }) : props.data.dataplane.networking.inbounds"
                   >
                     <template
                       v-for="item in inbounds"
@@ -154,24 +161,29 @@
                             inbound :
                             {
                               name: '',
-                              protocol: item.protocol,
+                              protocol: item.protocol as TrafficEntry['protocol'],
                               port: `${item.port}`,
                             }
                           "
                         >
-                          <RouterLink
-                            :to="{
-                              name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
-                              params: {
-                                service: item.name,
-                              },
-                              query: {
-                                inactive: route.params.inactive ? null : undefined,
-                              },
-                            }"
+                          <template
+                            v-for="name in [`${item.name.replace(`_${item.port}`, '').replace('localhost', '')}:${item.port}`]"
+                            :key="name"
                           >
-                            {{ item.name.replace('localhost_', ':') }}
-                          </RouterLink>
+                            <RouterLink
+                              :to="{
+                                name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
+                                params: {
+                                  service: name,
+                                },
+                                query: {
+                                  inactive: route.params.inactive ? null : undefined,
+                                },
+                              }"
+                            >
+                              {{ name }}
+                            </RouterLink>
+                          </template>
                           <TagList
                             :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
                           />
@@ -220,51 +232,58 @@
                   <template
                     v-else
                   >
-                    <ServiceTrafficGroup
-                      type="passthrough"
-                    >
-                      <ServiceTrafficCard
-                        :protocol="`passthrough`"
-                        :traffic="traffic.passthrough"
-                      >
-                        Non mesh traffic
-                      </ServiceTrafficCard>
-                    </ServiceTrafficGroup>
-                    <DataCollection
-                      v-slot="{ items }"
-                      :predicate="route.params.inactive ? undefined : (item) => ((item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined) ?? 0) > 0"
-                      :items="traffic.outbounds"
+                    <!-- Outbounds for gateways report actual traffic on the upstream so we switch to upstream here for non-standard-->
+                    <template
+                      v-for="direction in [props.data.dataplane.networking.type !== 'standard' ? 'upstream' : 'downstream'] as const"
+                      :key="direction"
                     >
                       <ServiceTrafficGroup
-                        v-if="items.length > 0"
-                        type="outbound"
-                        data-testid="dataplane-outbounds"
+                        type="passthrough"
                       >
-                        <template
-                          v-for="item in items"
-                          :key="`${item.name}`"
+                        <ServiceTrafficCard
+                          :protocol="`passthrough`"
+                          :traffic="traffic.passthrough"
                         >
-                          <ServiceTrafficCard
-                            :protocol="item.protocol"
-                            :traffic="item"
-                          >
-                            <RouterLink
-                              :to="{
-                                name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
-                                params: {
-                                  service: item.name,
-                                },
-                                query: {
-                                  inactive: route.params.inactive ? null : undefined,
-                                },
-                              }"
-                            >
-                              {{ item.name }}
-                            </RouterLink>
-                          </ServiceTrafficCard>
-                        </template>
+                          Non mesh traffic
+                        </ServiceTrafficCard>
                       </ServiceTrafficGroup>
-                    </DataCollection>
+                      <DataCollection
+                        v-slot="{ items }"
+                        :predicate="route.params.inactive ? undefined : (item) => ((item.protocol === 'tcp' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
+                        :items="traffic.outbounds"
+                      >
+                        <ServiceTrafficGroup
+                          v-if="items.length > 0"
+                          type="outbound"
+                          data-testid="dataplane-outbounds"
+                        >
+                          <template
+                            v-for="item in items"
+                            :key="`${item.name}`"
+                          >
+                            <ServiceTrafficCard
+                              :protocol="item.protocol"
+                              :traffic="item"
+                              :direction="direction"
+                            >
+                              <RouterLink
+                                :to="{
+                                  name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
+                                  params: {
+                                    service: item.name,
+                                  },
+                                  query: {
+                                    inactive: route.params.inactive ? null : undefined,
+                                  },
+                                }"
+                              >
+                                {{ item.name }}
+                              </RouterLink>
+                            </ServiceTrafficCard>
+                          </template>
+                        </ServiceTrafficGroup>
+                      </DataCollection>
+                    </template>
                   </template>
                 </template>
                 <template v-else>
@@ -417,7 +436,7 @@ import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tok
 import { InfoIcon, ForwardIcon, GatewayIcon, RefreshIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import type { DataplaneOverview } from '../data'
+import type { DataplaneOverview, DataplaneInbound, TrafficEntry } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
