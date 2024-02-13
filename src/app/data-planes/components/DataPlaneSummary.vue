@@ -9,12 +9,14 @@
         <template #body>
           <div class="status-with-reason">
             <StatusBadge :status="props.dataplaneOverview.status" />
-            <template
-              v-for="inbounds in [props.dataplaneOverview.dataplane.networking.inbounds.filter(item => !item.health.ready)]"
-              :key="inbounds"
+            <DataCollection
+              v-if="props.dataplaneOverview.dataplane.networking.type === 'standard'"
+              v-slot="{ items : inbounds }"
+              :items="props.dataplaneOverview.dataplane.networking.inbounds"
+              :predicate="item => !item.health.ready"
+              :empty="false"
             >
               <KTooltip
-                v-if="inbounds.length > 0"
                 class="reason-tooltip"
                 position-fixed
               >
@@ -34,7 +36,7 @@
                   </ul>
                 </template>
               </KTooltip>
-            </template>
+            </DataCollection>
           </div>
         </template>
       </DefinitionCard>
@@ -81,13 +83,17 @@
       </div>
     </div>
 
-    <div v-if="props.dataplaneOverview.dataplane.networking.inbounds.length > 0">
-      <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
+    <DataCollection
+      v-if="props.dataplaneOverview.dataplane.networking.type === 'standard'"
+      v-slot="{ items : inbounds }"
+      :items="props.dataplaneOverview.dataplane.networking.inbounds"
+    >
+      <div>
+        <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
 
-      <div class="mt-4">
-        <div class="stack">
+        <div class="mt-4 stack">
           <div
-            v-for="(inbound, index) in props.dataplaneOverview.dataplane.networking.inbounds"
+            v-for="(inbound, index) in inbounds"
             :key="index"
             class="inbound"
           >
@@ -146,7 +152,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </DataCollection>
   </div>
 </template>
 

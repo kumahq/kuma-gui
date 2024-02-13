@@ -10,7 +10,7 @@
   >
     <DataSource
       v-slot="{ data: traffic, error, refresh }: StatsSource"
-      :src="props.data.dataplaneType === 'delegated' ? '' : `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplaneType === 'builtin' && props.data.dataplane.networking.gateway ? props.data.dataplane.networking.gateway.tags['kuma.io/service'] : 'localhost_'}`"
+      :src="props.data.dataplane.networking.type !== 'delegated' ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundName}` : ''"
     >
       <AppView>
         <template
@@ -49,13 +49,14 @@
                 <template #body>
                   <div class="status-with-reason">
                     <StatusBadge :status="props.data.status" />
-
-                    <template
-                      v-for="inbounds in [props.data.dataplane.networking.inbounds.filter(item => !item.health.ready)]"
-                      :key="inbounds"
+                    <DataCollection
+                      v-if="props.data.dataplane.networking.type === 'standard'"
+                      v-slot="{ items : inbounds }"
+                      :items="props.data.dataplane.networking.inbounds"
+                      :predicate="item => !item.health.ready"
+                      :empty="false"
                     >
                       <KTooltip
-                        v-if="inbounds.length > 0"
                         class="reason-tooltip"
                         position-fixed
                       >
@@ -75,7 +76,7 @@
                           </ul>
                         </template>
                       </KTooltip>
-                    </template>
+                    </DataCollection>
                   </div>
                 </template>
               </DefinitionCard>
@@ -115,145 +116,7 @@
           </KCard>
 
           <KCard
-            v-if="props.data.dataplaneType === 'builtin' && props.data.dataplane.networking.gateway"
-            class="traffic"
-            data-testid="dataplane-traffic"
-          >
-            <div class="columns">
-              <DataPlaneTraffic>
-                <template #title>
-                  <ForwardIcon
-                    display="inline-block"
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-
-                  Inbounds
-                </template>
-
-                <ServiceTrafficGroup type="inbound">
-                  <template
-                    v-for="(inbound, index) in [
-                      (traffic || { inbounds: [] }).inbounds.find((inbound) => inbound.name === props.data.dataplane.networking.gateway?.tags['kuma.io/service']),
-                    ]"
-                    :key="index"
-                  >
-                    <ServiceTrafficCard
-                      protocol="http"
-                      :traffic="inbound"
-                    >
-                      <RouterLink
-                        :to="{
-                          name: 'data-plane-inbound-summary-overview-view',
-                          params: {
-                            service: props.data.dataplane.networking.gateway.tags['kuma.io/service'],
-                          },
-                          query: {
-                            inactive: route.params.inactive ? null : undefined,
-                          },
-                        }"
-                      >
-                        {{ props.data.dataplane.networking.gateway.tags['kuma.io/service'] }}
-                      </RouterLink>
-
-                      <TagList
-                        :tags="[{
-                          label: 'kuma.io/service',
-                          value: props.data.dataplane.networking.gateway.tags['kuma.io/service'],
-                        }]"
-                      />
-                    </ServiceTrafficCard>
-                  </template>
-                </ServiceTrafficGroup>
-              </DataPlaneTraffic>
-
-              <DataPlaneTraffic>
-                <template
-                  v-if="traffic"
-                  #actions
-                >
-                  <KInputSwitch
-                    v-model="route.params.inactive"
-                    data-testid="dataplane-outbounds-inactive-toggle"
-                  >
-                    <template #label>
-                      Show inactive
-                    </template>
-                  </KInputSwitch>
-
-                  <KButton
-                    appearance="primary"
-                    @click="refresh"
-                  >
-                    <RefreshIcon :size="KUI_ICON_SIZE_30" />
-
-                    Refresh
-                  </KButton>
-                </template>
-
-                <template #title>
-                  <GatewayIcon
-                    display="inline-block"
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-
-                  Outbounds
-                </template>
-
-                <template v-if="traffic">
-                  <ServiceTrafficGroup type="passthrough">
-                    <ServiceTrafficCard
-                      :protocol="`passthrough`"
-                      :traffic="traffic.passthrough"
-                    >
-                      Non mesh traffic
-                    </ServiceTrafficCard>
-                  </ServiceTrafficGroup>
-
-                  <template
-                    v-for="outbounds in [
-                      route.params.inactive ? traffic.outbounds : traffic.outbounds.filter((item) => (item.protocol === 'tcp' ? item.tcp?.downstream_cx_rx_bytes_total : item.http?.downstream_rq_total) as (number | undefined) ?? 0 > 0),
-                    ]"
-                    :key="outbounds"
-                  >
-                    <ServiceTrafficGroup
-                      v-if="outbounds.length > 0"
-                      type="outbound"
-                      data-testid="dataplane-outbounds"
-                    >
-                      <template
-                        v-for="item in outbounds"
-                        :key="`${item.name}`"
-                      >
-                        <ServiceTrafficCard
-                          :protocol="item.protocol"
-                          :traffic="item"
-                        >
-                          <RouterLink
-                            :to="{
-                              name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
-                              params: {
-                                service: item.name,
-                              },
-                              query: {
-                                inactive: route.params.inactive ? null : undefined,
-                              },
-                            }"
-                          >
-                            {{ item.name }}
-                          </RouterLink>
-                        </ServiceTrafficCard>
-                      </template>
-                    </ServiceTrafficGroup>
-                  </template>
-                </template>
-              </DataPlaneTraffic>
-            </div>
-          </KCard>
-
-          <KCard
-            v-else-if="props.data.dataplaneType === 'standard'"
+            v-if="props.data.dataplane.networking.type !== 'delegated'"
             class="traffic"
             data-testid="dataplane-traffic"
           >
@@ -276,18 +139,18 @@
                   >
                     <template
                       v-for="item in inbounds"
-                      :key="`${item.port}`"
+                      :key="`${item.name}`"
                     >
                       <!-- the finding here would be expensive if inbounds was commonly large -->
                       <!-- inbounds are mostly singular and even when they are not they are small -->
                       <template
                         v-for="inbound in [
-                          (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.port}` === `${item.port}`),
+                          (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.name}` === `${item.name}`),
                         ]"
                         :key="inbound"
                       >
                         <ServiceTrafficCard
-                          :protocol="item.protocol"
+                          :protocol="inbound?.protocol ?? item.protocol"
                           :traffic="typeof error === 'undefined' ?
                             inbound :
                             {
@@ -301,14 +164,14 @@
                             :to="{
                               name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
                               params: {
-                                service: `localhost_${item.port}`,
+                                service: item.name,
                               },
                               query: {
                                 inactive: route.params.inactive ? null : undefined,
                               },
                             }"
                           >
-                            :{{ item.port }}
+                            {{ item.name.replace('localhost_', ':') }}
                           </RouterLink>
                           <TagList
                             :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"

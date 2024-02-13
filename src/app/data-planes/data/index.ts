@@ -29,19 +29,19 @@ import { isSet } from '@/utilities/isSet'
 
 export type { TrafficEntry } from './stats'
 
-export type DataplaneInbound = PartialDataplaneInbound & {
+export type Connection = {
+  name: string
+  service: string
+  protocol: string
+}
+export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   health: {
     ready: boolean
   }
-  service: string
   addressPort: string
   serviceAddressPort: string
-  protocol: string
 }
-
-export type DataplaneOutbound = PartialDataplaneOutbound & {
-  service: string
-  protocol: string
+export type DataplaneOutbound = PartialDataplaneOutbound & Connection & {
 }
 
 export type DataplaneGateway = PartialDataplaneGateway & {}
@@ -49,6 +49,8 @@ export type DataplaneGateway = PartialDataplaneGateway & {}
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
   inbounds: DataplaneInbound[]
   outbounds: DataplaneOutbound[]
+  inboundName: string
+  type: 'delegated' | 'builtin' | 'standard'
 }
 
 export type Dataplane = PartialDataplane & {
@@ -85,7 +87,7 @@ export type MeshGatewayDataplane = PartialMeshGatewayDataplane & {
 }
 
 const DataplaneNetworking = {
-  fromObject(networking: PartialDataplaneNetworking): DataplaneNetworking {
+  fromObject(networking: PartialDataplaneNetworking, defaultHealth: boolean): DataplaneNetworking {
     // remove singular inbound/outbound to be replaced with plural versions
     const { inbound, outbound, ...rest } = networking
 
@@ -94,23 +96,45 @@ const DataplaneNetworking = {
     // outbounds are only present here on a universal DDP without transparent
     // proxying
     const outbounds = Array.isArray(outbound) ? outbound : []
-
+    const type = getDataplaneType(networking)
     return {
       ...rest,
-      inbounds: inbounds.map((item) => {
-        return {
-          ...item,
-          // If a health property is unset the inbound is considered healthy
-          health: { ready: !isSet(item.health) ? true : item.health.ready },
-          service: item.tags['kuma.io/service'],
-          protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
-          addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
-          serviceAddressPort: `${item.serviceAddress ?? item.address ?? networking.address}:${item.servicePort ?? item.port}`,
-        }
-      }),
+      type,
+      inboundName: typeof networking.gateway === 'undefined' ? 'localhost' : type === 'builtin' ? networking.gateway.tags['kuma.io/service'] : '~',
+      // guess a single inbound for the moment
+      // we need to fill this in and make it multiple by either using the policy info
+      // or the stats listeners info
+      inbounds: (typeof networking.gateway !== 'undefined' && type === 'builtin')
+        ? [{
+          name: networking.gateway.tags['kuma.io/service'],
+          tags: networking.gateway.tags,
+          service: networking.gateway.tags['kuma.io/service'],
+          //
+          health: { ready: defaultHealth },
+          protocol: networking.gateway.tags['kuma.io/protocol'] ?? 'tcp',
+          // we currently never display the below data for gateway inbounds
+          port: NaN,
+          address: networking.address,
+          addressPort: '',
+          serviceAddressPort: '',
+        }]
+        : inbounds.map((item) => {
+          return {
+            ...item,
+            // Envoy Stats use `localhost_0000` for sidecar inbounds
+            name: `localhost_${item.port}`,
+            // If a health property is unset the inbound is considered healthy
+            health: { ready: !isSet(item.health) ? true : item.health.ready },
+            service: item.tags['kuma.io/service'],
+            protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
+            addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
+            serviceAddressPort: `${item.serviceAddress ?? item.address ?? networking.address}:${item.servicePort ?? item.port}`,
+          }
+        }),
       outbounds: outbounds.map((item) => {
         return {
           ...item,
+          name: item.tags['kuma.io/service'],
           service: item.tags['kuma.io/service'],
           protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
         }
@@ -124,7 +148,7 @@ export const Dataplane = {
     return {
       ...partialDataplane,
       config: partialDataplane,
-      networking: DataplaneNetworking.fromObject(partialDataplane.networking),
+      networking: DataplaneNetworking.fromObject(partialDataplane.networking, true),
     }
   },
 }
@@ -141,9 +165,9 @@ const DataplaneInsight = {
 export const DataplaneOverview = {
   fromObject(partialDataplaneOverview: PartialDataplaneOverview, canUseZones: boolean): DataplaneOverview {
     const dataplaneInsight = DataplaneInsight.fromObject(partialDataplaneOverview.dataplaneInsight)
-    const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking)
 
-    const dataplaneType = getDataplaneType(networking)
+    const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking, typeof dataplaneInsight.connectedSubscription !== 'undefined')
+
     const status = getStatus(networking, dataplaneInsight.connectedSubscription)
     const tags = getTags(networking)
     const warnings = getWarnings(dataplaneInsight, tags, canUseZones)
@@ -157,7 +181,7 @@ export const DataplaneOverview = {
         networking,
       },
       dataplaneInsight,
-      dataplaneType,
+      dataplaneType: networking.type,
       status,
       warnings,
       isCertExpired,
@@ -292,7 +316,7 @@ function getWarnings({ version }: DataplaneInsight, tags: LabelValue[], canUseZo
   return warnings
 }
 
-function getDataplaneType({ gateway }: DataplaneNetworking): 'standard' | 'builtin' | 'delegated' {
+function getDataplaneType({ gateway }: PartialDataplaneNetworking): 'standard' | 'builtin' | 'delegated' {
   if (gateway) {
     if (gateway.type) {
       return gateway.type.toLowerCase() as 'builtin' | 'delegated'
