@@ -2581,7 +2581,7 @@
     "@vue/compiler-dom" "^3.2.47"
     magic-string "^0.30.0"
 
-"@yarnpkg/parsers@^3.0.0-rc.32":
+"@yarnpkg/parsers@^3.0.0-rc.48.1":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@yarnpkg/parsers/-/parsers-3.0.0.tgz#a43136f094bca5dcc1ae784c296446a85211cc62"
   integrity sha512-jVZa3njBv6tcOUw34nlUdUM/40wwtm/gnVF8rtk0tA6vNcokqYI8CFU1BZjlpFwUSZaXxYkrtuPE/f2MMFlTxQ==
@@ -5718,24 +5718,24 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lockfile-lint-api@^5.8.0:
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/lockfile-lint-api/-/lockfile-lint-api-5.8.0.tgz#c7ffdce754523a50a1eb4a03bab8d70cadb9588f"
-  integrity sha512-RHa+ofSGMGQvPFG1oD2qZmSWF2MfxWXhle/unpzmDjpi8F8Ou5sreNUcAscgGRfcX+BszBuVKddD0X5YKQ0TeA==
+lockfile-lint-api@^5.9.1:
+  version "5.9.1"
+  resolved "https://registry.yarnpkg.com/lockfile-lint-api/-/lockfile-lint-api-5.9.1.tgz#12b10434792fa8b8dd0e332ddfbac55ea70a9e08"
+  integrity sha512-us5IT1bGA6KXbq1WrhrSzk9mtPgHKz5nhvv3S4hwcYnhcVOKW2uK0W8+PN9oIgv4pI49WsD5wBdTQFTpNChF/Q==
   dependencies:
-    "@yarnpkg/parsers" "^3.0.0-rc.32"
+    "@yarnpkg/parsers" "^3.0.0-rc.48.1"
     debug "^4.3.4"
     object-hash "^3.0.0"
 
-lockfile-lint@4.12.1:
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/lockfile-lint/-/lockfile-lint-4.12.1.tgz#1c5606b0aabab994c99c153622ece8ad24b5d8ea"
-  integrity sha512-FBP7OA7sa45kzPgRNLYIcGGgDS86rpZNW3ptALp1vlzv+oHZsqFZdmHXM4N4FwiGXHzUOpSVvDLT4v7IiQXFtA==
+lockfile-lint@4.13.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/lockfile-lint/-/lockfile-lint-4.13.1.tgz#f6cfdd494a9af3832de869c07a24307beefe5214"
+  integrity sha512-JUOsgO2wUGSvo5UzVAj4z0IwQkRLgDY3OnsusnWy/uCUzpG9PDUJtMn718KjkSmnmmxwXqqWlc/Fvho1GaEFGg==
   dependencies:
     cosmiconfig "^8.2.0"
     debug "^4.3.4"
     fast-glob "^3.3.1"
-    lockfile-lint-api "^5.8.0"
+    lockfile-lint-api "^5.9.1"
     yargs "^17.7.2"
 
 lodash.debounce@^4.0.8:
