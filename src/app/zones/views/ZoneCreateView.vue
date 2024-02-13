@@ -83,7 +83,10 @@
                     :key="index"
                     class="fact-list__item"
                   >
-                    <CheckIcon :color="KUI_COLOR_TEXT_SUCCESS" />
+                    <CheckIcon
+                      class="fact-list__icon"
+                      :color="KUI_COLOR_TEXT_SUCCESS"
+                    />
 
                     {{ fact }}
                   </li>
