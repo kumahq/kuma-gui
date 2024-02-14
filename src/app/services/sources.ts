@@ -23,9 +23,8 @@ export const sources = (api: KumaApi) => {
         offset,
       }
 
-      // NOTE: The syntax for this isn’t final and the query parameter for it not implemented yet (see https://github.com/kumahq/kuma/issues/9109).
       if (serviceType !== 'all') {
-        filterParams.serviceType = serviceType
+        filterParams.type = serviceType
       }
 
       return ServiceInsight.fromCollection(await api.getAllServiceInsightsFromMesh({ mesh }, filterParams))

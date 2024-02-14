@@ -7,7 +7,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     `/meshes/${req.params.mesh}/service-insights`,
   )
 
-  const serviceType = req.url.searchParams.get('serviceType')
+  const serviceType = req.url.searchParams.get('type')
   const serviceTypes = serviceType ? serviceType.split(',') : undefined
 
   return {

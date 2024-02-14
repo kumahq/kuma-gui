@@ -62,9 +62,9 @@ export interface ServiceInsightsParameters extends PaginationParameters {
   /**
    * Filters objects by service type.
    *
-   * **Example**: `?serviceType=internal,gateway_builtin,gateway_delegated`
+   * **Example**: `?type=internal,gateway_builtin,gateway_delegated`
    */
-  serviceType?: string
+  type?: string
 }
 
 export interface ExternalServicesParameters extends PaginationParameters {
