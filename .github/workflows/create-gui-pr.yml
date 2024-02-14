@@ -108,6 +108,7 @@ jobs:
             Bumps ${{ github.repository }} to version [${{ env.BRANCH }}@${{ env.SHA }}](https://github.com/${{ github.repository }}/tree/${{ env.SHA }})
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          team-reviewers: team-mesh
           signoff: true
           branch: chore/update-gui-in-${{ env.BRANCH }}
           delete-branch: true
