@@ -18,7 +18,7 @@
             >
               <KTooltip
                 class="reason-tooltip"
-                position-fixed
+                placement="bottomEnd"
               >
                 <InfoIcon
                   :color="KUI_COLOR_BACKGROUND_NEUTRAL"

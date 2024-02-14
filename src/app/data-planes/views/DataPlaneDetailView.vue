@@ -58,7 +58,6 @@
                     >
                       <KTooltip
                         class="reason-tooltip"
-                        position-fixed
                       >
                         <InfoIcon
                           :color="KUI_COLOR_BACKGROUND_NEUTRAL"
