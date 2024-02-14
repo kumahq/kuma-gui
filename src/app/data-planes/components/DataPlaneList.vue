@@ -102,7 +102,7 @@
 
     <template #certificate="{ row }">
       <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
-        {{ formatIsoDate(row.dataplaneInsight.mTLS.certificateExpirationTime) }}
+        {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
       </template>
 
       <template v-else>
@@ -174,7 +174,7 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import { useI18n } from '@/utilities'
 
-const { t, formatIsoDate } = useI18n()
+const { t } = useI18n()
 
 type ChangeValue = {
   page?: number

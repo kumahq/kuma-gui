@@ -4,9 +4,11 @@ import type {
   ZoneOverview as PartialZoneOverview,
   ZoneInsight as PartialZoneInsight,
   Zone as PartialZone,
-  KDSSubscription,
+  KDSSubscription as PartialKDSSubscription,
 } from '@/types/index.d'
 import { get } from '@/utilities/get'
+
+export type KDSSubscription = PartialKDSSubscription
 
 type KDSSubscriptionCollection = {
   config: Record<string, unknown>

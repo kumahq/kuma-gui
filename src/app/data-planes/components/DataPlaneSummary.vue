@@ -47,7 +47,7 @@
         </template>
 
         <template #body>
-          {{ formatIsoDate(props.dataplaneOverview.modificationTime) }}
+          {{ t('common.formats.datetime', { value: Date.parse(props.dataplaneOverview.modificationTime) }) }}
         </template>
       </DefinitionCard>
     </div>
@@ -167,7 +167,7 @@ import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 
-const { t, formatIsoDate } = useI18n()
+const { t } = useI18n()
 
 const props = defineProps<{
   dataplaneOverview: DataplaneOverview

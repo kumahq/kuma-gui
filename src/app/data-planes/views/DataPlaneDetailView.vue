@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     :params="{
       mesh: '',
       dataPlane: '',
@@ -86,7 +86,7 @@
                 </template>
 
                 <template #body>
-                  {{ formatIsoDate(props.data.modificationTime) }}
+                  {{ t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) }) }}
                 </template>
               </DefinitionCard>
 
@@ -326,7 +326,7 @@
                       </template>
 
                       <template #body>
-                        {{ formatIsoDate(mTLS.certificateExpirationTime) }}
+                        {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
                       </template>
                     </DefinitionCard>
 
@@ -336,7 +336,7 @@
                       </template>
 
                       <template #body>
-                        {{ formatIsoDate(mTLS.lastCertificateRegeneration) }}
+                        {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
                       </template>
                     </DefinitionCard>
 
@@ -431,9 +431,7 @@ import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic
 import type { StatsSource } from '@/app/data-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import { useRoute } from '@/app/vue'
-import { useI18n } from '@/utilities'
 
-const { t, formatIsoDate } = useI18n()
 const _route = useRoute()
 
 const props = defineProps<{

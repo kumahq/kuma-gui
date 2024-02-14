@@ -15,13 +15,13 @@
     <span>
       <img src="@/assets/images/icon-connected.svg?url">
 
-      <b>{{ t('common.detail.subscriptions.connect_time') }}</b>: {{ connectTime }}
+      <b>{{ t('common.detail.subscriptions.connect_time') }}</b>:{{ t('common.formats.datetime', { value: Date.parse(props.subscription.connectTime ?? '') }) }}
     </span>
 
-    <span v-if="disconnectTime">
+    <span v-if="props.subscription.disconnectTime">
       <img src="@/assets/images/icon-disconnected.svg?url">
 
-      <b>{{ t('common.detail.subscriptions.disconnect_time') }}</b>: {{ disconnectTime }}
+      <b>{{ t('common.detail.subscriptions.disconnect_time') }}</b>:{{ t('common.formats.datetime', { value: Date.parse(props.subscription.disconnectTime) }) }}
     </span>
 
     <span class="responses-sent-acknowledged">
@@ -33,24 +33,20 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 
-import type { DiscoverySubscription, KDSSubscription } from '@/types/index.d'
+import type { DiscoverySubscription } from '@/app/subscriptions/data'
+import type { KDSSubscription } from '@/app/zones/data'
 import { useI18n } from '@/utilities'
 
-const { t, formatIsoDate } = useI18n()
+const { t } = useI18n()
 
-const props = defineProps({
-  subscription: {
-    type: Object as PropType<KDSSubscription | DiscoverySubscription>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  subscription: KDSSubscription | DiscoverySubscription
+}>()
 
 const globalInstanceId = computed(() => 'globalInstanceId' in props.subscription ? props.subscription.globalInstanceId : null)
 const controlPlaneInstanceId = computed(() => 'controlPlaneInstanceId' in props.subscription ? props.subscription.controlPlaneInstanceId : null)
-const connectTime = computed(() => props.subscription.connectTime ? formatIsoDate(props.subscription.connectTime) : null)
-const disconnectTime = computed(() => props.subscription.disconnectTime ? formatIsoDate(props.subscription.disconnectTime) : null)
 const total = computed(() => {
   const { responsesSent = 0, responsesAcknowledged = 0, responsesRejected = 0 } = props.subscription.status?.total ?? {}
 
