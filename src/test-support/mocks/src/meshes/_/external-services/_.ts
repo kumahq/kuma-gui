@@ -1,7 +1,9 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { ExternalService } from '@/types/index.d'
 
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
-  const { mesh, name } = req.params
+  const mesh = req.params.mesh as string
+  const name = req.params.name as string
 
   return {
     headers: {},
@@ -31,6 +33,6 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         'kuma.io/protocol': fake.kuma.protocol(),
         'kuma.io/service': name,
       },
-    },
+    } satisfies ExternalService,
   }
 }

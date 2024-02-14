@@ -467,7 +467,7 @@ export interface ServiceInsight extends MeshEntity {
   addressPort?: string
   status?: StatusKeyword
   dataplanes?: {
-    total: number
+    total?: number
     online?: number
     offline?: number
   }
@@ -641,6 +641,49 @@ export interface PolicyEntity extends MeshEntity {
       name?: string
       kind: string
     }
+  }
+}
+
+export interface MeshGatewaySelector {
+  match: ServiceTags
+}
+
+export interface TlsConfDataSource {
+  secret?: string
+  file?: string
+  inline?: string
+  inlineString?: string
+}
+
+export interface TlsConfOptions {}
+
+export interface MeshGatewayTlsConf {
+  mode?: 'TERMINATE' | 'PASSTHROUGH'
+  certificates?: TlsConfDataSource[]
+  options?: TlsConfOptions
+}
+
+export interface MeshGatewayListenerResources {
+  connection_limit?: number
+}
+
+export interface MeshGatewayListener {
+  hostname?: string
+  port?: number
+  protocol?: 'TCP' | 'TLS' | 'HTTP' | 'HTTPS'
+  tls?: MeshGatewayTlsConf
+  tags?: Tags
+  crossMesh?: boolean
+  resources?: MeshGatewayListenerResources
+}
+
+export interface MeshGateway extends MeshEntity {
+  type: 'MeshGateway'
+  labels?: Tags
+  selectors?: MeshGatewaySelector[]
+  tags?: Tags
+  conf?: {
+    listeners?: MeshGatewayListener[]
   }
 }
 

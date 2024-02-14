@@ -1,14 +1,15 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { ServiceInsight } from '@/types/index.d'
 
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
     req,
-    `/meshes/${req.params.mesh}/service-insights`,
+    '/service-insights',
   )
 
   const serviceType = req.url.searchParams.get('type')
-  const serviceTypes = serviceType ? serviceType.split(',') : undefined
+  const serviceTypes = serviceType ? serviceType.split(',') as Array<'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin'> : undefined
 
   return {
     headers: {},
@@ -17,26 +18,24 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const serviceType = fake.kuma.serviceType({ serviceTypes })
-        const mesh = req.params.mesh
+        const serviceType = serviceTypes || fake.datatype.boolean() ? fake.kuma.serviceType({ serviceTypes }) : undefined
+        const mesh = `${fake.hacker.noun()}-${id}`
         const name = `${fake.hacker.noun()}-${id}-${serviceType}`
+        const addressPort = serviceType !== 'external' ? `${name}.mesh:${fake.internet.port()}` : undefined
+        const status = serviceType !== 'external' ? fake.kuma.serviceStatusKeyword() : undefined
+        const dataplanes = serviceType !== 'external' ? fake.kuma.healthStatus() : undefined
 
-        const serviceInsight: any = {
+        return {
           type: 'ServiceInsight',
-          serviceType,
           mesh,
           name,
           creationTime: '2021-02-19T08:06:15.14624+01:00',
           modificationTime: '2021-02-19T08:07:37.539229+01:00',
-        }
-
-        if (serviceType === 'internal') {
-          serviceInsight.addressPort = `${name}.mesh:${fake.internet.port()}`
-          serviceInsight.status = fake.kuma.status()
-          serviceInsight.dataplanes = fake.kuma.healthStatus()
-        }
-
-        return serviceInsight
+          ...(serviceType && { serviceType }),
+          ...(addressPort && { addressPort }),
+          ...(status && { status }),
+          ...(dataplanes && { dataplanes }),
+        } satisfies ServiceInsight
       }),
     },
   }

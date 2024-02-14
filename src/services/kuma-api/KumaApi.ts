@@ -16,6 +16,7 @@ import type {
   GlobalInsight,
   InspectRulesForDataplane,
   Mesh,
+  MeshGateway,
   MeshGatewayDataplane,
   MeshInsight,
   PolicyDataplane,
@@ -206,5 +207,13 @@ export default class KumaApi extends Api {
 
   getSinglePolicyEntity({ mesh, path, name }: { mesh: string, path: string, name: string }, params?: SingleResourceParameters): Promise<PolicyEntity> {
     return this.client.get(`/meshes/${mesh}/${path}/${name}`, { params })
+  }
+
+  getAllMeshGatewaysFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshGateway>> {
+    return this.client.get(`/meshes/${mesh}/meshgateways`, { params })
+  }
+
+  getMeshGateway({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshGateway> {
+    return this.client.get(`/meshes/${mesh}/meshgateways/${name}`, { params })
   }
 }

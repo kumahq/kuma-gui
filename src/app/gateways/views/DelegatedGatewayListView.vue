@@ -5,60 +5,19 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ can, route, t }"
-      name="external-service-list-view"
+      v-slot="{ route, t }"
+      name="delegated-gateway-list-view"
       :params="{
         page: 1,
-        size: me.pageSize,
+        size: 10,
         mesh: '',
       }"
     >
       <DataSource
-        v-slot="{data, error}: ExternalServiceCollectionSource"
-        :src="`/meshes/${route.params.mesh}/external-services?page=${route.params.page}&size=${route.params.size}`"
+        v-slot="{data, error}: ServiceInsightCollectionSource"
+        :src="`/meshes/${route.params.mesh}/service-insights/of/gateway_delegated?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
-          <template #title>
-            <h2>
-              <RouteTitle :title="t(`${currentRoute.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)" />
-            </h2>
-          </template>
-
-          <template
-            v-if="can('use gateways ui')"
-            #actions
-          >
-            <LinkBox>
-              <RouterLink
-                :class="{
-                  'active': currentRoute.name === 'service-list-view',
-                }"
-                :to="{
-                  name: 'service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-              >
-                {{ t('services.routes.items.navigation.internal') }}
-              </RouterLink>
-
-              <RouterLink
-                :class="{
-                  'active': currentRoute.name === 'external-service-list-view',
-                }"
-                :to="{
-                  name: 'external-service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-              >
-                {{ t('services.routes.items.navigation.external') }}
-              </RouterLink>
-            </LinkBox>
-          </template>
-
           <KCard>
             <ErrorBlock
               v-if="error !== undefined"
@@ -67,14 +26,16 @@
 
             <AppCollection
               v-else
-              class="external-service-collection"
-              data-testid="external-service-collection"
-              :empty-state-message="t('common.emptyState.message', { type: 'External Services' })"
-              :empty-state-cta-to="t('external-services.href.docs')"
+              class="delegated-gateway-collection"
+              data-testid="delegated-gateway-collection"
+              :empty-state-message="t('common.emptyState.message', { type: 'Delegated Gateways' })"
+              :empty-state-cta-to="t('delegated-gateways.href.docs')"
               :empty-state-cta-text="t('common.documentation')"
               :headers="[
                 { label: 'Name', key: 'name' },
-                { label: 'Address', key: 'address' },
+                { label: 'Address', key: 'addressPort' },
+                { label: 'DP proxies (online / total)', key: 'dataplanes' },
+                { label: 'Status', key: 'status' },
                 { label: 'Details', key: 'details', hideLabel: true },
               ]"
               :page-number="route.params.page"
@@ -88,7 +49,7 @@
                 <TextWithCopyButton :text="item.name">
                   <RouterLink
                     :to="{
-                      name: 'external-service-detail-view',
+                      name: 'delegated-gateway-detail-view',
                       params: {
                         mesh: item.mesh,
                         service: item.name,
@@ -104,10 +65,10 @@
                 </TextWithCopyButton>
               </template>
 
-              <template #address="{ row }">
+              <template #addressPort="{ row }">
                 <TextWithCopyButton
-                  v-if="row.networking.address"
-                  :text="row.networking.address"
+                  v-if="row.addressPort"
+                  :text="row.addressPort"
                 />
 
                 <template v-else>
@@ -115,12 +76,26 @@
                 </template>
               </template>
 
+              <template #dataplanes="{ row }">
+                <template v-if="row.dataplanes">
+                  {{ row.dataplanes.online || 0 }} / {{ row.dataplanes.total || 0 }}
+                </template>
+
+                <template v-else>
+                  {{ t('common.collection.none') }}
+                </template>
+              </template>
+
+              <template #status="{ row }">
+                <StatusBadge :status="row.status" />
+              </template>
+
               <template #details="{ row }">
                 <RouterLink
                   class="details-link"
                   data-testid="details-link"
                   :to="{
-                    name: 'external-service-detail-view',
+                    name: 'delegated-gateway-detail-view',
                     params: {
                       mesh: row.mesh,
                       service: row.name,
@@ -147,16 +122,13 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
-import { useRoute } from 'vue-router'
 
-import type { ExternalServiceCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LinkBox from '@/app/common/LinkBox.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-
-const currentRoute = useRoute()
+import type { ServiceInsightCollectionSource } from '@/app/services/sources'
 </script>
 
 <style lang="scss" scoped>

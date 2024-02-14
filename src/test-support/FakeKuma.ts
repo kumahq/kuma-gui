@@ -7,7 +7,7 @@ import type {
   ServiceStatus,
 } from '@/types/index.d'
 
-type Tags<T extends { service?: string }> =
+type Tags<T extends Record<string, string | undefined>> =
   T extends { service: string }
     ? { 'kuma.io/service': string, [key: string]: string }
     : { [key: string]: string }
@@ -52,7 +52,7 @@ export class KumaModule {
     }
   }
 
-  serviceType({ serviceTypes = ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }: { serviceTypes?: string[] } = { serviceTypes: ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }) {
+  serviceType({ serviceTypes = ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }: { serviceTypes?: Array<'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin'> } = { serviceTypes: ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }) {
     return this.faker.helpers.arrayElement(serviceTypes)
   }
 
@@ -95,15 +95,8 @@ export class KumaModule {
     return times
   }
 
-  status() {
-    return this.faker.helpers.arrayElement(
-      [
-        'not_available',
-        'partially_degraded',
-        'offline',
-        'online',
-      ],
-    )
+  serviceStatusKeyword() {
+    return this.faker.helpers.arrayElement<'not_available' | 'partially_degraded' | 'offline' | 'online'>(['not_available', 'partially_degraded', 'offline', 'online'])
   }
 
   protocol() {
@@ -188,7 +181,7 @@ export class KumaModule {
     return Object.fromEntries(values)
   }
 
-  tags<T extends { protocol?: string, service?: string, zone?: string }>({ protocol, service, zone }: T): Tags<T> {
+  tags<T extends Record<string, string | undefined>>({ protocol, service, zone }: T): Tags<T> {
     const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
 
     // @ts-ignore TS isn’t happy when the service tag is not always provided, but I don’t know how to type this out better.
