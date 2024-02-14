@@ -13,7 +13,7 @@
   >
     <AppView>
       <template #title>
-        <h2 :style="`--icon-before: url('${icon}')`">
+        <h2>
           <RouterLink
             :to="{
               name: 'policy-detail-view',
@@ -105,7 +105,6 @@ import type { Policy, PolicyType } from '../data'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import icon from '@/assets/images/icon-circles-ext.svg?inline'
 
 const props = withDefaults(defineProps<{
   policy?: Policy
@@ -114,3 +113,8 @@ const props = withDefaults(defineProps<{
   policy: undefined,
 })
 </script>
+<style scoped>
+h2 {
+  --icon-before: url('@/assets/images/icon-circles-ext.svg?inline') !important;
+}
+</style>

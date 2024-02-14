@@ -9,7 +9,7 @@
   >
     <AppView>
       <template #title>
-        <h2 :style="`--icon-before: url('${icon}')`">
+        <h2>
           <RouterLink
             :to="{
               name: 'zone-egress-detail-view',
@@ -55,7 +55,6 @@
 import ZoneEgressSummary from '../components/ZoneEgressSummary.vue'
 import type { ZoneEgressOverview } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import icon from '@/assets/images/icon-location-on.svg?inline'
 
 const props = withDefaults(defineProps<{
   zoneEgressOverview?: ZoneEgressOverview
@@ -63,3 +62,8 @@ const props = withDefaults(defineProps<{
   zoneEgressOverview: undefined,
 })
 </script>
+<style scoped>
+h2 {
+  --icon-before: url('@/assets/images/icon-location-on.svg?inline') !important;
+}
+</style>
