@@ -5,6 +5,7 @@ import type {
   ExternalServicesParameters,
   PaginatedApiListResponse,
   PaginationParameters,
+  ServiceInsightsParameters,
   SingleResourceParameters,
 } from '@/types/api.d'
 import type { Config } from '@/types/config.d'
@@ -171,11 +172,11 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/${dataPath}`, { params })
   }
 
-  getAllServiceInsights(params?: PaginationParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
+  getAllServiceInsights(params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
     return this.client.get('/service-insights', { params })
   }
 
-  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
+  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
     return this.client.get(`/meshes/${mesh}/service-insights`, { params })
   }
 

@@ -13,10 +13,9 @@ export type TableHeader = {
   useSortHandlerFn?: boolean
 }
 
-export type TableData = {
-  headers: TableHeader[]
-  data: any
-}
+export type Tags = Record<string, string>
+
+export type ServiceTags = Tags & Record<'kuma.io/service', string>
 
 export interface DiscoveryServiceStats {
   responsesSent?: string
@@ -190,10 +189,7 @@ export interface DataPlaneInsight {
 }
 
 export type DataplaneGateway = {
-  tags: {
-    'kuma.io/service': string
-    [key: string]: string
-  }
+  tags: ServiceTags
   /**
    * Type of the gateway. **Default**: `'DELEGATED'`
    */
@@ -213,10 +209,7 @@ export type DataplaneInbound = {
   port: number
   servicePort?: number
   serviceAddress?: string
-  tags: {
-    'kuma.io/service': string
-    [key: string]: string
-  }
+  tags: ServiceTags
   health?: {
     ready: boolean
   }
@@ -224,10 +217,7 @@ export type DataplaneInbound = {
 
 export type DataplaneOutbound = {
   port: number
-  tags: {
-    'kuma.io/service': string
-    [key: string]: string
-  }
+  tags: ServiceTags
 }
 
 export type DataplaneNetworking = {
@@ -381,10 +371,7 @@ export interface InspectRulesForDataplane {
 }
 
 export type PolicyMatch = {
-  match: {
-    'kuma.io/service': string
-    [key: string]: string
-  }
+  match: ServiceTags
 }
 
 export interface MatchedPolicyType extends MeshEntity {
@@ -486,31 +473,29 @@ export interface ServiceInsight extends MeshEntity {
   }
 }
 
-/**
- * Entity of type `ExternalService` as returned via the `/meshes/:mesh/external-service/:service` endpoint.
- */
+type ByteDataSource = {
+  secret?: string
+  file?: string
+  inline?: string
+  inlineString?: string
+}
+
 export interface ExternalService extends MeshEntity {
   type: 'ExternalService'
   networking: {
     address: string
     tls?: {
       enabled: boolean
+      caCert?: ByteDataSource
+      clientCert?: ByteDataSource
+      clientKey?: ByteDataSource
       allowRenegotiation: boolean
-      caCert?: {
-        secret?: string
-        inline?: string
-      }
-      clientCert?: {
-        secret?: string
-        inline?: string
-      }
-      clientKey?: {
-        secret?: string
-        inline?: string
-      }
+      serverName?: string
+      skipHostnameVerification?: boolean
     }
+    disableHostDNSEntry?: boolean
   }
-  tags: Record<string, string>
+  tags: ServiceTags
 }
 
 export interface Zone {

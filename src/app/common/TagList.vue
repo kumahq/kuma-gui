@@ -28,7 +28,7 @@
 import { computed } from 'vue'
 
 import { useCan } from '@/app/application'
-import { LabelValue } from '@/types/index.d'
+import type { LabelValue, Tags } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
 import type { RouteLocationNamedRaw } from 'vue-router'
 
@@ -38,7 +38,7 @@ interface LabelValueWithRoute extends LabelValue {
 }
 
 const props = withDefaults(defineProps<{
-  tags: LabelValue[] | Record<string, string> | null | undefined
+  tags: LabelValue[] | Tags | null | undefined
   shouldTruncate?: boolean
   alignment?: 'left' | 'right'
 }>(), {

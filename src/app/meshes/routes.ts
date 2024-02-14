@@ -1,3 +1,4 @@
+import type { Can } from '@/app/application/services/can'
 import type { RouteRecordRaw } from 'vue-router'
 
 export type SplitRouteRecordRaw = {
@@ -6,7 +7,9 @@ export type SplitRouteRecordRaw = {
 }
 
 export const routes = (
+  can: Can,
   services: SplitRouteRecordRaw,
+  externalServices: SplitRouteRecordRaw,
   dataplanes: SplitRouteRecordRaw,
   policies: SplitRouteRecordRaw,
 ): RouteRecordRaw[] => {
@@ -49,11 +52,13 @@ export const routes = (
                   component: () => import('@/app/meshes/views/MeshDetailView.vue'),
                 },
                 ...services.items(),
+                ...(can('use gateways ui') ? externalServices.items() : []),
                 ...dataplanes.items(),
                 ...policies.items(),
               ],
             },
             ...services.item(),
+            ...(can('use gateways ui') ? externalServices.item() : []),
             ...dataplanes.item(),
             ...policies.item(),
           ],

@@ -27,6 +27,7 @@ Feature: mesh / services / item
       | gateway_builtin   |
       | gateway_delegated |
 
+  # TODO: Remove this when removing external services from the Services tab.
   Scenario Outline: Shows correct tabs for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
       """
@@ -149,6 +150,7 @@ Feature: mesh / services / item
       And I click the "$item:nth-child(1) [data-testid='details-link']" element
       Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
 
+    # TODO: Remove this when removing external services from the Services tab.
     Scenario: Service with matching ExternalService doesn't show empty state
       Given the environment
         """
@@ -172,6 +174,7 @@ Feature: mesh / services / item
 
       Then the "[data-testid='no-matching-external-service']" element doesn't exist
 
+    # TODO: Remove this when removing external services from the Services tab.
     Scenario: Service without matching ExternalService shows empty state
       Given the environment
         """
