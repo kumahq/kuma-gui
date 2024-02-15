@@ -33,38 +33,7 @@
           <CodeBlock
             v-else
             language="json"
-            :code="(() => {
-              if(props.gateway) {
-                const parts = route.params.service.split(':')
-                return data.raw.split('\n')
-                  .filter((item) => item.includes(`.${parts[0]}.`))
-                  .filter((item) => {
-                    return !item.startsWith('listener.') || item.includes(`_${parts[1]}.`)
-                  })
-                  .filter((item) => {
-                    return !item.includes('.rds.') || item.includes(`_${parts[1]}_*.`)
-                  })
-                  .map((item) => item.replace(`${parts[0]}.`, ''))
-                  .map((item) => item.replace(`_${parts[1]}.`, '.'))
-                  .map((item) => {
-                    if(item.includes('.rds.')) {
-                      const tmp = item.split('.')
-                      tmp.splice(2, 1)
-                      return tmp.join('.')
-                    } else {
-                      return item;
-                    }
-                  })
-                  .join('\n')
-
-              } else {
-                const name = `localhost_${route.params.service.split(':')[1]}`
-                return data.raw.split('\n')
-                  .filter((item) => item.includes(`.${name}.`))
-                  .map((item) => item.replace(`${name}.`, ''))
-                  .join('\n')
-              }
-            })()"
+            :code="findService(data, route.params.service)"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -101,4 +70,36 @@ const props = defineProps<{
   inbound?: DataplaneInbound
   gateway?: DataplaneGateway
 }>()
+
+const findService = (data: { raw: string }, service: string) => {
+  if (props.gateway) {
+    const parts = service.split(':')
+    return data.raw.split('\n')
+      .filter((item) => item.includes(`.${parts[0]}.`))
+      .filter((item) => {
+        return !item.startsWith('listener.') || item.includes(`_${parts[1]}.`)
+      })
+      .filter((item) => {
+        return !item.includes('.rds.') || item.includes(`_${parts[1]}_*.`)
+      })
+      .map((item) => item.replace(`${parts[0]}.`, ''))
+      .map((item) => item.replace(`_${parts[1]}.`, '.'))
+      .map((item) => {
+        if (item.includes('.rds.')) {
+          const tmp = item.split('.')
+          tmp.splice(2, 1)
+          return tmp.join('.')
+        } else {
+          return item
+        }
+      })
+      .join('\n')
+  } else {
+    const name = `localhost_${service.split(':')[1]}`
+    return data.raw.split('\n')
+      .filter((item) => item.includes(`.${name}.`))
+      .map((item) => item.replace(`${name}.`, ''))
+      .join('\n')
+  }
+}
 </script>
