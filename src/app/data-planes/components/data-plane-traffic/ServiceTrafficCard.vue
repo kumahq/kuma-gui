@@ -30,7 +30,7 @@
             <template
               v-for="(item, key) in [
                 (['http', 'tcp'] as const).reduce((prev, protocol) => {
-                  // FIXME: confirm this can change to upstream
+                  // TODO: confirm this can change to upstream
                   const direction = props.direction
                   // sum both the properties we need from both protocols
                   return Object.entries(props.traffic?.[protocol] || {}).reduce((prev, [key, value]) => {

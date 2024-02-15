@@ -3,7 +3,7 @@ interface MetricRecord {
 }
 
 const protocols = ['http', 'tcp'] as const
-const appProtocols = ['http2', 'grpc', 'kafka'] as const
+const appProtocols = ['http2', 'grpc'] as const
 
 type Protocols = Partial<Record<typeof protocols[number], MetricRecord>>
 type AppProtocols = Partial<Record<typeof appProtocols[number], MetricRecord>>
@@ -128,11 +128,11 @@ export const getTraffic = (json: ConnectionStats, filter: (key: string) => boole
       if (typeof traffic[key] === 'undefined') {
         traffic[key] = {
           name: key,
-          // FIXME Cope with _8888-sdofjsdf-big-hash
+          // TODO Cope with _8888-sdofjsdf-big-hash
           // we only get these on outbounds at the moment (and we don't need the port for the outbound)
           // so we can pretend this doesn't happen
           port: key.split('_').at(-1) ?? '',
-          // FIXME we need to detect the protocol based on the existence of
+          // TODO we need to detect the protocol based on the existence of
           // a http property in the stats, just not sure which one yet
           protocol: item === 'unknown' ? 'http' : item,
         }
