@@ -7,8 +7,14 @@
       <template #title>
         <div class="error-block-header">
           <div class="error-block-title">
-            <WarningIcon
+            <DangerIcon
+              v-if="props.appearance === 'danger'"
+              :color="KUI_COLOR_TEXT_DANGER"
               display="inline-block"
+            />
+
+            <WarningIcon
+              v-else
               :size="KUI_ICON_SIZE_50"
             />
 
@@ -22,7 +28,7 @@
             class="badge-list"
           >
             <KBadge
-              :appearance="props.badgeAppearance"
+              :appearance="props.appearance"
               data-testid="error-status"
             >
               {{ error.status }}
@@ -78,9 +84,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
-import { type BadgeAppearance, KBadge, KEmptyState } from '@kong/kongponents'
-import { computed, PropType } from 'vue'
+import { KUI_COLOR_TEXT_DANGER, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+import { DangerIcon } from '@kong/icons'
+import { computed } from 'vue'
 
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
@@ -89,17 +95,11 @@ import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
-const props = defineProps({
-  error: {
-    type: Error,
-    required: true,
-  },
-
-  badgeAppearance: {
-    type: String as PropType<BadgeAppearance>,
-    required: false,
-    default: 'warning',
-  },
+const props = withDefaults(defineProps<{
+  error: Error
+  appearance?: 'warning' | 'danger'
+}>(), {
+  appearance: 'warning',
 })
 
 const invalidParameters = computed(() => props.error instanceof ApiError ? props.error.invalidParameters : [])
@@ -119,7 +119,7 @@ const invalidParameters = computed(() => props.error instanceof ApiError ? props
 
 .error-block-title {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: $kui-space-40;
   text-align: left;
 }
