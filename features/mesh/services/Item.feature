@@ -21,27 +21,9 @@ Feature: mesh / services / item
     Then the "$data-plane-proxies-tab" element exists
 
     Examples:
-      | ServiceType       |
-      | !!js/undefined    |
-      | internal          |
-      | gateway_builtin   |
-      | gateway_delegated |
-
-  # TODO: Remove this when removing external services from the Services tab.
-  Scenario Outline: Shows correct tabs for service type <ServiceType>
-    Given the URL "/meshes/default/service-insights/firewall-1" responds with
-      """
-        body:
-          serviceType: <ServiceType>
-      """
-
-    When I visit the "/meshes/default/services/firewall-1/overview" URL
-    Then the "$config-tab" element exists
-    Then the "$data-plane-proxies-tab" element doesn't exist
-
-    Examples:
-      | ServiceType |
-      | external    |
+      | ServiceType    |
+      | !!js/undefined |
+      | internal       |
 
   Rule: With an internal service
     Background:
@@ -149,43 +131,3 @@ Feature: mesh / services / item
       Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
       And I click the "$item:nth-child(1) [data-testid='details-link']" element
       Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
-
-    # TODO: Remove this when removing external services from the Services tab.
-    Scenario: Service with matching ExternalService doesn't show empty state
-      Given the environment
-        """
-        KUMA_EXTERNALSERVICE_COUNT: 1
-        """
-      And the URL "/meshes/default/service-insights/service-1" responds with
-        """
-          body:
-            serviceType: external
-        """
-      And the URL "/meshes/default/external-services" responds with
-        """
-          body:
-            items:
-              - name: external-service-1
-                tags:
-                  kuma.io/service: service-1
-        """
-
-      When I visit the "/meshes/default/services/service-1/overview" URL
-
-      Then the "[data-testid='no-matching-external-service']" element doesn't exist
-
-    # TODO: Remove this when removing external services from the Services tab.
-    Scenario: Service without matching ExternalService shows empty state
-      Given the environment
-        """
-        KUMA_EXTERNALSERVICE_COUNT: 0
-        """
-      And the URL "/meshes/default/service-insights/service-1" responds with
-        """
-          body:
-            serviceType: external
-        """
-
-      When I visit the "/meshes/default/services/service-1/overview" URL
-
-      Then the "[data-testid='no-matching-external-service']" element exists

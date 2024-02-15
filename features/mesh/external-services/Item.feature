@@ -1,6 +1,3 @@
-# TODO: Enable this test suite when unflagging the KUMA_GATEWAYS_UI feature.
-# Unskip to run the test.
-@skip
 Feature: mesh / external-services / item
   Background:
     Given the CSS selectors
