@@ -59,15 +59,6 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
           isOutbound: true,
         },
         {
-          name: 'MeshGateway',
-          path: 'meshgateways',
-          readOnly: true,
-          isExperimental: false,
-          isTargetRefBased: false,
-          isInbound: false,
-          isOutbound: false,
-        },
-        {
           name: 'MeshGatewayRoute',
           path: 'meshgatewayroutes',
           readOnly: true,
