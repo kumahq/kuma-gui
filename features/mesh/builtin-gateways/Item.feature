@@ -1,6 +1,3 @@
-# TODO: Enable this test suite when unflagging the KUMA_GATEWAYS_UI feature.
-# Unskip to run the test.
-@skip
 Feature: mesh / builtin-gateways / item
   Background:
     Given the CSS selectors
@@ -10,11 +7,6 @@ Feature: mesh / builtin-gateways / item
       | filter-input       | [data-testid='dataplane-search-input']           |
       | affected-dpps      | [data-testid='affected-data-plane-proxies']      |
       | affected-dpps-item | [data-testid='dataplane-name']                   |
-    # TODO: Remove KUMA_GATEWAYS_UI when unflagging the KUMA_GATEWAYS_UI feature.
-    Given the environment
-      """
-      KUMA_GATEWAYS_UI: true
-      """
     Given the URL "/meshes/default/meshgateways/gateway-1" responds with
       """
       body:

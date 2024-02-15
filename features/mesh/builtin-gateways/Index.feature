@@ -1,6 +1,3 @@
-# TODO: Enable this test suite when unflagging the KUMA_GATEWAYS_UI feature.
-# Unskip to run the test.
-@skip
 Feature: mesh / builtin-gateways / index
   Background:
     Given the CSS selectors
@@ -8,10 +5,8 @@ Feature: mesh / builtin-gateways / index
       | items        | [data-testid='builtin-gateway-collection'] |
       | items-header | $items th                                  |
       | item         | $items tbody tr                            |
-    # TODO: Remove KUMA_GATEWAYS_UI when unflagging the KUMA_GATEWAYS_UI feature.
     And the environment
       """
-      KUMA_GATEWAYS_UI: true
       KUMA_MESHGATEWAY_COUNT: 1
       """
     And the URL "/meshes/default/meshgateways" responds with

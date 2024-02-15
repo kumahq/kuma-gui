@@ -1,6 +1,3 @@
-# TODO: Enable this test suite when unflagging the KUMA_GATEWAYS_UI feature.
-# Unskip to run the test.
-@skip
 Feature: mesh / external-services / index
   Background:
     Given the CSS selectors
@@ -8,10 +5,8 @@ Feature: mesh / external-services / index
       | items        | [data-testid='external-service-collection'] |
       | items-header | $items th                                   |
       | item         | $items tbody tr                             |
-    # TODO: Remove KUMA_GATEWAYS_UI when unflagging the KUMA_GATEWAYS_UI feature.
     Given the environment
       """
-      KUMA_GATEWAYS_UI: true
       KUMA_EXTERNALSERVICE_COUNT: 1
       """
     Given the URL "/meshes/default/external-services" responds with
@@ -33,7 +28,7 @@ Feature: mesh / external-services / index
   Scenario: The items have the expected content and UI elements
     When I visit the "/meshes/default/external-services" URL
 
-    Then the "#external-service-list-view-tab.active" element exists
+    Then the "#service-list-view-tab.active" element exists
     Then the "$item" element exists 1 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
