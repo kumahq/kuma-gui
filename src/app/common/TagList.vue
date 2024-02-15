@@ -101,29 +101,13 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
       }
     }
     case 'kuma.io/service': {
-      // Service annotations can refer to various service types which all have their dedicated detail views. To know which one to link to, we need to know the corresponding service type. In cases where we don’t know it, we can’t reliably link to a detail view.
+      // Service annotations can refer to various service types which all have their dedicated detail views. To know which one to link to, we need to know the corresponding service type. In cases where we don’t know it, we can’t reliably link to a detail view. **Importantly**, we can’t generally link to the built-in gateway detail view or the external service detail view because those resources generally have _different_ names than their corresponding `ServiceInsight` objects and so an API call based on the latters name would fail.
       switch (serviceType.value) {
         case 'internal': {
           return {
             name: 'service-detail-view',
             params: {
               service: tag.value,
-            },
-          }
-        }
-        case 'external': {
-          return {
-            name: 'external-service-detail-view',
-            params: {
-              service: tag.value,
-            },
-          }
-        }
-        case 'gateway_builtin': {
-          return {
-            name: 'builtin-gateway-detail-view',
-            params: {
-              gateway: tag.value,
             },
           }
         }
