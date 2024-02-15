@@ -66,6 +66,7 @@
               <TagList
                 alignment="right"
                 :tags="props.dataplaneOverview.dataplane.networking.gateway.tags"
+                :dataplane-type="props.dataplaneOverview.dataplaneType"
               />
             </template>
           </DefinitionCard>
@@ -135,6 +136,7 @@
                   <TagList
                     alignment="right"
                     :tags="inbound.tags"
+                    :dataplane-type="props.dataplaneOverview.dataplaneType"
                   />
                 </template>
               </DefinitionCard>

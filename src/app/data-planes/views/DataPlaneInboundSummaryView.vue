@@ -38,6 +38,7 @@
         >
           <component
             :is="child.Component"
+            :dataplane-type="props.dataplaneType"
             :inbound="items[0]"
             :gateway="props.gateway"
           />

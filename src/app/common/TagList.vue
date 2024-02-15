@@ -37,15 +37,37 @@ interface LabelValueWithRoute extends LabelValue {
   isKuma: boolean
 }
 
+const dataplaneTypeToServiceTypeMap = {
+  standard: 'internal',
+  builtin: 'gateway_builtin',
+  delegated: 'gateway_delegated',
+} as const
+
 const props = withDefaults(defineProps<{
   tags: LabelValue[] | Tags | null | undefined
   shouldTruncate?: boolean
   alignment?: 'left' | 'right'
+  dataplaneType?: 'standard' | 'builtin' | 'delegated'
+  serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
 }>(), {
   shouldTruncate: false,
   alignment: 'left',
+  dataplaneType: undefined,
+  serviceType: undefined,
 })
 const can = useCan()
+
+const serviceType = computed(() => {
+  if (props.serviceType) {
+    return props.serviceType
+  }
+
+  if (props.dataplaneType) {
+    return dataplaneTypeToServiceTypeMap[props.dataplaneType]
+  }
+
+  return undefined
+})
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
   const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
@@ -66,42 +88,69 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
     return undefined
   }
 
-  try {
-    switch (tag.label) {
-      case 'kuma.io/zone': {
-        if (!can('use zones')) {
-          return undefined
-        }
-        return {
-          name: 'zone-cp-detail-view',
-          params: {
-            zone: tag.value,
-          },
-        }
-      }
-      case 'kuma.io/service': {
-        return {
-          name: 'service-detail-view',
-          params: {
-            service: tag.value,
-          },
-        }
-      }
-      case 'kuma.io/mesh': {
-        return {
-          name: 'mesh-detail-view',
-          params: {
-            mesh: tag.value,
-          },
-        }
-      }
-      default: {
+  switch (tag.label) {
+    case 'kuma.io/zone': {
+      if (!can('use zones')) {
         return undefined
       }
+      return {
+        name: 'zone-cp-detail-view',
+        params: {
+          zone: tag.value,
+        },
+      }
     }
-  } catch {
-    // Ignores `router.resolve` errors because we don’t want this
-    return undefined
+    case 'kuma.io/service': {
+      // Service annotations can refer to various service types which all have their dedicated detail views. To know which one to link to, we need to know the corresponding service type. In cases where we don’t know it, we can’t reliably link to a detail view.
+      switch (serviceType.value) {
+        case 'internal': {
+          return {
+            name: 'service-detail-view',
+            params: {
+              service: tag.value,
+            },
+          }
+        }
+        case 'external': {
+          return {
+            name: 'external-service-detail-view',
+            params: {
+              service: tag.value,
+            },
+          }
+        }
+        case 'gateway_builtin': {
+          return {
+            name: 'builtin-gateway-detail-view',
+            params: {
+              gateway: tag.value,
+            },
+          }
+        }
+        case 'gateway_delegated': {
+          return {
+            name: 'delegated-gateway-detail-view',
+            params: {
+              service: tag.value,
+            },
+          }
+        }
+        default: {
+          return undefined
+        }
+      }
+    }
+    case 'kuma.io/mesh': {
+      return {
+        name: 'mesh-detail-view',
+        params: {
+          mesh: tag.value,
+        },
+      }
+    }
+    default: {
+      return undefined
+    }
   }
 }
 </script>
