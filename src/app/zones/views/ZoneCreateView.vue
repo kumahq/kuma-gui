@@ -282,32 +282,28 @@
                   :src="`/zone-cps/online/${name}?no-cache=${now}`"
                   @change="success"
                 >
-                  <div
-                    v-if="!scanError"
-                    class="form-section__header"
-                  >
+                  <div class="form-section__header">
                     <h2 class="form-section-title">
                       {{ t('zones.form.section.scanner.title') }}
                     </h2>
+
                     <p>{{ t('zones.form.section.scanner.description') }}</p>
                   </div>
 
                   <div class="form-section__content">
-                    <KEmptyState cta-is-hidden>
+                    <ErrorBlock
+                      v-if="scanError"
+                      :error="scanError"
+                      appearance="danger"
+                      data-testid="error"
+                    />
+
+                    <KEmptyState
+                      v-else
+                      cta-is-hidden
+                    >
                       <template #title>
-                        <template
-                          v-if="scanError"
-                        >
-                          <DangerIcon
-                            data-testid="error"
-                            display="inline-block"
-                            :color="KUI_COLOR_TEXT_DANGER"
-                          />
-                          <h3>{{ t('zones.form.scan.errorTitle') }}</h3>
-                        </template>
-                        <template
-                          v-else-if="(typeof data === 'undefined')"
-                        >
+                        <template v-if="(typeof data === 'undefined')">
                           <ProgressIcon
                             data-testid="waiting"
                             display="inline-block"
@@ -327,14 +323,7 @@
                         </template>
                       </template>
                       <template #message>
-                        <template
-                          v-if="scanError"
-                        >
-                          <p>{{ t('zones.form.scan.errorDescription') }}</p>
-                        </template>
-                        <template
-                          v-else-if="(typeof data !== 'undefined')"
-                        >
+                        <template v-if="(typeof data !== 'undefined')">
                           <p>
                             {{ t('zones.form.scan.completeDescription', { name }) }}
                           </p>
@@ -386,13 +375,14 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_30, KUI_COLOR_TEXT_NEUTRAL_WEAK, KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
-import { AddIcon, CheckIcon, ProgressIcon, DangerIcon, CheckCircleIcon } from '@kong/icons'
+import { KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_30, KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
+import { AddIcon, CheckIcon, ProgressIcon, CheckCircleIcon } from '@kong/icons'
 import { computed, ref } from 'vue'
 
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
 import { ZoneOverviewSource } from '../sources'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
