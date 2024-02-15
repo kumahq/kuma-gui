@@ -5,60 +5,20 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ can, route, t }"
-      name="external-service-list-view"
+      v-slot="{ route, t }"
+      name="builtin-gateway-list-view"
       :params="{
         page: 1,
-        size: me.pageSize,
+        size: 10,
         mesh: '',
+        gateway: '',
       }"
     >
       <DataSource
-        v-slot="{data, error}: ExternalServiceCollectionSource"
-        :src="`/meshes/${route.params.mesh}/external-services?page=${route.params.page}&size=${route.params.size}`"
+        v-slot="{ data, error }: MeshGatewayCollectionSource"
+        :src="`/meshes/${route.params.mesh}/mesh-gateways?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
-          <template #title>
-            <h2>
-              <RouteTitle :title="t(`${currentRoute.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)" />
-            </h2>
-          </template>
-
-          <template
-            v-if="can('use gateways ui')"
-            #actions
-          >
-            <LinkBox>
-              <RouterLink
-                :class="{
-                  'active': currentRoute.name === 'service-list-view',
-                }"
-                :to="{
-                  name: 'service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-              >
-                {{ t('services.routes.items.navigation.internal') }}
-              </RouterLink>
-
-              <RouterLink
-                :class="{
-                  'active': currentRoute.name === 'external-service-list-view',
-                }"
-                :to="{
-                  name: 'external-service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-              >
-                {{ t('services.routes.items.navigation.external') }}
-              </RouterLink>
-            </LinkBox>
-          </template>
-
           <KCard>
             <ErrorBlock
               v-if="error !== undefined"
@@ -67,14 +27,14 @@
 
             <AppCollection
               v-else
-              class="external-service-collection"
-              data-testid="external-service-collection"
-              :empty-state-message="t('common.emptyState.message', { type: 'External Services' })"
-              :empty-state-cta-to="t('external-services.href.docs')"
+              class="builtin-gateway-collection"
+              data-testid="builtin-gateway-collection"
+              :empty-state-message="t('common.emptyState.message', { type: 'Built-in Gateways' })"
+              :empty-state-cta-to="t('builtin-gateways.href.docs')"
               :empty-state-cta-text="t('common.documentation')"
               :headers="[
                 { label: 'Name', key: 'name' },
-                { label: 'Address', key: 'address' },
+                { label: 'Zone', key: 'zone' },
                 { label: 'Details', key: 'details', hideLabel: true },
               ]"
               :page-number="route.params.page"
@@ -88,10 +48,10 @@
                 <TextWithCopyButton :text="item.name">
                   <RouterLink
                     :to="{
-                      name: 'external-service-detail-view',
+                      name: 'builtin-gateway-detail-view',
                       params: {
                         mesh: item.mesh,
-                        service: item.name,
+                        gateway: item.name,
                       },
                       query: {
                         page: route.params.page,
@@ -104,14 +64,22 @@
                 </TextWithCopyButton>
               </template>
 
-              <template #address="{ row }">
-                <TextWithCopyButton
-                  v-if="row.networking.address"
-                  :text="row.networking.address"
-                />
+              <template #zone="{ row }">
+                <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
+                  <RouterLink
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: row.labels['kuma.io/zone'],
+                      },
+                    }"
+                  >
+                    {{ row.labels['kuma.io/zone'] }}
+                  </RouterLink>
+                </template>
 
                 <template v-else>
-                  {{ t('common.collection.none') }}
+                  {{ t('common.detail.none') }}
                 </template>
               </template>
 
@@ -120,10 +88,10 @@
                   class="details-link"
                   data-testid="details-link"
                   :to="{
-                    name: 'external-service-detail-view',
+                    name: 'builtin-gateway-detail-view',
                     params: {
                       mesh: row.mesh,
-                      service: row.name,
+                      gateway: row.name,
                     },
                   }"
                 >
@@ -147,16 +115,12 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
-import { useRoute } from 'vue-router'
 
-import type { ExternalServiceCollectionSource } from '../sources'
+import type { MeshGatewayCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LinkBox from '@/app/common/LinkBox.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-
-const currentRoute = useRoute()
 </script>
 
 <style lang="scss" scoped>

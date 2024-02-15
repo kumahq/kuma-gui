@@ -1,4 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { ExternalService } from '@/types/index.d'
+
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_EXTERNALSERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
@@ -13,7 +15,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const mesh = req.params.mesh
+        const mesh = req.params.mesh as string
         const nameQueryParam = req.url.searchParams.get('name')
         const name = nameQueryParam ?? `${fake.hacker.noun()}-external-${id}`
 
@@ -40,7 +42,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             'kuma.io/protocol': fake.kuma.protocol(),
             'kuma.io/service': name,
           },
-        }
+        } satisfies ExternalService
       }),
     },
   }

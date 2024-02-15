@@ -16,14 +16,12 @@
     >
       <DataSource
         v-slot="{data, error}: ServiceInsightCollectionSource"
-        :src="`/meshes/${route.params.mesh}/service-insights/of/${can('use gateways ui') ? 'internal,gateway_builtin,gateway_delegated' : 'all'}?page=${route.params.page}&size=${route.params.size}`"
+        :src="`/meshes/${route.params.mesh}/service-insights/of/${can('use gateways ui') ? 'internal' : 'all'}?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
           <template #title>
             <h2>
-              <RouteTitle
-                :title="t('services.routes.items.title')"
-              />
+              <RouteTitle :title="t(`${currentRoute.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)" />
             </h2>
           </template>
 
@@ -33,6 +31,9 @@
           >
             <LinkBox>
               <RouterLink
+                :class="{
+                  'active': currentRoute.name === 'service-list-view',
+                }"
                 :to="{
                   name: 'service-list-view',
                   params: {
@@ -40,10 +41,13 @@
                   },
                 }"
               >
-                <b>Internal</b>
+                {{ t('services.routes.items.navigation.internal') }}
               </RouterLink>
 
               <RouterLink
+                :class="{
+                  'active': currentRoute.name === 'external-service-list-view',
+                }"
                 :to="{
                   name: 'external-service-list-view',
                   params: {
@@ -51,7 +55,7 @@
                   },
                 }"
               >
-                External
+                {{ t('services.routes.items.navigation.external') }}
               </RouterLink>
             </LinkBox>
           </template>
@@ -69,7 +73,6 @@
               :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
               :headers="[
                 { label: 'Name', key: 'name' },
-                { label: 'Type', key: 'serviceType' },
                 { label: 'Address', key: 'addressPort' },
                 { label: 'DP proxies (online / total)', key: 'online' },
                 { label: 'Status', key: 'status' },
@@ -101,10 +104,6 @@
                     {{ item.name }}
                   </RouterLink>
                 </TextWithCopyButton>
-              </template>
-
-              <template #serviceType="{ row }">
-                {{ row.serviceType }}
               </template>
 
               <template #addressPort="{ row }">
@@ -191,6 +190,7 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
+import { useRoute } from 'vue-router'
 
 import type { ServiceInsightCollectionSource } from '../sources'
 import { useCan } from '@/app/application'
@@ -203,6 +203,7 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 
 const can = useCan()
+const currentRoute = useRoute()
 </script>
 
 <style lang="scss" scoped>

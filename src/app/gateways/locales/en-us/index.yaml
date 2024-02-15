@@ -1,0 +1,35 @@
+gateways:
+  routes:
+    items:
+      title: Gateways
+      navigation:
+        builtin: Built-in
+        delegated: Delegated
+
+builtin-gateways:
+  routes:
+    item:
+      title: '{name}'
+      breadcrumbs: Built-in Gateways
+      navigation:
+        builtin-gateway-detail-view: Overview
+    items:
+      title: Built-in Gateways
+  detail:
+    affected_dpps: Affected Data Plane Proxies
+    dataplane_input_placeholder: Filter by name
+  href:
+    docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin?{KUMA_UTM_QUERY_PARAMS}'
+
+delegated-gateways:
+  routes:
+    item:
+      title: '{name}'
+      breadcrumbs: Delegated Gateways
+      navigation:
+        delegated-gateway-detail-view: Overview
+        delegated-gateway-data-plane-proxies-view: Data Plane Proxies
+    items:
+      title: Delegated Gateways
+  href:
+    docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated?{KUMA_UTM_QUERY_PARAMS}'

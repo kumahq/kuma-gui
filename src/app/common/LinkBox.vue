@@ -11,24 +11,31 @@
 }
 
 .link-box :deep(> *) {
-  border-top: $kui-border-width-10 solid $kui-color-border;
-  border-bottom: $kui-border-width-10 solid $kui-color-border;
-  padding: $kui-space-40 $kui-space-60;
+  border-color: $kui-color-border-primary-weak;
+  border-top: $kui-border-width-10 solid;
+  border-bottom: $kui-border-width-10 solid;
+  padding: $kui-space-30 $kui-space-50;
+  font-weight: $kui-font-weight-semibold;
+}
+
+.link-box :deep(> .active) {
+  border-color: $kui-color-border-primary-strong;
+  background-color: $kui-color-background-primary-weakest;
 }
 
 .link-box :deep(> * + *) {
-  border-left: $kui-border-width-10 solid $kui-color-border;
+  border-left: $kui-border-width-10 solid;
 }
 
 .link-box :deep(> *:first-child) {
-  border-left: $kui-border-width-10 solid $kui-color-border;
-  border-top-left-radius: $kui-border-radius-20;
-  border-bottom-left-radius: $kui-border-radius-20;
+  border-left: $kui-border-width-10 solid;
+  border-top-left-radius: $kui-border-radius-30;
+  border-bottom-left-radius: $kui-border-radius-30;
 }
 
 .link-box :deep(> *:last-child) {
-  border-right: $kui-border-width-10 solid $kui-color-border;
-  border-top-right-radius: $kui-border-radius-20;
-  border-bottom-right-radius: $kui-border-radius-20;
+  border-right: $kui-border-width-10 solid;
+  border-top-right-radius: $kui-border-radius-30;
+  border-bottom-right-radius: $kui-border-radius-30;
 }
 </style>

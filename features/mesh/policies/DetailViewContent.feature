@@ -9,24 +9,9 @@ Feature: Policies: Detail view content
       """
       body:
         items:
-          - dataplane:
-              mesh: 'default'
-              name: 'backend'
-            attachments:
-              - type: 'inbound'
-                name: '192.168.0.1:80:81'
-          - dataplane:
-              mesh: 'default'
-              name: 'db'
-            attachments:
-              - type: 'inbound'
-                name: '192.168.0.1:80:81'
-          - dataplane:
-              mesh: 'default'
-              name: 'frontend'
-            attachments:
-              - type: 'inbound'
-                name: '192.168.0.1:80:81'
+          - name: backend
+          - name: db
+          - name: frontend
       """
 
   Scenario: Affected DPPs can be filtered

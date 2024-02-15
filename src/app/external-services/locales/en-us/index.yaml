@@ -10,3 +10,5 @@ external-services:
       config: 'YAML'
     items:
       title: External Services
+  href:
+    docs: '{KUMA_DOCS_URL}/policies/external-services?{KUMA_UTM_QUERY_PARAMS}'

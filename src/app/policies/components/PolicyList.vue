@@ -94,7 +94,7 @@
             :empty-state-cta-text="t('common.documentation')"
             :headers="[
               { label: 'Name', key: 'name' },
-              ...(props.currentPolicyType.isTargetRefBased ? [{ label: 'Zone', key: 'zone' }] : []),
+              ...(props.currentPolicyType.isTargetRefBased || props.currentPolicyType.name === 'MeshGateway' ? [{ label: 'Zone', key: 'zone' }] : []),
               ...(props.currentPolicyType.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
               { label: 'Details', key: 'details', hideLabel: true },
             ]"

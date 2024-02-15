@@ -21,11 +21,10 @@ Feature: mesh / services / index
     When I visit the "/meshes/default/services" URL
 
   Scenario: The items have the correct columns
-    Then the "$items-header" element exists 6 times
+    Then the "$items-header" element exists 5 times
     Then the "$items-header" elements contain
       | Value                       |
       | Name                        |
-      | Type                        |
       | Address                     |
       | DP proxies (online / total) |
       | Status                      |
