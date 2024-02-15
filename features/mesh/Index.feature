@@ -6,7 +6,7 @@ Feature: mesh / index
       | item           | $items tbody tr                              |
       | breadcrumbs    | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |
-      | navigation     | .route-mesh-view-tabs ul >                   |
+      | navigation     | [data-testid='mesh-tabs'] ul >               |
 
     Given the environment
       """

@@ -31,7 +31,6 @@ export const routes = () => {
           name: 'external-service-list-view',
           meta: {
             module: 'services',
-            shouldIgnoreInNavTabs: true,
           },
           component: () => import('@/app/external-services/views/ExternalServiceListView.vue'),
         },

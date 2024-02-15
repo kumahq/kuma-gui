@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="builtin-gateway-detail-tabs-view"
     :params="{
       mesh: '',
@@ -37,7 +37,10 @@
         </h1>
       </template>
 
-      <NavTabs :tabs="tabs" />
+      <NavTabs
+        anchor-route-name="builtin-gateway-detail-tabs-view"
+        i18n-prefix="builtin-gateways.routes.item.navigation"
+      />
 
       <RouterView />
     </AppView>
@@ -45,23 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordRaw, useRouter } from 'vue-router'
-
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const routes = router.getRoutes().find((route) => route.name === 'builtin-gateway-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = routes
-  .map((route) => {
-    const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-    const routeName = referenceRoute.name as string
-    const module = referenceRoute.meta?.module ?? ''
-    const title = t(`builtin-gateways.routes.item.navigation.${routeName}`)
-
-    return { title, routeName, module }
-  })
 </script>

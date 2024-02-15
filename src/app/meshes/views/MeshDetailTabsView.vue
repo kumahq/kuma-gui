@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="mesh-detail-tabs-view"
     :params="{
       mesh: '',
@@ -18,8 +18,10 @@
       </template>
 
       <NavTabs
-        class="route-mesh-view-tabs"
-        :tabs="tabs"
+        anchor-route-name="mesh-detail-tabs-view"
+        i18n-prefix="meshes.routes.item.navigation"
+        :filter-predicate="(route) => route.name !== 'external-service-list-view'"
+        data-testid="mesh-tabs"
       />
 
       <RouterView />
@@ -28,24 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter, RouteRecordRaw } from 'vue-router'
-
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = meshRoutes
-  .filter((route) => !route.meta?.shouldIgnoreInNavTabs)
-  .map((route) => {
-    const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-    const routeName = referenceRoute.name as string
-    const module = referenceRoute.meta?.module ?? ''
-    const title = t(`meshes.routes.item.navigation.${routeName}`)
-
-    return { title, routeName, module }
-  })
 </script>

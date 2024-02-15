@@ -20,8 +20,10 @@
       </template>
 
       <NavTabs
-        :tabs="tabs"
+        anchor-route-name="data-plane-inbound-summary-view"
+        i18n-prefix="data-planes.routes.item.navigation"
       />
+
       <RouterView v-slot="child">
         <component
           :is="child.Component"
@@ -48,29 +50,12 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordRaw, useRouter } from 'vue-router'
-
 import type { DataplaneGateway, DataplaneInbound } from '../data'
-import { useI18n } from '@/app/application'
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
-
-const { t } = useI18n()
-const router = useRouter()
+import NavTabs from '@/app/common/NavTabs.vue'
 
 const props = defineProps<{
   dataplaneType: 'standard' | 'builtin'
   gateway?: DataplaneGateway
   inbounds: DataplaneInbound[]
 }>()
-
-const routes = router.getRoutes().find((route) => route.name === 'data-plane-inbound-summary-view')?.children ?? []
-const tabs: NavTab[] = routes.map((route) => {
-  const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-  const routeName = referenceRoute.name as string
-  const module = referenceRoute.meta?.module ?? ''
-  const title = t(`data-planes.routes.item.navigation.${routeName}`)
-
-  return { title, routeName, module }
-})
-
 </script>

@@ -7,7 +7,7 @@
     data-testid="nav-tabs"
   >
     <template
-      v-for="tab in props.tabs"
+      v-for="tab in tabs"
       :key="`${tab.routeName}-anchor`"
       #[`${tab.routeName}-anchor`]
     >
@@ -22,36 +22,59 @@
 </template>
 
 <script lang="ts" setup>
-import { KTabs, Tab } from '@kong/kongponents'
-import { PropType, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router'
 
-export interface NavTab {
+import { useI18n } from '@/utilities'
+import type { Tab } from '@kong/kongponents'
+
+interface NavTab {
   title: string
   routeName: string
   module: string
 }
 
+const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
 
-const props = defineProps({
-  tabs: {
-    type: Array as PropType<NavTab[]>,
-    required: true,
-  },
+const props = withDefaults(defineProps<{
+  anchorRouteName: string
+  i18nPrefix: string
+  filterPredicate?: (route: RouteRecordRaw) => boolean
+}>(), {
+  filterPredicate: () => true,
 })
 
-const kTabs = computed<Tab[]>(() => props.tabs.map((tab) => ({
-  title: tab.title,
-  hash: '#' + tab.routeName,
-})))
+const tabs = computed<NavTab[]>(() => {
+  const routes = router.getRoutes().find((route) => route.name === props.anchorRouteName)?.children ?? []
+
+  return routes
+    .filter(props.filterPredicate)
+    .map((route) => {
+      const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
+      const routeName = referenceRoute.name as string
+      const module = referenceRoute.meta?.module ?? ''
+      const title = t(`${props.i18nPrefix}.${routeName}`)
+
+      return { title, routeName, module }
+    })
+})
+
+const kTabs = computed<Tab[]>(() => {
+  return tabs.value.map((tab) => ({
+    title: tab.title,
+    hash: '#' + tab.routeName,
+  }))
+})
+
 const currentTabHash = computed(() => {
   const modules = route.matched
     .map((route) => route.meta.module ?? '')
     .filter((module) => module !== '')
   modules.reverse()
 
-  const activeTab = props.tabs.find((tab) => {
+  const activeTab = tabs.value.find((tab) => {
     if (tab.routeName === route.name) {
       return true
     }
@@ -62,7 +85,7 @@ const currentTabHash = computed(() => {
 
     return false
   })
-  const routeName = activeTab?.routeName ?? props.tabs[0].routeName
+  const routeName = activeTab?.routeName ?? tabs.value[0].routeName
 
   return '#' + routeName
 })

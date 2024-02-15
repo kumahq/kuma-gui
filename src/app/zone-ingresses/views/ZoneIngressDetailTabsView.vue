@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="zone-ingress-detail-tabs-view"
     :params="{
       zone: '',
@@ -49,8 +49,8 @@
 
         <template v-else>
           <NavTabs
-            class="route-zone-ingress-detail-view-tabs"
-            :tabs="tabs"
+            anchor-route-name="zone-ingress-detail-tabs-view"
+            i18n-prefix="zone-ingresses.routes.item.navigation"
           />
 
           <RouterView v-slot="child">
@@ -66,25 +66,9 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordRaw, useRouter } from 'vue-router'
-
 import type { ZoneIngressOverviewSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const routes = router.getRoutes().find((route) => route.name === 'zone-ingress-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = routes.map((route) => {
-  const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-  const routeName = referenceRoute.name as string
-  const module = referenceRoute.meta?.module ?? ''
-  const title = t(`zone-ingresses.routes.item.navigation.${routeName}`)
-
-  return { title, routeName, module }
-})
 </script>
