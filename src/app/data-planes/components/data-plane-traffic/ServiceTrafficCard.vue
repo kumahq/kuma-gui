@@ -65,7 +65,7 @@
             </div>
           </template>
           <template
-            v-else-if="props.protocol === 'http'"
+            v-else-if="props.protocol.startsWith('http')"
           >
             <div
               v-for="value in [props.traffic.http?.[`${props.direction}_rq_1xx`] as (number | undefined) ?? 0].filter(item => item !== 0)"
