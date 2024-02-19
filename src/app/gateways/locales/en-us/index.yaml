@@ -3,8 +3,8 @@ gateways:
     items:
       title: Gateways
       navigation:
-        builtin: Built-in
-        delegated: Delegated
+        builtin-gateway-list-view: Built-in
+        delegated-gateway-list-view: Delegated
 
 builtin-gateways:
   routes:
