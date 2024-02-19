@@ -1,4 +1,5 @@
 import { ControlPlaneConfig, GlobalInsight } from './data'
+import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
 import type Env from '@/services/env/Env'
 import type KumaApi from '@/services/kuma-api/KumaApi'
@@ -27,7 +28,7 @@ const compare = (a: string, b: string) => {
   return 0
 }
 export const sources = (env: Env['var'], api: KumaApi) => {
-  return {
+  return defineSources({
     '/control-plane/addresses': async (): Promise<ControlPlaneAddresses> => {
       return {
         http: env('KUMA_API_URL'),
@@ -67,5 +68,5 @@ export const sources = (env: Env['var'], api: KumaApi) => {
     '/global-insight': async () => {
       return GlobalInsight.fromObject(await api.getGlobalInsight())
     },
-  }
+  })
 }
