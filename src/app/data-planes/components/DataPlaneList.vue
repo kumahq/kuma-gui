@@ -64,6 +64,7 @@
         >
           <TextWithCopyButton :text="service">
             <RouterLink
+              v-if="row.dataplaneType === 'standard'"
               :to="{
                 name: 'service-detail-view',
                 params: {
@@ -73,6 +74,22 @@
             >
               {{ service }}
             </RouterLink>
+
+            <RouterLink
+              v-else-if="row.dataplaneType === 'delegated'"
+              :to="{
+                name: 'delegated-gateway-detail-view',
+                params: {
+                  service,
+                },
+              }"
+            >
+              {{ service }}
+            </RouterLink>
+
+            <template v-else>
+              {{ service }}
+            </template>
           </TextWithCopyButton>
         </div>
       </KTruncate>

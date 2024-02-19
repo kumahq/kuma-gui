@@ -27,7 +27,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { useCan } from '@/app/application'
 import type { LabelValue, Tags } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -37,36 +36,13 @@ interface LabelValueWithRoute extends LabelValue {
   isKuma: boolean
 }
 
-const dataplaneTypeToServiceTypeMap = {
-  standard: 'internal',
-  builtin: 'gateway_builtin',
-  delegated: 'gateway_delegated',
-} as const
-
 const props = withDefaults(defineProps<{
   tags: LabelValue[] | Tags | null | undefined
   shouldTruncate?: boolean
   alignment?: 'left' | 'right'
-  dataplaneType?: 'standard' | 'builtin' | 'delegated'
-  serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
 }>(), {
   shouldTruncate: false,
   alignment: 'left',
-  dataplaneType: undefined,
-  serviceType: undefined,
-})
-const can = useCan()
-
-const serviceType = computed(() => {
-  if (props.serviceType) {
-    return props.serviceType
-  }
-
-  if (props.dataplaneType) {
-    return dataplaneTypeToServiceTypeMap[props.dataplaneType]
-  }
-
-  return undefined
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
@@ -90,38 +66,19 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
 
   switch (tag.label) {
     case 'kuma.io/zone': {
-      if (!can('use zones')) {
-        return undefined
-      }
       return {
-        name: 'zone-cp-detail-view',
-        params: {
-          zone: tag.value,
+        name: 'data-plane-list-view',
+        query: {
+          query: `tag: "kuma.io/zone:${tag.value}"`,
         },
       }
     }
     case 'kuma.io/service': {
-      // Service annotations can refer to various service types which all have their dedicated detail views. To know which one to link to, we need to know the corresponding service type. In cases where we don’t know it, we can’t reliably link to a detail view. **Importantly**, we can’t generally link to the built-in gateway detail view or the external service detail view because those resources generally have _different_ names than their corresponding `ServiceInsight` objects and so an API call based on the latters name would fail.
-      switch (serviceType.value) {
-        case 'internal': {
-          return {
-            name: 'service-detail-view',
-            params: {
-              service: tag.value,
-            },
-          }
-        }
-        case 'gateway_delegated': {
-          return {
-            name: 'delegated-gateway-detail-view',
-            params: {
-              service: tag.value,
-            },
-          }
-        }
-        default: {
-          return undefined
-        }
+      return {
+        name: 'data-plane-list-view',
+        query: {
+          query: `tag: "kuma.io/service:${tag.value}"`,
+        },
       }
     }
     case 'kuma.io/mesh': {

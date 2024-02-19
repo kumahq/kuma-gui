@@ -97,10 +97,7 @@
                   </template>
 
                   <template #body>
-                    <TagList
-                      :tags="props.data.dataplane.networking.gateway.tags"
-                      :dataplane-type="props.data.dataplaneType"
-                    />
+                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
                   </template>
                 </DefinitionCard>
 
@@ -189,7 +186,6 @@
                           </template>
                           <TagList
                             :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
-                            :dataplane-type="props.data.dataplaneType"
                           />
                         </ServiceTrafficCard>
                       </template>

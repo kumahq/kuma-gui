@@ -17,7 +17,6 @@
             <TagList
               :tags="props.gateway.tags"
               alignment="right"
-              :dataplane-type="props.dataplaneType"
             />
           </template>
         </DefinitionCard>
@@ -36,7 +35,6 @@
             <TagList
               :tags="props.inbound.tags"
               alignment="right"
-              :dataplane-type="props.dataplaneType"
             />
           </template>
         </DefinitionCard>
@@ -100,7 +98,6 @@ import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 
 const props = defineProps<{
-  dataplaneType: 'standard' | 'builtin'
   inbound?: DataplaneInbound
   gateway?: DataplaneGateway
 }>()
