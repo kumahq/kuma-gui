@@ -81,13 +81,12 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
 
       // inbounds are anything starting with the `inbound` we've passed in
       // we use `~` to equal "there are no inbounds", but we might not need that
-      const inbounds = inbound !== '~' ? getTraffic(json, (key) => key.startsWith(inbound)) : []
-
+      const inbounds = inbound !== '~' ? getTraffic(inbound === 'localhost_' ? json.cluster : json.listener, (key) => key.startsWith(inbound)) : []
       // outbounds are anything else unless it starts with something in the
       // below list these are likely to follow a pattern at some point at which
       // point this list can be removed and replaced by something that exludes
       // the pattern
-      const outbounds = getTraffic(json, (key) => {
+      const outbounds = getTraffic(json.cluster, (key) => {
         return ![
           ...(inbound !== '~' ? [inbound] : []), // removes inbounds if we've asked for them
           '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
@@ -95,17 +94,17 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
           'async-client',
           'kuma_envoy_admin',
           'probe_listener',
-          'inbound_passthrough',
-          'outbound_passthrough',
+          'inbound_passthrough_',
+          'outbound_passthrough_',
           'access_log_sink',
           'ads_cluster',
           'meshtrace_zipkin',
           'meshtrace_opentelemetry',
         ].some(item => key.startsWith(item))
       })
-
+      //
       // passthrough traffic is anything that starts with this list
-      const passthrough = getTraffic(json, (key) => [
+      const passthrough = getTraffic(json.cluster, (key) => [
         'outbound_passthrough_',
       ].some(item => key.startsWith(item))).reduce((entry, item) => {
         return {
