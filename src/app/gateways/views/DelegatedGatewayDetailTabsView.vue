@@ -38,7 +38,8 @@
       </template>
 
       <NavTabs
-        anchor-route-name="delegated-gateway-detail-tabs-view"
+        :children="route.children"
+        :active="route.active"
         i18n-prefix="delegated-gateways.routes.item.navigation"
       />
 

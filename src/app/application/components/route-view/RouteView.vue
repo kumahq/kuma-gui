@@ -54,6 +54,10 @@ export type RouteView = {
   removeAttrs: (sym: Symbol) => void
 }
 
+export type StringNamedRouteRecordRaw = RouteRecordRaw & {
+  name: string
+}
+
 const win = window
 const env = useEnv()
 const can = useCan()
@@ -64,9 +68,6 @@ const sym = Symbol('route-view')
 
 type Params = { [P in keyof T]: T[P] }
 type RouteReplaceParams = Parameters<typeof router['push']>
-type StringNamedRouteRecordRaw = RouteRecordRaw & {
-  name: string
-}
 
 const props = withDefaults(defineProps<{
   name: string

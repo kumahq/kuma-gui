@@ -18,7 +18,8 @@
       </template>
 
       <NavTabs
-        anchor-route-name="mesh-detail-tabs-view"
+        :children="route.children"
+        :active="route.active"
         i18n-prefix="meshes.routes.item.navigation"
         :filter-predicate="(route) => route.name !== 'external-service-list-view'"
         data-testid="mesh-tabs"

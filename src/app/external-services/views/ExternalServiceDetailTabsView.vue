@@ -38,7 +38,8 @@
       </template>
 
       <NavTabs
-        anchor-route-name="external-service-detail-tabs-view"
+        :children="route.children"
+        :active="route.active"
         i18n-prefix="external-services.routes.item.navigation"
       />
 

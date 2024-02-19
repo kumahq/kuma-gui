@@ -52,7 +52,8 @@
 
         <template v-else>
           <NavTabs
-            anchor-route-name="service-detail-tabs-view"
+            :children="route.children"
+            :active="route.active"
             i18n-prefix="services.routes.item.navigation"
             :filter-predicate="(route) => {
               if (data.serviceType !== 'external' && route.name === 'service-config-view') {

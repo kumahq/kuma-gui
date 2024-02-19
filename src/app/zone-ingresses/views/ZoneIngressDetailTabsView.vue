@@ -49,7 +49,8 @@
 
         <template v-else>
           <NavTabs
-            anchor-route-name="zone-ingress-detail-tabs-view"
+            :children="route.children"
+            :active="route.active"
             i18n-prefix="zone-ingresses.routes.item.navigation"
           />
 

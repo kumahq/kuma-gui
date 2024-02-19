@@ -38,7 +38,8 @@
       </template>
 
       <NavTabs
-        anchor-route-name="builtin-gateway-detail-tabs-view"
+        :children="route.children"
+        :active="route.active"
         i18n-prefix="builtin-gateways.routes.item.navigation"
       />
 

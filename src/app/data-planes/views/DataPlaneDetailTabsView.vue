@@ -50,7 +50,8 @@
 
         <template v-else>
           <NavTabs
-            anchor-route-name="data-plane-detail-tabs-view"
+            :children="route.children"
+            :active="route.active"
             i18n-prefix="data-planes.routes.item.navigation"
           />
 

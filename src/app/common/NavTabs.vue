@@ -1,6 +1,6 @@
 <template>
   <KTabs
-    :tabs="kTabs"
+    :tabs="tabs"
     :model-value="currentTabHash"
     hide-panels
     class="nav-tabs"
@@ -23,71 +23,47 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router'
+import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 
+import type { StringNamedRouteRecordRaw } from '@/app/application/components/route-view/RouteView.vue'
 import { useI18n } from '@/utilities'
 import type { Tab } from '@kong/kongponents'
 
-interface NavTab {
-  title: string
+interface NavTab extends Tab {
   routeName: string
-  module: string
+  isActive: boolean
 }
 
 const { t } = useI18n()
-const route = useRoute()
-const router = useRouter()
+const currentRoute = useRoute()
 
 const props = withDefaults(defineProps<{
-  anchorRouteName: string
+  children: StringNamedRouteRecordRaw[]
+  active?: (route: RouteLocationNormalizedLoaded) => StringNamedRouteRecordRaw | undefined
   i18nPrefix: string
-  filterPredicate?: (route: RouteRecordRaw) => boolean
+  filterPredicate?: (route: StringNamedRouteRecordRaw) => boolean
 }>(), {
+  active: () => undefined,
   filterPredicate: () => true,
 })
 
 const tabs = computed<NavTab[]>(() => {
-  const routes = router.getRoutes().find((route) => route.name === props.anchorRouteName)?.children ?? []
-
-  return routes
+  return props.children
     .filter(props.filterPredicate)
     .map((route) => {
-      const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-      const routeName = referenceRoute.name as string
-      const module = referenceRoute.meta?.module ?? ''
+      const routeName = route.name
+      const hash = '#' + routeName
       const title = t(`${props.i18nPrefix}.${routeName}`)
+      const isActive = props.active(currentRoute)?.name === routeName
 
-      return { title, routeName, module }
+      return { title, hash, routeName, isActive }
     })
 })
 
-const kTabs = computed<Tab[]>(() => {
-  return tabs.value.map((tab) => ({
-    title: tab.title,
-    hash: '#' + tab.routeName,
-  }))
-})
-
 const currentTabHash = computed(() => {
-  const modules = route.matched
-    .map((route) => route.meta.module ?? '')
-    .filter((module) => module !== '')
-  modules.reverse()
+  const activeTab = tabs.value.find((tab) => tab.isActive) ?? tabs.value[0]
 
-  const activeTab = tabs.value.find((tab) => {
-    if (tab.routeName === route.name) {
-      return true
-    }
-
-    if (modules.includes(tab.module)) {
-      return true
-    }
-
-    return false
-  })
-  const routeName = activeTab?.routeName ?? tabs.value[0].routeName
-
-  return '#' + routeName
+  return activeTab.hash
 })
 </script>
 

@@ -14,7 +14,8 @@
       </template>
 
       <NavTabs
-        anchor-route-name="data-plane-outbound-summary-view"
+        :children="route.children"
+        :active="route.active"
         i18n-prefix="data-planes.routes.item.navigation"
       />
 

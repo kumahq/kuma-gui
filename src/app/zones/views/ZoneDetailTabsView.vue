@@ -47,7 +47,8 @@
           </template>
 
           <NavTabs
-            anchor-route-name="zone-cp-detail-tabs-view"
+            :children="route.children"
+            :active="route.active"
             i18n-prefix="zone-cps.routes.item.navigation"
           />
 
