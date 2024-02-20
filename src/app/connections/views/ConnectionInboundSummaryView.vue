@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ route, t }"
-    name="data-plane-outbound-summary-view"
+    name="connection-inbound-summary-view"
     :params="{
       service: '',
       inactive: false,
@@ -10,7 +10,13 @@
     <AppView>
       <template #title>
         <h2>
-          {{ route.params.service }}
+          <template v-if="props.gateway">
+            {{ route.params.service }}
+          </template>
+
+          <template v-else>
+            Inbound {{ route.params.service.replace('localhost_', '') }}
+          </template>
         </h2>
       </template>
 
@@ -29,21 +35,29 @@
             }"
             :data-testid="`${name}-tab`"
           >
-            {{ t(`data-planes.routes.item.navigation.${name}`) }}
+            {{ t(`connections.routes.item.navigation.${name.split('-')[3]}`) }}
           </RouterLink>
         </template>
       </NavTabs>
 
       <RouterView v-slot="child">
+        <component
+          :is="child.Component"
+          v-if="props.gateway"
+          :gateway="props.gateway"
+        />
+
         <DataCollection
+          v-else
           v-slot="{ items }"
-          :items="props.data"
-          :predicate="(item) => item.name === route.params.service"
+          :items="props.inbounds"
+          :predicate="(item) => `${item.port}` === route.params.service.split(':')[1]"
           :find="true"
         >
           <component
             :is="child.Component"
-            :data="items[0]"
+            :inbound="items[0]"
+            :gateway="props.gateway"
           />
         </DataCollection>
       </RouterView>
@@ -52,10 +66,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { TrafficEntry } from '../data'
 import NavTabs from '@/app/common/NavTabs.vue'
+import type { DataplaneGateway, DataplaneInbound } from '@/app/data-planes/data/'
 
 const props = defineProps<{
-  data: TrafficEntry[]
+  dataplaneType: 'standard' | 'builtin'
+  gateway?: DataplaneGateway
+  inbounds: DataplaneInbound[]
 }>()
 </script>

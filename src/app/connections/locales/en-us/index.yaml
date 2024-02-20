@@ -1,0 +1,7 @@
+connections:
+  routes:
+    item:
+      navigation:
+        overview: 'Overview'
+        stats: 'Stats'
+        clusters: 'Clusters'

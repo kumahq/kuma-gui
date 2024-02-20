@@ -119,7 +119,7 @@
             data-testid="dataplane-traffic"
           >
             <div class="columns">
-              <DataPlaneTraffic>
+              <ConnectionTraffic>
                 <template #title>
                   <ForwardIcon
                     display="inline-block"
@@ -128,7 +128,7 @@
                   />
                   Inbounds
                 </template>
-                <ServiceTrafficGroup
+                <ConnectionGroup
                   type="inbound"
                 >
                   <DataCollection
@@ -164,7 +164,7 @@
                           ]"
                           :key="inbound"
                         >
-                          <ServiceTrafficCard
+                          <ConnectionCard
                             :protocol="inbound?.protocol ?? item.protocol"
                             :traffic="typeof error === 'undefined' ?
                               inbound :
@@ -181,7 +181,7 @@
                             >
                               <RouterLink
                                 :to="{
-                                  name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
+                                  name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
                                   params: {
                                     service: name,
                                   },
@@ -196,15 +196,15 @@
                             <TagList
                               :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
                             />
-                          </ServiceTrafficCard>
+                          </ConnectionCard>
                         </template>
                       </template>
                     </template>
                   </DataCollection>
-                </ServiceTrafficGroup>
-              </DataPlaneTraffic>
+                </ConnectionGroup>
+              </ConnectionTraffic>
 
-              <DataPlaneTraffic>
+              <ConnectionTraffic>
                 <template
                   v-if="traffic"
                   #actions
@@ -247,22 +247,22 @@
                       v-for="direction in [props.data.dataplane.networking.type !== 'standard' ? 'upstream' : 'downstream'] as const"
                       :key="direction"
                     >
-                      <ServiceTrafficGroup
+                      <ConnectionGroup
                         type="passthrough"
                       >
-                        <ServiceTrafficCard
+                        <ConnectionCard
                           :protocol="`passthrough`"
                           :traffic="traffic.passthrough"
                         >
                           Non mesh traffic
-                        </ServiceTrafficCard>
-                      </ServiceTrafficGroup>
+                        </ConnectionCard>
+                      </ConnectionGroup>
                       <DataCollection
                         v-slot="{ items }"
                         :predicate="route.params.inactive ? undefined : (item) => ((item.protocol === 'tcp' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
                         :items="traffic.outbounds"
                       >
-                        <ServiceTrafficGroup
+                        <ConnectionGroup
                           v-if="items.length > 0"
                           type="outbound"
                           data-testid="dataplane-outbounds"
@@ -271,14 +271,14 @@
                             v-for="item in items"
                             :key="`${item.name}`"
                           >
-                            <ServiceTrafficCard
+                            <ConnectionCard
                               :protocol="item.protocol"
                               :traffic="item"
                               :direction="direction"
                             >
                               <RouterLink
                                 :to="{
-                                  name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-outbound-summary-overview-view')(String(_route.name)),
+                                  name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
                                   params: {
                                     service: item.name,
                                   },
@@ -289,9 +289,9 @@
                               >
                                 {{ item.name }}
                               </RouterLink>
-                            </ServiceTrafficCard>
+                            </ConnectionCard>
                           </template>
-                        </ServiceTrafficGroup>
+                        </ConnectionGroup>
                       </DataCollection>
                     </template>
                   </template>
@@ -299,7 +299,7 @@
                 <template v-else>
                   <EmptyBlock />
                 </template>
-              </DataPlaneTraffic>
+              </ConnectionTraffic>
             </div>
           </KCard>
 
@@ -446,7 +446,7 @@ import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tok
 import { InfoIcon, ForwardIcon, GatewayIcon, RefreshIcon } from '@kong/icons'
 import { computed } from 'vue'
 
-import type { DataplaneOverview, DataplaneInbound, TrafficEntry } from '../data'
+import type { DataplaneOverview, DataplaneInbound } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
@@ -454,10 +454,11 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import DataPlaneTraffic from '@/app/data-planes/components/data-plane-traffic/DataPlaneTraffic.vue'
-import ServiceTrafficCard from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficCard.vue'
-import ServiceTrafficGroup from '@/app/data-planes/components/data-plane-traffic/ServiceTrafficGroup.vue'
-import type { StatsSource } from '@/app/data-planes/sources'
+import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
+import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
+import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
+import type { TrafficEntry } from '@/app/connections/data'
+import type { StatsSource } from '@/app/connections/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import { useRoute } from '@/app/vue'
 

@@ -8,6 +8,11 @@ const appProtocols = ['http2', 'grpc'] as const
 type Protocols = Partial<Record<typeof protocols[number], MetricRecord>>
 type AppProtocols = Partial<Record<typeof appProtocols[number], MetricRecord>>
 
+export type Connection = {
+  name: string
+  service: string
+  protocol: string
+}
 type ConnectionStats = {
   unknown?: MetricRecord
 } & Protocols

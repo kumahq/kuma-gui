@@ -9,7 +9,7 @@
       dataPlane: '',
       service: '',
     }"
-    name="data-plane-inbound-summary-stats-view"
+    name="connection-inbound-summary-stats-view"
   >
     <AppView>
       <template #title>
@@ -61,11 +61,11 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
-import type { DataplaneInbound, DataplaneGateway } from '../data'
 import { StatsSource } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import type { DataplaneGateway, DataplaneInbound } from '@/app/data-planes/data'
 const props = defineProps<{
   inbound?: DataplaneInbound
   gateway?: DataplaneGateway

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { parse, getTraffic } from './stats'
+import { parse, getTraffic } from './'
 
 describe('stats.ts', () => {
   describe('parse', () => {

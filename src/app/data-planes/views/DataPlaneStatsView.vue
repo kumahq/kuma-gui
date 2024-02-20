@@ -63,10 +63,11 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
-import type { DataplaneOverview, StatsSource } from '../sources'
+import type { DataplaneOverview } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import type { StatsSource } from '@/app/connections/sources'
 
 const props = defineProps<{
   data: DataplaneOverview

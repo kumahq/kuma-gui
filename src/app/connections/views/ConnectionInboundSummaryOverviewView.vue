@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
-    name="data-plane-inbound-summary-overview-view"
+    name="connection-inbound-summary-overview-view"
   >
     <AppView>
       <div
@@ -92,10 +92,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneGateway, DataplaneInbound } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { DataplaneGateway, DataplaneInbound } from '@/app/data-planes/data'
 
 const props = defineProps<{
   inbound?: DataplaneInbound

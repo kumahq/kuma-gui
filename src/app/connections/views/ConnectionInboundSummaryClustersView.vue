@@ -9,7 +9,7 @@
       dataPlane: '',
       service: '',
     }"
-    name="data-plane-outbound-summary-clusters-view"
+    name="connection-inbound-summary-clusters-view"
   >
     <AppView>
       <template #title>
@@ -36,8 +36,8 @@
             language="json"
             :code="(() => `${
               data.split('\n')
-                .filter(item => item.startsWith(`${route.params.service}::`))
-                .map(item => item.replace(`${route.params.service}::`, ''))
+                .filter(item => item.startsWith(`localhost:${route.params.service}::`))
+                .map(item => item.replace(`localhost:${route.params.service}::`, ''))
                 .join('\n')
             }`)()"
             is-searchable
@@ -67,8 +67,8 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
-import type { ClustersDataSource } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import type { ClustersDataSource } from '@/app/data-planes/sources'
 </script>
