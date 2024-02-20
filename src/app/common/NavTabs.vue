@@ -66,14 +66,3 @@ const currentTabHash = computed(() => {
   return activeTab.hash
 })
 </script>
-
-<style lang="scss" scoped>
-.nav-tabs {
-  overflow-x: auto;
-  width: 100%;
-}
-
-.nav-tabs :deep(.tab-item) {
-  white-space: nowrap;
-}
-</style>
