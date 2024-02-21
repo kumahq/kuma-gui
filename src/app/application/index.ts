@@ -2,6 +2,7 @@ import { i18nTComponent } from '@kong-ui-public/i18n'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
+import DataLoader from './components/data-source/DataLoader.vue'
 import DataSource from './components/data-source/DataSource.vue'
 import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
@@ -68,6 +69,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: (i18n: ReturnType<typeof I18n>) => {
         return [
           ['AppView', AppView],
+          ['DataLoader', DataLoader],
           ['DataSource', DataSource],
           ['DataCollection', DataCollection],
           ['RouteView', RouteView],
