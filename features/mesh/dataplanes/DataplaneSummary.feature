@@ -4,7 +4,7 @@ Feature: Dataplane summary
       | Alias                | Selector                                       |
       | item                 | [data-testid='data-plane-collection'] tbody tr |
       | summary              | [data-testid='summary']                        |
-      | close-summary-button | $summary [data-testid^='close-button-']        |
+      | close-summary-button | $summary [data-testid='slideout-close-icon']   |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
