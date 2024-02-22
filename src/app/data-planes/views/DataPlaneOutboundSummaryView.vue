@@ -4,6 +4,7 @@
     name="data-plane-outbound-summary-view"
     :params="{
       service: '',
+      inactive: false,
     }"
   >
     <AppView>
@@ -20,7 +21,12 @@
           #[`${name}`]
         >
           <RouterLink
-            :to="{ name }"
+            :to="{
+              name,
+              query: {
+                inactive: route.params.inactive ? null : undefined,
+              },
+            }"
             :data-testid="`${name}-tab`"
           >
             {{ t(`data-planes.routes.item.navigation.${name}`) }}
