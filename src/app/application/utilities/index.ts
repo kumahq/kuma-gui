@@ -27,14 +27,16 @@ export const createAttrsSetter = ($el = document.documentElement) => {
     return () => {}
   }
   const originalClasses = [...$el.classList]
-  return beforePaint((attrs: Record<string, string>[]) => {
-    const flat = attrs.reduce<Record<string, string[]>>((prev, item) => {
+  return beforePaint((attrs: Partial<Record<string, string>>[]) => {
+    const flat = attrs.reduce<Partial<Record<string, string[]>>>((prev, item) => {
       return Object.entries(item).reduce(
         (prev, [key, value]) => {
-          if (typeof prev[key] === 'undefined') {
-            prev[key] = []
+          if (value) {
+            if (typeof prev[key] === 'undefined') {
+              prev[key] = []
+            }
+            prev[key]!.push(value)
           }
-          prev[key].push(value)
           return prev
         }, prev,
       )
@@ -42,9 +44,9 @@ export const createAttrsSetter = ($el = document.documentElement) => {
     // omit any classes that were on the node previous to our application starting
     const currentClasses = difference([...$el.classList], originalClasses)
     // anything in currentClasses that isn't in our tree of attrs, remove
-    $el.classList.remove(...difference(currentClasses, flat.class))
+    $el.classList.remove(...difference(currentClasses, flat.class ?? []))
     // anything in our tree of attrs that isn't in currentClasses, add
-    $el.classList.add(...difference(flat.class, currentClasses))
+    $el.classList.add(...difference(flat.class ?? [], currentClasses))
   })
 }
 // normalizes url params from "value or array of values" to value

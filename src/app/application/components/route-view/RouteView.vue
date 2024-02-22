@@ -50,7 +50,7 @@ import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
 export type RouteView = {
   addTitle: (item: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
-  addAttrs: (item: Record<string, string>, sym: Symbol) => void
+  addAttrs: (item: Partial<Record<string, string>>, sym: Symbol) => void
   removeAttrs: (sym: Symbol) => void
 }
 
@@ -70,7 +70,7 @@ type StringNamedRouteRecordRaw = RouteRecordRaw & {
 
 const props = withDefaults(defineProps<{
   name: string
-  attrs?: Record<string, string>
+  attrs?: Partial<Record<string, string>>
   params?: T
 }>(), {
   attrs: () => ({}),
@@ -90,7 +90,7 @@ const name = computed(() => props.name)
 
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<Symbol, string>()
-const attributes = new Map<Symbol, Record<string, string>>()
+const attributes = new Map<Symbol, Partial<Record<string, string>>>()
 const setTitle = createTitleSetter(document)
 const setAttrs = createAttrsSetter(document.documentElement)
 
@@ -116,7 +116,7 @@ const routeView = {
     titles.delete(sym)
     setTitle(joinTitle([...titles.values()]))
   },
-  addAttrs: (item: Record<string, string>, sym: Symbol) => {
+  addAttrs: (item: Partial<Record<string, string>>, sym: Symbol) => {
     attributes.set(sym, item)
     setAttrs([...attributes.values()])
   },
