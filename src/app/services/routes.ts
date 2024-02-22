@@ -36,11 +36,6 @@ export const routes = () => {
                 name: 'external-service-detail-view',
                 component: () => import('@/app/external-services/views/ExternalServiceDetailView.vue'),
               },
-              {
-                path: 'config',
-                name: 'external-service-config-view',
-                component: () => import('@/app/external-services/views/ExternalServiceConfigView.vue'),
-              },
             ],
           },
         ],

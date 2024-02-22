@@ -4,7 +4,6 @@ Feature: mesh / external-services / item
       | Alias       | Selector                                     |
       | detail-view | [data-testid='external-service-detail-view'] |
       | details     | [data-testid='external-service-details']     |
-      | config-view | [data-testid='external-service-config-view'] |
       | config      | [data-testid='external-service-config']      |
     # TODO: Remove KUMA_GATEWAYS_UI when unflagging the KUMA_GATEWAYS_UI feature.
     Given the environment
@@ -23,8 +22,4 @@ Feature: mesh / external-services / item
 
     Then the "$detail-view" element contains "service-1"
     Then the "$details" element contains "1.2.3.4"
-
-  Scenario: Config tab has expected content
-    When I visit the "/meshes/default/services/external/service-1/config" URL
-
     Then the "$config" element contains "1.2.3.4"
