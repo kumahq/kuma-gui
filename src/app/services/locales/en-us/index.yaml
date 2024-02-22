@@ -5,8 +5,6 @@ services:
       breadcrumbs: Services
       navigation:
         service-detail-view: 'Overview'
-        service-data-plane-proxies-view: 'Data Plane Proxies'
-        service-config-view: 'YAML'
       overview: 'Overview'
       config: 'YAML'
     items:
@@ -15,4 +13,6 @@ services:
         service-list-view: Internal
         external-service-list-view: External
   detail:
+    config: YAML
+    data_plane_proxies: Data Plane Proxies
     no_matching_external_service: 'No matching ExternalService was found for service {name}'
