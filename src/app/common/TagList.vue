@@ -27,7 +27,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { useCan } from '@/app/application'
 import type { LabelValue, Tags } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -45,7 +44,6 @@ const props = withDefaults(defineProps<{
   shouldTruncate: false,
   alignment: 'left',
 })
-const can = useCan()
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
   const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
@@ -66,42 +64,34 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
     return undefined
   }
 
-  try {
-    switch (tag.label) {
-      case 'kuma.io/zone': {
-        if (!can('use zones')) {
-          return undefined
-        }
-        return {
-          name: 'zone-cp-detail-view',
-          params: {
-            zone: tag.value,
-          },
-        }
-      }
-      case 'kuma.io/service': {
-        return {
-          name: 'service-detail-view',
-          params: {
-            service: tag.value,
-          },
-        }
-      }
-      case 'kuma.io/mesh': {
-        return {
-          name: 'mesh-detail-view',
-          params: {
-            mesh: tag.value,
-          },
-        }
-      }
-      default: {
-        return undefined
+  switch (tag.label) {
+    case 'kuma.io/zone': {
+      return {
+        name: 'data-plane-list-view',
+        query: {
+          query: `tag: "kuma.io/zone:${tag.value}"`,
+        },
       }
     }
-  } catch {
-    // Ignores `router.resolve` errors because we don’t want this
-    return undefined
+    case 'kuma.io/service': {
+      return {
+        name: 'data-plane-list-view',
+        query: {
+          query: `tag: "kuma.io/service:${tag.value}"`,
+        },
+      }
+    }
+    case 'kuma.io/mesh': {
+      return {
+        name: 'mesh-detail-view',
+        params: {
+          mesh: tag.value,
+        },
+      }
+    }
+    default: {
+      return undefined
+    }
   }
 }
 </script>

@@ -222,12 +222,15 @@ watch(() => currentFields.value, function (newFields, oldFields) {
   }
 })
 
+watch(() => props.query, () => {
+  currentQuery.value = props.query
+  recomputeFields(currentQuery.value)
+}, { immediate: true })
+
 watch(() => currentQuery.value, function () {
   if (currentQuery.value === '') {
     tokenizerError.value = null
   }
-
-  isShowingSuggestionBox.value = true
 })
 
 type CommandKeywords = 'submitQuery' | 'jumpToNextSuggestion' | 'jumpToPreviousSuggestion' | 'closeSuggestionBox'
