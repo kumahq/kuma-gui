@@ -23,10 +23,8 @@
         replace: routeReplace,
         params: routeParams,
         back: routerBack,
-        children: children,
-        active: (active: RouteLocationNormalizedLoaded) => {
-          return children.find(item => item.name === active.name || (item.meta && item.meta.module === active.meta.module))
-        },
+        children,
+        active,
       }"
     />
   </div>
@@ -46,12 +44,16 @@ import {
   beforePaint,
 } from '../../utilities'
 import { useEnv } from '@/utilities'
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 export type RouteView = {
   addTitle: (item: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
   addAttrs: (item: Record<string, string>, sym: Symbol) => void
   removeAttrs: (sym: Symbol) => void
+}
+
+type StringNamedRouteRecordRaw = RouteRecordRaw & {
+  name: string
 }
 
 const win = window
@@ -64,9 +66,6 @@ const sym = Symbol('route-view')
 
 type Params = { [P in keyof T]: T[P] }
 type RouteReplaceParams = Parameters<typeof router['push']>
-type StringNamedRouteRecordRaw = RouteRecordRaw & {
-  name: string
-}
 
 const props = withDefaults(defineProps<{
   name: string
@@ -101,6 +100,7 @@ const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) =
   item.name = String(item.name)
   return item as StringNamedRouteRecordRaw
 }) ?? [])
+const active = computed(() => children.find((item) => item.name === route.name || item.meta?.module === route.meta.module))
 
 const routeView = {
   addTitle: (item: string, sym: Symbol) => {

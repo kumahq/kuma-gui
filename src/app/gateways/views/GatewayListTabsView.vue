@@ -35,7 +35,7 @@
                 >
                   <RouterLink
                     :class="{
-                      'active': route.active(active)?.name === item.name,
+                      'active': route.active?.name === item.name,
                     }"
                     :to="{
                       name: item.name,

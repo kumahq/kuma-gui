@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="external-service-detail-tabs-view"
     :params="{
       mesh: '',
@@ -37,10 +37,20 @@
         </h1>
       </template>
 
-      <NavTabs
-        class="route-external-service-detail-view-tabs"
-        :tabs="tabs"
-      />
+      <NavTabs :active-route-name="route.active?.name">
+        <template
+          v-for="{ name } in route.children"
+          :key="name"
+          #[`${name}`]
+        >
+          <RouterLink
+            :to="{ name }"
+            :data-testid="`${name}-tab`"
+          >
+            {{ t(`external-services.routes.item.navigation.${name}`) }}
+          </RouterLink>
+        </template>
+      </NavTabs>
 
       <RouterView />
     </AppView>
@@ -48,23 +58,6 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordRaw, useRouter } from 'vue-router'
-
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const routes = router.getRoutes().find((route) => route.name === 'external-service-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = routes
-  .map((route) => {
-    const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-    const routeName = referenceRoute.name as string
-    const module = referenceRoute.meta?.module ?? ''
-    const title = t(`external-services.routes.item.navigation.${routeName}`)
-
-    return { title, routeName, module }
-  })
 </script>

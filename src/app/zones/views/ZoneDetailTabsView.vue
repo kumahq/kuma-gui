@@ -46,10 +46,20 @@
             <ZoneActionMenu :zone-overview="data" />
           </template>
 
-          <NavTabs
-            class="route-zone-detail-view-tabs"
-            :tabs="tabs"
-          />
+          <NavTabs :active-route-name="route.active?.name">
+            <template
+              v-for="{ name } in route.children"
+              :key="name"
+              #[`${name}`]
+            >
+              <RouterLink
+                :to="{ name }"
+                :data-testid="`${name}-tab`"
+              >
+                {{ t(`zone-cps.routes.item.navigation.${name}`) }}
+              </RouterLink>
+            </template>
+          </NavTabs>
 
           <RouterView v-slot="child">
             <component
@@ -66,30 +76,19 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { RouteRecordRaw, useRouter } from 'vue-router'
 
 import ZoneActionMenu from '../components/ZoneActionMenu.vue'
 import type { ZoneOverview } from '../data'
 import type { ZoneOverviewSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n } from '@/utilities'
 import { get } from '@/utilities/get'
 
 const { t } = useI18n()
-const router = useRouter()
 
-const routes = router.getRoutes().find((route) => route.name === 'zone-cp-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = routes.map((route) => {
-  const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-  const routeName = referenceRoute.name as string
-  const module = referenceRoute.meta?.module ?? ''
-  const title = t(`zone-cps.routes.item.navigation.${routeName}`)
-
-  return { title, routeName, module }
-})
 const notifications = ref<{kind: string, payload: Record<string, string>}[]>([])
 
 const change = (data: ZoneOverview) => {

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="mesh-detail-tabs-view"
     :params="{
       mesh: '',
@@ -18,9 +18,22 @@
       </template>
 
       <NavTabs
-        class="route-mesh-view-tabs"
-        :tabs="tabs"
-      />
+        :active-route-name="route.active?.name"
+        data-testid="mesh-tabs"
+      >
+        <template
+          v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
+          :key="name"
+          #[`${name}`]
+        >
+          <RouterLink
+            :to="{ name }"
+            :data-testid="`${name}-tab`"
+          >
+            {{ t(`meshes.routes.item.navigation.${name}`) }}
+          </RouterLink>
+        </template>
+      </NavTabs>
 
       <RouterView />
     </AppView>
@@ -28,24 +41,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter, RouteRecordRaw } from 'vue-router'
-
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const meshRoutes = router.getRoutes().find((route) => route.name === 'mesh-detail-tabs-view')?.children ?? []
-const tabs: NavTab[] = meshRoutes
-  .filter((route) => !route.meta?.shouldIgnoreInNavTabs)
-  .map((route) => {
-    const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-    const routeName = referenceRoute.name as string
-    const module = referenceRoute.meta?.module ?? ''
-    const title = t(`meshes.routes.item.navigation.${routeName}`)
-
-    return { title, routeName, module }
-  })
 </script>

@@ -1,80 +1,32 @@
 <template>
   <KTabs
-    :tabs="kTabs"
-    :model-value="currentTabHash"
+    :tabs="tabs"
+    :model-value="props.activeRouteName ? '#' + props.activeRouteName : tabs[0].hash"
     hide-panels
-    class="nav-tabs"
-    data-testid="nav-tabs"
   >
     <template
-      v-for="tab in props.tabs"
-      :key="`${tab.routeName}-anchor`"
-      #[`${tab.routeName}-anchor`]
+      v-for="tab in tabs"
+      :key="tab.title"
+      #[`${tab.title}-anchor`]
     >
-      <RouterLink
-        :data-testid="`${tab.routeName}-tab`"
-        :to="{ name: tab.routeName }"
-      >
-        {{ tab.title }}
-      </RouterLink>
+      <slot :name="tab.title" />
     </template>
   </KTabs>
 </template>
 
 <script lang="ts" setup>
-import { KTabs, Tab } from '@kong/kongponents'
-import { PropType, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, useSlots } from 'vue'
 
-export interface NavTab {
-  title: string
-  routeName: string
-  module: string
-}
+import type { Tab } from '@kong/kongponents'
 
-const route = useRoute()
+const slots = useSlots()
 
-const props = defineProps({
-  tabs: {
-    type: Array as PropType<NavTab[]>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  activeRouteName?: string
+}>()
 
-const kTabs = computed<Tab[]>(() => props.tabs.map((tab) => ({
-  title: tab.title,
-  hash: '#' + tab.routeName,
+const tabs = computed<Tab[]>(() => Object.keys(slots).map((title) => ({
+  title,
+  hash: '#' + title,
 })))
-const currentTabHash = computed(() => {
-  const modules = route.matched
-    .map((route) => route.meta.module ?? '')
-    .filter((module) => module !== '')
-  modules.reverse()
-
-  const activeTab = props.tabs.find((tab) => {
-    if (tab.routeName === route.name) {
-      return true
-    }
-
-    if (modules.includes(tab.module)) {
-      return true
-    }
-
-    return false
-  })
-  const routeName = activeTab?.routeName ?? props.tabs[0].routeName
-
-  return '#' + routeName
-})
 </script>
-
-<style lang="scss" scoped>
-.nav-tabs {
-  overflow-x: auto;
-  width: 100%;
-}
-
-.nav-tabs :deep(.tab-item) {
-  white-space: nowrap;
-}
-</style>

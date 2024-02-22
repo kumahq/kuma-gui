@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="data-plane-detail-tabs-view"
     :params="{
       mesh: '',
@@ -20,21 +20,19 @@
         },
         {
           to: {
-            name: `${props.isGatewayView ? 'gateway' : 'data-plane'}-list-view`,
+            name: 'data-plane-list-view',
             params: {
               mesh: route.params.mesh,
             },
           },
-          text: t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.breadcrumbs`),
+          text: t('data-planes.routes.item.breadcrumbs'),
         },
       ]"
     >
       <template #title>
         <h1>
           <TextWithCopyButton :text="route.params.dataPlane">
-            <RouteTitle
-              :title="t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.title`, { name: route.params.dataPlane })"
-            />
+            <RouteTitle :title="t('data-planes.routes.item.title', { name: route.params.dataPlane })" />
           </TextWithCopyButton>
         </h1>
       </template>
@@ -51,10 +49,20 @@
         <LoadingBlock v-else-if="data === undefined" />
 
         <template v-else>
-          <NavTabs
-            class="route-data-plane-view-tabs"
-            :tabs="tabs"
-          />
+          <NavTabs :active-route-name="route.active?.name">
+            <template
+              v-for="{ name } in route.children"
+              :key="name"
+              #[`${name}`]
+            >
+              <RouterLink
+                :to="{ name }"
+                :data-testid="`${name}-tab`"
+              >
+                {{ t(`data-planes.routes.item.navigation.${name}`) }}
+              </RouterLink>
+            </template>
+          </NavTabs>
 
           <RouterView v-slot="child">
             <component
@@ -69,33 +77,9 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordRaw, useRouter } from 'vue-router'
-
 import { DataplaneOverviewSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-const props = defineProps({
-  isGatewayView: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-})
-
-const routes = router.getRoutes().find((route) => route.name === `${props.isGatewayView ? 'gateway' : 'data-plane'}-detail-tabs-view`)?.children ?? []
-const tabs: NavTab[] = routes.map((route) => {
-  const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-  const routeName = referenceRoute.name as string
-  const module = referenceRoute.meta?.module ?? ''
-  const title = t(`${props.isGatewayView ? 'gateways' : 'data-planes'}.routes.item.navigation.${routeName}`)
-
-  return { title, routeName, module }
-})
 </script>

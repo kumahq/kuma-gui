@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="service-detail-tabs-view"
     :params="{
       mesh: '',
@@ -51,10 +51,30 @@
         <LoadingBlock v-else-if="data === undefined" />
 
         <template v-else>
-          <NavTabs
-            class="route-service-detail-view-tabs"
-            :tabs="getNavTabs(data)"
-          />
+          <NavTabs :active-route-name="route.active?.name">
+            <template
+              v-for="{ name } in route.children.filter(({ name }) => {
+                if (data.serviceType !== 'external' && name === 'service-config-view') {
+                  return false
+                }
+
+                if (data.serviceType === 'external' && name === 'service-data-plane-proxies-view') {
+                  return false
+                }
+
+                return true
+              })"
+              :key="name"
+              #[`${name}`]
+            >
+              <RouterLink
+                :to="{ name }"
+                :data-testid="`${name}-tab`"
+              >
+                {{ t(`services.routes.item.navigation.${name}`) }}
+              </RouterLink>
+            </template>
+          </NavTabs>
 
           <RouterView v-slot="child">
             <component
@@ -69,41 +89,9 @@
 </template>
 
 <script lang="ts" setup>
-import { RouteRecordRaw, useRouter } from 'vue-router'
-
 import type { ServiceInsightSource } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import NavTabs, { NavTab } from '@/app/common/NavTabs.vue'
+import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import type { ServiceInsight } from '@/app/services/data'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
-const router = useRouter()
-
-function getNavTabs(serviceInsight: ServiceInsight): NavTab[] {
-  const routes = router.getRoutes().find((route) => route.name === 'service-detail-tabs-view')?.children ?? []
-
-  return routes
-    .filter((route) => {
-      if (serviceInsight.serviceType !== 'external' && route.name === 'service-config-view') {
-        return false
-      }
-
-      if (serviceInsight.serviceType === 'external' && route.name === 'service-data-plane-proxies-view') {
-        return false
-      }
-
-      return true
-    })
-    .map((route) => {
-      const referenceRoute = typeof route.name === 'undefined' ? route.children?.[0] as RouteRecordRaw : route
-      const routeName = referenceRoute.name as string
-      const module = referenceRoute.meta?.module ?? ''
-      const title = t(`services.routes.item.navigation.${routeName}`)
-
-      return { title, routeName, module }
-    })
-}
 </script>
