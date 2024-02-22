@@ -5,14 +5,6 @@ export type Unsaved<RT> = Omit<RT, 'creationTime' | 'modificationTime'>
 
 export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
 
-export type TableHeader = {
-  key: string
-  label: string
-  sortable?: boolean
-  hideLabel?: boolean
-  useSortHandlerFn?: boolean
-}
-
 export type Tags = Record<string, string>
 
 export type ServiceTags = Tags & Record<'kuma.io/service', string>
