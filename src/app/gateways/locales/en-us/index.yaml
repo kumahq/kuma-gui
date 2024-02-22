@@ -28,8 +28,9 @@ delegated-gateways:
       breadcrumbs: Delegated Gateways
       navigation:
         delegated-gateway-detail-view: Overview
-        delegated-gateway-data-plane-proxies-view: Data Plane Proxies
     items:
       title: Delegated Gateways
+  detail:
+    data_plane_proxies: Data Plane Proxies
   href:
     docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated?{KUMA_UTM_QUERY_PARAMS}'
