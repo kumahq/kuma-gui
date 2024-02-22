@@ -30,31 +30,19 @@
           >
             <LinkBox>
               <RouterLink
+                v-for="{ name } in route.children"
+                :key="name"
                 :class="{
-                  'active': currentRoute.name === 'service-list-view',
+                  'active': route.active?.name === name,
                 }"
                 :to="{
-                  name: 'service-list-view',
+                  name,
                   params: {
                     mesh: route.params.mesh,
                   },
                 }"
               >
-                {{ t('services.routes.items.navigation.internal') }}
-              </RouterLink>
-
-              <RouterLink
-                :class="{
-                  'active': currentRoute.name === 'external-service-list-view',
-                }"
-                :to="{
-                  name: 'external-service-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-              >
-                {{ t('services.routes.items.navigation.external') }}
+                {{ t(`services.routes.items.navigation.${name}`) }}
               </RouterLink>
             </LinkBox>
           </template>

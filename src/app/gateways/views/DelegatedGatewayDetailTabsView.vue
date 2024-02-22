@@ -37,11 +37,20 @@
         </h1>
       </template>
 
-      <NavTabs
-        :children="route.children"
-        :active="route.active"
-        i18n-prefix="delegated-gateways.routes.item.navigation"
-      />
+      <NavTabs :active-route-name="route.active?.name">
+        <template
+          v-for="{ name } in route.children"
+          :key="name"
+          #[`${name}`]
+        >
+          <RouterLink
+            :to="{ name }"
+            :data-testid="`${name}-tab`"
+          >
+            {{ t(`delegated-gateways.routes.item.navigation.${name}`) }}
+          </RouterLink>
+        </template>
+      </NavTabs>
 
       <RouterView />
     </AppView>

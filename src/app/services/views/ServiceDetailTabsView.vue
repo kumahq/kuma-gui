@@ -51,22 +51,30 @@
         <LoadingBlock v-else-if="data === undefined" />
 
         <template v-else>
-          <NavTabs
-            :children="route.children"
-            :active="route.active"
-            i18n-prefix="services.routes.item.navigation"
-            :filter-predicate="(route) => {
-              if (data.serviceType !== 'external' && route.name === 'service-config-view') {
-                return false
-              }
+          <NavTabs :active-route-name="route.active?.name">
+            <template
+              v-for="{ name } in route.children.filter(({ name }) => {
+                if (data.serviceType !== 'external' && name === 'service-config-view') {
+                  return false
+                }
 
-              if (data.serviceType === 'external' && route.name === 'service-data-plane-proxies-view') {
-                return false
-              }
+                if (data.serviceType === 'external' && name === 'service-data-plane-proxies-view') {
+                  return false
+                }
 
-              return true
-            }"
-          />
+                return true
+              })"
+              :key="name"
+              #[`${name}`]
+            >
+              <RouterLink
+                :to="{ name }"
+                :data-testid="`${name}-tab`"
+              >
+                {{ t(`services.routes.item.navigation.${name}`) }}
+              </RouterLink>
+            </template>
+          </NavTabs>
 
           <RouterView v-slot="child">
             <component

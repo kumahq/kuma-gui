@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route }"
+    v-slot="{ route, t }"
     name="data-plane-outbound-summary-view"
     :params="{
       service: '',
@@ -13,11 +13,20 @@
         </h2>
       </template>
 
-      <NavTabs
-        :children="route.children"
-        :active="route.active"
-        i18n-prefix="data-planes.routes.item.navigation"
-      />
+      <NavTabs :active-route-name="route.active?.name">
+        <template
+          v-for="{ name } in route.children"
+          :key="name"
+          #[`${name}`]
+        >
+          <RouterLink
+            :to="{ name }"
+            :data-testid="`${name}-tab`"
+          >
+            {{ t(`data-planes.routes.item.navigation.${name}`) }}
+          </RouterLink>
+        </template>
+      </NavTabs>
 
       <RouterView v-slot="child">
         <DataCollection

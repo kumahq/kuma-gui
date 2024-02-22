@@ -12,7 +12,7 @@ services:
     items:
       title: Services
       navigation:
-        internal: Internal
-        external: External
+        service-list-view: Internal
+        external-service-list-view: External
   detail:
     no_matching_external_service: 'No matching ExternalService was found for service {name}'

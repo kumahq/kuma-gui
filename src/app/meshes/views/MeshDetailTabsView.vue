@@ -18,12 +18,22 @@
       </template>
 
       <NavTabs
-        :children="route.children"
-        :active="route.active"
-        i18n-prefix="meshes.routes.item.navigation"
-        :filter-predicate="(route) => route.name !== 'external-service-list-view'"
+        :active-route-name="route.active?.name"
         data-testid="mesh-tabs"
-      />
+      >
+        <template
+          v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
+          :key="name"
+          #[`${name}`]
+        >
+          <RouterLink
+            :to="{ name }"
+            :data-testid="`${name}-tab`"
+          >
+            {{ t(`meshes.routes.item.navigation.${name}`) }}
+          </RouterLink>
+        </template>
+      </NavTabs>
 
       <RouterView />
     </AppView>
