@@ -10,7 +10,7 @@
   >
     <DataSource
       v-slot="{ data: traffic, error, refresh }: StatsSource"
-      :src="props.data.dataplane.networking.type !== 'delegated' ? `/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundName}` : ''"
+      :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundName}`"
     >
       <AppView>
         <template
@@ -115,7 +115,6 @@
           </KCard>
 
           <KCard
-            v-if="props.data.dataplane.networking.type !== 'delegated'"
             class="traffic"
             data-testid="dataplane-traffic"
           >
@@ -133,7 +132,6 @@
                   type="inbound"
                 >
                   <DataCollection
-                    v-slot="{ items: inbounds }"
                     :items="props.data.dataplane.networking.gateway ? (traffic?.inbounds ?? []).map((inbound): DataplaneInbound => {
                       return {
                         ...props.data.dataplane.networking.inbounds[0],
@@ -144,50 +142,62 @@
                     }) : props.data.dataplane.networking.inbounds"
                   >
                     <template
-                      v-for="item in inbounds"
-                      :key="`${item.name}`"
+                      v-if="props.data.dataplaneType === 'delegated'"
+                      #empty
                     >
-                      <!-- the finding here would be expensive if inbounds was commonly large -->
-                      <!-- inbounds are mostly singular and even when they are not they are small -->
+                      <EmptyBlock>
+                        <template #message>
+                          This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway
+                        </template>
+                      </EmptyBlock>
+                    </template>
+                    <template #default="{ items: inbounds }">
                       <template
-                        v-for="inbound in [
-                          (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.name}` === `${item.name}`),
-                        ]"
-                        :key="inbound"
+                        v-for="item in inbounds"
+                        :key="`${item.name}`"
                       >
-                        <ServiceTrafficCard
-                          :protocol="inbound?.protocol ?? item.protocol"
-                          :traffic="typeof error === 'undefined' ?
-                            inbound :
-                            {
-                              name: '',
-                              protocol: item.protocol as TrafficEntry['protocol'],
-                              port: `${item.port}`,
-                            }
-                          "
+                        <!-- the finding here would be expensive if inbounds was commonly large -->
+                        <!-- inbounds are mostly singular and even when they are not they are small -->
+                        <template
+                          v-for="inbound in [
+                            (traffic || {inbounds: []}).inbounds.find(inbound => `${inbound.name}` === `${item.name}`),
+                          ]"
+                          :key="inbound"
                         >
-                          <template
-                            v-for="name in [`${item.name.replace(`_${item.port}`, '').replace('localhost', '')}:${item.port}`]"
-                            :key="name"
+                          <ServiceTrafficCard
+                            :protocol="inbound?.protocol ?? item.protocol"
+                            :traffic="typeof error === 'undefined' ?
+                              inbound :
+                              {
+                                name: '',
+                                protocol: item.protocol as TrafficEntry['protocol'],
+                                port: `${item.port}`,
+                              }
+                            "
                           >
-                            <RouterLink
-                              :to="{
-                                name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
-                                params: {
-                                  service: name,
-                                },
-                                query: {
-                                  inactive: route.params.inactive ? null : undefined,
-                                },
-                              }"
+                            <template
+                              v-for="name in [`${item.name.replace(`_${item.port}`, '').replace('localhost', '')}:${item.port}`]"
+                              :key="name"
                             >
-                              {{ name }}
-                            </RouterLink>
-                          </template>
-                          <TagList
-                            :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
-                          />
-                        </ServiceTrafficCard>
+                              <RouterLink
+                                :to="{
+                                  name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-inbound-summary-overview-view')(String(_route.name)),
+                                  params: {
+                                    service: name,
+                                  },
+                                  query: {
+                                    inactive: route.params.inactive ? null : undefined,
+                                  },
+                                }"
+                              >
+                                {{ name }}
+                              </RouterLink>
+                            </template>
+                            <TagList
+                              :tags="[{label: 'kuma.io/service', value: item.tags['kuma.io/service']}]"
+                            />
+                          </ServiceTrafficCard>
+                        </template>
                       </template>
                     </template>
                   </DataCollection>

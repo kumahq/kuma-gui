@@ -100,7 +100,9 @@ const DataplaneNetworking = {
     return {
       ...rest,
       type,
-      inboundName: typeof networking.gateway === 'undefined' ? 'localhost' : type === 'builtin' ? networking.gateway.tags['kuma.io/service'] : '~',
+      // inboundNames are `localhost` for a sidecar, the service name for a gateway.
+      // The service name "as an inbound" will never be found for a delegated gateway
+      inboundName: typeof networking.gateway === 'undefined' ? 'localhost' : networking.gateway.tags['kuma.io/service'],
       // guess a single inbound for the moment
       // we need to fill this in and make it multiple by either using the policy info
       // or the stats listeners info
