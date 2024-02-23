@@ -18,7 +18,7 @@ meshes:
       breadcrumbs: Meshes
       navigation:
         mesh-detail-view: Overview
-        service-list-view: Services
+        service-list-tabs-view: Services
         external-service-list-view: External Services
         gateway-list-tabs-view: Gateways
         data-plane-list-view: Data Plane Proxies

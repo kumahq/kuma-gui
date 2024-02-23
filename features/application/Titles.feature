@@ -33,8 +33,17 @@ Feature: application / titles
       | /meshes                  | Meshes        |
       | /meshes/default/overview | Mesh overview |
 
-      | /meshes/default/services                       | Services     |
-      | /meshes/default/services/service-name/overview | service-name |
+      | /meshes/default/services/internal                       | Services     |
+      | /meshes/default/services/internal/service-name/overview | service-name |
+
+      | /meshes/default/services/external                       | External Services |
+      | /meshes/default/services/external/service-name/overview | service-name      |
+
+      | /meshes/default/gateways/builtin                  | Built-in Gateways |
+      | /meshes/default/gateways/builtin/gateway/overview | gateway           |
+
+      | /meshes/default/gateways/delegated                  | Delegated Gateways |
+      | /meshes/default/gateways/delegated/gateway/overview | gateway            |
 
       | /meshes/default/data-planes                          | Data Plane Proxies |
       | /meshes/default/data-planes/data-plane-name/overview | data-plane-name    |

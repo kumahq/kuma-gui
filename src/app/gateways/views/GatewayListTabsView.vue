@@ -1,66 +1,50 @@
 <template>
-  <DataSource
-    v-slot="{ data: me }: MeSource"
-    src="/me"
+  <RouteView
+    v-slot="{ route, t }"
+    name="gateway-list-tabs-view"
+    :params="{
+      mesh: '',
+    }"
   >
-    <RouteView
-      v-if="me"
-      v-slot="{ route, t }"
-      name="gateway-list-tabs-view"
-      :params="{
-        mesh: '',
-      }"
-    >
-      <RouterView
-        v-slot="{ Component, route: active }"
-      >
-        <AppView>
-          <template #title>
-            <h2>
-              <RouteTitle
-                :title="t(`${active.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
-              />
-            </h2>
-          </template>
-          <template #actions>
-            <DataCollection
-              v-slot="{ items }"
-              :items="route.children"
-              :empty="false"
+    <AppView>
+      <template #title>
+        <h2>
+          <RouteTitle :title="t(`${route.active?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)" />
+        </h2>
+      </template>
+
+      <template #actions>
+        <DataCollection
+          v-slot="{ items }"
+          :items="route.children"
+          :empty="false"
+        >
+          <LinkBox>
+            <RouterLink
+              v-for="{ name } in items"
+              :key="`${name}`"
+              :class="{
+                'active': route.active?.name === name,
+              }"
+              :to="{
+                name: name,
+                params: {
+                  mesh: route.params.mesh,
+                },
+              }"
+              :data-testid="`${name}-sub-tab`"
             >
-              <LinkBox>
-                <template
-                  v-for="item in items"
-                  :key="`${item.name}`"
-                >
-                  <RouterLink
-                    :class="{
-                      'active': route.active?.name === item.name,
-                    }"
-                    :to="{
-                      name: item.name,
-                      params: {
-                        mesh: route.params.mesh,
-                      },
-                    }"
-                  >
-                    {{ t(`gateways.routes.items.navigation.${item.name}`) }}
-                  </RouterLink>
-                </template>
-              </LinkBox>
-            </DataCollection>
-          </template>
-          <component
-            :is="Component"
-          />
-        </AppView>
-      </RouterView>
-    </RouteView>
-  </DataSource>
+              {{ t(`gateways.routes.items.navigation.${name}`) }}
+            </RouterLink>
+          </LinkBox>
+        </DataCollection>
+      </template>
+
+      <RouterView />
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
 import LinkBox from '@/app/common/LinkBox.vue'
-import type { MeSource } from '@/app/me/sources'
-
 </script>

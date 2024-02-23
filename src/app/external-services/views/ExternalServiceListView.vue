@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ can, route, t }"
+      v-slot="{ route, t }"
       name="external-service-list-view"
       :params="{
         page: 1,
@@ -18,35 +18,6 @@
         :src="`/meshes/${route.params.mesh}/external-services?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
-          <template #title>
-            <h2>
-              <RouteTitle :title="t(`${currentRoute.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)" />
-            </h2>
-          </template>
-
-          <template
-            v-if="can('use gateways ui')"
-            #actions
-          >
-            <LinkBox>
-              <RouterLink
-                v-for="{ name } in route.children"
-                :key="name"
-                :class="{
-                  'active': route.active?.name === name,
-                }"
-                :to="{
-                  name,
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-              >
-                {{ t(`services.routes.items.navigation.${name}`) }}
-              </RouterLink>
-            </LinkBox>
-          </template>
-
           <KCard>
             <ErrorBlock
               v-if="error !== undefined"
@@ -135,16 +106,12 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
-import { useRoute } from 'vue-router'
 
 import type { ExternalServiceCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LinkBox from '@/app/common/LinkBox.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-
-const currentRoute = useRoute()
 </script>
 
 <style lang="scss" scoped>
