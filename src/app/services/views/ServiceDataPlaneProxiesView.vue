@@ -48,6 +48,7 @@
               :is-selected-row="(row) => row.name === route.params.dataPlane"
               summary-route-name="service-data-plane-summary-view"
               :is-global-mode="can('use zones')"
+              :can-use-gateways-ui="can('use gateways ui')"
               @change="route.update"
             >
               <template #toolbar>
