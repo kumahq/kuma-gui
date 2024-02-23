@@ -121,6 +121,8 @@ const INLINE_NON_VOID_ELEMENTS = [
             'RouterView',
             // @kong/kongponents
             'K[A-Z].*',
+            //
+            'X[A-Z].*',
             // @kong-ui-public/i18n
             'I18nT',
             // Application

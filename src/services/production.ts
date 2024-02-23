@@ -6,6 +6,7 @@ import { services as kuma } from '@/app/kuma'
 import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
+import { services as x } from '@/app/x'
 import { services as zones } from '@/app/zones'
 import i18nEnUs from '@/locales/en-us'
 import type { EnvArgs } from '@/services/env/Env'
@@ -72,6 +73,7 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
     ...$,
     routes: $.routesLabel,
   }),
+  ...x($),
   ...me($),
   ...kuma($),
   //

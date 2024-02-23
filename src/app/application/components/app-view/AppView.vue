@@ -23,6 +23,7 @@
         <div
           class="actions"
         >
+          <XTeleportSlot :name="`${routeView.name}-actions`" />
           <slot name="actions" />
         </div>
       </header>
@@ -48,8 +49,9 @@ import { KongIcon } from '@kong/icons'
 import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
 import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
+import { ROUTE_VIEW_PARENT } from '../route-view/index'
+import type { RouteView } from '../route-view/RouteView.vue'
 import { useMainView } from '@/components'
-
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: Symbol) => void
   removeBreadcrumbs: (sym: Symbol) => void
@@ -57,6 +59,8 @@ type AppView = {
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
 
 const MainView = useMainView()
+
+const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
 
 const props = withDefaults(defineProps<{
   breadcrumbs?: BreadcrumbItem[] | null
