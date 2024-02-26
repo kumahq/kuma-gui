@@ -196,12 +196,16 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
-  // The following code is a hotfix for https://github.com/kumahq/kuma-gui/issues/599 until we implement the lookup of `ExternalService` resources by `ServiceInsight` name.
-  async getExternalServiceByServiceInsightName(mesh: string, name: string): Promise<ExternalService | null> {
-    const { items } = await this.getAllExternalServicesFromMesh({ mesh }, { name })
+  async getExternalServiceByServiceInsightName({ mesh }: { mesh: string }, params?: PaginationParameters & { service: string }): Promise<ExternalService | null> {
+    // Sends a `kuma.io/service` tag query parameter despite the Kuma API not understanding it. Should it be supported in a future patch, it would start working here.
+    const { service, ...rest } = params ?? {}
+    const { items } = await this.getAllExternalServicesFromMesh({ mesh }, {
+      ...rest,
+      ...(service ? { tag: [`kuma.io/service:${service}`] } : {}),
+    })
 
-    if (Array.isArray(items)) {
-      const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === name)
+    if (Array.isArray(items) && service) {
+      const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === service)
 
       return foundExternalService ?? null
     } else {

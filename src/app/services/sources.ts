@@ -16,6 +16,10 @@ type PaginationParams = {
   page: number
 }
 
+type ExternalServiceParams = CollectionParams & PaginationParams & {
+  service: string
+}
+
 type Closeable = { close: () => void }
 
 export type ServiceInsightSource = DataSourceResponse<ServiceInsight>
@@ -43,12 +47,12 @@ export const sources = (api: KumaApi) => {
       return api.getServiceInsight({ mesh, name })
     },
 
-    '/meshes/:mesh/external-services/:name': (params: DetailParams, source: Closeable) => {
+    '/meshes/:mesh/external-services/for/:service': (params: ExternalServiceParams, source: Closeable) => {
       source.close()
 
-      const { mesh, name } = params
+      const { mesh, service, size } = params
 
-      return api.getExternalServiceByServiceInsightName(mesh, name)
+      return api.getExternalServiceByServiceInsightName({ mesh }, { size, service })
     },
   }
 }

@@ -9,6 +9,7 @@ Feature: mesh / services / item
       | button-clear-search    | [data-testid="k-filter-bar-clear-query-button"]                                   |
       | button-actions         | $item:nth-child(1) .actions-column .dropdown-trigger button                       |
       | button-view            | $item:nth-child(1) .actions-column [data-testid="k-dropdown-item-View-details"] a |
+      | detail-view            | [data-testid='service-detail-view']                                               |
 
   Scenario Outline: Shows Data Plane Proxies for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
@@ -164,3 +165,43 @@ Feature: mesh / services / item
       And I click the "$button-actions" element
       Then I click the "$button-view" element
       Then the URL contains "/mesh/default/data-plane/fake-dataplane"
+
+    Scenario: Service with matching ExternalService doesn't show empty state
+      Given the environment
+        """
+        KUMA_EXTERNALSERVICE_COUNT: 1
+        """
+      And the URL "/meshes/default/service-insights/service-1" responds with
+        """
+          body:
+            serviceType: external
+        """
+      And the URL "/meshes/default/external-services" responds with
+        """
+          body:
+            items:
+              - name: external-service-1
+                tags:
+                  kuma.io/service: service-1
+        """
+
+      When I visit the "/mesh/default/service/service-1" URL
+
+      Then the "$detail-view" element contains "service-1"
+      Then the "[data-testid='no-matching-external-service']" element doesn't exist
+
+    Scenario: Service without matching ExternalService shows empty state
+      Given the environment
+        """
+        KUMA_EXTERNALSERVICE_COUNT: 0
+        """
+      And the URL "/meshes/default/service-insights/service-1" responds with
+        """
+          body:
+            serviceType: external
+        """
+
+      When I visit the "/mesh/default/service/service-1" URL
+
+      Then the "$detail-view" element contains "service-1"
+      Then the "[data-testid='no-matching-external-service']" element exists
