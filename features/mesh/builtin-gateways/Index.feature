@@ -1,10 +1,12 @@
 Feature: mesh / builtin-gateways / index
   Background:
     Given the CSS selectors
-      | Alias        | Selector                                   |
-      | items        | [data-testid='builtin-gateway-collection'] |
-      | items-header | $items th                                  |
-      | item         | $items tbody tr                            |
+      | Alias                   | Selector                                          |
+      | items                   | [data-testid='builtin-gateway-collection']        |
+      | items-header            | $items th                                         |
+      | item                    | $items tbody tr                                   |
+      | builtin-gateway-sub-tab | [data-testid='builtin-gateway-list-view-sub-tab'] |
+
     And the environment
       """
       KUMA_MESHGATEWAY_COUNT: 1
@@ -18,6 +20,11 @@ Feature: mesh / builtin-gateways / index
               kuma.io/origin: zone
               kuma.io/zone: zone-1
       """
+
+  Scenario: Sub navigation has expected content
+    When I visit the "/meshes/default/gateways/builtin" URL
+
+    Then the "$builtin-gateway-sub-tab" element exists
 
   Scenario: The items have the correct columns
     When I visit the "/meshes/default/gateways/builtin" URL

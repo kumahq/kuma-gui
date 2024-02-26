@@ -1,12 +1,13 @@
 Feature: mesh / services / index
   Background:
     Given the CSS selectors
-      | Alias        | Selector                              |
-      | items        | [data-testid='service-collection']    |
-      | children     | [data-testid='data-plane-collection'] |
-      | items-header | $items th                             |
-      | item         | $items tbody tr                       |
-      | breadcrumbs  | .k-breadcrumbs                        |
+      | Alias           | Selector                                  |
+      | items           | [data-testid='service-collection']        |
+      | children        | [data-testid='data-plane-collection']     |
+      | items-header    | $items th                                 |
+      | item            | $items tbody tr                           |
+      | breadcrumbs     | .k-breadcrumbs                            |
+      | service-sub-tab | [data-testid='service-list-view-sub-tab'] |
     And the environment
       """
       KUMA_SERVICE_COUNT: 2
@@ -18,7 +19,10 @@ Feature: mesh / services / index
         - name: service-1
         - name: service-2
       """
-    When I visit the "/meshes/default/services" URL
+    When I visit the "/meshes/default/services/internal" URL
+
+  Scenario: Sub navigation has expected content
+    Then the "$service-sub-tab" element exists
 
   Scenario: The items have the correct columns
     Then the "$items-header" element exists 5 times
@@ -30,7 +34,7 @@ Feature: mesh / services / index
       | Status                      |
 
   Scenario: The items have the expected content and UI elements
-    Then the "#service-list-view-tab.active" element exists
+    Then the "#service-list-tabs-view-tab.active" element exists
     Then the "$item" element exists 2 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
@@ -51,7 +55,7 @@ Feature: mesh / services / index
 
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
 
-    Then the URL contains "services/service-1/overview"
+    Then the URL contains "/services/internal/service-1/overview"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "external" shouldn't have a Data Plane Proxy table
     And the "#service-data-plane-proxies-view-tab a" element doesn't exists
@@ -62,7 +66,7 @@ Feature: mesh / services / index
 
     When I click the "$item:nth-child(2) [data-testid='details-link']" element
 
-    Then the URL contains "services/service-2/overview"
+    Then the URL contains "/services/internal/service-2/overview"
     Then the "[data-testid='service-detail-tabs-view']" element contains "service-2"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "internal" should have a Data Plane Proxy table

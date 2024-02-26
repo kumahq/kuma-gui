@@ -2,7 +2,6 @@ import { features } from './features'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
-export * from './routes'
 
 type Token = ReturnType<typeof token>
 

@@ -16,7 +16,7 @@ Feature: mesh / services / item
           serviceType: <ServiceType>
       """
 
-    When I visit the "/meshes/default/services/firewall-1/overview" URL
+    When I visit the "/meshes/default/services/internal/firewall-1/overview" URL
     Then the "$config-tab" element doesn't exist
     Then the "$data-plane-proxies-tab" element exists
 
@@ -41,7 +41,7 @@ Feature: mesh / services / item
                   networking:
                     gateway: !!js/undefined
         """
-      When I visit the "/meshes/default/services/system-1/overview" URL
+      When I visit the "/meshes/default/services/internal/system-1/overview" URL
 
     Scenario: Internal services request the dataplanes for the service
       When I click the "$data-plane-proxies-tab" element

@@ -1,10 +1,11 @@
 Feature: mesh / delegated-gateways / index
   Background:
     Given the CSS selectors
-      | Alias        | Selector                                     |
-      | items        | [data-testid='delegated-gateway-collection'] |
-      | items-header | $items th                                    |
-      | item         | $items tbody tr                              |
+      | Alias                     | Selector                                            |
+      | items                     | [data-testid='delegated-gateway-collection']        |
+      | items-header              | $items th                                           |
+      | item                      | $items tbody tr                                     |
+      | delegated-gateway-sub-tab | [data-testid='delegated-gateway-list-view-sub-tab'] |
     And the environment
       """
       KUMA_SERVICE_COUNT: 1
@@ -22,6 +23,11 @@ Feature: mesh / delegated-gateways / index
               online: 1
               offline: 1
       """
+
+  Scenario: Sub navigation has expected content
+    When I visit the "/meshes/default/gateways/delegated" URL
+
+    Then the "$delegated-gateway-sub-tab" element exists
 
   Scenario: The items have the correct columns
     When I visit the "/meshes/default/gateways/delegated" URL
