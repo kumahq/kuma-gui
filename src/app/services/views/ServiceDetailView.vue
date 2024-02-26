@@ -54,7 +54,7 @@
             <DataSource
               v-if="data.serviceType === 'external'"
               v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
-              :src="`/meshes/${route.params.mesh}/external-services/${route.params.service}`"
+              :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}?size=1000`"
             >
               <LoadingBlock v-if="externalService === undefined" />
 
@@ -62,6 +62,15 @@
                 v-else-if="externalServiceError"
                 :error="externalServiceError"
               />
+
+              <EmptyBlock
+                v-else-if="externalService === null"
+                data-testid="no-matching-external-service"
+              >
+                <template #title>
+                  <p>{{ t('services.detail.no_matching_external_service', { name: props.service }) }}</p>
+                </template>
+              </EmptyBlock>
 
               <ExternalServiceDetails
                 v-else
@@ -176,6 +185,7 @@ import AppView from '@/app/application/components/app-view/AppView.vue'
 import DataSource from '@/app/application/components/data-source/DataSource.vue'
 import RouteTitle from '@/app/application/components/route-view/RouteTitle.vue'
 import RouteView from '@/app/application/components/route-view/RouteView.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import KFilterBar from '@/app/common/KFilterBar.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
