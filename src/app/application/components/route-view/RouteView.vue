@@ -33,7 +33,7 @@
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import { ROUTE_VIEW_PARENT } from '.'
+import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
 import { useCan, useI18n, uniqueId } from '../../index'
 import {
   urlParam,
@@ -46,6 +46,7 @@ import {
 import { useEnv } from '@/utilities'
 import type { RouteRecordRaw } from 'vue-router'
 export type RouteView = {
+  name: string
   addTitle: (item: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
   addAttrs: (item: Partial<Record<string, string>>, sym: Symbol) => void
@@ -103,6 +104,7 @@ const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) =
 const active = computed(() => children.find((item) => item.name === route.name || item.meta?.module === route.meta.module))
 
 const routeView = {
+  name: props.name,
   addTitle: (item: string, sym: Symbol) => {
     const $title = title.value
     if ($title) {
@@ -201,12 +203,13 @@ const routerBack = (...args: RouteReplaceParams) => {
   routeReplace(...args)
 }
 
-const hasParent: RouteView | undefined = inject(ROUTE_VIEW_PARENT, undefined)
+const hasParent: RouteView | undefined = inject(ROUTE_VIEW_ROOT, undefined)
 if (!hasParent) {
   // use the default title if we are the topmost RouteView
   setTitle(t('components.route-view.title', { name: t('common.product.name') }))
-  provide(ROUTE_VIEW_PARENT, routeView)
+  provide(ROUTE_VIEW_ROOT, routeView)
 }
+provide(ROUTE_VIEW_PARENT, routeView)
 const parent: RouteView = hasParent || routeView
 
 watch(() => props.attrs, (attrs) => {
