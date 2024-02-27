@@ -145,7 +145,7 @@
                       </RouterLink>
 
                       <RouterLink
-                        v-else-if="row.dataplaneType === 'delegated' && can('use gateways ui')"
+                        v-else-if="row.dataplaneType === 'delegated'"
                         :to="{
                           name: 'delegated-gateway-detail-view',
                           params: {

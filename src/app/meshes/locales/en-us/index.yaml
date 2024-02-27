@@ -19,7 +19,6 @@ meshes:
       navigation:
         mesh-detail-view: Overview
         service-list-tabs-view: Services
-        external-service-list-view: External Services
         gateway-list-tabs-view: Gateways
         data-plane-list-view: Data Plane Proxies
         policy-list-index-view: Policies

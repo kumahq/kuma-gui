@@ -22,7 +22,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('meshes.routes'), {
       service: routes,
       arguments: [
-        app.can,
         $.serviceRoutes,
         $.gatewayRoutes,
         $.dataplaneRoutes,
