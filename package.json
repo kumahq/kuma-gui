@@ -50,7 +50,7 @@
     "semver": "7.6.0",
     "vue": "3.4.20",
     "vue-github-button": "3.1.0",
-    "vue-router": "4.2.5"
+    "vue-router": "4.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.23.9",
