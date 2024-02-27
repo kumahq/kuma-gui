@@ -16,6 +16,18 @@ export const routes = () => {
                 path: 'overview',
                 name: 'builtin-gateway-detail-view',
                 component: () => import('@/app/gateways/views/BuiltinGatewayDetailView.vue'),
+                children: [
+                  {
+                    path: ':dataPlane',
+                    name: 'builtin-gateway-data-plane-summary-view',
+                    component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+                  },
+                ],
+              },
+              {
+                path: 'config',
+                name: 'builtin-gateway-config-view',
+                component: () => import('@/app/gateways/views/BuiltinGatewayConfigView.vue'),
               },
             ],
           },

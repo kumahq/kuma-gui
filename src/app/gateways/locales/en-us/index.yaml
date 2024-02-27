@@ -13,11 +13,9 @@ builtin-gateways:
       breadcrumbs: Built-in Gateways
       navigation:
         builtin-gateway-detail-view: Overview
+        builtin-gateway-config-view: YAML
     items:
       title: Built-in Gateways
-  detail:
-    affected_dpps: Affected Data Plane Proxies
-    dataplane_input_placeholder: Filter by name
   href:
     docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin?{KUMA_UTM_QUERY_PARAMS}'
 
