@@ -244,7 +244,7 @@
                   >
                     <!-- Outbounds for gateways report actual traffic on the upstream so we switch to upstream here for non-standard-->
                     <template
-                      v-for="direction in [props.data.dataplane.networking.type !== 'standard' ? 'upstream' : 'downstream'] as const"
+                      v-for="direction in ['upstream'] as const"
                       :key="direction"
                     >
                       <ConnectionGroup
