@@ -16,19 +16,6 @@ export const routes = () => {
                 path: 'overview',
                 name: 'service-detail-view',
                 component: () => import('@/app/services/views/ServiceDetailView.vue'),
-              },
-              {
-                path: 'config',
-                name: 'service-config-view',
-                component: () => import('@/app/services/views/ServiceConfigView.vue'),
-              },
-              {
-                path: 'data-plane-proxies',
-                name: 'service-data-plane-proxies-view',
-                meta: {
-                  module: 'service-data-planes',
-                },
-                component: () => import('@/app/services/views/ServiceDataPlaneProxiesView.vue'),
                 children: [
                   {
                     path: ':dataPlane',
@@ -48,11 +35,6 @@ export const routes = () => {
                 path: 'overview',
                 name: 'external-service-detail-view',
                 component: () => import('@/app/external-services/views/ExternalServiceDetailView.vue'),
-              },
-              {
-                path: 'config',
-                name: 'external-service-config-view',
-                component: () => import('@/app/external-services/views/ExternalServiceConfigView.vue'),
               },
             ],
           },

@@ -1,55 +1,57 @@
 <template>
-  <KToggle
-    v-slot="{ isToggled, toggle }"
-    :toggled="false"
-  >
-    <CodeBlock
-      language="yaml"
-      :code="yamlUniversal"
-      :is-searchable="props.isSearchable"
-      :code-max-height="props.codeMaxHeight"
-      :query="props.query"
-      :is-filter-mode="props.isFilterMode"
-      :is-reg-exp-mode="props.isRegExpMode"
-      @query-change="emit('query-change', $event)"
-      @filter-mode-change="emit('filter-mode-change', $event)"
-      @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+  <div>
+    <KToggle
+      v-slot="{ isToggled, toggle }"
+      :toggled="false"
     >
-      <template #secondary-actions>
-        <KTooltip
-          class="kubernetes-copy-button-tooltip"
-          :text="t('common.copyKubernetesText')"
-          placement="bottomEnd"
-          max-width="200"
-        >
-          <CopyButton
-            class="kubernetes-copy-button"
-            :get-text="getYamlAsKubernetes"
-            :copy-text="t('common.copyKubernetesText')"
-            has-border
-            hide-title
-            icon-color="currentColor"
-            @click="() => {
-              if(isToggled.value === false) {
-                toggle()
-              }
-            }"
+      <CodeBlock
+        language="yaml"
+        :code="yamlUniversal"
+        :is-searchable="props.isSearchable"
+        :code-max-height="props.codeMaxHeight"
+        :query="props.query"
+        :is-filter-mode="props.isFilterMode"
+        :is-reg-exp-mode="props.isRegExpMode"
+        @query-change="emit('query-change', $event)"
+        @filter-mode-change="emit('filter-mode-change', $event)"
+        @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+      >
+        <template #secondary-actions>
+          <KTooltip
+            class="kubernetes-copy-button-tooltip"
+            :text="t('common.copyKubernetesText')"
+            placement="bottomEnd"
+            max-width="200"
           >
-            {{ t('common.copyKubernetesShortText') }}
-          </CopyButton>
-        </KTooltip>
-      </template>
-    </CodeBlock>
-    <slot
-      :copy="(cb: CopyCallback) => {
-        if(isToggled.value !== false) {
-          toggle()
-        }
-        copy(cb)
-      }"
-      :copying="isToggled.value"
-    />
-  </KToggle>
+            <CopyButton
+              class="kubernetes-copy-button"
+              :get-text="getYamlAsKubernetes"
+              :copy-text="t('common.copyKubernetesText')"
+              has-border
+              hide-title
+              icon-color="currentColor"
+              @click="() => {
+                if(isToggled.value === false) {
+                  toggle()
+                }
+              }"
+            >
+              {{ t('common.copyKubernetesShortText') }}
+            </CopyButton>
+          </KTooltip>
+        </template>
+      </CodeBlock>
+      <slot
+        :copy="(cb: CopyCallback) => {
+          if(isToggled.value !== false) {
+            toggle()
+          }
+          copy(cb)
+        }"
+        :copying="isToggled.value"
+      />
+    </KToggle>
+  </div>
 </template>
 
 <script lang="ts" setup>

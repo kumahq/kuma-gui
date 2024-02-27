@@ -3,7 +3,8 @@ Feature: mesh / services / index
     Given the CSS selectors
       | Alias           | Selector                                  |
       | items           | [data-testid='service-collection']        |
-      | children        | [data-testid='data-plane-collection']     |
+      | dataplanes      | [data-testid='data-plane-collection']     |
+      | config          | [data-testid='external-service-config']   |
       | items-header    | $items th                                 |
       | item            | $items tbody tr                           |
       | breadcrumbs     | .k-breadcrumbs                            |
@@ -46,11 +47,12 @@ Feature: mesh / services / index
       body:
         serviceType: external
       """
-    And the URL "/meshes/default/service-insights/service-2" responds with
+    Given the URL "/meshes/default/service-insights/service-2" responds with
       """
       body:
         serviceType: internal
       """
+
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1"
 
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
@@ -58,10 +60,13 @@ Feature: mesh / services / index
     Then the URL contains "/services/internal/service-1/overview"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "external" shouldn't have a Data Plane Proxy table
-    And the "#service-data-plane-proxies-view-tab a" element doesn't exists
+    Then the "$config" element exists
+    Then the "$dataplanes" element doesn't exist
 
     When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
+
     Then the "$item" element exists 2 times
+
     Then the "$item:nth-child(2) td:nth-child(1)" element contains "service-2"
 
     When I click the "$item:nth-child(2) [data-testid='details-link']" element
@@ -70,4 +75,5 @@ Feature: mesh / services / index
     Then the "[data-testid='service-detail-tabs-view']" element contains "service-2"
     Then the "#service-detail-view-tab a" element exists
     # Service Insights with serviceType "internal" should have a Data Plane Proxy table
-    And the "#service-data-plane-proxies-view-tab a" element exists
+    Then the "$dataplanes" element exists
+    Then the "$config" element doesn't exist

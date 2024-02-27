@@ -6,7 +6,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const name = req.params.name as string
 
   const paramType = ['internal', 'gateway_builtin', 'gateway_delegated', 'external'].find((type) => name.endsWith(`-${type}`)) as 'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin' | undefined
-  const serviceType = paramType ?? fake.datatype.boolean() ? fake.kuma.serviceType() : undefined
+  const serviceType = paramType ?? (fake.datatype.boolean() ? fake.kuma.serviceType() : undefined)
   const addressPort = serviceType !== 'external' ? `${name}.mesh:${fake.internet.port()}` : undefined
   const status = serviceType !== 'external' ? fake.kuma.serviceStatusKeyword() : undefined
   const dataplanes = serviceType !== 'external' ? fake.kuma.healthStatus() : undefined

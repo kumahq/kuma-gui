@@ -39,59 +39,27 @@
         </h1>
       </template>
 
-      <DataSource
-        v-slot="{ data, error }: ServiceInsightSource"
-        :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
-      >
-        <ErrorBlock
-          v-if="error"
-          :error="error"
-        />
-
-        <LoadingBlock v-else-if="data === undefined" />
-
-        <template v-else>
-          <NavTabs :active-route-name="route.active?.name">
-            <template
-              v-for="{ name } in route.children.filter(({ name }) => {
-                if (data.serviceType !== 'external' && name === 'service-config-view') {
-                  return false
-                }
-
-                if (data.serviceType === 'external' && name === 'service-data-plane-proxies-view') {
-                  return false
-                }
-
-                return true
-              })"
-              :key="name"
-              #[`${name}`]
-            >
-              <RouterLink
-                :to="{ name }"
-                :data-testid="`${name}-tab`"
-              >
-                {{ t(`services.routes.item.navigation.${name}`) }}
-              </RouterLink>
-            </template>
-          </NavTabs>
-
-          <RouterView v-slot="child">
-            <component
-              :is="child.Component"
-              :data="data"
-            />
-          </RouterView>
+      <NavTabs :active-route-name="route.active?.name">
+        <template
+          v-for="{ name } in route.children"
+          :key="name"
+          #[`${name}`]
+        >
+          <RouterLink
+            :to="{ name }"
+            :data-testid="`${name}-tab`"
+          >
+            {{ t(`services.routes.item.navigation.${name}`) }}
+          </RouterLink>
         </template>
-      </DataSource>
+      </NavTabs>
+
+      <RouterView />
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import type { ServiceInsightSource } from '../sources'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

@@ -28,14 +28,6 @@ export const routes = () => {
                 path: 'overview',
                 name: 'delegated-gateway-detail-view',
                 component: () => import('@/app/gateways/views/DelegatedGatewayDetailView.vue'),
-              },
-              {
-                path: 'data-plane-proxies',
-                name: 'delegated-gateway-data-plane-proxies-view',
-                meta: {
-                  module: 'delegated-gateway-data-planes',
-                },
-                component: () => import('@/app/gateways/views/DelegatedGatewayDataPlaneProxiesView.vue'),
                 children: [
                   {
                     path: ':dataPlane',

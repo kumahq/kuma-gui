@@ -49,4 +49,3 @@ Feature: mesh / external-services / index
 
     Then the URL contains "/services/external/service-1/overview"
     Then the "#external-service-detail-view-tab a" element exists
-    Then the "#external-service-config-view-tab a" element exists

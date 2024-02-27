@@ -177,7 +177,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       }), can('use zones'))
     },
 
-    '/meshes/:mesh/dataplanes/for/:service/of/:type': async (params) => {
+    '/meshes/:mesh/dataplanes/for/:service': async (params) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
@@ -189,16 +189,8 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/service:'))
       filterParams.tag.push(`kuma.io/service:${params.service}`)
 
-      // we use `all` in code to mean "don't specify `?gateway` in the API URL" i.e.
-      // both gateway and sidecars
-      const type = params.type === 'standard' ? 'false' : params.type
-      const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
-        ? { gateway: type }
-        : {}
-
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...filterParams,
-        ...gatewayParams,
         offset,
         size,
       }), can('use zones'))
