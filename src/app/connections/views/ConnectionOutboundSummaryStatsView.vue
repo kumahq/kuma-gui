@@ -9,20 +9,20 @@
       dataPlane: '',
       service: '',
     }"
-    name="data-plane-inbound-summary-clusters-view"
+    name="connection-outbound-summary-stats-view"
   >
     <AppView>
       <template #title>
         <h3>
           <RouteTitle
-            :title="`Clusters`"
+            :title="`Stats`"
           />
         </h3>
       </template>
       <div>
         <DataSource
-          v-slot="{ data, error, refresh }: ClustersDataSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
+          v-slot="{ data, error, refresh }: StatsSource"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${route.params.service}`"
         >
           <ErrorBlock
             v-if="error"
@@ -34,12 +34,11 @@
           <CodeBlock
             v-else
             language="json"
-            :code="(() => `${
-              data.split('\n')
-                .filter(item => item.startsWith(`localhost:${route.params.service}::`))
-                .map(item => item.replace(`localhost:${route.params.service}::`, ''))
-                .join('\n')
-            }`)()"
+            :code="(() => data.raw.split('\n')
+              .filter((item) => item.includes(`.${route.params.service}.`))
+              .map((item) => item.replace(`${route.params.service}.`, ''))
+              .join('\n')
+            )()"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -67,7 +66,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
-import type { ClustersDataSource } from '../sources'
+import { StatsSource } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'

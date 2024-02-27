@@ -1,3 +1,4 @@
+import type { Connection } from '@/app/connections/data'
 import { DiscoverySubscriptionCollection, type DiscoverySubscription } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
@@ -27,13 +28,6 @@ import type {
 } from '@/types/index.d'
 import { isSet } from '@/utilities/isSet'
 
-export type { TrafficEntry } from './stats'
-
-export type Connection = {
-  name: string
-  service: string
-  protocol: string
-}
 export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   health: {
     ready: boolean

@@ -1,6 +1,7 @@
 import common from './common/index.yaml'
 import components from './components/index.yaml'
 import http from './http/index.yaml'
+import connections from '@/app/connections/locales/en-us/index.yaml'
 import controlplanes from '@/app/control-planes/locales/en-us/index.yaml'
 import dataplanes from '@/app/data-planes/locales/en-us/index.yaml'
 import diagnostics from '@/app/diagnostics/locales/en-us/index.yaml'
@@ -27,6 +28,7 @@ export default {
   ...services,
   ...policies,
   ...dataplanes,
+  ...connections,
   ...zones,
   ...zoneIngresses,
   ...zoneEgresses,

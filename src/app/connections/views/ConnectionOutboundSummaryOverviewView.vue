@@ -1,7 +1,7 @@
 <template>
   <RouteView
     v-slot="{ t }"
-    name="data-plane-outbound-summary-overview-view"
+    name="connection-outbound-summary-overview-view"
   >
     <AppView>
       <div class="stack-with-borders">

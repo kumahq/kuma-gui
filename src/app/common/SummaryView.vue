@@ -42,7 +42,7 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 :where(.summary-slideout) :deep(.app-view-title-bar) {
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2 {
     --icon-before: url('@/assets/images/icon-wifi-tethering.svg');
   }
 }
@@ -50,7 +50,7 @@ const emit = defineEmits<{
   display: flex;
   // Accounts for the absolutely-positioned close button
   margin-right: calc($kui-space-30 + 24px);
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2 {
     &::before {
       color: $kui-color-text-neutral;
       mask-repeat: no-repeat;
