@@ -10,9 +10,6 @@
       :params="{
         mesh: '',
         gateway: '',
-        codeSearch: '',
-        codeFilter: false,
-        codeRegExp: false,
         page: 1,
         size: me.pageSize,
         query: '',
