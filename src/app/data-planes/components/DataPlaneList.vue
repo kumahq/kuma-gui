@@ -76,7 +76,7 @@
             </RouterLink>
 
             <RouterLink
-              v-else-if="row.dataplaneType === 'delegated'"
+              v-else-if="row.dataplaneType === 'delegated' && props.canUseGatewaysUi"
               :to="{
                 name: 'delegated-gateway-detail-view',
                 params: {
@@ -207,9 +207,11 @@ const props = withDefaults(defineProps<{
   isSelectedRow: ((row: any) => boolean) | null
   summaryRouteName: string
   isGlobalMode: boolean
+  canUseGatewaysUi?: boolean
 }>(), {
   total: 0,
   isSelectedRow: null,
+  canUseGatewaysUi: false,
 })
 
 const emit = defineEmits<{
