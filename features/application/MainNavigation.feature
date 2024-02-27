@@ -88,3 +88,11 @@ Feature: application / MainNavigation
     When I navigate "back"
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element exists
+
+  Scenario: Secondary navigation
+    When I visit the "/meshes/default/data-planes/dp-name/stats" URL
+    And the "#data-plane-stats-view-tab.active" element exists
+
+  Scenario: Tertiary navigation
+    When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/driver:8080/stats" URL
+    And the "#data-plane-inbound-summary-stats-view-tab.active" element exists

@@ -101,7 +101,7 @@ const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) =
   item.name = String(item.name)
   return item as StringNamedRouteRecordRaw
 }) ?? [])
-const active = computed(() => children.find((item) => item.name === route.name || item.meta?.module === route.meta.module))
+const active = computed(() => children.find((item) => item.name === route.name || (item.meta && item.meta.module === route.meta.module)))
 
 const routeView = {
   name: props.name,
