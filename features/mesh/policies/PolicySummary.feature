@@ -1,10 +1,10 @@
 Feature: Policy summary
   Background:
     Given the CSS selectors
-      | Alias                | Selector                                   |
-      | item                 | [data-testid='policy-collection'] tbody tr |
-      | summary              | [data-testid='summary']                    |
-      | close-summary-button | $summary [data-testid^='close-button-']    |
+      | Alias                | Selector                                     |
+      | item                 | [data-testid='policy-collection'] tbody tr   |
+      | summary              | [data-testid='summary']                      |
+      | close-summary-button | $summary [data-testid='slideout-close-icon'] |
     And the URL "/meshes/default/meshfaultinjections" responds with
       """
       body:

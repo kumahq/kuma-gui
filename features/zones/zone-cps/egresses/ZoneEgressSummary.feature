@@ -4,7 +4,7 @@ Feature: Zone Egress summary
       | Alias                | Selector                                        |
       | item                 | [data-testid='zone-egress-collection'] tbody tr |
       | summary              | [data-testid='summary']                         |
-      | close-summary-button | $summary [data-testid^='close-button-']         |
+      | close-summary-button | $summary [data-testid='slideout-close-icon']    |
     And the URL "/zoneegresses/_overview" responds with
       """
       body:
