@@ -38,6 +38,25 @@ async function mountVueApplication() {
   )
 
   const app = await get($.app)((await import('./app/App.vue')).default)
+
+  app.config.errorHandler = function (error) {
+    // Patches the vue-router MATCHER_NOT_FOUND error message back into the error object because vue-router explicitly creates an `Error` object with no message in production environments.
+    if (
+      error instanceof Error &&
+      error.message === '' &&
+      'type' in error &&
+      error.type === 1 &&
+      'location' in error
+    ) {
+      // Changing `error.message` causes Vue to throw the error twice even when `errorHandler` throws the same `Error` object.
+      error.message = `No match for ${JSON.stringify(error.location)}`
+
+      throw error
+    }
+
+    throw error
+  }
+
   app.mount('#app')
 }
 
