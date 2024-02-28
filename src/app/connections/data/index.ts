@@ -137,9 +137,20 @@ export const getTraffic = (json: ConnectionStats, filter: (key: string) => boole
           // we only get these on outbounds at the moment (and we don't need the port for the outbound)
           // so we can pretend this doesn't happen
           port: key.split('_').at(-1) ?? '',
-          // TODO we need to detect the protocol based on the existence of
-          // a http property in the stats, just not sure which one yet
-          protocol: item === 'unknown' ? 'http' : item,
+          protocol: item === 'unknown' ? 'tcp' : item,
+        }
+        // on initially setting the TrafficEntry we may have guessed tcp
+        // make an extra check on the stats themselves to try and figure
+        // if this protocol is actually http
+        // unfortunately there doesn't seem to be a way to do the same for grpc
+        if (item === 'unknown') {
+          const obj = value as Record<string, any>
+          switch (true) {
+            // use a stat that can only be non-zero for http (or gRPC)
+            case obj.upstream_rq_total !== 0:
+              traffic[key].protocol = 'http'
+            // if we figure a way to do the same for gRPC add we can add a case here
+          }
         }
         traffic[key][traffic[key].protocol] = {
           ...(traffic[key][traffic[key].protocol] || {}),
