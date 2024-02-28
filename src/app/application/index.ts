@@ -36,6 +36,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppView: typeof AppView
     DataSource: typeof DataSource
+    DataLoader: typeof DataLoader
     DataCollection: typeof DataCollection
     RouteView: typeof RouteView
     RouteTitle: typeof RouteTitle

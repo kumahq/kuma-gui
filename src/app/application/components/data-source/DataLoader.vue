@@ -16,7 +16,7 @@
         <slot
           name="disconnected"
           :data="props.src !== '' ? allData[0] : undefined"
-          :errors="props.src !== '' ? allErrors[0] : undefined"
+          :error="props.src !== '' ? allErrors[0] : undefined"
           :refresh="props.src !== '' ? refresh : () => {}"
         >
           <!-- KAlert -->
@@ -25,7 +25,7 @@
       <slot
         name="default"
         :data="props.src !== '' ? allData[0] : undefined"
-        :errors="props.src !== '' ? allErrors[0] : undefined"
+        :error="props.src !== '' ? allErrors[0] : undefined"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
     </template>
@@ -36,7 +36,7 @@
       <slot
         name="error"
         :data="props.src !== '' ? allData[0] : undefined"
-        :errors="props.src !== '' ? allErrors[0] : undefined"
+        :error="props.src !== '' ? allErrors[0] : undefined"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <ErrorBlock
@@ -49,7 +49,7 @@
         v-if="props.loader"
         name="connecting"
         :data="props.src !== '' ? allData[0] : undefined"
-        :errors="props.src !== '' ? allErrors[0] : undefined"
+        :error="props.src !== '' ? allErrors[0] : undefined"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <LoadingBlock />
@@ -58,7 +58,7 @@
         v-else
         name="default"
         :data="props.src !== '' ? allData[0] : undefined"
-        :errors="props.src !== '' ? allErrors[0] : undefined"
+        :error="props.src !== '' ? allErrors[0] : undefined"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
     </template>
