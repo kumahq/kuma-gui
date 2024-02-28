@@ -104,7 +104,7 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
 }
 
 .tag-list--align-right,
-.tag-list--align-right :deep(.k-truncate-container) {
+.tag-list--align-right :deep(.truncate-container) {
   justify-content: flex-end;
 }
 

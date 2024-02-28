@@ -95,4 +95,4 @@ Feature: application / MainNavigation
 
   Scenario: Tertiary navigation
     When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/driver:8080/stats" URL
-    And the "#data-plane-inbound-summary-stats-view-tab.active" element exists
+    And the "#connection-inbound-summary-stats-view-tab.active" element exists

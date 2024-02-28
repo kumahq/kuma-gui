@@ -4,7 +4,7 @@ Feature: Zone Ingress summary
       | Alias                | Selector                                         |
       | item                 | [data-testid='zone-ingress-collection'] tbody tr |
       | summary              | [data-testid='summary']                          |
-      | close-summary-button | $summary [data-testid^='close-button-']          |
+      | close-summary-button | $summary [data-testid='slideout-close-icon']     |
     And the URL "/zone-ingresses/_overview" responds with
       """
       body:
