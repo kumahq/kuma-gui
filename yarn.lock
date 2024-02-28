@@ -1849,10 +1849,10 @@
   resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.14.tgz#3219563df669b8bb3e260df12ac211a5072938e6"
   integrity sha512-nJUTtLpqelKCTY8lS8VByWaHYUq1CuB5cBUX/q2FEDu5o6IKH/B7fEDQpb/pB1lLRYTqZXneHR/lGYjxy4u8eQ==
 
-"@kong/kongponents@9.0.0-alpha.107":
-  version "9.0.0-alpha.107"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.107.tgz#fa90c7903d1b0a0a0bd4bea7cf752086f2f6b60b"
-  integrity sha512-467Gl4BV3WqsvDczuPir1LT2yTYo/C0AZLYh0izcCJqOGjtf8IUpW8E7d8McorLj0aGfh44+NHL6qLtVdMK3Iw==
+"@kong/kongponents@9.0.0-alpha.113":
+  version "9.0.0-alpha.113"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.113.tgz#15322b11b39a56d20421cc34edc4bcb057bb4ddb"
+  integrity sha512-MDs6dsdTG26tWiS5795R1a7y94SoATEtlynx6PqSfWrum0NgCxcqnpIq7lHhdquGnMCYVocw/3hOe3gDG4LOJw==
   dependencies:
     "@kong/icons" "^1.8.14"
     "@popperjs/core" "^2.11.8"
