@@ -173,7 +173,7 @@
                           name: { description: 'filter by name or parts of a name' },
                           protocol: { description: 'filter by “kuma.io/protocol” value' },
                           tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                          zone: { description: 'filter by “kuma.io/zone” value' },
+                          ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
                         }"
                         @fields-change="route.update({
                           query: $event.query,
