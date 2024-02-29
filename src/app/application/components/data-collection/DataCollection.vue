@@ -31,7 +31,7 @@
     />
   </slot>
 </template>
-<script lang="ts" generic="T extends {} = {}" setup>
+<script lang="ts" generic="T" setup>
 import { computed } from 'vue'
 
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
