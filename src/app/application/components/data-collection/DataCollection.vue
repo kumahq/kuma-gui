@@ -45,7 +45,7 @@ const props = withDefaults(defineProps<{
   pageSize?: number
   items: T[]
   predicate?: (item: T) => boolean
-  comparator?: ((item: T) => number) | undefined
+  comparator?: ((a: T, b: T) => number) | undefined
   find?: boolean
   empty?: boolean
 }>(), {

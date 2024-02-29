@@ -12,7 +12,7 @@ import type {
   DataPlaneProxyStatus as DataplaneStatusCount,
   DataplaneWarning,
   InspectBaseRule,
-  InspectRule,
+  InspectInbound,
   InspectRulesForDataplane as PartialInspectRulesForDataplane,
   LabelValue,
   MatchedPolicyType,
@@ -22,8 +22,6 @@ import type {
   Meta,
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
-  RuleEntry,
-  RuleEntryRule,
   SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
 import { isSet } from '@/utilities/isSet'
@@ -68,12 +66,6 @@ export type DataplaneOverview = PartialDataplaneOverview & {
 }
 
 export type SidecarDataplane = PartialSidecarDataplane
-
-export type InspectRulesForDataplane = PartialInspectRulesForDataplane & {
-  proxyRules: RuleEntry[]
-  toRules: RuleEntry[]
-  fromRuleInbounds: Array<{ port: number, ruleEntries: RuleEntry[] }>
-}
 
 export type MeshGatewayDataplane = PartialMeshGatewayDataplane & {
   listenerEntries: MeshGatewayListenerEntry[]
@@ -208,20 +200,68 @@ export const SidecarDataplane = {
     }
   },
 }
-
-export const InspectRules = {
-  fromCollection(partialInspectRules: PartialInspectRulesForDataplane): InspectRulesForDataplane & {} {
-    const rules = Array.isArray(partialInspectRules.rules) ? partialInspectRules.rules : []
-    const proxyRules = getProxyRules(rules)
-    const toRules = getToRules(rules)
-    const fromRuleInbounds = getFromRuleInbounds(rules)
-
+export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
+  type: string
+  ruleType: string
+  inbound?: InspectInbound
+  config: InspectBaseRule['conf']
+  origins: InspectBaseRule['origin']
+}
+export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
+  // httpMatches: unknown[]
+  rules: Rule[]
+}
+export const Rule = {
+  fromObject(item: InspectBaseRule): Rule {
+    const { conf, origin, matchers, ...rest } = item
+    return {
+      type: '',
+      ruleType: '',
+      ...rest,
+      config: Object.keys(conf || {}).length > 0 ? conf : {},
+      origins: Array.isArray(origin) ? origin : [],
+      matchers: Array.isArray(matchers) ? matchers : [],
+    }
+  },
+  fromCollection(partialInspectRules: PartialInspectRulesForDataplane): RuleCollection {
+    const rules = Array.isArray(partialInspectRules.rules)
+      ? partialInspectRules.rules.reduce<Rule[]>((prev, item) => {
+        const to = Array.isArray(item.toRules)
+          ? item.toRules.map(rule => {
+            return {
+              ...Rule.fromObject(rule),
+              type: item.type,
+              ruleType: 'to',
+            }
+          })
+          : []
+        const from = Array.isArray(item.fromRules)
+          ? item.fromRules.reduce<Rule[]>((prev, rule) => {
+            const { rules, ...rest } = rule
+            return prev.concat(rules.map(r => {
+              return {
+                ...rest,
+                ...Rule.fromObject(r),
+                type: item.type,
+                ruleType: 'from',
+              }
+            }))
+          }, [])
+          : []
+        const proxy = typeof item.proxyRule !== 'undefined'
+          ? [{
+            ...Rule.fromObject(item.proxyRule as InspectBaseRule),
+            type: item.type,
+            ruleType: 'proxy',
+          }]
+          : []
+        return prev.concat(to).concat(from).concat(proxy)
+      }, [])
+      : []
     return {
       ...partialInspectRules,
-      rules,
-      proxyRules,
-      toRules,
-      fromRuleInbounds,
+      // httpMatches: Array.isArray(partialInspectRules.httpMatches) ? partialInspectRules.httpMatches : [],
+      rules: rules.sort((a, b) => a.ruleType.localeCompare(b.ruleType)),
     }
   },
 }
@@ -389,96 +429,6 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDatapla
   }
 
   return policyTypeEntryConnections
-}
-
-function getProxyRules(rules: InspectRule[]): RuleEntry[] {
-  return rules
-    .map((rule) => {
-      const { type, proxyRule } = rule
-
-      if (proxyRule === undefined) {
-        return null
-      }
-
-      const config = proxyRule.conf && Object.keys(proxyRule.conf).length > 0 ? proxyRule.conf : undefined
-      const origins = proxyRule.origin
-
-      return {
-        type,
-        rules: [
-          {
-            config,
-            origins,
-          },
-        ],
-      }
-    })
-    .filter(<T>(rule: T | null): rule is T => rule !== null)
-}
-
-function getToRules(rules: InspectRule[]): RuleEntry[] {
-  const ruleEntries: RuleEntry[] = []
-
-  for (const rule of rules) {
-    const toRules = rule.toRules ?? []
-
-    if (toRules.length > 0) {
-      ruleEntries.push({
-        type: rule.type,
-        rules: getRules(toRules),
-      })
-    }
-  }
-
-  ruleEntries.sort((ruleEntryA, ruleEntryB) => ruleEntryA.type.localeCompare(ruleEntryB.type))
-
-  return ruleEntries
-}
-
-function getFromRuleInbounds(rules: InspectRule[]): Array<{ port: number, ruleEntries: RuleEntry[] }> {
-  // Group rule entries by inbound
-  const ruleEntriesByInbound = new Map<number, RuleEntry[]>()
-
-  for (const rule of rules) {
-    const fromRules = rule.fromRules ?? []
-    if (fromRules.length === 0) {
-      continue
-    }
-
-    for (const fromRule of fromRules) {
-      if (!ruleEntriesByInbound.has(fromRule.inbound.port)) {
-        ruleEntriesByInbound.set(fromRule.inbound.port, [])
-      }
-
-      // This access is safe because we previously ensured this Map item exists.
-      const ruleEntries = ruleEntriesByInbound.get(fromRule.inbound.port)!
-      ruleEntries.push({
-        type: rule.type,
-        rules: getRules(fromRule.rules),
-      })
-    }
-  }
-
-  for (const [, ruleEntries] of ruleEntriesByInbound) {
-    ruleEntries.sort((ruleEntryA, ruleEntryB) => ruleEntryA.type.localeCompare(ruleEntryB.type))
-  }
-
-  const fromRules = Array.from(ruleEntriesByInbound)
-  fromRules.sort(([portA], [portB]) => portB - portA)
-
-  return fromRules.map(([port, ruleEntries]) => ({ port, ruleEntries }))
-}
-
-function getRules(rules: InspectBaseRule[]): RuleEntryRule[] {
-  return rules.map(({ conf, matchers, origin: origins }) => {
-    const config = conf && Object.keys(conf).length > 0 ? conf : undefined
-
-    return {
-      config,
-      matchers,
-      origins,
-    }
-  })
 }
 
 function getListenerEntries(meshGatewayDataplane: PartialMeshGatewayDataplane): MeshGatewayListenerEntry[] {
