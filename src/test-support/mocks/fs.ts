@@ -49,6 +49,11 @@ import _32 from './src/meshes/_/meshgatewayroutes/_'
 import _33 from './src/meshes/_/meshgateways'
 import _34 from './src/meshes/_/meshgateways/_'
 import _130 from './src/meshes/_/meshgateways/_/_resources/dataplanes'
+import _131 from './src/meshes/_/meshgateways/_/_rules'
+import _134 from './src/meshes/_/meshgateways/test-meshgateway/_'
+import _135 from './src/meshes/_/meshgateways/test-meshgateway/_rules'
+import _132 from './src/meshes/_/meshhttproutes'
+import _133 from './src/meshes/_/meshhttproutes/_'
 import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
@@ -144,8 +149,13 @@ export const fs: FS = {
   '/meshes/:mesh/meshgatewayroutes': _31,
   '/meshes/:mesh/meshgatewayroutes/:name': _32,
   '/meshes/:mesh/meshgateways': _33,
+  '/meshes/:mesh/meshgateways/test-meshgateway': _134,
+  '/meshes/:mesh/meshgateways/test-meshgateway/_rules': _135,
   '/meshes/:mesh/meshgateways/:name': _34,
   '/meshes/:mesh/meshgateways/:name/_resources/dataplanes': _130,
+  '/meshes/:mesh/meshgateways/:name/_rules': _131,
+  '/meshes/:mesh/meshhttproutes': _132,
+  '/meshes/:mesh/meshhttproutes/:name': _133,
   '/meshes/:mesh/proxytemplates': _35,
   '/meshes/:mesh/proxytemplates/:name': _36,
   '/meshes/:mesh/rate-limits': _37,

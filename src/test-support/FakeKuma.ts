@@ -5,6 +5,7 @@ import type {
   DataplaneNetworking,
   DataPlaneProxyStatus,
   ServiceStatus,
+  ToTargetRefRuleMatch,
 } from '@/types/index.d'
 
 type Tags<T extends Record<string, string | undefined>> =
@@ -200,7 +201,7 @@ export class KumaModule {
   }
 
   tags<T extends Record<string, string | undefined>>({ protocol, service, zone }: T): Tags<T> {
-    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 0, max: 3 }) }))
+    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 1, max: 3 }) }))
 
     // @ts-ignore TS isn’t happy when the service tag is not always provided, but I don’t know how to type this out better.
     return {
@@ -292,6 +293,43 @@ export class KumaModule {
       certificateRegenerations: this.faker.number.int(),
       issuedBackend,
       supportedBackends,
+    }
+  }
+
+  ruleMatch({ kind }: { kind?: 'path' | 'method' | 'headers' | 'queryParams' } = { kind: 'path' }): ToTargetRefRuleMatch {
+    const _kind = kind ?? this.faker.helpers.arrayElement<'path' | 'method' | 'headers' | 'queryParams'>(['path', 'method', 'headers', 'queryParams'])
+
+    return {
+      ...(_kind === 'path' && {
+        path: {
+          value: '/api',
+          type: 'PathPrefix',
+        },
+      }),
+      ...(_kind === 'method' && {
+        method: this.faker.internet.httpMethod(),
+      }),
+      ...(_kind === 'queryParams' && {
+        queryParams: [
+          {
+            name: 'size',
+            type: 'Exact',
+            value: '1',
+          },
+        ],
+      }),
+      ...(_kind === 'headers' && {
+        headers: [
+          {
+            name: 'X-Test-Header',
+            value: 'test-1',
+          },
+          {
+            name: 'X-Test-Header',
+            value: 'test-2',
+          },
+        ],
+      }),
     }
   }
 }
