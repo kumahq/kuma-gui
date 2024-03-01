@@ -18,19 +18,12 @@
       }"
     >
       <AppView>
-        <DataSource
+        <DataLoader
           v-slot="{ data, error }: ServiceInsightSource"
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="data === undefined" />
-
           <div
-            v-else
+            v-if="data"
             class="stack"
           >
             <KCard>
@@ -77,17 +70,14 @@
               <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
 
               <KCard class="mt-4">
-                <DataSource
+                <DataLoader
                   v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
                   :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                  :data="[data]"
+                  :errors="[error]"
                 >
-                  <ErrorBlock
-                    v-if="dataplanesError !== undefined"
-                    :error="dataplanesError"
-                  />
-
                   <AppCollection
-                    v-else
+                    v-if="dataplanesData"
                     class="data-plane-collection"
                     data-testid="data-plane-collection"
                     :page-number="route.params.page"
@@ -252,11 +242,11 @@
                       />
                     </SummaryView>
                   </RouterView>
-                </DataSource>
+                </DataLoader>
               </KCard>
             </div>
           </div>
-        </DataSource>
+        </DataLoader>
       </AppView>
     </RouteView>
   </DataSource>
@@ -268,9 +258,7 @@ import { ArrowRightIcon } from '@kong/icons'
 
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
