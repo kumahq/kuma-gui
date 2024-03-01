@@ -1,0 +1,119 @@
+import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { InspectRulesForDataplane } from '@/types/index.d'
+
+export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+  const mesh = req.params.mesh as string
+  const name = req.params.name as string
+
+  return {
+    headers: {},
+    body: {
+      resource: {
+        mesh,
+        name,
+        type: 'MeshGateway',
+      },
+      rules: [
+        {
+          fromRules: [],
+          toRules: [
+            {
+              conf: {
+                rules: [
+                  {
+                    matches: [
+                      fake.kuma.ruleMatch({ kind: 'path' }),
+                      fake.kuma.ruleMatch({ kind: 'method' }),
+                    ],
+                    default: {
+                      backendRefs: [
+                        {
+                          kind: 'MeshService',
+                          name: 'demo-app_kuma-demo_svc_5000',
+                          weight: 1,
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    matches: [
+                      fake.kuma.ruleMatch({ kind: 'path' }),
+                      fake.kuma.ruleMatch({ kind: 'queryParams' }),
+                    ],
+                    default: {
+                      backendRefs: [
+                        {
+                          kind: 'MeshService',
+                          name: 'demo-app_kuma-demo_svc_5000',
+                          weight: 1,
+                        },
+                        {
+                          kind: 'MeshService',
+                          name: 'service-2',
+                          weight: 2,
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              matchers: [
+                { key: 'listener', value: 'listener-0', not: false },
+              ],
+              origin: [
+                {
+                  mesh: 'default',
+                  name: 'demo-app-1.kuma-system',
+                  type: 'MeshHTTPRoute',
+                },
+                {
+                  mesh: 'default',
+                  name: 'demo-app-2.kuma-system',
+                  type: 'MeshHTTPRoute',
+                },
+              ],
+            },
+            {
+              conf: {
+                rules: [
+                  {
+                    matches: [
+                      fake.kuma.ruleMatch({ kind: 'headers' }),
+                    ],
+                    default: {
+                      backendRefs: [
+                        {
+                          kind: 'MeshService',
+                          name: 'demo-app_kuma-demo_svc_5000',
+                          weight: 10,
+                        },
+                      ],
+                    },
+                  },
+                ],
+                hostnames: [
+                  'bar.com',
+                ],
+              },
+              matchers: [],
+              origin: [
+                {
+                  mesh: 'default',
+                  name: 'demo-app-1.kuma-system',
+                  type: 'MeshHTTPRoute',
+                },
+                {
+                  mesh: 'default',
+                  name: 'demo-app-2.kuma-system',
+                  type: 'MeshHTTPRoute',
+                },
+              ],
+            },
+          ],
+          type: 'MeshHTTPRoute',
+          warnings: [],
+        },
+      ],
+    } satisfies InspectRulesForDataplane,
+  }
+}

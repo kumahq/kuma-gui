@@ -1,9 +1,11 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { MeshGateway } from '@/types/index.d'
 
-export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
+export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
+
+  const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   return {
     headers: {},
@@ -29,14 +31,24 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         },
       ],
       conf: {
-        listeners: [
-          {
-            hostname: 'foo.example.com',
-            port: 8080,
-            protocol: 'HTTP',
-            tags: fake.kuma.tags({}),
-          },
-        ],
+        listeners: Array.from({ length: listenerCount }).map(() => {
+          return {
+            hostname: `${fake.internet.domainWord()}.${fake.internet.domainName()}`,
+            port: fake.internet.port(),
+            protocol: fake.helpers.arrayElement<'HTTP' | 'HTTPS' | 'TCP' | 'TLS'>(['HTTP', 'HTTPS', 'TCP', 'TLS']),
+            ...(fake.datatype.boolean({ probability: 0.2 }) && {
+              tags: fake.kuma.tags({}),
+            }),
+            ...(fake.datatype.boolean() && {
+              crossMesh: true,
+            }),
+            ...(fake.datatype.boolean() && {
+              tls: {
+                mode: fake.helpers.arrayElement<'TERMINATE' | 'PASSTHROUGH'>(['TERMINATE', 'PASSTHROUGH']),
+              },
+            }),
+          }
+        }),
       },
     } satisfies MeshGateway,
   }
