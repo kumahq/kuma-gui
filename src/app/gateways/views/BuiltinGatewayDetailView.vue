@@ -18,18 +18,18 @@
       }"
     >
       <AppView>
-        <DataLoader
+        <DataSource
           v-slot="{ data, error }: MeshGatewaySource"
           :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
         >
           <DataLoader
-            v-if="data"
             v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
-            :src="`/meshes/${route.params.mesh}/dataplanes/for/${data.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+            :src="data === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/${data.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
             :data="[data]"
             :errors="[error]"
+            :loader="false"
           >
-            <KCard v-if="dataplanesData">
+            <KCard>
               <AppCollection
                 class="data-plane-collection"
                 data-testid="data-plane-collection"
@@ -198,7 +198,7 @@
               </RouterView>
             </KCard>
           </DataLoader>
-        </DataLoader>
+        </DataSource>
       </AppView>
     </RouteView>
   </DataSource>

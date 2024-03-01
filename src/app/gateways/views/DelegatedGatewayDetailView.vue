@@ -72,6 +72,7 @@
                   :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
                   :data="[data]"
                   :errors="[error]"
+                  :loader="false"
                 >
                   <AppCollection
                     v-if="dataplanesData"
