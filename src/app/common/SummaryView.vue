@@ -10,13 +10,21 @@
     data-testid="summary"
     @close="emit('close')"
   >
+    <template #title>
+      <XTeleportSlot :name="id" />
+    </template>
     <slot />
   </KSlideout>
 </template>
 
 <script lang="ts" setup>
 import { onClickOutside, useThrottleFn } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, provide } from 'vue'
+
+import { uniqueId } from '@/app/application'
+const id = uniqueId('summary-view-title')
+provide('app-summary-view', id)
+
 // recreates KSlideOuts close on blur, but ignores clicks on any anchors
 const slideOutRef = ref(null)
 onClickOutside(
@@ -41,34 +49,9 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
-.summary-slideout :deep(.slideout-header) {
-  position: absolute;
-  z-index: 200;
-  right: 0;
-  top: 20px;
-}
-
-.summary-slideout :deep(.app-view-title-bar) {
-  position: absolute;
-  z-index: 199;
-  top: 20px;
-  right: 20px;
-  left: 20px;
-  background-color: $kui-color-background;
-  margin-bottom: 0;
-  padding-bottom: $kui-space-50;
-  padding-right: $kui-space-90;
-  display: flex;
-  align-items: baseline;
-
-  + * {
-    margin-top: $kui-space-130;
-  }
-
+:deep(.slideout-title) {
   h1, h2 {
     --icon-before: url('@/assets/images/icon-wifi-tethering.svg');
-    margin-top: 0;
-
     &::before {
       color: $kui-color-text-neutral;
       mask-repeat: no-repeat;

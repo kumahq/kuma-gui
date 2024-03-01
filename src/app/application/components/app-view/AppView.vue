@@ -18,7 +18,18 @@
       >
         <KongIcon v-if="props.fullscreen" />
 
-        <slot name="title" />
+        <template
+          v-if="summary.length > 0"
+        >
+          <XTeleportTemplate :to="{ name: summary }">
+            <slot name="title" />
+          </XTeleportTemplate>
+        </template>
+        <template
+          v-else
+        >
+          <slot name="title" />
+        </template>
 
         <div
           class="actions"
@@ -61,6 +72,9 @@ type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
 const MainView = useMainView()
 
 const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
+
+const summary: string = inject('app-summary-view', '')
+provide('app-summary-view', '')
 
 const props = withDefaults(defineProps<{
   breadcrumbs?: BreadcrumbItem[] | null
