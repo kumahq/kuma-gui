@@ -20,6 +20,7 @@ export const routes = () => {
           meta: {
             module: 'policies',
           },
+          component: () => import('@/app/policies/views/PolicyTypeListView.vue'),
           redirect: (to) => {
             return {
               ...to,

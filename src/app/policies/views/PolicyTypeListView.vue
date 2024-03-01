@@ -1,0 +1,161 @@
+<template>
+  <DataSource
+    v-slot="{ data: me }: MeSource"
+    src="/me"
+  >
+    <RouteView
+      v-if="me"
+      v-slot="{ route, t }"
+      name="policy-list-view"
+      :params="{
+        page: 1,
+        size: me.pageSize,
+        mesh: '',
+        policyPath: '',
+        policy: '',
+      }"
+    >
+      <AppView>
+        <template #title>
+          <h2>
+            <RouteTitle
+              :title="t('policies.routes.items.title')"
+            />
+          </h2>
+        </template>
+        <DataSource
+          v-slot="{ data: meshInsight }: MeshInsightSource"
+          :src="`/mesh-insights/${route.params.mesh}`"
+        >
+          <DataSource
+            v-slot="{ data }: PolicyTypeCollectionSource"
+            :src="`/*/policy-types`"
+          >
+            <div
+              class="policy-list-content"
+            >
+              <KCard
+                class="policy-type-list"
+                data-testid="policy-type-list"
+              >
+                <!-- block on policy types but not meshInsight -->
+                <DataLoader
+                  :data="[data]"
+                >
+                  <!-- this DataCollection will provide us with an empty state -->
+                  <DataCollection
+                    v-slot="{ items }"
+                    :items="data!.policies"
+                  >
+                    <template
+                      v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? items : items.filter(item => {
+                        // legacy policies are those that aren't targetRef, aren't MeshGateway and are also in use
+                        return !item.isTargetRefBased && item.name !== 'MeshGateway' && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
+                      })]"
+                      :key="legacy"
+                    >
+                      <template
+                        v-for="policies in [typeof meshInsight?.policies === 'undefined' ? items : items.filter(item => {
+                          // only if we have legacy policies in use, or uses targetRef, ot is MeshGateway
+                          return legacy.length > 0 || item.isTargetRefBased || item.name === 'MeshGateway'
+                        })]"
+                        :key="policies"
+                      >
+                        <template
+                          v-for="current in [policies.find(policyType => policyType.path === route.params.policyPath)]"
+                          :key="current"
+                        >
+                          <div
+                            v-for="policyType in policies"
+                            :key="policyType.path"
+                            class="policy-type-link-wrapper"
+                            :class="{
+                              'policy-type-link-wrapper--is-active': current && current.path === policyType.path,
+                            }"
+                          >
+                            <RouterLink
+                              class="policy-type-link"
+                              :to="{
+                                name: 'policy-list-view',
+                                params: {
+                                  mesh: route.params.mesh,
+                                  policyPath: policyType.path,
+                                },
+                              }"
+                              :data-testid="`policy-type-link-${policyType.name}`"
+                            >
+                              {{ policyType.name }}
+                            </RouterLink>
+
+                            <div class="policy-count">
+                              {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
+                            </div>
+                          </div>
+                        </template>
+                      </template>
+                    </template>
+                  </DataCollection>
+                </DataLoader>
+              </KCard>
+              <div class="policy-list">
+                <RouterView v-slot="{ Component }">
+                  <component
+                    :is="Component"
+                    :policy-types="data?.policies"
+                  />
+                </RouterView>
+              </div>
+            </div>
+          </DataSource>
+        </DataSource>
+      </AppView>
+    </RouteView>
+  </DataSource>
+</template>
+
+<script lang="ts" setup>
+import type { MeSource } from '@/app/me/sources'
+import type { MeshInsightSource } from '@/app/meshes/sources'
+import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+</script>
+<style lang="scss" scoped>
+.policy-list-content {
+  display: flex;
+  gap: $kui-space-80;
+}
+
+.policy-type-list {
+  align-self: flex-start;
+  max-width: 500px;
+}
+
+.policy-list {
+  flex-grow: 1;
+}
+.policy-type-link-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $kui-space-60;
+}
+
+.policy-type-link-wrapper--is-active {
+  background-color: $kui-color-background-primary-weakest;
+}
+
+.policy-type-link-wrapper:not(.policy-type-link-wrapper--is-active) {
+  color: $kui-color-text-neutral;
+}
+
+.policy-type-link {
+  color: currentColor;
+  flex-grow: 1;
+  padding: $kui-space-40 $kui-space-60;
+}
+
+.policy-count {
+  text-align: right;
+  padding-right: $kui-space-60;
+}
+
+</style>
