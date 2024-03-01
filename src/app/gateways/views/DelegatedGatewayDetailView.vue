@@ -18,15 +18,12 @@
       }"
     >
       <AppView>
-        <DataLoader
+        <DataSource
           v-slot="{ data, error }: ServiceInsightSource"
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
         >
-          <div
-            v-if="data"
-            class="stack"
-          >
-            <KCard>
+          <div class="stack">
+            <KCard v-if="data">
               <div class="columns">
                 <DefinitionCard>
                   <template #title>
@@ -246,7 +243,7 @@
               </KCard>
             </div>
           </div>
-        </DataLoader>
+        </DataSource>
       </AppView>
     </RouteView>
   </DataSource>
