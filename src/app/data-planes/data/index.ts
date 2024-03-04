@@ -209,7 +209,6 @@ export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
   origins: InspectBaseRule['origin']
 }
 export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
-  // httpMatches: unknown[]
   rules: Rule[]
 }
 export const Rule = {
@@ -261,8 +260,7 @@ export const Rule = {
     }, []) : []
     return {
       ...partialInspectRules,
-      // httpMatches: Array.isArray(partialInspectRules.httpMatches) ? partialInspectRules.httpMatches : [],
-      rules: rules.sort((a, b) => a.ruleType.localeCompare(b.ruleType)),
+      rules,
     }
   },
 }

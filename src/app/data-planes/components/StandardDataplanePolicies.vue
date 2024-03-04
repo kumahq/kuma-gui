@@ -4,6 +4,7 @@
       v-slot="{ items }"
       :items="props.rules"
       :predicate="(item) => item.ruleType === 'proxy'"
+      :comparator="(a, b) => a.type.localeCompare(b.type)"
       :empty="false"
     >
       <KCard>
@@ -24,6 +25,7 @@
       v-slot="{ items }"
       :items="props.rules"
       :predicate="(item) => item.ruleType === 'to'"
+      :comparator="(a, b) => a.type.localeCompare(b.type)"
       :empty="false"
     >
       <KCard>
@@ -44,6 +46,7 @@
       v-slot="{ items }"
       :items="props.rules"
       :predicate="(item) => item.ruleType === 'from'"
+      :comparator="(a, b) => a.type.localeCompare(b.type)"
       :empty="false"
     >
       <KCard>
