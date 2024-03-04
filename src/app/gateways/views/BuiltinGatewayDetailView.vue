@@ -22,25 +22,15 @@
           v-slot="{ data, error }: MeshGatewaySource"
           :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="data === undefined" />
-
-          <KCard v-else>
-            <DataSource
-              v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
-              :src="`/meshes/${route.params.mesh}/dataplanes/for/${data.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
-            >
-              <ErrorBlock
-                v-if="dataplanesError !== undefined"
-                :error="dataplanesError"
-              />
-
+          <DataLoader
+            v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
+            :src="data === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/${data.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+            :data="[data]"
+            :errors="[error]"
+            :loader="false"
+          >
+            <KCard>
               <AppCollection
-                v-else
                 class="data-plane-collection"
                 data-testid="data-plane-collection"
                 :page-number="route.params.page"
@@ -55,7 +45,6 @@
                 ]"
                 :items="dataplanesData?.items"
                 :total="dataplanesData?.total"
-                :error="dataplanesError"
                 :is-selected-row="(row) => row.name === route.params.dataPlane"
                 summary-route-name="builtin-gateway-data-plane-summary-view"
                 :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
@@ -206,8 +195,8 @@
                   />
                 </SummaryView>
               </RouterView>
-            </DataSource>
-          </KCard>
+            </KCard>
+          </DataLoader>
         </DataSource>
       </AppView>
     </RouteView>
@@ -220,9 +209,7 @@ import { ArrowRightIcon } from '@kong/icons'
 
 import type { MeshGatewaySource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'

@@ -71,9 +71,9 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 const props = withDefaults(defineProps<{
-  data: any[]
-  errors: (Error | undefined)[]
-  src: string
+  data?: any[]
+  errors?: (Error | undefined)[]
+  src?: string
   loader?: boolean
 }>(), {
   errors: () => [],
