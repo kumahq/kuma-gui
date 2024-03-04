@@ -18,11 +18,11 @@
       }"
     >
       <AppView>
-        <DataSource
-          v-slot="{ data, error }: ServiceInsightSource"
-          :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
-        >
-          <div class="stack">
+        <div class="stack">
+          <DataLoader
+            v-slot="{ data }: ServiceInsightSource"
+            :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
+          >
             <KCard v-if="data">
               <div class="columns">
                 <DefinitionCard>
@@ -62,189 +62,186 @@
                 </ResourceStatus>
               </div>
             </KCard>
+          </DataLoader>
 
-            <div>
-              <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
+          <div>
+            <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
 
-              <KCard class="mt-4">
-                <DataLoader
-                  v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
-                  :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
-                  :data="[data]"
-                  :errors="[error]"
-                  :loader="false"
+            <KCard class="mt-4">
+              <DataLoader
+                v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
+                :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                :loader="false"
+              >
+                <AppCollection
+                  class="data-plane-collection"
+                  data-testid="data-plane-collection"
+                  :page-number="route.params.page"
+                  :page-size="route.params.size"
+                  :headers="[
+                    { label: 'Name', key: 'name' },
+                    ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
+                    { label: 'Certificate Info', key: 'certificate' },
+                    { label: 'Status', key: 'status' },
+                    { label: 'Warnings', key: 'warnings', hideLabel: true },
+                    { label: 'Details', key: 'details', hideLabel: true },
+                  ]"
+                  :items="dataplanesData?.items"
+                  :total="dataplanesData?.total"
+                  :error="dataplanesError"
+                  :is-selected-row="(row) => row.name === route.params.dataPlane"
+                  summary-route-name="delegated-gateway-data-plane-summary-view"
+                  :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
+                  :empty-state-cta-to="t('data-planes.href.docs.data_plane_proxy')"
+                  :empty-state-cta-text="t('common.documentation')"
+                  @change="route.update"
                 >
-                  <AppCollection
-                    v-if="dataplanesData"
-                    class="data-plane-collection"
-                    data-testid="data-plane-collection"
-                    :page-number="route.params.page"
-                    :page-size="route.params.size"
-                    :headers="[
-                      { label: 'Name', key: 'name' },
-                      ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
-                      { label: 'Certificate Info', key: 'certificate' },
-                      { label: 'Status', key: 'status' },
-                      { label: 'Warnings', key: 'warnings', hideLabel: true },
-                      { label: 'Details', key: 'details', hideLabel: true },
-                    ]"
-                    :items="dataplanesData?.items"
-                    :total="dataplanesData?.total"
-                    :error="dataplanesError"
-                    :is-selected-row="(row) => row.name === route.params.dataPlane"
-                    summary-route-name="delegated-gateway-data-plane-summary-view"
-                    :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
-                    :empty-state-cta-to="t('data-planes.href.docs.data_plane_proxy')"
-                    :empty-state-cta-text="t('common.documentation')"
-                    @change="route.update"
-                  >
-                    <template #toolbar>
-                      <FilterBar
-                        class="data-plane-proxy-filter"
-                        :placeholder="`tag: 'kuma.io/protocol: http'`"
-                        :query="route.params.query"
-                        :fields="{
-                          name: { description: 'filter by name or parts of a name' },
-                          protocol: { description: 'filter by “kuma.io/protocol” value' },
-                          tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                          ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                        }"
-                        @fields-change="route.update({
-                          query: $event.query,
-                          s: $event.query.length > 0 ? JSON.stringify($event.fields) : '',
-                        })"
-                      />
-                    </template>
+                  <template #toolbar>
+                    <FilterBar
+                      class="data-plane-proxy-filter"
+                      :placeholder="`tag: 'kuma.io/protocol: http'`"
+                      :query="route.params.query"
+                      :fields="{
+                        name: { description: 'filter by name or parts of a name' },
+                        protocol: { description: 'filter by “kuma.io/protocol” value' },
+                        tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                        ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
+                      }"
+                      @fields-change="route.update({
+                        query: $event.query,
+                        s: $event.query.length > 0 ? JSON.stringify($event.fields) : '',
+                      })"
+                    />
+                  </template>
 
-                    <template #name="{ row }">
-                      <RouterLink
-                        class="name-link"
-                        :title="row.name"
-                        :to="{
-                          name: 'delegated-gateway-data-plane-summary-view',
-                          params: {
-                            mesh: row.mesh,
-                            dataPlane: row.name,
-                          },
-                          query: {
-                            page: route.params.page,
-                            size: route.params.size,
-                            query: route.params.query,
-                          },
-                        }"
-                      >
-                        {{ row.name }}
-                      </RouterLink>
-                    </template>
-
-                    <template #zone="{ row }">
-                      <RouterLink
-                        v-if="row.zone"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: row.zone,
-                          },
-                        }"
-                      >
-                        {{ row.zone }}
-                      </RouterLink>
-
-                      <template v-else>
-                        {{ t('common.collection.none') }}
-                      </template>
-                    </template>
-
-                    <template #certificate="{ row }">
-                      <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
-                        {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
-                      </template>
-
-                      <template v-else>
-                        {{ t('data-planes.components.data-plane-list.certificate.none') }}
-                      </template>
-                    </template>
-
-                    <template #status="{ row }">
-                      <StatusBadge :status="row.status" />
-                    </template>
-
-                    <template #warnings="{ row }">
-                      <KTooltip v-if="row.isCertExpired || row.warnings.length > 0">
-                        <template #content>
-                          <ul>
-                            <template v-if="row.warnings.length > 0">
-                              <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
-                            </template>
-
-                            <template v-if="row.isCertExpired">
-                              <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
-                            </template>
-                          </ul>
-                        </template>
-
-                        <WarningIcon
-                          class="mr-1"
-                          :size="KUI_ICON_SIZE_30"
-                          hide-title
-                        />
-                      </KTooltip>
-
-                      <template v-else>
-                        {{ t('common.collection.none') }}
-                      </template>
-                    </template>
-
-                    <template #details="{ row }">
-                      <RouterLink
-                        class="details-link"
-                        data-testid="details-link"
-                        :to="{
-                          name: 'data-plane-detail-view',
-                          params: {
-                            dataPlane: row.name,
-                          },
-                        }"
-                      >
-                        {{ t('common.collection.details_link') }}
-
-                        <ArrowRightIcon
-                          display="inline-block"
-                          decorative
-                          :size="KUI_ICON_SIZE_30"
-                        />
-                      </RouterLink>
-                    </template>
-                  </AppCollection>
-
-                  <RouterView
-                    v-if="route.params.dataPlane"
-                    v-slot="child"
-                  >
-                    <SummaryView
-                      @close="route.replace({
-                        name: route.name,
+                  <template #name="{ row }">
+                    <RouterLink
+                      class="name-link"
+                      :title="row.name"
+                      :to="{
+                        name: 'delegated-gateway-data-plane-summary-view',
                         params: {
-                          mesh: route.params.mesh,
+                          mesh: row.mesh,
+                          dataPlane: row.name,
                         },
                         query: {
                           page: route.params.page,
                           size: route.params.size,
+                          query: route.params.query,
                         },
-                      })"
+                      }"
                     >
-                      <component
-                        :is="child.Component"
-                        :name="route.params.dataPlane"
-                        :dataplane-overview="dataplanesData?.items.find((dataplaneOverview) => dataplaneOverview.name === route.params.dataPlane)"
+                      {{ row.name }}
+                    </RouterLink>
+                  </template>
+
+                  <template #zone="{ row }">
+                    <RouterLink
+                      v-if="row.zone"
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: row.zone,
+                        },
+                      }"
+                    >
+                      {{ row.zone }}
+                    </RouterLink>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #certificate="{ row }">
+                    <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                      {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
+                    </template>
+
+                    <template v-else>
+                      {{ t('data-planes.components.data-plane-list.certificate.none') }}
+                    </template>
+                  </template>
+
+                  <template #status="{ row }">
+                    <StatusBadge :status="row.status" />
+                  </template>
+
+                  <template #warnings="{ row }">
+                    <KTooltip v-if="row.isCertExpired || row.warnings.length > 0">
+                      <template #content>
+                        <ul>
+                          <template v-if="row.warnings.length > 0">
+                            <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
+                          </template>
+
+                          <template v-if="row.isCertExpired">
+                            <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
+                          </template>
+                        </ul>
+                      </template>
+
+                      <WarningIcon
+                        class="mr-1"
+                        :size="KUI_ICON_SIZE_30"
+                        hide-title
                       />
-                    </SummaryView>
-                  </RouterView>
-                </DataLoader>
-              </KCard>
-            </div>
+                    </KTooltip>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #details="{ row }">
+                    <RouterLink
+                      class="details-link"
+                      data-testid="details-link"
+                      :to="{
+                        name: 'data-plane-detail-view',
+                        params: {
+                          dataPlane: row.name,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.details_link') }}
+
+                      <ArrowRightIcon
+                        display="inline-block"
+                        decorative
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                    </RouterLink>
+                  </template>
+                </AppCollection>
+
+                <RouterView
+                  v-if="route.params.dataPlane"
+                  v-slot="child"
+                >
+                  <SummaryView
+                    @close="route.replace({
+                      name: route.name,
+                      params: {
+                        mesh: route.params.mesh,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                      },
+                    })"
+                  >
+                    <component
+                      :is="child.Component"
+                      :name="route.params.dataPlane"
+                      :dataplane-overview="dataplanesData?.items.find((dataplaneOverview) => dataplaneOverview.name === route.params.dataPlane)"
+                    />
+                  </SummaryView>
+                </RouterView>
+              </DataLoader>
+            </KCard>
           </div>
-        </DataSource>
+        </div>
       </AppView>
     </RouteView>
   </DataSource>
