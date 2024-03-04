@@ -69,7 +69,7 @@
 
             <KCard class="mt-4">
               <DataLoader
-                v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
+                v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
                 :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
                 :loader="false"
               >
@@ -88,7 +88,6 @@
                   ]"
                   :items="dataplanesData?.items"
                   :total="dataplanesData?.total"
-                  :error="dataplanesError"
                   :is-selected-row="(row) => row.name === route.params.dataPlane"
                   summary-route-name="delegated-gateway-data-plane-summary-view"
                   :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"

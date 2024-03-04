@@ -23,7 +23,7 @@
           :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
         >
           <DataLoader
-            v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
+            v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
             :src="data === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/${data.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
             :data="[data]"
             :errors="[error]"
@@ -45,7 +45,6 @@
                 ]"
                 :items="dataplanesData?.items"
                 :total="dataplanesData?.total"
-                :error="dataplanesError"
                 :is-selected-row="(row) => row.name === route.params.dataPlane"
                 summary-route-name="builtin-gateway-data-plane-summary-view"
                 :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
