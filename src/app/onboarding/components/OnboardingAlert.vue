@@ -7,8 +7,9 @@
     @dismiss="closeAlert"
   >
     <div class="onboarding-alert-content">
-      <!-- eslint-disable-next-line vue/no-v-html  -->
-      <div v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })" />
+      <div
+        v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })"
+      />
 
       <KButton
         appearance="primary"

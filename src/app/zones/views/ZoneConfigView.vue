@@ -15,7 +15,6 @@
         #notifications
       >
         <ul>
-          <!-- eslint-disable vue/no-v-html  -->
           <li
             v-for="warning in props.notifications"
             :key="warning.kind"
@@ -23,7 +22,6 @@
 
             v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
           />
-          <!-- eslint-enable -->
         </ul>
       </template>
 

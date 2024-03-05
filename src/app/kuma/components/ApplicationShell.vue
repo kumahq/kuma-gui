@@ -162,12 +162,10 @@
             appearance="warning"
           >
             <ul>
-              <!-- eslint-disable vue/no-v-html  -->
               <li
                 data-testid="warning-GLOBAL_STORE_TYPE_MEMORY"
                 v-html="t('common.warnings.GLOBAL_STORE_TYPE_MEMORY')"
               />
-              <!-- eslint-enable -->
             </ul>
           </KAlert>
         </slot>
