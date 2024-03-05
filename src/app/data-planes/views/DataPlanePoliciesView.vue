@@ -55,51 +55,59 @@
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
                 >
-                  <DataCollection
-                    v-if="gatewayDataplane"
-                    :items="gatewayDataplane.routePolicies"
+                  <template
+                    v-for="types in [policyTypesData!.policies.reduce<Record<string, PolicyType>>((prev, item) => Object.assign(prev, { [item.name]: item }), {})]"
+                    :key="types"
                   >
-                    <!-- we need to check routePolicies and listenerEntries for emptyness -->
-                    <EmptyBlock v-if="gatewayDataplane.listenerEntries.length === 0" />
                     <KCard
-                      v-else
                       class="mt-4"
                     >
-                      <BuiltinGatewayPolicies
-                        v-if="policyTypesData"
-                        :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                        :gateway-dataplane="gatewayDataplane"
-                        data-testid="builtin-gateway-dataplane-policies"
-                      />
+                      <DataCollection
+                        v-if="gatewayDataplane"
+                        :items="gatewayDataplane.routePolicies"
+                      >
+                        <!-- we need to check routePolicies and listenerEntries for emptiness -->
+                        <EmptyBlock v-if="gatewayDataplane.listenerEntries.length === 0" />
+                        <BuiltinGatewayPolicies
+                          v-else
+                          :policy-types-by-name="types"
+                          :gateway-dataplane="gatewayDataplane"
+                          data-testid="builtin-gateway-dataplane-policies"
+                        />
+                      </DataCollection>
                     </KCard>
-                  </DataCollection>
+                  </template>
                 </DataLoader>
               </template>
 
               <!-- anything but builtin gateways -->
               <template v-else>
                 <DataLoader
-                  v-slot="{ data: sidecarDataplaneData}: SidecarDataplaneCollectionSource"
+                  v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
                 >
-                  <DataCollection
-                    v-if="sidecarDataplaneData"
-                    v-slot="{items: policyTypeEntries}"
-                    :items="sidecarDataplaneData.policyTypeEntries"
+                  <template
+                    v-for="types in [policyTypesData!.policies.reduce<Record<string, PolicyType>>((prev, item) => Object.assign(prev, { [item.name]: item }), {})]"
+                    :key="types"
                   >
                     <KCard
                       class="mt-4"
                     >
-                      <PolicyTypeEntryList
-                        v-if="policyTypesData"
-                        :policy-type-entries="policyTypeEntries"
-                        :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                        data-testid="sidecar-dataplane-policies"
-                      />
+                      <DataCollection
+                        v-slot="{ items }"
+                        :predicate="(item) => types[item.type]?.isTargetRefBased === false"
+                        :items="sidecarDataplaneData!.policyTypeEntries"
+                      >
+                        <PolicyTypeEntryList
+                          :items="items"
+                          :types="types"
+                          data-testid="sidecar-dataplane-policies"
+                        />
+                      </DataCollection>
                     </KCard>
-                  </DataCollection>
+                  </template>
                 </DataLoader>
               </template>
             </div>
@@ -117,6 +125,7 @@ import StandardDataplanePolicies from '../components/StandardDataplanePolicies.v
 import type { DataplaneOverview } from '../data'
 import type { DataplaneRulesSource, MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import type { PolicyType } from '@/app/policies/data'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 
 const props = defineProps<{
