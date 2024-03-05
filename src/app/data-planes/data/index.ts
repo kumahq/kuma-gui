@@ -1,4 +1,3 @@
-/* eslint multiline-ternary: ["off"] */
 import type { Connection } from '@/app/connections/data'
 import { DiscoverySubscriptionCollection, type DiscoverySubscription } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
@@ -224,40 +223,48 @@ export const Rule = {
     }
   },
   fromCollection(partialInspectRules: PartialInspectRulesForDataplane): RuleCollection {
-    const rules = Array.isArray(partialInspectRules.rules) ? partialInspectRules.rules.reduce<Rule[]>((prev, item) => {
+    const rules = Array.isArray(partialInspectRules.rules)
+      ? partialInspectRules.rules.reduce<Rule[]>((prev, item) => {
       // to rules we can just reshape.
-      const to = Array.isArray(item.toRules) ? item.toRules.map(rule => {
-        return {
-          ...Rule.fromObject(rule),
-          type: item.type,
-          ruleType: 'to',
-        }
-      }) : []
+        const to = Array.isArray(item.toRules)
+          ? item.toRules.map(rule => {
+            return {
+              ...Rule.fromObject(rule),
+              type: item.type,
+              ruleType: 'to',
+            }
+          })
+          : []
 
-      // from rules we can need to flatten out with reduce
-      const from = Array.isArray(item.fromRules) ? item.fromRules.reduce<Rule[]>((prev, rule) => {
-        const { rules, ...rest } = rule
-        return prev.concat(rules.map(r => {
-          return {
-            ...rest,
-            ...Rule.fromObject(r),
+        // from rules we can need to flatten out with reduce
+        const from = Array.isArray(item.fromRules)
+          ? item.fromRules.reduce<Rule[]>((prev, rule) => {
+            const { rules, ...rest } = rule
+            return prev.concat(rules.map(r => {
+              return {
+                ...rest,
+                ...Rule.fromObject(r),
+                type: item.type,
+                ruleType: 'from',
+              }
+            }))
+          }, [])
+          : []
+
+        // the proxyRule is only ever a single one, but we turn it into an array
+        // with a single entry so it looks like to and from rules
+        const proxy = typeof item.proxyRule !== 'undefined'
+          ? [{
+            ...Rule.fromObject(item.proxyRule as InspectBaseRule),
             type: item.type,
-            ruleType: 'from',
-          }
-        }))
-      }, []) : []
+            ruleType: 'proxy',
+          }]
+          : []
 
-      // the proxyRule is only ever a single one, but we turn it into an array
-      // with a single entry so it looks like to and from rules
-      const proxy = typeof item.proxyRule !== 'undefined' ? [{
-        ...Rule.fromObject(item.proxyRule as InspectBaseRule),
-        type: item.type,
-        ruleType: 'proxy',
-      }] : []
-
-      // concat all the rules now thay all look the same
-      return prev.concat(to).concat(from).concat(proxy)
-    }, []) : []
+        // concat all the rules now thay all look the same
+        return prev.concat(to).concat(from).concat(proxy)
+      }, [])
+      : []
     return {
       ...partialInspectRules,
       rules,
