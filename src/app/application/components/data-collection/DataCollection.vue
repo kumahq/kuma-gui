@@ -22,7 +22,7 @@
       :current-page="props.page"
       :initial-page-size="props.pageSize"
       :page-sizes="[15, 30, 50, 75, 100]"
-      @page-changed="({ page }: PaginationChangeEvent) => {
+      @page-change="({ page }: PaginationChangeEvent) => {
         emit('change', {
           page,
           pageSize: props.pageSize,

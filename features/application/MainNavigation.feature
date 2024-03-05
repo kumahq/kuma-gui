@@ -53,11 +53,11 @@ Feature: application / MainNavigation
       """
     When I visit the "/meshes" URL
     And the URL contains "page=1&size=50"
-    And the "[data-testid='page-1-btn'].active" element exists
+    And the "[data-testid='page-1-button'].active" element exists
 
     When I visit the "/meshes?page=2&size=" URL
     And the URL contains "page=2&size=50"
-    And the "[data-testid='page-2-btn'].active" element exists
+    And the "[data-testid='page-2-button'].active" element exists
 
     When I visit the "/meshes/default/data-planes" URL
     And the URL contains "page=1&size=50"
@@ -75,15 +75,15 @@ Feature: application / MainNavigation
 
     When I click the "$meshes-nav" element
     Then the page title contains "Meshes"
-    And the "[data-testid='page-1-btn'].active" element exists
+    And the "[data-testid='page-1-button'].active" element exists
 
-    When I click the "[data-testid='next-btn'] > a" element
+    When I click the "[data-testid='next-button']" element
     Then the page title contains "Meshes"
-    And the "[data-testid='page-2-btn'].active" element exists
+    And the "[data-testid='page-2-button'].active" element exists
 
     When I navigate "back"
     Then the page title contains "Meshes"
-    And the "[data-testid='page-1-btn'].active" element exists
+    And the "[data-testid='page-1-button'].active" element exists
 
     When I navigate "back"
     Then the page title contains "Overview"
