@@ -28,7 +28,7 @@
           :src="`/mesh-insights/${route.params.mesh}`"
         >
           <DataSource
-            v-slot="{ data }: PolicyTypeCollectionSource"
+            v-slot="{ data, error }: PolicyTypeCollectionSource"
             :src="`/*/policy-types`"
           >
             <div
@@ -41,6 +41,7 @@
                 <!-- block on policy types but not meshInsight -->
                 <DataLoader
                   :data="[data]"
+                  :errors="[error]"
                 >
                   <!-- this DataCollection will provide us with an empty state -->
                   <DataCollection
