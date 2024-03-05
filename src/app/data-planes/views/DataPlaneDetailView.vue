@@ -416,11 +416,7 @@
                 class="mt-4"
                 appearance="warning"
               >
-                <template #alertMessage>
-                  <div
-                    v-html="t('data-planes.routes.item.mtls.disabled')"
-                  />
-                </template>
+                <div v-html="t('data-planes.routes.item.mtls.disabled')" />
               </KAlert>
             </template>
           </div>

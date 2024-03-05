@@ -41,25 +41,22 @@
           v-if="error !== null"
           appearance="danger"
           class="mb-4"
-          dismiss-type="icon"
           data-testid="create-zone-error"
         >
-          <template #alertMessage>
-            <template
-              v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
-            >
-              <p>{{ t(`zones.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
+          <template
+            v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
+          >
+            <p>{{ t(`zones.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
 
-              <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
-            </template>
+            <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
+          </template>
 
-            <template v-else-if="(error instanceof ApiError)">
-              <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
-            </template>
+          <template v-else-if="(error instanceof ApiError)">
+            <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
+          </template>
 
-            <template v-else>
-              <p>{{ t('common.error_state.default_error') }}</p>
-            </template>
+          <template v-else>
+            <p>{{ t('common.error_state.default_error') }}</p>
           </template>
         </KAlert>
 

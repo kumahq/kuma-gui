@@ -14,28 +14,25 @@
       v-if="error !== null"
       class="mt-4"
       appearance="danger"
-      is-dismissible
     >
-      <template #alertMessage>
-        <template v-if="(error instanceof ApiError)">
-          <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
+      <template v-if="(error instanceof ApiError)">
+        <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
 
-          <ul
-            v-if="error.invalidParameters.length > 0"
-            :data-testid="`error-${error.status}`"
+        <ul
+          v-if="error.invalidParameters.length > 0"
+          :data-testid="`error-${error.status}`"
+        >
+          <li
+            v-for="(parameter, index) in error.invalidParameters"
+            :key="index"
           >
-            <li
-              v-for="(parameter, index) in error.invalidParameters"
-              :key="index"
-            >
-              <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
-            </li>
-          </ul>
-        </template>
+            <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
+          </li>
+        </ul>
+      </template>
 
-        <template v-else>
-          <p>{{ t('common.error_state.default_error') }}</p>
-        </template>
+      <template v-else>
+        <p>{{ t('common.error_state.default_error') }}</p>
       </template>
     </KAlert>
   </KPrompt>

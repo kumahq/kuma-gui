@@ -4,13 +4,11 @@
       v-if="statuses.length === 0"
       appearance="info"
     >
-      <template #alertIcon>
+      <template #icon>
         <PortalIcon />
       </template>
 
-      <template #alertMessage>
-        {{ t('common.detail.subscriptions.no_stats', { id: props.subscription.id }) }}
-      </template>
+      {{ t('common.detail.subscriptions.no_stats', { id: props.subscription.id }) }}
     </KAlert>
 
     <template v-else>

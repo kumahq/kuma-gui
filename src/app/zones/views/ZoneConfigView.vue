@@ -55,9 +55,7 @@
           data-testid="warning-no-subscriptions"
           appearance="warning"
         >
-          <template #alertMessage>
-            {{ t('zone-cps.detail.no_subscriptions') }}
-          </template>
+          {{ t('zone-cps.detail.no_subscriptions') }}
         </KAlert>
       </KCard>
     </AppView>

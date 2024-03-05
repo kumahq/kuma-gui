@@ -44,9 +44,7 @@
           class="mb-4"
           appearance="warning"
         >
-          <template #alertMessage>
-            <slot name="notifications" />
-          </template>
+          <slot name="notifications" />
         </KAlert>
       </aside>
 
