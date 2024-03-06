@@ -57,7 +57,6 @@ common:
   emptyState:
     title: 'No data'
     message: 'There are no {type} present'
-    icon: 'stateNoData'
   collection:
     none: ''
     details_link: 'Go to details'

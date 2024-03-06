@@ -29,7 +29,7 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .docs-link {
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
   gap: $kui-space-20;
   padding-right: $kui-space-40;
   padding-left: $kui-space-40;

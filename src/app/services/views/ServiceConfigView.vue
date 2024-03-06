@@ -37,7 +37,7 @@
               data-testid="no-matching-external-service"
             >
               <template #title>
-                <p>{{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}</p>
+                {{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}
               </template>
             </EmptyBlock>
 

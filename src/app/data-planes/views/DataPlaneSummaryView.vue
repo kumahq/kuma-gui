@@ -22,11 +22,11 @@
       </template>
 
       <EmptyBlock v-if="props.dataplaneOverview === undefined">
-        {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
-
-        <template #message>
-          <p>{{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}</p>
+        <template #title>
+          {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
         </template>
+
+        <p>{{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}</p>
       </EmptyBlock>
 
       <div

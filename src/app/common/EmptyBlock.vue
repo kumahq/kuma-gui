@@ -1,28 +1,20 @@
 <template>
-  <KEmptyState
-    data-testid="empty-state"
-    cta-is-hidden
-    :icon="t('common.emptyState.icon')"
-    icon-size="96"
-  >
+  <KEmptyState data-testid="empty-block">
     <template #title>
       <slot name="title">
-        <p><slot>{{ t('common.emptyState.title') }}</slot></p>
+        {{ t('common.emptyState.title') }}
       </slot>
     </template>
 
-    <template
-      v-if="$slots.message"
-      #message
-    >
-      <slot name="message" />
+    <template v-if="$slots.default">
+      <slot />
     </template>
 
     <template
-      v-if="$slots.cta"
-      #cta
+      v-if="$slots.action"
+      #action
     >
-      <slot name="cta" />
+      <slot name="action" />
     </template>
   </KEmptyState>
 </template>

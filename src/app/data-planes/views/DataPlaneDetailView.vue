@@ -146,9 +146,7 @@
                       #empty
                     >
                       <EmptyBlock>
-                        <template #message>
-                          This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway
-                        </template>
+                        <p>This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway</p>
                       </EmptyBlock>
                     </template>
                     <template #default="{ items: inbounds }">

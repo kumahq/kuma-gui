@@ -1,18 +1,15 @@
 <template>
-  <KEmptyState
-    cta-is-hidden
-    data-testid="loading-block"
-  >
-    <template #title>
+  <KEmptyState data-testid="loading-block">
+    <template #icon>
       <ProgressIcon
         class="mb-3"
         display="inline-block"
         :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
       />
+    </template>
 
-      <slot>
-        <p>Loading data …</p>
-      </slot>
+    <template #title>
+      Loading data …
     </template>
   </KEmptyState>
 </template>

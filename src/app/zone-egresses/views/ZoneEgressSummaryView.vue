@@ -27,11 +27,11 @@
       </template>
 
       <EmptyBlock v-if="props.zoneEgressOverview === undefined">
-        {{ t('common.collection.summary.empty_title', { type: 'ZoneEgress' }) }}
-
-        <template #message>
-          <p>{{ t('common.collection.summary.empty_message', { type: 'ZoneEgress' }) }}</p>
+        <template #title>
+          {{ t('common.collection.summary.empty_title', { type: 'ZoneEgress' }) }}
         </template>
+
+        <p>{{ t('common.collection.summary.empty_message', { type: 'ZoneEgress' }) }}</p>
       </EmptyBlock>
 
       <div
