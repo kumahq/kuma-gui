@@ -28,6 +28,7 @@
     })"
     :row-attrs="getRowAttributes"
     disable-sorting
+    :disable-pagination="props.pageNumber === 0"
     hide-pagination-when-optional
     @row:click="click"
   >
@@ -139,7 +140,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   isSelectedRow: null,
   total: 0,
-  pageNumber: 1,
+  pageNumber: 0,
   pageSize: 30,
   error: undefined,
   emptyStateTitle: undefined,

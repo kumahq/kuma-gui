@@ -38,7 +38,6 @@
                 }"
                 :total="items.length"
                 :items="items"
-                :page-size="100000"
                 :headers="[
                   ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
                   { label: 'Origin policies', key: 'origins' },
