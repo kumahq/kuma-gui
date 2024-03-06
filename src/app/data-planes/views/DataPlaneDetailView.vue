@@ -203,7 +203,7 @@
                                 }
                               "
                             >
-                              <RouterLink
+                              <XAction
                                 data-action
                                 :to="{
                                   name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
@@ -211,12 +211,12 @@
                                     connection: item.name,
                                   },
                                   query: {
-                                    inactive: route.params.inactive ? null : undefined,
+                                    inactive: route.params.inactive,
                                   },
                                 }"
                               >
                                 {{ item.name.replace('localhost', '').replace('_', ':') }}
-                              </RouterLink>
+                              </XAction>
                             </ConnectionCard>
                           </template>
                         </template>
