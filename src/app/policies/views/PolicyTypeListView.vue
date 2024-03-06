@@ -43,59 +43,51 @@
                   :data="[data]"
                   :errors="[error]"
                 >
-                  <!-- this DataCollection will provide us with an empty state -->
-                  <DataCollection
-                    v-slot="{ items }"
-                    :items="data!.policies"
+                  <template
+                    v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? data!.policies : data!.policies.filter(item => {
+                      // legacy policies are those that aren't targetRef, aren't MeshGateway and are also in use
+                      return !item.isTargetRefBased && item.name !== 'MeshGateway' && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
+                    })]"
+                    :key="legacy"
                   >
-                    <template
-                      v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? items : items.filter(item => {
-                        // legacy policies are those that aren't targetRef, aren't MeshGateway and are also in use
-                        return !item.isTargetRefBased && item.name !== 'MeshGateway' && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
-                      })]"
-                      :key="legacy"
+                    <DataCollection
+                      v-slot="{ items }"
+                      :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.isTargetRefBased || item.name === 'MeshGateway'"
+                      :items="data!.policies"
                     >
                       <template
-                        v-for="policies in [typeof meshInsight?.policies === 'undefined' ? items : items.filter(item => {
-                          // only if we have legacy policies in use, or uses targetRef, ot is MeshGateway
-                          return legacy.length > 0 || item.isTargetRefBased || item.name === 'MeshGateway'
-                        })]"
-                        :key="policies"
+                        v-for="current in [items.find(policyType => policyType.path === route.params.policyPath)]"
+                        :key="current"
                       >
-                        <template
-                          v-for="current in [policies.find(policyType => policyType.path === route.params.policyPath)]"
-                          :key="current"
+                        <div
+                          v-for="policyType in items"
+                          :key="policyType.path"
+                          class="policy-type-link-wrapper"
+                          :class="{
+                            'policy-type-link-wrapper--is-active': current && current.path === policyType.path,
+                          }"
                         >
-                          <div
-                            v-for="policyType in policies"
-                            :key="policyType.path"
-                            class="policy-type-link-wrapper"
-                            :class="{
-                              'policy-type-link-wrapper--is-active': current && current.path === policyType.path,
+                          <RouterLink
+                            class="policy-type-link"
+                            :to="{
+                              name: 'policy-list-view',
+                              params: {
+                                mesh: route.params.mesh,
+                                policyPath: policyType.path,
+                              },
                             }"
+                            :data-testid="`policy-type-link-${policyType.name}`"
                           >
-                            <RouterLink
-                              class="policy-type-link"
-                              :to="{
-                                name: 'policy-list-view',
-                                params: {
-                                  mesh: route.params.mesh,
-                                  policyPath: policyType.path,
-                                },
-                              }"
-                              :data-testid="`policy-type-link-${policyType.name}`"
-                            >
-                              {{ policyType.name }}
-                            </RouterLink>
+                            {{ policyType.name }}
+                          </RouterLink>
 
-                            <div class="policy-count">
-                              {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
-                            </div>
+                          <div class="policy-count">
+                            {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
                           </div>
-                        </template>
+                        </div>
                       </template>
-                    </template>
-                  </DataCollection>
+                    </DataCollection>
+                  </template>
                 </DataLoader>
               </KCard>
               <div class="policy-list">
