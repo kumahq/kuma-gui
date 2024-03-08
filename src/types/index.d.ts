@@ -217,6 +217,9 @@ export type DataplaneNetworking = {
   advertisedAddress?: string
   inbound?: DataplaneInbound[]
   outbound?: DataplaneOutbound[]
+  admin?: {
+    port?: number
+  }
   /**
    * The presence of the `gateway` field means the resource is a gateway. The `gateway.type` property indicates which type of gateway it is.
    *

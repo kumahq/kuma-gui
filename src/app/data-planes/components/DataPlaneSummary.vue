@@ -10,7 +10,7 @@
           <div class="status-with-reason">
             <StatusBadge :status="props.dataplaneOverview.status" />
             <DataCollection
-              v-if="props.dataplaneOverview.dataplane.networking.type === 'standard'"
+              v-if="props.dataplaneOverview.dataplaneType === 'standard'"
               v-slot="{ items : inbounds }"
               :items="props.dataplaneOverview.dataplane.networking.inbounds"
               :predicate="item => !item.health.ready"
@@ -83,7 +83,7 @@
     </div>
 
     <DataCollection
-      v-if="props.dataplaneOverview.dataplane.networking.type === 'standard'"
+      v-if="props.dataplaneOverview.dataplaneType === 'standard'"
       v-slot="{ items : inbounds }"
       :items="props.dataplaneOverview.dataplane.networking.inbounds"
     >

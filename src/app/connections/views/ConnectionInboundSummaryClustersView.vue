@@ -21,7 +21,7 @@
       </template>
       <div>
         <DataSource
-          v-slot="{ data, error, refresh }: ClustersDataSource"
+          v-slot="{ data: clusters, error, refresh }: ClustersDataSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
         >
           <ErrorBlock
@@ -29,15 +29,15 @@
             :error="error"
           />
 
-          <LoadingBlock v-else-if="data === undefined" />
+          <LoadingBlock v-else-if="clusters === undefined" />
 
           <CodeBlock
             v-else
             language="json"
             :code="(() => `${
-              data.split('\n')
-                .filter(item => item.startsWith(`localhost:${route.params.service}::`))
-                .map(item => item.replace(`localhost:${route.params.service}::`, ''))
+              clusters.split('\n')
+                .filter(item => item.startsWith(`${props.data.service}::`))
+                .map(item => item.replace(`${props.data.service}::`, ''))
                 .join('\n')
             }`)()"
             is-searchable
@@ -70,5 +70,10 @@ import { RefreshIcon } from '@kong/icons'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import type { DataplaneInbound } from '@/app/data-planes/data'
 import type { ClustersDataSource } from '@/app/data-planes/sources'
+
+const props = defineProps<{
+  data: DataplaneInbound
+}>()
 </script>

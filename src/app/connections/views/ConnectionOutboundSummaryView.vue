@@ -9,7 +9,7 @@
     <AppView>
       <template #title>
         <h2>
-          {{ route.params.service }}
+          Outbound {{ route.params.service }}
         </h2>
       </template>
 
@@ -29,13 +29,13 @@
       <RouterView v-slot="{ Component }">
         <DataCollection
           v-slot="{ items }"
-          :items="props.data"
-          :predicate="(item) => item.name === route.params.service"
+          :items="Object.entries(props.data)"
+          :predicate="([key, value]) => key === route.params.service"
           :find="true"
         >
           <component
             :is="Component"
-            :data="items[0]"
+            :data="items[0][1]"
           />
         </DataCollection>
       </RouterView>
@@ -44,9 +44,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { TrafficEntry } from '../data'
 import NavTabs from '@/app/common/NavTabs.vue'
 const props = defineProps<{
-  data: TrafficEntry[]
+  data: Record<string, any>
 }>()
 </script>

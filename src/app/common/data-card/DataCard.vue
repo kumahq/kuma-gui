@@ -22,9 +22,10 @@
 .data-card :deep(.card-content) {
   font-size: $kui-font-size-20;
 }
-
+.card {
+  overflow: hidden;
+}
 .card,
-.title,
 .body,
 .body > :deep(dl),
 .body > :deep(dl) > div {

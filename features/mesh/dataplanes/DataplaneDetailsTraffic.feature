@@ -39,12 +39,6 @@ Feature: Dataplane traffic
           networking:
             gateway: !!js/undefined
       """
-    And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/stats" responds with
-      """
-      body: |
-        tcp.outbound_8888._cx_tx_bytes_total: 0
-        tcp.outbound_8888._cx_rx_bytes_total: 0
-      """
 
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     Then the "$detail-view" element contains "dpp-1-name-of-dataplane"
