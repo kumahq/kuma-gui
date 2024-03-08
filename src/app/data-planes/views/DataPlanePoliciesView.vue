@@ -36,7 +36,7 @@
             >
               <StandardDataplanePolicies
                 :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                :inspect-rules-for-dataplane="rulesData"
+                :rules="rulesData.rules"
                 data-testid="rules-based-policies"
               />
             </DataCollection>

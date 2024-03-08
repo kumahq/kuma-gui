@@ -3,131 +3,148 @@
     :initially-open="[]"
     multiple-open
   >
-    <AccordionItem
-      v-for="(ruleEntry, index) in props.ruleEntries"
-      :key="index"
+    <template
+      v-for="policies in [props.rules.reduce<Record<string, Rule[]>>((prev, item) => {
+        if(typeof prev[item.type] === 'undefined') {
+          prev[item.type] = []
+        }
+        prev[item.type].push(item)
+        return prev
+      }, {})]"
+      :key="policies"
     >
-      <template #accordion-header>
-        <h3 class="policy-type-heading">
-          <PolicyTypeTag :policy-type="ruleEntry.type">
-            {{ ruleEntry.type }}
-          </PolicyTypeTag>
-        </h3>
-      </template>
+      <AccordionItem
+        v-for="(items, type) in policies"
+        :key="type"
+      >
+        <template #accordion-header>
+          <h3 class="policy-type-heading">
+            <PolicyTypeTag :policy-type="type">
+              {{ type }}
+            </PolicyTypeTag>
+          </h3>
+        </template>
 
-      <template #accordion-content>
-        <div class="policy-list">
-          <KTable
-            class="policy-type-table"
-            :class="{
-              'has-matchers': props.showMatchers,
-            }"
-            :fetcher="() => ({ data: ruleEntry.rules, total: ruleEntry.rules.length })"
-            :headers="[
-              ...(props.showMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
-              { label: 'Origin policies', key: 'origins' },
-              { label: 'Conf', key: 'config' },
-            ]"
-            :cell-attrs="getCellAttributes"
-            disable-pagination
+        <template #accordion-content>
+          <template
+            v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
+            :key="hasMatchers"
           >
-            <template
-              v-if="props.showMatchers"
-              #matchers="{ row }: { row: RuleEntryRule }"
-            >
-              <span
-                v-if="row.matchers && row.matchers.length > 0"
-                class="matcher"
+            <div class="policy-list">
+              <AppCollection
+                class="policy-type-table"
+                :class="{
+                  'has-matchers': hasMatchers,
+                }"
+                :total="items.length"
+                :items="items"
+                :headers="[
+                  ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
+                  { label: 'Origin policies', key: 'origins' },
+                  { label: 'Conf', key: 'config' },
+                ]"
               >
                 <template
-                  v-for="({ key, value, not }, matcherIndex) in row.matchers"
-                  :key="matcherIndex"
+                  #matchers="{ row }"
                 >
                   <span
-                    v-if="matcherIndex > 0"
-                    class="matcher__and"
-                  > and<br></span><span
-                    v-if="not"
-                    class="matcher__not"
-                  >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
-                </template>
-              </span>
-
-              <template v-else>
-                <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
-              </template>
-            </template>
-
-            <template #origins="{ row }: { row: RuleEntryRule }">
-              <ul v-if="row.origins.length > 0">
-                <li
-                  v-for="(origin, originIndex) in row.origins"
-                  :key="`${index}-${originIndex}`"
-                >
-                  <RouterLink
-                    :to="{
-                      name: 'policy-detail-view',
-                      params: {
-                        mesh: origin.mesh,
-                        policyPath: props.policyTypesByName[origin.type]!.path,
-                        policy: origin.name,
-                      },
-                    }"
+                    v-if="row.matchers.length > 0"
+                    class="matcher"
                   >
-                    {{ origin.name }}
-                  </RouterLink>
-                </li>
-              </ul>
+                    <template
+                      v-for="({ key, value, not }, matcherIndex) in row.matchers"
+                      :key="matcherIndex"
+                    >
+                      <span
+                        v-if="matcherIndex > 0"
+                        class="matcher__and"
+                      > and<br></span><span
+                        v-if="not"
+                        class="matcher__not"
+                      >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
+                    </template>
+                  </span>
 
-              <template v-else>
-                {{ t('common.collection.none') }}
-              </template>
-            </template>
+                  <template v-else>
+                    <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
+                  </template>
+                </template>
 
-            <template #config="{ row }: { row: RuleEntryRule, rowKey: number }">
-              <template v-if="row.config">
-                <CodeBlock
-                  :code="toYaml(row.config)"
-                  language="yaml"
-                  :show-copy-button="false"
-                />
-              </template>
+                <template #origins="{ row }">
+                  <ul v-if="row.origins.length > 0">
+                    <li
+                      v-for="(origin, originIndex) in row.origins"
+                      :key="`${type}-${originIndex}`"
+                    >
+                      <RouterLink
+                        :to="{
+                          name: 'policy-detail-view',
+                          params: {
+                            mesh: origin.mesh,
+                            policyPath: props.policyTypesByName[origin.type]!.path,
+                            policy: origin.name,
+                          },
+                        }"
+                      >
+                        {{ origin.name }}
+                      </RouterLink>
+                    </li>
+                  </ul>
 
-              <template v-else>
-                {{ t('common.collection.none') }}
-              </template>
-            </template>
-          </KTable>
-        </div>
-      </template>
-    </AccordionItem>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #config="{ row }">
+                  <template v-if="row.config">
+                    <CodeBlock
+                      :code="toYaml(row.config)"
+                      language="yaml"
+                      :show-copy-button="false"
+                    />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+              </AppCollection>
+            </div>
+          </template>
+        </template>
+      </AccordionItem>
+    </template>
   </AccordionList>
 </template>
 
 <script lang="ts" setup>
+import type { Rule } from '../data'
 import { useI18n } from '@/app/application'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import type { PolicyType, RuleEntry, RuleEntryRule } from '@/types/index.d'
+import type { PolicyType } from '@/types/index.d'
 import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
 
-const props = withDefaults(defineProps<{
-  ruleEntries: RuleEntry[]
+const props = defineProps<{
+  rules: Rule[]
   policyTypesByName: Record<string, PolicyType | undefined>
-  showMatchers?: boolean
-}>(), {
-  showMatchers: true,
-})
+}>()
 
-function getCellAttributes({ headerKey }: any): Record<string, string> {
-  return { class: `cell-${headerKey}` }
-}
 </script>
 
 <style lang="scss" scoped>
+:deep(.app-collection .k-table.is-clickable tr) {
+  cursor: default;
+}
+:deep(.app-collection .k-table.has-hover tr:hover) {
+  background-color: transparent;
+}
+
 .policy-type-heading {
   font-size: inherit;
   font-weight: $kui-font-weight-regular;

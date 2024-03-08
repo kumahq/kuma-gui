@@ -28,6 +28,7 @@
     })"
     :row-attrs="getRowAttributes"
     disable-sorting
+    :disable-pagination="props.pageNumber === 0"
     hide-pagination-when-optional
     @row:click="click"
   >
@@ -139,7 +140,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   isSelectedRow: null,
   total: 0,
-  pageNumber: 1,
+  pageNumber: 0,
   pageSize: 30,
   error: undefined,
   emptyStateTitle: undefined,
@@ -216,8 +217,8 @@ function getRowAttributes(row: Row): Record<string, string> {
 const click = (e: MouseEvent) => {
   const $tr = (e.target as HTMLElement).closest('tr')
   if ($tr) {
-    const $a = $tr.querySelector('a')
-    if ($a !== null) {
+    const $a: HTMLAnchorElement | null = $tr.querySelector('td:first-child a')
+    if ($a !== null && $a.closest('tr, li') === $tr) {
       $a.click()
     }
   }
@@ -230,6 +231,13 @@ const click = (e: MouseEvent) => {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
+}
+.app-collection :deep(td:first-child li a) {
+  color: $kui-color-text-primary;
+  font-weight: $kui-font-weight-regular;
+}
+.app-collection :deep(td:first-child li a:hover) {
+  text-decoration: underline;
 }
 
 .app-collection-toolbar {

@@ -1,8 +1,8 @@
 import {
   Dataplane,
   DataplaneOverview,
-  InspectRules,
-  InspectRulesForDataplane,
+  Rule,
+  RuleCollection,
   MeshGatewayDataplane,
   SidecarDataplane,
 } from './data'
@@ -30,7 +30,7 @@ export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDatapla
 
 export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
 
-export type DataplaneRulesSource = DataSourceResponse<InspectRulesForDataplane>
+export type DataplaneRulesSource = DataSourceResponse<RuleCollection>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -72,7 +72,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
     },
 
     '/meshes/:mesh/dataplanes/:name/rules': async (params) => {
-      return InspectRules.fromCollection(await api.getDataplaneRules(params))
+      return Rule.fromCollection(await api.getDataplaneRules(params))
     },
 
     '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {

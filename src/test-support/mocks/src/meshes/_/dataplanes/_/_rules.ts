@@ -5,8 +5,8 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
-  const haxProxyRuleOverride = env('KUMA_DATAPLANE_PROXY_RULE_ENABLED', '')
-  const haxProxyRule = haxProxyRuleOverride !== '' ? haxProxyRuleOverride === 'true' : fake.datatype.boolean()
+  const hasProxyRuleOverride = env('KUMA_DATAPLANE_PROXY_RULE_ENABLED', '')
+  const hasProxyRule = hasProxyRuleOverride !== '' ? hasProxyRuleOverride === 'true' : fake.datatype.boolean()
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
   const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
@@ -20,7 +20,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         name,
       },
       rules: [
-        ...haxProxyRule
+        ...(hasProxyRule
           ? [{
             type: 'MeshProxyPatch',
             proxyRule: {
@@ -43,7 +43,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
               ],
             },
           }]
-          : [],
+          : []),
         ...Array.from({ length: ruleCount }).map(() => {
           const type = fake.helpers.arrayElement(['MeshHTTPRoute', 'MeshTimeout'])
 
