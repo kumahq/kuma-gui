@@ -6,6 +6,8 @@ policies:
       overview: 'Overview'
       config: 'YAML'
     items:
+      empty: "This policy type does not exist."
+    types:
       title: "Policies"
   href:
     docs: '{KUMA_DOCS_URL}/policies/{name}?{KUMA_UTM_QUERY_PARAMS}'

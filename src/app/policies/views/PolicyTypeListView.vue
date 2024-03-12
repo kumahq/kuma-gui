@@ -19,7 +19,7 @@
         <template #title>
           <h2>
             <RouteTitle
-              :title="t('policies.routes.items.title')"
+              :title="t('policies.routes.types.title')"
             />
           </h2>
         </template>
