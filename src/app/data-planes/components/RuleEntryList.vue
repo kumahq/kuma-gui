@@ -4,116 +4,114 @@
     multiple-open
   >
     <template
-      v-for="policies in [props.rules.reduce<Record<string, Rule[]>>((prev, item) => {
-        if(typeof prev[item.type] === 'undefined') {
-          prev[item.type] = []
-        }
-        prev[item.type].push(item)
-        return prev
-      }, {})]"
+      v-for="policies in [Object.groupBy(props.rules, (item, i) => item.type)]"
       :key="policies"
     >
-      <AccordionItem
+      <template
         v-for="(items, type) in policies"
         :key="type"
       >
-        <template #accordion-header>
-          <h3 class="policy-type-heading">
-            <PolicyTypeTag :policy-type="type">
-              {{ type }}
-            </PolicyTypeTag>
-          </h3>
-        </template>
-
-        <template #accordion-content>
-          <template
-            v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
-            :key="hasMatchers"
-          >
-            <div class="policy-list">
-              <AppCollection
-                class="policy-type-table"
-                :class="{
-                  'has-matchers': hasMatchers,
-                }"
-                :total="items.length"
-                :items="items"
-                :headers="[
-                  ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
-                  { label: 'Origin policies', key: 'origins' },
-                  { label: 'Conf', key: 'config' },
-                ]"
-              >
-                <template
-                  #matchers="{ row }"
-                >
-                  <span
-                    v-if="row.matchers.length > 0"
-                    class="matcher"
-                  >
-                    <template
-                      v-for="({ key, value, not }, matcherIndex) in row.matchers"
-                      :key="matcherIndex"
-                    >
-                      <span
-                        v-if="matcherIndex > 0"
-                        class="matcher__and"
-                      > and<br></span><span
-                        v-if="not"
-                        class="matcher__not"
-                      >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
-                    </template>
-                  </span>
-
-                  <template v-else>
-                    <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
-                  </template>
-                </template>
-
-                <template #origins="{ row }">
-                  <ul v-if="row.origins.length > 0">
-                    <li
-                      v-for="(origin, originIndex) in row.origins"
-                      :key="`${type}-${originIndex}`"
-                    >
-                      <RouterLink
-                        :to="{
-                          name: 'policy-detail-view',
-                          params: {
-                            mesh: origin.mesh,
-                            policyPath: props.policyTypesByName[origin.type]!.path,
-                            policy: origin.name,
-                          },
-                        }"
-                      >
-                        {{ origin.name }}
-                      </RouterLink>
-                    </li>
-                  </ul>
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-
-                <template #config="{ row }">
-                  <template v-if="row.config">
-                    <CodeBlock
-                      :code="toYaml(row.config)"
-                      language="yaml"
-                      :show-copy-button="false"
-                    />
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
-                </template>
-              </AppCollection>
-            </div>
+        <AccordionItem
+          v-if="items"
+        >
+          <template #accordion-header>
+            <h3 class="policy-type-heading">
+              <PolicyTypeTag :policy-type="type">
+                {{ type }}
+              </PolicyTypeTag>
+            </h3>
           </template>
-        </template>
-      </AccordionItem>
+
+          <template #accordion-content>
+            <template
+              v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
+              :key="hasMatchers"
+            >
+              <div class="policy-list">
+                <AppCollection
+                  class="policy-type-table"
+                  :class="{
+                    'has-matchers': hasMatchers,
+                  }"
+                  :total="items.length"
+                  :items="items"
+                  :headers="[
+                    ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
+                    { label: 'Origin policies', key: 'origins' },
+                    { label: 'Conf', key: 'config' },
+                  ]"
+                >
+                  <template
+                    #matchers="{ row }"
+                  >
+                    <span
+                      v-if="row.matchers.length > 0"
+                      class="matcher"
+                    >
+                      <template
+                        v-for="({ key, value, not }, matcherIndex) in row.matchers"
+                        :key="matcherIndex"
+                      >
+                        <span
+                          v-if="matcherIndex > 0"
+                          class="matcher__and"
+                        > and<br></span><span
+                          v-if="not"
+                          class="matcher__not"
+                        >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
+                      </template>
+                    </span>
+
+                    <template v-else>
+                      <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
+                    </template>
+                  </template>
+
+                  <template #origins="{ row }">
+                    <ul v-if="row.origins.length > 0">
+                      <li
+                        v-for="(origin, originIndex) in row.origins"
+                        :key="`${type}-${originIndex}`"
+                      >
+                        <RouterLink
+                          :to="{
+                            name: 'policy-detail-view',
+                            params: {
+                              mesh: origin.mesh,
+                              policyPath: props.policyTypesByName[origin.type]!.path,
+                              policy: origin.name,
+                            },
+                          }"
+                        >
+                          {{ origin.name }}
+                        </RouterLink>
+                      </li>
+                    </ul>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #config="{ row }">
+                    <template v-if="row.config">
+                      <CodeBlock
+                        :code="toYaml(row.config)"
+                        language="yaml"
+                        :show-copy-button="false"
+                      />
+                    </template>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+                </AppCollection>
+              </div>
+            </template>
+          </template>
+        </AccordionItem>
+      </template>
     </template>
   </AccordionList>
 </template>

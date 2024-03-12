@@ -54,15 +54,7 @@
           {{ t('data-planes.routes.item.from_rules') }}
         </h3>
         <template
-          v-for="inbounds in [items.reduce<Record<number, Rule[]>>((prev, item) => {
-            if(typeof item.inbound?.port !== 'undefined') {
-              if (typeof prev[item.inbound.port] === 'undefined') {
-                prev[item.inbound.port] = []
-              }
-              prev[item.inbound.port].push(item)
-            }
-            return prev
-          }, {})]"
+          v-for="inbounds in [Object.groupBy(items, (item) => item.inbound!.port)]"
           :key="inbounds"
         >
           <div
@@ -73,7 +65,7 @@
 
             <RuleEntryList
               class="mt-2"
-              :rules="rs"
+              :rules="rs!"
               :policy-types-by-name="props.policyTypesByName"
               :data-testid="`from-rule-list-${index}`"
             />

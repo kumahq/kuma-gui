@@ -1,4 +1,6 @@
 import { i18nTComponent } from '@kong-ui-public/i18n'
+// @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
+import groupBy from 'object.groupby'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
@@ -25,6 +27,9 @@ if (!('structuredClone' in globalThis)) {
     return JSON.parse(JSON.stringify(obj))
   }
 }
+// temporary Object.groupBy polyfill
+// TODO(jc): delete this once we get to 2026
+groupBy.shim()
 
 export type { DataSourceResponse, Source } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
