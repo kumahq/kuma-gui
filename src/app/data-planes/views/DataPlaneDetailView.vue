@@ -122,7 +122,6 @@
               <ConnectionTraffic>
                 <template #title>
                   <ForwardIcon
-                    display="inline-block"
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />
@@ -227,7 +226,6 @@
                 </template>
                 <template #title>
                   <GatewayIcon
-                    display="inline-block"
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />

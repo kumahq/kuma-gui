@@ -1,7 +1,6 @@
 <template>
   <WarningIcon
     color="var(--WarningIconBackground, currentColor)"
-    display="inline-block"
     :size="props.size || KUI_ICON_SIZE_60"
     :hide-title="props.hideTitle"
   />

@@ -275,7 +275,6 @@
                         {{ t('common.collection.details_link') }}
 
                         <ArrowRightIcon
-                          display="inline-block"
                           decorative
                           :size="KUI_ICON_SIZE_30"
                         />

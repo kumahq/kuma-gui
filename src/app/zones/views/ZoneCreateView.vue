@@ -296,14 +296,12 @@
                         <ProgressIcon
                           v-if="data === undefined"
                           data-testid="waiting"
-                          display="inline-block"
                           :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
                         />
 
                         <CheckCircleIcon
                           v-else
                           data-testid="connected"
-                          display="inline-block"
                           :color="KUI_COLOR_TEXT_SUCCESS"
                         />
                       </template>

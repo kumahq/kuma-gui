@@ -3,7 +3,6 @@
     <template #icon>
       <ProgressIcon
         class="mb-3"
-        display="inline-block"
         :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
       />
     </template>

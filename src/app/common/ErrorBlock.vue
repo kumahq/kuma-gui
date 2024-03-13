@@ -8,7 +8,6 @@
         <DangerIcon
           v-if="props.appearance === 'danger'"
           :color="KUI_COLOR_TEXT_DANGER"
-          display="inline-block"
         />
 
         <WarningIcon v-else />
