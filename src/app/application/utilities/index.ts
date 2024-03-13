@@ -3,6 +3,10 @@ type URLParamValue = string | null
 
 const difference = <T>(a: T[], b: T[]): T[] => a.filter(item => !b.includes(item))
 
+const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
+  return arr.includes(item as T[number])
+}
+
 const createUniqueId = (j = 0) => {
   let i = j
   return (prefix = 'unique') => {
@@ -13,42 +17,44 @@ const createUniqueId = (j = 0) => {
 
 export const uniqueId = createUniqueId()
 
-export const beforePaint = function (fn: (...args: any[]) => void) {
+export const beforePaint = <T extends (...args: any[]) => void>(fn: T) => {
   let num: number
-  return (...args: unknown[]) => {
+  return (...args: Parameters<T>) => {
     if (num) {
       window.cancelAnimationFrame(num)
     }
     num = window.requestAnimationFrame(fn.bind(fn, ...args))
   }
 }
+
+const supportedAttrs = ['class'] as const
+type SupportedAttrs = typeof supportedAttrs[number]
 export const createAttrsSetter = ($el = document.documentElement) => {
   if (!$el) {
     return () => {}
   }
   const originalClasses = [...$el.classList]
-  return beforePaint((attrs: Partial<Record<string, string>>[]) => {
-    const flat = attrs.reduce<Partial<Record<string, string[]>>>((prev, item) => {
+  return beforePaint((attrs: Partial<Record<SupportedAttrs, string>>[]) => {
+    const flat = attrs.reduce<Record<SupportedAttrs, string[]>>((prev, item) => {
       return Object.entries(item).reduce(
         (prev, [key, value]) => {
-          if (value) {
-            if (typeof prev[key] === 'undefined') {
-              prev[key] = []
-            }
-            prev[key]!.push(value)
+          if (includes(supportedAttrs, key) && value) {
+            prev[key].push(value)
           }
           return prev
         }, prev,
       )
-    }, {})
+    }, { class: [] })
+
     // omit any classes that were on the node previous to our application starting
     const currentClasses = difference([...$el.classList], originalClasses)
     // anything in currentClasses that isn't in our tree of attrs, remove
-    $el.classList.remove(...difference(currentClasses, flat.class ?? []))
+    $el.classList.remove(...difference(currentClasses, flat.class))
     // anything in our tree of attrs that isn't in currentClasses, add
-    $el.classList.add(...difference(flat.class ?? [], currentClasses))
+    $el.classList.add(...difference(flat.class, currentClasses))
   })
 }
+
 // normalizes url params from "value or array of values" to value
 // if the url params is an array we use the first value
 export const urlParam = function <T extends URLParamValue> (param: T | T[]): T {

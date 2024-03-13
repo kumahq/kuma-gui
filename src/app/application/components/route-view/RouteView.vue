@@ -68,12 +68,16 @@ const sym = Symbol('route-view')
 type Params = { [P in keyof T]: T[P] }
 type RouteReplaceParams = Parameters<typeof router['push']>
 
+const setTitle = createTitleSetter(document)
+const setAttrs = createAttrsSetter(document.documentElement)
+type SupportedAttrs = Parameters<typeof setAttrs>[0][number]
+
 const props = withDefaults(defineProps<{
   name: string
-  attrs?: Partial<Record<string, string>>
+  attrs?: SupportedAttrs
   params?: T
 }>(), {
-  attrs: () => ({}),
+  attrs: (): SupportedAttrs => ({}),
   params: () => { return {} as T },
 })
 const _id = uniqueId(props.name)
@@ -90,9 +94,7 @@ const name = computed(() => props.name)
 
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<Symbol, string>()
-const attributes = new Map<Symbol, Partial<Record<string, string>>>()
-const setTitle = createTitleSetter(document)
-const setAttrs = createAttrsSetter(document.documentElement)
+const attributes = new Map<Symbol, SupportedAttrs>()
 
 const joinTitle = (titles: string[]) => {
   return titles.reverse().concat(t('components.route-view.title', { name: t('common.product.name') })).join(' | ')
@@ -118,7 +120,7 @@ const routeView = {
     titles.delete(sym)
     setTitle(joinTitle([...titles.values()]))
   },
-  addAttrs: (item: Partial<Record<string, string>>, sym: Symbol) => {
+  addAttrs: (item: SupportedAttrs, sym: Symbol) => {
     attributes.set(sym, item)
     setAttrs([...attributes.values()])
   },
