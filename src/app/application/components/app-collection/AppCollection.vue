@@ -37,18 +37,17 @@
       #empty-state
     >
       <EmptyBlock>
-        {{ props.emptyStateTitle ?? t('common.emptyState.title') }}
+        <template #title>
+          {{ props.emptyStateTitle ?? t('common.emptyState.title') }}
+        </template>
 
-        <template
-          v-if="props.emptyStateMessage"
-          #message
-        >
+        <template v-if="props.emptyStateMessage">
           {{ props.emptyStateMessage }}
         </template>
 
         <template
           v-if="props.emptyStateCtaTo"
-          #cta
+          #action
         >
           <DocumentationLink
             v-if="typeof props.emptyStateCtaTo === 'string'"

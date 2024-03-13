@@ -5,20 +5,19 @@
     <AppView>
       <div class="overview">
         <KEmptyState>
-          <template #title>
+          <template #icon>
             <WarningIcon class="mb-3" />
+          </template>
+
+          <template #title>
             <h1>
-              <RouteTitle
-                title="Page Not Found"
-              />
+              <RouteTitle title="Page Not Found" />
             </h1>
           </template>
 
-          <template #message>
-            <p>The page or entity you were looking for does not exist.</p>
-          </template>
+          <p>The page or entity you were looking for does not exist.</p>
 
-          <template #cta>
+          <template #action>
             <KButton
               appearance="primary"
               :to="{ name: 'home' }"
@@ -31,6 +30,7 @@
     </AppView>
   </RouteView>
 </template>
+
 <script lang="ts" setup>
 import WarningIcon from '@/app/common/WarningIcon.vue'
 </script>

@@ -2,25 +2,23 @@
   <KAlert
     v-if="isShowingOnboardingAlert"
     appearance="success"
-    dismiss-type="icon"
+    dismissible
     data-testid="onboarding-notification"
-    @closed="closeAlert"
+    @dismiss="closeAlert"
   >
-    <template #alertMessage>
-      <div class="onboarding-alert-content">
-        <!-- eslint-disable-next-line vue/no-v-html  -->
-        <div v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })" />
+    <div class="onboarding-alert-content">
+      <!-- eslint-disable-next-line vue/no-v-html  -->
+      <div v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })" />
 
-        <KButton
-          appearance="primary"
-          size="small"
-          class="action-button"
-          :to="{ name: 'onboarding-welcome-view' }"
-        >
-          {{ t('main-overview.detail.onboarding.get_started_link') }}
-        </KButton>
-      </div>
-    </template>
+      <KButton
+        appearance="primary"
+        size="small"
+        class="action-button"
+        :to="{ name: 'onboarding-welcome-view' }"
+      >
+        {{ t('main-overview.detail.onboarding.get_started_link') }}
+      </KButton>
+    </div>
   </KAlert>
 </template>
 

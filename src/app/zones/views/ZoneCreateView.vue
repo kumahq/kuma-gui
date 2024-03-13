@@ -41,25 +41,22 @@
           v-if="error !== null"
           appearance="danger"
           class="mb-4"
-          dismiss-type="icon"
           data-testid="create-zone-error"
         >
-          <template #alertMessage>
-            <template
-              v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
-            >
-              <p>{{ t(`zones.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
+          <template
+            v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
+          >
+            <p>{{ t(`zones.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
 
-              <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
-            </template>
+            <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
+          </template>
 
-            <template v-else-if="(error instanceof ApiError)">
-              <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
-            </template>
+          <template v-else-if="(error instanceof ApiError)">
+            <p>{{ t('common.error_state.api_error', { status: error.status, title: error.detail }) }}</p>
+          </template>
 
-            <template v-else>
-              <p>{{ t('common.error_state.default_error') }}</p>
-            </template>
+          <template v-else>
+            <p>{{ t('common.error_state.default_error') }}</p>
           </template>
         </KAlert>
 
@@ -298,49 +295,44 @@
                       data-testid="error"
                     />
 
-                    <KEmptyState
-                      v-else
-                      cta-is-hidden
-                    >
-                      <template #title>
-                        <template v-if="(typeof data === 'undefined')">
-                          <ProgressIcon
-                            data-testid="waiting"
-                            display="inline-block"
-                            :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-                          />
-                          {{ t('zones.form.scan.waitTitle') }}
-                        </template>
-                        <template
+                    <KEmptyState v-else>
+                      <template #icon>
+                        <ProgressIcon
+                          v-if="data === undefined"
+                          data-testid="waiting"
+                          display="inline-block"
+                          :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+                        />
+
+                        <CheckCircleIcon
                           v-else
-                        >
-                          <CheckCircleIcon
-                            data-testid="connected"
-                            display="inline-block"
-                            :color="KUI_COLOR_TEXT_SUCCESS"
-                          />
-                          {{ t('zones.form.scan.completeTitle') }}
-                        </template>
+                          data-testid="connected"
+                          display="inline-block"
+                          :color="KUI_COLOR_TEXT_SUCCESS"
+                        />
                       </template>
-                      <template #message>
-                        <template v-if="(typeof data !== 'undefined')">
-                          <p>
-                            {{ t('zones.form.scan.completeDescription', { name }) }}
-                          </p>
-                          <p class="mt-2">
-                            <KButton
-                              appearance="primary"
-                              :to="{
-                                name: 'zone-cp-detail-view',
-                                params: {
-                                  zone: name,
-                                },
-                              }"
-                            >
-                              {{ t('zones.form.scan.completeButtonLabel', { name }) }}
-                            </KButton>
-                          </p>
-                        </template>
+
+                      <template #title>
+                        {{ data === undefined ? t('zones.form.scan.waitTitle') : t('zones.form.scan.completeTitle') }}
+                      </template>
+
+                      <template v-if="(typeof data !== 'undefined')">
+                        <p>
+                          {{ t('zones.form.scan.completeDescription', { name }) }}
+                        </p>
+                        <p class="mt-2">
+                          <KButton
+                            appearance="primary"
+                            :to="{
+                              name: 'zone-cp-detail-view',
+                              params: {
+                                zone: name,
+                              },
+                            }"
+                          >
+                            {{ t('zones.form.scan.completeButtonLabel', { name }) }}
+                          </KButton>
+                        </p>
                       </template>
                     </KEmptyState>
                   </div>

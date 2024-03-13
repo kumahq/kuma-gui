@@ -32,11 +32,11 @@
       </template>
 
       <EmptyBlock v-if="props.policy === undefined">
-        {{ t('common.collection.summary.empty_title', { type: props.policyType.name }) }}
-
-        <template #message>
-          <p>{{ t('common.collection.summary.empty_message', { type: props.policyType.name }) }}</p>
+        <template #title>
+          {{ t('common.collection.summary.empty_title', { type: props.policyType.name }) }}
         </template>
+
+        <p>{{ t('common.collection.summary.empty_message', { type: props.policyType.name }) }}</p>
       </EmptyBlock>
 
       <div

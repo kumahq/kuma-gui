@@ -29,24 +29,22 @@
               <!-- make sure we have data but don't show errors or loaders -->
               <KAlert
                 v-if="data && env('KUMA_VERSION') !== data.version"
+                class="upgrade-alert"
                 data-testid="upgrade-check"
                 appearance="info"
-                size="small"
               >
-                <template #alertMessage>
-                  <div class="alert-content">
-                    <p>
-                      {{ t('common.product.name') }} update available
-                    </p>
+                <div class="alert-content">
+                  <p>
+                    {{ t('common.product.name') }} update available
+                  </p>
 
-                    <KButton
-                      appearance="primary"
-                      :to="t('common.product.href.install')"
-                    >
-                      Update
-                    </KButton>
-                  </div>
-                </template>
+                  <KButton
+                    appearance="primary"
+                    :to="t('common.product.href.install')"
+                  >
+                    Update
+                  </KButton>
+                </div>
               </KAlert>
             </DataSource>
           </div>
@@ -166,16 +164,14 @@
             class="mb-4"
             appearance="warning"
           >
-            <template #alertMessage>
-              <ul>
-                <!-- eslint-disable vue/no-v-html  -->
-                <li
-                  data-testid="warning-GLOBAL_STORE_TYPE_MEMORY"
-                  v-html="t('common.warnings.GLOBAL_STORE_TYPE_MEMORY')"
-                />
-                <!-- eslint-enable -->
-              </ul>
-            </template>
+            <ul>
+              <!-- eslint-disable vue/no-v-html  -->
+              <li
+                data-testid="warning-GLOBAL_STORE_TYPE_MEMORY"
+                v-html="t('common.warnings.GLOBAL_STORE_TYPE_MEMORY')"
+              />
+              <!-- eslint-enable -->
+            </ul>
           </KAlert>
         </slot>
         <slot name="default" />
@@ -315,7 +311,7 @@ nav :deep(.app-navigator) > a {
   @media screen and (max-width: 800px) {
     display: none;
   }
-  .k-alert.small {
+  .upgrade-alert {
     // Uses smaller paddings for this particular alert.
     padding: $kui-space-20 $kui-space-40;
   }
