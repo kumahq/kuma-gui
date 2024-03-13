@@ -22,7 +22,9 @@
       >
         <template #empty>
           <EmptyBlock>
-            {{ t('policies.routes.items.empty') }}
+            <template #message>
+              {{ t('policies.routes.items.empty') }}
+            </template>
           </EmptyBlock>
         </template>
         <template #default="{ items: types }">
