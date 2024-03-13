@@ -41,6 +41,7 @@ const pager: Pager = (_total: string | number, req: RestRequest, self) => {
 export type AEnv = Alias<AppEnv['var']>
 export type MockEnvKeys = keyof {
   FAKE_SEED: string
+  KUMA_RULE_MATCHER_COUNT: string
   KUMA_DATAPLANE_COUNT: string
   KUMA_DATAPLANE_TYPE: string
   KUMA_DATAPLANEINBOUND_COUNT: string

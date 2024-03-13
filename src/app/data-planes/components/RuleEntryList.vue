@@ -4,114 +4,107 @@
     multiple-open
   >
     <template
-      v-for="policies in [Object.groupBy(props.rules, (item, i) => item.type)]"
+      v-for="policies in [props.rules.reduce<Record<string, Rule[]>>((prev, item) => {
+        if(typeof prev[item.type] === 'undefined') {
+          prev[item.type] = []
+        }
+        prev[item.type].push(item)
+        return prev
+      }, {})]"
       :key="policies"
     >
-      <template
+      <AccordionItem
         v-for="(items, type) in policies"
         :key="type"
       >
-        <AccordionItem
-          v-if="items"
-        >
-          <template #accordion-header>
-            <h3 class="policy-type-heading">
-              <PolicyTypeTag :policy-type="type">
-                {{ type }}
-              </PolicyTypeTag>
-            </h3>
-          </template>
+        <template #accordion-header>
+          <h3 class="policy-type-heading">
+            <PolicyTypeTag :policy-type="type">
+              {{ type }}
+            </PolicyTypeTag>
+          </h3>
+        </template>
 
-          <template #accordion-content>
-            <template
-              v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
-              :key="hasMatchers"
-            >
-              <div class="policy-list">
-                <AppCollection
-                  class="policy-type-table"
-                  :class="{
-                    'has-matchers': hasMatchers,
-                  }"
-                  :total="items.length"
-                  :items="items"
-                  :headers="[
-                    ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
-                    { label: 'Origin policies', key: 'origins' },
-                    { label: 'Conf', key: 'config' },
-                  ]"
+        <template #accordion-content>
+          <template
+            v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
+            :key="hasMatchers"
+          >
+            <div class="policy-list">
+              <AppCollection
+                class="policy-type-table"
+                :class="{
+                  'has-matchers': hasMatchers,
+                }"
+                :total="items.length"
+                :items="items"
+                :headers="[
+                  ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
+                  { label: 'Origin policies', key: 'origins' },
+                  { label: 'Conf', key: 'config' },
+                ]"
+              >
+                <template
+                  #matchers="{ row }"
                 >
-                  <template
-                    #matchers="{ row }"
+                  <span
+                    v-if="row.matchers.length > 0"
+                    class="matcher"
                   >
-                    <span
-                      v-if="row.matchers.length > 0"
-                      class="matcher"
+                    <RuleMatchers
+                      :items="row.matchers"
+                    />
+                  </span>
+
+                  <template v-else>
+                    <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
+                  </template>
+                </template>
+
+                <template #origins="{ row }">
+                  <ul v-if="row.origins.length > 0">
+                    <li
+                      v-for="(origin, originIndex) in row.origins"
+                      :key="`${type}-${originIndex}`"
                     >
-                      <template
-                        v-for="({ key, value, not }, matcherIndex) in row.matchers"
-                        :key="matcherIndex"
+                      <RouterLink
+                        :to="{
+                          name: 'policy-detail-view',
+                          params: {
+                            mesh: origin.mesh,
+                            policyPath: props.policyTypesByName[origin.type]!.path,
+                            policy: origin.name,
+                          },
+                        }"
                       >
-                        <span
-                          v-if="matcherIndex > 0"
-                          class="matcher__and"
-                        > and<br></span><span
-                          v-if="not"
-                          class="matcher__not"
-                        >!</span><span class="matcher__term">{{ `${key}:${value}` }}</span>
-                      </template>
-                    </span>
+                        {{ origin.name }}
+                      </RouterLink>
+                    </li>
+                  </ul>
 
-                    <template v-else>
-                      <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
-                    </template>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #config="{ row }">
+                  <template v-if="row.config">
+                    <CodeBlock
+                      :code="toYaml(row.config)"
+                      language="yaml"
+                      :show-copy-button="false"
+                    />
                   </template>
 
-                  <template #origins="{ row }">
-                    <ul v-if="row.origins.length > 0">
-                      <li
-                        v-for="(origin, originIndex) in row.origins"
-                        :key="`${type}-${originIndex}`"
-                      >
-                        <RouterLink
-                          :to="{
-                            name: 'policy-detail-view',
-                            params: {
-                              mesh: origin.mesh,
-                              policyPath: props.policyTypesByName[origin.type]!.path,
-                              policy: origin.name,
-                            },
-                          }"
-                        >
-                          {{ origin.name }}
-                        </RouterLink>
-                      </li>
-                    </ul>
-
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
                   </template>
-
-                  <template #config="{ row }">
-                    <template v-if="row.config">
-                      <CodeBlock
-                        :code="toYaml(row.config)"
-                        language="yaml"
-                        :show-copy-button="false"
-                      />
-                    </template>
-
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
-                  </template>
-                </AppCollection>
-              </div>
-            </template>
+                </template>
+              </AppCollection>
+            </div>
           </template>
-        </AccordionItem>
-      </template>
+        </template>
+      </AccordionItem>
     </template>
   </AccordionList>
 </template>
@@ -124,6 +117,7 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
+import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { PolicyType } from '@/types/index.d'
 import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
@@ -198,18 +192,16 @@ const props = defineProps<{
   word-break: break-word;
 }
 
-.app-collection :deep(td:first-child *) {
-  font-weight: $kui-font-weight-regular;
-  .matcher__not {
-    color: $kui-color-text-danger;
-  }
-  .matcher__and {
-    font-weight: $kui-font-weight-semibold;
-  }
-  .matcher__not,
-  .matcher__term {
-    font-family: $kui-font-family-code;
-  }
+.matcher__not {
+  color: $kui-color-text-danger;
 }
 
+.matcher__and {
+  font-weight: $kui-font-weight-semibold;
+}
+
+.matcher__not,
+.matcher__term {
+  font-family: $kui-font-family-code;
+}
 </style>

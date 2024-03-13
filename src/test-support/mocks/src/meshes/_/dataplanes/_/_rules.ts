@@ -8,6 +8,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const hasProxyRuleOverride = env('KUMA_DATAPLANE_PROXY_RULE_ENABLED', '')
   const hasProxyRule = hasProxyRuleOverride !== '' ? hasProxyRuleOverride === 'true' : fake.datatype.boolean()
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
+  const matcherCount = parseInt(env('KUMA_RULE_MATCHER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
   const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
 
@@ -57,13 +58,11 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 },
                 rules: Array.from({ length: fake.number.int({ min: 1, max: 3 }) }).map(() => {
                   return {
-                    matchers: [
-                      {
-                        key: 'kuma.io/service',
-                        not: fake.datatype.boolean(),
-                        value: fake.kuma.serviceName('internal'),
-                      },
-                    ],
+                    matchers: Array.from({ length: matcherCount }).map(() => ({
+                      key: 'kuma.io/service',
+                      not: fake.datatype.boolean(),
+                      value: fake.kuma.serviceName('internal'),
+                    })),
                     origin: [
                       {
                         mesh,
@@ -84,13 +83,11 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
               const service1 = fake.kuma.serviceName('internal')
 
               return {
-                matchers: [
-                  {
-                    key: 'kuma.io/service',
-                    not: fake.datatype.boolean(),
-                    value: service1,
-                  },
-                ],
+                matchers: Array.from({ length: matcherCount }).map(() => ({
+                  key: 'kuma.io/service',
+                  not: fake.datatype.boolean(),
+                  value: service1,
+                })),
                 origin: [
                   {
                     mesh,
