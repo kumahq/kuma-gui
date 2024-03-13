@@ -183,7 +183,6 @@
                       <WarningIcon
                         class="mr-1"
                         :size="KUI_ICON_SIZE_30"
-                        hide-title
                       />
                     </KTooltip>
 

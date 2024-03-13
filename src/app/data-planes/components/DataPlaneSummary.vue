@@ -23,7 +23,6 @@
                 <InfoIcon
                   :color="KUI_COLOR_BACKGROUND_NEUTRAL"
                   :size="KUI_ICON_SIZE_30"
-                  hide-title
                 />
                 <template #content>
                   <ul>

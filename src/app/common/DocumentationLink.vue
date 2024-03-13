@@ -4,10 +4,7 @@
     :href="props.href"
     target="_blank"
   >
-    <BookIcon
-      :size="KUI_ICON_SIZE_30"
-      :title="t('common.documentation')"
-    />
+    <BookIcon :size="KUI_ICON_SIZE_30" />
 
     <span><slot>{{ t('common.documentation') }}</slot></span>
   </a>
