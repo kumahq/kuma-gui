@@ -35,8 +35,8 @@
             <AppView>
               <div class="stack">
                 <KCard>
-                  <div>
-                    <div class="description-actions">
+                  <header>
+                    <div>
                       <KBadge
                         v-if="policyType.isExperimental"
                         appearance="warning"
@@ -65,20 +65,16 @@
                         <span class="visually-hidden">{{ t('common.documentation') }}</span>
                       </DocumentationLink>
                     </div>
-                    <div>
-                      <h3>
-                        <PolicyTypeTag
-                          :policy-type="policyType.name"
-                        >
-                          {{ t('policies.collection.title', { name: policyType.name }) }}
-                        </PolicyTypeTag>
-                      </h3>
-
-                      <p>
-                        {{ t(`policies.type.${policyType.name}.description`, undefined, { defaultMessage: t('policies.collection.description') }) }}
-                      </p>
-                    </div>
-                  </div>
+                    <h3>
+                      <PolicyTypeTag
+                        :policy-type="policyType.name"
+                      >
+                        {{ t('policies.collection.title', { name: policyType.name }) }}
+                      </PolicyTypeTag>
+                    </h3>
+                  </header>
+                  <!-- eslint-disable-next-line vue/no-v-html -->
+                  <div v-html="t(`policies.type.${policyType.name}.description`, undefined, { defaultMessage: t('policies.collection.description') })" />
                 </KCard>
 
                 <KCard>
@@ -231,11 +227,22 @@ const props = defineProps<{
 }>()
 </script>
 <style lang="scss" scoped>
-.description-actions {
+header {
+  display: flow-root;
+}
+header > * {
+  margin-bottom: $kui-space-40;
+}
+header > div {
   float: right;
   display: flex;
   gap: $kui-space-40;
   align-items: flex-start;
+}
+header > h3 {
+  /* TODO: remove :not(:first-child)s */
+  margin-top: 0;
+  float: left;
 }
 .details-link {
   display: inline-flex;
