@@ -47,7 +47,8 @@
                 appearance="primary"
                 @click="refresh"
               >
-                <RefreshIcon :size="KUI_ICON_SIZE_30" />
+                <RefreshIcon />
+
                 Refresh
               </KButton>
             </template>
@@ -58,7 +59,6 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
 import { StatsSource } from '../sources'

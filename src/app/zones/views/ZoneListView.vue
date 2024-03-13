@@ -31,7 +31,7 @@
             :to="{ name: 'zone-create-view' }"
             data-testid="create-zone-link"
           >
-            <AddIcon :size="KUI_ICON_SIZE_30" />
+            <AddIcon />
 
             {{ t('zones.index.create') }}
           </KButton>

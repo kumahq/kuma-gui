@@ -220,7 +220,7 @@
                     appearance="primary"
                     @click="refresh"
                   >
-                    <RefreshIcon :size="KUI_ICON_SIZE_30" />
+                    <RefreshIcon />
 
                     Refresh
                   </KButton>

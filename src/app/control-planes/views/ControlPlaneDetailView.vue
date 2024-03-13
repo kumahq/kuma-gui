@@ -64,7 +64,7 @@
                           appearance="primary"
                           :to="{ name: 'zone-create-view' }"
                         >
-                          <AddIcon :size="KUI_ICON_SIZE_30" />
+                          <AddIcon />
 
                           {{ t('zones.index.create') }}
                         </KButton>
@@ -116,7 +116,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 
 import { GlobalInsightSource } from '../sources'
