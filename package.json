@@ -34,9 +34,9 @@
     "docs:preview": "vitepress preview"
   },
   "engines": {
-    "node": ">=20.9",
-    "yarn": "^1.22.0"
+    "node": ">=20.9"
   },
+  "packageManager": "yarn@1.22.21",
   "dependencies": {
     "@kong-ui-public/i18n": "2.1.3",
     "@kong/icons": "1.8.14",
