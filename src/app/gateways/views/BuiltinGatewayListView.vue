@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t }"
+      v-slot="{ route, t, can }"
       name="builtin-gateway-list-view"
       :params="{
         page: 1,
@@ -34,7 +34,7 @@
               :empty-state-cta-text="t('common.documentation')"
               :headers="[
                 { label: 'Name', key: 'name' },
-                { label: 'Zone', key: 'zone' },
+                ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
                 { label: 'Details', key: 'details', hideLabel: true },
               ]"
               :page-number="route.params.page"
