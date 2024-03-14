@@ -198,16 +198,18 @@ const props = defineProps<{
   word-break: break-word;
 }
 
-.matcher__not {
-  color: $kui-color-text-danger;
+.app-collection :deep(td:first-child *) {
+  font-weight: $kui-font-weight-regular;
+  .matcher__not {
+    color: $kui-color-text-danger;
+  }
+  .matcher__and {
+    font-weight: $kui-font-weight-semibold;
+  }
+  .matcher__not,
+  .matcher__term {
+    font-family: $kui-font-family-code;
+  }
 }
 
-.matcher__and {
-  font-weight: $kui-font-weight-semibold;
-}
-
-.matcher__not,
-.matcher__term {
-  font-family: $kui-font-family-code;
-}
 </style>
