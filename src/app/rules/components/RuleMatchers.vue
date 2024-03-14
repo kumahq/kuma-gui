@@ -15,9 +15,10 @@
     >{{ `${key}:${value}` }}</span></span>
   </template>
 </template>
-<script lang="ts" generic="T extends {key: string, value: string, not: boolean}" setup>
+<script lang="ts" setup>
+import type { InspectRuleMatcher } from '@/types/index.d'
 const props = defineProps<{
-  items: T[]
+  items: InspectRuleMatcher[]
 }>()
 </script>
 <style lang="scss" scoped>
