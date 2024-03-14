@@ -4,7 +4,7 @@
     multiple-open
   >
     <AccordionItem
-      v-for="(policyTypeEntry, index) in legacyPolicyTypeEntries"
+      v-for="(policyTypeEntry, index) in items"
       :key="index"
     >
       <template #accordion-header>
@@ -78,7 +78,7 @@
                       name: 'policy-detail-view',
                       params: {
                         mesh: origin.mesh,
-                        policyPath: props.policyTypesByName[origin.type]!.path,
+                        policyPath: props.types[origin.type]!.path,
                         policy: origin.name,
                       },
                     }"
@@ -114,7 +114,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
@@ -125,11 +124,9 @@ import type { PolicyType, PolicyTypeEntry, PolicyTypeEntryConnection } from '@/t
 import { toYaml } from '@/utilities/toYaml'
 
 const props = defineProps<{
-  policyTypeEntries: PolicyTypeEntry[]
-  policyTypesByName: Record<string, PolicyType | undefined>
+  items: PolicyTypeEntry[]
+  types: Record<string, PolicyType | undefined>
 }>()
-
-const legacyPolicyTypeEntries = computed(() => props.policyTypeEntries.filter((policyTypeEntry) => props.policyTypesByName[policyTypeEntry.type]?.isTargetRefBased === false))
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {
   return { class: `cell-${headerKey}` }
