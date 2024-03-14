@@ -17,7 +17,6 @@
         <FilterIcon
           decorative
           data-testid="k-filter-bar-filter-icon"
-          hide-title
           :size="KUI_ICON_SIZE_30"
         />
       </span>
@@ -90,7 +89,6 @@
 
             <ChevronRightIcon
               decorative
-              hide-title
               :size="KUI_ICON_SIZE_30"
             />
           </button>
@@ -110,7 +108,6 @@
 
       <ClearIcon
         decorative
-        hide-title
         :size="KUI_ICON_SIZE_30"
       />
     </button>

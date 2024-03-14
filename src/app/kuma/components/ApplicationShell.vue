@@ -85,7 +85,7 @@
               appearance="tertiary"
               icon-only
             >
-              <HelpIcon :size="KUI_ICON_SIZE_30" />
+              <HelpIcon />
 
               <span class="visually-hidden">Help</span>
             </KButton>
@@ -128,10 +128,7 @@
             icon-only
             data-testid="nav-item-diagnostics"
           >
-            <CogIcon
-              :size="KUI_ICON_SIZE_30"
-              hide-title
-            />
+            <CogIcon />
 
             <span class="visually-hidden">Diagnostics</span>
           </KButton>
@@ -180,7 +177,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { CogIcon, HelpIcon } from '@kong/icons'
 import GithubButton from 'vue-github-button'
 

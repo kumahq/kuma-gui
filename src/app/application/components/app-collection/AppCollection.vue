@@ -61,7 +61,7 @@
             appearance="primary"
             :to="props.emptyStateCtaTo"
           >
-            <AddIcon :size="KUI_ICON_SIZE_30" />
+            <AddIcon />
 
             {{ props.emptyStateCtaText }}
           </KButton>
@@ -94,7 +94,6 @@
 </template>
 
 <script lang="ts" setup generic="Row extends {}">
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon } from '@kong/icons'
 import { KButton, KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, Ref, computed } from 'vue'

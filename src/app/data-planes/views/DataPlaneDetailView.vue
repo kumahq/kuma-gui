@@ -62,7 +62,6 @@
                         <InfoIcon
                           :color="KUI_COLOR_BACKGROUND_NEUTRAL"
                           :size="KUI_ICON_SIZE_30"
-                          hide-title
                         />
                         <template #content>
                           <ul>
@@ -122,7 +121,6 @@
               <ConnectionTraffic>
                 <template #title>
                   <ForwardIcon
-                    display="inline-block"
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />
@@ -220,14 +218,13 @@
                     appearance="primary"
                     @click="refresh"
                   >
-                    <RefreshIcon :size="KUI_ICON_SIZE_30" />
+                    <RefreshIcon />
 
                     Refresh
                   </KButton>
                 </template>
                 <template #title>
                   <GatewayIcon
-                    display="inline-block"
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />

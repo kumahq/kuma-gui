@@ -141,7 +141,6 @@
                     <WarningIcon
                       class="mr-1"
                       :size="KUI_ICON_SIZE_30"
-                      hide-title
                     />
                   </KTooltip>
 
@@ -164,7 +163,6 @@
                     {{ t('common.collection.details_link') }}
 
                     <ArrowRightIcon
-                      display="inline-block"
                       decorative
                       :size="KUI_ICON_SIZE_30"
                     />

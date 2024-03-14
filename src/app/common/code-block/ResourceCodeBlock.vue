@@ -28,7 +28,6 @@
               :get-text="getYamlAsKubernetes"
               :copy-text="t('common.copyKubernetesText')"
               has-border
-              hide-title
               icon-color="currentColor"
               @click="() => {
                 if(isToggled.value === false) {

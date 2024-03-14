@@ -138,13 +138,9 @@
                   <ProgressIcon
                     v-if="isChangingZone"
                     :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-                    :size="KUI_ICON_SIZE_30"
                   />
 
-                  <AddIcon
-                    v-else
-                    :size="KUI_ICON_SIZE_30"
-                  />
+                  <AddIcon v-else />
 
                   {{ t('zones.form.createZoneButtonLabel') }}
                 </KButton>
@@ -300,14 +296,12 @@
                         <ProgressIcon
                           v-if="data === undefined"
                           data-testid="waiting"
-                          display="inline-block"
                           :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
                         />
 
                         <CheckCircleIcon
                           v-else
                           data-testid="connected"
-                          display="inline-block"
                           :color="KUI_COLOR_TEXT_SUCCESS"
                         />
                       </template>
@@ -367,7 +361,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_SUCCESS, KUI_ICON_SIZE_30, KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
+import { KUI_COLOR_TEXT_SUCCESS, KUI_COLOR_TEXT_NEUTRAL_WEAK } from '@kong/design-tokens'
 import { AddIcon, CheckIcon, ProgressIcon, CheckCircleIcon } from '@kong/icons'
 import { computed, ref } from 'vue'
 

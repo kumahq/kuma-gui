@@ -8,13 +8,9 @@
         <DangerIcon
           v-if="props.appearance === 'danger'"
           :color="KUI_COLOR_TEXT_DANGER"
-          display="inline-block"
         />
 
-        <WarningIcon
-          v-else
-          :size="KUI_ICON_SIZE_50"
-        />
+        <WarningIcon v-else />
       </template>
 
       <template #title>
@@ -77,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_DANGER, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+import { KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
 import { DangerIcon } from '@kong/icons'
 import { computed } from 'vue'
 

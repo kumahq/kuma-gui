@@ -1,9 +1,7 @@
 <template>
   <WarningIcon
     color="var(--WarningIconBackground, currentColor)"
-    display="inline-block"
     :size="props.size || KUI_ICON_SIZE_60"
-    :hide-title="props.hideTitle"
   />
 </template>
 
@@ -11,11 +9,7 @@
 import { KUI_ICON_SIZE_60 } from '@kong/design-tokens'
 import { WarningIcon } from '@kong/icons'
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   size?: string
-  hideTitle?: boolean
-}>(), {
-  size: '',
-  hideTitle: false,
-})
+}>()
 </script>

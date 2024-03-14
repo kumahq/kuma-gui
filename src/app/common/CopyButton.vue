@@ -8,15 +8,10 @@
         'non-visual-button': !props.hasBorder,
       }"
       data-testid="copy-button"
-      :title="!props.hideTitle ? props.copyText : undefined"
       type="button"
       @click="copy($event, copyToClipboard)"
     >
-      <CopyIcon
-        :color="props.iconColor"
-        :title="!props.hideTitle ? props.copyText : undefined"
-        :hide-title="props.hideTitle"
-      />
+      <CopyIcon :color="props.iconColor" />
 
       <slot>
         <span class="visually-hidden">{{ props.copyText }}</span>
@@ -36,7 +31,6 @@ const props = withDefaults(defineProps<{
   tooltipSuccessText?: string
   tooltipFailText?: string
   hasBorder?: boolean
-  hideTitle?: boolean
   iconColor?: string
 }>(), {
   text: '',
@@ -45,7 +39,6 @@ const props = withDefaults(defineProps<{
   tooltipSuccessText: 'Copied code!',
   tooltipFailText: 'Failed to copy!',
   hasBorder: false,
-  hideTitle: false,
   iconColor: KUI_COLOR_TEXT_NEUTRAL,
 })
 
