@@ -173,8 +173,6 @@ zones:
             enabled: {zoneIngressEnabled}
           egress:
             enabled: {zoneEgressEnabled}
-          experimental:
-            deltaKds: true
         connectDescription: 'Next, run the following command to connect the Zone.'
         connectCommand: 'helm upgrade --install -n kuma-system -f values.yaml kuma kuma/kuma'
   create:
