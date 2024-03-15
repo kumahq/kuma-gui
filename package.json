@@ -79,7 +79,7 @@
     "babel-plugin-transform-import-meta": "2.2.1",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "cross-env": "7.0.3",
-    "cypress": "13.6.6",
+    "cypress": "13.7.0",
     "cypress-fail-fast": "7.1.0",
     "dotenv": "16.4.5",
     "esbuild": "0.20.2",
