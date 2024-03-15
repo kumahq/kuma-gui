@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t }"
+    v-slot="{ route, t }"
     name="service-list-tabs-view"
     :params="{
       mesh: '',
@@ -13,10 +13,7 @@
         </h2>
       </template>
 
-      <template
-        v-if="can('use gateways ui')"
-        #actions
-      >
+      <template #actions>
         <LinkBox>
           <RouterLink
             v-for="{ name } in route.children"

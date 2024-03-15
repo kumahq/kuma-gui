@@ -29,8 +29,6 @@ export const services: ServiceConfigurator<SupportedTokens> = ($) => [
       KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
       KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
       KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
-      // TODO: Remove this when unflagging KUMA_GATEWAYS_UI.
-      KUMA_GATEWAYS_UI: import.meta.env.VITE_GATEWAYS_UI,
       KUMA_ZONE_CREATION_FLOW: import.meta.env.VITE_ZONE_CREATION_FLOW,
     } as EnvArgs,
   }],

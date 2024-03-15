@@ -91,7 +91,7 @@
                       :empty-state-cta-text="t('common.documentation')"
                       :headers="[
                         { label: 'Name', key: 'name' },
-                        ...(can('use zones') && policyType.isTargetRefBased || policyType.name === 'MeshGateway' ? [{ label: 'Zone', key: 'zone' }] : []),
+                        ...(can('use zones') && policyType.isTargetRefBased ? [{ label: 'Zone', key: 'zone' }] : []),
                         ...(policyType.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
                         { label: 'Details', key: 'details', hideLabel: true },
                       ]"

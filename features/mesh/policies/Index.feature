@@ -128,8 +128,6 @@ Feature: mesh / policies / index
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
 
     Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
-    # Always shows MeshGateway
-    And the "[data-testid='policy-type-link-MeshGateway']" element exists
     And the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
 
   Scenario: Shows legacy policy types if there are any legacy policies applied
@@ -145,8 +143,6 @@ Feature: mesh / policies / index
 
     Then the "[data-testid='policy-type-link-FaultInjection']" element exists
     And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
-    # Always shows MeshGateway
-    And the "[data-testid='policy-type-link-MeshGateway']" element exists
 
   Scenario: Regression test: Zone column is visible when navigating from legacy policy type
     When I visit the "/meshes/default/policies/circuit-breakers" URL

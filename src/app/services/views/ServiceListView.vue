@@ -16,7 +16,7 @@
     >
       <DataSource
         v-slot="{data, error}: ServiceInsightCollectionSource"
-        :src="`/meshes/${route.params.mesh}/service-insights/of/${can('use gateways ui') ? 'internal' : 'all'}?page=${route.params.page}&size=${route.params.size}`"
+        :src="`/meshes/${route.params.mesh}/service-insights/of/internal?page=${route.params.page}&size=${route.params.size}`"
       >
         <AppView>
           <KCard>
@@ -150,15 +150,12 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
 import type { ServiceInsightCollectionSource } from '../sources'
-import { useCan } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
-
-const can = useCan()
 </script>
 
 <style lang="scss" scoped>

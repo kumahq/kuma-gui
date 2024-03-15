@@ -37,58 +37,7 @@
             class="stack"
           >
             <KCard>
-              <div v-if="!can('use gateways ui') && data.serviceType === 'external'">
-                <DataSource
-                  v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
-                  :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
-                >
-                  <ErrorBlock
-                    v-if="externalServiceError"
-                    :error="externalServiceError"
-                  />
-
-                  <LoadingBlock v-else-if="externalService === undefined" />
-
-                  <EmptyBlock
-                    v-else-if="externalService === null"
-                    data-testid="no-matching-external-service"
-                  >
-                    <template #title>
-                      {{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}
-                    </template>
-                  </EmptyBlock>
-
-                  <div
-                    v-else
-                    class="columns"
-                  >
-                    <DefinitionCard>
-                      <template #title>
-                        {{ t('http.api.property.address') }}
-                      </template>
-
-                      <template #body>
-                        <TextWithCopyButton :text="externalService.networking.address" />
-                      </template>
-                    </DefinitionCard>
-
-                    <DefinitionCard v-if="externalService.tags !== null">
-                      <template #title>
-                        {{ t('http.api.property.tags') }}
-                      </template>
-
-                      <template #body>
-                        <TagList :tags="externalService.tags" />
-                      </template>
-                    </DefinitionCard>
-                  </div>
-                </DataSource>
-              </div>
-
-              <div
-                v-else
-                class="columns"
-              >
+              <div class="columns">
                 <DefinitionCard>
                   <template #title>
                     {{ t('http.api.property.status') }}
@@ -127,7 +76,7 @@
               </div>
             </KCard>
 
-            <div v-if="data.serviceType !== 'external'">
+            <div>
               <h3>{{ t('services.detail.data_plane_proxies') }}</h3>
 
               <KCard class="mt-4">
@@ -307,58 +256,6 @@
                 </DataSource>
               </KCard>
             </div>
-
-            <div v-if="data.serviceType === 'external'">
-              <h3>{{ t('services.detail.config') }}</h3>
-
-              <div class="mt-4">
-                <DataSource
-                  v-slot="{ data: externalService, error: externalServiceError }: ExternalServiceSource"
-                  :src="`/meshes/${route.params.mesh}/external-services/for/${route.params.service}`"
-                >
-                  <ErrorBlock
-                    v-if="externalServiceError"
-                    :error="externalServiceError"
-                  />
-
-                  <LoadingBlock v-else-if="externalService === undefined" />
-
-                  <EmptyBlock
-                    v-else-if="externalService === null"
-                    data-testid="no-matching-external-service"
-                  >
-                    <template #title>
-                      {{ t('services.detail.no_matching_external_service', { name: route.params.service }) }}
-                    </template>
-                  </EmptyBlock>
-
-                  <ResourceCodeBlock
-                    v-else
-                    v-slot="{ copy, copying }"
-                    data-testid="external-service-config"
-                    :resource="externalService.config"
-                    is-searchable
-                    :query="route.params.codeSearch"
-                    :is-filter-mode="route.params.codeFilter"
-                    :is-reg-exp-mode="route.params.codeRegExp"
-                    @query-change="route.update({ codeSearch: $event })"
-                    @filter-mode-change="route.update({ codeFilter: $event })"
-                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  >
-                    <DataSource
-                      v-if="copying"
-                      :src="`/meshes/${externalService.mesh}/external-service/${externalService.name}/as/kubernetes?no-store`"
-                      @change="(data) => {
-                        copy((resolve) => resolve(data))
-                      }"
-                      @error="(e) => {
-                        copy((_resolve, reject) => reject(e))
-                      }"
-                    />
-                  </ResourceCodeBlock>
-                </DataSource>
-              </div>
-            </div>
           </div>
         </DataSource>
       </AppView>
@@ -370,18 +267,15 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
-import type { ServiceInsightSource, ExternalServiceSource } from '../sources'
+import type { ServiceInsightSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'

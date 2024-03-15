@@ -45,14 +45,14 @@
                 >
                   <template
                     v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? data!.policies : data!.policies.filter(item => {
-                      // legacy policies are those that aren't targetRef, aren't MeshGateway and are also in use
-                      return !item.isTargetRefBased && item.name !== 'MeshGateway' && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
+                      // legacy policies are those that aren't targetRef and are also in use
+                      return !item.isTargetRefBased && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
                     })]"
                     :key="legacy"
                   >
                     <DataCollection
                       v-slot="{ items }"
-                      :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.isTargetRefBased || item.name === 'MeshGateway'"
+                      :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.isTargetRefBased"
                       :items="data!.policies"
                     >
                       <template

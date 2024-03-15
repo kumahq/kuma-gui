@@ -1,14 +1,14 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = () => {
-  const item = (prefix: string): RouteRecordRaw[] => {
+  const item = (): RouteRecordRaw[] => {
     return [
       {
         path: 'services',
         name: 'service-detail-index-view',
         children: [
           {
-            path: `${prefix}:service`,
+            path: 'internal/:service',
             name: 'service-detail-tabs-view',
             component: () => import('@/app/services/views/ServiceDetailTabsView.vue'),
             children: [
@@ -44,7 +44,7 @@ export const routes = () => {
   }
 
   return {
-    items: (prefix: string): RouteRecordRaw[] => {
+    items: (): RouteRecordRaw[] => {
       return [
         {
           path: 'services',
@@ -56,7 +56,7 @@ export const routes = () => {
           component: () => import('@/app/services/views/ServiceListTabsView.vue'),
           children: [
             {
-              path: prefix,
+              path: 'internal',
               name: 'service-list-view',
               component: () => import('@/app/services/views/ServiceListView.vue'),
             },
