@@ -1,4 +1,3 @@
-import type { Connection } from '@/app/connections/data'
 import { DiscoverySubscriptionCollection, type DiscoverySubscription } from '@/app/subscriptions/data'
 import type { ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import type {
@@ -26,7 +25,14 @@ import type {
 } from '@/types/index.d'
 import { isSet } from '@/utilities/isSet'
 
+type Connection = {
+  name: string
+  service: string
+  protocol: string
+  cluster: string
+}
 export type DataplaneInbound = PartialDataplaneInbound & Connection & {
+  address: string
   health: {
     ready: boolean
   }
@@ -41,8 +47,7 @@ export type DataplaneGateway = PartialDataplaneGateway & {}
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
   inbounds: DataplaneInbound[]
   outbounds: DataplaneOutbound[]
-  inboundName: string
-  type: 'delegated' | 'builtin' | 'standard'
+  type: 'sidecar' | 'gateway'
 }
 
 export type Dataplane = PartialDataplane & {
@@ -82,39 +87,43 @@ const DataplaneNetworking = {
     // outbounds are only present here on a universal DDP without transparent
     // proxying
     const outbounds = Array.isArray(outbound) ? outbound : []
-    const type = getDataplaneType(networking)
+    const type = typeof networking.gateway === 'undefined' || networking.gateway?.type !== 'BUILTIN' ? 'sidecar' : 'gateway'
     return {
       ...rest,
       type,
-      // inboundNames are `localhost` for a sidecar, the service name for a gateway.
-      // The service name "as an inbound" will never be found for a delegated gateway
-      inboundName: typeof networking.gateway === 'undefined' ? 'localhost' : networking.gateway.tags['kuma.io/service'],
-      // guess a single inbound for the moment
-      // we need to fill this in and make it multiple by either using the policy info
-      // or the stats listeners info
-      inbounds: (typeof networking.gateway !== 'undefined' && type === 'builtin')
+      // if we are a builtin gateway fill in as much as we can for a single inbound
+      // we can 'clone' this later if we find out individual information for each inbound
+      // i.e. this acts as a template
+      inbounds: type === 'gateway' && typeof networking.gateway !== 'undefined'
         ? [{
-          name: networking.gateway.tags['kuma.io/service'],
-          tags: networking.gateway.tags,
-          service: networking.gateway.tags['kuma.io/service'],
-          //
-          health: { ready: defaultHealth },
-          protocol: networking.gateway.tags['kuma.io/protocol'] ?? 'tcp',
-          // we currently never display the below data for gateway inbounds
-          port: NaN,
           address: networking.address,
+          tags: networking.gateway.tags,
+          name: networking.gateway.tags['kuma.io/service'],
+          cluster: networking.gateway.tags['kuma.io/service'],
+          service: networking.gateway.tags['kuma.io/service'],
+          protocol: networking.gateway.tags['kuma.io/protocol'] ?? 'tcp',
+          // TODO
+          health: { ready: defaultHealth },
+          // these could be filled out during 'cloning'
+          // i.e. these are like template variables to be filled out
+          port: NaN,
           addressPort: '',
+          // this will never get set seeing as a gateway proxy never has a service
           serviceAddressPort: '',
         }]
         : inbounds.map((item) => {
+          const address = item.address ?? networking.address
           return {
             ...item,
-            // Envoy Stats use `localhost_0000` for sidecar inbounds
-            name: `localhost_${item.port}`,
+            // the name can be used to lookup listener envoy stats
+            name: `${address}_${item.port}`,
+            // the cluster of an inbound (ie. the outbound of an inbound :S) is always `localhost_*`
+            cluster: `localhost_${item.servicePort ?? item.port}`,
             // If a health property is unset the inbound is considered healthy
             health: { ready: !isSet(item.health) ? true : item.health.ready },
             service: item.tags['kuma.io/service'],
             protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
+            address,
             addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
             serviceAddressPort: `${item.serviceAddress ?? item.address ?? networking.address}:${item.servicePort ?? item.port}`,
           }
@@ -123,6 +132,7 @@ const DataplaneNetworking = {
         return {
           ...item,
           name: item.tags['kuma.io/service'],
+          cluster: item.tags['kuma.io/service'],
           service: item.tags['kuma.io/service'],
           protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
         }
@@ -169,7 +179,7 @@ export const DataplaneOverview = {
         networking,
       },
       dataplaneInsight,
-      dataplaneType: networking.type,
+      dataplaneType: networking.type === 'gateway' ? 'builtin' : typeof networking.gateway !== 'undefined' ? 'delegated' : 'standard',
       status,
       warnings,
       isCertExpired,
@@ -356,19 +366,6 @@ function getWarnings({ version }: DataplaneInsight, tags: LabelValue[], canUseZo
   }
 
   return warnings
-}
-
-function getDataplaneType({ gateway }: PartialDataplaneNetworking): 'standard' | 'builtin' | 'delegated' {
-  if (gateway) {
-    if (gateway.type) {
-      return gateway.type.toLowerCase() as 'builtin' | 'delegated'
-    } else {
-      // Dataplanes with a gateway property but without a type are delegated gateways.
-      return 'delegated'
-    }
-  }
-
-  return 'standard'
 }
 
 /**

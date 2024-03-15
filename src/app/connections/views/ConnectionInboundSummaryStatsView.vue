@@ -21,7 +21,7 @@
       </template>
       <div>
         <DataSource
-          v-slot="{ data, error, refresh }: StatsSource"
+          v-slot="{ data: stats, error, refresh }: StatsSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${route.params.service}`"
         >
           <ErrorBlock
@@ -29,11 +29,11 @@
             :error="error"
           />
 
-          <LoadingBlock v-else-if="data === undefined" />
+          <LoadingBlock v-else-if="stats === undefined" />
           <CodeBlock
             v-else
             language="json"
-            :code="findService(data, route.params.service)"
+            :code="findService(stats)"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -65,41 +65,21 @@ import { StatsSource } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import type { DataplaneGateway, DataplaneInbound } from '@/app/data-planes/data'
-const props = defineProps<{
-  inbound?: DataplaneInbound
-  gateway?: DataplaneGateway
-}>()
+import type { DataplaneInbound } from '@/app/data-planes/data'
 
-const findService = (data: { raw: string }, service: string) => {
-  if (props.gateway) {
-    const parts = service.split(':')
-    return data.raw.split('\n')
-      .filter((item) => item.includes(`.${parts[0]}.`))
-      .filter((item) => {
-        return !item.startsWith('listener.') || item.includes(`_${parts[1]}.`)
-      })
-      .filter((item) => {
-        return !item.includes('.rds.') || item.includes(`_${parts[1]}_*.`)
-      })
-      .map((item) => item.replace(`${parts[0]}.`, ''))
-      .map((item) => item.replace(`_${parts[1]}.`, '.'))
-      .map((item) => {
-        if (item.includes('.rds.')) {
-          const tmp = item.split('.')
-          tmp.splice(2, 1)
-          return tmp.join('.')
-        } else {
-          return item
-        }
-      })
-      .join('\n')
-  } else {
-    const name = `localhost_${service.split(':')[1]}`
-    return data.raw.split('\n')
-      .filter((item) => item.includes(`.${name}.`))
-      .map((item) => item.replace(`${name}.`, ''))
-      .join('\n')
-  }
+const props = defineProps<{
+  data: DataplaneInbound
+}>()
+const findService = (data: { raw: string }) => {
+  return data.raw.split('\n')
+    .filter(item => [
+      `listener.${props.data.name}.`,
+      `cluster.${props.data.cluster}.`,
+      `http.${props.data.cluster}.`,
+      `tcp.${props.data.cluster}.`,
+    ].some(prefix => item.startsWith(prefix)))
+    .filter(item => !item.includes('.rds.') || item.includes(`_${props.data.port}`)) // find the weirder rds lines that don't correspond
+    .map((item) => item.replace(`${props.data.name}.`, '').replace(`${props.data.cluster}.`, ''))
+    .join('\n')
 }
 </script>

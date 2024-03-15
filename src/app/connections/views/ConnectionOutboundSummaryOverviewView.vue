@@ -14,7 +14,7 @@
             <KBadge
               appearance="info"
             >
-              {{ t(`http.api.value.${props.data.protocol}`) }}
+              {{ t(`http.api.value.${['grpc', 'http', 'tcp'].find(protocol => typeof props.data[protocol] !== 'undefined')}`) }}
             </KBadge>
           </template>
         </DefinitionCard>
@@ -23,9 +23,8 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import type { TrafficEntry } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 const props = defineProps<{
-  data: TrafficEntry
+  data: Record<string, any>
 }>()
 </script>
