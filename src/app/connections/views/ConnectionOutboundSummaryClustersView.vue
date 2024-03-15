@@ -20,46 +20,39 @@
         </h3>
       </template>
       <div>
-        <DataSource
-          v-slot="{ data, error, refresh }: ClustersDataSource"
+        <DataLoader
+          v-slot="{ data, refresh }: ClustersDataSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="data === undefined" />
-
-          <CodeBlock
-            v-else
-            language="json"
-            :code="(() => `${
-              data.split('\n')
-                .filter(item => item.startsWith(`${route.params.service}::`))
-                .map(item => item.replace(`${route.params.service}::`, ''))
-                .join('\n')
-            }`)()"
-            is-searchable
-            :query="route.params.codeSearch"
-            :is-filter-mode="route.params.codeFilter"
-            :is-reg-exp-mode="route.params.codeRegExp"
-            @query-change="route.update({ codeSearch: $event })"
-            @filter-mode-change="route.update({ codeFilter: $event })"
-            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          <DataCollection
+            v-slot="{ items: lines }"
+            :items="data!.split('\n')"
+            :predicate="item => item.startsWith(`${route.params.service}::`)"
           >
-            <template #primary-actions>
-              <KButton
-                appearance="primary"
-                @click="refresh"
-              >
-                <RefreshIcon />
+            <CodeBlock
+              language="json"
+              :code="lines.map(item => item.replace(`${route.params.service}::`, '')).join('\n')"
+              is-searchable
+              :query="route.params.codeSearch"
+              :is-filter-mode="route.params.codeFilter"
+              :is-reg-exp-mode="route.params.codeRegExp"
+              @query-change="route.update({ codeSearch: $event })"
+              @filter-mode-change="route.update({ codeFilter: $event })"
+              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+            >
+              <template #primary-actions>
+                <KButton
+                  appearance="primary"
+                  @click="refresh"
+                >
+                  <RefreshIcon />
 
-                Refresh
-              </KButton>
-            </template>
-          </CodeBlock>
-        </DataSource>
+                  Refresh
+                </KButton>
+              </template>
+            </CodeBlock>
+          </DataCollection>
+        </DataLoader>
       </div>
     </AppView>
   </RouteView>
@@ -68,7 +61,5 @@
 import { RefreshIcon } from '@kong/icons'
 
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import type { ClustersDataSource } from '@/app/data-planes/sources'
 </script>

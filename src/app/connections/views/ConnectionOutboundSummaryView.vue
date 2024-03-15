@@ -4,6 +4,7 @@
     name="connection-outbound-summary-view"
     :params="{
       service: '',
+      inactive: false,
     }"
   >
     <AppView>
@@ -20,7 +21,13 @@
           #[`${item.name}`]
         >
           <RouterLink
-            :to="{ name: item.name }"
+            :to="{
+              name: item.name,
+              query: {
+                inactive: route.params.inactive ? null : undefined,
+              },
+
+            }"
           >
             {{ t(`connections.routes.item.navigation.${item.name.split('-')[3]}`) }}
           </RouterLink>
@@ -30,12 +37,13 @@
         <DataCollection
           v-slot="{ items }"
           :items="Object.entries(props.data)"
-          :predicate="([key, value]) => key === route.params.service"
+          :predicate="([key, _value]) => key === route.params.service"
           :find="true"
         >
           <component
             :is="Component"
             :data="items[0][1]"
+            :dataplane-overview="props.dataplaneOverview"
           />
         </DataCollection>
       </RouterView>
@@ -45,7 +53,9 @@
 
 <script lang="ts" setup>
 import NavTabs from '@/app/common/NavTabs.vue'
+import type { DataplaneOverview } from '@/app/data-planes/data/'
 const props = defineProps<{
   data: Record<string, any>
+  dataplaneOverview: DataplaneOverview
 }>()
 </script>

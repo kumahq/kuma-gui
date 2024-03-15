@@ -20,21 +20,13 @@
       </template>
 
       <KCard>
-        <DataSource
-          v-slot="{ data: statsData, error, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplaneType === 'builtin' && props.data.dataplane.networking.gateway ? props.data.dataplane.networking.gateway.tags['kuma.io/service'] : 'localhost_'}`"
+        <DataLoader
+          v-slot="{ data: statsData, refresh }: StatsSource"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.address}`"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="statsData === undefined" />
-
           <CodeBlock
-            v-else
             language="json"
-            :code="statsData.raw"
+            :code="statsData!.raw"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -53,7 +45,7 @@
               </KButton>
             </template>
           </CodeBlock>
-        </DataSource>
+        </DataLoader>
       </KCard>
     </AppView>
   </RouteView>
@@ -65,8 +57,6 @@ import { RefreshIcon } from '@kong/icons'
 
 import type { DataplaneOverview } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import type { StatsSource } from '@/app/connections/sources'
 
 const props = defineProps<{
