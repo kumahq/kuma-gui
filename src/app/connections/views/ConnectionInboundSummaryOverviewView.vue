@@ -80,7 +80,7 @@
       </div>
       <div
         v-if="props.data"
-        class="mt-4"
+        class="mt-6"
       >
         <h3>Rules</h3>
         <DataLoader
@@ -100,10 +100,9 @@
               >
                 <KCard>
                   <div
-                    class="stack-with-borders mt-4"
+                    class="stack-with-borders"
                   >
                     <DefinitionCard
-                      class="mt-2"
                       layout="horizontal"
                     >
                       <template #title>
