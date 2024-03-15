@@ -37,7 +37,7 @@ export default defineConfig({
     baseUrl: env.KUMA_BASE_URL,
     specPattern: '**/*.feature',
     experimentalRunAllSpecs: true,
-    // Can be turned on via CLI using `CYPRESS_video=true yarn test:browser`
+    // Can be turned on via CLI using `CYPRESS_video=true pnpm test:browser`
     video: false,
     async setupNodeEvents(on, config) {
       // propagate env to Cypress.env
