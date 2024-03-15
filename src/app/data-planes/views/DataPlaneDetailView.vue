@@ -239,7 +239,7 @@
                   >
                     <!-- Outbounds for gateways report actual traffic on the upstream so we switch to upstream here for non-standard-->
                     <template
-                      v-for="direction in ['upstream'] as const"
+                      v-for="direction in ['downstream'] as const"
                       :key="direction"
                     >
                       <ConnectionGroup
