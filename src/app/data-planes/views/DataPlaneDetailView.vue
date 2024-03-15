@@ -146,6 +146,7 @@
                 <ConnectionTraffic>
                   <template #title>
                     <ForwardIcon
+                      display="inline-block"
                       decorative
                       :size="KUI_ICON_SIZE_30"
                     />
@@ -193,6 +194,7 @@
                                 :key="name"
                               >
                                 <RouterLink
+                                  data-action
                                   :to="{
                                     name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
                                     params: {
@@ -239,6 +241,7 @@
                   </template>
                   <template #title>
                     <GatewayIcon
+                      display="inline-block"
                       decorative
                       :size="KUI_ICON_SIZE_30"
                     />
@@ -286,6 +289,7 @@
                                 :direction="direction"
                               >
                                 <RouterLink
+                                  data-action
                                   :to="{
                                     name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
                                     params: {
