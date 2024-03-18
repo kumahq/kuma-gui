@@ -10,7 +10,7 @@
     <DataCollection
       v-slot="{ items }"
       :items="props.data"
-      :predicate="(item) => `${item.port}` === route.params.service.split(':')[1]"
+      :predicate="(item) => `${item.port || route.params.service.split(':')[1]}` === route.params.service.split(':')[1]"
       :find="true"
     >
       <AppView>
@@ -44,6 +44,7 @@
           <component
             :is="child.Component"
             :data="items[0]"
+            :dataplane-overview="props.dataplaneOverview"
           />
         </RouterView>
       </AppView>
@@ -53,9 +54,10 @@
 
 <script lang="ts" setup>
 import NavTabs from '@/app/common/NavTabs.vue'
-import type { DataplaneInbound } from '@/app/data-planes/data/'
+import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneInbound[]
+  dataplaneOverview: DataplaneOverview
 }>()
 </script>
