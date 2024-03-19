@@ -5,6 +5,17 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
+  // use a seed based on the name to keep ports and ip address the same across
+  // _overview, stats and rules
+  fake.kuma.seed(name as string)
+  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const ports = Array.from({ length: inboundCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+    protocol: fake.kuma.protocol(),
+  }))
+  //
+
+  fake.kuma.seed()
   const hasProxyRuleOverride = env('KUMA_DATAPLANE_PROXY_RULE_ENABLED', '')
   const hasProxyRule = hasProxyRuleOverride !== '' ? hasProxyRuleOverride === 'true' : fake.datatype.boolean()
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
@@ -53,7 +64,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             fromRules: Array.from({ length: fromRuleCount }).map(() => {
               return {
                 inbound: {
-                  port: fake.internet.port(),
+                  port: ports[fake.number.int({ min: 0, max: ports.length - 1 })].port,
                   tags: fake.kuma.tags({ service: fake.kuma.serviceName('internal') }),
                 },
                 rules: Array.from({ length: fake.number.int({ min: 1, max: 3 }) }).map(() => {

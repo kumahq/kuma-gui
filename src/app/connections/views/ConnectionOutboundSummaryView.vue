@@ -3,14 +3,14 @@
     v-slot="{ route, t }"
     name="connection-outbound-summary-view"
     :params="{
-      service: '',
+      connection: '',
       inactive: false,
     }"
   >
     <AppView>
       <template #title>
         <h2>
-          Outbound {{ route.params.service }}
+          Outbound {{ route.params.connection }}
         </h2>
       </template>
 
@@ -37,7 +37,7 @@
         <DataCollection
           v-slot="{ items }"
           :items="Object.entries(props.data)"
-          :predicate="([key, _value]) => key === route.params.service"
+          :predicate="([key, _value]) => key === route.params.connection"
           :find="true"
         >
           <component

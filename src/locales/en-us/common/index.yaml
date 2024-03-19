@@ -1,7 +1,11 @@
 common:
   not_applicable: N/A
   formats:
-    integer: '{value, number, integer}'
+    integer: |
+      { value, select,
+        undefined { 0 }
+        other { { value, number, integer } }
+      }
     datetime: |
       { value, select,
         0 { Invalid Date }
