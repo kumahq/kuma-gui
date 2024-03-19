@@ -399,6 +399,13 @@ Feature: Dataplane policies
         """
         KUMA_MODE: zone
         """
+      Given the environment
+        """
+        KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
+        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TO_RULE_COUNT: 1
+        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        """
       And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
         """
         body:
@@ -409,24 +416,6 @@ Feature: Dataplane policies
                 type: BUILTIN
                 tags:
                   kuma.io/service: service-1
-        """
-      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/policies" responds with
-        """
-        body:
-          listeners:
-            - hosts:
-                - routes:
-                  - destinations:
-                      - tags:
-                          kuma.io/service: demo-app_kuma-demo_svc_5000
-                        policies:
-                          CircuitBreaker:
-                            name: circuit-breaker-1
-          policies:
-            TrafficLog:
-              name: traffic-log-1
-            TrafficTrace:
-              name: traffic-trace-1
         """
 
       When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
