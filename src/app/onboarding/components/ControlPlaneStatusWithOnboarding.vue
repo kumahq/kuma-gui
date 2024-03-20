@@ -1,6 +1,6 @@
 <template>
   <div class="stack">
-    <OnboardingAlert v-if="globalInsight.dataplanes.total === 0" />
+    <OnboardingAlert v-if="globalInsight.dataplanes.standard.total === 0" />
 
     <ControlPlaneStatus
       :can-use-zones="props.canUseZones"
