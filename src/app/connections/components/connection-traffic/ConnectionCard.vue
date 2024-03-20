@@ -60,11 +60,15 @@
         <template
           v-else-if="props.protocol === 'grpc'"
         >
-          <div>
+          <div
+            data-testid="grpc-success"
+          >
             <dt>{{ t('data-planes.components.service_traffic_card.grpc_success') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.grpc?.success }) }}</dd>
           </div>
-          <div>
+          <div
+            data-testid="grpc-failure"
+          >
             <dt>{{ t('data-planes.components.service_traffic_card.grpc_failure') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.grpc?.failure }) }}</dd>
           </div>
@@ -75,26 +79,34 @@
           <div
             v-for="value in [props.traffic.http?.[`${props.direction}_rq_1xx`] as (number | undefined) ?? 0].filter(item => item !== 0)"
             :key="value"
+            data-testid="rq-1xx"
           >
             <dt>{{ t('data-planes.components.service_traffic_card.1xx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: value }) }}</dd>
           </div>
-          <div>
+          <div
+            data-testid="rq-2xx"
+          >
             <dt>{{ t('data-planes.components.service_traffic_card.2xx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_2xx`] }) }}</dd>
           </div>
           <div
             v-for="value in [props.traffic.http?.[`${props.direction}_rq_3xx`] as (number | undefined) ?? 0].filter(item => item !== 0)"
             :key="value"
+            data-testid="rq-3xx"
           >
             <dt>{{ t('data-planes.components.service_traffic_card.3xx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: value }) }}</dd>
           </div>
-          <div>
+          <div
+            data-testid="rq-4xx"
+          >
             <dt>{{ t('data-planes.components.service_traffic_card.4xx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_4xx`] }) }}</dd>
           </div>
-          <div>
+          <div
+            data-testid="rq-5xx"
+          >
             <dt>{{ t('data-planes.components.service_traffic_card.5xx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_5xx`] }) }}</dd>
           </div>
@@ -102,18 +114,22 @@
         <template
           v-else
         >
-          <div>
+          <div
+            data-testid="connections-total"
+          >
             <dt>{{ t('data-planes.components.service_traffic_card.cx') }}</dt>
             <dd>{{ t('common.formats.integer', { value: props.traffic.tcp?.[`${props.direction}_cx_total`] }) }}</dd>
           </div>
           <div
             v-if="typeof props.traffic.tcp?.[`${props.direction}_cx_tx_bytes_total`] !== 'undefined'"
+            data-testid="bytes-received"
           >
             <dt>{{ t('data-planes.components.service_traffic_card.rx') }}</dt>
             <dd>{{ formatBytes(props.traffic.tcp?.[`${props.direction}_cx_tx_bytes_total`]) }}</dd>
           </div>
           <div
             v-if="typeof props.traffic.tcp?.[`${props.direction}_cx_rx_bytes_total`] !== 'undefined'"
+            data-testid="bytes-sent"
           >
             <dt>{{ t('data-planes.components.service_traffic_card.tx') }}</dt>
             <dd>{{ formatBytes(props.traffic.tcp?.[`${props.direction}_cx_rx_bytes_total`]) }}</dd>

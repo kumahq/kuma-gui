@@ -129,6 +129,7 @@
                 </template>
                 <ConnectionGroup
                   type="inbound"
+                  data-testid="dataplane-inbounds"
                 >
                   <!-- if we are a builtin gateway proxy i.e. a 'gateway' proxy -->
                   <!-- use its first and only inbounds as a template  -->
@@ -178,6 +179,7 @@
                             :key="stats"
                           >
                             <ConnectionCard
+                              data-testid="dataplane-inbound"
                               :protocol="item.protocol"
                               :service="item.tags['kuma.io/service']"
                               :traffic="typeof error === 'undefined' ?
@@ -287,6 +289,7 @@
                               :key="`${name}`"
                             >
                               <ConnectionCard
+                                data-testid="dataplane-outbound"
                                 :protocol="['grpc', 'http', 'tcp'].find(protocol => typeof outbound[protocol] !== 'undefined') ?? 'tcp'"
                                 :traffic="outbound"
                                 :service="name.replace(hash, '')"
