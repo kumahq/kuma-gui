@@ -1,5 +1,3 @@
-import { setupWorker } from 'msw/browser'
-
 import DebugKClipboardProvider from '@/app/application/components/debug-k-clipboard-provider/DebugKClipboardProvider.vue'
 import debugI18n from '@/app/application/services/i18n/DebugI18n'
 import { TOKENS as CONTROL_PLANES } from '@/app/control-planes'
@@ -8,31 +6,27 @@ import type Env from '@/services/env/Env'
 import type { ServiceConfigurator, Token, TokenType } from '@/services/utils'
 import { token, get } from '@/services/utils'
 import type { FS } from '@/test-support'
-import { fakeApi } from '@/test-support'
+import { mswHandlers } from '@/test-support'
 import { fs } from '@/test-support/mocks/fs'
 
 export { constant, get, container, createInjections, build, merge } from './utils'
 
-type Msw = {
-  listen: () => void
-  resetHandlers: () => void
-  close: () => void
-} & ReturnType<typeof setupWorker>
 type I18n = ReturnType<typeof debugI18n>
 type Sources = TokenType<typeof CONTROL_PLANES.sources>
-type AEnv = Env['var']
 
 const $ = {
-  msw: token<Promise<Msw>>('msw'),
   fakeFS: token<FS>('fake.fs'),
   kumaFS: token<FS>('fake.fs.kuma'),
   controlPlaneSources: CONTROL_PLANES.sources,
 }
 
 type SupportedTokens = typeof $ & {
+  mswHandlers: Token
   i18n: Token
   components: Token
-  env: Token<AEnv>
+  env: Token<Env['var']>
+} & {
+  msw?: Token<Promise<unknown>>
 }
 
 export const services: ServiceConfigurator<SupportedTokens> = (app) => [
@@ -45,7 +39,10 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
         const result = p(...args)
         const env = get(app.env)
         if (env('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
-          await get($.msw)
+          if (!app.msw) {
+            throw new Error('an MSW service container service has not been provided')
+          }
+          await get(app.msw)
         }
         return result
       }
@@ -78,48 +75,25 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
     ],
   }],
 
-  [token<AEnv>('env.debug'), {
-    service: (env: () => AEnv) => {
+  [token<Env['var']>('env.debug'), {
+    service: (env: () => Env['var']) => {
       return cookied(env())
     },
     decorates: app.env,
   }],
 
-  // Mock Service Worker
-  [$.msw, {
-    service: (env: TokenType<typeof app.env>, fs: FS) => {
-      const handlers = fakeApi(env, fs)
-      const worker = setupWorker(...handlers('*'))
-
-      console.warn(
-        '%c ✨You are mocking api requests.',
-        'background: gray; color: white; display: block; padding: 0.25rem;',
-      )
-
-      return worker.start({
-        quiet: true,
-        onUnhandledRequest(req: Request) {
-          // Ignores warnings about unhandled requests.
-          const { pathname, href } = new URL(req.url)
-          if (
-            pathname.startsWith('/@fs') ||
-            pathname.startsWith('/node_modules') ||
-            pathname.startsWith('/src/assets') ||
-            href.match(/\.(vue|ts|js|json)(\?.*)?$/)
-          ) {
-            return
-          }
-
-          console.warn('Found an unhandled %s request to %s', req.method, href)
-        },
-      })
+  [token('fake.msw.handlers'), {
+    service: (env: Env['var'], fs: FS) => {
+      return mswHandlers(env, fs)
     },
     arguments: [
       app.env,
       $.fakeFS,
     ],
+    labels: [
+      app.mswHandlers,
+    ],
   }],
-
   [$.kumaFS, {
     constant: fs,
     labels: [

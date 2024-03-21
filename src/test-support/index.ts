@@ -61,24 +61,6 @@ export const useResponder = (fs: FS, env: AEnv) => {
     }
   }
 }
-export const handler = (fs: FS, env: AEnv) => {
-  const baseUrl = env('KUMA_API_URL')
-  const responder = useResponder(fs, env)
-  return (route: string, opts: Options = {}, cb: Callback = noop) => {
-    const respond = responder(route, opts, cb)
-    return http.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async ({ request, params }) => {
-      const response = await respond({
-        method: request.method,
-        url: new URL(request.url),
-        body: request.body,
-        params,
-      })
-      return HttpResponse.json(response.body, {
-        status: parseInt(response.headers['Status-Code'] ?? '200'),
-      })
-    })
-  }
-}
 export const server = (mock: FakeEndpoint, options: {
   env?: Record<AppEnvKeys, string>
   params?: Record<string, string>
@@ -101,17 +83,28 @@ export const server = (mock: FakeEndpoint, options: {
   }
 }
 
-export const fakeApi = (env: AEnv, fs: FS) => {
-  const handlerFor = handler(fs, env)
-
-  return (route: string, _opts: Options = {}, _cb: Callback = noop) => {
-    if (route === '*') {
-      return Object.entries(fs).map(([route, _endpoint]) => {
-        return handlerFor(route)
+export const handler = (fs: FS, env: AEnv) => {
+  const baseUrl = env('KUMA_API_URL')
+  const responder = useResponder(fs, env)
+  return (route: string) => {
+    const respond = responder(route)
+    return http.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async ({ request, params }) => {
+      const response = await respond({
+        method: request.method,
+        url: new URL(request.url),
+        body: request.body,
+        params,
       })
-    } else {
-      return []
-    }
+      return HttpResponse.json(response.body, {
+        status: parseInt(response.headers['Status-Code'] ?? '200'),
+      })
+    })
   }
+}
+export const mswHandlers = (env: AEnv, fs: FS) => {
+  const handlerFor = handler(fs, env)
+  return Object.keys(fs).map(route => {
+    return handlerFor(route)
+  })
 }
 export type Mocker = (route: string, opts: Options, cb: Callback) => void

@@ -7,12 +7,25 @@ import { defineConfig } from 'vite'
 import svgLoader from 'vite-svg-loader'
 
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
-import { fs } from './src/test-support/mocks/fs'
+import { services, TOKENS } from './src/services/development'
 import fakeApi from './src/test-support/vite'
+import type Env from '@/services/env/Env'
+import { build, token } from '@/services/utils'
 import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 
 export const config: UserConfigFn = () => {
+  const $ = {
+    ...TOKENS,
+    // none of the following are used in vite
+    i18n: token('i18n'),
+    mswHandlers: token('msw.handlers'),
+    components: token('components'),
+    env: token<Env['var']>('env'),
+  }
+  const get = build(
+    services($),
+  )
   marked.use({
     gfm: true,
   })
@@ -30,7 +43,7 @@ export const config: UserConfigFn = () => {
         },
       }),
       fakeApi({
-        fs,
+        fs: get($.fakeFS),
       }),
       svgLoader(),
       yamlLoader(

@@ -6,6 +6,7 @@ import { build, token } from '@/services/utils'
   const $ = {
     // cypress doesn't need i18n but this quietens TS temporarily
     i18n: token('i18n'),
+    mswHandlers: token('msw.handlers'),
     components: token('components'),
     ...DEV_TOKENS,
     ...TOKENS,

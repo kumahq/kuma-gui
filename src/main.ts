@@ -28,11 +28,20 @@ async function mountVueApplication() {
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
       ? await (async () => {
-        const dev = await import('@/services/development')
-        return dev.services({
+        const [msw, dev] = await Promise.all([
+          import('@/app/msw'),
+          import('@/services/development'),
+        ],
+        )
+        const TOKENS = {
           ...$,
+          ...msw.TOKENS,
           ...dev.TOKENS,
-        })
+        }
+        return [
+          ...msw.services(TOKENS),
+          ...dev.services(TOKENS),
+        ]
       })()
       : [],
   )
