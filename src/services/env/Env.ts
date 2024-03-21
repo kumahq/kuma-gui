@@ -22,7 +22,6 @@ type EnvProps = {
   KUMA_BASE_PATH: string
   KUMA_API_URL: string
   KUMA_KDS_URL: string
-  KUMA_UTM_QUERY_PARAMS: string
   KUMA_MODE: string
   KUMA_ENVIRONMENT: string
   KUMA_STORE_TYPE: string
@@ -33,18 +32,13 @@ type EnvInternal = EnvArgs & Partial<EnvProps>
 export default class Env {
   protected env: EnvVars | undefined
   constructor(envArgs: EnvArgs) {
-    let _env: EnvInternal = envArgs
+    const _env: EnvInternal = envArgs
     const env = (str: keyof EnvInternal, d: string = '') => this.var(str, _env?.[str] ?? d)
 
     const config = this.getConfig()
     const mode = env('KUMA_MODE') || config.mode
     const version = semver(env('KUMA_VERSION', config.version))
 
-    const productName = encodeURIComponent(env('KUMA_PRODUCT_NAME'))
-    _env = {
-      ..._env,
-      KUMA_UTM_QUERY_PARAMS: `utm_source=${productName}&utm_medium=${productName}`,
-    }
     this.env = {
       ..._env as EnvVars,
       // TODO(jc): not totally sure we need to use a regex here, maybe just split and join if not
