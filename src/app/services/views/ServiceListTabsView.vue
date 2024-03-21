@@ -42,3 +42,9 @@
 <script lang="ts" setup>
 import LinkBox from '@/app/common/LinkBox.vue'
 </script>
+<style lang="scss" scoped>
+:deep(.link-box) {
+  margin-top: -10px;
+  margin-bottom: -8px;
+}
+</style>

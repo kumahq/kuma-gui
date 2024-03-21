@@ -51,31 +51,31 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: $kui-font-weight-semibold;
+  font-weight: $kui-font-weight-bold;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: $kui-font-size-70;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: $kui-font-size-40;
 }
 
 h3 {
-  font-size: 1.17rem;
+  font-size: $kui-font-size-40;
 }
 
 h4 {
-  font-size: 1rem;
+  font-size: $kui-font-size-30;
 }
 
 h5 {
-  font-size: 0.83rem;
+  font-size: $kui-font-size-30;
 }
 
 h6 {
-  font-size: 0.67rem;
+  font-size: $kui-font-size-30;
 }
 
 ul,
