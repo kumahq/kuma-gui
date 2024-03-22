@@ -117,6 +117,8 @@ const INLINE_NON_VOID_ELEMENTS = [
         'vue/no-undef-components': ['error', {
           // Globally-registered components must be ignored here (https://eslint.vuejs.org/rules/no-undef-components.html)
           ignorePatterns: [
+            // HTML
+            'search',
             // vue-router
             'RouterLink',
             'RouterView',

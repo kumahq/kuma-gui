@@ -5,9 +5,9 @@ Feature: mesh / services / item
       | dataplanes          | [data-testid='data-plane-collection']            |
       | config              | [data-testid='external-service-config']          |
       | item                | $dataplanes tbody tr                             |
-      | input-search        | [data-testid='k-filter-bar-filter-input']        |
-      | button-search       | [data-testid='k-filter-bar-submit-query-button'] |
-      | button-clear-search | [data-testid="k-filter-bar-clear-query-button"]  |
+      | input-search        | [data-testid='filter-bar-filter-input']        |
+      | button-search       | [data-testid='filter-bar-submit-query-button'] |
+      | button-clear-search | [data-testid="filter-bar-clear-query-button"]  |
 
   Scenario Outline: Shows correct tabs for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
@@ -51,10 +51,8 @@ Feature: mesh / services / item
           offset: 0
           size: 50
         """
-
     Scenario: Searching by tag doesn't overwrite the existing service tag
-      Then the "[data-testid='k-filter-bar-filter-input']" element isn't disabled
-      And I wait for 500 ms
+      Then the "[data-testid='filter-bar-filter-input']" element isn't disabled
       When I "type" "tag:version" into the "$input-search" element
       And I click the "$button-search" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
@@ -66,10 +64,7 @@ Feature: mesh / services / item
           offset: 0
           size: 50
         """
-
     Scenario: Searching by service tag doesn't overwrite the existing service tag
-      Then the "$input-search" element isn't disabled
-      And I wait for 500 ms
       When I "type" "tag:kuma.io/service:panel-2" into the "$input-search" element
       And I click the "$button-search" element
       Then the URL "/meshes/default/dataplanes/_overview" wasn't requested with
@@ -78,12 +73,9 @@ Feature: mesh / services / item
           tag:
             - "kuma.io/service:panel-2"
         """
-
     Scenario: The clear search button sends a new request with no search params
-      Then the "$input-search" element isn't disabled
-      And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
-      And I click the "$button-clear-search" element
+      And I clear the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" wasn't requested with
         """
         searchParams:
@@ -97,10 +89,7 @@ Feature: mesh / services / item
           tag:
             - "kuma.io/service:system-1"
         """
-
     Scenario: The clear search button sends a new request with the correct service tag
-      Then the "$input-search" element isn't disabled
-      And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
       And I click the "$button-search" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
@@ -113,7 +102,7 @@ Feature: mesh / services / item
           offset: 0
           size: 50
         """
-      And I click the "$button-clear-search" element
+      And I clear the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
