@@ -53,7 +53,7 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - uses: Kong/public-shared-actions/security-actions/sca@60c9b136104671b7091b2306c599d80fec34ae3f
+      - uses: Kong/public-shared-actions/security-actions/sca@590c699fe824010d7d563a33cc60500d847d3f9e
         id: sbom
         with:
           asset_prefix: kuma-gui
