@@ -5,7 +5,6 @@ Feature: Dataplane details for delegated gateway
       | detail-view | [data-testid='data-plane-detail-tabs-view'] |
       | warnings    | [data-testid='dataplane-warnings']          |
       | details     | [data-testid='dataplane-details']           |
-      | inbounds    | [data-testid='dataplane-inbounds']          |
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -56,4 +55,3 @@ Feature: Dataplane details for delegated gateway
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$warnings" element doesn't exist
-    And the "$inbounds" element doesn't exist

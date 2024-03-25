@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
       dataPlane: '',
-      service: '',
+      connection: '',
     }"
     name="connection-inbound-summary-overview-view"
   >
@@ -89,7 +89,7 @@
         >
           <DataCollection
             v-slot="{ items }"
-            :predicate="(item) => { return item.ruleType === 'from' && Number(item.inbound!.port) === Number(route.params.service.split(':')[1])}"
+            :predicate="(item) => { return item.ruleType === 'from' && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])}"
 
             :items="rulesData!.rules"
           >

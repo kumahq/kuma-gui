@@ -7,7 +7,7 @@
       codeRegExp: false,
       mesh: '',
       dataPlane: '',
-      service: '',
+      connection: '',
     }"
     name="connection-outbound-summary-stats-view"
   >
@@ -22,16 +22,16 @@
       <div>
         <DataLoader
           v-slot="{ data, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.address}`"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
         >
           <DataCollection
             v-slot="{ items: lines }"
             :items="data!.raw.split('\n')"
-            :predicate="item => item.includes(`.${route.params.service}.`)"
+            :predicate="item => item.includes(`.${route.params.connection}.`)"
           >
             <CodeBlock
               language="json"
-              :code="lines.map((item) => item.replace(`${route.params.service}.`, '')).join('\n')"
+              :code="lines.map((item) => item.replace(`${route.params.connection}.`, '')).join('\n')"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter"

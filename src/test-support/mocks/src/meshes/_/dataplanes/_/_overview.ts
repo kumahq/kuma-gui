@@ -2,10 +2,15 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh, name } = req.params
 
-  // use seed to sync the ports in stats.ts with the ports in _overview.ts
+  // use a seed based on the name to keep ports and ip address the same across
+  // _overview, stats and rules
   fake.kuma.seed(name as string)
-  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
-  const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
+  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const ports = Array.from({ length: inboundCount }).map(() => ({
+    port: fake.number.int({ min: 1, max: 65535 }),
+    protocol: fake.kuma.protocol(),
+  }))
+  const address = fake.internet.ip()
   //
 
   fake.kuma.seed()
@@ -22,15 +27,23 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMultizone = true && fake.datatype.boolean()
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
-  // Allows the service tag to be synchronized between overview and stats.
-  fake.kuma.seed(name as string)
   const service = fake.hacker.noun()
-  const networking = fake.kuma.dataplaneNetworking({ type, inbounds: ports.length, isMultizone, service })
+  const networking = {
+    ...fake.kuma.dataplaneNetworking({ type, inbounds: ports.length, isMultizone, service }),
+    address,
+  }
 
   // temporarily overwrite the result of dataplaneNetworking as it doesn't
   // currently accept port plus we need to keep our ports synced.
   ;(networking.inbound ?? []).forEach((inbound, i) => {
-    inbound.port = ports[i]
+    if (fake.datatype.boolean()) {
+      inbound.port = ports[i].port
+      inbound.servicePort = undefined
+    } else {
+      inbound.port = fake.number.int({ min: 1, max: 65535 })
+      inbound.servicePort = ports[i].port
+    }
+    inbound.tags['kuma.io/protocol'] = ports[i].protocol
   })
   //
 

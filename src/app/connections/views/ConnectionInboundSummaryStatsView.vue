@@ -7,7 +7,7 @@
       codeRegExp: false,
       mesh: '',
       dataPlane: '',
-      service: '',
+      connection: '',
     }"
     name="connection-inbound-summary-stats-view"
   >
@@ -22,21 +22,21 @@
       <div>
         <DataLoader
           v-slot="{ data: stats, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.address}`"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
         >
           <DataCollection
             v-slot="{ items: lines }"
             :items="stats!.raw.split('\n')"
             :predicate="item => [
-              `listener.${props.data.name}.`,
-              `cluster.${props.data.cluster}.`,
-              `http.${props.data.cluster}.`,
-              `tcp.${props.data.cluster}.`,
+              `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
+              `cluster.${props.data.name}.`,
+              `http.${props.data.name}.`,
+              `tcp.${props.data.name}.`,
             ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`))"
           >
             <CodeBlock
               language="json"
-              :code="lines.map(item => item.replace(`${props.data.name}.`, '').replace(`${props.data.cluster}.`, '')).join('\n')"
+              :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter"

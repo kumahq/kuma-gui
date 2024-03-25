@@ -7,7 +7,7 @@
       codeRegExp: false,
       mesh: '',
       dataPlane: '',
-      service: '',
+      connection: '',
     }"
     name="connection-outbound-summary-clusters-view"
   >
@@ -27,11 +27,11 @@
           <DataCollection
             v-slot="{ items: lines }"
             :items="data!.split('\n')"
-            :predicate="item => item.startsWith(`${route.params.service}::`)"
+            :predicate="item => item.startsWith(`${route.params.connection}::`)"
           >
             <CodeBlock
               language="json"
-              :code="lines.map(item => item.replace(`${route.params.service}::`, '')).join('\n')"
+              :code="lines.map(item => item.replace(`${route.params.connection}::`, '')).join('\n')"
               is-searchable
               :query="route.params.codeSearch"
               :is-filter-mode="route.params.codeFilter"

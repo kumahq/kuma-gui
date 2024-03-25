@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router'
 export const routes = (): RouteRecordRaw[] => {
   return [
     {
-      path: 'inbound/:service',
+      path: 'inbound/:connection',
       name: 'connection-inbound-summary-view',
       component: () => import('@/app/connections/views/ConnectionInboundSummaryView.vue'),
       children: [
@@ -24,7 +24,7 @@ export const routes = (): RouteRecordRaw[] => {
       ],
     },
     {
-      path: 'outbound/:service',
+      path: 'outbound/:connection',
       name: 'connection-outbound-summary-view',
       component: () => import('@/app/connections/views/ConnectionOutboundSummaryView.vue'),
       children: [

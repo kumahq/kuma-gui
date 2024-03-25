@@ -9,62 +9,80 @@ export const Stat = {
 export const ConnectionCollection = {
   fromObject(item: Record<string, any>) {
     // look in `listener.<inbound-address_port>.<potential-protocol>.<cluster-name>.<...stats>`
-    const inbounds = typeof item.listener !== 'undefined'
+    // following this we will end up with `listener.<inbound-address_port>.<definite-protocol>.<...stats>`
+    const listener = typeof item.listener !== 'undefined'
       ? Object.fromEntries(
         Object.entries<any>(item.listener)
-          .filter(
-            // only use if we find a protocol on `listener.<inbound-socket-address>.<potential-protocol>`
-            ([_key, value]) => protocols.some(protocol => protocol in value),
-          )
           .map(([key, value]) => {
-            // check each protocol for existence, including the appProtocol `grpc`:
-            // `listener.<inbound-socket-address>.http.<cluster-name>.grpc.<...stats>`
-            // and then remove the cluster-name leaving:
-            // `listener.<inbound-address_port>.<protocol>.<...stats>`
-            protocols.forEach((protocol) => {
-              if (typeof value[protocol] !== 'undefined') {
-                const cluster = Object.keys(value[protocol])[0]
-                // look at cluster<cluster-name>.grpc to see if it exists
-                // if so we are a gRPC inbound
-                if (typeof item.cluster[cluster]?.grpc !== 'undefined') {
-                  value.grpc = item.cluster[cluster].grpc
-                }
-                value[protocol] = value[protocol][cluster]
-              }
-            })
-            return [key, value]
+            const { http, ...tcp } = value
+            const stats = {
+              tcp,
+            }
+            if (typeof http !== 'undefined') {
+              // check http protocol for existence i.e. `listener.<inbound-socket-address>.http.<cluster-name>.<...stats>`
+              // and then remove the cluster-name leaving: `listener.<inbound-address_port>.http.<...stats>`
+              const cluster = Object.keys(http)[0]
+              return [key, {
+                ...stats,
+                http: http[cluster],
+                // check for grpc stats `listener.<inbound-socket-address>.http.grpc.<...stats>`
+                // and un-nest if we find them `listener.<inbound-socket-address>.grpc.<...stats>`
+                ...(typeof item.cluster[cluster]?.http2 !== 'undefined' ? { http2: item.cluster[cluster].http2 } : {}),
+                ...(typeof item.cluster[cluster]?.grpc !== 'undefined' ? { grpc: item.cluster[cluster].grpc } : {}),
+              }]
+            } else {
+              // if there is no `listener.<inbound-socket-address>.http`
+              // just move all the stats to `.tcp` i.e. `listener.<inbound-socket-address>.tcp.<...stats>`
+              return [key, stats]
+            }
           }),
       )
       : {}
-
-    const outbounds = typeof item.cluster !== 'undefined'
+    const cluster = typeof item.cluster !== 'undefined'
       ? Object.fromEntries(Object.entries<any>(item.cluster)
         .map(([cluster, value]) => {
+          const { tcp, http, http2, grpc, ...rest } = value
+          const stats = {
+            tcp,
+            ...(typeof http !== 'undefined' ? { http } : {}),
+            ...(typeof http2 !== 'undefined' ? { http2 } : {}),
+            ...(typeof grpc !== 'undefined' ? { grpc } : {}),
+          }
           // check each protocol for existence, on root i.e.`<protocol>.<cluster-name>`
           protocols.forEach(protocol => {
             // replaces `cluster.<cluster-name>.<protocol>` with anything in `<protocol>.<cluster-name>`
             if (typeof item[protocol]?.[cluster] !== 'undefined') {
-              value[protocol] = {
-                ...value[protocol],
+              stats[protocol] = {
+                ...stats[protocol],
                 ...item[protocol][cluster],
-                ...value,
               }
             }
           })
-          // if we don't find any appProtocols (e.g. http., tcp. or .grpc) which is always the case for a gateway
-          // then sniff based on a http non-zero value, falling back to tcp
-          // this means you will never get grpc protocol for an outbound on a gateway
-          if (!appProtocols.some(protocol => typeof value[protocol] !== 'undefined')) {
-            const protocol = (Object.keys(value).includes('upstream_rq_total') && value.upstream_rq_total !== 0) ? 'http' : 'tcp'
-            value[protocol] = value
+          // if we don't find any appProtocols (e.g. http., tcp. or .grpc) at
+          // root (which is always the case for a gateway) then sniff based on
+          // a http non-zero value. If we find it then add the stats to http
+          // otherwise we fall back to tcp and add the stats there. This means
+          // you will never get grpc protocol for an outbound on a gateway
+          if (
+            !appProtocols.some(protocol => typeof value[protocol] !== 'undefined') &&
+            ['upstream_cx_http1_total', 'upstream_cx_http2_total', 'upstream_cx_http3_total'].some(item => Object.keys(rest).includes(item) && rest[item] !== 0)
+          ) {
+            stats.http = {
+              ...stats.http,
+              ...rest,
+            }
+          } else {
+            stats.tcp = {
+              ...stats.tcp,
+              ...rest,
+            }
           }
-          return [cluster, value]
+          return [cluster, stats]
         }))
       : {}
-
     return {
-      inbounds,
-      outbounds,
+      listener,
+      cluster,
     }
   },
 }

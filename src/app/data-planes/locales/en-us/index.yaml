@@ -6,6 +6,7 @@ data-planes:
       3xx: 3xx
       4xx: 4xx
       5xx: 5xx
+      cx: Total connections
       tx: Bytes sent
       rx: Bytes received
       grpc_success: Successful

@@ -29,7 +29,6 @@ type Connection = {
   name: string
   service: string
   protocol: string
-  cluster: string
 }
 export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   address: string
@@ -38,6 +37,7 @@ export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   }
   addressPort: string
   serviceAddressPort: string
+  listenerAddress: string
 }
 export type DataplaneOutbound = PartialDataplaneOutbound & Connection & {
 }
@@ -45,6 +45,7 @@ export type DataplaneOutbound = PartialDataplaneOutbound & Connection & {
 export type DataplaneGateway = PartialDataplaneGateway & {}
 
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
+  inboundAddress: string
   inbounds: DataplaneInbound[]
   outbounds: DataplaneOutbound[]
   type: 'sidecar' | 'gateway'
@@ -76,7 +77,19 @@ export type MeshGatewayDataplane = PartialMeshGatewayDataplane & {
   listenerEntries: MeshGatewayListenerEntry[]
   routePolicies: Meta[]
 }
-
+const DataplaneOutbound = {
+  fromObject(item: PartialDataplaneOutbound): DataplaneOutbound {
+    return {
+      ...item,
+      name: item.tags['kuma.io/service'],
+      service: item.tags['kuma.io/service'],
+      protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
+    }
+  },
+  fromCollection(items: PartialDataplaneOutbound[]): DataplaneOutbound[] {
+    return Array.isArray(items) ? items.map(item => DataplaneOutbound.fromObject(item)) : []
+  },
+}
 const DataplaneNetworking = {
   fromObject(networking: PartialDataplaneNetworking, defaultHealth: boolean): DataplaneNetworking {
     // remove singular inbound/outbound to be replaced with plural versions
@@ -91,6 +104,9 @@ const DataplaneNetworking = {
     return {
       ...rest,
       type,
+      // used for a lookup for inbounds on the result of the envoy /stats endpoint
+      inboundAddress: type === 'gateway' ? networking.address : 'localhost',
+      //
       // if we are a builtin gateway fill in as much as we can for a single inbound
       // we can 'clone' this later if we find out individual information for each inbound
       // i.e. this acts as a template
@@ -99,7 +115,6 @@ const DataplaneNetworking = {
           address: networking.address,
           tags: networking.gateway.tags,
           name: networking.gateway.tags['kuma.io/service'],
-          cluster: networking.gateway.tags['kuma.io/service'],
           service: networking.gateway.tags['kuma.io/service'],
           protocol: networking.gateway.tags['kuma.io/protocol'] ?? 'tcp',
           // TODO
@@ -108,35 +123,32 @@ const DataplaneNetworking = {
           // i.e. these are like template variables to be filled out
           port: NaN,
           addressPort: '',
+          //
           // this will never get set seeing as a gateway proxy never has a service
           serviceAddressPort: '',
+          // we never set this currently as we never need it for a gateway
+          listenerAddress: '',
         }]
         : inbounds.map((item) => {
           const address = item.address ?? networking.address
+          const port = item.servicePort ?? item.port
           return {
             ...item,
             // the name can be used to lookup listener envoy stats
-            name: `${address}_${item.port}`,
-            // the cluster of an inbound (ie. the outbound of an inbound :S) is always `localhost_*`
-            cluster: `localhost_${item.servicePort ?? item.port}`,
+            name: `localhost_${port}`,
+            listenerAddress: `${address}_${port}`,
             // If a health property is unset the inbound is considered healthy
             health: { ready: !isSet(item.health) ? true : item.health.ready },
             service: item.tags['kuma.io/service'],
             protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
             address,
+            // inbound address, advertisedAddress, networkingAddress because externally accessible address
             addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
-            serviceAddressPort: `${item.serviceAddress ?? item.address ?? networking.address}:${item.servicePort ?? item.port}`,
+            // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address
+            serviceAddressPort: `${item.serviceAddress ?? address}:${port}`,
           }
         }),
-      outbounds: outbounds.map((item) => {
-        return {
-          ...item,
-          name: item.tags['kuma.io/service'],
-          cluster: item.tags['kuma.io/service'],
-          service: item.tags['kuma.io/service'],
-          protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
-        }
-      }),
+      outbounds: DataplaneOutbound.fromCollection(outbounds),
     }
   },
 }
