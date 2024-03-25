@@ -3,11 +3,13 @@ import vue from '@vitejs/plugin-vue'
 import { DEFAULT_SCHEMA, Type } from 'js-yaml'
 import { marked } from 'marked'
 import { fileURLToPath, URL } from 'url'
-import { defineConfig, type UserConfigFn } from 'vite'
+import { defineConfig } from 'vite'
 import svgLoader from 'vite-svg-loader'
 
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
-
+import { fs } from './src/test-support/mocks/fs'
+import fakeApi from './src/test-support/vite'
+import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 
 export const config: UserConfigFn = () => {
@@ -26,6 +28,9 @@ export const config: UserConfigFn = () => {
             whitespace: 'preserve',
           },
         },
+      }),
+      fakeApi({
+        fs,
       }),
       svgLoader(),
       yamlLoader(
