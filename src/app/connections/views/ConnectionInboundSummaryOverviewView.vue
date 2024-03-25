@@ -94,100 +94,110 @@
             :items="rulesData!.rules"
           >
             <div class="stack mt-4">
-              <template
-                v-for="item in items"
-                :key="item"
+              <AccordionList
+                :initially-open="0"
+                multiple-open
               >
-                <KCard>
-                  <div
-                    class="stack-with-borders"
-                  >
-                    <DefinitionCard
-                      layout="horizontal"
-                    >
-                      <template #title>
-                        Type
+                <template
+                  v-for="(rules, key) in Object.groupBy(items, item => item.type)"
+                  :key="key"
+                >
+                  <KCard>
+                    <AccordionItem>
+                      <template #accordion-header>
+                        <PolicyTypeTag
+                          :policy-type="key"
+                        >
+                          {{ key }} ({{ rules!.length }})
+                        </PolicyTypeTag>
                       </template>
-
-                      <template #body>
-                        {{ item.type }}
-                      </template>
-                    </DefinitionCard>
-                    <DefinitionCard
-                      v-if="item.matchers.length > 0"
-                      layout="horizontal"
-                    >
-                      <template #title>
-                        From
-                      </template>
-
-                      <template #body>
-                        <p><RuleMatchers :items="item.matchers" /></p>
-                      </template>
-                    </DefinitionCard>
-                    <DefinitionCard
-                      v-if="item.origins.length > 0"
-                      layout="horizontal"
-                    >
-                      <template #title>
-                        Origin Policies
-                      </template>
-
-                      <template #body>
-                        <DataSource
-                          v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
-                          :src="`/*/policy-types`"
+                      <template #accordion-content>
+                        <div
+                          class="stack-with-borders"
                         >
                           <template
-                            v-for="types in [Object.groupBy((policyTypes?.policies ?? []), (item) => item.name)]"
-                            :key="types"
+                            v-for="item in rules"
+                            :key="item"
                           >
-                            <ul>
-                              <li
-                                v-for="origin in item.origins"
-                                :key="`${origin.mesh}-${origin.name}`"
-                              >
-                                <RouterLink
-                                  v-if="types[origin.type]"
-                                  :to="{
-                                    name: 'policy-detail-view',
-                                    params: {
-                                      mesh: origin.mesh,
-                                      policyPath: types[origin.type]![0].path,
-                                      policy: origin.name,
-                                    },
-                                  }"
+                            <DefinitionCard
+                              v-if="item.matchers.length > 0"
+                              layout="horizontal"
+                            >
+                              <template #title>
+                                From
+                              </template>
+
+                              <template #body>
+                                <p><RuleMatchers :items="item.matchers" /></p>
+                              </template>
+                            </DefinitionCard>
+                            <DefinitionCard
+                              v-if="item.origins.length > 0"
+                              layout="horizontal"
+                            >
+                              <template #title>
+                                Origin Policies
+                              </template>
+
+                              <template #body>
+                                <DataSource
+                                  v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
+                                  :src="`/*/policy-types`"
                                 >
-                                  {{ origin.name }}
-                                </RouterLink>
-                                <template
-                                  v-else
-                                >
-                                  {{ origin.name }}
-                                </template>
-                              </li>
-                            </ul>
+                                  <template
+                                    v-for="types in [Object.groupBy((policyTypes?.policies ?? []), (item) => item.name)]"
+                                    :key="types"
+                                  >
+                                    <ul>
+                                      <li
+                                        v-for="origin in item.origins"
+                                        :key="`${origin.mesh}-${origin.name}`"
+                                      >
+                                        <RouterLink
+                                          v-if="types[origin.type]"
+                                          :to="{
+                                            name: 'policy-detail-view',
+                                            params: {
+                                              mesh: origin.mesh,
+                                              policyPath: types[origin.type]![0].path,
+                                              policy: origin.name,
+                                            },
+                                          }"
+                                        >
+                                          {{ origin.name }}
+                                        </RouterLink>
+                                        <template
+                                          v-else
+                                        >
+                                          {{ origin.name }}
+                                        </template>
+                                      </li>
+                                    </ul>
+                                  </template>
+                                </DataSource>
+                              </template>
+                            </DefinitionCard>
+                            <div>
+                              <dt>
+                                Config
+                              </dt>
+                              <dd class="mt-2">
+                                <div>
+                                  <CodeBlock
+                                    :code="toYaml(item.config)"
+                                    language="yaml"
+                                    :show-copy-button="false"
+                                  />
+                                </div>
+                              </dd>
+                            </div>
                           </template>
-                        </DataSource>
-                      </template>
-                    </DefinitionCard>
-                    <div>
-                      <dt>
-                        Config
-                      </dt>
-                      <dd class="mt-2">
-                        <div>
-                          <CodeBlock
-                            :code="toYaml(item.config)"
-                            language="yaml"
-                            :show-copy-button="false"
-                          />
                         </div>
-                      </dd>
-                    </div>
-                  </div>
-                </KCard>
-              </template>
+                      </template>
+                    </AccordionItem>
+                  </KCard>
+                </template>
+              </AccordionList>
             </div>
           </DataCollection>
         </DataLoader>
@@ -197,8 +207,11 @@
 </template>
 
 <script lang="ts" setup>
+import AccordionItem from '@/app/common/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
