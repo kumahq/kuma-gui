@@ -65,7 +65,7 @@ Feature: mesh / dataplanes / index
     Then the "$item:nth-child(1)" element contains
       | Value                |
       | fake-backend         |
-      | Standard proxy       |
+      | Proxy                |
       | service-1            |
       | zone-1               |
       | Nov 3, 2023, 9:10 AM |
@@ -211,4 +211,4 @@ Feature: mesh / dataplanes / index
       And the "$item:nth-child(1)" element contains
         | Value               |
         | fake-system-proxy-0 |
-        | Standard proxy      |
+        | Proxy               |

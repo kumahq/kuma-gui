@@ -81,6 +81,16 @@
 
               <DefinitionCard>
                 <template #title>
+                  Type
+                </template>
+
+                <template #body>
+                  {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
                   {{ t('data-planes.routes.item.last_updated') }}
                 </template>
 
@@ -89,7 +99,9 @@
                 </template>
               </DefinitionCard>
 
-              <template v-if="props.data.dataplane.networking.gateway">
+              <template
+                v-if="props.data.dataplane.networking.gateway"
+              >
                 <DefinitionCard>
                   <template #title>
                     {{ t('http.api.property.tags') }}

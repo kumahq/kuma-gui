@@ -75,6 +75,6 @@ data-planes:
       gateway: '{KUMA_DOCS_URL}/explore/gateway?{KUMA_UTM_QUERY_PARAMS}'
   type:
     all: 'All'
-    standard: 'Standard proxy'
+    standard: 'Proxy'
     builtin: 'Built-in gateway'
     delegated: 'Delegated gateway'
