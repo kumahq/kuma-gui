@@ -16,6 +16,7 @@ Feature: mesh / services / index
       body:
         items:
           - name: service-1
+            serviceType: internal
       """
     When I visit the "/meshes/default/services/internal" URL
 

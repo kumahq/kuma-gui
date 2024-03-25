@@ -84,6 +84,7 @@
 
       <template v-else>
         <slot
+          v-if="(props.items ?? []).length > 0"
           :name="key"
           :row="row as Row"
           :row-value="rowValue"
