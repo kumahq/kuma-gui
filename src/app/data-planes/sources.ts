@@ -1,8 +1,6 @@
 import {
   Dataplane,
   DataplaneOverview,
-  Rule,
-  RuleCollection,
   MeshGatewayDataplane,
   SidecarDataplane,
 } from './data'
@@ -29,8 +27,6 @@ export type SidecarDataplaneCollection = KindCollectionResponse<SidecarDataplane
 export type SidecarDataplaneCollectionSource = DataSourceResponse<SidecarDataplaneCollection>
 
 export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane>
-
-export type DataplaneRulesSource = DataSourceResponse<RuleCollection>
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
@@ -69,10 +65,6 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
 
     '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': async (params) => {
       return SidecarDataplane.fromCollection(await api.getSidecarDataplanePolicies(params))
-    },
-
-    '/meshes/:mesh/dataplanes/:name/rules': async (params) => {
-      return Rule.fromCollection(await api.getDataplaneRules(params))
     },
 
     '/meshes/:mesh/dataplanes/:name/gateway-dataplane-policies': async (params) => {

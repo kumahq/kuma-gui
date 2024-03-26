@@ -17,7 +17,7 @@
               name: 'policy-detail-view',
               params: {
                 mesh: policy.mesh,
-                policyPath: props.policyTypesByName[policy.type]!.path,
+                policyPath: props.types[policy.type]?.path ?? '',
                 policy: policy.name,
               },
             }"
@@ -63,7 +63,7 @@
                               name: 'policy-detail-view',
                               params: {
                                 mesh: routeEntry.route.mesh,
-                                policyPath: props.policyTypesByName[routeEntry.route.type]!.path,
+                                policyPath: props.types[routeEntry.route.type]?.path ?? '',
                                 policy: routeEntry.route.name,
                               },
                             }"
@@ -107,7 +107,7 @@
                             name: 'policy-detail-view',
                             params: {
                               mesh: policy.mesh,
-                              policyPath: props.policyTypesByName[policy.type]!.path,
+                              policyPath: props.types[policy.type]?.path ?? '',
                               policy: policy.name,
                             },
                           }"
@@ -135,7 +135,7 @@ import type { PolicyType } from '@/types/index.d'
 
 const props = defineProps<{
   gatewayDataplane: MeshGatewayDataplane
-  policyTypesByName: Record<string, PolicyType | undefined>
+  types: Partial<Record<string, PolicyType>>
 }>()
 </script>
 
