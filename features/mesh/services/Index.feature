@@ -47,5 +47,5 @@ Feature: mesh / services / index
     Then the URL contains "/services/internal/service-1/overview"
     Then the "#service-detail-view-tab a" element exists
 
-    When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
+    When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
     Then the "$item" element exists 1 times
