@@ -137,10 +137,8 @@ const ControlPlaneStatus = useControlPlaneStatus()
   justify-content: space-between;
   align-items: center;
   margin-bottom: $kui-space-50;
-}
-.card-header .card-actions a {
-  margin-top: -6px;
-  margin-bottom: -6px;
+  // Makes card header the same height as buttons so that they align with or without buttons present.
+  min-height: 32px;
 }
 
 .card-title {
