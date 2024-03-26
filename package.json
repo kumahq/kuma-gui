@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.24.3",
-    "@babel/preset-env": "7.24.0",
+    "@babel/preset-env": "7.24.3",
     "@babel/preset-typescript": "7.24.1",
     "@badeball/cypress-cucumber-preprocessor": "20.0.2",
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.0",
