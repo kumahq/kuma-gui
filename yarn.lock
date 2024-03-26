@@ -4414,6 +4414,11 @@ eslint@8.57.0, eslint@^8.41.0:
     strip-ansi "^6.0.1"
     text-table "^0.2.0"
 
+esm-resolve@^1.0.8:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/esm-resolve/-/esm-resolve-1.0.9.tgz#8d454de9ccef92799797811b0b9b952f199ecfdc"
+  integrity sha512-qVENG+4e2s5HO/TMV9LvjpOVNW4HlaZn98q7h0y9R524M1chXNAwrn2bKx+wQs9Qryb22qX8P0rQ5N3e3Udq/w==
+
 espree@^9.3.1, espree@^9.6.0, espree@^9.6.1:
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/espree/-/espree-9.6.1.tgz#a2a17b8e434690a5432f2f8018ce71d331a48c6f"
@@ -8430,16 +8435,17 @@ vue-demi@>=0.14.6, vue-demi@>=0.14.7:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.7.tgz#8317536b3ef74c5b09f268f7782e70194567d8f2"
   integrity sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==
 
-vue-docgen-api@^4.67.0:
-  version "4.75.1"
-  resolved "https://registry.yarnpkg.com/vue-docgen-api/-/vue-docgen-api-4.75.1.tgz#b71e3440e1d45a118c5e0bdb2c0df61692998ca7"
-  integrity sha512-MECZ3uExz+ssmhD/2XrFoQQs93y17IVO1KDYTp8nr6i9GNrk67AAto6QAtilW1H/pTDPMkQxJ7w/25ZIqVtfAA==
+vue-docgen-api@^4.78.0:
+  version "4.78.0"
+  resolved "https://registry.yarnpkg.com/vue-docgen-api/-/vue-docgen-api-4.78.0.tgz#e7eb426da7786b4aa602ea7f092dbebb933a74b4"
+  integrity sha512-RsZf+qzTttCCAN9v7AKmBykc2QWmO8csVk1c2aXeOktomSOu0NA7sgK4ObuRB5lpmtOvTnwuxssyYmxXxABr+A==
   dependencies:
     "@babel/parser" "^7.21.4"
     "@babel/types" "^7.21.4"
     "@vue/compiler-dom" "^3.2.0"
     "@vue/compiler-sfc" "^3.2.0"
     ast-types "^0.16.1"
+    esm-resolve "^1.0.8"
     hash-sum "^2.0.0"
     lru-cache "^8.0.3"
     pug "^3.0.2"
@@ -8447,10 +8453,10 @@ vue-docgen-api@^4.67.0:
     ts-map "^1.0.3"
     vue-inbrowser-compiler-independent-utils "^4.69.0"
 
-vue-docgen-cli@4.77.0:
-  version "4.77.0"
-  resolved "https://registry.yarnpkg.com/vue-docgen-cli/-/vue-docgen-cli-4.77.0.tgz#30af1494f18f0b9b0cf88b0f76cf76d02e11bc4a"
-  integrity sha512-oa6Y+UcLG11NB8nyylXJPH7Gaiyqi/W4AQWb6e4PfmhtB+pgFGD7d4mveMSf/5fZBOUWIpkH5f8tGvY9mfXFAg==
+vue-docgen-cli@4.79.0:
+  version "4.79.0"
+  resolved "https://registry.yarnpkg.com/vue-docgen-cli/-/vue-docgen-cli-4.79.0.tgz#4eff6eed583577c25ea63b2f484a160f9677587f"
+  integrity sha512-ye4/HAy1i/ULWpvLC+k7FGr7QiXyCPyduFoWAaXeMgmhxAu5H3jPSLQwf6MQwOWlMw4phRQnMlGfyHH1/NjsrQ==
   dependencies:
     cac "^6.7.14"
     chokidar "^3.5.1"
@@ -8458,7 +8464,7 @@ vue-docgen-cli@4.77.0:
     lodash.memoize "4.1.2"
     loglevel "^1.8.1"
     prettier "^2.8.4"
-    vue-docgen-api "^4.67.0"
+    vue-docgen-api "^4.78.0"
 
 vue-draggable-next@^2.2.1:
   version "2.2.1"
