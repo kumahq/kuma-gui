@@ -84,8 +84,8 @@
       >
         <h3>Rules</h3>
         <DataLoader
-          v-slot="{ data: rulesData }: DataplaneRulesSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/rules`"
+          v-slot="{ data: rulesData }: RuleCollectionSource"
+          :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
         >
           <DataCollection
             v-slot="{ items }"
@@ -143,7 +143,7 @@
                               <template #body>
                                 <DataSource
                                   v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
-                                  :src="`/*/policy-types`"
+                                  :src="`/policy-types`"
                                 >
                                   <template
                                     v-for="types in [Object.groupBy((policyTypes?.policies ?? []), (item) => item.name)]"
@@ -216,9 +216,9 @@ import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
-import type { DataplaneRulesSource } from '@/app/data-planes/sources'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
+import type { RuleCollectionSource } from '@/app/rules/sources'
 import { toYaml } from '@/utilities/toYaml'
 
 const props = defineProps<{

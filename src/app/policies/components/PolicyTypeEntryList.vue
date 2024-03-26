@@ -78,7 +78,7 @@
                       name: 'policy-detail-view',
                       params: {
                         mesh: origin.mesh,
-                        policyPath: props.types[origin.type]!.path,
+                        policyPath: props.types[origin.type]?.path ?? '',
                         policy: origin.name,
                       },
                     }"
@@ -125,7 +125,7 @@ import { toYaml } from '@/utilities/toYaml'
 
 const props = defineProps<{
   items: PolicyTypeEntry[]
-  types: Record<string, PolicyType | undefined>
+  types: Partial<Record<string, PolicyType>>
 }>()
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {

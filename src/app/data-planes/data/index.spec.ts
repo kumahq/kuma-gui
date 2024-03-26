@@ -115,6 +115,27 @@ describe('DataplaneOverview', () => {
     )
   })
 
+  describe('dataplane.dataplaneType', () => {
+    test(
+      "an empty networking.gateway.type gets set to the default of 'delegated'",
+      async ({ fixture }) => {
+        expect.assertions(2)
+        const actual = await fixture.setup((item) => {
+          if (typeof item.dataplane.networking.gateway !== 'undefined') {
+            delete item.dataplane.networking.gateway.type
+            expect(item.dataplane.networking.gateway.type).toBeUndefined()
+          }
+          return item
+        }, {
+          env: {
+            KUMA_DATAPLANE_TYPE: 'delegated',
+            KUMA_DATAPLANEINBOUND_COUNT: '1',
+          },
+        })
+        expect(actual.dataplaneType).toStrictEqual('delegated')
+      },
+    )
+  })
   describe('dataplaneInsight.subscriptions', () => {
     test(
       'absent dataplaneInsight remains defined',

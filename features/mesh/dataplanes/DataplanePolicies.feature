@@ -1,59 +1,22 @@
 Feature: Dataplane policies
-  Rule: Standard proxy
-    Background:
-      Given the CSS selectors
-        | Alias                              | Selector                                                            |
-        | policies-view                      | [data-testid='data-plane-policies-view']                            |
-        | rules-based-policies               | [data-testid='rules-based-policies']                                |
-        | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']                          |
-        | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies']                  |
-        | proxy-rule-item                    | [data-testid='proxy-rule-list'] .accordion-item                     |
-        | proxy-rule-item-button             | $proxy-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
-        | to-rule-item                       | [data-testid='to-rule-list'] .accordion-item                        |
-        | to-rule-item-button                | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
-        | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                    |
-        | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
-
-    Scenario: Dataplane policies view shows expected content for standard proxy (mode: global)
-      Given the environment
-        """
-        KUMA_MODE: global
-        """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
-        """
-        body:
-          mesh: default
-          dataplane:
-            networking:
-              gateway: !!js/undefined
-        """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element doesn't exist
-      And the "$builtin-gateway-dataplane-policies" element doesn't exist
-
-    Scenario: Dataplane policies view shows expected content for standard proxy (mode: zone)
-      Given the environment
-        """
-        KUMA_MODE: zone
-        KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
-        KUMA_DATAPLANE_RULE_COUNT: 2
-        KUMA_DATAPLANE_TO_RULE_COUNT: 2
-        KUMA_DATAPLANE_FROM_RULE_COUNT: 0
-        """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
-        """
-        body:
-          mesh: default
-          dataplane:
-            networking:
-              gateway: !!js/undefined
-        """
-      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element exists
-      And the "$builtin-gateway-dataplane-policies" element doesn't exist
+  Background:
+    Given the CSS selectors
+      | Alias                              | Selector                                                            |
+      | policies-view                      | [data-testid='data-plane-policies-view']                            |
+      | rules-based-policies               | [data-testid='rules-based-policies']                                |
+      | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']                          |
+      | legacy-sidecar-policies            | [data-testid='sidecar-dataplane-policies']                          |
+      | legacy-gateway-policies            | [data-testid='builtin-gateway-dataplane-policies']                  |
+      | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies']                  |
+      | proxy-rules                        | [data-testid='proxy-rule-list']                                     |
+      | proxy-rule-item                    | $proxy-rules .accordion-item                                        |
+      | proxy-rule-item-button             | $proxy-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
+      | to-rules                           | [data-testid='to-rule-list']                                        |
+      | to-rule-item                       | $to-rules .accordion-item                                           |
+      | to-rule-item-button                | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
+      | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                    |
+      | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
+  Rule: Any networking type
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
       Given the environment
@@ -221,16 +184,11 @@ Feature: Dataplane policies
         """
 
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-
       Then the "$policies-view" element contains "MeshTimeout"
-
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
-
       Then the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:foo"
       And the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:bar"
-
       When I click the "$from-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
-
       Then the "$from-rule-item:nth-child(1)" element contains "kuma.io/service:one and"
       Then the "$from-rule-item:nth-child(1)" element contains "!kuma.io/service:two"
 
@@ -276,159 +234,115 @@ Feature: Dataplane policies
                           connectTimeout: 5s
                           type: STATIC
         """
-
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-
       Then the "$policies-view" element contains "MeshTimeout"
-
       When I click the "$proxy-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
-
       Then the "$proxy-rule-item:nth-child(1)" element contains "mpp-on-gateway"
-
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
-
       Then the "$to-rule-item:nth-child(1)" element contains "!kuma.io/service:bar"
+
+  Rule: Standard proxy
+    Background:
+      Given the environment
+        """
+        KUMA_DATAPLANE_TYPE: standard
+        KUMA_DATAPLANE_TO_RULE_COUNT: 1
+        """
+
+    Scenario: Federated shows the rules but no legacy content
+      Given the environment
+        """
+        KUMA_MODE: global
+        """
+      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element doesn't exist
+      And the "$legacy-gateway-policies" element doesn't exist
+
+    Scenario: Non-federated shows the rules and only sidecar legacy content
+      Given the environment
+        """
+        KUMA_MODE: zone
+        """
+      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element exists
+      And the "$legacy-gateway-policies" element doesn't exist
 
   Rule: Delegated gateway
     Background:
-      Given the CSS selectors
-        | Alias                              | Selector                                           |
-        | rules-based-policies               | [data-testid='rules-based-policies']               |
-        | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
-        | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
-
-      And the environment
+      Given the environment
         """
-        KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
-        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TYPE: delegated
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
-        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         """
-    Scenario: Dataplane policies view shows expected content for delegated gateway (mode: global)
+
+    Scenario: Federated shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
-        """
-        body:
-          mesh: default
-          dataplane:
-            networking:
-              gateway:
-                type: DELEGATED
-                tags:
-                  kuma.io/service: service-1
-        """
-
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element doesn't exist
+      And the "$legacy-gateway-policies" element doesn't exist
 
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element doesn't exist
-      And the "$builtin-gateway-dataplane-policies" element doesn't exist
-
-    Scenario: Dataplane policies view shows expected content for delegated gateway (mode: global + omitted Dataplane type)
+    # We repeat the same test as the one before but with an omitted so we can test
+    # an omitted gateway.type. If we ever stop folks accessing gateway.type and rely on the
+    # data layer unit test for this instead, we can remove this test.
+    Scenario: Federated (with a default/delegated type) shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
+
       And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
         """
         body:
-          mesh: default
           dataplane:
             networking:
               gateway:
                 type: !!js/undefined
-                tags:
-                  kuma.io/service: service-1
         """
-
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element doesn't exist
+      And the "$legacy-gateway-policies" element doesn't exist
 
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element doesn't exist
-      And the "$builtin-gateway-dataplane-policies" element doesn't exist
-
-    Scenario: Dataplane policies view shows expected content for delegated gateway (mode: zone)
+    Scenario: Non-federated shows the rules and only sidecar-like (i.e. delegated) gateway legacy content
       Given the environment
         """
         KUMA_MODE: zone
         """
-      And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
-        """
-        body:
-          mesh: default
-          dataplane:
-            networking:
-              gateway:
-                type: DELEGATED
-                tags:
-                  kuma.io/service: service-1
-        """
-
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element exists
-      And the "$builtin-gateway-dataplane-policies" element doesn't exist
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element exists
+      And the "$legacy-gateway-policies" element doesn't exist
 
   Rule: Built-in gateway
     Background:
-      Given the CSS selectors
-        | Alias                              | Selector                                           |
-        | rules-based-policies               | [data-testid='rules-based-policies']               |
-        | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
-        | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
-      And the environment
+      Given the environment
         """
-        KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
-        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TYPE: builtin
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
-        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         """
-    Scenario: Dataplane policies view shows expected content for built-in gateway (mode: global)
+
+    Scenario: Federated shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
-      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
-        """
-        body:
-          mesh: default
-          dataplane:
-            networking:
-              gateway:
-                type: BUILTIN
-                tags:
-                  kuma.io/service: service-1
-        """
-
       When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element doesn't exist
+      And the "$legacy-gateway-policies" element doesn't exist
 
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element doesn't exist
-      And the "$builtin-gateway-dataplane-policies" element doesn't exist
-
-    Scenario: Dataplane policies view shows expected content for built-in gateway (mode: zone)
+    Scenario: Non-federated shows the rules and only builtin gateway legacy content
       Given the environment
         """
         KUMA_MODE: zone
         """
-      And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
-        """
-        body:
-          mesh: default
-          dataplane:
-            networking:
-              gateway:
-                type: BUILTIN
-                tags:
-                  kuma.io/service: service-1
-        """
-
       When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
-
-      Then the "$rules-based-policies" element exists
-      And the "$sidecar-dataplane-policies" element doesn't exist
-      And the "$builtin-gateway-dataplane-policies" element exists
+      Then the "$to-rules" element exists
+      And the "$legacy-sidecar-policies" element doesn't exist
+      And the "$legacy-gateway-policies" element exists

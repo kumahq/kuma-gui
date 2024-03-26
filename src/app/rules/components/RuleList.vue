@@ -72,7 +72,7 @@
                           name: 'policy-detail-view',
                           params: {
                             mesh: origin.mesh,
-                            policyPath: props.policyTypesByName[origin.type]!.path,
+                            policyPath: props.types[origin.type]?.path ?? '',
                             policy: origin.name,
                           },
                         }"
@@ -110,7 +110,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { Rule } from '../data'
 import { useI18n } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -118,13 +117,14 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
+import type { Rule } from '@/app/rules/data'
 import type { PolicyType } from '@/types/index.d'
 import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
 
 const props = defineProps<{
   rules: Rule[]
-  policyTypesByName: Record<string, PolicyType | undefined>
+  types: Partial<Record<string, PolicyType>>
 }>()
 
 </script>

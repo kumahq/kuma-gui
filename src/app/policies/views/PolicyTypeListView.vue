@@ -27,7 +27,7 @@
         >
           <DataSource
             v-slot="{ data, error }: PolicyTypeCollectionSource"
-            :src="`/*/policy-types`"
+            :src="`/policy-types`"
           >
             <div
               class="policy-list-content"
