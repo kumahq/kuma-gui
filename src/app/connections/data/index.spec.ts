@@ -34,15 +34,17 @@ describe('ConnectionCollection', () => {
   describe('fromObject', () => {
     test('it works', () => {
       const expected = {
-        inbounds: {
+        listener: {
           '10.244.0.11_8081': {
+            tcp: {},
             http: {
               downstream_rq_1xx: 0,
             },
           },
         },
-        outbounds: {
+        cluster: {
           localhost_9090: {
+            tcp: {},
             grpc: {
               0: 12,
               request_message_count: 12,

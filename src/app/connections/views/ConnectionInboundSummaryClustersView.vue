@@ -7,7 +7,7 @@
       codeRegExp: false,
       mesh: '',
       dataPlane: '',
-      service: '',
+      connection: '',
     }"
     name="connection-inbound-summary-clusters-view"
   >

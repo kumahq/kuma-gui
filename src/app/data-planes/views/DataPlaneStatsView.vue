@@ -22,7 +22,7 @@
       <KCard>
         <DataLoader
           v-slot="{ data: statsData, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.address}`"
+          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
         >
           <CodeBlock
             language="json"

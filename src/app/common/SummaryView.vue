@@ -50,6 +50,9 @@ const emit = defineEmits<{
 
 <style lang="scss" scoped>
 :deep(.slideout-title) {
+  h1, h2, h4, h5, h6 {
+    font-size: $kui-font-size-70;
+  }
   h1, h2 {
     --icon-before: url('@/assets/images/icon-wifi-tethering.svg');
     &::before {

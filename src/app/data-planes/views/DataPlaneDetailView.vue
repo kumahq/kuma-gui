@@ -10,7 +10,7 @@
   >
     <DataSource
       v-slot="{ data: traffic, error, refresh }: StatsSource"
-      :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.address}`"
+      :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
     >
       <AppView>
         <template
@@ -81,6 +81,16 @@
 
               <DefinitionCard>
                 <template #title>
+                  Type
+                </template>
+
+                <template #body>
+                  {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
                   {{ t('data-planes.routes.item.last_updated') }}
                 </template>
 
@@ -89,7 +99,9 @@
                 </template>
               </DefinitionCard>
 
-              <template v-if="props.data.dataplane.networking.gateway">
+              <template
+                v-if="props.data.dataplane.networking.gateway"
+              >
                 <DefinitionCard>
                   <template #title>
                     {{ t('http.api.property.tags') }}
@@ -129,17 +141,18 @@
                 </template>
                 <ConnectionGroup
                   type="inbound"
+                  data-testid="dataplane-inbounds"
                 >
                   <!-- if we are a builtin gateway proxy i.e. a 'gateway' proxy -->
                   <!-- use its first and only inbounds as a template  -->
                   <!-- and fill the inbounds out from the stats once they are loaded -->
                   <template
                     v-for="inbounds in [props.data.dataplane.networking.type === 'gateway' ? Object.entries<any>(traffic?.inbounds ?? {}).reduce<DataplaneInbound[]>((prev, [key, value]) => {
-                      const [ip, port] = key.split('_')
                       // As we are just 'finding' inbounds from stats without knowing them
                       // from the dataplane overview API request, we will wrongly 'find'
                       // the envoy admin inbound that is used for kumas /stats API. Ignore
                       // the envoy admin inbound when we find it
+                      const port = key.split('_').at(-1)
                       if(port === (props.data.dataplane.networking.admin?.port ?? '9901')) {
                         return prev
                       }
@@ -178,6 +191,7 @@
                             :key="stats"
                           >
                             <ConnectionCard
+                              data-testid="dataplane-inbound"
                               :protocol="item.protocol"
                               :service="item.tags['kuma.io/service']"
                               :traffic="typeof error === 'undefined' ?
@@ -189,25 +203,20 @@
                                 }
                               "
                             >
-                              <template
-                                v-for="name in [`${item.name.replace('_', ':')}`]"
-                                :key="name"
+                              <RouterLink
+                                data-action
+                                :to="{
+                                  name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
+                                  params: {
+                                    connection: item.name,
+                                  },
+                                  query: {
+                                    inactive: route.params.inactive ? null : undefined,
+                                  },
+                                }"
                               >
-                                <RouterLink
-                                  data-action
-                                  :to="{
-                                    name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
-                                    params: {
-                                      service: name,
-                                    },
-                                    query: {
-                                      inactive: route.params.inactive ? null : undefined,
-                                    },
-                                  }"
-                                >
-                                  {{ name }}
-                                </RouterLink>
-                              </template>
+                                {{ item.name.replace('localhost', '').replace('_', ':') }}
+                              </RouterLink>
                             </ConnectionCard>
                           </template>
                         </template>
@@ -280,30 +289,40 @@
                           type="outbound"
                           data-testid="dataplane-outbounds"
                         >
+                          <!-- the outbound name is the service name potentially with a 16 digit hash appended -->
+                          <!-- that potential hash follows a hypen and can contain digits and a-f -->
+                          <!-- so we replace this with `` if we find it to get the service name for linking -->
                           <template
-                            v-for="[name, outbound] in outbounds"
-                            :key="`${name}`"
+                            v-for="hash in [/-([a-f0-9]){16}$/]"
+                            :key="hash"
                           >
-                            <ConnectionCard
-                              :protocol="['grpc', 'http', 'tcp'].find(protocol => typeof outbound[protocol] !== 'undefined') ?? 'tcp'"
-                              :traffic="outbound"
-                              :direction="direction"
+                            <template
+                              v-for="[name, outbound] in outbounds"
+                              :key="`${name}`"
                             >
-                              <RouterLink
-                                data-action
-                                :to="{
-                                  name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
-                                  params: {
-                                    service: name,
-                                  },
-                                  query: {
-                                    inactive: route.params.inactive ? null : undefined,
-                                  },
-                                }"
+                              <ConnectionCard
+                                data-testid="dataplane-outbound"
+                                :protocol="['grpc', 'http', 'tcp'].find(protocol => typeof outbound[protocol] !== 'undefined') ?? 'tcp'"
+                                :traffic="outbound"
+                                :service="name.replace(hash, '')"
+                                :direction="direction"
                               >
-                                {{ name }}
-                              </RouterLink>
-                            </ConnectionCard>
+                                <RouterLink
+                                  data-action
+                                  :to="{
+                                    name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
+                                    params: {
+                                      connection: name,
+                                    },
+                                    query: {
+                                      inactive: route.params.inactive ? null : undefined,
+                                    },
+                                  }"
+                                >
+                                  {{ name }}
+                                </RouterLink>
+                              </ConnectionCard>
+                            </template>
                           </template>
                         </ConnectionGroup>
                       </DataCollection>

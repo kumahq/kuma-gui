@@ -1,5 +1,8 @@
 <template>
-  <component :is="!hasParent ? MainView : 'div'">
+  <component
+    :is="!hasParent ? MainView : 'div'"
+    class="app-view"
+  >
     <nav
       v-if="!hasParent && _breadcrumbs.length > 0"
       aria-label="Breadcrumb"
@@ -137,22 +140,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss">
-.app-view-title-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px; /* 2rem */
-
-  h1, h2, h3, h4, h5, h6  {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-.app-view-title-bar h1 {
-  font-weight: $kui-font-weight-semibold;
-  font-size: $kui-font-size-80;
-}
-.app-view-title-bar h2 {
-  font-size: $kui-font-size-60;
+.k-breadcrumbs {
+  margin-bottom: 0 !important
 }
 .is-fullscreen {
   .app-view-title-bar {
@@ -166,9 +155,23 @@ onBeforeUnmount(() => {
     font-size: $kui-font-size-60;
   }
 }
+.k-tabs + .route-view > .app-view .app-view-title-bar {
+  margin-bottom: 20px;
+}
 </style>
 
 <style lang="scss" scoped>
+.app-view-title-bar {
+  display: flex;
+  align-items: center;
+  margin-top: $kui-space-30;
+  margin-bottom: calc($kui-space-80 + 4px);
+
+  h1, h2, h3, h4, h5, h6  {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 .actions {
   flex-grow: 1;
   display: flex;

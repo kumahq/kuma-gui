@@ -6,7 +6,6 @@ Feature: Dataplane details for built-in gateway
       | policies-view     | [data-testid='data-plane-policies-view']                           |
       | warnings          | [data-testid='dataplane-warnings']                                 |
       | details           | [data-testid='dataplane-details']                                  |
-      | inbounds          | [data-testid='dataplane-inbounds']                                 |
       | route-item        | [data-testid='builtin-gateway-dataplane-policies'] .accordion-item |
       | route-item-button | $route-item:nth-child(1) [data-testid='accordion-item-button']     |
 
@@ -59,7 +58,6 @@ Feature: Dataplane details for built-in gateway
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$warnings" element doesn't exist
-    And the "$inbounds" element doesn't exist
 
   Scenario: Policies tab has expected content
     Given the environment

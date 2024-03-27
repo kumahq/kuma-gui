@@ -20,6 +20,21 @@ import _20 from './src/meshes/_/dataplanes/_/policies'
 import _121 from './src/meshes/_/dataplanes/_/stats'
 import _120 from './src/meshes/_/dataplanes/_/xds'
 import _21 from './src/meshes/_/dataplanes/_overview'
+import _228 from './src/meshes/_/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_overview'
+import _230 from './src/meshes/_/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_rules'
+import _229 from './src/meshes/_/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/stats'
+import _328 from './src/meshes/_/dataplanes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/_overview'
+import _330 from './src/meshes/_/dataplanes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/_rules'
+import _329 from './src/meshes/_/dataplanes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/stats'
+import _628 from './src/meshes/_/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_overview'
+import _630 from './src/meshes/_/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_rules'
+import _629 from './src/meshes/_/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/stats'
+import _528 from './src/meshes/_/dataplanes/kong-gateway-5bcc776cb4-578gc.kong/_overview'
+import _530 from './src/meshes/_/dataplanes/kong-gateway-5bcc776cb4-578gc.kong/_rules'
+import _529 from './src/meshes/_/dataplanes/kong-gateway-5bcc776cb4-578gc.kong/stats'
+import _428 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_overview'
+import _430 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_rules'
+import _429 from './src/meshes/_/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/stats'
 import _129 from './src/meshes/_/dataplanes/test-dataplane/_rules'
 import _23 from './src/meshes/_/external-services'
 import _24 from './src/meshes/_/external-services/_'
@@ -93,9 +108,24 @@ export const fs: FS = {
   '/meshes/:mesh/circuit-breakers/:name': _18,
   '/meshes/:mesh/circuit-breakers/:name/_resources/dataplanes': _125,
   '/meshes/:mesh/dataplanes/_overview': _21,
+  '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_overview': _228,
+  '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/stats': _229,
+  '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_rules': _230,
+  '/meshes/:mesh/dataplanes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/_overview': _328,
+  '/meshes/:mesh/dataplanes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/stats': _329,
+  '/meshes/:mesh/dataplanes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/_rules': _330,
+  '/meshes/:mesh/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_overview': _428,
+  '/meshes/:mesh/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/stats': _429,
+  '/meshes/:mesh/dataplanes/redis-54754f5b57-xl2tw.kuma-demo/_rules': _430,
+  '/meshes/:mesh/dataplanes/kong-gateway-5bcc776cb4-578gc.kong/_overview': _528,
+  '/meshes/:mesh/dataplanes/kong-gateway-5bcc776cb4-578gc.kong/stats': _529,
+  '/meshes/:mesh/dataplanes/kong-gateway-5bcc776cb4-578gc.kong/_rules': _530,
+  '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_overview': _628,
+  '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/stats': _629,
+  '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_rules': _630,
+  '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
-  '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
   '/meshes/:mesh/dataplanes/:name/_rules': _128,
   '/meshes/:mesh/dataplanes/:name/policies': _20,
   '/meshes/:mesh/dataplanes/:name/xds': _120,

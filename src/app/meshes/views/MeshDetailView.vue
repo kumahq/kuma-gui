@@ -12,69 +12,58 @@
     />
 
     <AppView>
-      <DataSource
-        v-slot="{ data: mesh, error: meshError }: MeshSource"
-        :src="`/meshes/${route.params.mesh}`"
+      <div
+        class="stack"
+        data-testid="detail-view-details"
       >
         <DataSource
           v-slot="{ data: meshInsight }: MeshInsightSource"
           :src="`/mesh-insights/${route.params.mesh}`"
         >
-          <ErrorBlock
-            v-if="meshError"
-            :error="meshError"
+          <MeshDetails
+            :mesh="props.mesh"
+            :mesh-insight="meshInsight"
           />
-
-          <LoadingBlock v-else-if="mesh === undefined" />
-
-          <div
-            v-else
-            class="stack"
-            data-testid="detail-view-details"
-          >
-            <MeshDetails
-              :mesh="mesh"
-              :mesh-insight="meshInsight"
-            />
-
-            <ResourceCodeBlock
-              v-slot="{ copy, copying }"
-              :resource="mesh.config"
-            >
-              <DataSource
-                v-if="copying"
-                :src="`/meshes/${route.params.mesh}/as/kubernetes?no-store`"
-                @change="(data) => {
-                  copy((resolve) => resolve(data))
-                }"
-                @error="(e) => {
-                  copy((_resolve, reject) => reject(e))
-                }"
-              />
-            </ResourceCodeBlock>
-
-            <div class="date-status-wrapper">
-              <ResourceDateStatus
-                :creation-time="mesh.creationTime"
-                :modification-time="mesh.modificationTime"
-              />
-            </div>
-          </div>
         </DataSource>
-      </DataSource>
+        <ResourceCodeBlock
+          v-slot="{ copy, copying }"
+          :resource="mesh.config"
+        >
+          <DataSource
+            v-if="copying"
+            :src="`/meshes/${route.params.mesh}/as/kubernetes?no-store`"
+            @change="(data) => {
+              copy((resolve) => resolve(data))
+            }"
+            @error="(e) => {
+              copy((_resolve, reject) => reject(e))
+            }"
+          />
+        </ResourceCodeBlock>
+
+        <div class="date-status-wrapper">
+          <ResourceDateStatus
+            :creation-time="mesh.creationTime"
+            :modification-time="mesh.modificationTime"
+          />
+        </div>
+      </div>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import type { MeshSource, MeshInsightSource } from '../sources'
+import type { Mesh } from '../data'
+import type { MeshInsightSource } from '../sources'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
 import { useMeshDetails } from '@/components'
 
 const MeshDetails = useMeshDetails()
+const props = defineProps<{
+  mesh: Mesh
+}>()
+
 </script>
 
 <style lang="scss" scoped>
