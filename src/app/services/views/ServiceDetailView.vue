@@ -131,15 +131,14 @@
                       />
                     </template>
 
-                    <template #name="{ row }">
+                    <template #name="{ row: item }">
                       <RouterLink
                         class="name-link"
-                        :title="row.name"
                         :to="{
                           name: 'service-data-plane-summary-view',
                           params: {
-                            mesh: row.mesh,
-                            dataPlane: row.name,
+                            mesh: item.mesh,
+                            dataPlane: item.id,
                           },
                           query: {
                             page: route.params.page,
@@ -148,7 +147,7 @@
                           },
                         }"
                       >
-                        {{ row.name }}
+                        {{ item.name }}
                       </RouterLink>
                     </template>
 
@@ -209,14 +208,14 @@
                       </template>
                     </template>
 
-                    <template #details="{ row }">
+                    <template #details="{ row: item }">
                       <RouterLink
                         class="details-link"
                         data-testid="details-link"
                         :to="{
                           name: 'data-plane-detail-view',
                           params: {
-                            dataPlane: row.name,
+                            dataPlane: item.id,
                           },
                         }"
                       >
@@ -248,8 +247,8 @@
                     >
                       <component
                         :is="child.Component"
-                        :name="route.params.dataPlane"
-                        :dataplane-overview="dataplanesData?.items.find((dataplaneOverview) => dataplaneOverview.name === route.params.dataPlane)"
+                        v-if="typeof dataplanesData !== 'undefined'"
+                        :items="dataplanesData.items"
                       />
                     </SummaryView>
                   </RouterView>

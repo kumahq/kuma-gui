@@ -96,15 +96,15 @@
                 </KSelect>
               </template>
 
-              <template #name="{ row }">
+              <template #name="{ row: item }">
                 <RouterLink
                   class="name-link"
-                  :title="row.name"
+                  :title="item.name"
                   :to="{
                     name: 'data-plane-summary-view',
                     params: {
-                      mesh: row.mesh,
-                      dataPlane: row.name,
+                      mesh: item.mesh,
+                      dataPlane: item.id,
                     },
                     query: {
                       page: route.params.page,
@@ -114,7 +114,7 @@
                     },
                   }"
                 >
-                  {{ row.name }}
+                  {{ item.name }}
                 </RouterLink>
               </template>
 
@@ -264,8 +264,8 @@
               >
                 <component
                   :is="child.Component"
-                  :name="route.params.dataPlane"
-                  :dataplane-overview="data?.items.find((item) => item.name === route.params.dataPlane)"
+                  v-if="typeof data !== 'undefined'"
+                  :items="data.items"
                 />
               </SummaryView>
             </RouterView>

@@ -62,6 +62,9 @@ export type DataplaneOverview = PartialDataplaneOverview & {
   dataplane: {
     networking: DataplaneNetworking
   }
+  id: string
+  namespace: string
+  labels: Exclude<PartialDataplaneOverview['labels'], undefined>
   dataplaneInsight: DataplaneInsight
   dataplaneType: 'standard' | 'builtin' | 'delegated'
   status: 'online' | 'offline' | 'partially_degraded'
@@ -173,10 +176,10 @@ const DataplaneInsight = {
 }
 
 export const DataplaneOverview = {
-  fromObject(partialDataplaneOverview: PartialDataplaneOverview, canUseZones: boolean): DataplaneOverview {
-    const dataplaneInsight = DataplaneInsight.fromObject(partialDataplaneOverview.dataplaneInsight)
+  fromObject(item: PartialDataplaneOverview, canUseZones: boolean): DataplaneOverview {
+    const dataplaneInsight = DataplaneInsight.fromObject(item.dataplaneInsight)
 
-    const networking = DataplaneNetworking.fromObject(partialDataplaneOverview.dataplane.networking, typeof dataplaneInsight.connectedSubscription !== 'undefined')
+    const networking = DataplaneNetworking.fromObject(item.dataplane.networking, typeof dataplaneInsight.connectedSubscription !== 'undefined')
 
     const status = getStatus(networking, dataplaneInsight.connectedSubscription)
     const tags = getTags(networking)
@@ -184,12 +187,17 @@ export const DataplaneOverview = {
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
     const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
 
     return {
-      ...partialDataplaneOverview,
+      ...item,
+      id: item.name,
+      name: labels['kuma.io/display-name'] ?? item.name,
+      namespace: labels['k8s.kuma.io/namespace'] ?? '',
       dataplane: {
         networking,
       },
+      labels,
       dataplaneInsight,
       dataplaneType: networking.type === 'gateway' ? 'builtin' : typeof networking.gateway !== 'undefined' ? 'delegated' : 'standard',
       status,

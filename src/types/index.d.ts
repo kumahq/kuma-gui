@@ -296,6 +296,7 @@ export interface DataPlane extends MeshEntity {
  */
 export interface DataPlaneOverview extends MeshEntity {
   type: 'DataplaneOverview'
+  labels?: Record<string, string>
   dataplane: {
     networking: DataplaneNetworking
   }
