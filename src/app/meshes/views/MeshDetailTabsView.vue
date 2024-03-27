@@ -17,30 +17,43 @@
         </h1>
       </template>
 
-      <NavTabs
-        :active-route-name="route.active?.name"
-        data-testid="mesh-tabs"
+      <DataLoader
+        v-slot="{ data: mesh }: MeshSource"
+        :src="`/meshes/${route.params.mesh}`"
       >
-        <template
-          v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
-          :key="name"
-          #[`${name}`]
+        <NavTabs
+          :active-route-name="route.active?.name"
+          data-testid="mesh-tabs"
         >
-          <RouterLink
-            :to="{ name }"
-            :data-testid="`${name}-tab`"
+          <template
+            v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
+            :key="name"
+            #[`${name}`]
           >
-            {{ t(`meshes.routes.item.navigation.${name}`) }}
-          </RouterLink>
-        </template>
-      </NavTabs>
+            <RouterLink
+              :to="{ name }"
+              :data-testid="`${name}-tab`"
+            >
+              {{ t(`meshes.routes.item.navigation.${name}`) }}
+            </RouterLink>
+          </template>
+        </NavTabs>
 
-      <RouterView />
+        <RouterView
+          v-slot="{ Component }"
+        >
+          <component
+            :is="Component"
+            :mesh="mesh"
+          />
+        </RouterView>
+      </DataLoader>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
+import type { MeshSource } from '../sources'
 import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>
