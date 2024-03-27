@@ -48,7 +48,7 @@ Feature: mesh / policies / index
     Then the URL contains "circuit-breakers/fake-cb-1/overview"
     And the "$detail-view" element contains "fake-cb-1"
 
-    When I click the "$breadcrumbs > .k-breadcrumbs-item:nth-child(3) > a" element
+    When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
 
     Then the "$item" element exists 2 times
 
