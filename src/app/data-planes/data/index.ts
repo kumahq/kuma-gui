@@ -22,6 +22,7 @@ import type {
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
   SidecarDataplane as PartialSidecarDataplane,
+  ToTargetRefRule,
 } from '@/types/index.d'
 import { isSet } from '@/utilities/isSet'
 
@@ -222,24 +223,36 @@ export const SidecarDataplane = {
     }
   },
 }
+
+type RuleConf = Exclude<InspectBaseRule['conf'], 'hostnames' | 'rules'> & {
+  hostnames: string[]
+  rules: ToTargetRefRule[]
+}
+
 export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
   type: string
-  ruleType: string
+  ruleType: 'to' | 'from' | 'proxy'
   inbound?: InspectInbound
-  config: InspectBaseRule['conf']
+  config: RuleConf
   origins: InspectBaseRule['origin']
 }
 export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
   rules: Rule[]
 }
 export const Rule = {
-  fromObject(item: InspectBaseRule): Rule {
-    const { conf, origin, matchers, ...rest } = item
+  fromObject(item: InspectBaseRule, ruleType: 'to' | 'from' | 'proxy'): Rule {
+    const { conf = {}, origin, matchers, ...rest } = item
+
     return {
       type: '',
-      ruleType: '',
+      ruleType,
       ...rest,
-      config: Object.keys(conf || {}).length > 0 ? conf : {},
+      config: {
+        ...conf,
+        // An omitted or empty hostnames list implies the wildcard hostname (meaning any hostnames apply).
+        hostnames: Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
+        rules: Array.isArray(conf.rules) ? conf.rules : [],
+      },
       origins: Array.isArray(origin) ? origin : [],
       matchers: Array.isArray(matchers) ? matchers : [],
     }
@@ -251,9 +264,8 @@ export const Rule = {
         const to = Array.isArray(item.toRules)
           ? item.toRules.map(rule => {
             return {
-              ...Rule.fromObject(rule),
+              ...Rule.fromObject(rule, 'to'),
               type: item.type,
-              ruleType: 'to',
             }
           })
           : []
@@ -265,9 +277,8 @@ export const Rule = {
             return prev.concat(rules.map(r => {
               return {
                 ...rest,
-                ...Rule.fromObject(r),
+                ...Rule.fromObject(r, 'from'),
                 type: item.type,
-                ruleType: 'from',
               }
             }))
           }, [])
@@ -277,9 +288,8 @@ export const Rule = {
         // with a single entry so it looks like to and from rules
         const proxy = typeof item.proxyRule !== 'undefined'
           ? [{
-            ...Rule.fromObject(item.proxyRule as InspectBaseRule),
+            ...Rule.fromObject(item.proxyRule as InspectBaseRule, 'proxy'),
             type: item.type,
-            ruleType: 'proxy',
           }]
           : []
 
