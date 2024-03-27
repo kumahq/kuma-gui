@@ -14,6 +14,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   //
 
   fake.kuma.seed()
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
 
@@ -45,7 +46,10 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     }
     inbound.tags['kuma.io/protocol'] = ports[i].protocol
   })
-  //
+
+  const parts = String(name).split('.')
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = parts.pop()
 
   return {
     headers: {},
@@ -58,6 +62,14 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       dataplane: {
         networking,
       },
+      ...(k8s
+        ? {
+          labels: {
+            'kuma.io/display-name': displayName,
+            'k8s.kuma.io/namespace': nspace,
+          },
+        }
+        : {}),
       dataplaneInsight: {
         ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {

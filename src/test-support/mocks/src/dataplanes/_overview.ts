@@ -6,6 +6,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const _name = query.get('name') ?? ''
   const _tags = query.get('tag') ?? ''
 
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const inbounds = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
@@ -48,18 +49,28 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
 
         const type = filterType ?? fake.helpers.arrayElement(['gateway_builtin', 'gateway_delegated', 'proxy'])
         const mesh = `${fake.hacker.noun()}-${id}`
-        const name = `${_name || fake.kuma.dataPlaneProxyName()}-${type}-${id}`
         const service = tags['kuma.io/service']
+
+        const displayName = `${_name || fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const nspace = fake.k8s.namespace()
 
         return {
           type: 'DataplaneOverview',
           mesh,
-          name,
+          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2021-02-17T08:33:36.442044+01:00',
           modificationTime: '2021-02-17T08:33:36.442044+01:00',
           dataplane: {
             networking: fake.kuma.dataplaneNetworking({ type, inbounds, isMultizone, service }),
           },
+          ...(k8s
+            ? {
+              labels: {
+                'kuma.io/display-name': displayName,
+                'k8s.kuma.io/namespace': nspace,
+              },
+            }
+            : {}),
           dataplaneInsight: {
             ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {

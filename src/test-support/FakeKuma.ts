@@ -12,13 +12,37 @@ type Tags<T extends Record<string, string | undefined>> =
     ? { 'kuma.io/service': string, [key: string]: string }
     : { [key: string]: string }
 
-export class KumaModule {
-  faker: Faker
+export class K8sModule {
   constructor(
-    faker: Faker,
-  ) {
-    this.faker = faker
+    protected faker: Faker,
+  ) {}
+
+  deploymentId() {
+    return this.faker.string.hexadecimal({ length: 9, casing: 'lower', prefix: '' })
   }
+
+  podId() {
+    return this.faker.string.alpha({ length: 5, casing: 'lower' })
+  }
+
+  namespace() {
+    return this.faker.helpers.arrayElement([this.faker.hacker.noun(), 'kuma-system'])
+  }
+
+  namespaceSuffix() {
+    return `-${this.namespace()}`
+  }
+
+  dataplaneSuffix() {
+    return `-${this.deploymentId()}-${this.podId()}`
+  }
+}
+
+export class KumaModule {
+  constructor(
+    protected faker: Faker,
+    protected k8s: K8sModule,
+  ) {}
 
   seed(str: string = '') {
     // sync the seed by name (temp use length until we convert strings to numbers differently)
@@ -66,14 +90,8 @@ export class KumaModule {
     }
   }
 
-  dataPlaneProxyName({ zone }: { zone?: string } = {}) {
-    const shortServiceName = this.faker.helpers.arrayElement(['redis', 'frontend', 'backend', 'demo-app', 'gateway', 'postgres', 'api'])
-    const deploymentId = this.faker.string.hexadecimal({ length: 10, casing: 'lower', prefix: '' })
-    const podId = this.faker.string.alpha({ length: 5, casing: 'lower' })
-    const zoneControlPlaneNamespace = this.faker.hacker.noun()
-    const systemNamespace = this.faker.helpers.arrayElement(['kuma-system'])
-
-    return (zone ? `${zone}.` : '') + `${shortServiceName}-${deploymentId}-${podId}.${zoneControlPlaneNamespace}.${systemNamespace}`
+  dataplaneSuffix(k8s: boolean) {
+    return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
   connection<T>(_: T, i: number, arr: T[]) {
@@ -278,7 +296,8 @@ export class KumaModule {
   }
 }
 export default class FakeKuma extends Faker {
-  kuma = new KumaModule(this)
+  k8s = new K8sModule(this)
+  kuma = new KumaModule(this, this.k8s)
 }
 
 function subscriptionConfig() {
