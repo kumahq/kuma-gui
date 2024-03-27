@@ -7,7 +7,10 @@
       v-if="!hasParent && _breadcrumbs.length > 0"
       aria-label="Breadcrumb"
     >
-      <KBreadcrumbs :items="_breadcrumbs" />
+      <KBreadcrumbs
+        :items="_breadcrumbs"
+        :item-max-width="'150px'"
+      />
     </nav>
 
     <section
