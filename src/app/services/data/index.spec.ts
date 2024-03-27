@@ -1,86 +1,66 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test as _test } from 'vitest'
 
-import { ExternalService, ServiceInsight } from './index'
+import { ExternalService, ServiceInsight } from './'
+import { plugin, server } from '@/test-support/data'
+import externalMock from '@/test-support/mocks/src/meshes/_/external-services'
+import insightMock from '@/test-support/mocks/src/meshes/_/service-insights'
 
-type TestCase<T extends (...args: any) => any> = {
-  message: string
-  parameters: Parameters<T>
-  expected: ReturnType<T>
-}
-
-describe('services data transformations', () => {
-  describe('ExternalService', () => {
-    test.each<TestCase<typeof ExternalService.fromObject>>([
-      {
-        message: 'minimal',
-        parameters: [{
-          type: 'ExternalService',
-          mesh: 'default',
-          name: 'service',
-          creationTime: '2021-02-02T10:59:26.640498+01:00',
-          modificationTime: '2021-02-02T10:59:26.640498+01:00',
-          networking: {
-            address: 'service.mesh:26986',
-          },
-          tags: {
-            'kuma.io/service': 'service',
-          },
-        }],
-        expected: {
-          type: 'ExternalService',
-          mesh: 'default',
-          name: 'service',
-          creationTime: '2021-02-02T10:59:26.640498+01:00',
-          modificationTime: '2021-02-02T10:59:26.640498+01:00',
-          networking: {
-            address: 'service.mesh:26986',
-          },
-          tags: {
-            'kuma.io/service': 'service',
-          },
-          config: {
-            type: 'ExternalService',
-            mesh: 'default',
-            name: 'service',
-            creationTime: '2021-02-02T10:59:26.640498+01:00',
-            modificationTime: '2021-02-02T10:59:26.640498+01:00',
-            networking: {
-              address: 'service.mesh:26986',
-            },
-            tags: {
-              'kuma.io/service': 'service',
-            },
-          },
-        },
+describe('ExternalService', () => {
+  const test = _test.extend(plugin<typeof ExternalService>(
+    ExternalService,
+    server(externalMock, {
+      params: {
+        name: 'zone',
       },
-    ])('.fromObject: $message', ({ parameters, expected }) => {
-      expect(ExternalService.fromObject(...parameters)).toStrictEqual(expected)
-    })
+    }),
+  ))
+  //
+  describe('externalService.config', () => {
+    test(
+      'config is the same as the original API object',
+      async ({ fixture }) => {
+        let expected
+        const actual = await fixture.setup((item) => {
+          expected = item
+          return item
+        })
+        expect(actual.config).toStrictEqual(expected)
+      },
+    )
   })
-
-  describe('ServiceInsight', () => {
-    test.each<TestCase<typeof ServiceInsight.fromObject>>([
-      {
-        message: 'minimal',
-        parameters: [{
-          type: 'ServiceInsight',
-          mesh: 'default',
-          name: 'service',
-          creationTime: '2021-02-19T08:06:15.14624+01:00',
-          modificationTime: '2021-02-19T08:07:37.539229+01:00',
-        }],
-        expected: {
-          type: 'ServiceInsight',
-          serviceType: 'internal',
-          mesh: 'default',
-          name: 'service',
-          creationTime: '2021-02-19T08:06:15.14624+01:00',
-          modificationTime: '2021-02-19T08:07:37.539229+01:00',
-          status: 'not_available',
-        },
+})
+describe('ServiceInsight', () => {
+  const test = _test.extend(plugin<typeof ServiceInsight>(
+    ServiceInsight,
+    server(insightMock, {
+      params: {
+        name: 'zone',
       },
-    ])('.fromObject: $message', ({ parameters, expected }) => {
-      expect(ServiceInsight.fromObject(...parameters)).toStrictEqual(expected)
-    })
+    }),
+  ))
+  //
+  describe('service.serviceType', () => {
+    test(
+      'serviceType has a default',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          delete item.serviceType
+          return item
+        })
+        expect(actual.serviceType).toStrictEqual('internal')
+      },
+    )
+  })
+  describe('service.status', () => {
+    test(
+      'status has a default',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          delete item.status
+          return item
+        })
+        expect(actual.status).toStrictEqual('not_available')
+      },
+    )
   })
 })
