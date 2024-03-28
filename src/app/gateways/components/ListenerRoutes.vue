@@ -58,11 +58,10 @@
                     </dd>
                   </div>
 
-                  <div
-                    v-if="listener.tls"
-                    class="text-neutral"
-                  >
-                    <dt>{{ t('http.api.property.tls') }}:</dt>
+                  <div v-if="listener.tls">
+                    <dt class="text-neutral">
+                      {{ t('http.api.property.tls') }}:
+                    </dt>
                     <dd>{{ listener.tls.mode ?? 'TERMINATE' }}</dd>
                   </div>
                 </dl>
