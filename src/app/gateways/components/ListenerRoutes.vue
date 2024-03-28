@@ -100,69 +100,63 @@
                   data-testid="route-card"
                 >
                   <div class="stack-with-borders">
-                    <div>
-                      <h3 class="route-card-title">
-                        {{ t('builtin-gateways.detail.overview') }}
-                      </h3>
+                    <dl class="definition-list definition-list--horizontal mt-2">
+                      <div>
+                        <dt class="text-neutral visually-hidden">
+                          {{ t('builtin-gateways.detail.type') }}:
+                        </dt>
+                        <dd>
+                          <KBadge>{{ toRule.type }}</KBadge>
+                        </dd>
+                      </div>
 
-                      <dl class="definition-list definition-list--horizontal mt-2">
+                      <template v-if="!toRule.config.hostnames.includes('*')">
                         <div>
                           <dt class="text-neutral">
-                            {{ t('builtin-gateways.detail.type') }}:
+                            {{ t('builtin-gateways.detail.hostnames') }}:
+                          </dt>
+                          <dd>{{ toRule.config.hostnames.join(', ') }}</dd>
+                        </div>
+                      </template>
+
+                      <template v-if="toRule.matchers.length > 0">
+                        <div>
+                          <dt class="text-neutral">
+                            {{ t('builtin-gateways.detail.matchers') }}:
                           </dt>
                           <dd>
-                            <KBadge>{{ toRule.type }}</KBadge>
+                            <RuleMatchers :items="toRule.matchers" />
                           </dd>
                         </div>
+                      </template>
 
-                        <template v-if="!toRule.config.hostnames.includes('*')">
-                          <div>
-                            <dt class="text-neutral">
-                              {{ t('builtin-gateways.detail.hostnames') }}:
-                            </dt>
-                            <dd>{{ toRule.config.hostnames.join(', ') }}</dd>
-                          </div>
-                        </template>
-
-                        <template v-if="toRule.matchers.length > 0">
-                          <div>
-                            <dt class="text-neutral">
-                              {{ t('builtin-gateways.detail.matchers') }}:
-                            </dt>
-                            <dd>
-                              <RuleMatchers :items="toRule.matchers" />
-                            </dd>
-                          </div>
-                        </template>
-
-                        <div>
-                          <dt class="text-neutral">
-                            {{ t('builtin-gateways.detail.origins') }}:
-                          </dt>
-                          <dd>
-                            <div class="list">
-                              <KBadge
-                                v-for="(origin, originIndex) in toRule.origins"
-                                :key="originIndex"
+                      <div>
+                        <dt class="text-neutral">
+                          {{ t('builtin-gateways.detail.origins') }}:
+                        </dt>
+                        <dd>
+                          <div class="list">
+                            <KBadge
+                              v-for="(origin, originIndex) in toRule.origins"
+                              :key="originIndex"
+                            >
+                              <RouterLink
+                                :to="{
+                                  name: 'policy-detail-view',
+                                  params: {
+                                    mesh: origin.mesh,
+                                    policyPath: props.policyTypesByName[origin.type]!.path,
+                                    policy: origin.name,
+                                  },
+                                }"
                               >
-                                <RouterLink
-                                  :to="{
-                                    name: 'policy-detail-view',
-                                    params: {
-                                      mesh: origin.mesh,
-                                      policyPath: props.policyTypesByName[origin.type]!.path,
-                                      policy: origin.name,
-                                    },
-                                  }"
-                                >
-                                  {{ origin.name }}
-                                </RouterLink>
-                              </KBadge>
-                            </div>
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
+                                {{ origin.name }}
+                              </RouterLink>
+                            </KBadge>
+                          </div>
+                        </dd>
+                      </div>
+                    </dl>
 
                     <div v-if="toRule.config.rules.length > 0">
                       <b>{{ t('builtin-gateways.detail.rules') }}</b>:

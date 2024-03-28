@@ -24,7 +24,6 @@ builtin-gateways:
     listeners: Listeners
     tags: Tags
     routes: Routes and Services
-    overview: Overview
     type: Type
     hostnames: Hostnames
     matchers: Matchers
