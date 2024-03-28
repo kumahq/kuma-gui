@@ -187,22 +187,9 @@
                                 v-for="(backendRef, backendRefIndex) in rule.default.backendRefs"
                                 :key="backendRefIndex"
                               >
-                                <KBadge>
-                                  <RouterLink
-                                    :to="{
-                                      name: 'service-detail-view',
-                                      params: {
-                                        service: backendRef.name,
-                                      },
-                                    }"
-                                  >
-                                    {{ backendRef.name }}
-                                  </RouterLink>
-                                </KBadge>
-
-                                <template v-if="backendRef.weight !== undefined && backendRef.weight !== 1">
-                                  {{ t('builtin-gateways.detail.weight_suffix', { weight: backendRef.weight }) }}
-                                </template>
+                                <TargetRef :target-ref="backendRef">
+                                  {{ backendRef.name }}
+                                </TargetRef>
                               </li>
                             </ul>
                           </div>
@@ -227,6 +214,7 @@ import RuleMatch from './RuleMatch.vue'
 import type { MeshGateway } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import TagList from '@/app/common/TagList.vue'
+import TargetRef from '@/app/common/TargetRef.vue'
 import type { Rule } from '@/app/data-planes/data'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { PolicyType } from '@/types/index.d'

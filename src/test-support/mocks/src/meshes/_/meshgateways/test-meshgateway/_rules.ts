@@ -48,8 +48,11 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                           weight: 1,
                         },
                         {
-                          kind: 'MeshService',
+                          kind: 'MeshServiceSubset',
                           name: 'service-2',
+                          tags: {
+                            version: 'v1',
+                          },
                           weight: 2,
                         },
                       ],

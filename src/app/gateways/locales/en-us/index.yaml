@@ -32,7 +32,6 @@ builtin-gateways:
     matches: Matches
     services: Services
     no_rules: Could not find any applicable rules for listener {listener}
-    weight_suffix: '(weight: {weight})'
 
 delegated-gateways:
   routes:

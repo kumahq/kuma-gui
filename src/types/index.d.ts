@@ -12,13 +12,11 @@ export type ServiceTags = Tags & Record<'kuma.io/service', string>
 // https://kuma.io/docs/latest/policies/targetref/
 export interface TargetRef<T extends string = string> {
   kind: T
-}
-
-export interface TopLevelTargetRef<T extends string = string> extends TargetRef<T> {
   mesh?: string
   name?: string
   proxyTypes?: Array<'Sidecar' | 'Gateway'>
   tags?: Tags
+  weight?: number
 }
 
 export interface ToTargetRefRuleMatchHeader {
@@ -43,14 +41,6 @@ export interface ToTargetRefRuleMatch {
   queryParams?: ToTargetRefRuleMatchQueryParameter[]
 }
 
-export interface BackendRef<T extends string = string> extends TargetRef<T> {
-  mesh?: string
-  name?: string
-  proxyTypes?: Array<'Sidecar' | 'Gateway'>
-  tags?: Tags
-  weight?: number
-}
-
 export interface RequestHeaderModifier {}
 export interface RequestMirror {}
 export interface RequestRedirect {}
@@ -69,7 +59,7 @@ export interface ToTargetRefFilter {
 export interface ToTargetRefRule {
   matches: ToTargetRefRuleMatch[]
   default: {
-    backendRefs?: BackendRef[]
+    backendRefs?: TargetRef[]
     filters?: ToTargetRefFilter[]
   }
 }
@@ -714,14 +704,14 @@ export interface PolicyEntity extends MeshEntity {
     [key: string]: string | undefined
   }
   spec?: {
-    targetRef?: TopLevelTargetRef
+    targetRef?: TargetRef
   }
 }
 
 // https://github.com/kumahq/kuma/blob/master/docs/generated/raw/crds/kuma.io_meshhttproutes.yaml
 export interface MeshHTTPRoute extends PolicyEntity {
   spec: {
-    targetRef?: TopLevelTargetRef
+    targetRef?: TargetRef
     to: ToTargetRef<'Mesh' | 'MeshSubset' | 'MeshService' | 'MeshServiceSubset' | 'MeshGateway'>[]
   }
 }
