@@ -10,6 +10,10 @@ Adapted from https://every-layout.dev/layouts/stack/.
   margin-block-start: $kui-space-80;
 }
 
+.stack-small>*+* {
+  margin-block-start: $kui-space-40;
+}
+
 /*
 .stack-with-borders
 

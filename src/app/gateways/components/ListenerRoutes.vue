@@ -45,21 +45,27 @@
                   </RouterLink>
                 </div>
 
-                <div
+                <dl
                   v-if="listener.tags || listener.tls"
-                  class="list mt-2"
+                  class="definition-list definition-list--horizontal mt-2"
                 >
                   <div v-if="listener.tags">
-                    <b>{{ t('builtin-gateways.detail.tags') }}</b>: <TagList :tags="listener.tags" />
+                    <dt class="text-neutral">
+                      {{ t('builtin-gateways.detail.tags') }}:
+                    </dt>
+                    <dd>
+                      <TagList :tags="listener.tags" />
+                    </dd>
                   </div>
 
                   <div
                     v-if="listener.tls"
-                    class="tls"
+                    class="text-neutral"
                   >
-                    <b>{{ t('http.api.property.tls') }}</b>: {{ listener.tls.mode ?? 'TERMINATE' }}
+                    <dt>{{ t('http.api.property.tls') }}:</dt>
+                    <dd>{{ listener.tls.mode ?? 'TERMINATE' }}</dd>
                   </div>
-                </div>
+                </dl>
               </div>
             </template>
           </div>
@@ -94,110 +100,123 @@
                   class="card route-card"
                   data-testid="route-card"
                 >
-                  <dl class="route-definition-list">
+                  <div class="stack-with-borders">
                     <div>
-                      <dt>{{ t('builtin-gateways.detail.type') }}:</dt>
-                      <dd>{{ toRule.type }}</dd>
-                    </div>
+                      <h3 class="route-card-title">
+                        {{ t('builtin-gateways.detail.overview') }}
+                      </h3>
 
-                    <template v-if="!toRule.config.hostnames.includes('*')">
-                      <div>
-                        <dt>{{ t('builtin-gateways.detail.hostnames') }}:</dt>
-                        <dd>{{ toRule.config.hostnames.join(', ') }}</dd>
-                      </div>
-                    </template>
-
-                    <template v-if="toRule.matchers.length > 0">
-                      <div>
-                        <dt>{{ t('builtin-gateways.detail.matchers') }}:</dt>
-
-                        <dd>
-                          <RuleMatchers :items="toRule.matchers" />
-                        </dd>
-                      </div>
-                    </template>
-
-                    <div>
-                      <dt>{{ t('builtin-gateways.detail.origins') }}:</dt>
-
-                      <dd>
-                        <div class="origins">
-                          <div
-                            v-for="(origin, originIndex) in toRule.origins"
-                            :key="originIndex"
-                          >
-                            <RouterLink
-                              :to="{
-                                name: 'policy-detail-view',
-                                params: {
-                                  mesh: origin.mesh,
-                                  policyPath: props.policyTypesByName[origin.type]!.path,
-                                  policy: origin.name,
-                                },
-                              }"
-                            >
-                              {{ origin.name }}
-                            </RouterLink>
-                          </div>
+                      <dl class="definition-list definition-list--horizontal mt-2">
+                        <div>
+                          <dt class="text-neutral">
+                            {{ t('builtin-gateways.detail.type') }}:
+                          </dt>
+                          <dd>
+                            <KBadge>{{ toRule.type }}</KBadge>
+                          </dd>
                         </div>
-                      </dd>
+
+                        <template v-if="!toRule.config.hostnames.includes('*')">
+                          <div>
+                            <dt class="text-neutral">
+                              {{ t('builtin-gateways.detail.hostnames') }}:
+                            </dt>
+                            <dd>{{ toRule.config.hostnames.join(', ') }}</dd>
+                          </div>
+                        </template>
+
+                        <template v-if="toRule.matchers.length > 0">
+                          <div>
+                            <dt class="text-neutral">
+                              {{ t('builtin-gateways.detail.matchers') }}:
+                            </dt>
+                            <dd>
+                              <RuleMatchers :items="toRule.matchers" />
+                            </dd>
+                          </div>
+                        </template>
+
+                        <div>
+                          <dt class="text-neutral">
+                            {{ t('builtin-gateways.detail.origins') }}:
+                          </dt>
+                          <dd>
+                            <div class="list">
+                              <KBadge
+                                v-for="(origin, originIndex) in toRule.origins"
+                                :key="originIndex"
+                              >
+                                <RouterLink
+                                  :to="{
+                                    name: 'policy-detail-view',
+                                    params: {
+                                      mesh: origin.mesh,
+                                      policyPath: props.policyTypesByName[origin.type]!.path,
+                                      policy: origin.name,
+                                    },
+                                  }"
+                                >
+                                  {{ origin.name }}
+                                </RouterLink>
+                              </KBadge>
+                            </div>
+                          </dd>
+                        </div>
+                      </dl>
                     </div>
 
-                    <template v-if="toRule.config.rules.length > 0">
-                      <div>
-                        <dt>{{ t('builtin-gateways.detail.rules') }}:</dt>
+                    <div v-if="toRule.config.rules.length > 0">
+                      <b>{{ t('builtin-gateways.detail.rules') }}</b>:
 
-                        <dd>
-                          <div class="rules">
-                            <div
-                              v-for="(rule, ruleIndex) in toRule.config.rules"
-                              :key="ruleIndex"
-                              class="rule"
-                            >
-                              <div>
-                                {{ t('builtin-gateways.detail.matches') }}:
+                      <div class="stack-small mt-2">
+                        <div
+                          v-for="(rule, ruleIndex) in toRule.config.rules"
+                          :key="ruleIndex"
+                          class="rule stack-small"
+                        >
+                          <div>
+                            {{ t('builtin-gateways.detail.matches') }}:
 
-                                <div class="matches">
-                                  <RuleMatch
-                                    v-for="(match, matchIndex) in rule.matches"
-                                    :key="matchIndex"
-                                    :match="match"
-                                  />
-                                </div>
-                              </div>
-
-                              <div>
-                                {{ t('builtin-gateways.detail.services') }}:
-
-                                <ul class="services">
-                                  <li
-                                    v-for="(backendRef, backendRefIndex) in rule.default.backendRefs"
-                                    :key="backendRefIndex"
-                                  >
-                                    <RouterLink
-                                      v-if="['MeshService', 'MeshServiceSubset'].includes(backendRef.kind) && backendRef.name"
-                                      :to="{
-                                        name: 'service-detail-view',
-                                        params: {
-                                          service: backendRef.name,
-                                        },
-                                      }"
-                                    >
-                                      {{ backendRef.name }}
-                                    </RouterLink>
-
-                                    <template v-if="backendRef.weight !== undefined && backendRef.weight !== 1">
-                                      {{ t('builtin-gateways.detail.weight_suffix', { weight: backendRef.weight }) }}
-                                    </template>
-                                  </li>
-                                </ul>
-                              </div>
+                            <div class="stack-small mt-2">
+                              <RuleMatch
+                                v-for="(match, matchIndex) in rule.matches"
+                                :key="matchIndex"
+                                :match="match"
+                              />
                             </div>
                           </div>
-                        </dd>
+
+                          <div>
+                            {{ t('builtin-gateways.detail.services') }}:
+
+                            <ul class="stack-small mt-2">
+                              <li
+                                v-for="(backendRef, backendRefIndex) in rule.default.backendRefs"
+                                :key="backendRefIndex"
+                              >
+                                <KBadge>
+                                  <RouterLink
+                                    :to="{
+                                      name: 'service-detail-view',
+                                      params: {
+                                        service: backendRef.name,
+                                      },
+                                    }"
+                                  >
+                                    {{ backendRef.name }}
+                                  </RouterLink>
+                                </KBadge>
+
+                                <template v-if="backendRef.weight !== undefined && backendRef.weight !== 1">
+                                  {{ t('builtin-gateways.detail.weight_suffix', { weight: backendRef.weight }) }}
+                                </template>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                    </template>
-                  </dl>
+                    </div>
+                  </div>
                 </div>
               </template>
             </template>
@@ -307,16 +326,6 @@ function triggerAction(event: Event) {
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
 }
 
-.list {
-  display: flex;
-  gap: $kui-space-50;
-  align-items: baseline;
-}
-
-.tls {
-  color: $kui-color-text-neutral;
-}
-
 .listener-card {
   cursor: pointer;
 }
@@ -325,34 +334,45 @@ function triggerAction(event: Event) {
   border-color: $kui-color-border-primary;
 }
 
-.route-definition-list>*+*,
-.rules,
-.rule>*+* {
-  margin-top: $kui-space-40;
+.route-card-title {
+  font-size: $kui-font-size-30;
+  line-height: $kui-line-height-30;
 }
 
-.route-definition-list dt {
+.list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: $kui-space-40;
+  align-items: baseline;
+}
+
+.rule {
+  padding: $kui-space-40;
+  border: $kui-border-width-10 solid $kui-color-border;
+  border-radius: $kui-border-radius-10;
+}
+
+.definition-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: $kui-space-40 $kui-space-50;
+}
+
+.definition-list:where(:not(.definition-list--horizontal)) {
+  flex-direction: column;
+}
+
+.definition-list>* {
+  min-width: 0;
+}
+
+.definition-list dt,
+.definition-list dd {
   display: inline;
-  font-weight: $kui-font-weight-semibold;
 }
 
-.route-definition-list dt,
-.route-definition-list dd {
-  display: inline;
-}
-
-.rules>*+* {
-  margin-top: $kui-space-40;
-  border-top: $kui-border-width-10 solid $kui-color-border;
-  padding-top: $kui-space-40;
-}
-
-.origins,
-.matches,
-.services,
-.origins>*+*,
-.matches>*+*,
-.services>*+* {
-  margin-top: $kui-space-20;
+.text-neutral {
+  color: $kui-color-text-neutral;
 }
 </style>

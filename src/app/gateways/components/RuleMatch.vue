@@ -1,5 +1,5 @@
 <template>
-  <dl class="match-definition-list">
+  <dl class="stack-small">
     <template v-if="props.match.method">
       <div class="match">
         <dt>
@@ -23,8 +23,10 @@
         </dt>
 
         <dd>
-          <span class="key">Type:</span> <span>{{ props.match.path.type }}</span>
-          <span class="key">Value:</span> <code>{{ props.match.path.value }}</code>
+          <div class="list">
+            <span><span class="text-neutral">Type:</span> {{ props.match.path.type }}</span>
+            <span><span class="text-neutral">Value:</span> <code>{{ props.match.path.value }}</code></span>
+          </div>
         </dd>
       </div>
     </template>
@@ -42,9 +44,11 @@
           </dt>
 
           <dd>
-            <span class="key">Type:</span> <span>{{ param.type }}</span>
-            <span class="key">Name:</span> <span>{{ param.name }}</span>
-            <span class="key">Value:</span> <span>{{ param.value }}</span>
+            <div class="list">
+              <span><span class="text-neutral">Type:</span> {{ param.type }}</span>
+              <span><span class="text-neutral">Name:</span> {{ param.name }}</span>
+              <span><span class="text-neutral">Value:</span> {{ param.value }}</span>
+            </div>
           </dd>
         </div>
       </div>
@@ -63,11 +67,13 @@
         </dt>
 
         <dd>
-          <span class="key">Type:</span> <span>{{ header.type ?? 'Exact' }}</span>
-          <span class="key">Name:</span> <span>{{ header.name }}</span>
-          <template v-if="header.value">
-            <span class="key">Value:</span> <span>{{ header.value }}</span>
-          </template>
+          <div class="list">
+            <span><span class="text-neutral">Type:</span> {{ header.type ?? 'Exact' }}</span>
+            <span><span class="text-neutral">Name:</span> {{ header.name }}</span>
+            <template v-if="header.value">
+              <span><span class="text-neutral">Value:</span> {{ header.value }}</span>
+            </template>
+          </div>
         </dd>
       </div>
     </template>
@@ -83,16 +89,19 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.match-definition-list>*+* {
-  margin-top: $kui-space-20;
-}
-
 .match {
   display: flex;
-  gap: $kui-space-30;
+  gap: $kui-space-50;
 }
 
-.key {
+.list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: $kui-space-40;
+  align-items: baseline;
+}
+
+.text-neutral {
   color: $kui-color-text-neutral;
 }
 </style>
