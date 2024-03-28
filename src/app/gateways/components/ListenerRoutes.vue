@@ -119,16 +119,19 @@
                         </div>
                       </template>
 
-                      <template v-if="toRule.matchers.length > 0">
-                        <div>
-                          <dt class="text-neutral">
-                            {{ t('builtin-gateways.detail.matchers') }}:
-                          </dt>
-                          <dd>
-                            <RuleMatchers :items="toRule.matchers" />
-                          </dd>
-                        </div>
-                      </template>
+                      <div>
+                        <dt class="text-neutral">
+                          {{ t('builtin-gateways.detail.matchers') }}:
+                        </dt>
+                        <dd>
+                          <RuleMatchers
+                            v-if="toRule.matchers.length > 0"
+                            :items="toRule.matchers"
+                          />
+
+                          <code v-else>*</code>
+                        </dd>
+                      </div>
 
                       <div>
                         <dt class="text-neutral">
