@@ -36,7 +36,6 @@
             {{ placeholderAndLabelFallback }}
           </slot>
         </label>
-
         <input
           :id="`${props.id}-filter-bar-input`"
           ref="filterInput"
@@ -116,39 +115,26 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ChevronRightIcon, FilterIcon } from '@kong/icons'
-import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, watch, ref } from 'vue'
 
 import { Command, ShortcutManager } from './ShortcutManager'
 import uniqueId from '@/utilities/uniqueId'
 
-export type Fields = [string, string][]
-
-export type FilterFieldDefinition = {
+type FilterFieldDefinition = {
   description: string
 }
 
-export type FilterFields = Record<string, FilterFieldDefinition>
-
-const props = defineProps({
-  id: {
-    type: String,
-    required: false,
-    default: () => uniqueId('k-filter-bar'),
-  },
-  fields: {
-    type: Object as PropType<FilterFields>,
-    required: true,
-  },
-  placeholder: {
-    type: String,
-    required: false,
-    default: null,
-  },
-  query: {
-    type: String,
-    required: false,
-    default: '',
-  },
+const props = withDefaults(defineProps<
+{
+  fields: Record<string, FilterFieldDefinition>
+  placeholder?: string
+  query?: string
+  id?: string
+}
+>(), {
+  query: '',
+  placeholder: '',
+  id: () => uniqueId('filter-bar'),
 })
 const $form = ref<HTMLFormElement | undefined>()
 
@@ -167,9 +153,13 @@ const clear = (_ev: Event): void => {
 
 const filterBar = ref<HTMLElement | null>(null)
 const filterInput = ref<HTMLInputElement | null>(null)
-const currentQuery = ref(props.query)
 const tokenizerError = ref<Error | null>(null)
 const isShowingSuggestionBox = ref(false)
+const currentQuery = ref(props.query)
+
+watch(() => props.query, (val) => {
+  currentQuery.value = val
+})
 /**
  * Keeps track of the selected suggestion item (from 0 to N-1 where N is the
  * number of suggestion items shown). A special value is -1 which represents
