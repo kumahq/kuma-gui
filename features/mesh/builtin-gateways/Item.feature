@@ -117,7 +117,8 @@ Feature: mesh / builtin-gateways / item
     Then the "$listener-card:nth-child(1).active" element exists
     Then the "$listener-card:nth-child(1)" element contains "*:80"
     Then the "$listener-card:nth-child(2)" element contains "bar.com:81"
-    Then the "$listener-card:nth-child(2)" element contains "TLS: TERMINATE"
+    Then the "$listener-card:nth-child(2)" element contains "TLS"
+    Then the "$listener-card:nth-child(2)" element contains "TERMINATE"
 
     Then the "$route-card:nth-child(1)" element contains "demo-app-1.kuma-system"
     Then the "$route-card:nth-child(1)" element contains "service-1"
