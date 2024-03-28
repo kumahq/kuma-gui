@@ -751,7 +751,7 @@ export interface MeshGatewayListenerResources {
 
 export interface MeshGatewayListener {
   hostname?: string
-  port?: number
+  port: number
   protocol?: 'TCP' | 'TLS' | 'HTTP' | 'HTTPS'
   tls?: MeshGatewayTlsConf
   tags?: Tags

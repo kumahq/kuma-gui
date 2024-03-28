@@ -41,7 +41,7 @@
                     class="listener-hostname"
                     data-action
                   >
-                    {{ listener.hostname }}:<span v-if="listener.port">{{ listener.port }}</span>
+                    {{ listener.hostname }}:{{ listener.port }}
                   </RouterLink>
                 </div>
 
