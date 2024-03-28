@@ -23,10 +23,7 @@
         </dt>
 
         <dd>
-          <div class="list">
-            <span><span class="text-neutral">Type:</span> {{ props.match.path.type }}</span>
-            <span><span class="text-neutral">Value:</span> <code>{{ props.match.path.value }}</code></span>
-          </div>
+          <code>{{ props.match.path.value }}</code>
         </dd>
       </div>
     </template>
@@ -46,8 +43,7 @@
           <dd>
             <div class="list">
               <span><span class="text-neutral">Type:</span> {{ param.type }}</span>
-              <span><span class="text-neutral">Name:</span> {{ param.name }}</span>
-              <span><span class="text-neutral">Value:</span> {{ param.value }}</span>
+              <span>{{ param.name }}:{{ param.value }}</span>
             </div>
           </dd>
         </div>
@@ -69,10 +65,7 @@
         <dd>
           <div class="list">
             <span><span class="text-neutral">Type:</span> {{ header.type ?? 'Exact' }}</span>
-            <span><span class="text-neutral">Name:</span> {{ header.name }}</span>
-            <template v-if="header.value">
-              <span><span class="text-neutral">Value:</span> {{ header.value }}</span>
-            </template>
+            <span>{{ header.name }}<span v-if="header.value">:{{ header.value }}</span></span>
           </div>
         </dd>
       </div>
