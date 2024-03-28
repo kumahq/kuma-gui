@@ -1,240 +1,269 @@
 <template>
   <RouteView
-    v-slot="{ t }"
+    v-slot="{ t, route }"
     name="data-plane-summary-view"
+    :params="{
+      dataPlane: '',
+    }"
   >
-    <AppView>
-      <template #title>
-        <h2>
-          <RouterLink
-            :to="{
-              name: 'data-plane-detail-view',
-              params: {
-                dataPlane: props.name,
-              },
-            }"
-          >
-            <RouteTitle
-              :title="t('data-planes.routes.item.title', { name: props.name })"
-            />
-          </RouterLink>
-        </h2>
+    <DataCollection
+      :items="props.items"
+      :predicate="item => item.id === route.params.dataPlane"
+      :find="true"
+    >
+      <template #empty>
+        <EmptyBlock>
+          <template #title>
+            {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
+          </template>
+
+          <p>{{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}</p>
+        </EmptyBlock>
       </template>
-
-      <EmptyBlock
-        v-if="props.dataplaneOverview === undefined"
+      <template
+        #default="{ items: proxies }"
       >
-        <template #title>
-          {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
-        </template>
-
-        <p>{{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}</p>
-      </EmptyBlock>
-
-      <div
-        v-else
-        class="stack"
-      >
-        <div
-          class="stack-with-borders"
+        <template
+          v-for="item in [proxies[0]]"
+          :key="item.id"
         >
-          <DefinitionCard
-            layout="horizontal"
-          >
+          <AppView>
             <template #title>
-              {{ t('http.api.property.status') }}
-            </template>
-
-            <template #body>
-              <div
-                class="status-with-reason"
-              >
-                <StatusBadge
-                  :status="props.dataplaneOverview.status"
-                />
-                <DataCollection
-                  v-if="props.dataplaneOverview.dataplaneType === 'standard'"
-                  v-slot="{ items : inbounds }"
-                  :items="props.dataplaneOverview.dataplane.networking.inbounds"
-                  :predicate="item => !item.health.ready"
-                  :empty="false"
+              <h2>
+                <RouterLink
+                  :to="{
+                    name: 'data-plane-detail-view',
+                    params: {
+                      dataPlane: item.id,
+                    },
+                  }"
                 >
-                  <KTooltip
-                    class="reason-tooltip"
-                    placement="bottomEnd"
-                  >
-                    <InfoIcon
-                      :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                      :size="KUI_ICON_SIZE_30"
-                    />
-                    <template #content>
-                      <ul>
-                        <li
-                          v-for="inbound in inbounds"
-                          :key="`${inbound.service}:${inbound.port}`"
-                        >
-                          {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                        </li>
-                      </ul>
-                    </template>
-                  </KTooltip>
-                </DataCollection>
-              </div>
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard
-            layout="horizontal"
-          >
-            <template #title>
-              Type
-            </template>
-
-            <template #body>
-              {{ t(`data-planes.type.${props.dataplaneOverview.dataplaneType}`) }}
-            </template>
-          </DefinitionCard>
-
-          <DefinitionCard
-            layout="horizontal"
-          >
-            <template #title>
-              {{ t('data-planes.routes.item.last_updated') }}
-            </template>
-
-            <template #body>
-              {{ t('common.formats.datetime', { value: Date.parse(props.dataplaneOverview.modificationTime) }) }}
-            </template>
-          </DefinitionCard>
-        </div>
-
-        <div
-          v-if="props.dataplaneOverview.dataplane.networking.gateway"
-        >
-          <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
-
-          <div
-            class="mt-4"
-          >
-            <div
-              class="stack-with-borders"
-            >
-              <DefinitionCard
-                layout="horizontal"
-              >
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
-
-                <template #body>
-                  <TagList
-                    alignment="right"
-                    :tags="props.dataplaneOverview.dataplane.networking.gateway.tags"
+                  <RouteTitle
+                    :title="t('data-planes.routes.item.title', { name: item.name })"
                   />
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard
-                layout="horizontal"
-              >
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
-
-                <template #body>
-                  <TextWithCopyButton
-                    :text="`${props.dataplaneOverview.dataplane.networking.address}`"
-                  />
-                </template>
-              </DefinitionCard>
-            </div>
-          </div>
-        </div>
-
-        <DataCollection
-          v-if="props.dataplaneOverview.dataplaneType === 'standard'"
-          v-slot="{ items : inbounds }"
-          :items="props.dataplaneOverview.dataplane.networking.inbounds"
-        >
-          <div>
-            <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
+                </RouterLink>
+              </h2>
+            </template>
 
             <div
-              class="mt-4 stack"
+              class="stack"
             >
               <div
-                v-for="(inbound, index) in inbounds"
-                :key="index"
-                class="inbound"
+                class="stack-with-borders"
               >
-                <h4>
-                  <TextWithCopyButton
-                    :text="inbound.tags['kuma.io/service']"
-                  >
-                    {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
-                  </TextWithCopyButton>
-                </h4>
+                <DefinitionCard
+                  layout="horizontal"
+                >
+                  <template #title>
+                    {{ t('http.api.property.status') }}
+                  </template>
+
+                  <template #body>
+                    <div
+                      class="status-with-reason"
+                    >
+                      <StatusBadge
+                        :status="item.status"
+                      />
+                      <DataCollection
+                        v-if="item.dataplaneType === 'standard'"
+                        v-slot="{ items : inbounds }"
+                        :items="item.dataplane.networking.inbounds"
+                        :predicate="item => !item.health.ready"
+                        :empty="false"
+                      >
+                        <KTooltip
+                          class="reason-tooltip"
+                          placement="bottomEnd"
+                        >
+                          <InfoIcon
+                            :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                            :size="KUI_ICON_SIZE_30"
+                          />
+                          <template #content>
+                            <ul>
+                              <li
+                                v-for="inbound in inbounds"
+                                :key="`${inbound.service}:${inbound.port}`"
+                              >
+                                {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                              </li>
+                            </ul>
+                          </template>
+                        </KTooltip>
+                      </DataCollection>
+                    </div>
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard
+                  layout="horizontal"
+                >
+                  <template #title>
+                    Type
+                  </template>
+
+                  <template #body>
+                    {{ t(`data-planes.type.${item.dataplaneType}`) }}
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard
+                  v-if="item.namespace.length > 0"
+                  layout="horizontal"
+                >
+                  <template #title>
+                    {{ t('data-planes.routes.item.namespace') }}
+                  </template>
+
+                  <template #body>
+                    {{ item.namespace }}
+                  </template>
+                </DefinitionCard>
+
+                <DefinitionCard
+                  layout="horizontal"
+                >
+                  <template #title>
+                    {{ t('data-planes.routes.item.last_updated') }}
+                  </template>
+
+                  <template #body>
+                    {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
+                  </template>
+                </DefinitionCard>
+              </div>
+
+              <div
+                v-if="item.dataplane.networking.gateway"
+              >
+                <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
                 <div
-                  class="mt-2 stack-with-borders"
+                  class="mt-4"
                 >
-                  <DefinitionCard
-                    layout="horizontal"
+                  <div
+                    class="stack-with-borders"
                   >
-                    <template #title>
-                      {{ t('http.api.property.status') }}
-                    </template>
+                    <DefinitionCard
+                      layout="horizontal"
+                    >
+                      <template #title>
+                        {{ t('http.api.property.tags') }}
+                      </template>
 
-                    <template #body>
-                      <KBadge
-                        v-if="inbound.health.ready"
-                        appearance="success"
-                      >
-                        {{ t('data-planes.routes.item.health.ready') }}
-                      </KBadge>
+                      <template #body>
+                        <TagList
+                          alignment="right"
+                          :tags="item.dataplane.networking.gateway.tags"
+                        />
+                      </template>
+                    </DefinitionCard>
 
-                      <KBadge
-                        v-else
-                        appearance="danger"
-                      >
-                        {{ t('data-planes.routes.item.health.not_ready') }}
-                      </KBadge>
-                    </template>
-                  </DefinitionCard>
+                    <DefinitionCard
+                      layout="horizontal"
+                    >
+                      <template #title>
+                        {{ t('http.api.property.address') }}
+                      </template>
 
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.tags') }}
-                    </template>
-
-                    <template #body>
-                      <TagList
-                        alignment="right"
-                        :tags="inbound.tags"
-                      />
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.address') }}
-                    </template>
-
-                    <template #body>
-                      <TextWithCopyButton :text="inbound.addressPort" />
-                    </template>
-                  </DefinitionCard>
+                      <template #body>
+                        <TextWithCopyButton
+                          :text="`${item.dataplane.networking.address}`"
+                        />
+                      </template>
+                    </DefinitionCard>
+                  </div>
                 </div>
               </div>
+
+              <DataCollection
+                v-if="item.dataplaneType === 'standard'"
+                v-slot="{ items : inbounds }"
+                :items="item.dataplane.networking.inbounds"
+              >
+                <div>
+                  <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
+
+                  <div
+                    class="mt-4 stack"
+                  >
+                    <div
+                      v-for="(inbound, index) in inbounds"
+                      :key="index"
+                      class="inbound"
+                    >
+                      <h4>
+                        <TextWithCopyButton
+                          :text="inbound.tags['kuma.io/service']"
+                        >
+                          {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
+                        </TextWithCopyButton>
+                      </h4>
+
+                      <div
+                        class="mt-2 stack-with-borders"
+                      >
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.status') }}
+                          </template>
+
+                          <template #body>
+                            <KBadge
+                              v-if="inbound.health.ready"
+                              appearance="success"
+                            >
+                              {{ t('data-planes.routes.item.health.ready') }}
+                            </KBadge>
+
+                            <KBadge
+                              v-else
+                              appearance="danger"
+                            >
+                              {{ t('data-planes.routes.item.health.not_ready') }}
+                            </KBadge>
+                          </template>
+                        </DefinitionCard>
+
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.tags') }}
+                          </template>
+
+                          <template #body>
+                            <TagList
+                              alignment="right"
+                              :tags="inbound.tags"
+                            />
+                          </template>
+                        </DefinitionCard>
+
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.address') }}
+                          </template>
+
+                          <template #body>
+                            <TextWithCopyButton :text="inbound.addressPort" />
+                          </template>
+                        </DefinitionCard>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </DataCollection>
             </div>
-          </div>
-        </DataCollection>
-      </div>
-    </AppView>
+          </AppView>
+        </template>
+      </template>
+    </DataCollection>
   </RouteView>
 </template>
 
@@ -249,12 +278,9 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 
-const props = withDefaults(defineProps<{
-  name: string
-  dataplaneOverview?: DataplaneOverview
-}>(), {
-  dataplaneOverview: undefined,
-})
+const props = defineProps<{
+  items: DataplaneOverview[]
+}>()
 </script>
 <style lang="scss" scoped>
 .status-with-reason {
