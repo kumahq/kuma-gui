@@ -21,96 +21,148 @@
         <!-- we ask for the policyTypes here and always share the errors/data with all the DataLoaders below -->
         <DataSource
           v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
-          :src="`/*/policy-types`"
+          :src="`/policy-types`"
         >
-          <!-- always try and load and show the rules for everything dataplane type -->
-          <DataLoader
-            v-slot="{ data: rulesData }: DataplaneRulesSource"
-            :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/rules`"
-            :data="[policyTypesData]"
-            :errors="[policyTypesError]"
+          <template
+            v-for="policyTypes in [(policyTypesData?.policies ?? []).reduce<Partial<Record<string, PolicyType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
+            :key="policyTypes"
           >
-            <DataCollection
-              v-if="rulesData && policyTypesData"
-              :items="rulesData.rules"
+            <!-- always try and load and show the rules for everything dataplane type -->
+            <DataLoader
+              v-slot="{ data: rulesData }: RuleCollectionSource"
+              :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
+              :data="[policyTypesData]"
+              :errors="[policyTypesError]"
             >
-              <StandardDataplanePolicies
-                :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                :rules="rulesData.rules"
-                data-testid="rules-based-policies"
-              />
-            </DataCollection>
-          </DataLoader>
-
-          <!-- if we are in non-federated zone mode try and load/show legacy policies -->
-          <template v-if="!can('use zones')">
-            <div>
-              <h3>{{ t('data-planes.routes.item.legacy_policies') }}</h3>
-
-              <!-- builtin gateways have different data/visuals than other types of dataplanes -->
-              <template v-if="props.data.dataplaneType === 'builtin'">
-                <DataLoader
-                  v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
-                  :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies`"
-                  :data="[policyTypesData]"
-                  :errors="[policyTypesError]"
+              <!-- show an empty state if we have no rules at all -->
+              <DataCollection
+                :items="rulesData!.rules"
+              >
+                <!-- for proxy and to rules, display if we have any -->
+                <template
+                  v-for="ruleType in ['proxy', 'to']"
+                  :key="ruleType"
                 >
-                  <template
-                    v-for="types in [policyTypesData!.policies.reduce<Record<string, PolicyType>>((prev, item) => Object.assign(prev, { [item.name]: item }), {})]"
-                    :key="types"
+                  <DataCollection
+                    v-slot="{ items }"
+                    :items="rulesData!.rules"
+                    :predicate="(item) => item.ruleType === ruleType"
+                    :comparator="(a, b) => a.type.localeCompare(b.type)"
+                    :empty="false"
                   >
-                    <KCard
-                      class="mt-4"
+                    <KCard>
+                      <h3>
+                        {{ t(`data-planes.routes.item.rules.${ruleType}`) }}
+                      </h3>
+
+                      <RuleList
+                        class="mt-2"
+                        :rules="items"
+                        :types="policyTypes"
+                        :data-testid="`${ruleType}-rule-list`"
+                      />
+                    </KCard>
+                  </DataCollection>
+                </template>
+
+                <!-- otherwise, for from rules, group by inbound port and display if we have any -->
+                <DataCollection
+                  v-slot="{ items }"
+                  :items="rulesData!.rules"
+                  :predicate="(item) => item.ruleType === 'from'"
+                  :comparator="(a, b) => a.type.localeCompare(b.type)"
+                  :empty="false"
+                >
+                  <KCard>
+                    <h3 class="mb-2">
+                      {{ t('data-planes.routes.item.rules.from') }}
+                    </h3>
+                    <template
+                      v-for="inbounds in [Object.groupBy(items, (item) => item.inbound!.port)]"
+                      :key="inbounds"
                     >
-                      <DataCollection
-                        v-if="gatewayDataplane"
-                        :items="gatewayDataplane.routePolicies"
+                      <div
+                        v-for="([port, rs], index) in Object.entries(inbounds).sort(([a], [b]) => Number(b) - Number(a))"
+                        :key="index"
                       >
-                        <!-- we need to check routePolicies and listenerEntries for emptiness -->
-                        <EmptyBlock v-if="gatewayDataplane.listenerEntries.length === 0" />
+                        <h4>{{ t('data-planes.routes.item.port', { port }) }}</h4>
+
+                        <RuleList
+                          class="mt-2"
+                          :rules="rs!"
+                          :types="policyTypes"
+                          :data-testid="`from-rule-list-${index}`"
+                        />
+                      </div>
+                    </template>
+                  </KCard>
+                </DataCollection>
+              </DataCollection>
+            </DataLoader>
+
+            <!-- if we are in non-federated zone mode try and load/show legacy policies -->
+            <template v-if="!can('use zones')">
+              <div>
+                <!-- builtin gateways have different data/visuals than other types of dataplanes -->
+                <template v-if="props.data.dataplaneType === 'builtin'">
+                  <DataLoader
+                    v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
+                    :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies`"
+                    :data="[policyTypesData]"
+                    :errors="[policyTypesError]"
+                  >
+                    <DataCollection
+                      v-if="gatewayDataplane"
+                      :items="gatewayDataplane.routePolicies"
+                      :empty="false"
+                    >
+                      <h3>
+                        {{ t('data-planes.routes.item.legacy_policies') }}
+                      </h3>
+                      <KCard
+                        class="mt-4"
+                      >
                         <BuiltinGatewayPolicies
-                          v-else
-                          :policy-types-by-name="types"
+                          :types="policyTypes"
                           :gateway-dataplane="gatewayDataplane"
                           data-testid="builtin-gateway-dataplane-policies"
                         />
-                      </DataCollection>
-                    </KCard>
-                  </template>
-                </DataLoader>
-              </template>
+                      </KCard>
+                    </DataCollection>
+                  </DataLoader>
+                </template>
 
-              <!-- anything but builtin gateways -->
-              <template v-else>
-                <DataLoader
-                  v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
-                  :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
-                  :data="[policyTypesData]"
-                  :errors="[policyTypesError]"
-                >
-                  <template
-                    v-for="types in [policyTypesData!.policies.reduce<Record<string, PolicyType>>((prev, item) => Object.assign(prev, { [item.name]: item }), {})]"
-                    :key="types"
+                <!-- anything but builtin gateways -->
+                <template v-else>
+                  <DataLoader
+                    v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
+                    :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
+                    :data="[policyTypesData]"
+                    :errors="[policyTypesError]"
                   >
-                    <KCard
-                      class="mt-4"
+                    <DataCollection
+                      v-slot="{ items }"
+                      :predicate="(item) => policyTypes[item.type]?.isTargetRefBased === false"
+                      :items="sidecarDataplaneData!.policyTypeEntries"
+                      :empty="false"
                     >
-                      <DataCollection
-                        v-slot="{ items }"
-                        :predicate="(item) => types[item.type]?.isTargetRefBased === false"
-                        :items="sidecarDataplaneData!.policyTypeEntries"
+                      <h3>
+                        {{ t('data-planes.routes.item.legacy_policies') }}
+                      </h3>
+                      <KCard
+                        class="mt-4"
                       >
                         <PolicyTypeEntryList
                           :items="items"
-                          :types="types"
+                          :types="policyTypes"
                           data-testid="sidecar-dataplane-policies"
                         />
-                      </DataCollection>
-                    </KCard>
-                  </template>
-                </DataLoader>
-              </template>
-            </div>
+                      </KCard>
+                    </DataCollection>
+                  </DataLoader>
+                </template>
+              </div>
+            </template>
           </template>
         </DataSource>
       </div>
@@ -120,13 +172,13 @@
 
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
-import PolicyTypeEntryList from '../components/PolicyTypeEntryList.vue'
-import StandardDataplanePolicies from '../components/StandardDataplanePolicies.vue'
 import type { DataplaneOverview } from '../data'
-import type { DataplaneRulesSource, MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
+import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyType } from '@/app/policies/data'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+import RuleList from '@/app/rules/components/RuleList.vue'
+import type { RuleCollectionSource } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: DataplaneOverview
