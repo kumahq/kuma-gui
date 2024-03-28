@@ -54,22 +54,21 @@
       <div
         v-for="(header, index) in props.match.headers"
         :key="index"
+        class="match"
       >
-        <div class="match">
-          <dt>
-            <KBadge appearance="neutral">
-              Header
-            </KBadge>
-          </dt>
+        <dt>
+          <KBadge appearance="neutral">
+            Header
+          </KBadge>
+        </dt>
 
-          <dd>
-            <span class="key">Type:</span> <span>{{ header.type ?? 'Exact' }}</span>
-            <span class="key">Name:</span> <span>{{ header.name }}</span>
-            <template v-if="header.value">
-              <span class="key">Value:</span> <span>{{ header.value }}</span>
-            </template>
-          </dd>
-        </div>
+        <dd>
+          <span class="key">Type:</span> <span>{{ header.type ?? 'Exact' }}</span>
+          <span class="key">Name:</span> <span>{{ header.name }}</span>
+          <template v-if="header.value">
+            <span class="key">Value:</span> <span>{{ header.value }}</span>
+          </template>
+        </dd>
       </div>
     </template>
   </dl>
