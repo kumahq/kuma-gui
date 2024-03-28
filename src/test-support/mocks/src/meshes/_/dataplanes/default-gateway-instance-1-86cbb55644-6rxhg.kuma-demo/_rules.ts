@@ -1,6 +1,8 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
+export default ({ env, fake }: EndpointDependencies): MockResponder => (_req) => {
+  const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+
   return {
     headers: {},
     body: {
@@ -41,14 +43,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
               conf: {
                 rules: [
                   {
-                    matches: [
-                      {
-                        path: {
-                          value: '/demo',
-                          type: 'PathPrefix',
-                        },
-                      },
-                    ],
+                    matches: Array.from({ length: ruleMatchCount }).map(() => fake.kuma.ruleMatch()),
                     default: {
                       backendRefs: [
                         {
@@ -60,14 +55,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
                     },
                   },
                   {
-                    matches: [
-                      {
-                        path: {
-                          value: '/',
-                          type: 'PathPrefix',
-                        },
-                      },
-                    ],
+                    matches: Array.from({ length: ruleMatchCount }).map(() => fake.kuma.ruleMatch()),
                     default: {
                       backendRefs: [
                         {
