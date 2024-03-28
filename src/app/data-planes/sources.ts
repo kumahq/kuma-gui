@@ -34,41 +34,6 @@ export type DataplaneRulesSource = DataSourceResponse<RuleCollection>
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
 }
-// any collection of non-spaces followed by a `:` or `: ` followed by a
-// collection of non-spaces
-// or
-// a collection of non-spaces
-//
-// Should match:
-// `kuma.io/service: name`
-// `kuma.io/service:name`
-// `version:1`
-// `dpp-name`
-const searchRe = /(\S+:\s*\S*)|(\S*)/g
-
-export const search = (search: string) => {
-  const map: Record<string, string> = {
-    service: 'kuma.io/service',
-    zone: 'kuma.io/zone',
-    protocol: 'kuma.io/protocol',
-  }
-  const terms = [...search.matchAll(searchRe)].filter(item => item[0].length > 0).map(item => item[0].trim())
-  return terms.reduce((prev, item) => {
-    return (function parse(prev, item, tag = false) {
-      const [key, ...value] = item.split(':')
-      if (key === 'name') {
-        prev.name = value.join(':').trim()
-      } else if (!tag && value.length === 0) {
-        prev.name = key.trim()
-      } else if (key === 'tag') {
-        return parse(prev, value.join(':').trim(), true)
-      } else {
-        prev.tag.push(`${map[key] || key}${value.length > 0 ? ':' : ''}${value.join(':').trim()}`)
-      }
-      return prev
-    })(prev, item)
-  }, { tag: [] } as { tag: string[], name?: string}) || {}
-}
 
 export const sources = (source: Source, api: KumaApi, can: Can) => {
   return defineSources({
@@ -147,7 +112,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const filterParams = search(params.search)
+      const filterParams = DataplaneOverview.search(params.search)
 
       const type = params.type === 'standard' ? 'false' : params.type
       const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
@@ -166,7 +131,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const filterParams = search(params.search)
+      const filterParams = DataplaneOverview.search(params.search)
 
       if (typeof filterParams.tag === 'undefined') {
         filterParams.tag = []
