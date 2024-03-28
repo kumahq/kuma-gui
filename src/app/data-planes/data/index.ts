@@ -233,6 +233,7 @@ export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
   type: string
   ruleType: 'to' | 'from' | 'proxy'
   inbound?: InspectInbound
+  raw: InspectBaseRule['conf']
   config: RuleConf
   origins: InspectBaseRule['origin']
 }
@@ -247,6 +248,7 @@ export const Rule = {
       type: '',
       ruleType,
       ...rest,
+      raw: conf,
       config: {
         ...conf,
         // An omitted or empty hostnames list implies the wildcard hostname (meaning any hostnames apply).
