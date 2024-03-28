@@ -182,19 +182,31 @@
                             </div>
                           </div>
 
-                          <div>
+                          <div v-if="rule.default.filters.length > 0">
+                            {{ t('builtin-gateways.detail.filters') }}:
+
+                            <div class="stack-small mt-2">
+                              <RuleFilter
+                                v-for="(filter, filterIndex) in rule.default.filters"
+                                :key="filterIndex"
+                                :filter="filter"
+                              />
+                            </div>
+                          </div>
+
+                          <div v-if="rule.default.backendRefs.length > 0">
                             {{ t('builtin-gateways.detail.services') }}:
 
-                            <ul class="stack-small mt-2">
-                              <li
+                            <div class="stack-small mt-2">
+                              <div
                                 v-for="(backendRef, backendRefIndex) in rule.default.backendRefs"
                                 :key="backendRefIndex"
                               >
                                 <TargetRef :target-ref="backendRef">
                                   {{ backendRef.name }}
                                 </TargetRef>
-                              </li>
-                            </ul>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -213,6 +225,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
+import RuleFilter from './RuleFilter.vue'
 import RuleMatch from './RuleMatch.vue'
 import type { MeshGateway } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'

@@ -30,6 +30,7 @@ builtin-gateways:
     origins: Origins
     rules: Rules
     matches: Matches
+    filters: Filters
     services: Services
     no_rules: Could not find any applicable rules for listener {listener}
 

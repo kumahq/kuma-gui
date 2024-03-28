@@ -26,6 +26,25 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                       fake.kuma.ruleMatch({ kind: 'method' }),
                     ],
                     default: {
+                      filters: [
+                        {
+                          type: 'RequestHeaderModifier',
+                          requestHeaderModifier: {
+                            remove: [
+                              'X-Token',
+                            ],
+                          },
+                        },
+                        {
+                          type: 'ResponseHeaderModifier',
+                          responseHeaderModifier: {
+                            add: [
+                              { name: 'Header-1', value: 'value-1' },
+                              { name: 'Header-2', value: 'value-2' },
+                            ],
+                          },
+                        },
+                      ],
                       backendRefs: [
                         {
                           kind: 'MeshService',
@@ -41,6 +60,18 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                       fake.kuma.ruleMatch({ kind: 'queryParams' }),
                     ],
                     default: {
+                      filters: [
+                        {
+                          type: 'RequestMirror',
+                          requestMirror: {
+                            backendRef: {
+                              kind: 'MeshService',
+                              name: 'service-9001',
+                            },
+                            percentage: 50,
+                          },
+                        },
+                      ],
                       backendRefs: [
                         {
                           kind: 'MeshService',
@@ -84,6 +115,19 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                       fake.kuma.ruleMatch({ kind: 'headers' }),
                     ],
                     default: {
+                      filters: [
+                        {
+                          type: 'URLRewrite',
+                          urlRewrite: {
+                            hostname: 'test.com',
+                            hostToBackendHostname: true,
+                            path: {
+                              type: 'ReplaceFullPath',
+                              replaceFullPath: 'bla',
+                            },
+                          },
+                        },
+                      ],
                       backendRefs: [
                         {
                           kind: 'MeshService',

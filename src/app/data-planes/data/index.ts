@@ -22,7 +22,9 @@ import type {
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
   SidecarDataplane as PartialSidecarDataplane,
-  ToTargetRefRule,
+  ToTargetRefRule as PartialToTargetRefRule,
+  TargetRef,
+  ToTargetRefFilter,
 } from '@/types/index.d'
 import { isSet } from '@/utilities/isSet'
 
@@ -224,6 +226,13 @@ export const SidecarDataplane = {
   },
 }
 
+export type ToTargetRefRule = Exclude<PartialToTargetRefRule, 'default'> & {
+  default: {
+    backendRefs: TargetRef[]
+    filters: ToTargetRefFilter[]
+  }
+}
+
 type RuleConf = Exclude<InspectBaseRule['conf'], 'hostnames' | 'rules'> & {
   hostnames: string[]
   rules: ToTargetRefRule[]
@@ -243,6 +252,17 @@ export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
 export const Rule = {
   fromObject(item: InspectBaseRule, ruleType: 'to' | 'from' | 'proxy'): Rule {
     const { conf = {}, origin, matchers, ...rest } = item
+    const rules = (Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
+      const { backendRefs = [], filters = [] } = rule.default
+
+      return {
+        matches: rule.matches,
+        default: {
+          backendRefs,
+          filters,
+        },
+      }
+    })
 
     return {
       type: '',
@@ -253,7 +273,7 @@ export const Rule = {
         ...conf,
         // An omitted or empty hostnames list implies the wildcard hostname (meaning any hostnames apply).
         hostnames: Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
-        rules: Array.isArray(conf.rules) ? conf.rules : [],
+        rules,
       },
       origins: Array.isArray(origin) ? origin : [],
       matchers: Array.isArray(matchers) ? matchers : [],

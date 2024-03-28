@@ -41,20 +41,53 @@ export interface ToTargetRefRuleMatch {
   queryParams?: ToTargetRefRuleMatchQueryParameter[]
 }
 
-export interface RequestHeaderModifier {}
-export interface RequestMirror {}
-export interface RequestRedirect {}
-export interface ResponseHeaderModifier {}
-export interface UrlRewrite {}
-
-export interface ToTargetRefFilter {
-  type: 'RequestHeaderModifier' | 'ResponseHeaderModifier' | 'RequestRedirect' | 'URLRewrite' | 'RequestMirror'
-  requestHeaderModifier?: RequestHeaderModifier
-  requestMirror?: RequestMirror
-  requestRedirect?: RequestRedirect
-  responseHeaderModifier?: ResponseHeaderModifier
-  urlRewrite?: UrlRewrite
+export interface RequestHeaderModifierFilter {
+  type: 'RequestHeaderModifier'
+  requestHeaderModifier: {
+    add?: Array<{ name: string, value: string }>
+    set?: Array<{ name: string, value: string }>
+    remove?: string[]
+  }
 }
+
+export interface ResponseHeaderModifierFilter {
+  type: 'ResponseHeaderModifier'
+  responseHeaderModifier: {
+    add?: Array<{ name: string, value: string }>
+    set?: Array<{ name: string, value: string }>
+    remove?: string[]
+  }
+}
+
+export interface RequestRedirectFilter {
+  type: 'RequestRedirect'
+  requestRedirect: {
+    hostname?: string
+    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string}
+    port?: number
+    schema?: 'http' | 'https'
+    statusCode?: number
+  }
+}
+
+export interface URLRewriteFilter {
+  type: 'URLRewrite'
+  urlRewrite: {
+    hostToBackendHostname?: boolean
+    hostname?: string
+    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string}
+  }
+}
+
+export interface RequestMirrorFilter {
+  type: 'RequestMirror'
+  requestMirror: {
+    backendRef: TargetRef<'Mesh' | 'MeshSubset' | 'MeshGateway' | 'MeshService' | 'MeshServiceSubset' | 'MeshHTTPRoute'>
+    percentage?: string | number
+  }
+}
+
+export type ToTargetRefFilter = RequestHeaderModifierFilter | ResponseHeaderModifierFilter | RequestRedirectFilter | URLRewriteFilter | RequestMirrorFilter
 
 export interface ToTargetRefRule {
   matches: ToTargetRefRuleMatch[]
