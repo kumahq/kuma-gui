@@ -1,4 +1,4 @@
-Feature: onboarding / dataplanes-overview / index
+Feature: onboarding / add-new-services-code / index
   Background:
     Given the CSS selectors
       | Alias           | Selector                               |
@@ -20,11 +20,15 @@ Feature: onboarding / dataplanes-overview / index
       """
       KUMA_DATAPLANE_COUNT: 1
       """
-    And the URL "/dataplanes" responds with
+    And the URL "/dataplanes/_overview" responds with
       """
       body:
         items:
           - name: dataplane-test
+            dataplaneInsight:
+              subscriptions:
+                - connectTime: 2021-02-17T07:33:36.412683Z
+                  disconnectTime: !!js/undefined
       """
     Then the "$loading" element doesn't exist
     And the "$is-connected" element exists

@@ -38,14 +38,40 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
 
 export const sources = (source: Source, api: KumaApi, can: Can) => {
   return defineSources({
+    // always resolves and keeps polling until we have at least one dataplane and all dataplanes are online
     '/dataplanes/poll': (params) => {
       const { size, page } = params
       const offset = size * (page - 1)
       const canUseZones = can('use zones')
 
-      return source(async () => {
-        return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }), canUseZones)
+      return source(async (source) => {
+        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }), canUseZones)
+        if (res.total > 0 && res.items.every(item => item.status === 'online')) {
+          source.close()
+        }
+        return res
       }, { interval: 1000 })
+    },
+    // doesn't resolve until we have at least one dataplane and all dataplanes are online
+    '/dataplanes/online': (params) => {
+      const OfflineError = class extends Error { }
+      const { size, page } = params
+      const offset = size * (page - 1)
+      const canUseZones = can('use zones')
+      return source(async () => {
+        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }), canUseZones)
+        if (res.total > 0 && res.items.every((item) => item.status === 'online')) {
+          return res
+        } else {
+          throw new OfflineError()
+        }
+      }, {
+        retry: (e) => {
+          if (e instanceof OfflineError) {
+            return new Promise((resolve) => setTimeout(resolve, 1000))
+          }
+        },
+      })
     },
 
     '/meshes/:mesh/dataplanes/:name': async (params) => {

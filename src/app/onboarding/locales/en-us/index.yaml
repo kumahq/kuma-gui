@@ -1,7 +1,4 @@
 onboarding:
-  href:
-    docs:
-      install: '{KUMA_DOCS_URL}/deployments/multi-zone?{KUMA_UTM_QUERY_PARAMS}#zone-control-plane'
   routes:
     welcome:
       title: Welcome to {name}!
@@ -11,12 +8,30 @@ onboarding:
       title: Configuration Types
     multizone:
       title: Multizone
+      body: !!text/markdown |
+        A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
+
+        **See <a href="{KUMA_DOCS_URL}/production/deployment/multi-zone/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">the documentation for options to install</a>.**
+      status: !!text/markdown |
+        Zone status: {zone, select,
+          online { *Connected* }
+          offline { **Disconnected** }
+          other { - }}
+
+        Zone ingress status: {ingress, select,
+          online { *Connected* }
+          offline { **Disconnected** }
+          other { - }}
+
     create-mesh:
       title: Create the Mesh
     add-services:
       title: Add new services
     add-services-code:
       title: Add new services
+      repo: https://github.com/kumahq/kuma-counter-demo/
+      readme: https://github.com/kumahq/kuma-counter-demo/blob/master/README.md
+      k8s: kubectl apply -f https://bit.ly/3Kh2Try
     dataplanes-overview:
       title: Data plane overview
       header:

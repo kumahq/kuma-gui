@@ -15,7 +15,7 @@ export type EnvoyDataSource = DataSourceResponse<object | string>
 
 export const sources = (source: Source, api: KumaApi) => {
   return defineSources({
-    ...zoneIngresses(api),
+    ...zoneIngresses(source, api),
     ...zoneEgresses(api),
 
     '/zone-cps': async (params) => {
@@ -24,9 +24,25 @@ export const sources = (source: Source, api: KumaApi) => {
       return ZoneOverview.fromCollection(await api.getAllZoneOverviews({ size, offset }))
     },
 
-    '/zone-cps/:name': async (params) => {
-      const { name } = params
-      return ZoneOverview.fromObject(await api.getZoneOverview({ name }))
+    // doesn't resolve until we have at least one zone and one zone is online
+    '/zone-cps/~online': (params) => {
+      const { size } = params
+      const offset = size * (params.page - 1)
+      const OfflineError = class extends Error { }
+      return source(async () => {
+        const res = ZoneOverview.fromCollection(await api.getAllZoneOverviews({ size, offset }))
+        if (res.total > 0 && res.items.some((item) => item.state === 'online')) {
+          return res
+        } else {
+          throw new OfflineError()
+        }
+      }, {
+        retry: (e) => {
+          if (e instanceof OfflineError) {
+            return new Promise((resolve) => setTimeout(resolve, 2000))
+          }
+        },
+      })
     },
     '/zone-cps/online/:name': (params) => {
       const ZoneOfflineError = class extends Error { }
@@ -47,6 +63,9 @@ export const sources = (source: Source, api: KumaApi) => {
         },
       })
     },
-
+    '/zone-cps/:name': async (params) => {
+      const { name } = params
+      return ZoneOverview.fromObject(await api.getZoneOverview({ name }))
+    },
   })
 }
