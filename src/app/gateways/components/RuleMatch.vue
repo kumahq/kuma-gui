@@ -23,6 +23,7 @@
         </dt>
 
         <dd>
+          <span><span class="text-neutral">Type:</span> {{ props.match.path.type }}</span>
           <code>{{ props.match.path.value }}</code>
         </dd>
       </div>
