@@ -9,114 +9,103 @@
     />
     <AppView>
       <DataSource
-        v-slot="{ error }: DataplaneOverviewCollectionSource"
-        :src="hasOfflineDataplanes ? `/dataplanes/poll?page=1&size=10` : ''"
-        @change="setDataplanes"
+        v-slot="{ data, error }: DataplaneOverviewCollectionSource"
+        :src="`/dataplanes/poll?page=1&size=10`"
       >
-        <ErrorBlock
-          v-if="error !== undefined"
-          :error="error"
-        />
-
-        <LoadingBlock v-else-if="dataplanes === undefined" />
-
-        <OnboardingPage v-else>
-          <template #header>
-            <template
-              v-for="item in [!hasOfflineDataplanes ? 'success' : 'waiting']"
-              :key="item"
-            >
-              <OnboardingHeading :data-testid="`state-${item}`">
-                <template #title>
-                  {{ t(`onboarding.routes.dataplanes-overview.header.${item}.title`) }}
-                </template>
-
-                <template
-                  #description
-                >
-                  <p>{{ t(`onboarding.routes.dataplanes-overview.header.${item}.description`) }}</p>
-                </template>
-              </OnboardingHeading>
-            </template>
-          </template>
-
-          <template #content>
-            <div
-              v-if="dataplanes.length === 0"
-              class="status-loading-box mb-4"
-            >
-              <LoadingBox />
-            </div>
-
-            <div v-else>
-              <p class="mb-4">
-                <b>Found {{ dataplanes.length }} DPPs:</b>
-              </p>
-
-              <KTable
-                class="mb-4"
-                data-testid="dataplanes-table"
-                :fetcher-cache-key="String(cacheKey)"
-                :fetcher="() => ({
-                  data: dataplanes,
-                  total: dataplanes?.length,
-                })"
-                :headers="[
-                  { label: 'Mesh', key: 'mesh' },
-                  { label: 'Name', key: 'name' },
-                  { label: 'Status', key: 'status' },
-                ]"
-                disable-pagination
+        <template
+          v-for="offline in [(data?.items ?? []).some(item => item.status !== 'online')]"
+          :key="offline"
+        >
+          <OnboardingPage>
+            <template #header>
+              <template
+                v-for="item in [offline ? 'waiting' : 'success']"
+                :key="item"
               >
-                <template #status="{ row }">
-                  <StatusBadge :status="row.status" />
-                </template>
-              </KTable>
-            </div>
-          </template>
+                <OnboardingHeading :data-testid="`state-${item}`">
+                  <template #title>
+                    {{ t(`onboarding.routes.dataplanes-overview.header.${item}.title`) }}
+                  </template>
 
-          <template #navigation>
-            <OnboardingNavigation
-              next-step="onboarding-completed-view"
-              previous-step="onboarding-add-new-services-code-view"
-              :should-allow-next="dataplanes.length > 0"
-            />
-          </template>
-        </OnboardingPage>
+                  <template
+                    #description
+                  >
+                    <p>{{ t(`onboarding.routes.dataplanes-overview.header.${item}.description`) }}</p>
+                  </template>
+                </OnboardingHeading>
+              </template>
+            </template>
+
+            <template #content>
+              <DataLoader
+                :data="[data]"
+                :errors="[error]"
+              >
+                <template
+                  #connecting
+                >
+                  <div
+                    class="status-loading-box mb-4"
+                  >
+                    <LoadingBox />
+                  </div>
+                </template>
+
+                <div v-if="data">
+                  <p>
+                    <strong>
+                      Found {{ data.items.length }} DPPs:
+                    </strong>
+                  </p>
+                  <KTable
+                    class="mb-4"
+                    data-testid="dataplanes-table"
+                    :fetcher-cache-key="JSON.stringify(data)"
+                    :fetcher="((data) => {
+                      return () => {
+                        return {
+                          data: data.items,
+                          total: data.items.length,
+                        }
+                      }})(data)"
+                    :headers="[
+                      { label: 'Mesh', key: 'mesh' },
+                      { label: 'Name', key: 'name' },
+                      { label: 'Status', key: 'status' },
+                    ]"
+                    disable-pagination
+                  >
+                    <template #status="{ row }">
+                      <StatusBadge :status="row.status" />
+                    </template>
+                  </KTable>
+                </div>
+              </DataLoader>
+            </template>
+
+            <template #navigation>
+              <OnboardingNavigation
+                next-step="onboarding-completed-view"
+                previous-step="onboarding-add-new-services-code-view"
+                :should-allow-next="(data?.items ?? []).length > 0"
+              />
+            </template>
+          </OnboardingPage>
+        </template>
       </DataSource>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 
 import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import type { DataplaneOverview, DataplaneOverviewCollection, DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
+import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 
-const dataplanes = ref<DataplaneOverview[] | undefined>()
-const cacheKey = ref(0)
-
-const hasOfflineDataplanes = computed(() => {
-  if (Array.isArray(dataplanes.value)) {
-    return dataplanes.value.some((dataplaneOverview) => dataplaneOverview.status === 'offline')
-  }
-
-  return true
-})
-
-function setDataplanes(data: DataplaneOverviewCollection | undefined) {
-  if (data) {
-    dataplanes.value = data.items
-    cacheKey.value++
-  }
-}
 </script>
 
 <style lang="scss" scoped>

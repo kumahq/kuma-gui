@@ -18,7 +18,6 @@
           #notifications
         >
           <ul data-testid="dataplane-warnings">
-            <!-- eslint-disable vue/no-v-html  -->
             <li
               v-for="warning in warnings"
               :key="warning.kind"
@@ -31,7 +30,6 @@
             >
               The below view is not enhanced with runtime stats (Error loading stats: <strong>{{ error.toString() }}</strong>)
             </li>
-            <!-- eslint-enable -->
           </ul>
         </template>
 

@@ -96,6 +96,7 @@ const INLINE_NON_VOID_ELEMENTS = [
           ignoreWhenEmpty: true,
           ignores: ['router-link', 'pre', ...INLINE_NON_VOID_ELEMENTS],
         }],
+        'vue/no-v-html': 'off',
         // Reason: https://github.com/vuejs/eslint-plugin-vue/issues/2259
         'vue/no-setup-props-destructure': 'off',
         // Disallow Kongponents utility classes
