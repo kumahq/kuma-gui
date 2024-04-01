@@ -2589,10 +2589,10 @@
   dependencies:
     vue-demi ">=0.14.7"
 
-"@whyframe/core@0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@whyframe/core/-/core-0.1.10.tgz#7563ac84cbdaf2dba255a7c1c74501058344aa69"
-  integrity sha512-6MT3O3YGqk6rbp08cHGheYFh7mawFqz1OKcNXhsDJYi4/H9nIU7sBNijEdssmNyINThBt7UoS2PUj5Bxv8FInQ==
+"@whyframe/core@0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@whyframe/core/-/core-0.1.11.tgz#a0b97585487edce24af36e069b9438f2d8dd55b3"
+  integrity sha512-gAh6l8H/zi9B4Yxi3Z+LRwANn/R7Q1hxkN6EB+prnewXBct+jVciVR5XKnhcyYRct/cW3m0Zvscneqv/vOOsdg==
 
 "@whyframe/vue@0.1.6":
   version "0.1.6"
