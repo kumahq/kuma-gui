@@ -97,6 +97,7 @@
     "lockfile-lint": "4.13.2",
     "marked": "12.0.1",
     "msw": "2.1.5",
+    "postcss": "8.4.38",
     "postcss-html": "1.6.0",
     "sass": "1.72.0",
     "standard": "17.1.0",
