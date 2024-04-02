@@ -80,6 +80,7 @@
                   :page-size="route.params.size"
                   :headers="[
                     { label: 'Name', key: 'name' },
+                    ...((dataplanesData?.items[0].namespace ?? '').length > 0 ? [{ label: 'Namespace', key: 'namespace' }] : []),
                     ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
                     { label: 'Certificate Info', key: 'certificate' },
                     { label: 'Status', key: 'status' },
@@ -131,6 +132,10 @@
                     >
                       {{ item.name }}
                     </RouterLink>
+                  </template>
+
+                  <template #namespace="{ row: item }">
+                    {{ item.namespace }}
                   </template>
 
                   <template #zone="{ row }">

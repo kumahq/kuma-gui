@@ -44,6 +44,7 @@
               :page-size="route.params.size"
               :headers="[
                 { label: 'Name', key: 'name' },
+                ...((data?.items[0].namespace ?? '').length > 0 ? [{ label: 'Namespace', key: 'namespace' }] : []),
                 { label: 'Type', key: 'type' },
                 { label: 'Services', key: 'services' },
                 ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
@@ -116,6 +117,10 @@
                 >
                   {{ item.name }}
                 </RouterLink>
+              </template>
+
+              <template #namespace="{ row: item }">
+                {{ item.namespace }}
               </template>
 
               <template #type="{ row }">
