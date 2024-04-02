@@ -8,7 +8,7 @@
       :aria-described-by="slots.default ? id : undefined"
       :decorative="!!slots.default"
       tabindex="0"
-      :color="props.color"
+      :color="props.color ? props.color : `var(--${props.name}IconColor, 'currentColor')`"
       :size="props.size"
       display="inline-block"
     />
@@ -31,6 +31,7 @@ import {
   MeshIcon,
   PortalIcon,
   ProfileTeamIcon,
+  WarningIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots } from 'vue'
@@ -42,6 +43,7 @@ const icons = {
   standard: MeshIcon,
   builtin: PortalIcon,
   delegated: ProfileTeamIcon,
+  warning: WarningIcon,
 } as const
 const id = uniqueId('x-icon')
 const slots = useSlots()
@@ -53,7 +55,17 @@ const props = withDefaults(defineProps<{
   size?: string
 }>(), {
   placement: 'auto',
-  color: 'currentColor',
+  color: undefined,
   size: KUI_ICON_SIZE_30,
 })
 </script>
+<style lang="scss" scoped>
+.warning-icon {
+  --warningIconColor: #ffa600;
+}
+</style>
+<style lang="scss">
+[id*='x-icon-'] ul {
+  padding-left: $kui-space-50;
+}
+</style>
