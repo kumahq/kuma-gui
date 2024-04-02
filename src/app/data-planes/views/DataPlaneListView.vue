@@ -42,11 +42,11 @@
               :page-number="route.params.page"
               :page-size="route.params.size"
               :headers="[
+                { label: '&nbsp;', key: 'type' },
                 { label: 'Name', key: 'name' },
-                ...((data?.items[0]?.namespace ?? '').length > 0 ? [{ label: 'Namespace', key: 'namespace' }] : []),
-                { label: 'Type', key: 'type' },
-                { label: 'Services', key: 'services' },
+                { label: 'Namespace', key: 'namespace' },
                 ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
+                { label: 'Services', key: 'services' },
                 { label: 'Certificate Info', key: 'certificate' },
                 { label: 'Status', key: 'status' },
                 { label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -95,6 +95,12 @@
                 </KSelect>
               </template>
 
+              <template #type="{ row: item }">
+                <XIcon :name="item.dataplaneType">
+                  {{ t(`data-planes.type.${item.dataplaneType}`) }}
+                </XIcon>
+              </template>
+
               <template #name="{ row: item }">
                 <RouterLink
                   class="name-link"
@@ -119,10 +125,6 @@
 
               <template #namespace="{ row: item }">
                 {{ item.namespace }}
-              </template>
-
-              <template #type="{ row }">
-                {{ t(`data-planes.type.${row.dataplaneType}`) }}
               </template>
 
               <template #services="{ row }">
