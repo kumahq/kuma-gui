@@ -23,7 +23,7 @@
         </dt>
 
         <dd>
-          <span><span class="text-neutral">{{ t('http.api.property.type') }}:</span> {{ props.match.path.type }}</span>
+          <span><span class="text-neutral">type:</span> {{ props.match.path.type }}</span>
           <code>{{ props.match.path.value }}</code>
         </dd>
       </div>
@@ -37,13 +37,13 @@
         <div class="match">
           <dt>
             <KBadge appearance="neutral">
-              Query parameter
+              QueryParameter
             </KBadge>
           </dt>
 
           <dd>
             <div class="list">
-              <span><span class="text-neutral">{{ t('http.api.property.type') }}:</span> {{ param.type }}</span>
+              <span><span class="text-neutral">type:</span> {{ param.type }}</span>
               <span>{{ param.name }}:{{ param.value }}</span>
             </div>
           </dd>
@@ -65,7 +65,7 @@
 
         <dd>
           <div class="list">
-            <span><span class="text-neutral">{{ t('http.api.property.type') }}:</span> {{ header.type ?? 'Exact' }}</span>
+            <span><span class="text-neutral">type:</span> {{ header.type ?? 'Exact' }}</span>
             <span>{{ header.name }}<span v-if="header.value">:{{ header.value }}</span></span>
           </div>
         </dd>
@@ -76,9 +76,6 @@
 
 <script lang="ts" setup>
 import type { ToTargetRefRuleMatch } from '@/types/index.d'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   match: ToTargetRefRuleMatch

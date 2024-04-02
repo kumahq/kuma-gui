@@ -1,7 +1,7 @@
 <template>
   <div class="filter">
     <KBadge appearance="neutral">
-      {{ t(`http.api.property.${props.filter.type}`) }}
+      {{ props.filter.type }}
     </KBadge>
 
     <div>
@@ -12,16 +12,16 @@
             :key="key"
           >
             <template v-if="value">
-              <div class="list">
-                <KBadge>{{ t(`http.api.property.${key}`) }}</KBadge>
-
-                <span
-                  v-for="(entry, index) in value"
-                  :key="index"
-                >
-                  {{ typeof entry === 'string' ? entry : `${entry.name}:${entry.value}` }}
+              <span
+                v-for="(entry, index) in value"
+                :key="index"
+              >
+                <span class="text-neutral">
+                  {{ key }}:
                 </span>
-              </div>
+
+                {{ typeof entry === 'string' ? entry : `${entry.name}:${entry.value}` }}
+              </span>
             </template>
           </template>
         </div>
@@ -34,22 +34,16 @@
             :key="key"
           >
             <template v-if="value">
-              <div class="list">
-                <KBadge>{{ t(`http.api.property.${key}`) }}</KBadge>
-
-                <span
-                  v-for="(entry, index) in value"
-                  :key="index"
-                >
-                  <template v-if="typeof entry === 'string'">
-                    {{ entry }}
-                  </template>
-
-                  <template v-else>
-                    {{ entry.name }}:{{ entry.value }}
-                  </template>
+              <span
+                v-for="(entry, index) in value"
+                :key="index"
+              >
+                <span class="text-neutral">
+                  {{ key }}:
                 </span>
-              </div>
+
+                {{ typeof entry === 'string' ? entry: `${entry.name}:${entry.value}` }}
+              </span>
             </template>
           </template>
         </div>
@@ -58,10 +52,11 @@
       <template v-else-if="props.filter.type === 'RequestMirror'">
         <TargetRef :target-ref="props.filter.requestMirror.backendRef">
           {{ props.filter.requestMirror.backendRef.name }}
-          <template v-if="props.filter.requestMirror.percentage">
-            ({{ props.filter.requestMirror.percentage }})
-          </template>
         </TargetRef>
+
+        <template v-if="props.filter.requestMirror.percentage">
+          ({{ props.filter.requestMirror.percentage }}%)
+        </template>
       </template>
 
       <template v-else-if="props.filter.type === 'RequestRedirect'">
@@ -72,7 +67,7 @@
           >
             <template v-if="value">
               <span class="text-neutral">
-                {{ t(`http.api.property.${key}`) }}:
+                {{ key }}:
               </span>
 
               <template v-if="typeof value === 'object'">
@@ -95,7 +90,7 @@
           >
             <template v-if="value">
               <span class="text-neutral">
-                {{ t(`http.api.property.${key}`) }}:
+                {{ key }}:
               </span>
 
               <template v-if="typeof value === 'object'">
@@ -116,9 +111,6 @@
 <script lang="ts" setup>
 import TargetRef from '@/app/common/TargetRef.vue'
 import type { ToTargetRefFilter } from '@/types/index.d'
-import { useI18n } from '@/utilities'
-
-const { t } = useI18n()
 
 const props = defineProps<{
   filter: ToTargetRefFilter
@@ -130,6 +122,7 @@ const props = defineProps<{
   display: flex;
   flex-wrap: wrap;
   gap: $kui-space-50;
+  align-items: baseline;
 }
 
 .list {

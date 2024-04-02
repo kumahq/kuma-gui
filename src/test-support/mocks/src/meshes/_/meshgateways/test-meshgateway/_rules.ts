@@ -42,6 +42,9 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                               { name: 'Header-1', value: 'value-1' },
                               { name: 'Header-2', value: 'value-2' },
                             ],
+                            remove: [
+                              'Test',
+                            ],
                           },
                         },
                       ],
