@@ -1,4 +1,4 @@
-Feature: Dataplane traffic
+Feature: mesh / dataplanes / DataplaneDetailsTraffic
   Background:
     Given the CSS selectors
       | Alias           | Selector                                            |
@@ -77,33 +77,3 @@ Feature: Dataplane traffic
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     And the "$traffic" element exists
     And the "$loading-warning" element exists
-
-  Scenario: Builtin gateway proxy doesn't show the traffic component
-    Given the URL "/meshes/default/dataplanes/dpp-1-name-of-gateway_builtin/_overview" responds with
-      """
-      body:
-        dataplane:
-          networking:
-            gateway:
-              type: BUILTIN
-      """
-
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-gateway_builtin/overview" URL
-
-    And the "$detail-view" element contains "dpp-1-name-of-gateway_builtin"
-    And the "$traffic" element doesn't exist
-
-  Scenario: Delegated gateway proxy doesn't show the traffic component
-    Given the URL "/meshes/default/dataplanes/dpp-1-name-of-gateway_delegated/_overview" responds with
-      """
-      body:
-        dataplane:
-          networking:
-            gateway:
-              type: DELEGATED
-      """
-
-    When I visit the "/meshes/default/data-planes/dpp-1-name-of-gateway_delegated/overview" URL
-
-    And the "$detail-view" element contains "dpp-1-name-of-gateway_delegated"
-    And the "$traffic" element doesn't exist

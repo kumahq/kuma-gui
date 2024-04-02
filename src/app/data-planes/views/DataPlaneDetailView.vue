@@ -87,6 +87,18 @@
                 </template>
               </DefinitionCard>
 
+              <DefinitionCard
+                v-if="props.data.namespace.length > 0"
+              >
+                <template #title>
+                  Namespace
+                </template>
+
+                <template #body>
+                  {{ props.data.namespace }}
+                </template>
+              </DefinitionCard>
+
               <DefinitionCard>
                 <template #title>
                   {{ t('data-planes.routes.item.last_updated') }}

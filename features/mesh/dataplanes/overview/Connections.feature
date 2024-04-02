@@ -1,4 +1,4 @@
-Feature: Dataplane traffic
+Feature: mesh / dataplanes / connections / Connections
   Background:
     Given the CSS selectors
       | Alias       | Selector                                    |
@@ -15,7 +15,7 @@ Feature: Dataplane traffic
   Scenario: Builtin gateway with inbound and outbound stats
     When I visit the "/meshes/default/data-planes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/overview" URL
 
-    And the "$detail-view" element contains "default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo"
+    And the "$detail-view" element contains "default-gateway-instance-1-86cbb55644-6rxhg"
     And the "$inbound" element exists 4 times
     And the "$outbound" element exists 3 times
 
@@ -43,7 +43,7 @@ Feature: Dataplane traffic
   Scenario: Delegated gateway with inbound and outbound stats
     When I visit the "/meshes/default/data-planes/kong-gateway-5bcc776cb4-578gc.kong/overview" URL
 
-    And the "$detail-view" element contains "kong-gateway-5bcc776cb4-578gc.kong"
+    And the "$detail-view" element contains "kong-gateway-5bcc776cb4-578gc"
     And the "$inbound" element exists 0 times
     And the "$outbound" element exists 1 times
 
@@ -54,7 +54,7 @@ Feature: Dataplane traffic
   Scenario: HTTP sidecar with inbound and outbound stats
     When I visit the "/meshes/default/data-planes/demo-app-fcc8bc4cb-5xjwd.kuma-demo/overview" URL
 
-    And the "$detail-view" element contains "demo-app-fcc8bc4cb-5xjwd.kuma-demo"
+    And the "$detail-view" element contains "demo-app-fcc8bc4cb-5xjwd"
     And the "$inbound" element exists 1 time
     And the "$outbound" element exists 1 time
 
@@ -70,7 +70,7 @@ Feature: Dataplane traffic
   Scenario: gRPC sidecar with inbound and outbound stats
     When I visit the "/meshes/default/data-planes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/overview" URL
 
-    And the "$detail-view" element contains "grpc-service-75b4ccdfd5-z2jmp.kuma-demo"
+    And the "$detail-view" element contains "grpc-service-75b4ccdfd5-z2jmp"
     And the "$inbound" element exists 1 time
     And the "$outbound" element exists 0 times
 
@@ -80,7 +80,7 @@ Feature: Dataplane traffic
   Scenario: TCP sidecar with inbound and outbound stats
     When I visit the "/meshes/default/data-planes/redis-54754f5b57-xl2tw.kuma-demo/overview" URL
 
-    And the "$detail-view" element contains "redis-54754f5b57-xl2tw.kuma-demo"
+    And the "$detail-view" element contains "redis-54754f5b57-xl2tw"
     And the "$inbound" element exists 1 time
     And the "$outbound" element exists 0 times
 

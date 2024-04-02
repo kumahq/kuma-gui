@@ -14,6 +14,7 @@ Feature: mesh / dataplanes / warnings
         dataplaneInsight:
           mTLS:
             certificateExpirationTime: 2022-10-03T12:40:13Z
+            lastCertificateRegeneration: 2021-10-03T12:40:13Z
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$expired-cert-warning" element exists
@@ -25,6 +26,7 @@ Feature: mesh / dataplanes / warnings
         dataplaneInsight:
           mTLS:
             certificateExpirationTime: 3022-10-03T12:40:13Z
+            lastCertificateRegeneration: 3021-10-03T12:40:13Z
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$expired-cert-warning" element doesn't exist

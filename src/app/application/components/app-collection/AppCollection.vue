@@ -198,6 +198,9 @@ watch(() => props.pageNumber, function () {
     kTableMountKey.value++
   }
 })
+watch(() => props.headers, function () {
+  kTableMountKey.value++
+})
 
 function getRowAttributes(row: Row): Record<string, string> {
   if (!row) {
