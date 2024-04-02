@@ -25,17 +25,18 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           'kuma.io/zone': fake.hacker.noun(),
         },
       }),
-      selectors: [
-        {
-          match: fake.kuma.tags({ service: name }),
-        },
-      ],
+      selectors: [{ match: fake.kuma.tags({ service: name }) }],
       conf: {
         listeners: Array.from({ length: listenerCount }).map(() => {
           return {
             hostname: `${fake.internet.domainWord()}.${fake.internet.domainName()}`,
             port: fake.internet.port(),
-            protocol: fake.helpers.arrayElement<'HTTP' | 'HTTPS' | 'TCP' | 'TLS'>(['HTTP', 'HTTPS', 'TCP', 'TLS']),
+            protocol: fake.helpers.weightedArrayElement<'HTTP' | 'HTTPS' | 'TCP' | 'TLS'>([
+              { value: 'HTTP', weight: 3 },
+              { value: 'HTTPS', weight: 3 },
+              { value: 'TCP', weight: 1 },
+              { value: 'TLS', weight: 1 },
+            ]),
             ...(fake.datatype.boolean({ probability: 0.2 }) && {
               tags: fake.kuma.tags({}),
             }),

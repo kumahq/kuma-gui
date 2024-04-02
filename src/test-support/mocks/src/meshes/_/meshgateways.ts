@@ -42,8 +42,15 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
               return {
                 hostname: `${fake.internet.domainWord()}.${fake.internet.domainName()}`,
                 port: fake.internet.port(),
-                protocol: fake.helpers.arrayElement<'HTTP' | 'HTTPS' | 'TCP' | 'TLS'>(['HTTP', 'HTTPS', 'TCP', 'TLS']),
-                tags: fake.kuma.tags({}),
+                protocol: fake.helpers.weightedArrayElement<'HTTP' | 'HTTPS' | 'TCP' | 'TLS'>([
+                  { value: 'HTTP', weight: 3 },
+                  { value: 'HTTPS', weight: 3 },
+                  { value: 'TCP', weight: 1 },
+                  { value: 'TLS', weight: 1 },
+                ]),
+                ...(fake.datatype.boolean({ probability: 0.2 }) && {
+                  tags: fake.kuma.tags({}),
+                }),
                 ...(fake.datatype.boolean() && {
                   crossMesh: true,
                 }),
