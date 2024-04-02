@@ -216,4 +216,8 @@ export default class KumaApi extends Api {
   getMeshGateway({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshGateway> {
     return this.client.get(`/meshes/${mesh}/meshgateways/${name}`, { params })
   }
+
+  getMeshGatewayRules({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<InspectRulesForDataplane> {
+    return this.client.get(`/meshes/${mesh}/meshgateways/${name}/_rules`, { params })
+  }
 }

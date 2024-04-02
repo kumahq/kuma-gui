@@ -12,12 +12,27 @@ builtin-gateways:
       title: '{name}'
       breadcrumbs: Built-in Gateways
       navigation:
+        builtin-gateway-overview-view: Overview
         builtin-gateway-detail-view: Overview
+        builtin-gateway-dataplanes-view: Data Plane Proxies
         builtin-gateway-config-view: YAML
     items:
       title: Built-in Gateways
   href:
     docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin?{KUMA_UTM_QUERY_PARAMS}'
+  detail:
+    listeners: Listeners
+    tags: Tags
+    routes: Routes and Services
+    type: Type
+    hostnames: Hostnames
+    matchers: Matchers
+    origins: Origins
+    rules: Rules
+    matches: Matches
+    filters: Filters
+    services: Services
+    no_rules: Could not find any applicable rules for listener {listener}
 
 delegated-gateways:
   routes:
