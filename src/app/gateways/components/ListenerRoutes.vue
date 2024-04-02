@@ -225,13 +225,13 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import RuleFilter from './RuleFilter.vue'
-import RuleMatch from './RuleMatch.vue'
 import type { MeshGateway } from '../data'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import TagList from '@/app/common/TagList.vue'
 import TargetRef from '@/app/common/TargetRef.vue'
 import type { Rule } from '@/app/data-planes/data'
+import RuleFilter from '@/app/rules/components/RuleFilter.vue'
+import RuleMatch from '@/app/rules/components/RuleMatch.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { PolicyType } from '@/types/index.d'
 import { useI18n } from '@/utilities'
