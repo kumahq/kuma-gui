@@ -82,15 +82,27 @@
                 <KSelect
                   class="filter-select"
                   label="Type"
-                  :items="['all', 'standard', 'builtin', 'delegated'].map((value) => ({
+                  :items="(['all', 'standard', 'builtin', 'delegated'] as const).map((value) => ({
                     value,
                     label: t(`data-planes.type.${value}`),
                     selected: value === route.params.dataplaneType,
                   }))"
                   @selected="route.update({ dataplaneType: String($event.value) })"
                 >
-                  <template #item-template="{ item: value }">
-                    {{ value.label }}
+                  <template #selected-item-template="{ item }">
+                    <XIcon
+                      v-if="item && item.value !== 'all'"
+                      :size="`20px`"
+                      :name="item.value as ('standard' | 'builtin' | 'delegated')"
+                    />
+                    {{ item?.label }}
+                  </template>
+                  <template #item-template="{ item }">
+                    <XIcon
+                      v-if="item.value !== 'all'"
+                      :name="item.value as ('standard' | 'builtin' | 'delegated')"
+                    />
+                    {{ item.label }}
                   </template>
                 </KSelect>
               </template>
@@ -298,18 +310,18 @@ import type { MeSource } from '@/app/me/sources'
 </script>
 
 <style lang="scss" scoped>
-.app-collection:deep(.type-column) {
+.app-collection:deep(:is(th, td):nth-child(1)) {
   padding-left: 8px !important;
   padding-right: 0 !important;
 }
 
 .data-plane-proxy-filter {
-  flex-basis: 350px;
+  flex-basis: 310px;
   flex-grow: 1;
 }
 
 .filter-select {
-  flex-basis: 205px;
+  flex-basis: 245px;
   display: flex;
   flex-direction: row;
   align-items: center;

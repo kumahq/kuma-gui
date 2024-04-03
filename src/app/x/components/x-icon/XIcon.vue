@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<{
 .x-icon-standard-icon {
   &::before {
     position: relative;
-    top: 2px;
+    top: 3px;
     mask-repeat: no-repeat;
     -webkit-mask-repeat: no-repeat;
     mask-position: center;
@@ -79,12 +79,13 @@ const props = withDefaults(defineProps<{
     content: '';
     background-color: var(--icon-before-color, currentColor);
     display: inline-flex;
-    margin-top: 2px;
 
     mask-image: var(--icon-before);
     -webkit-mask-image: var(--icon-before);
-    width: 16px;
-    height: 16px;
+    mask-size: 100%;
+    -webkit-mask-size: 100%;
+    width: v-bind('props.size');
+    height: v-bind('props.size');
   }
 }
 
