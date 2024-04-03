@@ -11,6 +11,7 @@
       :color="props.color ? props.color : `var(--${props.name}IconColor, 'currentColor')`"
       :size="props.size"
       display="inline-block"
+      class="x-icon-icon"
     />
 
     <template #content>
@@ -29,8 +30,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   MeshIcon,
-  PortalIcon,
-  ProfileTeamIcon,
+  DeployIcon,
   WarningIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
@@ -41,11 +41,11 @@ import AnonymousComponent from '@/app/application/components/anonymous-component
 
 const icons = {
   standard: MeshIcon,
-  builtin: PortalIcon,
-  delegated: ProfileTeamIcon,
+  builtin: DeployIcon,
+  delegated: DeployIcon,
   warning: WarningIcon,
 } as const
-const id = uniqueId('x-icon')
+const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()
 
 const props = withDefaults(defineProps<{
@@ -60,12 +60,15 @@ const props = withDefaults(defineProps<{
 })
 </script>
 <style lang="scss" scoped>
-.warning-icon {
+.x-icon-icon {
   --warningIconColor: #ffa600;
+  --standardIconColor: #250d50;
+  --delegatedIconColor: #4ca58e;
+  --builtinIconColor: #c25398;
 }
 </style>
 <style lang="scss">
-[id*='x-icon-'] ul {
+[id^='-x-icon-tooltip'] ul {
   padding-left: $kui-space-50;
 }
 </style>

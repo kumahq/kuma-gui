@@ -298,6 +298,11 @@ import type { MeSource } from '@/app/me/sources'
 </script>
 
 <style lang="scss" scoped>
+.app-collection:deep(.type-column) {
+  padding-left: 8px !important;
+  padding-right: 0 !important;
+}
+
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
