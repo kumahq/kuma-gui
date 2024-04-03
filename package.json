@@ -39,8 +39,8 @@
   "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@kong-ui-public/i18n": "2.1.5",
-    "@kong/icons": "1.8.16",
-    "@kong/kongponents": "9.0.0-alpha.141",
+    "@kong/icons": "1.9.0",
+    "@kong/kongponents": "9.0.0-alpha.146",
     "@vueuse/core": "10.9.0",
     "brandi": "5.0.0",
     "deepmerge": "4.3.1",

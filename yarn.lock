@@ -1890,17 +1890,17 @@
   resolved "https://registry.yarnpkg.com/@kong/design-tokens/-/design-tokens-1.12.11.tgz#4d491e198a8401252966abba0cc6185025e7c4c0"
   integrity sha512-+zgR6Ti4Joj85yD/KJzE3ja6Y0khxh9vapNnkOyGtLAUnCLstkH7WfLLhM22Qi7K5q/J2R1kWuR3X+XMp6U2mQ==
 
-"@kong/icons@1.8.16", "@kong/icons@^1.8.16":
-  version "1.8.16"
-  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.8.16.tgz#4284e8c3b587f0c903f5ef2f99bee5fabe3762b5"
-  integrity sha512-aQvZUrX9Px7SqQkGlZnjlAf7aubW3mFobF9ojJ88lMPZ1XN4gDI0TKBcWtvGCtCqgbvtqe0LJD9gqAjTRqArEg==
+"@kong/icons@1.9.0", "@kong/icons@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@kong/icons/-/icons-1.9.0.tgz#40391a01ccd95ff2053c962fb5e88d616bb90640"
+  integrity sha512-fA3gXZrPjhI6gV2ISV10kKG0Y6gsW+ps31ionv/09a7BY+z4K9XqNbRRzUkqZgCoTTCnf3MWYum/CRpzaYcctg==
 
-"@kong/kongponents@9.0.0-alpha.141":
-  version "9.0.0-alpha.141"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.141.tgz#4f56e8d46d3897a1f0211b8803fc0cc5d5ee7d4d"
-  integrity sha512-NvKRMgO3vR4b9Wdm9IXlJyyc7LRUO+mwC5ccELMqcSjAQVAlzEsvkqJtfnR8xgan+nMXiAKmm1pUMuH3sz29tA==
+"@kong/kongponents@9.0.0-alpha.146":
+  version "9.0.0-alpha.146"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-9.0.0-alpha.146.tgz#6f1fbb9f86047d0a8ddbb9ea3551693ec103d052"
+  integrity sha512-ATnmEAyHog8ApChPUsIJvomrQvR7V07AQoKhXt/IEr7mpw8vmd24CFxZI6BIQUjjTubaN/PAuBp05nNXSr1TTg==
   dependencies:
-    "@kong/icons" "^1.8.16"
+    "@kong/icons" "^1.9.0"
     "@popperjs/core" "^2.11.8"
     date-fns "^2.30.0"
     date-fns-tz "^2.0.1"
@@ -6558,12 +6558,7 @@ path-scurry@^1.10.2:
     lru-cache "^10.2.0"
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
 
-path-to-regexp@^6.2.0:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
-  integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
-
-path-to-regexp@^6.2.1:
+path-to-regexp@^6.2.0, path-to-regexp@^6.2.1:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.2.tgz#324377a83e5049cbecadc5554d6a63a9a4866b36"
   integrity sha512-GQX3SSMokngb36+whdpRXE+3f9V8UzyAorlYvOGx87ufGHehNTn5lCxrKtLyZ4Yl/wEKnNnr98ZzOwwDZV5ogw==
