@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	yarn run build
+	npm run build
 
 .PHONY: build/sync
 build/sync:

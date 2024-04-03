@@ -1,10 +1,10 @@
 .PHONY: install
 install:
-	yarn install
+	npm install
 
 .PHONY: install/sync
 install/sync:
-	yarn install --frozen-lockfile
+	npm clean-install
 
 .PHONY: clean
 clean: ## Delete all node_modules directories

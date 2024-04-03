@@ -17,7 +17,7 @@ You will need to have the following tools and programs installed to run and work
 Install the project’s dependencies.
 
 ```sh
-yarn install
+npm install
 ```
 
 ## Starting the development server
@@ -25,7 +25,7 @@ yarn install
 Start a development server (runs on [localhost:8080](http://localhost:8080/) by default):
 
 ```sh
-yarn run dev
+npm run dev
 ```
 
 The default development mode uses [msw](https://mswjs.io/) with custom mock data so you don’t have to run anything else to start exploring.
@@ -33,7 +33,7 @@ The default development mode uses [msw](https://mswjs.io/) with custom mock data
 Alternatively, you can start the development server **without msw mocking the Kuma API**.
 
 ```sh
-yarn run dev:real-api
+npm run dev:real-api
 ```
 
 ::: tip
@@ -59,7 +59,7 @@ echo "export KUMA_REPORTS_ENABLED=false" >> ~/.profile
 ## Build the application for production
 
 ```sh
-yarn run build
+npm run build
 ```
 
 ::: tip NOTE
@@ -69,7 +69,7 @@ In production environments, the GUI application is typically served at [localhos
 ## Run unit tests
 
 ```sh
-yarn test
+npm test
 ```
 
 ## Run browser tests
@@ -77,26 +77,26 @@ yarn test
 Start a development server in one terminal window:
 
 ```sh
-yarn run dev
+npm run dev
 ```
 
 Run the browser test UI in another terminal window:
 
 ```sh
-yarn run test:browser:view
+npm run test:browser:view
 ```
 
 Or run the browser tests in CLI:
 
 ```sh
-yarn run test:browser
+npm run test:browser
 ```
 
 ::: tip
 You can also run specific test files:
 
 ```sh
-yarn run test:browser --spec features/zones/Index.feature
+npm run test:browser --spec features/zones/Index.feature
 ```
 :::
 
@@ -105,24 +105,24 @@ yarn run test:browser --spec features/zones/Index.feature
 Lint code using ESLint:
 
 ```sh
-yarn run lint
+npm run lint
 ```
 
 Check types using vue-tsc:
 
 ```sh
-yarn run lint:ts
+npm run lint:ts
 ```
 
 Lint styles using Stylelint:
 
 ```sh
-yarn run lint:styles
+npm run lint:styles
 ```
 
 ## File structure
 
-- **dist**: holds the compiled Vue application (i.e. the output of `yarn run build`)
+- **dist**: holds the compiled Vue application (i.e. the output of `npm run build`)
 - **features**: holds the browser test files
 - **public**: a handful of resources that are going to be copied as-is to the `dist` directory when building the application
 - **src**: holds the application’s source code

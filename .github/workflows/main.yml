@@ -21,9 +21,6 @@ jobs:
     outputs:
       spec_groups: ${{ steps.set-groups.outputs.result }}
     steps:
-      - run: |
-          echo '$ yarn --version'
-          yarn --version
       - uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f # v4.1.3
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
@@ -34,14 +31,11 @@ jobs:
           path: |
             **/node_modules
             /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
-          yarn install --frozen-lockfile
-          yarn run lint:lockfile
-          yarn deps
-
+          npm install --frozen-lockfile
+          npm run lint:lockfile
       - id: set-groups
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         env:
@@ -67,14 +61,13 @@ jobs:
           path: |
             **/node_modules
             /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - env:
           LINTER_MODE: strict
         run: |
-          yarn run lint
-          yarn run lint:ts
-          yarn run lint:styles
+          npm run lint
+          npm run lint:ts
+          npm run lint:styles
 
   cli-tests:
     needs: [install-dependencies]
@@ -89,9 +82,9 @@ jobs:
           path: |
             **/node_modules
             /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          yarn run test
+          npm run test
 
   browser-tests:
     needs: [install-dependencies]
@@ -112,14 +105,14 @@ jobs:
           path: |
             **/node_modules
             /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          yarn build:staging
+          npm run build:staging
       - env:
           SPEC_GROUPS: ${{ needs.install-dependencies.outputs.spec_groups }}
         run: |
-          yarn preview:built &
-          CYPRESS_video=true yarn test:browser --spec $(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package }}"]' | jq -cMr '.[${{ matrix.container }}]')
+          npm run preview:built &
+          CYPRESS_video=true npm run test:browser -- --spec $(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package }}"]' | jq -cMr '.[${{ matrix.container }}]')
       - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         if: failure()
         with:
