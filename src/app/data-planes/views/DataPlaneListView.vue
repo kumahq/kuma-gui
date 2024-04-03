@@ -313,6 +313,7 @@ import type { MeSource } from '@/app/me/sources'
 .app-collection:deep(:is(th, td):nth-child(1)) {
   padding-left: 8px !important;
   padding-right: 0 !important;
+  width: 16px !important;
 }
 
 .data-plane-proxy-filter {
