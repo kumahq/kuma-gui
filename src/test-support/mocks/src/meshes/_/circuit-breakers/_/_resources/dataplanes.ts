@@ -1,27 +1,28 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
+export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const { mesh } = req.params
+  const { name } = req.params
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const { offset, total, next, pageTotal } = pager(
+    env('KUMA_DATAPLANE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
+    req,
+    `/meshes/${mesh}/circuit-breakers/${name}/_resources/dataplanes`,
+  )
   return {
     headers: {},
     body: {
-      total: 3,
-      items: [
-        {
+      total,
+      items: Array.from({ length: pageTotal }).map((_, i) => {
+        const id = offset + i
+        const displayName = `${fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+
+        return {
           type: 'Dataplane',
-          mesh: 'default',
-          name: 'backend',
-        },
-        {
-          type: 'Dataplane',
-          mesh: 'default',
-          name: 'db',
-        },
-        {
-          type: 'Dataplane',
-          mesh: 'default',
-          name: 'frontend',
-        },
-      ],
-      next: null,
+          mesh,
+          name: `${displayName}${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+        }
+      }),
+      next,
     },
   }
 }

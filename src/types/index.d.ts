@@ -390,7 +390,10 @@ export interface DataPlane extends MeshEntity {
  */
 export interface DataPlaneOverview extends MeshEntity {
   type: 'DataplaneOverview'
-  labels?: Record<string, string>
+  labels?: {
+    'kuma.io/display-name'?: string
+    'k8s.kuma.io/namespace'?: string
+  }
   dataplane: {
     networking: DataplaneNetworking
   }
