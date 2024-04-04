@@ -18,25 +18,24 @@
       :tags="props.targetRef.tags"
     />
 
-    <KTooltip
+    <span
       v-if="props.targetRef.weight !== undefined && props.targetRef.weight !== 1"
-      placement="right"
+      class="weight"
     >
-      <InfoIcon
-        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-        :size="KUI_ICON_SIZE_30"
-      />
+      <!-- TODO: Replace this with the @kong/icons icon once available -->
+      <img
+        src="@/assets/images/icon-weight.svg?url"
+        alt="Weight"
+        :width="KUI_ICON_SIZE_30"
+      >
 
-      <template #content>
-        weight: {{ props.targetRef.weight }}
-      </template>
-    </KTooltip>
+      {{ props.targetRef.weight }}
+    </span>
   </span>
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon } from '@kong/icons'
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { computed } from 'vue'
 
 import TagList from '@/app/common/TagList.vue'
@@ -83,5 +82,12 @@ const routeTarget = computed<RouteLocationNamedRaw | null>(() => {
   flex-wrap: wrap;
   align-items: center;
   gap: $kui-space-40;
+}
+
+.weight {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
+  color: $kui-color-text-neutral;
 }
 </style>
