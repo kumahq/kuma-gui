@@ -9,7 +9,6 @@ import {
 import type { Can } from '../application/services/can'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
-import { normalizeFilterFields } from '@/app/common/filter-bar/normalizeFilterFields'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
@@ -113,7 +112,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
+      const filterParams = DataplaneOverview.search(params.search)
 
       const type = params.type === 'standard' ? 'false' : params.type
       const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
@@ -132,7 +131,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const filterParams = Object.fromEntries(normalizeFilterFields(JSON.parse(params.search || '[]')))
+      const filterParams = DataplaneOverview.search(params.search)
 
       if (typeof filterParams.tag === 'undefined') {
         filterParams.tag = []
