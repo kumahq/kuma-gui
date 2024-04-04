@@ -1,58 +1,59 @@
 <template>
   <div>
-    <KToggle
-      v-slot="{ isToggled, toggle }"
-      :toggled="false"
+    <CodeBlock
+      language="yaml"
+      :code="yamlUniversal"
+      :is-searchable="props.isSearchable"
+      :code-max-height="props.codeMaxHeight"
+      :query="props.query"
+      :is-filter-mode="props.isFilterMode"
+      :is-reg-exp-mode="props.isRegExpMode"
+      @query-change="emit('query-change', $event)"
+      @filter-mode-change="emit('filter-mode-change', $event)"
+      @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
     >
-      <CodeBlock
-        language="yaml"
-        :code="yamlUniversal"
-        :is-searchable="props.isSearchable"
-        :code-max-height="props.codeMaxHeight"
-        :query="props.query"
-        :is-filter-mode="props.isFilterMode"
-        :is-reg-exp-mode="props.isRegExpMode"
-        @query-change="emit('query-change', $event)"
-        @filter-mode-change="emit('filter-mode-change', $event)"
-        @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
-      >
-        <template #secondary-actions>
-          <KClipboardProvider v-slot="{ copyToClipboard }">
-            <KCodeBlockIconButton
-              :copy-tooltip="t('common.copyKubernetesText')"
-              theme="dark"
-              @click="async () => {
-                if (isToggled.value === false) {
-                  toggle()
-                  const text = toYamlRepresentation(await fetcher())
-                  await copyToClipboard(text)
-                }
-              }"
-            >
-              <CopyIcon />
+      <template #secondary-actions>
+        <KCodeBlockIconButton
+          :copy-tooltip="t('common.copyKubernetesText')"
+          theme="dark"
+          @click="async () => {
+            if (!isCopying) {
+              isCopying = true
+              // Trigger an update of KCopy’s text
+              text = toYamlRepresentation(await fetcher())
+              // Wait a Vue tick for KCopy to have received the new text
+              await nextTick()
+              // Copy the text
+              kCopyElement?.copy()
+            }
+          }"
+        >
+          <KCopy
+            ref="kCopyElement"
+            format="hidden"
+            :text="text"
+          />
 
-              {{ t('common.copyKubernetesShortText') }}
-            </KCodeBlockIconButton>
-          </KClipboardProvider>
-        </template>
-      </CodeBlock>
+          {{ t('common.copyKubernetesShortText') }}
+        </KCodeBlockIconButton>
+      </template>
+    </CodeBlock>
 
-      <slot
-        :copy="(cb: CopyCallback) => {
-          if (isToggled.value !== false) {
-            toggle()
-          }
-          copy(cb)
-        }"
-        :copying="isToggled.value"
-      />
-    </KToggle>
+    <slot
+      :copy="(cb: CopyCallback) => {
+        if (isCopying) {
+          isCopying = false
+        }
+        copy(cb)
+      }"
+      :copying="isCopying"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { CopyIcon } from '@kong/icons'
-import { computed, ref } from 'vue'
+import { KCopy } from '@kong/kongponents'
+import { computed, nextTick, ref } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
@@ -62,7 +63,6 @@ import { toYaml } from '@/utilities/toYaml'
 
 type Resolve = (data: Entity) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
-type Copy = (cb: CopyCallback) => void
 
 const { t } = useI18n()
 
@@ -87,25 +87,27 @@ const emit = defineEmits<{
   (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
+const isCopying = ref(false)
+const text = ref('')
+const kCopyElement = ref<InstanceType<typeof KCopy> | null>(null)
+
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
 
-const noop: Copy = () => {}
-
-const copy = ref<Copy>(noop)
+// False negative. We should enable the TypeScript-specific linter rule, but that requires further changes.
+// eslint-disable-next-line no-extra-parens
+const copy = ref<(cb: CopyCallback) => void>(() => {})
 let promise = new Promise((resolve: Resolve, reject) => {
   copy.value = (cb) => cb(resolve, reject)
 })
 
 const fetcher = async (_params?: SingleResourceParameters): Promise<Entity> => {
-  let res: Entity
   try {
-    res = await promise
+    return promise
   } finally {
     promise = new Promise((resolve, reject) => {
       copy.value = (cb) => cb(resolve, reject)
     })
   }
-  return res
 }
 
 function toYamlRepresentation(resource: Entity): string {
