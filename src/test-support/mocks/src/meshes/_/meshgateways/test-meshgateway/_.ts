@@ -44,6 +44,10 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
               mode: 'PASSTHROUGH',
             },
           },
+          {
+            port: 82,
+            protocol: 'TCP',
+          },
         ],
       },
     } satisfies MeshGateway,

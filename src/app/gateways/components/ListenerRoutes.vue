@@ -211,6 +211,32 @@
                         </div>
                       </div>
                     </div>
+
+                    <div v-if="toRule.config.default">
+                      <b>{{ t('builtin-gateways.detail.default') }}</b>:
+
+                      <div
+                        v-if="toRule.config.default.backendRefs && toRule.config.default.backendRefs.length > 0"
+                        class="stack-small mt-2"
+                      >
+                        <div class="rule stack-small">
+                          <div>
+                            {{ t('builtin-gateways.detail.services') }}:
+
+                            <div class="stack-small mt-2">
+                              <div
+                                v-for="(backendRef, backendRefIndex) in toRule.config.default.backendRefs"
+                                :key="backendRefIndex"
+                              >
+                                <TargetRef :target-ref="backendRef">
+                                  {{ backendRef.name }}
+                                </TargetRef>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </template>

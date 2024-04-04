@@ -163,6 +163,34 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           type: 'MeshHTTPRoute',
           warnings: [],
         },
+        {
+          fromRules: [],
+          toRules: [
+            {
+              conf: {
+                default: {
+                  backendRefs: [
+                    {
+                      kind: 'MeshService',
+                      name: 'demo-app_kuma-demo_svc_5000',
+                      weight: 1,
+                    },
+                  ],
+                },
+              },
+              matchers: [],
+              origin: [
+                {
+                  mesh,
+                  name: 'demo-app-4.kuma-system',
+                  type: 'MeshTCPRoute',
+                },
+              ],
+            },
+          ],
+          type: 'MeshTCPRoute',
+          warnings: [],
+        },
       ],
     } satisfies InspectRulesForDataplane,
   }

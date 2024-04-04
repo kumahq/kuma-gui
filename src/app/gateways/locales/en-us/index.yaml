@@ -29,6 +29,7 @@ builtin-gateways:
     matchers: Matchers
     origins: Origins
     rules: Rules
+    default: Default
     matches: Matches
     filters: Filters
     services: Services

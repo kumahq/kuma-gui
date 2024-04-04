@@ -422,6 +422,9 @@ export interface RuleConf {
   matches?: ToTargetRefRuleMatch[]
   origin?: Meta[]
   hostnames?: string[]
+  default?: {
+    backendRefs?: TargetRef[]
+  }
   [key: string]: unknown
 }
 
