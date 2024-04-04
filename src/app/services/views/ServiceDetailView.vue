@@ -116,7 +116,7 @@
                     <template #toolbar>
                       <FilterBar
                         class="data-plane-proxy-filter"
-                        :placeholder="`tag: 'kuma.io/protocol: http'`"
+                        :placeholder="`name:dataplane-name`"
                         :query="route.params.s"
                         :fields="{
                           name: { description: 'filter by name or parts of a name' },

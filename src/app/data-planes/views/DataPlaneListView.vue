@@ -65,7 +65,7 @@
               <template #toolbar>
                 <FilterBar
                   class="data-plane-proxy-filter"
-                  :placeholder="`tag: 'kuma.io/service: backend'`"
+                  :placeholder="`service:backend`"
                   :query="route.params.s"
                   :fields="{
                     name: { description: 'filter by name or parts of a name' },
