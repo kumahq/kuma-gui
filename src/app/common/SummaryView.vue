@@ -63,10 +63,12 @@ const emit = defineEmits<{
       -webkit-mask-position: center;
       content: '';
       display: inline-flex;
-      background-color: currentColor;
+      background-color: var(--icon-before-color, currentColor);
 
       mask-image: var(--icon-before);
       -webkit-mask-image: var(--icon-before);
+      mask-size: 100%;
+      -webkit-mask-size: 100%;
       width: 16px;
       height: 16px;
       margin-right: $kui-space-30;

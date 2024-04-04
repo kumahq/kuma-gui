@@ -92,7 +92,7 @@
                   <template #selected-item-template="{ item }">
                     <XIcon
                       v-if="item && item.value !== 'all'"
-                      :size="`20px`"
+                      :size="KUI_ICON_SIZE_40"
                       :name="item.value as ('standard' | 'builtin' | 'delegated')"
                     />
                     {{ item?.label }}
@@ -115,6 +115,7 @@
 
               <template #name="{ row: item }">
                 <RouterLink
+                  data-action
                   class="name-link"
                   :title="item.name"
                   :to="{
@@ -295,7 +296,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_ICON_SIZE_30, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
 import type { DataplaneOverviewCollectionSource } from '../sources'
@@ -314,6 +315,11 @@ import type { MeSource } from '@/app/me/sources'
   padding-left: 8px !important;
   padding-right: 0 !important;
   width: 16px !important;
+}
+.app-collection :deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
 }
 
 .data-plane-proxy-filter {
