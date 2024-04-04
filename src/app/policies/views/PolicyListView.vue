@@ -91,6 +91,7 @@
                       :empty-state-cta-text="t('common.documentation')"
                       :headers="[
                         { label: 'Name', key: 'name' },
+                        { label: 'Namespace', key: 'namespace' },
                         ...(can('use zones') && policyType.isTargetRefBased ? [{ label: 'Zone', key: 'zone' }] : []),
                         ...(policyType.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
                         { label: 'Details', key: 'details', hideLabel: true },
@@ -99,7 +100,7 @@
                       :page-size="route.params.size"
                       :total="data?.total"
                       :items="data?.items"
-                      :is-selected-row="(row) => row.name === route.params.policy"
+                      :is-selected-row="(row) => row.id === route.params.policy"
                       @change="route.update"
                     >
                       <template #name="{ row }">
@@ -109,7 +110,7 @@
                             params: {
                               mesh: row.mesh,
                               policyPath: policyType.path,
-                              policy: row.name,
+                              policy: row.id,
                             },
                             query: {
                               page: route.params.page,
@@ -119,6 +120,9 @@
                         >
                           {{ row.name }}
                         </RouterLink>
+                      </template>
+                      <template #namespace="{ row: item }">
+                        {{ item.namespace.length > 0 ? item.namespace : t('common.detail.none') }}
                       </template>
 
                       <template #targetRef="{ row }">
@@ -193,7 +197,8 @@
                       >
                         <component
                           :is="Component"
-                          :policy="data?.items.find((item) => item.name === route.params.policy)"
+                          v-if="typeof data !== 'undefined'"
+                          :items="data.items"
                           :policy-type="policyType"
                         />
                       </SummaryView>

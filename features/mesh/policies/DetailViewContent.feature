@@ -5,7 +5,11 @@ Feature: Policies: Detail view content
       | filter-input       | [data-testid='dataplane-search-input']      |
       | affected-dpps      | [data-testid='affected-data-plane-proxies'] |
       | affected-dpps-item | [data-testid='dataplane-name']              |
-    And the URL "/meshes/default/circuit-breakers/cp-1/_resources/dataplanes" responds with
+    And the environment
+      """
+      KUMA_DATAPLANE_COUNT: 3
+      """
+    And the URL "/meshes/default/circuit-breakers/cb-1/_resources/dataplanes" responds with
       """
       body:
         items:
@@ -16,7 +20,6 @@ Feature: Policies: Detail view content
 
   Scenario: Affected DPPs can be filtered
     When I visit the "/meshes/default/policies/circuit-breakers/cb-1/overview" URL
-
     Then the "$affected-dpps-item" element exists 3 times
     And the "$affected-dpps" element contains "backend"
     And the "$affected-dpps" element contains "db"

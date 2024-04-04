@@ -37,6 +37,10 @@ Feature: Dataplane policies
       Given the environment
         """
         KUMA_MODE: zone
+        KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
+        KUMA_DATAPLANE_RULE_COUNT: 2
+        KUMA_DATAPLANE_TO_RULE_COUNT: 2
+        KUMA_DATAPLANE_FROM_RULE_COUNT: 0
         """
       And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
         """
@@ -47,7 +51,6 @@ Feature: Dataplane policies
               gateway: !!js/undefined
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-
       Then the "$rules-based-policies" element exists
       And the "$sidecar-dataplane-policies" element exists
       And the "$builtin-gateway-dataplane-policies" element doesn't exist
@@ -294,6 +297,13 @@ Feature: Dataplane policies
         | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
         | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
 
+      And the environment
+        """
+        KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
+        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TO_RULE_COUNT: 1
+        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        """
     Scenario: Dataplane policies view shows expected content for delegated gateway (mode: global)
       Given the environment
         """
@@ -370,7 +380,13 @@ Feature: Dataplane policies
         | rules-based-policies               | [data-testid='rules-based-policies']               |
         | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']         |
         | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies'] |
-
+      And the environment
+        """
+        KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
+        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TO_RULE_COUNT: 1
+        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        """
     Scenario: Dataplane policies view shows expected content for built-in gateway (mode: global)
       Given the environment
         """
@@ -398,13 +414,6 @@ Feature: Dataplane policies
       Given the environment
         """
         KUMA_MODE: zone
-        """
-      Given the environment
-        """
-        KUMA_DATAPLANE_PROXY_RULE_ENABLED: true
-        KUMA_DATAPLANE_RULE_COUNT: 1
-        KUMA_DATAPLANE_TO_RULE_COUNT: 1
-        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         """
       And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
         """

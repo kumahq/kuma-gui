@@ -10,6 +10,8 @@ export type PolicyDataplane = PartialPolicyDataplane
 
 export type Policy = PartialPolicy & {
   config: PartialPolicy
+  id: string
+  namespace: string
 }
 
 export const PolicyDataplane = {
@@ -28,10 +30,15 @@ export const PolicyDataplane = {
 }
 
 export const Policy = {
-  fromObject(partialPolicy: PartialPolicy): Policy {
+  fromObject(item: PartialPolicy): Policy {
+    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
     return {
-      ...partialPolicy,
-      config: partialPolicy,
+      ...item,
+      config: item,
+      id: item.name,
+      name: labels['kuma.io/display-name'] ?? item.name,
+      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+
     }
   },
 
