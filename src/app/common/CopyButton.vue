@@ -3,15 +3,12 @@
     <KButton
       v-bind="$attrs"
       appearance="tertiary"
-      class="copy-button"
-      :class="{
-        'non-visual-button': !props.hasBorder,
-      }"
+      class="copy-button non-visual-button"
       data-testid="copy-button"
       type="button"
       @click="copy($event, copyToClipboard)"
     >
-      <CopyIcon :color="props.iconColor" />
+      <CopyIcon />
 
       <slot>
         <span class="visually-hidden">{{ props.copyText }}</span>
@@ -21,25 +18,16 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL } from '@kong/design-tokens'
 import { CopyIcon } from '@kong/icons'
 
 const props = withDefaults(defineProps<{
   text?: string
-  getText?: (() => string | Promise<string>) | null
   copyText?: string
   tooltipSuccessText?: string
-  tooltipFailText?: string
-  hasBorder?: boolean
-  iconColor?: string
 }>(), {
   text: '',
-  getText: null,
   copyText: 'Copy',
   tooltipSuccessText: 'Copied code!',
-  tooltipFailText: 'Failed to copy!',
-  hasBorder: false,
-  iconColor: KUI_COLOR_TEXT_NEUTRAL,
 })
 
 async function copy(event: Event, copyToClipboard: (text: string) => Promise<boolean>) {
@@ -47,12 +35,11 @@ async function copy(event: Event, copyToClipboard: (text: string) => Promise<boo
   let hasCopiedCodeSuccessfully = false
 
   try {
-    const text = props.getText ? await props.getText() : props.text
-    hasCopiedCodeSuccessfully = await copyToClipboard(text)
+    hasCopiedCodeSuccessfully = await copyToClipboard(props.text)
   } catch (err) {
     hasCopiedCodeSuccessfully = false
   } finally {
-    const text = hasCopiedCodeSuccessfully ? props.tooltipSuccessText : props.tooltipFailText
+    const text = hasCopiedCodeSuccessfully ? props.tooltipSuccessText : 'Failed to copy!'
 
     if (button instanceof HTMLButtonElement) {
       button.setAttribute('data-tooltip-copy-success', String(hasCopiedCodeSuccessfully))

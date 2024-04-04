@@ -17,32 +17,29 @@
         @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
       >
         <template #secondary-actions>
-          <KTooltip
-            class="kubernetes-copy-button-tooltip"
-            :text="t('common.copyKubernetesText')"
-            placement="bottomEnd"
-            max-width="200"
-          >
-            <CopyButton
-              class="kubernetes-copy-button"
-              :get-text="getYamlAsKubernetes"
-              :copy-text="t('common.copyKubernetesText')"
-              has-border
-              icon-color="currentColor"
-              @click="() => {
-                if(isToggled.value === false) {
+          <KClipboardProvider v-slot="{ copyToClipboard }">
+            <KCodeBlockIconButton
+              :copy-tooltip="t('common.copyKubernetesText')"
+              theme="dark"
+              @click="async () => {
+                if (isToggled.value === false) {
                   toggle()
+                  const text = toYamlRepresentation(await fetcher())
+                  await copyToClipboard(text)
                 }
               }"
             >
+              <CopyIcon />
+
               {{ t('common.copyKubernetesShortText') }}
-            </CopyButton>
-          </KTooltip>
+            </KCodeBlockIconButton>
+          </KClipboardProvider>
         </template>
       </CodeBlock>
+
       <slot
         :copy="(cb: CopyCallback) => {
-          if(isToggled.value !== false) {
+          if (isToggled.value !== false) {
             toggle()
           }
           copy(cb)
@@ -54,10 +51,10 @@
 </template>
 
 <script lang="ts" setup>
+import { CopyIcon } from '@kong/icons'
 import { computed, ref } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import CopyButton from '@/app/common/CopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'
@@ -95,20 +92,20 @@ const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
 const noop: Copy = () => {}
 
 const copy = ref<Copy>(noop)
-let p = new Promise((resolve: Resolve, reject) => { copy.value = (cb) => cb(resolve, reject) })
+let promise = new Promise((resolve: Resolve, reject) => {
+  copy.value = (cb) => cb(resolve, reject)
+})
 
 const fetcher = async (_params?: SingleResourceParameters): Promise<Entity> => {
   let res: Entity
   try {
-    res = await p
+    res = await promise
   } finally {
-    p = new Promise((resolve, reject) => { copy.value = (cb) => cb(resolve, reject) })
+    promise = new Promise((resolve, reject) => {
+      copy.value = (cb) => cb(resolve, reject)
+    })
   }
   return res
-}
-
-async function getYamlAsKubernetes() {
-  return toYamlRepresentation(await fetcher())
 }
 
 function toYamlRepresentation(resource: Entity): string {
@@ -117,15 +114,3 @@ function toYamlRepresentation(resource: Entity): string {
   return toYaml(resourceWithoutTimes)
 }
 </script>
-
-<style lang="scss">
-.kubernetes-copy-button-tooltip {
-  display: flex;
-}
-
-.kubernetes-copy-button:not(.increase-specificity.increase-specificity) {
-  padding: $kui-space-20 $kui-space-40;
-  border: $kui-border-width-10 solid $kui-color-border-neutral-weak;
-  border-radius: $kui-border-radius-20;
-}
-</style>

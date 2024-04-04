@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="code-block"
-  >
+  <div>
     <template
       v-if="$slots['primary-actions']"
     >
@@ -13,14 +11,13 @@
     </template>
     <KCodeBlock
       :id="id"
-      class="code"
       :max-height="props.codeMaxHeight"
       :code="props.code"
       :language="language"
       :initial-filter-mode="props.isFilterMode"
       :initial-reg-exp-mode="props.isRegExpMode"
-      :is-processing="isProcessing"
-      :is-searchable="isSearchable"
+      :processing="isProcessing"
+      :searchable="isSearchable"
       :show-copy-button="showCopyButton"
       :query="props.query"
       theme="dark"
@@ -95,13 +92,22 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
   gap: $kui-space-60;
   margin-bottom: $kui-space-60;
 }
+
 // Makes code block actions sticky
-:deep(.k-code-block-actions) {
+:deep(.code-block-actions) {
   position: sticky;
   z-index: 4;
   top: var(--AppHeaderHeight);
 }
-:deep(.k-highlighted-code-block) {
-  border: none;
+
+// Reset some PrismJS styles that interfere with the display of the code block.
+:deep(pre[class*=language-]),
+:deep(code[class*=language-]) {
+  background: unset !important;
+  padding: unset !important;
+  border: unset !important;
+  border-radius: unset !important;
+  box-shadow: unset !important;
+  text-shadow: unset !important;
 }
 </style>
