@@ -393,6 +393,7 @@ export interface DataPlaneOverview extends MeshEntity {
   labels?: {
     'kuma.io/display-name'?: string
     'k8s.kuma.io/namespace'?: string
+    [key: string]: string | undefined
   }
   dataplane: {
     networking: DataplaneNetworking
