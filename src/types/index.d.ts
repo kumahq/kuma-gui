@@ -9,6 +9,100 @@ export type Tags = Record<string, string>
 
 export type ServiceTags = Tags & Record<'kuma.io/service', string>
 
+// https://kuma.io/docs/latest/policies/targetref/
+export interface TargetRef<T extends string = string> {
+  kind: T
+  mesh?: string
+  name?: string
+  proxyTypes?: Array<'Sidecar' | 'Gateway'>
+  tags?: Tags
+  weight?: number
+}
+
+export interface ToTargetRefRuleMatchHeader {
+  name: string
+  type?: 'Exact' | 'Present' | 'RegularExpression' | 'Absent' | 'Prefix'
+  value?: string
+}
+
+export interface ToTargetRefRuleMatchQueryParameter {
+  name: string
+  type: 'Exact' | 'RegularExpression'
+  value: string
+}
+
+export interface ToTargetRefRuleMatch {
+  headers?: ToTargetRefRuleMatchHeader[]
+  method?: 'CONNECT' | 'DELETE' | 'GET' | 'HEAD' | 'OPTIONS' | 'PATCH' | 'POST' | 'PUT' | 'TRACE'
+  path?: {
+    type: 'Exact' | 'PathPrefix' | 'RegularExpression'
+    value: string
+  }
+  queryParams?: ToTargetRefRuleMatchQueryParameter[]
+}
+
+export interface RequestHeaderModifierFilter {
+  type: 'RequestHeaderModifier'
+  requestHeaderModifier: {
+    add?: Array<{ name: string, value: string }>
+    set?: Array<{ name: string, value: string }>
+    remove?: string[]
+  }
+}
+
+export interface ResponseHeaderModifierFilter {
+  type: 'ResponseHeaderModifier'
+  responseHeaderModifier: {
+    add?: Array<{ name: string, value: string }>
+    set?: Array<{ name: string, value: string }>
+    remove?: string[]
+  }
+}
+
+export interface RequestRedirectFilter {
+  type: 'RequestRedirect'
+  requestRedirect: {
+    hostname?: string
+    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string}
+    port?: number
+    schema?: 'http' | 'https'
+    statusCode?: number
+  }
+}
+
+export interface URLRewriteFilter {
+  type: 'URLRewrite'
+  urlRewrite: {
+    hostToBackendHostname?: boolean
+    hostname?: string
+    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string}
+  }
+}
+
+export interface RequestMirrorFilter {
+  type: 'RequestMirror'
+  requestMirror: {
+    backendRef: TargetRef<'Mesh' | 'MeshSubset' | 'MeshGateway' | 'MeshService' | 'MeshServiceSubset' | 'MeshHTTPRoute'>
+    percentage?: string | number
+  }
+}
+
+export type ToTargetRefFilter = RequestHeaderModifierFilter | ResponseHeaderModifierFilter | RequestRedirectFilter | URLRewriteFilter | RequestMirrorFilter
+
+export interface ToTargetRefRule {
+  matches: ToTargetRefRuleMatch[]
+  default: {
+    backendRefs?: TargetRef[]
+    filters?: ToTargetRefFilter[]
+  }
+}
+
+export interface ToTargetRef<T extends string = string> {
+  targetRef: TargetRef<T>
+  hostnames?: string[]
+  rules: ToTargetRefRule[]
+}
+
 export interface DiscoveryServiceStats {
   responsesSent?: string
   responsesAcknowledged?: string
@@ -323,6 +417,17 @@ export interface Meta<Type extends string = string> {
 
 export type Conf = Record<string, unknown>
 
+export interface RuleConf {
+  rules?: ToTargetRefRule[]
+  matches?: ToTargetRefRuleMatch[]
+  origin?: Meta[]
+  hostnames?: string[]
+  default?: {
+    backendRefs?: TargetRef[]
+  }
+  [key: string]: unknown
+}
+
 export interface InspectRuleMatcher {
   key: string
   value: string
@@ -331,12 +436,12 @@ export interface InspectRuleMatcher {
 
 export interface InspectBaseRule {
   matchers: InspectRuleMatcher[]
-  conf: Conf
+  conf: RuleConf
   origin: Meta[]
 }
 
 export interface InspectProxyRule {
-  conf: Conf
+  conf: RuleConf
   origin: Meta[]
 }
 
@@ -362,7 +467,7 @@ export interface InspectRule {
 }
 
 export interface InspectRulesForDataplane {
-  resource: Meta<'Dataplane'>
+  resource: Meta<'Dataplane' | 'MeshGateway'>
   rules: InspectRule[]
 }
 
@@ -628,15 +733,23 @@ export interface MeshInsight extends Entity {
 
 export interface PolicyEntity extends MeshEntity {
   labels?: {
-    'kuma.io/origin'?: string
+    'k8s.kuma.io/namespace'?: string
+    'kuma.io/display-name'?: string
+    'kuma.io/mesh'?: string
+    'kuma.io/origin'?: 'zone'
     'kuma.io/zone'?: string
+    [key: string]: string | undefined
   }
   spec?: {
-    // https://kuma.io/docs/2.4.x/policies/targetref/
-    targetRef?: {
-      name?: string
-      kind: string
-    }
+    targetRef?: TargetRef
+  }
+}
+
+// https://github.com/kumahq/kuma/blob/master/docs/generated/raw/crds/kuma.io_meshhttproutes.yaml
+export interface MeshHTTPRoute extends PolicyEntity {
+  spec: {
+    targetRef?: TargetRef
+    to: ToTargetRef<'Mesh' | 'MeshSubset' | 'MeshService' | 'MeshServiceSubset' | 'MeshGateway'>[]
   }
 }
 
@@ -665,7 +778,7 @@ export interface MeshGatewayListenerResources {
 
 export interface MeshGatewayListener {
   hostname?: string
-  port?: number
+  port: number
   protocol?: 'TCP' | 'TLS' | 'HTTP' | 'HTTPS'
   tls?: MeshGatewayTlsConf
   tags?: Tags

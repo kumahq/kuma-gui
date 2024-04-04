@@ -88,9 +88,9 @@
                 </template>
 
                 <template #config="{ row }">
-                  <template v-if="row.config">
+                  <template v-if="Object.keys(row.raw).length > 0">
                     <CodeBlock
-                      :code="toYaml(row.config)"
+                      :code="toYaml(row.raw)"
                       language="yaml"
                       :show-copy-button="false"
                     />

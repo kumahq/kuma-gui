@@ -5,35 +5,24 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
-  // use a seed based on the name to keep ports and ip address the same across
-  // _overview, stats and rules
-  fake.kuma.seed(name as string)
-  const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
-  const ports = Array.from({ length: inboundCount }).map(() => ({
-    port: fake.number.int({ min: 1, max: 65535 }),
-    protocol: fake.kuma.protocol(),
-  }))
-  //
-
-  fake.kuma.seed()
   const hasProxyRuleOverride = env('KUMA_DATAPLANE_PROXY_RULE_ENABLED', '')
   const hasProxyRule = hasProxyRuleOverride !== '' ? hasProxyRuleOverride === 'true' : fake.datatype.boolean()
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
-  const matcherCount = parseInt(env('KUMA_RULE_MATCHER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
-  const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
-  const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
+  const matcherCount = parseInt(env('KUMA_RULE_MATCHER_COUNT', fake.datatype.boolean({ probability: 0.2 }) ? String(fake.number.int({ min: 0, max: 2 })) : '0'))
+  const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
   return {
     headers: {},
     body: {
       resource: {
-        type: 'Dataplane',
+        type: 'MeshGateway',
         mesh,
         name,
       },
       rules: [
-        ...(hasProxyRule
+        ...hasProxyRule
           ? [{
             type: 'MeshProxyPatch',
             proxyRule: {
@@ -56,7 +45,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
               ],
             },
           }]
-          : []),
+          : [],
         ...Array.from({ length: ruleCount }).map(() => {
           const type = fake.helpers.arrayElement(['MeshHTTPRoute', 'MeshTimeout'])
 
@@ -65,7 +54,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             fromRules: Array.from({ length: fromRuleCount }).map(() => {
               return {
                 inbound: {
-                  port: ports[fake.number.int({ min: 0, max: ports.length - 1 })].port,
+                  port: fake.internet.port(),
                   tags: fake.kuma.tags({ service: fake.kuma.serviceName('internal') }),
                 },
                 rules: Array.from({ length: fake.number.int({ min: 1, max: 3 }) }).map(() => {
@@ -87,18 +76,16 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                         requestTimeout: '15s',
                       },
                     },
-                  }
+                  } satisfies InspectBaseRule
                 }),
               }
             }),
-            toRules: Array.from({ length: toRuleCount }).map(() => {
-              const service1 = fake.kuma.serviceName('internal')
-
+            toRules: Array.from({ length: toRuleCount }).map((_, index) => {
               return {
                 matchers: Array.from({ length: matcherCount }).map(() => ({
                   key: 'kuma.io/service',
-                  not: fake.datatype.boolean(),
-                  value: service1,
+                  not: index === 0 ? false : fake.datatype.boolean({ probability: 0.2 }),
+                  value: index === 0 ? name : fake.kuma.serviceName('internal'),
                 })),
                 origin: [
                   {
@@ -108,6 +95,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                   },
                 ],
                 conf: {
+                  ...(fake.datatype.boolean() && { hostnames: ['foo.example.com'] }),
                   rules: [
                     {
                       matches: Array.from({ length: ruleMatchCount }).map(() => fake.kuma.ruleMatch()),
@@ -115,7 +103,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                         backendRefs: [
                           {
                             kind: 'MeshServiceSubset',
-                            name: service1,
+                            name: fake.kuma.serviceName('internal'),
                             tags: {
                               version: '1.0',
                             },

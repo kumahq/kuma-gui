@@ -22,6 +22,9 @@ import type {
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
   SidecarDataplane as PartialSidecarDataplane,
+  ToTargetRefRule as PartialToTargetRefRule,
+  TargetRef,
+  ToTargetRefFilter,
 } from '@/types/index.d'
 import { isSet } from '@/utilities/isSet'
 
@@ -230,11 +233,25 @@ export const SidecarDataplane = {
     }
   },
 }
+
+export type ToTargetRefRule = Exclude<PartialToTargetRefRule, 'default'> & {
+  default: {
+    backendRefs: TargetRef[]
+    filters: ToTargetRefFilter[]
+  }
+}
+
+type RuleConf = Exclude<InspectBaseRule['conf'], 'hostnames' | 'rules'> & {
+  hostnames: string[]
+  rules: ToTargetRefRule[]
+}
+
 export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
   type: string
-  ruleType: string
+  ruleType: 'to' | 'from' | 'proxy'
   inbound?: InspectInbound
-  config: InspectBaseRule['conf']
+  raw: InspectBaseRule['conf']
+  config: RuleConf
   origins: InspectBaseRule['origin']
 }
 export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
@@ -242,12 +259,30 @@ export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
 }
 export const Rule = {
   fromObject(item: InspectBaseRule): Rule {
-    const { conf, origin, matchers, ...rest } = item
+    const { conf = {}, origin, matchers, ...rest } = item
+    const rules = (Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
+      const { backendRefs = [], filters = [] } = rule.default
+
+      return {
+        matches: rule.matches,
+        default: {
+          backendRefs,
+          filters,
+        },
+      }
+    })
+
     return {
       type: '',
-      ruleType: '',
+      ruleType: 'to',
       ...rest,
-      config: Object.keys(conf || {}).length > 0 ? conf : {},
+      raw: conf,
+      config: {
+        ...conf,
+        // An omitted or empty hostnames list implies the wildcard hostname (meaning any hostnames apply).
+        hostnames: Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
+        rules,
+      },
       origins: Array.isArray(origin) ? origin : [],
       matchers: Array.isArray(matchers) ? matchers : [],
     }
@@ -256,26 +291,26 @@ export const Rule = {
     const rules = Array.isArray(partialInspectRules.rules)
       ? partialInspectRules.rules.reduce<Rule[]>((prev, item) => {
       // to rules we can just reshape.
-        const to = Array.isArray(item.toRules)
+        const to: Rule[] = Array.isArray(item.toRules)
           ? item.toRules.map(rule => {
             return {
               ...Rule.fromObject(rule),
-              type: item.type,
               ruleType: 'to',
+              type: item.type,
             }
           })
           : []
 
         // from rules we can need to flatten out with reduce
-        const from = Array.isArray(item.fromRules)
+        const from: Rule[] = Array.isArray(item.fromRules)
           ? item.fromRules.reduce<Rule[]>((prev, rule) => {
             const { rules, ...rest } = rule
             return prev.concat(rules.map(r => {
               return {
                 ...rest,
                 ...Rule.fromObject(r),
-                type: item.type,
                 ruleType: 'from',
+                type: item.type,
               }
             }))
           }, [])
@@ -283,11 +318,11 @@ export const Rule = {
 
         // the proxyRule is only ever a single one, but we turn it into an array
         // with a single entry so it looks like to and from rules
-        const proxy = typeof item.proxyRule !== 'undefined'
+        const proxy: Rule[] = typeof item.proxyRule !== 'undefined'
           ? [{
             ...Rule.fromObject(item.proxyRule as InspectBaseRule),
-            type: item.type,
             ruleType: 'proxy',
+            type: item.type,
           }]
           : []
 

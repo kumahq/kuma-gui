@@ -141,7 +141,7 @@
                                   <dd class="mt-2">
                                     <div>
                                       <CodeBlock
-                                        :code="toYaml(item.config)"
+                                        :code="toYaml(item.raw)"
                                         language="yaml"
                                         :show-copy-button="false"
                                       />
