@@ -24,14 +24,14 @@
           :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
         >
           <div class="stack">
-            <DataLoader
-              v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
-              :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
-              :data="[meshGateway]"
-              :errors="[error]"
-              :loader="false"
-            >
-              <KCard>
+            <KCard>
+              <DataLoader
+                v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
+                :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                :data="[meshGateway]"
+                :errors="[error]"
+                :loader="false"
+              >
                 <AppCollection
                   class="data-plane-collection"
                   data-testid="data-plane-collection"
@@ -200,8 +200,8 @@
                     />
                   </SummaryView>
                 </RouterView>
-              </KCard>
-            </DataLoader>
+              </DataLoader>
+            </KCard>
           </div>
         </DataSource>
       </AppView>
