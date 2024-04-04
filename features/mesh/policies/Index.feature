@@ -27,10 +27,7 @@ Feature: mesh / policies / index
 
     Then the "$button-docs" element exists
 
-    And the "$items-header" element exists 2 times
-    And the "$items-header" elements contain
-      | Value |
-      | Name  |
+    And the "$items-header" element exists 3 times
 
     And the "#policy-list-index-view-tab.active" element exists
     And the "$item" element exists 2 times
@@ -87,8 +84,8 @@ Feature: mesh / policies / index
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
 
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
-    And the "$item:nth-child(1) td:nth-child(2)" element contains "zone-1"
-    And the "$item:nth-child(1) td:nth-child(3)" element contains "MeshService:service-1"
+    And the "$item:nth-child(1) td:nth-child(3)" element contains "zone-1"
+    And the "$item:nth-child(1) td:nth-child(4)" element contains "MeshService:service-1"
 
   Scenario: Hides legacy policy types if there are no legacy policies applied
     Given the URL "/mesh-insights/default" responds with
@@ -147,8 +144,8 @@ Feature: mesh / policies / index
   Scenario: Regression test: Zone column is visible when navigating from legacy policy type
     When I visit the "/meshes/default/policies/circuit-breakers" URL
 
-    Then the "$items-header" element exists 2 times
+    Then the "$items-header" element exists 3 times
 
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
 
-    Then the "$items-header" element exists 4 times
+    Then the "$items-header" element exists 5 times
