@@ -53,10 +53,6 @@
                         mesh: item.mesh,
                         gateway: item.name,
                       },
-                      query: {
-                        page: route.params.page,
-                        size: route.params.size,
-                      },
                     }"
                   >
                     {{ item.name }}
