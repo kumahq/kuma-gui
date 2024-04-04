@@ -29,7 +29,6 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
-  DeployIcon,
   WarningIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
@@ -40,8 +39,8 @@ import AnonymousComponent from '@/app/application/components/anonymous-component
 
 const icons = {
   standard: 'span',
-  builtin: DeployIcon,
-  delegated: DeployIcon,
+  builtin: 'span',
+  delegated: 'span',
   warning: WarningIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
@@ -61,13 +60,21 @@ const props = withDefaults(defineProps<{
 <style lang="scss" scoped>
 .x-icon-icon {
   --warningIconColor: #ffa600;
-  --delegatedIconColor: #4ca58e;
-  --builtinIconColor: #c25398;
 }
 .x-icon-standard-icon {
-  --icon-before: url('@/assets/images/proxy.svg');
+  --icon-before: url('@/assets/images/east-west.svg');
   --icon-before-color: #250d50;
 }
+.x-icon-builtin-icon {
+  --icon-before: url('@/assets/images/north-south.svg');
+  --icon-before-color: #250d50;
+}
+.x-icon-delegated-icon {
+  --icon-before: url('@/assets/images/north-south.svg');
+  --icon-before-color: #4ca58e;
+}
+.x-icon-builtin-icon,
+.x-icon-delegated-icon,
 .x-icon-standard-icon {
   &::before {
     position: relative;
@@ -92,6 +99,10 @@ const props = withDefaults(defineProps<{
 </style>
 <style lang="scss">
 [id^='-x-icon-tooltip'] ul {
-  padding-left: $kui-space-50;
+  padding-left: $kui-space-60;
+}
+[id^='-x-icon-tooltip'] ul li:first-child:last-child {
+  margin-left: calc(0px - $kui-space-60);
+  list-style-type: none;
 }
 </style>
