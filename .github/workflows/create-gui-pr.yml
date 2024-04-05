@@ -58,6 +58,7 @@ jobs:
         with:
           asset_prefix: kuma-gui
           dir: '.'
+          config: .syft.yaml
           fail_build: 'true' # Fail job if critical vulnerabilities are detected
 
       - run: yarn run build
