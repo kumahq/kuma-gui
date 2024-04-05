@@ -7,12 +7,11 @@
       dataPlane: '',
     }"
   >
-    <DataLoader
-      v-slot="{ data }: DataplaneOverviewSource"
+    <DataSource
+      v-slot="{ data, error }: DataplaneOverviewSource"
       :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
     >
       <AppView
-        v-if="data"
         :breadcrumbs="[
           {
             to: {
@@ -34,7 +33,10 @@
           },
         ]"
       >
-        <template #title>
+        <template
+          v-if="data"
+          #title
+        >
           <h1>
             <TextWithCopyButton :text="data.name">
               <RouteTitle
@@ -43,30 +45,36 @@
             </TextWithCopyButton>
           </h1>
         </template>
-
-        <NavTabs :active-route-name="route.active?.name">
-          <template
-            v-for="{ name } in route.children"
-            :key="name"
-            #[`${name}`]
+        <DataLoader
+          :data="[data]"
+          :errors="[error]"
+        >
+          <NavTabs
+            :active-route-name="route.active?.name"
           >
-            <RouterLink
-              :to="{ name }"
-              :data-testid="`${name}-tab`"
+            <template
+              v-for="{ name } in route.children"
+              :key="name"
+              #[`${name}`]
             >
-              {{ t(`data-planes.routes.item.navigation.${name}`) }}
-            </RouterLink>
-          </template>
-        </NavTabs>
+              <RouterLink
+                :to="{ name }"
+                :data-testid="`${name}-tab`"
+              >
+                {{ t(`data-planes.routes.item.navigation.${name}`) }}
+              </RouterLink>
+            </template>
+          </NavTabs>
 
-        <RouterView v-slot="child">
-          <component
-            :is="child.Component"
-            :data="data"
-          />
-        </RouterView>
+          <RouterView v-slot="child">
+            <component
+              :is="child.Component"
+              :data="data"
+            />
+          </RouterView>
+        </DataLoader>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 
