@@ -235,7 +235,7 @@
                   :to="{
                     name: 'data-plane-detail-view',
                     params: {
-                      dataPlane: row.name,
+                      dataPlane: row.id,
                     },
                   }"
                 >
