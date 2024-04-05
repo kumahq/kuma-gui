@@ -63,7 +63,7 @@
                     name: 'zone-egress-summary-view',
                     params: {
                       zone: route.params.zone,
-                      zoneEgress: item.name,
+                      zoneEgress: item.id,
                     },
                     query: {
                       // TODO: Update page & size once the list endpoint is being filtered by zone
@@ -99,7 +99,7 @@
                   :to="{
                     name: 'zone-egress-detail-view',
                     params: {
-                      zoneEgress: item.name,
+                      zoneEgress: item.id,
                     },
                   }"
                 >
@@ -133,7 +133,8 @@
             >
               <component
                 :is="child.Component"
-                :zone-egress-overview="data?.items.find((item) => item.name === route.params.zoneEgress)"
+                v-if="typeof data !== 'undefined'"
+                :items="data.items"
               />
             </SummaryView>
           </RouterView>

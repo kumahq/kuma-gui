@@ -6,7 +6,6 @@
     <AppView>
       <div
         class="stack"
-        data-testid="detail-view-details"
       >
         <KCard>
           <div class="columns">
@@ -17,6 +16,18 @@
 
               <template #body>
                 <StatusBadge :status="props.data.state" />
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard
+              v-if="props.data.namespace.length > 0"
+            >
+              <template #title>
+                Namespace
+              </template>
+
+              <template #body>
+                {{ props.data.namespace }}
               </template>
             </DefinitionCard>
 

@@ -17,6 +17,42 @@ describe('ZoneEgressOverview', () => {
     }),
   ))
   //
+  describe('labels', () => {
+    test(
+      "if labels isn't set we default it to {}",
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          if (typeof item.labels !== 'undefined') {
+            delete item.labels
+          }
+          return item
+        }, {
+          env: {
+          },
+        })
+        expect(actual.labels).toBeDefined()
+        expect(Object.keys(actual.labels).length === 0).toBeDefined()
+      },
+    )
+    test(
+      'display-name and namespace reshaping',
+      async ({ fixture }) => {
+        const actual = await fixture.setup((item) => {
+          item.name = 'old-name.namespace'
+          item.labels = {
+            'kuma.io/display-name': 'new-name',
+            'k8s.kuma.io/namespace': 'namespace',
+          }
+          return item
+        }, {
+          env: {
+          },
+        })
+        expect(actual.name).toStrictEqual('new-name')
+        expect(actual.namespace).toStrictEqual('namespace')
+      },
+    )
+  })
   describe('zoneEgressInsight.subscriptions', () => {
     test(
       'absent enabled, a connected subscription, config has properties',

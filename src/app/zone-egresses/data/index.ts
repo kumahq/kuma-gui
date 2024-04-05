@@ -22,6 +22,9 @@ export type ZoneEgress = {
 export type ZoneEgressInsight = PartialZoneEgressInsight & DiscoverySubscriptionCollection & {}
 
 export type ZoneEgressOverview = PartialZoneEgressOverview & {
+  id: string
+  namespace: string
+  labels: Exclude<PartialZoneEgressOverview['labels'], undefined>
   zoneEgress: InternalZoneEgress
   zoneEgressInsight: ZoneEgressInsight
   state: 'online' | 'offline'
@@ -58,8 +61,14 @@ export const ZoneEgressOverview = {
   fromObject: (item: PartialZoneEgressOverview): ZoneEgressOverview => {
     const zoneEgressInsight = ZoneEgressInsight.fromObject(item.zoneEgressInsight)
     const zoneEgress = InternalZoneEgress.fromObject(item.zoneEgress)
+    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+
     return {
       ...item,
+      id: item.name,
+      name: labels['kuma.io/display-name'] ?? item.name,
+      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+      labels,
       zoneEgressInsight,
       zoneEgress,
       // it is possible to have zoneEgresses on a 'disabled' zone but we don't

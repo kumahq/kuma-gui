@@ -6,7 +6,6 @@
     <AppView>
       <div
         class="stack"
-        data-testid="detail-view-details"
       >
         <KCard>
           <div class="columns">
@@ -16,7 +15,21 @@
               </template>
 
               <template #body>
-                <StatusBadge :status="props.data.state" />
+                <StatusBadge
+                  :status="props.data.state"
+                />
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard
+              v-if="props.data.namespace.length > 0"
+            >
+              <template #title>
+                Namespace
+              </template>
+
+              <template #body>
+                {{ props.data.namespace }}
               </template>
             </DefinitionCard>
 
@@ -26,8 +39,12 @@
               </template>
 
               <template #body>
-                <template v-if="props.data.zoneIngress.socketAddress.length > 0">
-                  <TextWithCopyButton :text="props.data.zoneIngress.socketAddress" />
+                <template
+                  v-if="props.data.zoneIngress.socketAddress.length > 0"
+                >
+                  <TextWithCopyButton
+                    :text="props.data.zoneIngress.socketAddress"
+                  />
                 </template>
 
                 <template v-else>
@@ -42,8 +59,12 @@
               </template>
 
               <template #body>
-                <template v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0">
-                  <TextWithCopyButton :text="props.data.zoneIngress.advertisedSocketAddress" />
+                <template
+                  v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
+                >
+                  <TextWithCopyButton
+                    :text="props.data.zoneIngress.advertisedSocketAddress"
+                  />
                 </template>
 
                 <template v-else>

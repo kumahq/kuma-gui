@@ -1,6 +1,12 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
-  const zoneIngressName = req.params.name
+  const { name } = req.params
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+
+  const parts = String(name).split('.')
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = parts.pop()
+
   const zoneName = fake.hacker.noun()
 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
@@ -9,9 +15,17 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
     headers: {},
     body: {
       type: 'ZoneIngressOverview',
-      name: zoneIngressName,
+      name,
       creationTime: '2021-07-13T08:40:59Z',
       modificationTime: '2021-07-13T08:40:59Z',
+      ...(k8s
+        ? {
+          labels: {
+            'kuma.io/display-name': displayName,
+            'k8s.kuma.io/namespace': nspace,
+          },
+        }
+        : {}),
       zoneIngress: {
         zone: zoneName,
         networking: {
