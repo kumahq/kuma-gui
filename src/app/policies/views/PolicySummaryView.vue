@@ -46,7 +46,7 @@
                   }"
                 >
                   <RouteTitle
-                    :title="t('policies.routes.item.title', { name: route.params.policy })"
+                    :title="t('policies.routes.item.title', { name: item.name })"
                   />
                 </RouterLink>
               </h2>
