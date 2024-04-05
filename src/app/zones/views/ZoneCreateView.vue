@@ -19,21 +19,48 @@
       </template>
 
       <template #actions>
-        <KButton
-          appearance="tertiary"
-          data-testid="exit-button"
-          @click="() => {
-            if(token === '' || isZoneConnected) {
-              route.back({
-                name: 'zone-cp-list-view',
-              })
-            } else {
-              toggleConfirmModal()
-            }
-          }"
+        <XDisclosure
+          v-slot="{ expanded, toggle }"
         >
-          {{ t('zones.form.exit') }}
-        </KButton>
+          <KButton
+            appearance="tertiary"
+            data-testid="exit-button"
+            @click="() => {
+              if(token === '' || isZoneConnected) {
+                route.back({
+                  name: 'zone-cp-list-view',
+                })
+              } else {
+                toggle()
+              }
+            }"
+          >
+            {{ t('zones.form.exit') }}
+          </KButton>
+          <XTeleportTemplate
+            :to="{ name: 'modal-layer' }"
+          >
+            <KModal
+              :visible="expanded"
+              :title="t('zones.form.confirm_modal.title')"
+              data-testid="confirm-exit-modal"
+              @cancel="toggle"
+              @proceed="route.replace({ name: 'zone-cp-list-view' })"
+            >
+              {{ t('zones.form.confirm_modal.body') }}
+
+              <template #footer-actions>
+                <KButton
+                  appearance="primary"
+                  :to="{ name: 'zone-cp-list-view' }"
+                  data-testid="confirm-exit-button"
+                >
+                  {{ t('zones.form.confirm_modal.action_button') }}
+                </KButton>
+              </template>
+            </KModal>
+          </XTeleportTemplate>
+        </XDisclosure>
       </template>
 
       <div class="form-wrapper">
@@ -336,26 +363,6 @@
           </div>
         </KCard>
       </div>
-
-      <KModal
-        :visible="isConfirmModalVisible"
-        :title="t('zones.form.confirm_modal.title')"
-        data-testid="confirm-exit-modal"
-        @cancel="toggleConfirmModal"
-        @proceed="route.replace({ name: 'zone-cp-list-view' })"
-      >
-        {{ t('zones.form.confirm_modal.body') }}
-
-        <template #footer-actions>
-          <KButton
-            appearance="primary"
-            :to="{ name: 'zone-cp-list-view' }"
-            data-testid="confirm-exit-button"
-          >
-            {{ t('zones.form.confirm_modal.action_button') }}
-          </KButton>
-        </template>
-      </KModal>
     </AppView>
   </RouteView>
 </template>
@@ -383,7 +390,6 @@ const NAME_REGEX = /^(?![-0-9])[a-z0-9-]{1,63}$/
 
 const zone = ref<{ token: string } | null>(null)
 const isChangingZone = ref(false)
-const isConfirmModalVisible = ref(false)
 const error = ref<Error | null>(null)
 const frontendNameError = ref<string | null>(null)
 const zoneNameWithError = ref('')
@@ -461,9 +467,6 @@ function validateName(name: string): boolean {
   return isValidName
 }
 
-function toggleConfirmModal() {
-  isConfirmModalVisible.value = !isConfirmModalVisible.value
-}
 function success() {
   isZoneConnected.value = true
 }

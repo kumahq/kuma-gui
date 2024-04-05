@@ -6,87 +6,116 @@
       zone: '',
     }"
   >
-    <DataSource
-      v-slot="{ data, error }: ZoneOverviewSource"
+    <DataLoader
+      v-slot="{ data }: ZoneOverviewSource"
       :src="`/zone-cps/${route.params.zone}`"
       @change="change"
     >
-      <ErrorBlock
-        v-if="error !== undefined"
-        :error="error"
-      />
-
-      <LoadingBlock v-else-if="data === undefined" />
-
-      <template v-else>
-        <AppView
-          :breadcrumbs="[
-            {
-              to: {
-                name: 'zone-cp-list-view',
-              },
-              text: t('zone-cps.routes.item.breadcrumbs'),
+      <AppView
+        v-if="data"
+        :breadcrumbs="[
+          {
+            to: {
+              name: 'zone-cp-list-view',
             },
-          ]"
+            text: t('zone-cps.routes.item.breadcrumbs'),
+          },
+        ]"
+      >
+        <template #title>
+          <h1>
+            <TextWithCopyButton :text="route.params.zone">
+              <RouteTitle
+                :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+              />
+            </TextWithCopyButton>
+          </h1>
+        </template>
+
+        <template
+          v-if="can('create zones')"
+          #actions
         >
-          <template #title>
-            <h1>
-              <TextWithCopyButton :text="route.params.zone">
-                <RouteTitle
-                  :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-                />
-              </TextWithCopyButton>
-            </h1>
-          </template>
-
-          <template
-            v-if="can('create zones')"
-            #actions
+          <KDropdown
+            :kpop-attributes="{ placement: 'bottomEnd' }"
+            :trigger-text="t('zones.action_menu.toggle_button')"
+            show-caret
+            width="280"
           >
-            <ZoneActionMenu :zone-overview="data" />
-          </template>
-
-          <NavTabs :active-route-name="route.active?.name">
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-              #[`${name}`]
-            >
-              <RouterLink
-                :to="{ name }"
-                :data-testid="`${name}-tab`"
+            <template #items>
+              <XDisclosure
+                v-slot="{ expanded, toggle }"
               >
-                {{ t(`zone-cps.routes.item.navigation.${name}`) }}
-              </RouterLink>
-            </template>
-          </NavTabs>
+                <KDropdownItem
+                  danger
+                  data-testid="delete-button"
+                  @click.prevent="toggle"
+                >
+                  {{ t('zones.action_menu.delete_button') }}
+                </KDropdownItem>
+                <XTeleportTemplate
+                  :to="{ name: 'modal-layer' }"
+                >
+                  <DeleteResourceModal
+                    v-if="expanded"
+                    :confirmation-text="data.name"
+                    :delete-function="() => deleteZone(data.name)"
+                    is-visible
+                    :action-button-text="t('common.delete_modal.proceed_button')"
+                    :title="t('common.delete_modal.title', { type: 'Zone' })"
+                    data-testid="delete-zone-modal"
+                    @cancel="toggle"
+                    @delete="() => route.replace({ name: 'zone-cp-list-view' })"
+                  >
+                    <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: data.name }) }}</p>
 
-          <RouterView v-slot="child">
-            <component
-              :is="child.Component"
-              :data="data"
-              :notifications="notifications"
-            />
-          </RouterView>
-        </AppView>
-      </template>
-    </DataSource>
+                    <p>{{ t('common.delete_modal.text2') }}</p>
+                  </DeleteResourceModal>
+                </XTeleportTemplate>
+              </XDisclosure>
+            </template>
+          </KDropdown>
+        </template>
+
+        <NavTabs :active-route-name="route.active?.name">
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+            #[`${name}`]
+          >
+            <RouterLink
+              :to="{ name }"
+              :data-testid="`${name}-tab`"
+            >
+              {{ t(`zone-cps.routes.item.navigation.${name}`) }}
+            </RouterLink>
+          </template>
+        </NavTabs>
+
+        <RouterView v-slot="child">
+          <component
+            :is="child.Component"
+            :data="data"
+            :notifications="notifications"
+          />
+        </RouterView>
+      </AppView>
+    </DataLoader>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import ZoneActionMenu from '../components/ZoneActionMenu.vue'
 import type { ZoneOverview } from '../data'
 import type { ZoneOverviewSource } from '../sources'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n } from '@/utilities'
+import { useI18n, useKumaApi } from '@/utilities'
 import { get } from '@/utilities/get'
 
+const kumaApi = useKumaApi()
 const { t } = useI18n()
 
 const notifications = ref<{kind: string, payload: Record<string, string>}[]>([])
@@ -108,6 +137,10 @@ const change = (data: ZoneOverview) => {
     })
   }
   notifications.value = warnings
+}
+async function deleteZone(name: string) {
+  // Intentionally not wrapped in a try-catch block so that the DeleteResourceModal can discover when the operation failed.
+  await kumaApi.deleteZone({ name })
 }
 
 </script>

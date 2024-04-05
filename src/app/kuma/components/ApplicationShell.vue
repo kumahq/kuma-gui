@@ -2,6 +2,9 @@
   <div
     class="application-shell"
   >
+    <XTeleportSlot
+      name="modal-layer"
+    />
     <header
       role="banner"
     >
