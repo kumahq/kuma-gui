@@ -36,7 +36,7 @@
   "engines": {
     "node": ">=20.9"
   },
-  "packageManager": "yarn@1.22.21",
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@kong-ui-public/i18n": "2.1.4",
     "@kong/icons": "1.8.15",
