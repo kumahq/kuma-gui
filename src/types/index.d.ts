@@ -643,6 +643,11 @@ export interface ZoneIngressInsight {
 
 export interface ZoneIngressOverview extends MeshEntity {
   type: 'ZoneIngressOverview'
+  labels?: {
+    'kuma.io/display-name'?: string
+    'k8s.kuma.io/namespace'?: string
+    [key: string]: string | undefined
+  }
   zoneIngress: {
     zone?: string
     networking?: ZoneIngressNetworking
@@ -666,6 +671,11 @@ export interface ZoneEgressInsight {
 
 export interface ZoneEgressOverview extends MeshEntity {
   type: 'ZoneEgressOverview'
+  labels?: {
+    'kuma.io/display-name'?: string
+    'k8s.kuma.io/namespace'?: string
+    [key: string]: string | undefined
+  }
   zoneEgress: {
     zone?: string
     networking?: ZoneEgressNetworking

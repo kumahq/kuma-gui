@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_ZONEEGRESS_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
@@ -10,17 +11,29 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
-        const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
         const id = offset + i
-        const zoneEgressName = `${fake.hacker.noun()}-${id}`
+
+        const displayName = `${fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const nspace = fake.k8s.namespace()
+
         const zone = `${fake.hacker.noun()}-${id}`
         const zoneName = fake.helpers.arrayElement([env('KUMA_ZONE_NAME', zone), zone])
 
+        const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+
         return {
           type: 'ZoneEgressOverview',
-          name: zoneEgressName,
+          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2021-07-13T08:40:59Z',
           modificationTime: '2021-07-13T08:40:59Z',
+          ...(k8s
+            ? {
+              labels: {
+                'kuma.io/display-name': displayName,
+                'k8s.kuma.io/namespace': nspace,
+              },
+            }
+            : {}),
           zoneEgress: {
             zone: zoneName,
             networking: {

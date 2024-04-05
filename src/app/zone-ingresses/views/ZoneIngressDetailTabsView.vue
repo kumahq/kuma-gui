@@ -7,47 +7,48 @@
       zoneIngress: '',
     }"
   >
-    <AppView
-      :breadcrumbs="[
-        {
-          to: {
-            name: 'zone-cp-list-view',
-          },
-          text: t('zone-cps.routes.item.breadcrumbs'),
-        },
-        {
-          to: {
-            name: 'zone-ingress-list-view',
-            params: {
-              zone: route.params.zone,
-            },
-          },
-          text: t('zone-ingresses.routes.item.breadcrumbs'),
-        },
-      ]"
+    <DataSource
+      v-slot="{ data, error }: ZoneIngressOverviewSource"
+      :src="`/zone-ingress-overviews/${route.params.zoneIngress}`"
     >
-      <template #title>
-        <h1>
-          <TextWithCopyButton :text="route.params.zoneIngress">
-            <RouteTitle
-              :title="t('zone-ingresses.routes.item.title', { name: route.params.zoneIngress })"
-            />
-          </TextWithCopyButton>
-        </h1>
-      </template>
-
-      <DataSource
-        v-slot="{ data, error }: ZoneIngressOverviewSource"
-        :src="`/zone-ingress-overviews/${route.params.zoneIngress}`"
+      <AppView
+        :breadcrumbs="[
+          {
+            to: {
+              name: 'zone-cp-list-view',
+            },
+            text: t('zone-cps.routes.item.breadcrumbs'),
+          },
+          {
+            to: {
+              name: 'zone-ingress-list-view',
+              params: {
+                zone: route.params.zone,
+              },
+            },
+            text: t('zone-ingresses.routes.item.breadcrumbs'),
+          },
+        ]"
       >
-        <ErrorBlock
-          v-if="error !== undefined"
-          :error="error"
-        />
+        <template
+          v-if="data"
+          #title
+        >
+          <h1>
+            <TextWithCopyButton
+              :text="data.name"
+            >
+              <RouteTitle
+                :title="t('zone-ingresses.routes.item.title', { name: data.name })"
+              />
+            </TextWithCopyButton>
+          </h1>
+        </template>
 
-        <LoadingBlock v-else-if="data === undefined" />
-
-        <template v-else>
+        <DataLoader
+          :data="[data]"
+          :errors="[error]"
+        >
           <NavTabs
             :active-route-name="route.active?.name"
             data-testid="zone-ingress-tabs"
@@ -72,16 +73,14 @@
               :data="data"
             />
           </RouterView>
-        </template>
-      </DataSource>
-    </AppView>
+        </DataLoader>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import type { ZoneIngressOverviewSource } from '../sources'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>
