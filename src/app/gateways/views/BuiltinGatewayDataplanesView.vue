@@ -84,7 +84,7 @@
                         name: 'builtin-gateway-data-plane-summary-view',
                         params: {
                           mesh: row.mesh,
-                          dataPlane: row.name,
+                          dataPlane: row.id,
                         },
                         query: {
                           page: route.params.page,
@@ -161,7 +161,7 @@
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
-                          dataPlane: row.name,
+                          dataPlane: row.id,
                         },
                       }"
                     >
