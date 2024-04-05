@@ -30,6 +30,7 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   WarningIcon,
+  PortalIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots } from 'vue'
@@ -39,8 +40,8 @@ import AnonymousComponent from '@/app/application/components/anonymous-component
 
 const icons = {
   standard: 'span',
-  builtin: 'span',
-  delegated: 'span',
+  builtin: PortalIcon,
+  delegated: PortalIcon,
   warning: WarningIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
@@ -63,19 +64,6 @@ const props = withDefaults(defineProps<{
 }
 .x-icon-standard-icon {
   --icon-before: url('@/assets/images/east-west.svg');
-  --icon-before-color: #250d50;
-}
-.x-icon-builtin-icon {
-  --icon-before: url('@/assets/images/north-south.svg');
-  --icon-before-color: #250d50;
-}
-.x-icon-delegated-icon {
-  --icon-before: url('@/assets/images/north-south.svg');
-  --icon-before-color: #4ca58e;
-}
-.x-icon-builtin-icon,
-.x-icon-delegated-icon,
-.x-icon-standard-icon {
   &::before {
     position: relative;
     top: 3px;

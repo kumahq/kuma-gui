@@ -287,16 +287,12 @@ const props = defineProps<{
 <style lang="scss" scoped>
 h2.type-standard {
   --icon-before: url('@/assets/images/east-west.svg') !important;
-  --icon-before-color: #250d50;
 }
-h2.type-builtin {
-  --icon-before: url('@/assets/images/north-south.svg') !important;
-  --icon-before-color: #250d50;
-}
+h2.type-builtin,
 h2.type-delegated {
-  --icon-before: url('@/assets/images/north-south.svg') !important;
-  --icon-before-color: #4ca58e;
+  --icon-before: url('@/assets/images/portal.svg') !important;
 }
+
 .status-with-reason {
   display: flex;
   align-items: center;
