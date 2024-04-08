@@ -16,8 +16,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const displayName = `${fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
 
-        const zone = `${fake.hacker.noun()}-${id}`
-        const zoneName = fake.helpers.arrayElement([env('KUMA_ZONE_NAME', zone), zone])
+        const zoneName = env('KUMA_ZONE_NAME', `${fake.hacker.noun()}-${id}`)
 
         const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
