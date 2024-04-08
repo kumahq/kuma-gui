@@ -165,7 +165,7 @@
                             params: {
                               mesh: row.mesh,
                               policyPath: policyType.path,
-                              policy: row.name,
+                              policy: row.id,
                             },
                           }"
                         >
