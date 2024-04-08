@@ -1,6 +1,11 @@
 # create-gui-pr.yaml is dependant on this name being "Tests"
 name: 'Tests'
-#
+
+# Ensures that only one workflow is run per branch at a time.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
 on:
   push:
     branches: [master, 'release-[0-9]+.[0-9]+']
