@@ -49,10 +49,13 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
         const type = filterType ?? fake.helpers.arrayElement(['gateway_builtin', 'gateway_delegated', 'proxy'])
-        const service = tags['kuma.io/service']
 
-        const displayName = `${_name || fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        // we include the type in the name so when we link using the name
+        // we keep the type in the URL so the corresponding item mock knows the type
+        const name = `${fake.hacker.noun()}-${type}`
+        const displayName = `${_name || name}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
+        const service = tags['kuma.io/service']
 
         return {
           type: 'DataplaneOverview',
