@@ -219,7 +219,12 @@ function getRowAttributes(row: Row): Record<string, string> {
 const click = (e: MouseEvent) => {
   const $tr = (e.target as HTMLElement).closest('tr')
   if ($tr) {
-    const $a: HTMLAnchorElement | null = $tr.querySelector('td:first-child a')
+    const $a: HTMLAnchorElement | null = ['td:first-child a', '[data-action]'].reduce<HTMLAnchorElement | null>((prev, item) => {
+      if (prev === null) {
+        return $tr.querySelector(item)
+      }
+      return prev
+    }, null)
     if ($a !== null && $a.closest('tr, li') === $tr) {
       $a.click()
     }

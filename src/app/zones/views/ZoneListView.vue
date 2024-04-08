@@ -138,33 +138,25 @@
                     }]"
                     :key="`${warnings.version_mismatch}-${warnings.store_memory}`"
                   >
-                    <KTooltip
+                    <XIcon
                       v-if="Object.values(warnings).some((item) => item)"
+                      name="warning"
+                      data-testid="warning"
                     >
-                      <template
-                        #content
-                      >
-                        <ul>
-                          <template
-                            v-for="(warning, i) in warnings"
-                            :key="i"
+                      <ul>
+                        <template
+                          v-for="(warning, i) in warnings"
+                          :key="i"
+                        >
+                          <li
+                            v-if="warning"
+                            :data-testid="`warning-${i}`"
                           >
-                            <li
-                              v-if="warning"
-                              :data-testid="`warning-${i}`"
-                            >
-                              {{ t(`zone-cps.list.${i}`) }}
-                            </li>
-                          </template>
-                        </ul>
-                      </template>
-                      <WarningIcon
-                        data-testid="warning"
-                        class="mr-1"
-                        :size="KUI_ICON_SIZE_30"
-                      />
-                    </KTooltip>
-
+                            {{ t(`zone-cps.list.${i}`) }}
+                          </li>
+                        </template>
+                      </ul>
+                    </XIcon>
                     <template v-else>
                       {{ t('common.collection.none') }}
                     </template>
@@ -284,7 +276,6 @@ import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { MeSource } from '@/app/me/sources'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'

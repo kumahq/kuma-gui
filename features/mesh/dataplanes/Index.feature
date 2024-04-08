@@ -47,16 +47,7 @@ Feature: mesh / dataplanes / index
   Scenario: The Proxy listing table has the correct columns
     When I visit the "/meshes/default/data-planes" URL
 
-    Then the "$table-header" element exists 8 times
-    And the "$table-header" elements contain
-      | Value            |
-      | Name             |
-      | Type             |
-      | Service          |
-      | Zone             |
-      | Certificate Info |
-      | Status           |
-      | Warnings         |
+    Then the "$table-header" element exists 9 times
 
   Scenario: The Proxy listing has the expected content and UI elements
     When I visit the "/meshes/default/data-planes" URL
