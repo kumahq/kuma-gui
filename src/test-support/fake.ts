@@ -6,7 +6,7 @@ import type { Alias } from '@/services/utils'
 export type RestRequest = {
   method: string
   params: Record<string, string | readonly string[]>
-  body: any
+  body: Record<string, any>
   url: {
     searchParams: URLSearchParams
   }
