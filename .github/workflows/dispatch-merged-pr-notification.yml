@@ -1,5 +1,10 @@
 name: 'Dispatch merged PR notification'
 
+# Ensures that only one workflow is run per branch at a time.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
 on:
   pull_request_target:
     types: [closed]
