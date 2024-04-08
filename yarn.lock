@@ -1747,10 +1747,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl@^2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-2.10.0.tgz#d7bb557e172ceb0bb0be9298b61e9de957119985"
-  integrity sha512-X3xT9guVkKDS86EKV80lS0KxoazUglkJTGZO66sKY7otgl0VeStPA8B3u8UkKT47PexVV98fUzjpkchYmbe9nw==
+"@formatjs/intl@^2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl/-/intl-2.10.1.tgz#75ae637070553bf7dfd213847ba8219f5ddae2b6"
+  integrity sha512-dsLG15U7xDi8yzKf4hcAWSsCaez3XrjTO2oaRHPyHtXLm1aEzYbDw6bClo/HMHu+iwS5GbDqT3DV+hYP2ylScg==
   dependencies:
     "@formatjs/ecma402-abstract" "1.18.2"
     "@formatjs/fast-memoize" "2.2.0"
@@ -1867,12 +1867,12 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kong-ui-public/i18n@2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.1.4.tgz#14358c953511da14ca59c0475a7c6f8706abf1e7"
-  integrity sha512-fueflh8p98qLITjfqzRoIDXhqTWv5GEiFduSxs5p2f5J1bIeczRTwG3T3k86KI8HwbiU3jG2r5+rZ6d/WFPHYg==
+"@kong-ui-public/i18n@2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@kong-ui-public/i18n/-/i18n-2.1.5.tgz#60e548d6227c74297ea1f318463eccfcefb89c4d"
+  integrity sha512-8qo4syOcdpshnriFfc4+JIvh4rOlwc4OD58kLokOGFY6Z8FfJD3mvOeGrUCo4Z1VbMUCYw+U91Xcj+zeuXjK8Q==
   dependencies:
-    "@formatjs/intl" "^2.10.0"
+    "@formatjs/intl" "^2.10.1"
     flat "^6.0.1"
     intl-messageformat "^10.5.11"
 
