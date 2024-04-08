@@ -38,7 +38,7 @@
                   :page-size="route.params.size"
                   :headers="[
                     { label: 'Name', key: 'name' },
-                    ...((dataplanesData?.items[0]?.namespace ?? '').length > 0 ? [{ label: 'Namespace', key: 'namespace' }] : []),
+                    { label: 'Namespace', key: 'namespace' },
                     ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
                     { label: 'Certificate Info', key: 'certificate' },
                     { label: 'Status', key: 'status' },
@@ -84,7 +84,7 @@
                         name: 'builtin-gateway-data-plane-summary-view',
                         params: {
                           mesh: row.mesh,
-                          dataPlane: row.name,
+                          dataPlane: row.id,
                         },
                         query: {
                           page: route.params.page,
@@ -161,7 +161,7 @@
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
-                          dataPlane: row.name,
+                          dataPlane: row.id,
                         },
                       }"
                     >

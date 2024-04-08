@@ -42,11 +42,11 @@
               :page-number="route.params.page"
               :page-size="route.params.size"
               :headers="[
+                { label: '&nbsp;', key: 'type' },
                 { label: 'Name', key: 'name' },
-                ...((data?.items[0]?.namespace ?? '').length > 0 ? [{ label: 'Namespace', key: 'namespace' }] : []),
-                { label: 'Type', key: 'type' },
-                { label: 'Services', key: 'services' },
+                { label: 'Namespace', key: 'namespace' },
                 ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
+                { label: 'Services', key: 'services' },
                 { label: 'Certificate Info', key: 'certificate' },
                 { label: 'Status', key: 'status' },
                 { label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -82,21 +82,40 @@
                 <KSelect
                   class="filter-select"
                   label="Type"
-                  :items="['all', 'standard', 'builtin', 'delegated'].map((value) => ({
+                  :items="(['all', 'standard', 'builtin', 'delegated'] as const).map((value) => ({
                     value,
                     label: t(`data-planes.type.${value}`),
                     selected: value === route.params.dataplaneType,
                   }))"
                   @selected="route.update({ dataplaneType: String($event.value) })"
                 >
-                  <template #item-template="{ item: value }">
-                    {{ value.label }}
+                  <template #selected-item-template="{ item }">
+                    <XIcon
+                      v-if="item && item.value !== 'all'"
+                      :size="KUI_ICON_SIZE_40"
+                      :name="item.value as ('standard' | 'builtin' | 'delegated')"
+                    />
+                    {{ item?.label }}
+                  </template>
+                  <template #item-template="{ item }">
+                    <XIcon
+                      v-if="item.value !== 'all'"
+                      :name="item.value as ('standard' | 'builtin' | 'delegated')"
+                    />
+                    {{ item.label }}
                   </template>
                 </KSelect>
               </template>
 
+              <template #type="{ row: item }">
+                <XIcon :name="item.dataplaneType">
+                  {{ t(`data-planes.type.${item.dataplaneType}`) }}
+                </XIcon>
+              </template>
+
               <template #name="{ row: item }">
                 <RouterLink
+                  data-action
                   class="name-link"
                   :title="item.name"
                   :to="{
@@ -119,10 +138,6 @@
 
               <template #namespace="{ row: item }">
                 {{ item.namespace }}
-              </template>
-
-              <template #type="{ row }">
-                {{ t(`data-planes.type.${row.dataplaneType}`) }}
               </template>
 
               <template #services="{ row }">
@@ -281,7 +296,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { KUI_ICON_SIZE_30, KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
 import type { DataplaneOverviewCollectionSource } from '../sources'
@@ -296,13 +311,24 @@ import type { MeSource } from '@/app/me/sources'
 </script>
 
 <style lang="scss" scoped>
+.app-collection:deep(:is(th, td):nth-child(1)) {
+  padding-left: 8px !important;
+  padding-right: 0 !important;
+  width: 16px !important;
+}
+.app-collection :deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
+}
+
 .data-plane-proxy-filter {
-  flex-basis: 350px;
+  flex-basis: 310px;
   flex-grow: 1;
 }
 
 .filter-select {
-  flex-basis: 205px;
+  flex-basis: 245px;
   display: flex;
   flex-direction: row;
   align-items: center;

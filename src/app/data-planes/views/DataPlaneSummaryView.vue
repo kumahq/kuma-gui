@@ -29,7 +29,9 @@
         >
           <AppView>
             <template #title>
-              <h2>
+              <h2
+                :class="`type-${item.dataplaneType}`"
+              >
                 <RouterLink
                   :to="{
                     name: 'data-plane-detail-view',
@@ -283,6 +285,14 @@ const props = defineProps<{
 }>()
 </script>
 <style lang="scss" scoped>
+h2.type-standard {
+  --icon-before: url('@/assets/images/east-west.svg') !important;
+}
+h2.type-builtin,
+h2.type-delegated {
+  --icon-before: url('@/assets/images/portal.svg') !important;
+}
+
 .status-with-reason {
   display: flex;
   align-items: center;

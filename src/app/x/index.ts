@@ -1,5 +1,6 @@
 import XAction from './components/x-action/XAction.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
+import XIcon from './components/x-icon/XIcon.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
 import type { ServiceDefinition } from '@/services/utils'
@@ -9,6 +10,7 @@ type Token = ReturnType<typeof token>
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    XIcon: typeof XIcon
     XAction: typeof XAction
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
@@ -23,6 +25,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         service: () => {
           return [
             ['XAction', XAction],
+            ['XIcon', XIcon],
             ['XTeleportTemplate', XTeleportTemplate],
             ['XTeleportSlot', XTeleportSlot],
             ['XDisclosure', XDisclosure],
