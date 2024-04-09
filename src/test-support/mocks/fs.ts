@@ -4,7 +4,6 @@ import _3 from './src/dataplanes'
 import _4 from './src/dataplanes/_overview'
 import _6 from './src/external-services'
 import _5 from './src/global-insight'
-import _0 from './src/index'
 import _13 from './src/mesh-insights'
 import _14 from './src/mesh-insights/_'
 import _15 from './src/meshes'
@@ -86,7 +85,6 @@ import type { FS } from '@/test-support'
 
 export const fs: FS = {
   'https://kuma.io/latest_version': _124,
-  '/': _0,
   '/config': _1,
   '/policies': _2,
   '/dataplanes': _3,
