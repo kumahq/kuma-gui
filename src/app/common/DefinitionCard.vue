@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<{
 
 .definition-card-title {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: $kui-space-40;
 }
 
