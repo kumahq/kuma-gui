@@ -68,7 +68,7 @@
     "@types/prismjs": "1.26.3",
     "@types/semver": "7.5.8",
     "@typescript-eslint/eslint-plugin": "7.6.0",
-    "@typescript-eslint/parser": "7.5.0",
+    "@typescript-eslint/parser": "7.6.0",
     "@vitejs/plugin-vue": "5.0.4",
     "@vitest/coverage-istanbul": "1.4.0",
     "@vue/eslint-config-typescript": "13.0.0",
