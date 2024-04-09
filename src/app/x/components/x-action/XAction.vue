@@ -39,7 +39,7 @@
 </template>
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 import type { RouteLocationNamedRaw } from 'vue-router'
 type BooleanLocationQueryValue = string | number | undefined | boolean
@@ -47,6 +47,7 @@ type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue
 type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
+const router = useRouter()
 
 const props = withDefaults(defineProps<{
   href?: string
@@ -74,12 +75,27 @@ const query = computed(() => {
     return prev
   }, {})
 })
+
 watch(() => props.mount, (val) => {
   if (typeof val === 'function') {
     val({
       ...props.to,
       query: query.value,
     })
+  }
+}, { immediate: true })
+
+watch(() => props.to, (val) => {
+  try {
+    router.resolve({
+      ...val,
+      query: query.value,
+    })
+  } catch (e) {
+    if (e instanceof Error) {
+      e.message = `${e.toString()}: ${JSON.stringify(val)}`
+    }
+    console.error(e)
   }
 }, { immediate: true })
 </script>
