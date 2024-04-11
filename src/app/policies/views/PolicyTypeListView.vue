@@ -8,8 +8,6 @@
       v-slot="{ route, t }"
       name="policy-list-view"
       :params="{
-        page: 1,
-        size: me.pageSize,
         mesh: '',
         policyPath: '',
         policy: '',
@@ -60,14 +58,14 @@
                         :key="current"
                       >
                         <div
-                          v-for="policyType in items"
+                          v-for="(policyType, i) in items"
                           :key="policyType.path"
                           class="policy-type-link-wrapper"
                           :class="{
                             'policy-type-link-wrapper--is-active': current && current.path === policyType.path,
                           }"
                         >
-                          <RouterLink
+                          <XAction
                             class="policy-type-link"
                             :to="{
                               name: 'policy-list-view',
@@ -76,10 +74,11 @@
                                 policyPath: policyType.path,
                               },
                             }"
+                            :mount="route.params.policyPath.length === 0 && i === 0 ? route.replace : undefined"
                             :data-testid="`policy-type-link-${policyType.name}`"
                           >
                             {{ policyType.name }}
-                          </RouterLink>
+                          </XAction>
 
                           <div class="policy-count">
                             {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
