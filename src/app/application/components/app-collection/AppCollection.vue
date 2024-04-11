@@ -253,6 +253,7 @@ const click = (e: MouseEvent) => {
   flex-wrap: wrap;
   gap: $kui-space-60;
   font-size: $kui-font-size-40;
+  width: 100%;
 }
 </style>
 
