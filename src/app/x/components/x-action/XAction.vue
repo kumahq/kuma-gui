@@ -38,7 +38,7 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -52,10 +52,12 @@ const props = withDefaults(defineProps<{
   href?: string
   to?: RouteLocationRawWithBooleanQuery
   for?: string
+  mount?: (to: RouteLocationNamedRaw) => void
 }>(), {
   href: '',
   to: () => ({}),
   for: '',
+  mount: undefined,
 })
 const query = computed(() => {
   return Object.entries(props.to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
@@ -72,4 +74,12 @@ const query = computed(() => {
     return prev
   }, {})
 })
+watch(() => props.mount, (val) => {
+  if (typeof val === 'function') {
+    val({
+      ...props.to,
+      query: query.value,
+    })
+  }
+}, { immediate: true })
 </script>
