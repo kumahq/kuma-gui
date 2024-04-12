@@ -178,8 +178,10 @@
                     }, []) : props.data.dataplane.networking.inbounds]"
                     :key="inbounds"
                   >
+                    <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
                     <DataCollection
                       :items="inbounds"
+                      :predicate="(item) => item.port !== 49151"
                     >
                       <template
                         v-if="props.data.dataplaneType === 'delegated'"
@@ -189,9 +191,9 @@
                           This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway
                         </EmptyBlock>
                       </template>
-                      <template #default>
+                      <template #default="{ items: _inbounds }">
                         <template
-                          v-for="item in inbounds"
+                          v-for="item in _inbounds"
                           :key="`${item.name}`"
                         >
                           <template
