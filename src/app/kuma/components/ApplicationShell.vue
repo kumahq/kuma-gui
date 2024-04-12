@@ -150,7 +150,7 @@
           <slot name="navigation" />
         </ul>
       </nav>
-      <div
+      <main
         class="app-main-content"
       >
         <div class="app-notifications">
@@ -173,7 +173,7 @@
           </KAlert>
         </slot>
         <slot name="default" />
-      </div>
+      </main>
     </div>
   </div>
 </template>
