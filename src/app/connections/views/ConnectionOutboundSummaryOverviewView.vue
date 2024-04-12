@@ -50,10 +50,11 @@
 
                 :items="rulesData!.rules"
               >
-                <div class="stack mt-4">
+                <div class="mt-4">
                   <AccordionList
                     :initially-open="0"
                     multiple-open
+                    class="stack"
                   >
                     <template
                       v-for="(rules, key) in Object.groupBy(items, item => item.type)"
