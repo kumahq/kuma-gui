@@ -104,7 +104,7 @@
                       @change="route.update"
                     >
                       <template #name="{ row }">
-                        <RouterLink
+                        <XAction
                           :to="{
                             name: 'policy-summary-view',
                             params: {
@@ -119,7 +119,7 @@
                           }"
                         >
                           {{ row.name }}
-                        </RouterLink>
+                        </XAction>
                       </template>
                       <template #namespace="{ row: item }">
                         {{ item.namespace.length > 0 ? item.namespace : t('common.detail.none') }}
@@ -157,7 +157,7 @@
                       </template>
 
                       <template #details="{ row }">
-                        <RouterLink
+                        <XAction
                           class="details-link"
                           data-testid="details-link"
                           :to="{
@@ -175,7 +175,7 @@
                             decorative
                             :size="KUI_ICON_SIZE_30"
                           />
-                        </RouterLink>
+                        </XAction>
                       </template>
                     </AppCollection>
                     <RouterView

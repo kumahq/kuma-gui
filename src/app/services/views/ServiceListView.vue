@@ -47,7 +47,7 @@
             >
               <template #name="{ row: item }">
                 <TextWithCopyButton :text="item.name">
-                  <RouterLink
+                  <XAction
                     :to="{
                       name: 'service-detail-view',
                       params: {
@@ -61,7 +61,7 @@
                     }"
                   >
                     {{ item.name }}
-                  </RouterLink>
+                  </XAction>
                 </TextWithCopyButton>
               </template>
 
@@ -94,7 +94,7 @@
               </template>
 
               <template #details="{ row }">
-                <RouterLink
+                <XAction
                   class="details-link"
                   data-testid="details-link"
                   :to="{
@@ -111,7 +111,7 @@
                     decorative
                     :size="KUI_ICON_SIZE_30"
                   />
-                </RouterLink>
+                </XAction>
               </template>
             </AppCollection>
           </KCard>
