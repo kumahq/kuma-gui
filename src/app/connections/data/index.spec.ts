@@ -37,6 +37,7 @@ describe('ConnectionCollection', () => {
         listener: {
           '10.244.0.11_8081': {
             tcp: {},
+            $clusterName: 'edge-gateway',
             http: {
               downstream_rq_1xx: 0,
             },

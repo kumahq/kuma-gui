@@ -25,7 +25,7 @@ export const sources = (source: Source, api: KumaApi) => {
       // pick out the listeners/inbounds that start with our ip address (the.ip.address.1_port000)
       const inbounds = params.address === 'localhost'
         ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_')))
-        : Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(`${params.address}_`)))
+        : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.address}_`) && !value.$clusterName.startsWith('_')))
       // pick out the outbounds which aren't internal outbounds
       const outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
         // if we don't exclude localhost_ we end up with  a `localhost_`
