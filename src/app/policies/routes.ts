@@ -21,16 +21,6 @@ export const routes = () => {
             module: 'policies',
           },
           component: () => import('@/app/policies/views/PolicyTypeListView.vue'),
-          redirect: (to) => {
-            return {
-              ...to,
-              params: {
-                ...to.params,
-                policyPath: 'circuit-breakers',
-              },
-              name: 'policy-list-view',
-            }
-          },
           children: [
             {
               path: ':policyPath',
