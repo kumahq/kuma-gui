@@ -19,21 +19,25 @@ export const ConnectionCollection = {
               tcp,
             }
             if (typeof http !== 'undefined') {
-              // check http protocol for existence i.e. `listener.<inbound-socket-address>.http.<cluster-name>.<...stats>`
-              // and then remove the cluster-name leaving: `listener.<inbound-address_port>.http.<...stats>`
+              // check http protocol for existence i.e. `listener.<inbound-socket-address | clustername>.http.<cluster-name>.<...stats>`
+              // and then remove the cluster-name leaving: `listener.<inbound-address_port | clustername>.http.<...stats>`
               const cluster = Object.keys(http)[0]
               return [key, {
                 ...stats,
                 http: http[cluster],
+                $clusterName: cluster,
                 // check for grpc stats `listener.<inbound-socket-address>.http.grpc.<...stats>`
                 // and un-nest if we find them `listener.<inbound-socket-address>.grpc.<...stats>`
                 ...(typeof item.cluster[cluster]?.http2 !== 'undefined' ? { http2: item.cluster[cluster].http2 } : {}),
                 ...(typeof item.cluster[cluster]?.grpc !== 'undefined' ? { grpc: item.cluster[cluster].grpc } : {}),
               }]
             } else {
-              // if there is no `listener.<inbound-socket-address>.http`
-              // just move all the stats to `.tcp` i.e. `listener.<inbound-socket-address>.tcp.<...stats>`
-              return [key, stats]
+              // if there is no `listener.<inbound-socket-address | clustername>.http`
+              // just move all the stats to `.tcp` i.e. `listener.<inbound-socket-address | clustername>.tcp.<...stats>`
+              return [key, {
+                ...stats,
+                $clusterName: '',
+              }]
             }
           }),
       )
