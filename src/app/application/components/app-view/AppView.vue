@@ -7,9 +7,8 @@
       v-if="!hasParent && _breadcrumbs.length > 0"
       aria-label="Breadcrumb"
     >
-      <KBreadcrumbs
+      <XBreadcrumbs
         :items="_breadcrumbs"
-        :item-max-width="'150px'"
       />
     </nav>
 
@@ -61,12 +60,12 @@
 
 <script lang="ts" setup>
 import { KongIcon } from '@kong/icons'
-import { KBreadcrumbs, BreadcrumbItem } from '@kong/kongponents'
 import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
 import { useMainView } from '@/components'
+import type { BreadcrumbItem } from '@kong/kongponents'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: Symbol) => void
   removeBreadcrumbs: (sym: Symbol) => void
