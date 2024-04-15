@@ -4,6 +4,7 @@
     :placement="props.placement"
   >
     <component
+      v-bind="attrs"
       :is="icons[props.name]"
       :aria-described-by="slots.default ? id : undefined"
       :tabindex="slots.default ? 0 : undefined"
@@ -31,18 +32,25 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
   WarningIcon,
   PortalIcon,
+  MeshIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
-import { useSlots } from 'vue'
+import { useSlots, useAttrs } from 'vue'
 
 import { uniqueId } from '@/app/application'
 import AnonymousComponent from '@/app/application/components/anonymous-component/AnonymousComponent.vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
+const attrs = useAttrs()
 const icons = {
   standard: 'span',
   builtin: PortalIcon,
   delegated: PortalIcon,
   warning: WarningIcon,
+  mesh: MeshIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()
@@ -59,6 +67,9 @@ const props = withDefaults(defineProps<{
 })
 </script>
 <style lang="scss" scoped>
+.x-icon-mesh-icon {
+  --meshIconColor: #{$kui-color-text-decorative-aqua};
+}
 .x-icon-icon {
   --warningIconColor: #ffa600;
 }
