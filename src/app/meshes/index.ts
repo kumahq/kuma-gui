@@ -1,3 +1,4 @@
+import MeshStatus from './components/MeshStatus.vue'
 import { routes } from './routes'
 import type { SplitRouteRecordRaw } from './routes'
 import { sources } from './sources'
@@ -7,7 +8,7 @@ import { routes as gatewayRoutes, services as gatewaysModule } from '@/app/gatew
 import { routes as policyRoutes, services as policies } from '@/app/policies'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import type { ServiceDefinition } from '@/services/utils'
-import { token } from '@/services/utils'
+import { token, createInjections } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
@@ -16,9 +17,15 @@ const $ = {
   serviceRoutes: token<SplitRouteRecordRaw[]>('kuma.service.routes'),
   gatewayRoutes: token<SplitRouteRecordRaw[]>('kuma.gateway.routes'),
   policyRoutes: token<SplitRouteRecordRaw[]>('kuma.policy.routes'),
+  MeshStatus: token<typeof MeshStatus>('meshes.components.MeshStatus'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [$.MeshStatus, {
+      service: () => {
+        return MeshStatus
+      },
+    }],
     [token('meshes.routes'), {
       service: routes,
       arguments: [
@@ -60,3 +67,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...policies(app),
   ]
 }
+export const TOKENS = $
+export const [
+  useMeshStatus,
+] = createInjections(
+  $.MeshStatus,
+)

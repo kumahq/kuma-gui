@@ -1,6 +1,5 @@
 <template>
-  <component
-    :is="!hasParent ? MainView : 'div'"
+  <div
     class="app-view"
   >
     <nav
@@ -55,7 +54,7 @@
 
       <slot />
     </section>
-  </component>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -64,15 +63,12 @@ import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
-import { useMainView } from '@/components'
 import type { BreadcrumbItem } from '@kong/kongponents'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: Symbol) => void
   removeBreadcrumbs: (sym: Symbol) => void
 }
 type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
-
-const MainView = useMainView()
 
 const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
 

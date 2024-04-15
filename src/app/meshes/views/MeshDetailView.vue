@@ -20,7 +20,7 @@
           v-slot="{ data: meshInsight }: MeshInsightSource"
           :src="`/mesh-insights/${route.params.mesh}`"
         >
-          <MeshDetails
+          <MeshStatus
             :mesh="props.mesh"
             :mesh-insight="meshInsight"
           />
@@ -57,9 +57,9 @@ import type { Mesh } from '../data'
 import type { MeshInsightSource } from '../sources'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
-import { useMeshDetails } from '@/components'
+import { useMeshStatus } from '@/app/meshes/'
 
-const MeshDetails = useMeshDetails()
+const MeshStatus = useMeshStatus()
 const props = defineProps<{
   mesh: Mesh
 }>()
