@@ -9,6 +9,7 @@ import { TOKENS as APP, services as application } from '@/app/application'
 import { TOKENS as DEV, services as development } from '@/services/development'
 import { services as dataplanes } from '@/app/data-planes'
 import { TOKENS as VUE, services as vue } from '@/app/vue'
+import { services as x } from '@/app/x'
 import { services as kuma } from '@/app/kuma'
 import { build, token } from '@/services/utils'
 import Kongponents from '@kong/kongponents'
@@ -17,7 +18,6 @@ import KumaApi from '@/services/kuma-api/KumaApi'
 import { RestClient } from '@/services/kuma-api/RestClient'
 import i18nEnUs from '@/locales/en-us'
 import '../../src/assets/styles/main.scss'
-
 const el = ref()
 const $ = {
   ...VUE,
@@ -34,6 +34,7 @@ onMounted(async () => {
       const get = build(
         vue($),
         application($),
+        x($),
         development($),
         kuma($),
         dataplanes($),
@@ -152,4 +153,3 @@ onMounted(async () => {
   padding: 0.5rem;
 }
 </style>
-

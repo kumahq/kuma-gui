@@ -1,8 +1,8 @@
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
 import Theme from 'vitepress/theme'
+import Story from './components/Story.vue'
 import './style.css'
-
 export default {
   extends: Theme,
   Layout: () => {
@@ -11,6 +11,7 @@ export default {
     })
   },
   enhanceApp({ app, router, siteData }) {
+    app.component('Story', Story)
     // ...
   }
 }
