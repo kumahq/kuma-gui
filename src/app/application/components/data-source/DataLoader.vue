@@ -23,6 +23,12 @@
         </slot>
       </template>
       <slot
+        name="loadable"
+        :data="props.src !== '' ? allData[0] : undefined"
+        :error="props.src !== '' ? allErrors[0] : undefined"
+        :refresh="props.src !== '' ? refresh : () => {}"
+      />
+      <slot
         name="default"
         :data="props.src !== '' ? allData[0] : undefined"
         :error="props.src !== '' ? allErrors[0] : undefined"
@@ -46,7 +52,13 @@
     </template>
     <template v-else>
       <slot
-        v-if="props.loader"
+        name="loadable"
+        :data="props.src !== '' ? allData[0] : undefined"
+        :error="props.src !== '' ? allErrors[0] : undefined"
+        :refresh="props.src !== '' ? refresh : () => {}"
+      />
+      <slot
+        v-if="props.loader && typeof slots.loadable === 'undefined'"
         name="connecting"
         :data="props.src !== '' ? allData[0] : undefined"
         :error="props.src !== '' ? allErrors[0] : undefined"
@@ -65,7 +77,7 @@
   </DataSource>
 </template>
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
@@ -81,6 +93,8 @@ const props = withDefaults(defineProps<{
   src: '',
   loader: true,
 })
+
+const slots = useSlots()
 
 const srcData = ref<any>(undefined)
 const srcError = ref<Error | undefined>(undefined)

@@ -88,9 +88,11 @@ export const ZoneOverview = {
     }
   },
   fromCollection: (collection: CollectionResponse<PartialZoneOverview>): CollectionResponse<ZoneOverview> => {
+    const items = Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : []
     return {
       ...collection,
-      items: Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : [],
+      items,
+      total: collection.total ?? items.length,
     }
   },
 }

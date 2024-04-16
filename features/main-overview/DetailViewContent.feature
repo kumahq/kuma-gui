@@ -2,7 +2,6 @@ Feature: Overview: Detail view content
   Background:
     Given the CSS selectors
       | Alias                       | Selector                                    |
-      | details                     | [data-testid='detail-view-details']         |
       | zone-control-planes-details | [data-testid='zone-control-planes-details'] |
       | meshes-details              | [data-testid='meshes-details']              |
     And the URL "/mesh-insights" responds with
@@ -89,7 +88,6 @@ Feature: Overview: Detail view content
 
     When I visit the "/" URL
     Then the page title contains "Overview"
-    And the "$details" element exists
 
     And the "[data-testid='zone-control-planes-status']" element doesn't exist
     And the "[data-testid='meshes-status']" element contains "3"
@@ -161,7 +159,6 @@ Feature: Overview: Detail view content
     When I visit the "/" URL
 
     Then the page title contains "Overview"
-    And the "$details" element exists
 
     And the "[data-testid='zone-control-planes-status']" element contains "1/2"
     And the "[data-testid='meshes-status']" element contains "3"

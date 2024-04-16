@@ -1,6 +1,6 @@
 import { getDataplaneStatusCounts } from '@/app/data-planes/data'
 import { getServiceTypeCount } from '@/app/services/data'
-import type { PaginatedApiListResponse } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   Backend,
   MeshBackend,
@@ -61,12 +61,12 @@ export const MeshInsight = {
     }
   },
 
-  fromCollection(partialMeshInsights: PaginatedApiListResponse<PartialMeshInsight>): PaginatedApiListResponse<MeshInsight> {
+  fromCollection(collection: CollectionResponse<PartialMeshInsight>): CollectionResponse<MeshInsight> {
+    const items = Array.isArray(collection.items) ? collection.items.map(MeshInsight.fromObject) : []
     return {
-      ...partialMeshInsights,
-      items: Array.isArray(partialMeshInsights.items)
-        ? partialMeshInsights.items.map((partialMeshInsight) => MeshInsight.fromObject(partialMeshInsight))
-        : [],
+      ...collection,
+      items,
+      total: collection.total ?? items.length,
     }
   },
 }
