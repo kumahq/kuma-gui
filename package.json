@@ -70,7 +70,7 @@
     "@typescript-eslint/eslint-plugin": "7.7.0",
     "@typescript-eslint/parser": "7.6.0",
     "@vitejs/plugin-vue": "5.0.4",
-    "@vitest/coverage-istanbul": "1.4.0",
+    "@vitest/coverage-istanbul": "1.5.0",
     "@vue/eslint-config-typescript": "13.0.0",
     "@vue/test-utils": "2.4.5",
     "@whyframe/core": "0.1.11",
@@ -110,7 +110,7 @@
     "vite": "5.2.8",
     "vite-svg-loader": "5.1.0",
     "vitepress": "1.0.2",
-    "vitest": "1.4.0",
+    "vitest": "1.5.0",
     "vue-docgen-cli": "4.79.0",
     "vue-tsc": "2.0.11"
   },
