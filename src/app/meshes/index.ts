@@ -6,6 +6,7 @@ import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-pl
 import { services as externalServicesModule } from '@/app/external-services'
 import { routes as gatewayRoutes, services as gatewaysModule } from '@/app/gateways'
 import { routes as policyRoutes, services as policies } from '@/app/policies'
+import { services as rules } from '@/app/rules'
 import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
@@ -65,6 +66,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...gatewaysModule(app),
     ...dataplanes(app),
     ...policies(app),
+    ...rules(app),
   ]
 }
 export const TOKENS = $

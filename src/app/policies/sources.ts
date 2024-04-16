@@ -16,7 +16,7 @@ export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplane
 
 export const sources = (api: KumaApi) => {
   return defineSources({
-    '/*/policy-types': () => {
+    '/policy-types': () => {
       return api.getPolicyTypes()
     },
 

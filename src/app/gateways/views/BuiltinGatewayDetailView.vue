@@ -15,7 +15,7 @@
       >
         <DataSource
           v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
-          :src="`/*/policy-types`"
+          :src="`/policy-types`"
         >
           <DataLoader
             v-slot="{ data: rulesData }: GatewayRulesSource"
