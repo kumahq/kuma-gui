@@ -66,7 +66,7 @@
                           }"
                         >
                           <XAction
-                            class="policy-type-link"
+                            :class="$style['policy-type-link']"
                             :to="{
                               name: 'policy-list-view',
                               params: {
@@ -106,9 +106,11 @@
 </template>
 
 <script lang="ts" setup>
+
 import type { MeSource } from '@/app/me/sources'
 import type { MeshInsightSource } from '@/app/meshes/sources'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+
 </script>
 <style lang="scss" scoped>
 .policy-list-content {
@@ -139,15 +141,16 @@ import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
   color: $kui-color-text-neutral;
 }
 
-.policy-type-link {
-  color: currentColor;
-  flex-grow: 1;
-  padding: $kui-space-40 $kui-space-60;
-}
-
 .policy-count {
   text-align: right;
   padding-right: $kui-space-60;
 }
 
+</style>
+<style lang="scss" module>
+.policy-type-link {
+  color: currentColor;
+  flex-grow: 1;
+  padding: $kui-space-40 $kui-space-60;
+}
 </style>

@@ -3,18 +3,29 @@
     v-if="Object.keys(props.to).length > 0"
   >
     <RouterLink
+      v-if="Object.keys(to).length > 0"
+      v-bind="attrs"
       :to="{
-        ...props.to,
+        ...to,
         query,
       }"
     >
       <slot name="default" />
     </RouterLink>
+    <span
+      v-else
+      v-bind="attrs"
+      class="error"
+      title="Unable to render link"
+    >
+      <slot name="default" />
+    </span>
   </template>
   <template
     v-else-if="props.href.length > 0"
   >
     <a
+      v-bind="attrs"
       :href="props.href"
       target="_blank"
       rel="noopener noreferrer"
@@ -25,20 +36,26 @@
   <template
     v-else-if="props.for.length > 0"
   >
-    <label :for="props.for">
+    <label
+      v-bind="attrs"
+      :for="props.for"
+    >
       <slot name="default" />
     </label>
   </template>
   <template
     v-else
   >
-    <button type="button">
+    <button
+      type="button"
+      v-bind="attrs"
+    >
       <slot name="default" />
     </button>
   </template>
 </template>
 <script lang="ts" setup>
-import { computed, watch } from 'vue'
+import { computed, watch, useAttrs } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -47,6 +64,12 @@ type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue
 type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
+
+defineOptions({
+  inheritAttrs: false,
+})
+const attrs = useAttrs()
+
 const router = useRouter()
 
 const props = withDefaults(defineProps<{
@@ -75,17 +98,22 @@ const query = computed(() => {
     return prev
   }, {})
 })
-
-watch(() => props.mount, (val) => {
-  if (typeof val === 'function') {
-    val({
-      ...props.to,
+const to = computed(() => {
+  const to = props.to
+  try {
+    router.resolve({
+      ...to,
       query: query.value,
     })
+    return to
+  } catch (e) {
+    return {}
   }
-}, { immediate: true })
-
-watch(() => props.to, (val) => {
+})
+watch(() => props.to, (val, old) => {
+  if (JSON.stringify(val) === JSON.stringify(old)) {
+    return
+  }
   try {
     router.resolve({
       ...val,
@@ -98,4 +126,19 @@ watch(() => props.to, (val) => {
     console.error(e)
   }
 }, { immediate: true })
+
+watch(() => props.mount, (val) => {
+  if (typeof val === 'function' && Object.keys(to).length > 0) {
+    val({
+      ...props.to,
+      query: query.value,
+    })
+  }
+}, { immediate: true })
+
 </script>
+<style lang="scss" scoped>
+.error {
+  text-decoration: underline dotted;
+}
+</style>
