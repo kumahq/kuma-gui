@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
     name="diagnostics"
     :params="{
       codeSearch: '',
@@ -28,8 +28,8 @@
 
       <KCard>
         <DataLoader
-          v-slot="{ data }: ControlPlaneConfigSource"
-          :src="`/config`"
+          v-slot="{ data }"
+          :src="uri(sources, `/config`, {})"
         >
           <CodeBlock
             data-testid="code-block-diagnostics"
@@ -50,5 +50,5 @@
 </template>
 <script lang="ts" setup>
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-import type { ControlPlaneConfigSource } from '@/app/control-planes/sources'
+import { sources } from '@/app/control-planes/sources'
 </script>

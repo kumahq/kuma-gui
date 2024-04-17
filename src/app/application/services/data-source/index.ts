@@ -1,3 +1,5 @@
+import { compile } from 'path-to-regexp'
+
 import CallableEventSource from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
@@ -31,6 +33,37 @@ export const defineSources = <T extends Record<PropertyKey, unknown>>(sources: E
   return sources
 }
 
+type Sources = Record<PropertyKey, (...args: any[]) => any>
+type SourceFactory = (...args: any[]) => Sources
+export type TypeOf<T> = T extends { typeOf(): any } ? ReturnType<T['typeOf']> : any
+
+class TypedString<T = unknown> {
+  constructor(
+    protected str: string,
+  ) {}
+
+  toString() {
+    return this.str
+  }
+
+  typeOf() {
+    return undefined as T
+  }
+}
+
+const cache = new Map()
+export const useUri = () => {
+  return <T extends SourceFactory, K extends keyof ReturnType<T>>(_typeRef: T, src: K, params: ExtractRouteParams<K>, query: Partial<PaginationParams> = {}) => {
+    const str = String(src)
+    if (!cache.has(str)) {
+      cache.set(str, compile(str))
+    }
+    const interpolate = cache.get(str)
+    const q = Object.entries(query).reduce<string[]>((prev, [key, value]) => prev.concat(`${key}=${value}`), [])
+    const uri = `${interpolate(params)}${q.length > 0 ? `?${q.join('&')}` : ''}`
+    return new TypedString<Awaited<ReturnType<ReturnType<T>[K]>>>(uri)
+  }
+}
 type Configuration = {
   interval?: number
   cacheControl?: string

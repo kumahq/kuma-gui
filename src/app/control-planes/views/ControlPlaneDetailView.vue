@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ can, t }"
+    v-slot="{ can, t, uri }"
     name="home"
   >
     <AppView>
@@ -16,12 +16,12 @@
         class="stack"
       >
         <DataLoader
-          v-slot="{ data }: GlobalInsightSource"
-          src="/global-insight"
+          v-slot="{ data }"
+          :src="uri(ControlPlaneSources, '/global-insight', {})"
         >
           <ControlPlaneStatus
             :can-use-zones="can('use zones')"
-            :global-insight="data!"
+            :global-insight="data"
           />
         </DataLoader>
 
@@ -30,10 +30,13 @@
             v-if="can('use zones')"
           >
             <DataLoader
-              src="/zone-cps?page=1&size=10"
+              :src="uri(ZoneSources, '/zone-cps', {}, {
+                page: 1,
+                size: 10,
+              })"
             >
               <template
-                #loadable="{ data }: ZoneOverviewCollectionSource"
+                #loadable="{ data }"
               >
                 <div class="card-header">
                   <div class="card-title">
@@ -75,10 +78,13 @@
 
           <KCard>
             <DataLoader
-              src="/mesh-insights?page=1&size=10"
+              :src="uri(MeshSources, '/mesh-insights', {}, {
+                page: 1,
+                size: 10,
+              })"
             >
               <template
-                #loadable="{ data }: MeshInsightCollectionSource"
+                #loadable="{ data }"
               >
                 <div class="card-header">
                   <div class="card-title">
@@ -110,12 +116,12 @@
 <script lang="ts" setup>
 import { AddIcon } from '@kong/icons'
 
-import { GlobalInsightSource } from '../sources'
+import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
-import type { MeshInsightCollectionSource } from '@/app/meshes/sources'
+import { sources as MeshSources } from '@/app/meshes/sources'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
-import type { ZoneOverviewCollectionSource } from '@/app/zones/sources'
+import { sources as ZoneSources } from '@/app/zones/sources'
 
 const ControlPlaneStatus = useControlPlaneStatus()
 </script>

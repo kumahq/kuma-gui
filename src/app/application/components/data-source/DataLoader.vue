@@ -1,9 +1,9 @@
 <template>
   <DataSource
     v-slot="{ refresh }"
-    :src="props.src"
+    :src="props.src as T"
     @change="(data) => srcData = data"
-    @error="(e) => srcError = e"
+    @error="(e: Error) => srcError = e"
   >
     <template
       v-if="allData.length > 0 && allData.every(item => typeof item !== 'undefined')"
@@ -15,8 +15,8 @@
       >
         <slot
           name="disconnected"
-          :data="props.src !== '' ? allData[0] : undefined"
-          :error="props.src !== '' ? allErrors[0] : undefined"
+          :data="srcData"
+          :error="allErrors[0]"
           :refresh="props.src !== '' ? refresh : () => {}"
         >
           <!-- KAlert -->
@@ -24,14 +24,14 @@
       </template>
       <slot
         name="loadable"
-        :data="props.src !== '' ? allData[0] : undefined"
-        :error="props.src !== '' ? allErrors[0] : undefined"
+        :data="srcData"
+        :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
       <slot
         name="default"
-        :data="props.src !== '' ? allData[0] : undefined"
-        :error="props.src !== '' ? allErrors[0] : undefined"
+        :data="srcData as NonNullable<typeof srcData>"
+        :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
     </template>
@@ -41,8 +41,8 @@
     >
       <slot
         name="error"
-        :data="props.src !== '' ? allData[0] : undefined"
-        :error="props.src !== '' ? allErrors[0] : undefined"
+        :data="srcData"
+        :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <ErrorBlock
@@ -53,15 +53,15 @@
     <template v-else>
       <slot
         name="loadable"
-        :data="props.src !== '' ? allData[0] : undefined"
-        :error="props.src !== '' ? allErrors[0] : undefined"
+        :data="srcData"
+        :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
       <slot
         v-if="props.loader && typeof slots.loadable === 'undefined'"
         name="connecting"
-        :data="props.src !== '' ? allData[0] : undefined"
-        :error="props.src !== '' ? allErrors[0] : undefined"
+        :data="srcData"
+        :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <LoadingBlock />
@@ -69,39 +69,44 @@
       <slot
         v-else
         name="default"
-        :data="props.src !== '' ? allData[0] : undefined"
-        :error="props.src !== '' ? allErrors[0] : undefined"
+        :data="srcData as NonNullable<typeof srcData>"
+        :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
     </template>
   </DataSource>
 </template>
-<script lang="ts" setup>
+<script lang="ts" generic="T extends string | {
+  toString(): string
+  typeOf(): any
+}" setup
+>
 import { computed, ref, useSlots } from 'vue'
 
+import type { TypeOf } from '@/app/application'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 const props = withDefaults(defineProps<{
-  data?: any[]
+  data?: TypeOf<T>[]
   errors?: (Error | undefined)[]
-  src?: string
+  src?: T
   loader?: boolean
 }>(), {
   errors: () => [],
   data: () => [],
-  src: '',
+  src: '' as any,
   loader: true,
 })
 
 const slots = useSlots()
 
-const srcData = ref<any>(undefined)
+const srcData = ref<TypeOf<T> | undefined>(undefined)
 const srcError = ref<Error | undefined>(undefined)
 
 const allData = computed(() => {
   if (props.src !== '') {
-    return [srcData.value].concat(props.data)
+    return [srcData.value as TypeOf<T>].concat(props.data)
   }
   return props.data
 })

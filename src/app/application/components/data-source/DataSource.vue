@@ -1,29 +1,33 @@
 <template>
   <slot
-    :data="(message as any)"
+    :data="message"
     :error="error"
     :refresh="refresh"
   />
-
   <span />
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" generic="T extends string | {
+  toString(): string
+  typeOf(): any
+}" setup
+>
 import { watch, ref, onBeforeUnmount } from 'vue'
 
 import { useDataSourcePool } from '@/app/application'
+import type { TypeOf } from '@/app/application'
 
 const data = useDataSourcePool()
 
 const props = defineProps<{
-  src: string
+  src: T
 }>()
 
-const message = ref<unknown>(undefined)
+const message = ref<TypeOf<T> | undefined>(undefined)
 const error = ref<Error | undefined>(undefined)
 
 const emit = defineEmits<{
-  (e: 'change', value: any): void
+  (e: 'change', value: TypeOf<T>): void
   (e: 'error', error: Error): void
 }>()
 
@@ -37,7 +41,8 @@ let source: DataSource | undefined
 let controller = new AbortController()
 let close: Close = () => {}
 
-const open = (src: string): Close => {
+const open = (_src: T): Close => {
+  const src = _src.toString()
   // abort anything previous and reset the AbortController
   // if open if called imediately after a close.
   // this could be the controllers second call if it was closed first
@@ -62,7 +67,7 @@ const open = (src: string): Close => {
       // if we got a message we are no longer erroneous
       error.value = undefined
       // this should emit proper events
-      emit('change', message.value)
+      emit('change', message.value as TypeOf<T>)
     },
     { signal: controller.signal },
   )
@@ -95,9 +100,11 @@ const refresh = () => {
 
 // a change of src="" performs a full 'hard close' and acquiring of a new Source
 // close is updated to close this new Source
-watch(() => props.src, function (src) {
-  close()
-  close = open(src)
+watch(() => props.src, (src, prev) => {
+  if (`${src}` !== `${prev}`) {
+    close()
+    close = open(src)
+  }
 }, { immediate: true })
 
 // close everything

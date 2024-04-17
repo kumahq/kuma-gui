@@ -11,10 +11,6 @@ export type ControlPlaneAddresses = {
 
 export type ControlPlaneAddressesSource = DataSourceResponse<ControlPlaneAddresses>
 
-export type ControlPlaneConfigSource = DataSourceResponse<ControlPlaneConfig>
-
-export type GlobalInsightSource = DataSourceResponse<GlobalInsight>
-
 // mostly taken from semver-compare
 const compare = (a: string, b: string) => {
   const pa = a.split('.')
