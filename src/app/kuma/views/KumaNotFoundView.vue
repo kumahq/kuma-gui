@@ -6,12 +6,17 @@
       <div class="overview">
         <KEmptyState>
           <template #icon>
-            <WarningIcon class="mb-3" />
+            <XIcon
+              name="warning"
+              class="mb-3"
+            />
           </template>
 
           <template #title>
             <h1>
-              <RouteTitle title="Page Not Found" />
+              <RouteTitle
+                title="Page Not Found"
+              />
             </h1>
           </template>
 
@@ -30,7 +35,3 @@
     </AppView>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import WarningIcon from '@/app/common/WarningIcon.vue'
-</script>
