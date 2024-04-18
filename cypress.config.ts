@@ -74,8 +74,13 @@ export default defineConfig({
         if (results && results.stats.failures > 0) {
           for (const test of results.tests.filter((test) => test.state === 'failed')) {
             if (test.displayError) {
-              const newLineIndex = test.displayError.indexOf('\n')
-              const message = test.displayError.substring(0, newLineIndex !== -1 ? newLineIndex : test.displayError.length)
+              const trimmedMessage = test.displayError
+                .replace(/^Error: The following error originated from your application code, not from Cypress\..+/, '')
+                .replace(/^AssertionError: cypress-fail-on-console-error:/, '')
+                .trim()
+                .replace(/^> /, '')
+              const newLineIndex = trimmedMessage.indexOf('\n')
+              const message = trimmedMessage.substring(0, newLineIndex !== -1 ? newLineIndex : trimmedMessage.length)
               console.log(`::error file=${results.spec.relative}::${message}`)
             }
           }
