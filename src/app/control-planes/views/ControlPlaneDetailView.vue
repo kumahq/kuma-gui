@@ -12,105 +12,97 @@
         </h1>
       </template>
 
-      <DataSource
-        v-slot="{ data: globalInsight, error: globalInsightError }: GlobalInsightSource"
-        src="/global-insight"
+      <div
+        class="stack"
       >
-        <ErrorBlock
-          v-if="globalInsightError"
-          :error="globalInsightError"
-        />
+        <DataLoader
+          v-slot="{ data }: GlobalInsightSource"
+          src="/global-insight"
+        >
+          <ControlPlaneStatus
+            :can-use-zones="can('use zones')"
+            :global-insight="data!"
+          />
+        </DataLoader>
 
-        <LoadingBlock v-else-if="globalInsight === undefined" />
-
-        <template v-else>
-          <div
-            class="stack"
-            data-testid="detail-view-details"
+        <div class="columns">
+          <KCard
+            v-if="can('use zones')"
           >
-            <ControlPlaneStatus
-              :can-use-zones="can('use zones')"
-              :global-insight="globalInsight"
-            />
+            <DataLoader
+              src="/zone-cps?page=1&size=10"
+            >
+              <template
+                #loadable="{ data }: ZoneOverviewCollectionSource"
+              >
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>
+                      {{ t('main-overview.detail.zone_control_planes.title') }}
+                    </h2>
 
-            <div class="columns">
-              <KCard v-if="can('use zones')">
-                <DataSource
-                  v-slot="{ data: data, error }: ZoneOverviewCollectionSource"
-                  src="/zone-cps?page=1&size=10"
-                >
-                  <ErrorBlock
-                    v-if="error"
-                    :error="error"
-                  />
+                    <XAction
+                      :to="{ name: 'zone-cp-list-view' }"
+                    >
+                      {{ t('main-overview.detail.health.view_all') }}
+                    </XAction>
+                  </div>
+                  <!-- Here we check the length of the zones because if the length is zero then -->
+                  <!-- we show a create button in the empty state for the list therefore we don't need -->
+                  <!-- a repeated button here -->
+                  <div
+                    v-if="(data?.items.length ?? 0 > 0) && can('create zones')"
+                    class="card-actions"
+                  >
+                    <KButton
+                      appearance="primary"
+                      :to="{ name: 'zone-create-view' }"
+                    >
+                      <AddIcon />
 
-                  <template v-else>
-                    <div class="card-header">
-                      <div class="card-title">
-                        <h2>{{ t('main-overview.detail.zone_control_planes.title') }}</h2>
+                      {{ t('zones.index.create') }}
+                    </KButton>
+                  </div>
+                </div>
 
-                        <RouterLink :to="{ name: 'zone-cp-list-view' }">
-                          {{ t('main-overview.detail.health.view_all') }}
-                        </RouterLink>
-                      </div>
-                      <!-- Here we check the length of the zones because if the length is zero then -->
-                      <!-- we show a create button in the empty state for the list therefore we don't need -->
-                      <!-- a repeated button here -->
-                      <div
-                        v-if="can('create zones') && (data?.items?.length ?? 0 > 0)"
-                        class="card-actions"
-                      >
-                        <KButton
-                          appearance="primary"
-                          :to="{ name: 'zone-create-view' }"
-                        >
-                          <AddIcon />
+                <ZoneControlPlanesList
+                  data-testid="zone-control-planes-details"
+                  :items="data?.items"
+                />
+              </template>
+            </DataLoader>
+          </KCard>
 
-                          {{ t('zones.index.create') }}
-                        </KButton>
-                      </div>
-                    </div>
+          <KCard>
+            <DataLoader
+              src="/mesh-insights?page=1&size=10"
+            >
+              <template
+                #loadable="{ data }: MeshInsightCollectionSource"
+              >
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>
+                      {{ t('main-overview.detail.meshes.title') }}
+                    </h2>
 
-                    <ZoneControlPlanesList
-                      data-testid="zone-control-planes-details"
-                      :items="data?.items"
-                    />
-                  </template>
-                </DataSource>
-              </KCard>
+                    <XAction
+                      :to="{ name: 'mesh-list-view' }"
+                    >
+                      {{ t('main-overview.detail.health.view_all') }}
+                    </XAction>
+                  </div>
+                </div>
 
-              <KCard>
-                <DataSource
-                  v-slot="{ data: data, error }: MeshInsightCollectionSource"
-                  src="/mesh-insights?page=1&size=10"
-                >
-                  <ErrorBlock
-                    v-if="error"
-                    :error="error"
-                  />
-
-                  <template v-else>
-                    <div class="card-header">
-                      <div class="card-title">
-                        <h2>{{ t('main-overview.detail.meshes.title') }}</h2>
-
-                        <RouterLink :to="{ name: 'mesh-list-view' }">
-                          {{ t('main-overview.detail.health.view_all') }}
-                        </RouterLink>
-                      </div>
-                    </div>
-
-                    <MeshInsightsList
-                      data-testid="meshes-details"
-                      :items="data?.items"
-                    />
-                  </template>
-                </DataSource>
-              </KCard>
-            </div>
-          </div>
-        </template>
-      </DataSource>
+                <MeshInsightsList
+                  data-testid="meshes-details"
+                  :items="data?.items"
+                />
+              </template>
+            </DataLoader>
+          </KCard>
+        </div>
+      </div>
     </AppView>
   </RouteView>
 </template>
@@ -119,8 +111,6 @@
 import { AddIcon } from '@kong/icons'
 
 import { GlobalInsightSource } from '../sources'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { useControlPlaneStatus } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import type { MeshInsightCollectionSource } from '@/app/meshes/sources'
