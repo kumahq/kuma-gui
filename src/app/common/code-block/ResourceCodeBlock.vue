@@ -1,63 +1,61 @@
 <template>
   <div>
-    <KToggle
-      v-slot="{ isToggled, toggle }"
-      :toggled="false"
+    <CodeBlock
+      language="yaml"
+      :code="yamlUniversal"
+      :is-searchable="props.isSearchable"
+      :code-max-height="props.codeMaxHeight"
+      :query="props.query"
+      :is-filter-mode="props.isFilterMode"
+      :is-reg-exp-mode="props.isRegExpMode"
+      @query-change="emit('query-change', $event)"
+      @filter-mode-change="emit('filter-mode-change', $event)"
+      @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
     >
-      <CodeBlock
-        language="yaml"
-        :code="yamlUniversal"
-        :is-searchable="props.isSearchable"
-        :code-max-height="props.codeMaxHeight"
-        :query="props.query"
-        :is-filter-mode="props.isFilterMode"
-        :is-reg-exp-mode="props.isRegExpMode"
-        @query-change="emit('query-change', $event)"
-        @filter-mode-change="emit('filter-mode-change', $event)"
-        @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
-      >
-        <template #secondary-actions>
-          <KTooltip
-            class="kubernetes-copy-button-tooltip"
-            :text="t('common.copyKubernetesText')"
-            placement="bottomEnd"
-            max-width="200"
-          >
-            <CopyButton
-              class="kubernetes-copy-button"
-              :get-text="getYamlAsKubernetes"
-              :copy-text="t('common.copyKubernetesText')"
-              has-border
-              icon-color="currentColor"
-              @click="() => {
-                if(isToggled.value === false) {
-                  toggle()
-                }
-              }"
-            >
-              {{ t('common.copyKubernetesShortText') }}
-            </CopyButton>
-          </KTooltip>
-        </template>
-      </CodeBlock>
-      <slot
-        :copy="(cb: CopyCallback) => {
-          if(isToggled.value !== false) {
-            toggle()
-          }
-          copy(cb)
-        }"
-        :copying="isToggled.value"
-      />
-    </KToggle>
+      <template #secondary-actions>
+        <KCodeBlockIconButton
+          :copy-tooltip="t('common.copyKubernetesText')"
+          theme="dark"
+          @click="async () => {
+            if (!isCopying) {
+              isCopying = true
+              // Trigger an update of KCopy’s text
+              text = toYamlRepresentation(await fetcher())
+              // Wait a Vue tick for KCopy to have received the new text
+              await nextTick()
+              // Copy the text
+              kCopyElement?.copy()
+            }
+          }"
+        >
+          <KCopy
+            ref="kCopyElement"
+            format="hidden"
+            :text="text"
+          />
+
+          {{ t('common.copyKubernetesShortText') }}
+        </KCodeBlockIconButton>
+      </template>
+    </CodeBlock>
+
+    <slot
+      :copy="(cb: CopyCallback) => {
+        if (isCopying) {
+          isCopying = false
+        }
+        copy(cb)
+      }"
+      :copying="isCopying"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { KCopy } from '@kong/kongponents'
+import { computed, nextTick, ref } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import CopyButton from '@/app/common/CopyButton.vue'
 import type { SingleResourceParameters } from '@/types/api.d'
 import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'
@@ -65,7 +63,6 @@ import { toYaml } from '@/utilities/toYaml'
 
 type Resolve = (data: Entity) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
-type Copy = (cb: CopyCallback) => void
 
 const { t } = useI18n()
 
@@ -90,25 +87,27 @@ const emit = defineEmits<{
   (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
+const isCopying = ref(false)
+const text = ref('')
+const kCopyElement = ref<InstanceType<typeof KCopy> | null>(null)
+
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
 
-const noop: Copy = () => {}
-
-const copy = ref<Copy>(noop)
-let p = new Promise((resolve: Resolve, reject) => { copy.value = (cb) => cb(resolve, reject) })
+// False negative. We should enable the TypeScript-specific linter rule, but that requires further changes.
+// eslint-disable-next-line no-extra-parens
+const copy = ref<(cb: CopyCallback) => void>(() => {})
+let promise = new Promise((resolve: Resolve, reject) => {
+  copy.value = (cb) => cb(resolve, reject)
+})
 
 const fetcher = async (_params?: SingleResourceParameters): Promise<Entity> => {
-  let res: Entity
   try {
-    res = await p
+    return promise
   } finally {
-    p = new Promise((resolve, reject) => { copy.value = (cb) => cb(resolve, reject) })
+    promise = new Promise((resolve, reject) => {
+      copy.value = (cb) => cb(resolve, reject)
+    })
   }
-  return res
-}
-
-async function getYamlAsKubernetes() {
-  return toYamlRepresentation(await fetcher())
 }
 
 function toYamlRepresentation(resource: Entity): string {
@@ -117,15 +116,3 @@ function toYamlRepresentation(resource: Entity): string {
   return toYaml(resourceWithoutTimes)
 }
 </script>
-
-<style lang="scss">
-.kubernetes-copy-button-tooltip {
-  display: flex;
-}
-
-.kubernetes-copy-button:not(.increase-specificity.increase-specificity) {
-  padding: $kui-space-20 $kui-space-40;
-  border: $kui-border-width-10 solid $kui-color-border-neutral-weak;
-  border-radius: $kui-border-radius-20;
-}
-</style>
