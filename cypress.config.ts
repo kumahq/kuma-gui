@@ -64,10 +64,21 @@ export default defineConfig({
         }),
       )
 
-      // Deletes videos of successful specs to avoid uploading them as GitHub artifacts
       on('after:spec', (_spec, results) => {
+        // Deletes videos of successful specs to avoid uploading them as GitHub artifacts
         if (results && results.video && results.stats.failures === 0) {
           fs.unlinkSync(results.video)
+        }
+
+        // Extract the error message of a failing test to log it via the special GitHub Actions annotation for errors. This way, the workflow summary doesn’t just show “Process completed with exit code 1”.
+        if (results && results.stats.failures > 0) {
+          for (const test of results.tests.filter((test) => test.state === 'failed')) {
+            if (test.displayError) {
+              const newLineIndex = test.displayError.indexOf('\n')
+              const message = test.displayError.substring(0, newLineIndex !== -1 ? newLineIndex : test.displayError.length)
+              console.log(`::error file=${results.spec.relative}::${message}`)
+            }
+          }
         }
       })
 
