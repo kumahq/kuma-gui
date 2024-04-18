@@ -58,12 +58,13 @@
                         {{ t('policies.collection.outbound') }}
                       </KBadge>
 
-                      <DocumentationLink
+                      <XAction
+                        type="docs"
                         :href="t('policies.href.docs', { name: policyType.name })"
                         data-testid="policy-documentation-link"
                       >
                         <span class="visually-hidden">{{ t('common.documentation') }}</span>
-                      </DocumentationLink>
+                      </XAction>
                     </div>
                     <h3>
                       <PolicyTypeTag
@@ -220,7 +221,6 @@ import { ArrowRightIcon } from '@kong/icons'
 
 import type { PolicyType } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import SummaryView from '@/app/common/SummaryView.vue'

@@ -16,10 +16,25 @@
   >
     <a
       :href="props.href"
+      class="type-docs"
       target="_blank"
-      rel="noopener noreferrer"
+      :rel="props.type !== 'docs' ? `noopener noreferrer` : ``"
     >
-      <slot name="default" />
+      <template
+        v-if="props.type === 'docs'"
+      >
+        <XIcon
+          name="docs"
+        />
+        <slot
+          name="default"
+        />
+
+      </template>
+      <slot
+        v-else
+        name="default"
+      />
     </a>
   </template>
   <template
@@ -50,12 +65,14 @@ type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
 const router = useRouter()
 
 const props = withDefaults(defineProps<{
+  type?: 'default' | 'docs' | 'create' | 'copy' | 'action'
   href?: string
   to?: RouteLocationRawWithBooleanQuery
   for?: string
   mount?: (to: RouteLocationNamedRaw) => void
 }>(), {
   href: '',
+  type: 'default',
   to: () => ({}),
   for: '',
   mount: undefined,
