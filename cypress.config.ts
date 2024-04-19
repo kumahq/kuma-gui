@@ -75,8 +75,8 @@ export default defineConfig({
           for (const test of results.tests.filter((test) => test.state === 'failed')) {
             if (test.displayError) {
               const trimmedMessage = test.displayError
-                .replace(/^Error: The following error originated from your application code, not from Cypress\..+/, '')
-                .replace(/^AssertionError: cypress-fail-on-console-error:/, '')
+                .replace(/^Error: The following error originated from your application code, not from Cypress.*\n/, '')
+                .replace(/^AssertionError: cypress-fail-on-console-error.*\n/, '')
                 .trim()
                 .replace(/^> /, '')
               const newLineIndex = trimmedMessage.indexOf('\n')
