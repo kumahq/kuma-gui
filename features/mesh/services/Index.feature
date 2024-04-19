@@ -33,7 +33,7 @@ Feature: mesh / services / index
       | Status                      |
 
   Scenario: The items have the expected content and UI elements
-    Then the "#service-list-tabs-view-tab.active" element exists
+    Then the "[data-testid='service-list-tabs-view-tab'].active" element exists
     Then the "$item" element exists 1 times
     Then the "$item:nth-child(1)" element contains
       | Value     |

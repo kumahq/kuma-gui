@@ -29,7 +29,7 @@ Feature: mesh / policies / index
 
     And the "$items-header" element exists 3 times
 
-    And the "#policy-list-index-view-tab.active" element exists
+    And the "[data-testid='policy-list-index-view-tab'].active" element exists
     And the "$item" element exists 2 times
     And the "$item:nth-child(1)" element contains
       | Value     |

@@ -38,7 +38,7 @@ Feature: mesh / builtin-gateways / index
   Scenario: The items have the expected content and UI elements
     When I visit the "/meshes/default/gateways/builtin" URL
 
-    Then the "#gateway-list-tabs-view-tab.active" element exists
+    Then the "[data-testid='gateway-list-tabs-view-tab'].active" element exists
     Then the "$item" element exists 1 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
