@@ -33,6 +33,7 @@ import {
   WarningIcon,
   PortalIcon,
   MeshIcon,
+  BookIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
@@ -51,6 +52,7 @@ const icons = {
   delegated: PortalIcon,
   warning: WarningIcon,
   mesh: MeshIcon,
+  docs: BookIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

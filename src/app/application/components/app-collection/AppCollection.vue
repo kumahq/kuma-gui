@@ -49,12 +49,13 @@
           v-if="props.emptyStateCtaTo"
           #action
         >
-          <DocumentationLink
+          <XAction
             v-if="typeof props.emptyStateCtaTo === 'string'"
+            type="docs"
             :href="props.emptyStateCtaTo"
           >
             {{ props.emptyStateCtaText }}
-          </DocumentationLink>
+          </XAction>
 
           <KButton
             v-else
@@ -100,7 +101,6 @@ import { KButton, KTable, TableHeader } from '@kong/kongponents'
 import { useSlots, ref, watch, Ref, computed } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
-import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { useI18n } from '@/utilities'
 
