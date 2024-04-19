@@ -1,10 +1,64 @@
 import { defineConfig, DefaultTheme } from 'vitepress'
+import yamlLoader from '@modyfi/vite-plugin-yaml'
+import { whyframe } from '@whyframe/core'
+import { whyframeVue } from '@whyframe/vue'
+import { DEFAULT_SCHEMA, Type } from 'js-yaml'
+import { marked } from 'marked'
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig as viteConfig } from 'vite'
+
+import { hoistUseStatements } from '../dev-utilities/hoistUseStatements'
 import { sync as globSync } from 'glob'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'kuma-gui',
   description: '',
+  vite: viteConfig({
+    plugins: [
+      whyframe({
+        defaultSrc: '/.vitepress/theme/main',
+        components: [{ name: 'Story', showSource: true }],
+      }),
+      whyframeVue({
+        include: /\.(?:vue|md)$/,
+      }),
+      yamlLoader(
+        {
+          schema: DEFAULT_SCHEMA.extend(
+            new Type('tag:yaml.org,2002:text/markdown', {
+              kind: 'scalar',
+              construct: (data) => {
+                const str = marked(data) as string
+                return str.replace(/</g, "'<'")
+                  .replace(/%7B/g, '{')
+                  .replace(/%7D/g, '}')
+              },
+            }),
+          ),
+        },
+      ),
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('../src', import.meta.url)),
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: hoistUseStatements(`
+              @import "@kong/design-tokens/tokens/scss/variables";
+            `),
+        },
+      },
+    },
+  }),
+  markdown: {
+    config: (md) => {
+      // md.use()
+    }
+  },
   cleanUrls: true,
   ignoreDeadLinks: [
     // ignore all localhost links
@@ -44,10 +98,6 @@ export default defineConfig({
       {
         text: 'Components',
         items: [
-          {
-            text: 'Index',
-            link: 'docs/components.md',
-          },
           ...getSourceItems('src/**/{components,views}/**/README.md'),
           ...getSourceItems('src/app/common/**/README.md'),
         ],
