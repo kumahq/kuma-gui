@@ -187,24 +187,21 @@
                     </template>
 
                     <template #warnings="{ row }">
-                      <KTooltip v-if="row.isCertExpired || row.warnings.length > 0">
-                        <template #content>
-                          <ul>
-                            <template v-if="row.warnings.length > 0">
-                              <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
-                            </template>
+                      <XIcon
+                        v-if="row.isCertExpired || row.warnings.length > 0"
+                        class="mr-1"
+                        name="warning"
+                      >
+                        <ul>
+                          <template v-if="row.warnings.length > 0">
+                            <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
+                          </template>
 
-                            <template v-if="row.isCertExpired">
-                              <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
-                            </template>
-                          </ul>
-                        </template>
-
-                        <WarningIcon
-                          class="mr-1"
-                          :size="KUI_ICON_SIZE_30"
-                        />
-                      </KTooltip>
+                          <template v-if="row.isCertExpired">
+                            <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
+                          </template>
+                        </ul>
+                      </XIcon>
 
                       <template v-else>
                         {{ t('common.collection.none') }}
@@ -280,7 +277,6 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import WarningIcon from '@/app/common/WarningIcon.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { MeSource } from '@/app/me/sources'
 </script>

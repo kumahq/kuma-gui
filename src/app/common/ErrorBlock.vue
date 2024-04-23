@@ -9,8 +9,10 @@
           v-if="props.appearance === 'danger'"
           :color="KUI_COLOR_TEXT_DANGER"
         />
-
-        <WarningIcon v-else />
+        <XIcon
+          v-else
+          name="warning"
+        />
       </template>
 
       <template #title>
@@ -78,7 +80,6 @@ import { DangerIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import WarningIcon from '@/app/common/WarningIcon.vue'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n } from '@/utilities'
 
