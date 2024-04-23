@@ -34,7 +34,7 @@ Feature: mesh / external-services / index
   Scenario: The items have the expected content and UI elements
     When I visit the "/meshes/default/services/external" URL
 
-    Then the "#service-list-tabs-view-tab.active" element exists
+    Then the "[data-testid='service-list-tabs-view-tab'].active" element exists
     Then the "$item" element exists 1 times
     Then the "$item:nth-child(1)" element contains
       | Value     |
