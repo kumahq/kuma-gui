@@ -45,7 +45,7 @@ Feature: mesh / services / index
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
 
     Then the URL contains "/services/internal/service-1/overview"
-    Then the "#service-detail-view-tab a" element exists
+    Then the "[data-testid='service-detail-view-tab'].active" element exists
 
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
     Then the "$item" element exists 1 times

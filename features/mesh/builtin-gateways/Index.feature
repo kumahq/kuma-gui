@@ -52,4 +52,4 @@ Feature: mesh / builtin-gateways / index
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
 
     Then the URL contains "/gateways/builtin/gateway-1/overview"
-    Then the "#builtin-gateway-detail-view-tab a" element exists
+    Then the "[data-testid='builtin-gateway-detail-view-tab'].active" element exists

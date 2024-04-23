@@ -91,8 +91,8 @@ Feature: application / MainNavigation
 
   Scenario: Secondary navigation
     When I visit the "/meshes/default/data-planes/dp-name/stats" URL
-    And the "#data-plane-stats-view-tab.active" element exists
+    And the "[data-testid='data-plane-stats-view-tab'].active" element exists
 
   Scenario: Tertiary navigation
     When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/localhost_14899/stats" URL
-    And the "#connection-inbound-summary-stats-view-tab.active" element exists
+    And the "[data-testid='connection-inbound-summary-stats-view-tab'].active" element exists

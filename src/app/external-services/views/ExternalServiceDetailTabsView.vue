@@ -37,20 +37,21 @@
         </h1>
       </template>
 
-      <NavTabs :active-route-name="route.active?.name">
+      <XTabs
+        :selected="route.active?.name"
+      >
         <template
           v-for="{ name } in route.children"
           :key="name"
-          #[`${name}`]
+          #[`${name}-tab`]
         >
-          <RouterLink
+          <XAction
             :to="{ name }"
-            :data-testid="`${name}-tab`"
           >
             {{ t(`external-services.routes.item.navigation.${name}`) }}
-          </RouterLink>
+          </XAction>
         </template>
-      </NavTabs>
+      </XTabs>
 
       <RouterView />
     </AppView>
@@ -58,6 +59,5 @@
 </template>
 
 <script lang="ts" setup>
-import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

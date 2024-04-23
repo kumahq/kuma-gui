@@ -32,7 +32,6 @@
           >
             <XAction
               :to="{ name }"
-              :data-testid="`${name}-tab`"
             >
               {{ t(`meshes.routes.item.navigation.${name}`) }}
             </XAction>
