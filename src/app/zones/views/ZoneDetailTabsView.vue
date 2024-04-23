@@ -77,20 +77,21 @@
           </KDropdown>
         </template>
 
-        <NavTabs :active-route-name="route.active?.name">
+        <XTabs
+          :selected="route.active?.name"
+        >
           <template
             v-for="{ name } in route.children"
             :key="name"
-            #[`${name}`]
+            #[`${name}-tab`]
           >
-            <RouterLink
+            <XAction
               :to="{ name }"
-              :data-testid="`${name}-tab`"
             >
               {{ t(`zone-cps.routes.item.navigation.${name}`) }}
-            </RouterLink>
+            </XAction>
           </template>
-        </NavTabs>
+        </XTabs>
 
         <RouterView v-slot="child">
           <component
@@ -110,7 +111,6 @@ import { ref } from 'vue'
 import type { ZoneOverview } from '../data'
 import type { ZoneOverviewSource } from '../sources'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
-import NavTabs from '@/app/common/NavTabs.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { useI18n, useKumaApi } from '@/utilities'
 import { get } from '@/utilities/get'

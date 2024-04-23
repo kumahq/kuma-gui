@@ -48,4 +48,4 @@ Feature: mesh / external-services / index
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
 
     Then the URL contains "/services/external/service-1/overview"
-    Then the "#external-service-detail-view-tab a" element exists
+    Then the "[data-testid='external-service-detail-view-tab'].active" element exists

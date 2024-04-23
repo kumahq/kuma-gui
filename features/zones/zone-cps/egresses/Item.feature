@@ -1,11 +1,11 @@
 Feature: zones / egresses / item
   Background:
     Given the CSS selectors
-      | Alias                   | Selector                                     |
-      | egress-detail-view      | [data-testid='zone-egress-detail-view']      |
-      | egress-config-view      | [data-testid='zone-egress-config-view']      |
-      | egress-detail-tabs-view | [data-testid='zone-egress-detail-tabs-view'] |
-      | egress-config-tab       | #zone-egress-config-view-tab a               |
+      | Alias                   | Selector                                      |
+      | egress-detail-view      | [data-testid='zone-egress-detail-view']       |
+      | egress-config-view      | [data-testid='zone-egress-config-view']       |
+      | egress-detail-tabs-view | [data-testid='zone-egress-detail-tabs-view']  |
+      | egress-config-tab       | [data-testid='zone-egress-config-view-tab'] a |
     And the environment
       """
       KUMA_MODE: global

@@ -22,25 +22,26 @@
           </h2>
         </template>
 
-        <NavTabs :active-route-name="route.active?.name">
+        <XTabs
+          :selected="route.active?.name"
+        >
           <template
             v-for="{ name } in route.children"
             :key="name"
-            #[`${name}`]
+            #[`${name}-tab`]
           >
-            <RouterLink
+            <XAction
               :to="{
                 name,
                 query: {
-                  inactive: route.params.inactive ? null : undefined,
+                  inactive: route.params.inactive,
                 },
               }"
-              :data-testid="`${name}-tab`"
             >
               {{ t(`connections.routes.item.navigation.${name.split('-')[3]}`) }}
-            </RouterLink>
+            </XAction>
           </template>
-        </NavTabs>
+        </XTabs>
 
         <RouterView v-slot="child">
           <component
@@ -55,7 +56,6 @@
 </template>
 
 <script lang="ts" setup>
-import NavTabs from '@/app/common/NavTabs.vue'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
 
 const props = defineProps<{

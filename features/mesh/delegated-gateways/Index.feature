@@ -60,4 +60,4 @@ Feature: mesh / delegated-gateways / index
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
 
     Then the URL contains "/gateways/delegated/gateway-1/overview"
-    Then the "#delegated-gateway-detail-view-tab a" element exists
+    Then the "[data-testid='delegated-gateway-detail-view-tab'].active" element exists

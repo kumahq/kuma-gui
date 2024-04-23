@@ -1,12 +1,12 @@
 Feature: zones / ingresses / item
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                      |
-      | detail-view      | [data-testid='zone-ingress-detail-view']      |
-      | config-view      | [data-testid='zone-ingress-config-view']      |
-      | detail-tabs-view | [data-testid='zone-ingress-detail-tabs-view'] |
-      | config-tab       | #zone-ingress-config-view-tab a               |
-      | navigation       | [data-testid='zone-ingress-tabs'] > ul        |
+      | Alias            | Selector                                       |
+      | detail-view      | [data-testid='zone-ingress-detail-view']       |
+      | config-view      | [data-testid='zone-ingress-config-view']       |
+      | detail-tabs-view | [data-testid='zone-ingress-detail-tabs-view']  |
+      | navigation       | [data-testid='zone-ingress-tabs'] ul           |
+      | config-tab       | [data-testid='zone-ingress-config-view-tab'] a |
 
     And the environment
       """
