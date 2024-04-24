@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
     name="mesh-detail-view"
     :params="{
       mesh: '',
@@ -14,15 +14,16 @@
     <AppView>
       <div
         class="stack"
-        data-testid="detail-view-details"
       >
         <DataSource
-          v-slot="{ data: meshInsight }: MeshInsightSource"
-          :src="`/mesh-insights/${route.params.mesh}`"
+          v-slot="{ data }"
+          :src="uri(sources, '/mesh-insights/:name', {
+            name: route.params.mesh,
+          })"
         >
           <MeshStatus
             :mesh="props.mesh"
-            :mesh-insight="meshInsight"
+            :mesh-insight="data"
           />
         </DataSource>
         <ResourceCodeBlock
@@ -31,7 +32,11 @@
         >
           <DataSource
             v-if="copying"
-            :src="`/meshes/${route.params.mesh}/as/kubernetes?no-store`"
+            :src="uri(sources, '/meshes/:name/as/kubernetes', {
+              name: route.params.mesh,
+            }, {
+              cacheControl: 'no-store',
+            })"
             @change="(data) => {
               copy((resolve) => resolve(data))
             }"
@@ -54,15 +59,16 @@
 
 <script lang="ts" setup>
 import type { Mesh } from '../data'
-import type { MeshInsightSource } from '../sources'
+import { sources } from '../sources'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import ResourceDateStatus from '@/app/common/ResourceDateStatus.vue'
 import { useMeshStatus } from '@/app/meshes/'
 
-const MeshStatus = useMeshStatus()
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const MeshStatus = useMeshStatus()
 
 </script>
 

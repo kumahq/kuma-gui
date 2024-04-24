@@ -17,6 +17,7 @@
       :t="t"
       :env="env"
       :can="can"
+      :uri="uri"
       :route="{
         name: props.name,
         update: routeUpdate,
@@ -43,6 +44,7 @@ import {
   createTitleSetter,
   beforePaint,
 } from '../../utilities'
+import { useUri } from '@/app/application/services/data-source'
 import { useEnv } from '@/utilities'
 import type { RouteRecordRaw } from 'vue-router'
 export type RouteView = {
@@ -60,6 +62,7 @@ type StringNamedRouteRecordRaw = RouteRecordRaw & {
 const win = window
 const env = useEnv()
 const can = useCan()
+const uri = useUri()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()

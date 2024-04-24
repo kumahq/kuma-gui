@@ -31,7 +31,7 @@ if (!('structuredClone' in globalThis)) {
 // TODO(jc): delete this once we get to 2026
 groupBy.shim()
 
-export type { DataSourceResponse, Source } from './services/data-source'
+export type { DataSourceResponse, Source, TypeOf } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
 type Can = ReturnType<typeof can>
