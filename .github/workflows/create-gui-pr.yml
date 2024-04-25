@@ -51,7 +51,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      - run: yarn install --frozen-lockfile
+      - run: |
+          make install/sync
 
       - uses: Kong/public-shared-actions/security-actions/sca@23929cfda574afc77b018c51794454b6dc99ca57
         id: sbom
@@ -61,7 +62,8 @@ jobs:
           config: .syft.yaml
           fail_build: 'true' # Fail job if critical vulnerabilities are detected
 
-      - run: yarn run build
+      - run: |
+          make build/sync
 
       - uses: actions/create-github-app-token@7bfa3a4717ef143a604ee0a99d859b8886a96d00 # v1.9.3
         id: github-app-token
