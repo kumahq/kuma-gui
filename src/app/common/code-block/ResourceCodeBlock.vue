@@ -102,7 +102,7 @@ let promise = new Promise((resolve: Resolve, reject) => {
 
 const fetcher = async (_params?: SingleResourceParameters): Promise<Entity> => {
   try {
-    return promise
+    return await promise
   } finally {
     promise = new Promise((resolve, reject) => {
       copy.value = (cb) => cb(resolve, reject)
