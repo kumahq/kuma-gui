@@ -10,6 +10,8 @@ services:
     items:
       title: Services
       navigation:
+        mesh-service-list-view: MeshService
+        mesh-external-service-list-view: MeshExternalService
         service-list-view: Internal
         external-service-list-view: External
   detail:

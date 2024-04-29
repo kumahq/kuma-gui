@@ -1,7 +1,7 @@
+import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
-export * from './routes'
 
 type Token = ReturnType<typeof token>
 
@@ -14,6 +14,14 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.sources,
+      ],
+    }],
+    [token('policies.routes'), {
+      service: () => {
+        return [routes()]
+      },
+      labels: [
+        app.routes,
       ],
     }],
   ]

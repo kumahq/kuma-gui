@@ -9,7 +9,9 @@
     <AppView>
       <template #title>
         <h2>
-          <RouteTitle :title="t(`${route.active?.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)" />
+          <RouteTitle
+            :title="t(`${route.active?.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)"
+          />
         </h2>
       </template>
 

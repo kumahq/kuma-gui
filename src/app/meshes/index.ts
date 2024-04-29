@@ -2,56 +2,26 @@ import MeshStatus from './components/MeshStatus.vue'
 import { routes } from './routes'
 import type { SplitRouteRecordRaw } from './routes'
 import { sources } from './sources'
-import { routes as dataplaneRoutes, services as dataplanes } from '@/app/data-planes'
+import { services as dataplanes } from '@/app/data-planes'
 import { services as externalServicesModule } from '@/app/external-services'
-import { routes as gatewayRoutes, services as gatewaysModule } from '@/app/gateways'
-import { routes as policyRoutes, services as policies } from '@/app/policies'
+import { services as gatewaysModule } from '@/app/gateways'
+import { services as policies } from '@/app/policies'
 import { services as rules } from '@/app/rules'
-import { routes as serviceRoutes, services as servicesModule } from '@/app/services'
+import { services as servicesModule } from '@/app/services'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
 const $ = {
-  dataplaneRoutes: token<SplitRouteRecordRaw[]>('kuma.dataplane.routes'),
-  serviceRoutes: token<SplitRouteRecordRaw[]>('kuma.service.routes'),
-  gatewayRoutes: token<SplitRouteRecordRaw[]>('kuma.gateway.routes'),
-  policyRoutes: token<SplitRouteRecordRaw[]>('kuma.policy.routes'),
   MeshStatus: token<typeof MeshStatus>('meshes.components.MeshStatus'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
+  const mesh = {
+    ...app,
+    routes: token<SplitRouteRecordRaw[]>('meshes.routes.children'),
+  }
   return [
-    [$.MeshStatus, {
-      service: () => {
-        return MeshStatus
-      },
-    }],
-    [token('meshes.routes'), {
-      service: routes,
-      arguments: [
-        $.serviceRoutes,
-        $.gatewayRoutes,
-        $.dataplaneRoutes,
-        $.policyRoutes,
-      ],
-      labels: [
-        app.routes,
-      ],
-    }],
-    [$.dataplaneRoutes, {
-      service: dataplaneRoutes,
-    }],
-    [$.gatewayRoutes, {
-      service: gatewayRoutes,
-    }],
-    [$.serviceRoutes, {
-      service: serviceRoutes,
-    }],
-    [$.policyRoutes, {
-      service: policyRoutes,
-    }],
-
     [token('meshes.sources'), {
       service: sources,
       arguments: [
@@ -61,12 +31,28 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    ...servicesModule(app),
-    ...externalServicesModule(app),
-    ...gatewaysModule(app),
-    ...dataplanes(app),
-    ...policies(app),
-    ...rules(app),
+    [token('meshes.routes'), {
+      service: (r) => {
+        return routes(r[0], r[1], r[2], r[3])
+      },
+      arguments: [
+        mesh.routes,
+      ],
+      labels: [
+        app.routes,
+      ],
+    }],
+    [$.MeshStatus, {
+      service: () => {
+        return MeshStatus
+      },
+    }],
+    ...servicesModule(mesh),
+    ...externalServicesModule(mesh),
+    ...gatewaysModule(mesh),
+    ...dataplanes(mesh),
+    ...policies(mesh),
+    ...rules(mesh),
   ]
 }
 export const TOKENS = $
