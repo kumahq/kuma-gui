@@ -80,7 +80,7 @@
     "babel-plugin-transform-import-meta": "2.2.1",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "cross-env": "7.0.3",
-    "cypress": "13.8.0",
+    "cypress": "13.8.1",
     "cypress-fail-fast": "7.1.0",
     "cypress-fail-on-console-error": "5.1.1",
     "dotenv": "16.4.5",
