@@ -50,7 +50,7 @@
     "pretty-bytes": "6.1.1",
     "prismjs": "1.29.0",
     "semver": "7.6.0",
-    "vue": "3.4.25",
+    "vue": "3.4.26",
     "vue-github-button": "3.1.0",
     "vue-router": "4.3.2"
   },
