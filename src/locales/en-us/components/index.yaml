@@ -6,3 +6,11 @@ components:
     tooltip:
       not_available: |
         The online or offline status of this entity is unknown
+  x-empty-state:
+    title: 'No data'
+    body: ''
+    action:
+      label: ''
+      href: ''
+
+
