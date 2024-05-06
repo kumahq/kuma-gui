@@ -111,7 +111,7 @@
     "vitepress": "1.1.4",
     "vitest": "1.5.2",
     "vue-docgen-cli": "4.79.0",
-    "vue-tsc": "2.0.15"
+    "vue-tsc": "2.0.16"
   },
   "browserslist": [
     "> 1%",
