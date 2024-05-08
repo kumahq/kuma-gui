@@ -61,7 +61,7 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
             // temporarily change any http.api terms to camelCase at runtime
             return camelCaseToWords((e as I18nError).key.split('.').pop()!)
           default:
-            if (rest[2]?.defaultMessage) {
+            if (typeof rest[2]?.defaultMessage === 'string') {
               return rest[2].defaultMessage
             }
 
