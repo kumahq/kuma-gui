@@ -9,7 +9,7 @@
       name="builtin-gateway-list-view"
       :params="{
         page: 1,
-        size: 10,
+        size: me.pageSize,
         mesh: '',
         gateway: '',
       }"
