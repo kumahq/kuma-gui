@@ -2,6 +2,7 @@ import XAction from './components/x-action/XAction.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
 import XIcon from './components/x-icon/XIcon.vue'
+import XSelect from './components/x-select/XSelect.vue'
 import XInput from './components/x-input/XInput.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
@@ -17,6 +18,7 @@ declare module '@vue/runtime-core' {
     XInput: typeof XInput
     XAction: typeof XAction
     XBreadcrumbs: typeof XBreadcrumbs
+    XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
@@ -34,6 +36,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             ['XBreadcrumbs', XBreadcrumbs],
             ['XIcon', XIcon],
             ['XInput', XInput],
+            ['XSelect', XSelect],
             ['XTabs', XTabs],
             ['XTeleportTemplate', XTeleportTemplate],
             ['XTeleportSlot', XTeleportSlot],

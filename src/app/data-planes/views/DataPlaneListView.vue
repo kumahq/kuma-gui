@@ -79,32 +79,31 @@
                   })"
                 />
 
-                <KSelect
-                  class="filter-select"
+                <XSelect
                   label="Type"
-                  :items="(['all', 'standard', 'builtin', 'delegated'] as const).map((value) => ({
-                    value,
-                    label: t(`data-planes.type.${value}`),
-                    selected: value === route.params.dataplaneType,
-                  }))"
-                  @selected="route.update({ dataplaneType: String($event.value) })"
+                  :selected="route.params.dataplaneType"
+                  @change="(value: string) => route.update({ dataplaneType: value })"
                 >
-                  <template #selected-item-template="{ item }">
+                  <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
                     <XIcon
-                      v-if="item && item.value !== 'all'"
+                      v-if="item !== 'all'"
                       :size="KUI_ICON_SIZE_40"
-                      :name="item.value as ('standard' | 'builtin' | 'delegated')"
+                      :name="item"
                     />
-                    {{ item?.label }}
+                    {{ t(`data-planes.type.${item}`) }}
                   </template>
-                  <template #item-template="{ item }">
+                  <template
+                    v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                    :key="item"
+                    #[`${item}-option`]
+                  >
                     <XIcon
-                      v-if="item.value !== 'all'"
-                      :name="item.value as ('standard' | 'builtin' | 'delegated')"
+                      v-if="item !== 'all'"
+                      :name="item"
                     />
-                    {{ item.label }}
+                    {{ t(`data-planes.type.${item}`) }}
                   </template>
-                </KSelect>
+                </XSelect>
               </template>
 
               <template #type="{ row: item }">
@@ -321,19 +320,6 @@ import type { MeSource } from '@/app/me/sources'
 .data-plane-proxy-filter {
   flex-basis: 310px;
   flex-grow: 1;
-}
-
-.filter-select {
-  flex-basis: 245px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: $kui-space-40;
-}
-
-.filter-select :deep(.k-label) {
-  // Removes the bottom margin as we’re aligning the label with the select in a horizontal layout.
-  margin-bottom: 0 !important;
 }
 
 .name-link {
