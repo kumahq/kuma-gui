@@ -130,11 +130,11 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-:deep(.app-collection .k-table.is-clickable tr) {
-  cursor: default;
+:deep(.app-collection .table.is-clickable tr) {
+  cursor: default !important;
 }
-:deep(.app-collection .k-table.has-hover tr:hover) {
-  background-color: transparent;
+:deep(.app-collection .table.has-hover tr:hover) {
+  background-color: transparent !important;
 }
 
 .policy-type-heading {
