@@ -65,7 +65,7 @@ jobs:
       - env:
           LINTER_MODE: strict
         run: |
-          npm run lint
+          npm run lint -- --config .eslintrc.production.cjs
           npm run lint:ts
           npm run lint:styles
 

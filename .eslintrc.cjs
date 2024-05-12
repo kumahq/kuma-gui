@@ -86,6 +86,7 @@ const INLINE_NON_VOID_ELEMENTS = [
         caseInsensitive: true,
       },
     }],
+    'no-console': 'off',
   },
   overrides: [
     {
