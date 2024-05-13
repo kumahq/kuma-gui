@@ -97,7 +97,7 @@
     "postcss": "8.4.38",
     "postcss-html": "1.6.0",
     "sass": "1.76.0",
-    "shiki": "1.4.0",
+    "shiki": "1.5.1",
     "standard": "17.1.0",
     "stylelint": "16.5.0",
     "stylelint-config-html": "1.1.0",
