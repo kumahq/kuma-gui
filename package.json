@@ -71,7 +71,7 @@
     "@vitejs/plugin-vue": "5.0.4",
     "@vitest/coverage-istanbul": "1.6.0",
     "@vue/eslint-config-typescript": "13.0.0",
-    "@vue/test-utils": "2.4.5",
+    "@vue/test-utils": "2.4.6",
     "@whyframe/core": "0.1.11",
     "@whyframe/vue": "0.1.7",
     "autoprefixer": "10.4.19",
