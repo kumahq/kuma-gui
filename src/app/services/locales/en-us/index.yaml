@@ -1,5 +1,9 @@
 services:
+  x-empty-state:
+    title: There are no Services present
   routes:
+    mesh-service-list-view:
+      title: Mesh Services
     item:
       title: "{name}"
       breadcrumbs: Services

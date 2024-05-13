@@ -1,5 +1,6 @@
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
+  MeshService as PartialMeshService,
   ExternalService as PartialExternalService,
   ServiceInsight as PartialServiceInsight,
   ServiceStatus as ServiceTypeCount,
@@ -7,6 +8,9 @@ import type {
 
 export type ExternalService = PartialExternalService & {
   config: PartialExternalService
+}
+export type MeshService = PartialMeshService & {
+  config: PartialMeshService
 }
 
 export type ServiceInsight = PartialServiceInsight & {
@@ -41,6 +45,23 @@ export const ServiceInsight = {
       items: Array.isArray(partialServiceInsights.items)
         ? partialServiceInsights.items.map((partialServiceInsight) => ServiceInsight.fromObject(partialServiceInsight))
         : [],
+    }
+  },
+}
+export const MeshService = {
+  fromObject(item: PartialMeshService): MeshService {
+    return {
+      ...item,
+      config: item,
+    }
+  },
+
+  fromCollection(collection: PaginatedApiListResponse<PartialMeshService>): PaginatedApiListResponse<MeshService> {
+    const items = Array.isArray(collection.items) ? collection.items.map(MeshService.fromObject) : []
+    return {
+      ...collection,
+      items,
+      total: collection.total ?? items.length,
     }
   },
 }

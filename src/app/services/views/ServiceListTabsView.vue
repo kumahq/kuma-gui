@@ -8,11 +8,9 @@
   >
     <AppView>
       <template #title>
-        <h2>
-          <RouteTitle
-            :title="t(`${route.active?.name === 'service-list-view' ? '' : 'external-'}services.routes.items.title`)"
-          />
-        </h2>
+        <XTeleportSlot
+          name="service-list-tabs-view-title"
+        />
       </template>
 
       <template #actions>
