@@ -15,7 +15,7 @@
     "build:gui": "mkdir gui && mv dist/* gui && mv gui dist/gui && mv dist/gui/mockServiceWorker.js dist/",
     "build:preview": "npm run build:ci && npm run build:gui && cp _redirects dist/_redirects",
     "build:staging": "cross-env VITE_ZONE_CREATION_FLOW=enabled npm run build && npm run  build:gui",
-    "lint": "eslint --ext .js,.ts,.vue --fix .",
+    "lint": "eslint --ext .js,.ts,.vue .",
     "lint:lockfile": "lockfile-lint --path package-lock.json --allowed-hosts npm --validate-https",
     "lint:ts": "vue-tsc --noEmit",
     "lint:styles": "stylelint --allow-empty-input './src/**/*.{css,scss,vue}'",
