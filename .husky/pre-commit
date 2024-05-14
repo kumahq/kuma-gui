@@ -1,1 +1,4 @@
-npm run lint -- --config .eslintrc.production.cjs
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged
