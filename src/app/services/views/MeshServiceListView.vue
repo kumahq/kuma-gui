@@ -46,6 +46,7 @@
                   data-testid="service-collection"
                   :headers="[
                     { label: 'Name', key: 'name' },
+                    { label: 'Namespace', key: 'namespace' },
                   ]"
                   :page-number="route.params.page"
                   :page-size="route.params.size"

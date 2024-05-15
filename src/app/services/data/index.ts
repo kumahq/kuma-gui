@@ -11,6 +11,7 @@ export type ExternalService = PartialExternalService & {
 }
 export type MeshService = PartialMeshService & {
   config: PartialMeshService
+  namespace: string
 }
 
 export type ServiceInsight = PartialServiceInsight & {
@@ -50,9 +51,15 @@ export const ServiceInsight = {
 }
 export const MeshService = {
   fromObject(item: PartialMeshService): MeshService {
+    const labels = item.labels ?? {}
+    const name = labels['kuma.io/display-name'] ?? item.name
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+
     return {
       ...item,
       config: item,
+      name,
+      namespace,
     }
   },
 
