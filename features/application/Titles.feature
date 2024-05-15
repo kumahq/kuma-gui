@@ -39,6 +39,8 @@ Feature: application / titles
       | /meshes/default/services/external                       | External Services |
       | /meshes/default/services/external/service-name/overview | service-name      |
 
+      | /meshes/default/services/mesh-services                  | Mesh Services     |
+
       | /meshes/default/gateways/builtin                  | Built-in Gateways |
       | /meshes/default/gateways/builtin/gateway/overview | gateway           |
 

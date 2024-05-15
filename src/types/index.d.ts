@@ -602,6 +602,14 @@ export interface ExternalService extends MeshEntity {
   }
   tags: ServiceTags
 }
+export interface MeshService extends MeshEntity {
+  type: 'MeshService'
+  labels?: {
+    'kuma.io/display-name'?: string
+    'k8s.kuma.io/namespace'?: string
+    [key: string]: string | undefined
+  }
+}
 
 export interface Zone {
   name: string
