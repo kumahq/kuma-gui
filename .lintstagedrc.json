@@ -1,0 +1,4 @@
+{
+  "*.{js,ts,vue}": "eslint --config .eslintrc.production.cjs --fix",
+  "*.{css,scss,vue}": "stylelint --allow-empty-input --fix"
+}
