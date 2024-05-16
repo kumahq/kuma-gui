@@ -10,6 +10,7 @@ export type ExternalService = PartialExternalService & {
   config: PartialExternalService
 }
 export type MeshService = PartialMeshService & {
+  id: string
   config: PartialMeshService
   namespace: string
 }
@@ -57,6 +58,7 @@ export const MeshService = {
 
     return {
       ...item,
+      id: item.name,
       config: item,
       name,
       namespace,
