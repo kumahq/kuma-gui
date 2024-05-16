@@ -10,7 +10,7 @@ Feature: mesh / services / mesh-services / index
       KUMA_SERVICE_COUNT: 1
       """
 
-    Rule: In a namepaced environment
+    Rule: In a namespaced environment
       Background:
         Given the environment
           """
