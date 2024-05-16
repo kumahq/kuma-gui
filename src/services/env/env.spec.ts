@@ -34,6 +34,7 @@ describe('env', () => {
         KUMA_DOCS_URL: 'http://docs.fake',
         KUMA_MOCK_API_ENABLED: 'false',
         KUMA_ZONE_CREATION_FLOW: 'enabled',
+        KUMA_MESHSERVICE_ENABLED: 'true',
       },
     )
     expect(env.var('KUMA_DOCS_URL')).toBe('http://docs.fake/110.127.x')

@@ -1,6 +1,7 @@
 import { features } from './features'
 import { routes } from './routes'
 import { sources } from './sources'
+import type { Can } from '@/app/application'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
 
@@ -18,15 +19,21 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
     [token('services.routes'), {
-      service: () => {
-        return [routes()]
+      service: (can: Can) => {
+        return [routes(can)]
       },
+      arguments: [
+        app.can,
+      ],
       labels: [
         app.routes,
       ],
     }],
     [token('services.features'), {
       service: features,
+      arguments: [
+        app.env,
+      ],
       labels: [
         app.features,
       ],
