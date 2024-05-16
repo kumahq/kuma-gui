@@ -1,6 +1,7 @@
+import type { Can } from '@/app/application'
 import type { RouteRecordRaw } from 'vue-router'
 
-export const routes = () => {
+export const routes = (can: Can) => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
@@ -65,18 +66,22 @@ export const routes = () => {
               name: 'external-service-list-view',
               component: () => import('@/app/external-services/views/ExternalServiceListView.vue'),
             },
-            {
-              path: 'mesh-services',
-              name: 'mesh-service-list-view',
-              component: () => import('@/app/services/views/MeshServiceListView.vue'),
-              children: [
+            ...(can('use meshservice')
+              ? [
                 {
-                  path: ':service',
-                  name: 'mesh-service-summary-view',
-                  component: () => import('@/app/services/views/MeshServiceSummaryView.vue'),
+                  path: 'mesh-services',
+                  name: 'mesh-service-list-view',
+                  component: () => import('@/app/services/views/MeshServiceListView.vue'),
+                  children: [
+                    {
+                      path: ':service',
+                      name: 'mesh-service-summary-view',
+                      component: () => import('@/app/services/views/MeshServiceSummaryView.vue'),
+                    },
+                  ],
                 },
-              ],
-            },
+              ]
+              : []),
           ],
         },
       ]
