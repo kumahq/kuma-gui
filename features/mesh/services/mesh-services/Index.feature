@@ -10,7 +10,7 @@ Feature: mesh / services / mesh-services / index
       KUMA_SERVICE_COUNT: 1
       """
 
-    Rule: In a namespaced environment
+    Rule: In a namepaced environment
       Background:
         Given the environment
           """
@@ -29,8 +29,8 @@ Feature: mesh / services / mesh-services / index
         When I visit the "<URL>" URL
         Then the "$button-group" element exists
         And I click the "$item a" element
-        Then the URL contains "monitor-proxy-0"
-        And the URL doesn't contain "monitor-proxy-0/overview"
+        Then the URL contains "monitor-proxy-0.kuma-demo"
+        And the URL doesn't contain "monitor-proxy-0.kuma-demo/overview"
         Examples:
           | URL                                    |
           | /meshes/default/services/mesh-services |
