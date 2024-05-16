@@ -10,6 +10,7 @@ import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
 import { routes } from './routes'
 import can from './services/can'
+import type { Can } from './services/can'
 import I18n from './services/i18n/I18n'
 import type { Source } from '@/app/application/services/data-source'
 import { create, destroy, getSource, DataSourcePool } from '@/app/application/services/data-source'
@@ -18,6 +19,7 @@ import Env from '@/services/env/Env'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
+export * from './services/can'
 
 // temporary simple "JSON data only" structuredClone polyfill for cloning JSON
 // data
@@ -34,7 +36,6 @@ groupBy.shim()
 export type { DataSourceResponse, Source, TypeOf } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
-type Can = ReturnType<typeof can>
 type Token = ReturnType<typeof token>
 
 declare module '@vue/runtime-core' {

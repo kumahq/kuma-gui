@@ -1,8 +1,13 @@
-import type { Features } from '@/app/application/services/can'
-export const features = (): Features => {
+import type { Features } from '@/app/application'
+import type Env from '@/services/env/Env'
+export const features = (env: Env['var']): Features => {
   return {
     'use meshservice': () => {
-      return false
+      try {
+        return !!JSON.parse(env('KUMA_MESHSERVICE_ENABLED', 'true'))
+      } catch (e) {
+        return true
+      }
     },
   }
 }
