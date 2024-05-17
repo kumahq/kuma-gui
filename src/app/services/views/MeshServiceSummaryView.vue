@@ -12,7 +12,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.name === route.params.service"
+      :predicate="item => item.id === route.params.service"
     >
       <template
         #item="{ item }"

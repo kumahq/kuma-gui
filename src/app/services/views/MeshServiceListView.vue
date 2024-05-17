@@ -46,6 +46,7 @@
                   data-testid="service-collection"
                   :headers="[
                     { label: 'Name', key: 'name' },
+                    { label: 'Namespace', key: 'namespace' },
                   ]"
                   :page-number="route.params.page"
                   :page-size="route.params.size"
@@ -63,7 +64,7 @@
                           name: 'mesh-service-summary-view',
                           params: {
                             mesh: item.mesh,
-                            service: item.name,
+                            service: item.id,
                           },
                           query: {
                             page: route.params.page,
