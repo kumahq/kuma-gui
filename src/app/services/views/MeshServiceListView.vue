@@ -47,6 +47,9 @@
                   :headers="[
                     { label: 'Name', key: 'name' },
                     { label: 'Namespace', key: 'namespace' },
+                    { label: 'Ports', key: 'ports' },
+                    { label: 'Tags', key: 'tags' },
+                    { label: 'Details', key: 'details', hideLabel: true },
                   ]"
                   :page-number="route.params.page"
                   :page-size="route.params.size"
@@ -60,6 +63,7 @@
                       :text="item.name"
                     >
                       <XAction
+                        data-action
                         :to="{
                           name: 'mesh-service-summary-view',
                           params: {
@@ -75,6 +79,52 @@
                         {{ item.name }}
                       </XAction>
                     </TextWithCopyButton>
+                  </template>
+                  <template
+                    #ports="{ row: item }"
+                  >
+                    <KTruncate>
+                      <KBadge
+                        v-for="connection in item.spec.ports"
+                        :key="connection.port"
+                        appearance="info"
+                      >
+                        {{ connection.port }}:{{ connection.targetPort }}/{{ connection.protocol }}
+                      </KBadge>
+                    </KTruncate>
+                  </template>
+                  <template
+                    #tags="{ row: item }"
+                  >
+                    <KTruncate>
+                      <KBadge
+                        v-for="(value, key) in item.spec.selector.dataplaneTags"
+                        :key="`${key}:${value}`"
+                        appearance="info"
+                      >
+                        {{ key }}:{{ value }}
+                      </KBadge>
+                    </KTruncate>
+                  </template>
+                  <template #details="{ row: item }">
+                    <XAction
+                      class="details-link"
+                      data-testid="details-link"
+                      :to="{
+                        name: 'mesh-service-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.id,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.details_link') }}
+
+                      <ArrowRightIcon
+                        decorative
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                    </XAction>
                   </template>
                 </AppCollection>
                 <RouterView
@@ -109,9 +159,19 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { ArrowRightIcon } from '@kong/icons'
+
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
+<style lang="scss" scoped>
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
+}
+</style>

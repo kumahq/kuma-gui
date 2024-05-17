@@ -13,6 +13,12 @@ export type MeshService = PartialMeshService & {
   id: string
   config: PartialMeshService
   namespace: string
+  spec: {
+    ports: NonNullable<PartialMeshService['spec']['ports']>
+    selector: {
+      dataplaneTags: Record<string, string>
+    }
+  }
 }
 
 export type ServiceInsight = PartialServiceInsight & {
@@ -55,13 +61,20 @@ export const MeshService = {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
-
     return {
       ...item,
       id: item.name,
       config: item,
       name,
       namespace,
+      spec: ((spec = {}) => {
+        return {
+          ports: Array.isArray(spec.ports) ? spec.ports : [],
+          selector: {
+            dataplaneTags: Object.keys(spec.selector?.dataplaneTags ?? {}).length > 0 ? spec.selector?.dataplaneTags ?? {} : {},
+          },
+        }
+      })(item.spec),
     }
   },
 

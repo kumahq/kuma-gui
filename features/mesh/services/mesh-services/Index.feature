@@ -1,10 +1,12 @@
 Feature: mesh / services / mesh-services / index
   Background:
     Given the CSS selectors
-      | Alias        | Selector                                  |
-      | items        | [data-testid='service-collection']        |
-      | item         | $items tbody tr                           |
-      | button-group | [data-testid='service-list-view-sub-tab'] |
+      | Alias         | Selector                                  |
+      | items         | [data-testid='service-collection']        |
+      | item          | $items tbody tr                           |
+      | button-group  | [data-testid='service-list-view-sub-tab'] |
+      | summary-title | [data-testid='slideout-title'] a          |
+      | detail-link   | $item [data-testid='details-link']        |
     And the environment
       """
       KUMA_SERVICE_COUNT: 1
@@ -25,12 +27,24 @@ Feature: mesh / services / mesh-services / index
                 kuma.io/display-name: monitor-proxy-0
                 k8s.kuma.io/namespace: kuma-demo
           """
-      Scenario Outline: clicking the row, opening and summary
+      Scenario Outline: clicking the detail link
+        When I visit the "<URL>" URL
+        And I click the "$detail-link" element
+        Then the URL contains "monitor-proxy-0.kuma-demo/overview"
+        And the "[data-testid='mesh-service-detail-view']" element exists
+        Examples:
+          | URL                                    |
+          | /meshes/default/services/mesh-services |
+
+      Scenario Outline: clicking the row, opening the summary, and clicking the title
         When I visit the "<URL>" URL
         Then the "$button-group" element exists
-        And I click the "$item a" element
+        And I click the "$item a[data-action]" element
         Then the URL contains "monitor-proxy-0.kuma-demo"
         And the URL doesn't contain "monitor-proxy-0.kuma-demo/overview"
+        Then I click the "$summary-title" element
+        Then the URL contains "monitor-proxy-0.kuma-demo/overview"
+        And the "[data-testid='mesh-service-detail-view']" element exists
         Examples:
           | URL                                    |
           | /meshes/default/services/mesh-services |

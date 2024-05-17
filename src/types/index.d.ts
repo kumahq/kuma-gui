@@ -609,6 +609,10 @@ export interface MeshService extends MeshEntity {
     'k8s.kuma.io/namespace'?: string
     [key: string]: string | undefined
   }
+  spec: {
+    ports?: { port: number, targetPort: number, protocol: string }[]
+    selector?: { dataplaneTags?: Record<string, string> }
+  }
 }
 
 export interface Zone {

@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { MeshService } from '@/types/index.d'
 
-export default ({ env }: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
 
   const mesh = req.params.mesh as string
@@ -31,6 +31,18 @@ export default ({ env }: EndpointDependencies): MockResponder => (req) => {
           },
         }
         : {}),
+      spec: {
+        ports: Array.from({ length: 5 }).map(_ => (
+          {
+            port: fake.internet.port(),
+            targetPort: fake.internet.port(),
+            protocol: fake.kuma.protocol(),
+          }
+        )),
+        selector: {
+          dataplaneTags: fake.kuma.tags({}),
+        },
+      },
     } satisfies MeshService,
   }
 }
