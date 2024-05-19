@@ -67,9 +67,9 @@
                       v-for="(origin, originIndex) in row.origins"
                       :key="`${type}-${originIndex}`"
                     >
-                      <RouterLink
+                      <XAction
                         :to="{
-                          name: 'policy-detail-view',
+                          name: 'data-plane-policy-summary-view',
                           params: {
                             mesh: origin.mesh,
                             policyPath: props.types[origin.type]?.path ?? '',
@@ -78,7 +78,7 @@
                         }"
                       >
                         {{ origin.name }}
-                      </RouterLink>
+                      </XAction>
                     </li>
                   </ul>
 
@@ -118,6 +118,7 @@ import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
+import XAction from '@/app/x/components/x-action/XAction.vue'
 import type { PolicyType } from '@/types/index.d'
 import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
