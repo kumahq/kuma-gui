@@ -5,6 +5,8 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      policyPath: '',
+      policy: '',
     }"
   >
     <AppView>
@@ -163,17 +165,35 @@
                 </template>
               </div>
             </template>
+            <RouterView
+              v-if="route.params.policyPath && route.params.policy"
+              v-slot="{ Component }"
+            >
+              <SummaryView
+                @close="route.replace({
+                  name: 'data-plane-policies-view',
+                  params: {
+                    mesh: route.params.mesh,
+                    dataPlane: route.params.dataPlane,
+                  },
+                })"
+              >
+                <component
+                  :is="Component"
+                />
+              </SummaryView>
+            </RouterView>
           </template>
         </DataSource>
       </div>
     </AppView>
   </RouteView>
 </template>
-
 <script lang="ts" setup>
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import type { DataplaneOverview } from '../data'
 import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
+import SummaryView from '@/app/common/SummaryView.vue'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyType } from '@/app/policies/data'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
