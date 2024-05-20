@@ -17,6 +17,7 @@
       disableFix: true,
       severity: 'error',
     }],
+    'no-duplicate-selectors': [null],
   },
 }
 

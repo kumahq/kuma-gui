@@ -70,6 +70,10 @@ export default defineConfig({
         text: 'Overview',
         items: [
           {
+            text: 'TLDR',
+            link: 'docs/tldr.md',
+          },
+          {
             text: 'Getting started',
             link: 'docs/getting-started.md',
           },

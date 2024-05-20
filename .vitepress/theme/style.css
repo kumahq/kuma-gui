@@ -1,3 +1,12 @@
+.custom-block:is(.danger, .warning) {
+  padding-top: 8px;
+}
+
+.custom-block:is(.danger, .warning) p.custom-block-title {
+  display: none;
+}
+
+
 /* Hide theme switching */
 .VPNav .VPMenu,
 .VPNavBar .VPFlyout,
