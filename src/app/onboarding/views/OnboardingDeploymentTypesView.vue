@@ -61,17 +61,12 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 
+import MultizoneGraph from '../components/graphs/MultizoneGraph.vue'
+import StandaloneGraph from '../components/graphs/StandaloneGraph.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import { useCan } from '@/app/application'
-import {
-  useMultizoneGraph,
-  useStandaloneGraph,
-} from '@/components'
-
-const MultizoneGraph = useMultizoneGraph()
-const StandaloneGraph = useStandaloneGraph()
 
 const componentMap: Record<string, any> = {
   standalone: StandaloneGraph,
