@@ -63,20 +63,15 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 
+import KubernetesGraph from '../components/graphs/KubernetesGraph.vue'
+import MemoryGraph from '../components/graphs/MemoryGraph.vue'
+import PostgresGraph from '../components/graphs/PostgresGraph.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import {
-  useKubernetesGraph,
-  useMemoryGraph,
-  usePostgresGraph,
-} from '@/components'
 import { useEnv } from '@/utilities'
 
 const env = useEnv()
-const KubernetesGraph = useKubernetesGraph()
-const MemoryGraph = useMemoryGraph()
-const PostgresGraph = usePostgresGraph()
 
 const componentMap: Record<string, any> = {
   postgres: PostgresGraph,
