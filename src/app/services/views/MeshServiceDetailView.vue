@@ -77,9 +77,9 @@
               class="mt-4"
             >
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/dataplanes/for/:service', {
+                :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
                   mesh: route.params.mesh,
-                  service: props.data.name,
+                  tags: JSON.stringify(props.data.spec.selector.dataplaneTags),
                 }, {
                   page: route.params.page,
                   size: route.params.size,

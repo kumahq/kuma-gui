@@ -81,7 +81,7 @@
               <KCard class="mt-4">
                 <DataSource
                   v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
-                  :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                  :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
                 >
                   <ErrorBlock
                     v-if="dataplanesError !== undefined"
