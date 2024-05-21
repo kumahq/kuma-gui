@@ -83,7 +83,7 @@
     "cypress-fail-fast": "^7.1.0",
     "cypress-fail-on-console-error": "^5.1.1",
     "dotenv": "^16.4.5",
-    "esbuild": "^0.21.2",
+    "esbuild": "^0.21.3",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
