@@ -7,10 +7,7 @@ Feature: Dataplane policy summary
       | summary-content            | $summary-slideout-container [data-testid='data-plane-policy-summary-view'] |
   
   Scenario: Policy Summary View has expected content
-    Given the environment
-      """
-      """
-    And the URL "/meshes/default/meshhttproutes/the-other-http-route" responds with
+    Given the URL "/meshes/default/meshhttproutes/the-other-http-route" responds with
       """
       body:
         type: MeshHTTPRoute
