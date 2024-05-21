@@ -1,12 +1,15 @@
 <template>
-  <div class="copy-button-wrapper">
-    <span class="text"><slot>{{ props.text }}</slot></span>
-
-    <KCopy
-      format="hidden"
-      :text="props.text"
-    />
-  </div>
+  <XCopyButton
+    format="custom"
+    :text="props.text"
+  >
+    <template
+      v-if="$slots.default"
+      #default
+    >
+      <slot name="default" />
+    </template>
+  </XCopyButton>
 </template>
 
 <script lang="ts" setup>
@@ -14,16 +17,3 @@ const props = defineProps<{
   text: string
 }>()
 </script>
-
-<style lang="scss" scoped>
-.copy-button-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-40;
-}
-
-.text {
-  min-width: 0;
-  word-wrap: break-word;
-}
-</style>

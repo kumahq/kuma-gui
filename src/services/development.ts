@@ -1,8 +1,8 @@
 import { setupWorker } from 'msw/browser'
 
-import DebugKClipboardProvider from '@/app/application/components/debug-k-clipboard-provider/DebugKClipboardProvider.vue'
 import debugI18n from '@/app/application/services/i18n/DebugI18n'
 import { TOKENS as CONTROL_PLANES } from '@/app/control-planes'
+import XCopyButtonDebug from '@/app/x/components/x-copy-button/XCopyButtonDebug.vue'
 import cookied from '@/services/env/CookiedEnv'
 import type Env from '@/services/env/Env'
 import type { ServiceConfigurator, Token, TokenType } from '@/services/utils'
@@ -70,7 +70,7 @@ export const services: ServiceConfigurator<SupportedTokens> = (app) => [
   [token('development.components'), {
     service: () => {
       return [
-        ['KClipboardProvider', DebugKClipboardProvider],
+        ['XCopyButton', XCopyButtonDebug],
       ]
     },
     labels: [

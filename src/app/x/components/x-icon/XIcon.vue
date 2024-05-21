@@ -35,6 +35,7 @@ import {
   MeshIcon,
   BookIcon,
   FilterIcon,
+  CopyIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
@@ -55,6 +56,7 @@ const icons = {
   mesh: MeshIcon,
   docs: BookIcon,
   search: FilterIcon,
+  copy: CopyIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

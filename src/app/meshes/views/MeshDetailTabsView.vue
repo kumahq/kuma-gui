@@ -9,11 +9,13 @@
     <AppView>
       <template #title>
         <h1>
-          <TextWithCopyButton :text="route.params.mesh">
+          <XCopyButton
+            :text="route.params.mesh"
+          >
             <RouteTitle
               :title="t('meshes.routes.item.title', { name: route.params.mesh })"
             />
-          </TextWithCopyButton>
+          </XCopyButton>
         </h1>
       </template>
 
@@ -53,5 +55,4 @@
 
 <script lang="ts" setup>
 import type { MeshSource } from '../sources'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>
