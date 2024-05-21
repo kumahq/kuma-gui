@@ -21,7 +21,7 @@ function createVuePlugin(
     },
   }
 }
-const env = dotenv.config().parsed as {[key: string]: string}
+const env = dotenv.config().parsed as { [key: string]: string }
 
 Object.entries({
   // default base URL for testing against
@@ -49,7 +49,8 @@ export default defineConfig({
 
       on('task', {
         log(message: unknown) {
-          console.log(JSON.stringify(message))
+          console.info(JSON.stringify(message))
+
           return null
         },
       })
@@ -81,7 +82,7 @@ export default defineConfig({
                 .replace(/^> /, '')
               const newLineIndex = trimmedMessage.indexOf('\n')
               const message = trimmedMessage.substring(0, newLineIndex !== -1 ? newLineIndex : trimmedMessage.length)
-              console.log(`::error file=${results.spec.relative}::${message}`)
+              console.info(`::error file=${results.spec.relative}::${message}`)
             }
           }
         }

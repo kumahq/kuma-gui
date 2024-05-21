@@ -34,8 +34,7 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
-          npm install --frozen-lockfile
-          npm run lint:lockfile
+          npm clean-install
       - id: set-groups
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         env:
@@ -62,12 +61,8 @@ jobs:
             **/node_modules
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - env:
-          LINTER_MODE: strict
-        run: |
-          npm run lint -- --config .eslintrc.production.cjs
-          npm run lint:ts
-          npm run lint:styles
+      - run: |
+          make lint
 
   cli-tests:
     needs: [install-dependencies]
@@ -84,7 +79,7 @@ jobs:
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          npm run test
+          make test/unit
 
   browser-tests:
     needs: [install-dependencies]
@@ -140,5 +135,4 @@ jobs:
           contains(needs.*.result, 'failure') ||
           contains(needs.*.result, 'cancelled')
         run: echo '${{toJSON(needs)}}' && exit 1
-
       - run: echo "Successful"

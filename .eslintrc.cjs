@@ -86,7 +86,7 @@ const INLINE_NON_VOID_ELEMENTS = [
         caseInsensitive: true,
       },
     }],
-    'no-console': 'off',
+    'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
   },
   overrides: [
     {
@@ -153,7 +153,7 @@ const INLINE_NON_VOID_ELEMENTS = [
         '@typescript-eslint/func-call-spacing': 'error',
 
         'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': [process.env.LINTER_MODE === 'strict' ? 'error' : 'warn', {
+        '@typescript-eslint/no-unused-vars': ['error', {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
           ignoreRestSiblings: true,
