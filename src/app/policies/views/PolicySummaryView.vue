@@ -33,17 +33,22 @@
         >
           <AppView>
             <template #title>
-              <PolicySummaryTitle
-                :title="t('policies.routes.item.title', { name: item.name })"
-                :link-to="{
-                  name: 'policy-detail-view',
-                  params: {
-                    mesh: route.params.mesh,
-                    policyPath: route.params.policyPath,
-                    policy: route.params.policy,
-                  },
-                }"
-              />
+              <h2>
+                <RouterLink
+                  :to="{
+                    name: 'policy-detail-view',
+                    params: {
+                      mesh: route.params.mesh,
+                      policyPath: route.params.policyPath,
+                      policy: route.params.policy,
+                    },
+                  }"
+                >
+                  <RouteTitle
+                    :title="t('policies.routes.item.title', { name: item.name })"
+                  />
+                </RouterLink>
+              </h2>
             </template>
 
             <PolicySummary
@@ -82,7 +87,6 @@
 
 <script lang="ts" setup>
 import PolicySummary from '../components/PolicySummary.vue'
-import PolicySummaryTitle from '../components/PolicySummaryTitle.vue'
 import type { Policy, PolicyType } from '../data'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
@@ -92,3 +96,8 @@ const props = defineProps<{
   policyType: PolicyType
 }>()
 </script>
+<style scoped>
+h2 {
+  --icon-before: url('@/assets/images/icon-circles-ext.svg?inline') !important;
+}
+</style>
