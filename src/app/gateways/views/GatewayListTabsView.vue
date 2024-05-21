@@ -9,7 +9,7 @@
     <AppView>
       <template #title>
         <h2>
-          <RouteTitle :title="t(`${route.active?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)" />
+          <RouteTitle :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)" />
         </h2>
       </template>
 
@@ -24,7 +24,7 @@
               v-for="{ name } in items"
               :key="`${name}`"
               :class="{
-                'active': route.active?.name === name,
+                'active': route.child()?.name === name,
               }"
               :to="{
                 name: name,

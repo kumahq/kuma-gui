@@ -19,7 +19,7 @@
             v-for="{ name } in route.children"
             :key="name"
             :class="{
-              'active': route.active?.name === name,
+              'active': route.child()?.name === name,
             }"
             :to="{
               name,

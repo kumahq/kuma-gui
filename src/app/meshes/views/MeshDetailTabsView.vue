@@ -24,7 +24,7 @@
         :src="`/meshes/${route.params.mesh}`"
       >
         <XTabs
-          :selected="route.active?.name"
+          :selected="route.child()?.name"
           data-testid="mesh-tabs"
         >
           <template
