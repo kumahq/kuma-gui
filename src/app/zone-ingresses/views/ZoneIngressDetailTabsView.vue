@@ -50,7 +50,7 @@
           :errors="[error]"
         >
           <XTabs
-            :selected="route.active?.name"
+            :selected="route.child()?.name"
             data-testid="zone-ingress-tabs"
           >
             <template

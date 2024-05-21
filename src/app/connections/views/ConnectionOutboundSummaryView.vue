@@ -14,7 +14,7 @@
         </h2>
       </template>
 
-      <XTabs :active-route-name="route.active?.name">
+      <XTabs :selected="route.child()?.name">
         <template
           v-for="item in route.children"
           :key="`${item.name}`"

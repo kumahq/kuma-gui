@@ -23,7 +23,7 @@
         </template>
 
         <XTabs
-          :selected="route.active?.name"
+          :selected="route.child()?.name"
         >
           <template
             v-for="{ name } in route.children"
