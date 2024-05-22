@@ -61,24 +61,6 @@
                         :types="policyTypes"
                         :data-testid="`${ruleType}-rule-list`"
                       />
-                      <RouterView
-                        v-if="route.child()"
-                        v-slot="{ Component }"
-                      >
-                        <SummaryView
-                          @close="route.replace({
-                            name: 'data-plane-policies-view',
-                            params: {
-                              mesh: route.params.mesh,
-                              dataPlane: route.params.dataPlane,
-                            },
-                          })"
-                        >
-                          <component
-                            :is="Component"
-                          />
-                        </SummaryView>
-                      </RouterView>
                     </KCard>
                   </DataCollection>
                 </template>
@@ -111,24 +93,6 @@
                           :types="policyTypes"
                           :data-testid="`from-rule-list-${index}`"
                         />
-                        <RouterView
-                          v-if="route.child()"
-                          v-slot="{ Component }"
-                        >
-                          <SummaryView
-                            @close="route.replace({
-                              name: 'data-plane-policies-view',
-                              params: {
-                                mesh: route.params.mesh,
-                                dataPlane: route.params.dataPlane,
-                              },
-                            })"
-                          >
-                            <component
-                              :is="Component"
-                            />
-                          </SummaryView>
-                        </RouterView>
                       </div>
                     </template>
                   </KCard>
@@ -163,24 +127,6 @@
                           :gateway-dataplane="gatewayDataplane"
                           data-testid="builtin-gateway-dataplane-policies"
                         />
-                        <RouterView
-                          v-if="route.child()"
-                          v-slot="{ Component }"
-                        >
-                          <SummaryView
-                            @close="route.replace({
-                              name: 'data-plane-policies-view',
-                              params: {
-                                mesh: route.params.mesh,
-                                dataPlane: route.params.dataPlane,
-                              },
-                            })"
-                          >
-                            <component
-                              :is="Component"
-                            />
-                          </SummaryView>
-                        </RouterView>
                       </KCard>
                     </DataCollection>
                   </DataLoader>
@@ -211,24 +157,6 @@
                           :types="policyTypes"
                           data-testid="sidecar-dataplane-policies"
                         />
-                        <RouterView
-                          v-if="route.child()"
-                          v-slot="{ Component }"
-                        >
-                          <SummaryView
-                            @close="route.replace({
-                              name: 'data-plane-policies-view',
-                              params: {
-                                mesh: route.params.mesh,
-                                dataPlane: route.params.dataPlane,
-                              },
-                            })"
-                          >
-                            <component
-                              :is="Component"
-                            />
-                          </SummaryView>
-                        </RouterView>
                       </KCard>
                     </DataCollection>
                   </DataLoader>
@@ -238,6 +166,24 @@
           </template>
         </DataSource>
       </div>
+      <RouterView
+        v-slot="{ Component }"
+      >
+        <SummaryView
+          v-if="route.child()"
+          @close="route.replace({
+            name: 'data-plane-policies-view',
+            params: {
+              mesh: route.params.mesh,
+              dataPlane: route.params.dataPlane,
+            },
+          })"
+        >
+          <component
+            :is="Component"
+          />
+        </SummaryView>
+      </RouterView>
     </AppView>
   </RouteView>
 </template>
