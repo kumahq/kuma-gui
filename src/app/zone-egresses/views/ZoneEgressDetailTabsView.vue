@@ -13,12 +13,23 @@
     >
       <AppView
         :breadcrumbs="[
-          ...(can('use zones') ? [{
-            to: {
-              name: 'zone-cp-list-view',
+          ...(can('use zones') ? [
+            {
+              to: {
+                name: 'zone-cp-list-view',
+              },
+              text: t('zone-cps.routes.item.breadcrumbs'),
             },
-            text: t('zone-cps.routes.item.breadcrumbs'),
-          }] : []),
+            {
+              to: {
+                name: 'zone-cp-detail-view',
+                params: {
+                  zone: route.params.zone,
+                },
+              },
+              text: route.params.zone,
+            },
+          ] : []),
           {
             to: {
               name: 'zone-egress-list-view',
