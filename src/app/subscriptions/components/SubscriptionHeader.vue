@@ -3,7 +3,11 @@
     <span class="instance-id">
       <img src="@/assets/images/icon-deployed-code.svg?url">
 
-      <template v-if="globalInstanceId">
+      <template v-if="zoneInstanceId">
+        <b>{{ t('http.api.property.zoneInstanceId') }}</b>: {{ zoneInstanceId }}
+      </template>
+
+      <template v-else-if="globalInstanceId">
         <b>{{ t('http.api.property.globalInstanceId') }}</b>: {{ globalInstanceId }}
       </template>
 
@@ -12,6 +16,9 @@
       </template>
     </span>
 
+    <span>
+      <b>Version</b>: {{ get(props.subscription, 'version.kumaCp.version', t('common.collection.none')) }}
+    </span>
     <span>
       <img src="@/assets/images/icon-connected.svg?url">
 
@@ -35,9 +42,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
+import { useI18n } from '@/app/application'
 import type { DiscoverySubscription } from '@/app/subscriptions/data'
 import type { KDSSubscription } from '@/app/zones/data'
-import { useI18n } from '@/utilities'
+import { get } from '@/utilities/get'
 
 const { t } = useI18n()
 
@@ -45,6 +53,7 @@ const props = defineProps<{
   subscription: KDSSubscription | DiscoverySubscription
 }>()
 
+const zoneInstanceId = computed(() => 'zoneInstanceId' in props.subscription ? props.subscription.zoneInstanceId : null)
 const globalInstanceId = computed(() => 'globalInstanceId' in props.subscription ? props.subscription.globalInstanceId : null)
 const controlPlaneInstanceId = computed(() => 'controlPlaneInstanceId' in props.subscription ? props.subscription.controlPlaneInstanceId : null)
 const total = computed(() => {

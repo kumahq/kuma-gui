@@ -12,7 +12,7 @@ export type ControlPlaneAddresses = {
 export type ControlPlaneAddressesSource = DataSourceResponse<ControlPlaneAddresses>
 
 // mostly taken from semver-compare
-const compare = (a: string, b: string) => {
+export const compare = (a: string, b: string) => {
   const pa = a.split('.')
   const pb = b.split('.')
   for (let i = 0; i < 3; i++) {
@@ -32,7 +32,7 @@ export const sources = (env: Env['var'], api: KumaApi) => {
       }
     },
 
-    '/control-plane/version/latest': async (): Promise<{version: string}> => {
+    '/control-plane/version/latest': async (): Promise<{ version: string }> => {
       const current = env('KUMA_VERSION')
       // if the current version includes some sort of `-dev` then pretend we
       // are on the latest version

@@ -43,6 +43,8 @@ common:
       There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
     INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: !!text/markdown |
       There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ KUMA_VERSION }**)
+    OUTDATED_ZONE_VERSION: !!text/markdown |
+      The Zone Control Plane's version (**{ zoneCpVersion }**) is out of date with the Global Control Plane (**{ KUMA_VERSION }**). You should consider upgrading the Zone Control Plane
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
