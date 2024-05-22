@@ -70,7 +70,7 @@
                 <KButton
                   class="non-visual-button"
                   appearance="secondary"
-                  icon-only
+                  icon
                 >
                   <MoreIcon />
                 </KButton>

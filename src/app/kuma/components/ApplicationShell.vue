@@ -85,8 +85,8 @@
             :kpop-attributes="{ placement: 'bottomEnd' }"
           >
             <KButton
+              icon
               appearance="tertiary"
-              icon-only
             >
               <HelpIcon />
 
@@ -128,7 +128,7 @@
           <KButton
             :to="{ name: 'diagnostics' }"
             appearance="tertiary"
-            icon-only
+            icon
             data-testid="nav-item-diagnostics"
           >
             <CogIcon />

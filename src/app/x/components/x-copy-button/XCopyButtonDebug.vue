@@ -1,7 +1,7 @@
 <template>
   <CopyButton
     :text="props.text"
-    @mouseup="(e) => {
+    @mouseup="() => {
       createCopy(() => {})(props.text)
     }"
   >
