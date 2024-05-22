@@ -12,4 +12,5 @@ lint: ## Dev: Run lint checks on all languages
 	@$(MAKE) run/lint
 	@$(MAKE) run/lint:ts
 	@$(MAKE) run/lint:styles
+	@$(MAKE) run/lint:lockfile
 
