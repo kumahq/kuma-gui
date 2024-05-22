@@ -43,6 +43,17 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
           dataplaneTags: fake.kuma.tags({}),
         },
       },
+      status: {
+        addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
+          hostname: fake.internet.domainName(),
+        })),
+        vips: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
+          ip: fake.internet.ip(),
+        })),
+        tls: {
+          status: '',
+        },
+      },
     } satisfies MeshService,
   }
 }

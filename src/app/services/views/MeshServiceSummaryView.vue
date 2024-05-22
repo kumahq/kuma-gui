@@ -44,6 +44,28 @@
               class="stack-with-borders"
             >
               <DefinitionCard
+                v-if="item.status.addresses.length > 0"
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
+                  Addresses
+                </template>
+                <template
+                  #body
+                >
+                  <KTruncate>
+                    <span
+                      v-for="address in item.status.addresses"
+                      :key="address.hostname"
+                    >
+                      {{ address.hostname }}
+                    </span>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
                 layout="horizontal"
               >
                 <template

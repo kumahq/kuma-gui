@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t, uri }"
+      v-slot="{ route, t, can, uri }"
       name="mesh-service-list-view"
       :params="{
         page: 1,
@@ -47,6 +47,8 @@
                   :headers="[
                     { label: 'Name', key: 'name' },
                     { label: 'Namespace', key: 'namespace' },
+                    ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
+                    { label: 'Addresses', key: 'addresses' },
                     { label: 'Ports', key: 'ports' },
                     { label: 'Tags', key: 'tags' },
                     { label: 'Details', key: 'details', hideLabel: true },
@@ -79,6 +81,42 @@
                         {{ item.name }}
                       </XAction>
                     </TextWithCopyButton>
+                  </template>
+                  <template
+                    #namespace="{ row: item }"
+                  >
+                    {{ item.namespace }}
+                  </template>
+                  <template #zone="{ row: item }">
+                    <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
+                      <RouterLink
+                        v-if="item.labels['kuma.io/zone']"
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: item.labels['kuma.io/zone'],
+                          },
+                        }"
+                      >
+                        {{ item.labels['kuma.io/zone'] }}
+                      </RouterLink>
+                    </template>
+
+                    <template v-else>
+                      {{ t('common.detail.none') }}
+                    </template>
+                  </template>
+                  <template
+                    #addresses="{ row: item }"
+                  >
+                    <KTruncate>
+                      <span
+                        v-for="address in item.status.addresses"
+                        :key="address.hostname"
+                      >
+                        {{ address.hostname }}
+                      </span>
+                    </KTruncate>
                   </template>
                   <template
                     #ports="{ row: item }"

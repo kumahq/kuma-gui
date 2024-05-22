@@ -25,6 +25,27 @@
         >
           <KCard>
             <div class="columns">
+              <DefinitionCard
+                v-if="data.status.addresses.length > 0"
+              >
+                <template
+                  #title
+                >
+                  Addresses
+                </template>
+                <template
+                  #body
+                >
+                  <KTruncate>
+                    <span
+                      v-for="address in data.status.addresses"
+                      :key="address.hostname"
+                    >
+                      {{ address.hostname }}
+                    </span>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
               <DefinitionCard>
                 <template
                   #title
@@ -62,6 +83,28 @@
                     >
                       {{ key }}:{{ value }}
                     </KBadge>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
+                v-if="data.status.vips.length > 0"
+                class="ip"
+              >
+                <template
+                  #title
+                >
+                  VIPs
+                </template>
+                <template
+                  #body
+                >
+                  <KTruncate>
+                    <span
+                      v-for="address in data.status.vips"
+                      :key="address.ip"
+                    >
+                      {{ address.ip }}
+                    </span>
                   </KTruncate>
                 </template>
               </DefinitionCard>
@@ -280,6 +323,9 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
+.ip span {
+  font-size: $kui-font-size-30;
+}
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
