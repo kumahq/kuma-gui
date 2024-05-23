@@ -39,6 +39,35 @@ export const routes = (can: Can) => {
               },
             ],
           },
+          ...(can('use meshservice')
+            ? [
+              {
+                path: 'mesh-services/:service',
+                name: 'mesh-service-detail-tabs-view',
+                component: () => import('@/app/services/views/MeshServiceDetailTabsView.vue'),
+                children: [
+                  {
+                    path: 'overview',
+                    name: 'mesh-service-detail-view',
+                    component: () => import('@/app/services/views/MeshServiceDetailView.vue'),
+                    children: [
+                      {
+                        path: ':dataPlane',
+                        name: 'mesh-service-data-plane-summary-view',
+                        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+                      },
+                    ],
+                  },
+                  {
+                    path: 'config',
+                    name: 'mesh-service-config-view',
+                    component: () => import('@/app/services/views/MeshServiceConfigView.vue'),
+                  },
+                ],
+              },
+            ]
+            : []),
+
         ],
       },
     ]

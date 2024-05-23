@@ -119,7 +119,24 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       }), can('use zones'))
     },
 
-    '/meshes/:mesh/dataplanes/for/:service': async (params) => {
+    '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
+      const { mesh, size } = params
+      const offset = size * (params.page - 1)
+      const filterParams = DataplaneOverview.search(params.search)
+
+      if (typeof filterParams.tag === 'undefined') {
+        filterParams.tag = []
+      }
+      filterParams.tag = filterParams.tag.concat(Object.entries(JSON.parse(params.tags)).map(([key, value]) => `${key}:${value}`))
+
+      return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
+        ...filterParams,
+        offset,
+        size,
+      }), can('use zones'))
+    },
+
+    '/meshes/:mesh/dataplanes/for/service-insight/:service': async (params) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 

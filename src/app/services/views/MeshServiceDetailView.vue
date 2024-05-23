@@ -5,8 +5,8 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ can, route, t }"
-      name="service-detail-view"
+      v-slot="{ can, route, t, uri }"
+      name="mesh-service-detail-view"
       :params="{
         mesh: '',
         service: '',
@@ -20,76 +20,119 @@
       }"
     >
       <AppView>
-        <DataSource
-          v-slot="{ data, error }: ServiceInsightSource"
-          :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
+        <div
+          class="stack"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="data === undefined" />
-
-          <div
-            v-else
-            class="stack"
-          >
-            <KCard>
-              <div class="columns">
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.status') }}
-                  </template>
-
-                  <template #body>
-                    <StatusBadge :status="data.status" />
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.address') }}
-                  </template>
-
-                  <template #body>
-                    <TextWithCopyButton
-                      v-if="data.addressPort"
-                      :text="data.addressPort"
-                    />
-
-                    <template v-else>
-                      {{ t('common.detail.none') }}
-                    </template>
-                  </template>
-                </DefinitionCard>
-
-                <ResourceStatus
-                  :online="data.dataplanes?.online ?? 0"
-                  :total="data.dataplanes?.total ?? 0"
+          <KCard>
+            <div class="columns">
+              <DefinitionCard
+                v-if="data.status.addresses.length > 0"
+              >
+                <template
+                  #title
                 >
-                  <template #title>
-                    {{ t('http.api.property.dataPlaneProxies') }}
-                  </template>
-                </ResourceStatus>
-              </div>
-            </KCard>
-
-            <div>
-              <h3>{{ t('services.detail.data_plane_proxies') }}</h3>
-
-              <KCard class="mt-4">
-                <DataSource
-                  v-slot="{ data: dataplanesData, error: dataplanesError }: DataplaneOverviewCollectionSource"
-                  :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                  Addresses
+                </template>
+                <template
+                  #body
                 >
-                  <ErrorBlock
-                    v-if="dataplanesError !== undefined"
-                    :error="dataplanesError"
-                  />
+                  <KTruncate>
+                    <span
+                      v-for="address in data.status.addresses"
+                      :key="address.hostname"
+                    >
+                      {{ address.hostname }}
+                    </span>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard>
+                <template
+                  #title
+                >
+                  Ports
+                </template>
+                <template
+                  #body
+                >
+                  <KTruncate>
+                    <KBadge
+                      v-for="connection in data.spec.ports"
+                      :key="connection.port"
+                      appearance="info"
+                    >
+                      {{ connection.port }}:{{ connection.targetPort }}/{{ connection.protocol }}
+                    </KBadge>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard>
+                <template
+                  #title
+                >
+                  Dataplane Tags
+                </template>
+                <template
+                  #body
+                >
+                  <KTruncate>
+                    <KBadge
+                      v-for="(value, key) in data.spec.selector.dataplaneTags"
+                      :key="`${key}:${value}`"
+                      appearance="info"
+                    >
+                      {{ key }}:{{ value }}
+                    </KBadge>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
+                v-if="data.status.vips.length > 0"
+                class="ip"
+              >
+                <template
+                  #title
+                >
+                  VIPs
+                </template>
+                <template
+                  #body
+                >
+                  <KTruncate>
+                    <span
+                      v-for="address in data.status.vips"
+                      :key="address.ip"
+                    >
+                      {{ address.ip }}
+                    </span>
+                  </KTruncate>
+                </template>
+              </DefinitionCard>
+            </div>
+          </KCard>
 
+          <div>
+            <h3>
+              {{ t('services.detail.data_plane_proxies') }}
+            </h3>
+
+            <KCard
+              class="mt-4"
+            >
+              <DataLoader
+                :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
+                  mesh: route.params.mesh,
+                  tags: JSON.stringify(props.data.spec.selector.dataplaneTags),
+                }, {
+                  page: route.params.page,
+                  size: route.params.size,
+                  search: route.params.s,
+                })"
+              >
+                <template
+                  #loadable="{ data: dataplanes }"
+                >
                   <AppCollection
-                    v-else
                     class="data-plane-collection"
                     data-testid="data-plane-collection"
                     :page-number="route.params.page"
@@ -103,9 +146,8 @@
                       { label: 'Warnings', key: 'warnings', hideLabel: true },
                       { label: 'Details', key: 'details', hideLabel: true },
                     ]"
-                    :items="dataplanesData?.items"
-                    :total="dataplanesData?.total"
-                    :error="dataplanesError"
+                    :items="dataplanes?.items"
+                    :total="dataplanes?.total"
                     :is-selected-row="(row) => row.name === route.params.dataPlane"
                     summary-route-name="service-data-plane-summary-view"
                     :empty-state-message="t('common.emptyState.message', { type: 'Data Plane Proxies' })"
@@ -134,7 +176,7 @@
                       <RouterLink
                         class="name-link"
                         :to="{
-                          name: 'service-data-plane-summary-view',
+                          name: 'mesh-service-data-plane-summary-view',
                           params: {
                             mesh: item.mesh,
                             dataPlane: item.id,
@@ -228,7 +270,6 @@
                       </RouterLink>
                     </template>
                   </AppCollection>
-
                   <RouterView
                     v-if="route.params.dataPlane"
                     v-slot="child"
@@ -248,16 +289,16 @@
                     >
                       <component
                         :is="child.Component"
-                        v-if="typeof dataplanesData !== 'undefined'"
-                        :items="dataplanesData.items"
+                        v-if="typeof dataplanes !== 'undefined'"
+                        :items="dataplanes.items"
                       />
                     </SummaryView>
                   </RouterView>
-                </DataSource>
-              </KCard>
-            </div>
+                </template>
+              </DataLoader>
+            </KCard>
           </div>
-        </DataSource>
+        </div>
       </AppView>
     </RouteView>
   </DataSource>
@@ -267,21 +308,24 @@
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { ArrowRightIcon } from '@kong/icons'
 
-import type { ServiceInsightSource } from '../sources'
+import type { MeshService } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
+import { sources } from '@/app/data-planes/sources'
 import type { MeSource } from '@/app/me/sources'
+
+const props = defineProps<{
+  data: MeshService
+}>()
 </script>
 
 <style lang="scss" scoped>
+.ip span {
+  font-size: $kui-font-size-30;
+}
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;

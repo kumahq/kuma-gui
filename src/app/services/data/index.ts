@@ -9,10 +9,22 @@ import type {
 export type ExternalService = PartialExternalService & {
   config: PartialExternalService
 }
-export type MeshService = PartialMeshService & {
+export type MeshService = Omit<PartialMeshService, 'spec' | 'status'> & {
   id: string
-  config: PartialMeshService
   namespace: string
+  labels: NonNullable<PartialMeshService['labels']>
+  spec: {
+    ports: NonNullable<PartialMeshService['spec']['ports']>
+    selector: {
+      dataplaneTags: NonNullable<NonNullable<PartialMeshService['spec']['selector']>['dataplaneTags']>
+    }
+  }
+  status: {
+    addresses: NonNullable<PartialMeshService['status']['addresses']>
+    vips: NonNullable<PartialMeshService['status']['vips']>
+    tls: NonNullable<PartialMeshService['status']['tls']>
+  }
+  config: PartialMeshService
 }
 
 export type ServiceInsight = PartialServiceInsight & {
@@ -55,13 +67,30 @@ export const MeshService = {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
-
     return {
       ...item,
-      id: item.name,
       config: item,
+      id: item.name,
       name,
       namespace,
+      labels,
+      spec: ((item = {}) => {
+        return {
+          ports: Array.isArray(item.ports) ? item.ports : [],
+          selector: ((item = {}) => {
+            return {
+              dataplaneTags: Object.keys(item.dataplaneTags ?? {}).length > 0 ? item.dataplaneTags! : {},
+            }
+          })(item.selector),
+        }
+      })(item.spec),
+      status: ((item = {}) => {
+        return {
+          tls: typeof item.tls !== 'undefined' ? item.tls : { status: '' },
+          vips: Array.isArray(item.vips) ? item.vips : [],
+          addresses: Array.isArray(item.addresses) ? item.addresses : [],
+        }
+      })(item.status),
     }
   },
 

@@ -63,7 +63,7 @@ export interface RequestRedirectFilter {
   type: 'RequestRedirect'
   requestRedirect: {
     hostname?: string
-    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string}
+    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string }
     port?: number
     schema?: 'http' | 'https'
     statusCode?: number
@@ -75,7 +75,7 @@ export interface URLRewriteFilter {
   urlRewrite: {
     hostToBackendHostname?: boolean
     hostname?: string
-    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string}
+    path?: { type: 'ReplaceFullPath', replaceFullPath: string } | { type: 'ReplacePrefixMatch', replacePrefixMatch: string }
   }
 }
 
@@ -606,8 +606,18 @@ export interface MeshService extends MeshEntity {
   type: 'MeshService'
   labels?: {
     'kuma.io/display-name'?: string
+    'kuma.io/zone'?: string
     'k8s.kuma.io/namespace'?: string
     [key: string]: string | undefined
+  }
+  spec: {
+    ports?: { port: number, targetPort: number, protocol: string }[]
+    selector?: { dataplaneTags?: Record<string, string> }
+  }
+  status: {
+    tls?: { status: string }
+    vips?: { ip: string }[]
+    addresses?: { hostname: string }[]
   }
 }
 
@@ -786,7 +796,7 @@ export interface TlsConfDataSource {
   inlineString?: string
 }
 
-export interface TlsConfOptions {}
+export interface TlsConfOptions { }
 
 export interface MeshGatewayTlsConf {
   mode?: 'TERMINATE' | 'PASSTHROUGH'

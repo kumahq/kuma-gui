@@ -9,6 +9,8 @@ services:
       breadcrumbs: Services
       navigation:
         service-detail-view: 'Overview'
+        mesh-service-detail-view: 'Overview'
+        mesh-service-config-view: 'YAML'
       overview: 'Overview'
       config: 'YAML'
     items:

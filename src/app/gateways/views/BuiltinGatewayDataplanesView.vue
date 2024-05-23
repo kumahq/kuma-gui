@@ -26,7 +26,7 @@
             <KCard>
               <DataLoader
                 v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
-                :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/service-insight/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
                 :data="[meshGateway]"
                 :errors="[error]"
                 :loader="false"

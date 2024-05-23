@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t, uri }"
+      v-slot="{ route, t, can, uri }"
       name="mesh-service-list-view"
       :params="{
         page: 1,
@@ -47,6 +47,11 @@
                   :headers="[
                     { label: 'Name', key: 'name' },
                     { label: 'Namespace', key: 'namespace' },
+                    ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
+                    { label: 'Addresses', key: 'addresses' },
+                    { label: 'Ports', key: 'ports' },
+                    { label: 'Tags', key: 'tags' },
+                    { label: 'Details', key: 'details', hideLabel: true },
                   ]"
                   :page-number="route.params.page"
                   :page-size="route.params.size"
@@ -60,6 +65,7 @@
                       :text="item.name"
                     >
                       <XAction
+                        data-action
                         :to="{
                           name: 'mesh-service-summary-view',
                           params: {
@@ -75,6 +81,88 @@
                         {{ item.name }}
                       </XAction>
                     </TextWithCopyButton>
+                  </template>
+                  <template
+                    #namespace="{ row: item }"
+                  >
+                    {{ item.namespace }}
+                  </template>
+                  <template #zone="{ row: item }">
+                    <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
+                      <RouterLink
+                        v-if="item.labels['kuma.io/zone']"
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: item.labels['kuma.io/zone'],
+                          },
+                        }"
+                      >
+                        {{ item.labels['kuma.io/zone'] }}
+                      </RouterLink>
+                    </template>
+
+                    <template v-else>
+                      {{ t('common.detail.none') }}
+                    </template>
+                  </template>
+                  <template
+                    #addresses="{ row: item }"
+                  >
+                    <KTruncate>
+                      <span
+                        v-for="address in item.status.addresses"
+                        :key="address.hostname"
+                      >
+                        {{ address.hostname }}
+                      </span>
+                    </KTruncate>
+                  </template>
+                  <template
+                    #ports="{ row: item }"
+                  >
+                    <KTruncate>
+                      <KBadge
+                        v-for="connection in item.spec.ports"
+                        :key="connection.port"
+                        appearance="info"
+                      >
+                        {{ connection.port }}:{{ connection.targetPort }}/{{ connection.protocol }}
+                      </KBadge>
+                    </KTruncate>
+                  </template>
+                  <template
+                    #tags="{ row: item }"
+                  >
+                    <KTruncate>
+                      <KBadge
+                        v-for="(value, key) in item.spec.selector.dataplaneTags"
+                        :key="`${key}:${value}`"
+                        appearance="info"
+                      >
+                        {{ key }}:{{ value }}
+                      </KBadge>
+                    </KTruncate>
+                  </template>
+                  <template #details="{ row: item }">
+                    <XAction
+                      class="details-link"
+                      data-testid="details-link"
+                      :to="{
+                        name: 'mesh-service-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.id,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.details_link') }}
+
+                      <ArrowRightIcon
+                        decorative
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                    </XAction>
                   </template>
                 </AppCollection>
                 <RouterView
@@ -109,9 +197,19 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { ArrowRightIcon } from '@kong/icons'
+
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
+<style lang="scss" scoped>
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: $kui-space-20;
+}
+</style>

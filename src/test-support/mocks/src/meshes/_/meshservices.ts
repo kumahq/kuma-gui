@@ -36,9 +36,34 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               labels: {
                 'kuma.io/display-name': displayName,
                 'k8s.kuma.io/namespace': nspace,
+                'kuma.io/origin': 'zone',
+                'kuma.io/zone': fake.hacker.noun(),
               },
             }
             : {}),
+          spec: {
+            ports: Array.from({ length: 5 }).map(_ => (
+              {
+                port: fake.internet.port(),
+                targetPort: fake.internet.port(),
+                protocol: fake.kuma.protocol(),
+              }
+            )),
+            selector: {
+              dataplaneTags: fake.kuma.tags({}),
+            },
+          },
+          status: {
+            addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
+              hostname: fake.internet.domainName(),
+            })),
+            vips: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
+              ip: fake.internet.ip(),
+            })),
+            tls: {
+              status: '',
+            },
+          },
         } satisfies MeshService
       }),
     },

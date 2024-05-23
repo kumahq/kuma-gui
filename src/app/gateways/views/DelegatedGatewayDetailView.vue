@@ -69,7 +69,7 @@
             <KCard class="mt-4">
               <DataLoader
                 v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
-                :src="`/meshes/${route.params.mesh}/dataplanes/for/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
+                :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
                 :loader="false"
               >
                 <AppCollection
