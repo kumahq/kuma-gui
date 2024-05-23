@@ -12,7 +12,7 @@ export type ControlPlaneAddresses = {
 export type ControlPlaneAddressesSource = DataSourceResponse<ControlPlaneAddresses>
 
 // mostly taken from semver-compare
-export const compare = (a: string, b: string) => {
+const compare = (a: string, b: string) => {
   const pa = a.split('.')
   const pb = b.split('.')
   for (let i = 0; i < 3; i++) {

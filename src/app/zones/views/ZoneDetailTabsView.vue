@@ -110,16 +110,13 @@ import { ref } from 'vue'
 
 import type { ZoneOverview } from '../data'
 import type { ZoneOverviewSource } from '../sources'
-import { useI18n } from '@/app/application'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { compare } from '@/app/control-planes/sources'
-import { useKumaApi, useEnv } from '@/utilities'
+import { useI18n, useKumaApi } from '@/utilities'
 import { get } from '@/utilities/get'
 
 const kumaApi = useKumaApi()
 const { t } = useI18n()
-const env = useEnv()
 
 const notifications = ref<{kind: string, payload: Record<string, string>}[]>([])
 
@@ -131,23 +128,14 @@ const change = (data: ZoneOverview) => {
       payload: {},
     })
   }
-  const version = get(data.zoneInsight, 'version.kumaCp.version', '')
   if (!get(data.zoneInsight, 'version.kumaCp.kumaCpGlobalCompatible', 'true')) {
     warnings.push({
       kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS',
       payload: {
-        zoneCpVersion: version,
-      },
-    })
-  } else if (compare(env('KUMA_VERSION'), version) === 1) {
-    warnings.push({
-      kind: 'OUTDATED_ZONE_VERSION',
-      payload: {
-        zoneCpVersion: version,
+        zoneCpVersion: get(data.zoneInsight, 'version.kumaCp.version', t('common.collection.none')),
       },
     })
   }
-
   notifications.value = warnings
 }
 async function deleteZone(name: string) {
