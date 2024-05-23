@@ -32,7 +32,7 @@ export const sources = (env: Env['var'], api: KumaApi) => {
       }
     },
 
-    '/control-plane/version/latest': async (): Promise<{version: string}> => {
+    '/control-plane/version/latest': async (): Promise<{ version: string }> => {
       const current = env('KUMA_VERSION')
       // if the current version includes some sort of `-dev` then pretend we
       // are on the latest version

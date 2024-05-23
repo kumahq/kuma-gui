@@ -39,9 +39,19 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           ? {
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
-                config: fake.kuma.subscriptionConfig(),
                 id: fake.string.uuid(),
-                globalInstanceId: fake.hacker.noun(),
+                globalInstanceId: `global-${fake.hacker.noun()}`,
+                zoneInstanceId: `zone-${fake.hacker.noun()}`,
+                version: {
+                  kumaCp: {
+                    version: '1.0.0-rc2-211-g823fe8ce',
+                    gitTag: '1.0.0-rc2-211-g823fe8ce',
+                    gitCommit: fake.git.commitSha(),
+                    buildDate: '2021-02-18T13:22:30Z',
+                    kumaCpGlobalCompatible: fake.datatype.boolean(),
+                  },
+                },
+                config: fake.kuma.subscriptionConfig(),
                 ...fake.kuma.connection(item, i, arr),
                 status: {
                   lastUpdateTime: '2021-02-19T07:06:16.384057Z',
@@ -106,15 +116,6 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                       responsesSent: `${fake.number.int(30)}`,
                       responsesAcknowledged: `${fake.number.int(30)}`,
                     },
-                  },
-                },
-                version: {
-                  kumaCp: {
-                    version: '1.0.0-rc2-211-g823fe8ce',
-                    gitTag: '1.0.0-rc2-211-g823fe8ce',
-                    gitCommit: fake.git.commitSha(),
-                    buildDate: '2021-02-18T13:22:30Z',
-                    kumaCpGlobalCompatible: fake.datatype.boolean(),
                   },
                 },
               }
