@@ -19,6 +19,13 @@ export const routes = () => {
             path: 'policies',
             name: 'data-plane-policies-view',
             component: () => import('@/app/data-planes/views/DataPlanePoliciesView.vue'),
+            children: [
+              {
+                path: ':policyPath/:policy',
+                name: 'data-plane-policy-summary-view',
+                component: () => import('@/app/data-planes/views/DataPlanePolicySummaryView.vue'),
+              },
+            ],
           },
           {
             path: 'xds-config',

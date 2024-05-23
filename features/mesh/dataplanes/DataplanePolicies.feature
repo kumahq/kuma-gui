@@ -14,8 +14,10 @@ Feature: Dataplane policies
       | to-rules                           | [data-testid='to-rule-list']                                        |
       | to-rule-item                       | $to-rules .accordion-item                                           |
       | to-rule-item-button                | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
+      | to-rule-item-content               | $to-rule-item:nth-child(1) [data-testid='accordion-item-content']   |
       | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                    |
       | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
+      | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']          |
   Rule: Any networking type
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
@@ -240,6 +242,40 @@ Feature: Dataplane policies
       Then the "$proxy-rule-item:nth-child(1)" element contains "mpp-on-gateway"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
       Then the "$to-rule-item:nth-child(1)" element contains "!kuma.io/service:bar"
+    
+    Scenario: The origin policies link in the policies rules' policy list opens the policy summary panel
+      Given the environment
+        """
+        KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
+        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TO_RULE_COUNT: 1
+        KUMA_DATAPLANE_FROM_RULE_COUNT: 0
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+        """
+        body:
+          rules:
+            - type: MeshHTTPRoute
+              toRules:
+                - matchers:
+                    - key: kuma.io/service
+                      not: false
+                      value: other-svc
+                  origin:
+                    - mesh: default
+                      name: the-other-http-route
+                      type: MeshHTTPRoute
+        """
+      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      Then the "$policies-view" element contains "MeshHTTPRoute"
+      When I click the "$to-rule-item-button" element
+      Then the "$to-rule-item-content" element exists
+      Then the "$to-rule-item-content table tr:nth-child(1) td.origins-column a" element contains "the-other-http-route"
+      When I click the "$to-rule-item-content table tr:nth-child(1) td.origins-column a" element
+      Then the "$summary-slideout-container" element exists
+      And the "$summary-slideout-container [data-testid='slideout-title']" element exists
+      And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
+
 
   Rule: Standard proxy
     Background:
