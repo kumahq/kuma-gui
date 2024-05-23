@@ -21,6 +21,15 @@
           },
           {
             to: {
+              name: 'zone-cp-detail-view',
+              params: {
+                zone: route.params.zone,
+              },
+            },
+            text: route.params.zone,
+          },
+          {
+            to: {
               name: 'zone-ingress-list-view',
               params: {
                 zone: route.params.zone,
