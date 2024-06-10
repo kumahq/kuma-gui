@@ -354,7 +354,7 @@
             <SummaryView
               v-if="child.route.name !== route.name"
               width="670px"
-              @close="function (_e) {
+              @close="function () {
                 route.replace({
                   name: 'data-plane-detail-view',
                   params: {
