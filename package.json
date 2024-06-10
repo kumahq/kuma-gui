@@ -40,7 +40,7 @@
   "dependencies": {
     "@kong-ui-public/i18n": "^2.1.6",
     "@kong/icons": "^1.13.0",
-    "@kong/kongponents": "9.0.0-alpha.159",
+    "@kong/kongponents": "9.0.0-alpha.166",
     "@vueuse/core": "^10.10.0",
     "brandi": "^5.0.0",
     "deepmerge": "^4.3.1",
