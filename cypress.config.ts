@@ -59,7 +59,7 @@ export default defineConfig({
         'file:preprocessor',
         createBundler({
           plugins: [
-            createEsbuildPlugin(config),
+            createEsbuildPlugin(config) as esbuild.Plugin,
             createVuePlugin(),
           ],
         }),
