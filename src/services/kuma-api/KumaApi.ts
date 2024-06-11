@@ -20,6 +20,7 @@ import type {
   MeshGatewayDataplane,
   MeshInsight,
   MeshService,
+  MeshExternalService,
   PolicyDataplane,
   PolicyEntity,
   PolicyType,
@@ -180,6 +181,14 @@ export default class KumaApi extends Api {
 
   getMeshService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshService> {
     return this.client.get(`/meshes/${mesh}/meshservices/${name}`, { params })
+  }
+
+  getAllMeshExternalServicesFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshExternalService>> {
+    return this.client.get(`/meshes/${mesh}/meshexternalservices`, { params })
+  }
+
+  getMeshExternalService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshExternalService> {
+    return this.client.get(`/meshes/${mesh}/meshexternalservices/${name}`, { params })
   }
 
   getAllServiceInsights(params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {

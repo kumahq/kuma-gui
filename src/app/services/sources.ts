@@ -1,4 +1,4 @@
-import { MeshService, ExternalService, ServiceInsight } from './data'
+import { MeshService, MeshExternalService, ExternalService, ServiceInsight } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/services/kuma-api/KumaApi'
@@ -31,6 +31,27 @@ export const sources = (api: KumaApi) => {
       const { mesh, name } = params
 
       return api.getMeshService({ mesh, name }, {
+        format: 'kubernetes',
+      })
+    },
+
+    '/meshes/:mesh/mesh-external-services': async (params) => {
+      const { mesh, size } = params
+      const offset = params.size * (params.page - 1)
+
+      return MeshExternalService.fromCollection(await api.getAllMeshExternalServicesFromMesh({ mesh }, { size, offset }))
+    },
+
+    '/meshes/:mesh/mesh-external-service/:name': async (params) => {
+      const { mesh, name } = params
+
+      return MeshExternalService.fromObject(await api.getMeshExternalService({ mesh, name }))
+    },
+
+    '/meshes/:mesh/mesh-external-service/:name/as/kubernetes': async (params) => {
+      const { mesh, name } = params
+
+      return api.getMeshExternalService({ mesh, name }, {
         format: 'kubernetes',
       })
     },

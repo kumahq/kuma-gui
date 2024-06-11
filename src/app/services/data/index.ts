@@ -1,6 +1,7 @@
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   MeshService as PartialMeshService,
+  MeshExternalService as PartialMeshExternalService,
   ExternalService as PartialExternalService,
   ServiceInsight as PartialServiceInsight,
   ServiceStatus as ServiceTypeCount,
@@ -25,6 +26,16 @@ export type MeshService = Omit<PartialMeshService, 'spec' | 'status'> & {
     tls: NonNullable<PartialMeshService['status']['tls']>
   }
   config: PartialMeshService
+}
+export type MeshExternalService = Omit<PartialMeshExternalService, 'status'> & {
+  id: string
+  namespace: string
+  labels: NonNullable<PartialMeshExternalService['labels']>
+  config: PartialMeshExternalService
+  status: {
+    addresses: NonNullable<PartialMeshExternalService['status']['addresses']>
+    vip?: PartialMeshExternalService['status']['vip']
+  }
 }
 
 export type ServiceInsight = PartialServiceInsight & {
@@ -96,6 +107,37 @@ export const MeshService = {
 
   fromCollection(collection: PaginatedApiListResponse<PartialMeshService>): PaginatedApiListResponse<MeshService> {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshService.fromObject) : []
+    return {
+      ...collection,
+      items,
+      total: collection.total ?? items.length,
+    }
+  },
+}
+export const MeshExternalService = {
+  fromObject(item: PartialMeshExternalService): MeshExternalService {
+    const labels = item.labels ?? {}
+    const name = labels['kuma.io/display-name'] ?? item.name
+    const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+    return {
+      ...item,
+      config: item,
+      id: item.name,
+      name,
+      namespace,
+      labels,
+      status: ((item = {}) => {
+        return {
+          ...item,
+          addresses: Array.isArray(item.addresses) ? item.addresses : [],
+        }
+      })(item.status),
+
+    }
+  },
+
+  fromCollection(collection: PaginatedApiListResponse<PartialMeshExternalService>): PaginatedApiListResponse<MeshExternalService> {
+    const items = Array.isArray(collection.items) ? collection.items.map(MeshExternalService.fromObject) : []
     return {
       ...collection,
       items,

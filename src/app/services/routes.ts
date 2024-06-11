@@ -65,6 +65,23 @@ export const routes = (can: Can) => {
                   },
                 ],
               },
+              {
+                path: 'mesh-external-services/:service',
+                name: 'mesh-external-service-detail-tabs-view',
+                component: () => import('@/app/services/views/MeshExternalServiceDetailTabsView.vue'),
+                children: [
+                  {
+                    path: 'overview',
+                    name: 'mesh-external-service-detail-view',
+                    component: () => import('@/app/services/views/MeshExternalServiceDetailView.vue'),
+                  },
+                  {
+                    path: 'config',
+                    name: 'mesh-external-service-config-view',
+                    component: () => import('@/app/services/views/MeshExternalServiceConfigView.vue'),
+                  },
+                ],
+              },
             ]
             : []),
 
@@ -106,6 +123,18 @@ export const routes = (can: Can) => {
                       path: ':service',
                       name: 'mesh-service-summary-view',
                       component: () => import('@/app/services/views/MeshServiceSummaryView.vue'),
+                    },
+                  ],
+                },
+                {
+                  path: 'mesh-external-services',
+                  name: 'mesh-external-service-list-view',
+                  component: () => import('@/app/services/views/MeshExternalServiceListView.vue'),
+                  children: [
+                    {
+                      path: ':service',
+                      name: 'mesh-external-service-summary-view',
+                      component: () => import('@/app/services/views/MeshExternalServiceSummaryView.vue'),
                     },
                   ],
                 },

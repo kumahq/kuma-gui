@@ -620,6 +620,24 @@ export interface MeshService extends MeshEntity {
     addresses?: { hostname: string }[]
   }
 }
+export interface MeshExternalService extends MeshEntity {
+  type: 'MeshExternalService'
+  labels?: {
+    'kuma.io/display-name'?: string
+    'kuma.io/zone'?: string
+    'k8s.kuma.io/namespace'?: string
+    [key: string]: string | undefined
+  }
+  spec: {
+    match?: { type: string, port: number, protocol: string }
+    endpoints?: { address: string, port?: number }[]
+    tls?: { enabled: boolean }
+  }
+  status: {
+    vip?: { ip: string }
+    addresses?: { hostname: string }[]
+  }
+}
 
 export interface Zone {
   name: string
