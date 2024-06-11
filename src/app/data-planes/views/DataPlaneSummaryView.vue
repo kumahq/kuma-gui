@@ -76,7 +76,6 @@
                       >
                         <KTooltip
                           class="reason-tooltip"
-                          placement="bottomEnd"
                         >
                           <InfoIcon
                             :color="KUI_COLOR_BACKGROUND_NEUTRAL"
