@@ -93,13 +93,6 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
   margin-bottom: $kui-space-60;
 }
 
-// Makes code block actions sticky
-:deep(.code-block-actions) {
-  position: sticky;
-  z-index: 4;
-  top: var(--AppHeaderHeight);
-}
-
 // Reset some PrismJS styles that interfere with the display of the code block.
 :deep(pre[class*=language-]),
 :deep(code[class*=language-]) {
