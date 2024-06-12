@@ -17,9 +17,6 @@
     </span>
 
     <span>
-      <b>Version</b>: {{ get(props.subscription, 'version.kumaCp.version', t('common.collection.none')) }}
-    </span>
-    <span>
       <img src="@/assets/images/icon-connected.svg?url">
 
       <b>{{ t('common.detail.subscriptions.connect_time') }}</b>:{{ t('common.formats.datetime', { value: Date.parse(props.subscription.connectTime ?? '') }) }}
@@ -45,7 +42,6 @@ import { computed } from 'vue'
 import { useI18n } from '@/app/application'
 import type { DiscoverySubscription } from '@/app/subscriptions/data'
 import type { KDSSubscription } from '@/app/zones/data'
-import { get } from '@/utilities/get'
 
 const { t } = useI18n()
 

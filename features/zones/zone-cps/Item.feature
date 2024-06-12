@@ -1,4 +1,5 @@
 Feature: zones / item
+
   Background:
     Given the CSS selectors
       | Alias                  | Selector                                           |
@@ -6,13 +7,18 @@ Feature: zones / item
       | detail-view            | [data-testid='zone-cp-detail-view']                |
       | config-view            | [data-testid='zone-cp-config-view']                |
       | status-circuit-breaker | [data-testid='subscription-status-CircuitBreaker'] |
+      | version-outdated       | .version.outdated                                  |
+    And the environment
+      """
+      KUMA_MODE: global
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
 
   Scenario: Detail view has expected content
     # We always use the final subscription
     # If the disconnectTime is empty then we are online
     Given the environment
       """
-      KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 2
       """
     And the URL "/zones/zone-cp-1/_overview" responds with
@@ -25,6 +31,9 @@ Feature: zones / item
           subscriptions:
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: 2020-07-28T16:18:09.743141Z
+              version:
+                kumaCp:
+                  version: 100.0.0
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: !!js/undefined
               config: |
@@ -35,33 +44,33 @@ Feature: zones / item
                     responsesSent: '12'
                     responsesAcknowledged: '10'
       """
-
     When I visit the "/zones/zone-cp-1/overview" URL
-
     Then the page title contains "zone-cp-1"
     And the "$tabs-view" element contains "zone-cp-1"
     And the "$detail-view" element contains
       | Value     |
       | Universal |
+      | 100.0.0   |
       | online    |
       | dpToken   |
     And the "$detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
+    And the "$version-outdated" element doesn't exist
 
-    When I click the ".accordion-item:nth-child(1) [data-testid='accordion-item-button']" element
-
-    Then the "$status-circuit-breaker" element contains
-      | Value           |
-      | Circuit Breaker |
-      | 10              |
-      | 12              |
+  Scenario: Outdated versions are highlighted
+    And the URL "/zones/zone-cp-1/_overview" responds with
+      """
+      body:
+        zoneInsight:
+          subscriptions:
+            - version:
+                kumaCp:
+                  version: 0.0.0
+      """
+    When I visit the "/zones/zone-cp-1/overview" URL
+    And the "$version-outdated" element contains "0.0.0"
 
   Scenario: Config view has expected content
-    Given the environment
-      """
-      KUMA_MODE: global
-      KUMA_SUBSCRIPTION_COUNT: 1
-      """
-    And the URL "/zones/zone-cp-1/_overview" responds with
+    Given the URL "/zones/zone-cp-1/_overview" responds with
       """
       body:
         name: default
@@ -72,8 +81,6 @@ Feature: zones / item
               config: |
                 { "multizone": { "zone": { "globalAddress": "grpcs://localhost:123" } } }
       """
-
     When I visit the "/zones/zone-cp-1/config" URL
-
     Then the "$config-view" element contains "globalAddress"
     And the "$config-view" element contains "grpcs://localhost:123"

@@ -32,6 +32,19 @@ export const sources = (env: Env['var'], api: KumaApi) => {
       }
     },
 
+    // used to figure out if the currently running zone control-plane
+    // is out of date with the currently running GUI release
+    '/control-plane/outdated/:version': async (params) => {
+      // if the current version includes some sort of `-dev` then pretend we
+      // are on the latest version and therefore not outdated
+      if (!params.version.match('^[0-9]+.[0-9]+.[0-9]+$')) {
+        return false
+      }
+      return compare(env('KUMA_VERSION'), params.version) === 1
+    },
+
+    // used to figure out if the currently running global control-plane
+    // is out of date with the latest release
     '/control-plane/version/latest': async (): Promise<{ version: string }> => {
       const current = env('KUMA_VERSION')
       // if the current version includes some sort of `-dev` then pretend we

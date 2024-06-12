@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ t }"
+    v-slot="{ t, uri }"
     name="zone-cp-detail-view"
   >
     <AppView>
@@ -33,7 +33,44 @@
                 <StatusBadge :status="props.data.state" />
               </template>
             </DefinitionCard>
+            <DataSource
+              v-slot="{ data: outdated }"
+              :src="uri(sources, '/control-plane/outdated/:version', {
+                version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
+              })"
+            >
+              <DefinitionCard
+                :class="{
+                  version: true,
+                  outdated,
+                }"
+              >
+                <template #title>
+                  {{ t('zone-cps.routes.item.version') }}
+                  <template
+                    v-if="outdated === true"
+                  >
+                    <KTooltip
+                      max-width="300"
+                    >
+                      <InfoIcon
+                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                      <template #content>
+                        <div
+                          v-html="t('zone-cps.routes.item.version_warning')"
+                        />
+                      </template>
+                    </KTooltip>
+                  </template>
+                </template>
 
+                <template #body>
+                  {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
+                </template>
+              </DefinitionCard>
+            </DataSource>
             <DefinitionCard>
               <template #title>
                 {{ t('http.api.property.type') }}
@@ -75,9 +112,13 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
+import { InfoIcon } from '@kong/icons'
+
 import type { ZoneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import { sources } from '@/app/control-planes/sources'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 
 const props = withDefaults(defineProps<{
@@ -87,3 +128,8 @@ const props = withDefaults(defineProps<{
   notifications: () => [],
 })
 </script>
+<style lang="scss" scoped>
+.version.outdated :deep(.definition-card-container) {
+  color: #{$kui-color-text-warning};
+}
+</style>

@@ -16,7 +16,7 @@ type Tags<T extends Record<string, string | undefined>> =
 export class K8sModule {
   constructor(
     protected faker: Faker,
-  ) {}
+  ) { }
 
   deploymentId() {
     return this.faker.string.hexadecimal({ length: 9, casing: 'lower', prefix: '' })
@@ -43,7 +43,7 @@ export class KumaModule {
   constructor(
     protected faker: Faker,
     protected k8s: K8sModule,
-  ) {}
+  ) { }
 
   seed(str: string = '') {
     // sync the seed by name (temp use length until we convert strings to numbers differently)
@@ -79,6 +79,10 @@ export class KumaModule {
 
   serviceType({ serviceTypes = ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }: { serviceTypes?: Array<'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin'> } = { serviceTypes: ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }) {
     return this.faker.helpers.arrayElement(serviceTypes)
+  }
+
+  version() {
+    return this.faker.helpers.arrayElement([this.faker.system.semver(), `${this.faker.system.semver()}-${this.faker.git.branch()}-${this.faker.git.shortSha()}`])
   }
 
   serviceName(serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' = 'internal') {
