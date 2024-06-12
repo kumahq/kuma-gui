@@ -832,4 +832,9 @@ export interface PolicyDataplane {
   type: 'Dataplane'
   mesh: string
   name: string
+  labels?: {
+    'kuma.io/display-name'?: string
+    'k8s.kuma.io/namespace'?: string
+    [key: string]: string | undefined
+  }
 }

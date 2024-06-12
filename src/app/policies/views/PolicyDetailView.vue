@@ -105,7 +105,7 @@
                                 name: 'data-plane-detail-view',
                                 params: {
                                   mesh: item.mesh,
-                                  dataPlane: item.name,
+                                  dataPlane: item.id,
                                 },
                               }"
                             >
