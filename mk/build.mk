@@ -39,3 +39,7 @@ deploy/preview:
 	@$(MAKE) build/preview
 	@$(MAKE) deploy/test
 
+build/types:
+	@npx openapi-typescript \
+		../kuma/docs/generated/openapi.yaml \
+		-o src/types/auto-generated.d.ts

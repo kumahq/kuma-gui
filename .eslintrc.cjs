@@ -57,6 +57,7 @@ const INLINE_NON_VOID_ELEMENTS = [
   ignorePatterns: [
     'node_modules',
     'dist',
+    'src/types/auto-generated.d.ts',
   ],
   plugins: ['vue', 'import', '@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript', 'plugin:import/recommended', 'plugin:import/typescript'],

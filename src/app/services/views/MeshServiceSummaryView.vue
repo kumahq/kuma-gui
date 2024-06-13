@@ -82,7 +82,7 @@
                       :key="connection.port"
                       appearance="info"
                     >
-                      {{ connection.port }}:{{ connection.targetPort }}/{{ connection.appProtocol }}
+                      {{ connection.port }}{{ connection.targetPort ? `:${connection.targetPort}` : '' }}{{ connection.appProtocol ? `/${connection.appProtocol}` : '' }}
                     </KBadge>
                   </KTruncate>
                 </template>
@@ -150,7 +150,7 @@
 <script lang="ts" setup>
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import { MeshService } from '@/app/services/data'
+import type { MeshService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshService[]
 }>()
