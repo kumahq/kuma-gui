@@ -19,12 +19,15 @@ zone-cps:
       title: '{name}'
       breadcrumbs: Zone Control Planes
       navigation:
-        zone-cp-detail-view: 'Overview'
-        zone-cp-config-view: 'Config'
-        zone-ingress-list-view: 'Ingresses'
-        zone-egress-list-view: 'Egresses'
+        zone-cp-detail-view: Overview
+        zone-cp-config-view: Config
+        zone-ingress-list-view: Ingresses
+        zone-egress-list-view: Egresses
       authentication_type: Dataplane authentication type
-      overview: 'Overview'
+      overview: Overview
+      version: Version
+      version_warning: !!text/markdown |
+        This Zone Control Plane is using an older version than the Global Control Plane, please consider upgrading your ZoneCP.
       subscription_intro: |
         Statistics indicate requests and responses between global and zone only
     items:

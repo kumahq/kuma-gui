@@ -44,8 +44,8 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 zoneInstanceId: `zone-${fake.hacker.noun()}`,
                 version: {
                   kumaCp: {
-                    version: '1.0.0-rc2-211-g823fe8ce',
-                    gitTag: '1.0.0-rc2-211-g823fe8ce',
+                    version: fake.kuma.version(),
+                    gitTag: fake.kuma.version(),
                     gitCommit: fake.git.commitSha(),
                     buildDate: '2021-02-18T13:22:30Z',
                     kumaCpGlobalCompatible: fake.datatype.boolean(),
