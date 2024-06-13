@@ -133,6 +133,7 @@ const INLINE_NON_VOID_ELEMENTS = [
             'AppView',
             'DataLoader',
             'DataSource',
+            'DataSink',
             'DataCollection',
             'RouteView',
             'RouteTitle',
