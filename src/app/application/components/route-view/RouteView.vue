@@ -1,37 +1,50 @@
 <template>
-  <div
-    class="route-view"
-    :data-testid="name"
+  <DataSource
+    v-slot="{ data: me }: MeSource"
+    :src="`/me/${props.name}`"
   >
     <div
-      v-if="!hasParent"
-      id="application-route-announcer"
-      ref="title"
-      class="route-view-title visually-hidden"
-      aria-live="assertive"
-      aria-atomic="true"
-    />
-    <slot
-      :id="UniqueId"
-      name="default"
-      :t="t"
-      :env="env"
-      :can="can"
-      :uri="uri"
-      :route="{
-        name: props.name,
-        update: routeUpdate,
-        replace: routeReplace,
-        params: routeParams,
-        back: routerBack,
-        children,
-        child,
-      }"
-    />
-  </div>
+      class="route-view"
+      v-bind="htmlAttrs"
+      :data-testid="name"
+    >
+      <div
+        v-if="!hasParent"
+        id="application-route-announcer"
+        ref="title"
+        class="route-view-title visually-hidden"
+        aria-live="assertive"
+        aria-atomic="true"
+      />
+      <DataSink
+        v-if="me"
+        v-slot="{ submit }"
+        :src="`/me/mesh-list-view`"
+      >
+        <slot
+          :id="UniqueId"
+          name="default"
+          :t="t"
+          :env="env"
+          :me="{ data: me, set: submit, get: (uri: string, d: unknown = {}) => get(me, uri, d) }"
+          :can="can"
+          :uri="uri"
+          :route="{
+            name: props.name,
+            update: routeUpdate,
+            replace: routeReplace,
+            params: routeParams,
+            back: routerBack,
+            children,
+            child,
+          }"
+        />
+      </DataSink>
+    </div>
+  </DataSource>
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean> = {}">
-import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive } from 'vue'
+import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
@@ -45,8 +58,11 @@ import {
   beforePaint,
 } from '../../utilities'
 import { useUri } from '@/app/application/services/data-source'
+import type { MeSource } from '@/app/me/sources'
 import { useEnv } from '@/utilities'
+import { get } from '@/utilities/get'
 import type { RouteRecordRaw } from 'vue-router'
+
 export type RouteView = {
   name: string
   addTitle: (item: string, sym: Symbol) => void
@@ -63,6 +79,7 @@ const win = window
 const env = useEnv()
 const can = useCan()
 const uri = useUri()
+const htmlAttrs = useAttrs()
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
