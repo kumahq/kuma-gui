@@ -46,6 +46,46 @@
                 </template>
               </DefinitionCard>
               <DefinitionCard
+                v-if="data.spec.match"
+                class="port"
+              >
+                <template
+                  #title
+                >
+                  Port
+                </template>
+                <template
+                  #body
+                >
+                  <KBadge
+                    v-for="connection in [data.spec.match]"
+                    :key="connection.port"
+                    appearance="info"
+                  >
+                    {{ connection.port }}/{{ connection.protocol }}
+                  </KBadge>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
+                v-if="data.spec.match"
+                class="tls"
+              >
+                <template
+                  #title
+                >
+                  TLS
+                </template>
+                <template
+                  #body
+                >
+                  <KBadge
+                    appearance="neutral"
+                  >
+                    {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                  </KBadge>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
                 v-if="typeof data.status.vip !== 'undefined'"
                 class="ip"
               >

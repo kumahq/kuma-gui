@@ -86,6 +86,24 @@
                   </KBadge>
                 </template>
               </DefinitionCard>
+              <DefinitionCard
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
+                  TLS
+                </template>
+                <template
+                  #body
+                >
+                  <KBadge
+                    appearance="neutral"
+                  >
+                    {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                  </KBadge>
+                </template>
+              </DefinitionCard>
             </div>
             <div>
               <h3>

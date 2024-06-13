@@ -48,6 +48,7 @@
                     { label: 'Name', key: 'name' },
                     { label: 'Namespace', key: 'namespace' },
                     ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
+                    { label: 'TLS', key: 'tls' },
                     { label: 'Addresses', key: 'addresses' },
                     { label: 'Port', key: 'port' },
                     { label: 'Details', key: 'details', hideLabel: true },
@@ -104,6 +105,13 @@
                     <template v-else>
                       {{ t('common.detail.none') }}
                     </template>
+                  </template>
+                  <template #tls="{ row: item }">
+                    <KBadge
+                      appearance="neutral"
+                    >
+                      {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                    </KBadge>
                   </template>
                   <template
                     #addresses="{ row: item }"
