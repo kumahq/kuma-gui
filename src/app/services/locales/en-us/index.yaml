@@ -4,6 +4,8 @@ services:
   routes:
     mesh-service-list-view:
       title: Mesh Services
+    mesh-external-service-list-view:
+      title: Mesh External Services
     item:
       title: "{name}"
       breadcrumbs: Services
@@ -11,6 +13,8 @@ services:
         service-detail-view: 'Overview'
         mesh-service-detail-view: 'Overview'
         mesh-service-config-view: 'YAML'
+        mesh-external-service-detail-view: 'Overview'
+        mesh-external-service-config-view: 'YAML'
       overview: 'Overview'
       config: 'YAML'
     items:

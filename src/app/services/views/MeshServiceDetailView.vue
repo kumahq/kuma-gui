@@ -26,7 +26,7 @@
           <KCard>
             <div class="columns">
               <DefinitionCard
-                v-if="data.status.addresses.length > 0"
+                v-if="props.data.status.addresses.length > 0"
               >
                 <template
                   #title
@@ -38,7 +38,7 @@
                 >
                   <KTruncate>
                     <span
-                      v-for="address in data.status.addresses"
+                      v-for="address in props.data.status.addresses"
                       :key="address.hostname"
                     >
                       {{ address.hostname }}

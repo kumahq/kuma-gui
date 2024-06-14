@@ -41,6 +41,8 @@ import _27 from './src/meshes/_/fault-injections'
 import _28 from './src/meshes/_/fault-injections/_'
 import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
+import _138 from './src/meshes/_/meshexternalservices'
+import _139 from './src/meshes/_/meshexternalservices/_'
 import _52 from './src/meshes/_/meshfaultinjections'
 import _53 from './src/meshes/_/meshfaultinjections/_'
 import _31 from './src/meshes/_/meshgatewayroutes'
@@ -156,6 +158,8 @@ export const fs: FS = {
   '/meshes/:mesh/meshgateways/:name/_rules': _131,
   '/meshes/:mesh/meshservices': _136,
   '/meshes/:mesh/meshservices/:name': _137,
+  '/meshes/:mesh/meshexternalservices': _138,
+  '/meshes/:mesh/meshexternalservices/:name': _139,
   '/meshes/:mesh/meshhttproutes': _132,
   '/meshes/:mesh/meshhttproutes/:name': _133,
   '/meshes/:mesh/proxytemplates': _35,
