@@ -6,8 +6,8 @@
     <template
       v-for="{title, body, href, actionLabel, actionType} in [
         {
-          title: t(`${prefix}x-empty-state.title`, undefined, { defaultMessage: '' }),
-          body: t(`${prefix}x-empty-state.body`, undefined, { defaultMessage: '' }),
+          title: t(`${prefix}x-empty-state.title`, undefined, { defaultMessage: t('components.x-empty-state.title') }),
+          body: t(`${prefix}x-empty-state.body`, undefined, { defaultMessage: t('components.x-empty-state.body') }),
           href: t(`${prefix}x-empty-state.action.href`, undefined, { defaultMessage: '' }),
           actionLabel: t(`${prefix}x-empty-state.action.label`, undefined, { defaultMessage: '' }),
           actionType: t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }),

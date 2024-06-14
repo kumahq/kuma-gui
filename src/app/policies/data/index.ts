@@ -9,6 +9,7 @@ export type { PolicyType } from '@/types/index.d'
 export type PolicyDataplane = PartialPolicyDataplane & {
   id: string
   namespace: string
+  zone: string
   labels: Exclude<PartialPolicyDataplane['labels'], undefined>
 }
 
@@ -24,6 +25,8 @@ export const PolicyDataplane = {
     return {
       ...item,
       id: item.name,
+      labels,
+      zone: labels['kuma.io/zone'] ?? '',
       name: labels['kuma.io/display-name'] ?? item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
     }
