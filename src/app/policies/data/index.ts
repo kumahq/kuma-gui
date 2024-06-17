@@ -6,7 +6,12 @@ import type {
 
 export type { PolicyType } from '@/types/index.d'
 
-export type PolicyDataplane = PartialPolicyDataplane
+export type PolicyDataplane = PartialPolicyDataplane & {
+  id: string
+  namespace: string
+  zone: string
+  labels: Exclude<PartialPolicyDataplane['labels'], undefined>
+}
 
 export type Policy = PartialPolicy & {
   config: PartialPolicy
@@ -15,16 +20,24 @@ export type Policy = PartialPolicy & {
 }
 
 export const PolicyDataplane = {
-  fromObject(partialPolicyDataplane: PartialPolicyDataplane): PolicyDataplane {
-    return partialPolicyDataplane
+  fromObject(item: PartialPolicyDataplane): PolicyDataplane {
+    const labels = typeof item.labels !== 'undefined' ? item.labels : {}
+    return {
+      ...item,
+      id: item.name,
+      labels,
+      zone: labels['kuma.io/zone'] ?? '',
+      name: labels['kuma.io/display-name'] ?? item.name,
+      namespace: labels['k8s.kuma.io/namespace'] ?? '',
+    }
   },
 
-  fromCollection(partialPolicyDataplanes: PaginatedApiListResponse<PartialPolicyDataplane>): PaginatedApiListResponse<PolicyDataplane> {
+  fromCollection(collection: PaginatedApiListResponse<PartialPolicyDataplane>): PaginatedApiListResponse<PolicyDataplane> {
+    const items = Array.isArray(collection.items) ? collection.items.map(PolicyDataplane.fromObject) : []
     return {
-      ...partialPolicyDataplanes,
-      items: Array.isArray(partialPolicyDataplanes.items)
-        ? partialPolicyDataplanes.items.map((partialPolicyDataplane) => PolicyDataplane.fromObject(partialPolicyDataplane))
-        : [],
+      ...collection,
+      items,
+      total: collection.total ?? items.length,
     }
   },
 }

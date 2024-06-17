@@ -5,6 +5,9 @@ policies:
       breadcrumbs: Policies
       overview: 'Overview'
       config: 'YAML'
+      navigation:
+        policy-detail-view: Overview
+        policy-detail-config-view: YAML
     items:
       empty: "This policy type does not exist."
     types:

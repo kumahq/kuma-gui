@@ -34,9 +34,9 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes': async (params) => {
-      const { mesh, path, name } = params
-
-      return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }))
+      const { mesh, path, name, size } = params
+      const offset = params.size * (params.page - 1)
+      return PolicyDataplane.fromCollection(await api.getPolicyConnections({ mesh, path, name }, { offset, size }))
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes': (params) => {

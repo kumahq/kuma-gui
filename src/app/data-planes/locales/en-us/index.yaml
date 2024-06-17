@@ -1,4 +1,6 @@
 data-planes:
+  x-empty-state:
+    title: There are no Dataplanes present
   components:
     service_traffic_card:
       1xx: 1xx

@@ -15,11 +15,22 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
         const displayName = `${fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const nspace = fake.k8s.namespace()
 
         return {
           type: 'Dataplane',
           mesh,
-          name: `${displayName}${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
+          ...(k8s
+            ? {
+              labels: {
+                'kuma.io/display-name': displayName,
+                'k8s.kuma.io/namespace': nspace,
+                'kuma.io/origin': fake.kuma.origin(),
+                'kuma.io/zone': fake.hacker.noun(),
+              },
+            }
+            : {}),
         }
       }),
       next,
