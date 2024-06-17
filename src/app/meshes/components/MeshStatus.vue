@@ -13,6 +13,7 @@
 
         <ResourceStatus
           :total="props.meshInsight?.dataplanesByType.standard.total ?? 0"
+          :online="props.meshInsight?.dataplanesByType.standard.online ?? 0"
           data-testid="data-plane-proxies-status"
         >
           <template #title>
@@ -28,9 +29,6 @@
             {{ t('meshes.detail.policies') }}
           </template>
         </ResourceStatus>
-      </div>
-
-      <div class="columns">
         <DefinitionCard>
           <template #title>
             {{ t('http.api.property.mtls') }}
@@ -47,37 +45,6 @@
             <template v-else>
               {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
             </template>
-          </template>
-        </DefinitionCard>
-
-        <DefinitionCard>
-          <template #title>
-            {{ t('http.api.property.metrics') }}
-          </template>
-
-          <template #body>
-            <KBadge
-              v-if="!props.mesh.metricsBackend"
-              appearance="neutral"
-            >
-              {{ t('meshes.detail.disabled') }}
-            </KBadge>
-
-            <template v-else>
-              {{ props.mesh.metricsBackend.type }} / {{ props.mesh.metricsBackend.name }}
-            </template>
-          </template>
-        </DefinitionCard>
-
-        <DefinitionCard>
-          <template #title>
-            {{ t('http.api.property.zoneEgress') }}
-          </template>
-
-          <template #body>
-            <KBadge appearance="neutral">
-              {{ t(`meshes.detail.${Boolean(props.mesh.routing?.zoneEgress) ? 'enabled' : 'disabled'}`) }}
-            </KBadge>
           </template>
         </DefinitionCard>
       </div>
