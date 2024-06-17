@@ -116,8 +116,8 @@ onBeforeUnmount(() => {
 // 'visually-hidden type' rule applied here so we are dependency free
 span {
   position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
+  width: 0px !important;
+  height: 0px !important;
   padding: 0 !important;
   margin: -1px !important;
   overflow: hidden !important;
