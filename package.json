@@ -67,7 +67,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/prismjs": "^1.26.4",
     "@types/semver": "^7.5.8",
-    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vitest/coverage-istanbul": "^1.6.0",
