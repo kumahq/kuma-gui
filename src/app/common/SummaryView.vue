@@ -49,6 +49,9 @@ const emit = defineEmits<{
 </script>
 
 <style lang="scss" scoped>
+.summary-slideout {
+  --app-view-content-top: 0;
+}
 :deep(.slideout-title) {
   h1, h2, h4, h5, h6 {
     font-size: $kui-font-size-70;
