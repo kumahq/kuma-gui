@@ -7,7 +7,7 @@
   >
     <RouteView
       v-if="typeof addresses !== 'undefined'"
-      v-slot="{ t, can }"
+      v-slot="{ t, can, route }"
       name="app"
       :attrs="{
         class: 'kuma-ready',
@@ -27,14 +27,45 @@
         </template>
 
         <template #navigation>
-          <ControlPlaneNavigator />
-          <ZoneNavigator
-            v-if="can('use zones')"
-          />
-          <ZoneEgressNavigator
-            v-else
-          />
-          <MeshNavigator />
+          <template
+            v-for="child in [route.child() ?? { name: '' }]"
+            :key="child.name"
+          >
+            <AppNavigator
+              data-testid="control-planes-navigator"
+              :active="child.name === 'home'"
+              label="Home"
+              :to="{
+                name: 'home',
+              }"
+            />
+            <AppNavigator
+              v-if="can('use zones')"
+              data-testid="zones-navigator"
+              :active="child.name === 'zone-index-view'"
+              label="Zones"
+              :to="{
+                name: 'zone-index-view',
+              }"
+            />
+            <AppNavigator
+              v-else
+              data-testid="zone-egresses-navigator"
+              :active="child.name === 'zone-egress-index-view'"
+              label="Zone Egresses"
+              :to="{
+                name: 'zone-egress-list-view',
+              }"
+            />
+            <AppNavigator
+              :active="child.name === 'mesh-index-view'"
+              data-testid="meshes-navigator"
+              label="Meshes"
+              :to="{
+                name: 'mesh-index-view',
+              }"
+            />
+          </template>
         </template>
 
         <AppView>
@@ -46,12 +77,10 @@
 </template>
 
 <script lang="ts" setup>
-import ControlPlaneNavigator from '@/app/control-planes/components/ControlPlaneNavigator.vue'
+import AppNavigator from '@/app/application/components/app-navigator/AppNavigator.vue'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import ApplicationShell from '@/app/kuma/components/ApplicationShell.vue'
-import MeshNavigator from '@/app/meshes/components/MeshNavigator.vue'
-import ZoneEgressNavigator from '@/app/zone-egresses/components/ZoneEgressNavigator.vue'
-import ZoneNavigator from '@/app/zones/components/ZoneNavigator.vue'
+
 </script>
 
 <style lang="scss" scoped>

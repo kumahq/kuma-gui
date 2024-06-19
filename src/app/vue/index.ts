@@ -60,7 +60,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ) => {
         const router = createRouter({
           history: createWebHistory(env('KUMA_BASE_PATH')),
-          routes,
+          routes: [{
+            path: '/',
+            name: 'app',
+            children: routes,
+          }],
         })
 
         guards.forEach((item) => {

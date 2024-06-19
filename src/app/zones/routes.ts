@@ -70,6 +70,7 @@ export const routes = (
       : [
         {
           path: `${prefix}`,
+          name: 'zone-egress-index-view',
           redirect: { name: 'zone-egress-list-view' },
           children: [
             ...egresses().items(),
