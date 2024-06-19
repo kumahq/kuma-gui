@@ -8,7 +8,7 @@ type EventSource = {
 } & EventTarget
 
 // The user definable 'Sources' themselves i.e. `/uri/:param` => HTTP call
-export type Source = (params: Record<string, unknown>, source: { close: () => void }) => unknown
+export type Source = (params: Record<string, unknown>) => unknown
 type Sources = Record<string, Source>
 type Connection = {
   source: EventSource

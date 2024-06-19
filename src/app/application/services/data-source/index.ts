@@ -26,7 +26,7 @@ type ExtractRouteParams<T extends PropertyKey> =
         : {};
 
 export type ExtractSources<T extends Record<PropertyKey, unknown>> = {
-  [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams, source: { close: () => void }) => T[Route]
+  [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams) => T[Route]
 }
 
 export const defineSources = <T extends Record<PropertyKey, unknown>>(sources: ExtractSources<T>) => {
@@ -40,7 +40,7 @@ export type TypeOf<T> = T extends { typeOf(): any } ? ReturnType<T['typeOf']> : 
 class TypedString<T = unknown> {
   constructor(
     protected str: string,
-  ) {}
+  ) { }
 
   toString() {
     return this.str
@@ -143,15 +143,13 @@ export const create: Creator = (src, router) => {
     ...route.params,
   }
   try {
-    // TODO(jc) Once we remove all the source.closes in the sources.ts files the
-    // second argument here can go
-    const init = route.route(params, { close: () => { } })
+    const init = route.route(params)
     let inited = false
     const eventSource = init instanceof CallableEventSource
       ? init
       : source(() => {
         if (inited) {
-          return Promise.resolve(route.route(params, { close: () => { } }))
+          return Promise.resolve(route.route(params))
         } else {
           inited = true
           return Promise.resolve(init)
