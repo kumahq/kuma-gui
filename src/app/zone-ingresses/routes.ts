@@ -50,9 +50,6 @@ export const routes = (prefix = 'ingresses') => {
         {
           path: `${prefix}`,
           name: 'zone-ingress-list-view',
-          meta: {
-            module: 'zone-ingresses',
-          },
           component: () => import('@/app/zone-ingresses/views/ZoneIngressListView.vue'),
           children: [
             {

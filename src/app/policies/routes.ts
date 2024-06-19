@@ -29,9 +29,6 @@ export const routes = () => {
         {
           path: 'policies',
           name: 'policy-list-index-view',
-          meta: {
-            module: 'policies',
-          },
           component: () => import('@/app/policies/views/PolicyTypeListView.vue'),
           children: [
             {

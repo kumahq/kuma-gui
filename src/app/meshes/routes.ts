@@ -36,9 +36,6 @@ export const routes = (
               children: [
                 {
                   path: 'overview',
-                  meta: {
-                    module: 'meshes',
-                  },
                   name: 'mesh-detail-view',
                   component: () => import('@/app/meshes/views/MeshDetailView.vue'),
                 },

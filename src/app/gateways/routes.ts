@@ -20,9 +20,6 @@ export const routes = () => {
               {
                 path: 'dataplanes',
                 name: 'builtin-gateway-dataplanes-view',
-                meta: {
-                  module: 'builtin-gateway-dataplanes',
-                },
                 component: () => import('@/app/gateways/views/BuiltinGatewayDataplanesView.vue'),
                 children: [
                   {
@@ -70,9 +67,6 @@ export const routes = () => {
           path: 'gateways',
           name: 'gateway-list-tabs-view',
           redirect: { name: 'builtin-gateway-list-view' },
-          meta: {
-            module: 'gateways',
-          },
           component: () => import('@/app/gateways/views/GatewayListTabsView.vue'),
           children: [
             {

@@ -7,9 +7,6 @@ export const actions = (): RouteRecordRaw[] => {
   return [{
     path: '/zones/-create',
     name: 'zone-create-view',
-    meta: {
-      isWizard: true,
-    },
     component: () => import('@/app/zones/views/ZoneCreateView.vue'),
   }]
 }
@@ -30,9 +27,6 @@ export const routes = (
             {
               path: '',
               name: 'zone-cp-list-view',
-              meta: {
-                module: 'zone-cps',
-              },
               component: () => import('@/app/zones/views/ZoneListView.vue'),
             },
             {
