@@ -1,4 +1,5 @@
 import type { Can } from '@/app/application/services/can'
+import { routes as subscriptions } from '@/app/subscriptions/routes'
 import { routes as egresses } from '@/app/zone-egresses/routes'
 import { routes as ingresses } from '@/app/zone-ingresses/routes'
 import type { RouteRecordRaw } from 'vue-router'
@@ -49,6 +50,7 @@ export const routes = (
                       path: 'overview',
                       name: 'zone-cp-detail-view',
                       component: () => import('@/app/zones/views/ZoneDetailView.vue'),
+                      children: subscriptions(),
                     },
                     {
                       path: 'config',
