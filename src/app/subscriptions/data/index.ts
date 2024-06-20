@@ -26,7 +26,7 @@ export const DiscoverySubscriptionCollection = {
 }
 export const SubscriptionCollection = {
   fromArray: <T extends Subscription>(items?: T[]): SubscriptionCollection<T> => {
-    const subscriptions = Array.isArray(items) ? items : []
+    const subscriptions = Array.isArray(items) ? items.map(item => item) : []
 
     // make a copy of the original array so we don't change its order
     const subs = subscriptions.slice()

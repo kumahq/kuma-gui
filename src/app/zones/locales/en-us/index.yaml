@@ -43,7 +43,7 @@ zone-cps:
     INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: 'Version mismatch'
     ZONE_STORE_TYPE_MEMORY: 'Uses memory store'
   detail:
-    subscriptions: 'KDS connections'
+    subscriptions: 'KDS Connections'
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
   empty_state:

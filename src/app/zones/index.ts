@@ -7,6 +7,7 @@ import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
 import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
+import { services as subscriptions } from '@/app/subscriptions'
 
 type Token = ReturnType<typeof token>
 
@@ -68,6 +69,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.enUs,
       ],
     }],
+    ...subscriptions(app),
   ]
 }
 export const TOKENS = $

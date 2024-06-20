@@ -141,7 +141,7 @@ export class KumaModule {
   }
 
   subscriptionConfig(config: any = {}) {
-    return JSON.stringify(deepmerge(subscriptionConfig(), config))
+    return JSON.stringify(deepmerge(subscriptionConfig(), config), null, 4)
   }
 
   /**
