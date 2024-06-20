@@ -1,9 +1,10 @@
 Feature: mesh / policies / index
+
   Background:
     Given the CSS selectors
       | Alias            | Selector                                  |
       | policy-type-list | [data-testid='policy-type-list']          |
-      | items            | [data-testid='policy-collection']         |
+      | items            | [data-testid='app-collection']            |
       | detail-view      | [data-testid='policy-detail-view']        |
       | items-header     | $items th                                 |
       | item             | $items tbody tr                           |
@@ -24,11 +25,8 @@ Feature: mesh / policies / index
 
   Scenario: Listing has expected content
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-
     Then the "$button-docs" element exists
-
     And the "$items-header" element exists 3 times
-
     And the "[data-testid='policy-list-index-view-tab'].active" element exists
     And the "$item" element exists 2 times
     And the "$item:nth-child(1)" element contains
@@ -37,16 +35,11 @@ Feature: mesh / policies / index
 
   Scenario: Clicking the link goes to the detail page and back again
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
-
     When I click the "$item:nth-child(1) [data-testid='details-link']" element
-
     Then the URL contains "circuit-breakers/fake-cb-1/overview"
     And the "$detail-view" element contains "fake-cb-1"
-
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
-
     Then the "$item" element exists 2 times
 
   Scenario: Clicking policy types in the sidebar switches listing
@@ -57,13 +50,9 @@ Feature: mesh / policies / index
           - name: mfi-1
           - name: mfi-2
       """
-
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
-
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
-
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
 
   Scenario: TargetRef-based policies show Zone and targetRef columns
@@ -80,9 +69,7 @@ Feature: mesh / policies / index
                 kind: MeshService
                 name: service-1
       """
-
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
-
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
     And the "$item:nth-child(1) td:nth-child(3)" element contains "zone-1"
     And the "$item:nth-child(1) td:nth-child(4)" element contains "MeshService:service-1"
@@ -121,9 +108,7 @@ Feature: mesh / policies / index
           MeshFaultInjection:
             total: 2
       """
-
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
-
     Then the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
     And the "[data-testid='policy-type-link-FaultInjection']" element doesn't exist
 
@@ -135,17 +120,12 @@ Feature: mesh / policies / index
           CircuitBreaker:
             total: 1
       """
-
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
-
     Then the "[data-testid='policy-type-link-FaultInjection']" element exists
     And the "[data-testid='policy-type-link-MeshFaultInjection']" element exists
 
   Scenario: Regression test: Zone column is visible when navigating from legacy policy type
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-
     Then the "$items-header" element exists 3 times
-
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
-
     Then the "$items-header" element exists 5 times

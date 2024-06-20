@@ -24,7 +24,9 @@ export const sources = (api: KumaApi) => {
       const { mesh, path, size } = params
       const offset = params.size * (params.page - 1)
 
-      return Policy.fromCollection(await api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size }))
+      const name = params.search.length > 0 ? params.search : undefined
+
+      return Policy.fromCollection(await api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size, name }))
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {
