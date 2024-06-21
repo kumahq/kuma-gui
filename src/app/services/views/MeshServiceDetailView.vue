@@ -61,7 +61,7 @@
                       :key="connection.port"
                       appearance="info"
                     >
-                      {{ connection.port }}:{{ connection.targetPort }}/{{ connection.protocol }}
+                      {{ connection.port }}:{{ connection.targetPort }}/{{ connection.appProtocol }}
                     </KBadge>
                   </KTruncate>
                 </template>
