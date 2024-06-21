@@ -11,29 +11,39 @@
       :render="false"
     />
 
-    <AppView>
-      <template
-        v-if="!props.mesh.mtlsBackend"
-        #notifications
-      >
-        <div v-html="t('meshes.routes.item.mtls-warning')" />
-      </template>
-      <div
-        class="stack"
-      >
-        <DataSource
-          v-slot="{ data }"
-          :src="uri(sources, '/mesh-insights/:name', {
-            name: route.params.mesh,
-          })"
+    <DataSource
+      v-slot="{ data }"
+      :src="uri(sources, '/mesh-insights/:name', {
+        name: route.params.mesh,
+      })"
+    >
+      <AppView>
+        <template
+          v-if="!props.mesh.mtlsBackend || (props.mesh.mtlsBackend && (data?.policies?.MeshTrafficPermission?.total ?? 0) === 0)"
+          #notifications
         >
-          <KCard>
-            <div class="date-status-wrapper">
-              Created: {{ t('common.formats.datetime', {value: Date.parse(mesh.creationTime)}) }}
-            </div>
+          <ul>
+            <li
+              v-if="!props.mesh.mtlsBackend"
+              v-html="t('meshes.routes.item.mtls-warning')"
+            />
+            <li
+              v-if="props.mesh.mtlsBackend && (data?.policies?.MeshTrafficPermission?.total ?? 0) === 0"
+              v-html="t('meshes.routes.item.mtp-warning')"
+            />
+          </ul>
+        </template>
+        <div
+          class="stack"
+        >
+          <AppAboutSection
+            :title="t('meshes.routes.item.subtitle', {name: props.mesh.name})"
+            :created="t('common.formats.datetime', {value: Date.parse(props.mesh.creationTime)})"
+            :modified="t('common.formats.datetime', {value: Date.parse(props.mesh.modificationTime)})"
+          >
             <div class="columns">
               <template
-                v-for="policy in ['MeshMetric', 'MeshAccessLog', 'MeshTrace']"
+                v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
                 :key="policy"
               >
                 <template
@@ -66,55 +76,100 @@
                 </template>
               </template>
             </div>
+          </AppAboutSection>
+
+          <KCard>
+            <div class="stack">
+              <div class="columns">
+                <ResourceStatus
+                  :total="data?.services.total ?? 0"
+                  data-testid="services-status"
+                >
+                  <template #title>
+                    {{ t('meshes.detail.services') }}
+                  </template>
+                </ResourceStatus>
+
+                <ResourceStatus
+                  :total="data?.dataplanesByType.standard.total ?? 0"
+                  :online="data?.dataplanesByType.standard.online ?? 0"
+                  data-testid="data-plane-proxies-status"
+                >
+                  <template #title>
+                    {{ t('meshes.detail.data_plane_proxies') }}
+                  </template>
+                </ResourceStatus>
+
+                <ResourceStatus
+                  :total="data?.totalPolicyCount ?? 0"
+                  data-testid="policies-status"
+                >
+                  <template #title>
+                    {{ t('meshes.detail.policies') }}
+                  </template>
+                </ResourceStatus>
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.mtls') }}
+                  </template>
+
+                  <template #body>
+                    <KBadge
+                      v-if="!props.mesh.mtlsBackend"
+                      appearance="neutral"
+                    >
+                      {{ t('meshes.detail.disabled') }}
+                    </KBadge>
+
+                    <template v-else>
+                      {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
+                    </template>
+                  </template>
+                </DefinitionCard>
+              </div>
+            </div>
           </KCard>
-          <MeshStatus
-            :mesh="props.mesh"
-            :mesh-insight="data"
-          />
-        </DataSource>
-        <ResourceCodeBlock
-          v-slot="{ copy, copying }"
-          :resource="mesh.config"
-        >
-          <DataSource
-            v-if="copying"
-            :src="uri(sources, '/meshes/:name/as/kubernetes', {
-              name: route.params.mesh,
-            }, {
-              cacheControl: 'no-store',
-            })"
-            @change="(data) => {
-              copy((resolve) => resolve(data))
-            }"
-            @error="(e) => {
-              copy((_resolve, reject) => reject(e))
-            }"
-          />
-        </ResourceCodeBlock>
-      </div>
-    </AppView>
+          <ResourceCodeBlock
+            v-slot="{ copy, copying }"
+            :resource="mesh.config"
+          >
+            <DataSource
+              v-if="copying"
+              :src="uri(sources, '/meshes/:name/as/kubernetes', {
+                name: route.params.mesh,
+              }, {
+                cacheControl: 'no-store',
+              })"
+              @change="(data) => {
+                copy((resolve) => resolve(data))
+              }"
+              @error="(e) => {
+                copy((_resolve, reject) => reject(e))
+              }"
+            />
+          </ResourceCodeBlock>
+        </div>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
+import { AppAboutSection } from '@kong-ui-public/app-layout'
+
 import type { Mesh } from '../data'
 import { sources } from '../sources'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import { useMeshStatus } from '@/app/meshes/'
+import ResourceStatus from '@/app/common/ResourceStatus.vue'
 
 const props = defineProps<{
   mesh: Mesh
 }>()
-
-const MeshStatus = useMeshStatus()
-
 </script>
 
 <style lang="scss" scoped>
-.date-status-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1em
+:deep(.kong-ui-app-about-section .about-section-content) {
+  display: block;
 }
 </style>

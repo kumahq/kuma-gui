@@ -14,36 +14,36 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
       name,
       type: 'Mesh',
       creationTime: '2020-06-19T12:18:02.097986-04:00',
-      modificationTime: '2020-06-19T12:18:02.097986-04:00',
+      modificationTime: '2020-07-19T12:18:02.097986-04:00',
       ...(isMtlsEnabled &&
-         {
-           mtls: {
-             enabledBackend: 'ca-1',
-             backends: [
-               {
-                 name: 'ca-1',
-                 type: 'provided',
-                 dpCert: {
-                   rotation: {
-                     expiration: '1d',
-                   },
-                 },
-                 conf: {
-                   cert: {
-                     secret: 'name-of-secret',
-                   },
-                   key: {
-                     secret: 'name-of-secret',
-                   },
-                 },
-               },
-               {
-                 name: 'ca-2',
-                 type: 'BUILTIN',
-               },
-             ],
-           },
-         }),
+      {
+        mtls: {
+          enabledBackend: 'ca-1',
+          backends: [
+            {
+              name: 'ca-1',
+              type: 'provided',
+              dpCert: {
+                rotation: {
+                  expiration: '1d',
+                },
+              },
+              conf: {
+                cert: {
+                  secret: 'name-of-secret',
+                },
+                key: {
+                  secret: 'name-of-secret',
+                },
+              },
+            },
+            {
+              name: 'ca-2',
+              type: 'BUILTIN',
+            },
+          ],
+        },
+      }),
       ...(fake.datatype.boolean() && {
         logging: {
           backends: [
