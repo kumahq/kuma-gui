@@ -1,4 +1,5 @@
 Feature: zones / index
+
   Background:
     Given the CSS selectors
       | Alias             | Selector                                    |
@@ -22,13 +23,13 @@ Feature: zones / index
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"universal", "store": {"type": "memory"}}'
+                  config: '{"store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: !!js/undefined
-                  config: '{"environment":"kubernetes", "store": {"type": "memory"}}'
+                  config: '{"store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-not-the-version-i-want
@@ -39,7 +40,7 @@ Feature: zones / index
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
-                  config: '{"environment":"kubernetes", "store": {"type": "memory"}}'
+                  config: '{"store": {"type": "memory"}}'
                   version:
                     kumaCp:
                       version: 1.0.0-rc2-211-g823fe8ce
@@ -56,19 +57,13 @@ Feature: zones / index
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: 2020-07-28T16:18:09.743141Z
       """
-
     When I visit the "/zones" URL
     Then the page title contains "Zone Control Planes"
-
     Then the "$zone-cp-table-row:nth-child(1) .state-column" element contains "online"
     Then the "$zone-cp-table-row:nth-child(1) .name-column" element contains "zone-cp-1"
     Then the "$zone-cp-table-row:nth-child(1) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
-    Then the "$zone-cp-table-row:nth-child(1) .type-column" element contains "universal"
-
     Then the "$zone-cp-table-row:nth-child(2) .state-column" element contains "offline"
     Then the "$zone-cp-table-row:nth-child(2) .name-column" element contains "zone-cp-2"
     Then the "$zone-cp-table-row:nth-child(2) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
-    Then the "$zone-cp-table-row:nth-child(2) .type-column" element contains "kubernetes"
-
     Then the "$zone-cp-table-row:nth-child(3) .state-column" element contains "disabled"
     Then the "$zone-cp-table-row:nth-child(3) .name-column" element contains "zone-cp-3"

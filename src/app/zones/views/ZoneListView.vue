@@ -5,7 +5,7 @@
   >
     <RouteView
       v-if="me"
-      v-slot="{ route, t, can }"
+      v-slot="{ route, t, can, uri }"
       name="zone-cp-list-view"
       :params="{
         page: 1,
@@ -23,8 +23,11 @@
         </template>
 
         <DataSource
-          v-slot="{ data, error, refresh }: ZoneOverviewCollectionSource"
-          :src="`/zone-cps?page=${route.params.page}&size=${route.params.size}`"
+          v-slot="{ data, error, refresh }"
+          :src="uri(zoneSources, '/zone-cps', {}, {
+            page: route.params.page,
+            size: route.params.size,
+          })"
         >
           <DataSource
             :src="`/zone-ingress-overviews?page=1&size=100`"
@@ -61,9 +64,9 @@
                 class="zone-cp-collection"
                 data-testid="zone-cp-collection"
                 :headers="[
+                  { label: '&nbsp;', key: 'type' },
                   { label: 'Name', key: 'name' },
                   { label: 'Zone CP Version', key: 'zoneCpVersion' },
-                  { label: 'Type', key: 'type' },
                   { label: 'Ingresses (online / total)', key: 'ingress' },
                   { label: 'Egresses (online / total)', key: 'egress' },
                   { label: 'Status', key: 'state' },
@@ -83,6 +86,20 @@
                 :is-selected-row="(row) => row.name === route.params.zone"
                 @change="route.update"
               >
+                <template
+                  #type="{ row: item }"
+                >
+                  <template
+                    v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === item.zoneInsight.environment) ?? 'kubernetes']"
+                    :key="env"
+                  >
+                    <XIcon
+                      :name="env"
+                    >
+                      {{ t(`common.product.environment.${env}`) }}
+                    </XIcon>
+                  </template>
+                </template>
                 <template #name="{ row: item }">
                   <RouterLink
                     :to="{
@@ -102,10 +119,6 @@
 
                 <template #zoneCpVersion="{ row: item }">
                   {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
-                </template>
-
-                <template #type="{ row: item }">
-                  {{ item.zoneInsight.environment.length > 0 ? item.zoneInsight.environment : 'kubernetes' }}
                 </template>
 
                 <template #ingress="{ row: item }">
@@ -270,7 +283,7 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
 import { ref } from 'vue'
 
-import type { ZoneOverviewCollectionSource } from '../sources'
+import { sources as zoneSources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -330,6 +343,12 @@ async function deleteZone(name: string) {
 </script>
 
 <style lang="scss" scoped>
+.app-collection:deep(:is(th, td):nth-child(1)) {
+  padding-left: 8px !important;
+  padding-right: 0 !important;
+  width: 16px !important;
+}
+
 .details-link {
   display: inline-flex;
   align-items: center;
