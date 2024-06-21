@@ -17,139 +17,146 @@
         name: route.params.mesh,
       })"
     >
-      <AppView>
-        <template
-          v-if="!props.mesh.mtlsBackend || (props.mesh.mtlsBackend && (data?.policies?.MeshTrafficPermission?.total ?? 0) === 0)"
-          #notifications
-        >
-          <ul>
-            <li
-              v-if="!props.mesh.mtlsBackend"
-              v-html="t('meshes.routes.item.mtls-warning')"
-            />
-            <li
-              v-if="props.mesh.mtlsBackend && (data?.policies?.MeshTrafficPermission?.total ?? 0) === 0"
-              v-html="t('meshes.routes.item.mtp-warning')"
-            />
-          </ul>
-        </template>
-        <div
-          class="stack"
-        >
-          <AppAboutSection
-            :title="t('meshes.routes.item.subtitle', {name: props.mesh.name})"
-            :created="t('common.formats.datetime', {value: Date.parse(props.mesh.creationTime)})"
-            :modified="t('common.formats.datetime', {value: Date.parse(props.mesh.modificationTime)})"
+      <template
+        v-for="missingTLSPolicy in [
+          ['MeshTrafficPermission', 'TrafficPermission'].reduce((prev, item) => prev + (data?.policies?.[item]?.total ?? 0), 0) === 0,
+        ]"
+        :key="missingTLSPolicy"
+      >
+        <AppView>
+          <template
+            v-if="!props.mesh.mtlsBackend || missingTLSPolicy"
+            #notifications
           >
-            <div class="columns">
-              <template
-                v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
-                :key="policy"
-              >
+            <ul>
+              <li
+                v-if="!props.mesh.mtlsBackend"
+                v-html="t('meshes.routes.item.mtls-warning')"
+              />
+              <li
+                v-if="missingTLSPolicy"
+                v-html="t('meshes.routes.item.mtp-warning')"
+              />
+            </ul>
+          </template>
+          <div
+            class="stack"
+          >
+            <AppAboutSection
+              :title="t('meshes.routes.item.subtitle', {name: props.mesh.name})"
+              :created="t('common.formats.datetime', {value: Date.parse(props.mesh.creationTime)})"
+              :modified="t('common.formats.datetime', {value: Date.parse(props.mesh.modificationTime)})"
+            >
+              <div class="columns">
                 <template
-                  v-for="enabled in [Object.entries(data?.policies ?? {}).find(([key, value]) => key === policy)]"
-                  :key="enabled"
+                  v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
+                  :key="policy"
                 >
+                  <template
+                    v-for="enabled in [Object.entries(data?.policies ?? {}).find(([key, value]) => key === policy)]"
+                    :key="enabled"
+                  >
+                    <DefinitionCard>
+                      <template #title>
+                        <XAction
+                          :to="{
+                            name: 'policy-list-view',
+                            params: {
+                              mesh: route.params.mesh,
+                              policyPath: `${policy.toLowerCase()}s`,
+                            },
+                          }"
+                        >
+                          {{ policy }}
+                        </XAction>
+                      </template>
+
+                      <template #body>
+                        <KBadge
+                          appearance="neutral"
+                        >
+                          {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
+                        </KBadge>
+                      </template>
+                    </DefinitionCard>
+                  </template>
+                </template>
+              </div>
+            </AppAboutSection>
+
+            <KCard>
+              <div class="stack">
+                <div class="columns">
+                  <ResourceStatus
+                    :total="data?.services.total ?? 0"
+                    data-testid="services-status"
+                  >
+                    <template #title>
+                      {{ t('meshes.detail.services') }}
+                    </template>
+                  </ResourceStatus>
+
+                  <ResourceStatus
+                    :total="data?.dataplanesByType.standard.total ?? 0"
+                    :online="data?.dataplanesByType.standard.online ?? 0"
+                    data-testid="data-plane-proxies-status"
+                  >
+                    <template #title>
+                      {{ t('meshes.detail.data_plane_proxies') }}
+                    </template>
+                  </ResourceStatus>
+
+                  <ResourceStatus
+                    :total="data?.totalPolicyCount ?? 0"
+                    data-testid="policies-status"
+                  >
+                    <template #title>
+                      {{ t('meshes.detail.policies') }}
+                    </template>
+                  </ResourceStatus>
                   <DefinitionCard>
                     <template #title>
-                      <XAction
-                        :to="{
-                          name: 'policy-list-view',
-                          params: {
-                            mesh: route.params.mesh,
-                            policyPath: `${policy.toLowerCase()}s`,
-                          },
-                        }"
-                      >
-                        {{ policy }}
-                      </XAction>
+                      {{ t('http.api.property.mtls') }}
                     </template>
 
                     <template #body>
                       <KBadge
+                        v-if="!props.mesh.mtlsBackend"
                         appearance="neutral"
                       >
-                        {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
+                        {{ t('meshes.detail.disabled') }}
                       </KBadge>
+
+                      <template v-else>
+                        {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
+                      </template>
                     </template>
                   </DefinitionCard>
-                </template>
-              </template>
-            </div>
-          </AppAboutSection>
-
-          <KCard>
-            <div class="stack">
-              <div class="columns">
-                <ResourceStatus
-                  :total="data?.services.total ?? 0"
-                  data-testid="services-status"
-                >
-                  <template #title>
-                    {{ t('meshes.detail.services') }}
-                  </template>
-                </ResourceStatus>
-
-                <ResourceStatus
-                  :total="data?.dataplanesByType.standard.total ?? 0"
-                  :online="data?.dataplanesByType.standard.online ?? 0"
-                  data-testid="data-plane-proxies-status"
-                >
-                  <template #title>
-                    {{ t('meshes.detail.data_plane_proxies') }}
-                  </template>
-                </ResourceStatus>
-
-                <ResourceStatus
-                  :total="data?.totalPolicyCount ?? 0"
-                  data-testid="policies-status"
-                >
-                  <template #title>
-                    {{ t('meshes.detail.policies') }}
-                  </template>
-                </ResourceStatus>
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.mtls') }}
-                  </template>
-
-                  <template #body>
-                    <KBadge
-                      v-if="!props.mesh.mtlsBackend"
-                      appearance="neutral"
-                    >
-                      {{ t('meshes.detail.disabled') }}
-                    </KBadge>
-
-                    <template v-else>
-                      {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
-                    </template>
-                  </template>
-                </DefinitionCard>
+                </div>
               </div>
-            </div>
-          </KCard>
-          <ResourceCodeBlock
-            v-slot="{ copy, copying }"
-            :resource="mesh.config"
-          >
-            <DataSource
-              v-if="copying"
-              :src="uri(sources, '/meshes/:name/as/kubernetes', {
-                name: route.params.mesh,
-              }, {
-                cacheControl: 'no-store',
-              })"
-              @change="(data) => {
-                copy((resolve) => resolve(data))
-              }"
-              @error="(e) => {
-                copy((_resolve, reject) => reject(e))
-              }"
-            />
-          </ResourceCodeBlock>
-        </div>
-      </AppView>
+            </KCard>
+            <ResourceCodeBlock
+              v-slot="{ copy, copying }"
+              :resource="mesh.config"
+            >
+              <DataSource
+                v-if="copying"
+                :src="uri(sources, '/meshes/:name/as/kubernetes', {
+                  name: route.params.mesh,
+                }, {
+                  cacheControl: 'no-store',
+                })"
+                @change="(data) => {
+                  copy((resolve) => resolve(data))
+                }"
+                @error="(e) => {
+                  copy((_resolve, reject) => reject(e))
+                }"
+              />
+            </ResourceCodeBlock>
+          </div>
+        </AppView>
+      </template>
     </DataSource>
   </RouteView>
 </template>
