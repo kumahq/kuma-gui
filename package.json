@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@kong-ui-public/i18n": "^2.1.6",
+    "@kong-ui-public/app-layout": "^4.2.5",
     "@kong/icons": "^1.13.0",
     "@kong/kongponents": "^9.0.0-alpha < 9.0.0-beta",
     "@vueuse/core": "^10.10.0",
