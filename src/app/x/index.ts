@@ -1,4 +1,5 @@
 import XAction from './components/x-action/XAction.vue'
+import XActionGroup from './components/x-action-group/XActionGroup.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
@@ -18,6 +19,7 @@ declare module '@vue/runtime-core' {
     XIcon: typeof XIcon
     XInput: typeof XInput
     XAction: typeof XAction
+    XActionGroup: typeof XActionGroup
     XCopyButton: typeof XCopyButton
     XBreadcrumbs: typeof XBreadcrumbs
     XSelect: typeof XSelect
@@ -35,6 +37,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         service: () => {
           return [
             ['XAction', XAction],
+            ['XActionGroup', XActionGroup],
             ['XBreadcrumbs', XBreadcrumbs],
             ['XCopyButton', XCopyButton],
             ['XIcon', XIcon],

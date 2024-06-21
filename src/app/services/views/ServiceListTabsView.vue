@@ -14,8 +14,8 @@
       </template>
 
       <template #actions>
-        <LinkBox>
-          <RouterLink
+        <XActionGroup>
+          <XAction
             v-for="{ name } in route.children"
             :key="name"
             :class="{
@@ -30,15 +30,11 @@
             :data-testid="`${name}-sub-tab`"
           >
             {{ t(`services.routes.items.navigation.${name}`) }}
-          </RouterLink>
-        </LinkBox>
+          </XAction>
+        </XActionGroup>
       </template>
 
       <RouterView />
     </AppView>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import LinkBox from '@/app/common/LinkBox.vue'
-</script>
