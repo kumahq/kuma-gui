@@ -34,7 +34,7 @@
                 v-html="t('meshes.routes.item.mtls-warning')"
               />
               <li
-                v-if="missingTLSPolicy"
+                v-if="props.mesh.mtlsBackend && missingTLSPolicy"
                 v-html="t('meshes.routes.item.mtp-warning')"
               />
             </ul>
