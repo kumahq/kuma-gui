@@ -95,7 +95,7 @@
     "jsdom": "^24.1.0",
     "lint-staged": "^15.2.7",
     "lockfile-lint": "^4.14.0",
-    "marked": "^13.0.0",
+    "marked": "^13.0.1",
     "msw": "^2.3.1",
     "postcss": "^8.4.38",
     "postcss-html": "^1.7.0",
