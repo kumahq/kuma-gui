@@ -9,7 +9,9 @@
     <AppView>
       <template #title>
         <h2>
-          <RouteTitle :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)" />
+          <RouteTitle
+            :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
+          />
         </h2>
       </template>
 
@@ -19,8 +21,8 @@
           :items="route.children"
           :empty="false"
         >
-          <LinkBox>
-            <RouterLink
+          <XActionGroup>
+            <XAction
               v-for="{ name } in items"
               :key="`${name}`"
               :class="{
@@ -35,16 +37,18 @@
               :data-testid="`${name}-sub-tab`"
             >
               {{ t(`gateways.routes.items.navigation.${name}`) }}
-            </RouterLink>
-          </LinkBox>
+            </XAction>
+          </XActionGroup>
         </DataCollection>
       </template>
 
-      <RouterView />
+      <RouterView
+        v-slot="{ Component}"
+      >
+        <component
+          :is="Component"
+        />
+      </RouterView>
     </AppView>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import LinkBox from '@/app/common/LinkBox.vue'
-</script>
