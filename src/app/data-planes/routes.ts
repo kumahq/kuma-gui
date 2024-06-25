@@ -58,9 +58,6 @@ export const routes = () => {
         {
           path: 'data-planes',
           name: 'data-plane-list-view',
-          meta: {
-            module: 'data-planes',
-          },
           component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
           children: [
             {

@@ -7,9 +7,6 @@ export const routes = (notFoundViews: (() => Promise<Component>)[]): RouteRecord
       path: '/404',
       name: 'kuma-not-found-view',
       alias: '/:pathMatch(.*)*',
-      meta: {
-        title: 'Item not found',
-      },
       component: () => notFoundViews[notFoundViews.length - 1](),
     },
   ]
