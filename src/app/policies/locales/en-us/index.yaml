@@ -1,4 +1,8 @@
 policies:
+  x-empty-state:
+    title: No data
+    body: !!text/markdown |
+      There are no { type } policies present{ suffix }.
   routes:
     item:
       title: "{name}"

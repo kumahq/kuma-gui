@@ -1,12 +1,13 @@
 Feature: mesh / policies / data
+
   Background:
     Given the CSS selectors
-      | Alias         | Selector                          |
-      | items         | [data-testid='policy-collection'] |
-      | item          | $items tbody tr                   |
-      | state-empty   | [data-testid='empty-block']       |
-      | state-error   | [data-testid='error-block']       |
-      | state-loading | [data-testid='loading-block']     |
+      | Alias         | Selector                       |
+      | items         | [data-testid='app-collection'] |
+      | item          | $items tbody tr                |
+      | state-empty   | [data-testid='empty-block']    |
+      | state-error   | [data-testid='error-block']    |
+      | state-loading | [data-testid='loading-block']  |
     And the URL "/mesh-insights/default" responds with
       """
       body:
@@ -14,6 +15,7 @@ Feature: mesh / policies / data
           CircuitBreaker:
             - total: 2
       """
+
   Scenario: 2 items in the response shows 2 items
     Given the environment
       """
@@ -30,6 +32,7 @@ Feature: mesh / policies / data
     When I visit the "/meshes/default/policies/circuit-breakers" URL
     Then the "$state-loading" element exists
     Then the "$item" element exists 2 times
+
   Scenario: Zero items shows the empty state
     Given the environment
       """

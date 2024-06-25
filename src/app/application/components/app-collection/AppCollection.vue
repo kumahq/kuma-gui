@@ -1,6 +1,7 @@
 <template>
   <KTable
     :key="kTableMountKey"
+    data-testid="app-collection"
     class="app-collection"
     :style="`--column-width: ${columnWidth}; --special-column-width: ${SPECIAL_COLUMN_WIDTH}%;`"
     :has-error="(typeof props.error !== 'undefined')"
