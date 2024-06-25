@@ -14,6 +14,7 @@
       "marked",
       "vite/client"
     ],
+    "noErrorTruncation": true,
     "baseUrl": ".",
     "paths": {
       "@badeball/cypress-cucumber-preprocessor/*": [
