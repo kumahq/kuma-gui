@@ -86,7 +86,7 @@ export class KumaModule {
   }
 
   version() {
-    return this.faker.helpers.arrayElement([this.faker.system.semver(), `${this.faker.system.semver()}-${this.faker.git.branch()}-${this.faker.git.shortSha()}`])
+    return this.faker.helpers.arrayElement([this.faker.system.semver(), `${this.faker.system.semver()}-${this.faker.git.branch()}-${this.faker.git.commitSha({ length: 7 })}`])
   }
 
   serviceName(serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' = 'internal') {
