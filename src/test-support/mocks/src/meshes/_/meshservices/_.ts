@@ -36,7 +36,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
           {
             port: fake.internet.port(),
             targetPort: fake.internet.port(),
-            protocol: fake.kuma.protocol(),
+            appProtocol: fake.kuma.protocol(),
           }
         )),
         selector: {

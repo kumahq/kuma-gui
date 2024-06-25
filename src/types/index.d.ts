@@ -611,7 +611,7 @@ export interface MeshService extends MeshEntity {
     [key: string]: string | undefined
   }
   spec: {
-    ports?: { port: number, targetPort: number, protocol: string }[]
+    ports?: { port: number, targetPort: number, appProtocol: string }[]
     selector?: { dataplaneTags?: Record<string, string> }
   }
   status: {
