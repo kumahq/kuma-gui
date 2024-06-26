@@ -14,6 +14,9 @@ import type { Can } from './services/can'
 import I18n from './services/i18n/I18n'
 import type { Source } from '@/app/application/services/data-source'
 import { create, destroy, getSource, DataSourcePool } from '@/app/application/services/data-source'
+import { services as kuma } from '@/app/kuma'
+import { services as me } from '@/app/me'
+import { services as x } from '@/app/x'
 import type { EnvVars } from '@/services/env/Env'
 import Env from '@/services/env/Env'
 import type { ServiceDefinition } from '@/services/utils'
@@ -71,6 +74,10 @@ const $ = {
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+
+    ...me(app),
+    ...x(app),
+    ...kuma(app),
 
     [token('application.components'), {
       service: (i18n: ReturnType<typeof I18n>) => {

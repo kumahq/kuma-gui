@@ -1,18 +1,31 @@
 // Importing styles here enforces a consistent stylesheet order between the Vite development server and the production build. See https://github.com/vitejs/vite/issues/4890.
 import './assets/styles/main.scss'
 
-import { services as controlPlanes, TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
+import { services as application, TOKENS as APPLICATION } from '@/app/application'
+import { TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
 import { services as diagnostics } from '@/app/diagnostics'
+import { TOKENS } from '@/app/kuma'
 import { services as onboarding } from '@/app/onboarding'
-import { TOKENS as $, services as production } from '@/services/production'
+import { services as serviceMesh } from '@/app/service-mesh'
+import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { build } from '@/services/utils'
 
 async function mountVueApplication() {
-  const get = build(
-    // production service container configuration
-    production($),
+  const $ = {
+    ...VUE,
+    ...APPLICATION,
+    ...TOKENS,
+  }
 
-    controlPlanes({
+  const get = build(
+    vue($),
+
+    application({
+      ...$,
+      routes: $.routesLabel,
+    }),
+
+    serviceMesh({
       ...$,
       routes: $.routesLabel,
     }),
@@ -25,6 +38,7 @@ async function mountVueApplication() {
       ...$,
       routes: $.routesLabel,
     }),
+
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
       ? await (async () => {

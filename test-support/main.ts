@@ -5,12 +5,25 @@
 import { beforeEach, afterEach } from 'vitest'
 
 import { services as testing } from './index'
-import { TOKENS as $, services as production } from '@/services/production'
+import { services as application, TOKENS as APPLICATION } from '@/app/application'
+import { TOKENS } from '@/app/kuma'
+import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { get, container, build } from '@/services/utils'
 
 (async () => {
+  const $ = {
+    ...VUE,
+    ...APPLICATION,
+    ...TOKENS,
+  }
   build(
-    production($),
+    vue($),
+
+    application({
+      ...$,
+      routes: $.routesLabel,
+    }),
+
     testing($),
   )
   // initializes vue-test-utils with any global components and/or plugins etc
