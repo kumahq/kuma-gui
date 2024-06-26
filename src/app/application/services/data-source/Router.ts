@@ -25,7 +25,7 @@ export default class Router<T> {
         const args = pattern.exec(_url)
         return {
           route,
-          params: args?.pathname.groups || {},
+          params: Object.fromEntries(Object.entries(args?.pathname.groups || {}).map(([key, value]) => [key, decodeURIComponent(value ?? '')])),
         }
       }
     }
