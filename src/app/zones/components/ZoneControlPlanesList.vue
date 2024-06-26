@@ -31,6 +31,7 @@
         </template>
         <template #name="{ row: item }">
           <XAction
+            data-action
             :to="{
               name: 'zone-cp-detail-view',
               params: {
@@ -89,5 +90,10 @@ const props = defineProps<{
   padding-left: 8px !important;
   padding-right: 0 !important;
   width: 16px !important;
+}
+.app-collection :deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
 }
 </style>
