@@ -1,10 +1,31 @@
 import { makeRequest } from './makeRequest'
 import type Env from '@/services/env/Env'
 
+export const createFetch = (client: RestClient) => {
+  return async (req: Request) => {
+    const url = new URL(req.url)
+    const payload = ['GET', 'DELETE'].includes(req.method) ? undefined : req.body ? (await new Response(req.body).json()) : {}
+    const options = {
+      ...req,
+      params: url.searchParams.size > 0 ? Object.fromEntries(url.searchParams.entries()) : undefined,
+    }
+    const { response, data } = await client.raw(url.pathname, payload, options, req.method)
+
+    // we've already accessed the response via .json from within client.raw
+    // so we can't call it again later (which the new client does)
+    // therefore fake json until we can get rid of our old client
+    response.json = () => data
+    return response
+  }
+}
 export class RestClient {
   constructor(
     protected env: Env['var'],
-  ) {}
+  ) { }
+
+  get fetch() {
+    return createFetch(this)
+  }
 
   /**
    * The absolute API base URL used in all requests. Includes its base path segment if one is set.
