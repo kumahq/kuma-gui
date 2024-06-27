@@ -50,21 +50,10 @@
                       {{ t('main-overview.detail.health.view_all') }}
                     </XAction>
                   </div>
-                  <!-- Here we check the length of the zones because if the length is zero then -->
-                  <!-- we show a create button in the empty state for the list therefore we don't need -->
-                  <!-- a repeated button here -->
                   <div
-                    v-if="(data?.items.length ?? 0 > 0) && can('create zones')"
                     class="card-actions"
                   >
-                    <KButton
-                      appearance="primary"
-                      :to="{ name: 'zone-create-view' }"
-                    >
-                      <AddIcon />
-
-                      {{ t('zones.index.create') }}
-                    </KButton>
+                    <XTeleportSlot name="control-plane-detail-view-zone-actions" />
                   </div>
                 </div>
 
@@ -114,7 +103,6 @@
 </template>
 
 <script lang="ts" setup>
-import { AddIcon } from '@kong/icons'
 
 import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus } from '@/app/control-planes'

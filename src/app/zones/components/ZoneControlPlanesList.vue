@@ -1,38 +1,61 @@
 <template>
-  <AppCollection
-    :headers="[
-      { label: t('zone-cps.components.zone-control-planes-list.name'), key: 'name'},
-      { label: t('zone-cps.components.zone-control-planes-list.status'), key: 'status'},
-    ]"
-    :items="props.items"
-    :total="props.items?.length"
-    :empty-state-title="t('zone-cps.empty_state.title')"
-    :empty-state-message="can('create zones') ? t('zone-cps.empty_state.message') : t('common.emptyState.message', { type: 'Zones' })"
-    :empty-state-cta-to="can('create zones') ? { name: 'zone-create-view' } : undefined"
-    :empty-state-cta-text="t('zones.index.create')"
+  <div
+    v-bind="$attrs"
   >
-    <template #name="{ row: item }">
-      <RouterLink
-        :to="{
-          name: 'zone-cp-detail-view',
-          params: {
-            zone: item.name,
-          },
-        }"
+    <DataCollection
+      :items="props.items ?? [undefined]"
+      :type="can('create zones') ? `zone-cps-crud` : `zone-cps`"
+    >
+      <AppCollection
+        :headers="[
+          { label: t('zone-cps.components.zone-control-planes-list.name'), key: 'name'},
+          { label: t('zone-cps.components.zone-control-planes-list.status'), key: 'status'},
+        ]"
+        :items="props.items"
+        :total="props.items?.length"
       >
-        {{ item.name }}
-      </RouterLink>
-    </template>
+        <template #name="{ row: item }">
+          <XAction
+            :to="{
+              name: 'zone-cp-detail-view',
+              params: {
+                zone: item.name,
+              },
+            }"
+          >
+            {{ item.name }}
+          </XAction>
+        </template>
 
-    <template #status="{ row: item }">
-      <StatusBadge
-        :status="item.state"
-      />
-    </template>
-  </AppCollection>
+        <template #status="{ row: item }">
+          <StatusBadge
+            :status="item.state"
+          />
+        </template>
+      </AppCollection>
+    </DataCollection>
+  </div>
+  <!-- put the create button either in the empty state or above the list -->
+  <!-- depending on whether we are empty or not -->
+  <XTeleportTemplate
+    v-if="can('create zones') && props.items"
+    :to="{
+      name: (props.items.length > 0) ? 'control-plane-detail-view-zone-actions' : 'zone-cps-crud-x-empty-state-actions',
+    }"
+  >
+    <KButton
+      appearance="primary"
+      :to="{ name: 'zone-create-view' }"
+    >
+      <AddIcon />
+      {{ t('zones.index.create') }}
+    </KButton>
+  </XTeleportTemplate>
 </template>
 
 <script lang="ts" setup>
+
+import { AddIcon } from '@kong/icons'
 
 import type { ZoneOverview } from '../data'
 import { useCan, useI18n } from '@/app/application'
