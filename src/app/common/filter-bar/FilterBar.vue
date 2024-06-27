@@ -118,7 +118,7 @@ import { ChevronRightIcon, FilterIcon } from '@kong/icons'
 import { computed, onBeforeUnmount, onMounted, watch, ref } from 'vue'
 
 import { Command, ShortcutManager } from './ShortcutManager'
-import uniqueId from '@/utilities/uniqueId'
+import { uniqueId } from '@/app/application'
 
 type FilterFieldDefinition = {
   description: string
