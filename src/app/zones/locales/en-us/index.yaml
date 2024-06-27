@@ -1,4 +1,14 @@
+zone-cps-crud:
+  x-empty-state:
+    title: No Zones yet...
+    body: !!text/markdown |
+      Create your first Zone to start managing your mesh
+
 zone-cps:
+  x-empty-state:
+    title: No Zones yet...
+    body: !!text/markdown |
+      There are no Zones present
 
   common:
     name: Name

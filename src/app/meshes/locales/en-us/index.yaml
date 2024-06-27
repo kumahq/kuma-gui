@@ -1,4 +1,12 @@
 meshes:
+  x-empty-state:
+    title: 'No data'
+    body: !!text/markdown |
+      There are no Meshes present
+    action:
+      type: docs
+      label: Documentation
+      href: '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
   common:
     name: Name
     type: |

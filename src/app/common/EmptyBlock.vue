@@ -53,16 +53,20 @@
         </template>
 
         <template
-          v-if="$slots.action || href.length > 0"
           #action
         >
           <slot name="action">
             <XAction
+              v-if="href.length > 0"
               :type="(['docs', 'create'] as const).find((item) => item === actionType)"
               :href="href"
             >
               {{ actionLabel }}
             </XAction>
+            <XTeleportSlot
+              v-else
+              :name="`${props.type}-x-empty-state-actions`"
+            />
           </slot>
         </template>
       </KEmptyState>
