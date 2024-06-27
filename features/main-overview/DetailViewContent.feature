@@ -1,4 +1,5 @@
 Feature: Overview: Detail view content
+
   Background:
     Given the CSS selectors
       | Alias                       | Selector                                    |
@@ -10,13 +11,8 @@ Feature: Overview: Detail view content
         items:
           - name: mesh-1
             services:
-              external:
-                total: 0
-              internal:
-                total: 5
-                online: 3
-                partiallyDegraded: 1
-                offline: 1
+              external: 0
+              internal: 5
             dataplanesByType:
               standard:
                 total: 3
@@ -25,13 +21,8 @@ Feature: Overview: Detail view content
                 offline: 1
           - name: mesh-2
             services:
-              external:
-                total: 0
-              internal:
-                total: 5
-                online: 5
-                partiallyDegraded: 0
-                offline: 0
+              external: 0
+              internal: 5
             dataplanesByType:
               standard:
                 total: 3
@@ -40,13 +31,8 @@ Feature: Overview: Detail view content
                 offline: 0
           - name: mesh-3
             services:
-              external:
-                total: 4
-              internal:
-                total: 5
-                online: 5
-                partiallyDegraded: 0
-                offline: 0
+              external: 4
+              internal: 5
             dataplanesByType:
               standard:
                 total: 3
@@ -55,7 +41,7 @@ Feature: Overview: Detail view content
                 offline: 0
       """
 
-  Scenario: Shows expected content in zone mode
+  Scenario: Shows expected content in non-federated mode
     Given the environment
       """
       KUMA_MESH_COUNT: 3
@@ -85,19 +71,16 @@ Feature: Overview: Detail view content
             total: 1
             online: 1
       """
-
     When I visit the "/" URL
     Then the page title contains "Overview"
-
     And the "[data-testid='zone-control-planes-status']" element doesn't exist
     And the "[data-testid='meshes-status']" element contains "3"
     And the "[data-testid='services-status']" element contains "9/15"
     And the "[data-testid='data-plane-proxies-status']" element contains "7/9"
-
-    And the "$zone-control-planes-details" element doesn't exists
+    And the "$zone-control-planes-details" element doesn't exist
     And the "$meshes-details" element exists
 
-  Scenario: Shows expected content in global mode
+  Scenario: Shows expected content in federated mode
     Given the environment
       """
       KUMA_ZONE_COUNT: 2
@@ -155,15 +138,11 @@ Feature: Overview: Detail view content
                   disconnectTime: 2020-07-28T16:18:09.743141Z
                   config: '{"environment":"kubernetes"}'
       """
-
     When I visit the "/" URL
-
     Then the page title contains "Overview"
-
     And the "[data-testid='zone-control-planes-status']" element contains "1/2"
     And the "[data-testid='meshes-status']" element contains "3"
     And the "[data-testid='services-status']" element contains "9/15"
     And the "[data-testid='data-plane-proxies-status']" element contains "7/9"
-
     And the "$zone-control-planes-details" element exists
     And the "$meshes-details" element exists

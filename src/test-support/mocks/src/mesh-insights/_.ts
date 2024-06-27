@@ -104,7 +104,13 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           }, {}),
         },
       },
-      services: fake.kuma.serviceStatus({ max: serviceTotal }),
+      services: {
+        total: serviceTotal,
+        ...fake.kuma.partitionInto({
+          internal: Number,
+          external: Number,
+        }, serviceTotal),
+      },
     },
   }
 }

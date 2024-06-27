@@ -4,7 +4,6 @@ import deepmerge from 'deepmerge'
 import type {
   DataplaneNetworking,
   DataPlaneProxyStatus,
-  ServiceStatus,
   ToTargetRefRuleMatch,
 } from '@/types/index.d'
 
@@ -66,6 +65,10 @@ export class KumaModule {
     )
   }
 
+  // TODO(jc): Use `totalName: Number.MAX_VALUE` so we can set a 'total' property automatically
+  /**
+   * Returns an object with the specified properties with the values as a random 'partition' of `total`
+   */
   partitionInto<T extends Record<string, typeof Number | number>>(skeleton: T, total: number): { [K in keyof T]: number } {
     const props = Object.entries(skeleton).filter(([_key, value]) => value === Number || isNaN(Number(value))).map(([key, _value]) => key)
     return {
@@ -158,23 +161,6 @@ export class KumaModule {
     ].filter(([_key, value]) => omitZeroValues ? value !== 0 : true)
 
     return Object.fromEntries(values) as DataPlaneProxyStatus
-  }
-
-  /**
-   * Returns a random service status object with self-consistent values (i.e. total = internal + external).
-   */
-  serviceStatus({ min = 0, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
-    const total = this.faker.number.int({ min, max })
-    const internal = this.faker.number.int({ min: 0, max: total })
-    const external = total - internal
-
-    const values = [
-      ['total', total],
-      ['internal', internal],
-      ['external', external],
-    ].filter(([_key, value]) => omitZeroValues ? value !== 0 : true)
-
-    return Object.fromEntries(values) as ServiceStatus
   }
 
   globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {

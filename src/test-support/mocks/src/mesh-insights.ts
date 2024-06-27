@@ -119,7 +119,13 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               },
             },
           },
-          services: fake.kuma.serviceStatus({ max: serviceTotal }),
+          services: {
+            total: serviceTotal,
+            ...fake.kuma.partitionInto({
+              internal: Number,
+              external: Number,
+            }, serviceTotal),
+          },
         }
       }),
       next,
