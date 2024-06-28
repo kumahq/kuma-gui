@@ -8,7 +8,7 @@ If you are considering to contribute and help create an awesome user experience,
 
 You will need to have the following tools and programs installed to run and work on the application.
 
-- [Node.js](https://nodejs.org)  and `npm` (see [.nvmrc](https://github.com/kumahq/kuma-gui/blob/master/.nvmrc) for the required main version)
+- [Node.js](https://nodejs.org) and `npm` (see [.nvmrc](https://github.com/kumahq/kuma-gui/blob/master/.nvmrc) for the required main version)
 - git
 - make
 
@@ -40,10 +40,10 @@ You can confirm Kuma is running by accessing its API:
 ```sh
 curl http://localhost:5681/
 ```
+
 :::
 
-Once installed you can make the development server/GUI use Kuma by adding a `KUMA_MOCK_API_ENABLED=false` cookie to your browser. You can do this my using the browser's Application/Cookies settings in Web Inspector, or by clicking <http://localhost:8080/gui/#KUMA_MOCK_API_ENABLED=false> (and set it back again by clicking http://localhost:8080/gui/#KUMA_MOCK_API_ENABLED=true)
-
+Once installed you can make the development server/GUI use Kuma by adding a `KUMA_MOCK_API_ENABLED=false` cookie to your browser. You can do this my using the browser's Application/Cookies settings in Web Inspector, or by clicking <http://localhost:8080/gui/#KUMA_MOCK_API_ENABLED=false> (and set it back again by clicking <http://localhost:8080/gui/#KUMA_MOCK_API_ENABLED=true>)
 
 ### Disabling anonymous reports in Kuma
 
@@ -80,19 +80,32 @@ make run
 Run the browser test UI in another terminal window:
 
 ```sh
-make test/e2e
+KUMA_BASE_URL=http://localhost:8080/gui KUMA_TEST_BROWSER=chrome make test/e2e
 ```
-::: tip NOTE
-By default when running the e2e tests locally the tests will always run against <http://localhost:8080/gui/>
-:::
 
-::: tip
-You can also run specific test files:
+The above environment variables:
+
+1. Point the e2e tests to use the locally running GUI on localhost:8080
+2. Tell the e2e tests to open and run in Chrome
+
+::: tip NOTE
+If you are running tests often you should consider adding these environment variables to your shell profile:
 
 ```sh
-npm run test:browser --spec features/zones/Index.feature
+export KUMA_BASE_URL=http://localhost:8080/gui
+export KUMA_TEST_BROWSER=chrome make test/e2e
 ```
-See our (package file)[https://github.com/kumahq/kuma-gui/blob/master/package.json] for more details
+
+You can then just run:
+
+```sh
+make run
+make test/e2e
+```
+
+:::
+
+See our [package file](https://github.com/kumahq/kuma-gui/blob/master/package.json) for more details
 :::
 
 ## Run linters
@@ -105,11 +118,11 @@ make lint
 You can also lint specific language files:
 
 ```sh
-npm run lint:ts
+make lint/ts
 ```
-See our (package file)[https://github.com/kumahq/kuma-gui/blob/master/package.json] for more details
-:::
 
+See our [package file](https://github.com/kumahq/kuma-gui/blob/master/package.json) for more details
+:::
 
 ## File structure
 
