@@ -70,6 +70,7 @@ const $ = {
   sources: token('data.sources'),
   dataSourcePool: token<DataSourcePool>('data.DataSourcePool'),
   getDataSourceCacheKeyPrefix: token<() => string>('data.getDataSourceCacheKeyPrefix'),
+  errorHandler: token<(e: Error) => void>('application.error.handler'),
 
   i18n: token<ReturnType<typeof I18n>>('i18n'),
   enUs: token('i18n.locale.enUs'),
@@ -156,12 +157,17 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
+    [$.errorHandler, {
+      service: () => () => { },
+    }],
+
     [$.dataSourcePool, {
       service: (sources: Sources, getKey: () => string) => {
         return new DataSourcePool(sources, { create, destroy }, getKey)
       },
       arguments: [
         app.sources,
+        $.errorHandler,
         $.getDataSourceCacheKeyPrefix,
       ],
     }],
