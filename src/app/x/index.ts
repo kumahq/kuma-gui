@@ -1,3 +1,5 @@
+import Kongponents from '@kong/kongponents'
+
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
@@ -32,27 +34,36 @@ declare module '@vue/runtime-core' {
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token('x.vue.components'),
-      {
-        service: () => {
-          return [
-            ['XAction', XAction],
-            ['XActionGroup', XActionGroup],
-            ['XBreadcrumbs', XBreadcrumbs],
-            ['XCopyButton', XCopyButton],
-            ['XIcon', XIcon],
-            ['XInput', XInput],
-            ['XSelect', XSelect],
-            ['XTabs', XTabs],
-            ['XTeleportTemplate', XTeleportTemplate],
-            ['XTeleportSlot', XTeleportSlot],
-            ['XDisclosure', XDisclosure],
-          ]
-        },
-        labels: [
-          app.components,
-        ],
+    [token('kong.plugins'), {
+      service: () => {
+        return [
+          [Kongponents],
+        ]
       },
-    ],
+      labels: [
+        app.plugins,
+      ],
+    }],
+
+    [token('x.vue.components'), {
+      service: () => {
+        return [
+          ['XAction', XAction],
+          ['XActionGroup', XActionGroup],
+          ['XBreadcrumbs', XBreadcrumbs],
+          ['XCopyButton', XCopyButton],
+          ['XIcon', XIcon],
+          ['XInput', XInput],
+          ['XSelect', XSelect],
+          ['XTabs', XTabs],
+          ['XTeleportTemplate', XTeleportTemplate],
+          ['XTeleportSlot', XTeleportSlot],
+          ['XDisclosure', XDisclosure],
+        ]
+      },
+      labels: [
+        app.components,
+      ],
+    }],
   ]
 }
