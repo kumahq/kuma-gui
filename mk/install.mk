@@ -1,6 +1,6 @@
 .PHONY: install
 install: check/node ## Dev: install all dependencies
-	@npm clean-install
+	@npm install
 
 .PHONY: install/sync
 install/sync:

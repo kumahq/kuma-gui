@@ -101,13 +101,11 @@ jobs:
             **/node_modules
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - run: |
-          npm run build:staging
       - env:
           SPEC_GROUPS: ${{ needs.install-dependencies.outputs.spec_groups }}
         run: |
-          npm run preview:built &
-          CYPRESS_video=true npm run test:browser -- --spec $(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package }}"]' | jq -cMr '.[${{ matrix.container }}]')
+          make run/e2e &
+          make CYPRESS_SPEC="$(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package }}"]' | jq -cMr '.[${{ matrix.container }}]')" test/e2e
       - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         if: failure()
         with:
