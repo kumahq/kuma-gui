@@ -5,6 +5,7 @@ import groupBy from 'object.groupby'
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
 import DataLoader from './components/data-source/DataLoader.vue'
+import DataSink from './components/data-source/DataSink.vue'
 import DataSource from './components/data-source/DataSource.vue'
 import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
@@ -45,6 +46,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppView: typeof AppView
     DataSource: typeof DataSource
+    DataSink: typeof DataSink
     DataLoader: typeof DataLoader
     DataCollection: typeof DataCollection
     RouteView: typeof RouteView
@@ -85,6 +87,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['AppView', AppView],
           ['DataLoader', DataLoader],
           ['DataSource', DataSource],
+          ['DataSink', DataSink],
           ['DataCollection', DataCollection],
           ['RouteView', RouteView],
           ['RouteTitle', RouteTitle],
