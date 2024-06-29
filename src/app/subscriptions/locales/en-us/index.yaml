@@ -1,0 +1,6 @@
+subscriptions:
+  routes:
+    item:
+      navigation:
+        subscription-summary-overview-view: Overview
+        subscription-summary-config-view: Config

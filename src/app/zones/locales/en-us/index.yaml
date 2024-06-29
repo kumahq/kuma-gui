@@ -47,7 +47,7 @@ zone-cps:
     version_mismatch: 'Version mismatch'
     store_memory: 'Uses memory store'
   detail:
-    subscriptions: 'KDS connections'
+    subscriptions: 'KDS Connections'
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
   empty_state:

@@ -118,6 +118,7 @@ export interface KDSSubscriptionStatus {
 export interface KDSSubscription {
   config: string
   id: string
+  zoneInstanceId: string
   globalInstanceId: string
   connectTime: string
   disconnectTime?: string
