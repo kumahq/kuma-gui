@@ -11,49 +11,44 @@
     }"
     name="connection-outbound-summary-stats-view"
   >
+    <RouteTitle
+      :render="false"
+      :title="`Stats`"
+    />
     <AppView>
-      <template #title>
-        <h3>
-          <RouteTitle
-            :title="`Stats`"
-          />
-        </h3>
-      </template>
-      <div>
-        <DataLoader
-          v-slot="{ data, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
+      <DataLoader
+        v-slot="{ data, refresh }: StatsSource"
+        :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
+      >
+        <DataCollection
+          v-slot="{ items: lines }"
+          :items="data!.raw.split('\n')"
+          :predicate="item => item.includes(`.${route.params.connection}.`)"
         >
-          <DataCollection
-            v-slot="{ items: lines }"
-            :items="data!.raw.split('\n')"
-            :predicate="item => item.includes(`.${route.params.connection}.`)"
+          <CodeBlock
+            language="json"
+            :code="lines.map((item) => item.replace(`${route.params.connection}.`, '')).join('\n')"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
-            <CodeBlock
-              language="json"
-              :code="lines.map((item) => item.replace(`${route.params.connection}.`, '')).join('\n')"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            >
-              <template #primary-actions>
-                <KButton
-                  appearance="primary"
-                  @click="refresh"
-                >
-                  <RefreshIcon />
+            <template #primary-actions>
+              <KButton
+                appearance="primary"
+                @click="refresh"
+              >
+                <RefreshIcon />
 
-                  Refresh
-                </KButton>
-              </template>
-            </CodeBlock>
-          </DataCollection>
-        </DataLoader>
-      </div>
+                Refresh
+              </KButton>
+            </template>
+          </CodeBlock>
+        </DataCollection>
+      </DataLoader>
     </AppView>
   </RouteView>
 </template>

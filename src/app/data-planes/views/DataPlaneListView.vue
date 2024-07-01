@@ -20,15 +20,11 @@
         v-slot="{ data, error }: DataplaneOverviewCollectionSource"
         :src="`/meshes/${route.params.mesh}/dataplanes/of/${route.params.dataplaneType}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
       >
+        <RouteTitle
+          :render="false"
+          :title="t('data-planes.routes.items.title')"
+        />
         <AppView>
-          <template #title>
-            <h2>
-              <RouteTitle
-                :title="t('data-planes.routes.items.title')"
-              />
-            </h2>
-          </template>
-
           <KCard>
             <ErrorBlock
               v-if="error !== undefined"

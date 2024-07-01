@@ -7,12 +7,6 @@
     }"
   >
     <AppView>
-      <template #title>
-        <XTeleportSlot
-          name="service-list-tabs-view-title"
-        />
-      </template>
-
       <template #actions>
         <XActionGroup>
           <XAction

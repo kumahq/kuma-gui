@@ -14,18 +14,11 @@
         service: '',
       }"
     >
+      <RouteTitle
+        :render="false"
+        :title="t(`services.routes.items.title`)"
+      />
       <AppView>
-        <template #title>
-          <XTeleportTemplate
-            :to="{ name: 'service-list-tabs-view-title'}"
-          >
-            <h2>
-              <RouteTitle
-                :title="t(`services.routes.items.title`)"
-              />
-            </h2>
-          </XTeleportTemplate>
-        </template>
         <KCard>
           <DataLoader
             :src="uri(sources, '/meshes/:mesh/service-insights/of/:serviceType', {

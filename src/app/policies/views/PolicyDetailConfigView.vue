@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, uri }"
     name="policy-detail-config-view"
     :params="{
       mesh: '',
@@ -12,12 +12,6 @@
     }"
   >
     <AppView>
-      <template #title>
-        <h2>
-          {{ t('policies.routes.item.navigation.policy-detail-config-view') }}
-        </h2>
-      </template>
-
       <KCard>
         <ResourceCodeBlock
           v-slot="{ copy, copying }"
