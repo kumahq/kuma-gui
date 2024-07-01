@@ -61,7 +61,7 @@
               :headers="[
                 { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
                 { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                { ...me.get('headers.zoneCpVersion'), label: 'Zone CP Version', key: 'zoneCpVersion' },
+                { ...me.get('headers.zoneCpVersion'), label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
                 { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
                 { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
                 { ...me.get('headers.state'), label: 'Status', key: 'state' },
@@ -140,40 +140,27 @@
               </template>
 
               <template #warnings="{ row: item }">
-                <template
-                  v-for="warnings in [{
-                    version_mismatch: !get(item.zoneInsight, 'version.kumaCp.kumaCpGlobalCompatible', 'true'),
-                    store_memory: item.zoneInsight.store === 'memory',
-                  }]"
-                  :key="`${warnings.version_mismatch}-${warnings.store_memory}`"
+                <XIcon
+                  v-if="item.warnings.length > 0"
+                  name="warning"
+                  data-testid="warning"
                 >
-                  <XIcon
-                    v-if="Object.values(warnings).some((item) => item)"
-                    name="warning"
-                    data-testid="warning"
-                  >
-                    <ul>
-                      <template
-                        v-for="(warning, i) in warnings"
-                        :key="i"
-                      >
-                        <li
-                          v-if="warning"
-                          :data-testid="`warning-${i}`"
-                        >
-                          {{ t(`zone-cps.list.${i}`) }}
-                        </li>
-                      </template>
-                    </ul>
-                  </XIcon>
-                  <template v-else>
-                    {{ t('common.collection.none') }}
-                  </template>
+                  <ul>
+                    <li
+                      v-for="warning in item.warnings"
+                      :key="warning.kind"
+                      :data-testid="`warning-${warning.kind}`"
+                    >
+                      {{ t(`zone-cps.list.${warning.kind}`) }}
+                    </li>
+                  </ul>
+                </XIcon>
+                <template v-else>
+                  {{ t('common.collection.none') }}
                 </template>
               </template>
 
               <template
-                v-if="can('create zones')"
                 #actions="{ row }"
               >
                 <XActionGroup>
@@ -191,6 +178,7 @@
                       {{ t('common.collection.actions.view') }}
                     </XAction>
                     <XAction
+                      v-if="can('create zones')"
                       appearance="danger"
                       @click="toggle"
                     >
@@ -318,10 +306,5 @@ async function deleteZone(name: string) {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
-}
-
-.warning-type-memory {
-  margin-top: $kui-space-60;
-  margin-bottom: $kui-space-60;
 }
 </style>

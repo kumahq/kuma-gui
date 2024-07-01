@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
     name="zone-cp-config-view"
     :params="{
       zone: '',
@@ -13,56 +13,73 @@
       :render="false"
       :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
     />
-    <AppView>
-      <template
-        v-if="props.notifications.length > 0"
-        #notifications
-      >
-        <ul>
-          <li
-            v-for="warning in props.notifications"
-            :key="warning.kind"
-            :data-testid="`warning-${warning.kind}`"
-
-            v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
-          />
-        </ul>
-      </template>
-      <KCard>
-        <CodeBlock
-          v-if="Object.keys(props.data.zoneInsight.config).length > 0"
-          language="json"
-          :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
-          is-searchable
-          :query="route.params.codeSearch"
-          :is-filter-mode="route.params.codeFilter"
-          :is-reg-exp-mode="route.params.codeRegExp"
-          @query-change="route.update({ codeSearch: $event })"
-          @filter-mode-change="route.update({ codeFilter: $event })"
-          @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-        />
-
-        <KAlert
-          v-else
-          class="mt-4"
-          data-testid="warning-no-subscriptions"
-          appearance="warning"
+    <DataSource
+      v-slot="{ data: version }"
+      :src="uri(sources, '/control-plane/outdated/:version', {
+        version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
+      })"
+    >
+      <AppView>
+        <template
+          v-if="props.data.warnings.length > 0"
+          #notifications
         >
-          {{ t('zone-cps.detail.no_subscriptions') }}
-        </KAlert>
-      </KCard>
-    </AppView>
+          <ul>
+            <li
+              v-for="warning in props.data.warnings"
+              :key="warning.kind"
+              :data-testid="`warning-${warning.kind}`"
+              v-html="t(`common.warnings.${warning.kind}`, {
+                ...warning.payload,
+                ...(warning.kind === 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS' ? {
+                  globalCpVersion: version?.version ?? '',
+                } : {}),
+              })"
+            />
+          </ul>
+        </template>
+
+        <template #title>
+          <h2>
+            <RouteTitle
+              :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
+            />
+          </h2>
+        </template>
+
+        <KCard>
+          <CodeBlock
+            v-if="Object.keys(props.data.zoneInsight.config).length > 0"
+            language="json"
+            :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          />
+
+          <KAlert
+            v-else
+            class="mt-4"
+            data-testid="warning-no-subscriptions"
+            appearance="warning"
+          >
+            {{ t('zone-cps.detail.no_subscriptions') }}
+          </KAlert>
+        </KCard>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
 import type { ZoneOverview } from '../data'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-
-const props = withDefaults(defineProps<{
+import { sources } from '@/app/control-planes/sources'
+const props = defineProps<{
   data: ZoneOverview
-  notifications: { kind: string, payload: Record<string, string> }[]
-}>(), {
-  notifications: () => [],
-})
+}>()
 </script>

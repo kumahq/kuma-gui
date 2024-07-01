@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ can, route }"
+    v-slot="{ can, route, t }"
     name="zone-cp-detail-tabs-view"
     :params="{
       zone: '',
@@ -9,7 +9,6 @@
     <DataLoader
       v-slot="{ data }: ZoneOverviewSource"
       :src="`/zone-cps/${route.params.zone}`"
-      @change="change"
     >
       <AppView
         v-if="data"
@@ -100,7 +99,6 @@
           <component
             :is="child.Component"
             :data="data"
-            :notifications="notifications"
           />
         </RouterView>
       </AppView>
@@ -109,38 +107,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 
-import type { ZoneOverview } from '../data'
 import type { ZoneOverviewSource } from '../sources'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useI18n, useKumaApi } from '@/utilities'
-import { get } from '@/utilities/get'
+import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()
-const { t } = useI18n()
-
-const notifications = ref<{kind: string, payload: Record<string, string>}[]>([])
-
-const change = (data: ZoneOverview) => {
-  const warnings = []
-  if (data.zoneInsight.store === 'memory') {
-    warnings.push({
-      kind: 'ZONE_STORE_TYPE_MEMORY',
-      payload: {},
-    })
-  }
-  if (!get(data.zoneInsight, 'version.kumaCp.kumaCpGlobalCompatible', 'true')) {
-    warnings.push({
-      kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS',
-      payload: {
-        zoneCpVersion: get(data.zoneInsight, 'version.kumaCp.version', t('common.collection.none')),
-      },
-    })
-  }
-  notifications.value = warnings
-}
 async function deleteZone(name: string) {
   // Intentionally not wrapped in a try-catch block so that the DeleteResourceModal can discover when the operation failed.
   await kumaApi.deleteZone({ name })
