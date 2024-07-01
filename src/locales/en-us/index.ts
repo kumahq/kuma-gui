@@ -14,6 +14,7 @@ import services from '@/app/services/locales/en-us/index.yaml'
 import zoneEgresses from '@/app/zone-egresses/locales/en-us/index.yaml'
 import zoneIngresses from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import zones from '@/app/zones/locales/en-us/index.yaml'
+import zonesCrud from '@/app/zones-crud/locales/en-us/index.yaml'
 
 export default {
   ...common,
@@ -30,6 +31,7 @@ export default {
   ...dataplanes,
   ...connections,
   ...zones,
+  ...zonesCrud,
   ...zoneIngresses,
   ...zoneEgresses,
 }

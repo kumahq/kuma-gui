@@ -1,34 +1,21 @@
-import ZoneControlPlanesList from './components/ZoneControlPlanesList.vue'
+import ZoneControlPlanesListWithCreate from './components/ZoneControlPlanesListWithCreate.vue'
 import { features } from './features'
 import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
-import { token, createInjections } from '@/services/utils'
+import { token } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
-const $ = {
-  ZoneControlPlanesList: token<typeof ZoneControlPlanesList>('zones.components.ZoneControlPlanesList'),
-}
-
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [$.ZoneControlPlanesList, {
-      service: () => {
-        return ZoneControlPlanesList
-      },
-    }],
-
-    [token('zones.routes'), {
+    [token('zones-crud.routes'), {
       service: routes,
-      arguments: [
-        app.can,
-      ],
       labels: [
         app.routes,
       ],
     }],
-    [token('zone.sources'), {
+    [token('zones-crud.sources'), {
       service: sources,
       arguments: [
         app.source,
@@ -38,7 +25,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-    [token('zone.features'), {
+    [token('zones-crud.features'), {
       service: features,
       arguments: [
         app.env,
@@ -47,11 +34,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.features,
       ],
     }],
+    [token('zones-crud.components.ZoneControlPlanesListWithCreate'), {
+      service: () => {
+        return ZoneControlPlanesListWithCreate
+      },
+      decorates: app.ZoneControlPlanesList,
+    }],
   ]
 }
-export const TOKENS = $
-export const [
-  useZoneControlPlanesList,
-] = createInjections(
-  $.ZoneControlPlanesList,
-)

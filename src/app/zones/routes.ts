@@ -3,20 +3,11 @@ import { routes as egresses } from '@/app/zone-egresses/routes'
 import { routes as ingresses } from '@/app/zone-ingresses/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
-export const actions = (): RouteRecordRaw[] => {
-  return [{
-    path: '/zones/-create',
-    name: 'zone-create-view',
-    component: () => import('@/app/zones/views/ZoneCreateView.vue'),
-  }]
-}
 export const routes = (
-  actions: RouteRecordRaw[],
   can: Can,
 ): RouteRecordRaw[] => {
   const prefix = '/zones'
   return [
-    ...actions,
     ...(can('use zones')
       ? [
         {

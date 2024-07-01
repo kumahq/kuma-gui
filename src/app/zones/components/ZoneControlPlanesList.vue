@@ -4,7 +4,7 @@
   >
     <DataCollection
       :items="props.items ?? [undefined]"
-      :type="can('create zones') ? `zone-cps-crud` : `zone-cps`"
+      :type="can('create zones') ? `zones-crud` : `zone-cps`"
     >
       <AppCollection
         :headers="[
@@ -35,28 +35,9 @@
       </AppCollection>
     </DataCollection>
   </div>
-  <!-- put the create button either in the empty state or above the list -->
-  <!-- depending on whether we are empty or not -->
-  <XTeleportTemplate
-    v-if="can('create zones') && props.items"
-    :to="{
-      name: (props.items.length > 0) ? 'control-plane-detail-view-zone-actions' : 'zone-cps-crud-x-empty-state-actions',
-    }"
-  >
-    <KButton
-      appearance="primary"
-      :to="{ name: 'zone-create-view' }"
-    >
-      <AddIcon />
-      {{ t('zones.index.create') }}
-    </KButton>
-  </XTeleportTemplate>
 </template>
 
 <script lang="ts" setup>
-
-import { AddIcon } from '@kong/icons'
-
 import type { ZoneOverview } from '../data'
 import { useCan, useI18n } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'

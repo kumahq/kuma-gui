@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, id }"
+    v-slot="{ route, id, uri }"
     name="zone-create-view"
     :attrs="{
       class: 'is-fullscreen',
@@ -13,7 +13,7 @@
       <template #title>
         <h1>
           <RouteTitle
-            :title="t('zones.routes.create.title')"
+            :title="t('zones-crud.routes.create.title')"
           />
         </h1>
       </template>
@@ -35,19 +35,19 @@
               }
             }"
           >
-            {{ t('zones.form.exit') }}
+            {{ t('zones-crud.form.exit') }}
           </KButton>
           <XTeleportTemplate
             :to="{ name: 'modal-layer' }"
           >
             <KModal
               :visible="expanded"
-              :title="t('zones.form.confirm_modal.title')"
+              :title="t('zones-crud.form.confirm_modal.title')"
               data-testid="confirm-exit-modal"
               @cancel="toggle"
               @proceed="route.replace({ name: 'zone-cp-list-view' })"
             >
-              {{ t('zones.form.confirm_modal.body') }}
+              {{ t('zones-crud.form.confirm_modal.body') }}
 
               <template #footer-actions>
                 <KButton
@@ -55,7 +55,7 @@
                   :to="{ name: 'zone-cp-list-view' }"
                   data-testid="confirm-exit-button"
                 >
-                  {{ t('zones.form.confirm_modal.action_button') }}
+                  {{ t('zones-crud.form.confirm_modal.action_button') }}
                 </KButton>
               </template>
             </KModal>
@@ -73,9 +73,9 @@
           <template
             v-if="(error instanceof ApiError && [409, 500].includes(error.status))"
           >
-            <p>{{ t(`zones.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
+            <p>{{ t(`zones-crud.create.status_error.${error.status}.title`, { name: zoneNameWithError }) }}</p>
 
-            <p>{{ t(`zones.create.status_error.${error.status}.description`) }}</p>
+            <p>{{ t(`zones-crud.create.status_error.${error.status}.description`) }}</p>
           </template>
 
           <template v-else-if="(error instanceof ApiError)">
@@ -92,18 +92,18 @@
             <div class="form-header">
               <div>
                 <h1 class="form-title">
-                  <span class="text-gradient">{{ t('zones.form.title') }}</span>
+                  <span class="text-gradient">{{ t('zones-crud.form.title') }}</span>
                 </h1>
 
-                <p v-if="t('zones.form.description') !== ' '">
-                  {{ t('zones.form.description') }}
+                <p v-if="t('zones-crud.form.description') !== ' '">
+                  {{ t('zones-crud.form.description') }}
                 </p>
               </div>
 
-              <div v-if="tm('zones.form.facts').length > 0">
+              <div v-if="tm('zones-crud.form.facts').length > 0">
                 <ul class="fact-list">
                   <li
-                    v-for="(fact, index) in tm('zones.form.facts')"
+                    v-for="(fact, index) in tm('zones-crud.form.facts')"
                     :key="index"
                     class="fact-list__item"
                   >
@@ -121,10 +121,10 @@
             <div class="form-section">
               <div class="form-section__header">
                 <h2 class="form-section-title">
-                  {{ t('zones.form.section.name.title') }}
+                  {{ t('zones-crud.form.section.name.title') }}
                 </h2>
 
-                <p>{{ t('zones.form.section.name.description') }}</p>
+                <p>{{ t('zones-crud.form.section.name.description') }}</p>
               </div>
 
               <div class="form-section__content">
@@ -134,10 +134,10 @@
                     required
                     :tooltip-attributes="{ placement: 'right'}"
                   >
-                    {{ t('zones.form.nameLabel') }}
+                    {{ t('zones-crud.form.nameLabel') }}
 
                     <template #tooltip>
-                      {{ t('zones.form.name_tooltip') }}
+                      {{ t('zones-crud.form.name_tooltip') }}
                     </template>
                   </KLabel>
 
@@ -169,7 +169,7 @@
 
                   <AddIcon v-else />
 
-                  {{ t('zones.form.createZoneButtonLabel') }}
+                  {{ t('zones-crud.form.createZoneButtonLabel') }}
                 </KButton>
               </div>
             </div>
@@ -181,17 +181,17 @@
               >
                 <div class="form-section__header">
                   <h2 class="form-section-title">
-                    {{ t('zones.form.section.configuration.title') }}
+                    {{ t('zones-crud.form.section.configuration.title') }}
                   </h2>
 
-                  <p>{{ t('zones.form.section.configuration.description') }}</p>
+                  <p>{{ t('zones-crud.form.section.configuration.description') }}</p>
                 </div>
 
                 <div class="form-section__content">
                   <div class="field-group-list">
                     <div class="field-group">
                       <span class="field-group-label">
-                        {{ t('zones.form.environmentLabel') }} *
+                        {{ t('zones-crud.form.environmentLabel') }} *
                       </span>
 
                       <div class="radio-button-group">
@@ -201,7 +201,7 @@
                           name="zone-environment"
                           data-testid="environment-universal-radio-button"
                         >
-                          {{ t('zones.form.universalLabel') }}
+                          {{ t('zones-crud.form.universalLabel') }}
                         </KRadio>
 
                         <KRadio
@@ -210,7 +210,7 @@
                           name="zone-environment"
                           data-testid="environment-kubernetes-radio-button"
                         >
-                          {{ t('zones.form.kubernetesLabel') }}
+                          {{ t('zones-crud.form.kubernetesLabel') }}
                         </KRadio>
                       </div>
                     </div>
@@ -218,7 +218,7 @@
                     <template v-if="environment === 'kubernetes'">
                       <div class="field-group">
                         <span class="field-group-label">
-                          {{ t('zones.form.zoneIngressLabel') }} *
+                          {{ t('zones-crud.form.zoneIngressLabel') }} *
                         </span>
 
                         <div
@@ -229,7 +229,7 @@
                             v-model="zoneIngressEnabled"
                           >
                             <template #label>
-                              {{ t('zones.form.zoneIngressEnabledLabel') }}
+                              {{ t('zones-crud.form.zoneIngressEnabledLabel') }}
                             </template>
                           </KInputSwitch>
                         </div>
@@ -237,7 +237,7 @@
 
                       <div class="field-group">
                         <span class="field-group-label">
-                          {{ t('zones.form.zoneEgressLabel') }} *
+                          {{ t('zones-crud.form.zoneEgressLabel') }} *
                         </span>
 
                         <div
@@ -248,7 +248,7 @@
                             v-model="zoneEgressEnabled"
                           >
                             <template #label>
-                              {{ t('zones.form.zoneEgressEnabledLabel') }}
+                              {{ t('zones-crud.form.zoneEgressEnabledLabel') }}
                             </template>
                           </KInputSwitch>
                         </div>
@@ -261,16 +261,16 @@
               <div class="form-section">
                 <div class="form-section__header">
                   <h2 class="form-section-title">
-                    {{ t('zones.form.section.connect_zone.title') }}
+                    {{ t('zones-crud.form.section.connect_zone.title') }}
                   </h2>
 
-                  <p>{{ t('zones.form.section.connect_zone.description') }}</p>
+                  <p>{{ t('zones-crud.form.section.connect_zone.description') }}</p>
                 </div>
 
                 <div class="form-section__content">
                   <DataSource
-                    v-slot="{ data }: ControlPlaneAddressesSource"
-                    src="/control-plane/addresses"
+                    v-slot="{ data }"
+                    :src="uri(cpSources, '/control-plane/addresses', {})"
                   >
                     <template
                       v-if="(typeof data !== 'undefined')"
@@ -298,16 +298,20 @@
 
               <div class="form-section">
                 <DataSource
-                  v-slot="{ data, error: scanError }: ZoneOverviewSource"
-                  :src="`/zone-cps/online/${name}?no-cache=${now}`"
+                  v-slot="{ data, error: scanError }"
+                  :src="uri(sources, '/zone-cps/online/:name', {
+                    name,
+                  }, {
+                    cacheControl: 'no-cache',
+                  })"
                   @change="success"
                 >
                   <div class="form-section__header">
                     <h2 class="form-section-title">
-                      {{ t('zones.form.section.scanner.title') }}
+                      {{ t('zones-crud.form.section.scanner.title') }}
                     </h2>
 
-                    <p>{{ t('zones.form.section.scanner.description') }}</p>
+                    <p>{{ t('zones-crud.form.section.scanner.description') }}</p>
                   </div>
 
                   <div class="form-section__content">
@@ -334,12 +338,12 @@
                       </template>
 
                       <template #title>
-                        {{ data === undefined ? t('zones.form.scan.waitTitle') : t('zones.form.scan.completeTitle') }}
+                        {{ data === undefined ? t('zones-crud.form.scan.waitTitle') : t('zones-crud.form.scan.completeTitle') }}
                       </template>
 
                       <template v-if="(typeof data !== 'undefined')">
                         <p>
-                          {{ t('zones.form.scan.completeDescription', { name }) }}
+                          {{ t('zones-crud.form.scan.completeDescription', { name }) }}
                         </p>
                         <p class="mt-2">
                           <KButton
@@ -351,7 +355,7 @@
                               },
                             }"
                           >
-                            {{ t('zones.form.scan.completeButtonLabel', { name }) }}
+                            {{ t('zones-crud.form.scan.completeButtonLabel', { name }) }}
                           </KButton>
                         </p>
                       </template>
@@ -374,9 +378,9 @@ import { computed, ref } from 'vue'
 
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
-import { ZoneOverviewSource } from '../sources'
+import { sources } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
+import { sources as cpSources } from '@/app/control-planes/sources'
 import { ApiError } from '@/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
 
@@ -395,7 +399,6 @@ const frontendNameError = ref<string | null>(null)
 const zoneNameWithError = ref('')
 
 const isZoneConnected = ref(false)
-const now = ref(new Date())
 
 const name = ref('')
 const environment = ref<'universal' | 'kubernetes'>('kubernetes')
@@ -461,7 +464,7 @@ function validateName(name: string): boolean {
   if (isValidName) {
     frontendNameError.value = null
   } else {
-    frontendNameError.value = t('zones.create.invalidNameError')
+    frontendNameError.value = t('zones-crud.create.invalidNameError')
   }
 
   return isValidName

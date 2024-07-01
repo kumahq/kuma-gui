@@ -2,10 +2,10 @@
   <div>
     <h3 class="form-step-title">
       <span class="form-step-number">1</span>
-      {{ t('zones.form.universal.saveToken.title') }}
+      {{ t('zones-crud.form.universal.saveToken.title') }}
     </h3>
 
-    <p>{{ t('zones.form.universal.saveToken.saveTokenDescription') }}</p>
+    <p>{{ t('zones-crud.form.universal.saveToken.saveTokenDescription') }}</p>
 
     <CodeBlock
       class="mt-4"
@@ -15,13 +15,13 @@
 
     <h3 class="form-step-title">
       <span class="form-step-number">2</span>
-      {{ t('zones.form.universal.connectZone.title') }}
+      {{ t('zones-crud.form.universal.connectZone.title') }}
     </h3>
 
-    <p>{{ t('zones.form.universal.connectZone.configDescription') }}</p>
+    <p>{{ t('zones-crud.form.universal.connectZone.configDescription') }}</p>
 
     <span class="field-group-label mt-4">
-      {{ t('zones.form.universal.connectZone.configFileName') }}
+      {{ t('zones-crud.form.universal.connectZone.configFileName') }}
     </span>
 
     <CodeBlock
@@ -32,12 +32,12 @@
     />
 
     <p class="mt-4">
-      {{ t('zones.form.universal.connectZone.connectDescription') }}
+      {{ t('zones-crud.form.universal.connectZone.connectDescription') }}
     </p>
 
     <CodeBlock
       class="mt-4"
-      :code="t('zones.form.universal.connectZone.connectCommand').trim()"
+      :code="t('zones-crud.form.universal.connectZone.connectCommand').trim()"
       language="bash"
     />
   </div>
@@ -69,7 +69,7 @@ const props = defineProps({
   },
 })
 
-const saveTokenCommand = computed(() => t('zones.form.universal.saveToken.saveTokenCommand', { token: props.token }).trim())
+const saveTokenCommand = computed(() => t('zones-crud.form.universal.saveToken.saveTokenCommand', { token: props.token }).trim())
 const universalConfig = computed(() => {
   const placeholders: Record<string, string> = {
     zoneName: props.zoneName,
@@ -77,6 +77,6 @@ const universalConfig = computed(() => {
     controlPlaneId: typeof route.params.virtualControlPlaneId === 'string' ? route.params.virtualControlPlaneId : '',
   }
 
-  return t('zones.form.universal.connectZone.config', placeholders).trim()
+  return t('zones-crud.form.universal.connectZone.config', placeholders).trim()
 })
 </script>
