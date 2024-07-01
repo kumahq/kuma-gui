@@ -66,7 +66,7 @@
                 :headers="[
                   { label: '&nbsp;', key: 'type' },
                   { label: 'Name', key: 'name' },
-                  { label: 'Zone CP Version', key: 'zoneCpVersion' },
+                  { label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
                   { label: 'Ingresses (online / total)', key: 'ingress' },
                   { label: 'Egresses (online / total)', key: 'egress' },
                   { label: 'Status', key: 'state' },
@@ -145,35 +145,23 @@
                 </template>
 
                 <template #warnings="{ row: item }">
-                  <template
-                    v-for="warnings in [{
-                      version_mismatch: !get(item.zoneInsight, 'version.kumaCp.kumaCpGlobalCompatible', 'true'),
-                      store_memory: item.zoneInsight.store === 'memory',
-                    }]"
-                    :key="`${warnings.version_mismatch}-${warnings.store_memory}`"
+                  <XIcon
+                    v-if="item.warnings.length > 0"
+                    name="warning"
+                    data-testid="warning"
                   >
-                    <XIcon
-                      v-if="Object.values(warnings).some((item) => item)"
-                      name="warning"
-                      data-testid="warning"
-                    >
-                      <ul>
-                        <template
-                          v-for="(warning, i) in warnings"
-                          :key="i"
-                        >
-                          <li
-                            v-if="warning"
-                            :data-testid="`warning-${i}`"
-                          >
-                            {{ t(`zone-cps.list.${i}`) }}
-                          </li>
-                        </template>
-                      </ul>
-                    </XIcon>
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
+                    <ul>
+                      <li
+                        v-for="warning in item.warnings"
+                        :key="warning.kind"
+                        :data-testid="`warning-${warning.kind}`"
+                      >
+                        {{ t(`zone-cps.list.${warning.kind}`) }}
+                      </li>
+                    </ul>
+                  </XIcon>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
                   </template>
                 </template>
 
