@@ -2,7 +2,7 @@ import { readFile as read, stat } from 'fs/promises'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig, createLogger } from 'vite'
 
-import type { PathConfig } from '@/services/env/Env'
+import type { PathConfig } from '@/app/application/services/env/Env'
 import type { UserConfigFn } from 'vite'
 
 // https://vitejs.dev/config/

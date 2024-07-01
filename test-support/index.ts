@@ -1,7 +1,7 @@
 import { config } from '@vue/test-utils'
 
+import CliEnv from '@/app/application/services/env/CliEnv'
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
-import CliEnv from '@/services/env/CliEnv'
 import { ServiceConfigurator } from '@/services/utils'
 import type { Component } from 'vue'
 

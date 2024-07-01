@@ -1,9 +1,9 @@
 import { ZoneOverview } from './data'
 import type { DataSourceResponse, Source } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { sources as zoneEgresses } from '@/app/zone-egresses/sources'
 import { sources as zoneIngresses } from '@/app/zone-ingresses/sources'
-import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 export type { ZoneOverview } from './data'
 

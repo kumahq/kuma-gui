@@ -86,10 +86,6 @@ export default defineConfig({
             link: 'docs/routing.md',
           },
           {
-            text: 'Services',
-            link: 'src/services/README.md',
-          },
-          {
             text: 'API Mocking',
             link: 'src/test-support/mocks/README.md',
           },

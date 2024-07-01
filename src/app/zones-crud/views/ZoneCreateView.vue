@@ -381,7 +381,7 @@ import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalIn
 import { sources } from '../sources'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import { sources as cpSources } from '@/app/control-planes/sources'
-import { ApiError } from '@/services/kuma-api/ApiError'
+import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import { useI18n, useKumaApi } from '@/utilities'
 
 const { t, tm } = useI18n()

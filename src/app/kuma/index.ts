@@ -1,7 +1,7 @@
+import type { EnvArgs } from '@/app/application/services/env/Env'
+import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import i18nEnUs from '@/locales/en-us'
-import type { EnvArgs } from '@/services/env/Env'
-import KumaApi from '@/services/kuma-api/KumaApi'
-import { RestClient } from '@/services/kuma-api/RestClient'
 import { token } from '@/services/utils'
 import type { ServiceDefinition } from '@/services/utils'
 
