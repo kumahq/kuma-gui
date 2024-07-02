@@ -44,7 +44,7 @@
                 { label: 'Name', key: 'name' },
                 { label: 'Address', key: 'socketAddress' },
                 { label: 'Status', key: 'status' },
-                { label: 'Details', key: 'details', hideLabel: true },
+                { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :page-number="1"
               :page-size="100"
@@ -92,24 +92,19 @@
                 />
               </template>
 
-              <template #details="{ row: item }">
-                <RouterLink
-                  class="details-link"
-                  data-testid="details-link"
-                  :to="{
-                    name: 'zone-egress-detail-view',
-                    params: {
-                      zoneEgress: item.id,
-                    },
-                  }"
-                >
-                  {{ t('common.collection.details_link') }}
-
-                  <ArrowRightIcon
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                </RouterLink>
+              <template #actions="{ row: item }">
+                <XActionGroup>
+                  <XAction
+                    :to="{
+                      name: 'zone-egress-detail-view',
+                      params: {
+                        zoneEgress: item.id,
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.actions.view') }}
+                  </XAction>
+                </XActionGroup>
               </template>
             </AppCollection>
           </KCard>
@@ -145,9 +140,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import type { ZoneEgressOverviewCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -156,11 +148,3 @@ import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
-
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>
