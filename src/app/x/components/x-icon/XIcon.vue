@@ -36,6 +36,8 @@ import {
   BookIcon,
   FilterIcon,
   CopyIcon,
+  RuntimeKicIcon,
+  DeployIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
@@ -57,6 +59,8 @@ const icons = {
   docs: BookIcon,
   search: FilterIcon,
   copy: CopyIcon,
+  kubernetes: RuntimeKicIcon,
+  universal: DeployIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

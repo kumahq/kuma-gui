@@ -3,7 +3,6 @@
     :key="kTableMountKey"
     data-testid="app-collection"
     class="app-collection"
-    :style="`--column-width: ${columnWidth}; --special-column-width: ${SPECIAL_COLUMN_WIDTH}%;`"
     :has-error="(typeof props.error !== 'undefined')"
     :pagination-total-items="props.total"
     :initial-fetcher-params="{ page: props.pageNumber, pageSize: props.pageSize }"
@@ -99,7 +98,7 @@
 <script lang="ts" setup generic="Row extends {}">
 import { AddIcon } from '@kong/icons'
 import { KButton, KTable, TableHeader } from '@kong/kongponents'
-import { useSlots, ref, watch, Ref, computed } from 'vue'
+import { useSlots, ref, watch, Ref } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
@@ -122,8 +121,6 @@ type ChangeValue = {
 }
 
 const { t } = useI18n()
-
-const SPECIAL_COLUMN_WIDTH = 5
 
 const props = withDefaults(defineProps<{
   isSelectedRow?: ((row: Row) => boolean) | null
@@ -174,18 +171,6 @@ const cacheKey = ref<number>(0)
 const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
 const lastPageSize = ref(props.pageSize)
-
-const columnWidth = computed(() => {
-  const specialColumns = props.headers.filter((header) => ['details', 'warnings', 'actions'].includes(header.key))
-
-  if (specialColumns.length > 4) {
-    return 'initial'
-  }
-
-  const percentage = 100 - specialColumns.length * SPECIAL_COLUMN_WIDTH
-  const numberOfCommonColumns = props.headers.length - specialColumns.length
-  return `calc(${percentage}% / ${numberOfCommonColumns})`
-})
 
 watch(() => props.items, (newItems, oldItems) => {
   if (newItems !== oldItems) {
@@ -259,18 +244,6 @@ const click = (e: MouseEvent) => {
 </style>
 
 <style lang="scss">
-.app-collection td {
-  width: var(--column-width, initial);
-}
-
-.app-collection .details-column,
-.app-collection .warnings-column,
-.app-collection .actions-column {
-  width: var(--special-column-width, initial);
-  min-width: 80px;
-  text-align: end;
-}
-
 .app-collection .is-selected {
   background-color: $kui-color-background-neutral-weakest;
 }

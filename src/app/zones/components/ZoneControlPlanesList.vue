@@ -8,14 +8,30 @@
     >
       <AppCollection
         :headers="[
+          { label: '&nbsp;', key: 'type' },
           { label: t('zone-cps.components.zone-control-planes-list.name'), key: 'name'},
           { label: t('zone-cps.components.zone-control-planes-list.status'), key: 'status'},
         ]"
         :items="props.items"
         :total="props.items?.length"
       >
+        <template
+          #type="{ row: item }"
+        >
+          <template
+            v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === item.zoneInsight.environment) ?? 'kubernetes']"
+            :key="env"
+          >
+            <XIcon
+              :name="env"
+            >
+              {{ t(`common.product.environment.${env}`) }}
+            </XIcon>
+          </template>
+        </template>
         <template #name="{ row: item }">
           <XAction
+            data-action
             :to="{
               name: 'zone-cp-detail-view',
               params: {
@@ -50,3 +66,15 @@ const props = defineProps<{
   items?: ZoneOverview[]
 }>()
 </script>
+<style lang="scss" scoped>
+.app-collection:deep(:is(th, td):nth-child(1)) {
+  padding-left: 8px !important;
+  padding-right: 0 !important;
+  width: 16px !important;
+}
+.app-collection :deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
+}
+</style>
