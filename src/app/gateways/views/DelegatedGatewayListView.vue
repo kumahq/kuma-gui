@@ -36,7 +36,7 @@
                 { label: 'Address', key: 'addressPort' },
                 { label: 'DP proxies (online / total)', key: 'dataplanes' },
                 { label: 'Status', key: 'status' },
-                { label: 'Details', key: 'details', hideLabel: true },
+                { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :page-number="route.params.page"
               :page-size="route.params.size"
@@ -90,25 +90,20 @@
                 <StatusBadge :status="row.status" />
               </template>
 
-              <template #details="{ row }">
-                <RouterLink
-                  class="details-link"
-                  data-testid="details-link"
-                  :to="{
-                    name: 'delegated-gateway-detail-view',
-                    params: {
-                      mesh: row.mesh,
-                      service: row.name,
-                    },
-                  }"
-                >
-                  {{ t('common.collection.details_link') }}
-
-                  <ArrowRightIcon
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                </RouterLink>
+              <template #actions="{ row: item }">
+                <XActionGroup>
+                  <XAction
+                    :to="{
+                      name: 'delegated-gateway-detail-view',
+                      params: {
+                        mesh: item.mesh,
+                        service: item.name,
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.actions.view') }}
+                  </XAction>
+                </XActionGroup>
               </template>
             </AppCollection>
           </KCard>
@@ -119,9 +114,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -129,11 +121,3 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 import type { ServiceInsightCollectionSource } from '@/app/services/sources'
 </script>
-
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>
