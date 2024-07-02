@@ -1,12 +1,13 @@
 Feature: zones / warnings
+
   Background:
     Given the CSS selectors
-      | Alias                    | Selector                                                             |
-      | warning-no-subscriptions | [data-testid='warning-no-subscriptions']                             |
-      | warning-zone-memory      | [data-testid='warning-ZONE_STORE_TYPE_MEMORY']                       |
-      | zone-cp-table-row        | [data-testid='zone-cp-collection'] tbody tr                          |
-      | warning-trigger          | $zone-cp-table-row:nth-child(1) [data-testid="warning"]              |
-      | warning-memory           | $zone-cp-table-row:nth-child(1) [data-testid="warning-store_memory"] |
+      | Alias                    | Selector                                                                       |
+      | warning-no-subscriptions | [data-testid='warning-no-subscriptions']                                       |
+      | warning-zone-memory      | [data-testid='warning-ZONE_STORE_TYPE_MEMORY']                                 |
+      | zone-cp-table-row        | [data-testid='zone-cp-collection'] tbody tr                                    |
+      | warning-trigger          | $zone-cp-table-row:nth-child(1) [data-testid="warning"]                        |
+      | warning-memory           | $zone-cp-table-row:nth-child(1) [data-testid="warning-ZONE_STORE_TYPE_MEMORY"] |
     And the environment
       """
       KUMA_ZONE_COUNT: 1
@@ -24,6 +25,7 @@ Feature: zones / warnings
     When I visit the "/zones/zone-cp-1/overview" URL
     And I click the "[data-testid='zone-cp-config-view-tab'] a" element
     Then the "$warning-no-subscriptions" element exists
+
   Scenario: When zone store type is memory a warning is shown in listings
     Given the environment
       """
@@ -56,6 +58,7 @@ Feature: zones / warnings
       """
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element exists
+
     Examples:
       | URL                       |
       | /zones/zone-cp-1/overview |
@@ -70,6 +73,7 @@ Feature: zones / warnings
       """
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element doesn't exist
+
     Examples:
       | URL                       |
       | /zones/zone-cp-1/overview |
