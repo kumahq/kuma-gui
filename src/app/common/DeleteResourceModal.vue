@@ -42,7 +42,7 @@
 import { KAlert, KPrompt } from '@kong/kongponents'
 import { PropType, ref } from 'vue'
 
-import { ApiError } from '@/services/kuma-api/ApiError'
+import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

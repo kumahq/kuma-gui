@@ -1,5 +1,5 @@
 import type { Features } from '@/app/application'
-import type Env from '@/services/env/Env'
+import type Env from '@/app/application/services/env/Env'
 export const features = (env: Env['var']): Features => {
   return {
     'use meshservice': () => {

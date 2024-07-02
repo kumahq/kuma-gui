@@ -1,4 +1,4 @@
-import type { EnvVars } from '@/services/env/Env'
+import type { EnvVars } from '@/app/application/services/env/Env'
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
 import type { Callback, Options } from '@/test-support'
 import getClient from '@/test-support/client'

@@ -1,7 +1,7 @@
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
-import type KumaApi from '@/services/kuma-api/KumaApi'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
 export type StatsSource = DataSourceResponse<{
   inbounds: Record<string, any>

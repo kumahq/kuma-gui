@@ -1,7 +1,6 @@
 ---
 layout: false
 ---
-
 <script setup>
 import { ref, onMounted } from 'vue'
 import { createApp } from 'whyframe:app'
@@ -13,9 +12,9 @@ import { services as x } from '@/app/x'
 import { services as kuma } from '@/app/kuma'
 import { build, token } from '@/services/utils'
 import Kongponents from '@kong/kongponents'
-import CliEnv from '@/services/env/CliEnv'
-import KumaApi from '@/services/kuma-api/KumaApi'
-import { RestClient } from '@/services/kuma-api/RestClient'
+import CliEnv from '@/app/application/services/env/CliEnv'
+import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import i18nEnUs from '@/locales/en-us'
 import '../../src/assets/styles/main.scss'
 const el = ref()
@@ -147,9 +146,10 @@ onMounted(async () => {
 <div id="sandboxed-component" ref="el"></div>
 
 <style scoped>
-#sandboxed-component {
+# sandboxed-component {
   width: 100%;
   height: 100vh;
   padding: 0.5rem;
 }
 </style>
+

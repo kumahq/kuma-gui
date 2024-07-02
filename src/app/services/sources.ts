@@ -1,7 +1,7 @@
 import { MeshService, MeshExternalService, ExternalService, ServiceInsight } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
-import type KumaApi from '@/services/kuma-api/KumaApi'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ServiceInsightsParameters } from '@/types/api.d'
 
 export type { ServiceInsight } from './data'

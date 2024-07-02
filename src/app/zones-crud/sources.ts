@@ -1,7 +1,7 @@
 import type { Source } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { ZoneOverview } from '@/app/zones/data'
-import type KumaApi from '@/services/kuma-api/KumaApi'
 
 export const sources = (source: Source, api: KumaApi) => {
   return defineSources({

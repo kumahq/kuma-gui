@@ -1,7 +1,7 @@
 import { en } from '@faker-js/faker'
 
 import FakeKuma from './FakeKuma'
-import type AppEnv from '@/services/env/Env'
+import type AppEnv from '@/app/application/services/env/Env'
 import type { Alias } from '@/services/utils'
 export type RestRequest = {
   method: string

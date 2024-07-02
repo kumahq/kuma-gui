@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, test, vi } from 'vitest'
 
 import ErrorBlock from './ErrorBlock.vue'
-import { ApiError } from '@/services/kuma-api/ApiError'
+import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 
 function renderComponent(props: any = {}) {
   return mount(ErrorBlock, {

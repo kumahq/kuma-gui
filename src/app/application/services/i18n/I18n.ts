@@ -1,6 +1,6 @@
 import { createI18n } from '@kong-ui-public/i18n'
 
-import type Env from '@/services/env/Env'
+import type Env from '@/app/application/services/env/Env'
 import { camelCaseToWords } from '@/utilities/camelCaseToWords'
 import { get } from '@/utilities/get'
 

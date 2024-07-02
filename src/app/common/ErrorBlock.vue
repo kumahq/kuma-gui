@@ -80,7 +80,7 @@ import { DangerIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { ApiError } from '@/services/kuma-api/ApiError'
+import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import { useI18n } from '@/utilities'
 
 const { t } = useI18n()

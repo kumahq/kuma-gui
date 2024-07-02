@@ -7,7 +7,7 @@ import {
 import type { Can } from '../application/services/can'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
-import type KumaApi from '@/services/kuma-api/KumaApi'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
 

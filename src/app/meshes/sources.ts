@@ -1,7 +1,7 @@
 import { Mesh, MeshInsight } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
-import type KumaApi from '@/services/kuma-api/KumaApi'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 
 export type MeshSource = DataSourceResponse<Mesh>

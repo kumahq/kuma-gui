@@ -1,7 +1,7 @@
 import { ZoneIngressOverview, ZoneIngress } from './data'
 import type { DataSourceResponse, Source } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
-import type KumaApi from '@/services/kuma-api/KumaApi'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
