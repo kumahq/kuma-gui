@@ -71,7 +71,6 @@
                   { label: 'Egresses (online / total)', key: 'egress' },
                   { label: 'Status', key: 'state' },
                   { label: 'Warnings', key: 'warnings', hideLabel: true },
-                  { label: 'Details', key: 'details', hideLabel: true },
                   { label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :page-number="route.params.page"
@@ -101,7 +100,7 @@
                   </template>
                 </template>
                 <template #name="{ row: item }">
-                  <RouterLink
+                  <XAction
                     data-action
                     :to="{
                       name: 'zone-cp-detail-view',
@@ -115,7 +114,7 @@
                     }"
                   >
                     {{ item.name }}
-                  </RouterLink>
+                  </XAction>
                 </template>
 
                 <template #zoneCpVersion="{ row: item }">
@@ -177,78 +176,51 @@
                   </template>
                 </template>
 
-                <template #details="{ row }">
-                  <RouterLink
-                    class="details-link"
-                    data-testid="details-link"
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: row.name,
-                      },
-                    }"
-                  >
-                    {{ t('common.collection.details_link') }}
-
-                    <ArrowRightIcon
-                      decorative
-                      :size="KUI_ICON_SIZE_30"
-                    />
-                  </RouterLink>
-                </template>
-
                 <template
                   v-if="can('create zones')"
                   #actions="{ row }"
                 >
-                  <KDropdown
-                    class="actions-dropdown"
-                    :kpop-attributes="{ placement: 'bottomEnd', popoverClasses: 'mt-5 more-actions-popover' }"
-                    width="150"
-                  >
-                    <template #default>
-                      <KButton
-                        class="non-visual-button"
-                        appearance="secondary"
-                        icon
+                  <XActionGroup>
+                    <XDisclosure
+                      v-slot="{ expanded, toggle }"
+                    >
+                      <XAction
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: row.name,
+                          },
+                        }"
                       >
-                        <MoreIcon />
-                      </KButton>
-                    </template>
-
-                    <template #items>
-                      <XDisclosure
-                        v-slot="{ expanded, toggle }"
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                      <XAction
+                        appearance="danger"
+                        @click="toggle"
                       >
-                        <KDropdownItem
-                          danger
-                          data-testid="dropdown-delete-item"
-                          @click="toggle"
+                        {{ t('common.collection.actions.delete') }}
+                      </XAction>
+                      <XTeleportTemplate
+                        :to="{ name: 'modal-layer' }"
+                      >
+                        <DeleteResourceModal
+                          v-if="expanded"
+                          :confirmation-text="row.name"
+                          :delete-function="() => deleteZone(row.name)"
+                          is-visible
+                          :action-button-text="t('common.delete_modal.proceed_button')"
+                          :title="t('common.delete_modal.title', { type: 'Zone' })"
+                          data-testid="delete-zone-modal"
+                          @cancel="toggle"
+                          @delete="() => { toggle(); refresh() }"
                         >
-                          {{ t('common.collection.actions.delete') }}
-                        </KDropdownItem>
-                        <XTeleportTemplate
-                          :to="{ name: 'modal-layer' }"
-                        >
-                          <DeleteResourceModal
-                            v-if="expanded"
-                            :confirmation-text="row.name"
-                            :delete-function="() => deleteZone(row.name)"
-                            is-visible
-                            :action-button-text="t('common.delete_modal.proceed_button')"
-                            :title="t('common.delete_modal.title', { type: 'Zone' })"
-                            data-testid="delete-zone-modal"
-                            @cancel="toggle"
-                            @delete="() => { toggle(); refresh() }"
-                          >
-                            <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: row.name }) }}</p>
+                          <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: row.name }) }}</p>
 
-                            <p>{{ t('common.delete_modal.text2') }}</p>
-                          </DeleteResourceModal>
-                        </XTeleportTemplate>
-                      </XDisclosure>
-                    </template>
-                  </KDropdown>
+                          <p>{{ t('common.delete_modal.text2') }}</p>
+                        </DeleteResourceModal>
+                      </XTeleportTemplate>
+                    </XDisclosure>
+                  </XActionGroup>
                 </template>
               </AppCollection>
             </template>
@@ -280,8 +252,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { AddIcon, ArrowRightIcon, MoreIcon } from '@kong/icons'
+import { AddIcon } from '@kong/icons'
 import { ref } from 'vue'
 
 import { sources as zoneSources } from '../sources'
@@ -353,16 +324,6 @@ async function deleteZone(name: string) {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
-}
-
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-
-.actions-dropdown {
-  display: inline-block;
 }
 
 .warning-type-memory {

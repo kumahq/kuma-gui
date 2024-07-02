@@ -81,59 +81,53 @@
             {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
           </p>
 
-          <KDropdown
-            :kpop-attributes="{ placement: 'bottomEnd' }"
-          >
-            <KButton
-              icon
-              appearance="tertiary"
+          <XActionGroup>
+            <template
+              #control
             >
-              <HelpIcon />
-
-              <span class="visually-hidden">Help</span>
-            </KButton>
-
-            <template #items>
-              <KDropdownItem
-                :item="{
-                  to: t('common.product.href.docs.index'),
-                  label: '',
-                }"
-                target="_blank"
-                rel="noopener noreferrer"
+              <XAction
+                appearance="tertiary"
               >
-                Documentation
-              </KDropdownItem>
-              <KDropdownItem
-                :item="{
-                  to: t('common.product.href.feedback'),
-                  label: '',
-                }"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Feedback
-              </KDropdownItem>
-              <KDropdownItem
-                :item="{
-                  to: { name: 'onboarding-welcome-view' },
-                  label: '',
-                }"
-              >
-                Onboarding
-              </KDropdownItem>
+                <XIcon
+                  name="help"
+                >
+                  Help
+                </XIcon>
+              </XAction>
             </template>
-          </KDropdown>
-
+            <XAction
+              :href="t('common.product.href.docs.index')"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Documentation
+            </XAction>
+            <XAction
+              :href="t('common.product.href.feedback')"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Feedback
+            </XAction>
+            <XAction
+              :to="{ name: 'onboarding-welcome-view' }"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Onboarding
+            </XAction>
+          </XActionGroup>
           <KButton
             :to="{ name: 'diagnostics' }"
             appearance="tertiary"
             icon
             data-testid="nav-item-diagnostics"
           >
-            <CogIcon />
-
-            <span class="visually-hidden">Diagnostics</span>
+            <XIcon
+              name="settings"
+            >
+              Diagnostics
+            </XIcon>
           </KButton>
         </slot>
       </div>
@@ -178,7 +172,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { CogIcon, HelpIcon } from '@kong/icons'
 import GithubButton from 'vue-github-button'
 
 import { useEnv, useI18n, useCan } from '@/app/application'

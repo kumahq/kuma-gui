@@ -1,12 +1,16 @@
 Feature: mesh / services / index
+
   Background:
     Given the CSS selectors
-      | Alias           | Selector                                  |
-      | items           | [data-testid='service-collection']        |
-      | items-header    | $items th                                 |
-      | item            | $items tbody tr                           |
-      | breadcrumbs     | .k-breadcrumbs                            |
-      | service-sub-tab | [data-testid='service-list-view-sub-tab'] |
+      | Alias           | Selector                                                                                 |
+      | items           | [data-testid='service-collection']                                                       |
+      | items-header    | $items th                                                                                |
+      | item            | $items tbody tr                                                                          |
+      | action-group    | $item:first-child [data-testid='x-action-group-control']                                 |
+      | view            | $item:first-child [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
+      | action          | $item:first-child [data-action]                                                          |
+      | breadcrumbs     | .k-breadcrumbs                                                                           |
+      | service-sub-tab | [data-testid='service-list-view-sub-tab']                                                |
     And the environment
       """
       KUMA_SERVICE_COUNT: 1
@@ -41,11 +45,9 @@ Feature: mesh / services / index
 
   Scenario: Clicking View details goes to the detail page and back again
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "service-1"
-
-    When I click the "$item:nth-child(1) [data-testid='details-link']" element
-
+    When I click the "$action-group" element
+    And I click the "$view" element
     Then the URL contains "/services/internal/service-1/overview"
     Then the "[data-testid='service-detail-view-tab'].active" element exists
-
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
     Then the "$item" element exists 1 times

@@ -84,7 +84,7 @@
                     { label: 'Certificate Info', key: 'certificate' },
                     { label: 'Status', key: 'status' },
                     { label: 'Warnings', key: 'warnings', hideLabel: true },
-                    { label: 'Details', key: 'details', hideLabel: true },
+                    { label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="dataplanesData?.items"
                   :total="dataplanesData?.total"
@@ -190,24 +190,19 @@
                     </template>
                   </template>
 
-                  <template #details="{ row: item }">
-                    <RouterLink
-                      class="details-link"
-                      data-testid="details-link"
-                      :to="{
-                        name: 'data-plane-detail-view',
-                        params: {
-                          dataPlane: item.id,
-                        },
-                      }"
-                    >
-                      {{ t('common.collection.details_link') }}
-
-                      <ArrowRightIcon
-                        decorative
-                        :size="KUI_ICON_SIZE_30"
-                      />
-                    </RouterLink>
+                  <template #actions="{ row: item }">
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'data-plane-detail-view',
+                          params: {
+                            dataPlane: item.id,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
                   </template>
                 </AppCollection>
 
@@ -245,9 +240,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
@@ -273,12 +265,6 @@ import type { ServiceInsightSource } from '@/app/services/sources'
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
-}
-
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
 }
 
 .data-plane-collection :deep(.name-column) {

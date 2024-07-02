@@ -31,7 +31,7 @@
                 { ...me.get('headers.name'), label: t('meshes.common.name'), key: 'name' },
                 { ...me.get('headers.services'), label: t('meshes.routes.items.collection.services'), key: 'services'},
                 { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
-                { ...me.get('headers.details'), label: 'Details', key: 'details', hideLabel: true },
+                { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :page-number="route.params.page"
               :page-size="route.params.size"
@@ -46,7 +46,8 @@
               @resize="me.set"
             >
               <template #name="{ row: item }">
-                <RouterLink
+                <XAction
+                  data-action
                   :to="{
                     name: 'mesh-detail-view',
                     params: {
@@ -59,7 +60,7 @@
                   }"
                 >
                   {{ item.name }}
-                </RouterLink>
+                </XAction>
               </template>
 
               <template #services="{ row: item }">
@@ -69,25 +70,19 @@
               <template #dataplanes="{ row: item }">
                 {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
               </template>
-
-              <template #details="{ row }">
-                <RouterLink
-                  class="details-link"
-                  data-testid="details-link"
-                  :to="{
-                    name: 'mesh-detail-view',
-                    params: {
-                      mesh: row.name,
-                    },
-                  }"
-                >
-                  {{ t('common.collection.details_link') }}
-
-                  <ArrowRightIcon
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                </RouterLink>
+              <template #actions="{ row: item }">
+                <XActionGroup>
+                  <XAction
+                    :to="{
+                      name: 'mesh-detail-view',
+                      params: {
+                        mesh: item.name,
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.actions.view') }}
+                  </XAction>
+                </XActionGroup>
               </template>
             </AppCollection>
           </DataLoader>
@@ -98,17 +93,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import type { MeshInsightCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 </script>
-
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>

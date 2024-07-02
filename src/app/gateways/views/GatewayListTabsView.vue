@@ -17,7 +17,9 @@
           :items="route.children"
           :empty="false"
         >
-          <XActionGroup>
+          <XActionGroup
+            :expanded="true"
+          >
             <XAction
               v-for="{ name } in items"
               :key="`${name}`"

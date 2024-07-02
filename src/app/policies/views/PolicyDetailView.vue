@@ -43,7 +43,7 @@
                     { label: 'Name', key: 'name' },
                     { label: 'Namespace', key: 'namespace' },
                     ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
-                    { label: 'Details', key: 'details', hideLabel: true },
+                    { label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="data?.items"
                   :total="data?.total"
@@ -86,24 +86,19 @@
                     </template>
                   </template>
 
-                  <template #details="{ row: item }">
-                    <RouterLink
-                      class="details-link"
-                      data-testid="details-link"
-                      :to="{
-                        name: 'data-plane-detail-view',
-                        params: {
-                          dataPlane: item.id,
-                        },
-                      }"
-                    >
-                      {{ t('common.collection.details_link') }}
-
-                      <ArrowRightIcon
-                        decorative
-                        :size="KUI_ICON_SIZE_30"
-                      />
-                    </RouterLink>
+                  <template #actions="{ row: item }">
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'data-plane-detail-view',
+                          params: {
+                            dataPlane: item.id,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
                   </template>
                 </AppCollection>
               </DataCollection>
@@ -139,18 +134,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>

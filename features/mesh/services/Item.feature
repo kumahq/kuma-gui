@@ -1,12 +1,16 @@
 Feature: mesh / services / item
+
   Background:
     Given the CSS selectors
-      | Alias               | Selector                                       |
-      | dataplanes          | [data-testid='data-plane-collection']          |
-      | config              | [data-testid='external-service-config']        |
-      | item                | $dataplanes tbody tr                           |
-      | input-search        | [data-testid='filter-bar-filter-input']        |
-      | button-search       | [data-testid='filter-bar-submit-query-button'] |
+      | Alias         | Selector                                                                                  |
+      | dataplanes    | [data-testid='data-plane-collection']                                                     |
+      | config        | [data-testid='external-service-config']                                                   |
+      | item          | $dataplanes tbody tr                                                                      |
+      | action-group  | $item:nth-child(1) [data-testid='x-action-group-control']                                 |
+      | view          | $item:nth-child(1) [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
+      | action        | $item:nth-child(1) [data-action]                                                          |
+      | input-search  | [data-testid='filter-bar-filter-input']                                                   |
+      | button-search | [data-testid='filter-bar-submit-query-button']                                            |
 
   Scenario Outline: Shows correct tabs for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
@@ -14,7 +18,6 @@ Feature: mesh / services / item
         body:
           serviceType: <ServiceType>
       """
-
     When I visit the "/meshes/default/services/internal/firewall-1/overview" URL
     Then the "$dataplanes" element exists
     Then the "$config" element doesn't exist
@@ -25,6 +28,7 @@ Feature: mesh / services / item
       | internal       |
 
   Rule: With an internal service
+
     Background:
       Given the URL "/meshes/default/service-insights/system-1" responds with
         """
@@ -50,6 +54,7 @@ Feature: mesh / services / item
           offset: 0
           size: 50
         """
+
     Scenario: Searching by tag doesn't overwrite the existing service tag
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
@@ -64,6 +69,7 @@ Feature: mesh / services / item
           offset: 0
           size: 50
         """
+
     Scenario: Searching by service tag doesn't overwrite the existing service tag
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
@@ -75,6 +81,7 @@ Feature: mesh / services / item
           tag:
             - "kuma.io/service:panel-2"
         """
+
     Scenario: The clear search button sends a new request with no search params
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
@@ -93,6 +100,7 @@ Feature: mesh / services / item
           tag:
             - "kuma.io/service:system-1"
         """
+
     Scenario: The clear search button sends a new request with the correct service tag
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
@@ -119,6 +127,7 @@ Feature: mesh / services / item
         """
 
     Scenario: Clicking an items view menu takes you to the correct page
-      Then the "$item:nth-child(1) td:nth-child(1) a" element contains "fake-dataplane"
-      And I click the "$item:nth-child(1) [data-testid='details-link']" element
+      Then the "$action" element contains "fake-dataplane"
+      When I click the "$action-group" element
+      And I click the "$view" element
       Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"

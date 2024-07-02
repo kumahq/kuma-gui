@@ -139,7 +139,7 @@
                             { label: 'Namespace', key: 'namespace' },
                             ...(can('use zones') && type.isTargetRefBased ? [{ label: 'Zone', key: 'zone' }] : []),
                             ...(type.isTargetRefBased ? [{ label: 'Target ref', key: 'targetRef' }] : []),
-                            { label: 'Details', key: 'details', hideLabel: true },
+                            { label: 'Actions', key: 'actions', hideLabel: true },
                           ]"
                           :page-number="route.params.page"
                           :page-size="route.params.size"
@@ -150,6 +150,7 @@
                         >
                           <template #name="{ row }">
                             <XAction
+                              data-action
                               :to="{
                                 name: 'policy-summary-view',
                                 params: {
@@ -184,7 +185,7 @@
 
                           <template #zone="{ row }">
                             <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
-                              <RouterLink
+                              <XAction
                                 :to="{
                                   name: 'zone-cp-detail-view',
                                   params: {
@@ -193,7 +194,7 @@
                                 }"
                               >
                                 {{ row.labels['kuma.io/zone'] }}
-                              </RouterLink>
+                              </XAction>
                             </template>
 
                             <template v-else>
@@ -201,26 +202,21 @@
                             </template>
                           </template>
 
-                          <template #details="{ row }">
-                            <XAction
-                              class="details-link"
-                              data-testid="details-link"
-                              :to="{
-                                name: 'policy-detail-view',
-                                params: {
-                                  mesh: row.mesh,
-                                  policyPath: type.path,
-                                  policy: row.id,
-                                },
-                              }"
-                            >
-                              {{ t('common.collection.details_link') }}
-
-                              <ArrowRightIcon
-                                decorative
-                                :size="KUI_ICON_SIZE_30"
-                              />
-                            </XAction>
+                          <template #actions="{ row: item }">
+                            <XActionGroup>
+                              <XAction
+                                :to="{
+                                  name: 'policy-detail-view',
+                                  params: {
+                                    mesh: item.mesh,
+                                    policyPath: type.path,
+                                    policy: item.id,
+                                  },
+                                }"
+                              >
+                                {{ t('common.collection.actions.view') }}
+                              </XAction>
+                            </XActionGroup>
                           </template>
                         </AppCollection>
                       </template>
@@ -262,9 +258,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import type { PolicyType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -292,10 +285,5 @@ header > div {
 header > h3 {
   margin-top: 0;
   float: left;
-}
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
 }
 </style>

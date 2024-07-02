@@ -1,4 +1,5 @@
 Feature: mesh / index
+
   Background:
     Given the CSS selectors
       | Alias          | Selector                                     |
@@ -7,7 +8,6 @@ Feature: mesh / index
       | breadcrumbs    | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |
       | navigation     | [data-testid='mesh-tabs'] ul >               |
-
     Given the environment
       """
       KUMA_MESH_COUNT: 2
@@ -23,15 +23,14 @@ Feature: mesh / index
 
   Scenario: Clicking a mesh and back again for <Mesh>
     Then the "$item" element exists 2 times
-    When I click the "<Selector> [data-testid='details-link']" element
+    When I click the "<Selector> [data-testid='x-action-group-control']" element
+    And I click the "<Selector> [data-testid='x-action-group'] li:nth-child(1) [data-testid='x-action']" element
     Then the URL contains "/meshes/<Mesh>"
     And the "$breadcrumbs" element contains "Meshes"
-
     Then I click the "$navigation li:nth-child(2) a" element
     Then I click the "$navigation li:nth-child(3) a" element
     Then I click the "$navigation li:nth-child(4) a" element
     Then I click the "$navigation li:nth-child(1) a" element
-
     And I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(1) > a" element
     Then the "$item" element exists 2 times
 

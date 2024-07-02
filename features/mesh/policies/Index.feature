@@ -2,14 +2,17 @@ Feature: mesh / policies / index
 
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                  |
-      | policy-type-list | [data-testid='policy-type-list']          |
-      | items            | [data-testid='app-collection']            |
-      | detail-view      | [data-testid='policy-detail-view']        |
-      | items-header     | $items th                                 |
-      | item             | $items tbody tr                           |
-      | button-docs      | [data-testid='policy-documentation-link'] |
-      | breadcrumbs      | .k-breadcrumbs                            |
+      | Alias            | Selector                                                                                 |
+      | policy-type-list | [data-testid='policy-type-list']                                                         |
+      | items            | [data-testid='app-collection']                                                           |
+      | detail-view      | [data-testid='policy-detail-view']                                                       |
+      | items-header     | $items th                                                                                |
+      | item             | $items tbody tr                                                                          |
+      | action-group     | $item:first-child [data-testid='x-action-group-control']                                 |
+      | view             | $item:first-child [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
+      | action           | $item:first-child [data-action]                                                          |
+      | button-docs      | [data-testid='policy-documentation-link']                                                |
+      | breadcrumbs      | .k-breadcrumbs                                                                           |
     And the environment
       """
       KUMA_MODE: global
@@ -36,7 +39,8 @@ Feature: mesh / policies / index
   Scenario: Clicking the link goes to the detail page and back again
     When I visit the "/meshes/default/policies/circuit-breakers" URL
     Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
-    When I click the "$item:nth-child(1) [data-testid='details-link']" element
+    When I click the "$action-group" element
+    And I click the "$view" element
     Then the URL contains "circuit-breakers/fake-cb-1/overview"
     And the "$detail-view" element contains "fake-cb-1"
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
