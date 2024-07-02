@@ -17,7 +17,7 @@
       }"
     >
       <header
-        v-if="$slots.title"
+        v-if="$slots.title || $slots.actions"
         class="app-view-title-bar"
       >
         <KongIcon v-if="props.fullscreen" />

@@ -9,15 +9,11 @@
       codeRegExp: false,
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('zone-ingresses.routes.item.navigation.zone-ingress-config-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('zone-ingresses.routes.item.navigation.zone-ingress-config-view')"
-          />
-        </h2>
-      </template>
-
       <KCard>
         <DataSource
           v-slot="{ data, error }: ZoneIngressSource"

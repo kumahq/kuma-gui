@@ -7,15 +7,11 @@
       dataPlane: '',
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('data-planes.routes.item.navigation.data-plane-policies-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('data-planes.routes.item.navigation.data-plane-policies-view')"
-          />
-        </h2>
-      </template>
-
       <div class="stack">
         <!-- we load in policyTypes for everything so we can use `path` for links/URLs/API requests -->
         <!-- we ask for the policyTypes here and always share the errors/data with all the DataLoaders below -->

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ route }"
     name="mesh-external-service-config-view"
     :params="{
       mesh: '',
@@ -11,12 +11,6 @@
     }"
   >
     <AppView>
-      <template #title>
-        <h2>
-          {{ t('services.routes.item.navigation.mesh-service-config-view') }}
-        </h2>
-      </template>
-
       <KCard>
         <ResourceCodeBlock
           v-slot="{ copy, copying }"

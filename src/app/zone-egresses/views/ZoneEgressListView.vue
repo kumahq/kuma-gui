@@ -15,15 +15,11 @@
         zoneEgress: '',
       }"
     >
+      <RouteTitle
+        :render="false"
+        :title="t('zone-egresses.routes.items.title')"
+      />
       <AppView>
-        <template #title>
-          <h2>
-            <RouteTitle
-              :title="t('zone-egresses.routes.items.title')"
-            />
-          </h2>
-        </template>
-
         <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
         <DataSource
           v-slot="{ data, error }: ZoneEgressOverviewCollectionSource"

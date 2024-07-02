@@ -6,15 +6,11 @@
       mesh: '',
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
-          />
-        </h2>
-      </template>
-
       <template #actions>
         <DataCollection
           v-slot="{ items }"

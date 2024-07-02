@@ -10,15 +10,11 @@
       codeRegExp: false,
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('data-planes.routes.item.navigation.data-plane-config-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('data-planes.routes.item.navigation.data-plane-config-view')"
-          />
-        </h2>
-      </template>
-
       <KCard>
         <DataSource
           v-slot="{ data, error }: DataplaneSource"

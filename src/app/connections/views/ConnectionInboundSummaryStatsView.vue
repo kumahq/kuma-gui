@@ -11,54 +11,49 @@
     }"
     name="connection-inbound-summary-stats-view"
   >
+    <RouteTitle
+      :render="false"
+      :title="`Stats`"
+    />
     <AppView>
-      <template #title>
-        <h3>
-          <RouteTitle
-            :title="`Stats`"
-          />
-        </h3>
-      </template>
-      <div>
-        <DataLoader
-          v-slot="{ data: stats, refresh }: StatsSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
+      <DataLoader
+        v-slot="{ data: stats, refresh }: StatsSource"
+        :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
+      >
+        <DataCollection
+          v-slot="{ items: lines }"
+          :items="stats!.raw.split('\n')"
+          :predicate="item => [
+            `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
+            `cluster.${props.data.name}.`,
+            `http.${props.data.name}.`,
+            `tcp.${props.data.name}.`,
+          ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`))"
         >
-          <DataCollection
-            v-slot="{ items: lines }"
-            :items="stats!.raw.split('\n')"
-            :predicate="item => [
-              `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
-              `cluster.${props.data.name}.`,
-              `http.${props.data.name}.`,
-              `tcp.${props.data.name}.`,
-            ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`))"
+          <CodeBlock
+            language="json"
+            :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
+            is-searchable
+            :query="route.params.codeSearch"
+            :is-filter-mode="route.params.codeFilter"
+            :is-reg-exp-mode="route.params.codeRegExp"
+            @query-change="route.update({ codeSearch: $event })"
+            @filter-mode-change="route.update({ codeFilter: $event })"
+            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
-            <CodeBlock
-              language="json"
-              :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-            >
-              <template #primary-actions>
-                <KButton
-                  appearance="primary"
-                  @click="refresh"
-                >
-                  <RefreshIcon />
+            <template #primary-actions>
+              <KButton
+                appearance="primary"
+                @click="refresh"
+              >
+                <RefreshIcon />
 
-                  Refresh
-                </KButton>
-              </template>
-            </CodeBlock>
-          </DataCollection>
-        </DataLoader>
-      </div>
+                Refresh
+              </KButton>
+            </template>
+          </CodeBlock>
+        </DataCollection>
+      </DataLoader>
     </AppView>
   </RouteView>
 </template>

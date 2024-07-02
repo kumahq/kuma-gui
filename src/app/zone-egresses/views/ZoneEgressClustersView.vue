@@ -9,15 +9,11 @@
       codeRegExp: false,
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('zone-egresses.routes.item.navigation.zone-egress-clusters-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('zone-egresses.routes.item.navigation.zone-egress-clusters-view')"
-          />
-        </h2>
-      </template>
-
       <KCard>
         <EnvoyData
           resource="Zone"

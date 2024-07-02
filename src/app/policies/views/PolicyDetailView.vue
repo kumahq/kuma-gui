@@ -18,13 +18,6 @@
       }"
     >
       <AppView>
-        <template
-          #title
-        >
-          <h2>
-            {{ t('policies.detail.affected_dpps') }}
-          </h2>
-        </template>
         <KCard>
           <DataLoader
             :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes', {

@@ -17,18 +17,11 @@
         v-slot="{data, error}: ExternalServiceCollectionSource"
         :src="`/meshes/${route.params.mesh}/external-services?page=${route.params.page}&size=${route.params.size}`"
       >
+        <RouteTitle
+          :render="false"
+          :title="t(`external-services.routes.items.title`)"
+        />
         <AppView>
-          <template #title>
-            <XTeleportTemplate
-              :to="{ name: 'service-list-tabs-view-title'}"
-            >
-              <h2>
-                <RouteTitle
-                  :title="t(`external-services.routes.items.title`)"
-                />
-              </h2>
-            </XTeleportTemplate>
-          </template>
           <KCard>
             <ErrorBlock
               v-if="error !== undefined"

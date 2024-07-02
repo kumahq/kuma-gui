@@ -13,14 +13,11 @@
         policy: '',
       }"
     >
+      <RouteTitle
+        :render="false"
+        :title="t('policies.routes.types.title')"
+      />
       <AppView>
-        <template #title>
-          <h2>
-            <RouteTitle
-              :title="t('policies.routes.types.title')"
-            />
-          </h2>
-        </template>
         <DataSource
           v-slot="{ data: meshInsight }: MeshInsightSource"
           :src="`/mesh-insights/${route.params.mesh}`"
