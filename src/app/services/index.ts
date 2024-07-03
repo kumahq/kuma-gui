@@ -1,4 +1,5 @@
 import { features } from './features'
+import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
 import type { Can } from '@/app/application'
@@ -36,6 +37,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.features,
+      ],
+    }],
+    [token('services.locales'), {
+      service: () => locales,
+      labels: [
+        app.enUs,
       ],
     }],
 

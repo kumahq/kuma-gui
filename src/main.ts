@@ -71,7 +71,10 @@ async function mountVueApplication() {
       })()
       : [],
   )
-
+  if (import.meta.env.MODE !== 'production' && get($.env)('KUMA_MOCK_API_ENABLED', 'true') === 'true') {
+    const msw = await import('@/app/msw')
+    await get(msw.TOKENS.msw)
+  }
   const app = await get($.app)((await import('./app/App.vue')).default)
 
   app.config.errorHandler = function (error) {

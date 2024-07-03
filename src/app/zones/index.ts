@@ -1,7 +1,10 @@
 import ZoneControlPlanesList from './components/ZoneControlPlanesList.vue'
 import { features } from './features'
+import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
+import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
+import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
 
@@ -45,6 +48,24 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.features,
+      ],
+    }],
+    [token('zones.locales'), {
+      service: () => locales,
+      labels: [
+        app.enUs,
+      ],
+    }],
+    [token('zone-egresses.locales'), {
+      service: () => egressLocales,
+      labels: [
+        app.enUs,
+      ],
+    }],
+    [token('zones-ingresses.locales'), {
+      service: () => ingressLocales,
+      labels: [
+        app.enUs,
       ],
     }],
   ]

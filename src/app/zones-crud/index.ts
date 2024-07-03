@@ -1,5 +1,6 @@
 import ZoneControlPlanesListWithCreate from './components/ZoneControlPlanesListWithCreate.vue'
 import { features } from './features'
+import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
 import type { ServiceDefinition } from '@/services/utils'
@@ -32,6 +33,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.features,
+      ],
+    }],
+    [token('zones-crud.locales'), {
+      service: () => locales,
+      labels: [
+        app.enUs,
       ],
     }],
     [token('zones-crud.components.ZoneControlPlanesListWithCreate'), {

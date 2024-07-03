@@ -1,5 +1,6 @@
 import ControlPlaneStatusWithOnboarding from './components/ControlPlaneStatusWithOnboarding.vue'
 import OnboardingIcon from './components/OnboardingIcon.vue'
+import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, service as set, createInjections } from '@/services/utils'
@@ -17,6 +18,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: routes,
       labels: [
         app.routes,
+      ],
+    }],
+    [token('onboarding.locales'), {
+      service: () => locales,
+      labels: [
+        app.enUs,
       ],
     }],
     [token('onboarding.components.ControlPlaneStatusWithOnboarding'), {
