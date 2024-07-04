@@ -1,12 +1,6 @@
 import merge from 'deepmerge'
 
 import { defineSources } from '../application/services/data-source'
-import type { DataSourceResponse } from '@/app/application'
-
-export type MeSource = DataSourceResponse<{
-  pageSize: number
-  headers: Record<string, { width: number }>
-}>
 
 export const sources = (_api: unknown, storage: Storage = window.localStorage) => {
   const prefix = 'kumahq.kuma-gui'
@@ -28,9 +22,6 @@ export const sources = (_api: unknown, storage: Storage = window.localStorage) =
     return {}
   }
   return defineSources({
-    '/me': async () => {
-      return Promise.resolve({ pageSize: 50 })
-    },
     '/me/:route': async (params) => {
       const json = await get(params.route)
       const res = merge({

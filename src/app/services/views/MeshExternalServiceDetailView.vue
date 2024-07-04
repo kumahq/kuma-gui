@@ -1,117 +1,101 @@
 <template>
-  <DataSource
-    v-slot="{ data: me }: MeSource"
-    src="/me"
+  <RouteView
+    name="mesh-external-service-detail-view"
+    :params="{
+    }"
   >
-    <RouteView
-      v-if="me"
-      name="mesh-external-service-detail-view"
-      :params="{
-        mesh: '',
-        service: '',
-        page: 1,
-        size: me.pageSize,
-        s: '',
-        dataPlane: '',
-        codeSearch: '',
-        codeFilter: false,
-        codeRegExp: false,
-      }"
-    >
-      <AppView>
-        <div
-          class="stack"
-        >
-          <KCard>
-            <div class="columns">
-              <DefinitionCard
-                v-if="props.data.status.addresses.length > 0"
+    <AppView>
+      <div
+        class="stack"
+      >
+        <KCard>
+          <div class="columns">
+            <DefinitionCard
+              v-if="props.data.status.addresses.length > 0"
+            >
+              <template
+                #title
               >
-                <template
-                  #title
-                >
-                  Addresses
-                </template>
-                <template
-                  #body
-                >
-                  <KTruncate>
-                    <span
-                      v-for="address in props.data.status.addresses"
-                      :key="address.hostname"
-                    >
-                      {{ address.hostname }}
-                    </span>
-                  </KTruncate>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                v-if="data.spec.match"
-                class="port"
+                Addresses
+              </template>
+              <template
+                #body
               >
-                <template
-                  #title
-                >
-                  Port
-                </template>
-                <template
-                  #body
-                >
-                  <KBadge
-                    v-for="connection in [data.spec.match]"
-                    :key="connection.port"
-                    appearance="info"
+                <KTruncate>
+                  <span
+                    v-for="address in props.data.status.addresses"
+                    :key="address.hostname"
                   >
-                    {{ connection.port }}/{{ connection.protocol }}
-                  </KBadge>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                v-if="data.spec.match"
-                class="tls"
+                    {{ address.hostname }}
+                  </span>
+                </KTruncate>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              v-if="data.spec.match"
+              class="port"
+            >
+              <template
+                #title
               >
-                <template
-                  #title
-                >
-                  TLS
-                </template>
-                <template
-                  #body
-                >
-                  <KBadge
-                    appearance="neutral"
-                  >
-                    {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                  </KBadge>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                v-if="typeof data.status.vip !== 'undefined'"
-                class="ip"
+                Port
+              </template>
+              <template
+                #body
               >
-                <template
-                  #title
+                <KBadge
+                  v-for="connection in [data.spec.match]"
+                  :key="connection.port"
+                  appearance="info"
                 >
-                  VIP
-                </template>
-                <template
-                  #body
+                  {{ connection.port }}/{{ connection.protocol }}
+                </KBadge>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              v-if="data.spec.match"
+              class="tls"
+            >
+              <template
+                #title
+              >
+                TLS
+              </template>
+              <template
+                #body
+              >
+                <KBadge
+                  appearance="neutral"
                 >
-                  {{ data.status.vip.ip }}
-                </template>
-              </DefinitionCard>
-            </div>
-          </KCard>
-        </div>
-      </AppView>
-    </RouteView>
-  </DataSource>
+                  {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                </KBadge>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              v-if="typeof data.status.vip !== 'undefined'"
+              class="ip"
+            >
+              <template
+                #title
+              >
+                VIP
+              </template>
+              <template
+                #body
+              >
+                {{ data.status.vip.ip }}
+              </template>
+            </DefinitionCard>
+          </div>
+        </KCard>
+      </div>
+    </AppView>
+  </RouteView>
 </template>
 
 <script lang="ts" setup>
 import type { MeshExternalService } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import type { MeSource } from '@/app/me/sources'
 
 const props = defineProps<{
   data: MeshExternalService
