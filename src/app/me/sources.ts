@@ -2,8 +2,7 @@ import merge from 'deepmerge'
 
 import { defineSources } from '../application/services/data-source'
 
-export const sources = (_api: unknown, storage: Storage = window.localStorage) => {
-  const prefix = 'kumahq.kuma-gui'
+export const sources = (prefix: string = 'me', storage: Storage = window.localStorage) => {
   const get = async (key: string): Promise<Object> => {
     try {
       return JSON.parse(storage.getItem(`${prefix}:${key}`) ?? '{}')

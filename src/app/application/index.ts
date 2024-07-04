@@ -18,7 +18,7 @@ import I18n from './services/i18n/I18n'
 import type { Source } from '@/app/application/services/data-source'
 import { create, destroy, getSource, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
-import { services as me } from '@/app/me'
+import { TOKENS as ME, services as me } from '@/app/me'
 import { services as x } from '@/app/x'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections, constant } from '@/services/utils'
@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
 }
 
 const $ = {
+  ...ME,
   Env: token<Env>('application.Env'),
   env: token<Env['var']>('application.env'),
   EnvVars: token<EnvVars>('EnvVars'),
