@@ -1,5 +1,5 @@
 import { makeRequest } from './makeRequest'
-import type Env from '@/services/env/Env'
+import type Env from '@/app/application/services/env/Env'
 
 export const createFetch = (client: RestClient) => {
   return async (req: Request) => {

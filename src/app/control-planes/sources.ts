@@ -1,8 +1,8 @@
 import { ControlPlaneConfig, GlobalInsight } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
-import type Env from '@/services/env/Env'
-import type KumaApi from '@/services/kuma-api/KumaApi'
+import type Env from '@/app/application/services/env/Env'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
 export type ControlPlaneAddresses = {
   http: string

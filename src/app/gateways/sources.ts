@@ -1,8 +1,8 @@
 import { MeshGateway } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
+import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Rule, type RuleCollection } from '@/app/rules/data'
-import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 
 export type { MeshGateway } from './data'
