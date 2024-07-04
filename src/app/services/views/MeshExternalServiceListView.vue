@@ -44,7 +44,7 @@
                     { label: 'TLS', key: 'tls' },
                     { label: 'Addresses', key: 'addresses' },
                     { label: 'Port', key: 'port' },
-                    { label: 'Details', key: 'details', hideLabel: true },
+                    { label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :page-number="route.params.page"
                   :page-size="route.params.size"
@@ -82,7 +82,7 @@
                   </template>
                   <template #zone="{ row: item }">
                     <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
-                      <RouterLink
+                      <XAction
                         v-if="item.labels['kuma.io/zone']"
                         :to="{
                           name: 'zone-cp-detail-view',
@@ -92,7 +92,7 @@
                         }"
                       >
                         {{ item.labels['kuma.io/zone'] }}
-                      </RouterLink>
+                      </XAction>
                     </template>
 
                     <template v-else>
@@ -134,25 +134,20 @@
                     </template>
                   </template>
 
-                  <template #details="{ row: item }">
-                    <XAction
-                      class="details-link"
-                      data-testid="details-link"
-                      :to="{
-                        name: 'mesh-external-service-detail-view',
-                        params: {
-                          mesh: item.mesh,
-                          service: item.id,
-                        },
-                      }"
-                    >
-                      {{ t('common.collection.details_link') }}
-
-                      <ArrowRightIcon
-                        decorative
-                        :size="KUI_ICON_SIZE_30"
-                      />
-                    </XAction>
+                  <template #actions="{ row: item }">
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'mesh-external-service-detail-view',
+                          params: {
+                            mesh: item.mesh,
+                            service: item.id,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
                   </template>
                 </AppCollection>
                 <RouterView
@@ -187,19 +182,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>

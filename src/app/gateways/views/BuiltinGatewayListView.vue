@@ -35,7 +35,7 @@
               :headers="[
                 { label: 'Name', key: 'name' },
                 ...(can('use zones') ? [{ label: 'Zone', key: 'zone' }] : []),
-                { label: 'Details', key: 'details', hideLabel: true },
+                { label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :page-number="route.params.page"
               :page-size="route.params.size"
@@ -46,7 +46,8 @@
             >
               <template #name="{ row: item }">
                 <TextWithCopyButton :text="item.name">
-                  <RouterLink
+                  <XAction
+                    data-action
                     :to="{
                       name: 'builtin-gateway-detail-view',
                       params: {
@@ -56,13 +57,13 @@
                     }"
                   >
                     {{ item.name }}
-                  </RouterLink>
+                  </XAction>
                 </TextWithCopyButton>
               </template>
 
               <template #zone="{ row }">
                 <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
-                  <RouterLink
+                  <XAction
                     :to="{
                       name: 'zone-cp-detail-view',
                       params: {
@@ -71,7 +72,7 @@
                     }"
                   >
                     {{ row.labels['kuma.io/zone'] }}
-                  </RouterLink>
+                  </XAction>
                 </template>
 
                 <template v-else>
@@ -79,25 +80,20 @@
                 </template>
               </template>
 
-              <template #details="{ row }">
-                <RouterLink
-                  class="details-link"
-                  data-testid="details-link"
-                  :to="{
-                    name: 'builtin-gateway-detail-view',
-                    params: {
-                      mesh: row.mesh,
-                      gateway: row.name,
-                    },
-                  }"
-                >
-                  {{ t('common.collection.details_link') }}
-
-                  <ArrowRightIcon
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                </RouterLink>
+              <template #actions="{ row: item }">
+                <XActionGroup>
+                  <XAction
+                    :to="{
+                      name: 'builtin-gateway-detail-view',
+                      params: {
+                        mesh: item.mesh,
+                        gateway: item.name,
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.actions.view') }}
+                  </XAction>
+                </XActionGroup>
               </template>
             </AppCollection>
           </KCard>
@@ -108,20 +104,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { ArrowRightIcon } from '@kong/icons'
-
 import type { MeshGatewayCollectionSource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeSource } from '@/app/me/sources'
 </script>
-
-<style lang="scss" scoped>
-.details-link {
-  display: inline-flex;
-  align-items: center;
-  gap: $kui-space-20;
-}
-</style>

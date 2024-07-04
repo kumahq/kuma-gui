@@ -36,45 +36,48 @@
           v-if="can('create zones')"
           #actions
         >
-          <KDropdown
-            :kpop-attributes="{ placement: 'bottomEnd' }"
-            :trigger-text="t('zones.action_menu.toggle_button')"
-            show-caret
-            width="280"
-          >
-            <template #items>
-              <XDisclosure
-                v-slot="{ expanded, toggle }"
+          <XActionGroup>
+            <template
+              #control
+            >
+              <XAction
+                type="expand"
+                appearance="primary"
               >
-                <KDropdownItem
-                  danger
-                  data-testid="delete-button"
-                  @click.prevent="toggle"
-                >
-                  {{ t('zones.action_menu.delete_button') }}
-                </KDropdownItem>
-                <XTeleportTemplate
-                  :to="{ name: 'modal-layer' }"
-                >
-                  <DeleteResourceModal
-                    v-if="expanded"
-                    :confirmation-text="data.name"
-                    :delete-function="() => deleteZone(data.name)"
-                    is-visible
-                    :action-button-text="t('common.delete_modal.proceed_button')"
-                    :title="t('common.delete_modal.title', { type: 'Zone' })"
-                    data-testid="delete-zone-modal"
-                    @cancel="toggle"
-                    @delete="() => route.replace({ name: 'zone-cp-list-view' })"
-                  >
-                    <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: data.name }) }}</p>
-
-                    <p>{{ t('common.delete_modal.text2') }}</p>
-                  </DeleteResourceModal>
-                </XTeleportTemplate>
-              </XDisclosure>
+                {{ t('zones.action_menu.toggle_button') }}
+              </XAction>
             </template>
-          </KDropdown>
+            <XDisclosure
+              v-slot="{ expanded, toggle }"
+            >
+              <XAction
+                appearance="danger"
+                data-testid="delete-button"
+                @click="toggle"
+              >
+                {{ t('zones.action_menu.delete_button') }}
+              </XAction>
+              <XTeleportTemplate
+                :to="{ name: 'modal-layer' }"
+              >
+                <DeleteResourceModal
+                  v-if="expanded"
+                  :confirmation-text="data.name"
+                  :delete-function="() => deleteZone(data.name)"
+                  is-visible
+                  :action-button-text="t('common.delete_modal.proceed_button')"
+                  :title="t('common.delete_modal.title', { type: 'Zone' })"
+                  data-testid="delete-zone-modal"
+                  @cancel="toggle"
+                  @delete="() => route.replace({ name: 'zone-cp-list-view' })"
+                >
+                  <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: data.name }) }}</p>
+
+                  <p>{{ t('common.delete_modal.text2') }}</p>
+                </DeleteResourceModal>
+              </XTeleportTemplate>
+            </XDisclosure>
+          </XActionGroup>
         </template>
 
         <XTabs

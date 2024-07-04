@@ -262,7 +262,6 @@ const click = (e: MouseEvent) => {
 .app-collection :deep(td:first-child li a:hover) {
   text-decoration: underline;
 }
-
 .app-collection-toolbar {
   display: flex;
   justify-content: flex-end;
@@ -275,6 +274,10 @@ const click = (e: MouseEvent) => {
 </style>
 
 <style lang="scss">
+
+.app-collection .actions-column {
+  width: 48px;
+}
 .app-collection .is-selected {
   background-color: $kui-color-background-neutral-weakest;
 }

@@ -8,7 +8,9 @@
   >
     <AppView>
       <template #actions>
-        <XActionGroup>
+        <XActionGroup
+          :expanded="true"
+        >
           <XAction
             v-for="{ name } in route.children"
             :key="name"

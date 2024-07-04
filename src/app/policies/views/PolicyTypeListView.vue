@@ -107,6 +107,14 @@ import type { MeSource } from '@/app/me/sources'
 import type { MeshInsightSource } from '@/app/meshes/sources'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 </script>
+<style lang="scss">
+.policy-type-link {
+  color: currentColor;
+  flex-grow: 1;
+  padding: $kui-space-40 $kui-space-60;
+}
+
+</style>
 <style lang="scss" scoped>
 .policy-list-content {
   display: flex;
@@ -134,12 +142,6 @@ import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 
 .policy-type-link-wrapper:not(.policy-type-link-wrapper--is-active) {
   color: $kui-color-text-neutral;
-}
-
-.policy-type-link {
-  color: currentColor;
-  flex-grow: 1;
-  padding: $kui-space-40 $kui-space-60;
 }
 
 .policy-count {
