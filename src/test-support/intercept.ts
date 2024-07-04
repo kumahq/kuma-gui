@@ -1,6 +1,6 @@
 import { URLPattern } from 'urlpattern-polyfill'
 
-import { TOKENS } from '@/services/e2e'
+import { TOKENS } from '../../cypress/services'
 import { get } from '@/services/utils'
 import { FS, Callback, createMerge, Mocker } from '@/test-support'
 import { dependencies, MockEnvKeys, AppEnvKeys, Env } from '@/test-support/fake'

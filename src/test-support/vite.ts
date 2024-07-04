@@ -66,11 +66,11 @@ export default (opts: PluginOptions): Plugin => {
     const _url = new URL(url)
     const { route, params } = router.match(_url.pathname)
 
-    const cookiedEnv = <T extends Parameters<typeof dependencies['env']>[0]>(key: T, d = '') => dependencies.env(key, cookies[key] ?? d)
+    const env = <T extends Parameters<typeof dependencies['env']>[0]>(key: T, d = '') => dependencies.env(key, cookies[key] ?? d)
 
     const request = route({
       ...dependencies,
-      env: cookiedEnv,
+      env,
     })
     const response = request({
       url: _url,
@@ -78,7 +78,7 @@ export default (opts: PluginOptions): Plugin => {
       body: options.body ?? {},
       params,
     })
-    await new Promise(resolve => setTimeout(resolve, parseInt(cookiedEnv('KUMA_LATENCY', '0'))))
+    await new Promise(resolve => setTimeout(resolve, parseInt(env('KUMA_LATENCY', '0'))))
     return {
       json: async () => {
         return response.body

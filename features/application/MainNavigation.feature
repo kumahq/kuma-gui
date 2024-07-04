@@ -1,4 +1,5 @@
 Feature: application / MainNavigation
+
   Background:
     Given the CSS selectors
       | Alias              | Selector                                   |
@@ -16,6 +17,7 @@ Feature: application / MainNavigation
       """
     When I visit the "/" URL
     Then the "<Element>" element <ExistsAssertion>
+
     Examples:
       | Element            | Mode   | ExistsAssertion |
       | $zones-nav         | global | exists          |
@@ -48,21 +50,15 @@ Feature: application / MainNavigation
       """
       KUMA_MESH_COUNT: 60
       """
-    And the URL "/meshes" responds with
-      """
-      """
     When I visit the "/meshes" URL
     And the URL contains "page=1&size=50"
     And the "[data-testid='page-1-button'].active" element exists
-
     When I visit the "/meshes?page=2&size=" URL
     And the URL contains "page=2&size=50"
     And the "[data-testid='page-2-button'].active" element exists
-
     When I visit the "/meshes/default/data-planes" URL
     And the URL contains "page=1&size=50"
     And the URL doesn't contain "mesh=default"
-
 
   Scenario: History navigation
     Given the environment
@@ -72,19 +68,15 @@ Feature: application / MainNavigation
     When I visit the "/" URL
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element exists
-
     When I click the "$meshes-nav" element
     Then the page title contains "Meshes"
     And the "[data-testid='page-1-button'].active" element exists
-
     When I click the "[data-testid='next-button']" element
     Then the page title contains "Meshes"
     And the "[data-testid='page-2-button'].active" element exists
-
     When I navigate "back"
     Then the page title contains "Meshes"
     And the "[data-testid='page-1-button'].active" element exists
-
     When I navigate "back"
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element exists

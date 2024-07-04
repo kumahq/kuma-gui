@@ -1,7 +1,7 @@
 import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber-preprocessor'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
-import { useServer, useMock, useClient } from '@/services/e2e'
+import { useServer, useMock, useClient } from '../../services'
 import { undefinedSymbol } from '@/test-support'
 
 const console = {
