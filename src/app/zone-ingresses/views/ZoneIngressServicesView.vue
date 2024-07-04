@@ -3,15 +3,11 @@
     v-slot="{ t }"
     name="zone-ingress-services-view"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('zone-ingresses.routes.item.navigation.zone-ingress-services-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('zone-ingresses.routes.item.navigation.zone-ingress-services-view')"
-          />
-        </h2>
-      </template>
-
       <KCard>
         <AppCollection
           data-testid="available-services-collection"

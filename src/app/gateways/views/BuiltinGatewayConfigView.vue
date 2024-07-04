@@ -10,15 +10,11 @@
       codeRegExp: false,
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('builtin-gateways.routes.item.navigation.builtin-gateway-config-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('builtin-gateways.routes.item.navigation.builtin-gateway-config-view')"
-          />
-        </h2>
-      </template>
-
       <KCard>
         <DataSource
           v-slot="{ data, error }: MeshGatewaySource"

@@ -10,15 +10,11 @@
       codeRegExp: false,
     }"
   >
+    <RouteTitle
+      :render="false"
+      :title="t('data-planes.routes.item.navigation.data-plane-stats-view')"
+    />
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('data-planes.routes.item.navigation.data-plane-stats-view')"
-          />
-        </h2>
-      </template>
-
       <KCard>
         <DataLoader
           v-slot="{ data: statsData, refresh }: StatsSource"

@@ -11,14 +11,10 @@
     }"
   >
     <AppView>
-      <template #title>
-        <h2>
-          <RouteTitle
-            :title="t('data-planes.routes.item.navigation.data-plane-clusters-view')"
-          />
-        </h2>
-      </template>
-
+      <RouteTitle
+        :render="false"
+        :title="t('data-planes.routes.item.navigation.data-plane-clusters-view')"
+      />
       <KCard>
         <EnvoyData
           resource="Data Plane Proxy"
