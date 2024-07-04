@@ -30,7 +30,17 @@
     disable-sorting
     :disable-pagination="props.pageNumber === 0"
     hide-pagination-when-optional
+    resize-columns
+    :table-preferences="{
+      columnWidths: props.headers.reduce<Record<string, number>>((prev, value) => {
+        if(typeof value.width !== 'undefined') {
+          prev[value.key] = value.width
+        }
+        return prev
+      }, {}),
+    }"
     @row:click="click"
+    @update:table-preferences="resize"
   >
     <template
       v-if="props.items?.length === 0"
@@ -97,12 +107,13 @@
 
 <script lang="ts" setup generic="Row extends {}">
 import { AddIcon } from '@kong/icons'
-import { KButton, KTable, TableHeader } from '@kong/kongponents'
+import { KButton, KTable } from '@kong/kongponents'
 import { useSlots, ref, watch, Ref } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { useI18n } from '@/utilities'
+import type { TableHeader as KTableHeader, TablePreferences } from '@kong/kongponents'
 
 type CellAttrParams = {
   headerKey: string
@@ -119,9 +130,15 @@ type ChangeValue = {
   page?: number
   size?: number
 }
+type ResizeValue = {
+  headers: Record<string, { width: number }>
+}
 
 const { t } = useI18n()
 
+type TableHeader = KTableHeader & {
+  width?: number
+}
 const props = withDefaults(defineProps<{
   isSelectedRow?: ((row: Row) => boolean) | null
   total?: number
@@ -148,6 +165,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   (e: 'change', value: ChangeValue): void
+  (e: 'resize', value: ResizeValue): void
 }>()
 
 const slots = useSlots()
@@ -171,6 +189,19 @@ const cacheKey = ref<number>(0)
 const kTableMountKey = ref(0)
 const lastPageNumber = ref(props.pageNumber)
 const lastPageSize = ref(props.pageSize)
+
+const resize = (args: TablePreferences) => {
+  const headers = Object.entries(args.columnWidths ?? {}).reduce<Record<string, { width: number }>>((prev, [key, value]) => {
+    prev[key] = {
+      width: value,
+    }
+    return prev
+  }, {})
+
+  emit('resize', {
+    headers,
+  })
+}
 
 watch(() => props.items, (newItems, oldItems) => {
   if (newItems !== oldItems) {
