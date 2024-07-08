@@ -106,7 +106,7 @@ jobs:
         run: |
           make run/e2e &
           make CYPRESS_SPEC="$(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package }}"]' | jq -cMr '.[${{ matrix.container }}]')" test/e2e
-      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+      - uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4.3.4
         if: failure()
         with:
           name: cypress-artifacts-${{ matrix.package }}-${{ matrix.container }}
