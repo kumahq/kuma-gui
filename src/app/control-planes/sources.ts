@@ -38,9 +38,15 @@ export const sources = (env: Env['var'], api: KumaApi) => {
       // if the current version includes some sort of `-dev` then pretend we
       // are on the latest version and therefore not outdated
       if (!params.version.match('^[0-9]+.[0-9]+.[0-9]+$')) {
-        return false
+        return {
+          version: env('KUMA_VERSION'),
+          outdated: false,
+        }
       }
-      return compare(env('KUMA_VERSION'), params.version) === 1
+      return {
+        version: env('KUMA_VERSION'),
+        outdated: compare(env('KUMA_VERSION'), params.version) === 1,
+      }
     },
 
     // used to figure out if the currently running global control-plane
