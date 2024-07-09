@@ -1,17 +1,19 @@
-import { TOKENS as DEV_TOKENS, services as development } from '@/services/development'
-import { TOKENS, services as e2e } from '@/services/e2e'
+import { TOKENS, services as e2e } from './services'
+import { services as application } from '@/app/application/debug'
+import { TOKENS as FAKE_FS, services as fakeFs } from '@/app/fake-fs'
+import { services as kuma } from '@/app/kuma/debug'
 import { build, token } from '@/services/utils'
 
 (async () => {
   const $ = {
-    // cypress doesn't need i18n but this quietens TS temporarily
-    i18n: token('i18n'),
-    components: token('components'),
-    ...DEV_TOKENS,
+    mswHandlers: token('msw.handlers'),
     ...TOKENS,
+    ...FAKE_FS,
   }
   build(
-    development($),
+    fakeFs($),
     e2e($),
+    application($),
+    kuma($),
   )
 })()
