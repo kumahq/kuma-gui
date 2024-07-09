@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ can, t, uri }"
+    v-slot="{ can, t, uri, me }"
     name="home"
   >
     <AppView>
@@ -60,6 +60,7 @@
                 <ZoneControlPlanesList
                   data-testid="zone-control-planes-details"
                   :items="data?.items"
+                  :storage="me"
                 />
               </template>
             </DataLoader>
@@ -92,6 +93,7 @@
                 <MeshInsightsList
                   data-testid="meshes-details"
                   :items="data?.items"
+                  :storage="me"
                 />
               </template>
             </DataLoader>

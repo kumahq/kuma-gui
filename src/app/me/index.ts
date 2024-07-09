@@ -7,13 +7,14 @@ type Sources = ReturnType<typeof sources>
 
 const $ = {
   sources: token<Sources>('me.sources'),
+  storagePrefix: token<string>('me.storage.prefix'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [$.sources, {
       service: sources,
       arguments: [
-        app.api,
+        $.storagePrefix,
       ],
       labels: [
         app.sources,

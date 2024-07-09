@@ -13,6 +13,9 @@ export const TOKENS = {
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
+    [app.storagePrefix, {
+      service: () => 'kumahq.kuma-gui',
+    }],
     [app.EnvVars, {
       constant: {
         KUMA_PRODUCT_NAME: import.meta.env.VITE_NAMESPACE,

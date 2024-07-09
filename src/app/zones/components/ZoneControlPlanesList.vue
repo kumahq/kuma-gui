@@ -8,12 +8,17 @@
     >
       <AppCollection
         :headers="[
-          { label: '&nbsp;', key: 'type' },
-          { label: t('zone-cps.components.zone-control-planes-list.name'), key: 'name'},
-          { label: t('zone-cps.components.zone-control-planes-list.status'), key: 'status'},
+          { ...storage.get('zone.headers.type'), label: '&nbsp;', key: 'type' },
+          { ...storage.get('zone.headers.name'),label: t('zone-cps.components.zone-control-planes-list.name'), key: 'name'},
+          { ...storage.get('zone.headers.status'),label: t('zone-cps.components.zone-control-planes-list.status'), key: 'status'},
         ]"
         :items="props.items"
         :total="props.items?.length"
+        @resize="(obj) => {
+          storage.set({
+            zone: obj,
+          })
+        }"
       >
         <template
           #type="{ row: item }"
@@ -62,9 +67,19 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 const { t } = useI18n()
 const can = useCan()
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   items?: ZoneOverview[]
-}>()
+  storage?: {
+    get: (uri: string) => {}
+    set: (data: any) => void
+  }
+}>(), {
+  items: undefined,
+  storage: () => ({
+    get: () => ({}),
+    set: () => {},
+  }),
+})
 </script>
 <style lang="scss" scoped>
 .app-collection:deep(:is(th, td):nth-child(1)) {

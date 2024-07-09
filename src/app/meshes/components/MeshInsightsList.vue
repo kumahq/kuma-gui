@@ -6,12 +6,17 @@
     >
       <AppCollection
         :headers="[
-          { label: t('meshes.components.mesh-insights-list.name'), key: 'name'},
-          { label: t('meshes.components.mesh-insights-list.services'), key: 'services'},
-          { label: t('meshes.components.mesh-insights-list.dataplanes'), key: 'dataplanes'},
+          { ...storage.get('mesh.headers.name') ,label: t('meshes.components.mesh-insights-list.name'), key: 'name'},
+          { ...storage.get('mesh.headers.services') ,label: t('meshes.components.mesh-insights-list.services'), key: 'services'},
+          { ...storage.get('mesh.headers.dataplanes') ,label: t('meshes.components.mesh-insights-list.dataplanes'), key: 'dataplanes'},
         ]"
         :items="props.items"
         :total="props.items?.length"
+        @resize="(obj) => {
+          storage.set({
+            mesh: obj,
+          })
+        }"
       >
         <template
           #name="{ row: item }"
@@ -51,7 +56,17 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 
 const { t } = useI18n()
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   items?: MeshInsight[]
-}>()
+  storage?: {
+    get: (uri: string) => {}
+    set: (data: any) => void
+  }
+}>(), {
+  items: undefined,
+  storage: () => ({
+    get: () => ({}),
+    set: () => {},
+  }),
+})
 </script>

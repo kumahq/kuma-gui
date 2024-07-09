@@ -1,7 +1,9 @@
 <template>
   <DataSource
-    v-slot="{ data: me }: MeSource"
-    :src="`/me/${props.name}`"
+    v-slot="{ data: me }"
+    :src="uri(sources, '/me/:route', {
+      route: props.name,
+    })"
   >
     <div
       class="route-view"
@@ -19,7 +21,7 @@
       <DataSink
         v-if="me"
         v-slot="{ submit }"
-        :src="`/me/mesh-list-view`"
+        :src="`/me/${props.name}`"
       >
         <slot
           :id="UniqueId"
@@ -58,7 +60,7 @@ import {
   beforePaint,
 } from '../../utilities'
 import { useUri } from '@/app/application/services/data-source'
-import type { MeSource } from '@/app/me/sources'
+import { sources } from '@/app/me/sources'
 import { useEnv } from '@/utilities'
 import { get } from '@/utilities/get'
 import type { RouteRecordRaw } from 'vue-router'
