@@ -44,15 +44,14 @@
               v-if="can('create zones') && (data?.items ?? []).length > 0"
               :to="{ name: 'zone-cp-list-view-actions'}"
             >
-              <KButton
+              <XAction
+                type="create"
                 appearance="primary"
                 :to="{ name: 'zone-create-view' }"
                 data-testid="create-zone-link"
               >
-                <AddIcon />
-
                 {{ t('zones.index.create') }}
-              </KButton>
+              </XAction>
             </XTeleportTemplate>
 
             <AppCollection
@@ -235,7 +234,6 @@
 </template>
 
 <script lang="ts" setup>
-import { AddIcon } from '@kong/icons'
 import { ref } from 'vue'
 
 import { sources as zoneSources } from '../sources'

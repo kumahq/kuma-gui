@@ -5,26 +5,18 @@ layout: false
 import { ref, onMounted } from 'vue'
 import { createApp } from 'whyframe:app'
 import { TOKENS as APP, services as application } from '@/app/application'
-import { TOKENS as DEV, services as development } from '@/services/development'
-import { services as dataplanes } from '@/app/data-planes'
-import { TOKENS as VUE, services as vue } from '@/app/vue'
-import { services as x } from '@/app/x'
-import { services as kuma } from '@/app/kuma'
-import { build, token } from '@/services/utils'
-import Kongponents from '@kong/kongponents'
+import { services as applicationDebug } from '@/app/application/debug'
 import CliEnv from '@/app/application/services/env/CliEnv'
-import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
-import i18nEnUs from '@/locales/en-us'
+import { TOKENS as VUE, services as vue } from '@/app/vue'
+import { TOKENS } from '@/app/kuma'
+import { build, token } from '@/services/utils'
 import '../../src/assets/styles/main.scss'
 const el = ref()
 const $ = {
   ...VUE,
   ...APP,
-  ...DEV,
+  ...TOKENS,
   globals: token('vue.globals'),
-  httpClient: token('httpClient'),
-  api: token<KumaApi>('KumaApi'),
 }
 
 onMounted(async () => {
@@ -33,10 +25,7 @@ onMounted(async () => {
       const get = build(
         vue($),
         application($),
-        x($),
-        development($),
-        kuma($),
-        dataplanes($),
+        applicationDebug($),
         [
           // temporary $.app replacement
           [$.app, {
@@ -67,25 +56,6 @@ onMounted(async () => {
               $.globals,
             ],
           }],
-          [token('application.routes.navigation.guards'), {
-            service: () => {
-              return []
-            },
-            labels: [
-              $.routesLabel,
-            ],
-          }],
-
-          [token('kong.plugins'), {
-            service: () => {
-              return [
-                [Kongponents],
-              ]
-            },
-            labels: [
-              $.plugins,
-            ],
-          }],
           [token('docs.globals'), {
             service: (i18n) => {
               return [
@@ -105,38 +75,8 @@ onMounted(async () => {
               $.EnvVars,
             ],
           }],
-          [$.httpClient, {
-            service: RestClient,
-            arguments: [
-              $.env,
-            ],
-          }],
-          [$.api, {
-            service: KumaApi,
-            arguments: [
-              $.httpClient,
-              $.env,
-            ],
-          }],
-          [$.EnvVars, {
-            constant: {
-              KUMA_PRODUCT_NAME: '',
-              KUMA_VERSION_URL: '',
-              KUMA_DOCS_URL: '',
-              KUMA_MOCK_API_ENABLED: '',
-              KUMA_API_URL: 'http://localhost:5681',
-              KUMA_ZONE_CREATION_FLOW: '',
-            },
-          }],
-          [token('kuma.i18n.en-us'), {
-            constant: i18nEnUs,
-            labels: [
-              $.enUs,
-            ],
-          }],
         ],
       )
-      get($.msw)
       get($.app)(app)
     }
   })
@@ -146,7 +86,7 @@ onMounted(async () => {
 <div id="sandboxed-component" ref="el"></div>
 
 <style scoped>
-# sandboxed-component {
+#sandboxed-component {
   width: 100%;
   height: 100vh;
   padding: 0.5rem;

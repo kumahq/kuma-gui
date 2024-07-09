@@ -23,13 +23,20 @@
           <XAction
             v-else
             data-testid="x-action-group-control"
-            type="expand"
+            icon
+            appearance="tertiary"
+            size="small"
           >
             <XIcon name="more" />
           </XAction>
         </template>
         <template #items>
-          <slot name="default" />
+          <XProvider
+            name="x-action-group"
+            :service="props"
+          >
+            <slot name="default" />
+          </XProvider>
         </template>
       </KDropdown>
     </template>
@@ -41,7 +48,6 @@
 </template>
 <script lang="ts" setup>
 import { KDropdown } from '@kong/kongponents'
-import { provide } from 'vue'
 
 const props = withDefaults(defineProps<{
   expanded?: boolean
@@ -49,7 +55,6 @@ const props = withDefaults(defineProps<{
   expanded: false,
 })
 
-provide('x-action-group', props)
 </script>
 <style lang="scss" scoped>
 .x-action-group.expanded {

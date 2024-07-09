@@ -2,15 +2,14 @@
   <section
     class="story"
   >
-
     <iframe
+      :height="props.height"
       ref="iframe"
       data-why
       data-why-show-source
     >
       <slot name="default" />
     </iframe>
-
     <details open class="vue-source">
       <summary>View Vue Source</summary>
       <div class="language-vue vp-adaptive-theme">
@@ -35,6 +34,12 @@ import { ref, computed, watch } from 'vue'
 import { getWhyframeSource } from '@whyframe/core/utils'
 import { getHighlighter } from 'shiki'
 
+
+const props = withDefaults(defineProps<{
+  height?: number
+}>(), {
+  height: 300
+})
 const iframe = ref<HTMLIFrameElement>(null)
 const htmlSource = ref<string>('')
 const highlighter = ref<Awaited<ReturnType<typeof getHighlighter>> | undefined>()
