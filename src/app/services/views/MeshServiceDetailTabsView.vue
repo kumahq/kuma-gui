@@ -15,6 +15,7 @@
       })"
     >
       <AppView
+        :docs="t('services.mesh-service.href.docs')"
         :breadcrumbs="[
           {
             to: {

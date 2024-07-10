@@ -13,7 +13,9 @@
       :render="false"
       :title="t(`services.routes.mesh-external-service-list-view.title`)"
     />
-    <AppView>
+    <AppView
+      :docs="t('services.mesh-external-service.href.docs')"
+    >
       <KCard>
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/mesh-external-services', {

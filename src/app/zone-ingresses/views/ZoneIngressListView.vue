@@ -14,7 +14,10 @@
       :render="false"
       :title="t('zone-ingresses.routes.items.title')"
     />
-    <AppView>
+    <AppView
+      :docs="t('zone-ingresses.href.docs')"
+    >
+      <div v-html="t('zone-ingresses.routes.items.intro', {}, { defaultMessage: '' })" />
       <KCard>
         <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
         <DataLoader

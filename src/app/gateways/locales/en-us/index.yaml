@@ -2,6 +2,8 @@ gateways:
   routes:
     items:
       title: Gateways
+      intro: !!text/markdown |
+        Gateways are specialized proxies that manage incoming and outgoing traffic between the service mesh and external clients or other networks, enabling secure and controlled access to services with the mesh.
       navigation:
         builtin-gateway-list-view: Built-in
         delegated-gateway-list-view: Delegated

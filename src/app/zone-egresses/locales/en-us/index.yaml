@@ -20,5 +20,7 @@ zone-egresses:
     items:
       title: Egresses
       breadcrumbs: Egresses
+      intro: !!text/markdown |
+        A Zone Egress is specialized gateway that manages and routes outbound traffic from services with a zone to external destinations outside the mesh.
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'

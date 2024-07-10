@@ -13,7 +13,9 @@
       :render="false"
       :title="t(`services.routes.items.title`)"
     />
-    <AppView>
+    <AppView
+      :docs="t('services.href.docs')"
+    >
       <KCard>
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/service-insights/of/:serviceType', {

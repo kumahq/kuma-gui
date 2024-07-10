@@ -12,6 +12,7 @@
       :src="`/zone-ingress-overviews/${route.params.zoneIngress}`"
     >
       <AppView
+        :docs="t('zone-ingresses.href.docs')"
         :breadcrumbs="[
           {
             to: {
@@ -40,10 +41,11 @@
         ]"
       >
         <template
-          v-if="data"
           #title
         >
-          <h1>
+          <h1
+            v-if="data"
+          >
             <TextWithCopyButton
               :text="data.name"
             >

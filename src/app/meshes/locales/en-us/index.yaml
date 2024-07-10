@@ -39,6 +39,8 @@ meshes:
     items:
       title: Meshes
       breadcrumbs: Meshes
+      intro: !!text/markdown |
+        Meshes are logical groupings of services that define the scope of traffic management and security.
       collection:
         services: 'Services'
         dataplanes: 'Data Plane Proxies (online/total)'

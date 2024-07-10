@@ -23,7 +23,9 @@
         ]"
         :key="missingTLSPolicy"
       >
-        <AppView>
+        <AppView
+          :docs="t('meshes.href.docs')"
+        >
           <template
             v-if="!props.mesh.mtlsBackend || missingTLSPolicy"
             #notifications

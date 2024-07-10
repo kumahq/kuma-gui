@@ -8,6 +8,7 @@
     }"
   >
     <AppView
+      :docs="t('services.href.docs')"
       :breadcrumbs="[
         {
           to: {

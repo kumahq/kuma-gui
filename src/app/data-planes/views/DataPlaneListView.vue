@@ -15,7 +15,10 @@
       :render="false"
       :title="t('data-planes.routes.items.title')"
     />
-    <AppView>
+    <AppView
+      :docs="t('data-planes.href.docs.data_plane_proxy')"
+    >
+      <div v-html="t('data-planes.routes.items.intro', {}, { defaultMessage: '' })" />
       <KCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type`, {

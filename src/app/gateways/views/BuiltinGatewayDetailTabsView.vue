@@ -8,6 +8,7 @@
     }"
   >
     <AppView
+      :docs="t('builtin-gateways.href.docs')"
       :breadcrumbs="[
         {
           to: {
