@@ -379,10 +379,11 @@ import { computed, ref } from 'vue'
 import ZoneCreateKubernetesInstructions from '../components/ZoneCreateKubernetesInstructions.vue'
 import ZoneCreateUniversalInstructions from '../components/ZoneCreateUniversalInstructions.vue'
 import { sources } from '../sources'
+import { useI18n } from '@/app/application'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import { sources as cpSources } from '@/app/control-planes/sources'
+import { useKumaApi } from '@/app/kuma'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
-import { useI18n, useKumaApi } from '@/utilities'
 
 const { t, tm } = useI18n()
 const kumaApi = useKumaApi()

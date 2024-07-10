@@ -111,7 +111,7 @@
 import type { ZoneOverviewSource } from '../sources'
 import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-import { useKumaApi } from '@/utilities'
+import { useKumaApi } from '@/app/kuma'
 
 const kumaApi = useKumaApi()
 async function deleteZone(name: string) {

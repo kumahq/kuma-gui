@@ -1,7 +1,6 @@
 import { createI18n } from '@kong-ui-public/i18n'
 
 import type Env from '@/app/application/services/env/Env'
-import { camelCaseToWords } from '@/utilities/camelCaseToWords'
 import { get } from '@/utilities/get'
 
 declare module 'intl-messageformat' {
@@ -18,6 +17,14 @@ class I18nError extends Error {
   get key() {
     return this.message
   }
+}
+const camelCaseToWords = (str: string): string => {
+  const words = str
+    .split(/([A-Z][a-z]+)/)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return words.charAt(0).toUpperCase() + words.substring(1)
 }
 
 export default <T extends I18nRecord>(strs: T, env: Env['var']) => {

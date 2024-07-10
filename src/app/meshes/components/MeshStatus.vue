@@ -54,9 +54,9 @@
 
 <script lang="ts" setup>
 import type { Mesh, MeshInsight } from '../data'
+import { useI18n } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
-import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 

@@ -79,9 +79,9 @@ import { KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
 import { DangerIcon } from '@kong/icons'
 import { computed } from 'vue'
 
+import { useI18n } from '@/app/application'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
-import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 

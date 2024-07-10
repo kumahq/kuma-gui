@@ -51,7 +51,7 @@
 import { computed } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import { useI18n } from '@/utilities'
+import { useI18n } from '@/app/application'
 import { toYaml } from '@/utilities/toYaml'
 
 type Resolve = (data: Object) => void

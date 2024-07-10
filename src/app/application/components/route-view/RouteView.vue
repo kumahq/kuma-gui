@@ -50,7 +50,7 @@ import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAt
 import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
-import { useCan, useI18n, uniqueId } from '../../index'
+import { useCan, useI18n, uniqueId, useEnv } from '../../index'
 import {
   urlParam,
   normalizeUrlParam,
@@ -61,7 +61,6 @@ import {
 } from '../../utilities'
 import { useUri } from '@/app/application/services/data-source'
 import { sources } from '@/app/me/sources'
-import { useEnv } from '@/utilities'
 import { get } from '@/utilities/get'
 import type { RouteRecordRaw } from 'vue-router'
 

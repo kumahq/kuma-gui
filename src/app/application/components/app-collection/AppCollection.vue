@@ -111,8 +111,8 @@ import { KButton, KTable } from '@kong/kongponents'
 import { useSlots, ref, watch, Ref } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 
+import { useI18n } from '@/app/application'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import { useI18n } from '@/utilities'
 import type { TableHeader as KTableHeader, TablePreferences } from '@kong/kongponents'
 
 type CellAttrParams = {

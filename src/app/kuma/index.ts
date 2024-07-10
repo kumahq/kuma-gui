@@ -3,7 +3,7 @@ import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import i18nEnUs from '@/locales/en-us'
-import { token } from '@/services/utils'
+import { token, createInjections } from '@/services/utils'
 import type { ServiceDefinition } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
@@ -71,3 +71,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
   ]
 }
+export const [
+  useKumaApi,
+] = createInjections(
+  TOKENS.api,
+)

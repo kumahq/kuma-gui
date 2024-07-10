@@ -242,9 +242,9 @@ import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import { useKumaApi } from '@/app/kuma'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
-import { useKumaApi } from '@/utilities'
 import { get } from '@/utilities/get'
 
 const kumaApi = useKumaApi()
