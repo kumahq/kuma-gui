@@ -8,8 +8,10 @@ check/node:
 	)
 
 .PHONY: lint
-lint: MAKEFLAGS += -j4
-lint: lint/js lint/ts lint/css lint/lock  ## Dev: Run lint checks on all languages
+lint: lint/js lint/ts lint/css lint/lock lint/gherkin ## Dev: Run lint checks on all languages
+
+.PHONY: lint/script
+lint/script: lint/js lint/ts  ## Dev: Run lint checs on both JS/TS
 
 .PHONY: lint/js
 lint/js:
@@ -27,6 +29,12 @@ lint/css:
 	@npx stylelint \
 		$(if $(CI),,--fix) --allow-empty-input \
 		./src/**/*.{css,scss,vue}
+
+.PHONY: lint/gherkin
+lint/gherkin:
+	@find ./features \
+		-name '*.feature' \
+		-exec npx gherkin-utils format '{}' +
 
 .PHONY: lint/lock
 lint/lock:
