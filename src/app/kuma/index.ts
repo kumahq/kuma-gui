@@ -1,4 +1,5 @@
 import type { EnvArgs } from '@/app/application/services/env/Env'
+import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import i18nEnUs from '@/locales/en-us'
@@ -48,6 +49,18 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
+    [app.errorHandler, {
+      service: () => {
+        return (e: Error | ErrorEvent) => {
+          const error = 'error' in e ? e.error : e
+          if (error instanceof ApiError) {
+            return
+          }
+          console.error(error)
+        }
+      },
+    }],
+
     [token('kuma.components.not-found'), {
       service: () => [
         () => import('@/app/kuma/views/KumaNotFoundView.vue'),
@@ -56,6 +69,5 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.notFoundView,
       ],
     }],
-
   ]
 }

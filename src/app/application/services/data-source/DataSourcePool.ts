@@ -26,7 +26,8 @@ export default class DataSourcePool {
 
   constructor(
     requests: Sources,
-    { create, destroy = () => {}, error = () => {} }: { create: Creator, destroy?: Destroyer, error?: (e: Event) => void },
+    { create, destroy = () => { } }: { create: Creator, destroy?: Destroyer },
+    error: (e: Event) => void = () => { },
     getCacheKeyPrefix: () => string = () => '',
 
     // a currently unbounded cache of previous JSON responses that is used to
