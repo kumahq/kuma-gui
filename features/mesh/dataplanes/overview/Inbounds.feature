@@ -1,4 +1,5 @@
 Feature: mesh / dataplanes / connections / Inbounds
+
   Background:
     Given the CSS selectors
       | Alias       | Selector                                    |
@@ -22,7 +23,6 @@ Feature: mesh / dataplanes / connections / Inbounds
               - port: 49151
       """
     When I visit the "/meshes/default/data-planes/service-less/overview" URL
-
     And the "$detail-view" element contains "service-less"
     And the "$traffic" element exists
     And the "$inbound" element exists 0 times
@@ -33,8 +33,6 @@ Feature: mesh / dataplanes / connections / Inbounds
       KUMA_DATAPLANE_TYPE: delegated
       """
     When I visit the "/meshes/default/data-planes/delegated/overview" URL
-
     And the "$detail-view" element contains "delegated"
     And the "$traffic" element exists
     And the "$inbound" element exists 0 times
-

@@ -1,4 +1,5 @@
 Feature: mesh / external-services / item
+
   Background:
     Given the CSS selectors
       | Alias       | Selector                                     |
@@ -14,7 +15,6 @@ Feature: mesh / external-services / item
 
   Scenario: Overview tab has expected content
     When I visit the "/meshes/default/services/external/service-1/overview" URL
-
     Then the "$detail-view" element contains "service-1"
     Then the "$details" element contains "1.2.3.4"
     Then the "$config" element contains "1.2.3.4"

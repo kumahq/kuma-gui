@@ -1,4 +1,5 @@
 Feature: application / warnings
+
   Background:
     Given the CSS selectors
       | Alias                     | Selector                                         |
@@ -19,4 +20,3 @@ Feature: application / warnings
       """
     When I visit the "/" URL
     Then the "$memory-store-type-warning" element doesn't exist
-

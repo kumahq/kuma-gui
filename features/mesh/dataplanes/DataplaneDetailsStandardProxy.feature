@@ -1,4 +1,5 @@
 Feature: Dataplane details for standard Data Plane Proxy
+
   Background:
     Given the CSS selectors
       | Alias         | Selector                                    |
@@ -77,33 +78,29 @@ Feature: Dataplane details for standard Data Plane Proxy
                 envoy:
                   kumaDpCompatible: true
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
-
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$details" element contains "online"
-
     When I click the ".accordion-item:nth-child(1) [data-testid='accordion-item-button']" element
-
     Then the "$status-cds" element contains
       | Value |
       | CDS   |
-      | 1     |
-      | 2     |
+      |     1 |
+      |     2 |
     And the "$status-eds" element contains
       | Value |
       | EDS   |
-      | 3     |
-      | 4     |
+      |     3 |
+      |     4 |
     And the "$status-lds" element contains
       | Value |
       | LDS   |
-      | 6     |
+      |     6 |
     And the "$status-rds" element contains
       | Value |
       | RDS   |
-      | 0     |
+      |     0 |
 
   Scenario: Clusters tab has expected content
     Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with
@@ -114,7 +111,5 @@ Feature: Dataplane details for standard Data Plane Proxy
         access_log_sink::default_priority::max_pending_requests::1024
         access_log_sink::default_priority::max_requests::1024
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/clusters" URL
-
     Then the "$clusters-view" element contains "access_log_sink::observability_name::access_log_sink"

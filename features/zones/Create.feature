@@ -1,4 +1,5 @@
 Feature: zones / create
+
   Background:
     Given the CSS selectors
       | Alias                               | Selector                                             |
@@ -23,7 +24,6 @@ Feature: zones / create
       | connected                           | [data-testid='connected']                            |
       | error                               | [data-testid='error']                                |
       | instructions                        | [data-testid='connect-zone-instructions']            |
-
     And the environment
       """
       KUMA_MODE: global
@@ -33,10 +33,8 @@ Feature: zones / create
     Given I visit the "/" URL
     Then the "[data-testid='loading-block']" element doesn't exist
     And I click the "$zones-nav" element
-
     Then the page title contains "Zone Control Planes"
     And the "$create-zone-link" element exists
-
     When I click the "$create-zone-link" element
     Then the page title contains "Create & connect Zone"
 
@@ -44,7 +42,6 @@ Feature: zones / create
     When I visit the "/zones/-create" URL
     Then the "$name-input" element exists
     Then the "$create-zone-button" element is disabled
-
     Then the "$environment-universal-radio-button" element doesn't exist
     Then the "$environment-kubernetes-radio-button" element doesn't exist
     Then the "$ingress-input-switch-label" element doesn't exist
@@ -62,10 +59,8 @@ Feature: zones / create
       """
     When I visit the "/zones/-create" URL
     Then the "$create-zone-button" element is disabled
-
     When I "type" "test" into the "$name-input" element
     Then the "$create-zone-button" element isn't disabled
-
     When I click the "$create-zone-button" element
     Then the URL "/provision-zone" was requested with
       """
@@ -79,15 +74,12 @@ Feature: zones / create
     And the "$egress-input-switch-input" element is checked
     And the "$environment-kubernetes-config" element contains "kdsGlobalAddress: grpcs://<global-kds-address>:5685"
     And the "$waiting" element exists
-
     When I click the "$ingress-input-switch-label" element
     Then the "$ingress-input-switch-input" element isn't checked
     And the "$egress-input-switch-input" element is checked
-
     When I click the "$egress-input-switch-label" element
     Then the "$ingress-input-switch-input" element isn't checked
     And the "$egress-input-switch-input" element isn't checked
-
     When I click the "$environment-universal-radio-button" element
     Then the "$ingress-input-switch-input" element doesn't exist
     And the "$egress-input-switch-input" element doesn't exist
@@ -153,17 +145,13 @@ Feature: zones / create
       headers:
         Status-Code: '409'
       """
-
     When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
-
     Then the "$create-error" element contains "test"
     And the "$instructions" element doesn't exist
-
     When I clear the "$name-input" element
     And I "type" "different-name" into the "$name-input" element
-
     Then the "$create-error" element contains "test"
 
   Scenario: The form shows expected error for 400 response
@@ -180,12 +168,10 @@ Feature: zones / create
           - field: 'name'
             reason: "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols."
       """
-
     When I visit the "/zones/-create" URL
     # Note: We're deliberately using a valid name here in order to not trigger client-side validation.
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
-
     Then the "$name-input-invalid-dns-name" element exists
     And the "$instructions" element doesn't exist
 
@@ -193,15 +179,12 @@ Feature: zones / create
     When I visit the "/zones/-create" URL
     And I "type" "zone.eu" into the "$name-input" element
     And I click the "$create-zone-button" element
-
     Then the "$create-error" element doesn't exist
     And the "$name-input-invalid-dns-name" element exists
     And the "$instructions" element doesn't exist
-
     When I clear the "$name-input" element
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
-
     Then the "$create-error" element doesn't exist
     And the "$instructions" element exists
 
@@ -225,16 +208,12 @@ Feature: zones / create
             - connectTime: '2020-07-28T16:18:09.743141Z'
               disconnectTime: !!js/undefined
       """
-
     When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
-
     Then the "$instructions" element exists
     And the "$connected" element exists
-
     When I click the "$exit-button" element
-
     Then the "$confirm-exit-modal" element doesn't exist
     And the page title contains "Zone Control Planes"
 
@@ -248,19 +227,13 @@ Feature: zones / create
       body:
         token: spat_595QOxTSreRmrtdh8ValuoeUAzXMfBmRwYU3V35NQvwgLAWIU
       """
-
     When I visit the "/zones/-create" URL
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
-
     Then the "$instructions" element exists
     And the "$waiting" element exists
-
     When I click the "$exit-button" element
-
     Then the "$confirm-exit-modal" element exists
-
     When I click the "$confirm-exit-button" element
-
     Then the "$confirm-exit-modal" element doesn't exist
     And the page title contains "Zone Control Planes"

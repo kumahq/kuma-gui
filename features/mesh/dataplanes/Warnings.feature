@@ -1,4 +1,5 @@
 Feature: mesh / dataplanes / warnings
+
   Background:
     Given the CSS selectors
       | Alias                     | Selector                                                          |
@@ -61,7 +62,6 @@ Feature: mesh / dataplanes / warnings
               - tags:
                   kuma.io/zone: zone
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-zone-warning" element exists
 
@@ -81,7 +81,6 @@ Feature: mesh / dataplanes / warnings
                 envoy:
                   kumaDpCompatible: true
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-kuma-warning" element exists
 
@@ -101,6 +100,5 @@ Feature: mesh / dataplanes / warnings
                 envoy:
                   kumaDpCompatible: false
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-envoy-warning" element exists

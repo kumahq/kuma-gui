@@ -1,4 +1,5 @@
 Feature: mesh / builtin-gateways / item
+
   Background:
     Given the CSS selectors
       | Alias         | Selector                                         |
@@ -108,45 +109,36 @@ Feature: mesh / builtin-gateways / item
 
   Scenario: Overview tab has expected content
     When I visit the "/meshes/default/gateways/builtin/gateway-1/overview" URL
-
     Then the URL contains "/builtin/gateway-1/overview?listener=0"
     Then the "$tabs-view" element contains "gateway-1"
     Then the "$listener-card" element exists 2 times
     Then the "$route-card" element exists 2 times
-
     Then the "$listener-card:nth-child(1).active" element exists
     Then the "$listener-card:nth-child(1)" element contains "*:80"
     Then the "$listener-card:nth-child(2)" element contains "bar.com:81"
     Then the "$listener-card:nth-child(2)" element contains "TLS"
     Then the "$listener-card:nth-child(2)" element contains "TERMINATE"
-
     Then the "$route-card:nth-child(1)" element contains "demo-app-1.kuma-system"
     Then the "$route-card:nth-child(1)" element contains "service-1"
     Then the "$route-card:nth-child(2)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(2)" element contains "service-2"
-
     When I click the "$listener-card:nth-child(2) [data-action]" element
-
     Then the URL contains "/builtin/gateway-1/overview?listener=1"
     Then the "$route-card" element exists 1 times
-
     Then the "$listener-card:nth-child(2).active" element exists
     Then the "$route-card:nth-child(1)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(1)" element contains "service-2"
 
   Scenario: Navigate to overview with non-first selected listener
     When I visit the "/meshes/default/gateways/builtin/gateway-1/overview?listener=1" URL
-
     Then the "$listener-card:nth-child(2).active" element exists
     Then the "$route-card:nth-child(1)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(1)" element contains "service-2"
 
   Scenario: Dataplanes tab has expected content
     When I visit the "/meshes/default/gateways/builtin/gateway-1/dataplanes" URL
-
     Then the "$dataplanes" element exists
 
   Scenario: Config tab has expected content
     When I visit the "/meshes/default/gateways/builtin/gateway-1/config" URL
-
     Then the "$config" element exists

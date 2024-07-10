@@ -1,10 +1,10 @@
 Feature: zones / ingresses / item / services
+
   Background:
     Given the CSS selectors
       | Alias | Selector                                      |
       | items | [data-testid='available-services-collection'] |
       | item  | $items tbody tr                               |
-
     And the environment
       """
       KUMA_MODE: global

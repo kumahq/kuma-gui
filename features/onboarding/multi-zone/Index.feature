@@ -1,4 +1,5 @@
 Feature: onboarding / multi-zone / index
+
   Background:
     Given the CSS selectors
       | Alias       | Selector                                   |

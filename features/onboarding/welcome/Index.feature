@@ -1,4 +1,5 @@
 Feature: onboarding / welcome
+
   Background:
     Given the CSS selectors
       | Alias            | Selector                               |
@@ -12,6 +13,7 @@ Feature: onboarding / welcome
       """
     When I visit the "/onboarding/welcome" URL
     Then the "$environment-text" element contains "<Text>"
+
     Examples:
       | Value      | Text       |
       | universal  | Universal  |

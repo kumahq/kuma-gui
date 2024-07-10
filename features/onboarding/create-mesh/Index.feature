@@ -1,4 +1,5 @@
 Feature: onboarding / create-mesh / index
+
   Background:
     Given the CSS selectors
       | Alias       | Selector                                   |
@@ -12,8 +13,8 @@ Feature: onboarding / create-mesh / index
     When I visit the "/onboarding/create-mesh" URL
     And I click the "$back-button" element
     Then the URL is "<URL>"
-    Examples:
-      | Value      | URL                     |
-      | global     | /onboarding/multi-zone  |
-      | standalone | /onboarding/configuration-types |
 
+    Examples:
+      | Value      | URL                             |
+      | global     | /onboarding/multi-zone          |
+      | standalone | /onboarding/configuration-types |

@@ -1,4 +1,5 @@
 Feature: onboarding / dataplanes-overview / index
+
   Background:
     Given the CSS selectors
       | Alias            | Selector                               |
@@ -12,9 +13,7 @@ Feature: onboarding / dataplanes-overview / index
       """
       KUMA_DATAPLANE_COUNT: 0
       """
-
     When I visit the "/onboarding/dataplanes-overview" URL
-
     Then the "$next-button[disabled]" element exists
 
   Scenario: Next button is enabled if there is at least one Dataplane
@@ -33,9 +32,7 @@ Feature: onboarding / dataplanes-overview / index
                 - connectTime: 2021-02-17T07:33:36.412683Z
                   disconnectTime: !!js/undefined
       """
-
     When I visit the "/onboarding/dataplanes-overview" URL
-
     Then the "$next-button:not([disabled])" element exists
 
   Scenario: UI updates in response to Dataplanes not being offline anymore
@@ -55,13 +52,10 @@ Feature: onboarding / dataplanes-overview / index
                 - connectTime: 2021-02-17T07:33:36.412683Z
                   disconnectTime: 2021-02-17T07:33:36.412683Z
       """
-
     When I visit the "/onboarding/dataplanes-overview" URL
-
     Then the "$state-waiting" element exists
     And the "$dataplanes-table" element contains "dataplane-test"
     And the "$dataplanes-table" element contains "offline"
-
     When the URL "/dataplanes/_overview" responds with
       """
       body:
@@ -77,7 +71,6 @@ Feature: onboarding / dataplanes-overview / index
                 - connectTime: 2021-02-17T07:33:36.412683Z
                   disconnectTime: !!js/undefined
       """
-
     Then the "$state-success" element exists
     And the "$dataplanes-table" element contains "dataplane-test"
     And the "$dataplanes-table" element contains "online"

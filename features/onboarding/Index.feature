@@ -1,4 +1,5 @@
 Feature: onboarding / index
+
   Background:
     Given the CSS selectors
       | Alias                   | Selector                                |
@@ -41,6 +42,7 @@ Feature: onboarding / index
     When I visit the "<URL>" URL
     Then I click the "$skip-button" element
     Then the URL is "/"
+
     Examples:
       | URL                             |
       | /onboarding/welcome             |

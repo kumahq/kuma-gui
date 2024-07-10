@@ -1,4 +1,5 @@
 Feature: Dataplane policies
+
   Background:
     Given the CSS selectors
       | Alias                              | Selector                                                            |
@@ -18,6 +19,7 @@ Feature: Dataplane policies
       | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                    |
       | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
       | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']          |
+
   Rule: Any networking type
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
@@ -78,19 +80,13 @@ Feature: Dataplane policies
                       name: on-service
                       type: MeshTimeout
         """
-
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
-
       Then the "$policies-view" element contains "MeshHTTPRoute"
       And the "$policies-view" element contains "MeshTimeout"
-
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
-
       Then the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:other-svc"
       And the "$to-rule-item:nth-child(1)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
-
       When I click the "$to-rule-item:nth-child(2) [data-testid='accordion-item-button']" element
-
       Then the "$to-rule-item:nth-child(2)" element contains "__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and"
       Then the "$to-rule-item:nth-child(2)" element contains "kuma.io/service:backend_kuma-demo_svc_3001"
       And the "$to-rule-item:nth-child(2)" element contains "!__rule-matches-hash__:waFsoIISmZDTfFWYqxvY265/GASHYEWvHQTwMh/bpuU= and"
@@ -184,7 +180,6 @@ Feature: Dataplane policies
                     http:
                       requestTimeout: 10s
         """
-
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$policies-view" element contains "MeshTimeout"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
@@ -242,7 +237,7 @@ Feature: Dataplane policies
       Then the "$proxy-rule-item:nth-child(1)" element contains "mpp-on-gateway"
       When I click the "$to-rule-item:nth-child(1) [data-testid='accordion-item-button']" element
       Then the "$to-rule-item:nth-child(1)" element contains "!kuma.io/service:bar"
-    
+
     Scenario: The origin policies link in the policies rules' policy list opens the policy summary panel
       Given the environment
         """
@@ -276,8 +271,8 @@ Feature: Dataplane policies
       And the "$summary-slideout-container [data-testid='slideout-title']" element exists
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
 
-
   Rule: Standard proxy
+
     Background:
       Given the environment
         """
@@ -306,6 +301,7 @@ Feature: Dataplane policies
       And the "$legacy-gateway-policies" element doesn't exist
 
   Rule: Delegated gateway
+
     Background:
       Given the environment
         """
@@ -322,16 +318,15 @@ Feature: Dataplane policies
       Then the "$to-rules" element exists
       And the "$legacy-sidecar-policies" element doesn't exist
       And the "$legacy-gateway-policies" element doesn't exist
-
     # We repeat the same test as the one before but with an omitted so we can test
     # an omitted gateway.type. If we ever stop folks accessing gateway.type and rely on the
     # data layer unit test for this instead, we can remove this test.
+
     Scenario: Federated (with a default/delegated type) shows the rules but no legacy content
       Given the environment
         """
         KUMA_MODE: global
         """
-
       And the URL "/meshes/default/dataplanes/dataplane-1/_overview" responds with
         """
         body:
@@ -356,6 +351,7 @@ Feature: Dataplane policies
       And the "$legacy-gateway-policies" element doesn't exist
 
   Rule: Built-in gateway
+
     Background:
       Given the environment
         """
