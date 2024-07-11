@@ -189,21 +189,34 @@
                     <XTeleportTemplate
                       :to="{ name: 'modal-layer' }"
                     >
-                      <DeleteResourceModal
+                      <DataSink
                         v-if="expanded"
-                        :confirmation-text="row.name"
-                        :delete-function="() => deleteZone(row.name)"
-                        is-visible
-                        :action-button-text="t('common.delete_modal.proceed_button')"
-                        :title="t('common.delete_modal.title', { type: 'Zone' })"
-                        data-testid="delete-zone-modal"
-                        @cancel="toggle"
-                        @delete="() => { toggle(); refresh() }"
+                        v-slot="{ submit, error: deleteError }"
+                        :src="`/zone-cps/${row.name}/delete`"
+                        @change="() => { toggle(); refresh() }"
                       >
-                        <p>{{ t('common.delete_modal.text1', { type: 'Zone', name: row.name }) }}</p>
-
-                        <p>{{ t('common.delete_modal.text2') }}</p>
-                      </DeleteResourceModal>
+                        <XPrompt
+                          :action="t('common.delete_modal.proceed_button')"
+                          :expected="row.name"
+                          data-testid="delete-zone-modal"
+                          @cancel="toggle"
+                          @submit="() => submit({})"
+                        >
+                          <template
+                            #title
+                          >
+                            {{ t('common.delete_modal.title', { type: 'Zone' }) }}
+                          </template>
+                          <div
+                            v-html="t('common.delete_modal.text', { type: 'Zone', name: row.name })"
+                          />
+                          <DataLoader
+                            class="mt-4"
+                            :errors="[deleteError]"
+                            :loader="false"
+                          />
+                        </XPrompt>
+                      </DataSink>
                     </XTeleportTemplate>
                   </XDisclosure>
                 </XActionGroup>
@@ -241,16 +254,12 @@ import { ref } from 'vue'
 
 import { sources as zoneSources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import DeleteResourceModal from '@/app/common/DeleteResourceModal.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import { useKumaApi } from '@/app/kuma'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 import { get } from '@/utilities/get'
-
-const kumaApi = useKumaApi()
 
 type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
 const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})
@@ -289,11 +298,6 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
     }
     return prev
   }, {} as ZoneProxies<ZoneEgressOverview>)
-}
-
-async function deleteZone(name: string) {
-  // Intentionally not wrapped in a try-catch block so that the DeleteResourceModal can discover when the operation failed.
-  await kumaApi.deleteZone({ name })
 }
 </script>
 

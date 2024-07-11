@@ -3,7 +3,9 @@
     data-testid="error-block"
     class="error-block"
   >
-    <KEmptyState>
+    <KEmptyState
+      v-if="!prompt"
+    >
       <template #icon>
         <DangerIcon
           v-if="props.appearance === 'danger'"
@@ -53,37 +55,77 @@
 
       <div class="error-block-message mt-4">
         <slot v-if="$slots.default" />
-
-        <p v-else>
-          {{ error.message }}
-        </p>
-
-        <ul
-          v-if="invalidParameters.length > 0"
-          data-testid="error-invalid-parameters"
+        <template
+          v-else-if="props.error instanceof ApiError"
         >
-          <li
-            v-for="(parameter, index) in invalidParameters"
-            :key="index"
+          <p>
+            {{ props.error.message }}
+          </p>
+          <ul
+            v-if="props.error.invalidParameters.length > 0"
+            :data-testid="`error-invalid-parameters-${props.error.status}`"
           >
-            {{ t('common.error_state.field') }} <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
-          </li>
-        </ul>
+            <li
+              v-for="parameter in props.error.invalidParameters"
+              :key="parameter.field"
+            >
+              {{ t('common.error_state.field') }} <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
+            </li>
+          </ul>
+        </template>
+        <p v-else>
+          {{ props.error.message }}
+        </p>
       </div>
     </KEmptyState>
+    <template
+      v-else
+    >
+      <KAlert
+        appearance="danger"
+      >
+        <div
+          class="error-block-message"
+        >
+          <slot v-if="$slots.default" />
+          <template
+            v-else-if="props.error instanceof ApiError"
+          >
+            <p>
+              {{ t('common.error_state.api_error', { status: props.error.status, title: props.error.detail }) }}
+            </p>
+            <ul
+              v-if="props.error.invalidParameters.length > 0"
+              :data-testid="`error-invalid-parameters-${props.error.status}`"
+            >
+              <li
+                v-for="parameter in props.error.invalidParameters"
+                :key="parameter.field"
+              >
+                {{ t('common.error_state.field') }} <b><code>{{ parameter.field }}</code></b>: {{ parameter.reason }}
+              </li>
+            </ul>
+          </template>
+          <p v-else>
+            {{ error.message }}
+          </p>
+        </div>
+      </KAlert>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { KUI_COLOR_TEXT_DANGER } from '@kong/design-tokens'
 import { DangerIcon } from '@kong/icons'
-import { computed } from 'vue'
+import { inject } from 'vue'
 
 import { useI18n } from '@/app/application'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 
 const { t } = useI18n()
+const prompt = inject('x-prompt', undefined)
 
 const props = withDefaults(defineProps<{
   error: Error
@@ -91,8 +133,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   appearance: 'warning',
 })
-
-const invalidParameters = computed(() => props.error instanceof ApiError ? props.error.invalidParameters : [])
 </script>
 
 <style lang="scss" scoped>

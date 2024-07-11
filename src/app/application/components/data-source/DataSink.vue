@@ -4,17 +4,33 @@
   >
     <DataSource
       v-if="expanded"
-      :src="`${props.src}/${JSON.stringify(data)}`"
-      @change="toggle"
+      :src="`${props.src}/${JSON.stringify(payload)}`"
+      @change="(d: TypeOf<T>) => {
+        data = d;
+        emit('change', d)
+        toggle()
+      }"
+      @error="(e: Error) => {
+        error = e;
+        emit('error', e)
+        toggle()
+      }"
     />
     <!-- eslint-disable vue/no-lone-template -->
     <template
-      :ref="() => write = toggle"
+      :ref="() => {
+        write = toggle
+        writing = expanded
+      }"
     />
     <!-- eslint-enable -->
   </XDisclosure>
   <slot
-    :submit="(args: any) => { data = args;write()}"
+    :submit="submit"
+    :error="error"
+    :writing="writing"
+    :data="data"
+    :payload="payload"
   />
 </template>
 
@@ -25,10 +41,24 @@
 >
 import { ref } from 'vue'
 
+import type { TypeOf } from '@/app/application'
+
+const emit = defineEmits<{
+  (e: 'change', value: TypeOf<T>): void
+  (e: 'error', error: Error): void
+}>()
 const props = defineProps<{
   src: T
 }>()
 
-const data = ref({})
+const payload = ref<any>()
+const data = ref<TypeOf<T> | undefined>()
+const error = ref<Error | undefined>()
+const writing = ref<boolean>(false)
 const write = ref(() => {})
+const submit = (args: any) => {
+  payload.value = args
+  write.value()
+}
+
 </script>

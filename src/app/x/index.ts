@@ -7,6 +7,7 @@ import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
 import XIcon from './components/x-icon/XIcon.vue'
 import XInput from './components/x-input/XInput.vue'
+import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
 import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
@@ -26,6 +27,7 @@ declare module '@vue/runtime-core' {
     XCard: typeof KCard
     XCopyButton: typeof XCopyButton
     XBreadcrumbs: typeof XBreadcrumbs
+    XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XSelect: typeof XSelect
     XTabs: typeof XTabs
@@ -58,6 +60,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XCopyButton', XCopyButton],
           ['XIcon', XIcon],
           ['XInput', XInput],
+          ['XPrompt', XPrompt],
           ['XProvider', XProvider],
           ['XSelect', XSelect],
           ['XTabs', XTabs],

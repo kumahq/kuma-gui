@@ -46,6 +46,7 @@
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <ErrorBlock
+          v-bind="$attrs"
           :error="allErrors[0]"
         />
       </slot>
@@ -64,7 +65,9 @@
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
-        <LoadingBlock />
+        <LoadingBlock
+          v-bind="$attrs"
+        />
       </slot>
       <slot
         v-else
