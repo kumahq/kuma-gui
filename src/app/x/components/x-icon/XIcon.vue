@@ -41,6 +41,7 @@ import {
   MoreIcon,
   ChevronDownIcon,
   CogIcon,
+  AddIcon,
   HelpIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
@@ -69,6 +70,7 @@ const icons = {
   universal: DeployIcon,
   settings: CogIcon,
   help: HelpIcon,
+  create: AddIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

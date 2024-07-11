@@ -1,23 +1,58 @@
 <template>
   <template
-    v-if="Object.keys(props.to).length > 0"
+    v-if="group?.expanded === false"
   >
-    <template
-      v-if="group?.expanded === false"
+    <KDropdownItem
+      data-testid="x-action"
+      v-bind="$attrs"
+      :target="props.href.length > 0 ? '_blank' : undefined"
+      :item="{
+        label: '',
+        to: props.href.length > 0 ? props.href : {
+          ...props.to,
+          query,
+        },
+      }"
+      :danger="props.appearance === 'danger' ? true : false"
+      @click="emit('click')"
     >
-      <KDropdownItem
-        v-bind="attrs"
-        :item="{
-          label: '',
-          to: props.to,
-        }"
+      <slot name="default" />
+    </KDropdownItem>
+  </template>
+  <template
+    v-else-if="Object.keys(props.to).length > 0"
+  >
+    <KButton
+      v-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
+      data-testid="x-action"
+      v-bind="$attrs"
+      :appearance="props.appearance as ButtonAppearance"
+      :size="props.size"
+      :to="{
+        ...props.to,
+        query,
+      }"
+    >
+      <template
+        v-if="['create'].includes(props.type)"
       >
-        <slot name="default" />
-      </KDropdownItem>
-    </template>
+        <XIcon
+          :name="props.type as 'create'"
+        />
+      </template>
+      <slot name="default" />
+      <template
+        v-if="['expand'].includes(props.type)"
+      >
+        <XIcon
+          :name="props.type as 'expand'"
+        />
+      </template>
+    </KButton>
     <RouterLink
       v-else
-      v-bind="attrs"
+      data-testid="x-action"
+      v-bind="$attrs"
       :to="{
         ...props.to,
         query,
@@ -30,24 +65,13 @@
   <template
     v-else-if="props.href.length > 0"
   >
-    <template
-      v-if="group?.expanded === false"
-    >
-      <KDropdownItem
-        v-bind="attrs"
-        :item="{
-          label: '',
-          to: props.href,
-        }"
-      >
-        <slot name="default" />
-      </KDropdownItem>
-    </template>
     <a
-      v-else
-      v-bind="attrs"
+      data-testid="x-action"
+      v-bind="$attrs"
       :href="props.href"
-      class="type-docs"
+      class="{
+        'type-docs': props.type === 'docs'
+      }"
       target="_blank"
       :rel="props.type !== 'docs' ? `noopener noreferrer` : ``"
     >
@@ -72,7 +96,8 @@
     v-else-if="props.for.length > 0"
   >
     <label
-      v-bind="attrs"
+      data-testid="x-action"
+      v-bind="$attrs"
       :for="props.for"
     >
       <slot name="default" />
@@ -81,36 +106,35 @@
   <template
     v-else
   >
-    <template
-      v-if="group?.expanded === false && !['primary', 'secondary', 'tertiary'].includes(props.appearance) && !['expand'].includes(props.type)"
-    >
-      <KDropdownItem
-        v-bind="attrs"
-        :danger="props.appearance === 'danger'"
-        :item="{
-          label: '',
-          to: props.to,
-        }"
-        @click="emit('click')"
-      >
-        <slot name="default" />
-      </KDropdownItem>
-    </template>
     <KButton
-      v-else-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
+      v-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
+      data-testid="x-action"
       v-bind="$attrs"
       :appearance="props.appearance as ButtonAppearance"
+      :size="props.size"
+      @click="emit('click')"
     >
+      <template
+        v-if="['create'].includes(props.type)"
+      >
+        <XIcon
+          :name="props.type as 'create'"
+        />
+      </template>
       <slot name="default" />
       <template
-        v-if="props.type === 'expand'"
+        v-if="['expand'].includes(props.type)"
       >
-        <XIcon name="expand" />
+        <XIcon
+          :name="props.type as 'expand'"
+        />
       </template>
     </KButton>
     <button
       v-else
-      v-bind="attrs"
+      :class="`appearance-${props.appearance}`"
+      data-testid="x-action"
+      v-bind="$attrs"
       type="button"
       @click="emit('click')"
     >
@@ -120,7 +144,7 @@
 </template>
 <script lang="ts" setup>
 import { KDropdownItem, ButtonAppearance } from '@kong/kongponents'
-import { computed, watch, inject, useAttrs } from 'vue'
+import { computed, watch, inject } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
 import type { RouteLocationNamedRaw } from 'vue-router'
@@ -134,30 +158,26 @@ const emit = defineEmits<{
   (event: 'click'): Event
 }>()
 const props = withDefaults(defineProps<{
-  type?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'more' | 'expand'
+  type?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand'
   appearance?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'anchor'
+  size?: 'small' | 'medium' | 'large'
   href?: string
   to?: RouteLocationRawWithBooleanQuery
   for?: string
-  mount?: (to: RouteLocationNamedRaw) => void
 }>(), {
   href: '',
   appearance: 'anchor',
+  size: 'medium',
   type: 'default',
   to: () => ({}),
   for: '',
-  mount: undefined,
 })
-const router = useRouter()
-const attrs = {
-  'data-testid': 'x-action',
-  ...useAttrs(),
-}
 
 const group = inject<{
   expanded: boolean
 }>('x-action-group')
 
+const router = useRouter()
 const query = computed(() => {
   return Object.entries(props.to.query ?? {}).reduce<Record<string, string | number | null | undefined>>((prev, [key, value]) => {
     switch (true) {
@@ -174,15 +194,6 @@ const query = computed(() => {
   }, {})
 })
 
-watch(() => props.mount, (val) => {
-  if (typeof val === 'function') {
-    val({
-      ...props.to,
-      query: query.value,
-    })
-  }
-}, { immediate: true })
-
 watch(() => props.to, (val) => {
   try {
     router.resolve({
@@ -197,3 +208,16 @@ watch(() => props.to, (val) => {
   }
 }, { immediate: true })
 </script>
+<style lang="scss" scoped>
+/* taken from styles/_base.scss `a` */
+button.appearance-anchor {
+  text-decoration: none;
+  color: $kui-color-text-primary;
+}
+
+button.appearance-anchor:hover,
+button.appearance-anchor:focus {
+  text-decoration: underline
+}
+
+</style>

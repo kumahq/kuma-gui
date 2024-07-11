@@ -1,4 +1,4 @@
-import Kongponents from '@kong/kongponents'
+import Kongponents, { KCard } from '@kong/kongponents'
 
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
@@ -7,6 +7,7 @@ import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
 import XIcon from './components/x-icon/XIcon.vue'
 import XInput from './components/x-input/XInput.vue'
+import XProvider from './components/x-provider/XProvider.vue'
 import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
@@ -22,8 +23,10 @@ declare module '@vue/runtime-core' {
     XInput: typeof XInput
     XAction: typeof XAction
     XActionGroup: typeof XActionGroup
+    XCard: typeof KCard
     XCopyButton: typeof XCopyButton
     XBreadcrumbs: typeof XBreadcrumbs
+    XProvider: typeof XProvider
     XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate
@@ -51,9 +54,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XAction', XAction],
           ['XActionGroup', XActionGroup],
           ['XBreadcrumbs', XBreadcrumbs],
+          ['XCard', KCard],
           ['XCopyButton', XCopyButton],
           ['XIcon', XIcon],
           ['XInput', XInput],
+          ['XProvider', XProvider],
           ['XSelect', XSelect],
           ['XTabs', XTabs],
           ['XTeleportTemplate', XTeleportTemplate],

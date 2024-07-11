@@ -11,26 +11,22 @@
       name: (props.items.length > 0) ? 'control-plane-detail-view-zone-actions' : 'zones-crud-x-empty-state-actions',
     }"
   >
-    <KButton
+    <XAction
+      type="create"
       appearance="primary"
       :to="{ name: 'zone-create-view' }"
     >
-      <AddIcon />
       {{ t('zones-crud.index.create') }}
-    </KButton>
+    </XAction>
   </XTeleportTemplate>
 </template>
 
 <script lang="ts" setup>
-
-import { AddIcon } from '@kong/icons'
-
 import { useI18n } from '@/app/application'
 import ZoneControlPlanesList from '@/app/zones/components/ZoneControlPlanesList.vue'
 import type { ZoneOverview } from '@/app/zones/data'
 
 const { t } = useI18n()
-
 const props = defineProps<{
   items?: ZoneOverview[]
 }>()
