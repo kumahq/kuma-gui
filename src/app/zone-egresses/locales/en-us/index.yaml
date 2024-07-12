@@ -1,4 +1,8 @@
 zone-egresses:
+  x-empty-state:
+    title: No Data
+    body: !!text/markdown |
+      There are no Zone Egresses present
   routes:
     item:
       title: '{name}'

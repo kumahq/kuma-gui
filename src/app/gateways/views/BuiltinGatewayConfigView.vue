@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
     name="builtin-gateway-config-view"
     :params="{
       mesh: '',
@@ -16,19 +16,14 @@
     />
     <AppView>
       <KCard>
-        <DataSource
-          v-slot="{ data, error }: MeshGatewaySource"
-          :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
+        <DataLoader
+          v-slot="{ data }"
+          :src="uri(sources, `/meshes/:mesh/mesh-gateways/:name`, {
+            mesh: route.params.mesh,
+            name: route.params.gateway,
+          })"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="data === undefined" />
-
           <ResourceCodeBlock
-            v-else
             v-slot="{ copy, copying }"
             data-testid="config"
             :resource="data.config"
@@ -42,7 +37,12 @@
           >
             <DataSource
               v-if="copying"
-              :src="`/meshes/${data.mesh}/mesh-gateways/${data.name}/as/kubernetes?no-store`"
+              :src="uri(sources, `/meshes/:mesh/mesh-gateways/:name/as/kubernetes`, {
+                mesh: route.params.mesh,
+                name: route.params.gateway,
+              }, {
+                cacheControl: 'no-store',
+              })"
               @change="(data) => {
                 copy((resolve) => resolve(data))
               }"
@@ -51,15 +51,13 @@
               }"
             />
           </ResourceCodeBlock>
-        </DataSource>
+        </DataLoader>
       </KCard>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { MeshGatewaySource } from '../sources'
+import { sources } from '../sources'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 </script>

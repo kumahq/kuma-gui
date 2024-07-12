@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
     name="data-plane-config-view"
     :params="{
       mesh: '',
@@ -16,19 +16,14 @@
     />
     <AppView>
       <KCard>
-        <DataSource
-          v-slot="{ data, error }: DataplaneSource"
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}`"
+        <DataLoader
+          v-slot="{ data }"
+          :src="uri(sources, `/meshes/:mesh/dataplanes/:name`, {
+            mesh: route.params.mesh,
+            name: route.params.dataPlane,
+          })"
         >
-          <ErrorBlock
-            v-if="error"
-            :error="error"
-          />
-
-          <LoadingBlock v-else-if="data === undefined" />
-
           <ResourceCodeBlock
-            v-else
             v-slot="{ copy, copying }"
             :resource="data.config"
             is-searchable
@@ -41,7 +36,12 @@
           >
             <DataSource
               v-if="copying"
-              :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/as/kubernetes?no-store`"
+              :src="uri(sources, `/meshes/:mesh/dataplanes/:name/as/kubernetes`, {
+                mesh: route.params.mesh,
+                name: route.params.dataPlane,
+              }, {
+                cacheControl: 'no-store',
+              })"
               @change="(data) => {
                 copy((resolve) => resolve(data))
               }"
@@ -50,15 +50,13 @@
               }"
             />
           </ResourceCodeBlock>
-        </DataSource>
+        </DataLoader>
       </KCard>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { DataplaneSource } from '../sources'
+import { sources } from '../sources'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 </script>
