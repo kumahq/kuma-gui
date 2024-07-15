@@ -9,7 +9,9 @@
         version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
       })"
     >
-      <AppView>
+      <AppView
+        :docs="t('zones.href.docs.cta')"
+      >
         <template
           v-if="props.data.warnings.length > 0"
           #notifications

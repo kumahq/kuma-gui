@@ -21,5 +21,7 @@ zone-ingresses:
     items:
       title: Ingresses
       breadcrumbs: Ingresses
+      intro: !!text/markdown |
+        A Zone Ingress is a specialized gateway that facilitates cross-zone communication by securely routing traffic between services in different zones.
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'

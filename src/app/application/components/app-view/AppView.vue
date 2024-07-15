@@ -25,7 +25,9 @@
         <template
           v-if="summary.length > 0"
         >
-          <XTeleportTemplate :to="{ name: summary }">
+          <XTeleportTemplate
+            :to="{ name: summary }"
+          >
             <slot name="title" />
           </XTeleportTemplate>
         </template>
@@ -38,8 +40,13 @@
         <div
           class="actions"
         >
-          <XTeleportSlot :name="`${routeView.name}-actions`" />
-          <slot name="actions" />
+          <XTeleportSlot
+            v-if="$slots.title"
+            name="app-view-docs"
+          />
+          <slot name="actions">
+            <XTeleportSlot :name="`${routeView.name}-actions`" />
+          </slot>
         </div>
       </header>
 
@@ -51,10 +58,22 @@
           <slot name="notifications" />
         </KAlert>
       </aside>
-
-      <slot />
+      <div class="stack">
+        <slot
+          name="default"
+        />
+      </div>
     </section>
   </div>
+  <XTeleportTemplate
+    v-if="props.docs.length > 0"
+    :to="{ name: 'app-view-docs' }"
+  >
+    <XAction
+      type="docs"
+      :href="props.docs"
+    />
+  </XTeleportTemplate>
 </template>
 
 <script lang="ts" setup>
@@ -78,9 +97,11 @@ provide('app-summary-view', '')
 const props = withDefaults(defineProps<{
   breadcrumbs?: BreadcrumbItem[] | null
   fullscreen?: boolean
+  docs?: string
 }>(), {
   breadcrumbs: null,
   fullscreen: false,
+  docs: '',
 })
 
 const map: Breadcrumbs = new Map()

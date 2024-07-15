@@ -1,7 +1,7 @@
 <template>
   <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
   <RouteView
-    v-slot="{ route, t, me, uri }"
+    v-slot="{ route, t, me, uri, can }"
     name="zone-egress-list-view"
     :params="{
       /* page: 1, */
@@ -11,10 +11,24 @@
     }"
   >
     <RouteTitle
+      v-if="can('use zones')"
       :render="false"
       :title="t('zone-egresses.routes.items.title')"
     />
-    <AppView>
+    <AppView
+      :docs="t('zone-ingresses.href.docs')"
+    >
+      <template
+        v-if="!can('use zones')"
+        #title
+      >
+        <h1>
+          <RouteTitle
+            :title="t('zone-egresses.routes.items.title')"
+          />
+        </h1>
+      </template>
+      <div v-html="t('zone-egresses.routes.items.intro', {}, { defaultMessage: '' })" />
       <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
       <KCard>
         <DataLoader

@@ -8,7 +8,9 @@
       mesh: '',
     }"
   >
-    <AppView>
+    <AppView
+      :docs="t('delegated-gateways.href.docs')"
+    >
       <KCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/service-insights/of/:serviceType`, {

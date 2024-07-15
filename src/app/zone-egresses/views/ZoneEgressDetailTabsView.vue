@@ -12,6 +12,7 @@
       :src="`/zone-egress-overviews/${route.params.zoneEgress}`"
     >
       <AppView
+        :docs="t('zone-ingresses.href.docs')"
         :breadcrumbs="[
           ...(can('use zones') ? [
             {
@@ -42,10 +43,11 @@
         ]"
       >
         <template
-          v-if="data"
           #title
         >
-          <h1>
+          <h1
+            v-if="data"
+          >
             <TextWithCopyButton :text="data.name">
               <RouteTitle
                 :title="t('zone-egresses.routes.item.title', { name: data.name })"

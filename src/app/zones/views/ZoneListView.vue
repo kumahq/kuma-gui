@@ -8,7 +8,9 @@
       zone: '',
     }"
   >
-    <AppView>
+    <AppView
+      :docs="t('zones.href.docs.cta')"
+    >
       <template #title>
         <h1>
           <RouteTitle
@@ -32,6 +34,7 @@
           :src="`/zone-egress-overviews?page=1&size=100`"
           @change="getEgresses"
         />
+        <div v-html="t('zone-cps.routes.items.intro', {}, { defaultMessage: '' })" />
         <KCard>
           <ErrorBlock
             v-if="error !== undefined"

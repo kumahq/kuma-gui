@@ -8,6 +8,7 @@
     }"
   >
     <AppView
+      :docs="t('delegated-gateways.href.docs')"
       :breadcrumbs="[
         {
           to: {

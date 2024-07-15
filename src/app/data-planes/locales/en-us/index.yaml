@@ -73,6 +73,8 @@ data-planes:
       matches_everything: 'Matches everything'
     items:
       title: Data Plane Proxies
+      intro: !!text/markdown |
+        Data Plane Proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
   href:
     docs:
       data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'

@@ -37,6 +37,8 @@ zone-cps:
     items:
       title: Zone Control Planes
       breadcrumbs: Zone Control Planes
+      intro: !!text/markdown |
+        Zones are a logical grouping that represents a distinct network or infrastructure boundary with a multi-zone deplyment. Zone Control Planes are responsible for managing and coordinating the service mesh within a specific zone, handling policies and communication with the Global Control Plane.
   list:
     ZONE_STORE_TYPE_MEMORY: 'Version mismatch'
     INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: 'Uses memory store'

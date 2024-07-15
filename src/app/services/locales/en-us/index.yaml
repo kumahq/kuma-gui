@@ -19,6 +19,8 @@ services:
       config: 'YAML'
     items:
       title: Services
+      intro: !!text/markdown |
+        A Service represents an application or microservice that is registered with the mesh and can be managed, monitored and secured through the mesh's policies.
       navigation:
         mesh-service-list-view: MeshService
         mesh-external-service-list-view: MeshExternalService
@@ -28,3 +30,12 @@ services:
     config: YAML
     data_plane_proxies: Data Plane Proxies
     no_matching_external_service: 'No matching ExternalService was found for service {name}'
+  href:
+    docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
+  mesh-service:
+    href:
+      docs: '{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}'
+  mesh-external-service:
+    href:
+      docs: '{KUMA_DOCS_URL}/networking/meshexternalservice/?{KUMA_UTM_QUERY_PARAMS}'
+

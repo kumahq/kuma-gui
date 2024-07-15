@@ -69,8 +69,8 @@
       data-testid="x-action"
       v-bind="$attrs"
       :href="props.href"
-      class="{
-        'type-docs': props.type === 'docs'
+      :class="{
+        'type-docs': props.type === 'docs',
       }"
       target="_blank"
       :rel="props.type !== 'docs' ? `noopener noreferrer` : ``"
@@ -80,6 +80,7 @@
       >
         <XIcon
           name="docs"
+          :size="KUI_ICON_SIZE_40"
         />
         <slot
           name="default"
@@ -143,6 +144,7 @@
   </template>
 </template>
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 import { KDropdownItem, ButtonAppearance } from '@kong/kongponents'
 import { computed, watch, inject } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
@@ -218,6 +220,11 @@ button.appearance-anchor {
 button.appearance-anchor:hover,
 button.appearance-anchor:focus {
   text-decoration: underline
+}
+.type-docs {
+  display: flex;
+  align-items: center;
+  gap: $kui-space-20;
 }
 
 </style>

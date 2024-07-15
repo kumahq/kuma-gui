@@ -8,6 +8,7 @@
     }"
   >
     <AppView
+      :docs="t('external-services.href.docs')"
       :breadcrumbs="[
         {
           to: {

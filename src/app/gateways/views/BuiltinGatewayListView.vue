@@ -9,7 +9,9 @@
       gateway: '',
     }"
   >
-    <AppView>
+    <AppView
+      :docs="t('builtin-gateways.href.docs')"
+    >
       <KCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/mesh-gateways`, {

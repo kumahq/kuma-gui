@@ -8,7 +8,9 @@
       mesh: '',
     }"
   >
-    <AppView>
+    <AppView
+      :docs="t('meshes.href.docs')"
+    >
       <template #title>
         <h1>
           <RouteTitle
@@ -18,6 +20,7 @@
       </template>
 
       <div class="stack">
+        <div v-html="t('meshes.routes.items.intro', {}, { defaultMessage: '' })" />
         <KCard>
           <DataLoader
             v-slot="{ data, error }: MeshInsightCollectionSource"
