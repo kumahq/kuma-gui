@@ -364,7 +364,7 @@
 </template>
 <script lang="ts" setup>
 import { useOnboardingIcon } from '../../'
-import { useI18n } from '@/utilities'
+import { useI18n } from '@/app/application'
 const { t } = useI18n()
 const OnboardingIcon = useOnboardingIcon()
 </script>

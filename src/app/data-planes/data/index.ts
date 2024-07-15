@@ -20,7 +20,6 @@ import type {
   PolicyTypeEntryConnection,
   SidecarDataplane as PartialSidecarDataplane,
 } from '@/types/index.d'
-import { isSet } from '@/utilities/isSet'
 
 type Connection = {
   name: string
@@ -138,7 +137,7 @@ const DataplaneNetworking = {
             name: `localhost_${port}`,
             listenerAddress: `${address}_${port}`,
             // If a health property is unset the inbound is considered healthy
-            health: { ready: !isSet(item.health) ? true : item.health.ready },
+            health: { ready: typeof item.health?.ready !== 'boolean' ? true : item.health.ready },
             service: item.tags['kuma.io/service'],
             protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
             address,
@@ -308,7 +307,7 @@ function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
 }
 
 function getWarnings({ version }: DataplaneInsight, tags: LabelValue[], canUseZones: boolean): DataplaneWarning[] {
-  if (!isSet(version)) {
+  if (typeof version === 'undefined') {
     return []
   }
 
@@ -464,7 +463,7 @@ export function getDataplaneStatusCounts({ total = 0, online = 0, partiallyDegra
 }
 
 function getStatus({ gateway, inbounds }: DataplaneNetworking, connectedSubscription: DiscoverySubscription | undefined): 'online' | 'offline' | 'partially_degraded' {
-  const state = isSet(connectedSubscription) ? 'online' : 'offline'
+  const state = typeof connectedSubscription !== 'undefined' ? 'online' : 'offline'
 
   if (gateway) {
     return state

@@ -20,9 +20,9 @@
 <script lang="ts" setup>
 import { KTooltip } from '@kong/kongponents'
 
+import { useI18n } from '@/app/application'
 import AnonymousComponent from '@/app/application/components/anonymous-component/AnonymousComponent.vue'
 import { StatusKeyword } from '@/types/index.d'
-import { useI18n } from '@/utilities'
 import type { BadgeAppearance } from '@kong/kongponents'
 
 const { t } = useI18n()

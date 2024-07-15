@@ -56,8 +56,8 @@
 
 <script lang="ts" setup>
 import type { Policy } from '../data'
+import { useI18n } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 

@@ -28,7 +28,6 @@
 import { computed } from 'vue'
 
 import type { LabelValue, Tags } from '@/types/index.d'
-import { getLabels } from '@/utilities/getLabels'
 import type { RouteLocationNamedRaw } from 'vue-router'
 
 interface LabelValueWithRoute extends LabelValue {
@@ -46,7 +45,7 @@ const props = withDefaults(defineProps<{
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
-  const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
+  const labels = Array.isArray(props.tags) ? props.tags : Object.entries(props.tags ?? {}).map(([label, value]) => ({ label, value }))
 
   return labels.map((tag) => {
     const { label, value } = tag

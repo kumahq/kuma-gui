@@ -53,8 +53,8 @@ import { PortalIcon } from '@kong/icons'
 import { KAlert } from '@kong/kongponents'
 import { PropType, computed } from 'vue'
 
+import { useI18n } from '@/app/application'
 import type { DiscoveryServiceStats, DiscoverySubscription, KDSSubscription } from '@/types/index.d'
-import { useI18n } from '@/utilities'
 
 const { t } = useI18n()
 
