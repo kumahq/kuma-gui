@@ -3,7 +3,7 @@ import type Env from '@/app/application/services/env/Env'
 
 export class Api {
   constructor(
-    protected client: RestClient,
+    public client: RestClient,
     protected env: Env['var'],
   ) { }
 

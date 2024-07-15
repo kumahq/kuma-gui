@@ -145,7 +145,7 @@
 <script lang="ts" setup>
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import { MeshExternalService } from '@/app/services/data'
+import type { MeshExternalService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshExternalService[]
 }>()

@@ -36,7 +36,7 @@
                 if (expanded) {
                   toggle()
                 }
-                cb((text: Entity) => copy(toYamlRepresentation(text)), (e: unknown) => console.error(e))
+                cb((text: Object) => copy(toYamlRepresentation(text)), (e: unknown) => console.error(e))
               }"
               :copying="expanded"
             />
@@ -51,17 +51,16 @@
 import { computed } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import type { Entity } from '@/types/index.d'
 import { useI18n } from '@/utilities'
 import { toYaml } from '@/utilities/toYaml'
 
-type Resolve = (data: Entity) => void
+type Resolve = (data: Object) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
 
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  resource: Entity
+  resource: Object
   codeMaxHeight?: string
   isSearchable?: boolean
   query?: string
@@ -82,8 +81,13 @@ const emit = defineEmits<{
 }>()
 
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
-function toYamlRepresentation(resource: Entity): string {
-  const { creationTime, modificationTime, ...resourceWithoutTimes } = resource
-  return toYaml(resourceWithoutTimes)
+function toYamlRepresentation(resource: Object): string {
+  if ('creationTime' in resource) {
+    delete resource.creationTime
+  }
+  if ('modificationTime' in resource) {
+    delete resource.modificationTime
+  }
+  return toYaml(resource)
 }
 </script>
