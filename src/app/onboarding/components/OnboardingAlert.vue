@@ -1,42 +1,49 @@
 <template>
-  <KAlert
-    v-if="isShowingOnboardingAlert"
-    appearance="success"
-    dismissible
-    data-testid="onboarding-notification"
-    @dismiss="closeAlert"
+  <DataSource
+    v-slot="{ data, refresh }"
+    :src="`/me/-onboarding-alert`"
   >
-    <div class="onboarding-alert-content">
-      <div
-        v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })"
-      />
-
-      <KButton
-        appearance="primary"
-        size="small"
-        class="action-button"
-        :to="{ name: 'onboarding-welcome-view' }"
+    <DataSink
+      v-slot="{ submit }"
+      :src="`/me/-onboarding-alert`"
+    >
+      <KAlert
+        v-if="data?.closed !== true"
+        appearance="success"
+        dismissible
+        data-testid="onboarding-notification"
+        @dismiss="async () => {
+          submit({
+            closed: true,
+          })
+          await nextTick()
+          refresh()
+        }"
       >
-        {{ t('main-overview.detail.onboarding.get_started_link') }}
-      </KButton>
-    </div>
-  </KAlert>
+        <div class="onboarding-alert-content">
+          <div
+            v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })"
+          />
+
+          <KButton
+            appearance="primary"
+            size="small"
+            class="action-button"
+            :to="{ name: 'onboarding-welcome-view' }"
+          >
+            {{ t('main-overview.detail.onboarding.get_started_link') }}
+          </KButton>
+        </div>
+      </KAlert>
+    </DataSink>
+  </DataSource>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { nextTick } from 'vue'
 
 import { useI18n } from '@/utilities'
-import { ClientStorage } from '@/utilities/ClientStorage'
-
 const { t } = useI18n()
-
-const isShowingOnboardingAlert = ref(ClientStorage.get('hasDismissedOnboardingAlert') !== 'true')
-
-function closeAlert() {
-  isShowingOnboardingAlert.value = false
-  ClientStorage.set('hasDismissedOnboardingAlert', 'true')
-}
 </script>
 
 <style lang="scss" scoped>
