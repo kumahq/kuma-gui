@@ -43,6 +43,7 @@ import {
   CogIcon,
   AddIcon,
   HelpIcon,
+  RefreshIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
@@ -71,6 +72,7 @@ const icons = {
   settings: CogIcon,
   help: HelpIcon,
   create: AddIcon,
+  refresh: RefreshIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

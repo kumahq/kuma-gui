@@ -115,10 +115,10 @@
       @click="emit('click')"
     >
       <template
-        v-if="['create'].includes(props.type)"
+        v-if="['create', 'refresh'].includes(props.type)"
       >
         <XIcon
-          :name="props.type as 'create'"
+          :name="props.type as ('create' | 'refresh')"
         />
       </template>
       <slot name="default" />
@@ -158,7 +158,7 @@ const emit = defineEmits<{
   (event: 'click'): Event
 }>()
 const props = withDefaults(defineProps<{
-  type?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand'
+  type?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh'
   appearance?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'anchor'
   size?: 'small' | 'medium' | 'large'
   href?: string
