@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="data-plane-stats-view"
     :params="{
       mesh: '',
@@ -9,6 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t }"
   >
     <RouteTitle
       :render="false"
@@ -17,8 +17,8 @@
     <AppView>
       <KCard>
         <DataLoader
-          v-slot="{ data: statsData, refresh }: StatsSource"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
+          v-slot="{ data: statsData, refresh }: StatsSource"
         >
           <CodeBlock
             language="json"

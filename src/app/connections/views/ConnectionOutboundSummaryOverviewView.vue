@@ -1,12 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ t, route }"
     :params="{
       mesh: '',
       dataPlane: '',
       connection: '',
     }"
     name="connection-outbound-summary-overview-view"
+    v-slot="{ t, route }"
   >
     <AppView>
       <template
@@ -35,11 +35,10 @@
           >
             <h3>Rules</h3>
             <DataLoader
-              v-slot="{ data: rulesData }: RuleCollectionSource"
               :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
+              v-slot="{ data: rulesData }: RuleCollectionSource"
             >
               <DataCollection
-                v-slot="{ items }"
                 :predicate="(item) => {
                   // for to rules we don't have inbound.port, filter out Routes
                   // then look for the kuma.io/service
@@ -47,8 +46,9 @@
                     item.matchers.every(item => item.key === 'kuma.io/service' && (item.not ? item.value !== service : item.value === service))
                   )
                 }"
-
                 :items="rulesData!.rules"
+
+                v-slot="{ items }"
               >
                 <div class="mt-4">
                   <AccordionList
@@ -99,8 +99,8 @@
 
                                   <template #body>
                                     <DataSource
-                                      v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
                                       :src="`/policy-types`"
+                                      v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
                                     >
                                       <template
                                         v-for="types in [Object.groupBy((policyTypes?.policies ?? []), (item) => item.name)]"

@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="data-plane-config-view"
     :params="{
       mesh: '',
@@ -9,6 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -17,14 +17,13 @@
     <AppView>
       <KCard>
         <DataLoader
-          v-slot="{ data }"
           :src="uri(sources, `/meshes/:mesh/dataplanes/:name`, {
             mesh: route.params.mesh,
             name: route.params.dataPlane,
           })"
+          v-slot="{ data }"
         >
           <ResourceCodeBlock
-            v-slot="{ copy, copying }"
             :resource="data.config"
             is-searchable
             :query="route.params.codeSearch"
@@ -33,6 +32,7 @@
             @query-change="route.update({ codeSearch: $event })"
             @filter-mode-change="route.update({ codeFilter: $event })"
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+            v-slot="{ copy, copying }"
           >
             <DataSource
               v-if="copying"

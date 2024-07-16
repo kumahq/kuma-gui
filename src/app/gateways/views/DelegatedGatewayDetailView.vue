@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t, me }"
     name="delegated-gateway-detail-view"
     :params="{
       mesh: '',
@@ -10,12 +9,13 @@
       s: '',
       dataPlane: '',
     }"
+    v-slot="{ can, route, t, me }"
   >
     <AppView>
       <div class="stack">
         <DataLoader
-          v-slot="{ data }: ServiceInsightSource"
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
+          v-slot="{ data }: ServiceInsightSource"
         >
           <KCard v-if="data">
             <div class="columns">
@@ -63,9 +63,9 @@
 
           <KCard class="mt-4">
             <DataLoader
-              v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
               :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
               :loader="false"
+              v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
             >
               <AppCollection
                 class="data-plane-collection"

@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route }"
     :params="{
       codeSearch: '',
       codeFilter: false,
@@ -10,6 +9,7 @@
       connection: '',
     }"
     name="connection-outbound-summary-clusters-view"
+    v-slot="{ route }"
   >
     <RouteTitle
       :render="false"
@@ -17,13 +17,13 @@
     />
     <AppView>
       <DataLoader
-        v-slot="{ data, refresh }: ClustersDataSource"
         :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
+        v-slot="{ data, refresh }: ClustersDataSource"
       >
         <DataCollection
-          v-slot="{ items: lines }"
           :items="data!.split('\n')"
           :predicate="item => item.startsWith(`${route.params.connection}::`)"
+          v-slot="{ items: lines }"
         >
           <CodeBlock
             language="json"

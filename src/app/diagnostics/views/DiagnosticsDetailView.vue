@@ -1,12 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="diagnostics"
     :params="{
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t, uri }"
   >
     <AppView
       :breadcrumbs="[
@@ -28,8 +28,8 @@
 
       <KCard>
         <DataLoader
-          v-slot="{ data }"
           :src="uri(sources, `/config`, {})"
+          v-slot="{ data }"
         >
           <CodeBlock
             data-testid="code-block-diagnostics"

@@ -1,16 +1,16 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     :params="{
       mesh: '',
       dataPlane: '',
       inactive: false,
     }"
     name="data-plane-detail-view"
+    v-slot="{ route, t }"
   >
     <DataSource
-      v-slot="{ data: traffic, error, refresh }: StatsSource"
       :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
+      v-slot="{ data: traffic, error, refresh }: StatsSource"
     >
       <AppView>
         <template
@@ -49,10 +49,10 @@
                     <StatusBadge :status="props.data.status" />
                     <DataCollection
                       v-if="props.data.dataplaneType === 'standard'"
-                      v-slot="{ items : unhealthyInbounds }"
                       :items="props.data.dataplane.networking.inbounds"
                       :predicate="item => !item.health.ready"
                       :empty="false"
+                      v-slot="{ items : unhealthyInbounds }"
                     >
                       <KTooltip
                         class="reason-tooltip"
@@ -292,9 +292,9 @@
                         </ConnectionCard>
                       </ConnectionGroup>
                       <DataCollection
-                        v-slot="{ items: outbounds }"
                         :predicate="route.params.inactive ? undefined : ([key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
                         :items="Object.entries<any>(traffic.outbounds)"
+                        v-slot="{ items: outbounds }"
                       >
                         <ConnectionGroup
                           v-if="outbounds.length > 0"

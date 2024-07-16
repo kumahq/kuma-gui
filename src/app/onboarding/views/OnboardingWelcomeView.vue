@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ env, t, can }"
     name="onboarding-welcome-view"
+    v-slot="{ env, t, can }"
   >
     <RouteTitle
       :title="t('onboarding.routes.welcome.title', {name: t('common.product.name')})"

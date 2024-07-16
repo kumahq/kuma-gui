@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ t }"
     name="mesh-index-view"
+    v-slot="{ t }"
   >
     <AppView
       :breadcrumbs="[

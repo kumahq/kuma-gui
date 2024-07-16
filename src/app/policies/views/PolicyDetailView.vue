@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri, can, me }"
     name="policy-detail-view"
     :params="{
       page: 1,
@@ -11,6 +10,7 @@
       policyPath: '',
       dataPlane: '',
     }"
+    v-slot="{ route, t, uri, can, me }"
   >
     <AppView>
       <KCard>

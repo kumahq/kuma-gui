@@ -1,27 +1,27 @@
 <template>
   <RouteView
-    v-slot="{ route }"
     name="builtin-gateway-detail-view"
     :params="{
       mesh: '',
       gateway: '',
       listener: '0',
     }"
+    v-slot="{ route }"
   >
     <AppView>
       <DataSource
-        v-slot="{ data: meshGateway, error: meshGatewayError }: MeshGatewaySource"
         :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
+        v-slot="{ data: meshGateway, error: meshGatewayError }: MeshGatewaySource"
       >
         <DataSource
-          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
           :src="`/policy-types`"
+          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
         >
           <DataLoader
-            v-slot="{ data: rulesData }: GatewayRulesSource"
             :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}/rules`"
             :data="[meshGateway, policyTypesData]"
             :errors="[meshGatewayError, policyTypesError]"
+            v-slot="{ data: rulesData }: GatewayRulesSource"
           >
             <template v-if="meshGateway && rulesData && policyTypesData">
               <ListenerRoutes

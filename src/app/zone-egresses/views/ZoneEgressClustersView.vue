@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="zone-egress-clusters-view"
     :params="{
       zoneEgress: '',
@@ -8,6 +7,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t }"
   >
     <RouteTitle
       :render="false"
@@ -16,8 +16,8 @@
     <AppView>
       <KCard>
         <DataLoader
-          v-slot="{ data, refresh }"
           :src="`/zone-egresses/${route.params.zoneEgress}/data-path/clusters`"
+          v-slot="{ data, refresh }"
         >
           <CodeBlock
             language="json"

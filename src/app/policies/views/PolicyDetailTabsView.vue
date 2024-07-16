@@ -1,20 +1,20 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="policy-detail-tabs-view"
     :params="{
       mesh: '',
       policy: '',
       policyPath: '',
     }"
+    v-slot="{ route, t, uri }"
   >
     <DataSource
-      v-slot="{ data, error }"
       :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name', {
         mesh: route.params.mesh,
         path: route.params.policyPath,
         name: route.params.policy,
       })"
+      v-slot="{ data, error }"
     >
       <AppView
         :breadcrumbs="[

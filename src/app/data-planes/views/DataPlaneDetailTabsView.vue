@@ -1,15 +1,15 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="data-plane-detail-tabs-view"
     :params="{
       mesh: '',
       dataPlane: '',
     }"
+    v-slot="{ route, t }"
   >
     <DataSource
-      v-slot="{ data, error }: DataplaneOverviewSource"
       :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
+      v-slot="{ data, error }: DataplaneOverviewSource"
     >
       <AppView
         :breadcrumbs="[

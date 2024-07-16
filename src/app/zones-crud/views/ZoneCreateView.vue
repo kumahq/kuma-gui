@@ -1,14 +1,14 @@
 <template>
   <RouteView
-    v-slot="{ route, id, uri, t }"
     name="zone-create-view"
     :attrs="{
       class: 'is-fullscreen',
     }"
+    v-slot="{ route, id, uri, t }"
   >
     <DataSink
-      v-slot="{ submit, payload, data: zone, error, writing }"
       :src="`/zone-cps/~/create`"
+      v-slot="{ submit, payload, data: zone, error, writing }"
     >
       <AppView
         :fullscreen="true"
@@ -150,12 +150,12 @@
                       v-slot="{ expanded, toggle }"
                     >
                       <DataSource
-                        v-slot="{ error: validateError }"
                         :src="expanded ? uri(sources, `/zone-cps/:name/validate`, {
                           name,
                         }) : ''"
                         @change="toggle"
                         @error="toggle"
+                        v-slot="{ error: validateError }"
                       >
                         <template
                           v-for="invalid in [
@@ -300,8 +300,8 @@
 
                   <div class="form-section__content">
                     <DataSource
-                      v-slot="{ data }"
                       :src="uri(cpSources, '/control-plane/addresses', {})"
+                      v-slot="{ data }"
                     >
                       <template
                         v-if="(typeof data !== 'undefined')"
@@ -329,13 +329,13 @@
 
                 <div class="form-section">
                   <DataSource
-                    v-slot="{ data, error: scanError }"
                     :src="uri(sources, '/zone-cps/online/:name', {
                       name,
                     }, {
                       cacheControl: 'no-cache',
                     })"
                     @change="success"
+                    v-slot="{ data, error: scanError }"
                   >
                     <div class="form-section__header">
                       <h2 class="form-section-title">

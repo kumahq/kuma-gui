@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="data-plane-clusters-view"
     :params="{
       mesh: '',
@@ -9,6 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t }"
   >
     <AppView>
       <RouteTitle
@@ -17,8 +17,8 @@
       />
       <KCard>
         <DataLoader
-          v-slot="{ data, refresh }"
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
+          v-slot="{ data, refresh }"
         >
           <CodeBlock
             language="json"

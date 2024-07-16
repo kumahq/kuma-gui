@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="service-list-tabs-view"
     :params="{
       mesh: '',
     }"
+    v-slot="{ route, t }"
   >
     <div class="stack">
       <div v-html="t('services.routes.items.intro', {}, { defaultMessage: '' })" />

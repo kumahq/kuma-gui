@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ t, route }"
     name="data-plane-summary-view"
     :params="{
       dataPlane: '',
     }"
+    v-slot="{ t, route }"
   >
     <DataCollection
       :items="props.items"
@@ -69,10 +69,10 @@
                       />
                       <DataCollection
                         v-if="item.dataplaneType === 'standard'"
-                        v-slot="{ items : inbounds }"
                         :items="item.dataplane.networking.inbounds"
                         :predicate="item => !item.health.ready"
                         :empty="false"
+                        v-slot="{ items : inbounds }"
                       >
                         <KTooltip
                           class="reason-tooltip"
@@ -180,8 +180,8 @@
 
               <DataCollection
                 v-if="item.dataplaneType === 'standard'"
-                v-slot="{ items : inbounds }"
                 :items="item.dataplane.networking.inbounds"
+                v-slot="{ items : inbounds }"
               >
                 <div>
                   <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>

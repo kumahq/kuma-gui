@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="zone-ingress-xds-config-view"
     :params="{
       zoneIngress: '',
@@ -8,6 +7,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t }"
   >
     <RouteTitle
       :render="false"
@@ -16,8 +16,8 @@
     <AppView>
       <KCard>
         <DataLoader
-          v-slot="{ data, refresh }"
           :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/xds`"
+          v-slot="{ data, refresh }"
         >
           <CodeBlock
             language="json"

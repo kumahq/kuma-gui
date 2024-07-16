@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="policy-summary-view"
     :params="{
       mesh: '',
@@ -10,6 +9,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t }"
   >
     <DataCollection
       :items="props.items"
@@ -56,7 +56,6 @@
               :policy="item"
             >
               <ResourceCodeBlock
-                v-slot="{ copy, copying }"
                 :resource="item.config"
                 is-searchable
                 :query="route.params.codeSearch"
@@ -65,6 +64,7 @@
                 @query-change="route.update({ codeSearch: $event })"
                 @filter-mode-change="route.update({ codeFilter: $event })"
                 @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                v-slot="{ copy, copying }"
               >
                 <DataSource
                   v-if="copying"

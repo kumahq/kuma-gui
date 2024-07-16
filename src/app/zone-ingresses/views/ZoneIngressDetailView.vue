@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ t }"
     name="zone-ingress-detail-view"
+    v-slot="{ t }"
   >
     <AppView>
       <div

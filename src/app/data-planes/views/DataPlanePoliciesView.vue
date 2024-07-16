@@ -1,11 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t }"
     name="data-plane-policies-view"
     :params="{
       mesh: '',
       dataPlane: '',
     }"
+    v-slot="{ can, route, t }"
   >
     <RouteTitle
       :render="false"
@@ -16,8 +16,8 @@
         <!-- we load in policyTypes for everything so we can use `path` for links/URLs/API requests -->
         <!-- we ask for the policyTypes here and always share the errors/data with all the DataLoaders below -->
         <DataSource
-          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
           :src="`/policy-types`"
+          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
         >
           <template
             v-for="policyTypes in [(policyTypesData?.policies ?? []).reduce<Partial<Record<string, PolicyType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
@@ -25,10 +25,10 @@
           >
             <!-- always try and load and show the rules for everything dataplane type -->
             <DataLoader
-              v-slot="{ data: rulesData }: RuleCollectionSource"
               :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
               :data="[policyTypesData]"
               :errors="[policyTypesError]"
+              v-slot="{ data: rulesData }: RuleCollectionSource"
             >
               <!-- show an empty state if we have no rules at all -->
               <DataCollection
@@ -40,11 +40,11 @@
                   :key="ruleType"
                 >
                   <DataCollection
-                    v-slot="{ items }"
                     :items="rulesData!.rules"
                     :predicate="(item) => item.ruleType === ruleType"
                     :comparator="(a, b) => a.type.localeCompare(b.type)"
                     :empty="false"
+                    v-slot="{ items }"
                   >
                     <KCard>
                       <h3>
@@ -63,11 +63,11 @@
 
                 <!-- otherwise, for from rules, group by inbound port and display if we have any -->
                 <DataCollection
-                  v-slot="{ items }"
                   :items="rulesData!.rules"
                   :predicate="(item) => item.ruleType === 'from'"
                   :comparator="(a, b) => a.type.localeCompare(b.type)"
                   :empty="false"
+                  v-slot="{ items }"
                 >
                   <KCard>
                     <h3 class="mb-2">
@@ -102,10 +102,10 @@
                 <!-- builtin gateways have different data/visuals than other types of dataplanes -->
                 <template v-if="props.data.dataplaneType === 'builtin'">
                   <DataLoader
-                    v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
                     :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies`"
                     :data="[policyTypesData]"
                     :errors="[policyTypesError]"
+                    v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
                   >
                     <DataCollection
                       v-if="gatewayDataplane"
@@ -131,16 +131,16 @@
                 <!-- anything but builtin gateways -->
                 <template v-else>
                   <DataLoader
-                    v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                     :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
                     :data="[policyTypesData]"
                     :errors="[policyTypesError]"
+                    v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                   >
                     <DataCollection
-                      v-slot="{ items }"
                       :predicate="(item) => policyTypes[item.type]?.isTargetRefBased === false"
                       :items="sidecarDataplaneData!.policyTypeEntries"
                       :empty="false"
+                      v-slot="{ items }"
                     >
                       <h3>
                         {{ t('data-planes.routes.item.legacy_policies') }}

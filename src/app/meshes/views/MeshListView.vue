@@ -1,12 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ route, t, me }"
     name="mesh-list-view"
     :params="{
       page: 1,
       size: 50,
       mesh: '',
     }"
+    v-slot="{ route, t, me }"
   >
     <AppView
       :docs="t('meshes.href.docs')"
@@ -23,9 +23,9 @@
         <div v-html="t('meshes.routes.items.intro', {}, { defaultMessage: '' })" />
         <KCard>
           <DataLoader
-            v-slot="{ data, error }: MeshInsightCollectionSource"
             :src="`/mesh-insights?page=${route.params.page}&size=${route.params.size}`"
             :loader="false"
+            v-slot="{ data, error }: MeshInsightCollectionSource"
           >
             <AppCollection
               class="mesh-collection"

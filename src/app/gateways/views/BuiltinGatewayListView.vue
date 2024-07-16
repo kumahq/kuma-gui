@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, can, me, uri }"
     name="builtin-gateway-list-view"
     :params="{
       page: 1,
@@ -8,6 +7,7 @@
       mesh: '',
       gateway: '',
     }"
+    v-slot="{ route, t, can, me, uri }"
   >
     <AppView
       :docs="t('builtin-gateways.href.docs')"

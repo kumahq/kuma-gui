@@ -1,7 +1,6 @@
 <template>
   <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
   <RouteView
-    v-slot="{ route, t, me, uri, can }"
     name="zone-egress-list-view"
     :params="{
       /* page: 1, */
@@ -9,6 +8,7 @@
       zone: '',
       zoneEgress: '',
     }"
+    v-slot="{ route, t, me, uri, can }"
   >
     <RouteTitle
       v-if="can('use zones')"

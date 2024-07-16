@@ -26,8 +26,8 @@
 
           <div class="upgrade-check-wrapper">
             <DataSource
-              v-slot="{ data }"
               :src="`/control-plane/version/latest`"
+              v-slot="{ data }"
             >
               <!-- make sure we have data but don't show errors or loaders -->
               <KAlert

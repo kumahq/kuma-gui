@@ -1,13 +1,13 @@
 <template>
   <RouteView
-    v-slot="{ t, uri }"
     name="zone-cp-detail-view"
+    v-slot="{ t, uri }"
   >
     <DataSource
-      v-slot="{ data: version }"
       :src="uri(sources, '/control-plane/outdated/:version', {
         version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
       })"
+      v-slot="{ data: version }"
     >
       <AppView
         :docs="t('zones.href.docs.cta')"
