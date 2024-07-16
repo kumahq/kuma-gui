@@ -1,14 +1,14 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t }"
     name="zone-cp-detail-tabs-view"
     :params="{
       zone: '',
     }"
+    v-slot="{ can, route, t }"
   >
     <DataLoader
-      v-slot="{ data }: ZoneOverviewSource"
       :src="`/zone-cps/${route.params.zone}`"
+      v-slot="{ data }: ZoneOverviewSource"
     >
       <AppView
         v-if="data"
@@ -61,9 +61,9 @@
               >
                 <DataSink
                   v-if="expanded"
-                  v-slot="{ submit, error }"
                   :src="`/zone-cps/${data.name}/delete`"
                   @change="() => route.replace({ name: 'zone-cp-list-view' })"
+                  v-slot="{ submit, error }"
                 >
                   <XPrompt
                     :action="t('common.delete_modal.proceed_button')"

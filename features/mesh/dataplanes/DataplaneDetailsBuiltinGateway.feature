@@ -1,4 +1,5 @@
 Feature: Dataplane details for built-in gateway
+
   Background:
     Given the CSS selectors
       | Alias             | Selector                                                           |
@@ -46,15 +47,13 @@ Feature: Dataplane details for built-in gateway
                 envoy:
                   kumaDpCompatible: true
       """
-
     When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
-
     Then the page title contains "dataplane-gateway_builtin-1"
     And the "$detail-view" element contains "dataplane-gateway_builtin-1"
     And the "$details" element contains
       | Value                 |
       | online                |
-      | 193.107.134.106       |
+      |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$warnings" element doesn't exist
@@ -82,13 +81,9 @@ Feature: Dataplane details for built-in gateway
           TrafficTrace:
             name: traffic-trace-1
       """
-
     When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
-
     Then the "$policies-view" element contains "traffic-log-1"
     And the "$policies-view" element contains "traffic-trace-1"
-
     When I click the "$route-item-button" element
-
     Then the "$policies-view" element contains "circuit-breaker-1"
     And the "$policies-view" element contains "demo-app_kuma-demo_svc_5000"

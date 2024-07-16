@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, can, uri, me }"
     name="policy-list-view"
     :params="{
       page: 1,
@@ -10,6 +9,7 @@
       policy: '',
       s: '',
     }"
+    v-slot="{ route, t, can, uri, me }"
   >
     <DataCollection
       :predicate="(policyType) => typeof policyType !== 'undefined' && policyType.path === route.params.policyPath"

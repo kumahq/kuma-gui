@@ -1,11 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="service-detail-tabs-view"
     :params="{
       mesh: '',
       service: '',
     }"
+    v-slot="{ route, t }"
   >
     <AppView
       :docs="t('services.href.docs')"

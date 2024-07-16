@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ t }"
     name="onboarding-multi-zone-view"
+    v-slot="{ t }"
   >
     <RouteTitle
       :title="t('onboarding.routes.multizone.title')"
@@ -9,12 +9,12 @@
     />
     <AppView>
       <DataSource
-        v-slot="{ data, error }: ZoneOverviewCollectionSource"
         :src="`/zone-cps/~online?page=1&size=10`"
+        v-slot="{ data, error }: ZoneOverviewCollectionSource"
       >
         <DataSource
-          v-slot="{ data: ingresses, error: ingressesError }: ZoneIngressOverviewCollectionSource"
           :src="`/zone-ingress-overviews/~online?page=1&size=10`"
+          v-slot="{ data: ingresses, error: ingressesError }: ZoneIngressOverviewCollectionSource"
         >
           <OnboardingPage>
             <template #header>

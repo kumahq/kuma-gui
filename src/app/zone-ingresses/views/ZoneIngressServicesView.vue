@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ t }"
     name="zone-ingress-services-view"
+    v-slot="{ t }"
   >
     <RouteTitle
       :render="false"

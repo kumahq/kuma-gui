@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ t }"
     name="onboarding-dataplanes-view"
+    v-slot="{ t }"
   >
     <RouteTitle
       :title="t('onboarding.routes.dataplanes-overview.title')"
@@ -9,8 +9,8 @@
     />
     <AppView>
       <DataSource
-        v-slot="{ data, error }: DataplaneOverviewCollectionSource"
         :src="`/dataplanes/poll?page=1&size=10`"
+        v-slot="{ data, error }: DataplaneOverviewCollectionSource"
       >
         <template
           v-for="offline in [(data?.items ?? []).some(item => item.status !== 'online')]"

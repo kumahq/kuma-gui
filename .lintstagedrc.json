@@ -1,5 +1,5 @@
 {
-  "*.{js,ts,vue}": "make lint/js",
+  "*.{js,ts,vue}": "make -j2 lint/script",
   "*.{css,scss,vue}": "make lint/css",
   "package-lock.json": "make lint/lock"
 }

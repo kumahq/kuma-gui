@@ -93,6 +93,23 @@ const INLINE_NON_VOID_ELEMENTS = [
     {
       files: ['*.vue'],
       rules: {
+        'vue/attributes-order': ['error', {
+          order: [
+            'DEFINITION',
+            'LIST_RENDERING',
+            'CONDITIONALS',
+            'RENDER_MODIFIERS',
+            'GLOBAL',
+            'UNIQUE',
+            'TWO_WAY_BINDING',
+            'OTHER_DIRECTIVES',
+            'OTHER_ATTR',
+            'EVENTS',
+            'SLOT',
+            'CONTENT',
+          ],
+          alphabetical: false,
+        }],
         'vue/singleline-html-element-content-newline': ['error', {
           ignoreWhenNoAttributes: true,
           ignoreWhenEmpty: true,

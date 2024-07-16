@@ -1,11 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="connection-outbound-summary-view"
     :params="{
       connection: '',
       inactive: false,
     }"
+    v-slot="{ route, t }"
   >
     <AppView>
       <template #title>
@@ -35,10 +35,10 @@
       </XTabs>
       <RouterView v-slot="{ Component }">
         <DataCollection
-          v-slot="{ items }"
           :items="Object.entries(props.data)"
           :predicate="([key, _value]) => key === route.params.connection"
           :find="true"
+          v-slot="{ items }"
         >
           <component
             :is="Component"

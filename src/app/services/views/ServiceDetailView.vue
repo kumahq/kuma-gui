@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t, me, uri }"
     name="service-detail-view"
     :params="{
       mesh: '',
@@ -13,6 +12,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ can, route, t, me, uri }"
   >
     <AppView>
       <div
@@ -20,11 +20,11 @@
       >
         <KCard>
           <DataLoader
-            v-slot="{ data }"
             :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
               mesh: route.params.mesh,
               name: route.params.service,
             })"
+            v-slot="{ data }"
           >
             <div class="columns">
               <DefinitionCard>

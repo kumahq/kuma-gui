@@ -1,4 +1,5 @@
 Feature: mesh / dataplanes / index
+
   Background:
     Given the CSS selectors
       | Alias            | Selector                              |
@@ -46,12 +47,10 @@ Feature: mesh / dataplanes / index
 
   Scenario: The Proxy listing table has the correct columns
     When I visit the "/meshes/default/data-planes" URL
-
     Then the "$table-header" element exists 9 times
 
   Scenario: The Proxy listing has the expected content and UI elements
     When I visit the "/meshes/default/data-planes" URL
-
     Then the "$item" element exists 9 times
     Then the "$item:nth-child(1)" element contains
       | Value                |
@@ -90,9 +89,7 @@ Feature: mesh / dataplanes / index
                   disconnectTime: 2021-02-17T07:33:36.412683Z
       """
     When I visit the "/meshes/default/data-planes" URL
-
     Then the "$service-cell" element is empty
-
     Then the "$item:nth-child(1)" element contains
       | Value          |
       | dpp-2          |
@@ -100,6 +97,7 @@ Feature: mesh / dataplanes / index
       | offline        |
 
   Rule: The listing can be filtered by type
+
     Scenario: Filtering by "builtin"
       Given the environment
         """
@@ -118,12 +116,9 @@ Feature: mesh / dataplanes / index
                     tags:
                       kuma.io/service: service-1
         """
-
       When I visit the "/meshes/default/data-planes" URL
       And I click the "$select-type" element
-
       Then the "$select-option" element exists 4 times
-
       When I click the "$select-builtin" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -154,12 +149,9 @@ Feature: mesh / dataplanes / index
                     tags:
                       kuma.io/service: service-1
         """
-
       When I visit the "/meshes/default/data-planes" URL
       And I click the "$select-type" element
-
       Then the "$select-option" element exists 4 times
-
       When I click the "$select-delegated" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
@@ -186,12 +178,9 @@ Feature: mesh / dataplanes / index
                 networking:
                   gateway: !!js/undefined
         """
-
       When I visit the "/meshes/default/data-planes" URL
       And I click the "$select-type" element
-
       Then the "$select-option" element exists 4 times
-
       When I click the "$select-standard" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """

@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ can, t }"
     name="onboarding-add-new-services"
+    v-slot="{ can, t }"
   >
     <RouteTitle
       :title="t('onboarding.routes.add-services-code.title')"
@@ -9,8 +9,8 @@
     />
     <AppView>
       <DataSource
-        v-slot="{ data, error }: DataplaneOverviewCollectionSource"
         :src="`/dataplanes/online?page=1&size=10`"
+        v-slot="{ data, error }: DataplaneOverviewCollectionSource"
       >
         <OnboardingPage>
           <template #header>

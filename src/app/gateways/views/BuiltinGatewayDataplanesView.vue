@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t, me }"
     name="builtin-gateway-dataplanes-view"
     :params="{
       mesh: '',
@@ -11,20 +10,21 @@
       s: '',
       dataPlane: '',
     }"
+    v-slot="{ can, route, t, me }"
   >
     <AppView>
       <DataSource
-        v-slot="{ data: meshGateway, error }: MeshGatewaySource"
         :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
+        v-slot="{ data: meshGateway, error }: MeshGatewaySource"
       >
         <div class="stack">
           <KCard>
             <DataLoader
-              v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
               :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/service-insight/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
               :data="[meshGateway]"
               :errors="[error]"
               :loader="false"
+              v-slot="{ data: dataplanesData }: DataplaneOverviewCollectionSource"
             >
               <AppCollection
                 class="data-plane-collection"

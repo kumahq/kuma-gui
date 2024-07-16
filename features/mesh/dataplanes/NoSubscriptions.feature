@@ -1,4 +1,5 @@
 Feature: dataplanes / no-subscriptions
+
   Scenario: When there are no subscription I don't get an error
     Given the CSS selectors
       | Alias            | Selector                                    |
@@ -18,7 +19,6 @@ Feature: dataplanes / no-subscriptions
               - health:
                   ready: true
       """
-
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     And the "$detail-view" element contains "backend"
     And the "$overview-content" element contains "offline"

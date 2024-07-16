@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t, uri, me }"
     name="mesh-service-detail-view"
     :params="{
       mesh: '',
@@ -13,6 +12,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ can, route, t, uri, me }"
   >
     <AppView>
       <div

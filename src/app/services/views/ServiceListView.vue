@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri, me }"
     name="service-list-view"
     :params="{
       page: 1,
@@ -8,6 +7,7 @@
       mesh: '',
       service: '',
     }"
+    v-slot="{ route, t, uri, me }"
   >
     <RouteTitle
       :render="false"

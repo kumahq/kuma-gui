@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="mesh-detail-tabs-view"
     :params="{
       mesh: '',
     }"
+    v-slot="{ route, t }"
   >
     <AppView>
       <template #title>
@@ -20,8 +20,8 @@
       </template>
 
       <DataLoader
-        v-slot="{ data: mesh }: MeshSource"
         :src="`/meshes/${route.params.mesh}`"
+        v-slot="{ data: mesh }: MeshSource"
       >
         <XTabs
           :selected="route.child()?.name"

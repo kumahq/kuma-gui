@@ -1,9 +1,9 @@
 <template>
   <DataSource
-    v-slot="{ data: me }"
     :src="uri(sources, '/me/:route', {
       route: props.name,
     })"
+    v-slot="{ data: me }"
   >
     <div
       class="route-view"
@@ -20,8 +20,8 @@
       />
       <DataSink
         v-if="me"
-        v-slot="{ submit }"
         :src="`/me/${props.name}`"
+        v-slot="{ submit }"
       >
         <slot
           :id="UniqueId"

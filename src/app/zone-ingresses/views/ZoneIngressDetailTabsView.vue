@@ -1,15 +1,15 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="zone-ingress-detail-tabs-view"
     :params="{
       zone: '',
       zoneIngress: '',
     }"
+    v-slot="{ route, t }"
   >
     <DataSource
-      v-slot="{ data, error }: ZoneIngressOverviewSource"
       :src="`/zone-ingress-overviews/${route.params.zoneIngress}`"
+      v-slot="{ data, error }: ZoneIngressOverviewSource"
     >
       <AppView
         :docs="t('zone-ingresses.href.docs')"

@@ -1,12 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ route, t, can, uri, me }"
     name="zone-cp-list-view"
     :params="{
       page: 1,
       size: 50,
       zone: '',
     }"
+    v-slot="{ route, t, can, uri, me }"
   >
     <AppView
       :docs="t('zones.href.docs.cta')"
@@ -20,11 +20,11 @@
       </template>
 
       <DataSource
-        v-slot="{ data, error, refresh }"
         :src="uri(zoneSources, '/zone-cps', {}, {
           page: route.params.page,
           size: route.params.size,
         })"
+        v-slot="{ data, error, refresh }"
       >
         <DataSource
           :src="`/zone-ingress-overviews?page=1&size=100`"
@@ -191,9 +191,9 @@
                     >
                       <DataSink
                         v-if="expanded"
-                        v-slot="{ submit, error: deleteError }"
                         :src="`/zone-cps/${row.name}/delete`"
                         @change="() => { toggle(); refresh() }"
+                        v-slot="{ submit, error: deleteError }"
                       >
                         <XPrompt
                           :action="t('common.delete_modal.proceed_button')"

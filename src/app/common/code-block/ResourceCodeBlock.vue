@@ -28,8 +28,8 @@
             <XIcon name="copy" />{{ t('common.copyKubernetesShortText') }}
           </KCodeBlockIconButton>
           <XCopyButton
-            v-slot="{ copy }"
             format="hidden"
+            v-slot="{ copy }"
           >
             <slot
               :copy="(cb: CopyCallback) => {

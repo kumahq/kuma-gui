@@ -1,9 +1,9 @@
 <template>
   <DataSource
-    v-slot="{ refresh }"
     :src="props.src as T"
     @change="(data) => srcData = data"
     @error="(e: Error) => srcError = e"
+    v-slot="{ refresh }"
   >
     <template
       v-if="allData.length > 0 && allData.every(item => typeof item !== 'undefined')"

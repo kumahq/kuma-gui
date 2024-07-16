@@ -1,4 +1,5 @@
 Feature: mesh / delegated-gateways / item
+
   Background:
     Given the CSS selectors
       | Alias       | Selector                                           |
@@ -19,10 +20,9 @@ Feature: mesh / delegated-gateways / item
 
   Scenario: Overview tab has expected content
     When I visit the "/meshes/default/gateways/delegated/service-1/overview" URL
-
     Then the "$tabs-view" element contains "service-1"
     Then the "$detail-view" elements contain
       | Value              |
-      | 1.2.3.4:8000       |
-      | 1 / 2              |
+      |       1.2.3.4:8000 |
+      |              1 / 2 |
       | partially degraded |

@@ -1,11 +1,11 @@
 <template>
   <DataSource
-    v-slot="{ data, refresh }"
     :src="`/me/-onboarding-alert`"
+    v-slot="{ data, refresh }"
   >
     <DataSink
-      v-slot="{ submit }"
       :src="`/me/-onboarding-alert`"
+      v-slot="{ submit }"
     >
       <KAlert
         v-if="data?.closed !== true"

@@ -1,4 +1,5 @@
 Feature: mesh / dataplanes / DataplaneDetailsTraffic
+
   Background:
     Given the CSS selectors
       | Alias           | Selector                                            |
@@ -20,9 +21,7 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
           networking:
             gateway: !!js/undefined
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
-
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists
 
@@ -39,7 +38,6 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
           networking:
             gateway: !!js/undefined
       """
-
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     Then the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$traffic" element exists

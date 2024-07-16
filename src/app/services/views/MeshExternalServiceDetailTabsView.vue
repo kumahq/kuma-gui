@@ -1,18 +1,18 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="mesh-external-service-detail-tabs-view"
     :params="{
       mesh: '',
       service: '',
     }"
+    v-slot="{ route, t, uri }"
   >
     <DataSource
-      v-slot="{ data, error }"
       :src="uri(sources, '/meshes/:mesh/mesh-external-service/:name', {
         mesh: route.params.mesh,
         name: route.params.service,
       })"
+      v-slot="{ data, error }"
     >
       <AppView
         :docs="t('services.mesh-external-service.href.docs')"

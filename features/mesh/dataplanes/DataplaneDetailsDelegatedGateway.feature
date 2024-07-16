@@ -1,4 +1,5 @@
 Feature: Dataplane details for delegated gateway
+
   Background:
     Given the CSS selectors
       | Alias       | Selector                                    |
@@ -43,15 +44,13 @@ Feature: Dataplane details for delegated gateway
                 envoy:
                   kumaDpCompatible: true
       """
-
     When I visit the "/meshes/default/data-planes/dataplane-gateway_delegated-1/overview" URL
-
     Then the page title contains "dataplane-gateway_delegated-1"
     And the "$detail-view" element contains "dataplane-gateway_delegated-1"
     And the "$details" element contains
       | Value                 |
       | online                |
-      | 193.107.134.106       |
+      |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
     And the "$warnings" element doesn't exist

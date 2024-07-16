@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    v-slot="{ can, t, uri, me }"
     name="home"
+    v-slot="{ can, t, uri, me }"
   >
     <AppView>
       <template #title>
@@ -16,8 +16,8 @@
         class="stack"
       >
         <DataLoader
-          v-slot="{ data }"
           :src="uri(ControlPlaneSources, '/global-insight', {})"
+          v-slot="{ data }"
         >
           <ControlPlaneStatus
             :can-use-zones="can('use zones')"

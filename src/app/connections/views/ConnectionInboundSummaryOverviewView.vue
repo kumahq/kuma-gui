@@ -1,12 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ t, route }"
     :params="{
       mesh: '',
       dataPlane: '',
       connection: '',
     }"
     name="connection-inbound-summary-overview-view"
+    v-slot="{ t, route }"
   >
     <AppView>
       <div
@@ -84,14 +84,14 @@
       >
         <h3>Rules</h3>
         <DataLoader
-          v-slot="{ data: rulesData }: RuleCollectionSource"
           :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
+          v-slot="{ data: rulesData }: RuleCollectionSource"
         >
           <DataCollection
-            v-slot="{ items }"
             :predicate="(item) => { return item.ruleType === 'from' && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])}"
-
             :items="rulesData!.rules"
+
+            v-slot="{ items }"
           >
             <div class="mt-4">
               <AccordionList
@@ -142,8 +142,8 @@
 
                               <template #body>
                                 <DataSource
-                                  v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
                                   :src="`/policy-types`"
+                                  v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
                                 >
                                   <template
                                     v-for="types in [Object.groupBy((policyTypes?.policies ?? []), (item) => item.name)]"

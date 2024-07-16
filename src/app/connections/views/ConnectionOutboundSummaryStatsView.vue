@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route }"
     :params="{
       codeSearch: '',
       codeFilter: false,
@@ -10,6 +9,7 @@
       connection: '',
     }"
     name="connection-outbound-summary-stats-view"
+    v-slot="{ route }"
   >
     <RouteTitle
       :render="false"
@@ -17,13 +17,13 @@
     />
     <AppView>
       <DataLoader
-        v-slot="{ data, refresh }: StatsSource"
         :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
+        v-slot="{ data, refresh }: StatsSource"
       >
         <DataCollection
-          v-slot="{ items: lines }"
           :items="data!.raw.split('\n')"
           :predicate="item => item.includes(`.${route.params.connection}.`)"
+          v-slot="{ items: lines }"
         >
           <CodeBlock
             language="json"

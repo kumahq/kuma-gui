@@ -2,17 +2,17 @@
   <!-- whilst we don't use the addresses here, -->
   <!-- we want to make sure they are retrieved/correctly set -->
   <DataSource
-    v-slot="{data: addresses}: ControlPlaneAddressesSource"
     :src="`/control-plane/addresses`"
+    v-slot="{data: addresses}: ControlPlaneAddressesSource"
   >
     <RouteView
       v-if="typeof addresses !== 'undefined'"
-      v-slot="{ t, can, route }"
       name="app"
       :attrs="{
         class: 'kuma-ready',
       }"
       data-testid-root="mesh-app"
+      v-slot="{ t, can, route }"
     >
       <ApplicationShell
         class="kuma-application"

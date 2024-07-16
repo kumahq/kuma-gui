@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="zone-ingress-summary-view"
     :params="{
       zoneIngress: '',
     }"
+    v-slot="{ route, t }"
   >
     <DataCollection
       :items="props.items"

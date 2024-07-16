@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ can, route, t, me, uri }"
     name="data-plane-list-view"
     :params="{
       page: 1,
@@ -10,6 +9,7 @@
       mesh: '',
       dataPlane: '',
     }"
+    v-slot="{ can, route, t, me, uri }"
   >
     <RouteTitle
       :render="false"

@@ -1,11 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="delegated-gateway-detail-tabs-view"
     :params="{
       mesh: '',
       service: '',
     }"
+    v-slot="{ route, t }"
   >
     <AppView
       :docs="t('delegated-gateways.href.docs')"

@@ -1,12 +1,12 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="policy-list-view"
     :params="{
       mesh: '',
       policyPath: '',
       policy: '',
     }"
+    v-slot="{ route, t }"
   >
     <RouteTitle
       :render="false"
@@ -14,12 +14,12 @@
     />
     <AppView>
       <DataSource
-        v-slot="{ data: meshInsight }: MeshInsightSource"
         :src="`/mesh-insights/${route.params.mesh}`"
+        v-slot="{ data: meshInsight }: MeshInsightSource"
       >
         <DataSource
-          v-slot="{ data, error }: PolicyTypeCollectionSource"
           :src="`/policy-types`"
+          v-slot="{ data, error }: PolicyTypeCollectionSource"
         >
           <div
             class="policy-list-content"
@@ -41,9 +41,9 @@
                   :key="legacy"
                 >
                   <DataCollection
-                    v-slot="{ items }"
                     :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.isTargetRefBased"
                     :items="data!.policies"
+                    v-slot="{ items }"
                   >
                     <template
                       v-for="current in [items.find(policyType => policyType.path === route.params.policyPath)]"

@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="gateway-list-tabs-view"
     :params="{
       mesh: '',
     }"
+    v-slot="{ route, t }"
   >
     <RouteTitle
       :render="false"
@@ -15,9 +15,9 @@
       <AppView>
         <template #actions>
           <DataCollection
-            v-slot="{ items }"
             :items="route.children"
             :empty="false"
+            v-slot="{ items }"
           >
             <XActionGroup
               :expanded="true"

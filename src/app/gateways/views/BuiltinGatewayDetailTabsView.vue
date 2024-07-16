@@ -1,11 +1,11 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="builtin-gateway-detail-tabs-view"
     :params="{
       mesh: '',
       gateway: '',
     }"
+    v-slot="{ route, t }"
   >
     <AppView
       :docs="t('builtin-gateways.href.docs')"

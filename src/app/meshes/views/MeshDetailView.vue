@@ -1,10 +1,10 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="mesh-detail-view"
     :params="{
       mesh: '',
     }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :title="t('meshes.routes.overview.title')"
@@ -12,10 +12,10 @@
     />
 
     <DataSource
-      v-slot="{ data }"
       :src="uri(sources, '/mesh-insights/:name', {
         name: route.params.mesh,
       })"
+      v-slot="{ data }"
     >
       <template
         v-for="missingTLSPolicy in [
@@ -138,8 +138,8 @@
               </div>
             </KCard>
             <ResourceCodeBlock
-              v-slot="{ copy, copying }"
               :resource="mesh.config"
+              v-slot="{ copy, copying }"
             >
               <DataSource
                 v-if="copying"

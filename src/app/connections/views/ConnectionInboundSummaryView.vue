@@ -1,19 +1,19 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="connection-inbound-summary-view"
     :params="{
       connection: '',
       inactive: false,
     }"
+    v-slot="{ route, t }"
   >
     <!-- if its a built in gateway, just take the first one, all the data we use here is the same -->
     <!-- otherwise find the exact inbound -->
     <DataCollection
-      v-slot="{ items }"
       :items="props.data"
       :predicate="props.dataplaneOverview.dataplane.networking.type === 'gateway' ? (item) => true : (item) => item.name === route.params.connection"
       :find="true"
+      v-slot="{ items }"
     >
       <AppView>
         <template #title>

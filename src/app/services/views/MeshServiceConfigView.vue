@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route }"
     name="mesh-service-config-view"
     :params="{
       mesh: '',
@@ -9,11 +8,11 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route }"
   >
     <AppView>
       <KCard>
         <ResourceCodeBlock
-          v-slot="{ copy, copying }"
           :resource="props.data.config"
           is-searchable
           :query="route.params.codeSearch"
@@ -22,6 +21,7 @@
           @query-change="route.update({ codeSearch: $event })"
           @filter-mode-change="route.update({ codeFilter: $event })"
           @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          v-slot="{ copy, copying }"
         >
           <DataSource
             v-if="copying"

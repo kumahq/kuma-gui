@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t }"
     name="data-plane-policy-summary-view"
     :params="{
       mesh: '',
@@ -10,10 +9,11 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t }"
   >
     <DataSource
-      v-slot="{ data, error }: PolicySource"
       :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}`"
+      v-slot="{ data, error }: PolicySource"
     >
       <AppView>
         <template #title>
@@ -43,7 +43,6 @@
             :policy="data"
           >
             <ResourceCodeBlock
-              v-slot="{ copy, copying }"
               :resource="data.config"
               is-searchable
               :query="route.params.codeSearch"
@@ -52,6 +51,7 @@
               @query-change="route.update({ codeSearch: $event })"
               @filter-mode-change="route.update({ codeFilter: $event })"
               @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              v-slot="{ copy, copying }"
             >
               <DataSource
                 v-if="copying"

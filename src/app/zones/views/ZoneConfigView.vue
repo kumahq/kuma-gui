@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="zone-cp-config-view"
     :params="{
       zone: '',
@@ -8,16 +7,17 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
       :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
     />
     <DataSource
-      v-slot="{ data: version }"
       :src="uri(sources, '/control-plane/outdated/:version', {
         version: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
       })"
+      v-slot="{ data: version }"
     >
       <AppView>
         <template

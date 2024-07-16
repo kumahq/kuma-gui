@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="zone-egress-config-view"
     :params="{
       zoneEgress: '',
@@ -8,6 +7,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -16,13 +16,12 @@
     <AppView>
       <KCard>
         <DataLoader
-          v-slot="{ data }"
           :src="uri(sources, `/zone-egresses/:name`, {
             name: route.params.zoneEgress,
           })"
+          v-slot="{ data }"
         >
           <ResourceCodeBlock
-            v-slot="{ copy, copying }"
             :resource="data.config"
             is-searchable
             :query="route.params.codeSearch"
@@ -31,6 +30,7 @@
             @query-change="route.update({ codeSearch: $event })"
             @filter-mode-change="route.update({ codeFilter: $event })"
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+            v-slot="{ copy, copying }"
           >
             <DataSource
               v-if="copying"

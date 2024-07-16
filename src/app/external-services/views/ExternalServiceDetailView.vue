@@ -1,6 +1,5 @@
 <template>
   <RouteView
-    v-slot="{ route, t, uri }"
     name="external-service-detail-view"
     :params="{
       mesh: '',
@@ -9,17 +8,18 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ route, t, uri }"
   >
     <AppView>
       <div
         class="stack"
       >
         <DataLoader
-          v-slot="{ data }"
           :src="uri(sources, `/meshes/:mesh/external-services/:name`, {
             mesh: route.params.mesh,
             name: route.params.service,
           })"
+          v-slot="{ data }"
         >
           <KCard
             data-testid="external-service-details"
@@ -51,7 +51,6 @@
             <h3>{{ t('external-services.detail.config') }}</h3>
 
             <ResourceCodeBlock
-              v-slot="{ copy, copying }"
               class="mt-4"
               data-testid="external-service-config"
               :resource="data.config"
@@ -62,6 +61,7 @@
               @query-change="route.update({ codeSearch: $event })"
               @filter-mode-change="route.update({ codeFilter: $event })"
               @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              v-slot="{ copy, copying }"
             >
               <DataSource
                 v-if="copying"
