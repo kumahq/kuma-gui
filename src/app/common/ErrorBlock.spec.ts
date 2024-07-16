@@ -97,7 +97,7 @@ describe('ErrorBlock.vue', () => {
   ])('has expected invalid parameters for ApiError', ({ error, expectedInvalidParameters }) => {
     const wrapper = renderComponent({ error })
 
-    const invalidParametersHtml = wrapper.find('[data-testid="error-invalid-parameters"]').text()
+    const invalidParametersHtml = wrapper.find('[data-testid^="error-invalid-parameters"]').text()
     for (const invalidParameter of expectedInvalidParameters) {
       expect(invalidParametersHtml).toContain(invalidParameter)
     }

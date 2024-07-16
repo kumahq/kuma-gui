@@ -92,9 +92,10 @@ export const handler = (fs: FS, env: AEnv) => {
       const response = await respond({
         method: request.method,
         url: new URL(request.url),
-        body: request.body ? JSON.parse(await new Response(request.body).text()) : {},
+        body: request.body ? JSON.parse(await new Response(request.body).text() || '{}') : {},
         params,
       })
+
       return HttpResponse.json(response.body, {
         status: parseInt(response.headers['Status-Code'] ?? '200'),
       })
