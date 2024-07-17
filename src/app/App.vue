@@ -12,7 +12,7 @@
         class: 'kuma-ready',
       }"
       data-testid-root="mesh-app"
-      v-slot="{ t, can, route }"
+      v-slot="{ t, can }"
     >
       <ApplicationShell
         class="kuma-application"
@@ -27,45 +27,40 @@
         </template>
 
         <template #navigation>
-          <template
-            v-for="child in [route.child() ?? { name: '' }]"
-            :key="child.name"
-          >
-            <AppNavigator
-              data-testid="control-planes-navigator"
-              :active="child.name === 'home'"
-              label="Home"
-              :to="{
-                name: 'home',
-              }"
-            />
-            <AppNavigator
-              v-if="can('use zones')"
-              data-testid="zones-navigator"
-              :active="child.name === 'zone-index-view'"
-              label="Zones"
-              :to="{
-                name: 'zone-index-view',
-              }"
-            />
-            <AppNavigator
-              v-else
-              data-testid="zone-egresses-navigator"
-              :active="child.name === 'zone-egress-index-view'"
-              label="Zone Egresses"
-              :to="{
-                name: 'zone-egress-list-view',
-              }"
-            />
-            <AppNavigator
-              :active="child.name === 'mesh-index-view'"
-              data-testid="meshes-navigator"
-              label="Meshes"
-              :to="{
-                name: 'mesh-index-view',
-              }"
-            />
-          </template>
+          <AppNavigator
+            data-testid="control-planes-navigator"
+            :active="child.name === 'home'"
+            label="Home"
+            :to="{
+              name: 'home',
+            }"
+          />
+          <AppNavigator
+            v-if="can('use zones')"
+            data-testid="zones-navigator"
+            :active="child.name === 'zone-index-view'"
+            label="Zones"
+            :to="{
+              name: 'zone-index-view',
+            }"
+          />
+          <AppNavigator
+            v-else
+            data-testid="zone-egresses-navigator"
+            :active="child.name === 'zone-egress-index-view'"
+            label="Zone Egresses"
+            :to="{
+              name: 'zone-egress-list-view',
+            }"
+          />
+          <AppNavigator
+            :active="child.name === 'mesh-index-view'"
+            data-testid="meshes-navigator"
+            label="Meshes"
+            :to="{
+              name: 'mesh-index-view',
+            }"
+          />
         </template>
 
         <AppView>
@@ -77,10 +72,31 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 import AppNavigator from '@/app/application/components/app-navigator/AppNavigator.vue'
 import { ControlPlaneAddressesSource } from '@/app/control-planes/sources'
 import ApplicationShell from '@/app/kuma/components/ApplicationShell.vue'
+import type { RouteRecordRaw } from 'vue-router'
 
+type StringNamedRouteRecordRaw = RouteRecordRaw & {
+  name: string
+}
+const router = useRouter()
+const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) => route.name === 'app')?.children.map(item => {
+  item.name = String(item.name)
+  return item as StringNamedRouteRecordRaw
+}) ?? [])
+
+const child = ref({ name: '' })
+router.afterEach(() => {
+  const matched = router.currentRoute.value.matched.map(item => item.name)
+  const found = children.find((item) => matched.includes(item.name))
+  if (found && found.name !== child.value.name) {
+    child.value = found
+  }
+})
 </script>
 
 <style lang="scss" scoped>
