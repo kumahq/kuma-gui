@@ -26,6 +26,10 @@ Feature: mesh / policies / index
         - name: fake-cb-2
       """
 
+  Scenario: Visiting `/policies` redirects
+    When I visit the "/meshes/default/policies" URL
+    Then the URL contains "/meshes/default/policies/circuit-breakers"
+
   Scenario: Listing has expected content
     When I visit the "/meshes/default/policies/circuit-breakers" URL
     Then the "$button-docs" element exists
