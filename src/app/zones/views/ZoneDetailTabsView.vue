@@ -40,7 +40,7 @@
               #control
             >
               <XAction
-                type="expand"
+                action="expand"
                 appearance="primary"
               >
                 {{ t('zones.action_menu.toggle_button') }}

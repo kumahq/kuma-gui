@@ -50,7 +50,7 @@
                   </KBadge>
 
                   <XAction
-                    type="docs"
+                    action="docs"
                     :href="t('policies.href.docs', { name: type.name })"
                     data-testid="policy-documentation-link"
                   >
@@ -117,7 +117,7 @@
                           #action
                         >
                           <XAction
-                            type="docs"
+                            action="docs"
                             :href="t('policies.href.docs', { name: type.name })"
                           >
                             {{ t('common.documentation') }}

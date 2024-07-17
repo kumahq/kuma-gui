@@ -58,7 +58,7 @@
           <slot name="action">
             <XAction
               v-if="href.length > 0"
-              :type="(['docs', 'create'] as const).find((item) => item === actionType)"
+              :action="(['docs', 'create'] as const).find((item) => item === actionType)"
               :href="href"
             >
               {{ actionLabel }}

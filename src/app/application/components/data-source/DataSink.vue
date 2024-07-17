@@ -4,13 +4,15 @@
   >
     <DataSource
       v-if="expanded"
-      :src="`${props.src}/${JSON.stringify(payload)}`"
+      :src="`${props.src}/${JSON.stringify(payload)}?cacheControl=no-cache`"
       @change="(d: TypeOf<T>) => {
+        writing = false
         data = d;
         emit('change', d)
         toggle()
       }"
       @error="(e: Error) => {
+        writing = false
         error = e;
         emit('error', e)
         toggle()
@@ -20,7 +22,6 @@
     <template
       :ref="() => {
         write = toggle
-        writing = expanded
       }"
     />
     <!-- eslint-enable -->
@@ -58,6 +59,7 @@ const writing = ref<boolean>(false)
 const write = ref(() => {})
 const submit = (args: any) => {
   payload.value = args
+  writing.value = true
   write.value()
 }
 
