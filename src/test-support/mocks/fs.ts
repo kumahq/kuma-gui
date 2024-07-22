@@ -55,6 +55,8 @@ import _134 from './src/meshes/_/meshgateways/test-meshgateway/_'
 import _135 from './src/meshes/_/meshgateways/test-meshgateway/_rules'
 import _132 from './src/meshes/_/meshhttproutes'
 import _133 from './src/meshes/_/meshhttproutes/_'
+import _140 from './src/meshes/_/meshmultizoneservices'
+import _141 from './src/meshes/_/meshmultizoneservices/_'
 import _136 from './src/meshes/_/meshservices'
 import _137 from './src/meshes/_/meshservices/_'
 import _35 from './src/meshes/_/proxytemplates'
@@ -158,6 +160,8 @@ export const fs: FS = {
   '/meshes/:mesh/meshgateways/:name/_rules': _131,
   '/meshes/:mesh/meshservices': _136,
   '/meshes/:mesh/meshservices/:name': _137,
+  '/meshes/:mesh/meshmultizoneservices': _140,
+  '/meshes/:mesh/meshmultizoneservices/:name': _141,
   '/meshes/:mesh/meshexternalservices': _138,
   '/meshes/:mesh/meshexternalservices/:name': _139,
   '/meshes/:mesh/meshhttproutes': _132,

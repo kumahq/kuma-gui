@@ -1,6 +1,12 @@
 import createClient from 'openapi-fetch'
 
-import { MeshService, MeshExternalService, ExternalService, ServiceInsight } from './data'
+import {
+  MeshService,
+  MeshMultizoneService,
+  MeshExternalService,
+  ExternalService,
+  ServiceInsight,
+} from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -57,6 +63,55 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/mesh-service/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
       const res = await http.GET('/meshes/{mesh}/meshservices/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+          query: {
+            format: 'kubernetes',
+          },
+        },
+      })
+      return res.data!
+    },
+
+    '/meshes/:mesh/mesh-multizone-services': async (params) => {
+      const { mesh, size } = params
+      const offset = params.size * (params.page - 1)
+
+      const res = await http.GET('/meshes/{mesh}/meshmultizoneservices', {
+        params: {
+          path: {
+            mesh,
+          },
+          query: {
+            offset,
+            size,
+          },
+        },
+      })
+
+      return MeshMultizoneService.fromCollection(res.data!)
+    },
+
+    '/meshes/:mesh/mesh-multizone-service/:name': async (params) => {
+      const { mesh, name } = params
+
+      const res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
+        params: {
+          path: {
+            mesh,
+            name,
+          },
+        },
+      })
+      return MeshMultizoneService.fromObject(res.data!)
+    },
+
+    '/meshes/:mesh/mesh-multizone-service/:name/as/kubernetes': async (params) => {
+      const { mesh, name } = params
+      const res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
         params: {
           path: {
             mesh,

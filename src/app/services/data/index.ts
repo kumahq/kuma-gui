@@ -4,7 +4,9 @@ import type {
   ServiceInsight as PartialServiceInsight,
   ServiceStatus as ServiceTypeCount,
 } from '@/types/index.d'
+
 export * from './MeshService'
+export * from './MeshMultizoneService'
 export * from './MeshExternalService'
 
 export type ExternalService = PartialExternalService & {

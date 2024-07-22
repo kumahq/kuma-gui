@@ -1,6 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { components } from '@/types/auto-generated.d'
-type Entity = components['schemas']['MeshServiceItem']
+type Entity = components['schemas']['MeshMultiZoneServiceItem']
 
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
@@ -27,7 +27,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const nspace = fake.k8s.namespace()
 
         return {
-          type: 'MeshService',
+          type: 'MeshMultiZoneService',
           mesh,
           name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2021-02-19T08:06:15.14624+01:00',
@@ -43,6 +43,13 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             }
             : {}),
           spec: {
+            selector: {
+              meshService: {
+                matchLabels: fake.kuma.tags({}),
+              },
+            },
+          },
+          status: {
             ports: Array.from({ length: 5 }).map(_ => (
               {
                 port: fake.internet.port(),
@@ -50,20 +57,15 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 appProtocol: fake.kuma.protocol(),
               }
             )),
-            selector: {
-              dataplaneTags: fake.kuma.tags({}),
-            },
-          },
-          status: {
+            meshServices: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
+              name: fake.hacker.noun(),
+            })),
             addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
               hostname: fake.internet.domainName(),
             })),
             vips: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
               ip: fake.internet.ip(),
             })),
-            tls: {
-              status: fake.helpers.arrayElement([undefined, 'Ready', 'NotReady']),
-            },
           },
         } satisfies Entity & {
           creationTime: string
