@@ -58,7 +58,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               }
             )),
             meshServices: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
-              name: fake.hacker.noun(),
+              name: `${fake.hacker.noun()}-${i}${k8s ? `.${fake.k8s.namespace()}` : ''}`,
             })),
             addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
               hostname: fake.internet.domainName(),

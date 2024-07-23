@@ -11,6 +11,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
+    v-slot="{ t, me }"
   >
     <AppView>
       <div
@@ -103,6 +104,57 @@
             </DefinitionCard>
           </div>
         </KCard>
+
+        <div>
+          <h3>
+            Mesh Services
+          </h3>
+
+          <KCard
+            class="mt-4"
+          >
+            <AppCollection
+              :headers="[
+                { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+              ]"
+              :items="data.status.meshServices"
+              :total="data.status.meshServices.length"
+              @resize="me.set"
+            >
+              <template #name="{ row: item }">
+                <XAction
+                  class="name-link"
+                  :to="{
+                    name: 'mesh-service-detail-view',
+                    params: {
+                      mesh: data.mesh,
+                      service: item.name,
+                    },
+                  }"
+                >
+                  {{ item.name }}
+                </XAction>
+              </template>
+
+              <template #actions="{ row: item }">
+                <XActionGroup>
+                  <XAction
+                    :to="{
+                      name: 'mesh-service-detail-view',
+                      params: {
+                        mesh: data.mesh,
+                        service: item.name,
+                      },
+                    }"
+                  >
+                    {{ t('common.collection.actions.view') }}
+                  </XAction>
+                </XActionGroup>
+              </template>
+            </AppCollection>
+          </KCard>
+        </div>
       </div>
     </AppView>
   </RouteView>
@@ -110,6 +162,7 @@
 
 <script lang="ts" setup>
 import type { MeshMultizoneService } from '../data'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
@@ -120,5 +173,14 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .ip span {
   font-size: $kui-font-size-30;
+}
+
+.name-link {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 </style>

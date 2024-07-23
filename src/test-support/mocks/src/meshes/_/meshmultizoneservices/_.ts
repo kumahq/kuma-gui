@@ -2,16 +2,14 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { components } from '@/types/auto-generated.d'
 type Entity = components['schemas']['MeshMultiZoneServiceItem']
 
-export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
 
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()!
+  const k8s = parts.length > 1
 
   return {
     headers: {},
@@ -27,8 +25,8 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
       ...(k8s
         ? {
           labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
+            'kuma.io/display-name': parts.slice(0, -1).join('.'),
+            'k8s.kuma.io/namespace': parts.pop()!,
           },
         }
         : {}),
@@ -47,9 +45,11 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
             appProtocol: fake.kuma.protocol(),
           }
         )),
-        meshServices: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
-          name: fake.hacker.noun(),
-        })),
+        meshServices: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map((_, i) => {
+          return {
+            name: `${fake.hacker.noun()}-${i}${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+          }
+        }),
         addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
           hostname: fake.internet.domainName(),
         })),

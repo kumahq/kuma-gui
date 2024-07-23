@@ -1,16 +1,14 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { MeshService } from '@/types/index.d'
 
-export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
 
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
-  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  const k8s = parts.length > 1
 
   return {
     headers: {},
@@ -26,8 +24,8 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
       ...(k8s
         ? {
           labels: {
-            'kuma.io/display-name': displayName,
-            'k8s.kuma.io/namespace': nspace,
+            'kuma.io/display-name': parts.slice(0, -1).join('.'),
+            'k8s.kuma.io/namespace': parts.pop()!,
           },
         }
         : {}),
