@@ -160,7 +160,9 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .k-breadcrumbs {
-  margin-bottom: 0 !important
+  margin-bottom: 0 !important;
+  position: relative;
+  left: -3px;
 }
 .is-fullscreen {
   .app-view-title-bar {

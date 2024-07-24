@@ -269,6 +269,7 @@ nav :deep(.app-navigator) > a {
   border-radius: 5px;
   text-decoration: none;
   color: currentColor;
+  font-size: $kui-font-size-40;
   &:hover,
   &:is(.is-active) {
     background-color: $kui-color-background-neutral-weaker;
