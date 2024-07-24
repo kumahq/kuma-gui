@@ -39,14 +39,6 @@
           </ul>
         </template>
 
-        <template #title>
-          <h2>
-            <RouteTitle
-              :title="t('zone-cps.routes.item.navigation.zone-cp-config-view')"
-            />
-          </h2>
-        </template>
-
         <KCard>
           <CodeBlock
             v-if="Object.keys(props.data.zoneInsight.config).length > 0"
