@@ -26,7 +26,7 @@
           <XDisclosure
             v-slot="{ expanded, toggle }"
           >
-            <KButton
+            <XAction
               appearance="tertiary"
               data-testid="exit-button"
               @click="() => {
@@ -40,7 +40,7 @@
               }"
             >
               {{ t('zones-crud.form.exit') }}
-            </KButton>
+            </XAction>
             <XTeleportTemplate
               :to="{ name: 'modal-layer' }"
             >
@@ -54,13 +54,13 @@
                 {{ t('zones-crud.form.confirm_modal.body') }}
 
                 <template #footer-actions>
-                  <KButton
+                  <XAction
                     appearance="primary"
                     :to="{ name: 'zone-cp-list-view' }"
                     data-testid="confirm-exit-button"
                   >
                     {{ t('zones-crud.form.confirm_modal.action_button') }}
-                  </KButton>
+                  </XAction>
                 </template>
               </KModal>
             </XTeleportTemplate>
@@ -134,72 +134,75 @@
                   class="form-section__content"
                   @submit.prevent="() => submit({ name })"
                 >
-                  <div>
-                    <KLabel
-                      :for="id"
-                      required
-                      :tooltip-attributes="{ placement: 'right'}"
-                    >
-                      {{ t('zones-crud.form.nameLabel') }}
-
-                      <template #tooltip>
-                        {{ t('zones-crud.form.name_tooltip') }}
-                      </template>
-                    </KLabel>
-                    <XDisclosure
-                      v-slot="{ expanded, toggle }"
-                    >
-                      <DataSource
-                        :src="expanded ? uri(sources, `/zone-cps/:name/validate`, {
-                          name,
-                        }) : ''"
-                        @change="toggle"
-                        @error="toggle"
-                        v-slot="{ error: validateError }"
-                      >
-                        <template
-                          v-for="invalid in [
-                            [validateError, error].find((error) => error instanceof ApiError)?.invalidParameters?.find(param => param.field === 'name') ?? undefined,
-                          ]"
-                          :key="invalid"
-                        >
-                          <XInput
-                            :id="id"
-                            v-model="name"
-                            type="text"
-                            name="zone-name"
-                            data-testid="name-input"
-                            :data-test-error-type="invalid ? 'invalid-dns-name' : undefined"
-                            :error="typeof invalid !== 'undefined'"
-                            :error-message="invalid?.reason ?? undefined"
-                            :disabled="zone?.token"
-                            @blur="() => {
-                              if(name.length > 0) {
-                                toggle()
-                              }
-                            }"
-                          />
-                        </template>
-                      </DataSource>
-                    </XDisclosure>
-                  </div>
-
-                  <KButton
-                    appearance="primary"
-                    class="mt-4"
-                    :disabled="zone?.token || name.length === 0"
-                    data-testid="create-zone-button"
-                    type="submit"
+                  <fieldset
+                    :disabled="zone?.token"
                   >
-                    <ProgressIcon
-                      v-if="writing"
-                      :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
-                    />
+                    <div>
+                      <KLabel
+                        :for="id"
+                        required
+                        :tooltip-attributes="{ placement: 'right'}"
+                      >
+                        {{ t('zones-crud.form.nameLabel') }}
 
-                    <AddIcon v-else />
+                        <template #tooltip>
+                          {{ t('zones-crud.form.name_tooltip') }}
+                        </template>
+                      </KLabel>
+                      <XDisclosure
+                        v-slot="{ expanded, toggle }"
+                      >
+                        <DataSource
+                          :src="expanded ? uri(sources, `/zone-cps/:name/validate`, {
+                            name,
+                          }) : ''"
+                          @change="toggle"
+                          @error="toggle"
+                          v-slot="{ error: validateError }"
+                        >
+                          <template
+                            v-for="invalid in [
+                              [validateError, error].find((error) => error instanceof ApiError)?.invalidParameters?.find(param => param.field === 'name') ?? undefined,
+                            ]"
+                            :key="invalid"
+                          >
+                            <XInput
+                              :id="id"
+                              v-model="name"
+                              type="text"
+                              name="zone-name"
+                              data-testid="name-input"
+                              :data-test-error-type="invalid ? 'invalid-dns-name' : undefined"
+                              :error="typeof invalid !== 'undefined'"
+                              :error-message="invalid?.reason ?? undefined"
+                              @blur="() => {
+                                if(name.length > 0) {
+                                  toggle()
+                                }
+                              }"
+                            />
+                          </template>
+                        </DataSource>
+                      </XDisclosure>
+                    </div>
 
-                    {{ t('zones-crud.form.createZoneButtonLabel') }}
-                  </KButton>
+                    <XAction
+                      appearance="primary"
+                      class="mt-4"
+                      data-testid="create-zone-button"
+                      :disabled="name.length === 0"
+                      type="submit"
+                    >
+                      <ProgressIcon
+                        v-if="writing"
+                        :color="KUI_COLOR_TEXT_NEUTRAL_WEAK"
+                      />
+
+                      <AddIcon v-else />
+
+                      {{ t('zones-crud.form.createZoneButtonLabel') }}
+                    </XAction>
+                  </fieldset>
                 </form>
               </div>
 
@@ -377,7 +380,7 @@
                             {{ t('zones-crud.form.scan.completeDescription', { name }) }}
                           </p>
                           <p class="mt-2">
-                            <KButton
+                            <XAction
                               appearance="primary"
                               :to="{
                                 name: 'zone-cp-detail-view',
@@ -387,7 +390,7 @@
                               }"
                             >
                               {{ t('zones-crud.form.scan.completeButtonLabel', { name }) }}
-                            </KButton>
+                            </XAction>
                           </p>
                         </template>
                       </KEmptyState>

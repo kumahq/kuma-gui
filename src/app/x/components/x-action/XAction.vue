@@ -34,18 +34,18 @@
       }"
     >
       <template
-        v-if="['create'].includes(props.type)"
+        v-if="['create'].includes(props.action)"
       >
         <XIcon
-          :name="props.type as 'create'"
+          :name="props.action as 'create'"
         />
       </template>
       <slot name="default" />
       <template
-        v-if="['expand'].includes(props.type)"
+        v-if="['expand'].includes(props.action)"
       >
         <XIcon
-          :name="props.type as 'expand'"
+          :name="props.action as 'expand'"
         />
       </template>
     </KButton>
@@ -70,13 +70,13 @@
       v-bind="$attrs"
       :href="props.href"
       :class="{
-        'type-docs': props.type === 'docs',
+        'action-docs': props.action === 'docs',
       }"
       target="_blank"
-      :rel="props.type !== 'docs' ? `noopener noreferrer` : ``"
+      :rel="props.action !== 'docs' ? `noopener noreferrer` : ``"
     >
       <template
-        v-if="props.type === 'docs'"
+        v-if="props.action === 'docs'"
       >
         <XIcon
           name="docs"
@@ -116,18 +116,18 @@
       @click="emit('click')"
     >
       <template
-        v-if="['create', 'refresh'].includes(props.type)"
+        v-if="['create', 'refresh'].includes(props.action)"
       >
         <XIcon
-          :name="props.type as ('create' | 'refresh')"
+          :name="props.action as ('create' | 'refresh')"
         />
       </template>
       <slot name="default" />
       <template
-        v-if="['expand'].includes(props.type)"
+        v-if="['expand'].includes(props.action)"
       >
         <XIcon
-          :name="props.type as 'expand'"
+          :name="props.action as 'expand'"
         />
       </template>
     </KButton>
@@ -136,7 +136,6 @@
       :class="`appearance-${props.appearance}`"
       data-testid="x-action"
       v-bind="$attrs"
-      type="button"
       @click="emit('click')"
     >
       <slot name="default" />
@@ -160,7 +159,7 @@ const emit = defineEmits<{
   (event: 'click'): Event
 }>()
 const props = withDefaults(defineProps<{
-  type?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh'
+  action?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh'
   appearance?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'anchor'
   size?: 'small' | 'medium' | 'large'
   href?: string
@@ -171,7 +170,7 @@ const props = withDefaults(defineProps<{
   href: '',
   appearance: 'anchor',
   size: 'medium',
-  type: 'default',
+  action: 'default',
   to: () => ({}),
   for: '',
 })
@@ -231,7 +230,7 @@ button.appearance-anchor:hover,
 button.appearance-anchor:focus {
   text-decoration: underline
 }
-.type-docs {
+.action-docs {
   display: flex;
   align-items: center;
   gap: $kui-space-20;

@@ -32,7 +32,7 @@
           >
             <template #primary-actions>
               <XAction
-                type="refresh"
+                action="refresh"
                 appearance="primary"
                 @click="refresh"
               >

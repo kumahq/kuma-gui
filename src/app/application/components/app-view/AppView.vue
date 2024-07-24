@@ -70,7 +70,7 @@
     :to="{ name: 'app-view-docs' }"
   >
     <XAction
-      type="docs"
+      action="docs"
       :href="props.docs"
     />
   </XTeleportTemplate>

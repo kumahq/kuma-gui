@@ -12,7 +12,7 @@
     }"
   >
     <XAction
-      type="create"
+      action="create"
       appearance="primary"
       :to="{ name: 'zone-create-view' }"
     >

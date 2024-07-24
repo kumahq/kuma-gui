@@ -61,7 +61,7 @@
         >
           <XAction
             v-if="typeof props.emptyStateCtaTo === 'string'"
-            type="docs"
+            action="docs"
             :href="props.emptyStateCtaTo"
           >
             {{ props.emptyStateCtaText }}

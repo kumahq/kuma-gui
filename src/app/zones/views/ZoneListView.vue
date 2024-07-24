@@ -48,7 +48,7 @@
               :to="{ name: 'zone-cp-list-view-actions'}"
             >
               <XAction
-                type="create"
+                action="create"
                 appearance="primary"
                 :to="{ name: 'zone-create-view' }"
                 data-testid="create-zone-link"
