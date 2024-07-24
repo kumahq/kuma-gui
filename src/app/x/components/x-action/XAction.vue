@@ -166,6 +166,7 @@ const props = withDefaults(defineProps<{
   href?: string
   to?: RouteLocationRawWithBooleanQuery
   for?: string
+  mount?: (to: RouteLocationNamedRaw) => void
 }>(), {
   href: '',
   appearance: 'anchor',
@@ -207,6 +208,15 @@ watch(() => props.to, (val) => {
       e.message = `${e.toString()}: ${JSON.stringify(val)}`
     }
     console.error(e)
+  }
+}, { immediate: true })
+
+watch(() => props.mount, (val) => {
+  if (typeof val === 'function') {
+    val({
+      ...props.to,
+      query: query.value,
+    })
   }
 }, { immediate: true })
 </script>
