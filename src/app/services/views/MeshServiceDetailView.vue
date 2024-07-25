@@ -21,6 +21,29 @@
         <KCard>
           <div class="columns">
             <DefinitionCard
+              v-if="can('use zones') && props.data.zone"
+            >
+              <template
+                #title
+              >
+                Zone
+              </template>
+              <template
+                #body
+              >
+                <XAction
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: props.data.zone,
+                    },
+                  }"
+                >
+                  {{ props.data.zone }}
+                </XAction>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
               v-if="props.data.status.addresses.length > 0"
             >
               <template
@@ -117,7 +140,12 @@
             <DataLoader
               :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
                 mesh: route.params.mesh,
-                tags: JSON.stringify(props.data.spec.selector.dataplaneTags),
+                tags: JSON.stringify({
+                  ...(can('use zones') && props.data.zone ? {
+                    'kuma.io/zone': props.data.zone,
+                  } : {}),
+                  ...props.data.spec.selector.dataplaneTags,
+                }),
               }, {
                 page: route.params.page,
                 size: route.params.size,
@@ -135,7 +163,6 @@
                   :headers="[
                     { ...me.get('headers.name'), label: 'Name', key: 'name' },
                     { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                    ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
                     { ...me.get('headers.certificate'), label: 'Certificate Info', key: 'certificate' },
                     { ...me.get('headers.status'), label: 'Status', key: 'status' },
                     { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -160,7 +187,6 @@
                         name: { description: 'filter by name or parts of a name' },
                         protocol: { description: 'filter by “kuma.io/protocol” value' },
                         tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                        ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
                       }"
                       @change="(e) => route.update({
                         ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,

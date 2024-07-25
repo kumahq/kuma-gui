@@ -4,7 +4,7 @@
     :params="{
       dataPlane: '',
     }"
-    v-slot="{ t, route }"
+    v-slot="{ t, route, can }"
   >
     <DataCollection
       :items="props.items"
@@ -122,6 +122,30 @@
                   </template>
                 </DefinitionCard>
 
+                <DefinitionCard
+                  v-if="can('use zones') && item.zone"
+                  layout="horizontal"
+                >
+                  <template
+                    #title
+                  >
+                    Zone
+                  </template>
+                  <template
+                    #body
+                  >
+                    <XAction
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: item.zone,
+                        },
+                      }"
+                    >
+                      {{ item.zone }}
+                    </XAction>
+                  </template>
+                </DefinitionCard>
                 <DefinitionCard
                   layout="horizontal"
                 >

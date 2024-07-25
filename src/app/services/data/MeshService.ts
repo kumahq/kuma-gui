@@ -13,8 +13,10 @@ export const MeshService = {
       name,
       namespace,
       labels,
+      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
       spec: ((item = {}) => {
         return {
+          ...item,
           ports: Array.isArray(item.ports) ? item.ports : [],
           selector: ((item = {}) => {
             return {
@@ -25,6 +27,7 @@ export const MeshService = {
       })(item.spec),
       status: ((item = {}) => {
         return {
+          ...item,
           tls: typeof item.tls !== 'undefined' ? item.tls : { status: 'NotReady' },
           vips: Array.isArray(item.vips) ? item.vips : [],
           addresses: Array.isArray(item.addresses) ? item.addresses : [],

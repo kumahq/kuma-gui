@@ -127,6 +127,8 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       if (typeof filterParams.tag === 'undefined') {
         filterParams.tag = []
       }
+      // MeshService dataplanes should always be filtered by the zone for the MeshService via dataplaneTags
+      filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/zone:'))
       filterParams.tag = filterParams.tag.concat(Object.entries(JSON.parse(params.tags)).map(([key, value]) => `${key}:${value}`))
 
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
