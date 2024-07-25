@@ -1,8 +1,8 @@
+import locales from './locales/en-us/index.yaml'
 import type { EnvArgs } from '@/app/application/services/env/Env'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
-import i18nEnUs from '@/locales/en-us'
 import { token, createInjections } from '@/services/utils'
 import type { ServiceDefinition } from '@/services/utils'
 
@@ -42,8 +42,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
-    [token('kuma.i18n.en-us'), {
-      constant: i18nEnUs,
+    [token('kuma.locales'), {
+      service: () => locales,
       labels: [
         app.enUs,
       ],

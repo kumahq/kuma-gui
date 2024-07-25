@@ -1,3 +1,4 @@
+import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import type { SplitRouteRecordRaw } from './routes'
 import { sources } from './sources'
@@ -36,6 +37,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.routes,
+      ],
+    }],
+    [token('meshes.locales'), {
+      service: () => locales,
+      labels: [
+        app.enUs,
       ],
     }],
     ...servicesModule(mesh),

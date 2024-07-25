@@ -1,0 +1,5 @@
+components:
+  route-view:
+    title: "{name} Manager"
+    route-announcer: "Navigated to {title}"
+

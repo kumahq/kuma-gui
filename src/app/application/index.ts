@@ -9,6 +9,7 @@ import DataSink from './components/data-source/DataSink.vue'
 import DataSource from './components/data-source/DataSource.vue'
 import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
+import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import can from './services/can'
 import type { Can } from './services/can'
@@ -113,6 +114,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.routes,
+      ],
+    }],
+    [token('application.locales'), {
+      service: () => locales,
+      labels: [
+        app.enUs,
       ],
     }],
 
