@@ -51,8 +51,7 @@
 import { computed } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
-import { useI18n } from '@/app/application'
-import { toYaml } from '@/utilities/toYaml'
+import { useI18n, YAML } from '@/app/application'
 
 type Resolve = (data: Object) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
@@ -88,6 +87,6 @@ function toYamlRepresentation(resource: Object): string {
   if ('modificationTime' in resource) {
     delete resource.modificationTime
   }
-  return toYaml(resource)
+  return YAML.stringify(resource)
 }
 </script>

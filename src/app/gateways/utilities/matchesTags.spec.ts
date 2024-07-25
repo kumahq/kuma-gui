@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { matchesTags } from './matchesTags'
+import { matchesTags } from './'
 
 describe('matchesTags', () => {
   test.each([

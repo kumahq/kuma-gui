@@ -253,13 +253,13 @@
 import { ref } from 'vue'
 
 import { sources as zoneSources } from '../sources'
+import { get } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
-import { get } from '@/utilities/get'
 
 type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
 const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})

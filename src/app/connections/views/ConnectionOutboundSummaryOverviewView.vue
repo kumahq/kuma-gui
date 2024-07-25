@@ -142,7 +142,7 @@
                                   <dd class="mt-2">
                                     <div>
                                       <CodeBlock
-                                        :code="toYaml(item.raw)"
+                                        :code="YAML.stringify(item.raw)"
                                         language="yaml"
                                         :show-copy-button="false"
                                       />
@@ -166,6 +166,7 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
+import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
@@ -175,7 +176,6 @@ import type { DataplaneOverview } from '@/app/data-planes/data/'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { RuleCollectionSource } from '@/app/rules/sources'
-import { toYaml } from '@/utilities/toYaml'
 const props = defineProps<{
   data: Record<string, any>
   dataplaneOverview: DataplaneOverview

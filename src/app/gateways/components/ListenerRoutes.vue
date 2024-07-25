@@ -252,6 +252,7 @@
 import { computed } from 'vue'
 
 import type { MeshGateway } from '../data'
+import { matchesTags } from '../utilities'
 import { useI18n } from '@/app/application'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import TagList from '@/app/common/TagList.vue'
@@ -261,7 +262,6 @@ import RuleMatch from '@/app/rules/components/RuleMatch.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
 import type { PolicyType } from '@/types/index.d'
-import { matchesTags } from '@/utilities/matchesTags'
 
 const { t } = useI18n()
 
