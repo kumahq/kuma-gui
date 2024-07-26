@@ -26,6 +26,9 @@ export const config: UserConfigFn = () => {
         template: {
           compilerOptions: {
             whitespace: 'preserve',
+            isCustomElement: (item) => [
+              'search',
+            ].includes(item),
           },
         },
       }),

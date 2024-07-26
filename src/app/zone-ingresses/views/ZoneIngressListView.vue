@@ -29,11 +29,11 @@
           })"
         >
           <template
-            #loadable="{ data }"
+            #loadable="{ data: ingresses }"
           >
             <DataCollection
               type="zone-ingresses"
-              :items="data?.items ?? [undefined]"
+              :items="ingresses?.items ?? [undefined]"
             >
               <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
               <AppCollection
@@ -48,8 +48,8 @@
                 ]"
                 :page-number="1"
                 :page-size="100"
-                :total="data?.total"
-                :items="data?.items"
+                :total="ingresses?.total"
+                :items="ingresses?.items"
                 :is-selected-row="(row) => row.name === route.params.zoneIngress"
                 @change="route.update"
                 @resize="me.set"
@@ -135,8 +135,8 @@
                 >
                   <component
                     :is="Component"
-                    v-if="typeof data !== 'undefined'"
-                    :items="data.items"
+                    v-if="typeof ingresses !== 'undefined'"
+                    :items="ingresses.items"
                   />
                 </SummaryView>
               </RouterView>
@@ -154,4 +154,8 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { ZoneOverview } from '@/app/zones/data'
+const _props = defineProps<{
+  data: ZoneOverview
+}>()
 </script>

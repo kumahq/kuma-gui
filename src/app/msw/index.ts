@@ -15,16 +15,16 @@ const $ = {
   mswPassthroughs: token('msw.passthroughs'),
 }
 export const TOKENS = $
+const passthroughExtension = /\.(vue|ts|js|json)(\?.*)?$/
 export const services = (_: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('msw.passthrough.msw'), {
       service: () => [(req: Request) => {
         const { pathname, href } = new URL(req.url)
         if (
-          pathname.startsWith('/@fs') ||
-          pathname.startsWith('/node_modules') ||
-          pathname.startsWith('/src/assets') ||
-          href.match(/\.(vue|ts|js|json)(\?.*)?$/)
+          !pathname.startsWith('/node_modules') &&
+         !pathname.startsWith('/src/assets/') &&
+         !passthroughExtension.test(href)
         ) {
           return `Found an unhandled ${req.method} request to ${href}`
         }
@@ -36,10 +36,6 @@ export const services = (_: Record<string, Token>): ServiceDefinition[] => {
     ],
     [$.msw, {
       service: (handlers: Handler[] = [], passthroughs: Passthrough[]) => {
-        console.warn(
-          '%c ✨You are mocking api requests.',
-          'background: gray; color: white; display: block; padding: 0.25rem;',
-        )
         return setupWorker(...handlers).start({
           quiet: true,
           onUnhandledRequest(req: Request) {

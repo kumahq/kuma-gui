@@ -38,6 +38,9 @@ declare module '@vue/runtime-core' {
   }
 }
 
+const $ = {
+  xVueComponents: token('x.vue.components'),
+}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [token('kong.plugins'), {
@@ -51,7 +54,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
-    [token('x.vue.components'), {
+    [$.xVueComponents, {
       service: () => {
         return [
           ['XAction', XAction],
@@ -82,3 +85,4 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
   ]
 }
+export const TOKENS = $
