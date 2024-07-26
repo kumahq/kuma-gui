@@ -40,8 +40,8 @@ zone-cps:
       intro: !!text/markdown |
         Zones are a logical grouping that represents a distinct network or infrastructure boundary with a multi-zone deplyment. Zone Control Planes are responsible for managing and coordinating the service mesh within a specific zone, handling policies and communication with the Global Control Plane.
   list:
-    ZONE_STORE_TYPE_MEMORY: 'Version mismatch'
-    INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: 'Uses memory store'
+    INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: 'Version mismatch'
+    ZONE_STORE_TYPE_MEMORY: 'Uses memory store'
   detail:
     subscriptions: 'KDS connections'
     configuration_title: 'Configuration'
