@@ -86,7 +86,7 @@ export const createTitleSetter = ($doc = document) => {
   })
 }
 // when used with router.push, prevents things like `q=` (i.e. key= but with no value)
-export const cleanQuery = <T extends Record<string, unknown>>(params: Record<string, string | boolean | undefined>, originalQuery: T) => {
+export const cleanQuery = <T extends Record<string, unknown>>(params: Record<string, string | boolean | number | undefined>, originalQuery: T) => {
   const query = {
     ...originalQuery as Record<string, string | undefined | null>,
   }

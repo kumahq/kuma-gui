@@ -44,7 +44,7 @@ type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
 type Token = ReturnType<typeof token>
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     AppView: typeof AppView
     DataSource: typeof DataSource
