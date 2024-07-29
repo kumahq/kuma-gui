@@ -45,7 +45,7 @@
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.16.1",
     "@vitejs/plugin-vue": "^5.0.5",
-    "@vitest/coverage-istanbul": "^2.0.1",
+    "@vitest/coverage-istanbul": "^2.0.4",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/test-utils": "^2.4.6",
     "@whyframe/core": "^0.1.11",
