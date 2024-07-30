@@ -2,16 +2,18 @@ Feature: mesh / dataplanes / index
 
   Background:
     Given the CSS selectors
-      | Alias            | Selector                              |
-      | table            | [data-testid='data-plane-collection'] |
-      | table-header     | $table th                             |
-      | item             | $table tbody tr                       |
-      | service-cell     | $item:nth-child(1) td:nth-child(3)    |
-      | select-type      | [data-testid='select-input']          |
-      | select-option    | .select-item                          |
-      | select-standard  | [data-testid='select-item-standard']  |
-      | select-builtin   | [data-testid='select-item-builtin']   |
-      | select-delegated | [data-testid='select-item-delegated'] |
+      | Alias            | Selector                                       |
+      | table            | [data-testid='data-plane-collection']          |
+      | table-header     | $table th                                      |
+      | item             | $table tbody tr                                |
+      | service-cell     | $item:nth-child(1) td:nth-child(3)             |
+      | select-type      | [data-testid='select-input']                   |
+      | select-option    | .select-item                                   |
+      | select-standard  | [data-testid='select-item-standard']           |
+      | select-builtin   | [data-testid='select-item-builtin']            |
+      | select-delegated | [data-testid='select-item-delegated']          |
+      | input-search     | [data-testid='filter-bar-filter-input']        |
+      | button-search    | [data-testid='filter-bar-submit-query-button'] |
     And the environment
       """
       KUMA_MODE: global
@@ -95,6 +97,21 @@ Feature: mesh / dataplanes / index
       | dpp-2          |
       | No certificate |
       | offline        |
+
+  Scenario: Searching by tag doesn't overwrite the existing service tag
+    When I visit the "/meshes/default/data-planes" URL
+    Then the "$input-search" element isn't disabled
+    And I wait for 500 ms
+    When I "type" "service:system-1" into the "$input-search" element
+    And I click the "$button-search" element
+    Then the URL "/meshes/default/dataplanes/_overview" was requested with
+      """
+      searchParams:
+        tag:
+          - "kuma.io/service:system-1"
+        offset: 0
+        size: 50
+      """
 
   Rule: The listing can be filtered by type
 

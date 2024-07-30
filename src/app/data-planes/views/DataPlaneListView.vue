@@ -27,6 +27,7 @@
           }, {
             page: route.params.page,
             size: route.params.size,
+            search: route.params.s,
           })"
         >
           <template
