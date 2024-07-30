@@ -40,7 +40,7 @@ const attrs = useAttrs()
 
 const component = ref<KCopyT | null>(null)
 
-const _text = ref()
+const _text = ref('')
 const copy = async (text: string) => {
   _text.value = text
   await nextTick()

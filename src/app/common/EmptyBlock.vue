@@ -81,7 +81,7 @@ import { useI18n } from '@/app/application'
 
 const { t } = useI18n()
 const props = withDefaults(defineProps<{
-  type: string
+  type?: string
 }>(), {
   type: '',
 })

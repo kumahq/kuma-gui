@@ -11,7 +11,7 @@
     >
       <KDropdown
         :kpop-attributes="{
-          placement: 'bottomEnd',
+          placement: 'bottom-end',
         }"
         width="150"
       >

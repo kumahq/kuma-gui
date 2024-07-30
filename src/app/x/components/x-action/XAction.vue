@@ -173,11 +173,12 @@ const props = withDefaults(defineProps<{
   action: 'default',
   to: () => ({}),
   for: '',
+  mount: () => {},
 })
 
 const group = inject<{
   expanded: boolean
-}>('x-action-group')
+} | undefined>('x-action-group', undefined)
 
 const router = useRouter()
 const query = computed(() => {

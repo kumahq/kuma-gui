@@ -87,7 +87,7 @@ export const ZoneOverview = {
         payload: {},
       })
     }
-    if (!get(insight, 'version.kumaCp.kumaCpGlobalCompatible', 'true')) {
+    if (!get(insight, 'version.kumaCp.kumaCpGlobalCompatible', true)) {
       warnings.push({
         kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS',
         payload: {
