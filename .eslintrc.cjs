@@ -178,6 +178,15 @@ const INLINE_NON_VOID_ELEMENTS = [
           ignoreRestSiblings: true,
         }],
 
+        /* temporarily allow function, variable and export hoisting */
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': ['error', {
+          functions: false,
+          classes: true,
+          variables: false,
+          allowNamedExports: true,
+        }],
+
         'no-useless-constructor': 'off',
         '@typescript-eslint/no-useless-constructor': 'error',
 
