@@ -1,3 +1,4 @@
+import { get } from '@/app/application'
 import { SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
@@ -6,7 +7,6 @@ import type {
   Zone as PartialZone,
   KDSSubscription as PartialKDSSubscription,
 } from '@/types/index.d'
-import { get } from '@/utilities/get'
 
 export type KDSSubscription = PartialKDSSubscription
 

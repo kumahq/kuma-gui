@@ -90,7 +90,7 @@
                 <template #config="{ row }">
                   <template v-if="Object.keys(row.raw).length > 0">
                     <CodeBlock
-                      :code="toYaml(row.raw)"
+                      :code="YAML.stringify(row.raw)"
                       language="yaml"
                       :show-copy-button="false"
                     />
@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from '@/app/application'
+import { useI18n, YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
@@ -120,7 +120,6 @@ import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
 import XAction from '@/app/x/components/x-action/XAction.vue'
 import type { PolicyType } from '@/types/index.d'
-import { toYaml } from '@/utilities/toYaml'
 const { t } = useI18n()
 
 const props = defineProps<{

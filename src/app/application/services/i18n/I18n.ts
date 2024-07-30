@@ -1,7 +1,7 @@
 import { createI18n } from '@kong-ui-public/i18n'
 
+import { get } from '@/app/application'
 import type Env from '@/app/application/services/env/Env'
-import { get } from '@/utilities/get'
 
 declare module 'intl-messageformat' {
   interface Options {

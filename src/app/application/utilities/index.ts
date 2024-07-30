@@ -1,3 +1,5 @@
+import jsYaml from 'js-yaml'
+
 type URLParamDefault = string | number | boolean
 type URLParamValue = string | null
 
@@ -7,6 +9,28 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 
+export const YAML = {
+  stringify: (json: any) => {
+    return jsYaml
+      .dump(json, { lineWidth: -1 })
+      // Removes the trailing new line js-yaml is outputting.
+      .replace(/\n$/, '')
+  },
+}
+
+export function get(obj: any, path: string, defaultValue: any = undefined): any {
+  if (!(typeof obj === 'object') || Array.isArray(obj)) {
+    return defaultValue
+  }
+
+  const props = path.split('.')
+  if (props.length === 1) {
+    const value = obj[props[0]]
+    return typeof value === 'undefined' ? defaultValue : value
+  }
+
+  return get(obj[props[0]], props.slice(1).join('.'), defaultValue)
+}
 const createUniqueId = (j = 0) => {
   let i = j
   return (prefix = 'unique') => {
@@ -31,7 +55,7 @@ const supportedAttrs = ['class'] as const
 type SupportedAttrs = typeof supportedAttrs[number]
 export const createAttrsSetter = ($el = document.documentElement) => {
   if (!$el) {
-    return () => {}
+    return () => { }
   }
   const originalClasses = [...$el.classList]
   return beforePaint((attrs: Partial<Record<SupportedAttrs, string>>[]) => {
