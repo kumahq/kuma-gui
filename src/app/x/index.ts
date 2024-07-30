@@ -19,7 +19,7 @@ import { token } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     XIcon: typeof XIcon
     XInput: typeof XInput
