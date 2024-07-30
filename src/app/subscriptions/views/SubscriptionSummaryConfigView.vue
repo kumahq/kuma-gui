@@ -17,8 +17,8 @@
 
       <KCard>
         <CodeBlock
-          language="json"
-          :code="props.data.config"
+          language="yaml"
+          :code="YAML.stringify(props.data)"
           is-searchable
           :query="route.params.codeSearch"
           :is-filter-mode="route.params.codeFilter"
@@ -33,6 +33,7 @@
 </template>
 
 <script lang="ts" setup>
+import { YAML } from '@/app/application'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import type { KDSSubscription } from '@/app/zones/data'
 const props = defineProps<{
