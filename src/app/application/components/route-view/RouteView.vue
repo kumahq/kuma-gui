@@ -199,15 +199,16 @@ watch(() => props.name, () => {
   }
 }, { immediate: true })
 
-let newParams: Record<string, string | boolean | undefined> = {}
-const routerPush = beforePaint((params: Record<string, string | boolean | undefined>) => {
+type RouteParams = Record<string, string | boolean | number | undefined>
+let newParams: RouteParams = {}
+const routerPush = beforePaint((params: RouteParams) => {
   router.push({
     name: props.name,
     query: cleanQuery(params, route.query),
   })
   newParams = {}
 })
-const routeUpdate = (params: Record<string, string | boolean | undefined>) => {
+const routeUpdate = (params: RouteParams): void => {
   newParams = {
     ...newParams,
     ...params,
