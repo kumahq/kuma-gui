@@ -108,7 +108,8 @@
             <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
             <AppCollection
               :headers="[
-                { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                { ...me.get('headers.zoneInstanceId'), label: 'Zone Leader Instance ID', key: 'zoneInstanceId' },
+                { ...me.get('headers.version'), label: 'Version', key: 'version' },
                 { ...me.get('headers.connected'), label: 'Connected', key: 'connected' },
                 { ...me.get('headers.disconnected'), label: 'Disconnected', key: 'disconnected' },
                 { ...me.get('headers.responses'), label: `Responses (sent/ack'ed)`, key: 'responses' },
@@ -118,7 +119,7 @@
               @resize="me.set"
             >
               <template
-                #name="{ row: item }"
+                #zoneInstanceId="{ row: item }"
               >
                 <XAction
                   data-action
@@ -131,6 +132,11 @@
                 >
                   {{ item.zoneInstanceId }}
                 </XAction>
+              </template>
+              <template
+                #version="{ row: item }"
+              >
+                {{ item.version?.kumaCp?.version ?? '-' }}
               </template>
               <template
                 #connected="{ row: item }"
