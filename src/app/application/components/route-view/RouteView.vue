@@ -21,27 +21,34 @@
       <DataSink
         v-if="me"
         :src="`/me/${props.name}`"
-        v-slot="{ submit }"
+        v-slot="{ submit: _submit }"
       >
-        <slot
-          :id="UniqueId"
-          name="default"
-          :t="t"
-          :env="env"
-          :me="{ data: me, set: submit, get: (uri: string, d: unknown = {}) => get(me, uri, d) }"
-          :can="can"
-          :uri="uri"
-          :route="{
-            name: props.name,
-            update: routeUpdate,
-            replace: routeReplace,
-            params: routeParams,
-            back: routerBack,
-            children,
-            child,
+        <!-- eslint-disable vue/no-lone-template -->
+        <template
+          :ref="() => {
+            submit = _submit
           }"
         />
       </DataSink>
+      <slot
+        v-if="submit"
+        :id="UniqueId"
+        name="default"
+        :t="t"
+        :env="env"
+        :me="{ data: me, set: submit, get: (uri: string, d: unknown = {}) => get(me, uri, d) }"
+        :can="can"
+        :uri="uri"
+        :route="{
+          name: props.name,
+          update: routeUpdate,
+          replace: routeReplace,
+          params: routeParams,
+          back: routerBack,
+          children,
+          child,
+        }"
+      />
     </div>
   </DataSource>
 </template>
@@ -112,6 +119,7 @@ class UniqueId {
 }
 const name = computed(() => props.name)
 
+const submit = ref(() => undefined)
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<Symbol, string>()
 const attributes = new Map<Symbol, SupportedAttrs>()
