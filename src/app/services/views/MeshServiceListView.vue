@@ -100,7 +100,18 @@
                 <template
                   #addresses="{ row: item }"
                 >
-                  <KTruncate>
+                  <template
+                    v-if="item.status.addresses.length === 1"
+                  >
+                    <TextWithCopyButton
+                      :text="item.status.addresses[0].hostname"
+                    >
+                      {{ item.status.addresses[0].hostname }}
+                    </TextWithCopyButton>
+                  </template>
+                  <KTruncate
+                    v-else
+                  >
                     <span
                       v-for="address in item.status.addresses"
                       :key="address.hostname"

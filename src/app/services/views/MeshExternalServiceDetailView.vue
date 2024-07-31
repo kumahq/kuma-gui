@@ -21,7 +21,18 @@
               <template
                 #body
               >
-                <KTruncate>
+                <template
+                  v-if="props.data.status.addresses.length === 1"
+                >
+                  <TextWithCopyButton
+                    :text="props.data.status.addresses[0].hostname"
+                  >
+                    {{ props.data.status.addresses[0].hostname }}
+                  </TextWithCopyButton>
+                </template>
+                <KTruncate
+                  v-else
+                >
                   <span
                     v-for="address in props.data.status.addresses"
                     :key="address.hostname"
@@ -96,6 +107,7 @@
 <script lang="ts" setup>
 import type { MeshExternalService } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 
 const props = defineProps<{
   data: MeshExternalService
