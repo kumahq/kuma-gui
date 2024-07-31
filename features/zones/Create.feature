@@ -185,6 +185,7 @@ Feature: zones / create
     When I clear the "$name-input" element
     And I "type" "test" into the "$name-input" element
     And I click the "$create-zone-button" element
+    And the "$name-input-invalid-dns-name" element doesn't exist
     Then the "$create-error" element doesn't exist
     And the "$instructions" element exists
 
