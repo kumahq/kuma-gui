@@ -54,7 +54,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             },
           },
           status: {
-            addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
+            addresses: Array.from({ length: fake.number.int({ min: 0, max: 5 }) }).map(_ => ({
               hostname: fake.internet.domainName(),
             })),
             vips: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({

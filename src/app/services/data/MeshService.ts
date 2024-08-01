@@ -27,7 +27,14 @@ export const MeshService = {
         return {
           tls: typeof item.tls !== 'undefined' ? item.tls : { status: 'NotReady' },
           vips: Array.isArray(item.vips) ? item.vips : [],
-          addresses: Array.isArray(item.addresses) ? item.addresses : [],
+          addresses: Array.isArray(item.addresses)
+            ? item.addresses.map(item => {
+              return {
+                ...item,
+                hostname: typeof item.hostname === 'string' ? item.hostname : '',
+              }
+            })
+            : [],
         }
       })(item.status),
       config: item,

@@ -31,7 +31,18 @@
               <template
                 #body
               >
-                <KTruncate>
+                <template
+                  v-if="props.data.status.addresses.length === 1"
+                >
+                  <TextWithCopyButton
+                    :text="props.data.status.addresses[0].hostname"
+                  >
+                    {{ props.data.status.addresses[0].hostname }}
+                  </TextWithCopyButton>
+                </template>
+                <KTruncate
+                  v-else
+                >
                   <span
                     v-for="address in props.data.status.addresses"
                     :key="address.hostname"
@@ -301,6 +312,7 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { sources } from '@/app/data-planes/sources'
 
 const props = defineProps<{

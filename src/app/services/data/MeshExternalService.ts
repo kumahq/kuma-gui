@@ -17,7 +17,14 @@ export const MeshExternalService = {
       status: ((item = {}) => {
         return {
           ...item,
-          addresses: Array.isArray(item.addresses) ? item.addresses : [],
+          addresses: Array.isArray(item.addresses)
+            ? item.addresses.map(item => {
+              return {
+                ...item,
+                hostname: typeof item.hostname === 'string' ? item.hostname : '',
+              }
+            })
+            : [],
         }
       })(item.status),
 
