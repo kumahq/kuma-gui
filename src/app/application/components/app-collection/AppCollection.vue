@@ -215,8 +215,10 @@ watch(() => props.pageNumber, function () {
     kTableMountKey.value++
   }
 })
-watch(() => props.headers, function () {
-  kTableMountKey.value++
+watch(() => props.headers, function (val, prev) {
+  if (JSON.stringify(val) !== JSON.stringify(prev)) {
+    kTableMountKey.value++
+  }
 })
 
 function getRowAttributes(row: Row): Record<string, string> {
