@@ -8,6 +8,7 @@
       @change="(d: TypeOf<T>) => {
         writing = false
         data = d;
+        error = undefined;
         emit('change', d)
         toggle()
       }"
