@@ -22,7 +22,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const matcherCount = parseInt(env('KUMA_RULE_MATCHER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
   const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
+  const resourceRuleCount = parseInt(env('KUMA_DATAPLANE_RESOURCE_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
   const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   return {
     headers: {},
@@ -32,6 +34,44 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         mesh,
         name,
       },
+      toResourceRules: Array.from({ length: resourceRuleCount }).map((_, i) => {
+        const id = i
+        const displayName = `${fake.hacker.noun()}-${id}`
+        const nspace = fake.k8s.namespace()
+        return {
+          resourceMeta: {
+            type: fake.helpers.arrayElement([
+              'MeshService',
+              'MeshExternalService',
+              'MeshGateway',
+              'MeshHTTPRoute',
+              'MeshTCPRoute',
+            ]),
+            mesh,
+            name: `${displayName}${k8s ? `.${nspace}` : ''}`,
+            ...(k8s
+              ? {
+                labels: {
+                  'kuma.io/display-name': displayName,
+                  'k8s.kuma.io/namespace': nspace,
+                  'kuma.io/origin': 'zone',
+                  'kuma.io/zone': fake.hacker.noun(),
+                },
+              }
+              : {}),
+          },
+          conf: '',
+          origin: {
+            resourceMeta: {
+              type: 'MeshTimeout',
+              mesh,
+              name: fake.hacker.noun(),
+              labels: {},
+            },
+            ruleIndex: 0, // fake.number.int({ min: 0, max: ruleCount }),
+          },
+        }
+      }),
       rules: [
         ...(hasProxyRule
           ? [{

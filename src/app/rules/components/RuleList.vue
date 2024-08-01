@@ -40,6 +40,7 @@
                 :items="items"
                 :headers="[
                   ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),
+                  { label: 'Origin Resources', key: 'resources' },
                   { label: 'Origin policies', key: 'origins' },
                   { label: 'Conf', key: 'config' },
                 ]"
@@ -58,6 +59,63 @@
 
                   <template v-else>
                     <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
+                  </template>
+                </template>
+
+                <template #resources="{ row }">
+                  <ul v-if="row.resources.length > 0">
+                    <li
+                      v-for="(resource, resourceIndex) in row.resources"
+                      :key="`${type}-${resourceIndex}`"
+                    >
+                      <XAction
+                        :to="({
+                          MeshService: {
+                            name: 'mesh-service-detail-view',
+                            params: {
+                              mesh: resource.resourceMeta.mesh,
+                              service: resource.resourceMeta.name,
+                            },
+                          },
+                          MeshExternalService: {
+                            name: 'mesh-external-service-detail-view',
+                            params: {
+                              mesh: resource.resourceMeta.mesh,
+                              service: resource.resourceMeta.name,
+                            },
+                          },
+                          MeshGateway: {
+                            name: 'mesh-gateway-detail-view',
+                            params: {
+                              mesh: resource.resourceMeta.mesh,
+                              gateway: resource.resourceMeta.name,
+                            },
+                          },
+                          MeshHTTPRoute: {
+                            name: 'policy-detail-view',
+                            params: {
+                              mesh: resource.resourceMeta.mesh,
+                              policyType: 'meshhttproutes',
+                              policy: resource.resourceMeta.name,
+                            },
+                          },
+                          MeshTCPRoute: {
+                            name: 'policy-detail-view',
+                            params: {
+                              mesh: resource.resourceMeta.mesh,
+                              policyType: 'meshtcproutes',
+                              policy: resource.resourceMeta.name,
+                            },
+                          },
+                        })[resource.resourceMeta.type]"
+                      >
+                        {{ resource.resourceMeta.name }}
+                      </XAction>
+                    </li>
+                  </ul>
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
                   </template>
                 </template>
 
@@ -160,11 +218,16 @@ const props = defineProps<{
   &:not(.has-matchers) {
     :deep(th:nth-child(1)),
     :deep(td:nth-child(1)) {
-      width: 65%;
+      width: 50%;
     }
 
     :deep(th:nth-child(2)),
     :deep(td:nth-child(2)) {
+      width: 15%;
+    }
+
+    :deep(th:nth-child(3)),
+    :deep(td:nth-child(3)) {
       width: 35%;
     }
   }
@@ -177,12 +240,16 @@ const props = defineProps<{
 
     :deep(th:nth-child(2)),
     :deep(td:nth-child(2)) {
-      width: 15%;
+      width: 10%;
     }
 
     :deep(th:nth-child(3)),
     :deep(td:nth-child(3)) {
-      width: 35%;
+      width: 10%;
+    }
+    :deep(th:nth-child(4)),
+    :deep(td:nth-child(4)) {
+      width: 30%;
     }
   }
 }

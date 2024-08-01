@@ -13,6 +13,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         name,
         type: 'MeshGateway',
       },
+      toResourceRules: [],
       rules: [
         {
           fromRules: [],

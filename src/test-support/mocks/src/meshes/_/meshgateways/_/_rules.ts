@@ -21,6 +21,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         mesh,
         name,
       },
+      toResourceRules: [],
       rules: [
         ...hasProxyRule
           ? [{

@@ -18,13 +18,14 @@ type RuleConf = Exclude<InspectBaseRule['conf'], 'hostnames' | 'rules'> & {
   rules: ToTargetRefRule[]
 }
 
-export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
+export type Rule = Omit<InspectBaseRule, 'conf' | 'origin' | 'toResourceRules'> & {
   type: string
   ruleType: 'to' | 'from' | 'proxy'
   inbound?: InspectInbound
   raw: InspectBaseRule['conf']
   config: RuleConf
   origins: InspectBaseRule['origin']
+  resources: NonNullable<PartialInspectRulesForDataplane['toResourceRules']>
 }
 export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
   rules: Rule[]
@@ -57,18 +58,29 @@ export const Rule = {
       },
       origins: Array.isArray(origin) ? origin : [],
       matchers: Array.isArray(matchers) ? matchers : [],
+      resources: [],
     }
   },
-  fromCollection(partialInspectRules: PartialInspectRulesForDataplane): RuleCollection {
-    const rules = Array.isArray(partialInspectRules.rules)
-      ? partialInspectRules.rules.reduce<Rule[]>((prev, item) => {
-      // to rules we can just reshape.
+  fromCollection(collection: PartialInspectRulesForDataplane): RuleCollection {
+    const resourceMap = new Map<Number, PartialInspectRulesForDataplane['toResourceRules']>();
+    (collection.toResourceRules ?? []).forEach(item => {
+      const index = item.origin.ruleIndex
+      if (!resourceMap.has(index)) {
+        resourceMap.set(index, [])
+      }
+      resourceMap.get(index)!.push(item)
+    })
+
+    const rules = Array.isArray(collection.rules)
+      ? collection.rules.reduce<Rule[]>((prev, item, i) => {
+        // to rules we can just reshape.
         const to: Rule[] = Array.isArray(item.toRules)
           ? item.toRules.map(rule => {
             return {
               ...Rule.fromObject(rule),
               ruleType: 'to',
               type: item.type,
+              resources: resourceMap.has(i) ? [...resourceMap.get(i)!] : [],
             }
           })
           : []
@@ -83,6 +95,7 @@ export const Rule = {
                 ...Rule.fromObject(r),
                 ruleType: 'from',
                 type: item.type,
+                resources: [],
               }
             }))
           }, [])
@@ -95,6 +108,7 @@ export const Rule = {
             ...Rule.fromObject(item.proxyRule as InspectBaseRule),
             ruleType: 'proxy',
             type: item.type,
+            resources: [],
           }]
           : []
 
@@ -102,8 +116,9 @@ export const Rule = {
         return prev.concat(to).concat(from).concat(proxy)
       }, [])
       : []
+
     return {
-      ...partialInspectRules,
+      ...collection,
       rules,
     }
   },

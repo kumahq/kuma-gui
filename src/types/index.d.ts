@@ -473,6 +473,24 @@ export interface InspectRule {
 export interface InspectRulesForDataplane {
   resource: Meta<'Dataplane' | 'MeshGateway'>
   rules: InspectRule[]
+  toResourceRules?: {
+    resourceMeta: Meta<'MeshService' | 'MeshGateway' | 'MeshExternalService' | 'MeshHTTPRoute' | 'MeshTCPRoute'>
+    labels?: {
+      'kuma.io/display-name'?: string
+      'k8s.kuma.io/namespace'?: string
+      [key: string]: string | undefined
+    }
+    conf: string
+    origin: {
+      resourceMeta: Meta<'MeshTimeout' | 'MeshHTTPRoute' | 'MeshTCPRoute'>
+      labels?: {
+        'kuma.io/display-name'?: string
+        'k8s.kuma.io/namespace'?: string
+        [key: string]: string | undefined
+      }
+      ruleIndex: number
+    }
+  }[]
 }
 
 export type PolicyMatch = {
