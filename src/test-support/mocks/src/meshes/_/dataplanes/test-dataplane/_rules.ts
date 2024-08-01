@@ -14,6 +14,7 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
         mesh,
         name,
       },
+      toResourceRules: [],
       rules: [
         {
           fromRules: [
