@@ -9,11 +9,11 @@ export const MeshExternalService = {
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
     return {
       ...item,
-      config: item,
       id: item.name,
       name,
       namespace,
       labels,
+      zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
       status: ((item = {}) => {
         return {
           ...item,
@@ -27,6 +27,7 @@ export const MeshExternalService = {
             : [],
         }
       })(item.status),
+      config: item,
 
     }
   },

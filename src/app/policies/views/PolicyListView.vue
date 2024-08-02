@@ -180,16 +180,16 @@
                         </template>
 
                         <template #zone="{ row }">
-                          <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
+                          <template v-if="row.zone">
                             <XAction
                               :to="{
                                 name: 'zone-cp-detail-view',
                                 params: {
-                                  zone: row.labels['kuma.io/zone'],
+                                  zone: row.zone,
                                 },
                               }"
                             >
-                              {{ row.labels['kuma.io/zone'] }}
+                              {{ row.zone }}
                             </XAction>
                           </template>
 

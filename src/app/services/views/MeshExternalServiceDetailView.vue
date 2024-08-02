@@ -1,8 +1,7 @@
 <template>
   <RouteView
     name="mesh-external-service-detail-view"
-    :params="{
-    }"
+    v-slot="{ can }"
   >
     <AppView>
       <div
@@ -10,6 +9,29 @@
       >
         <KCard>
           <div class="columns">
+            <DefinitionCard
+              v-if="can('use zones') && props.data.zone"
+            >
+              <template
+                #title
+              >
+                Zone
+              </template>
+              <template
+                #body
+              >
+                <XAction
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: props.data.zone,
+                    },
+                  }"
+                >
+                  {{ props.data.zone }}
+                </XAction>
+              </template>
+            </DefinitionCard>
             <DefinitionCard
               v-if="props.data.status.addresses.length > 0"
             >

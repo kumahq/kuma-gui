@@ -8,7 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, can }"
   >
     <DataCollection
       :items="props.items"
@@ -43,6 +43,30 @@
             <div
               class="stack-with-borders"
             >
+              <DefinitionCard
+                v-if="can('use zones') && item.zone"
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
+                  Zone
+                </template>
+                <template
+                  #body
+                >
+                  <XAction
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: item.zone,
+                      },
+                    }"
+                  >
+                    {{ item.zone }}
+                  </XAction>
+                </template>
+              </DefinitionCard>
               <DefinitionCard
                 v-if="item.status.addresses.length > 0"
                 layout="horizontal"

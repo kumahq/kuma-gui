@@ -6,7 +6,7 @@
       inactive: false,
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, can }"
   >
     <DataSource
       :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
@@ -38,100 +38,132 @@
           data-testid="dataplane-details"
         >
           <KCard>
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
-                </template>
+            <div
+              class="stack"
+            >
+              <div
+                class="columns"
+              >
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.status') }}
+                  </template>
 
-                <template #body>
-                  <div class="status-with-reason">
-                    <StatusBadge :status="props.data.status" />
-                    <DataCollection
-                      v-if="props.data.dataplaneType === 'standard'"
-                      :items="props.data.dataplane.networking.inbounds"
-                      :predicate="item => !item.health.ready"
-                      :empty="false"
-                      v-slot="{ items : unhealthyInbounds }"
-                    >
-                      <KTooltip
-                        class="reason-tooltip"
+                  <template #body>
+                    <div class="status-with-reason">
+                      <StatusBadge :status="props.data.status" />
+                      <DataCollection
+                        v-if="props.data.dataplaneType === 'standard'"
+                        :items="props.data.dataplane.networking.inbounds"
+                        :predicate="item => !item.health.ready"
+                        :empty="false"
+                        v-slot="{ items : unhealthyInbounds }"
                       >
-                        <InfoIcon
-                          :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                          :size="KUI_ICON_SIZE_30"
-                        />
-                        <template #content>
-                          <ul>
-                            <li
-                              v-for="inbound in unhealthyInbounds"
-                              :key="`${inbound.service}:${inbound.port}`"
-                            >
-                              {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                            </li>
-                          </ul>
-                        </template>
-                      </KTooltip>
-                    </DataCollection>
-                  </div>
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  Type
-                </template>
-
-                <template #body>
-                  {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard
-                v-if="props.data.namespace.length > 0"
-              >
-                <template #title>
-                  Namespace
-                </template>
-
-                <template #body>
-                  {{ props.data.namespace }}
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('data-planes.routes.item.last_updated') }}
-                </template>
-
-                <template #body>
-                  {{ t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) }) }}
-                </template>
-              </DefinitionCard>
-
-              <template
-                v-if="props.data.dataplane.networking.gateway"
-              >
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.tags') }}
-                  </template>
-
-                  <template #body>
-                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                        <KTooltip
+                          class="reason-tooltip"
+                        >
+                          <InfoIcon
+                            :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                            :size="KUI_ICON_SIZE_30"
+                          />
+                          <template #content>
+                            <ul>
+                              <li
+                                v-for="inbound in unhealthyInbounds"
+                                :key="`${inbound.service}:${inbound.port}`"
+                              >
+                                {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                              </li>
+                            </ul>
+                          </template>
+                        </KTooltip>
+                      </DataCollection>
+                    </div>
                   </template>
                 </DefinitionCard>
 
+                <DefinitionCard
+                  v-if="can('use zones') && props.data.zone"
+                >
+                  <template
+                    #title
+                  >
+                    Zone
+                  </template>
+                  <template
+                    #body
+                  >
+                    <XAction
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: props.data.zone,
+                        },
+                      }"
+                    >
+                      {{ props.data.zone }}
+                    </XAction>
+                  </template>
+                </DefinitionCard>
                 <DefinitionCard>
                   <template #title>
-                    {{ t('http.api.property.address') }}
+                    Type
                   </template>
 
                   <template #body>
-                    <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                    {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
                   </template>
                 </DefinitionCard>
-              </template>
+
+                <DefinitionCard
+                  v-if="props.data.namespace.length > 0"
+                >
+                  <template #title>
+                    Namespace
+                  </template>
+
+                  <template #body>
+                    {{ props.data.namespace }}
+                  </template>
+                </DefinitionCard>
+              </div>
+              <div
+                class="columns"
+              >
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('data-planes.routes.item.last_updated') }}
+                  </template>
+
+                  <template #body>
+                    {{ t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) }) }}
+                  </template>
+                </DefinitionCard>
+
+                <template
+                  v-if="props.data.dataplane.networking.gateway"
+                >
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('http.api.property.tags') }}
+                    </template>
+
+                    <template #body>
+                      <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                    </template>
+                  </DefinitionCard>
+
+                  <DefinitionCard>
+                    <template #title>
+                      {{ t('http.api.property.address') }}
+                    </template>
+
+                    <template #body>
+                      <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                    </template>
+                  </DefinitionCard>
+                </template>
+              </div>
             </div>
           </KCard>
 
