@@ -11,7 +11,7 @@
           layout="horizontal"
         >
           <template #title>
-            Version
+            {{ t('subscriptions.routes.item.headers.version') }}
           </template>
 
           <template #body>
@@ -26,7 +26,7 @@
           layout="horizontal"
         >
           <template #title>
-            Connected
+            {{ t('subscriptions.routes.item.headers.connected') }}
           </template>
 
           <template #body>
@@ -38,7 +38,7 @@
           layout="horizontal"
         >
           <template #title>
-            Disconnected
+            {{ t('subscriptions.routes.item.headers.disconnected') }}
           </template>
 
           <template #body>
@@ -49,7 +49,7 @@
           layout="horizontal"
         >
           <template #title>
-            Total Responses (sent/ack'ed)
+            {{ t('subscriptions.routes.item.headers.responses') }}
           </template>
 
           <template #body>
@@ -65,7 +65,7 @@
           layout="horizontal"
         >
           <template #title>
-            Zone Leader Instance ID
+            {{ t('subscriptions.routes.item.headers.zoneInstanceId') }}
           </template>
 
           <template #body>
@@ -77,7 +77,7 @@
           layout="horizontal"
         >
           <template #title>
-            Global Instance ID
+            {{ t('subscriptions.routes.item.headers.globalInstanceId') }}
           </template>
 
           <template #body>
@@ -88,7 +88,7 @@
           layout="horizontal"
         >
           <template #title>
-            ID
+            {{ t('subscriptions.routes.item.headers.id') }}
           </template>
 
           <template #body>
@@ -107,11 +107,13 @@
           layout="horizontal"
         >
           <template #title>
-            <strong>Type</strong>
+            <strong>
+              {{ t('subscriptions.routes.item.headers.type') }}
+            </strong>
           </template>
 
           <template #body>
-            Responses sent/ack'ed
+            {{ t('subscriptions.routes.item.headers.stat') }}
           </template>
         </DefinitionCard>
         <template
