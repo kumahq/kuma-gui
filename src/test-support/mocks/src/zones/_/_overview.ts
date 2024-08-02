@@ -40,7 +40,11 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: fake.string.uuid(),
-                globalInstanceId: `global-${fake.hacker.noun()}`,
+                ...(fake.datatype.boolean()
+                  ? {
+                    globalInstanceId: `global-${fake.hacker.noun()}`,
+                  }
+                  : {}),
                 zoneInstanceId: `zone-${fake.hacker.noun()}`,
                 version: {
                   kumaCp: {
