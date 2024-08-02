@@ -108,11 +108,11 @@
             <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
             <AppCollection
               :headers="[
-                { ...me.get('headers.zoneInstanceId'), label: 'Zone Leader Instance ID', key: 'zoneInstanceId' },
-                { ...me.get('headers.version'), label: 'Version', key: 'version' },
-                { ...me.get('headers.connected'), label: 'Connected', key: 'connected' },
-                { ...me.get('headers.disconnected'), label: 'Disconnected', key: 'disconnected' },
-                { ...me.get('headers.responses'), label: `Responses (sent/ack'ed)`, key: 'responses' },
+                { ...me.get('headers.zoneInstanceId'), label: t('zone-cps.routes.items.headers.zoneInstanceId'), key: 'zoneInstanceId' },
+                { ...me.get('headers.version'), label: t('zone-cps.routes.items.headers.version'), key: 'version' },
+                { ...me.get('headers.connected'), label: t('zone-cps.routes.items.headers.connected'), key: 'connected' },
+                { ...me.get('headers.disconnected'), label: t('zone-cps.routes.items.headers.disconnected'), key: 'disconnected' },
+                { ...me.get('headers.responses'), label: t('zone-cps.routes.items.headers.responses'), key: 'responses' },
               ]"
               :is-selected-row="item => item.id === route.params.subscription"
               :items="props.data.zoneInsight.subscriptions.map((item, i, arr) => arr[arr.length - (i + 1)])"

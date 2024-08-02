@@ -4,3 +4,14 @@ subscriptions:
       navigation:
         subscription-summary-overview-view: Overview
         subscription-summary-config-view: YAML
+      headers:
+        config: Config
+        version: Version
+        connected: Connected
+        disconnected: Disconnected
+        responses: Total Responses (sent/ack'ed)
+        zoneInstanceId: Zone Leader Instance ID
+        globalInstanceId: Global Instance ID
+        id: ID
+        type: Type
+        stat: Responses sent/ack'ed

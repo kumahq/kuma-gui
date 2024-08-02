@@ -6,12 +6,12 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route }"
+    v-slot="{ route, t }"
   >
     <AppView>
       <template #title>
         <h2>
-          Config
+          {{ t('subscriptions.routes.item.headers.config') }}
         </h2>
       </template>
 
