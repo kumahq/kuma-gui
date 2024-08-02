@@ -53,7 +53,7 @@ Feature: zones / item
       |   100.0.0 |
       | online    |
       | dpToken   |
-    And the "$detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
+    And the "$detail-view" element contains "Jul 28, 2020, 4:18 PM"
     And the "$version-outdated" element doesn't exist
 
   Scenario: Outdated versions are highlighted
