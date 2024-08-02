@@ -1,7 +1,7 @@
 <template>
   <KBreadcrumbs
     :items="props.items"
-    :item-max-width="'150px'"
+    :item-max-width="'500px'"
   >
     <template
       v-for="(slot, key) in slots"

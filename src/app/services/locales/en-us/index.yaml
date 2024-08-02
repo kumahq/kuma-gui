@@ -4,6 +4,8 @@ services:
   routes:
     mesh-service-list-view:
       title: Mesh Services
+    mesh-multizone-service-list-view:
+      title: Mesh Multizone Services
     mesh-external-service-list-view:
       title: Mesh External Services
     item:
@@ -13,6 +15,8 @@ services:
         service-detail-view: 'Overview'
         mesh-service-detail-view: 'Overview'
         mesh-service-config-view: 'YAML'
+        mesh-multizone-service-detail-view: 'Overview'
+        mesh-multizone-service-config-view: 'YAML'
         mesh-external-service-detail-view: 'Overview'
         mesh-external-service-config-view: 'YAML'
       overview: 'Overview'
@@ -23,6 +27,7 @@ services:
         A Service represents an application or microservice that is registered with the mesh and can be managed, monitored and secured through the mesh's policies.
       navigation:
         mesh-service-list-view: MeshService
+        mesh-multizone-service-list-view: MeshMultizoneService
         mesh-external-service-list-view: MeshExternalService
         service-list-view: Internal
         external-service-list-view: External
@@ -35,6 +40,9 @@ services:
   mesh-service:
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}'
+  mesh-multizone-service:
+    href:
+      docs: '{KUMA_DOCS_URL}/networking/meshmultizoneservice/?{KUMA_UTM_QUERY_PARAMS}'
   mesh-external-service:
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshexternalservice/?{KUMA_UTM_QUERY_PARAMS}'
