@@ -73,7 +73,7 @@
           </template>
         </DefinitionCard>
         <DefinitionCard
-          v-else
+          v-if="props.data.globalInstanceId"
           layout="horizontal"
         >
           <template #title>
