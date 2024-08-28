@@ -9,9 +9,9 @@ Feature: mesh / dataplanes / index
       | service-cell     | $item:nth-child(1) td:nth-child(3)             |
       | select-type      | [data-testid='select-input']                   |
       | select-option    | .select-item                                   |
-      | select-standard  | [data-testid='select-item-standard'] button          |
-      | select-builtin   | [data-testid='select-item-builtin'] button           |
-      | select-delegated | [data-testid='select-item-delegated'] button        |
+      | select-standard  | [data-testid='select-item-standard'] button    |
+      | select-builtin   | [data-testid='select-item-builtin'] button     |
+      | select-delegated | [data-testid='select-item-delegated'] button   |
       | input-search     | [data-testid='filter-bar-filter-input']        |
       | button-search    | [data-testid='filter-bar-submit-query-button'] |
     And the environment
