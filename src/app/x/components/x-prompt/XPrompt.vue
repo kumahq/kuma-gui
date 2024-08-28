@@ -1,5 +1,6 @@
 <template>
   <form
+    ref="$form"
     @submit.prevent="() => emit('submit')"
   >
     <KPrompt
@@ -9,6 +10,7 @@
       :visible="true"
       :type="props.type"
       @cancel="() => emit('cancel')"
+      @proceed="() => $form!.submit()"
     >
       <template
         #title
@@ -35,6 +37,7 @@ const props = withDefaults(defineProps<{
   expected: '',
 })
 provide('x-prompt', {})
+const $form = ref<HTMLFormElement | null>(null)
 const $ref = ref<{$el: HTMLDivElement } | null>(null)
 const rewrite = () => {
   const $el = $ref.value!.$el // $ref is statically always there
