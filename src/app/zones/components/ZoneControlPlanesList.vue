@@ -13,7 +13,6 @@
           { ...storage.get('zone.headers.status'),label: t('zone-cps.components.zone-control-planes-list.status'), key: 'status'},
         ]"
         :items="props.items"
-        :total="props.items?.length"
         @resize="(obj) => {
           storage.set({
             zone: obj,

@@ -90,12 +90,14 @@
                 <DataCollection
                   type="data-planes"
                   :items="data?.items ?? [undefined]"
+                  :page="route.params.page"
+                  :page-size="route.params.size"
+                  :total="data?.total"
+                  @change="route.update"
                 >
                   <AppCollection
                     class="data-plane-collection"
                     data-testid="data-plane-collection"
-                    :page-number="route.params.page"
-                    :page-size="route.params.size"
                     :headers="[
                       { ...me.get('headers.name'), label: 'Name', key: 'name' },
                       { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
@@ -106,10 +108,7 @@
                       { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                     ]"
                     :items="data?.items"
-                    :total="data?.total"
                     :is-selected-row="(row) => row.name === route.params.dataPlane"
-                    summary-route-name="service-data-plane-summary-view"
-                    @change="route.update"
                     @resize="me.set"
                   >
                     <template #toolbar>

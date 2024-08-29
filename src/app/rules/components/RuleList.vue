@@ -36,7 +36,6 @@
                 :class="{
                   'has-matchers': hasMatchers,
                 }"
-                :total="items.length"
                 :items="items"
                 :headers="[
                   ...(hasMatchers ? [{ label: 'Matchers', key: 'matchers' }] : []),

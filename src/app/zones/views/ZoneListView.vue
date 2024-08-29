@@ -60,6 +60,10 @@
             <DataCollection
               type="zones"
               :items="data?.items ?? [undefined]"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="data?.total"
+              @change="route.update"
             >
               <AppCollection
                 class="zone-cp-collection"
@@ -74,12 +78,8 @@
                   { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
-                :page-number="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
                 :items="data?.items"
                 :is-selected-row="(row) => row.name === route.params.zone"
-                @change="route.update"
                 @resize="me.set"
               >
                 <template
