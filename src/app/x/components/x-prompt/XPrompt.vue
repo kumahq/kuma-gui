@@ -17,7 +17,7 @@
   </KPrompt>
 </template>
 <script lang="ts" setup>
-import { provide } from 'vue'
+import { onBeforeUnmount, provide } from 'vue'
 const emit = defineEmits<{
   (e: 'cancel'): void
   (e: 'submit'): void
@@ -31,6 +31,9 @@ const props = withDefaults(defineProps<{
   expected: '',
 })
 provide('x-prompt', {})
+onBeforeUnmount(() => {
+  document?.body?.classList?.remove('k-modal-overflow-hidden')
+})
 </script>
 <style lang="scss">
 .error {

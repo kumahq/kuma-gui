@@ -17,7 +17,7 @@
     "@kong-ui-public/i18n": "^2.2.2",
     "@kong/icons": "^1.14.1",
     "@kong-ui-public/app-layout": "^4.2.16",
-    "@kong/kongponents": "9.1.0",
+    "@kong/kongponents": "^9.5.1",
     "@vueuse/core": "^10.10.0",
     "brandi": "^5.0.0",
     "deepmerge": "^4.3.1",
