@@ -17,6 +17,7 @@ test/unit/watch: install ## Dev: run unit tests but watch for changes
 
 
 .PHONY: test/e2e
+test/e2e: CYPRESS_SPEC?=**/*.feature
 test/e2e: ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_BASE_URL=http://localhost:8080/gui and KUMA_TEST_BROWSER=chrome
 ifdef KUMA_TEST_BROWSER
 	@TZ=UTC \
