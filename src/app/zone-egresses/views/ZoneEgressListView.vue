@@ -16,7 +16,7 @@
       :title="t('zone-egresses.routes.items.title')"
     />
     <AppView
-      :docs="t('zone-ingresses.href.docs')"
+      :docs="t('zone-egresses.href.docs')"
     >
       <template
         v-if="!can('use zones')"
