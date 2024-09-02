@@ -45,6 +45,7 @@ describe('ConnectionCollection', () => {
         },
         cluster: {
           localhost_9090: {
+            $kind: '',
             tcp: {},
             grpc: {
               0: 12,
