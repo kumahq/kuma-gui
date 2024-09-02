@@ -31,7 +31,7 @@ deploy/test:
 
 .PHONY: deploy/e2e
 deploy/e2e:
-	@VITE_ZONE_CREATION_FLOW=enabled $(MAKE) build
+	@$(MAKE) build
 	@$(MAKE) deploy/test
 
 .PHONY: deploy/preview

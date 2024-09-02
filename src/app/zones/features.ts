@@ -5,5 +5,8 @@ export const features = (env: Env['var']): Features => {
     'use zones': () => {
       return env('KUMA_MODE') === 'global'
     },
+    'create zones': () => {
+      return false
+    },
   }
 }

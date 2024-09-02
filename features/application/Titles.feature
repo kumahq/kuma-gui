@@ -21,7 +21,6 @@ Feature: application / titles
       | /onboarding/add-services-code                                | Add new services      |
       | /onboarding/dataplanes-overview                              | Data plane overview   |
       | /onboarding/completed                                        | Completed             |
-      | /zones/-create                                               | Create & connect Zone |
       | /zones                                                       | Zone Control Planes   |
       | /zones/zone-cp-name/overview                                 | zone-cp-name          |
       | /zones/zone-cp-name/ingresses                                | Ingresses             |
