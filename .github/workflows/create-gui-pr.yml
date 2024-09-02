@@ -54,7 +54,7 @@ jobs:
       - run: |
           make install/sync
 
-      - uses: Kong/public-shared-actions/security-actions/sca@5c685ec0bc8d18f9faa540cb66837c326176c541
+      - uses: Kong/public-shared-actions/security-actions/sca@a1f9449f51053b1ef86fd1e35d9b6d588c7c3a7d
         id: sbom
         with:
           asset_prefix: kuma-gui
