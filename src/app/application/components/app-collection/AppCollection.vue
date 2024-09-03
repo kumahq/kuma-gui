@@ -21,7 +21,7 @@
       if(Object.keys(value).length > 0) {
         emit('change', value)
       }
-      return {data: items}
+      return { data: props.items }
     }"
     :cell-attrs="({ headerKey }: CellAttrParams) => ({
       class: `${headerKey}-column`,
@@ -39,6 +39,7 @@
         return prev
       }, {}),
     }"
+    :loading="typeof props.items === 'undefined'"
     @row:click="click"
     @update:table-preferences="resize"
   >
