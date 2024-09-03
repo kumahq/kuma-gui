@@ -1,3 +1,6 @@
+---
+section: Overview
+---
 # TLDR
 
 ## Run the thing
@@ -9,14 +12,13 @@ git clone https://github.com/kumahq/kuma-gui.git
 cd kuma-gui
 ```
 
-Start the development server.
+Start the development server (you'll need `node` installed)
 
 ```sh
 make run
 ```
 
 Visit the GUI at <http://localhost:8080>
-
 
 ::: warning
 `make help` gives you a list of all make targets and a short description for what they are for.
@@ -47,7 +49,7 @@ For more detail see:
   name="the-name-of-the-route"
   :params="{
     policyName: '',
-    page: 1
+    page: 1,
   }"
 >
   <AppView>
@@ -64,7 +66,6 @@ For more detail see:
   </AppView>
 </RouteView>
 ```
-
 
 ## Working with data
 
@@ -87,10 +88,7 @@ For more detail see:
 - [DataCollection](src/app/application/components/data-collection/README)
 
 ```vue
-<DataSource
-  v-slot="{ data }"
-  src="/mesh-insights"
->
+<DataSource v-slot="{ data }" src="/mesh-insights">
     {{ data?.items.length }}
 </DataSource>
 ```
@@ -98,29 +96,23 @@ For more detail see:
 ## GUI Components
 
 Apart from our `Data*` components we also have a set of `X*` components which
-are generic GUI specific components and we also use the
-[Kongponents](https://alpha--kongponents.netlify.app/) component library which
+are generic GUI specific components. We also use the
+[Kongponents](https://kongponents.konghq.com/) component library which
 use `K*` a naming scheme.
 
 These 'x' components are generally 'thin wrappers' over either native Vue
 components or Kongponents to make them easier to work with.
 
-For example:
+We globally import our generic GUI `X*`, our `Data*` components and `K*`
+[Kongponents](https://kongponents.konghq.com/)
 
-- `XAction`: Use these for `<a>`s or `<button>`s. They wrap Vue's `RouterLink`.
-- `XTeleportTemplate`/`XTeleportSlot`: Use these for rendering things in a
-different place to where you are writing it. They wrap Vue's `Teleport`.
-- `XTabs`: Basic tab navigation. They wrap `KTabs`.
-- ...
+Links:
 
-We globally import both our generic GUI 'x' components and
-[Kongponents](https://alpha--kongponents.netlify.app/)
-
-We also use:
-
+- K\* Kongponents <https://kongponents.konghq.com/>
+- X\* components [These docs](/src/app/x/README)
+- Data\* Components [These docs](/src/app/application/components/data-source/README)
 - Design Tokens from <https://github.com/Kong/design-tokens>
 - Icons from <https://github.com/Kong/icons>
-
 
 ## Test the thing
 
@@ -136,12 +128,17 @@ Browser based 'e2e' tests
 make test/e2e
 ```
 
+:::warning
+When running e2e tests locally the GUI must already be running at <http://localhost:8080/gui>.
+You can use `make run` to do this in a separate terminal to do this.
+
+You can also use `export KUMA_BASE_URL=http://localhost:8081` to tell the tests
+to use a different URL, and `export KUMA_TEST_BROWSER=chrome` to tell the tests
+to run in a non-headless browser.
+:::
+
 If you are new to the GUI you will probably be writing e2e tests rather than
 unit tests. We have very little logic in the GUI that isn't tested elsewhere
 and most new GUI features can be built using existing utilities, components and
 tooling.
 
-:::warning
-When running e2e tests locally the GUI must already be running at <http://localhost:8080/gui>.
-You can use `make run` to do this in a separate terminal to do this.
-:::

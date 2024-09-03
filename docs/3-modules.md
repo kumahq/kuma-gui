@@ -1,3 +1,6 @@
+---
+section: Overview
+---
 # Modules
 
 In `src/app/$module/`.
@@ -69,3 +72,4 @@ Learn more about [services](/src/services/README.md)
 :::
 
 Defines the module so it can be exposed to our dependency injection layer. This makes it so that a module’s features and sources are available throughout the application.
+

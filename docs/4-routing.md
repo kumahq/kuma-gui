@@ -1,3 +1,6 @@
+---
+section: Overview
+---
 # Routing
 
 In out application, documents (or views) are associated with URL paths using [vue-router](https://router.vuejs.org/). Every view has its own URL. Most views are representations of a resource (e.g. `/meshes` is a list of meshes, `/meshes/default` is a detail of the default mesh, `/meshes/default/services` is a list of services in the mesh “default”, etc.).
@@ -16,13 +19,13 @@ Each route definition has a path segment. All path segments are lowercase and da
 
 An example of route paths and their associated views based on the rules laid out below:
 
-| Path                                    | View                          |
-|-----------------------------------------|-------------------------------|
-| `/meshes`                               | List                          |
-| `/meshes/-create`                       | Create                        |
-| `/meshes/:mesh`                         | List (with selected resource) |
-| `/meshes/:mesh/-update`                 | Update                        |
-| `/meshes/:mesh/overview`                | Detail (overview)             |
+| Path                     | View                          |
+| ------------------------ | ----------------------------- |
+| `/meshes`                | List                          |
+| `/meshes/-create`        | Create                        |
+| `/meshes/:mesh`          | List (with selected resource) |
+| `/meshes/:mesh/-update`  | Update                        |
+| `/meshes/:mesh/overview` | Detail (overview)             |
 
 ### List
 
@@ -69,3 +72,4 @@ The second path segment is static and should describe the kind of resource detai
 **Example**: `/meshes/:mesh/-update`
 
 For an update view, a single static path segment `/-update` is used.
+

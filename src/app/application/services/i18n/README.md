@@ -1,3 +1,7 @@
+---
+type: service
+title: t
+---
 # I18n
 
 i18n utilities for translation (machine to human as well as other languages) and
@@ -18,11 +22,7 @@ available in environments such as PR preview sites.
 ## Usage
 
 ```vue
-// from within components
-
-const { t } = useI18n()
-
-// 'project global' text
-{{ t('http.api.property.mtls') }}
-
+// from within components const { t } = useI18n() // 'project global' text
+{{ t("http.api.property.mtls") }}
 ```
+
