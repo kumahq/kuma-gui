@@ -68,7 +68,7 @@
     "jsdom": "^24.1.1",
     "lint-staged": "^15.2.7",
     "lockfile-lint": "^4.14.0",
-    "marked": "^13.0.1",
+    "marked": "^14.1.0",
     "msw": "^2.3.5",
     "postcss": "^8.4.44",
     "openapi-typescript": "^7.3.0",
