@@ -1,3 +1,6 @@
+---
+section: Overview
+---
 # HTTP API Mocks
 
 Our HTTP API mocks consist of a bunch of 'generator' functions, each in a
@@ -26,15 +29,14 @@ An endpoint mock file must be a typescript file that contains a default export
 like the following:
 
 ```typescript
-import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (deps: EndpointDependencies): MockResponder => (req) => {
-  return {
-    headers: {
-    },
-    body: {
-    },
-  }
-}
+import type { EndpointDependencies, MockResponder } from "@/test-support";
+export default (deps: EndpointDependencies): MockResponder =>
+  (req) => {
+    return {
+      headers: {},
+      body: {},
+    };
+  };
 ```
 
 **TLDR; Copy/pasta the above code, throw your response into the `body` property
@@ -58,16 +60,16 @@ status code. In order to send a different status code use a HTTP `Status-Code`
 header:
 
 ```typescript
-import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (deps: EndpointDependencies): MockResponder => (req) => {
-  return {
-    headers: {
-      'Status-Code': '500'
-    },
-    body: {
-    },
-  }
-}
+import type { EndpointDependencies, MockResponder } from "@/test-support";
+export default (deps: EndpointDependencies): MockResponder =>
+  (req) => {
+    return {
+      headers: {
+        "Status-Code": "500",
+      },
+      body: {},
+    };
+  };
 ```
 
 If you need to add more HTTP headers you can add them to this `headers` object.
@@ -76,25 +78,25 @@ If you need to add more HTTP headers you can add them to this `headers` object.
 a string). The following shows a simple HTTP API response:
 
 ```typescript
-import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default (_deps: EndpointDependencies): MockResponder => (_req) => {
-  return {
-    headers: {
-    },
-    body: {
-      hostname: 'control-plane-5d94cb99c6-rzr96',
-      tagline: 'kuma',
-      version: '1.7.1',
-      basedOnKuma: '1.7.1',
-      instanceId: 'control-plane-5d94cb99c6-rzr96-ca19',
-      clusterId: 'b3c42481-0681-4da7-a276-c1fd4ed3c7a1',
-      gui: 'The gui is available at /gui',
-    },
-  }
-}
+import type { EndpointDependencies, MockResponder } from "@/test-support";
+export default (_deps: EndpointDependencies): MockResponder =>
+  (_req) => {
+    return {
+      headers: {},
+      body: {
+        hostname: "control-plane-5d94cb99c6-rzr96",
+        tagline: "kuma",
+        version: "1.7.1",
+        basedOnKuma: "1.7.1",
+        instanceId: "control-plane-5d94cb99c6-rzr96-ca19",
+        clusterId: "b3c42481-0681-4da7-a276-c1fd4ed3c7a1",
+        gui: "The gui is available at /gui",
+      },
+    };
+  };
 ```
 
-A more complicated example can be seen at [./src/meshes/_/dataplanes/_overview.ts](./src/meshes/_/dataplanes/_overview.ts)
+A more complicated example can be seen at [./src/meshes/\_/dataplanes/\_overview.ts](./src/meshes/_/dataplanes/_overview.ts)
 
 The idea behind the approach is based on a traditional template engine and a set
 of JSON templates. The JSON templates also have access to a collection of helper
@@ -143,7 +145,7 @@ reusable as possible, which should err against adding tonnes of them. Additional
 Kuma helpers should be properly considered during review (i.e are they
 necessary? are they generic enough? etc).
 
-`pager` usage can be seen in [./src/meshes/_/circuit-breakers.ts](./src/meshes/_/circuit-breakers.ts)
+`pager` usage can be seen in [./src/meshes/\_/circuit-breakers.ts](./src/meshes/_/circuit-breakers.ts)
 or any paged HTTP API response.
 
 `env` is similiar to the `env` helper function that we use in the application
@@ -159,10 +161,11 @@ you can easily view empty states.
 At the time of writing the `req:Request` variables consist of:
 
 - `req.params`: an object containing the parameters from any dynamic URL
-    segments i.e. `/meshes/:mesh/dataplanes/:name` > `{mesh: 'default', name:
-    'dp-name'}`
+  segments i.e. `/meshes/:mesh/dataplanes/:name` > `{mesh: 'default', name:
+  'dp-name'}`
 - `req.url.searchParams`: A [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get)
-    object for access to anything from the requests query parameters.
+  object for access to anything from the requests query parameters.
 
 These are highly likely to change shape slightly ^ at some point in a future
 refactor. They loosely follow MockServiceWorkers `RestRequest` type
+

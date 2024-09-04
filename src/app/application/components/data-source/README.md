@@ -1,3 +1,6 @@
+---
+type: component
+---
 # DataSource
 
 `DataSource` is used for loading/reading data in the application. Used on its
@@ -8,10 +11,7 @@ create more detailed blocking/non-blocking loading use cases.
 The simplest example is:
 
 ```vue
-<DataSource
-  v-slot="{ data }"
-  src="/mesh-insights"
->
+<DataSource v-slot="{ data }" src="/mesh-insights">
   {{ data?.items.length }}
 </DataSource>
 ```
@@ -19,7 +19,6 @@ The simplest example is:
 The `src` is a string based [Uniform Resource
 Identifier](https://developer.mozilla.org/en-US/docs/Glossary/URI) that refers
 to a piece of data a.k.a. a resource.
-
 
 ::: warning
 All resources/sources for our application are defined in a modules
@@ -31,9 +30,7 @@ For improved typing for `DataSource` you can our `uri` helper to define URIs. Ou
 `uri` helper is exported from `RouteView`
 
 ```vue
-<RouteView
-  v-slot="{ uri }"
->
+<RouteView v-slot="{ uri }">
     <DataSource
       v-slot="{ data }"
       :src="uri(sources, '/mesh-insights')"
@@ -42,7 +39,7 @@ For improved typing for `DataSource` you can our `uri` helper to define URIs. Ou
     </DataSource>
 </RouteView>
 <script lang="ts" setup>
-import { sources} from '@/app/meshes/sources'
+import { sources } from "@/app/meshes/sources";
 </script>
 ```
 
@@ -55,7 +52,7 @@ Whilst you can just use strings for `uri`s, using `uri` helper exported by
   name="the-name-of-the-route"
   :params="{
     policyName: '',
-    page: 1
+    page: 1,
   }"
 >
   <AppView>
@@ -68,7 +65,7 @@ Whilst you can just use strings for `uri`s, using `uri` helper exported by
   </AppView>
 </RouteView>
 <script lang="ts" setup>
-import { sources} from '@/app/meshes/sources'
+import { sources } from "@/app/meshes/sources";
 </script>
 ```
 
@@ -82,7 +79,7 @@ The following is the most common use case, just block until the data is loaded.
   name="the-name-of-the-route"
   :params="{
     policyName: '',
-    page: 1
+    page: 1,
   }"
 >
   <AppView>
@@ -96,7 +93,7 @@ The following is the most common use case, just block until the data is loaded.
   </AppView>
 </RouteView>
 <script lang="ts" setup>
-import { sources} from '@/app/meshes/sources'
+import { sources } from "@/app/meshes/sources";
 </script>
 ```
 
@@ -139,28 +136,23 @@ fetches it's resources for a URI:
 ```ts
 export const sources = (api) => {
   return defineSources({
-    '/meshes/:name': async (params) => {
-      const { name } = params
+    "/meshes/:name": async (params) => {
+      const { name } = params;
       // i.e. Promise.resolve({ name: 'default', creationTime: '0000-00-00 00:00:00'})
       // or an API/HTTP call
-      return api.getMesh({ name })
+      return api.getMesh({ name });
     },
-  })
-}
+  });
+};
 ```
 
 They are a simple "String to Promise" map. i.e. "use this string as your URI get
 the result of this Promise".
 
 ```vue
-<DataSource
-  v-slot="{ data }"
-  :src="`/mesh/${'default'}`"
->
+<DataSource v-slot="{ data }" :src="`/mesh/${'default'}`">
   Name: {{ data?.name }} <== "default"
   Creation Time: {{ data?.creationTime }}
 </DataSource>
 ```
-
-
 

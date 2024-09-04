@@ -1,7 +1,7 @@
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
 import { DEFAULT_SCHEMA, Type } from 'js-yaml'
-import { marked } from 'marked'
+import markdown from 'markdown-it'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import svgLoader from 'vite-svg-loader'
@@ -13,9 +13,11 @@ import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 
 export const config: UserConfigFn = () => {
-  marked.use({
-    gfm: true,
-  })
+  const md = markdown(
+    {
+      html: true,
+    },
+  )
   return {
     base: './',
     server: {
@@ -46,7 +48,8 @@ export const config: UserConfigFn = () => {
                 // for which we use FormatJS under the hood. FormatJS requires you to escape any XML/HTML looking
                 // things, plus ICU '{' and '}', hence this replace.
                 // If we ever need !!text/markdown for anything else we should do something like !!text/icu+markdown
-                const str = marked(data) as string
+                const str = md.render(data)
+
                 return str.replace(/</g, "'<'")
                   .replace(/%7B/g, '{')
                   .replace(/%7D/g, '}')
@@ -94,7 +97,7 @@ export const config: UserConfigFn = () => {
       deps: {
         optimizer: {
           web: {
-          // https://github.com/vitest-dev/vitest/issues/4074
+            // https://github.com/vitest-dev/vitest/issues/4074
             exclude: ['vue'],
           },
         },

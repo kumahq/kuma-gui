@@ -11,7 +11,6 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "types": [
-      "marked",
       "vite/client"
     ],
     "noErrorTruncation": true,

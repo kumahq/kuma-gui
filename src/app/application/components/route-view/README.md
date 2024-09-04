@@ -1,3 +1,6 @@
+---
+type: component
+---
 # RouteView
 
 Our `RouteView` component should be used as the top-most component for **every
@@ -11,9 +14,9 @@ the RouteView's `name` property.
 `RouteView` contains functionality to:
 
 - make it easy to set top-level DOM values that you usually wouldn't have
-direct access to, for example [setting the HTML `<title>`](#setting-the-title-of-the-page) or [the HTML `class` attribute](#setting-html-node-attributes).
+  direct access to, for example [setting the HTML `<title>`](#setting-the-title-of-the-page) or [the HTML `class` attribute](#setting-html-node-attributes).
 - [provide access to utilities/tooling commonly used in route views](#exposing-commonly-used-utilities) i.e.
-`route`, `t` and `uri`
+  `route`, `t` and `uri`
 
 ## Setting the `<title>` of the page
 
@@ -21,9 +24,7 @@ direct access to, for example [setting the HTML `<title>`](#setting-the-title-of
 the page from anywhere in your `*View.vue` component.
 
 ```vue
-<RouteView
-  name="route-name"
->
+<RouteView name="route-name">
   <h1>
     <RouteTitle
       title="The title"
@@ -32,13 +33,13 @@ the page from anywhere in your `*View.vue` component.
 ...
 </RouteView>
 ```
+
 `RouteTitle` also renders the title you give it into the page, meaning that you
 can easily use the same text for your page header and the HTML title.
 
 Titles are automatically joined together as you would expect in a nested route
 structure and finally suffixed by the title of the product (taken from our i18n
 strings). The above code, depending on nested routes could end up like:
-
 
 ```vue
 <html>
@@ -64,7 +65,7 @@ attributes such as `data-*`, you'll need to add that functionality to
 <RouteView
   name="route-name"
   :attrs="{
-    class: 'my-html-class'
+    class: 'my-html-class',
   }"
 >
 ...
@@ -76,7 +77,7 @@ HTML:
 
 ```html
 <html class="my-html-class">
-...
+  ...
 </html>
 ```
 
@@ -113,7 +114,7 @@ removes access to some things and dds functionality to others.
   v-slot="{ route }"
   :params="{
     service: '',
-    page: 1
+    page: 1,
   }"
 >
   <h1>
@@ -128,8 +129,8 @@ removes access to some things and dds functionality to others.
 
 ## Props
 
-| Name  | Description |
-| --- | --- |
+| Name   | Description                                                                                             |
+| ------ | ------------------------------------------------------------------------------------------------------- |
 | `name` | The name of the current route file as specified in your routing configuration i.e. `services-list-view` |
 
 ## Slots
@@ -138,8 +139,8 @@ removes access to some things and dds functionality to others.
 
 #### exports
 
-| Name  | Description |
-| --- | --- |
+| Name    | Description                                                                 |
+| ------- | --------------------------------------------------------------------------- |
 | `route` | an object with route based utilties (this, is **not** Vue route, see above) |
 | `t`     | A reference to our `t` function/service                                     |
 | `env`   | A reference to our `env` function/service                                   |
