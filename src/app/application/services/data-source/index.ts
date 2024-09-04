@@ -1,6 +1,6 @@
 import { compile } from 'path-to-regexp'
 
-import CallableEventSource from './CallableEventSource'
+import CallableEventSource, { isClosed } from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
 // reusable Type Utility for easy to use Types within Vue templates
@@ -78,7 +78,7 @@ export const getSource = (doc: Hideable) => {
       const self = this
       let attempts = 0
       let iterations = 0
-      while (true) {
+      while (!isClosed(self)) {
         // if this isn't the first call then we should wait before calling again
         if (iterations > 0) {
           await new Promise((resolve) => setTimeout(resolve, self.configuration.interval ?? 1000))
