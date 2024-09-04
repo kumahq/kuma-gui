@@ -1,6 +1,11 @@
 const protocols = ['http', 'tcp'] as const
 const appProtocols = ['http', 'tcp', 'grpc'] as const
 
+// `_` followed by 1 to 5 digits followed by a `.`
+const trailingPortRe = /_\d{1,5}\./
+const trailingPortRe2 = /_\d{1,5}/
+const meshServiceRe = /_(mz|m|me){1}svc_\d{1,5}$/
+
 export const Stat = {
   fromCollection(items: string) {
     return parse(items)
@@ -47,11 +52,29 @@ export const ConnectionCollection = {
         .map(([cluster, value]) => {
           const { tcp, http, http2, grpc, ...rest } = value
           const stats = {
+            $kind: '',
             tcp,
             ...(typeof http !== 'undefined' ? { http } : {}),
             ...(typeof http2 !== 'undefined' ? { http2 } : {}),
             ...(typeof grpc !== 'undefined' ? { grpc } : {}),
           }
+          // sniff the name to see if we are a new type of service
+          const found = cluster.match(meshServiceRe)
+          if (found) {
+            const str = found[0]
+            switch (true) {
+              case (str.indexOf('_msvc_') !== -1):
+                stats.$kind = 'MeshService'
+                break
+              case (str.indexOf('_mesvc_') !== -1):
+                stats.$kind = 'MeshExternalService'
+                break
+              case (str.indexOf('_mzsvc_') !== -1):
+                stats.$kind = 'MeshMultiZoneService'
+                break
+            }
+          }
+          //
           // check each protocol for existence, on root i.e.`<protocol>.<cluster-name>`
           protocols.forEach(protocol => {
             // replaces `cluster.<cluster-name>.<protocol>` with anything in `<protocol>.<cluster-name>`
@@ -90,10 +113,6 @@ export const ConnectionCollection = {
     }
   },
 }
-
-// `_` followed by 1 to 5 digits followed by a `.`
-const trailingPortRe = /_\d{1,5}\./
-const trailingPortRe2 = /_\d{1,5}/
 
 // just does the initial response to JSON parsing
 const parse = (lines: string): Record<string, any> => {

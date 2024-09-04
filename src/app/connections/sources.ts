@@ -37,6 +37,7 @@ export const sources = (source: Source, api: KumaApi) => {
         '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
         'admin',
         'async-client',
+        'kuma_readiness',
         'kuma_envoy_admin',
         'probe_listener',
         'inbound_passthrough_',
