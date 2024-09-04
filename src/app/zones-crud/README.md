@@ -1,5 +1,0 @@
----
-section: Modules
----
-# zones-crud
-
