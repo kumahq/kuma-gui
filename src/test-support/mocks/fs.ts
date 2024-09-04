@@ -75,7 +75,6 @@ import _45 from './src/meshes/_/traffic-traces'
 import _46 from './src/meshes/_/traffic-traces/_'
 import _47 from './src/meshes/_/virtual-outbounds'
 import _2 from './src/policies'
-import _51 from './src/provision-zone'
 import _7 from './src/service-insights'
 import _126 from './src/zone-ingresses/_'
 import _48 from './src/zone-ingresses/_/_overview'
@@ -102,7 +101,6 @@ export const fs: FS = {
   '/zones/_overview': _11,
   '/zones/:name': _50,
   '/zones/:name/_overview': _12,
-  '/provision-zone': _51,
   '/zone-ingresses/_overview': _9,
   '/zone-ingresses/:name': _126,
   '/zone-ingresses/:name/_overview': _48,

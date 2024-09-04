@@ -23,7 +23,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
         KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
         KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
-        KUMA_ZONE_CREATION_FLOW: import.meta.env.VITE_ZONE_CREATION_FLOW,
       } as EnvArgs,
     }],
 

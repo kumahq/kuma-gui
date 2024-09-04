@@ -8,8 +8,6 @@ import { TOKENS } from '@/app/kuma'
 import { services as onboarding } from '@/app/onboarding'
 import { services as serviceMesh } from '@/app/service-mesh'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
-import { TOKENS as ZONES_TOKENS } from '@/app/zones'
-import { services as zonesCrud } from '@/app/zones-crud'
 import { build } from '@/services/utils'
 
 async function mountVueApplication() {
@@ -38,11 +36,6 @@ async function mountVueApplication() {
     }),
     diagnostics({
       ...$,
-      routes: $.routesLabel,
-    }),
-    zonesCrud({
-      ...$,
-      ZoneControlPlanesList: ZONES_TOKENS.ZoneControlPlanesList,
       routes: $.routesLabel,
     }),
     // any DEV-time only service container configuration
