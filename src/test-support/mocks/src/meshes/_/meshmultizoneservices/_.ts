@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import type { MeshService } from '@/types/index.d'
+import type { components } from '@/types/auto-generated.d'
+type Entity = components['schemas']['MeshMultiZoneServiceItem']
 
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
@@ -16,7 +17,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       ...(query.get('format') === 'kubernetes' && {
         apiVersion: 'kuma.io/v1alpha1',
       }),
-      type: 'MeshService',
+      type: 'MeshMultiZoneService',
       mesh,
       name,
       creationTime: '2021-02-19T08:06:15.14624+01:00',
@@ -30,6 +31,13 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         }
         : {}),
       spec: {
+        selector: {
+          meshService: {
+            matchLabels: fake.kuma.tags({}),
+          },
+        },
+      },
+      status: {
         ports: Array.from({ length: 5 }).map(_ => (
           {
             port: fake.internet.port(),
@@ -37,21 +45,21 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
             appProtocol: fake.kuma.protocol(),
           }
         )),
-        selector: {
-          dataplaneTags: fake.kuma.tags({}),
-        },
-      },
-      status: {
+        meshServices: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map((_, i) => {
+          return {
+            name: `${fake.hacker.noun()}-${i}${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+          }
+        }),
         addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
           hostname: fake.internet.domainName(),
         })),
         vips: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
           ip: fake.internet.ip(),
         })),
-        tls: {
-          status: '',
-        },
       },
-    } satisfies MeshService,
+    } satisfies Entity & {
+      creationTime: string
+      modificationTime: string
+    },
   }
 }
