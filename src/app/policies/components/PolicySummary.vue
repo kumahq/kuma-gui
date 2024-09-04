@@ -7,7 +7,7 @@
         {{ t('policies.routes.item.overview') }}
       </h3>
 
-      <div class="mt-4 stack">
+      <div class="mt-4 stack-with-borders">
         <DefinitionCard
           layout="horizontal"
         >
@@ -37,6 +37,30 @@
 
           <template #body>
             {{ props.policy.namespace }}
+          </template>
+        </DefinitionCard>
+        <DefinitionCard
+          v-if="props.policy.zone"
+          layout="horizontal"
+        >
+          <template
+            #title
+          >
+            Zone
+          </template>
+          <template
+            #body
+          >
+            <XAction
+              :to="{
+                name: 'zone-cp-detail-view',
+                params: {
+                  zone: props.policy.zone,
+                },
+              }"
+            >
+              {{ props.policy.zone }}
+            </XAction>
           </template>
         </DefinitionCard>
       </div>

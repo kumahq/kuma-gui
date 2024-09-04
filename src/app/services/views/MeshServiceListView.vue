@@ -79,17 +79,16 @@
                   {{ item.namespace }}
                 </template>
                 <template #zone="{ row: item }">
-                  <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
+                  <template v-if="item.zone">
                     <XAction
-                      v-if="item.labels['kuma.io/zone']"
                       :to="{
                         name: 'zone-cp-detail-view',
                         params: {
-                          zone: item.labels['kuma.io/zone'],
+                          zone: item.zone,
                         },
                       }"
                     >
-                      {{ item.labels['kuma.io/zone'] }}
+                      {{ item.zone }}
                     </XAction>
                   </template>
 
