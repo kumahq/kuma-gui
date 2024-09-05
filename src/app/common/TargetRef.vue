@@ -1,13 +1,13 @@
 <template>
   <span class="target-ref">
-    <RouterLink
+    <XAction
       v-if="routeTarget !== null"
       :to="routeTarget"
     >
       <KBadge>
         <slot />
       </KBadge>
-    </RouterLink>
+    </XAction>
 
     <KBadge v-else>
       <slot />
@@ -46,7 +46,7 @@ const props = defineProps<{
   targetRef: TargetRef
 }>()
 
-const routeTarget = computed<RouteLocationNamedRaw | null>(() => {
+const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => {
   if (!props.targetRef.name) {
     return null
   }

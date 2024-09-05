@@ -12,7 +12,7 @@
         >
           <span>{{ policy.type }}</span>:
 
-          <RouterLink
+          <XAction
             :to="{
               name: 'policy-detail-view',
               params: {
@@ -23,7 +23,7 @@
             }"
           >
             {{ policy.name }}
-          </RouterLink>
+          </XAction>
         </li>
       </ul>
 
@@ -58,7 +58,7 @@
                     <div class="dataplane-policy-header">
                       <div>
                         <div>
-                          <b>Route</b>: <RouterLink
+                          <b>Route</b>: <XAction
                             :to="{
                               name: 'policy-detail-view',
                               params: {
@@ -69,7 +69,7 @@
                             }"
                           >
                             {{ routeEntry.route.name }}
-                          </RouterLink>
+                          </XAction>
                         </div>
 
                         <div>
@@ -102,7 +102,7 @@
                       >
                         {{ policy.type }}:
 
-                        <RouterLink
+                        <XAction
                           :to="{
                             name: 'policy-detail-view',
                             params: {
@@ -113,7 +113,7 @@
                           }"
                         >
                           {{ policy.name }}
-                        </RouterLink>
+                        </XAction>
                       </li>
                     </ul>
                   </template>

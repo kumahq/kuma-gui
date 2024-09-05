@@ -12,9 +12,9 @@
         class="horizontal-list"
       >
         <slot name="header">
-          <RouterLink :to="{ name: 'home' }">
+          <XAction :to="{ name: 'home' }">
             <slot name="home" />
-          </RouterLink>
+          </XAction>
 
           <GithubButton
             class="gh-star"

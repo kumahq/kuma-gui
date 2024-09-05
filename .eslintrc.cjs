@@ -139,7 +139,6 @@ const INLINE_NON_VOID_ELEMENTS = [
             // HTML
             'search',
             // vue-router
-            'RouterLink',
             'RouterView',
             // @kong/kongponents
             'K[A-Z].*',

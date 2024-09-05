@@ -13,21 +13,16 @@
         v-for="service in [route.params.connection.replace(/-([a-f0-9]){16}$/, '')]"
         :key="service"
       >
-        <div
-          class="stack-with-borders"
-        >
-          <DefinitionCard
-            layout="horizontal"
-          >
+        <div class="stack-with-borders">
+          <DefinitionCard layout="horizontal">
             <template #title>
               Protocol
             </template>
 
             <template #body>
-              <KBadge
-                appearance="info"
-              >
-                {{ t(`http.api.value.${['grpc', 'http', 'tcp'].find(protocol => typeof props.data[protocol] !== 'undefined')}`) }}
+              <KBadge appearance="info">
+                {{ t(`http.api.value.${['grpc', 'http', 'tcp'].find(protocol => typeof props.data[protocol] !==
+                  'undefined')}`) }}
               </KBadge>
             </template>
           </DefinitionCard>
@@ -52,9 +47,7 @@
                   })"
                   v-slot="{ data: rulesData }"
                 >
-                  <template
-                    v-if="props.data.$resourceMeta.type !== ''"
-                  >
+                  <template v-if="props.data.$resourceMeta.type !== ''">
                     <DataCollection
                       :predicate="(item) => {
                         return item.resourceMeta.type === 'Mesh' || ruleForCluster(props.data, item)
@@ -62,22 +55,16 @@
                       :items="rulesData.toResourceRules"
                       v-slot="{ items }"
                     >
-                      <div
-                        class="stack-with-borders mt-4"
-                      >
+                      <div class="stack-with-borders mt-4">
                         <template
                           v-for="(rules, key) in Object.groupBy(items, item => item.type)"
                           :key="key"
                         >
                           <div>
-                            <PolicyTypeTag
-                              :policy-type="key"
-                            >
+                            <PolicyTypeTag :policy-type="key">
                               {{ key }}
                             </PolicyTypeTag>
-                            <div
-                              class="stack-with-borders mt-4"
-                            >
+                            <div class="stack-with-borders mt-4">
                               <template
                                 v-for="item in rules!.length > 1 ? rules!.filter(item => ruleForCluster(props.data, item)) : rules"
                                 :key="item"
@@ -137,9 +124,7 @@
                       </div>
                     </DataCollection>
                   </template>
-                  <template
-                    v-else
-                  >
+                  <template v-else>
                     <DataCollection
                       :predicate="(item) => {
                         // for to rules we don't have inbound.port, filter out Routes
@@ -149,7 +134,6 @@
                         )
                       }"
                       :items="rulesData!.rules"
-
                       v-slot="{ items }"
                     >
                       <div class="mt-4">
@@ -165,16 +149,12 @@
                             <KCard>
                               <AccordionItem>
                                 <template #accordion-header>
-                                  <PolicyTypeTag
-                                    :policy-type="key"
-                                  >
+                                  <PolicyTypeTag :policy-type="key">
                                     {{ key }} ({{ rules!.length }})
                                   </PolicyTypeTag>
                                 </template>
                                 <template #accordion-content>
-                                  <div
-                                    class="stack-with-borders"
-                                  >
+                                  <div class="stack-with-borders">
                                     <template
                                       v-for="item in rules"
                                       :key="item"
@@ -188,7 +168,9 @@
                                         </template>
 
                                         <template #body>
-                                          <p><RuleMatchers :items="item.matchers" /></p>
+                                          <p>
+                                            <RuleMatchers :items="item.matchers" />
+                                          </p>
                                         </template>
                                       </DefinitionCard>
                                       <DefinitionCard
@@ -218,9 +200,7 @@
                                               >
                                                 {{ origin.name }}
                                               </RouterLink>
-                                              <template
-                                                v-else
-                                              >
+                                              <template v-else>
                                                 {{ origin.name }}
                                               </template>
                                             </li>
@@ -280,9 +260,9 @@ const props = defineProps<{
 
 const ruleForCluster = (cluster: any, rule: ResourceRule) => {
   return cluster.$resourceMeta.name === rule.name &&
-  cluster.$resourceMeta.namespace === rule.namespace &&
-  cluster.$resourceMeta.zone === rule.zone &&
-  (rule.resourceSectionName === '' || cluster.$resourceMeta.port === rule.port)
+    cluster.$resourceMeta.namespace === rule.namespace &&
+    cluster.$resourceMeta.zone === rule.zone &&
+    (rule.resourceSectionName === '' || cluster.$resourceMeta.port === rule.port)
 }
 </script>
 <style lang="scss" scoped>
