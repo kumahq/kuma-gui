@@ -65,7 +65,21 @@
   <template
     v-else-if="props.href.length > 0"
   >
+    <KButton
+      v-if="['primary', 'secondary', 'tertiary', 'danger'].includes(props.appearance)"
+      data-testid="x-action"
+      v-bind="$attrs"
+      :appearance="props.appearance as ButtonAppearance"
+      :size="props.size"
+      :to="props.href"
+      target="_blank"
+    >
+      <slot
+        name="default"
+      />
+    </KButton>
     <a
+      v-else
       data-testid="x-action"
       v-bind="$attrs"
       :href="props.href"

@@ -286,14 +286,13 @@
                     </template>
                   </XInputSwitch>
 
-                  <KButton
+                  <XAction
+                    action="refresh"
                     appearance="primary"
                     @click="refresh"
                   >
-                    <RefreshIcon />
-
                     Refresh
-                  </KButton>
+                  </XAction>
                 </template>
                 <template #title>
                   <GatewayIcon
@@ -518,7 +517,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon, ForwardIcon, GatewayIcon, RefreshIcon } from '@kong/icons'
+import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import type { DataplaneOverview, DataplaneInbound } from '../data'

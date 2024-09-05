@@ -25,14 +25,14 @@
             v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })"
           />
 
-          <KButton
+          <XAction
             appearance="primary"
             size="small"
             class="action-button"
             :to="{ name: 'onboarding-welcome-view' }"
           >
             {{ t('main-overview.detail.onboarding.get_started_link') }}
-          </KButton>
+          </XAction>
         </div>
       </XAlert>
     </DataSink>

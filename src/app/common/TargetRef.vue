@@ -46,7 +46,7 @@ const props = defineProps<{
   targetRef: TargetRef
 }>()
 
-const routeTarget = computed<RouteLocationNamedRaw | null>(() => {
+const routeTarget = computed<Omit<RouteLocationNamedRaw, 'query'> | null>(() => {
   if (!props.targetRef.name) {
     return null
   }

@@ -42,14 +42,13 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
             <template #primary-actions>
-              <KButton
+              <XAction
+                action="refresh"
                 appearance="primary"
                 @click="refresh"
               >
-                <RefreshIcon />
-
                 Refresh
-              </KButton>
+              </XAction>
             </template>
           </XCodeBlock>
         </DataCollection>
@@ -58,8 +57,6 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { RefreshIcon } from '@kong/icons'
-
 import { StatsSource } from '../sources'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
 
