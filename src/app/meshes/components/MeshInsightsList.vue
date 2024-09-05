@@ -11,7 +11,6 @@
           { ...storage.get('mesh.headers.dataplanes') ,label: t('meshes.components.mesh-insights-list.dataplanes'), key: 'dataplanes'},
         ]"
         :items="props.items"
-        :total="props.items?.length"
         @resize="(obj) => {
           storage.set({
             mesh: obj,

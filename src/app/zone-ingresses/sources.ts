@@ -48,6 +48,7 @@ export const sources = (source: Source, api: KumaApi) => {
       res.items = res.items.filter((item) => {
         return item.zoneIngress.zone === name
       })
+      res.total = res.items.length
       return ZoneIngressOverview.fromCollection(res)
     },
 

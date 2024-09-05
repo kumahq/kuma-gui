@@ -63,10 +63,12 @@
               <DataCollection
                 type="data-planes"
                 :items="data?.items ?? [undefined]"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                :total="data?.total"
+                @change="route.update"
               >
                 <AppCollection
-                  :page-number="route.params.page"
-                  :page-size="route.params.size"
                   :headers="[
                     { ...me.get('headers.name'), label: 'Name', key: 'name' },
                     { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
@@ -74,9 +76,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="data?.items"
-                  :total="data?.total"
                   :is-selected-row="(row) => row.id === route.params.dataPlane"
-                  @change="route.update"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">

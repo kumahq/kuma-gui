@@ -30,6 +30,10 @@
             <DataCollection
               type="external-services"
               :items="data?.items ?? [undefined]"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="data?.total"
+              @change="route.update"
             >
               <AppCollection
                 class="external-service-collection"
@@ -39,11 +43,7 @@
                   { ...me.get('headers.address'), label: 'Address', key: 'address' },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
-                :page-number="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
                 :items="data?.items"
-                @change="route.update"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">

@@ -34,6 +34,8 @@
             <DataCollection
               type="zone-ingresses"
               :items="ingresses?.items ?? [undefined]"
+              :total="ingresses?.total"
+              @change="route.update"
             >
               <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
               <AppCollection
@@ -46,12 +48,8 @@
                   { ...me.get('headers.status'), label: 'Status', key: 'status' },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
-                :page-number="1"
-                :page-size="100"
-                :total="ingresses?.total"
                 :items="ingresses?.items"
                 :is-selected-row="(row) => row.name === route.params.zoneIngress"
-                @change="route.update"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">

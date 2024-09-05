@@ -9,56 +9,24 @@
     />
     <AppView>
       <KCard>
-        <AppCollection
-          data-testid="available-services-collection"
-          :empty-state-message="t('common.emptyState.message', { type: 'Services' })"
-          :headers="[
-            { label: 'Name', key: 'name' },
-            { label: 'Mesh', key: 'mesh' },
-            { label: 'Protocol', key: 'protocol' },
-            { label: 'No. Instances', key: 'instances' },
-            { label: 'Actions', key: 'actions', hideLabel: true },
-          ]"
+        <DataCollection
+          type="services"
           :items="props.data.zoneIngress.availableServices"
+          :total="props.data.zoneIngress.availableServices.length"
         >
-          <template #name="{ row: item }">
-            <RouterLink
-              :to="{
-                name: 'service-detail-view',
-                params: {
-                  mesh: item.mesh,
-                  service: item.tags['kuma.io/service'],
-                },
-              }"
-            >
-              {{ item.tags['kuma.io/service'] }}
-            </RouterLink>
-          </template>
-
-          <template #mesh="{ row: item }">
-            <RouterLink
-              :to="{
-                name: 'mesh-detail-view',
-                params: {
-                  mesh: item.mesh,
-                },
-              }"
-            >
-              {{ item.mesh }}
-            </RouterLink>
-          </template>
-
-          <template #protocol="{ row: item }">
-            {{ item.tags['kuma.io/protocol'] ?? t('common.collection.none') }}
-          </template>
-
-          <template #instances="{ row: item }">
-            {{ item.instances }}
-          </template>
-
-          <template #actions="{ row: item }">
-            <XActionGroup>
-              <XAction
+          <AppCollection
+            data-testid="available-services-collection"
+            :headers="[
+              { label: 'Name', key: 'name' },
+              { label: 'Mesh', key: 'mesh' },
+              { label: 'Protocol', key: 'protocol' },
+              { label: 'No. Instances', key: 'instances' },
+              { label: 'Actions', key: 'actions', hideLabel: true },
+            ]"
+            :items="props.data.zoneIngress.availableServices"
+          >
+            <template #name="{ row: item }">
+              <RouterLink
                 :to="{
                   name: 'service-detail-view',
                   params: {
@@ -67,11 +35,48 @@
                   },
                 }"
               >
-                {{ t('common.collection.actions.view') }}
-              </XAction>
-            </XActionGroup>
-          </template>
-        </AppCollection>
+                {{ item.tags['kuma.io/service'] }}
+              </RouterLink>
+            </template>
+
+            <template #mesh="{ row: item }">
+              <RouterLink
+                :to="{
+                  name: 'mesh-detail-view',
+                  params: {
+                    mesh: item.mesh,
+                  },
+                }"
+              >
+                {{ item.mesh }}
+              </RouterLink>
+            </template>
+
+            <template #protocol="{ row: item }">
+              {{ item.tags['kuma.io/protocol'] ?? t('common.collection.none') }}
+            </template>
+
+            <template #instances="{ row: item }">
+              {{ item.instances }}
+            </template>
+
+            <template #actions="{ row: item }">
+              <XActionGroup>
+                <XAction
+                  :to="{
+                    name: 'service-detail-view',
+                    params: {
+                      mesh: item.mesh,
+                      service: item.tags['kuma.io/service'],
+                    },
+                  }"
+                >
+                  {{ t('common.collection.actions.view') }}
+                </XAction>
+              </XActionGroup>
+            </template>
+          </AppCollection>
+        </DataCollection>
       </KCard>
     </AppView>
   </RouteView>

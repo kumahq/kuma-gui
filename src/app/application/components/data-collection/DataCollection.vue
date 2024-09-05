@@ -41,21 +41,31 @@
       name="default"
       :items="paginated"
     />
-
     <slot
-      v-if="props.page !== 0 && items.length > 0"
+      v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
       name="pagination"
       :items="paginated"
     >
       <KPagination
-        :total-count="items.length"
+        :class="{
+          pagination: true,
+          'with-paging': props.page !== 0 && props.total > 0 && props.total !== props.items.length,
+          'with-sizing': props.pageSize !== 0,
+        }"
+        :total-count="props.total"
         :current-page="props.page"
-        :initial-page-size="props.pageSize"
+        :initial-page-size="props.pageSize || props.total"
         :page-sizes="[15, 30, 50, 75, 100]"
         @page-change="({ page }: PaginationChangeEvent) => {
-          emit('change', {
+          change({
             page,
-            pageSize: props.pageSize,
+            size: props.pageSize,
+          })
+        }"
+        @page-size-change="({ pageSize }: SizeChangeEvent) => {
+          change({
+            page: props.page,
+            size: pageSize,
           })
         }"
       />
@@ -63,17 +73,22 @@
   </template>
 </template>
 <script lang="ts" generic="T" setup>
+import { useThrottleFn } from '@vueuse/core'
 import { computed, useSlots } from 'vue'
 
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 type PaginationChangeEvent = {
   page: number
 }
+type SizeChangeEvent = {
+  pageSize: number
+}
 const props = withDefaults(defineProps<{
   type?: string
   paginationType?: 'server' | 'client'
   page?: number
   pageSize?: number
+  total?: number
   items: T[]
   predicate?: (item: T) => boolean
   comparator?: ((a: T, b: T) => number) | undefined
@@ -83,17 +98,23 @@ const props = withDefaults(defineProps<{
   type: '',
   paginationType: 'server',
   page: 0,
-  pageSize: 50,
+  total: 0,
+  pageSize: 0,
   predicate: () => true,
   comparator: undefined,
   find: false,
   empty: true,
 })
 const emit = defineEmits<{
-  (e: 'change', value: {page: number, pageSize: number}): void
+  (e: 'change', value: {page: number, size: number}): void
   (e: 'error', error: Error): void
 }>()
 const slots = useSlots()
+
+const change = useThrottleFn((obj) => {
+  emit('change', obj)
+})
+
 const items = computed(() => {
   if (slots.item) {
     return props.items
@@ -119,3 +140,14 @@ const paginated = computed(() => {
 })
 
 </script>
+<style lang="scss" scoped>
+.pagination {
+  margin-top: $kui-space-70;
+}
+.pagination:not(.with-paging) :deep(.pagination-button-container) {
+  display: none;
+}
+.pagination:not(.with-sizing) :deep(.page-size-select) {
+  display: none;
+}
+</style>
