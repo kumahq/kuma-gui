@@ -16,11 +16,9 @@
       :items="props.policyTypes ?? []"
     >
       <template #empty>
-        <EmptyBlock>
-          <template #message>
-            {{ t('policies.routes.items.empty') }}
-          </template>
-        </EmptyBlock>
+        <XEmptyState>
+          {{ t('policies.routes.items.empty') }}
+        </XEmptyState>
       </template>
       <template #item="{ item: type }">
         <AppView>
@@ -110,9 +108,11 @@
                     <template
                       #empty
                     >
-                      <EmptyBlock>
+                      <XEmptyState>
                         <template #title>
-                          {{ t('policies.x-empty-state.title') }}
+                          <h3>
+                            {{ t('policies.x-empty-state.title') }}
+                          </h3>
                         </template>
                         <div
                           v-html="t('policies.x-empty-state.body', { type: type.name, suffix: route.params.s.length > 0 ? t('common.matchingsearch') : '' })"
@@ -127,7 +127,7 @@
                             {{ t('common.documentation') }}
                           </XAction>
                         </template>
-                      </EmptyBlock>
+                      </XEmptyState>
                     </template>
                     <template
                       #default
@@ -279,7 +279,6 @@
 import type { PolicyType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 const props = defineProps<{

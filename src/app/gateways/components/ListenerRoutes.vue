@@ -84,11 +84,11 @@
 
         <div class="content">
           <div class="to-rule-list">
-            <EmptyBlock v-if="toRules.length === 0">
-              <template #title>
-                {{ t('builtin-gateways.detail.no_rules', { listener: props.selectedListenerIndex + 1 }) }}
-              </template>
-            </EmptyBlock>
+            <XEmptyState
+              v-if="toRules.length === 0"
+            >
+              {{ t('builtin-gateways.detail.no_rules', { listener: props.selectedListenerIndex + 1 }) }}
+            </XEmptyState>
 
             <template v-else>
               <template
@@ -254,7 +254,6 @@ import { computed } from 'vue'
 import type { MeshGateway } from '../data'
 import { matchesTags } from '../utilities'
 import { useI18n } from '@/app/application'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import TagList from '@/app/common/TagList.vue'
 import TargetRef from '@/app/common/TargetRef.vue'
 import RuleFilter from '@/app/rules/components/RuleFilter.vue'

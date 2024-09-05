@@ -16,7 +16,7 @@
         name="empty"
         :items="items"
       >
-        <EmptyBlock
+        <XEmptyState
           v-if="props.empty"
           :type="props.type"
         />
@@ -31,7 +31,7 @@
       name="empty"
       :items="items"
     >
-      <EmptyBlock
+      <XEmptyState
         v-if="props.empty"
         :type="props.type"
       />
@@ -76,7 +76,6 @@
 import { useThrottleFn } from '@vueuse/core'
 import { computed, useSlots } from 'vue'
 
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 type PaginationChangeEvent = {
   page: number
 }

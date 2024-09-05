@@ -12,13 +12,16 @@
       :find="true"
     >
       <template #empty>
-        <EmptyBlock>
+        <XEmptyState>
           <template #title>
-            {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
+            <h2>
+              {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
+            </h2>
           </template>
-
-          <p>{{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}</p>
-        </EmptyBlock>
+          <p>
+            {{ t('common.collection.summary.empty_message', { type: 'Data Plane Proxy' }) }}
+          </p>
+        </XEmptyState>
       </template>
       <template
         #default="{ items: proxies }"
@@ -298,7 +301,6 @@ import { InfoIcon } from '@kong/icons'
 
 import type { DataplaneOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
