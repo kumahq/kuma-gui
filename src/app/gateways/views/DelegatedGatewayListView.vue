@@ -47,7 +47,7 @@
               >
                 <template #name="{ row: item }">
                   <TextWithCopyButton :text="item.name">
-                    <RouterLink
+                    <XAction
                       :to="{
                         name: 'delegated-gateway-detail-view',
                         params: {
@@ -61,7 +61,7 @@
                       }"
                     >
                       {{ item.name }}
-                    </RouterLink>
+                    </XAction>
                   </TextWithCopyButton>
                 </template>
 

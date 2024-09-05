@@ -14,7 +14,7 @@
       :appearance="tag.isKuma ? 'info' : 'neutral'"
     >
       <component
-        :is="tag.route ? 'RouterLink' : 'span'"
+        :is="tag.route ? 'XAction' : 'span'"
         :to="tag.route"
       >
         {{ tag.label }}:<b>{{ tag.value }}</b>

@@ -18,7 +18,7 @@
       <AppView>
         <template #title>
           <h2>
-            <RouterLink
+            <XAction
               :to="{
                 name: 'policy-detail-view',
                 params: {
@@ -31,7 +31,7 @@
               <RouteTitle
                 :title="t('policies.routes.item.title', { name: route.params.policy })"
               />
-            </RouterLink>
+            </XAction>
           </h2>
         </template>
         <DataLoader

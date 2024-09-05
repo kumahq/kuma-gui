@@ -128,7 +128,7 @@
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
-                    <RouterLink
+                    <XAction
                       data-action
                       :to="{
                         name: 'data-plane-detail-view',
@@ -138,7 +138,7 @@
                       }"
                     >
                       {{ item.name }}
-                    </RouterLink>
+                    </XAction>
                   </template>
 
                   <template #namespace="{ row: item }">
@@ -146,7 +146,7 @@
                   </template>
 
                   <template #zone="{ row }">
-                    <RouterLink
+                    <XAction
                       v-if="row.zone"
                       :to="{
                         name: 'zone-cp-detail-view',
@@ -156,7 +156,7 @@
                       }"
                     >
                       {{ row.zone }}
-                    </RouterLink>
+                    </XAction>
 
                     <template v-else>
                       {{ t('common.collection.none') }}

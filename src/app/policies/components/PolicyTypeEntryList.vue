@@ -73,7 +73,7 @@
                   v-for="(origin, originIndex) in row.origins"
                   :key="`${index}-${originIndex}`"
                 >
-                  <RouterLink
+                  <XAction
                     :to="{
                       name: 'policy-detail-view',
                       params: {
@@ -84,7 +84,7 @@
                     }"
                   >
                     {{ origin.name }}
-                  </RouterLink>
+                  </XAction>
                 </li>
               </ul>
 

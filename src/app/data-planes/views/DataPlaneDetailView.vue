@@ -353,7 +353,7 @@
                                 :service="outbound.$resourceMeta.type === '' ? name.replace(hash, '') : undefined"
                                 :direction="direction"
                               >
-                                <RouterLink
+                                <XAction
                                   data-action
                                   :to="{
                                     name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
@@ -361,12 +361,12 @@
                                       connection: name,
                                     },
                                     query: {
-                                      inactive: route.params.inactive ? null : undefined,
+                                      inactive: route.params.inactive,
                                     },
                                   }"
                                 >
                                   {{ name }}
-                                </RouterLink>
+                                </XAction>
                               </ConnectionCard>
                             </template>
                           </template>

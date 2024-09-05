@@ -1,13 +1,13 @@
 <template>
   <span class="target-ref">
-    <RouterLink
+    <XAction
       v-if="routeTarget !== null"
       :to="routeTarget"
     >
       <XBadge>
         <slot />
       </XBadge>
-    </RouterLink>
+    </XAction>
 
     <XBadge v-else>
       <slot />
