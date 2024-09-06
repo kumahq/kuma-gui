@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="mesh-multizone-service-detail-tabs-view"
+    name="mesh-multi-zone-service-detail-tabs-view"
     :params="{
       mesh: '',
       service: '',
@@ -8,14 +8,14 @@
     v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="uri(sources, '/meshes/:mesh/mesh-multizone-service/:name', {
+      :src="uri(sources, '/meshes/:mesh/mesh-multi-zone-service/:name', {
         mesh: route.params.mesh,
         name: route.params.service,
       })"
       v-slot="{ data, error }"
     >
       <AppView
-        :docs="t('services.mesh-multizone-service.href.docs')"
+        :docs="t('services.mesh-multi-zone-service.href.docs')"
         :breadcrumbs="[
           {
             to: {
@@ -28,12 +28,12 @@
           },
           {
             to: {
-              name: 'mesh-multizone-service-list-view',
+              name: 'mesh-multi-zone-service-list-view',
               params: {
                 mesh: route.params.mesh,
               },
             },
-            text: t('services.routes.mesh-multizone-service-list-view.title'),
+            text: t('services.routes.mesh-multi-zone-service-list-view.title'),
           },
         ]"
       >

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="mesh-service-config-view"
+    name="mesh-multi-zone-service-config-view"
     :params="{
       mesh: '',
       service: '',
@@ -25,7 +25,7 @@
         >
           <DataSource
             v-if="copying"
-            :src="`/meshes/${props.data.mesh}/mesh-service/${props.data.id}/as/kubernetes?no-store`"
+            :src="`/meshes/${props.data.mesh}/mesh-multi-zone-service/${props.data.id}/as/kubernetes?no-store`"
             @change="(data) => {
               copy((resolve) => resolve(data))
             }"
@@ -40,9 +40,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { MeshService } from '../data'
+import type { MeshMultiZoneService } from '../data'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
-  data: MeshService
+  data: MeshMultiZoneService
 }>()
 </script>

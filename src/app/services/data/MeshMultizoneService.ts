@@ -13,11 +13,17 @@ const Entity = {
       name,
       namespace,
       labels,
+      spec: ((item) => {
+        return {
+          ...item,
+          ports: Array.isArray(item.ports) ? item.ports : [],
+        }
+      })(item.spec),
       status: ((item = {}) => {
         return {
+          ...item,
           vips: Array.isArray(item.vips) ? item.vips : [],
           meshServices: Array.isArray(item.meshServices) ? item.meshServices : [],
-          ports: Array.isArray(item.ports) ? item.ports : [],
           addresses: Array.isArray(item.addresses) ? item.addresses : [],
         }
       })(item.status),
@@ -34,5 +40,5 @@ const Entity = {
     }
   },
 }
-export const MeshMultizoneService = Entity
-export type MeshMultizoneService = ReturnType<typeof Entity['fromObject']>
+export const MeshMultiZoneService = Entity
+export type MeshMultiZoneService = ReturnType<typeof Entity['fromObject']>

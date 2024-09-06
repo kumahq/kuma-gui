@@ -10,10 +10,11 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
-    env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
+    env('KUMA_MULTIZONESERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
     req,
     `/meshes/${req.params.mesh}/meshservices`,
   )
+  const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 120 })}`))
 
   return {
     headers: {},
@@ -43,13 +44,6 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             }
             : {}),
           spec: {
-            selector: {
-              meshService: {
-                matchLabels: fake.kuma.tags({}),
-              },
-            },
-          },
-          status: {
             ports: Array.from({ length: 5 }).map(_ => (
               {
                 port: fake.internet.port(),
@@ -57,8 +51,18 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 appProtocol: fake.kuma.protocol(),
               }
             )),
-            meshServices: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
-              name: `${fake.hacker.noun()}-${i}${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+            selector: {
+              meshService: {
+                matchLabels: fake.kuma.tags({}),
+              },
+            },
+          },
+          status: {
+            meshServices: Array.from({ length: serviceCount }).map(_ => ({
+              name: `${fake.hacker.noun()}-${i}`,
+              mesh: fake.hacker.noun(),
+              namespace: `${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+              zone: fake.hacker.noun(),
             })),
             addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
               hostname: fake.internet.domainName(),
