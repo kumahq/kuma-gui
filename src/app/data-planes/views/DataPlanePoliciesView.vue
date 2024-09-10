@@ -21,7 +21,7 @@
         >
           <template
             v-for="policyTypes in [(policyTypesData?.policies ?? []).reduce<Partial<Record<string, PolicyType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
-            :key="policyTypes"
+            :key="typeof policyTypes"
           >
             <!-- always try and load and show the rules for everything dataplane type -->
             <DataLoader
