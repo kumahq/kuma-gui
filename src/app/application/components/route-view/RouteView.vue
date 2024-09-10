@@ -1,37 +1,36 @@
 <template>
-  <DataSource
-    :src="uri(sources, '/me/:route', {
-      route: props.name,
-    })"
-    v-slot="{ data: me }"
+  <div
+    class="route-view"
+    v-bind="htmlAttrs"
+    :data-testid="name"
   >
     <div
-      class="route-view"
-      v-bind="htmlAttrs"
-      :data-testid="name"
+      v-if="!hasParent"
+      id="application-route-announcer"
+      ref="title"
+      class="route-view-title visually-hidden"
+      aria-live="assertive"
+      aria-atomic="true"
+    />
+    <DataSink
+      :src="`/me/${props.name}`"
+      v-slot="{ submit: _submit }"
     >
-      <div
-        v-if="!hasParent"
-        id="application-route-announcer"
-        ref="title"
-        class="route-view-title visually-hidden"
-        aria-live="assertive"
-        aria-atomic="true"
+      <!-- eslint-disable vue/no-lone-template -->
+      <template
+        :ref="() => {
+          submit = _submit
+        }"
       />
-      <DataSink
-        v-if="me"
-        :src="`/me/${props.name}`"
-        v-slot="{ submit: _submit }"
-      >
-        <!-- eslint-disable vue/no-lone-template -->
-        <template
-          :ref="() => {
-            submit = _submit
-          }"
-        />
-      </DataSink>
+    </DataSink>
+    <DataSource
+      :src="uri(sources, '/me/:route', {
+        route: props.name,
+      })"
+      v-slot="{ data: me }"
+    >
       <slot
-        v-if="submit"
+        v-if="me && submit"
         :id="UniqueId"
         name="default"
         :t="t"
@@ -49,8 +48,8 @@
           child,
         }"
       />
-    </div>
-  </DataSource>
+    </DataSource>
+  </div>
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
