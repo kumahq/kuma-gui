@@ -1,6 +1,6 @@
 <a href="https://kuma.io/"><img class="logo" src="https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png"></a>
 
-<a class="badge" href="https://github.com/kumahq/kuma-gui/actions"><img alt="Tests passing" src="https://github.com/kumahq/kuma-gui/workflows/main/badge.svg"></a>
+<a class="badge" href="https://github.com/kumahq/kuma-gui/actions"><img alt="Tests passing" src="https://github.com/kumahq/kuma-gui/actions/workflows/main.yml/badge.svg"></a>
 <a class="badge" href="https://github.com/kumahq/kuma/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
 <a class="badge" href="https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ"><img alt="Slack" src="https://img.shields.io/badge/Slack-4A154B?logo=slack"></a>
 <a class="badge" href="https://twitter.com/intent/follow?screen_name=KumaMesh"><img alt="Twitter" src="https://img.shields.io/twitter/follow/KumaMesh.svg?style=social&label=Follow"></a>
