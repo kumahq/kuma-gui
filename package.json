@@ -74,7 +74,7 @@
     "postcss": "^8.4.44",
     "openapi-typescript": "^7.3.0",
     "postcss-html": "^1.7.0",
-    "sass": "^1.77.8",
+    "sass": "^1.78.0",
     "shiki": "^1.16.1",
     "standard": "^17.1.0",
     "stylelint": "^16.9.0",
