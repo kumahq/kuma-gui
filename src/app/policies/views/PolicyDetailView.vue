@@ -13,11 +13,11 @@
     v-slot="{ route, t, uri, can, me }"
   >
     <AppView>
-      <KCard>
+      <KCard
+        v-if="can('use zones') && props.data.zone"
+      >
         <div class="columns">
-          <DefinitionCard
-            v-if="can('use zones') && props.data.zone"
-          >
+          <DefinitionCard>
             <template
               #title
             >
@@ -58,14 +58,14 @@
             })"
           >
             <template
-              #loadable="{ data }"
+              #loadable="{ data: dataplanes }"
             >
               <DataCollection
                 type="data-planes"
-                :items="data?.items ?? [undefined]"
+                :items="dataplanes?.items ?? [undefined]"
                 :page="route.params.page"
                 :page-size="route.params.size"
-                :total="data?.total"
+                :total="dataplanes?.total"
                 @change="route.update"
               >
                 <AppCollection
@@ -75,7 +75,7 @@
                     ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
-                  :items="data?.items"
+                  :items="dataplanes?.items"
                   :is-selected-row="(row) => row.id === route.params.dataPlane"
                   @resize="me.set"
                 >
@@ -130,30 +130,30 @@
                     </XActionGroup>
                   </template>
                 </AppCollection>
-              </DataCollection>
-              <RouterView
-                v-slot="{ Component }"
-              >
-                <SummaryView
-                  v-if="route.child()"
-                  @close="route.replace({
-                    params: {
-                      mesh: route.params.mesh,
-                    },
-                    query: {
-                      page: route.params.page,
-                      size: route.params.size,
-                      s: route.params.s,
-                    },
-                  })"
+                <RouterView
+                  v-slot="{ Component }"
                 >
-                  <component
-                    :is="Component"
-                    v-if="typeof data !== 'undefined'"
-                    :items="data.items"
-                  />
-                </SummaryView>
-              </RouterView>
+                  <SummaryView
+                    v-if="route.child()"
+                    @close="route.replace({
+                      params: {
+                        mesh: route.params.mesh,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                        s: route.params.s,
+                      },
+                    })"
+                  >
+                    <component
+                      :is="Component"
+                      v-if="typeof dataplanes !== 'undefined'"
+                      :items="dataplanes.items"
+                    />
+                  </SummaryView>
+                </RouterView>
+              </DataCollection>
             </template>
           </DataLoader>
         </KCard>
