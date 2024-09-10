@@ -5,7 +5,7 @@ import type { Token, ServiceDefinition } from '@/services/utils'
 import type { SetupWorker } from 'msw/browser'
 
 type Handler = Parameters<typeof setupWorker>[0]
-type Passthrough = (req: Request) => string | string[] | void
+type Passthrough = (req: Request) => boolean | void
 
 type Msw = ReturnType<SetupWorker['start']>
 
@@ -22,26 +22,25 @@ export const services = (_: Record<string, Token>): ServiceDefinition[] => {
       service: () => [(req: Request) => {
         const { pathname, href } = new URL(req.url)
         if (
-          !pathname.startsWith('/node_modules') &&
-         !pathname.startsWith('/src/assets/') &&
-         !passthroughExtension.test(href)
+          pathname.startsWith('/node_modules') ||
+          pathname.startsWith('/src/assets/') ||
+          passthroughExtension.test(href)
         ) {
-          return `Found an unhandled ${req.method} request to ${href}`
+          return true
         }
       }],
       labels: [
         $.mswPassthroughs,
       ],
-    },
-    ],
+    }],
     [$.msw, {
       service: (handlers: Handler[] = [], passthroughs: Passthrough[]) => {
         return setupWorker(...handlers).start({
           quiet: true,
-          onUnhandledRequest(req: Request) {
-            passthroughs.reduce<string[]>((prev, item) => prev.concat(item(req) ?? []), []).forEach(item => {
-              console.warn(item)
-            })
+          onUnhandledRequest(req: Request, print) {
+            if (!passthroughs.some((passthrough) => passthrough(req))) {
+              print.warning()
+            }
           },
         })
       },
