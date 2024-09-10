@@ -24,7 +24,7 @@
     "js-yaml": "^4.1.0",
     "object.groupby": "^1.0.3",
     "openapi-fetch": "^0.12.0",
-    "path-to-regexp": "^7.2.0",
+    "path-to-regexp": "^8.0.0",
     "pretty-bytes": "^6.1.1",
     "prismjs": "^1.29.0",
     "vue": "^3.4.38",
