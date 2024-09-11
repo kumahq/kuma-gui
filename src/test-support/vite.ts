@@ -78,6 +78,9 @@ export default (opts: PluginOptions): Plugin => {
       body: options.body ?? {},
       params,
     })
+    if (typeof response === 'undefined') {
+      throw new Error('not found')
+    }
     await new Promise(resolve => setTimeout(resolve, parseInt(env('KUMA_LATENCY', '0'))))
     return {
       json: async () => {
@@ -86,7 +89,7 @@ export default (opts: PluginOptions): Plugin => {
       text: async () => {
         return response.body.toString()
       },
-      headers: new Map(Object.entries(response.headers)),
+      headers: new Map(Object.entries(response.headers ?? {})),
     }
   }
 

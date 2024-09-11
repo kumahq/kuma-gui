@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge'
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse, passthrough } from 'msw'
 
 import { dependencies, escapeRoute } from './fake'
 import type { FakeEndpoint, MockResponse, FS, AEnv, Env, AppEnvKeys, MockEnvKeys, RestRequest } from './fake'
@@ -79,7 +79,7 @@ export const server = (mock: FakeEndpoint, options: {
         },
         params: options.params ?? {},
       },
-    )).body
+    ))?.body
   }
 }
 
@@ -88,7 +88,11 @@ export const handler = (fs: FS, env: AEnv) => {
   const responder = useResponder(fs, env)
   return (route: string) => {
     const respond = responder(route)
-    return http.all(`${route.includes('://') ? '' : baseUrl}${escapeRoute(route)}`, async ({ request, params }) => {
+    const base = route.includes('://') ? '' : baseUrl
+    if (route.startsWith('://')) {
+      route = route.replace('://', '')
+    }
+    return http.all(`${base}${escapeRoute(route)}`, async ({ request, params }) => {
       const response = await respond({
         method: request.method,
         url: new URL(request.url),
@@ -96,8 +100,12 @@ export const handler = (fs: FS, env: AEnv) => {
         params,
       })
 
+      if (typeof response === 'undefined') {
+        return passthrough()
+      }
+
       return HttpResponse.json(response.body, {
-        status: parseInt(response.headers['Status-Code'] ?? '200'),
+        status: parseInt(response.headers?.['Status-Code'] ?? '200'),
       })
     })
   }

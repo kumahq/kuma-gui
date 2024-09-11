@@ -80,9 +80,9 @@ export type EndpointDependencies = {
   env: Env
 }
 export type MockResponse = {
-  headers: Record<string, string>
+  headers?: Record<string, string>
   body: string | Record<string, unknown>
-}
+} | undefined
 export type MockResponder = (req: RestRequest) => MockResponse
 export type FakeEndpoint = (deps: EndpointDependencies) => MockResponder
 
