@@ -378,7 +378,7 @@ function subscriptionConfig() {
       port: 5653,
     },
     dpServer: {
-      auth: {
+      authn: {
         type: 'dpToken',
       },
       hds: {
