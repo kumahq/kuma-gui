@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="mesh-multizone-service-detail-view"
+    name="mesh-multi-zone-service-detail-view"
     :params="{
       mesh: '',
       service: '',
@@ -51,7 +51,7 @@
               >
                 <KTruncate>
                   <KBadge
-                    v-for="connection in data.status.ports"
+                    v-for="connection in data.spec.ports"
                     :key="connection.port"
                     appearance="info"
                   >
@@ -114,8 +114,12 @@
             class="mt-4"
           >
             <AppCollection
+              data-testid="mesh-service-collection"
               :headers="[
                 { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                { ...me.get('headers.zone'), label: 'Zone', key: 'zone' },
+                { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                { ...me.get('headers.mesh'), label: 'Mesh', key: 'mesh' },
                 { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :items="data.status.meshServices"
@@ -124,16 +128,47 @@
             >
               <template #name="{ row: item }">
                 <XAction
+                  data-action
                   class="name-link"
                   :to="{
                     name: 'mesh-service-detail-view',
                     params: {
-                      mesh: data.mesh,
+                      mesh: item.mesh,
                       service: item.name,
                     },
                   }"
                 >
                   {{ item.name }}
+                </XAction>
+              </template>
+
+              <template #zone="{ row }">
+                <XAction
+                  :to="{
+                    name: 'zone-cp-detail-view',
+                    params: {
+                      zone: row.zone,
+                    },
+                  }"
+                >
+                  {{ row.zone }}
+                </XAction>
+              </template>
+
+              <template #namespace="{ row: item }">
+                {{ item.namespace }}
+              </template>
+
+              <template #mesh="{ row: item }">
+                <XAction
+                  :to="{
+                    name: 'mesh-detail-view',
+                    params: {
+                      mesh: item.mesh,
+                    },
+                  }"
+                >
+                  {{ item.mesh }}
                 </XAction>
               </template>
 
@@ -143,7 +178,7 @@
                     :to="{
                       name: 'mesh-service-detail-view',
                       params: {
-                        mesh: data.mesh,
+                        mesh: item.mesh,
                         service: item.name,
                       },
                     }"
@@ -161,12 +196,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { MeshMultizoneService } from '../data'
+import type { MeshMultiZoneService } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
-  data: MeshMultizoneService
+  data: MeshMultiZoneService
 }>()
 </script>
 

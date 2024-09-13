@@ -6,7 +6,7 @@ import type {
 } from '@/types/index.d'
 
 export * from './MeshService'
-export * from './MeshMultizoneService'
+export * from './MeshMultiZoneService'
 export * from './MeshExternalService'
 
 export type ExternalService = PartialExternalService & {

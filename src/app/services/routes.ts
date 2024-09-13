@@ -66,26 +66,26 @@ export const routes = (can: Can) => {
                 ],
               },
               {
-                path: 'mesh-multizone-services/:service',
-                name: 'mesh-multizone-service-detail-tabs-view',
-                component: () => import('@/app/services/views/MeshMultizoneServiceDetailTabsView.vue'),
+                path: 'mesh-multi-zone-services/:service',
+                name: 'mesh-multi-zone-service-detail-tabs-view',
+                component: () => import('@/app/services/views/MeshMultiZoneServiceDetailTabsView.vue'),
                 children: [
                   {
                     path: 'overview',
-                    name: 'mesh-multizone-service-detail-view',
-                    component: () => import('@/app/services/views/MeshMultizoneServiceDetailView.vue'),
+                    name: 'mesh-multi-zone-service-detail-view',
+                    component: () => import('@/app/services/views/MeshMultiZoneServiceDetailView.vue'),
                     children: [
                       {
                         path: ':dataPlane',
-                        name: 'mesh-multizone-service-data-plane-summary-view',
+                        name: 'mesh-multi-zone-service-data-plane-summary-view',
                         component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
                       },
                     ],
                   },
                   {
                     path: 'config',
-                    name: 'mesh-multizone-service-config-view',
-                    component: () => import('@/app/services/views/MeshMultizoneServiceConfigView.vue'),
+                    name: 'mesh-multi-zone-service-config-view',
+                    component: () => import('@/app/services/views/MeshMultiZoneServiceConfigView.vue'),
                   },
                 ],
               },
@@ -148,14 +148,14 @@ export const routes = (can: Can) => {
                   ],
                 },
                 {
-                  path: 'mesh-multizone-services',
-                  name: 'mesh-multizone-service-list-view',
-                  component: () => import('@/app/services/views/MeshMultizoneServiceListView.vue'),
+                  path: 'mesh-multi-zone-services',
+                  name: 'mesh-multi-zone-service-list-view',
+                  component: () => import('@/app/services/views/MeshMultiZoneServiceListView.vue'),
                   children: [
                     {
                       path: ':service',
-                      name: 'mesh-multizone-service-summary-view',
-                      component: () => import('@/app/services/views/MeshMultizoneServiceSummaryView.vue'),
+                      name: 'mesh-multi-zone-service-summary-view',
+                      component: () => import('@/app/services/views/MeshMultiZoneServiceSummaryView.vue'),
                     },
                   ],
                 },

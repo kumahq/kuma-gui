@@ -102,6 +102,10 @@
                   </search>
                   <DataCollection
                     :items="data?.items ?? [undefined]"
+                    :page="route.params.page"
+                    :page-size="route.params.size"
+                    :total="data?.total"
+                    @change="route.update"
                   >
                     <template
                       #empty
@@ -136,12 +140,8 @@
                           ...(type.isTargetRefBased ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
                           { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                         ]"
-                        :page-number="route.params.page"
-                        :page-size="route.params.size"
-                        :total="data?.total"
                         :items="data?.items"
                         :is-selected-row="(row) => row.id === route.params.policy"
-                        @change="route.update"
                         @resize="me.set"
                       >
                         <template #name="{ row }">

@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="mesh-multizone-service-list-view"
+    name="mesh-multi-zone-service-list-view"
     :params="{
       page: 1,
       size: 50,
@@ -11,14 +11,14 @@
   >
     <RouteTitle
       :render="false"
-      :title="t(`services.routes.mesh-multizone-service-list-view.title`)"
+      :title="t(`services.routes.mesh-multi-zone-service-list-view.title`)"
     />
     <AppView
-      :docs="t('services.mesh-multizone-service.href.docs')"
+      :docs="t('services.mesh-multi-zone-service.href.docs')"
     >
       <KCard>
         <DataLoader
-          :src="uri(sources, '/meshes/:mesh/mesh-multizone-services', {
+          :src="uri(sources, '/meshes/:mesh/mesh-multi-zone-services', {
             mesh: route.params.mesh,
           },{
             page: route.params.page,
@@ -57,7 +57,7 @@
                     <XAction
                       data-action
                       :to="{
-                        name: 'mesh-multizone-service-summary-view',
+                        name: 'mesh-multi-zone-service-summary-view',
                         params: {
                           mesh: item.mesh,
                           service: item.id,
@@ -113,7 +113,7 @@
                 >
                   <KTruncate>
                     <KBadge
-                      v-for="connection in item.status.ports"
+                      v-for="connection in item.spec.ports"
                       :key="connection.port"
                       appearance="info"
                     >
@@ -138,7 +138,7 @@
                   <XActionGroup>
                     <XAction
                       :to="{
-                        name: 'mesh-multizone-service-detail-view',
+                        name: 'mesh-multi-zone-service-detail-view',
                         params: {
                           mesh: item.mesh,
                           service: item.id,
@@ -156,7 +156,7 @@
               >
                 <SummaryView
                   @close="route.replace({
-                    name: 'mesh-multizone-service-list-view',
+                    name: 'mesh-multi-zone-service-list-view',
                     params: {
                       mesh: route.params.mesh,
                     },

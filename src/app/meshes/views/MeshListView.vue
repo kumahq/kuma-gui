@@ -34,6 +34,10 @@
               <DataCollection
                 type="meshes"
                 :items="data?.items ?? [undefined]"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                :total="data?.total"
+                @change="route.update"
               >
                 <AppCollection
                   class="mesh-collection"
@@ -44,12 +48,8 @@
                     { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
-                  :page-number="route.params.page"
-                  :page-size="route.params.size"
-                  :total="data?.total"
                   :items="data?.items"
                   :is-selected-row="(row) => row.name === route.params.mesh"
-                  @change="route.update"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">

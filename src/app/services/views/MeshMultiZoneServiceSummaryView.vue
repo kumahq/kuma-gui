@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="mesh-multizone-service-summary-view"
+    name="mesh-multi-zone-service-summary-view"
     :params="{
       mesh: '',
       service: '',
@@ -22,7 +22,7 @@
             <h2>
               <XAction
                 :to="{
-                  name: 'mesh-multizone-service-detail-view',
+                  name: 'mesh-multi-zone-service-detail-view',
                   params: {
                     mesh: route.params.mesh,
                     service: route.params.service,
@@ -78,7 +78,7 @@
                 >
                   <KTruncate>
                     <KBadge
-                      v-for="connection in item.status.ports"
+                      v-for="connection in item.spec.ports"
                       :key="connection.port"
                       appearance="info"
                     >
@@ -129,7 +129,7 @@
                 >
                   <DataSource
                     v-if="copying"
-                    :src="`/meshes/${route.params.mesh}/mesh-multizone-service/${route.params.service}/as/kubernetes?no-store`"
+                    :src="`/meshes/${route.params.mesh}/mesh-multi-zone-service/${route.params.service}/as/kubernetes?no-store`"
                     @change="(data) => {
                       copy((resolve) => resolve(data))
                     }"
@@ -150,8 +150,8 @@
 <script lang="ts" setup>
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import type { MeshMultizoneService } from '@/app/services/data'
+import type { MeshMultiZoneService } from '@/app/services/data'
 const props = defineProps<{
-  items: MeshMultizoneService[]
+  items: MeshMultiZoneService[]
 }>()
 </script>

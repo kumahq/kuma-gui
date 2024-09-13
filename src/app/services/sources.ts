@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch'
 
 import {
   MeshService,
-  MeshMultizoneService,
+  MeshMultiZoneService,
   MeshExternalService,
   ExternalService,
   ServiceInsight,
@@ -36,6 +36,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore
           query: {
             offset,
             size,
@@ -68,6 +69,7 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
+          // @ts-ignore
           query: {
             format: 'kubernetes',
           },
@@ -76,7 +78,7 @@ export const sources = (api: KumaApi) => {
       return res.data!
     },
 
-    '/meshes/:mesh/mesh-multizone-services': async (params) => {
+    '/meshes/:mesh/mesh-multi-zone-services': async (params) => {
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
@@ -85,6 +87,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore
           query: {
             offset,
             size,
@@ -92,10 +95,10 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return MeshMultizoneService.fromCollection(res.data!)
+      return MeshMultiZoneService.fromCollection(res.data!)
     },
 
-    '/meshes/:mesh/mesh-multizone-service/:name': async (params) => {
+    '/meshes/:mesh/mesh-multi-zone-service/:name': async (params) => {
       const { mesh, name } = params
 
       const res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
@@ -106,10 +109,10 @@ export const sources = (api: KumaApi) => {
           },
         },
       })
-      return MeshMultizoneService.fromObject(res.data!)
+      return MeshMultiZoneService.fromObject(res.data!)
     },
 
-    '/meshes/:mesh/mesh-multizone-service/:name/as/kubernetes': async (params) => {
+    '/meshes/:mesh/mesh-multi-zone-service/:name/as/kubernetes': async (params) => {
       const { mesh, name } = params
       const res = await http.GET('/meshes/{mesh}/meshmultizoneservices/{name}', {
         params: {
@@ -117,6 +120,7 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
+          // @ts-ignore
           query: {
             format: 'kubernetes',
           },
@@ -134,6 +138,7 @@ export const sources = (api: KumaApi) => {
           path: {
             mesh,
           },
+          // @ts-ignore
           query: {
             offset,
             size,
@@ -167,6 +172,7 @@ export const sources = (api: KumaApi) => {
             mesh,
             name,
           },
+          // @ts-ignore
           query: {
             format: 'kubernetes',
           },
