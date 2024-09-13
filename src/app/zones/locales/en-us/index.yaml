@@ -66,5 +66,5 @@ zones:
   index:
     create: 'Create Zone'
   action_menu:
-    toggle_button: 'Zone Actions'
+    toggle_button: 'Actions'
     delete_button: 'Delete'
