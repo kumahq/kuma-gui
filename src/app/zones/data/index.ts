@@ -69,7 +69,7 @@ export const ZoneInsight = {
     return {
       ...item,
       ...subs,
-      authenticationType: get(subs.config, 'dpServer.auth.type', ''),
+      authenticationType: get(subs.config, 'dpServer.authn.type', ''),
       environment: String(subs.config.environment ?? ''),
       store: get(subs.config, 'store.type', ''),
     }
