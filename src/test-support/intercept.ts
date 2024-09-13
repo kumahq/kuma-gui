@@ -87,8 +87,12 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
             url,
             request,
           })
+          if (typeof response === 'undefined') {
+            req.continue()
+            return
+          }
           req.reply({
-            statusCode: parseInt(response.headers['Status-Code'] ?? '200'),
+            statusCode: parseInt(response.headers?.['Status-Code'] ?? '200'),
             delay: parseInt(mockEnv('KUMA_LATENCY', '0')),
             body: response.body,
           })
