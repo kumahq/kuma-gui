@@ -13,11 +13,37 @@
     v-slot="{ route, t, uri, can, me }"
   >
     <AppView>
-      <KCard
-        v-if="can('use zones') && props.data.zone"
-      >
+      <KCard>
         <div class="columns">
           <DefinitionCard>
+            <template
+              #title
+            >
+              Type
+            </template>
+            <template
+              #body
+            >
+              {{ props.data.type }}
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="props.data.namespace.length > 0"
+          >
+            <template
+              #title
+            >
+              Namespace
+            </template>
+            <template
+              #body
+            >
+              {{ props.data.namespace }}
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="can('use zones') && props.data.zone"
+          >
             <template
               #title
             >
@@ -36,6 +62,23 @@
               >
                 {{ props.data.zone }}
               </XAction>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard>
+            <template #title>
+              {{ t('http.api.property.targetRef') }}
+            </template>
+
+            <template #body>
+              <template v-if="props.data.spec?.targetRef">
+                <KBadge appearance="neutral">
+                  {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
+                </KBadge>
+              </template>
+
+              <template v-else>
+                {{ t('common.detail.none') }}
+              </template>
             </template>
           </DefinitionCard>
         </div>
