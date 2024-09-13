@@ -4,19 +4,8 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
   // To test the error handling of the zone creation flow’s polling mechanism
-  /* return {
-    headers: {
-      'Status-Code': '401',
-    },
-    body: {
-      type: '/std-errors',
-      status: 401,
-      title: 'Authorization error',
-      detail: '401 Unauthorized',
-      instance: '0123456789abcdefghijkl',
-      invalid_parameters: [],
-    },
-  } */
+  // use KUMA_SUBSCRIPTION_COUNT=0 in your cookies, set to
+  // KUMA_SUBSCRIPTION_COUNT=1 to make it connect
 
   return {
     headers: {
