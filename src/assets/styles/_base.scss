@@ -140,7 +140,9 @@ iframe {
   vertical-align: middle;
 }
 
-img {
+// @TODO(jc): We either need a better way to turn this off (maybe :not([height])
+// or it needs removing entirely
+img:not(.no-auto-height) {
   max-width: 100%;
   height: auto;
 }
