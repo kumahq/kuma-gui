@@ -46,6 +46,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           spec: {
             ports: Array.from({ length: 5 }).map(_ => (
               {
+                name: fake.helpers.arrayElement([fake.hacker.noun(), String(fake.internet.port())]),
                 port: fake.internet.port(),
                 targetPort: fake.internet.port(),
                 appProtocol: fake.kuma.protocol(),

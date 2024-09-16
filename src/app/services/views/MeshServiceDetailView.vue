@@ -20,6 +20,30 @@
       >
         <KCard>
           <div class="columns">
+            <DefinitionCard>
+              <template #title>
+                State
+              </template>
+
+              <template #body>
+                <KBadge
+                  :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
+                >
+                  {{ props.data.spec.state }}
+                </KBadge>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              v-if="props.data.namespace.length > 0"
+            >
+              <template #title>
+                Namespace
+              </template>
+
+              <template #body>
+                {{ props.data.namespace }}
+              </template>
+            </DefinitionCard>
             <DefinitionCard
               v-if="can('use zones') && props.data.zone"
             >
@@ -43,38 +67,6 @@
                 </XAction>
               </template>
             </DefinitionCard>
-            <DefinitionCard
-              v-if="props.data.status.addresses.length > 0"
-            >
-              <template
-                #title
-              >
-                Addresses
-              </template>
-              <template
-                #body
-              >
-                <template
-                  v-if="props.data.status.addresses.length === 1"
-                >
-                  <TextWithCopyButton
-                    :text="props.data.status.addresses[0].hostname"
-                  >
-                    {{ props.data.status.addresses[0].hostname }}
-                  </TextWithCopyButton>
-                </template>
-                <KTruncate
-                  v-else
-                >
-                  <span
-                    v-for="address in props.data.status.addresses"
-                    :key="address.hostname"
-                  >
-                    {{ address.hostname }}
-                  </span>
-                </KTruncate>
-              </template>
-            </DefinitionCard>
             <DefinitionCard>
               <template
                 #title
@@ -90,7 +82,7 @@
                     :key="connection.port"
                     appearance="info"
                   >
-                    {{ connection.port }}:{{ connection.targetPort }}/{{ connection.appProtocol }}
+                    {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
                   </KBadge>
                 </KTruncate>
               </template>
@@ -99,7 +91,7 @@
               <template
                 #title
               >
-                Dataplane Tags
+                Selector
               </template>
               <template
                 #body
@@ -112,28 +104,6 @@
                   >
                     {{ key }}:{{ value }}
                   </KBadge>
-                </KTruncate>
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="data.status.vips.length > 0"
-              class="ip"
-            >
-              <template
-                #title
-              >
-                VIPs
-              </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <span
-                    v-for="address in data.status.vips"
-                    :key="address.ip"
-                  >
-                    {{ address.ip }}
-                  </span>
                 </KTruncate>
               </template>
             </DefinitionCard>
@@ -180,6 +150,7 @@
                     :headers="[
                       { ...me.get('headers.name'), label: 'Name', key: 'name' },
                       { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                      ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
                       { ...me.get('headers.certificate'), label: 'Certificate Info', key: 'certificate' },
                       { ...me.get('headers.status'), label: 'Status', key: 'status' },
                       { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -339,7 +310,6 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { sources } from '@/app/data-planes/sources'
 
 const props = defineProps<{

@@ -44,6 +44,53 @@
               class="stack-with-borders"
             >
               <DefinitionCard
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
+                  State
+                </template>
+                <template
+                  #body
+                >
+                  <KBadge
+                    :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
+                  >
+                    {{ item.spec.state }}
+                  </KBadge>
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
+                  Dataplane Proxies
+                </template>
+                <template
+                  #body
+                >
+                  {{ item.status.dataplaneProxies?.connected }} connected, {{ item.status.dataplaneProxies?.healthy }} healthy ({{ item.status.dataplaneProxies?.total }} total)
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
+                v-if="item.namespace"
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
+                  Namespace
+                </template>
+                <template
+                  #body
+                >
+                  {{ item.namespace }}
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
                 v-if="can('use zones') && item.zone"
                 layout="horizontal"
               >
@@ -68,39 +115,6 @@
                 </template>
               </DefinitionCard>
               <DefinitionCard
-                v-if="item.status.addresses.length > 0"
-                layout="horizontal"
-              >
-                <template
-                  #title
-                >
-                  Addresses
-                </template>
-                <template
-                  #body
-                >
-                  <template
-                    v-if="item.status.addresses.length === 1"
-                  >
-                    <TextWithCopyButton
-                      :text="item.status.addresses[0].hostname"
-                    >
-                      {{ item.status.addresses[0].hostname }}
-                    </TextWithCopyButton>
-                  </template>
-                  <KTruncate
-                    v-else
-                  >
-                    <span
-                      v-for="address in item.status.addresses"
-                      :key="address.hostname"
-                    >
-                      {{ address.hostname }}
-                    </span>
-                  </KTruncate>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
                 layout="horizontal"
               >
                 <template
@@ -117,7 +131,7 @@
                       :key="connection.port"
                       appearance="info"
                     >
-                      {{ connection.port }}{{ connection.targetPort ? `:${connection.targetPort}` : '' }}{{ connection.appProtocol ? `/${connection.appProtocol}` : '' }}
+                      {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
                     </KBadge>
                   </KTruncate>
                 </template>
@@ -128,7 +142,7 @@
                 <template
                   #title
                 >
-                  Dataplane Tags
+                  Selector
                 </template>
                 <template
                   #body
@@ -185,7 +199,6 @@
 <script lang="ts" setup>
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeshService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshService[]

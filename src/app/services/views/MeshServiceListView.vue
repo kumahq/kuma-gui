@@ -42,9 +42,9 @@
                   { ...me.get('headers.name'), label: 'Name', key: 'name' },
                   { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                   ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.addresses'), label: 'Addresses', key: 'addresses' },
+                  { ...me.get('headers.state'), label: 'State', key: 'state' },
+                  { ...me.get('headers.status'), label: 'DP proxies (connected / healthy / total)', key: 'status' },
                   { ...me.get('headers.ports'), label: 'Ports', key: 'ports' },
-                  { ...me.get('headers.tags'), label: 'Tags', key: 'tags' },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :items="data?.items"
@@ -97,27 +97,18 @@
                   </template>
                 </template>
                 <template
-                  #addresses="{ row: item }"
+                  #state="{ row: item }"
                 >
-                  <template
-                    v-if="item.status.addresses.length === 1"
+                  <KBadge
+                    :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
                   >
-                    <TextWithCopyButton
-                      :text="item.status.addresses[0].hostname"
-                    >
-                      {{ item.status.addresses[0].hostname }}
-                    </TextWithCopyButton>
-                  </template>
-                  <KTruncate
-                    v-else
-                  >
-                    <span
-                      v-for="address in item.status.addresses"
-                      :key="address.hostname"
-                    >
-                      {{ address.hostname }}
-                    </span>
-                  </KTruncate>
+                    {{ item.spec.state }}
+                  </KBadge>
+                </template>
+                <template
+                  #status="{ row: item }"
+                >
+                  {{ item.status.dataplaneProxies?.connected }} / {{ item.status.dataplaneProxies?.healthy }} / {{ item.status.dataplaneProxies?.total }}
                 </template>
                 <template
                   #ports="{ row: item }"
@@ -128,20 +119,7 @@
                       :key="connection.port"
                       appearance="info"
                     >
-                      {{ connection.port }}:{{ connection.targetPort }}/{{ connection.appProtocol }}
-                    </KBadge>
-                  </KTruncate>
-                </template>
-                <template
-                  #tags="{ row: item }"
-                >
-                  <KTruncate>
-                    <KBadge
-                      v-for="(value, key) in item.spec.selector.dataplaneTags"
-                      :key="`${key}:${value}`"
-                      appearance="info"
-                    >
-                      {{ key }}:{{ value }}
+                      {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
                     </KBadge>
                   </KTruncate>
                 </template>

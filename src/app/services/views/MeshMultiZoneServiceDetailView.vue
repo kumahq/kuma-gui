@@ -11,7 +11,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ t, me }"
+    v-slot="{ t, me, can }"
   >
     <AppView>
       <div
@@ -19,27 +19,6 @@
       >
         <KCard>
           <div class="columns">
-            <DefinitionCard
-              v-if="props.data.status.addresses.length > 0"
-            >
-              <template
-                #title
-              >
-                Addresses
-              </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <span
-                    v-for="address in props.data.status.addresses"
-                    :key="address.hostname"
-                  >
-                    {{ address.hostname }}
-                  </span>
-                </KTruncate>
-              </template>
-            </DefinitionCard>
             <DefinitionCard>
               <template
                 #title
@@ -51,11 +30,11 @@
               >
                 <KTruncate>
                   <KBadge
-                    v-for="connection in data.spec.ports"
+                    v-for="connection in props.data.spec.ports"
                     :key="connection.port"
                     appearance="info"
                   >
-                    {{ connection.port }}:{{ connection.targetPort }}/{{ connection.appProtocol }}
+                    {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
                   </KBadge>
                 </KTruncate>
               </template>
@@ -64,7 +43,7 @@
               <template
                 #title
               >
-                Match Labels
+                Selector
               </template>
               <template
                 #body
@@ -77,28 +56,6 @@
                   >
                     {{ key }}:{{ value }}
                   </KBadge>
-                </KTruncate>
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="data.status.vips.length > 0"
-              class="ip"
-            >
-              <template
-                #title
-              >
-                VIPs
-              </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <span
-                    v-for="address in data.status.vips"
-                    :key="address.ip"
-                  >
-                    {{ address.ip }}
-                  </span>
                 </KTruncate>
               </template>
             </DefinitionCard>
@@ -117,9 +74,8 @@
               data-testid="mesh-service-collection"
               :headers="[
                 { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                { ...me.get('headers.zone'), label: 'Zone', key: 'zone' },
+                ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
                 { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                { ...me.get('headers.mesh'), label: 'Mesh', key: 'mesh' },
                 { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
               ]"
               :items="data.status.meshServices"
@@ -157,19 +113,6 @@
 
               <template #namespace="{ row: item }">
                 {{ item.namespace }}
-              </template>
-
-              <template #mesh="{ row: item }">
-                <XAction
-                  :to="{
-                    name: 'mesh-detail-view',
-                    params: {
-                      mesh: item.mesh,
-                    },
-                  }"
-                >
-                  {{ item.mesh }}
-                </XAction>
               </template>
 
               <template #actions="{ row: item }">

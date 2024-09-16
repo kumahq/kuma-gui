@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import type { MeshService } from '@/types/index.d'
+import type { components } from '@/types/auto-generated.d'
+type Entity = components['schemas']['MeshServiceItem']
 
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
@@ -9,6 +10,8 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
 
   const parts = String(name).split('.')
   const k8s = parts.length > 1
+
+  const proxies = fake.number.int({ min: 1, max: 120 })
 
   return {
     headers: {},
@@ -26,12 +29,15 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           labels: {
             'kuma.io/display-name': parts.slice(0, -1).join('.'),
             'k8s.kuma.io/namespace': parts.pop()!,
+            'kuma.io/origin': 'zone',
+            'kuma.io/zone': fake.hacker.noun(),
           },
         }
         : {}),
       spec: {
         ports: Array.from({ length: 5 }).map(_ => (
           {
+            name: fake.helpers.arrayElement([fake.hacker.noun(), String(fake.internet.port())]),
             port: fake.internet.port(),
             targetPort: fake.internet.port(),
             appProtocol: fake.kuma.protocol(),
@@ -40,6 +46,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         selector: {
           dataplaneTags: fake.kuma.tags({}),
         },
+        state: fake.helpers.arrayElement(['Available', 'Unavailable']),
       },
       status: {
         addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
@@ -49,9 +56,17 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           ip: fake.internet.ip(),
         })),
         tls: {
-          status: '',
+          status: fake.helpers.arrayElement([undefined, 'Ready', 'NotReady']),
+        },
+        dataplaneProxies: {
+          connected: fake.number.int({ min: 1, max: proxies }),
+          healthy: fake.number.int({ min: 1, max: proxies }),
+          total: proxies,
         },
       },
-    } satisfies MeshService,
+    } satisfies Entity & {
+      creationTime: string
+      modificationTime: string
+    },
   }
 }
