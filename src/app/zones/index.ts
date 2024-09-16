@@ -3,6 +3,7 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
+import { services as subscriptions } from '@/app/subscriptions'
 import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
 import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
@@ -68,6 +69,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.enUs,
       ],
     }],
+    ...subscriptions(app),
   ]
 }
 export const TOKENS = $
