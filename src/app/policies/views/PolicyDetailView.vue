@@ -64,21 +64,26 @@
               </XAction>
             </template>
           </DefinitionCard>
-          <DefinitionCard>
+          <DefinitionCard
+            v-if="props.data.spec"
+          >
             <template #title>
               {{ t('http.api.property.targetRef') }}
             </template>
 
             <template #body>
-              <template v-if="props.data.spec?.targetRef">
-                <KBadge appearance="neutral">
-                  {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
-                </KBadge>
-              </template>
-
-              <template v-else>
-                {{ t('common.detail.none') }}
-              </template>
+              <KBadge
+                v-if="props.data.spec.targetRef"
+                appearance="neutral"
+              >
+                {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
+              </KBadge>
+              <KBadge
+                v-else
+                appearance="neutral"
+              >
+                Mesh
+              </KBadge>
             </template>
           </DefinitionCard>
         </div>

@@ -168,15 +168,18 @@
                         </template>
 
                         <template #targetRef="{ row }">
-                          <template v-if="type.isTargetRefBased && typeof row.spec?.targetRef !== 'undefined'">
-                            <KBadge appearance="neutral">
-                              {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
-                            </KBadge>
-                          </template>
-
-                          <template v-else>
-                            {{ t('common.detail.none') }}
-                          </template>
+                          <KBadge
+                            v-if="typeof row.spec?.targetRef !== 'undefined'"
+                            appearance="neutral"
+                          >
+                            {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
+                          </KBadge>
+                          <KBadge
+                            v-else
+                            appearance="neutral"
+                          >
+                            Mesh
+                          </KBadge>
                         </template>
 
                         <template #zone="{ row }">

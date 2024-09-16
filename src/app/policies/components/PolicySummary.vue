@@ -16,15 +16,18 @@
           </template>
 
           <template #body>
-            <template v-if="props.policy.spec.targetRef">
-              <KBadge appearance="neutral">
-                {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
-              </KBadge>
-            </template>
-
-            <template v-else>
-              {{ t('common.detail.none') }}
-            </template>
+            <KBadge
+              v-if="props.policy.spec.targetRef"
+              appearance="neutral"
+            >
+              {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
+            </KBadge>
+            <KBadge
+              v-else
+              appearance="neutral"
+            >
+              Mesh
+            </KBadge>
           </template>
         </DefinitionCard>
         <DefinitionCard
@@ -40,7 +43,7 @@
           </template>
         </DefinitionCard>
         <DefinitionCard
-          v-if="props.policy.zone"
+          v-if="can('use zones') && props.policy.zone"
           layout="horizontal"
         >
           <template
@@ -80,10 +83,11 @@
 
 <script lang="ts" setup>
 import type { Policy } from '../data'
-import { useI18n } from '@/app/application'
+import { useI18n, useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const { t } = useI18n()
+const can = useCan()
 
 const props = defineProps<{
   policy: Policy
