@@ -71,7 +71,7 @@
     "lockfile-lint": "^4.14.0",
     "markdown-it": "^14.1.0",
     "msw": "^2.4.4",
-    "postcss": "^8.4.45",
+    "postcss": "^8.4.47",
     "openapi-typescript": "^7.4.0",
     "postcss-html": "^1.7.0",
     "sass": "^1.78.0",
