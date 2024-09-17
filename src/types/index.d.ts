@@ -1,3 +1,5 @@
+import type { components } from '@/types/auto-generated.d'
+type ResourceRule = components['schemas']['ResourceRule']
 /**
  * Creates an “unsaved” variant of a resource type which is missing the fields that are only present on an object once its saved in the database.
  */
@@ -465,6 +467,7 @@ export interface InspectRule {
    */
   type: string
   proxyRule?: InspectProxyRule
+  toResourceRules?: ResourceRule[]
   toRules?: InspectBaseRule[]
   fromRules?: InspectFromRule[]
   warnings?: string[]

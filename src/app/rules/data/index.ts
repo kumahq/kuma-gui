@@ -1,3 +1,4 @@
+import { ResourceRule } from './ResourceRule'
 import type {
   InspectBaseRule,
   InspectInbound,
@@ -28,6 +29,7 @@ export type Rule = Omit<InspectBaseRule, 'conf' | 'origin'> & {
 }
 export type RuleCollection = Omit<PartialInspectRulesForDataplane, 'rules'> & {
   rules: Rule[]
+  toResourceRules: ResourceRule[]
 }
 export const Rule = {
   fromObject(item: InspectBaseRule): Rule {
@@ -43,7 +45,6 @@ export const Rule = {
         },
       }
     })
-
     return {
       type: '',
       ruleType: 'to',
@@ -62,7 +63,7 @@ export const Rule = {
   fromCollection(partialInspectRules: PartialInspectRulesForDataplane): RuleCollection {
     const rules = Array.isArray(partialInspectRules.rules)
       ? partialInspectRules.rules.reduce<Rule[]>((prev, item) => {
-      // to rules we can just reshape.
+        // to rules we can just reshape.
         const to: Rule[] = Array.isArray(item.toRules)
           ? item.toRules.map(rule => {
             return {
@@ -102,9 +103,24 @@ export const Rule = {
         return prev.concat(to).concat(from).concat(proxy)
       }, [])
       : []
+
+    const toResourceRules = Array.isArray(partialInspectRules.rules)
+      ? partialInspectRules.rules.reduce<ResourceRule[]>((prev, item) => {
+        const rules = Array.isArray(item.toResourceRules)
+          ? item.toResourceRules.map(rule => {
+            return {
+              ...ResourceRule.fromObject(rule),
+              type: item.type,
+            }
+          })
+          : []
+        return prev.concat(rules)
+      }, [])
+      : []
     return {
       ...partialInspectRules,
       rules,
+      toResourceRules,
     }
   },
 }

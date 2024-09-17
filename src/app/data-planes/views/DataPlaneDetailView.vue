@@ -348,7 +348,7 @@
                                 data-testid="dataplane-outbound"
                                 :protocol="['grpc', 'http', 'tcp'].find(protocol => typeof outbound[protocol] !== 'undefined') ?? 'tcp'"
                                 :traffic="outbound"
-                                :service="outbound.$kind === '' ? name.replace(hash, '') : undefined"
+                                :service="outbound.$resourceMeta.type === '' ? name.replace(hash, '') : undefined"
                                 :direction="direction"
                               >
                                 <RouterLink
