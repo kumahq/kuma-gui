@@ -1,7 +1,7 @@
 <template>
   <KInput
     :model-value="props.value"
-    @input="(e) => e.length === 0 ? emit('change', e) : change(e)"
+    @input="(e: string) => e.length === 0 ? emit('change', e) : change(e)"
   >
     <template
       v-if="[
