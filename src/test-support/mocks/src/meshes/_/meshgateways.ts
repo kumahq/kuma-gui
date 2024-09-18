@@ -3,6 +3,7 @@ import type { MeshGateway } from '@/types/index.d'
 
 export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (req) => {
   const mesh = req.params.mesh as string
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESHGATEWAY_COUNT', `${fake.number.int({ min: 1, max: 120 })}`),
@@ -20,18 +21,25 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const name = `${fake.hacker.noun()}-${id}`
 
+        const displayName = `${name}${fake.kuma.dataplaneSuffix(k8s)}`
+        const nspace = fake.k8s.namespace()
+
         return {
           type: 'MeshGateway',
           mesh,
-          name,
+          name: `${displayName}${k8s ? `.${nspace}` : ''}`,
           creationTime: '2022-01-25T13:55:51.798701+01:00',
           modificationTime: '2022-01-25T13:55:51.798701+01:00',
-          ...(fake.datatype.boolean() && {
-            labels: {
-              'kuma.io/origin': 'zone',
-              'kuma.io/zone': fake.hacker.noun(),
-            },
-          }),
+          labels: {
+            'kuma.io/display-name': displayName,
+            'kuma.io/origin': fake.kuma.origin(),
+            'kuma.io/zone': fake.hacker.noun(),
+            ...(k8s
+              ? {
+                'k8s.kuma.io/namespace': nspace,
+              }
+              : {}),
+          },
           selectors: [
             {
               match: fake.kuma.tags({ service: name }),
