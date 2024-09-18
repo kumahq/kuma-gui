@@ -120,7 +120,6 @@ export const routes = (can: Can) => {
         {
           path: 'services',
           name: 'service-list-tabs-view',
-          redirect: { name: 'service-list-view' },
           component: () => import('@/app/services/views/ServiceListTabsView.vue'),
           children: [
             {

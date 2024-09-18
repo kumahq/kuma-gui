@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <AppView>
       <template #title>
@@ -20,8 +20,14 @@
       </template>
 
       <DataLoader
-        :src="`/meshes/${route.params.mesh}`"
-        v-slot="{ data: mesh }: MeshSource"
+        :src="uri(
+          sources,
+          '/meshes/:name',
+          {
+            name: route.params.mesh,
+          },
+        )"
+        v-slot="{ data: mesh }"
       >
         <XTabs
           :selected="route.child()?.name"
@@ -54,5 +60,5 @@
 </template>
 
 <script lang="ts" setup>
-import type { MeshSource } from '../sources'
+import { sources } from '../sources'
 </script>

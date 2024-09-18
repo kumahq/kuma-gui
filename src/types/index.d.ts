@@ -753,6 +753,9 @@ export interface Mesh extends Entity {
     localityAwareLoadBalancing?: boolean
     zoneEgress?: boolean
   }
+  meshServices?: {
+    enabled: 'Everywhere' | 'Exclusive'
+  }
 }
 
 export type DpVersions = {
