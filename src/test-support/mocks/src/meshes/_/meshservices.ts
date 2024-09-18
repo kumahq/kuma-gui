@@ -26,6 +26,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const displayName = `${_name || name}-${id}`
         const nspace = fake.k8s.namespace()
 
+        const proxies = fake.number.int({ min: 1, max: 120 })
+
         return {
           type: 'MeshService',
           mesh,
@@ -45,6 +47,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           spec: {
             ports: Array.from({ length: 5 }).map(_ => (
               {
+                name: fake.helpers.arrayElement([fake.hacker.noun(), String(fake.internet.port())]),
                 port: fake.internet.port(),
                 targetPort: fake.internet.port(),
                 appProtocol: fake.kuma.protocol(),
@@ -53,6 +56,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             selector: {
               dataplaneTags: fake.kuma.tags({}),
             },
+            state: fake.helpers.arrayElement(['Available', 'Unavailable']),
           },
           status: {
             addresses: Array.from({ length: fake.number.int({ min: 0, max: 5 }) }).map(_ => ({
@@ -63,6 +67,11 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             })),
             tls: {
               status: fake.helpers.arrayElement([undefined, 'Ready', 'NotReady']),
+            },
+            dataplaneProxies: {
+              connected: fake.number.int({ min: 1, max: proxies }),
+              healthy: fake.number.int({ min: 1, max: proxies }),
+              total: proxies,
             },
           },
         } satisfies Entity & {

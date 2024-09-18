@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import type { MeshExternalService } from '@/types/index.d'
+import type { components } from '@/types/auto-generated.d'
+type Entity = components['schemas']['MeshExternalServiceItem']
 
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
@@ -54,7 +55,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               },
             ],
             tls: {
-              enabled: true,
+              allowRenegotiation: fake.datatype.boolean(),
+              enabled: fake.datatype.boolean(),
             },
           },
           status: {
@@ -65,7 +67,10 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               ip: fake.internet.ip(),
             },
           },
-        } satisfies MeshExternalService
+        } satisfies Entity & {
+          creationTime: string
+          modificationTime: string
+        }
       }),
     },
   }

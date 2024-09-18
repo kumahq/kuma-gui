@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import type { MeshExternalService } from '@/types/index.d'
+import type { components } from '@/types/auto-generated.d'
+type Entity = components['schemas']['MeshExternalServiceItem']
 
 export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
   const query = req.url.searchParams
@@ -10,7 +11,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  const nspace = parts.pop() ?? ''
 
   return {
     headers: {},
@@ -46,7 +47,8 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
           },
         ],
         tls: {
-          enabled: true,
+          allowRenegotiation: fake.datatype.boolean(),
+          enabled: fake.datatype.boolean(),
         },
       },
       status: {
@@ -57,6 +59,9 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
           ip: fake.internet.ip(),
         },
       },
-    } satisfies MeshExternalService,
+    } satisfies Entity & {
+      creationTime: string
+      modificationTime: string
+    },
   }
 }

@@ -7,7 +7,7 @@
       mesh: '',
       service: '',
     }"
-    v-slot="{ route, t, can, uri, me }"
+    v-slot="{ route, t, uri, me }"
   >
     <RouteTitle
       :render="false"
@@ -35,11 +35,8 @@
               <AppCollection
                 :headers="[
                   { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                  { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.addresses'), label: 'Addresses', key: 'addresses' },
                   { ...me.get('headers.ports'), label: 'Ports', key: 'ports' },
-                  { ...me.get('headers.labels'), label: 'Match Labels', key: 'labels' },
+                  { ...me.get('headers.labels'), label: 'Selector', key: 'labels' },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :page-number="route.params.page"
@@ -73,42 +70,6 @@
                   </TextWithCopyButton>
                 </template>
                 <template
-                  #namespace="{ row: item }"
-                >
-                  {{ item.namespace }}
-                </template>
-                <template #zone="{ row: item }">
-                  <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
-                    <XAction
-                      v-if="item.labels['kuma.io/zone']"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.labels['kuma.io/zone'],
-                        },
-                      }"
-                    >
-                      {{ item.labels['kuma.io/zone'] }}
-                    </XAction>
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-                <template
-                  #addresses="{ row: item }"
-                >
-                  <KTruncate>
-                    <span
-                      v-for="address in item.status.addresses"
-                      :key="address.hostname"
-                    >
-                      {{ address.hostname }}
-                    </span>
-                  </KTruncate>
-                </template>
-                <template
                   #ports="{ row: item }"
                 >
                   <KTruncate>
@@ -117,7 +78,7 @@
                       :key="connection.port"
                       appearance="info"
                     >
-                      {{ connection.port }}:{{ connection.targetPort }}/{{ connection.appProtocol }}
+                      {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
                     </KBadge>
                   </KTruncate>
                 </template>

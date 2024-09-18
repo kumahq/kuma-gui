@@ -30,6 +30,11 @@ export const MeshService = {
           ...item,
           tls: typeof item.tls !== 'undefined' ? item.tls : { status: 'NotReady' },
           vips: Array.isArray(item.vips) ? item.vips : [],
+          dataplaneProxies: ((item = {}) => ({
+            connected: item.connected ?? 0,
+            total: item.total ?? 0,
+            healthy: item.healthy ?? 0,
+          }))(item.dataplaneProxies),
           addresses: Array.isArray(item.addresses)
             ? item.addresses.map(item => {
               return {

@@ -126,18 +126,23 @@ export class KumaModule {
   }
 
   serviceStatusKeyword() {
-    return this.faker.helpers.arrayElement<'not_available' | 'partially_degraded' | 'offline' | 'online'>(['not_available', 'partially_degraded', 'offline', 'online'])
+    const items = [
+      'not_available',
+      'partially_degraded',
+      'offline',
+      'online',
+    ] as const
+    return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
   protocol() {
-    return this.faker.helpers.arrayElement(
-      [
-        'http',
-        'grpc',
-        'tcp',
-        'kafka',
-      ],
-    )
+    const items = [
+      'http',
+      'grpc',
+      'tcp',
+      'http2',
+    ] as const
+    return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
   subscriptionConfig(config: any = {}) {

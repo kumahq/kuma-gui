@@ -44,6 +44,18 @@
               class="stack-with-borders"
             >
               <DefinitionCard
+                v-if="item.namespace.length > 0"
+                layout="horizontal"
+              >
+                <template #title>
+                  Namespace
+                </template>
+
+                <template #body>
+                  {{ item.namespace }}
+                </template>
+              </DefinitionCard>
+              <DefinitionCard
                 v-if="can('use zones') && item.zone"
                 layout="horizontal"
               >
@@ -65,39 +77,6 @@
                   >
                     {{ item.zone }}
                   </XAction>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                v-if="item.status.addresses.length > 0"
-                layout="horizontal"
-              >
-                <template
-                  #title
-                >
-                  Addresses
-                </template>
-                <template
-                  #body
-                >
-                  <template
-                    v-if="item.status.addresses.length === 1"
-                  >
-                    <TextWithCopyButton
-                      :text="item.status.addresses[0].hostname"
-                    >
-                      {{ item.status.addresses[0].hostname }}
-                    </TextWithCopyButton>
-                  </template>
-                  <KTruncate
-                    v-else
-                  >
-                    <span
-                      v-for="address in item.status.addresses"
-                      :key="address.hostname"
-                    >
-                      {{ address.hostname }}
-                    </span>
-                  </KTruncate>
                 </template>
               </DefinitionCard>
               <DefinitionCard
@@ -180,7 +159,6 @@
 <script lang="ts" setup>
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { MeshExternalService } from '@/app/services/data'
 const props = defineProps<{
   items: MeshExternalService[]

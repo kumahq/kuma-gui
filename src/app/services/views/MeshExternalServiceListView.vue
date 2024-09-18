@@ -42,8 +42,6 @@
                   { ...me.get('headers.name'), label: 'Name', key: 'name' },
                   { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                   ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.tls'), label: 'TLS', key: 'tls' },
-                  { ...me.get('headers.addresses'), label: 'Addresses', key: 'addresses' },
                   { ...me.get('headers.port'), label: 'Port', key: 'port' },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
@@ -96,36 +94,6 @@
                   <template v-else>
                     {{ t('common.detail.none') }}
                   </template>
-                </template>
-                <template #tls="{ row: item }">
-                  <KBadge
-                    appearance="neutral"
-                  >
-                    {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                  </KBadge>
-                </template>
-                <template
-                  #addresses="{ row: item }"
-                >
-                  <template
-                    v-if="item.status.addresses.length === 1"
-                  >
-                    <TextWithCopyButton
-                      :text="item.status.addresses[0].hostname"
-                    >
-                      {{ item.status.addresses[0].hostname }}
-                    </TextWithCopyButton>
-                  </template>
-                  <KTruncate
-                    v-else
-                  >
-                    <span
-                      v-for="address in item.status.addresses"
-                      :key="address.hostname"
-                    >
-                      {{ address.hostname }}
-                    </span>
-                  </KTruncate>
                 </template>
                 <template
                   #port="{ row: item }"

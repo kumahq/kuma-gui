@@ -40,6 +40,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
         },
         ports: Array.from({ length: 5 }).map(_ => (
           {
+            name: fake.helpers.arrayElement([fake.hacker.noun(), String(fake.internet.port())]),
             port: fake.internet.port(),
             targetPort: fake.internet.port(),
             appProtocol: fake.kuma.protocol(),
@@ -50,7 +51,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
         meshServices: Array.from({ length: serviceCount }).map((_, i) => ({
           name: `${fake.hacker.noun()}-${i}`,
           mesh: fake.hacker.noun(),
-          namespace: `${k8s ? `.${fake.k8s.namespace()}` : ''}`,
+          namespace: `${k8s ? `${fake.k8s.namespace()}` : ''}`,
           zone: fake.hacker.noun(),
         })),
         addresses: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(_ => ({
