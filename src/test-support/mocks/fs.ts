@@ -45,6 +45,7 @@ import _138 from './src/meshes/_/meshexternalservices'
 import _139 from './src/meshes/_/meshexternalservices/_'
 import _52 from './src/meshes/_/meshfaultinjections'
 import _53 from './src/meshes/_/meshfaultinjections/_'
+import _54 from './src/meshes/_/meshfaultinjections/_/_resources/dataplanes'
 import _31 from './src/meshes/_/meshgatewayroutes'
 import _32 from './src/meshes/_/meshgatewayroutes/_'
 import _33 from './src/meshes/_/meshgateways'
@@ -148,6 +149,7 @@ export const fs: FS = {
   '/meshes/:mesh/health-checks/:name': _30,
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
+  '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
   '/meshes/:mesh/meshgatewayroutes': _31,
   '/meshes/:mesh/meshgatewayroutes/:name': _32,
   '/meshes/:mesh/meshgateways': _33,

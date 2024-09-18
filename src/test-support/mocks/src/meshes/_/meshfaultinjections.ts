@@ -34,10 +34,6 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             }
             : {}),
           spec: {
-            targetRef: {
-              kind: 'MeshService',
-              name: fake.hacker.noun(),
-            },
             from: [
               {
                 targetRef: {
