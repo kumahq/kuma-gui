@@ -56,7 +56,9 @@ export const ConnectionCollection = {
               type: '',
               mesh: '',
               name: '',
+              namespace: '',
               zone: '',
+              port: '',
             },
             tcp,
             ...(typeof http !== 'undefined' ? { http } : {}),
@@ -66,11 +68,13 @@ export const ConnectionCollection = {
           // sniff the name to see if we are a new type of service
           const found = cluster.match(meshServiceRe)
           if (found) {
-            const [mesh, name, namespace, zone, _abbr, _port] = cluster.split('_')
+            const [mesh, name, namespace, zone, _abbr, port] = cluster.split('_')
             stats.$resourceMeta = {
               mesh,
-              name: `${name}.${namespace}`,
+              name,
+              namespace,
               zone,
+              port,
               type: ((str: string) => {
                 switch (true) {
                   case (str.indexOf('_msvc_') !== -1):
