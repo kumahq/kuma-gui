@@ -38,7 +38,14 @@
           </XActionGroup>
         </template>
 
-        <RouterView />
+        <RouterView
+          v-slot="{ Component }"
+        >
+          <component
+            :is="Component"
+            :mesh="props.mesh"
+          />
+        </RouterView>
       </AppView>
     </div>
   </RouteView>

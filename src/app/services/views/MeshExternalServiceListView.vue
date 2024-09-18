@@ -13,147 +13,177 @@
       :render="false"
       :title="t(`services.routes.mesh-external-service-list-view.title`)"
     />
-    <AppView
-      :docs="t('services.mesh-external-service.href.docs')"
+    <DataSource
+      :src="uri(egressSources, `/zone-cps/:name/egresses`, {
+        name: '*',
+      }, {
+        page: 1,
+        size: 100,
+      })"
+      v-slot="{ data: egresses }"
     >
-      <KCard>
-        <DataLoader
-          :src="uri(sources, '/meshes/:mesh/mesh-external-services', {
-            mesh: route.params.mesh,
-          },{
-            page: route.params.page,
-            size: route.params.size,
-          })"
+      <template
+        v-for="warnings in [[
+          [t('services.mesh-external-service.notifications.mtls-warning'), typeof props.mesh.mtlsBackend === 'undefined'],
+          [t('services.mesh-external-service.notifications.no-zone-egress'), egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')],
+        ].filter(([_, bool]) => bool).map(item => item[0] as string)]"
+        :key="typeof warnings"
+      >
+        <AppView
+          :docs="t('services.mesh-external-service.href.docs')"
         >
           <template
-            #loadable="{ data }"
+            v-if="warnings.length > 0"
+            #notifications
           >
-            <DataCollection
-              type="services"
-              :items="data?.items ?? [undefined]"
-              :page="route.params.page"
-              :page-size="route.params.size"
-              :total="data?.total"
-              @change="route.update"
+            <ul>
+              <li
+                v-for="warning in warnings"
+                :key="warning"
+                v-html="warning"
+              />
+            </ul>
+          </template>
+          <KCard>
+            <DataLoader
+              :src="uri(sources, '/meshes/:mesh/mesh-external-services', {
+                mesh: route.params.mesh,
+              },{
+                page: route.params.page,
+                size: route.params.size,
+              })"
             >
-              <AppCollection
-                data-testid="service-collection"
-                :headers="[
-                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                  { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.port'), label: 'Port', key: 'port' },
-                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                ]"
-                :items="data?.items"
-                :is-selected-row="(item) => item.name === route.params.service"
-                @resize="me.set"
+              <template
+                #loadable="{ data }"
               >
-                <template #name="{ row: item }">
-                  <TextWithCopyButton
-                    :text="item.name"
+                <DataCollection
+                  type="services"
+                  :items="data?.items ?? [undefined]"
+                  :page="route.params.page"
+                  :page-size="route.params.size"
+                  :total="data?.total"
+                  @change="route.update"
+                >
+                  <AppCollection
+                    data-testid="service-collection"
+                    :headers="[
+                      { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                      { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                      ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                      { ...me.get('headers.port'), label: 'Port', key: 'port' },
+                      { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                    ]"
+                    :items="data?.items"
+                    :is-selected-row="(item) => item.name === route.params.service"
+                    @resize="me.set"
                   >
-                    <XAction
-                      data-action
-                      :to="{
-                        name: 'mesh-external-service-summary-view',
+                    <template #name="{ row: item }">
+                      <TextWithCopyButton
+                        :text="item.name"
+                      >
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'mesh-external-service-summary-view',
+                            params: {
+                              mesh: item.mesh,
+                              service: item.id,
+                            },
+                            query: {
+                              page: route.params.page,
+                              size: route.params.size,
+                            },
+                          }"
+                        >
+                          {{ item.name }}
+                        </XAction>
+                      </TextWithCopyButton>
+                    </template>
+                    <template
+                      #namespace="{ row: item }"
+                    >
+                      {{ item.namespace }}
+                    </template>
+                    <template #zone="{ row: item }">
+                      <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
+                        <XAction
+                          v-if="item.labels['kuma.io/zone']"
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: item.labels['kuma.io/zone'],
+                            },
+                          }"
+                        >
+                          {{ item.labels['kuma.io/zone'] }}
+                        </XAction>
+                      </template>
+
+                      <template v-else>
+                        {{ t('common.detail.none') }}
+                      </template>
+                    </template>
+                    <template
+                      #port="{ row: item }"
+                    >
+                      <template
+                        v-if="item.spec.match"
+                      >
+                        <KBadge
+                          v-for="connection in [item.spec.match]"
+                          :key="connection.port"
+                          appearance="info"
+                        >
+                          {{ connection.port }}/{{ connection.protocol }}
+                        </KBadge>
+                      </template>
+                    </template>
+
+                    <template #actions="{ row: item }">
+                      <XActionGroup>
+                        <XAction
+                          :to="{
+                            name: 'mesh-external-service-detail-view',
+                            params: {
+                              mesh: item.mesh,
+                              service: item.id,
+                            },
+                          }"
+                        >
+                          {{ t('common.collection.actions.view') }}
+                        </XAction>
+                      </XActionGroup>
+                    </template>
+                  </AppCollection>
+                  <RouterView
+                    v-if="data?.items && route.params.service"
+                    v-slot="child"
+                  >
+                    <SummaryView
+                      @close="route.replace({
+                        name: 'mesh-external-service-list-view',
                         params: {
-                          mesh: item.mesh,
-                          service: item.id,
+                          mesh: route.params.mesh,
                         },
                         query: {
                           page: route.params.page,
                           size: route.params.size,
                         },
-                      }"
+                      })"
                     >
-                      {{ item.name }}
-                    </XAction>
-                  </TextWithCopyButton>
-                </template>
-                <template
-                  #namespace="{ row: item }"
-                >
-                  {{ item.namespace }}
-                </template>
-                <template #zone="{ row: item }">
-                  <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
-                    <XAction
-                      v-if="item.labels['kuma.io/zone']"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.labels['kuma.io/zone'],
-                        },
-                      }"
-                    >
-                      {{ item.labels['kuma.io/zone'] }}
-                    </XAction>
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-                <template
-                  #port="{ row: item }"
-                >
-                  <template
-                    v-if="item.spec.match"
-                  >
-                    <KBadge
-                      v-for="connection in [item.spec.match]"
-                      :key="connection.port"
-                      appearance="info"
-                    >
-                      {{ connection.port }}/{{ connection.protocol }}
-                    </KBadge>
-                  </template>
-                </template>
-
-                <template #actions="{ row: item }">
-                  <XActionGroup>
-                    <XAction
-                      :to="{
-                        name: 'mesh-external-service-detail-view',
-                        params: {
-                          mesh: item.mesh,
-                          service: item.id,
-                        },
-                      }"
-                    >
-                      {{ t('common.collection.actions.view') }}
-                    </XAction>
-                  </XActionGroup>
-                </template>
-              </AppCollection>
-              <RouterView
-                v-if="data?.items && route.params.service"
-                v-slot="child"
-              >
-                <SummaryView
-                  @close="route.replace({
-                    name: 'mesh-external-service-list-view',
-                    params: {
-                      mesh: route.params.mesh,
-                    },
-                    query: {
-                      page: route.params.page,
-                      size: route.params.size,
-                    },
-                  })"
-                >
-                  <component
-                    :is="child.Component"
-                    :items="data?.items"
-                  />
-                </SummaryView>
-              </RouterView>
-            </DataCollection>
-          </template>
-        </DataLoader>
-      </KCard>
-    </AppView>
+                      <component
+                        :is="child.Component"
+                        :items="data?.items"
+                      />
+                    </SummaryView>
+                  </RouterView>
+                </DataCollection>
+              </template>
+            </DataLoader>
+          </KCard>
+        </AppView>
+      </template>
+    </DataSource>
   </RouteView>
 </template>
 
@@ -162,4 +192,10 @@ import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { Mesh } from '@/app/meshes/data'
+import { sources as egressSources } from '@/app/zone-egresses/sources'
+
+const props = defineProps<{
+  mesh: Mesh
+}>()
 </script>
