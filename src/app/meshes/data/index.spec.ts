@@ -99,6 +99,9 @@ describe('meshes data transformations', () => {
               },
             ],
           },
+          routing: {
+            zoneEgress: false,
+          },
           logging: {
             backends: [
               {
