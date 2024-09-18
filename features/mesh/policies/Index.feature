@@ -33,7 +33,7 @@ Feature: mesh / policies / index
   Scenario: Listing has expected content
     When I visit the "/meshes/default/policies/circuit-breakers" URL
     Then the "$button-docs" element exists
-    And the "$items-header" element exists 3 times
+    And the "$items-header" element exists 4 times
     And the "[data-testid='policy-list-index-view-tab'].active" element exists
     And the "$item" element exists 2 times
     And the "$item:nth-child(1)" element contains
@@ -42,7 +42,7 @@ Feature: mesh / policies / index
 
   Scenario: Clicking the link goes to the detail page and back again
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-cb-1"
     When I click the "$action-group" element
     And I click the "$view" element
     Then the URL contains "circuit-breakers/fake-cb-1/overview"
@@ -59,9 +59,9 @@ Feature: mesh / policies / index
           - name: mfi-2
       """
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$item:nth-child(1) td:nth-child(1)" element contains "fake-cb-1"
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "fake-cb-1"
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
-    Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "mfi-1"
 
   Scenario: TargetRef-based policies show Zone and targetRef columns
     Given the URL "/meshes/default/meshfaultinjections" responds with
@@ -78,9 +78,9 @@ Feature: mesh / policies / index
                 name: service-1
       """
     When I visit the "/meshes/default/policies/meshfaultinjections" URL
-    Then the "$item:nth-child(1) td:nth-child(1)" element contains "mfi-1"
-    And the "$item:nth-child(1) td:nth-child(3)" element contains "zone-1"
-    And the "$item:nth-child(1) td:nth-child(4)" element contains "MeshService:service-1"
+    Then the "$item:nth-child(1) td:nth-child(2)" element contains "mfi-1"
+    And the "$item:nth-child(1) td:nth-child(4)" element contains "zone-1"
+    And the "$item:nth-child(1) td:nth-child(5)" element contains "MeshService:service-1"
 
   Scenario: Hides legacy policy types if there are no legacy policies applied
     Given the URL "/mesh-insights/default" responds with
@@ -134,6 +134,6 @@ Feature: mesh / policies / index
 
   Scenario: Regression test: Zone column is visible when navigating from legacy policy type
     When I visit the "/meshes/default/policies/circuit-breakers" URL
-    Then the "$items-header" element exists 3 times
+    Then the "$items-header" element exists 4 times
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
-    Then the "$items-header" element exists 5 times
+    Then the "$items-header" element exists 6 times
