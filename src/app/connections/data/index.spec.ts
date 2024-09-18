@@ -45,7 +45,12 @@ describe('ConnectionCollection', () => {
         },
         cluster: {
           localhost_9090: {
-            $kind: '',
+            $resourceMeta: {
+              mesh: '',
+              name: '',
+              type: '',
+              zone: '',
+            },
             tcp: {},
             grpc: {
               0: 12,

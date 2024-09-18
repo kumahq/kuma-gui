@@ -52,7 +52,12 @@ export const ConnectionCollection = {
         .map(([cluster, value]) => {
           const { tcp, http, http2, grpc, ...rest } = value
           const stats = {
-            $kind: '',
+            $resourceMeta: {
+              type: '',
+              mesh: '',
+              name: '',
+              zone: '',
+            },
             tcp,
             ...(typeof http !== 'undefined' ? { http } : {}),
             ...(typeof http2 !== 'undefined' ? { http2 } : {}),
@@ -61,17 +66,22 @@ export const ConnectionCollection = {
           // sniff the name to see if we are a new type of service
           const found = cluster.match(meshServiceRe)
           if (found) {
-            const str = found[0]
-            switch (true) {
-              case (str.indexOf('_msvc_') !== -1):
-                stats.$kind = 'MeshService'
-                break
-              case (str.indexOf('_mesvc_') !== -1):
-                stats.$kind = 'MeshExternalService'
-                break
-              case (str.indexOf('_mzsvc_') !== -1):
-                stats.$kind = 'MeshMultiZoneService'
-                break
+            const [mesh, name, namespace, zone, _abbr, _port] = cluster.split('_')
+            stats.$resourceMeta = {
+              mesh,
+              name: `${name}.${namespace}`,
+              zone,
+              type: ((str: string) => {
+                switch (true) {
+                  case (str.indexOf('_msvc_') !== -1):
+                    return 'MeshService'
+                  case (str.indexOf('_mesvc_') !== -1):
+                    return 'MeshExternalService'
+                  case (str.indexOf('_mzsvc_') !== -1):
+                    return 'MeshMultiZoneService'
+                }
+                return ''
+              })(found[0]),
             }
           }
           //
