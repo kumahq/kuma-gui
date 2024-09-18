@@ -1,7 +1,8 @@
-import Kongponents, { KCard } from '@kong/kongponents'
+import Kongponents, { KCard, KBadge } from '@kong/kongponents'
 
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
+import XBadge from './components/x-badge/XBadge.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
@@ -26,6 +27,7 @@ declare module 'vue' {
     XAction: typeof XAction
     XActionGroup: typeof XActionGroup
     XCard: typeof KCard
+    XBadge: typeof KBadge
     XCopyButton: typeof XCopyButton
     XBreadcrumbs: typeof XBreadcrumbs
     XPrompt: typeof XPrompt
@@ -59,6 +61,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         return [
           ['XAction', XAction],
           ['XActionGroup', XActionGroup],
+          ['XBadge', XBadge],
           ['XBreadcrumbs', XBreadcrumbs],
           ['XCard', KCard],
           ['XCopyButton', XCopyButton],

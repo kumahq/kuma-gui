@@ -145,6 +145,7 @@ const INLINE_NON_VOID_ELEMENTS = [
             'K[A-Z].*',
             //
             'X[A-Z].*',
+            'Kuma[A-Z].*',
             // @kong-ui-public/i18n
             'I18nT',
             // Application

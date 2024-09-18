@@ -114,13 +114,14 @@
                   #ports="{ row: item }"
                 >
                   <KTruncate>
-                    <KBadge
+                    <KumaPort
                       v-for="connection in item.spec.ports"
                       :key="connection.port"
-                      appearance="info"
-                    >
-                      {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
-                    </KBadge>
+                      :port="{
+                        ...connection,
+                        targetPort: undefined,
+                      }"
+                    />
                   </KTruncate>
                 </template>
                 <template #actions="{ row: item }">

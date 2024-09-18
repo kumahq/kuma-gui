@@ -77,13 +77,14 @@
                 #body
               >
                 <KTruncate>
-                  <KBadge
-                    v-for="connection in data.spec.ports"
+                  <KumaPort
+                    v-for="connection in props.data.spec.ports"
                     :key="connection.port"
-                    appearance="info"
-                  >
-                    {{ connection.port }}/{{ connection.appProtocol }}{{ connection.name && connection.name !== String(connection.port) ? ` (${connection.name})` : '' }}
-                  </KBadge>
+                    :port="{
+                      ...connection,
+                      targetPort: undefined,
+                    }"
+                  />
                 </KTruncate>
               </template>
             </DefinitionCard>
