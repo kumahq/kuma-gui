@@ -30,6 +30,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               labels: {
                 'kuma.io/display-name': displayName,
                 'k8s.kuma.io/namespace': nspace,
+                'kuma.io/policy-role': fake.kuma.policyRole(),
               },
             }
             : {}),
