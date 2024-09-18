@@ -134,6 +134,7 @@
                     >
                       <AppCollection
                         :headers="[
+                          { ...me.get('headers.role'), label: 'Role', key: 'role', hideLabel: true },
                           { ...me.get('headers.name'), label: 'Name', key: 'name' },
                           { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                           ...(can('use zones') && type.isTargetRefBased ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
@@ -144,6 +145,25 @@
                         :is-selected-row="(row) => row.id === route.params.policy"
                         @resize="me.set"
                       >
+                        <template
+                          #role="{ row: item }"
+                        >
+                          <template
+                            v-if="item.role === 'producer'"
+                          >
+                            <XIcon
+                              :name="`policy-role-${item.role}`"
+                            >
+                              Role: {{ item.role }}
+                            </XIcon>
+                          </template>
+                          <template
+                            v-else
+                          >
+                            &nbsp;
+                          </template>
+                        </template>
+
                         <template #name="{ row }">
                           <XAction
                             data-action
@@ -282,5 +302,14 @@ header > div {
 header > h3 {
   margin-top: 0;
   float: left;
+}
+.app-collection:deep(:is(th, td):nth-child(1)) {
+  padding-right: 0 !important;
+  width: 16px !important;
+}
+.app-collection :deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
 }
 </style>

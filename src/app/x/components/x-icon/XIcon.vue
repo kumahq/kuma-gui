@@ -58,6 +58,7 @@ defineOptions({
 const attrs = useAttrs()
 const icons = {
   standard: 'span',
+  'policy-role-producer': 'span',
   builtin: PortalIcon,
   delegated: PortalIcon,
   warning: WarningIcon,
@@ -112,6 +113,16 @@ const props = withDefaults(defineProps<{
     -webkit-mask-image: var(--icon-before);
     mask-size: 100%;
     -webkit-mask-size: 100%;
+    width: v-bind('props.size');
+    height: v-bind('props.size');
+  }
+}
+.x-icon-policy-role-producer-icon {
+  &::before {
+    content: 'P';
+    color: var(--icon-before-color, currentColor);
+    display: inline-flex;
+
     width: v-bind('props.size');
     height: v-bind('props.size');
   }
