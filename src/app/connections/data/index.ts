@@ -4,7 +4,7 @@ const appProtocols = ['http', 'tcp', 'grpc'] as const
 // `_` followed by 1 to 5 digits followed by a `.`
 const trailingPortRe = /_\d{1,5}\./
 const trailingPortRe2 = /_\d{1,5}/
-const meshServiceRe = /_(mz|m|me){1}svc_\d{1,5}$/
+const meshServiceRe = /_(mz|m|ext){1}svc_\d{1,5}$/
 
 export const Stat = {
   fromCollection(items: string) {

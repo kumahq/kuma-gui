@@ -16,57 +16,6 @@
         <div
           class="stack-with-borders"
         >
-          <template
-            v-if="props.data.$resourceMeta.type !== ''"
-          >
-            <DefinitionCard
-              layout="horizontal"
-            >
-              <template #title>
-                Resource
-              </template>
-
-              <template #body>
-                <KBadge
-                  appearance="info"
-                  max-width="auto"
-                >
-                  <template
-                    v-for="item in [props.data.$resourceMeta]"
-                    :key="typeof item"
-                  >
-                    <XAction
-                      :to="({
-                        MeshService: {
-                          name: 'mesh-service-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                        },
-                        MeshExternalService: {
-                          name: 'mesh-external-service-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                        },
-                        MeshMultiZoneService: {
-                          name: 'mesh-multizone-service-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                        },
-                      } as const)[item.type as 'MeshService' | 'MeshExternalService' | 'MeshMultiZoneService']"
-                    >
-                      {{ item.type }}: {{ item.name }}
-                    </XAction>
-                  </template>
-                </KBadge>
-              </template>
-            </DefinitionCard>
-          </template>
           <DefinitionCard
             layout="horizontal"
           >
