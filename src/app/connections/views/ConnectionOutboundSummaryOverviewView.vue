@@ -330,10 +330,10 @@ const props = defineProps<{
 }>()
 
 const ruleForCluster = (cluster: any, rule: ResourceRule) => {
-  return cluster.$resourceMeta.name === rule.resourceMeta.labels['kuma.io/display-name'] &&
-  cluster.$resourceMeta.namespace === rule.resourceMeta.labels['k8s.kuma.io/namespace'] &&
-  cluster.$resourceMeta.zone === rule.resourceMeta.labels['kuma.io/zone'] &&
-  (rule.resourceSectionName === '' || cluster.$resourceMeta.port === rule.resourceSectionName)
+  return cluster.$resourceMeta.name === rule.name &&
+  cluster.$resourceMeta.namespace === rule.namespace &&
+  cluster.$resourceMeta.zone === rule.zone &&
+  (rule.resourceSectionName === '' || cluster.$resourceMeta.port === rule.port)
 }
 </script>
 <style lang="scss" scoped>

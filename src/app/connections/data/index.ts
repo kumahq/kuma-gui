@@ -79,7 +79,7 @@ export const ConnectionCollection = {
                 switch (true) {
                   case (str.indexOf('_msvc_') !== -1):
                     return 'MeshService'
-                  case (str.indexOf('_mesvc_') !== -1):
+                  case (str.indexOf('_extsvc_') !== -1):
                     return 'MeshExternalService'
                   case (str.indexOf('_mzsvc_') !== -1):
                     return 'MeshMultiZoneService'
