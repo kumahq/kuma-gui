@@ -108,7 +108,7 @@
                   >
                     <DataCollection
                       :predicate="(item) => {
-                        return item.resourceMeta.type === 'Mesh' || props.data.$resourceMeta.name === item.resourceMeta.name
+                        return item.resourceMeta.type === 'Mesh' || ruleForCluster(props.data, item)
                       }"
                       :items="rulesData.toResourceRules"
                       v-slot="{ items }"
@@ -130,7 +130,7 @@
                               class="stack-with-borders mt-4"
                             >
                               <template
-                                v-for="item in rules!.length > 1 ? rules!.filter((item) => props.data.$resourceMeta.name === item.resourceMeta.name) : rules"
+                                v-for="item in rules!.length > 1 ? rules!.filter(item => ruleForCluster(props.data, item)) : rules"
                                 :key="item"
                               >
                                 <div>
@@ -321,12 +321,20 @@ import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { DataplaneOverview } from '@/app/data-planes/data/'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
+import { ResourceRule } from '@/app/rules/data/ResourceRule'
 import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: Record<string, any>
   dataplaneOverview: DataplaneOverview
 }>()
+
+const ruleForCluster = (cluster: any, rule: ResourceRule) => {
+  return cluster.$resourceMeta.name === rule.name &&
+  cluster.$resourceMeta.namespace === rule.namespace &&
+  cluster.$resourceMeta.zone === rule.zone &&
+  (rule.resourceSectionName === '' || cluster.$resourceMeta.port === rule.port)
+}
 </script>
 <style lang="scss" scoped>
 .rules {

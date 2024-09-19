@@ -48,6 +48,8 @@ describe('ConnectionCollection', () => {
             $resourceMeta: {
               mesh: '',
               name: '',
+              namespace: '',
+              port: '',
               type: '',
               zone: '',
             },
