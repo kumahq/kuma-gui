@@ -84,11 +84,6 @@ export const routes = (can: Can) => {
                           },
                         ],
                       },
-                      {
-                        path: 'config',
-                        name: 'mesh-multi-zone-service-config-view',
-                        component: () => import('@/app/services/views/MeshMultiZoneServiceConfigView.vue'),
-                      },
                     ],
                   },
                 ]
