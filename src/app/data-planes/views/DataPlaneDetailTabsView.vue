@@ -69,6 +69,7 @@
             <component
               :is="child.Component"
               :data="data"
+              :mesh="props.mesh"
             />
           </RouterView>
         </DataLoader>
@@ -80,4 +81,8 @@
 <script lang="ts" setup>
 import { DataplaneOverviewSource } from '../sources'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { Mesh } from '@/app/meshes/data'
+const props = defineProps<{
+  mesh: Mesh
+}>()
 </script>
