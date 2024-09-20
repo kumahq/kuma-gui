@@ -4,7 +4,7 @@
     :params="{
       mesh: '',
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t }"
   >
     <AppView>
       <template #title>
@@ -19,46 +19,38 @@
         </h1>
       </template>
 
-      <DataLoader
-        :src="uri(
-          sources,
-          '/meshes/:name',
-          {
-            name: route.params.mesh,
-          },
-        )"
-        v-slot="{ data: mesh }"
+      <XTabs
+        :selected="route.child()?.name"
+        data-testid="mesh-tabs"
       >
-        <XTabs
-          :selected="route.child()?.name"
-          data-testid="mesh-tabs"
+        <template
+          v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
+          :key="name"
+          #[`${name}-tab`]
         >
-          <template
-            v-for="{ name } in route.children.filter(({ name }) => name !== 'external-service-list-view')"
-            :key="name"
-            #[`${name}-tab`]
+          <XAction
+            :to="{ name }"
           >
-            <XAction
-              :to="{ name }"
-            >
-              {{ t(`meshes.routes.item.navigation.${name}`) }}
-            </XAction>
-          </template>
-        </XTabs>
+            {{ t(`meshes.routes.item.navigation.${name}`) }}
+          </XAction>
+        </template>
+      </XTabs>
 
-        <RouterView
-          v-slot="{ Component }"
-        >
-          <component
-            :is="Component"
-            :mesh="mesh"
-          />
-        </RouterView>
-      </DataLoader>
+      <RouterView
+        v-slot="{ Component }"
+      >
+        <component
+          :is="Component"
+          :mesh="props.mesh"
+        />
+      </RouterView>
     </AppView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { sources } from '../sources'
+import type { Mesh } from '@/app/meshes/data'
+const props = defineProps<{
+  mesh: Mesh
+}>()
 </script>

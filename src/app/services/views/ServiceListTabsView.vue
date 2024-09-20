@@ -20,7 +20,7 @@
               :key="name"
             >
               <XAction
-                v-if="!(props.mesh.meshServices?.enabled === 'Exclusive' && ['service-list-view', 'external-service-list-view'].includes(name))"
+                v-if="!(!can('use service-insights', props.mesh) && ['service-list-view', 'external-service-list-view'].includes(name))"
                 :class="{
                   'active': route.child()?.name === name,
                 }"
@@ -54,14 +54,17 @@
 import { watch } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { useCan } from '@/app/application'
 import type { Mesh } from '@/app/meshes/data'
-const router = useRouter()
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const router = useRouter()
+const can = useCan()
 watch(() => router.currentRoute.value.name, (val) => {
   if (val === 'service-list-tabs-view') {
-    router.replace(props.mesh.meshServices?.enabled === 'Exclusive' ? { name: 'mesh-service-list-view' } : { name: 'service-list-view' })
+    router.replace(can('use service-insights', props.mesh) ? { name: 'service-list-view' } : { name: 'mesh-service-list-view' })
   }
 }, { immediate: true })
 </script>

@@ -49,7 +49,7 @@
                   { ...me.get('headers.name'), label: 'Name', key: 'name' },
                   { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                   ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.services'), label: 'Services', key: 'services' },
+                  ...(can('use service-insights', props.mesh) ? [{ ...me.get('headers.services'), label: 'Services', key: 'services' }] : []),
                   { ...me.get('headers.certificate'), label: 'Certificate Info', key: 'certificate' },
                   { ...me.get('headers.status'), label: 'Status', key: 'status' },
                   { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
@@ -293,6 +293,10 @@ import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import type { Mesh } from '@/app/meshes/data'
+const props = defineProps<{
+  mesh: Mesh
+}>()
 </script>
 
 <style lang="scss" scoped>

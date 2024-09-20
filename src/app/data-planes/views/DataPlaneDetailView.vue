@@ -237,7 +237,7 @@
                             <ConnectionCard
                               data-testid="dataplane-inbound"
                               :protocol="item.protocol"
-                              :service="item.tags['kuma.io/service']"
+                              :service="can('use service-insights', props.mesh) ? item.tags['kuma.io/service'] : ''"
                               :traffic="typeof error === 'undefined' ?
                                 stats :
                                 {
@@ -531,6 +531,7 @@ import ConnectionCard from '@/app/connections/components/connection-traffic/Conn
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import type { StatsSource } from '@/app/connections/sources'
+import type { Mesh } from '@/app/meshes/data'
 import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import { useRoute } from '@/app/vue'
 
@@ -538,6 +539,7 @@ const _route = useRoute()
 
 const props = defineProps<{
   data: DataplaneOverview
+  mesh: Mesh
 }>()
 
 const warnings = computed(() => props.data.warnings.concat(...(props.data.isCertExpired ? [{ kind: 'CERT_EXPIRED' }] : [])))
