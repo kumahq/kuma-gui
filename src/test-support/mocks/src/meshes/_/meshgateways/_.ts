@@ -7,6 +7,11 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
 
   const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const parts = String(name).split('.')
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = parts.pop()
+
   return {
     headers: {},
     body: {
@@ -19,12 +24,16 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       name,
       creationTime: '2022-01-25T13:55:51.798701+01:00',
       modificationTime: '2022-01-25T13:55:51.798701+01:00',
-      ...(fake.datatype.boolean() && {
-        labels: {
-          'kuma.io/origin': 'zone',
-          'kuma.io/zone': fake.hacker.noun(),
-        },
-      }),
+      labels: {
+        'kuma.io/display-name': displayName,
+        'kuma.io/origin': fake.kuma.origin(),
+        'kuma.io/zone': fake.hacker.noun(),
+        ...(k8s
+          ? {
+            'k8s.kuma.io/namespace': nspace,
+          }
+          : {}),
+      },
       selectors: [{ match: fake.kuma.tags({ service: name }) }],
       conf: {
         listeners: Array.from({ length: listenerCount }).map(() => {

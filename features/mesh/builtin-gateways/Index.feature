@@ -19,6 +19,7 @@ Feature: mesh / builtin-gateways / index
             labels:
               kuma.io/origin: zone
               kuma.io/zone: zone-1
+              kuma.io/display-name: gateway-1
       """
 
   Scenario: Sub navigation has expected content

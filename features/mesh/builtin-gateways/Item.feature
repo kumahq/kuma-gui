@@ -18,7 +18,7 @@ Feature: mesh / builtin-gateways / item
       KUMA_RULE_MATCHER_COUNT: 1
       KUMA_RULE_MATCH_COUNT: 2
       """
-    Given the URL "/meshes/default/meshgateways/gateway-1" responds with
+    Given the URL "/meshes/default/meshgateways/gateway-1.kuma-system" responds with
       """
       body:
         conf:
@@ -37,7 +37,7 @@ Feature: mesh / builtin-gateways / item
               tls:
                 mode: TERMINATE
       """
-    Given the URL "/meshes/default/meshgateways/gateway-1/_rules" responds with
+    Given the URL "/meshes/default/meshgateways/gateway-1.kuma-system/_rules" responds with
       """
       body:
         rules:
@@ -108,8 +108,8 @@ Feature: mesh / builtin-gateways / item
       """
 
   Scenario: Overview tab has expected content
-    When I visit the "/meshes/default/gateways/builtin/gateway-1/overview" URL
-    Then the URL contains "/builtin/gateway-1/overview?listener=0"
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/overview" URL
+    Then the URL contains "/builtin/gateway-1.kuma-system/overview?listener=0"
     Then the "$tabs-view" element contains "gateway-1"
     Then the "$listener-card" element exists 2 times
     Then the "$route-card" element exists 2 times
@@ -123,22 +123,22 @@ Feature: mesh / builtin-gateways / item
     Then the "$route-card:nth-child(2)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(2)" element contains "service-2"
     When I click the "$listener-card:nth-child(2) [data-action]" element
-    Then the URL contains "/builtin/gateway-1/overview?listener=1"
+    Then the URL contains "/builtin/gateway-1.kuma-system/overview?listener=1"
     Then the "$route-card" element exists 1 times
     Then the "$listener-card:nth-child(2).active" element exists
     Then the "$route-card:nth-child(1)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(1)" element contains "service-2"
 
   Scenario: Navigate to overview with non-first selected listener
-    When I visit the "/meshes/default/gateways/builtin/gateway-1/overview?listener=1" URL
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/overview?listener=1" URL
     Then the "$listener-card:nth-child(2).active" element exists
     Then the "$route-card:nth-child(1)" element contains "demo-app-3.kuma-system"
     Then the "$route-card:nth-child(1)" element contains "service-2"
 
   Scenario: Dataplanes tab has expected content
-    When I visit the "/meshes/default/gateways/builtin/gateway-1/dataplanes" URL
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/dataplanes" URL
     Then the "$dataplanes" element exists
 
   Scenario: Config tab has expected content
-    When I visit the "/meshes/default/gateways/builtin/gateway-1/config" URL
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/config" URL
     Then the "$config" element exists

@@ -6,29 +6,30 @@
       gateway: '',
       listener: '0',
     }"
-    v-slot="{ route }"
+    v-slot="{ route, uri }"
   >
     <AppView>
       <DataSource
-        :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
-        v-slot="{ data: meshGateway, error: meshGatewayError }: MeshGatewaySource"
+        :src="uri(policySources, '/policy-types', {})"
+        v-slot="{ data, error }"
       >
         <DataSource
-          :src="`/policy-types`"
-          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
+          :src="uri(sources, '/meshes/:mesh/mesh-gateways/:name/rules', {
+            mesh: route.params.mesh,
+            name: route.params.gateway,
+          })"
+          v-slot="{ data: rules, error: rulesError }"
         >
           <DataLoader
-            :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}/rules`"
-            :data="[meshGateway, policyTypesData]"
-            :errors="[meshGatewayError, policyTypesError]"
-            v-slot="{ data: rulesData }: GatewayRulesSource"
+            :data="[data, rules]"
+            :errors="[error, rulesError]"
           >
-            <template v-if="meshGateway && rulesData && policyTypesData">
+            <template v-if="rules && data">
               <ListenerRoutes
-                :mesh-gateway="meshGateway"
+                :mesh-gateway="props.gateway"
                 :selected-listener-index="Number(route.params.listener)"
-                :policy-types-by-name="policyTypesData.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
-                :inspect-rules="rulesData.rules"
+                :policy-types-by-name="data.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
+                :inspect-rules="rules.rules"
               />
             </template>
           </DataLoader>
@@ -40,6 +41,10 @@
 
 <script lang="ts" setup>
 import ListenerRoutes from '../components/ListenerRoutes.vue'
-import type { GatewayRulesSource, MeshGatewaySource } from '../sources'
-import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+import type { MeshGateway } from '../data'
+import { sources } from '../sources'
+import { sources as policySources } from '@/app/policies/sources'
+const props = defineProps<{
+  gateway: MeshGateway
+}>()
 </script>

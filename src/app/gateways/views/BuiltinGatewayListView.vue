@@ -44,14 +44,16 @@
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
-                  <TextWithCopyButton :text="item.name">
+                  <TextWithCopyButton
+                    :text="item.name"
+                  >
                     <XAction
                       data-action
                       :to="{
                         name: 'builtin-gateway-detail-view',
                         params: {
                           mesh: item.mesh,
-                          gateway: item.name,
+                          gateway: item.id,
                         },
                       }"
                     >
