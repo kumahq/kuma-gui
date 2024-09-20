@@ -91,13 +91,9 @@
                 <template
                   #body
                 >
-                  <KBadge
-                    v-for="connection in [item.spec.match]"
-                    :key="connection.port"
-                    appearance="info"
-                  >
-                    {{ connection.port }}/{{ connection.protocol }}
-                  </KBadge>
+                  <KumaPort
+                    :port="item.spec.match"
+                  />
                 </template>
               </DefinitionCard>
               <DefinitionCard

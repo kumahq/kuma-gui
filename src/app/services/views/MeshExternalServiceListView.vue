@@ -129,13 +129,9 @@
                       <template
                         v-if="item.spec.match"
                       >
-                        <KBadge
-                          v-for="connection in [item.spec.match]"
-                          :key="connection.port"
-                          appearance="info"
-                        >
-                          {{ connection.port }}/{{ connection.protocol }}
-                        </KBadge>
+                        <KumaPort
+                          :port="item.spec.match"
+                        />
                       </template>
                     </template>
 

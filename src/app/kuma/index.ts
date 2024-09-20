@@ -1,5 +1,6 @@
 import locales from './locales/en-us/index.yaml'
 import type { EnvArgs } from '@/app/application/services/env/Env'
+import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
@@ -8,6 +9,11 @@ import type { ServiceDefinition } from '@/services/utils'
 
 type Token = ReturnType<typeof token>
 
+declare module 'vue' {
+  export interface GlobalComponents {
+    KumaPort: typeof KumaPort
+  }
+}
 export const TOKENS = {
   httpClient: token<RestClient>('httpClient'),
   api: token<KumaApi>('KumaApi'),
@@ -68,6 +74,18 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.notFoundView,
       ],
     }],
+
+    [token('kuma.components'), {
+      service: () => {
+        return [
+          ['KumaPort', KumaPort],
+        ]
+      },
+      labels: [
+        app.components,
+      ],
+    }],
+
   ]
 }
 export const [
