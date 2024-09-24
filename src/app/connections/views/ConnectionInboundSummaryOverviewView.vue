@@ -6,7 +6,7 @@
       connection: '',
     }"
     name="connection-inbound-summary-overview-view"
-    v-slot="{ t, route }"
+    v-slot="{ t, route, uri }"
   >
     <AppView>
       <div
@@ -84,12 +84,15 @@
       >
         <h3>Rules</h3>
         <DataLoader
-          :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
-          v-slot="{ data: rulesData }: RuleCollectionSource"
+          :src="uri(sources, '/meshes/:mesh/rules/for/:dataplane', {
+            mesh: route.params.mesh,
+            dataplane: route.params.dataPlane,
+          })"
+          v-slot="{ data: rulesData }"
         >
           <DataCollection
             :predicate="(item) => { return item.ruleType === 'from' && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])}"
-            :items="rulesData!.rules"
+            :items="rulesData.rules"
 
             v-slot="{ items }"
           >
@@ -219,7 +222,7 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
-import type { RuleCollectionSource } from '@/app/rules/sources'
+import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: DataplaneInbound

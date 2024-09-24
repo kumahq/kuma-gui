@@ -91,7 +91,7 @@ import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 const props = withDefaults(defineProps<{
-  data?: TypeOf<T>[]
+  data?: unknown[]
   errors?: (Error | undefined)[]
   src?: T
   loader?: boolean
@@ -109,7 +109,7 @@ const srcError = ref<Error | undefined>(undefined)
 
 const allData = computed(() => {
   if (props.src !== '') {
-    return [srcData.value as TypeOf<T>].concat(props.data)
+    return [srcData.value as unknown].concat(props.data)
   }
   return props.data
 })

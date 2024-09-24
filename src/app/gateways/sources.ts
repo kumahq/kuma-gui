@@ -1,9 +1,12 @@
+import createClient from 'openapi-fetch'
+
 import { MeshGateway } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import { Rule, type RuleCollection } from '@/app/rules/data'
+import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type { paths } from '@/types/auto-generated.d'
 
 export type { MeshGateway } from './data'
 
@@ -11,9 +14,11 @@ export type MeshGatewaySource = DataSourceResponse<MeshGateway>
 export type MeshGatewayCollection = CollectionResponse<MeshGateway>
 export type MeshGatewayCollectionSource = DataSourceResponse<MeshGatewayCollection>
 
-export type GatewayRulesSource = DataSourceResponse<RuleCollection>
-
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/meshes/:mesh/mesh-gateways': async (params) => {
       const { mesh, size } = params
@@ -35,7 +40,16 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/mesh-gateways/:name/rules': async (params) => {
-      return Rule.fromCollection(await api.getMeshGatewayRules(params))
+      const res = await http.GET('/meshes/{mesh}/{resourceType}/{resourceName}/_rules', {
+        params: {
+          path: {
+            mesh: params.mesh,
+            resourceType: 'meshgateways',
+            resourceName: params.name,
+          },
+        },
+      })
+      return Rule.fromCollection(res.data!)
     },
   })
 }
