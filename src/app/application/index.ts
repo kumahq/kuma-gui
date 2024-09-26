@@ -82,10 +82,6 @@ const $ = {
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
 
-    ...me(app),
-    ...x(app),
-    ...kuma(app),
-
     [token('application.components'), {
       service: (i18n: ReturnType<typeof I18n>) => {
         return [
@@ -176,8 +172,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
 
     [$.dataSourcePool, {
-      service: (sources: Sources, getKey: () => string) => {
-        return new DataSourcePool(sources, { create, destroy }, getKey)
+      service: (sources: Sources, errorHandler: () => void, getKey: () => string) => {
+        return new DataSourcePool(sources, { create, destroy }, errorHandler, getKey)
       },
       arguments: [
         app.sources,
@@ -198,6 +194,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
     }],
 
+    ...me(app),
+    ...x(app),
+    ...kuma(app),
   ]
 }
 export const TOKENS = $
