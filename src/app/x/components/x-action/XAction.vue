@@ -34,10 +34,10 @@
       }"
     >
       <template
-        v-if="['create'].includes(props.action)"
+        v-if="['create', 'refresh', 'progress'].includes(props.action)"
       >
         <XIcon
-          :name="props.action as 'create'"
+          :name="props.action as ('create' | 'refresh' | 'progress')"
         />
       </template>
       <slot name="default" />
@@ -116,10 +116,10 @@
       @click="emit('click')"
     >
       <template
-        v-if="['create', 'refresh'].includes(props.action)"
+        v-if="['create', 'refresh', 'progress'].includes(props.action)"
       >
         <XIcon
-          :name="props.action as ('create' | 'refresh')"
+          :name="props.action as ('create' | 'refresh' | 'progress')"
         />
       </template>
       <slot name="default" />
@@ -159,7 +159,7 @@ const emit = defineEmits<{
   (event: 'click'): Event
 }>()
 const props = withDefaults(defineProps<{
-  action?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh'
+  action?: 'default' | 'docs' | 'create' | 'copy' | 'action' | 'expand' | 'refresh' | 'progress'
   appearance?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'anchor'
   size?: 'small' | 'medium' | 'large'
   href?: string
