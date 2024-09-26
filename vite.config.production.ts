@@ -73,6 +73,7 @@ export const config: UserConfigFn = () => {
           additionalData: hoistUseStatements(`
             @import "@kong/design-tokens/tokens/scss/variables";
           `),
+          api: 'modern-compiler',
         },
       },
     },
