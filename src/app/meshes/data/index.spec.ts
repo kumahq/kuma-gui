@@ -68,6 +68,9 @@ describe('meshes data transformations', () => {
           type: 'Mesh',
           creationTime: '2020-06-19T12:18:02.097986-04:00',
           modificationTime: '2020-06-19T12:18:02.097986-04:00',
+          meshServices: {
+            mode: 'Disabled',
+          },
           mtlsBackend: {
             name: 'ca-2',
             type: 'BUILTIN',

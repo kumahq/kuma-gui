@@ -12,6 +12,12 @@ export const Mesh = {
     return {
       ...item,
       config: item,
+      meshServices: ((item = {}) => {
+        return {
+          ...item,
+          mode: typeof item.mode === 'undefined' ? (item.enabled ?? 'Disabled') : item.mode,
+        }
+      })(item.meshServices),
       mtlsBackend,
       metricsBackend,
       routing: ((item = {}) => {

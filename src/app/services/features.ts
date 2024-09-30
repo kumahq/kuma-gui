@@ -1,4 +1,5 @@
 import type { Features } from '@/app/application'
+import { runInDebug } from '@/app/application'
 import type Env from '@/app/application/services/env/Env'
 import { Mesh } from '@/app/meshes/data'
 export const features = (env: Env['var']): Features => {
@@ -11,7 +12,12 @@ export const features = (env: Env['var']): Features => {
       }
     },
     'use service-insights': (_can, mesh: Mesh) => {
-      return mesh.meshServices?.enabled !== 'Exclusive'
+      runInDebug(() => {
+        if (typeof mesh === 'undefined') {
+          throw new Error('argument `mesh` not provided for can(`use service-insights`)')
+        }
+      })
+      return mesh.meshServices.mode !== 'Exclusive'
     },
   }
 }

@@ -25,6 +25,7 @@ import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
 export * from './services/can'
+export { runInDebug } from './utilities'
 export { defineSources } from './services/data-source'
 
 // temporary simple "JSON data only" structuredClone polyfill for cloning JSON
