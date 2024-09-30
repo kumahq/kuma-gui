@@ -3,6 +3,10 @@ import jsYaml from 'js-yaml'
 type URLParamDefault = string | number | boolean
 type URLParamValue = string | null
 
+export const runInDebug = (func: () => void) => {
+  if (import.meta.env.PROD) return
+  func()
+}
 const difference = <T>(a: T[], b: T[]): T[] => a.filter(item => !b.includes(item))
 
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
