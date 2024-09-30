@@ -32,7 +32,7 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^20.1.2",
+    "@badeball/cypress-cucumber-preprocessor": "^21.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
     "@cucumber/gherkin-utils": "^9.0.0",
     "@faker-js/faker": "^8.4.1",
