@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <!-- This trailing slash matters! Do not remove it. See also: https://stackoverflow.com/a/26043021/2036825 -->
-  <base href="%VITE_BASE_GUI_PATH%/" />
+  <base href="{{.BaseGuiPath}}/" />
 
   <link rel="icon" href="/favicon.png" />
   <title>Manager</title>
@@ -48,7 +48,7 @@
       }
     }
   </style>
-  <script type="application/json" id="kuma-config">%VITE_KUMA_CONFIG%</script>
+  <script type="application/json" id="kuma-config" />{{.}}</script>
 </head>
 
 <body>

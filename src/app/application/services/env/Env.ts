@@ -66,52 +66,16 @@ export default class Env {
    */
   protected getConfig(): PathConfig {
     const pathConfigNode = document.querySelector('#kuma-config')
-
-    // Falls back to a sensible default when encountering a malformed JSON
-    // payload or non-replaced template, or during CLI tests when there is no
-    // HTML file.
-
-    let config!: PathConfig
     if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
-      try {
-        config = JSON.parse(pathConfigNode.textContent.trim())
-      } catch (e) {
-        // Handled by falling back to a default value.
-        console.error(e)
-      }
+      const config = JSON.parse(pathConfigNode.textContent.trim())
+      // Ensures the API baseUrl always has an absolute, non-trailing slash URL,
+      // i.e. a base.
+      // Chosen to be done here as this is the closest point to the backend we
+      // can get
+      config.apiUrl = normalizeBaseUrl(config.apiUrl)
+      return config
     }
-    if (!config) {
-      config = getPathConfigDefault()
-      console.error('Unable to parse kuma config. Falling back to defaults')
-    }
-    // Ensures the API baseUrl always has an absolute, non-trailing slash URL,
-    // i.e. a base.
-    // Chosen to be done here as this is the closest point to the backend we
-    // can get
-    config.apiUrl = normalizeBaseUrl(config.apiUrl)
-    return config
-  }
-}
-export function getPathConfigDefault(apiUrlDefault: string = ''): PathConfig {
-  return {
-    /**
-     * The base GUI path. Will include a leading slash. Won’t include a trailing slash.
-     *
-     * **Example**: `'/gui'`
-    */
-    baseGuiPath: '/gui',
-    /**
-     * The base API URL. Won’t include a trailing slash.
-     *
-     * **Example**: `'http://localhost:5681'`
-    */
-    apiUrl: apiUrlDefault,
-    version: '2.9.0',
-    product: 'Kuma',
-    mode: 'global',
-    environment: 'universal',
-    storeType: 'postgres',
-    apiReadOnly: false,
+    throw new Error('Unable to parse kuma config')
   }
 }
 function stripTrailingSlashes(url: string): string {
