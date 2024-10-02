@@ -4,26 +4,27 @@
     :items="items"
     @selected="emit('change', String($event.value))"
   >
-    <template #selected-item-template="{ item }">
+    <template
+      #selected-item-template="{ item }: any"
+    >
       <slot
         v-if="slots.selected"
-        :item="item!.value as any"
+        :item="item.value as any"
         name="selected"
       />
       <slot
         v-else
-        :item="item!.value as any"
+        :item="item.value as any"
         :name="`${item?.value}-option`"
       />
     </template>
-    <template #item-template="{ item }">
-      <slot
-        :name="`${item.value}-option`"
-      />
+    <template #item-template="{ item }: any">
+      <slot :name="`${item.value}-option`" />
     </template>
   </KSelect>
 </template>
 <script lang="ts" setup>
+import { KSelect } from '@kong/kongponents'
 import { computed, useSlots } from 'vue'
 
 const emit = defineEmits<{
@@ -75,9 +76,9 @@ const items = computed(() => {
   align-items: center;
   gap: $kui-space-40;
 }
+
 .k-select :deep(.k-label) {
   // Removes the bottom margin as we’re aligning the label with the select in a horizontal layout.
   margin-bottom: 0 !important;
 }
-
 </style>
