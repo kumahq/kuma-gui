@@ -82,7 +82,9 @@ import _48 from './src/zone-ingresses/_/_overview'
 import _9 from './src/zone-ingresses/_overview'
 import _127 from './src/zoneegresses/_'
 import _49 from './src/zoneegresses/_/_overview'
+import _149 from './src/zoneegresses/_/xds'
 import _10 from './src/zoneegresses/_overview'
+import _148 from './src/zoneingresses/_/xds'
 import _8 from './src/zones'
 import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
@@ -105,9 +107,11 @@ export const fs: FS = {
   '/zone-ingresses/_overview': _9,
   '/zone-ingresses/:name': _126,
   '/zone-ingresses/:name/_overview': _48,
+  '/zoneingresses/:name/xds': _148,
   '/zoneegresses/_overview': _10,
   '/zoneegresses/:name': _127,
   '/zoneegresses/:name/_overview': _49,
+  '/zoneegresses/:name/xds': _149,
   '/mesh-insights': _13,
   '/mesh-insights/:mesh': _14,
   '/meshes': _15,

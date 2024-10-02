@@ -8,7 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -17,7 +17,11 @@
     <AppView>
       <KCard>
         <DataLoader
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/xds`"
+          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/xds/:endpoints', {
+            mesh: route.params.mesh,
+            name: route.params.dataPlane,
+            endpoints: String(endpoints),
+          })"
           v-slot="{ data, refresh }"
         >
           <CodeBlock
@@ -32,6 +36,10 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
             <template #primary-actions>
+              <KCheckbox
+                v-model="endpoints"
+                label="Include Endpoints"
+              />
               <XAction
                 action="refresh"
                 appearance="primary"
@@ -48,5 +56,10 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
+import { sources } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
+
+const endpoints = ref<boolean>(false)
 </script>

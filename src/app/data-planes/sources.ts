@@ -87,6 +87,17 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         dataPath,
       })
     },
+    '/meshes/:mesh/dataplanes/:name/xds/:endpoints': async (params) => {
+      const { mesh, name, endpoints } = params
+
+      return api.getDataplaneData({
+        mesh,
+        dppName: name,
+        dataPath: 'xds',
+      }, {
+        include_eds: endpoints,
+      })
+    },
 
     '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': async (params) => {
       return SidecarDataplane.fromCollection(await api.getSidecarDataplanePolicies(params))

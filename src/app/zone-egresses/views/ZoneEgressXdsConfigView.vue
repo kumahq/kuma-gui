@@ -7,7 +7,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -16,7 +16,10 @@
     <AppView>
       <KCard>
         <DataLoader
-          :src="`/zone-egresses/${route.params.zoneEgress}/data-path/xds`"
+          :src="uri(sources, '/zone-egresses/:name/xds/:endpoints', {
+            name: route.params.zoneEgress,
+            endpoints: String(endpoints),
+          })"
           v-slot="{ data, refresh }"
         >
           <CodeBlock
@@ -31,6 +34,10 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
             <template #primary-actions>
+              <KCheckbox
+                v-model="endpoints"
+                label="Include Endpoints"
+              />
               <XAction
                 action="refresh"
                 appearance="primary"
@@ -47,5 +54,9 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
+import { sources } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
+const endpoints = ref<boolean>(false)
 </script>
