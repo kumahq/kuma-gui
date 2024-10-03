@@ -1,8 +1,6 @@
 import _124 from './kuma.io/latest_version'
 import _1 from './src/config'
-import _3 from './src/dataplanes'
 import _4 from './src/dataplanes/_overview'
-import _6 from './src/external-services'
 import _5 from './src/global-insight'
 import _13 from './src/mesh-insights'
 import _14 from './src/mesh-insights/_'
@@ -76,50 +74,27 @@ import _45 from './src/meshes/_/traffic-traces'
 import _46 from './src/meshes/_/traffic-traces/_'
 import _47 from './src/meshes/_/virtual-outbounds'
 import _2 from './src/policies'
-import _7 from './src/service-insights'
 import _126 from './src/zone-ingresses/_'
 import _48 from './src/zone-ingresses/_/_overview'
 import _9 from './src/zone-ingresses/_overview'
 import _127 from './src/zoneegresses/_'
 import _49 from './src/zoneegresses/_/_overview'
+import _153 from './src/zoneegresses/_/clusters'
+import _152 from './src/zoneegresses/_/stats'
 import _149 from './src/zoneegresses/_/xds'
 import _10 from './src/zoneegresses/_overview'
+import _151 from './src/zoneingresses/_/clusters'
+import _150 from './src/zoneingresses/_/stats'
 import _148 from './src/zoneingresses/_/xds'
 import _8 from './src/zones'
-import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
 import type { FS } from '@/test-support'
 
 export const fs: FS = {
-  'https://kuma.io/latest_version': _124,
-  '/config': _1,
-  '/policies': _2,
-  '/dataplanes': _3,
-  '/dataplanes/_overview': _4,
-  '/global-insight': _5,
-  '/external-services': _6,
-  '/service-insights': _7,
-  '/zones': _8,
-  '/zones/_overview': _11,
-  '/zones/:name': _50,
-  '/zones/:name/_overview': _12,
-  '/zone-ingresses/_overview': _9,
-  '/zone-ingresses/:name': _126,
-  '/zone-ingresses/:name/_overview': _48,
-  '/zoneingresses/:name/xds': _148,
-  '/zoneegresses/_overview': _10,
-  '/zoneegresses/:name': _127,
-  '/zoneegresses/:name/_overview': _49,
-  '/zoneegresses/:name/xds': _149,
-  '/mesh-insights': _13,
-  '/mesh-insights/:mesh': _14,
-  '/meshes': _15,
-  '/meshes/:mesh': _16,
-  '/meshes/:mesh/circuit-breakers': _17,
-  '/meshes/:mesh/circuit-breakers/:name': _18,
-  '/meshes/:mesh/circuit-breakers/:name/_resources/dataplanes': _125,
-  '/meshes/:mesh/dataplanes/_overview': _21,
+  // static/testing
+  '/meshes/:mesh/meshgateways/test-meshgateway': _134,
+  '/meshes/:mesh/meshgateways/test-meshgateway/_rules': _135,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_overview': _228,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/stats': _229,
   '/meshes/:mesh/dataplanes/default-gateway-instance-1-86cbb55644-6rxhg.kuma-demo/_rules': _230,
@@ -136,6 +111,36 @@ export const fs: FS = {
   '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/stats': _629,
   '/meshes/:mesh/dataplanes/grpc-service-75b4ccdfd5-z2jmp.kuma-demo/_rules': _630,
   '/meshes/:mesh/dataplanes/test-dataplane/_rules': _129,
+  ///
+  // stats
+  'https://kuma.io/latest_version': _124,
+  '/config': _1,
+  '/policies': _2,
+  '/global-insight': _5,
+  // onboarding
+  '/dataplanes/_overview': _4,
+  // zones
+  '/zones': _8,
+  '/zones/_overview': _11,
+  '/zones/:name/_overview': _12,
+  '/zone-ingresses/_overview': _9,
+  '/zone-ingresses/:name/_overview': _48,
+  '/zone-ingresses/:name': _126,
+  '/zoneingresses/:name/xds': _148,
+  '/zoneingresses/:name/stats': _150,
+  '/zoneingresses/:name/clusters': _151,
+  '/zoneegresses/_overview': _10,
+  '/zoneegresses/:name': _127,
+  '/zoneegresses/:name/_overview': _49,
+  '/zoneegresses/:name/xds': _149,
+  '/zoneegresses/:name/stats': _152,
+  '/zoneegresses/:name/clusters': _151,
+  // meshes
+  '/mesh-insights': _13,
+  '/mesh-insights/:mesh': _14,
+  '/meshes': _15,
+  '/meshes/:mesh': _16,
+  '/meshes/:mesh/dataplanes/_overview': _21,
   '/meshes/:mesh/dataplanes/:name': _19,
   '/meshes/:mesh/dataplanes/:name/_overview': _22,
   '/meshes/:mesh/dataplanes/:name/_rules': _128,
@@ -143,22 +148,9 @@ export const fs: FS = {
   '/meshes/:mesh/dataplanes/:name/xds': _120,
   '/meshes/:mesh/dataplanes/:name/stats': _121,
   '/meshes/:mesh/dataplanes/:name/clusters': _122,
-  '/meshes/:mesh/external-services': _23,
-  '/meshes/:mesh/external-services/:name': _24,
-  '/meshes/:mesh/service-insights': _25,
-  '/meshes/:mesh/service-insights/:name': _26,
-  '/meshes/:mesh/fault-injections': _27,
-  '/meshes/:mesh/fault-injections/:name': _28,
-  '/meshes/:mesh/health-checks': _29,
-  '/meshes/:mesh/health-checks/:name': _30,
-  '/meshes/:mesh/meshfaultinjections': _52,
-  '/meshes/:mesh/meshfaultinjections/:name': _53,
-  '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
   '/meshes/:mesh/meshgatewayroutes': _31,
   '/meshes/:mesh/meshgatewayroutes/:name': _32,
   '/meshes/:mesh/meshgateways': _33,
-  '/meshes/:mesh/meshgateways/test-meshgateway': _134,
-  '/meshes/:mesh/meshgateways/test-meshgateway/_rules': _135,
   '/meshes/:mesh/meshgateways/:name': _34,
   '/meshes/:mesh/meshgateways/:name/_resources/dataplanes': _130,
   '/meshes/:mesh/meshgateways/:name/_rules': _131,
@@ -170,6 +162,23 @@ export const fs: FS = {
   '/meshes/:mesh/meshexternalservices/:name': _139,
   '/meshes/:mesh/meshhttproutes': _132,
   '/meshes/:mesh/meshhttproutes/:name': _133,
+  // policies
+  '/meshes/:mesh/meshfaultinjections': _52,
+  '/meshes/:mesh/meshfaultinjections/:name': _53,
+  '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
+  // legacy mesh
+  '/meshes/:mesh/service-insights': _25,
+  '/meshes/:mesh/service-insights/:name': _26,
+  '/meshes/:mesh/external-services': _23,
+  '/meshes/:mesh/external-services/:name': _24,
+  // legacy policies
+  '/meshes/:mesh/circuit-breakers': _17,
+  '/meshes/:mesh/circuit-breakers/:name': _18,
+  '/meshes/:mesh/circuit-breakers/:name/_resources/dataplanes': _125,
+  '/meshes/:mesh/fault-injections': _27,
+  '/meshes/:mesh/fault-injections/:name': _28,
+  '/meshes/:mesh/health-checks': _29,
+  '/meshes/:mesh/health-checks/:name': _30,
   '/meshes/:mesh/proxytemplates': _35,
   '/meshes/:mesh/proxytemplates/:name': _36,
   '/meshes/:mesh/rate-limits': _37,
@@ -183,4 +192,5 @@ export const fs: FS = {
   '/meshes/:mesh/traffic-traces': _45,
   '/meshes/:mesh/traffic-traces/:name': _46,
   '/meshes/:mesh/virtual-outbounds': _47,
+
 }
