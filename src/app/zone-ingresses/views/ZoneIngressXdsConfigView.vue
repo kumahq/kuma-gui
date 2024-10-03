@@ -6,6 +6,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      includeEds: false,
     }"
     v-slot="{ route, t, uri }"
   >
@@ -18,7 +19,7 @@
         <DataLoader
           :src="uri(sources, '/zone-ingresses/:name/xds/:endpoints', {
             name: route.params.zoneIngress,
-            endpoints: String(endpoints),
+            endpoints: String(route.params.includeEds),
           })"
           v-slot="{ data, refresh }"
         >
@@ -35,7 +36,7 @@
           >
             <template #primary-actions>
               <KCheckbox
-                v-model="endpoints"
+                v-model="route.params.includeEds"
                 label="Include Endpoints"
               />
               <XAction
@@ -54,9 +55,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
 import { sources } from '../sources'
 import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-const endpoints = ref<boolean>(false)
 </script>
