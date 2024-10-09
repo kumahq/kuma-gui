@@ -119,7 +119,6 @@ function getRowAttributes(row: Row): Record<string, string> {
 
   return attributes
 }
-
 const click = (e: MouseEvent) => {
   const $tr = (e.target as HTMLElement).closest('tr')
   if ($tr) {
@@ -129,7 +128,8 @@ const click = (e: MouseEvent) => {
       }
       return prev
     }, null)
-    if ($a !== null && $a.closest('tr, li') === $tr) {
+    if ((window.getSelection()?.isCollapsed ?? true) && $a !== null && $a.closest('tr, li') === $tr) {
+      e.preventDefault()
       $a.click()
     }
   }

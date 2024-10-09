@@ -32,7 +32,7 @@ onClickOutside(
   slideOutRef,
   useThrottleFn((event: PointerEvent) => {
     const $el = event.target as HTMLElement
-    if (event.isTrusted && $el.nodeName.toLowerCase() !== 'a') {
+    if ((window.getSelection()?.isCollapsed ?? true) && !event.defaultPrevented && event.isTrusted && $el.nodeName.toLowerCase() !== 'a') {
       emit('close')
     }
   }, 1, true, false),
