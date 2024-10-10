@@ -135,7 +135,7 @@
                     </template>
 
                     <template #zone="{ row }">
-                      <RouterLink
+                      <XAction
                         v-if="row.zone"
                         :to="{
                           name: 'zone-cp-detail-view',
@@ -145,7 +145,7 @@
                         }"
                       >
                         {{ row.zone }}
-                      </RouterLink>
+                      </XAction>
 
                       <template v-else>
                         {{ t('common.collection.none') }}
