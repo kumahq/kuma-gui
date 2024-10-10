@@ -65,6 +65,8 @@ import {
   createTitleSetter,
   beforePaint,
 } from '../../utilities'
+import DataSink from '../data-source/DataSink.vue'
+import DataSource from '../data-source/DataSource.vue'
 import { useUri } from '@/app/application/services/data-source'
 import { sources } from '@/app/me/sources'
 import type { RouteRecordRaw } from 'vue-router'
@@ -118,7 +120,7 @@ class UniqueId {
 }
 const name = computed(() => props.name)
 
-const submit = ref(() => undefined)
+const submit = ref((_args: any) => {})
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<Symbol, string>()
 const attributes = new Map<Symbol, SupportedAttrs>()
