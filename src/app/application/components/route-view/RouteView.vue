@@ -5,7 +5,7 @@
     :data-testid="name"
   >
     <div
-      v-if="!hasParent"
+      v-if="!hasRoot"
       id="application-route-announcer"
       ref="title"
       class="route-view-title visually-hidden"
@@ -46,6 +46,7 @@
           back: routerBack,
           children,
           child,
+          from,
         }"
       />
     </DataSource>
@@ -69,10 +70,12 @@ import DataSink from '../data-source/DataSink.vue'
 import DataSource from '../data-source/DataSource.vue'
 import { useUri } from '@/app/application/services/data-source'
 import { sources } from '@/app/me/sources'
-import type { RouteRecordRaw } from 'vue-router'
+import type { Ref } from 'vue'
+import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
 
 export type RouteView = {
   name: string
+  from: Ref
   addTitle: (item: string, sym: Symbol) => void
   removeTitle: (sym: Symbol) => void
   addAttrs: (item: Partial<Record<string, string>>, sym: Symbol) => void
@@ -118,12 +121,13 @@ class UniqueId {
     return uniqueId(props.name)
   }
 }
-const name = computed(() => props.name)
 
+const name = computed(() => props.name)
 const submit = ref((_args: any) => {})
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<Symbol, string>()
 const attributes = new Map<Symbol, SupportedAttrs>()
+const from = ref<RouteLocationNormalizedLoaded | undefined>()
 
 const joinTitle = (titles: string[]) => {
   return titles.reverse().concat(t('components.route-view.title', { name: t('common.product.name') })).join(' | ')
@@ -139,6 +143,7 @@ const child = () => {
 
 const routeView = {
   name: props.name,
+  from,
   addTitle: (item: string, sym: Symbol) => {
     const $title = title.value
     if ($title) {
@@ -238,22 +243,36 @@ const routerBack = (...args: RouteReplaceParams) => {
   routeReplace(...args)
 }
 
-const hasParent: RouteView | undefined = inject(ROUTE_VIEW_ROOT, undefined)
-if (!hasParent) {
+const hasRoot: RouteView | undefined = inject(ROUTE_VIEW_ROOT, undefined)
+if (!hasRoot) {
   // use the default title if we are the topmost RouteView
   setTitle(t('components.route-view.title', { name: t('common.product.name') }))
+  // listen for to our navigations so we can set route.from
+  router.beforeEach((_to, f) => {
+    from.value = f
+    return true
+  })
+  // add the root so all other RouteView are marked as children
   provide(ROUTE_VIEW_ROOT, routeView)
 }
+// add RouteTitle's parent
 provide(ROUTE_VIEW_PARENT, routeView)
-const parent: RouteView = hasParent || routeView
+//
+const root: RouteView = hasRoot || routeView
 
 watch(() => props.attrs, (attrs) => {
   if (Object.keys(attrs).length > 0) {
-    parent.addAttrs(attrs, sym)
+    root.addAttrs(attrs, sym)
   }
 }, { immediate: true })
 
+if (hasRoot) {
+  watch(() => root.from, (val) => {
+    from.value = val.value
+  }, { immediate: true })
+}
+
 onBeforeUnmount(() => {
-  parent.removeAttrs(sym)
+  root.removeAttrs(sym)
 })
 </script>
