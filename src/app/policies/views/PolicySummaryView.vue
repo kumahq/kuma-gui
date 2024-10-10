@@ -17,12 +17,16 @@
       :find="true"
     >
       <template #empty>
-        <EmptyBlock>
+        <XEmptyState>
           <template #title>
-            {{ t('common.collection.summary.empty_title', { type: props.policyType.name }) }}
+            <h2>
+              {{ t('common.collection.summary.empty_title', { type: props.policyType.name }) }}
+            </h2>
           </template>
-          <p>{{ t('common.collection.summary.empty_message', { type: props.policyType.name }) }}</p>
-        </EmptyBlock>
+          <p>
+            {{ t('common.collection.summary.empty_message', { type: props.policyType.name }) }}
+          </p>
+        </XEmptyState>
       </template>
       <template
         #default="{ items: policies }"
@@ -89,7 +93,6 @@
 import PolicySummary from '../components/PolicySummary.vue'
 import type { Policy, PolicyType } from '../data'
 import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 
 const props = defineProps<{
   items: Policy[]

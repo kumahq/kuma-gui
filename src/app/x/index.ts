@@ -6,6 +6,7 @@ import XBadge from './components/x-badge/XBadge.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
+import XEmptyState from './components/x-empty-state/XEmptyState.vue'
 import XIcon from './components/x-icon/XIcon.vue'
 import XInput from './components/x-input/XInput.vue'
 import XPrompt from './components/x-prompt/XPrompt.vue'
@@ -30,6 +31,7 @@ declare module 'vue' {
     XBadge: typeof KBadge
     XCopyButton: typeof XCopyButton
     XBreadcrumbs: typeof XBreadcrumbs
+    XEmptyState: typeof XEmptyState
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XSelect: typeof XSelect
@@ -65,6 +67,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XBreadcrumbs', XBreadcrumbs],
           ['XCard', KCard],
           ['XCopyButton', XCopyButton],
+          ['XEmptyState', XEmptyState],
           ['XIcon', XIcon],
           ['XInput', XInput],
           ['XPrompt', XPrompt],

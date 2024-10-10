@@ -12,13 +12,16 @@
       :find="true"
     >
       <template #empty>
-        <EmptyBlock>
+        <XEmptyState>
           <template #title>
-            {{ t('common.collection.summary.empty_title', { type: 'ZoneIngress' }) }}
+            <h2>
+              {{ t('common.collection.summary.empty_title', { type: 'ZoneIngress' }) }}
+            </h2>
           </template>
-
-          <p>{{ t('common.collection.summary.empty_message', { type: 'ZoneIngress' }) }}</p>
-        </EmptyBlock>
+          <p>
+            {{ t('common.collection.summary.empty_message', { type: 'ZoneIngress' }) }}
+          </p>
+        </XEmptyState>
       </template>
       <template
         #default="{ items: proxies }"
@@ -130,7 +133,6 @@
 <script lang="ts" setup>
 import type { ZoneIngressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 
