@@ -43,7 +43,7 @@ jobs:
       SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
       BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
     steps:
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           ref: ${{ env.BRANCH }}
 
@@ -74,7 +74,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: "kuma-gui,kuma"
 
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
         with:
           # This needs to be a token that grants read access to `HOST_REPOSITORY`. If that repository is private, it needs general access to the `repo` scope which grants access to read private repositories. Otherwise, you will run into an error telling you that the checkout actions can’t determine the repository’s default branch. This is on account of a lack of access not because it can’t determine the default branch.
           token: ${{ steps.github-app-token.outputs.token }}
