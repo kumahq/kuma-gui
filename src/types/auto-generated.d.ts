@@ -2927,7 +2927,9 @@ export interface components {
         };
         ProxyRule: {
             /** @description The actual conf generated */
-            conf: Record<string, never>;
+            conf: {
+                [key: string]: unknown;
+            };
             origin: components["schemas"]["Meta"][];
         };
         /** @description A matcher to select which traffic this conf applies to */
@@ -2948,7 +2950,9 @@ export interface components {
         Rule: {
             matchers: components["schemas"]["RuleMatcher"][];
             /** @description The actual conf generated */
-            conf: Record<string, never>;
+            conf: {
+                [key: string]: unknown;
+            };
             origin: components["schemas"]["Meta"][];
         };
         ResourceRuleOrigin: {
@@ -2960,12 +2964,16 @@ export interface components {
             resourceMeta: components["schemas"]["Meta"];
             resourceSectionName?: string;
             /** @description The actual conf generated */
-            conf: Record<string, never>;
+            conf: {
+                [key: string]: unknown;
+            }[];
             /** @description The list of policies that contributed to the 'conf'. The order is important as it reflects in what order confs were merged to get the resulting 'conf'. */
             origin: components["schemas"]["ResourceRuleOrigin"][];
         };
         Inbound: {
-            tags: Record<string, never>;
+            tags: {
+                [key: string]: string;
+            };
             port: number;
         };
         FromRule: {
@@ -6452,7 +6460,6 @@ export interface components {
                     default?: {
                         /**
                          * @description Mode defines the behavior of inbound listeners with regard to traffic encryption.
-                         *     Default: Strict.
                          * @enum {string}
                          */
                         mode?: "Permissive" | "Strict";
@@ -6890,12 +6897,12 @@ export interface components {
                 /** @description Endpoints defines a list of destinations to send traffic to. */
                 endpoints?: {
                     /**
-                     * @description Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip` and `unix` sockets.
-                     * @example unix:///tmp/example.sock
+                     * @description Address defines an address to which a user want to send a request. Is possible to provide `domain`, `ip`.
+                     * @example example.com
                      */
                     address: string;
                     /** @description Port of the endpoint */
-                    port?: number;
+                    port: number;
                 }[];
                 /** @description Extension struct for a plugin configuration, in the presence of an extension `endpoints` and `tls` are not required anymore - it's up to the extension to validate them independently. */
                 extension?: {
@@ -7085,7 +7092,6 @@ export interface components {
                     name?: string;
                     /** Format: int32 */
                     port: number;
-                    targetPort?: number | string;
                 }[];
                 /** @description Selector is a way to select multiple MeshServices */
                 selector: {

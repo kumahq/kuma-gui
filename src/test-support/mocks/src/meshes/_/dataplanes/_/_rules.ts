@@ -1,5 +1,6 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import type { InspectBaseRule, InspectRulesForDataplane } from '@/types/index.d'
+import type { components } from '@/types/auto-generated.d'
+type InspectRules = components['schemas']['InspectRules']
 
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const mesh = req.params.mesh as string
@@ -14,54 +15,95 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     protocol: fake.kuma.protocol(),
   }))
   //
-
   fake.kuma.seed()
+  const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const hasProxyRuleOverride = env('KUMA_DATAPLANE_PROXY_RULE_ENABLED', '')
   const hasProxyRule = hasProxyRuleOverride !== '' ? hasProxyRuleOverride === 'true' : fake.datatype.boolean()
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const matcherCount = parseInt(env('KUMA_RULE_MATCHER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
-  const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
-  const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 0, max: 3 })}`))
+  const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const toResourceRuleCount = fake.number.int({ min: 1, max: 3 })
   const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+
+  const parts = String(name).split('.')
+  const displayName = parts.slice(0, -1).join('.')
+  const nspace = parts.pop()
 
   return {
     headers: {},
     body: {
+      httpMatches: [],
       resource: {
         type: 'Dataplane',
         mesh,
         name,
+        labels: {
+          'kuma.io/display-name': displayName,
+          'kuma.io/origin': fake.kuma.origin(),
+          'kuma.io/zone': fake.hacker.noun(),
+          ...(k8s
+            ? {
+              'k8s.kuma.io/namespace': nspace,
+            }
+            : {}),
+        },
       },
       rules: [
-        ...(hasProxyRule
-          ? [{
-            type: 'MeshProxyPatch',
-            proxyRule: {
-              conf: {
-                appendModifications: [
-                  {
-                    cluster: {
-                      operation: 'Add',
-                      value: 'name: test-cluster\nconnectTimeout: 5s\ntype: STATIC',
-                    },
-                  },
-                ],
-              },
-              origin: [
-                {
-                  mesh: 'default',
-                  name: 'mpp-on-gateway',
-                  type: 'MeshProxyPatch',
-                },
-              ],
-            },
-          }]
-          : []),
         ...Array.from({ length: ruleCount }).map(() => {
-          const type = fake.helpers.arrayElement(['MeshHTTPRoute', 'MeshTimeout'])
-
           return {
-            type,
+            type: fake.kuma.policyName(),
+            toResourceRules: Array.from({ length: toResourceRuleCount }).map(() => {
+              const clusterName = env('KUMA_CLUSTER_NAME', `${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`)
+              const [mesh, service, nspace, zone] = clusterName.split('_')
+
+              return {
+                resourceMeta: {
+                  type: 'MeshService',
+                  mesh,
+                  name,
+                  labels: {
+                    'kuma.io/display-name': service,
+                    'kuma.io/origin': fake.kuma.origin(),
+                    'kuma.io/zone': zone,
+                    ...(k8s
+                      ? {
+                        'k8s.kuma.io/namespace': nspace,
+                      }
+                      : {}),
+
+                  },
+                },
+                resourceSectionName: '',
+                origin: Array.from({ length: fake.number.int({ min: 1, max: 3 }) }).map(() => {
+                  const displayName = fake.hacker.noun()
+                  const nspace = fake.k8s.namespace()
+                  const id = `${name}.${nspace}`
+                  return {
+                    resourceMeta: {
+                      type: fake.kuma.policyName(),
+                      mesh,
+                      name: id,
+                      labels: {
+                        'kuma.io/display-name': displayName,
+                        'kuma.io/origin': fake.kuma.origin(),
+                        'kuma.io/zone': fake.hacker.noun(),
+                        ...(k8s
+                          ? {
+                            'k8s.kuma.io/namespace': nspace,
+                          }
+                          : {}),
+                      },
+                    },
+                  }
+                }),
+                conf: [{
+                  http: {
+                    requestTimeout: '15s',
+                  },
+                }],
+              }
+            }),
             fromRules: Array.from({ length: fromRuleCount }).map(() => {
               return {
                 inbound: {
@@ -79,7 +121,8 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                       {
                         mesh,
                         name: 'the-http-route',
-                        type,
+                        type: fake.kuma.policyName(),
+                        labels: {},
                       },
                     ],
                     conf: {
@@ -104,7 +147,8 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                   {
                     mesh,
                     name: 'the-other-http-route',
-                    type,
+                    type: fake.kuma.policyName(),
+                    labels: {},
                   },
                 ],
                 conf: {
@@ -132,11 +176,27 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                     },
                   ],
                 },
-              } satisfies InspectBaseRule
+              }
             }),
           }
         }),
+        ...(hasProxyRule
+          ? [{
+            type: 'MeshProxyPatch',
+            proxyRule: {
+              conf: {},
+              origin: [
+                {
+                  type: 'MeshProxyPatch',
+                  mesh: 'default',
+                  name: 'mpp-on-gateway',
+                  labels: {},
+                },
+              ],
+            },
+          }]
+          : []),
       ],
-    } satisfies InspectRulesForDataplane,
+    } satisfies InspectRules,
   }
 }
