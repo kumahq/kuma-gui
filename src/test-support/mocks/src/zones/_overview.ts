@@ -15,7 +15,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const shouldHaveZoneInsight = subscriptionCount !== 0 || fake.datatype.boolean()
 
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = i === 0 ? 'zone-0' : `${fake.hacker.noun()}-${id}`
 
         return {
           type: 'ZoneOverview',
