@@ -1,4 +1,4 @@
-# create-gui-pr.yaml is dependant on this name being "Tests"
+# create-gui-pr.yaml is dependent on this name being "Tests"
 name: 'Tests'
 
 # Ensures that only one workflow is run per branch at a time.
