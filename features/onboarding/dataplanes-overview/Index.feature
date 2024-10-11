@@ -38,8 +38,15 @@ Feature: onboarding / dataplanes-overview / index
   Scenario: UI updates in response to Dataplanes not being offline anymore
     Given the environment
       """
-      KUMA_DATAPLANE_COUNT: 1
+      KUMA_DATAPLANE_COUNT: 0
       KUMA_DATAPLANEINBOUND_COUNT: 0
+      KUMA_SUBSCRIPTION_COUNT: 0
+      """
+    When I visit the "/onboarding/dataplanes-overview" URL
+    Then the "$state-waiting" element exists
+    Then the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
       KUMA_SUBSCRIPTION_COUNT: 1
       """
     And the URL "/dataplanes/_overview" responds with
@@ -52,8 +59,6 @@ Feature: onboarding / dataplanes-overview / index
                 - connectTime: 2021-02-17T07:33:36.412683Z
                   disconnectTime: 2021-02-17T07:33:36.412683Z
       """
-    When I visit the "/onboarding/dataplanes-overview" URL
-    Then the "$state-waiting" element exists
     And the "$dataplanes-table" element contains "dataplane-test"
     And the "$dataplanes-table" element contains "offline"
     When the URL "/dataplanes/_overview" responds with
