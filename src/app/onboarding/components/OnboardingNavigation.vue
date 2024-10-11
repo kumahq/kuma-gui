@@ -1,38 +1,37 @@
 <template>
   <div class="onboarding-actions">
-    <KButton
+    <XAction
       v-if="props.previousStep"
       appearance="secondary"
       :to="{ name: props.previousStep }"
       data-testid="onboarding-previous-button"
     >
       Back
-    </KButton>
+    </XAction>
 
     <div class="button-list">
-      <KButton
+      <XAction
         v-if="props.showSkip"
         appearance="tertiary"
         data-testid="onboarding-skip-button"
         :to="{ name: 'home' }"
       >
         Skip setup
-      </KButton>
+      </XAction>
 
-      <KButton
+      <XAction
         :disabled="!props.shouldAllowNext"
         appearance="primary"
         :to="{ name: props.lastStep ? 'home' : props.nextStep }"
         data-testid="onboarding-next-button"
       >
         {{ props.nextStepTitle }}
-      </KButton>
+      </XAction>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { KButton } from '@kong/kongponents'
 
 const props = defineProps({
   shouldAllowNext: {

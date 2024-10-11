@@ -284,14 +284,13 @@
                     </template>
                   </KInputSwitch>
 
-                  <KButton
+                  <XAction
+                    action="refresh"
                     appearance="primary"
                     @click="refresh"
                   >
-                    <RefreshIcon />
-
                     Refresh
-                  </KButton>
+                  </XAction>
                 </template>
                 <template #title>
                   <GatewayIcon
@@ -351,7 +350,7 @@
                                 :service="outbound.$resourceMeta.type === '' ? name.replace(hash, '') : undefined"
                                 :direction="direction"
                               >
-                                <RouterLink
+                                <XAction
                                   data-action
                                   :to="{
                                     name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
@@ -359,12 +358,12 @@
                                       connection: name,
                                     },
                                     query: {
-                                      inactive: route.params.inactive ? null : undefined,
+                                      inactive: route.params.inactive,
                                     },
                                   }"
                                 >
                                   {{ name }}
-                                </RouterLink>
+                                </XAction>
                               </ConnectionCard>
                             </template>
                           </template>
@@ -516,7 +515,7 @@
 
 <script lang="ts" setup>
 import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon, ForwardIcon, GatewayIcon, RefreshIcon } from '@kong/icons'
+import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import type { DataplaneOverview, DataplaneInbound } from '../data'
