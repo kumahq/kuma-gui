@@ -13,7 +13,7 @@
         v-slot="{ data, error }: DataplaneOverviewCollectionSource"
       >
         <template
-          v-for="offline in [(data?.items ?? []).some(item => item.status !== 'online')]"
+          v-for="offline in [data?.items.length === 0 || data?.items.some(item => item.status !== 'online')]"
           :key="offline"
         >
           <OnboardingPage>
