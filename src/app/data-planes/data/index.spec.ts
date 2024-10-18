@@ -174,9 +174,7 @@ describe('DataplaneOverview', () => {
           }
           // take inbounds out of the equation
           if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: true,
-            }
+            item.dataplane.networking.inbound[0].state = 'Ready'
           }
           return item
         }, {
@@ -205,9 +203,7 @@ describe('DataplaneOverview', () => {
           }
           // take inbounds out of the equation
           if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: true,
-            }
+            item.dataplane.networking.inbound[0].state = 'Ready'
           }
           return item
         }, {
@@ -235,12 +231,8 @@ describe('DataplaneOverview', () => {
             })
           }
           if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: true,
-            }
-            item.dataplane.networking.inbound[1].health = {
-              ready: false,
-            }
+            item.dataplane.networking.inbound[0].state = 'Ready'
+            item.dataplane.networking.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -268,12 +260,8 @@ describe('DataplaneOverview', () => {
             })
           }
           if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: false,
-            }
-            item.dataplane.networking.inbound[1].health = {
-              ready: false,
-            }
+            item.dataplane.networking.inbound[0].state = 'NotReady'
+            item.dataplane.networking.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -301,12 +289,8 @@ describe('DataplaneOverview', () => {
             })
           }
           if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: false,
-            }
-            item.dataplane.networking.inbound[1].health = {
-              ready: false,
-            }
+            item.dataplane.networking.inbound[0].state = 'NotReady'
+            item.dataplane.networking.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -335,12 +319,8 @@ describe('DataplaneOverview', () => {
             })
           }
           if (item.dataplane.networking.inbound?.length === 2) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: false,
-            }
-            item.dataplane.networking.inbound[1].health = {
-              ready: false,
-            }
+            item.dataplane.networking.inbound[0].state = 'NotReady'
+            item.dataplane.networking.inbound[1].state = 'NotReady'
           }
           return item
         }, {
@@ -358,7 +338,7 @@ describe('DataplaneOverview', () => {
   })
   describe('dataplane.inbounds', () => {
     test(
-      "if health isn't set we default it to true",
+      "if state isn't set we default it to Ready",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (item.dataplane.networking.inbound?.length === 1) {
@@ -375,17 +355,15 @@ describe('DataplaneOverview', () => {
             KUMA_DATAPLANEINBOUND_COUNT: '1',
           },
         })
-        expect(actual.dataplane.networking.inbounds[0].health.ready).toStrictEqual(true)
+        expect(actual.dataplane.networking.inbounds[0].state).toStrictEqual('Ready')
       },
     )
     test(
-      "if health is set we don't overwrite it",
+      "if state is set we don't overwrite it",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (item.dataplane.networking.inbound?.length === 1) {
-            item.dataplane.networking.inbound[0].health = {
-              ready: false,
-            }
+            item.dataplane.networking.inbound[0].state = 'NotReady'
           }
           return item
         }, {
@@ -393,7 +371,7 @@ describe('DataplaneOverview', () => {
             KUMA_DATAPLANEINBOUND_COUNT: '1',
           },
         })
-        expect(actual.dataplane.networking.inbounds[0].health.ready).toStrictEqual(false)
+        expect(actual.dataplane.networking.inbounds[0].state).toStrictEqual('NotReady')
       },
     )
   })
