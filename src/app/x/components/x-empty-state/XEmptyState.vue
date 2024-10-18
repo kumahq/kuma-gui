@@ -16,6 +16,7 @@
       :key="title"
     >
       <KEmptyState
+        class="x-empty-state"
         data-testid="empty-block"
       >
         <template

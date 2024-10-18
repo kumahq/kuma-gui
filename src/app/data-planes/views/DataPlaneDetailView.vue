@@ -219,9 +219,11 @@
                         v-if="props.data.dataplaneType === 'delegated'"
                         #empty
                       >
-                        <EmptyBlock>
-                          This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway
-                        </EmptyBlock>
+                        <XEmptyState>
+                          <p>
+                            This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway.
+                          </p>
+                        </XEmptyState>
                       </template>
                       <template #default="{ items: _inbounds }">
                         <template
@@ -302,7 +304,7 @@
                   <span>Outbounds</span>
                 </template>
                 <!-- we don't want to show an error here -->
-                <!-- instead we show a No Data EmptyBlock -->
+                <!-- instead we show a No Data EmptyState -->
                 <template v-if="typeof error === 'undefined'">
                   <LoadingBlock v-if="typeof traffic === 'undefined'" />
                   <template
@@ -374,7 +376,7 @@
                   </template>
                 </template>
                 <template v-else>
-                  <EmptyBlock />
+                  <XEmptyState />
                 </template>
               </ConnectionTraffic>
             </div>
@@ -521,7 +523,6 @@ import { computed } from 'vue'
 
 import type { DataplaneOverview, DataplaneInbound } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
