@@ -211,7 +211,9 @@
                 </template>
 
                 <template #status="{ row }">
-                  <StatusBadge :status="row.status" />
+                  <StatusBadge
+                    :status="row.status"
+                  />
                 </template>
 
                 <template #warnings="{ row }">

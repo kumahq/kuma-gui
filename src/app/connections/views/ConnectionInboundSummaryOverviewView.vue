@@ -28,14 +28,14 @@
           layout="horizontal"
         >
           <template #title>
-            Status
+            {{ t('http.api.property.state') }}
           </template>
 
           <template #body>
             <KBadge
-              :appearance="props.data.health.ready ? 'success' : 'danger'"
+              :appearance="props.data.state === 'Ready' ? 'success' : 'danger'"
             >
-              {{ props.data.health.ready ? 'Healthy' : 'Unhealthy' }}
+              {{ t(`http.api.value.${props.data.state}`) }}
             </KBadge>
           </template>
         </DefinitionCard>

@@ -55,7 +55,7 @@
                       <DataCollection
                         v-if="props.data.dataplaneType === 'standard'"
                         :items="props.data.dataplane.networking.inbounds"
-                        :predicate="item => !item.health.ready"
+                        :predicate="item => item.state !== 'Ready'"
                         :empty="false"
                         v-slot="{ items : unhealthyInbounds }"
                       >
