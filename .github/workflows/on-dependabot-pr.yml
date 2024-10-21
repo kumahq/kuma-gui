@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   dependabot-labels:
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'kumahq/kuma-gui'
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: dependabot/fetch-metadata@v2
