@@ -64,6 +64,7 @@ export type MockEnvKeys = keyof {
   KUMA_ZONEINGRESS_COUNT: string
   KUMA_ZONE_COUNT: string
   KUMA_ZONE_NAME: string
+  KUMA_CLUSTER_NAME: string
   KUMA_MESH_COUNT: string
   KUMA_SUBSCRIPTION_COUNT: string
   KUMA_GLOBALSECRET_COUNT: string

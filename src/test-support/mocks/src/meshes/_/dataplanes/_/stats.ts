@@ -12,9 +12,18 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const address = fake.internet.ip()
 
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
-  const services = Array.from({ length: serviceCount }).map(() => `${fake.hacker.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`)
-
+  const services = Array.from({ length: serviceCount }).map(() => {
+    if (fake.datatype.boolean()) {
+      return `${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`
+    } else {
+      return `${fake.hacker.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
+    }
+  })
   fake.kuma.seed()
+  if (env('KUMA_CLUSTER_NAME', '').length > 0) {
+    services[0] = env('KUMA_CLUSTER_NAME', '')
+  }
+
   const minMax = {
     min: 0,
     max: fake.number.int({ max: 100000 }),
@@ -497,7 +506,8 @@ cluster.${service}.upstream_rq_timeout: 0
 cluster.${service}.upstream_rq_total: ${totalRequests}
 cluster.${service}.upstream_rq_tx_reset: 0
 cluster.${service}.version: 14158250831699139132
-cluster.${service}.warming_state: 0` }
+cluster.${service}.warming_state: 0`
+      }
       case 'tcp': {
         const totalConnections = fake.number.int(_minMax)
         const bytesReceived = fake.number.int(_minMax)
