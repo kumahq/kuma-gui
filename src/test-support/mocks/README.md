@@ -10,7 +10,7 @@ filesystem.
 The mocks are used in several environments:
 
 - During development in a browser via MockServiceWorker
-- During CLI testing in a CLI via MockServiceWorker
+- During CLI testing in a CLI via vitest
 - During browser testing in a browser via Cypress
 - ...potentially more
 
