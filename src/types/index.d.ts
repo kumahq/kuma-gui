@@ -299,9 +299,7 @@ export type DataplaneInbound = {
   servicePort?: number
   serviceAddress?: string
   tags: ServiceTags
-  health?: {
-    ready: boolean
-  }
+  state?: 'Ready' | 'NotReady' | 'Ignored'
 }
 
 export type DataplaneOutbound = {

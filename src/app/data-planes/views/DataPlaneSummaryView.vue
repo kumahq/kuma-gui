@@ -73,7 +73,7 @@
                       <DataCollection
                         v-if="item.dataplaneType === 'standard'"
                         :items="item.dataplane.networking.inbounds"
-                        :predicate="item => !item.health.ready"
+                        :predicate="item => item.state !== 'Ready'"
                         :empty="false"
                         v-slot="{ items : inbounds }"
                       >
@@ -236,22 +236,22 @@
                           layout="horizontal"
                         >
                           <template #title>
-                            {{ t('http.api.property.status') }}
+                            {{ t('http.api.property.state') }}
                           </template>
 
                           <template #body>
                             <KBadge
-                              v-if="inbound.health.ready"
+                              v-if="inbound.state === 'Ready'"
                               appearance="success"
                             >
-                              {{ t('data-planes.routes.item.health.ready') }}
+                              {{ t(`http.api.value.${inbound.state}`) }}
                             </KBadge>
 
                             <KBadge
                               v-else
                               appearance="danger"
                             >
-                              {{ t('data-planes.routes.item.health.not_ready') }}
+                              {{ t(`http.api.value.${inbound.state}`) }}
                             </KBadge>
                           </template>
                         </DefinitionCard>
