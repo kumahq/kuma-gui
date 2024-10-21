@@ -33,7 +33,8 @@
   },
   "include": [
     "**/*.ts",
-    "**/*.vue"
+    "**/*.vue",
+    ".**/*.ts"
   ],
   "exclude": [
     "node_modules"

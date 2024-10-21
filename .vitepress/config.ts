@@ -8,6 +8,7 @@ import matter from 'gray-matter'
 import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
 import { defineConfig as viteConfig } from 'vite'
+// @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
 
 import { hoistUseStatements } from '../dev-utilities/hoistUseStatements'
@@ -104,7 +105,7 @@ export default defineConfig({
         return {
           collapsed: key !== 'Overview',
           text: key,
-          items: value.map(item => {
+          items: value?.map(item => {
             const items = get(`${path.dirname(item.path)}/*/**/README.md`)
             return {
               collapsed: true,
@@ -117,7 +118,7 @@ export default defineConfig({
                 }
               })
             }
-          })
+          }) ?? []
         }
       }),
       {
