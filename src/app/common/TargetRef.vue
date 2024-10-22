@@ -4,14 +4,14 @@
       v-if="routeTarget !== null"
       :to="routeTarget"
     >
-      <KBadge>
+      <XBadge>
         <slot />
-      </KBadge>
+      </XBadge>
     </RouterLink>
 
-    <KBadge v-else>
+    <XBadge v-else>
       <slot />
-    </KBadge>
+    </XBadge>
 
     <TagList
       v-if="props.targetRef.kind === 'MeshServiceSubset' && props.targetRef.tags"

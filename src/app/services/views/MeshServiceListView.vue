@@ -99,11 +99,11 @@
                 <template
                   #state="{ row: item }"
                 >
-                  <KBadge
+                  <XBadge
                     :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
                   >
                     {{ item.spec.state }}
-                  </KBadge>
+                  </XBadge>
                 </template>
                 <template
                   #status="{ row: item }"

@@ -88,7 +88,7 @@
 
                 <template #config="{ row }">
                   <template v-if="Object.keys(row.raw).length > 0">
-                    <CodeBlock
+                    <XCodeBlock
                       :code="YAML.stringify(row.raw)"
                       language="yaml"
                       :show-copy-button="false"
@@ -113,7 +113,6 @@ import { useI18n, YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'

@@ -25,7 +25,7 @@
           :predicate="item => item.startsWith(`${props.data.service}::`)"
           v-slot="{ items: lines }"
         >
-          <CodeBlock
+          <XCodeBlock
             language="json"
             :code="lines.map(item => item.replace(`${props.data.service}::`, '')).join('\n')"
             is-searchable
@@ -46,7 +46,7 @@
                 Refresh
               </KButton>
             </template>
-          </CodeBlock>
+          </XCodeBlock>
         </DataCollection>
       </DataLoader>
     </AppView>
@@ -55,7 +55,6 @@
 <script lang="ts" setup>
 import { RefreshIcon } from '@kong/icons'
 
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
 import type { ClustersDataSource } from '@/app/data-planes/sources'
 

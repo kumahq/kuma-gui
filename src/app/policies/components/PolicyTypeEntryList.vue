@@ -95,7 +95,7 @@
 
             <template #config="{ row }: { row: PolicyTypeEntryConnection, rowKey: number }">
               <template v-if="row.config">
-                <CodeBlock
+                <XCodeBlock
                   :code="YAML.stringify(row.config)"
                   language="yaml"
                   :show-copy-button="false"
@@ -118,7 +118,6 @@
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import type { PolicyType, PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'

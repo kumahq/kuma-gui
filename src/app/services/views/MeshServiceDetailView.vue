@@ -26,11 +26,11 @@
               </template>
 
               <template #body>
-                <KBadge
+                <XBadge
                   :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
                 >
                   {{ props.data.spec.state }}
-                </KBadge>
+                </XBadge>
               </template>
             </DefinitionCard>
             <DefinitionCard
@@ -98,13 +98,13 @@
                 #body
               >
                 <KTruncate>
-                  <KBadge
+                  <XBadge
                     v-for="(value, key) in data.spec.selector.dataplaneTags"
                     :key="`${key}:${value}`"
                     appearance="info"
                   >
                     {{ key }}:{{ value }}
-                  </KBadge>
+                  </XBadge>
                 </KTruncate>
               </template>
             </DefinitionCard>

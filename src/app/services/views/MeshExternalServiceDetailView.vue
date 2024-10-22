@@ -17,11 +17,15 @@
             <DefinitionCard
               v-if="props.data.namespace.length > 0"
             >
-              <template #title>
+              <template
+                #title
+              >
                 Namespace
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 {{ props.data.namespace }}
               </template>
             </DefinitionCard>
@@ -77,11 +81,11 @@
               <template
                 #body
               >
-                <KBadge
+                <XBadge
                   appearance="neutral"
                 >
                   {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                </KBadge>
+                </XBadge>
               </template>
             </DefinitionCard>
           </div>
@@ -115,8 +119,8 @@
 
 <script lang="ts" setup>
 import type { MeshExternalService } from '../data'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   data: MeshExternalService

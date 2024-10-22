@@ -19,7 +19,7 @@
           :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/clusters`"
           v-slot="{ data, refresh }"
         >
-          <CodeBlock
+          <XCodeBlock
             language="json"
             :code="data"
             is-searchable
@@ -39,13 +39,9 @@
                 Refresh
               </XAction>
             </template>
-          </CodeBlock>
+          </XCodeBlock>
         </DataLoader>
       </KCard>
     </AppView>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-</script>
