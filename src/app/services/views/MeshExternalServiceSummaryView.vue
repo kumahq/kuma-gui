@@ -47,11 +47,15 @@
                 v-if="item.namespace.length > 0"
                 layout="horizontal"
               >
-                <template #title>
+                <template
+                  #title
+                >
                   Namespace
                 </template>
 
-                <template #body>
+                <template
+                  #body
+                >
                   {{ item.namespace }}
                 </template>
               </DefinitionCard>
@@ -83,22 +87,16 @@
                 v-if="item.spec.match"
                 layout="horizontal"
               >
-                <template
-                  #title
-                >
+                <template #title>
                   Port
                 </template>
-                <template
-                  #body
-                >
+                <template #body>
                   <KumaPort
                     :port="item.spec.match"
                   />
                 </template>
               </DefinitionCard>
-              <DefinitionCard
-                layout="horizontal"
-              >
+              <DefinitionCard layout="horizontal">
                 <template
                   #title
                 >
@@ -107,11 +105,11 @@
                 <template
                   #body
                 >
-                  <KBadge
+                  <XBadge
                     appearance="neutral"
                   >
                     {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                  </KBadge>
+                  </XBadge>
                 </template>
               </DefinitionCard>
             </div>
@@ -153,9 +151,9 @@
 </template>
 
 <script lang="ts" setup>
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { MeshExternalService } from '@/app/services/data'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
   items: MeshExternalService[]
 }>()

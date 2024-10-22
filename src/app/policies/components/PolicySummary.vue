@@ -16,18 +16,18 @@
           </template>
 
           <template #body>
-            <KBadge
+            <XBadge
               v-if="props.policy.spec.targetRef"
               appearance="neutral"
             >
               {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
-            </KBadge>
-            <KBadge
+            </XBadge>
+            <XBadge
               v-else
               appearance="neutral"
             >
               Mesh
-            </KBadge>
+            </XBadge>
           </template>
         </DefinitionCard>
         <DefinitionCard

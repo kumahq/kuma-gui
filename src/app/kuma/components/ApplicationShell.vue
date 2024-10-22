@@ -30,7 +30,7 @@
               v-slot="{ data }"
             >
               <!-- make sure we have data but don't show errors or loaders -->
-              <KAlert
+              <XAlert
                 v-if="data && env('KUMA_VERSION') !== data.version"
                 class="upgrade-alert"
                 data-testid="upgrade-check"
@@ -48,7 +48,7 @@
                     Update
                   </KButton>
                 </div>
-              </KAlert>
+              </XAlert>
             </DataSource>
           </div>
         </slot>
@@ -60,7 +60,7 @@
           <div
             class="app-status app-status--mobile"
           >
-            <KPop
+            <XPop
               width="280"
             >
               <KButton
@@ -74,7 +74,7 @@
                   {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
                 </p>
               </template>
-            </KPop>
+            </XPop>
           </div>
 
           <p class="app-status app-status--desktop">
@@ -153,7 +153,7 @@
         <slot
           name="notifications"
         >
-          <KAlert
+          <XAlert
             v-if="!can('use state')"
             class="mb-4"
             appearance="warning"
@@ -164,7 +164,7 @@
                 v-html="t('common.warnings.GLOBAL_STORE_TYPE_MEMORY')"
               />
             </ul>
-          </KAlert>
+          </XAlert>
         </slot>
         <slot name="default" />
       </main>

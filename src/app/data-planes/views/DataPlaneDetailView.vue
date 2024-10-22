@@ -277,14 +277,14 @@
                   v-if="traffic"
                   #actions
                 >
-                  <KInputSwitch
+                  <XInputSwitch
                     v-model="route.params.inactive"
                     data-testid="dataplane-outbounds-inactive-toggle"
                   >
                     <template #label>
                       Show inactive
                     </template>
-                  </KInputSwitch>
+                  </XInputSwitch>
 
                   <KButton
                     appearance="primary"
@@ -489,14 +489,14 @@
             <template
               v-else
             >
-              <KAlert
+              <XAlert
                 class="mt-4"
                 appearance="warning"
               >
                 <div
                   v-html="t('data-planes.routes.item.mtls.disabled')"
                 />
-              </KAlert>
+              </XAlert>
             </template>
           </div>
 

@@ -23,9 +23,7 @@
         ]"
         :key="missingTLSPolicy"
       >
-        <AppView
-          :docs="t('meshes.href.docs')"
-        >
+        <AppView :docs="t('meshes.href.docs')">
           <template
             v-if="!props.mesh.mtlsBackend || missingTLSPolicy"
             #notifications
@@ -41,13 +39,11 @@
               />
             </ul>
           </template>
-          <div
-            class="stack"
-          >
+          <div class="stack">
             <AppAboutSection
-              :title="t('meshes.routes.item.subtitle', {name: props.mesh.name})"
-              :created="t('common.formats.datetime', {value: Date.parse(props.mesh.creationTime)})"
-              :modified="t('common.formats.datetime', {value: Date.parse(props.mesh.modificationTime)})"
+              :title="t('meshes.routes.item.subtitle', { name: props.mesh.name })"
+              :created="t('common.formats.datetime', { value: Date.parse(props.mesh.creationTime) })"
+              :modified="t('common.formats.datetime', { value: Date.parse(props.mesh.modificationTime) })"
             >
               <div class="columns">
                 <template
@@ -74,11 +70,11 @@
                       </template>
 
                       <template #body>
-                        <KBadge
+                        <XBadge
                           appearance="neutral"
                         >
                           {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
-                        </KBadge>
+                        </XBadge>
                       </template>
                     </DefinitionCard>
                   </template>
@@ -122,12 +118,12 @@
                     </template>
 
                     <template #body>
-                      <KBadge
+                      <XBadge
                         v-if="!props.mesh.mtlsBackend"
                         appearance="neutral"
                       >
                         {{ t('meshes.detail.disabled') }}
-                      </KBadge>
+                      </XBadge>
 
                       <template v-else>
                         {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
@@ -168,9 +164,9 @@ import { AppAboutSection } from '@kong-ui-public/app-layout'
 
 import type { Mesh } from '../data'
 import { sources } from '../sources'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   mesh: Mesh

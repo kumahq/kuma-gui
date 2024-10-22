@@ -19,7 +19,7 @@
           :error="allErrors[0]"
           :refresh="props.src !== '' ? refresh : () => {}"
         >
-          <!-- KAlert -->
+          <!-- XAlert -->
         </slot>
       </template>
       <slot

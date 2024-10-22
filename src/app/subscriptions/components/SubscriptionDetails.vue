@@ -1,6 +1,6 @@
 <template>
   <div class="stack">
-    <KAlert
+    <XAlert
       v-if="statuses.length === 0"
       appearance="info"
     >
@@ -9,7 +9,7 @@
       </template>
 
       {{ t('common.detail.subscriptions.no_stats', { id: props.subscription.id }) }}
-    </KAlert>
+    </XAlert>
 
     <template v-else>
       <div>
@@ -50,7 +50,6 @@
 
 <script lang="ts" setup>
 import { PortalIcon } from '@kong/icons'
-import { KAlert } from '@kong/kongponents'
 import { PropType, computed } from 'vue'
 
 import { useI18n } from '@/app/application'

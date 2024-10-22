@@ -72,9 +72,9 @@
 </template>
 
 <script lang="ts" setup>
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import PolicySummary from '@/app/policies/components/PolicySummary.vue'
 import { PolicySource } from '@/app/policies/sources'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>
 
 <style scoped>

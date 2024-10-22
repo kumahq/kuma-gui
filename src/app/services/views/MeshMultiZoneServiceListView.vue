@@ -87,13 +87,13 @@
                   #labels="{ row: item }"
                 >
                   <KTruncate>
-                    <KBadge
+                    <XBadge
                       v-for="(value, key) in item.spec.selector.meshService.matchLabels"
                       :key="`${key}:${value}`"
                       appearance="info"
                     >
                       {{ key }}:{{ value }}
-                    </KBadge>
+                    </XBadge>
                   </KTruncate>
                 </template>
                 <template #actions="{ row: item }">

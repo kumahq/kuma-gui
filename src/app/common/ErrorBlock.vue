@@ -27,30 +27,30 @@
         v-if="(error instanceof ApiError)"
         class="badge-list"
       >
-        <KBadge
+        <XBadge
           :appearance="props.appearance"
           data-testid="error-status"
         >
           {{ error.status }}
-        </KBadge>
+        </XBadge>
 
-        <KBadge
+        <XBadge
           v-if="error.type"
           appearance="neutral"
           data-testid="error-type"
           max-width="auto"
         >
           type: {{ error.type }}
-        </KBadge>
+        </XBadge>
 
-        <KBadge
+        <XBadge
           v-if="error.instance"
           appearance="neutral"
           data-testid="error-trace"
           max-width="auto"
         >
           trace: <TextWithCopyButton :text="error.instance" />
-        </KBadge>
+        </XBadge>
       </div>
 
       <div class="error-block-message mt-4">
@@ -81,7 +81,7 @@
     <template
       v-else
     >
-      <KAlert
+      <XAlert
         appearance="danger"
       >
         <div
@@ -110,7 +110,7 @@
             {{ error.message }}
           </p>
         </div>
-      </KAlert>
+      </XAlert>
     </template>
   </div>
 </template>

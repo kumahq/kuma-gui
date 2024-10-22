@@ -27,9 +27,11 @@
                 @click="triggerAction"
               >
                 <div class="listener-card-header">
-                  <KBadge appearance="info">
+                  <XBadge
+                    appearance="info"
+                  >
                     {{ t(`http.api.value.${listener.protocol}`) }}
-                  </KBadge>
+                  </XBadge>
 
                   <RouterLink
                     :to="{
@@ -106,7 +108,9 @@
                           {{ t('builtin-gateways.detail.type') }}:
                         </dt>
                         <dd>
-                          <KBadge>{{ toRule.type }}</KBadge>
+                          <XBadge>
+                            {{ toRule.type }}
+                          </XBadge>
                         </dd>
                       </div>
 
@@ -139,7 +143,7 @@
                         </dt>
                         <dd>
                           <div class="list">
-                            <KBadge
+                            <XBadge
                               v-for="(origin, originIndex) in toRule.origins"
                               :key="originIndex"
                             >
@@ -155,7 +159,7 @@
                               >
                                 {{ origin.name }}
                               </RouterLink>
-                            </KBadge>
+                            </XBadge>
                           </div>
                         </dd>
                       </div>

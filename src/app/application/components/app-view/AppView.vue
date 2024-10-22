@@ -51,12 +51,12 @@
       </header>
 
       <aside v-if="$slots.notifications">
-        <KAlert
+        <XAlert
           class="mb-4"
           appearance="warning"
         >
           <slot name="notifications" />
-        </KAlert>
+        </XAlert>
       </aside>
       <div class="stack">
         <slot

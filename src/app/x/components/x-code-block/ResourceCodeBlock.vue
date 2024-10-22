@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CodeBlock
+    <XCodeBlock
       language="yaml"
       :code="yamlUniversal"
       :is-searchable="props.isSearchable"
@@ -43,14 +43,13 @@
           </XCopyButton>
         </XDisclosure>
       </template>
-    </CodeBlock>
+    </XCodeBlock>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import CodeBlock from './CodeBlock.vue'
 import { useI18n, YAML } from '@/app/application'
 
 type Resolve = (data: Object) => void

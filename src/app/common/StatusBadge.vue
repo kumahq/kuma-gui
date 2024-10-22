@@ -1,13 +1,13 @@
 <template>
   <component :is="props.status === 'not_available' ? KTooltip : AnonymousComponent">
-    <KBadge
+    <XBadge
       class="status-badge"
       :appearance="BADGE_APPEARANCE[props.status]"
       max-width="auto"
       data-testid="status-badge"
     >
       {{ t(`http.api.value.${props.status}`) }}
-    </KBadge>
+    </XBadge>
     <template
       v-if="props.status === 'not_available'"
       #content

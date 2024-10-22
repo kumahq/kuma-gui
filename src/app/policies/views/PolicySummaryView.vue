@@ -92,7 +92,7 @@
 <script lang="ts" setup>
 import PolicySummary from '../components/PolicySummary.vue'
 import type { Policy, PolicyType } from '../data'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   items: Policy[]

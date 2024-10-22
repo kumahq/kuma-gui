@@ -25,7 +25,7 @@
           :predicate="item => item.includes(`.${route.params.connection}.`)"
           v-slot="{ items: lines }"
         >
-          <CodeBlock
+          <XCodeBlock
             language="json"
             :code="lines.map((item) => item.replace(`${route.params.connection}.`, '')).join('\n')"
             is-searchable
@@ -46,7 +46,7 @@
                 Refresh
               </KButton>
             </template>
-          </CodeBlock>
+          </XCodeBlock>
         </DataCollection>
       </DataLoader>
     </AppView>
@@ -56,7 +56,6 @@
 import { RefreshIcon } from '@kong/icons'
 
 import { StatsSource } from '../sources'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import type { DataplaneOverview } from '@/app/data-planes/data/'
 const props = defineProps<{
   dataplaneOverview: DataplaneOverview

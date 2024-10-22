@@ -24,11 +24,11 @@
             </template>
 
             <template #body>
-              <KBadge
+              <XBadge
                 appearance="info"
               >
                 {{ t(`http.api.value.${['grpc', 'http', 'tcp'].find(protocol => typeof props.data[protocol] !== 'undefined')}`) }}
-              </KBadge>
+              </XBadge>
             </template>
           </DefinitionCard>
           <div
@@ -123,7 +123,7 @@
                                       </DataCollection>
                                     </template>
                                   </DefinitionCard>
-                                  <CodeBlock
+                                  <XCodeBlock
                                     class="mt-2"
                                     :code="YAML.stringify(item.raw)"
                                     language="yaml"
@@ -233,7 +233,7 @@
                                         </dt>
                                         <dd class="mt-2">
                                           <div>
-                                            <CodeBlock
+                                            <XCodeBlock
                                               :code="YAML.stringify(item.raw)"
                                               language="yaml"
                                               :show-copy-button="false"
@@ -264,7 +264,6 @@
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { DataplaneOverview } from '@/app/data-planes/data/'

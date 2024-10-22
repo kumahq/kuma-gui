@@ -7,7 +7,7 @@
       :src="`/me/-onboarding-alert`"
       v-slot="{ submit }"
     >
-      <KAlert
+      <XAlert
         v-if="data?.closed !== true"
         appearance="success"
         dismissible
@@ -34,7 +34,7 @@
             {{ t('main-overview.detail.onboarding.get_started_link') }}
           </KButton>
         </div>
-      </KAlert>
+      </XAlert>
     </DataSink>
   </DataSource>
 </template>

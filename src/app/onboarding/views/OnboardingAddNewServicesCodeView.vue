@@ -29,7 +29,7 @@
             <template v-if="can('use kubernetes')">
               <p>To run execute the following command:</p>
 
-              <CodeBlock
+              <XCodeBlock
                 language="bash"
                 :code="t('onboarding.routes.add-services-code.k8s')"
               />
@@ -43,7 +43,7 @@
                 >the GitHub repository</a> for the demo application:
               </p>
 
-              <CodeBlock
+              <XCodeBlock
                 language="bash"
                 :code="`git clone ${t('onboarding.routes.add-services-code.repo')}`"
               />
@@ -106,7 +106,6 @@ import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 </script>
 

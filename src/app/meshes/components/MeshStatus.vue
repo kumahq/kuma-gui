@@ -35,12 +35,12 @@
           </template>
 
           <template #body>
-            <KBadge
+            <XBadge
               v-if="!props.mesh.mtlsBackend"
               appearance="neutral"
             >
               {{ t('meshes.detail.disabled') }}
-            </KBadge>
+            </XBadge>
 
             <template v-else>
               {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}

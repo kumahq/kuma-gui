@@ -30,7 +30,7 @@
           ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`))"
           v-slot="{ items: lines }"
         >
-          <CodeBlock
+          <XCodeBlock
             language="json"
             :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
             is-searchable
@@ -51,7 +51,7 @@
                 Refresh
               </KButton>
             </template>
-          </CodeBlock>
+          </XCodeBlock>
         </DataCollection>
       </DataLoader>
     </AppView>
@@ -61,7 +61,6 @@
 import { RefreshIcon } from '@kong/icons'
 
 import { StatsSource } from '../sources'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
 
 const props = defineProps<{

@@ -41,7 +41,7 @@
 
 <script lang="ts" setup>
 import type { MeshService } from '../data'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
   data: MeshService
 }>()

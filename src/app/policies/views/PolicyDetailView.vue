@@ -72,18 +72,18 @@
             </template>
 
             <template #body>
-              <KBadge
+              <XBadge
                 v-if="props.data.spec.targetRef"
                 appearance="neutral"
               >
                 {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
-              </KBadge>
-              <KBadge
+              </XBadge>
+              <XBadge
                 v-else
                 appearance="neutral"
               >
                 Mesh
-              </KBadge>
+              </XBadge>
             </template>
           </DefinitionCard>
         </div>

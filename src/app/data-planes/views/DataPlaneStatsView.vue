@@ -20,7 +20,7 @@
           :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
           v-slot="{ data: statsData, refresh }: StatsSource"
         >
-          <CodeBlock
+          <XCodeBlock
             language="json"
             :code="statsData!.raw"
             is-searchable
@@ -40,7 +40,7 @@
                 Refresh
               </KButton>
             </template>
-          </CodeBlock>
+          </XCodeBlock>
         </DataLoader>
       </KCard>
     </AppView>
@@ -52,7 +52,6 @@ import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import { RefreshIcon } from '@kong/icons'
 
 import type { DataplaneOverview } from '../sources'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import type { StatsSource } from '@/app/connections/sources'
 
 const props = defineProps<{

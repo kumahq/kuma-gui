@@ -31,7 +31,7 @@
           :src="uri(sources, `/config`, {})"
           v-slot="{ data }"
         >
-          <CodeBlock
+          <XCodeBlock
             data-testid="code-block-diagnostics"
             language="json"
             :code="JSON.stringify(data, null, 2)"
@@ -49,6 +49,5 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import { sources } from '@/app/control-planes/sources'
 </script>

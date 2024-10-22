@@ -9,7 +9,7 @@
         :tags="[{label: 'kuma.io/service', value: props.service}]"
       />
       <div class="title">
-        <KBadge
+        <XBadge
           class="protocol"
           :appearance="props.protocol === 'passthrough' ? 'success' : 'info'"
         >
@@ -20,7 +20,7 @@
               defaultMessage: t(`http.api.value.${props.protocol}`),
             },
           ) }}
-        </KBadge>
+        </XBadge>
         <slot name="default" />
       </div>
     </template>

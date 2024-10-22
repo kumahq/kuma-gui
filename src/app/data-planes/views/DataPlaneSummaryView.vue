@@ -240,19 +240,19 @@
                           </template>
 
                           <template #body>
-                            <KBadge
+                            <XBadge
                               v-if="inbound.state === 'Ready'"
                               appearance="success"
                             >
                               {{ t(`http.api.value.${inbound.state}`) }}
-                            </KBadge>
+                            </XBadge>
 
-                            <KBadge
+                            <XBadge
                               v-else
                               appearance="danger"
                             >
                               {{ t(`http.api.value.${inbound.state}`) }}
-                            </KBadge>
+                            </XBadge>
                           </template>
                         </DefinitionCard>
 

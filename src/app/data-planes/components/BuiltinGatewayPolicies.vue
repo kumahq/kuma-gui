@@ -81,12 +81,12 @@
                         v-if="routeEntry.origins.length > 0"
                         class="badge-list"
                       >
-                        <KBadge
+                        <XBadge
                           v-for="(policy, policyIndex) in routeEntry.origins"
                           :key="`${index}-${policyIndex}`"
                         >
                           {{ policy.type }}
-                        </KBadge>
+                        </XBadge>
                       </div>
                     </div>
                   </template>
