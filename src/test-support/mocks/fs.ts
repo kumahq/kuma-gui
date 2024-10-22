@@ -87,6 +87,7 @@ import _151 from './src/zoneingresses/_/clusters'
 import _150 from './src/zoneingresses/_/stats'
 import _148 from './src/zoneingresses/_/xds'
 import _8 from './src/zones'
+import _50 from './src/zones/_'
 import _12 from './src/zones/_/_overview'
 import _11 from './src/zones/_overview'
 import type { FS } from '@/test-support'
@@ -122,6 +123,7 @@ export const fs: FS = {
   // zones
   '/zones': _8,
   '/zones/_overview': _11,
+  '/zones/:name': _50,
   '/zones/:name/_overview': _12,
   '/zone-ingresses/_overview': _9,
   '/zone-ingresses/:name/_overview': _48,
