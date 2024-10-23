@@ -17,8 +17,27 @@
         :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}`"
         v-slot="{ data: meshGateway, error }: MeshGatewaySource"
       >
-        <div class="stack">
+        <div
+          class="stack"
+        >
           <KCard>
+            <search>
+              <FilterBar
+                class="data-plane-proxy-filter"
+                :placeholder="`name:dataplane-name`"
+                :query="route.params.s"
+                :fields="{
+                  name: { description: 'filter by name or parts of a name' },
+                  protocol: { description: 'filter by “kuma.io/protocol” value' },
+                  service: { description: 'filter by “kuma.io/service” value' },
+                  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                  ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
+                }"
+                @change="(e) => route.update({
+                  ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
+                })"
+              />
+            </search>
             <DataLoader
               :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/service-insight/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
               :data="[meshGateway]"
@@ -51,24 +70,6 @@
                     :is-selected-row="(row) => row.name === route.params.dataPlane"
                     @resize="me.set"
                   >
-                    <template #toolbar>
-                      <FilterBar
-                        class="data-plane-proxy-filter"
-                        :placeholder="`name:dataplane-name`"
-                        :query="route.params.s"
-                        :fields="{
-                          name: { description: 'filter by name or parts of a name' },
-                          protocol: { description: 'filter by “kuma.io/protocol” value' },
-                          service: { description: 'filter by “kuma.io/service” value' },
-                          tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                          ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                        }"
-                        @change="(e) => route.update({
-                          ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                        })"
-                      />
-                    </template>
-
                     <template #namespace="{ row }">
                       {{ row.namespace }}
                     </template>
@@ -208,6 +209,15 @@ import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/source
 </script>
 
 <style lang="scss" scoped>
+search {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: $kui-space-60;
+  margin-bottom: $kui-space-60;
+}
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;

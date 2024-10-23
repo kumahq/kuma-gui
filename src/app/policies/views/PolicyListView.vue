@@ -69,6 +69,22 @@
             </KCard>
 
             <KCard>
+              <search>
+                <form
+                  @submit.prevent
+                >
+                  <XInput
+                    placeholder="Filter by name..."
+                    type="search"
+                    appearance="search"
+                    :value="route.params.s"
+                    :debounce="1000"
+                    @change="(e) => route.update({
+                      s: e,
+                    })"
+                  />
+                </form>
+              </search>
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/policy-path/:path', {
                   mesh: route.params.mesh,
@@ -82,24 +98,6 @@
                 <template
                   #loadable="{ data }"
                 >
-                  <search
-                    v-if="(data?.items ?? { length: 0 }).length > 0 || (route.params.s.length > 0)"
-                  >
-                    <form
-                      @submit.prevent
-                    >
-                      <XInput
-                        placeholder="Filter by name..."
-                        type="search"
-                        appearance="search"
-                        :value="route.params.s"
-                        :debounce="1000"
-                        @change="(e) => route.update({
-                          s: e,
-                        })"
-                      />
-                    </form>
-                  </search>
                   <DataCollection
                     :items="data?.items ?? [undefined]"
                     :page="route.params.page"
@@ -302,6 +300,15 @@ header > div {
 header > h3 {
   margin-top: 0;
   float: left;
+}
+search form {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: $kui-space-60;
+  margin-bottom: $kui-space-60;
 }
 .app-collection:deep(:is(th, td):nth-child(1)) {
   padding-right: 0 !important;
