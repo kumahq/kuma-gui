@@ -119,6 +119,21 @@
           <KCard
             class="mt-4"
           >
+            <search>
+              <FilterBar
+                class="data-plane-proxy-filter"
+                :placeholder="`name:dataplane-name`"
+                :query="route.params.s"
+                :fields="{
+                  name: { description: 'filter by name or parts of a name' },
+                  protocol: { description: 'filter by “kuma.io/protocol” value' },
+                  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                }"
+                @change="(e) => route.update({
+                  ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
+                })"
+              />
+            </search>
             <DataLoader
               :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
                 mesh: route.params.mesh,
@@ -161,22 +176,6 @@
                     :is-selected-row="(row) => row.name === route.params.dataPlane"
                     @resize="me.set"
                   >
-                    <template #toolbar>
-                      <FilterBar
-                        class="data-plane-proxy-filter"
-                        :placeholder="`name:dataplane-name`"
-                        :query="route.params.s"
-                        :fields="{
-                          name: { description: 'filter by name or parts of a name' },
-                          protocol: { description: 'filter by “kuma.io/protocol” value' },
-                          tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                        }"
-                        @change="(e) => route.update({
-                          ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                        })"
-                      />
-                    </template>
-
                     <template #name="{ row: item }">
                       <RouterLink
                         class="name-link"
@@ -321,6 +320,15 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .ip span {
   font-size: $kui-font-size-30;
+}
+search {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: $kui-space-60;
+  margin-bottom: $kui-space-60;
 }
 .data-plane-proxy-filter {
   flex-basis: 350px;

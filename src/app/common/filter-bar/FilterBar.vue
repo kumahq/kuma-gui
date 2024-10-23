@@ -4,111 +4,109 @@
     class="filter-bar"
     data-testid="filter-bar"
   >
-    <search>
-      <form
-        ref="$form"
-        @submit.prevent="change"
+    <form
+      ref="$form"
+      @submit.prevent="change"
+    >
+      <button
+        class="focus-filter-input-button"
+        title="Focus filter"
+        type="button"
+        data-testid="filter-bar-focus-filter-input-button"
+        @click="focusFilterInput"
       >
-        <button
-          class="focus-filter-input-button"
-          title="Focus filter"
-          type="button"
-          data-testid="filter-bar-focus-filter-input-button"
-          @click="focusFilterInput"
-        >
-          <span class="visually-hidden">Focus filter</span>
+        <span class="visually-hidden">Focus filter</span>
 
-          <span class="filter-bar-icon">
-            <FilterIcon
-              decorative
-              data-testid="filter-bar-filter-icon"
-              hide-title
-              :size="KUI_ICON_SIZE_30"
-            />
-          </span>
-        </button>
+        <span class="filter-bar-icon">
+          <FilterIcon
+            decorative
+            data-testid="filter-bar-filter-icon"
+            hide-title
+            :size="KUI_ICON_SIZE_30"
+          />
+        </span>
+      </button>
 
-        <label
-          :for="`${props.id}-filter-bar-input`"
-          class="visually-hidden"
-        >
-          <slot>
-            {{ placeholderAndLabelFallback }}
-          </slot>
-        </label>
-        <input
-          :id="`${props.id}-filter-bar-input`"
-          ref="filterInput"
-          v-model="currentQuery"
-          class="filter-bar-input"
-          type="search"
-          :placeholder="currentPlaceholder"
-          data-testid="filter-bar-filter-input"
-          name="s"
-          @focus="isShowingSuggestionBox = true"
-          @input="isShowingSuggestionBox = true"
-          @blur="closeSuggestionBoxIfCondition"
-          @search="(e: InputEvent) => {
-            const $el = e.target as HTMLInputElement
-            if($el.value.length === 0) {
-              clear(e)
-              isShowingSuggestionBox = true
-            }
-          }"
-        >
+      <label
+        :for="`${props.id}-filter-bar-input`"
+        class="visually-hidden"
+      >
+        <slot>
+          {{ placeholderAndLabelFallback }}
+        </slot>
+      </label>
+      <input
+        :id="`${props.id}-filter-bar-input`"
+        ref="filterInput"
+        v-model="currentQuery"
+        class="filter-bar-input"
+        type="search"
+        :placeholder="currentPlaceholder"
+        data-testid="filter-bar-filter-input"
+        name="s"
+        @focus="isShowingSuggestionBox = true"
+        @input="isShowingSuggestionBox = true"
+        @blur="closeSuggestionBoxIfCondition"
+        @search="(e: InputEvent) => {
+          const $el = e.target as HTMLInputElement
+          if($el.value.length === 0) {
+            clear(e)
+            isShowingSuggestionBox = true
+          }
+        }"
+      >
 
-        <div
-          v-if="isShowingSuggestionBox"
-          class="suggestion-box"
-          data-testid="filter-bar-suggestion-box"
-        >
-          <div class="suggestion-list">
-            <p
-              v-if="tokenizerError !== null"
-              class="filter-bar-error"
-            >
-              {{ tokenizerError.message }}
-            </p>
+      <div
+        v-if="isShowingSuggestionBox"
+        class="suggestion-box"
+        data-testid="filter-bar-suggestion-box"
+      >
+        <div class="suggestion-list">
+          <p
+            v-if="tokenizerError !== null"
+            class="filter-bar-error"
+          >
+            {{ tokenizerError.message }}
+          </p>
+
+          <button
+            v-else
+            type="submit"
+            class="submit-query-button"
+            :class="{ 'submit-query-button-is-selected': selectedSuggestionItemIndex === 0 }"
+            data-testid="filter-bar-submit-query-button"
+          >
+            Submit {{ currentQuery }}
+          </button>
+
+          <div
+            v-for="(fieldEntry, index) in fieldEntries"
+            :key="`${props.id}-${index}`"
+            class="suggestion-list-item"
+            :class="{ 'suggestion-list-item-is-selected': selectedSuggestionItemIndex === index + 1 }"
+          >
+            <b>{{ fieldEntry.fieldName }}</b><span v-if="fieldEntry.description !== ''">: {{ fieldEntry.description }}</span>
 
             <button
-              v-else
-              type="submit"
-              class="submit-query-button"
-              :class="{ 'submit-query-button-is-selected': selectedSuggestionItemIndex === 0 }"
-              data-testid="filter-bar-submit-query-button"
+              class="apply-suggestion-button"
+              :title="`Add ${fieldEntry.fieldName}:`"
+              type="button"
+              :data-filter-field="fieldEntry.fieldName"
+              data-testid="filter-bar-apply-suggestion-button"
+              @click="applySuggestion"
             >
-              Submit {{ currentQuery }}
+              <span class="visually-hidden">Add {{ fieldEntry.fieldName }}:</span>
+
+              <ChevronRightIcon
+                decorative
+                hide-title
+                :size="KUI_ICON_SIZE_30"
+              />
             </button>
-
-            <div
-              v-for="(fieldEntry, index) in fieldEntries"
-              :key="`${props.id}-${index}`"
-              class="suggestion-list-item"
-              :class="{ 'suggestion-list-item-is-selected': selectedSuggestionItemIndex === index + 1 }"
-            >
-              <b>{{ fieldEntry.fieldName }}</b><span v-if="fieldEntry.description !== ''">: {{ fieldEntry.description }}</span>
-
-              <button
-                class="apply-suggestion-button"
-                :title="`Add ${fieldEntry.fieldName}:`"
-                type="button"
-                :data-filter-field="fieldEntry.fieldName"
-                data-testid="filter-bar-apply-suggestion-button"
-                @click="applySuggestion"
-              >
-                <span class="visually-hidden">Add {{ fieldEntry.fieldName }}:</span>
-
-                <ChevronRightIcon
-                  decorative
-                  hide-title
-                  :size="KUI_ICON_SIZE_30"
-                />
-              </button>
-            </div>
           </div>
         </div>
-      </form>
-    </search>
+      </div>
+    </form>
   </div>
 </template>
 

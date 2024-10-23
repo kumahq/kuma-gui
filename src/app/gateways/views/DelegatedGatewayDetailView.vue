@@ -61,7 +61,25 @@
         <div>
           <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
 
-          <KCard class="mt-4">
+          <KCard
+            class="mt-4"
+          >
+            <search>
+              <FilterBar
+                class="data-plane-proxy-filter"
+                :placeholder="`tag: 'kuma.io/protocol: http'`"
+                :query="route.params.s"
+                :fields="{
+                  name: { description: 'filter by name or parts of a name' },
+                  protocol: { description: 'filter by “kuma.io/protocol” value' },
+                  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                  ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
+                }"
+                @change="(e) => route.update({
+                  ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
+                })"
+              />
+            </search>
             <DataLoader
               :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
             >
@@ -92,23 +110,6 @@
                     :is-selected-row="(row) => row.name === route.params.dataPlane"
                     @resize="me.set"
                   >
-                    <template #toolbar>
-                      <FilterBar
-                        class="data-plane-proxy-filter"
-                        :placeholder="`tag: 'kuma.io/protocol: http'`"
-                        :query="route.params.s"
-                        :fields="{
-                          name: { description: 'filter by name or parts of a name' },
-                          protocol: { description: 'filter by “kuma.io/protocol” value' },
-                          tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                          ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                        }"
-                        @change="(e) => route.update({
-                          ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                        })"
-                      />
-                    </template>
-
                     <template #name="{ row: item }">
                       <XAction
                         data-action
@@ -250,6 +251,15 @@ import type { ServiceInsightSource } from '@/app/services/sources'
 </script>
 
 <style lang="scss" scoped>
+search {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: $kui-space-60;
+  margin-bottom: $kui-space-60;
+}
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;
