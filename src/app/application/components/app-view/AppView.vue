@@ -187,6 +187,9 @@ onBeforeUnmount(() => {
 </style>
 
 <style lang="scss" scoped>
+.app-view {
+  font-size: $kui-font-size-30;
+}
 .app-view-title-bar {
   display: flex;
   align-items: center;
