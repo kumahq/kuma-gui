@@ -58,11 +58,13 @@
           <slot name="notifications" />
         </KAlert>
       </aside>
-      <div class="stack">
+      <XLayout
+        type="stack"
+      >
         <slot
           name="default"
         />
-      </div>
+      </XLayout>
     </section>
   </div>
   <XTeleportTemplate

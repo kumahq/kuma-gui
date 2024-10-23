@@ -1,18 +1,36 @@
 <template>
-  <template
-    v-if="slots.item"
+  <XLayout
+    type="stack"
   >
     <template
-      v-for="item in [props.items.find(props.predicate)]"
-      :key="item"
+      v-if="slots.item"
+    >
+      <template
+        v-for="item in [props.items.find(props.predicate)]"
+        :key="item"
+      >
+        <slot
+          v-if="item"
+          name="item"
+          :item="item as T"
+        />
+        <slot
+          v-else
+          name="empty"
+          :items="items"
+        >
+          <XEmptyState
+            v-if="props.empty"
+            :type="props.type"
+          />
+        </slot>
+      </template>
+    </template>
+    <template
+      v-else
     >
       <slot
-        v-if="item"
-        name="item"
-        :item="item as T"
-      />
-      <slot
-        v-else
+        v-if="items.length === 0"
         name="empty"
         :items="items"
       >
@@ -21,56 +39,42 @@
           :type="props.type"
         />
       </slot>
+      <slot
+        v-else
+        name="default"
+        :items="paginated"
+      />
+      <slot
+        v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
+        name="pagination"
+        :items="paginated"
+      >
+        <KPagination
+          :class="{
+            pagination: true,
+            'with-paging': props.page !== 0 && props.total > 0 && props.total !== props.items.length,
+            'with-sizing': props.pageSize !== 0,
+          }"
+          :total-count="props.total"
+          :current-page="props.page"
+          :initial-page-size="props.pageSize || props.total"
+          :page-sizes="[15, 30, 50, 75, 100]"
+          @page-change="({ page }: PaginationChangeEvent) => {
+            change({
+              page,
+              size: props.pageSize,
+            })
+          }"
+          @page-size-change="({ pageSize }: SizeChangeEvent) => {
+            change({
+              page: props.page,
+              size: pageSize,
+            })
+          }"
+        />
+      </slot>
     </template>
-  </template>
-  <template
-    v-else
-  >
-    <slot
-      v-if="items.length === 0"
-      name="empty"
-      :items="items"
-    >
-      <XEmptyState
-        v-if="props.empty"
-        :type="props.type"
-      />
-    </slot>
-    <slot
-      v-else
-      name="default"
-      :items="paginated"
-    />
-    <slot
-      v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
-      name="pagination"
-      :items="paginated"
-    >
-      <KPagination
-        :class="{
-          pagination: true,
-          'with-paging': props.page !== 0 && props.total > 0 && props.total !== props.items.length,
-          'with-sizing': props.pageSize !== 0,
-        }"
-        :total-count="props.total"
-        :current-page="props.page"
-        :initial-page-size="props.pageSize || props.total"
-        :page-sizes="[15, 30, 50, 75, 100]"
-        @page-change="({ page }: PaginationChangeEvent) => {
-          change({
-            page,
-            size: props.pageSize,
-          })
-        }"
-        @page-size-change="({ pageSize }: SizeChangeEvent) => {
-          change({
-            page: props.page,
-            size: pageSize,
-          })
-        }"
-      />
-    </slot>
-  </template>
+  </XLayout>
 </template>
 <script lang="ts" generic="T" setup>
 import { useThrottleFn } from '@vueuse/core'
@@ -140,9 +144,6 @@ const paginated = computed(() => {
 
 </script>
 <style lang="scss" scoped>
-.pagination {
-  margin-top: $kui-space-70;
-}
 .pagination:not(.with-paging) :deep(.pagination-button-container) {
   display: none;
 }
