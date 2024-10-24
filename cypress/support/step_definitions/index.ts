@@ -1,4 +1,4 @@
-import { When, Then, Before, Given, DataTable } from '@badeball/cypress-cucumber-preprocessor'
+import { When, Then, Before, Given, DataTable, After } from '@badeball/cypress-cucumber-preprocessor'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
 import { useServer, useMock, useClient } from '../../services'
@@ -24,12 +24,19 @@ const YAML = {
 
 let env = {}
 let selectors: Record<string, string> = {}
+let localStorage: Set<string>
 const client = useClient()
 Before(() => {
   client.reset()
   env = {}
   selectors = {}
+  localStorage = new Set()
   useServer()
+})
+After(() => {
+  Array.from(localStorage).forEach((key) => {
+    window.localStorage.removeItem(key)
+  })
 })
 
 const negativeTimeout = parseInt(Cypress.env().KUMA_NEGATIVE_TIMEOUT) || 4000
@@ -69,6 +76,15 @@ Given('the environment', (yaml: string) => {
     cy.setCookie(key, String(value))
   })
 })
+
+Given('the localStorage', (yaml: string) => {
+  const obj = YAML.parse(yaml) as object
+  Object.entries(obj).forEach(([key, value]) => {
+    window.localStorage.setItem(key, JSON.stringify(value))
+    localStorage.add(key)
+  })
+})
+
 Given('the URL {string} responds with', (url: string, yaml: string) => {
   const mock = useMock()
   mock(url, env, (respond) => {
@@ -83,6 +99,46 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
 })
 
 // act
+
+When('I visit the {string} URL', function (path: string) {
+  // turn off MSW in dev environments so we can use cy.intercept
+  cy.setCookie('KUMA_MOCK_API_ENABLED', 'false')
+  //
+
+  cy.getAllCookies().then((cookies) => {
+    cy.visit(`${path}`)
+    cy.get('#kuma-config').then((obj) => {
+      const node = obj.get(0)
+      if (node === null || node.textContent === null) {
+        throw new Error('#kuma-config not found')
+      }
+      const config = JSON.parse(node.textContent)
+      cookies.forEach(item => {
+        switch (item.name) {
+          case 'KUMA_VERSION':
+            config.version = item.value
+            break
+          case 'KUMA_MODE':
+            config.mode = item.value
+            break
+          case 'KUMA_ENVIRONMENT':
+            config.environment = item.value
+            break
+          case 'KUMA_STORE_TYPE':
+            config.storeType = item.value
+            break
+        }
+      })
+      node.textContent = JSON.stringify(config)
+    })
+  })
+  // currently use this to denote "the page has initially rendered"
+  cy.get('[data-testid-root="mesh-app"]').should('be.visible')
+})
+
+When('I load the {string} URL', function (path: string) {
+  cy.visit(`${path}`)
+})
 
 // TODO(jc): we can probably combine these 2 steps
 When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, value?: string) => {
