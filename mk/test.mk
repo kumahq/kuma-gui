@@ -1,24 +1,24 @@
 .PHONY: test
 
-.PHONY: test/unit
-test/unit: install ## Dev: run unit tests and exit
+.PHONY: .test/unit
+.test/unit: install
 	@TZ=UTC \
 		FORCE_COLOR=1 \
 		npx vitest \
 			-c vite.config.production.ts \
 			run
 
-.PHONY: test/unit/watch
-test/unit/watch: install ## Dev: run unit tests but watch for changes
+.PHONY: .test/unit/watch
+.test/unit/watch: install
 	@TZ=UTC \
 		FORCE_COLOR=1 \
 		npx vitest \
 			-c vite.config.production.ts \
 
 
-.PHONY: test/e2e
-test/e2e: CYPRESS_SPEC?=**/*.feature
-test/e2e: ## Run browser-based e2e tests against a running GUI, you may want to set KUMA_BASE_URL=http://localhost:8080/gui and KUMA_TEST_BROWSER=chrome
+.PHONY: .test/e2e
+.test/e2e: CYPRESS_SPEC?=**/*.feature
+.test/e2e:
 ifdef KUMA_TEST_BROWSER
 	@TZ=UTC \
 		npx cypress \
