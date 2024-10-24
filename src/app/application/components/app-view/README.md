@@ -102,7 +102,7 @@ example a child route that is fullscreen), you need to specify an empty set of b
 ```
 
 This is different to specifying no breadcrumb property at all, specifying no
-property all will just not append a new breadcrumb to the current set.
+property at all will just not append a new breadcrumb to the current set.
 
 ```vue
 <AppView>
