@@ -34,20 +34,20 @@ Routing configuration is stored in a modules `routes.ts` file i.e.
 `@/app/module.name/routes.ts`. If your route is brand new add the JSON
 configuration in there.
 
+:::danger
 All route views should use `RouteView`s and `AppView`s. Please make use of
 Vue's nested routing/`RouterView` when required. Remember you can pass data
 down through `RouterView`s.
+:::
 
-For more detail see:
-
-- [RouteView](/src/app/application/components/route-view/README)
-- [AppView](/src/app/application/components/app-view/README)
+TLDR:
 
 ```vue
 <RouteView
   v-slot="{ route }"
   name="the-name-of-the-route"
   :params="{
+    onlySpecifyTheParamsYouNeed: '',
     policyName: '',
     page: 1,
   }"
@@ -56,42 +56,90 @@ For more detail see:
     <!-- your content goes in here -->
     Page: {{ route.params.page }}
 
-    <!-- Make use of Nested Routing -->
-    <RouterView v-slot="{ Component }">
+    <!-- Please make use of Nested Routing when necessary -->
+    <RouterView
+      v-slot="{ Component }"
+    >
       <component
         :is="Component"
-        :data="..."
+        :data="{ passDataToTheChildRoute: true }"
       />
     </RouterView>
   </AppView>
 </RouteView>
 ```
 
+For more detail see:
+
+- [RouteView](/src/app/application/components/route-view/README)
+- [AppView](/src/app/application/components/app-view/README)
+
 ## Working with data
 
 All read data interactions should use `DataSource` and or `DataLoader`.
 
+:::warning
 `DataSource` is **non-blocking** i.e. its contents will show always whether the data
 is loaded or not.
 
 `DataLoader` is **blocking** and can be used with or without `DataSource`
 depending on which parts of the UI you want to be blocked. `DataLoader` can
 also load multiple `DataSource`s.
+:::
 
 We often use `DataCollection` for filtering/finding data inline and providing
 empty states.
+
+:::warning
+`DataSource` has no visual elements/states.
+
+`DataLoader` has automatic (but slottable) loading and error states.
+
+`DataCollection` has an automatic (but slottable) empty state.
+:::
+
+As `DataLoader` has visual states for loading and error states, we generally
+only use `DataSource` for more low level data-requesting and/or loading from
+multiple sources at once and/or more complex data requesting sequences.
+
+TLDR:
+
+```vue
+<DataSource
+  v-slot="{ data }"
+  src="/mesh-insights"
+>
+  Always show me (guard for data is required as it might be undefined)
+  {{ data?.items.length }}
+</DataSource>
+...
+<DataLoader
+  v-slot="{ data }"
+  src="/mesh-insights"
+>
+  Only show me once the data is loaded
+  {{ data.items.length }}
+
+  <DataCollection
+    :items="data.items"
+  >
+    We are guaranteed to have at least one item,
+    otherwise the default empty state is shown.
+    {{ data.items[0].name }}
+  </DataCollection>
+</DataLoader>
+```
+
+You could also use our `uri` helper for creating URIs/URLs for the `src`
+parameter to enable auto-completion of URIs and type hints for the outputted
+data.
 
 For more detail see:
 
 - [DataSource](/src/app/application/components/data-source/README)
 - [DataLoader](/src/app/application/components/data-source/README#simple-dataloader-usage)
-- [DataCollection](src/app/application/components/data-collection/README)
+- [DataCollection](/src/app/application/components/data-collection/README)
 
-```vue
-<DataSource v-slot="{ data }" src="/mesh-insights">
-    {{ data?.items.length }}
-</DataSource>
-```
 
 ## GUI Components
 
