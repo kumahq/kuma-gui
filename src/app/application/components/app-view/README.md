@@ -90,8 +90,8 @@ You can of course specify multiple breadcrumbs for a single route/view component
 </AppView>
 ```
 
-If you need to tell the application not to show any breadcrumbs all (for
-example a child route that is fullscreen). Specify an empty set of breadcrumbs.
+If you need to tell the application not to show any breadcrumbs at all (for
+example a child route that is fullscreen), you need to specify an empty set of breadcrumbs.
 
 ```vue
 <AppView
