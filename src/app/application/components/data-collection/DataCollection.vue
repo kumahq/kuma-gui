@@ -5,17 +5,35 @@
     <template
       v-if="slots.item"
     >
-      <template
-        v-for="item in [props.items.find(props.predicate)]"
-        :key="item"
-      >
+      <div>
+        <template
+          v-for="item in [props.items.find(props.predicate)]"
+          :key="item"
+        >
+          <slot
+            v-if="item"
+            name="item"
+            :item="item as T"
+          />
+          <slot
+            v-else
+            name="empty"
+            :items="items"
+          >
+            <XEmptyState
+              v-if="props.empty"
+              :type="props.type"
+            />
+          </slot>
+        </template>
+      </div>
+    </template>
+    <template
+      v-else
+    >
+      <div>
         <slot
-          v-if="item"
-          name="item"
-          :item="item as T"
-        />
-        <slot
-          v-else
+          v-if="items.length === 0"
           name="empty"
           :items="items"
         >
@@ -24,26 +42,12 @@
             :type="props.type"
           />
         </slot>
-      </template>
-    </template>
-    <template
-      v-else
-    >
-      <slot
-        v-if="items.length === 0"
-        name="empty"
-        :items="items"
-      >
-        <XEmptyState
-          v-if="props.empty"
-          :type="props.type"
+        <slot
+          v-else
+          name="default"
+          :items="paginated"
         />
-      </slot>
-      <slot
-        v-else
-        name="default"
-        :items="paginated"
-      />
+      </div>
       <slot
         v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
         name="pagination"
