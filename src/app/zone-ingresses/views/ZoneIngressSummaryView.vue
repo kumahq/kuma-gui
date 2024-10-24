@@ -33,7 +33,7 @@
           <AppView>
             <template #title>
               <h2>
-                <RouterLink
+                <XAction
                   :to="{
                     name: 'zone-ingress-detail-view',
                     params: {
@@ -45,7 +45,7 @@
                   <RouteTitle
                     :title="t('zone-ingresses.routes.item.title', { name: item.name })"
                   />
-                </RouterLink>
+                </XAction>
               </h2>
             </template>
 

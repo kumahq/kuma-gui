@@ -178,7 +178,7 @@
                     </template>
 
                     <template #name="{ row: item }">
-                      <RouterLink
+                      <XAction
                         class="name-link"
                         :to="{
                           name: 'mesh-service-data-plane-summary-view',
@@ -194,7 +194,7 @@
                         }"
                       >
                         {{ item.name }}
-                      </RouterLink>
+                      </XAction>
                     </template>
 
                     <template #namespace="{ row: item }">
@@ -202,7 +202,7 @@
                     </template>
 
                     <template #zone="{ row }">
-                      <RouterLink
+                      <XAction
                         v-if="row.zone"
                         :to="{
                           name: 'zone-cp-detail-view',
@@ -212,7 +212,7 @@
                         }"
                       >
                         {{ row.zone }}
-                      </RouterLink>
+                      </XAction>
 
                       <template v-else>
                         {{ t('common.collection.none') }}

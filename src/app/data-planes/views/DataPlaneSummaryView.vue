@@ -35,7 +35,7 @@
               <h2
                 :class="`type-${item.dataplaneType}`"
               >
-                <RouterLink
+                <XAction
                   :to="{
                     name: 'data-plane-detail-view',
                     params: {
@@ -46,7 +46,7 @@
                   <RouteTitle
                     :title="t('data-planes.routes.item.title', { name: item.name })"
                   />
-                </RouterLink>
+                </XAction>
               </h2>
             </template>
 

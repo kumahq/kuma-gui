@@ -23,12 +23,12 @@
           <p>The page or entity you were looking for does not exist.</p>
 
           <template #action>
-            <KButton
+            <XAction
               appearance="primary"
               :to="{ name: 'home' }"
             >
               Go Home
-            </KButton>
+            </XAction>
           </template>
         </KEmptyState>
       </div>

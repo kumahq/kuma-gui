@@ -34,7 +34,7 @@
           <AppView>
             <template #title>
               <h2>
-                <RouterLink
+                <XAction
                   :to="{
                     name: 'zone-egress-detail-view',
                     params: {
@@ -46,7 +46,7 @@
                   <RouteTitle
                     :title="t('zone-egresses.routes.item.title', { name: item.name })"
                   />
-                </RouterLink>
+                </XAction>
               </h2>
             </template>
 
