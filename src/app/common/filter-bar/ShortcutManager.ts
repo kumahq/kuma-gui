@@ -113,7 +113,11 @@ function triggerShortcuts<CommandKeyword extends string>(event: KeyboardEvent, k
   command.trigger(event)
 }
 
-function normalizeKeyCode(code: string): string {
+/**
+ * `code` can sometimes be undefined, e.g. when using input field autocomplete functionalities.
+ * @param {string|undefined} code - Default: empty string `''`
+ */
+function normalizeKeyCode(code: string | undefined = ''): string {
   // Returns relevant modifier keys as the empty string which is going to be filtered out.
   if (MODIFIER_KEY_CODES.includes(code)) {
     return ''
