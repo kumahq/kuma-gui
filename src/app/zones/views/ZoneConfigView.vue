@@ -40,7 +40,7 @@
         </template>
 
         <KCard>
-          <CodeBlock
+          <XCodeBlock
             v-if="Object.keys(props.data.zoneInsight.config).length > 0"
             language="json"
             :code="JSON.stringify(props.data.zoneInsight.config, null, 2)"
@@ -53,14 +53,14 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           />
 
-          <KAlert
+          <XAlert
             v-else
             class="mt-4"
             data-testid="warning-no-subscriptions"
             appearance="warning"
           >
             {{ t('zone-cps.detail.no_subscriptions') }}
-          </KAlert>
+          </XAlert>
         </KCard>
       </AppView>
     </DataSource>
@@ -69,7 +69,6 @@
 
 <script lang="ts" setup>
 import type { ZoneOverview } from '../data'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
 import { sources } from '@/app/control-planes/sources'
 const props = defineProps<{
   data: ZoneOverview

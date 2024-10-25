@@ -25,7 +25,7 @@
           })"
           v-slot="{ data, refresh }"
         >
-          <CodeBlock
+          <XCodeBlock
             language="json"
             :code="JSON.stringify(data, null, 2)"
             is-searchable
@@ -37,7 +37,7 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
             <template #primary-actions>
-              <KCheckbox
+              <XCheckbox
                 v-model="route.params.includeEds"
                 label="Include Endpoints"
               />
@@ -49,7 +49,7 @@
                 Refresh
               </XAction>
             </template>
-          </CodeBlock>
+          </XCodeBlock>
         </DataLoader>
       </KCard>
     </AppView>
@@ -58,6 +58,4 @@
 
 <script lang="ts" setup>
 import { sources } from '../sources'
-import CodeBlock from '@/app/common/code-block/CodeBlock.vue'
-
 </script>

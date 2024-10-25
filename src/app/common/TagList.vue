@@ -7,10 +7,9 @@
       'tag-list--align-right': props.alignment === 'right',
     }"
   >
-    <KBadge
+    <XBadge
       v-for="(tag, index) in tagList"
       :key="index"
-      max-width="auto"
       class="tag"
       :appearance="tag.isKuma ? 'info' : 'neutral'"
     >
@@ -20,7 +19,7 @@
       >
         {{ tag.label }}:<b>{{ tag.value }}</b>
       </component>
-    </KBadge>
+    </XBadge>
   </component>
 </template>
 

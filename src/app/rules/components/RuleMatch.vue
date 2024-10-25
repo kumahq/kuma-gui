@@ -3,13 +3,13 @@
     <template v-if="props.match.method">
       <div class="match">
         <dt>
-          <KBadge appearance="neutral">
+          <XBadge appearance="neutral">
             Method
-          </KBadge>
+          </XBadge>
         </dt>
 
         <dd>
-          <KBadge>{{ props.match.method }}</KBadge>
+          <XBadge>{{ props.match.method }}</XBadge>
         </dd>
       </div>
     </template>
@@ -17,9 +17,9 @@
     <template v-if="props.match.path">
       <div class="match">
         <dt>
-          <KBadge appearance="neutral">
+          <XBadge appearance="neutral">
             Path
-          </KBadge>
+          </XBadge>
         </dt>
 
         <dd>
@@ -36,9 +36,9 @@
       >
         <div class="match">
           <dt>
-            <KBadge appearance="neutral">
+            <XBadge appearance="neutral">
               QueryParameter
-            </KBadge>
+            </XBadge>
           </dt>
 
           <dd>
@@ -58,9 +58,9 @@
         class="match"
       >
         <dt>
-          <KBadge appearance="neutral">
+          <XBadge appearance="neutral">
             Header
-          </KBadge>
+          </XBadge>
         </dt>
 
         <dd>

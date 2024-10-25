@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import type { Policy } from '../data'
 import { sources } from '../sources'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
   data: Policy
 }>()

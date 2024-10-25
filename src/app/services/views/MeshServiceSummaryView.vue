@@ -18,7 +18,9 @@
         #item="{ item }"
       >
         <AppView>
-          <template #title>
+          <template
+            #title
+          >
             <h2>
               <XAction
                 :to="{
@@ -54,11 +56,11 @@
                 <template
                   #body
                 >
-                  <KBadge
+                  <XBadge
                     :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
                   >
                     {{ item.spec.state }}
-                  </KBadge>
+                  </XBadge>
                 </template>
               </DefinitionCard>
               <DefinitionCard
@@ -137,9 +139,7 @@
                   </KTruncate>
                 </template>
               </DefinitionCard>
-              <DefinitionCard
-                layout="horizontal"
-              >
+              <DefinitionCard layout="horizontal">
                 <template
                   #title
                 >
@@ -149,13 +149,13 @@
                   #body
                 >
                   <KTruncate>
-                    <KBadge
+                    <XBadge
                       v-for="(value, key) in item.spec.selector.dataplaneTags"
                       :key="`${key}:${value}`"
                       appearance="info"
                     >
                       {{ key }}:{{ value }}
-                    </KBadge>
+                    </XBadge>
                   </KTruncate>
                 </template>
               </DefinitionCard>
@@ -198,9 +198,9 @@
 </template>
 
 <script lang="ts" setup>
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { MeshService } from '@/app/services/data'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
   items: MeshService[]
 }>()

@@ -1,9 +1,10 @@
-import Kongponents, { KCard, KBadge } from '@kong/kongponents'
+import Kongponents, { KCard, KPop, KInputSwitch, KAlert, KCheckbox } from '@kong/kongponents'
 
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
 import XBadge from './components/x-badge/XBadge.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
+import XCodeBlock from './components/x-code-block/XCodeBlock.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
 import XEmptyState from './components/x-empty-state/XEmptyState.vue'
@@ -23,13 +24,19 @@ type Token = ReturnType<typeof token>
 
 declare module 'vue' {
   export interface GlobalComponents {
+    XCard: typeof KCard
+    XPop: typeof KPop
+    XInputSwitch: typeof KInputSwitch
+    XCheckbox: typeof KCheckbox
+    //
     XIcon: typeof XIcon
     XInput: typeof XInput
     XAction: typeof XAction
+    XAlert: typeof KAlert
     XActionGroup: typeof XActionGroup
-    XCard: typeof KCard
-    XBadge: typeof KBadge
+    XBadge: typeof XBadge
     XCopyButton: typeof XCopyButton
+    XCodeBlock: typeof XCodeBlock
     XBreadcrumbs: typeof XBreadcrumbs
     XEmptyState: typeof XEmptyState
     XPrompt: typeof XPrompt
@@ -61,16 +68,22 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.xVueComponents, {
       service: () => {
         return [
+          ['XCard', KCard],
+          ['XPop', KPop],
+          ['XInputSwitch', KInputSwitch],
+          ['XCheckbox', KCheckbox],
+          //
           ['XAction', XAction],
           ['XActionGroup', XActionGroup],
           ['XBadge', XBadge],
           ['XBreadcrumbs', XBreadcrumbs],
-          ['XCard', KCard],
           ['XCopyButton', XCopyButton],
+          ['XCodeBlock', XCodeBlock],
           ['XEmptyState', XEmptyState],
           ['XIcon', XIcon],
           ['XInput', XInput],
           ['XPrompt', XPrompt],
+          ['XAlert', KAlert],
           ['XProvider', XProvider],
           ['XSelect', XSelect],
           ['XTabs', XTabs],

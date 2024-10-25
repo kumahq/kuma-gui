@@ -26,26 +26,26 @@
             <KCard>
               <header>
                 <div>
-                  <KBadge
+                  <XBadge
                     v-if="type.isExperimental"
                     appearance="warning"
                   >
                     {{ t('policies.collection.beta') }}
-                  </KBadge>
+                  </XBadge>
 
-                  <KBadge
+                  <XBadge
                     v-if="type.isInbound"
                     appearance="neutral"
                   >
                     {{ t('policies.collection.inbound') }}
-                  </KBadge>
+                  </XBadge>
 
-                  <KBadge
+                  <XBadge
                     v-if="type.isOutbound"
                     appearance="neutral"
                   >
                     {{ t('policies.collection.outbound') }}
-                  </KBadge>
+                  </XBadge>
 
                   <XAction
                     action="docs"
@@ -188,18 +188,18 @@
                         </template>
 
                         <template #targetRef="{ row }">
-                          <KBadge
+                          <XBadge
                             v-if="typeof row.spec?.targetRef !== 'undefined'"
                             appearance="neutral"
                           >
                             {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
-                          </KBadge>
-                          <KBadge
+                          </XBadge>
+                          <XBadge
                             v-else
                             appearance="neutral"
                           >
                             Mesh
-                          </KBadge>
+                          </XBadge>
                         </template>
 
                         <template #zone="{ row }">

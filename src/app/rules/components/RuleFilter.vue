@@ -1,8 +1,8 @@
 <template>
   <div class="filter">
-    <KBadge appearance="neutral">
+    <XBadge appearance="neutral">
       {{ props.filter.type }}
-    </KBadge>
+    </XBadge>
 
     <div>
       <template v-if="props.filter.type === 'RequestHeaderModifier'">

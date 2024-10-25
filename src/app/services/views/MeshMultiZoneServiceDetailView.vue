@@ -47,13 +47,13 @@
                 #body
               >
                 <KTruncate>
-                  <KBadge
+                  <XBadge
                     v-for="(value, key) in data.spec.selector.meshService.matchLabels"
                     :key="`${key}:${value}`"
                     appearance="info"
                   >
                     {{ key }}:{{ value }}
-                  </KBadge>
+                  </XBadge>
                 </KTruncate>
               </template>
             </DefinitionCard>
@@ -91,8 +91,8 @@
 
 <script lang="ts" setup>
 import type { MeshMultiZoneService } from '../data'
-import ResourceCodeBlock from '@/app/common/code-block/ResourceCodeBlock.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   data: MeshMultiZoneService
