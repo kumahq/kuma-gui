@@ -3,13 +3,22 @@ type: component
 ---
 # AppView
 
-Similar to `RouteView`, the `AppView` component should be used in every
-routable `*View.vue` component. But it does not need to be used in a particular
-position although its likely that it would be a fairly close child of the
-`RouteView` component for the route:
+Similar to `RouteView`, the `AppView` component should be used in **every
+routable `*View.vue` component**. Think of it as your `<body>` tag.
+
+It should go inside the `RouteView`, however it does not need to be the
+immediate child, but it commonly is - or at least a fairly close child.
+
+The following will show no breadcrumbs at all, and render/announce the
+`service` route parameter as the page title.
 
 ```vue
-<RouteView v-slot="{ route }">
+<RouteView
+  :params="{
+    service: ''
+  }"
+  v-slot="{ route }"
+>
   <AppView
     :breadcrumbs="[]"
   >
@@ -23,9 +32,9 @@ position although its likely that it would be a fairly close child of the
 </RouteView>
 ```
 
-`AppView` mainly contains functionality to set the breadcrumbs for the
-application, but also includes a slot for correctly positioning the
-header/title for the page.
+`AppView` is very application specific. It mainly contains functionality to set
+the breadcrumbs for the application, but also includes a slot for correctly
+positioning the header/title for the page.
 
 ::: warning
 Even if you do not need to set a breadcrumb please still wrap your route/page
@@ -39,7 +48,7 @@ Only the topmost `AppView` (usually in `App.vue`) contains an instance of
 breadcrumbs to the top most `AppView` in order to be combined and rendered using
 `XBreadcrumbs`.
 
-Therefore you only need to specify the breadcrumbs for your `*View.vue`
+Therefore you only need to specify the breadcrumb(s) for your `*View.vue`
 route/view component, the breadcrumbs will automatically be prepended with the
 breadcrumbs from any parent components in a nested route structure.
 
@@ -81,12 +90,22 @@ You can of course specify multiple breadcrumbs for a single route/view component
 </AppView>
 ```
 
-If you need to tell the application not to show any breadcrumbs all (for example a child route that is fullscreen). Specify an empty set of breadcrumbs.
-
-This is different to specify no breadcrumb property at all, specifying no property all all will just not append a new breadcrumb to the current set.
+If you need to tell the application not to show any breadcrumbs at all (for
+example a child route that is fullscreen), you need to specify an empty set of breadcrumbs.
 
 ```vue
-<AppView :breadcrumbs="[]">
+<AppView
+  :breadcrumbs="[]"
+>
+...
+</AppView>
+```
+
+This is different to specifying no breadcrumb property at all, specifying no
+property at all will just not append a new breadcrumb to the current set.
+
+```vue
+<AppView>
 ...
 </AppView>
 ```
