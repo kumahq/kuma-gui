@@ -756,7 +756,6 @@ export interface Mesh extends Entity {
   }
   meshServices?: {
     mode?: 'Disabled' | ' Everywhere' | 'ReachableBackends' | 'Exclusive'
-    enabled?: 'Disabled' | ' Everywhere' | 'ReachableBackends' | 'Exclusive'
   }
 }
 
