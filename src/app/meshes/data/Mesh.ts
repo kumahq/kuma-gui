@@ -15,7 +15,7 @@ export const Mesh = {
       meshServices: ((item = {}) => {
         return {
           ...item,
-          mode: typeof item.mode === 'undefined' ? (item.enabled ?? 'Disabled') : item.mode,
+          mode: item.mode ?? 'Disabled',
         }
       })(item.meshServices),
       mtlsBackend,

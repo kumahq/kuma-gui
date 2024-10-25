@@ -16,7 +16,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
       creationTime: '2020-06-19T12:18:02.097986-04:00',
       modificationTime: '2020-07-19T12:18:02.097986-04:00',
       meshServices: {
-        enabled: env('KUMA_MESHSERVICE_MODE', 'Everywhere'),
+        mode: env('KUMA_MESHSERVICE_MODE', 'Everywhere'),
       },
       ...(isMtlsEnabled &&
       {
