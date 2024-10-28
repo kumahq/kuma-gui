@@ -1,6 +1,5 @@
 import { config } from '@vue/test-utils'
 
-import CliEnv from '@/app/application/services/env/CliEnv'
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
 import { ServiceConfigurator } from '@/services/utils'
 import type { Component } from 'vue'
@@ -26,13 +25,6 @@ export const services: ServiceConfigurator = (app) => [
     arguments: [
       app.components,
       app.plugins,
-    ],
-  }],
-
-  [app.Env, {
-    service: CliEnv,
-    arguments: [
-      app.EnvVars,
     ],
   }],
 ]
