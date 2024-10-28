@@ -14,13 +14,7 @@ export const kumaIndexHtmlVars = (): Plugin => {
       return template
         .replace('{{.BaseGuiPath}}', '/gui')
         .replace('{{.}}', JSON.stringify({
-          baseGuiPath: '/gui',
-          apiUrl: 'http://localhost:5681',
-          product: 'Kuma',
-          mode: 'global',
-          environment: 'universal',
-          storeType: 'postgres',
-          apiReadOnly: false,
+          ...pack.kuma,
           version: pack.version,
         }),
         )
