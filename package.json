@@ -36,7 +36,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^21.0.2",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
     "@cucumber/gherkin-utils": "^9.0.0",
-    "@faker-js/faker": "^9.0.3",
+    "@faker-js/faker": "^9.1.0",
     "@kong/design-tokens": "^1.17.2",
     "@modyfi/vite-plugin-yaml": "^1.1.0",
     "@types/glob": "^8.1.0",
