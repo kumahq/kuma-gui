@@ -71,7 +71,7 @@ export const config: UserConfigFn = () => {
       preprocessorOptions: {
         scss: {
           additionalData: hoistUseStatements(`
-            @import "@kong/design-tokens/tokens/scss/variables";
+            @use "@kong/design-tokens/tokens/scss/variables" as *;
           `),
           api: 'modern-compiler',
         },
