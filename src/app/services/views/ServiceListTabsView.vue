@@ -9,33 +9,38 @@
     <div
       class="stack"
     >
-      <div v-html="t('services.routes.items.intro', {}, { defaultMessage: '' })" />
       <AppView>
         <template #actions>
-          <XActionGroup
-            :expanded="true"
-          >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
+          <div class="service-types-action-group">
+            <XActionGroup
+              :expanded="true"
             >
-              <XAction
-                v-if="!(!can('use service-insights', props.mesh) && ['service-list-view', 'external-service-list-view'].includes(name))"
-                :class="{
-                  'active': route.child()?.name === name,
-                }"
-                :to="{
-                  name,
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                }"
-                :data-testid="`${name}-sub-tab`"
+              <template
+                v-for="{ name } in route.children"
+                :key="name"
               >
-                {{ t(`services.routes.items.navigation.${name}`) }}
-              </XAction>
-            </template>
-          </XActionGroup>
+                <XAction
+                  v-if="!(!can('use service-insights', props.mesh) && ['service-list-view', 'external-service-list-view'].includes(name))"
+                  :class="{
+                    'active': route.child()?.name === name,
+                  }"
+                  :to="{
+                    name,
+                    params: {
+                      mesh: route.params.mesh,
+                    },
+                  }"
+                  :data-testid="`${name}-sub-tab`"
+                >
+                  {{ t(`services.routes.items.navigation.${name}.label`) }}
+                </XAction>
+              </template>
+            </XActionGroup>
+
+            <p
+              v-html="t(`services.routes.items.navigation.${route.child()?.name}.description`, {}, { defaultMessage: '' })"
+            />
+          </div>
         </template>
 
         <RouterView
@@ -68,3 +73,11 @@ watch(() => router.currentRoute.value.name, (val) => {
   }
 }, { immediate: true })
 </script>
+
+<style lang="scss" scoped>
+.service-types-action-group {
+  display: flex;
+  flex-flow: column nowrap;
+  width: min-content;
+}
+</style>
