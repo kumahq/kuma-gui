@@ -35,7 +35,7 @@ services:
         mesh-external-service-list-view:
           label: MeshExternalService
           description: !!text/markdown |
-            **Experimental**: A <a href="https://kuma.io/docs/latest/networking/meshexternalservice/#meshexternalservice" target="_blank">MeshExternalService</a> is a policy that allows an application or microservice to interact with explicit destinations that are not part of the mesh.
+            A <a href="https://kuma.io/docs/latest/networking/meshexternalservice/#meshexternalservice" target="_blank">MeshExternalService</a> is a policy that allows an application or microservice to interact with explicit destinations that are not part of the mesh.
         service-list-view:
           label: Internal
           description: !!text/markdown |
