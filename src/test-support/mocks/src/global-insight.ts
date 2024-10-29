@@ -23,9 +23,24 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
     },
     body: {
       dataplanes: {
-        gatewayBuiltin: fake.kuma.healthStatus({ max: gatewayBuiltinTotal, omitZeroValues: false }),
-        gatewayDelegated: fake.kuma.healthStatus({ max: gatewayDelegatedTotal, omitZeroValues: false }),
-        standard: fake.kuma.healthStatus({ max: dataplaneTotal, omitZeroValues: false }),
+        gatewayBuiltin: fake.kuma.partitionInto({
+          online: Number,
+          offline: Number,
+          partiallyDegraded: Number,
+          total: gatewayBuiltinTotal,
+        }, gatewayBuiltinTotal),
+        gatewayDelegated: fake.kuma.partitionInto({
+          online: Number,
+          offline: Number,
+          partiallyDegraded: Number,
+          total: gatewayDelegatedTotal,
+        }, gatewayDelegatedTotal),
+        standard: fake.kuma.partitionInto({
+          online: Number,
+          offline: Number,
+          partiallyDegraded: Number,
+          total: dataplaneTotal,
+        }, dataplaneTotal),
       },
       meshes: {
         total: meshTotal,
