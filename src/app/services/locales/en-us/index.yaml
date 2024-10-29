@@ -27,15 +27,15 @@ services:
         mesh-service-list-view:
           label: MeshService
           description: !!text/markdown |
-            A [MeshService](https://kuma.io/docs/latest/networking/meshservice/#meshservice) represents a destination for traffic from elsewhere in the mesh and can define several networking details. The behaviour of this resource depends on the zone type. 
+            A <a href="https://kuma.io/docs/latest/networking/meshservice/#meshservice" target="_blank">MeshService</a> represents a destination for traffic from elsewhere in the mesh and can define several networking details. The behaviour of this resource depends on the zone type. 
         mesh-multi-zone-service-list-view:
           label: MeshMultiZoneService
           description: !!text/markdown |
-            A [MeshMultiZoneService](https://kuma.io/docs/latest/networking/meshmultizoneservice/#meshmultizoneservice) represents a group of `MeshService` resources in a loadbalanced multizone deployment. `MeshService` resources that are deployed across several clusters can be grouped by a `MeshMultiZoneService`.
+            A <a href="https://kuma.io/docs/latest/networking/meshmultizoneservice/#meshmultizoneservice" target="_blank">MeshMultiZoneService</a> represents a group of `MeshService` resources in a loadbalanced multizone deployment. `MeshService` resources that are deployed across several clusters can be grouped by a `MeshMultiZoneService`.
         mesh-external-service-list-view:
           label: MeshExternalService
           description: !!text/markdown |
-            **Experimental**: A [MeshExternalService](https://kuma.io/docs/latest/networking/meshexternalservice/#meshexternalservice) is a policy that allows an application or microservice to interact with explicit destinations that are not part of the mesh.
+            **Experimental**: A <a href="https://kuma.io/docs/latest/networking/meshexternalservice/#meshexternalservice" target="_blank">MeshExternalService</a> is a policy that allows an application or microservice to interact with explicit destinations that are not part of the mesh.
         service-list-view:
           label: Internal
           description: !!text/markdown |
@@ -43,7 +43,7 @@ services:
         external-service-list-view:
           label: External
           description: !!text/markdown |
-            An [ExternalService](https://kuma.io/docs/latest/policies/external-services/#external-service) is a policy that allows an application or microservice to interact with other services that are not part of the mesh.
+            An <a href="https://kuma.io/docs/latest/policies/external-services/#external-service" target="_blank">ExternalService</a> is a policy that allows an application or microservice to interact with other services that are not part of the mesh.
   detail:
     config: YAML
     data_plane_proxies: Data Plane Proxies
