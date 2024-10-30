@@ -32,13 +32,13 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
             <template #primary-actions>
-              <KButton
+              <XAction
+                action="refresh"
                 appearance="primary"
                 @click="refresh"
               >
-                <RefreshIcon :size="KUI_ICON_SIZE_30" />
                 Refresh
-              </KButton>
+              </XAction>
             </template>
           </XCodeBlock>
         </DataLoader>
@@ -48,9 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { RefreshIcon } from '@kong/icons'
-
 import type { DataplaneOverview } from '../sources'
 import type { StatsSource } from '@/app/connections/sources'
 

@@ -26,7 +26,7 @@
             :items="props.data.zoneIngress.availableServices"
           >
             <template #name="{ row: item }">
-              <RouterLink
+              <XAction
                 :to="{
                   name: 'service-detail-view',
                   params: {
@@ -36,11 +36,11 @@
                 }"
               >
                 {{ item.tags['kuma.io/service'] }}
-              </RouterLink>
+              </XAction>
             </template>
 
             <template #mesh="{ row: item }">
-              <RouterLink
+              <XAction
                 :to="{
                   name: 'mesh-detail-view',
                   params: {
@@ -49,7 +49,7 @@
                 }"
               >
                 {{ item.mesh }}
-              </RouterLink>
+              </XAction>
             </template>
 
             <template #protocol="{ row: item }">

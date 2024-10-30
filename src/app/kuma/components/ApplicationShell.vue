@@ -12,9 +12,9 @@
         class="horizontal-list"
       >
         <slot name="header">
-          <RouterLink :to="{ name: 'home' }">
+          <XAction :to="{ name: 'home' }">
             <slot name="home" />
-          </RouterLink>
+          </XAction>
 
           <GithubButton
             class="gh-star"
@@ -41,12 +41,12 @@
                     {{ t('common.product.name') }} update available
                   </p>
 
-                  <KButton
+                  <XAction
                     appearance="primary"
-                    :to="t('common.product.href.install')"
+                    :href="t('common.product.href.install')"
                   >
                     Update
-                  </KButton>
+                  </XAction>
                 </div>
               </XAlert>
             </DataSource>
@@ -63,11 +63,11 @@
             <XPop
               width="280"
             >
-              <KButton
+              <XAction
                 appearance="tertiary"
               >
                 Info
-              </KButton>
+              </XAction>
 
               <template #content>
                 <p>
@@ -117,7 +117,7 @@
               Onboarding
             </XAction>
           </XActionGroup>
-          <KButton
+          <XAction
             :to="{ name: 'diagnostics' }"
             appearance="tertiary"
             icon
@@ -128,7 +128,7 @@
             >
               Diagnostics
             </XIcon>
-          </KButton>
+          </XAction>
         </slot>
       </div>
     </header>

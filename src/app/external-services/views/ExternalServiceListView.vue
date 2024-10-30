@@ -48,7 +48,7 @@
               >
                 <template #name="{ row: item }">
                   <TextWithCopyButton :text="item.name">
-                    <RouterLink
+                    <XAction
                       :to="{
                         name: 'external-service-detail-view',
                         params: {
@@ -62,7 +62,7 @@
                       }"
                     >
                       {{ item.name }}
-                    </RouterLink>
+                    </XAction>
                   </TextWithCopyButton>
                 </template>
 

@@ -33,7 +33,7 @@
                     {{ t(`http.api.value.${listener.protocol}`) }}
                   </XBadge>
 
-                  <RouterLink
+                  <XAction
                     :to="{
                       name: 'builtin-gateway-detail-view',
                       query: {
@@ -44,7 +44,7 @@
                     data-action
                   >
                     {{ listener.hostname }}:{{ listener.port }}
-                  </RouterLink>
+                  </XAction>
                 </div>
 
                 <dl
@@ -147,7 +147,7 @@
                               v-for="(origin, originIndex) in toRule.origins"
                               :key="originIndex"
                             >
-                              <RouterLink
+                              <XAction
                                 :to="{
                                   name: 'policy-detail-view',
                                   params: {
@@ -158,7 +158,7 @@
                                 }"
                               >
                                 {{ origin.name }}
-                              </RouterLink>
+                              </XAction>
                             </XBadge>
                           </div>
                         </dd>

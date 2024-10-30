@@ -205,7 +205,7 @@
                                               v-for="origin in item.origins"
                                               :key="`${origin.mesh}-${origin.name}`"
                                             >
-                                              <RouterLink
+                                              <XAction
                                                 v-if="types[origin.type]"
                                                 :to="{
                                                   name: 'policy-detail-view',
@@ -217,7 +217,7 @@
                                                 }"
                                               >
                                                 {{ origin.name }}
-                                              </RouterLink>
+                                              </XAction>
                                               <template
                                                 v-else
                                               >
