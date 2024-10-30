@@ -161,6 +161,7 @@ export class KumaModule {
 
   /**
    * Returns a random DPP (or gateway) status object with self-consistent values (i.e. total = online + partiallyDegraded + offline).
+   * @deprecated - please use partitionInto
    */
   healthStatus({ min = 0, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
     const total = this.faker.number.int({ min, max })
