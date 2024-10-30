@@ -11,7 +11,6 @@
       :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
     />
     <div class="stack">
-      <div v-html="t('gateways.routes.items.intro', {}, { defaultMessage: '' })" />
       <AppView>
         <template #actions>
           <DataCollection
@@ -36,11 +35,15 @@
                 }"
                 :data-testid="`${name}-sub-tab`"
               >
-                {{ t(`gateways.routes.items.navigation.${name}`) }}
+                {{ t(`gateways.routes.items.navigation.${name}.label`) }}
               </XAction>
             </XActionGroup>
           </DataCollection>
         </template>
+
+        <div
+          v-html="t(`gateways.routes.items.navigation.${route.child()?.name}.description`, {}, { defaultMessage: '' })"
+        />
 
         <RouterView
           v-slot="{ Component}"

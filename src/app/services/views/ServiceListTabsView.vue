@@ -9,7 +9,6 @@
     <div
       class="stack"
     >
-      <div v-html="t('services.routes.items.intro', {}, { defaultMessage: '' })" />
       <AppView>
         <template #actions>
           <XActionGroup
@@ -32,11 +31,15 @@
                 }"
                 :data-testid="`${name}-sub-tab`"
               >
-                {{ t(`services.routes.items.navigation.${name}`) }}
+                {{ t(`services.routes.items.navigation.${name}.label`) }}
               </XAction>
             </template>
           </XActionGroup>
         </template>
+
+        <div
+          v-html="t(`services.routes.items.navigation.${route.child()?.name}.description`, {}, { defaultMessage: '' })"
+        />
 
         <RouterView
           v-slot="{ Component }"

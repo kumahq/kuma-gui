@@ -1,11 +1,11 @@
-.PHONY: build
-build:
+.PHONY: .build
+.build:
 	@npx vite \
 		-c ./vite.config.production.ts \
 		build
 
-.PHONY: build/sync
-build/sync:
+.PHONY: .build/sync
+.build/sync:
 	@$(MAKE) build
 
 .PHONY: build/preview

@@ -7,11 +7,11 @@ check/node:
 		exit 1; \
 	)
 
-.PHONY: lint
-lint: lint/js lint/ts lint/css lint/lock lint/gherkin ## Dev: Run lint checks on all languages
+.PHONY: .lint
+.lint: lint/js lint/ts lint/css lint/lock lint/gherkin
 
-.PHONY: lint/script
-lint/script: lint/js lint/ts  ## Dev: Run lint checs on both JS/TS
+.PHONY: .lint/script
+.lint/script: lint/js lint/ts  ## Dev: Run lint checs on both JS/TS
 
 .PHONY: lint/js
 lint/js:

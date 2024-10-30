@@ -5,8 +5,14 @@ gateways:
       intro: !!text/markdown |
         Gateways are specialized proxies that manage incoming and outgoing traffic between the service mesh and external clients or other networks, enabling secure and controlled access to services with the mesh.
       navigation:
-        builtin-gateway-list-view: Built-in
-        delegated-gateway-list-view: Delegated
+        builtin-gateway-list-view:
+          label: Built-in
+          description: !!text/markdown |
+            With a <a href="{KUMA_DOCS_URL}/guides/gateway-builtin/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Built-in Gateway</a> it is possible to route external traffic into the service mesh (North/South). Further <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">configuration</a> enables secure and controlled access to the mesh internal services.
+        delegated-gateway-list-view:
+          label: Delegated
+          description: !!text/markdown |
+            A <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Delegated Gateway</a> allows the integration of existing API gateway solutions into the mesh by adding an Envoy sidecar proxy to an existing Gateway. It then manages the traffic between the services inside the mesh and external clients (North/South).
 
 builtin-gateways:
   routes:

@@ -23,14 +23,27 @@ services:
       config: 'YAML'
     items:
       title: Services
-      intro: !!text/markdown |
-        A Service represents an application or microservice that is registered with the mesh and can be managed, monitored and secured through the mesh's policies.
       navigation:
-        mesh-service-list-view: MeshService
-        mesh-multi-zone-service-list-view: MeshMultiZoneService
-        mesh-external-service-list-view: MeshExternalService
-        service-list-view: Internal
-        external-service-list-view: External
+        mesh-service-list-view:
+          label: MeshService
+          description: !!text/markdown |
+            A <a href="{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshService</a> represents a destination for traffic from elsewhere in the mesh and can define several networking details. The behaviour of this resource depends on the zone type. 
+        mesh-multi-zone-service-list-view:
+          label: MeshMultiZoneService
+          description: !!text/markdown |
+            A <a href="{KUMA_DOCS_URL}/networking/meshmultizoneservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshMultiZoneService</a> represents a group of `MeshService` resources in a loadbalanced multizone deployment. `MeshService` resources that are deployed across several clusters can be grouped by a `MeshMultiZoneService`.
+        mesh-external-service-list-view:
+          label: MeshExternalService
+          description: !!text/markdown |
+            A <a href="{KUMA_DOCS_URL}/networking/meshexternalservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshExternalService</a> is a policy that allows an application or microservice to interact with explicit destinations that are not part of the mesh.
+        service-list-view:
+          label: Internal
+          description: !!text/markdown |
+            An `Internal` Service represents an application or microservice that is defined and registered with the mesh by using the `DataPlane` tag `kuma.io/service` and can be managed, monitored and secured through the mesh's policies.
+        external-service-list-view:
+          label: External
+          description: !!text/markdown |
+            An <a href="{KUMA_DOCS_URL}/policies/external-services/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">ExternalService</a> is a policy that allows an application or microservice to interact with other services that are not part of the mesh.
   detail:
     config: YAML
     data_plane_proxies: Data Plane Proxies

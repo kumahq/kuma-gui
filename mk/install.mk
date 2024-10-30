@@ -1,12 +1,12 @@
-.PHONY: install
-install: check/node ## Dev: install all dependencies
+.PHONY: .install
+.install: check/node
 	@npm install
 
-.PHONY: install/sync
-install/sync:
+.PHONY: .install/sync
+.install/sync:
 	npm clean-install
 
-.PHONY: clean
-clean: ## Dev: Delete all node_modules directories
+.PHONY: .clean
+.clean:
 	find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
 
