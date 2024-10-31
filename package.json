@@ -1,15 +1,6 @@
 {
   "name": "kuma-gui",
   "version": "2.10.0",
-  "kuma": {
-    "baseGuiPath": "/gui",
-    "apiUrl": "http://localhost:5681",
-    "product": "Kuma",
-    "mode": "global",
-    "environment": "universal",
-    "storeType": "postgres",
-    "apiReadOnly": false
-  },
   "private": true,
   "description": "Kuma Manager",
   "author": "Kong",

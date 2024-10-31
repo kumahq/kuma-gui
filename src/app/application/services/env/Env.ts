@@ -1,4 +1,4 @@
-export type PathConfig = {
+export type KumaHtmlVars = {
   baseGuiPath: string
   apiUrl: string
   version: string
@@ -64,7 +64,7 @@ export default class Env {
    * tag that’s populated during server-side rendering of the Vue application’s
    * index.html file.
    */
-  protected getConfig(): PathConfig {
+  protected getConfig(): KumaHtmlVars {
     const pathConfigNode = document.querySelector('#kuma-config')
     if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       const config = JSON.parse(pathConfigNode.textContent.trim())
@@ -75,7 +75,9 @@ export default class Env {
       config.apiUrl = normalizeBaseUrl(config.apiUrl)
       return config
     }
-    throw new Error('Unable to parse kuma config')
+    const msg = 'Unable to parse kuma config. Please check your instance of kuma is running correctly'
+    console.error(msg)
+    throw new Error(msg)
   }
 }
 function stripTrailingSlashes(url: string): string {

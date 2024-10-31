@@ -88,6 +88,7 @@ const INLINE_NON_VOID_ELEMENTS = [
       },
     }],
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+    'padded-blocks': 'off',
   },
   overrides: [
     {

@@ -13,7 +13,7 @@ import { defineConfig as viteConfig } from 'vite'
 import groupBy from 'object.groupby'
 
 import { hoistUseStatements } from '../dev-utilities/hoistUseStatements'
-import { kumaIndexHtmlVars } from '../vite.config.development'
+import { kumaIndexHtmlVars } from '../vite.plugins'
 import { sync as globSync } from 'glob'
 import fs from 'node:fs'
 
@@ -63,9 +63,7 @@ export default defineConfig({
         // works the same
         name: 'kuma-vitepress-gotemplate',
         transformIndexHtml: (template) => {
-          return template
-            .replace('<div id="app"></div>', `<div id="app"></div><script type="application/json" id="kuma-config" />{{.}}</script>`,
-            )
+          return template.replace('<div id="app"></div>', `<div id="app"></div><script type="application/json" id="kuma-config" />{{.}}</script>`)
         },
       },
       kumaIndexHtmlVars(),
