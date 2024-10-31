@@ -29,19 +29,15 @@ describe('env', () => {
     }
     const env = new MockEnv(
       {
-        KUMA_PRODUCT_NAME: 'product',
         KUMA_VERSION_URL: 'http://version.fake',
         KUMA_DOCS_URL: 'http://docs.fake',
         KUMA_MOCK_API_ENABLED: 'false',
-        KUMA_ZONE_CREATION_FLOW: 'enabled',
-        KUMA_MESHSERVICE_ENABLED: 'true',
       },
     )
     expect(env.var('KUMA_DOCS_URL')).toBe('http://docs.fake/110.127.x')
     expect(env.var('KUMA_VERSION')).toBe('110.127.30')
     expect(env.var('KUMA_API_URL')).toBe('/somewhere/else')
     expect(env.var('KUMA_BASE_PATH')).toBe('/not/gui')
-    expect(env.var('KUMA_PRODUCT_NAME')).toBe('product')
   })
 
   test.each([

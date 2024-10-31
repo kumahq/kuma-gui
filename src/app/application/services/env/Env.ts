@@ -11,13 +11,9 @@ export type KumaHtmlVars = {
 }
 
 export type EnvArgs = {
-  KUMA_PRODUCT_NAME: string
   KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
   KUMA_MOCK_API_ENABLED: string
-  KUMA_MESHSERVICE_ENABLED: string
-  // @TODO(jc) pretty sure this can be removed now, along with its reference in env.spec
-  KUMA_ZONE_CREATION_FLOW: 'disabled' | 'enabled' | undefined
 }
 type EnvProps = {
   KUMA_VERSION: string
