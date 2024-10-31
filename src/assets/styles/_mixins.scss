@@ -1,102 +1,125 @@
-$spacing: (
-  xxs: $kui-space-20,
-  xs: $kui-space-40,
-  sm: $kui-space-50,
-  md: $kui-space-60,
-  lg: $kui-space-80,
-  xl: $kui-space-90,
-  xxl: $kui-space-110,
-  xxxl: $kui-space-110
-);
-$sides: (
-  top,
-  right,
-  bottom,
-  left
-);
+@use "@kong/design-tokens/tokens/scss/variables" as *;
 
-// Loop spacing and create margin classes
-@each $size, $space in $spacing {
-  /* stylelint-disable-next-line scss/no-global-function-names */
-  $i: index($spacing, $size $space);
-
-  // Create (t, r, b, l) classes
-  @each $marginSide in $sides {
-
-    // if first add a 0 utility
-    @if $i == 1 {
-      .m#{str-slice($marginSide, 0, 1)}-auto {
-        margin-#{$marginSide}: auto !important;
-      }
-
-      .m#{str-slice($marginSide, 0, 1)}-0 {
-        margin-#{$marginSide}: 0px !important;
-      }
-    }
-  }
-
-  @each $marginSide in $sides {
-    .m#{str-slice($marginSide, 0, 1)}-#{$i} {
-      margin-#{$marginSide}: #{$space} !important;
-    }
-  }
-
-  // Create X, Y, and A (all) classes
-  .mx-#{$i} {
-    margin-left: #{$space} !important;
-    margin-right: #{$space} !important;
-  }
-
-  .my-#{$i} {
-    margin-bottom: #{$space} !important;
-    margin-top: #{$space} !important;
-  }
-
-  .ma-#{$i} {
-    margin-bottom: #{$space} !important;
-    margin-left: #{$space} !important;
-    margin-right: #{$space} !important;
-    margin-top: #{$space} !important;
-  }
+.mt-auto {
+  margin-top: auto !important;
+}
+.mt-0 {
+  margin-top: 0px !important;
+}
+.mt-1 {
+  margin-top: $kui-space-20 !important;
+}
+.mt-2 {
+  margin-top: $kui-space-40 !important;
+}
+.mt-3 {
+  margin-top: $kui-space-50 !important;
+}
+.mt-4 {
+  margin-top: $kui-space-60 !important;
+}
+.mt-5 {
+  margin-top: $kui-space-80 !important;
+}
+.mt-6 {
+  margin-top: $kui-space-90 !important;
+}
+.mt-7 {
+  margin-top: $kui-space-110 !important;
+}
+.mt-8 {
+  margin-top: $kui-space-110 !important;
 }
 
-// Loop spacing and create padding classes
-@each $size, $space in $spacing {
-  /* stylelint-disable-next-line scss/no-global-function-names */
-  $i: index($spacing, $size $space);
+.mb-auto {
+  margin-bottom: auto !important;
+}
+.mb-0 {
+  margin-bottom: 0px !important;
+}
+.mb-1 {
+  margin-bottom: $kui-space-20 !important;
+}
+.mb-2 {
+  margin-bottom: $kui-space-40 !important;
+}
+.mb-3 {
+  margin-bottom: $kui-space-50 !important;
+}
+.mb-4 {
+  margin-bottom: $kui-space-60 !important;
+}
+.mb-5 {
+  margin-bottom: $kui-space-80 !important;
+}
+.mb-6 {
+  margin-bottom: $kui-space-90 !important;
+}
+.mb-7 {
+  margin-bottom: $kui-space-110 !important;
+}
+.mb-8 {
+  margin-bottom: $kui-space-110 !important;
+}
 
-  // Create (t, r, b, l) classes
-  @each $paddingSide in $sides {
+.mr-auto {
+  margin-right: auto !important;
+}
+.mr-0 {
+  margin-right: 0px !important;
+}
+.mr-1 {
+  margin-right: $kui-space-20 !important;
+}
+.mr-2 {
+  margin-right: $kui-space-40 !important;
+}
+.mr-3 {
+  margin-right: $kui-space-50 !important;
+}
+.mr-4 {
+  margin-right: $kui-space-60 !important;
+}
+.mr-5 {
+  margin-right: $kui-space-80 !important;
+}
+.mr-6 {
+  margin-right: $kui-space-90 !important;
+}
+.mr-7 {
+  margin-right: $kui-space-110 !important;
+}
+.mr-8 {
+  margin-right: $kui-space-110 !important;
+}
 
-    // if first add a 0 utility
-    @if $i == 1 {
-      .p#{str-slice($paddingSide, 0, 1)}-0 {
-        padding-#{$paddingSide}: 0px !important;
-      }
-    }
-  }
-
-  @each $paddingSide in $sides {
-    .p#{str-slice($paddingSide, 0, 1)}-#{$i} {
-      padding-#{$paddingSide}: #{$space} !important;
-    }
-  }
-
-  // Create X & Y classes
-  .px-#{$i} {
-    padding-left: #{$space} !important;
-    padding-right: #{$space} !important;
-  }
-
-  .py-#{$i} {
-    padding-bottom: #{$space} !important;
-    padding-top: #{$space} !important;
-  }
-
-  .pa-#{$i} {
-    padding-bottom: #{$space} !important;
-    padding-left: #{$space} !important;
-    padding-right: #{$space} !important;
-    padding-top: #{$space} !important;
-  }
+.ml-auto {
+  margin-left: auto !important;
+}
+.ml-0 {
+  margin-left: 0px !important;
+}
+.ml-1 {
+  margin-left: $kui-space-20 !important;
+}
+.ml-2 {
+  margin-left: $kui-space-40 !important;
+}
+.ml-3 {
+  margin-left: $kui-space-50 !important;
+}
+.ml-4 {
+  margin-left: $kui-space-60 !important;
+}
+.ml-5 {
+  margin-left: $kui-space-80 !important;
+}
+.ml-6 {
+  margin-left: $kui-space-90 !important;
+}
+.ml-7 {
+  margin-left: $kui-space-110 !important;
+}
+.ml-8 {
+  margin-left: $kui-space-110 !important;
 }
