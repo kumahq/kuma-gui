@@ -39,7 +39,8 @@ deploy/preview:
 	@$(MAKE) build/preview
 	@$(MAKE) deploy/test
 
-build/types:
+## To amend the specs see `make generate/oas-for-ts` in the main kuma repository
+build/types: ## Regenerate the TS types from kumahq/kuma OpenAPI specs
 	@npx openapi-typescript \
 		../kuma/docs/generated/openapi.yaml \
 		-o src/types/auto-generated.d.ts

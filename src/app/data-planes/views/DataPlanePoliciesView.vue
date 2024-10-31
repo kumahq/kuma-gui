@@ -5,7 +5,7 @@
       mesh: '',
       dataPlane: '',
     }"
-    v-slot="{ can, route, t }"
+    v-slot="{ can, route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -25,10 +25,13 @@
           >
             <!-- always try and load and show the rules for everything dataplane type -->
             <DataLoader
-              :src="`/meshes/${route.params.mesh}/rules/for/${route.params.dataPlane}`"
+              :src="uri(sources, '/meshes/:mesh/rules/for/:dataplane', {
+                mesh: route.params.mesh,
+                dataplane: route.params.dataPlane,
+              })"
               :data="[policyTypesData]"
               :errors="[policyTypesError]"
-              v-slot="{ data: rulesData }: RuleCollectionSource"
+              v-slot="{ data: rulesData }"
             >
               <!-- show an empty state if we have no rules at all -->
               <DataCollection
@@ -192,7 +195,7 @@ import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.v
 import type { PolicyType } from '@/app/policies/data'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleList from '@/app/rules/components/RuleList.vue'
-import type { RuleCollectionSource } from '@/app/rules/sources'
+import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: DataplaneOverview

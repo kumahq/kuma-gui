@@ -94,6 +94,28 @@ export class KumaModule {
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
+  policyName() {
+    const items = [
+      'MeshAccessLog',
+      'MeshCircuitBreaker',
+      'MeshFaultInjection',
+      'MeshHTTPRoute',
+      'MeshHealthCheck',
+      'MeshLoadBalancingStrategy',
+      'MeshMetric',
+      'MeshPassthrough',
+      'MeshProxyPatch',
+      'MeshRateLimit',
+      'MeshRetry',
+      'MeshTCPRoute',
+      'MeshTLS',
+      'MeshTimeout',
+      'MeshTrace',
+      'MeshTrafficPermission',
+    ] as const
+    return this.faker.helpers.arrayElement<typeof items[number]>(items)
+  }
+
   serviceType({ serviceTypes = ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }: { serviceTypes?: Array<'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin'> } = { serviceTypes: ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }) {
     return this.faker.helpers.arrayElement(serviceTypes)
   }

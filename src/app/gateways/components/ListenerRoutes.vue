@@ -216,7 +216,7 @@
                       </div>
                     </div>
 
-                    <div v-if="toRule.config.default">
+                    <div v-if="((item: Rule | RouteRule): item is RouteRule => 'default' in item.config)(toRule)">
                       <b>{{ t('builtin-gateways.detail.default') }}</b>:
 
                       <div
@@ -264,10 +264,16 @@ import RuleFilter from '@/app/rules/components/RuleFilter.vue'
 import RuleMatch from '@/app/rules/components/RuleMatch.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
-import type { PolicyType } from '@/types/index.d'
+import type { TargetRef as TarRef, PolicyType } from '@/types/index.d'
 
 const { t } = useI18n()
-
+type RouteRule = Rule & {
+  config: {
+    default: {
+      backendRefs: TarRef[]
+    }
+  }
+}
 const props = defineProps<{
   meshGateway: MeshGateway
   selectedListenerIndex: number

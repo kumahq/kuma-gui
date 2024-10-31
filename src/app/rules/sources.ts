@@ -1,19 +1,29 @@
+import createClient from 'openapi-fetch'
+
 import {
   Rule,
-  RuleCollection,
 } from './data'
-import type { DataSourceResponse } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { paths } from '@/types/auto-generated.d'
 
-export type RuleCollectionSource = DataSourceResponse<RuleCollection>
 export const sources = (source: Source, api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
   return defineSources({
     '/meshes/:mesh/rules/for/:dataplane': async (params) => {
-      return Rule.fromCollection(await api.getDataplaneRules({
-        mesh: params.mesh,
-        name: params.dataplane,
-      }))
+      const res = await http.GET('/meshes/{mesh}/{resourceType}/{resourceName}/_rules', {
+        params: {
+          path: {
+            mesh: params.mesh,
+            resourceType: 'dataplanes',
+            resourceName: params.dataplane,
+          },
+        },
+      })
+      return Rule.fromCollection(res.data!)
     },
   })
 }
