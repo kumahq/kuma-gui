@@ -1,6 +1,8 @@
-import Env, { getPathConfigDefault } from './Env'
+import Env from './Env'
+import { htmlVars } from '../../../../../vite.plugins'
+
 export default class CliEnv extends Env {
   protected getConfig() {
-    return getPathConfigDefault()
+    return htmlVars
   }
 }

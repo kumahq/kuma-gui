@@ -6,7 +6,6 @@ import { ref, onMounted } from 'vue'
 import { createApp } from 'whyframe:app'
 import { TOKENS as APP, services as application } from '@/app/application'
 import { services as applicationDebug } from '@/app/application/debug'
-import CliEnv from '@/app/application/services/env/CliEnv'
 import { TOKENS as VUE, services as vue } from '@/app/vue'
 import { TOKENS } from '@/app/kuma'
 import { build, token } from '@/services/utils'
@@ -67,12 +66,6 @@ onMounted(async () => {
             ],
             labels: [
               $.globals,
-            ],
-          }],
-          [$.Env, {
-            service: CliEnv,
-            arguments: [
-              $.EnvVars,
             ],
           }],
         ],

@@ -9,6 +9,7 @@ import svgLoader from 'vite-svg-loader'
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
 import { fs } from './src/test-support/mocks/fs'
 import fakeApi from './src/test-support/vite'
+import { replicateKumaServer } from './vite.plugins'
 import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 
@@ -24,6 +25,7 @@ export const config: UserConfigFn = () => {
       port: 8080,
     },
     plugins: [
+      replicateKumaServer(),
       vue({
         template: {
           compilerOptions: {

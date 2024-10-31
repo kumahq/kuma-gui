@@ -1,4 +1,5 @@
 import { defineConfig, DefaultTheme } from 'vitepress'
+import { readFileSync as read } from 'node:fs'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import { whyframe } from '@whyframe/core'
 import { whyframeVue } from '@whyframe/vue'
@@ -12,12 +13,14 @@ import { defineConfig as viteConfig } from 'vite'
 import groupBy from 'object.groupby'
 
 import { hoistUseStatements } from '../dev-utilities/hoistUseStatements'
+import { kumaIndexHtmlVars } from '../vite.plugins'
 import { sync as globSync } from 'glob'
 import fs from 'node:fs'
 
 // temporary Object.groupBy polyfill
 // TODO(jc): delete this once we get to 2026
 groupBy.shim()
+
 const md = markdown(
   {
     html: true,
@@ -39,7 +42,6 @@ const get = (path: string) => {
   return items
 }
 
-
 const files = get('{src,docs}/**/*.md')
 const sections = Object.groupBy(files.filter(({ data }) => typeof data.section !== 'undefined'), (item) => {
   return item.data.section
@@ -49,13 +51,22 @@ const components = files.filter((item) => {
   return item.data.type === 'component' || (typeof item.data.type === 'undefined' && typeof item.data.section === 'undefined')
 })
 
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'kuma-gui',
   description: '',
   vite: viteConfig({
     plugins: [
+      {
+        // in lieu of being able to provide our own index.html insert `{{.}}`
+        // into the html first, so that the following kumaIndexHtmlVars plugin
+        // works the same
+        name: 'kuma-vitepress-gotemplate',
+        transformIndexHtml: (template) => {
+          return template.replace('<div id="app"></div>', `<div id="app"></div><script type="application/json" id="kuma-config" />{{.}}</script>`)
+        },
+      },
+      kumaIndexHtmlVars(),
       whyframe({
         defaultSrc: '/.vitepress/theme/main',
         components: [{ name: 'Story', showSource: true }],
