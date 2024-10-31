@@ -10,6 +10,7 @@ import XDisclosure from './components/x-disclosure/XDisclosure.vue'
 import XEmptyState from './components/x-empty-state/XEmptyState.vue'
 import XIcon from './components/x-icon/XIcon.vue'
 import XInput from './components/x-input/XInput.vue'
+import XLayout from './components/x-layout/XLayout.vue'
 import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
 import XSelect from './components/x-select/XSelect.vue'
@@ -39,6 +40,7 @@ declare module 'vue' {
     XCodeBlock: typeof XCodeBlock
     XBreadcrumbs: typeof XBreadcrumbs
     XEmptyState: typeof XEmptyState
+    XLayout: typeof XLayout
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XSelect: typeof XSelect
@@ -82,6 +84,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XEmptyState', XEmptyState],
           ['XIcon', XIcon],
           ['XInput', XInput],
+          ['XLayout', XLayout],
           ['XPrompt', XPrompt],
           ['XAlert', KAlert],
           ['XProvider', XProvider],
