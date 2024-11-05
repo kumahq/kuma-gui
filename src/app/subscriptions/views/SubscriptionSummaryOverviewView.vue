@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="subscription-summary-overview-view"
+    :name="$routeName!"
     v-slot="{ t }"
   >
     <AppView>

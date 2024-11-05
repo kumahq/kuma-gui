@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="subscription-summary-config-view"
+    :name="$routeName!"
     :params="{
       codeSearch: '',
       codeFilter: false,

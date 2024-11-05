@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="subscription-summary-view"
+    :name="$routeName!"
     :params="{
       subscription: '',
     }"
