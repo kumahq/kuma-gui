@@ -28,7 +28,6 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
   [$.EnvVars, {
     constant: {
       KUMA_API_URL: Cypress.env('VITE_KUMA_API_SERVER_URL'),
-      KUMA_PRODUCT_NAME: Cypress.env('VITE_NAMESPACE'),
       KUMA_VERSION_URL: Cypress.env('VITE_VERSION_URL'),
       KUMA_DOCS_URL: Cypress.env('VITE_DOCS_BASE_URL'),
       KUMA_MOCK_API_ENABLED: Cypress.env('VITE_MOCK_API_ENABLED'),

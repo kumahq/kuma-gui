@@ -1,6 +1,22 @@
 common:
-  not_applicable: N/A
-  matchingsearch: " matching that search"
+  product:
+    name: Kuma
+    utm_query_params: utm_source=Kuma&utm_medium=Kuma
+    href:
+      # version: https://kuma.io/latest_version
+      feedback: 'https://github.com/kumahq/kuma/issues/new/choose'
+      install: 'https://kuma.io/install/latest/?{KUMA_UTM_QUERY_PARAMS}'
+      docs:
+        # base: https://kuma.io/docs
+        index: '{KUMA_DOCS_URL}/?{KUMA_UTM_QUERY_PARAMS}'
+    environment:
+      universal: Universal
+      kubernetes: Kubernetes
+      unknown: '—'
+    mode:
+      standalone: Standalone
+      global: Multi-Zone
+      zone: Zone
   formats:
     integer: |
       { value, select,
@@ -13,22 +29,8 @@ common:
         undefined { Invalid Date }
         other { { value, date, datetime } }
       }
-  product:
-    name: Kuma
-    utm_query_params: utm_source=Kuma&utm_medium=Kuma
-    href:
-      docs:
-        index: '{KUMA_DOCS_URL}/?{KUMA_UTM_QUERY_PARAMS}'
-      feedback: 'https://github.com/kumahq/kuma/issues/new/choose'
-      install: 'https://kuma.io/install/latest/?{KUMA_UTM_QUERY_PARAMS}'
-    environment:
-      universal: Universal
-      kubernetes: Kubernetes
-      unknown: '—'
-    mode:
-      standalone: Standalone
-      global: Multi-Zone
-      zone: Zone
+  not_applicable: N/A
+  matchingsearch: " matching that search"
   warnings:
     CERT_EXPIRED: !!text/markdown |
       The certificate for this dataplane has expired
