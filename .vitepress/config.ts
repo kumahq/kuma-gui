@@ -63,7 +63,7 @@ export default defineConfig({
         // works the same
         name: 'kuma-vitepress-gotemplate',
         transformIndexHtml: (template) => {
-          return template.replace('<div id="app"></div>', `<div id="app"></div><script type="application/json" id="kuma-config" />{{.}}</script>`)
+          return template.replace('<div id="app"></div>', `<div id="app"></div><script type="application/json" id="kuma-config">{{.}}</script>`)
         },
       },
       kumaIndexHtmlVars(),
