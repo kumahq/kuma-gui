@@ -36,17 +36,17 @@ export const Subscription = {
             ...acknowledgements.reduce((prev, prop) => {
               prev[prop] = prev[prop] ?? 0
               return prev
-            }, item.total as {
+            }, {} as {
               [key in (typeof acknowledgements)[number]]: number
             }),
           },
           acknowledgements: {
             ...Object.fromEntries(
-              Object.entries(stats).map(([key, value]) => {
+              Object.entries(stats).map(([key, _value]) => {
                 return [key, acknowledgements.reduce((prev, prop) => {
                   prev[prop] = prev[prop] ?? 0
                   return prev
-                }, value as {
+                }, {} as {
                   [key in (typeof acknowledgements)[number]]: number
                 })]
               }),
