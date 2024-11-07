@@ -41,16 +41,32 @@ const addRouteName = (item: RouteRecordRaw, _parent?: RouteRecordRaw) => {
     // natively cached we could re-cache this in a WeakMap if it becomes
     // necessary (I don't think it will)
     const cached = (await component()).default
-    const route = {
-      default: {
-        ...cached,
-        render: (...args: Record<string, unknown>[]) => {
-          args[0].$routeName = item.name
-          return cached.render(...args)
+    if (typeof cached.render === 'function') {
+      return {
+        default: {
+          ...cached,
+          render: (...args: Record<string, unknown>[]) => {
+            args[0].$routeName = item.name
+            return cached.render(...args)
+          },
         },
-      },
+      }
+    } else if (typeof cached.setup === 'function') {
+      return {
+        default: {
+          ...cached,
+          setup: (...args: any[]) => {
+            const func = cached.setup(...args)
+            return (...args: Record<string, unknown>[]) => {
+              args[0].$routeName = item.name
+              return func(...args)
+            }
+          },
+        },
+      }
+
     }
-    return route
+    return cached
   }
 }
 const addModule = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
