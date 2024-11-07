@@ -6,6 +6,8 @@ subscriptions:
         zone-cp-subscription-summary-config-view: YAML
         zone-ingress-subscription-summary-overview-view: Overview
         zone-ingress-subscription-summary-config-view: YAML
+        zone-egress-subscription-summary-overview-view: Overview
+        zone-egress-subscription-summary-config-view: YAML
       headers:
         config: Config
         responses: Total Responses (sent/ack'ed)

@@ -1,3 +1,4 @@
+import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (prefix = 'egresses') => {
@@ -13,6 +14,7 @@ export const routes = (prefix = 'egresses') => {
             path: 'overview',
             name: 'zone-egress-detail-view',
             component: () => import('@/app/zone-egresses/views/ZoneEgressDetailView.vue'),
+            children: subscriptions('zone-egress'),
           },
           {
             path: 'xds-config',
