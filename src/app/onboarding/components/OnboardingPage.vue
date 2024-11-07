@@ -41,12 +41,13 @@ const props = defineProps({
   background-color: #fff;
   box-shadow: var(--onboarding-shadow);
 
+  position: absolute;
+  left: 0;
+  right: 0;
+
   @media (min-width: 768px) {
     max-width: 1075px;
   }
-    position: absolute;
-    left: 0;
-    right: 0;
 
   @media (min-height: 950px) {
     top: 50%;
