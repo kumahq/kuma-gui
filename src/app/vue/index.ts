@@ -26,6 +26,63 @@ const $ = {
   routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
   navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
 }
+
+// @TODO at some point we should expose this as an extendable thing
+// similar to navigationGuards. We'd then do this specific functionality in
+// `@app/application` as it relates to RouteView
+const addRouteName = (item: RouteRecordRaw, _parent?: RouteRecordRaw) => {
+  if (typeof item.component !== 'function') {
+    return
+  }
+  // @ts-ignore at this point item.component has to be a function because we checked it above
+  const component = item.component.bind(item)
+  item.component = async () => {
+    // we need to create a new instance of the component as import is
+    // natively cached we could re-cache this in a WeakMap if it becomes
+    // necessary (I don't think it will)
+    const cached = (await component()).default
+    const route = {
+      default: {
+        ...cached,
+        render: (...args: Record<string, unknown>[]) => {
+          args[0].$routeName = item.name
+          return cached.render(...args)
+        },
+      },
+    }
+    return route
+  }
+}
+const addModule = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
+  item.meta = {
+    ...(item.meta ?? {}),
+  }
+  if (typeof parent?.meta?.module !== 'undefined') {
+    item.meta.module = parent.meta.module
+  }
+}
+const addPath = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
+  item.meta = {
+    ...(item.meta ?? {}),
+  }
+  if (typeof parent?.meta?.path !== 'undefined') {
+    const path = String(parent.meta.path) ?? ''
+    item.meta.path = `${path}${path.length > 0 ? '.' : ''}${String(item.name)}`
+  }
+}
+function walkRoutes(routes: RouteRecordRaw[], parent?: RouteRecordRaw) {
+  routes.forEach((item) => {
+    // this is very specific to app/application
+    addModule(item, parent)
+    addPath(item, parent)
+    addRouteName(item, parent)
+    //
+    if (typeof item.children !== 'undefined') {
+      walkRoutes(item.children, item)
+    }
+  })
+  return routes
+}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [$.app, {
@@ -60,11 +117,16 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ) => {
         const router = createRouter({
           history: createWebHistory(env('KUMA_BASE_PATH')),
-          routes: [{
-            path: '/',
-            name: 'app',
-            children: routes,
-          }],
+          routes: walkRoutes([
+            {
+              path: '/',
+              name: 'app',
+              meta: {
+                path: '',
+              },
+              children: routes,
+            },
+          ]),
         })
 
         guards.forEach((item) => {

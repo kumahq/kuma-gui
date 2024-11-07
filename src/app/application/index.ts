@@ -56,6 +56,9 @@ declare module 'vue' {
     RouteTitle: typeof RouteTitle
     I18nT: ReturnType<typeof i18nTComponent>
   }
+  interface ComponentCustomProperties {
+    $routeName?: string
+  }
 }
 
 const $ = {
