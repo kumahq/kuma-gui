@@ -31,22 +31,12 @@
       :key="key"
       #[key]="{ row, rowValue }"
     >
-      <template
-        v-if="key === 'toolbar'"
-      >
-        <div class="app-collection-toolbar">
-          <slot name="toolbar" />
-        </div>
-      </template>
-
-      <template v-else>
-        <slot
-          v-if="(props.items ?? []).length > 0"
-          :name="key"
-          :row="row as Row"
-          :row-value="rowValue"
-        />
-      </template>
+      <slot
+        v-if="(props.items ?? []).length > 0"
+        :name="key"
+        :row="row as Row"
+        :row-value="rowValue"
+      />
     </template>
   </KTable>
 </template>
@@ -148,15 +138,6 @@ const click = (e: MouseEvent) => {
 }
 .app-collection :deep(td:first-child li a:hover) {
   text-decoration: underline;
-}
-.app-collection-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: $kui-space-70;
-  font-size: $kui-font-size-40;
-  width: 100%;
 }
 </style>
 

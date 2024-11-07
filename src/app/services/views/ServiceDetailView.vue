@@ -74,6 +74,22 @@
           <KCard
             class="mt-4"
           >
+            <search>
+              <FilterBar
+                class="data-plane-proxy-filter"
+                :placeholder="`name:dataplane-name`"
+                :query="route.params.s"
+                :fields="{
+                  name: { description: 'filter by name or parts of a name' },
+                  protocol: { description: 'filter by “kuma.io/protocol” value' },
+                  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                  ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
+                }"
+                @change="(e) => route.update({
+                  ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
+                })"
+              />
+            </search>
             <DataLoader
               :src="uri(dataplaneSources, `/meshes/:mesh/dataplanes/for/service-insight/:service`, {
                 mesh: route.params.mesh,
@@ -111,23 +127,6 @@
                     :is-selected-row="(row) => row.name === route.params.dataPlane"
                     @resize="me.set"
                   >
-                    <template #toolbar>
-                      <FilterBar
-                        class="data-plane-proxy-filter"
-                        :placeholder="`name:dataplane-name`"
-                        :query="route.params.s"
-                        :fields="{
-                          name: { description: 'filter by name or parts of a name' },
-                          protocol: { description: 'filter by “kuma.io/protocol” value' },
-                          tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                          ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                        }"
-                        @change="(e) => route.update({
-                          ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                        })"
-                      />
-                    </template>
-
                     <template #name="{ row: item }">
                       <XAction
                         data-action
@@ -270,6 +269,15 @@ import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>
 
 <style lang="scss" scoped>
+search {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: $kui-space-70;
+  margin-bottom: $kui-space-70;
+}
 .data-plane-proxy-filter {
   flex-basis: 350px;
   flex-grow: 1;

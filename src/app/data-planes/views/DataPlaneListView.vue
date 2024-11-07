@@ -20,6 +20,49 @@
     >
       <div v-html="t('data-planes.routes.items.intro', {}, { defaultMessage: '' })" />
       <KCard>
+        <search>
+          <FilterBar
+            class="data-plane-proxy-filter"
+            :placeholder="`service:backend`"
+            :query="route.params.s"
+            :fields="{
+              name: { description: 'filter by name or parts of a name' },
+              protocol: { description: 'filter by “kuma.io/protocol” value' },
+              service: { description: 'filter by “kuma.io/service” value' },
+              tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+              ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
+            }"
+            @change="(e) => route.update({
+              ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
+            })"
+          />
+
+          <XSelect
+            label="Type"
+            :selected="route.params.dataplaneType"
+            @change="(value: string) => route.update({ dataplaneType: value })"
+          >
+            <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+              <XIcon
+                v-if="item !== 'all'"
+                :size="KUI_ICON_SIZE_40"
+                :name="item"
+              />
+              {{ t(`data-planes.type.${item}`) }}
+            </template>
+            <template
+              v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+              :key="item"
+              #[`${item}-option`]
+            >
+              <XIcon
+                v-if="item !== 'all'"
+                :name="item"
+              />
+              {{ t(`data-planes.type.${item}`) }}
+            </template>
+          </XSelect>
+        </search>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type`, {
             mesh: route.params.mesh,
@@ -59,50 +102,6 @@
                 :is-selected-row="(row) => row.name === route.params.dataPlane"
                 @resize="me.set"
               >
-                <template #toolbar>
-                  <FilterBar
-                    class="data-plane-proxy-filter"
-                    :placeholder="`service:backend`"
-                    :query="route.params.s"
-                    :fields="{
-                      name: { description: 'filter by name or parts of a name' },
-                      protocol: { description: 'filter by “kuma.io/protocol” value' },
-                      service: { description: 'filter by “kuma.io/service” value' },
-                      tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                      ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                    }"
-                    @change="(e) => route.update({
-                      ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                    })"
-                  />
-
-                  <XSelect
-                    label="Type"
-                    :selected="route.params.dataplaneType"
-                    @change="(value: string) => route.update({ dataplaneType: value })"
-                  >
-                    <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
-                      <XIcon
-                        v-if="item !== 'all'"
-                        :size="KUI_ICON_SIZE_40"
-                        :name="item"
-                      />
-                      {{ t(`data-planes.type.${item}`) }}
-                    </template>
-                    <template
-                      v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
-                      :key="item"
-                      #[`${item}-option`]
-                    >
-                      <XIcon
-                        v-if="item !== 'all'"
-                        :name="item"
-                      />
-                      {{ t(`data-planes.type.${item}`) }}
-                    </template>
-                  </XSelect>
-                </template>
-
                 <template #type="{ row: item }">
                   <XIcon :name="item.dataplaneType">
                     {{ t(`data-planes.type.${item.dataplaneType}`) }}
@@ -313,6 +312,15 @@ const props = defineProps<{
   text-decoration: none;
 }
 
+search {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: $kui-space-70;
+  margin-bottom: $kui-space-70;
+}
 .data-plane-proxy-filter {
   flex-basis: 310px;
   flex-grow: 1;
