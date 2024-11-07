@@ -66,27 +66,41 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     id: fake.string.uuid(),
                     controlPlaneInstanceId: fake.hacker.noun(),
                     ...fake.kuma.connection(item, i, arr),
-                    generation: 409,
-                    status: {
-                      lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
-                      total: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
-                      },
-                      cds: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
-                      },
-                      eds: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
-                      },
-                      lds: {
-                        responsesSent: `${fake.number.int(30)}`,
-                        responsesAcknowledged: `${fake.number.int(30)}`,
-                      },
-                      rds: {},
-                    },
+                    generation: fake.number.int({ min: 1, max: 500 }),
+                    status: (() => {
+                      const xcks = fake.number.int({ min: 100, max: 500 })
+                      const stats = Object.entries(fake.kuma.partitionInto(
+                        {
+                          cds: Number,
+                          eds: Number,
+                          lds: Number,
+                          rds: Number,
+                        }, xcks,
+                      ))
+                      return {
+                        lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                        total: fake.kuma.partitionInto(
+                          {
+                            responsesSent: xcks,
+                            responsesAcknowledged: Number,
+                            responsesRejected: Number,
+                          }, xcks,
+                        ),
+                        ...stats.reduce(
+                          (prev, [key, value]) => {
+                            prev[key] = fake.kuma.partitionInto(
+                              {
+                                responsesSent: value,
+                                responsesAcknowledged: Number,
+                                responsesRejected: Number,
+                              }, value,
+                            )
+                            return prev
+                          },
+                          {} as Record<string, {}>,
+                        ),
+                      }
+                    })(),
                     version: {
                       kumaDp: {
                         version: '1.2.1',

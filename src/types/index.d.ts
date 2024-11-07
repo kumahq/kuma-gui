@@ -105,29 +105,6 @@ export interface ToTargetRef<T extends string = string> {
   rules: ToTargetRefRule[]
 }
 
-export interface DiscoveryServiceStats {
-  responsesSent?: string
-  responsesAcknowledged?: string
-  responsesRejected?: string
-}
-
-export interface KDSSubscriptionStatus {
-  lastUpdateTime: string
-  total: DiscoveryServiceStats
-  stat: Record<string, DiscoveryServiceStats>
-}
-
-export interface KDSSubscription {
-  config: string
-  id: string
-  zoneInstanceId?: string
-  globalInstanceId?: string
-  connectTime: string
-  disconnectTime?: string
-  status: KDSSubscriptionStatus
-  version: any
-}
-
 export interface ZoneInsight {
   subscriptions: KDSSubscription[]
 }
@@ -238,33 +215,59 @@ export interface EnvoyVersion {
   build: string
   kumaDpCompatible?: boolean
 }
-
-export interface DiscoverySubscriptionStatus {
-  lastUpdateTime: string
-  total: DiscoveryServiceStats
-  cds: DiscoveryServiceStats
-  eds: DiscoveryServiceStats
-  lds: DiscoveryServiceStats
-  rds: DiscoveryServiceStats
-}
-
 export interface Version {
   kumaDp: KumaDpVersion
+  kumaCp?: KumaCpVersion
 
   envoy: EnvoyVersion
 
   dependencies: Record<string, string>
 }
 
-export interface DiscoverySubscription {
+export interface DiscoveryServiceStats {
+  responsesSent?: number
+  responsesAcknowledged?: number
+  responsesRejected?: number
+}
+
+export type SubscriptionStatus = {
+  lastUpdateTime: string
+  total: DiscoveryServiceStats
+}
+
+export type KDSSubscriptionStatus = {
+  stat: Record<string, DiscoveryServiceStats>
+} & SubscriptionStatus
+
+export type DiscoverySubscriptionStatus = {
+  cds: DiscoveryServiceStats
+  eds: DiscoveryServiceStats
+  lds: DiscoveryServiceStats
+  rds: DiscoveryServiceStats
+} & SubscriptionStatus
+
+export type Subscription = {
   id: string
-  controlPlaneInstanceId: string
   connectTime?: string
   disconnectTime?: string
-  status: DiscoverySubscriptionStatus
-  generation?: number
-  version?: Version
 }
+
+export type KDSSubscription = {
+  version: any
+
+  config: string
+  zoneInstanceId?: string
+  globalInstanceId?: string
+  status: KDSSubscriptionStatus
+} & Subscription
+
+export type DiscoverySubscription = {
+  version?: Version
+
+  controlPlaneInstanceId: string
+  generation?: number
+  status: DiscoverySubscriptionStatus
+} & Subscription
 
 export interface DataPlaneInsight {
   mTLS?: {

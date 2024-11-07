@@ -124,7 +124,7 @@
                 <XAction
                   data-action
                   :to="{
-                    name: 'subscription-summary-view',
+                    name: 'zone-cp-subscription-summary-view',
                     params: {
                       subscription: item.id,
                     },

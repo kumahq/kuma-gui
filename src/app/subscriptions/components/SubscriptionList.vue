@@ -28,12 +28,12 @@ import { computed } from 'vue'
 
 import SubscriptionDetails from './SubscriptionDetails.vue'
 import SubscriptionHeader from './SubscriptionHeader.vue'
+import type { Subscription } from '../data'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import type { DiscoverySubscription, KDSSubscription } from '@/types/index.d'
 
 const props = defineProps<{
-  subscriptions: Array<KDSSubscription | DiscoverySubscription>
+  subscriptions: Subscription[]
 }>()
 
 const reversedSubscriptions = computed(() => {

@@ -11,7 +11,7 @@
           layout="horizontal"
         >
           <template #title>
-            {{ t('subscriptions.routes.item.headers.version') }}
+            {{ t('http.api.property.version') }}
           </template>
 
           <template #body>
@@ -26,7 +26,7 @@
           layout="horizontal"
         >
           <template #title>
-            {{ t('subscriptions.routes.item.headers.connected') }}
+            {{ t('http.api.property.connectTime') }}
           </template>
 
           <template #body>
@@ -38,7 +38,7 @@
           layout="horizontal"
         >
           <template #title>
-            {{ t('subscriptions.routes.item.headers.disconnected') }}
+            {{ t('http.api.property.disconnectTime') }}
           </template>
 
           <template #body>
@@ -60,35 +60,28 @@
             </template>
           </template>
         </DefinitionCard>
-        <DefinitionCard
-          v-if="props.data.zoneInstanceId"
-          layout="horizontal"
+        <template
+          v-for="prop in (['zoneInstanceId', 'globalInstanceId', 'controlPlaneInstanceId'] as const)"
+          :key="typeof prop"
         >
-          <template #title>
-            {{ t('subscriptions.routes.item.headers.zoneInstanceId') }}
-          </template>
+          <DefinitionCard
+            v-if="props.data[prop]"
+            layout="horizontal"
+          >
+            <template #title>
+              {{ t(`http.api.property.${prop}`) }}
+            </template>
 
-          <template #body>
-            {{ props.data.zoneInstanceId }}
-          </template>
-        </DefinitionCard>
-        <DefinitionCard
-          v-if="props.data.globalInstanceId"
-          layout="horizontal"
-        >
-          <template #title>
-            {{ t('subscriptions.routes.item.headers.globalInstanceId') }}
-          </template>
-
-          <template #body>
-            {{ props.data.globalInstanceId }}
-          </template>
-        </DefinitionCard>
+            <template #body>
+              {{ props.data[prop] }}
+            </template>
+          </DefinitionCard>
+        </template>
         <DefinitionCard
           layout="horizontal"
         >
           <template #title>
-            {{ t('subscriptions.routes.item.headers.id') }}
+            {{ t('http.api.property.id') }}
           </template>
 
           <template #body>
@@ -96,7 +89,18 @@
           </template>
         </DefinitionCard>
       </div>
+      <XAlert
+        v-if="Object.keys(props.data.status.acknowledgements).length === 0"
+        appearance="info"
+      >
+        <template #icon>
+          <PortalIcon />
+        </template>
+
+        {{ t('common.detail.subscriptions.no_stats', { id: props.data.id }) }}
+      </XAlert>
       <div
+        v-else
         class="mt-8 stack-with-borders"
       >
         <div>
@@ -117,14 +121,14 @@
           </template>
         </DefinitionCard>
         <template
-          v-for="[key, item] in Object.entries(props.data.status?.stat ?? {})"
+          v-for="[key, item] in Object.entries(props.data.status.acknowledgements ?? {})"
           :key="key"
         >
           <DefinitionCard
             layout="horizontal"
           >
             <template #title>
-              {{ key }}
+              {{ t(`http.api.property.${key}`) }}
             </template>
 
             <template #body>
@@ -138,10 +142,12 @@
 </template>
 
 <script lang="ts" setup>
+import { PortalIcon } from '@kong/icons'
+
+import type { Subscription } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import type { KDSSubscription } from '@/app/zones/data'
 
 const props = defineProps<{
-  data: KDSSubscription
+  data: Subscription
 }>()
 </script>

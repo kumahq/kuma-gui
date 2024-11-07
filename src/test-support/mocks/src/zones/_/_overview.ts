@@ -46,71 +46,52 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 },
                 config: fake.kuma.subscriptionConfig(),
                 ...fake.kuma.connection(item, i, arr),
-                status: {
-                  lastUpdateTime: '2021-02-19T07:06:16.384057Z',
-                  total: {
-                    responsesSent: `${fake.number.int(30)}`,
-                    responsesAcknowledged: `${fake.number.int(30)}`,
-                  },
-                  stat: {
-                    CircuitBreaker: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
+                status: (() => {
+                  const xcks = fake.number.int({ min: 100, max: 500 })
+                  const stats = Object.entries(fake.kuma.partitionInto(
+                    {
+                      CircuitBreaker: Number,
+                      Config: Number,
+                      Mesh: Number,
+                      Secret: Number,
+                      Dataplane: Number,
+                      ExternalService: Number,
+                      FaultInjection: Number,
+                      HealthCheck: Number,
+                      ProxyTemplate: Number,
+                      Retry: Number,
+                      TrafficLog: Number,
+                      TrafficPermission: Number,
+                      TrafficRoute: Number,
+                      TrafficTrace: Number,
+                    }, xcks,
+                  ))
+                  return {
+                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                    total: fake.kuma.partitionInto(
+                      {
+                        responsesSent: xcks,
+                        responsesAcknowledged: Number,
+                        responsesRejected: Number,
+                      }, xcks,
+                    ),
+                    stat: {
+                      ...stats.reduce(
+                        (prev, [key, value]) => {
+                          prev[key] = fake.kuma.partitionInto(
+                            {
+                              responsesSent: value,
+                              responsesAcknowledged: Number,
+                              responsesRejected: Number,
+                            }, value,
+                          )
+                          return prev
+                        },
+                        {} as Record<string, {}>,
+                      ),
                     },
-                    Config: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    Dataplane: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    ExternalService: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    FaultInjection: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    HealthCheck: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    Mesh: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    ProxyTemplate: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    Retry: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    Secret: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    TrafficLog: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    TrafficPermission: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    TrafficRoute: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                    TrafficTrace: {
-                      responsesSent: `${fake.number.int(30)}`,
-                      responsesAcknowledged: `${fake.number.int(30)}`,
-                    },
-                  },
-                },
+                  }
+                })(),
               }
             }),
           }

@@ -1,32 +1,77 @@
 import type {
   Version as PartialVersion,
   DiscoverySubscription as PartialDiscoverySubscription,
+  SubscriptionStatus as PartialSubscriptionStatus,
+  Subscription as ProtoSubscription,
 } from '@/types/index.d'
 
-export type Version = PartialVersion
-export type Subscription = {
-  disconnectTime?: string
-  status: {
-    lastUpdateTime: string
-  }
-  version?: Version
-}
-export type DiscoverySubscription = PartialDiscoverySubscription
-export type SubscriptionCollection<T extends { version?: any }> = {
-  subscriptions: T[]
-  connectedSubscription?: T
-  version?: T['version']
-}
-export type DiscoverySubscriptionCollection = SubscriptionCollection<DiscoverySubscription>
+const acknowledgements = [
+  'responsesSent',
+  'responsesAcknowledged',
+  'responsesRejected',
+] as const
 
+export type Version = PartialVersion
+
+export type PartialSubscription = {
+  status: PartialSubscriptionStatus
+  version?: Version
+} & ProtoSubscription
+
+export type DiscoverySubscription = PartialDiscoverySubscription
+
+export const Subscription = {
+  fromObject<T extends PartialSubscription>(item: T) {
+    return {
+      $raw: item,
+      ...item,
+      status: ((item) => {
+        const { total, lastUpdateTime, stat, ...rest } = { stat: {}, ...item }
+        const stats = Object.keys(stat).length > 0 ? stat : rest
+        return {
+          ...item,
+          // make sure we default to zero for all acknowledgement properties
+          total: {
+            ...total,
+            ...acknowledgements.reduce((prev, prop) => {
+              prev[prop] = prev[prop] ?? 0
+              return prev
+            }, item.total as {
+              [key in (typeof acknowledgements)[number]]: number
+            }),
+          },
+          acknowledgements: {
+            ...Object.fromEntries(
+              Object.entries(stats).map(([key, value]) => {
+                return [key, acknowledgements.reduce((prev, prop) => {
+                  prev[prop] = prev[prop] ?? 0
+                  return prev
+                }, value as {
+                  [key in (typeof acknowledgements)[number]]: number
+                })]
+              }),
+            ),
+          },
+          //
+        }
+      })(item.status),
+    }
+  },
+}
+export type Subscription = ReturnType<typeof Subscription.fromObject> & {
+  zoneInstanceId?: string
+  globalInstanceId?: string
+  controlPlaneInstanceId?: string
+}
 export const DiscoverySubscriptionCollection = {
-  fromArray: (items?: DiscoverySubscription[]): DiscoverySubscriptionCollection => {
+  fromArray: (items?: DiscoverySubscription[]) => {
     return SubscriptionCollection.fromArray(items)
   },
 }
+export type DiscoverySubscriptionCollection = ReturnType<typeof DiscoverySubscriptionCollection.fromArray>
 export const SubscriptionCollection = {
-  fromArray: <T extends Subscription>(items?: T[]): SubscriptionCollection<T> => {
-    const subscriptions = Array.isArray(items) ? items.map(item => item) : []
+  fromArray: <T extends PartialSubscription>(items?: T[]) => {
+    const subscriptions = Array.isArray(items) ? items.map(Subscription.fromObject<T>) : []
 
     // make a copy of the original array so we don't change its order
     const subs = subscriptions.slice()
@@ -49,3 +94,4 @@ export const SubscriptionCollection = {
     }
   },
 }
+export type SubscriptionCollection = ReturnType<typeof SubscriptionCollection.fromArray>
