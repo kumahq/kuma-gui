@@ -198,9 +198,6 @@ watch(() => {
 }, { immediate: true })
 
 watch(() => props.name, () => {
-  if (typeof props.name === 'undefined' || props.name.startsWith('$routeName')) {
-    throw new Error('`$routeName` has been used for a name, please use `:name` not `name`')
-  }
   // we only want query params here
   const params = Object.entries(routeParams || {}).reduce((prev, [key, value]) => {
     if (typeof route.params[key] === 'undefined') {
