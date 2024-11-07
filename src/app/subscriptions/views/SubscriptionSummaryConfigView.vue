@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    :name="$routeName!"
+    :name="props.routeName"
     :params="{
       codeSearch: '',
       codeFilter: false,
@@ -29,5 +29,6 @@ import type { Subscription } from '../data'
 import { YAML } from '@/app/application'
 const props = defineProps<{
   data: Subscription
+  routeName: string
 }>()
 </script>

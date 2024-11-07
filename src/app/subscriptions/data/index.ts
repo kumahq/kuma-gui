@@ -10,6 +10,9 @@ const acknowledgements = [
   'responsesAcknowledged',
   'responsesRejected',
 ] as const
+type Acknowledgements = {
+  [key in (typeof acknowledgements)[number]]: number
+}
 
 export type Version = PartialVersion
 
@@ -36,9 +39,7 @@ export const Subscription = {
             ...acknowledgements.reduce((prev, prop) => {
               prev[prop] = total[prop] ?? 0
               return prev
-            }, {} as {
-              [key in (typeof acknowledgements)[number]]: number
-            }),
+            }, {} as Acknowledgements),
           },
           acknowledgements: {
             ...Object.fromEntries(
@@ -46,9 +47,7 @@ export const Subscription = {
                 return [key, acknowledgements.reduce((prev, prop) => {
                   prev[prop] = value[prop] ?? 0
                   return prev
-                }, {} as {
-                  [key in (typeof acknowledgements)[number]]: number
-                })]
+                }, {} as Acknowledgements)]
               }),
             ),
           },

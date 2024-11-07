@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    :name="$routeName!"
+    :name="props.routeName"
     :params="{
       subscription: '',
     }"
@@ -58,5 +58,6 @@ import type { Subscription } from '../data/'
 
 const props = defineProps<{
   data: Subscription[]
+  routeName: string
 }>()
 </script>

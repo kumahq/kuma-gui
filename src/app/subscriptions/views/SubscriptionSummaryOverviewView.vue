@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    :name="$routeName!"
+    :name="props.routeName"
     v-slot="{ t }"
   >
     <AppView>
@@ -149,5 +149,6 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 
 const props = defineProps<{
   data: Subscription
+  routeName: string
 }>()
 </script>
