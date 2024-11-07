@@ -4,8 +4,13 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
 
   const parts = String(name).split('.')
-  const displayName = parts.slice(0, -1).join('.')
-  const nspace = parts.pop()
+  let displayName = parts.slice(0, -1).join('.')
+  let nspace = parts.pop()
+
+  if (displayName.length === 0) {
+    displayName = String(nspace)
+    nspace = ''
+  }
 
   const zoneName = fake.hacker.noun()
 

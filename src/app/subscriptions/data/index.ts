@@ -26,15 +26,15 @@ export const Subscription = {
       $raw: item,
       ...item,
       status: ((item) => {
-        const { total, lastUpdateTime, stat, ...rest } = { stat: {}, ...item }
-        const stats = Object.keys(stat).length > 0 ? stat : rest
+        const { total = {}, lastUpdateTime, stat = {}, ...rest } = { stat: {}, ...item }
+        const stats: Record<string, Record<string, number>> = Object.keys(stat).length > 0 ? stat : rest
         return {
           ...item,
           // make sure we default to zero for all acknowledgement properties
           total: {
             ...total,
             ...acknowledgements.reduce((prev, prop) => {
-              prev[prop] = prev[prop] ?? 0
+              prev[prop] = total[prop] ?? 0
               return prev
             }, {} as {
               [key in (typeof acknowledgements)[number]]: number
@@ -42,9 +42,9 @@ export const Subscription = {
           },
           acknowledgements: {
             ...Object.fromEntries(
-              Object.entries(stats).map(([key, _value]) => {
+              Object.entries(stats).map(([key, value]) => {
                 return [key, acknowledgements.reduce((prev, prop) => {
-                  prev[prop] = prev[prop] ?? 0
+                  prev[prop] = value[prop] ?? 0
                   return prev
                 }, {} as {
                   [key in (typeof acknowledgements)[number]]: number
