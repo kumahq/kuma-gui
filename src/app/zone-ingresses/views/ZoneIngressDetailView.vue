@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    :name="$routeName!"
+    name="zone-ingress-detail-view"
     :params="{
       subscription: '',
       zoneIngress: '',
