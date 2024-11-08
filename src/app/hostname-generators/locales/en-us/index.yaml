@@ -1,0 +1,33 @@
+hostname-generators:
+  x-empty-state:
+    title: 'No data'
+    body: !!text/markdown |
+      There are no HostnameGenerators present
+    action:
+      type: docs
+      label: Documentation
+      href: '{KUMA_DOCS_URL}/networking/hostnamegenerator?{KUMA_UTM_QUERY_PARAMS}'
+  common:
+    name: Name
+    namespace: Namespace
+    zone: Zone
+    selector: Selector
+    template: Template
+    actions: Actions
+  routes:
+    item:
+      title: "{name}"
+      subtitle: "{name} HostnameGenerator"
+      breadcrumbs: HostnameGenerators
+      config: YAML
+    items:
+      title: HostnameGenerators
+      breadcrumbs: HostnameGenerators
+      intro: !!text/markdown |
+        HostnameGenerators provide templates to generate hostnames from properties of different `MeshService` types.
+      collection:
+        services: 'Services'
+        dataplanes: 'Data Plane Proxies (online/total)'
+        
+  href:
+    docs: '{KUMA_DOCS_URL}/networking/hostnamegenerator?{KUMA_UTM_QUERY_PARAMS}'

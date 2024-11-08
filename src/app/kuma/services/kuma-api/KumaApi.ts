@@ -1,5 +1,10 @@
 import { Api } from './Api'
 import type {
+  HostnameGeneratorGetParams,
+  HostnameGeneratorItem,
+  HostnameGeneratorList,
+} from '@/app/hostname-generators/data'
+import type {
   ApiKindListResponse,
   DataPlaneOverviewParameters,
   ExternalServicesParameters,
@@ -237,5 +242,13 @@ export default class KumaApi extends Api {
 
   getMeshGatewayRules({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<InspectRulesForDataplane> {
     return this.client.get(`/meshes/${mesh}/meshgateways/${name}/_rules`, { params })
+  }
+
+  getHostnameGenerators(params?: any): Promise<HostnameGeneratorList> {
+    return this.client.get('/hostnamegenerators', { params })
+  }
+
+  getHostnameGenerator({ name }: HostnameGeneratorGetParams['path'], params?: any): Promise<HostnameGeneratorItem> {
+    return this.client.get(`/hostnamegenerators/${name}`, params)
   }
 }
