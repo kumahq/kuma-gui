@@ -66,6 +66,7 @@ export class KumaModule {
   }
 
   // TODO(jc): Use `totalName: Number.MAX_VALUE` so we can set a 'total' property automatically
+  // TODO(jc): Would be good to make this work deeply `{cds: { responses: Number }}` etc
   /**
    * Returns an object with the specified properties with the values as a random 'partition' of `total`
    */

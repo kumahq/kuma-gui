@@ -12,36 +12,20 @@ export type KDSSubscription = PartialKDSSubscription
 
 type KDSSubscriptionCollection = {
   config: Record<string, unknown>
-} & SubscriptionCollection<KDSSubscription>
-
-export type Zone = PartialZone & {
-  enabled: boolean
-}
-
-export type ZoneInsight = {
-  authenticationType: string
-  environment: string
-  store: string
-} & KDSSubscriptionCollection & PartialZoneInsight
-
-export type ZoneOverview = PartialZoneOverview & {
-  zoneInsight: ZoneInsight
-  zone: Zone
-  state: 'online' | 'offline' | 'disabled'
-  warnings: { kind: string, payload: Record<string, string> }[]
-}
+} & SubscriptionCollection
 
 export const Zone = {
-  fromObject: (item: PartialZone): Zone => {
+  fromObject: (item: PartialZone) => {
     return {
       ...item,
       enabled: !(item.enabled === false),
     }
   },
 }
+export type Zone = ReturnType<typeof Zone.fromObject>
 
 const KDSSubscriptionCollection = {
-  fromArray: (items?: KDSSubscription[]): KDSSubscriptionCollection => {
+  fromArray: (items?: KDSSubscription[]) => {
     const collection = SubscriptionCollection.fromArray(items)
     // find the first subscription in the list for a config
     // if its valid JSON and is not null, turn it into an object
@@ -64,7 +48,7 @@ const KDSSubscriptionCollection = {
 }
 
 export const ZoneInsight = {
-  fromObject: (item?: PartialZoneInsight): ZoneInsight => {
+  fromObject: (item?: PartialZoneInsight) => {
     const subs = KDSSubscriptionCollection.fromArray(item?.subscriptions)
     return {
       ...item,
@@ -75,9 +59,10 @@ export const ZoneInsight = {
     }
   },
 }
+export type ZoneInsight = ReturnType<typeof ZoneInsight.fromObject>
 
 export const ZoneOverview = {
-  fromObject: (item: PartialZoneOverview): ZoneOverview => {
+  fromObject: (item: PartialZoneOverview) => {
     const insight = ZoneInsight.fromObject(item.zoneInsight)
     const zone = Zone.fromObject(item.zone)
     const warnings = []
@@ -95,17 +80,21 @@ export const ZoneOverview = {
         },
       })
     }
-
+    const state = {
+      disabled: 'disabled',
+      online: 'online',
+      offline: 'offline',
+    } as const
     return {
       ...item,
       zoneInsight: insight,
       zone,
       // first check see if the zone is disabled, if not look for the connectedSubscription
-      state: !zone.enabled ? 'disabled' : typeof insight.connectedSubscription !== 'undefined' ? 'online' : 'offline',
+      state: !zone.enabled ? state.disabled : typeof insight.connectedSubscription !== 'undefined' ? state.online : state.offline,
       warnings,
     }
   },
-  fromCollection: (collection: CollectionResponse<PartialZoneOverview>): CollectionResponse<ZoneOverview> => {
+  fromCollection: (collection: CollectionResponse<PartialZoneOverview>) => {
     const items = Array.isArray(collection.items) ? collection.items.map(ZoneOverview.fromObject) : []
     return {
       ...collection,
@@ -114,3 +103,4 @@ export const ZoneOverview = {
     }
   },
 }
+export type ZoneOverview = ReturnType<typeof ZoneOverview.fromObject>

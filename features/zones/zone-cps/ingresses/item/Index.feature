@@ -2,12 +2,15 @@ Feature: zones / ingresses / item
 
   Background:
     Given the CSS selectors
-      | Alias            | Selector                                       |
-      | detail-view      | [data-testid='zone-ingress-detail-view']       |
-      | config-view      | [data-testid='zone-ingress-config-view']       |
-      | detail-tabs-view | [data-testid='zone-ingress-detail-tabs-view']  |
-      | navigation       | [data-testid='zone-ingress-tabs'] ul           |
-      | config-tab       | [data-testid='zone-ingress-config-view-tab'] a |
+      | Alias         | Selector                                       |
+      | page          | [data-testid='zone-ingress-detail-tabs-view']  |
+      | header        | $page .app-view-title-bar                      |
+      | overview-view | [data-testid='zone-ingress-detail-view']       |
+      | config-view   | [data-testid='zone-ingress-config-view']       |
+      | subscriptions | [data-testid='app-collection'] tbody tr        |
+      | subscription  | $subscriptions:nth-child(1)                    |
+      | navigation    | [data-testid='zone-ingress-tabs'] ul           |
+      | config-tab    | [data-testid='zone-ingress-config-view-tab'] a |
     And the environment
       """
       KUMA_MODE: global
@@ -41,9 +44,8 @@ Feature: zones / ingresses / item
               disconnectTime: !!js/undefined
       """
     When I visit the "/zones/zone-cp-1/ingresses/item-1/overview" URL
-    Then the page title contains "item-1"
-    Then the "$detail-tabs-view" element contains "item-1"
-    Then the "$detail-view" element contains "166.197.238.26:20555"
-    Then the "$detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
+    Then the "$header" element contains "item-1"
+    Then the "$overview-view" element contains "166.197.238.26:20555"
+    Then the "$subscription" element contains "Jul 28, 2020, 4:18 PM"
     When I click the "$config-tab" element
     Then the "$config-view" element contains "type: ZoneIngress"

@@ -39,14 +39,13 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
+import type { Subscription } from '../data'
 import { useI18n } from '@/app/application'
-import type { DiscoverySubscription } from '@/app/subscriptions/data'
-import type { KDSSubscription } from '@/app/zones/data'
 
 const { t } = useI18n()
 
 const props = defineProps<{
-  subscription: KDSSubscription | DiscoverySubscription
+  subscription: Subscription
 }>()
 
 const zoneInstanceId = computed(() => 'zoneInstanceId' in props.subscription ? props.subscription.zoneInstanceId : null)

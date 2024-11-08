@@ -7,9 +7,8 @@ Our `RouteView` component should be used as the top-most component for **every
 routable `*View.vue` component**. Think of it as your `<html>` tag.
 
 ::: danger
-When using this you should use `$routeName` route component global for the name
-of the route you are creating as the RouteView's `name` property. See
-`:name="$routeName!"` in the below example.
+When using this you should specify the name of the route you are creating as
+the RouteView's `name` property. See `name="route-name"` in the below example.
 :::
 
 `RouteView` contains functionality for:
@@ -30,7 +29,7 @@ It generally looks something like this:
 
 ```vue
 <RouteView
-  :name="$routeName!"
+  name="route-name"
   :params="{
     define: ''
     route: ''
@@ -52,7 +51,7 @@ omits some things and adds functionality to others.
 
 ```vue
 <RouteView
-  :name="$routeName!"
+  name="route-name"
   :params="{
     mesh: ''
     service: ''
@@ -108,7 +107,7 @@ the page in-place anywhere in your `*View.vue` component.
 
 ```vue
 <RouteView
-  :name="$routeName!"
+  name="route-name"
 >
   <h1>
     <RouteTitle
@@ -125,7 +124,7 @@ disable this render you can use the `render` attribute:
 
 ```vue
 <RouteView
-  :name="$routeName!"
+  name="route-name"
 >
   <RouteTitle
     title="The title"
@@ -170,7 +169,7 @@ attributes such as `data-*`, you'll need to add that functionality to
 
 ```vue
 <RouteView
-  :name="$routeName!"
+  name="route-name"
   :attrs="{
     class: 'my-html-class',
   }"
@@ -203,7 +202,7 @@ the root HTML node.
 
 ```vue
 <RouteView
-  :name="$routeName!"
+  name="route-name"
   v-slot="{ route, t, env, uri, can, me }"
   ...
 >
