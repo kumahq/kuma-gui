@@ -16,8 +16,10 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
     body: {
       type: 'ZoneIngressOverview',
       name,
-      creationTime: '2021-07-13T08:40:59Z',
-      modificationTime: '2021-07-13T08:40:59Z',
+      ...((modificationTime) => ({
+        creationTime: fake.kuma.date({ refDate: modificationTime }),
+        modificationTime,
+      }))(fake.kuma.date()),
       ...(k8s
         ? {
           labels: {
@@ -59,7 +61,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
                 ...fake.kuma.connection(item, i, arr),
                 generation: 409,
                 status: {
-                  lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                  lastUpdateTime: fake.kuma.nanodate(),
                   total: {
                     responsesSent: `${fake.number.int(30)}`,
                     responsesAcknowledged: `${fake.number.int(30)}`,
@@ -80,15 +82,15 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
                 },
                 version: {
                   kumaDp: {
-                    version: '1.2.1',
-                    gitTag: '1.2.1',
-                    gitCommit: 'e88ec407e669c47d3dc9ef32fcde60e2f31c0c4d',
-                    buildDate: '2021-06-30T14:32:58Z',
+                    version: fake.system.semver(),
+                    gitTag: fake.system.semver(),
+                    gitCommit: fake.git.commitSha(),
+                    buildDate: fake.kuma.date(),
                   },
-                  envoy: {
-                    version: '1.18.3',
-                    build: '98c1c9e9a40804b93b074badad1cdf284b47d58b/1.18.3/Clean/RELEASE/BoringSSL',
-                  },
+                  envoy: ((sha, version) => ({
+                    version,
+                    build: `${sha}/${version}/Clean/RELEASE/BoringSSL`,
+                  }))(fake.git.commitSha(), fake.system.semver()),
                 },
 
               }

@@ -138,20 +138,35 @@ export class KumaModule {
     return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
+  nanodate() {
+    const d = this.faker.date.past()
+    // e.g. '2021-07-13T08:41:04.556796688Z'
+    return `${d.toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 999999 })}Z`
+  }
+
+  date(options: { refDate?: string | Date } = {}) {
+    if (options.refDate) {
+      options.refDate = new Date(Date.parse(String(options.refDate)))
+    }
+    const d = this.faker.date.past(options)
+    // e.g. '2021-07-13T08:41:04Z'
+    return `${d.toISOString().slice(0, -5)}Z`
+  }
+
   connection<T>(_: T, i: number, arr: T[]) {
     const connected = this.faker.date.past()
     const times: {
       connectTime: string
       disconnectTime?: string
     } = {
-      connectTime: `${connected.toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 9999 })}Z`,
+      connectTime: `${connected.toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 999999 })}Z`,
       // connectTime: '2021-07-13T08:41:04.556796688Z',
     }
     if ((arr.length > 1 && i !== arr.length - 1) || this.faker.datatype.boolean({ probability: 0.3 })) {
       times.disconnectTime = `${this.faker.date.between({
         from: connected,
         to: new Date(),
-      }).toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 9999 })}Z`
+      }).toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 999999 })}Z`
       // times.disconnectTime = '2021-02-17T07:33:36.412683Z'
     }
     return times
