@@ -34,9 +34,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     address,
   }
 
-  // temporarily overwrite the result of dataplaneNetworking as it doesn't
-  // currently accept port plus we need to keep our ports synced.
-  ;(networking.inbound ?? []).forEach((inbound, i) => {
+    // temporarily overwrite the result of dataplaneNetworking as it doesn't
+    // currently accept port plus we need to keep our ports synced.
+    ; (networking.inbound ?? []).forEach((inbound, i) => {
     if (fake.datatype.boolean()) {
       inbound.port = ports[i].port
       inbound.servicePort = undefined
@@ -74,29 +74,44 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         ...(isMtlsEnabled ? { mTLS: fake.kuma.dataplaneMtls() } : {}),
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
           return {
-            id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
-            controlPlaneInstanceId: `${fake.hacker.noun()}-${i}`,
+            id: fake.string.uuid(),
+            controlPlaneInstanceId: fake.hacker.noun(),
             ...fake.kuma.connection(item, i, arr),
-            status: {
-              lastUpdateTime: '2021-02-17T10:48:03.638434Z',
-              total: {
-                responsesSent: '5',
-                responsesAcknowledged: '5',
-              },
-              cds: {
-                responsesSent: '1',
-                responsesAcknowledged: '1',
-              },
-              eds: {
-                responsesSent: '2',
-                responsesAcknowledged: '2',
-              },
-              lds: {
-                responsesSent: '2',
-                responsesAcknowledged: '2',
-              },
-              rds: {},
-            },
+            generation: fake.number.int({ min: 1, max: 500 }),
+            status: (() => {
+              const xcks = fake.number.int({ min: 100, max: 500 })
+              const stats = Object.entries(fake.kuma.partitionInto(
+                {
+                  cds: Number,
+                  eds: Number,
+                  lds: Number,
+                  rds: Number,
+                }, xcks,
+              ))
+              return {
+                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                total: fake.kuma.partitionInto(
+                  {
+                    responsesSent: xcks,
+                    responsesAcknowledged: Number,
+                    responsesRejected: Number,
+                  }, xcks,
+                ),
+                ...stats.reduce(
+                  (prev, [key, value]) => {
+                    prev[key] = fake.kuma.partitionInto(
+                      {
+                        responsesSent: value,
+                        responsesAcknowledged: Number,
+                        responsesRejected: Number,
+                      }, value,
+                    )
+                    return prev
+                  },
+                  {} as Record<string, {}>,
+                ),
+              }
+            })(),
             version: {
               kumaDp: {
                 version: '1.0.7',

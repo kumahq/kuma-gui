@@ -1,8 +1,9 @@
 import { routes as connections } from '@/app/connections/routes'
+import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
+
 export const routes = () => {
   const item = (): RouteRecordRaw[] => {
-    const children = connections()
     return [
       {
         path: 'data-planes/:dataPlane',
@@ -13,7 +14,10 @@ export const routes = () => {
             path: 'overview',
             name: 'data-plane-detail-view',
             component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
-            children,
+            children: [
+              ...connections(),
+              ...subscriptions('data-plane'),
+            ],
           },
           {
             path: 'policies',
