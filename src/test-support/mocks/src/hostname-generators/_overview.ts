@@ -14,11 +14,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i): HostnameGeneratorItem => {
-        const meshServiceType = fake.kuma.meshServiceTypeSelector()
-        const matchLabels = {
-          'kuma.io/origin': fake.kuma.origin(),
-          'kuma.io/env': fake.kuma.env(),
-        }
+        const meshServiceTypeSelector = fake.kuma.meshServiceTypeSelector()
         const namespace = fake.hacker.noun()
         const displayName = `${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
         const creationTime = fake.date.past()
@@ -38,11 +34,16 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             : {},
           spec: {
             selector: {
-              [meshServiceType]: { matchLabels },
+              [meshServiceTypeSelector]: {
+                matchLabels: {
+                  'kuma.io/origin': fake.kuma.origin(),
+                  'kuma.io/env': fake.kuma.env(),
+                },
+              },
             },
             template: fake.kuma.hostnameTemplate({
-              external: meshServiceType === 'meshExternalService',
-              multizone: meshServiceType === 'meshMultiZoneService',
+              external: meshServiceTypeSelector === 'meshExternalService',
+              multizone: meshServiceTypeSelector === 'meshMultiZoneService',
               withNamespace: fake.datatype.boolean(),
               withZone: fake.datatype.boolean(),
             }),
