@@ -18,10 +18,7 @@ export interface HostnameGenerator extends HostnameGeneratorItem {
   namespace: string
   zone: string
   mesh: string
-  selector?: {
-    routeName: string
-    label: string
-  } | undefined
+  selector?: keyof NonNullable<HostnameGeneratorItem['spec']['selector']> | undefined
   $raw: HostnameGeneratorItem
 }
 
@@ -30,6 +27,7 @@ export const HostnameGenerator = {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name
     const namespace = labels['k8s.kuma.io/namespace'] ?? ''
+
     return {
       ...item,
       id: item.name,
@@ -38,25 +36,7 @@ export const HostnameGenerator = {
       zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
       mesh: labels['kuma.io/mesh'] || 'default',
       $raw: item,
-      selector: ((selector: string | undefined) => {
-        if (!selector) return undefined
-
-        let routeName = 'mesh-service-list-view'
-        switch (selector) {
-          case 'meshExternalService': {
-            routeName = 'mesh-external-service-list-view'
-            break
-          }
-          case 'meshMultiZoneService': {
-            routeName = 'mesh-multi-zone-service-list-view'
-          }
-        }
-
-        return {
-          routeName,
-          label: `${selector.charAt(0).toUpperCase()}${selector.slice(1, selector.length)}`,
-        }
-      })(Object.keys(item.spec.selector ?? {})?.[0]),
+      selector: item.spec.selector ? Object.keys(item.spec.selector)[0] as keyof typeof item.spec.selector : undefined,
     } satisfies HostnameGenerator
   },
 
