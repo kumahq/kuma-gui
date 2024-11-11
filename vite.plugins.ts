@@ -75,9 +75,19 @@ const server = (template: string = './index.html', vars: Partial<KumaHtmlVars> =
 
 }
 export const replicateKumaServer = (...args: Parameters<typeof server>): Plugin => {
-  return {
+  const plugin = {
     name: 'replicateKumaServer',
+    config: (_: unknown, { mode }: { mode: string }) => {
+      switch (mode) {
+        case 'preview': {
+          const { name, ...rest } = kumaIndexHtmlVars()
+          Object.assign(plugin, rest)
+          break
+        }
+      }
+    },
     configureServer: server(...args),
     configurePreviewServer: server(...args),
   }
+  return plugin
 }
