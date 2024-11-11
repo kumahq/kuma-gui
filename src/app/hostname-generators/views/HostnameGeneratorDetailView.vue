@@ -18,10 +18,7 @@
       v-slot="{ data }"
     >
       <AppView :docs="t('hostname-generators.href.docs')">
-        <template
-          v-if="data"
-          #title
-        >
+        <template #title>
           <h1>
             <XCopyButton
               :text="data.name"
@@ -64,7 +61,6 @@
           </AppAboutSection>
 
           <ResourceCodeBlock
-            v-if="data"
             :resource="data.$raw"
             v-slot="{ copy, copying }"
           >
