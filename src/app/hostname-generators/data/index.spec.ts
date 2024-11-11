@@ -109,4 +109,34 @@ describe('HostnameGenerator', () => {
       expect(response.namespace).toStrictEqual(ns)
     })
   })
+
+  describe('hostnameGenerator.selector', () => {
+    test('selector is set from spec.selector meshService key', async ({ fixture }) => {
+      const response = await fixture.setup((item) => {
+        Object.assign(item, { spec: { selector: { meshService: {} } } })
+        return item
+      })
+      expect(response.selector).toStrictEqual({ routeName: 'mesh-service-list-view', label: 'MeshService' })
+    })
+    test('selector is set from spec.selector meshExternalService key', async ({ fixture }) => {
+      const response = await fixture.setup((item) => {
+        Object.assign(item, { spec: { selector: { meshExternalService: {} } } })
+        return item
+      })
+      expect(response.selector).toStrictEqual({
+        routeName: 'mesh-external-service-list-view',
+        label: 'MeshExternalService',
+      })
+    })
+    test('selector is set from spec.selector meshMultiZoneService key', async ({ fixture }) => {
+      const response = await fixture.setup((item) => {
+        Object.assign(item, { spec: { selector: { meshMultiZoneService: {} } } })
+        return item
+      })
+      expect(response.selector).toStrictEqual({
+        routeName: 'mesh-multi-zone-service-list-view',
+        label: 'MeshMultiZoneService',
+      })
+    })
+  })
 })
