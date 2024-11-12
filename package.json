@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@kong-ui-public/i18n": "^2.2.7",
-    "@kong/icons": "^1.14.1",
+    "@kong/icons": "^1.19.1",
     "@kong-ui-public/app-layout": "^4.2.56",
     "@kong/kongponents": "^9.14.8",
     "@vueuse/core": "^11.2.0",
