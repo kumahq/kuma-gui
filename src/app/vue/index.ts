@@ -30,29 +30,6 @@ const $ = {
 // @TODO at some point we should expose this as an extendable thing
 // similar to navigationGuards. We'd then do this specific functionality in
 // `@app/application` as it relates to RouteView
-const addRouteName = (item: RouteRecordRaw, _parent?: RouteRecordRaw) => {
-  if (typeof item.component !== 'function') {
-    return
-  }
-  // @ts-ignore at this point item.component has to be a function because we checked it above
-  const component = item.component.bind(item)
-  item.component = async () => {
-    // we need to create a new instance of the component as import is
-    // natively cached we could re-cache this in a WeakMap if it becomes
-    // necessary (I don't think it will)
-    const cached = (await component()).default
-    const route = {
-      default: {
-        ...cached,
-        render: (...args: Record<string, unknown>[]) => {
-          args[0].$routeName = item.name
-          return cached.render(...args)
-        },
-      },
-    }
-    return route
-  }
-}
 const addModule = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
   item.meta = {
     ...(item.meta ?? {}),
@@ -75,7 +52,6 @@ function walkRoutes(routes: RouteRecordRaw[], parent?: RouteRecordRaw) {
     // this is very specific to app/application
     addModule(item, parent)
     addPath(item, parent)
-    addRouteName(item, parent)
     //
     if (typeof item.children !== 'undefined') {
       walkRoutes(item.children, item)

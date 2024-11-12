@@ -1,3 +1,4 @@
+import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (prefix = 'ingresses') => {
@@ -13,6 +14,7 @@ export const routes = (prefix = 'ingresses') => {
             path: 'overview',
             name: 'zone-ingress-detail-view',
             component: () => import('@/app/zone-ingresses/views/ZoneIngressDetailView.vue'),
+            children: subscriptions('zone-ingress'),
           },
           {
             path: 'services',

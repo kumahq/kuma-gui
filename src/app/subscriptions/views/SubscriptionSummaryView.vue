@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    :name="$routeName!"
+    :name="props.routeName"
     :params="{
       subscription: '',
     }"
@@ -16,7 +16,7 @@
         <AppView>
           <template #title>
             <h2>
-              {{ item.zoneInstanceId ?? item.globalInstanceId }}
+              {{ item.zoneInstanceId ?? item.globalInstanceId ?? item.controlPlaneInstanceId }}
             </h2>
           </template>
           <XTabs
@@ -54,9 +54,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { KDSSubscription } from '@/app/zones/data/'
+import type { Subscription } from '../data/'
 
 const props = defineProps<{
-  data: KDSSubscription[]
+  data: Subscription[]
+  routeName: string
 }>()
 </script>

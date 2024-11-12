@@ -94,10 +94,13 @@ http:
       tls: TLS
       mtls: mTLS
       mTLS: mTLS
+      id: ID
       globalInstanceId: Global instance ID
       controlPlaneInstanceId: CP instance ID
+      zoneInstanceId: Zone Leader Instance ID
       connectTime: Connected
       disconnectTime: Disconnected
+      version: Version
       cds: CDS
       eds: EDS
       lds: LDS

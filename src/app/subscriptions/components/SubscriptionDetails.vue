@@ -1,7 +1,7 @@
 <template>
   <div class="stack">
     <XAlert
-      v-if="statuses.length === 0"
+      v-if="Object.keys(props.subscription.status.acknowledgements).length === 0"
       appearance="info"
     >
       <template #icon>
@@ -30,13 +30,13 @@
         </div>
 
         <div
-          v-for="(row, index) in statuses"
-          :key="index"
+          v-for="(row, prop) in props.subscription.status.acknowledgements"
+          :key="prop"
           class="row"
-          :data-testid="`subscription-status-${row.type}`"
+          :data-testid="`subscription-status-${prop}`"
         >
           <div class="type">
-            {{ t(`http.api.property.${row.type}`) }}
+            {{ t(`http.api.property.${prop}`) }}
           </div>
 
           <div>
@@ -50,16 +50,16 @@
 
 <script lang="ts" setup>
 import { PortalIcon } from '@kong/icons'
-import { PropType, computed } from 'vue'
+import { PropType } from 'vue'
 
+import type { Subscription } from '../data'
 import { useI18n } from '@/app/application'
-import type { DiscoveryServiceStats, DiscoverySubscription, KDSSubscription } from '@/types/index.d'
 
 const { t } = useI18n()
 
 const props = defineProps({
   subscription: {
-    type: Object as PropType<KDSSubscription | DiscoverySubscription>,
+    type: Object as PropType<Subscription>,
     required: true,
   },
 
@@ -67,39 +67,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
-
-type StatusRow = {
-  type: string
-  responsesSent: string
-  responsesAcknowledged: string
-  responsesRejected: string
-}
-
-const statuses = computed<StatusRow[]>(() => {
-  let status: Record<string, DiscoveryServiceStats>
-
-  if ('controlPlaneInstanceId' in props.subscription) {
-    const { lastUpdateTime, total, ...discoverySubscriptionStatus } = props.subscription.status
-    status = discoverySubscriptionStatus
-  } else {
-    status = props.subscription.status?.stat ?? {}
-  }
-
-  if (!status) {
-    return []
-  }
-
-  return Object.entries(status).map(([type, stat]) => {
-    const { responsesSent = '0', responsesAcknowledged = '0', responsesRejected = '0' } = stat
-
-    return {
-      type,
-      responsesSent,
-      responsesAcknowledged,
-      responsesRejected,
-    }
-  })
 })
 </script>
 
