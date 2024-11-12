@@ -45,10 +45,12 @@ jobs:
         with:
           script: |
             const getPartitionedTestFiles = require('./packages/kuma-gui/scripts/getPartitionedTestFiles.cjs')
-
-            return {
-              'kuma-gui': getPartitionedTestFiles(process.env.THREAD_COUNT),
+            const json = {
+              'kuma-gui': getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
             }
+
+
+            return json
 
   lint-tests:
     needs: [install-dependencies]
