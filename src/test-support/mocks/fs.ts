@@ -2,6 +2,8 @@ import _124 from './kuma.io/latest_version'
 import _1 from './src/config'
 import _4 from './src/dataplanes/_overview'
 import _5 from './src/global-insight'
+import _201 from './src/hostname-generators/_/_overview'
+import _200 from './src/hostname-generators/_overview'
 import _13 from './src/mesh-insights'
 import _14 from './src/mesh-insights/_'
 import _15 from './src/meshes'
@@ -194,5 +196,7 @@ export const fs: FS = {
   '/meshes/:mesh/traffic-traces': _45,
   '/meshes/:mesh/traffic-traces/:name': _46,
   '/meshes/:mesh/virtual-outbounds': _47,
-
+  // hostname-generators
+  '/hostnamegenerators': _200,
+  '/hostnamegenerators/:name': _201,
 }

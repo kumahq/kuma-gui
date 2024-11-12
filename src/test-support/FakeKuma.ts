@@ -365,7 +365,35 @@ export class KumaModule {
       }),
     }
   }
+
+  env() {
+    const environments = ['kubernetes', 'universal'] as const
+    return this.faker.helpers.arrayElement<typeof environments[number]>(environments)
+  }
+
+  hostnameTemplate({ external, multizone, withNamespace, withZone }: Record<string, boolean | undefined> = {}) {
+    const service = external ? 'extsvc' : multizone ? 'mzsvc' : 'svc'
+
+    return [
+      '{{ .DisplayName }}',
+      withNamespace ? '{{ .Namespace }}' : [],
+      service,
+      withZone ? '{{ .Zone }}' : [],
+      'mesh',
+      'local',
+    ].flat().join('.')
+  }
+
+  meshServiceTypeSelector() {
+    const items = [
+      'meshExternalService',
+      'meshMultiZoneService',
+      'meshService',
+    ] as const
+    return this.faker.helpers.arrayElement<typeof items[number]>(items)
+  }
 }
+
 export default class FakeKuma extends Faker {
   k8s = new K8sModule(this)
   kuma = new KumaModule(this, this.k8s)

@@ -2988,9 +2988,9 @@ export interface components {
             type: string;
             /** @description a rule that affects the entire proxy */
             proxyRule?: components["schemas"]["ProxyRule"];
-            /** @description a set of rules for the outbounds of this proxy */
+            /** @description a set of rules for the outbounds of this proxy. The field is not set when 'meshService.mode' on Mesh is set to 'Exclusive'. */
             toRules?: components["schemas"]["Rule"][];
-            /** @description a set of rules for the resources targeted by this proxy */
+            /** @description a set of rules for the outbounds produced by real resources (i.e MeshService, MeshExternalService, MeshMultiZoneService). */
             toResourceRules?: components["schemas"]["ResourceRule"][];
             /** @description a set of rules for each inbound of this proxy */
             fromRules?: components["schemas"]["FromRule"][];
@@ -3368,6 +3368,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshAccessLogCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -3918,6 +3930,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshCircuitBreakerCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4127,6 +4151,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshFaultInjectionCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4343,6 +4379,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshHealthCheckCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4649,6 +4697,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshHTTPRouteCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -4953,6 +5013,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5117,6 +5189,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshMetricCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5206,6 +5290,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshPassthroughCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5519,6 +5615,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshProxyPatchCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -5774,6 +5882,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshRateLimitCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6082,6 +6202,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshRetryCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6226,6 +6358,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshTCPRouteCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6427,6 +6571,18 @@ export interface components {
                     };
                 }[];
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshTimeoutCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6550,6 +6706,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshTLSCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6643,20 +6811,20 @@ export interface components {
                          *     'x-client-trace-id' header is set. Mirror of client_sampling in Envoy
                          *     https://github.com/envoyproxy/envoy/blob/v1.22.0/api/envoy/config/filter/network/http_connection_manager/v2/http_connection_manager.proto#L127-L133
                          *     Either int or decimal represented as string.
-                         * @default 100%
+                         * @default 100
                          */
                         client: number | string;
                         /**
                          * @description Target percentage of requests will be traced
                          *     after all other sampling checks have been applied (client, force tracing,
                          *     random sampling). This field functions as an upper limit on the total
-                         *     configured sampling rate. For instance, setting client_sampling to 100%
-                         *     but overall_sampling to 1% will result in only 1% of client requests with
+                         *     configured sampling rate. For instance, setting client to 100
+                         *     but overall to 1 will result in only 1% of client requests with
                          *     the appropriate headers to be force traced. Mirror of
                          *     overall_sampling in Envoy
                          *     https://github.com/envoyproxy/envoy/blob/v1.22.0/api/envoy/config/filter/network/http_connection_manager/v2/http_connection_manager.proto#L142-L150
                          *     Either int or decimal represented as string.
-                         * @default 100%
+                         * @default 100
                          */
                         overall: number | string;
                         /**
@@ -6665,7 +6833,7 @@ export interface components {
                          *     Mirror of random_sampling in Envoy
                          *     https://github.com/envoyproxy/envoy/blob/v1.22.0/api/envoy/config/filter/network/http_connection_manager/v2/http_connection_manager.proto#L135-L140
                          *     Either int or decimal represented as string.
-                         * @default 100%
+                         * @default 100
                          */
                         random: number | string;
                     };
@@ -6722,6 +6890,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshTraceCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6828,6 +7008,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         MeshTrafficPermissionCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6868,6 +7060,18 @@ export interface components {
                 };
                 template?: string;
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
         };
         HostnameGeneratorCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -7016,6 +7220,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
             /** @description Status is the current status of the Kuma MeshExternalService resource. */
             status?: {
                 /** @description Addresses section for generated domains */
@@ -7104,6 +7320,18 @@ export interface components {
                     };
                 };
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
             /** @description Status is the current status of the Kuma MeshMultiZoneService resource. */
             status?: {
                 /** @description Addresses is a list of addresses generated by HostnameGenerator */
@@ -7209,6 +7437,18 @@ export interface components {
                  */
                 state?: "Available" | "Unavailable";
             };
+            /**
+             * Format: date-time
+             * @description Time at which the resource was created
+             * @example 0001-01-01T00:00:00Z
+             */
+            creationTime?: string;
+            /**
+             * Format: date-time
+             * @description Time at which the resource was updated
+             * @example 0001-01-01T00:00:00Z
+             */
+            modificationTime?: string;
             /** @description Status is the current status of the Kuma MeshService resource. */
             status?: {
                 addresses?: {
