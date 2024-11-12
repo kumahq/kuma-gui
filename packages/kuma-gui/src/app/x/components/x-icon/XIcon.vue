@@ -3,12 +3,13 @@
     :is="slots.default ? KTooltip : AnonymousComponent"
     :placement="props.placement"
   >
+    <!-- we hardcode decorative to false for the moment due to an issue with kong/icons -->
     <component
       v-bind="attrs"
       :is="icons[props.name]"
       :aria-described-by="slots.default ? id : undefined"
       :tabindex="slots.default ? 0 : undefined"
-      :decorative="!!slots.default"
+      :decorative="false"
       :color="props.color ? props.color : `var(--${props.name}IconColor, 'currentColor')`"
       :size="props.size"
       display="inline-block"
