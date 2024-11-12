@@ -12,7 +12,7 @@
     />
 
     <DataLoader
-      :src="uri(sources, '/hostnamegenerators/:name', {
+      :src="uri(sources, '/hostname-generators/:name', {
         name: route.params.name,
       })"
       v-slot="{ data }"
@@ -72,7 +72,7 @@
           >
             <DataSource
               v-if="copying"
-              :src="uri(sources, '/hostnamegenerators/:name/as/kubernetes', {
+              :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
                 name: route.params.name,
               }, {
                 cacheControl: 'no-store',

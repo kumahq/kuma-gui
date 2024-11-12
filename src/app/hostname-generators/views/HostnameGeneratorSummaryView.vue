@@ -116,7 +116,7 @@
                 >
                   <DataSource
                     v-if="copying"
-                    :src="`/hostnamegenerators/${route.params.name}/as/kubernetes?no-store`"
+                    :src="`/hostname-generators/${route.params.name}/as/kubernetes?no-store`"
                     @change="(data) => {
                       copy((resolve) => resolve(data))
                     }"

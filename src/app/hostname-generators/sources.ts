@@ -12,7 +12,7 @@ export const sources = (api: KumaApi) => {
   })
 
   return defineSources({
-    '/hostnamegenerators': async (params) => {
+    '/hostname-generators': async (params) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
@@ -29,7 +29,7 @@ export const sources = (api: KumaApi) => {
       return HostnameGenerator.fromCollection(res.data!)
     },
 
-    '/hostnamegenerators/:name': async (params) => {
+    '/hostname-generators/:name': async (params) => {
       const { name } = params
 
       const res = await http.GET('/hostnamegenerators/{name}', {
@@ -43,7 +43,7 @@ export const sources = (api: KumaApi) => {
       return HostnameGenerator.fromObject(res.data!)
     },
 
-    '/hostnamegenerators/:name/as/kubernetes': async (params) => {
+    '/hostname-generators/:name/as/kubernetes': async (params) => {
       const { name } = params
 
       const res = await http.GET('/hostnamegenerators/{name}', {

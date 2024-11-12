@@ -22,7 +22,7 @@
         <div v-html="t('hostname-generators.routes.items.intro', {}, { defaultMessage: '' })" />
         <KCard>
           <DataLoader
-            :src="uri(sources, '/hostnamegenerators', {}, {
+            :src="uri(sources, '/hostname-generators', {}, {
               page: route.params.page,
               size: route.params.size,
             })"
