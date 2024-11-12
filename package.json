@@ -6,9 +6,6 @@
   "engines": {
     "node": ">=20.9",
     "npm": "^10.0.0"
-  },
-  "dependencies": {
-    "vue": "~3.4.38 <3.5.0",
-    "@kong/kongponents": "^9.0.0"
-  },
+  }
 }
+
