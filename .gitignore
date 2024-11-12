@@ -27,5 +27,5 @@ yarn-error.log*
 .vitepress/dist
 
 # Vite Test and Build/Release
-coverage/*
-dist/*
+coverage
+dist
