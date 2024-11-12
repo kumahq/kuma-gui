@@ -27,7 +27,7 @@ deploy/test:
 		mv dist/* gui && \
 		mv gui dist/gui && \
 		mv dist/gui/mockServiceWorker.js dist/ && \
-		cp _redirects dist/_redirects
+		cp ../../_redirects dist/_redirects
 
 .PHONY: deploy/e2e
 deploy/e2e:
