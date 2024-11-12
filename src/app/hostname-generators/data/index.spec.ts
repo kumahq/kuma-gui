@@ -53,21 +53,14 @@ describe('HostnameGenerator', () => {
     })
   })
 
-  describe('hostnameGenerator.mesh', () => {
-    test('mesh is taken from labels', async ({ fixture }) => {
-      const mesh = 'foo'
+  describe('hostnameGenerator.namespace', () => {
+    test('namespace is set from labels', async ({ fixture }) => {
+      const ns = 'foo'
       const response = await fixture.setup((item) => {
-        Object.assign(item, { labels: { 'kuma.io/mesh': mesh } })
+        Object.assign(item, { labels: { 'k8s.kuma.io/namespace': ns } })
         return item
       })
-      expect(response.mesh).toStrictEqual(mesh)
-    })
-    test('mesh has a fallback to `default`', async ({ fixture }) => {
-      const response = await fixture.setup((item) => {
-        Object.assign(item, { labels: { 'kuma.io/mesh': '' } })
-        return item
-      })
-      expect(response.mesh).toStrictEqual('default')
+      expect(response.namespace).toStrictEqual(ns)
     })
   })
 
@@ -84,41 +77,6 @@ describe('HostnameGenerator', () => {
         return item
       })
       expect(response.zone).toStrictEqual(zone)
-    })
-  })
-
-  describe('hostnameGenerator.namespace', () => {
-    test('namespace is set from labels', async ({ fixture }) => {
-      const ns = 'foo'
-      const response = await fixture.setup((item) => {
-        Object.assign(item, { labels: { 'k8s.kuma.io/namespace': ns } })
-        return item
-      })
-      expect(response.namespace).toStrictEqual(ns)
-    })
-  })
-
-  describe('hostnameGenerator.selector', () => {
-    test('selector is set from spec.selector meshService key', async ({ fixture }) => {
-      const response = await fixture.setup((item) => {
-        Object.assign(item, { spec: { selector: { meshService: {} } } })
-        return item
-      })
-      expect(response.selector).toStrictEqual('meshService')
-    })
-    test('selector is set from spec.selector meshExternalService key', async ({ fixture }) => {
-      const response = await fixture.setup((item) => {
-        Object.assign(item, { spec: { selector: { meshExternalService: {} } } })
-        return item
-      })
-      expect(response.selector).toStrictEqual('meshExternalService')
-    })
-    test('selector is set from spec.selector meshMultiZoneService key', async ({ fixture }) => {
-      const response = await fixture.setup((item) => {
-        Object.assign(item, { spec: { selector: { meshMultiZoneService: {} } } })
-        return item
-      })
-      expect(response.selector).toStrictEqual('meshMultiZoneService')
     })
   })
 })

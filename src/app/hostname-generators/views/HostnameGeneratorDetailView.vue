@@ -36,27 +36,33 @@
             :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime) })"
           >
             <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('hostname-generators.common.selector') }}
-                </template>
+              <template
+                v-for="labels in [{
+                  ...data.spec.selector.meshService.matchLabels,
+                  ...data.spec.selector.meshExternalService.matchLabels,
+                  ...data.spec.selector.meshMultiZoneService.matchLabels,
+                }]"
+                :key="typeof labels"
+              >
+                <DefinitionCard v-if="Object.keys(labels).length">
+                  <template #title>
+                    Tags
+                  </template>
 
-                <template
-                  v-if="data.selector"
-                  #body
-                >
-                  <XAction
-                    :to="{
-                      name: routeMap.get(data.selector),
-                      params: {
-                        mesh: data.mesh,
-                      },
-                    }"
-                  >
-                    {{ `${data.selector.charAt(0).toUpperCase()}${data.selector.slice(1, data.selector.length)}` }}
-                  </XAction>
-                </template>
-              </DefinitionCard>
+                  <template #body>
+                    <XLayout type="separated">
+                      <template
+                        v-for="(value, key) in labels"
+                        :key="key"
+                      >
+                        <XBadge>
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </template>
+                    </XLayout>
+                  </template>
+                </DefinitionCard>
+              </template>
             </div>
           </AppAboutSection>
 
@@ -88,16 +94,9 @@
 <script lang="ts" setup>
 import { AppAboutSection } from '@kong-ui-public/app-layout'
 
-import { HostnameGenerator } from '../data'
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
-
-const routeMap = new Map<HostnameGenerator['selector'], string>([
-  ['meshService', 'mesh-service-list-view'],
-  ['meshExternalService', 'mesh-external-service-list-view'],
-  ['meshMultiZoneService', 'mesh-multi-zone-service-list-view'],
-])
 </script>
 
 <style lang="scss" scoped>
