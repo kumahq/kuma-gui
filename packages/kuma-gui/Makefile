@@ -3,6 +3,7 @@
 
 SHELL := /usr/bin/env bash
 MK := ./mk
+NODE_VERSION:=v$(shell cat ../../.nvmrc)
 
 ## make help: if you're aren't sure use `make help`
 .DEFAULT_GOAL := help
