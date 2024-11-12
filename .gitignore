@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-/dist
 
 # local env files
 .env.local
@@ -27,4 +26,6 @@ yarn-error.log*
 .vitepress/cache
 .vitepress/dist
 
+# Vite Test and Build/Release
 coverage/*
+dist/*
