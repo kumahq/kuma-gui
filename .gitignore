@@ -22,10 +22,6 @@ yarn-error.log*
 # Yarn
 .yarn/*
 
-# Vitepress
-.vitepress/cache
-.vitepress/dist
-
 # Vite Test and Build/Release
 coverage
 dist
