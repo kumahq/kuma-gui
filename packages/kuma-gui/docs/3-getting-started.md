@@ -2,5 +2,5 @@
 section: Overview
 title: Getting started
 ---
-<!--@include: ../DEVELOPER.md-->
+<!--@include: ../../../DEVELOPER.md-->
 

@@ -18,6 +18,9 @@ permissions:
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/kuma-gui
     outputs:
       spec_groups: ${{ steps.set-groups.outputs.result }}
     steps:
@@ -41,15 +44,20 @@ jobs:
           THREAD_COUNT: 4
         with:
           script: |
-            const getPartitionedTestFiles = require('./scripts/getPartitionedTestFiles.cjs')
-
-            return {
-              'kuma-gui': getPartitionedTestFiles(process.env.THREAD_COUNT),
+            const getPartitionedTestFiles = require('./packages/kuma-gui/scripts/getPartitionedTestFiles.cjs')
+            const json = {
+              'kuma-gui': getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
             }
+
+
+            return json
 
   lint-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/kuma-gui
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
@@ -67,6 +75,9 @@ jobs:
   cli-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/kuma-gui
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
@@ -84,6 +95,9 @@ jobs:
   browser-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/kuma-gui
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -112,8 +126,8 @@ jobs:
           name: cypress-artifacts-${{ matrix.package }}-${{ matrix.container }}
           retention-days: ${{ github.event_name == 'pull_request' && 3 || 30 }}
           path: |
-            cypress/screenshots
-            cypress/videos
+            ./packages/kuma-gui/cypress/screenshots
+            ./packages/kuma-gui/cypress/videos
 
   post-checks:
     # There is a branch protection rule on the repo that requires "branch-protection" to
