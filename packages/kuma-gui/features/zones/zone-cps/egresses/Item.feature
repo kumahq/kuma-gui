@@ -2,11 +2,14 @@ Feature: zones / egresses / item
 
   Background:
     Given the CSS selectors
-      | Alias                   | Selector                                      |
-      | egress-detail-view      | [data-testid='zone-egress-detail-view']       |
-      | egress-config-view      | [data-testid='zone-egress-config-view']       |
-      | egress-detail-tabs-view | [data-testid='zone-egress-detail-tabs-view']  |
-      | egress-config-tab       | [data-testid='zone-egress-config-view-tab'] a |
+      | Alias         | Selector                                      |
+      | page          | [data-testid='zone-egress-detail-tabs-view']  |
+      | header        | $page .app-view-title-bar                     |
+      | overview-view | [data-testid='zone-egress-detail-view']       |
+      | config-view   | [data-testid='zone-egress-config-view']       |
+      | subscriptions | [data-testid='app-collection'] tbody tr       |
+      | subscription  | $subscriptions:nth-child(1)                   |
+      | config-tab    | [data-testid='zone-egress-config-view-tab'] a |
     And the environment
       """
       KUMA_MODE: global
@@ -31,8 +34,8 @@ Feature: zones / egresses / item
       """
     When I visit the "/zones/zone-cp-1/egresses/item-1/overview" URL
     Then the page title contains "item-1"
-    Then the "$egress-detail-tabs-view" element contains "item-1"
-    Then the "$egress-detail-view" element contains "166.197.238.26:20555"
-    Then the "$egress-detail-view" element contains "Connected: Jul 28, 2020, 4:18 PM"
-    When I click the "$egress-config-tab" element
-    Then the "$egress-config-view" element contains "type: ZoneEgress"
+    Then the "$header" element contains "item-1"
+    Then the "$overview-view" element contains "166.197.238.26:20555"
+    Then the "$subscription" element contains "Jul 28, 2020, 4:18 PM"
+    When I click the "$config-tab" element
+    Then the "$config-view" element contains "type: ZoneEgress"

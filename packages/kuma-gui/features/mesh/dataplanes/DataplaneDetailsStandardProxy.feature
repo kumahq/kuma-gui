@@ -7,11 +7,6 @@ Feature: Dataplane details for standard Data Plane Proxy
       | clusters-view | [data-testid='data-plane-clusters-view']    |
       | warnings      | [data-testid='dataplane-warnings']          |
       | details       | [data-testid='dataplane-details']           |
-      | subscriptions | [data-testid='dataplane-subscriptions']     |
-      | status-cds    | [data-testid='subscription-status-cds']     |
-      | status-eds    | [data-testid='subscription-status-eds']     |
-      | status-lds    | [data-testid='subscription-status-lds']     |
-      | status-rds    | [data-testid='subscription-status-rds']     |
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -23,84 +18,27 @@ Feature: Dataplane details for standard Data Plane Proxy
     And the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/_overview" responds with
       """
       body:
-        mesh: default
         dataplane:
           networking:
-            address: 193.107.134.106
             advertisedAddress: !!js/undefined
             gateway: !!js/undefined
             inbound:
               - health:
                   ready: true
                 address: !!js/undefined
-                port: 1328
-                serviceAddress: 44.167.201.218
-                servicePort: 62098
-                tags:
-                  kuma.io/protocol: http
-                  kuma.io/zone: zone-1
         dataplaneInsight:
           mTLS: !!js/undefined
           subscriptions:
-            - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
-              connectTime: 2021-02-17T07:33:36.412683Z
+            - connectTime: 2021-02-17T07:33:36.412683Z
               disconnectTime: 2021-02-17T07:33:36.412683Z
-              status:
-                lastUpdateTime: 2021-02-17T07:33:36.412683Z
-              version:
-                kumaDp:
-                  version: 1.0.7
-                  kumaCpCompatible: false
-                envoy:
-                  kumaDpCompatible: false
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:37.412683Z
               disconnectTime: !!js/undefined
-              status:
-                lastUpdateTime: 2021-02-17T07:33:37.412683Z
-                total:
-                  responsesSent: '12'
-                  responsesAcknowledged: '10'
-                cds:
-                  responsesSent: '2'
-                  responsesAcknowledged: '1'
-                eds:
-                  responsesSent: '4'
-                  responsesAcknowledged: '3'
-                lds:
-                  responsesSent: '6'
-                  responsesAcknowledged: '6'
-                rds: {}
-              version:
-                kumaDp:
-                  version: 1.0.8
-                  kumaCpCompatible: true
-                envoy:
-                  kumaDpCompatible: true
       """
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
     And the "$details" element contains "online"
-    When I click the ".accordion-item:nth-child(1) [data-testid='accordion-item-button']" element
-    Then the "$status-cds" element contains
-      | Value |
-      | CDS   |
-      |     1 |
-      |     2 |
-    And the "$status-eds" element contains
-      | Value |
-      | EDS   |
-      |     3 |
-      |     4 |
-    And the "$status-lds" element contains
-      | Value |
-      | LDS   |
-      |     6 |
-    And the "$status-rds" element contains
-      | Value |
-      | RDS   |
-      |     0 |
 
   Scenario: Clusters tab has expected content
     Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with

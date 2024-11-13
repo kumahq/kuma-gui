@@ -3,10 +3,11 @@
     :params="{
       mesh: '',
       dataPlane: '',
+      subscription: '',
       inactive: false,
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can }"
+    v-slot="{ route, t, can, me }"
   >
     <DataSource
       :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
@@ -403,7 +404,7 @@
             >
               <component
                 :is="child.Component"
-                :data="(child.route.name as string).includes('-inbound-') ? props.data.dataplane.networking.inbounds : traffic?.outbounds || {}"
+                :data="route.params.subscription.length > 0 ? props.data.dataplaneInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? props.data.dataplane.networking.inbounds : traffic?.outbounds || {}"
                 :dataplane-overview="props.data"
               />
             </SummaryView>
@@ -504,10 +505,62 @@
             data-testid="dataplane-subscriptions"
           >
             <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
-
-            <KCard class="mt-4">
-              <SubscriptionList :subscriptions="props.data.dataplaneInsight.subscriptions" />
-            </KCard>
+            <AppCollection
+              :headers="[
+                { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
+                { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
+                { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
+                { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
+                { ...me.get('headers.responses'), label: t('http.api.property.responses'), key: 'responses' },
+              ]"
+              :is-selected-row="item => item.id === route.params.subscription"
+              :items="props.data.dataplaneInsight.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
+              @resize="me.set"
+            >
+              <template
+                #instanceId="{ row: item }"
+              >
+                <XAction
+                  data-action
+                  :to="{
+                    name: 'data-plane-subscription-summary-view',
+                    params: {
+                      subscription: item.id,
+                    },
+                  }"
+                >
+                  {{ item.controlPlaneInstanceId }}
+                </XAction>
+              </template>
+              <template
+                #version="{ row: item }"
+              >
+                {{ item.version?.kumaDp?.version ?? '-' }}
+              </template>
+              <template
+                #connected="{ row: item }"
+              >
+                {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
+              </template>
+              <template
+                #disconnected="{ row: item }"
+              >
+                <template
+                  v-if="item.disconnectTime"
+                >
+                  {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
+                </template>
+              </template>
+              <template
+                #responses="{ row: item }"
+              >
+                <template
+                  v-for="responses in [item.status?.total ?? {}]"
+                >
+                  {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                </template>
+              </template>
+            </AppCollection>
           </div>
         </div>
       </AppView>
@@ -521,6 +574,7 @@ import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import type { DataplaneOverview, DataplaneInbound } from '../data'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -532,7 +586,6 @@ import ConnectionGroup from '@/app/connections/components/connection-traffic/Con
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import type { StatsSource } from '@/app/connections/sources'
 import type { Mesh } from '@/app/meshes/data'
-import SubscriptionList from '@/app/subscriptions/components/SubscriptionList.vue'
 import { useRoute } from '@/app/vue'
 
 const _route = useRoute()
