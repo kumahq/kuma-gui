@@ -111,10 +111,10 @@ jobs:
           mkdir -p ${{ vars.HOST_REPORTS_DIRECTORY }}
           rm -f ${{ vars.HOST_REPORTS_DIRECTORY }}/{${{ steps.sbom.outputs.grype-json-report }},${{ steps.sbom.outputs.grype-sarif-report }},${{ steps.sbom.outputs.sbom-spdx-report }},${{ steps.sbom.outputs.sbom-cyclonedx-report }}}
           mv \
-            ../${{ steps.sbom.outputs.grype-json-report }} \
-            ../${{ steps.sbom.outputs.grype-sarif-report }} \
-            ../${{ steps.sbom.outputs.sbom-spdx-report }} \
-            ../${{ steps.sbom.outputs.sbom-cyclonedx-report }} \
+            ../../../${{ steps.sbom.outputs.grype-json-report }} \
+            ../../../${{ steps.sbom.outputs.grype-sarif-report }} \
+            ../../../${{ steps.sbom.outputs.sbom-spdx-report }} \
+            ../../../${{ steps.sbom.outputs.sbom-cyclonedx-report }} \
             ${{ vars.HOST_REPORTS_DIRECTORY }}
 
           echo 'Replacing GUI dist files ...'
