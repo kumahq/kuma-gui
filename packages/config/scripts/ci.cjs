@@ -31,4 +31,6 @@ function shuffleArray(array) {
   }
 }
 
-module.exports = getPartitionedTestFiles
+module.exports = {
+  getPartitionedTestFiles
+}
