@@ -1,9 +1,9 @@
 <template>
   <KPrompt
     :action-button-text="props.action"
+    :action-button-appearance="props.type === 'danger' ? 'danger' : 'primary'"
     :confirmation-text="props.expected.length > 0 ? props.expected : undefined"
     :visible="true"
-    :type="props.type"
     @cancel="() => emit('cancel')"
     @proceed="() => emit('submit')"
   >
