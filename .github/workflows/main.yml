@@ -44,9 +44,9 @@ jobs:
           THREAD_COUNT: 4
         with:
           script: |
-            const getPartitionedTestFiles = require('./packages/kuma-gui/scripts/getPartitionedTestFiles.cjs')
+            const ci = require('./packages/config/scripts/ci.cjs')
             const json = {
-              'kuma-gui': getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
+              'kuma-gui': ci.getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
             }
 
 
