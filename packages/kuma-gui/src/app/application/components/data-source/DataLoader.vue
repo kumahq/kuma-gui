@@ -24,7 +24,7 @@
       </template>
       <slot
         name="loadable"
-        :data="srcData"
+        :data="srcData as TypeOf<T>"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
@@ -41,7 +41,7 @@
     >
       <slot
         name="error"
-        :data="srcData as NonNullable<TypeOf<T>>"
+        :data="srcData"
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
@@ -54,7 +54,7 @@
     <template v-else>
       <slot
         name="loadable"
-        :data="srcData as NonNullable<TypeOf<T>>"
+        :data="srcData as TypeOf<T>"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
