@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    class="x-code-block"
+    data-testid="x-code-block"
+  >
     <template
       v-if="$slots['primary-actions']"
     >
@@ -17,7 +20,7 @@
       :initial-filter-mode="props.isFilterMode"
       :initial-reg-exp-mode="props.isRegExpMode"
       :processing="isProcessing"
-      :searchable="isSearchable"
+      :searchable="true"
       :show-copy-button="showCopyButton"
       :query="props.query"
       theme="dark"

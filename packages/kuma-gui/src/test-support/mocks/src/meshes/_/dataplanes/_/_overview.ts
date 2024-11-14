@@ -37,15 +37,16 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     // temporarily overwrite the result of dataplaneNetworking as it doesn't
     // currently accept port plus we need to keep our ports synced.
     ; (networking.inbound ?? []).forEach((inbound, i) => {
-    if (fake.datatype.boolean()) {
+      // if (fake.datatype.boolean()) {
+      inbound.address = address
       inbound.port = ports[i].port
       inbound.servicePort = undefined
-    } else {
-      inbound.port = fake.number.int({ min: 1, max: 65535 })
-      inbound.servicePort = ports[i].port
-    }
-    inbound.tags['kuma.io/protocol'] = ports[i].protocol
-  })
+      // } else {
+      //   inbound.port = fake.number.int({ min: 1, max: 65535 })
+      //   inbound.servicePort = ports[i].port
+      // }
+      inbound.tags['kuma.io/protocol'] = ports[i].protocol
+    })
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
@@ -57,10 +58,36 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       type: 'DataplaneOverview',
       mesh,
       name,
-      creationTime: '2021-02-17T08:33:36.442044+01:00',
-      modificationTime: '2021-02-17T08:33:36.442044+01:00',
+      ...((modificationTime) => ({
+        creationTime: fake.kuma.date({ refDate: modificationTime }),
+        modificationTime,
+      }))(fake.kuma.date()),
       dataplane: {
-        networking,
+        networking: {
+          ...networking,
+          inbounds: Array.from({ length: inboundCount }).map((_, i) => {
+            return {
+              ...(() => {
+                // TODO(jc) we need to understand correctly, and cope with serviceAddress and servicePort and how it relates to address
+                return {
+                  address,
+                  port: ports[i].port,
+                }
+              })(),
+              tags: fake.kuma.tags({
+                protocol: fake.kuma.protocol(),
+                service,
+                zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+              }),
+            }
+          }),
+          outbounds: [
+            {
+              port: fake.internet.port(),
+              tags: fake.kuma.tags({ service }),
+            },
+          ],
+        },
       },
       ...(k8s
         ? {

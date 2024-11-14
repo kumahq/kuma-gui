@@ -21,6 +21,11 @@ export const routes = (): RouteRecordRaw[] => {
           name: 'connection-inbound-summary-clusters-view',
           component: () => import('@/app/connections/views/ConnectionInboundSummaryClustersView.vue'),
         },
+        {
+          path: 'xds-config',
+          name: 'connection-inbound-summary-xds-config-view',
+          component: () => import('@/app/connections/views/ConnectionInboundSummaryXdsConfigView.vue'),
+        },
       ],
     },
     {
@@ -43,7 +48,11 @@ export const routes = (): RouteRecordRaw[] => {
           name: 'connection-outbound-summary-clusters-view',
           component: () => import('@/app/connections/views/ConnectionOutboundSummaryClustersView.vue'),
         },
-
+        {
+          path: 'xds-config',
+          name: 'connection-outbound-summary-xds-config-view',
+          component: () => import('@/app/connections/views/ConnectionOutboundSummaryXdsConfigView.vue'),
+        },
       ],
     },
   ]

@@ -260,6 +260,9 @@ export class KumaModule {
     }
   }
 
+  /**
+   * @deprecated - please inline networking property instead
+   */
   dataplaneNetworking(
     {
       type = 'proxy',

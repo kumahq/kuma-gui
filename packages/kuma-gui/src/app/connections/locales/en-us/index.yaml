@@ -3,5 +3,6 @@ connections:
     item:
       navigation:
         overview: 'Overview'
+        xds: 'XDS Configuration'
         stats: 'Stats'
         clusters: 'Clusters'
