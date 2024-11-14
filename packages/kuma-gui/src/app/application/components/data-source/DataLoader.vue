@@ -15,7 +15,7 @@
       >
         <slot
           name="disconnected"
-          :data="srcData"
+          :data="srcData as NonNullable<TypeOf<T>>"
           :error="allErrors[0]"
           :refresh="props.src !== '' ? refresh : () => {}"
         >
@@ -30,7 +30,7 @@
       />
       <slot
         name="default"
-        :data="srcData as NonNullable<typeof srcData>"
+        :data="srcData as NonNullable<TypeOf<T>>"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
@@ -41,7 +41,7 @@
     >
       <slot
         name="error"
-        :data="srcData"
+        :data="srcData as NonNullable<TypeOf<T>>"
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
@@ -54,7 +54,7 @@
     <template v-else>
       <slot
         name="loadable"
-        :data="srcData"
+        :data="srcData as NonNullable<TypeOf<T>>"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
@@ -72,7 +72,7 @@
       <slot
         v-else
         name="default"
-        :data="srcData as NonNullable<typeof srcData>"
+        :data="srcData as NonNullable<TypeOf<T>>"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
@@ -104,7 +104,7 @@ const props = withDefaults(defineProps<{
 
 const slots = useSlots()
 
-const srcData = ref<TypeOf<T> | undefined>(undefined)
+const srcData = ref<unknown>(undefined)
 const srcError = ref<Error | undefined>(undefined)
 
 const allData = computed(() => {
