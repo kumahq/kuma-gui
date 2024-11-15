@@ -13,7 +13,7 @@
         :kpop-attributes="{
           placement: 'bottom-end',
         }"
-        width="150"
+        :width="width"
       >
         <template #default>
           <slot
@@ -50,9 +50,11 @@
 import { KDropdown } from '@kong/kongponents'
 
 const props = withDefaults(defineProps<{
+  width?: string
   expanded?: boolean
 }>(), {
   expanded: false,
+  width: '150',
 })
 
 </script>
