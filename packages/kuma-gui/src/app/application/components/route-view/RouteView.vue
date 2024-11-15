@@ -64,7 +64,6 @@ import {
   cleanQuery,
   createAttrsSetter,
   createTitleSetter,
-  beforePaint,
 } from '../../utilities'
 import DataSink from '../data-source/DataSink.vue'
 import DataSource from '../data-source/DataSource.vue'
@@ -214,13 +213,13 @@ watch(() => props.name, () => {
 
 type RouteParams = Record<string, string | boolean | number | undefined>
 let newParams: RouteParams = {}
-const routerPush = beforePaint((params: RouteParams) => {
+const routerPush = (params: RouteParams) => {
   router.push({
     name: props.name,
     query: cleanQuery(params, route.query),
   })
   newParams = {}
-})
+}
 const routeUpdate = (params: RouteParams): void => {
   newParams = {
     ...newParams,
