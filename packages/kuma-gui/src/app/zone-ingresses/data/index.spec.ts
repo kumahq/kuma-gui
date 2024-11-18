@@ -281,4 +281,14 @@ describe('ZoneIngressOverview', () => {
       },
     )
   })
+  describe('zoneIngressOverview.$raw', () => {
+    test('$raw is the same as original API response', async ({ fixture }) => {
+      let expected
+      const actual = await fixture.setup((item) => {
+        expected = item
+        return item
+      })
+      expect(actual.$raw).toStrictEqual(expected)
+    })
+  })
 })
