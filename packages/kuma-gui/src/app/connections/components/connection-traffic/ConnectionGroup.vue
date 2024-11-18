@@ -14,11 +14,6 @@ const props = defineProps<{
 }>()
 </script>
 <style lang="scss" scoped>
-.service-traffic-group .body {
-  display: flex;
-  flex-direction: column;
-  gap: $kui-space-40;
-}
 .type-passthrough,
 .type-outbound {
   padding: $kui-space-40;
