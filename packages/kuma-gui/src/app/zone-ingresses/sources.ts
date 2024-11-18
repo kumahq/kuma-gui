@@ -37,7 +37,7 @@ export const sources = (source: Source, api: KumaApi) => {
         },
       })
     },
-    '/zone-cps/:name/ingresses': async (params): Promise<ZoneIngressOverviewCollection> => {
+    '/zone-cps/:name/ingresses': async (params) => {
       const { name, size, page } = params
       const offset = size * (page - 1)
 
