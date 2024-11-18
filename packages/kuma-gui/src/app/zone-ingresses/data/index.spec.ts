@@ -281,4 +281,45 @@ describe('ZoneIngressOverview', () => {
       },
     )
   })
+  describe('zoneIngressOverview.config', () => {
+    test('config is derived from name, timestamps, mesh and zoneIngress of item', async ({ fixture }) => {
+      const expected = {
+        type: 'ZoneIngress',
+        name: 'zone-ingress-name.zone-ingress-namespace',
+        mesh: 'mesh-0',
+        zone: 'zone-0',
+        creationTime: '2021-07-13T08:40:59Z',
+        modificationTime: '2021-07-13T08:40:59Z',
+        availableServices: [{
+          instances: 50,
+          mesh: 'mesh-0',
+          tags: {
+            app: 'programm-app',
+            'kuma.io/zone': 'zone-0',
+            'kuma.io/service': 'program-app_alarm_svc_36676',
+          },
+        }],
+        networking: {
+          address: '486f:d1db:efde:c143:94a5:cb9f:271a:c1a7',
+          advertisedAddress: '190.26.201.59',
+          advertisedPort: '58329',
+          port: '58936',
+        },
+      }
+      const actual = await fixture.setup((item) => {
+        item.name = expected.name
+        item.mesh = expected.mesh
+        item.creationTime = expected.creationTime
+        item.modificationTime = expected.modificationTime
+        item.zoneIngress = {
+          availableServices: expected.availableServices,
+          networking: expected.networking,
+          zone: expected.zone,
+        }
+
+        return item
+      })
+      expect(actual.config).toStrictEqual(expected)
+    })
+  })
 })

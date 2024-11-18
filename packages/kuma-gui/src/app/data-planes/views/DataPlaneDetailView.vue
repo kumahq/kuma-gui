@@ -227,46 +227,51 @@
                         </XEmptyState>
                       </template>
                       <template #default="{ items: _inbounds }">
-                        <template
-                          v-for="item in _inbounds"
-                          :key="`${item.name}`"
+                        <XLayout
+                          type="stack"
+                          size="small"
                         >
                           <template
-                            v-for="stats in [
-                              traffic?.inbounds[item.name],
-                            ]"
-                            :key="stats"
+                            v-for="item in _inbounds"
+                            :key="`${item.name}`"
                           >
-                            <ConnectionCard
-                              data-testid="dataplane-inbound"
-                              :protocol="item.protocol"
-                              :service="can('use service-insights', props.mesh) ? item.tags['kuma.io/service'] : ''"
-                              :traffic="typeof error === 'undefined' ?
-                                stats :
-                                {
-                                  name: '',
-                                  protocol: item.protocol,
-                                  port: `${item.port}`,
-                                }
-                              "
+                            <template
+                              v-for="stats in [
+                                traffic?.inbounds[item.name],
+                              ]"
+                              :key="stats"
                             >
-                              <XAction
-                                data-action
-                                :to="{
-                                  name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
-                                  params: {
-                                    connection: item.name,
-                                  },
-                                  query: {
-                                    inactive: route.params.inactive,
-                                  },
-                                }"
+                              <ConnectionCard
+                                data-testid="dataplane-inbound"
+                                :protocol="item.protocol"
+                                :service="can('use service-insights', props.mesh) ? item.tags['kuma.io/service'] : ''"
+                                :traffic="typeof error === 'undefined' ?
+                                  stats :
+                                  {
+                                    name: '',
+                                    protocol: item.protocol,
+                                    port: `${item.port}`,
+                                  }
+                                "
                               >
-                                {{ item.name.replace('localhost', '').replace('_', ':') }}
-                              </XAction>
-                            </ConnectionCard>
+                                <XAction
+                                  data-action
+                                  :to="{
+                                    name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
+                                    params: {
+                                      connection: item.name,
+                                    },
+                                    query: {
+                                      inactive: route.params.inactive,
+                                    },
+                                  }"
+                                >
+                                  {{ item.name.replace('localhost', '').replace('_', ':') }}
+                                </XAction>
+                              </ConnectionCard>
+                            </template>
                           </template>
-                        </template>
+                        </XLayout>
                       </template>
                     </DataCollection>
                   </template>
@@ -342,33 +347,38 @@
                             v-for="hash in [/-([a-f0-9]){16}$/]"
                             :key="hash"
                           >
-                            <template
-                              v-for="[name, outbound] in outbounds"
-                              :key="`${name}`"
+                            <XLayout
+                              type="stack"
+                              size="small"
                             >
-                              <ConnectionCard
-                                data-testid="dataplane-outbound"
-                                :protocol="['grpc', 'http', 'tcp'].find(protocol => typeof outbound[protocol] !== 'undefined') ?? 'tcp'"
-                                :traffic="outbound"
-                                :service="outbound.$resourceMeta.type === '' ? name.replace(hash, '') : undefined"
-                                :direction="direction"
+                              <template
+                                v-for="[name, outbound] in outbounds"
+                                :key="`${name}`"
                               >
-                                <XAction
-                                  data-action
-                                  :to="{
-                                    name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
-                                    params: {
-                                      connection: name,
-                                    },
-                                    query: {
-                                      inactive: route.params.inactive,
-                                    },
-                                  }"
+                                <ConnectionCard
+                                  data-testid="dataplane-outbound"
+                                  :protocol="['grpc', 'http', 'tcp'].find(protocol => typeof outbound[protocol] !== 'undefined') ?? 'tcp'"
+                                  :traffic="outbound"
+                                  :service="outbound.$resourceMeta.type === '' ? name.replace(hash, '') : undefined"
+                                  :direction="direction"
                                 >
-                                  {{ name }}
-                                </XAction>
-                              </ConnectionCard>
-                            </template>
+                                  <XAction
+                                    data-action
+                                    :to="{
+                                      name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
+                                      params: {
+                                        connection: name,
+                                      },
+                                      query: {
+                                        inactive: route.params.inactive,
+                                      },
+                                    }"
+                                  >
+                                    {{ name }}
+                                  </XAction>
+                                </ConnectionCard>
+                              </template>
+                            </XLayout>
                           </template>
                         </ConnectionGroup>
                       </DataCollection>
@@ -634,7 +644,8 @@ const warnings = computed(() => props.data.warnings.concat(...(props.data.isCert
   align-items: center;
 }
 
-.inbound-list>*+* {
+.inbound-list > * + * {
+  border: 1px solid red;
   margin-block-start: $kui-space-60;
   border-top: $kui-border-width-10 solid $kui-color-border;
   padding-block-start: $kui-space-60;

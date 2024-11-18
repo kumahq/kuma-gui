@@ -632,8 +632,10 @@ cluster.${service}.upstream_rq_tx_reset: 0
 cluster.${service}.version: 18174995656166257622
 cluster.${service}.warming_state: 0`
       }
+      default: {
+        return ''
+      }
     }
-    return ''
   }).join(`
 `)
 
