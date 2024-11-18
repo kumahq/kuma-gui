@@ -2,7 +2,7 @@ hostname-generators:
   x-empty-state:
     title: 'No data'
     body: !!text/markdown |
-      There are no HostnameGenerators present
+      There are no `HostnameGenerator`s present
     action:
       type: docs
       label: Documentation
@@ -17,12 +17,12 @@ hostname-generators:
     item:
       title: "{name}"
       subtitle: "{name} HostnameGenerator"
-      breadcrumbs: HostnameGenerators
+      breadcrumbs: Hostname Generators
       config: YAML
     items:
-      title: HostnameGenerators
-      breadcrumbs: HostnameGenerators
+      title: Hostname Generators
+      breadcrumbs: Hostname Generators
       intro: !!text/markdown |
-        HostnameGenerators provide templates to generate hostnames from properties of different `MeshService` types.
+        `HostnameGenerator`s provide templates to generate hostnames from properties of different `MeshService` types.
   href:
     docs: '{KUMA_DOCS_URL}/networking/hostnamegenerator?{KUMA_UTM_QUERY_PARAMS}'

@@ -21,4 +21,4 @@ main-overview:
   action_menu:
     toggle_button: 'Actions'
     items:
-      hostname_generators: HostnameGenerators
+      hostname_generators: Hostname Generators
