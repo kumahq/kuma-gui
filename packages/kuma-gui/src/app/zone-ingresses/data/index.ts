@@ -60,17 +60,25 @@ export const ZoneIngressOverview = {
   fromObject: (item: PartialZoneIngressOverview) => {
     const zoneIngressInsight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
     const zoneIngress = InternalZoneIngress.fromObject(item.zoneIngress)
+    const zoneIngressConfig = ZoneIngress.fromObject({
+      type: 'ZoneIngress',
+      name: item.name,
+      creationTime: item.creationTime,
+      modificationTime: item.modificationTime,
+      mesh: item.mesh,
+      ...item.zoneIngress,
+    }).config
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
 
     return {
       ...item,
-      $raw: item,
       id: item.name,
       name: labels['kuma.io/display-name'] ?? item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
       labels,
       zoneIngressInsight,
       zoneIngress,
+      config: zoneIngressConfig,
       // it is possible to have zoneIngresses on a 'disabled' zone but we don't
       // want to do anything special about that just now at least
       state: typeof zoneIngressInsight.connectedSubscription !== 'undefined' ? 'online' as const : 'offline' as const,

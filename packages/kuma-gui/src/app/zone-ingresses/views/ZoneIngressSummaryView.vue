@@ -133,7 +133,7 @@
 
               <div class="mt-4">
                 <ResourceCodeBlock
-                  :resource="item.$raw"
+                  :resource="item.config"
                   is-searchable
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
