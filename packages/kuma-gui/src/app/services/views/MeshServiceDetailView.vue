@@ -191,6 +191,7 @@
                             s: route.params.s,
                           },
                         }"
+                        data-action
                       >
                         {{ item.name }}
                       </XAction>

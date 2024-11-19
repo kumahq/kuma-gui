@@ -39,6 +39,16 @@ data-planes:
         data-plane-outbound-summary-clusters-view: 'Clusters'
         data-plane-summary-overview-view: Overview
         data-plane-summary-config-view: Config
+        service-data-plane-summary-overview-view: Overview
+        service-data-plane-summary-config-view: Config
+        mesh-service-data-plane-summary-overview-view: Overview
+        mesh-service-data-plane-summary-config-view: Config
+        mesh-multi-zone-service-service-data-plane-summary-overview-view: Overview
+        mesh-multi-zone-service-data-plane-summary-config-view: Config
+        builtin-gateway-data-plane-summary-overview-view: Overview
+        builtin-gateway-data-plane-summary-config-view: Config
+        delegated-gateway-data-plane-summary-overview-view: Overview
+        delegated-gateway-data-plane-summary-config-view: Config
       gateway: 'Gateway'
       inbounds: 'Inbounds'
       inbound_name: '{service}'
