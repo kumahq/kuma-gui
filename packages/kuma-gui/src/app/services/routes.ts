@@ -20,6 +20,9 @@ export const routes = (can: Can) => {
                 children: [
                   {
                     path: ':dataPlane',
+                    props: () => ({
+                      routeName: 'service-data-plane-summary-view',
+                    }),
                     name: 'service-data-plane-summary-view',
                     component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
                   },
@@ -51,6 +54,9 @@ export const routes = (can: Can) => {
                 children: [
                   {
                     path: ':dataPlane',
+                    props: () => ({
+                      routeName: 'mesh-service-data-plane-summary-view',
+                    }),
                     name: 'mesh-service-data-plane-summary-view',
                     component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
                   },
@@ -77,6 +83,9 @@ export const routes = (can: Can) => {
                     children: [
                       {
                         path: ':dataPlane',
+                        props: () => ({
+                          routeName: 'mesh-multi-zone-service-data-plane-summary-view',
+                        }),
                         name: 'mesh-multi-zone-service-data-plane-summary-view',
                         component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
                       },
