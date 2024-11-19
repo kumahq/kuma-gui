@@ -63,7 +63,7 @@
     "eslint": "^8.57.1",
     "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.10",
     "lockfile-lint": "^4.14.0",
