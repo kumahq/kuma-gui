@@ -37,6 +37,8 @@ data-planes:
         data-plane-outbound-summary-overview-view: 'Overview'
         data-plane-outbound-summary-stats-view: 'Stats'
         data-plane-outbound-summary-clusters-view: 'Clusters'
+        data-plane-summary-overview-view: Overview
+        data-plane-summary-config-view: Config
       gateway: 'Gateway'
       inbounds: 'Inbounds'
       inbound_name: '{service}'

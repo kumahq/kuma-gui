@@ -67,7 +67,29 @@ export const routes = () => {
             {
               path: ':dataPlane',
               name: 'data-plane-summary-view',
+              props: () => ({
+                routeName: 'data-plane-summary-view',
+              }),
+              redirect: { name: 'data-plane-summary-overview-view' },
               component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+              children: [
+                {
+                  path: 'summary-overview',
+                  name: 'data-plane-summary-overview-view',
+                  props: () => ({
+                    routeName: 'data-plane-summary-overview-view',
+                  }),
+                  component: () => import('@/app/data-planes/views/DataPlaneSummaryOverviewView.vue'),
+                },
+                {
+                  path: 'config',
+                  name: 'data-plane-summary-config-view',
+                  props: () => ({
+                    routeName: 'data-plane-summary-config-view',
+                  }),
+                  component: () => import('@/app/data-planes/views/DataPlaneSummaryConfigView.vue'),
+                },
+              ],
             },
           ],
         },

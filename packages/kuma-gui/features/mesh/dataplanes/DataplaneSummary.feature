@@ -47,3 +47,12 @@ Feature: Dataplane summary
       """
     When I visit the "/meshes/default/data-planes/test-data-plane-1?page=2&size=50" URL
     Then the "$summary" element exists
+
+  Scenario: Summary URL offers tabs
+    When I visit the "/meshes/default/data-planes/test-data-plane-1?page=2&size=50" URL
+    Then the URL contains "/summary-overview"
+    And the "[data-testid='data-plane-summary-overview-view']" element exists
+    Then I click the "[data-testid='data-plane-summary-config-view-tab'] a" element
+    Then the URL contains "/config"
+    And the "[data-testid='data-plane-summary-config-view']" element exists
+    And the "[data-testid='k-code-block']" element exists
