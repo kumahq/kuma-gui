@@ -24,6 +24,9 @@ export const routes = () => {
                 children: [
                   {
                     path: ':dataPlane',
+                    props: () => ({
+                      routeName: 'builtin-gateway-data-plane-summary-view',
+                    }),
                     name: 'builtin-gateway-data-plane-summary-view',
                     component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
                   },
@@ -48,6 +51,9 @@ export const routes = () => {
                 children: [
                   {
                     path: ':dataPlane',
+                    props: () => ({
+                      routeName: 'delegated-gateway-data-plane-summary-view',
+                    }),
                     name: 'delegated-gateway-data-plane-summary-view',
                     component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
                   },
