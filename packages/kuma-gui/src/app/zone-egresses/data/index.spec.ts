@@ -209,4 +209,34 @@ describe('ZoneEgressOverview', () => {
       },
     )
   })
+
+  describe('zoneIngressOverview.config', () => {
+    test('config is derived from name, timestamps, mesh and zoneIngress of item', async ({ fixture }) => {
+      const expected = {
+        type: 'ZoneEgress',
+        name: 'zone-egress-name.zone-egress-namespace',
+        mesh: 'mesh-0',
+        zone: 'zone-0',
+        creationTime: '2021-07-13T08:40:59Z',
+        modificationTime: '2021-07-13T08:40:59Z',
+        networking: {
+          address: '486f:d1db:efde:c143:94a5:cb9f:271a:c1a7',
+          port: '58936',
+        },
+      }
+      const actual = await fixture.setup((item) => {
+        item.name = expected.name
+        item.mesh = expected.mesh
+        item.creationTime = expected.creationTime
+        item.modificationTime = expected.modificationTime
+        item.zoneEgress = {
+          networking: expected.networking,
+          zone: expected.zone,
+        }
+
+        return item
+      })
+      expect(actual.config).toStrictEqual(expected)
+    })
+  })
 })
