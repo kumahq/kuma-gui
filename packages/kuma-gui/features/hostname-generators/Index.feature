@@ -21,7 +21,7 @@ Feature: hostname-generators / index
     When I click the "<Selector> [data-testid='x-action-group-control']" element
     And I click the "<Selector> [data-testid='x-action-group'] li:nth-child(1) [data-testid='x-action']" element
     Then the URL contains "/hostname-generators/<HostnameGenerator>/overview"
-    And the "$breadcrumbs" element contains "HostnameGenerators"
+    And the "$breadcrumbs" element contains "Hostname Generators"
     And I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(1) > a" element
 
     Examples:
