@@ -78,7 +78,7 @@ export const routes = () => {
             component: () => import('@/app/data-planes/views/DataPlaneSummaryOverviewView.vue'),
           },
           {
-            path: 'config',
+            path: 'summary-config',
             name: `${fullPrefix}data-plane-summary-config-view`,
             props: () => ({
               routeName: `${fullPrefix}data-plane-summary-config-view`,
