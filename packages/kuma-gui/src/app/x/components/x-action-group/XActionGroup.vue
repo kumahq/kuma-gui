@@ -13,7 +13,7 @@
         :kpop-attributes="{
           placement: 'bottom-end',
         }"
-        :width="width"
+        width="auto"
       >
         <template #default>
           <slot
@@ -50,11 +50,9 @@
 import { KDropdown } from '@kong/kongponents'
 
 const props = withDefaults(defineProps<{
-  width?: string
   expanded?: boolean
 }>(), {
   expanded: false,
-  width: '150',
 })
 
 </script>
@@ -92,5 +90,14 @@ const props = withDefaults(defineProps<{
   border-right: $kui-border-width-10 solid;
   border-top-right-radius: $kui-border-radius-30;
   border-bottom-right-radius: $kui-border-radius-30;
+}
+
+.x-action-group :deep(.popover-container) {
+  min-width: 100px;
+  max-width: 300px;
+}
+
+.x-action-group :deep(.dropdown-item-trigger) {
+  padding-right: 40px;
 }
 </style>

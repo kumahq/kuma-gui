@@ -1,5 +1,5 @@
 <template>
-  <XActionGroup width="auto">
+  <XActionGroup>
     <template #control>
       <XAction
         action="expand"
