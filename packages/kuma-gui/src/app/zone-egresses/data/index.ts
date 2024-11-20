@@ -21,14 +21,6 @@ export type ZoneEgress = {
 
 export type ZoneEgressInsight = PartialZoneEgressInsight & DiscoverySubscriptionCollection & {}
 
-export type ZoneEgressOverview = PartialZoneEgressOverview & {
-  id: string
-  namespace: string
-  labels: Exclude<PartialZoneEgressOverview['labels'], undefined>
-  zoneEgress: InternalZoneEgress
-  zoneEgressInsight: ZoneEgressInsight
-  state: 'online' | 'offline'
-}
 // TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
 const InternalZoneEgress = {
   fromObject: (item: PartialInternalZoneEgress): InternalZoneEgress => {
@@ -58,13 +50,22 @@ export const ZoneEgressInsight = {
   },
 }
 export const ZoneEgressOverview = {
-  fromObject: (item: PartialZoneEgressOverview): ZoneEgressOverview => {
+  fromObject: (item: PartialZoneEgressOverview) => {
     const zoneEgressInsight = ZoneEgressInsight.fromObject(item.zoneEgressInsight)
     const zoneEgress = InternalZoneEgress.fromObject(item.zoneEgress)
+    const zoneEgressConfig = ZoneEgress.fromObject({
+      type: 'ZoneEgress',
+      name: item.name,
+      creationTime: item.creationTime,
+      modificationTime: item.modificationTime,
+      mesh: item.mesh,
+      ...item.zoneEgress,
+    }).config
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
 
     return {
       ...item,
+      config: zoneEgressConfig,
       id: item.name,
       name: labels['kuma.io/display-name'] ?? item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
@@ -73,13 +74,15 @@ export const ZoneEgressOverview = {
       zoneEgress,
       // it is possible to have zoneEgresses on a 'disabled' zone but we don't
       // want to do anything special about that just now at least
-      state: typeof zoneEgressInsight.connectedSubscription !== 'undefined' ? 'online' : 'offline',
+      state: typeof zoneEgressInsight.connectedSubscription !== 'undefined' ? 'online' as const : 'offline' as const,
     }
   },
-  fromCollection: (collection: CollectionResponse<PartialZoneEgressOverview>): CollectionResponse<ZoneEgressOverview> => {
+  fromCollection: (collection: CollectionResponse<PartialZoneEgressOverview>) => {
     return {
       ...collection,
       items: Array.isArray(collection.items) ? collection.items.map(ZoneEgressOverview.fromObject) : [],
     }
   },
 }
+
+export type ZoneEgressOverview = ReturnType<typeof ZoneEgressOverview.fromObject>

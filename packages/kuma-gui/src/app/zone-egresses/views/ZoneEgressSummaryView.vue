@@ -3,6 +3,9 @@
     name="zone-egress-summary-view"
     :params="{
       zoneEgress: '',
+      codeSearch: '',
+      codeFilter: false,
+      codeRegExp: false,
     }"
     v-slot="{ route, t }"
   >
@@ -102,6 +105,36 @@
                 </template>
               </DefinitionCard>
             </div>
+            <div>
+              <h3>
+                {{ t('zone-ingresses.routes.item.config') }}
+              </h3>
+
+              <div class="mt-4">
+                <ResourceCodeBlock
+                  :resource="item.config"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                  v-slot="{ copy, copying }"
+                >
+                  <DataSource
+                    v-if="copying"
+                    :src="`/zone-egresses/${route.params.zoneEgress}/as/kubernetes?no-store`"
+                    @change="(data) => {
+                      copy((resolve) => resolve(data))
+                    }"
+                    @error="(e) => {
+                      copy((_resolve, reject) => reject(e))
+                    }"
+                  />
+                </ResourceCodeBlock>
+              </div>
+            </div>
           </AppView>
         </template>
       </template>
@@ -114,6 +147,7 @@ import type { ZoneEgressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   items: ZoneEgressOverview[]
