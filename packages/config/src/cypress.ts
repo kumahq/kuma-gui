@@ -2,6 +2,7 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 import { createEsbuildPlugin } from '@badeball/cypress-cucumber-preprocessor/esbuild'
 import createBundler from '@bahmutov/cypress-esbuild-preprocessor'
 import cypressFailFast from 'cypress-fail-fast/plugin'
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter'
 import esbuild from 'esbuild'
 import fs from 'node:fs'
 
@@ -31,6 +32,7 @@ export const cypress = (env: Record<string, string>) => {
       // Can be turned on via CLI using `CYPRESS_video=true npm run test:browser`
       video: false,
       async setupNodeEvents(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
+
         // propagate env to Cypress.env
         Object.entries(env).forEach(([prop, value]) => {
           config.env[prop] = value
@@ -79,6 +81,10 @@ export const cypress = (env: Record<string, string>) => {
           }
         })
 
+        installLogsPrinter(on, {
+          logToFilesOnAfterRun: true,
+          printLogsToConsole: 'always',
+        })
         cypressFailFast(on, config)
 
         // Make sure to return the config object as it might have been modified by the plugin.
