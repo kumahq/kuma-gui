@@ -18,3 +18,7 @@ main-overview:
       title: 'Zones'
     meshes:
       title: 'Meshes'
+  action_menu:
+    toggle_button: 'Actions'
+    items:
+      hostname_generators: Hostname Generators

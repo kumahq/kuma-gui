@@ -11,6 +11,9 @@
           />
         </h1>
       </template>
+      <template #actions>
+        <ControlPlaneActionGroup />
+      </template>
 
       <div
         class="stack"
@@ -107,13 +110,14 @@
 <script lang="ts" setup>
 
 import { sources as ControlPlaneSources } from '../sources'
-import { useControlPlaneStatus } from '@/app/control-planes'
+import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import { sources as MeshSources } from '@/app/meshes/sources'
 import { useZoneControlPlanesList } from '@/app/zones'
 import { sources as ZoneSources } from '@/app/zones/sources'
 
 const ControlPlaneStatus = useControlPlaneStatus()
+const ControlPlaneActionGroup = useControlPlaneActionGroup()
 const ZoneControlPlanesList = useZoneControlPlanesList()
 </script>
 

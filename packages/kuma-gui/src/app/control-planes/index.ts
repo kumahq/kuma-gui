@@ -2,6 +2,7 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
+import ControlPlaneActionGroup from '@/app/control-planes/components/ControlPlaneActionGroup.vue'
 import ControlPlaneStatus from '@/app/control-planes/components/ControlPlaneStatus.vue'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
@@ -11,6 +12,7 @@ type Token = ReturnType<typeof token>
 const $ = {
   sources: token<ReturnType<typeof sources>>('control-planes.sources'),
   ControlPlaneStatus: token<typeof ControlPlaneStatus>('control-planes.components.ControlPlaneStatus'),
+  ControlPlaneActionGroup: token<typeof ControlPlaneActionGroup>('control-planes.components.ControlPlaneActionGroup'),
 }
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
@@ -35,6 +37,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         return ControlPlaneStatus
       },
     }],
+    [$.ControlPlaneActionGroup, {
+      service: () => {
+        return ControlPlaneActionGroup
+      },
+    }],
     [token('control-planes.routes'), {
       service: routes,
       labels: [
@@ -56,6 +63,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 export const TOKENS = $
 export const [
   useControlPlaneStatus,
+  useControlPlaneActionGroup,
 ] = createInjections(
   $.ControlPlaneStatus,
+  $.ControlPlaneActionGroup,
 )
