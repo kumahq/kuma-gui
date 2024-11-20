@@ -76,7 +76,7 @@ export const DataplaneOverview = {
       mesh: item.mesh,
       creationTime: item.creationTime,
       modificationTime: item.modificationTime,
-      networking,
+      networking: item.dataplane.networking,
     })
 
     return {
