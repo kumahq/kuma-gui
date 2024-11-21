@@ -31,7 +31,6 @@ const props = withDefaults(defineProps<{
   &::before {
     content: '';
     mask-image: var(--icon);
-    -webkit-mask-image: var(--icon);
     background-color: currentColor;
     height: 20px;
     width: 20px;
