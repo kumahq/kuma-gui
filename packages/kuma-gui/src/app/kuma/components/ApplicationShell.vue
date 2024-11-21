@@ -259,16 +259,12 @@ header {
 nav ul {
   list-style-type: none;
 }
-nav :deep(.app-navigator) {
-  margin-left: $kui-space-40;
-}
 nav :deep(.app-navigator) + .app-navigator {
   margin-top: $kui-space-20;
 }
 nav :deep(.app-navigator) > a {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: $kui-space-40 $kui-space-60;
   border-radius: 5px;

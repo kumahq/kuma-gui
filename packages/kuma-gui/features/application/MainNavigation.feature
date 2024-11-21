@@ -8,7 +8,7 @@ Feature: application / MainNavigation
       | meshes-nav         | [data-testid='meshes-navigator'] a         |
       | zones-nav          | [data-testid='zones-navigator'] a          |
       | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a  |
-      | diagnostics-nav    | [data-testid='nav-item-diagnostics']       |
+      | diagnostics-nav    | [data-testid='diagnostics-navigator'] a       |
 
   Scenario Outline: The navigation shows the correct nav for <Mode>
     Given the environment

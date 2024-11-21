@@ -34,6 +34,7 @@
             :to="{
               name: 'home',
             }"
+            style="--icon: var(--icon-home);"
           />
           <AppNavigator
             v-if="can('use zones')"
@@ -43,6 +44,7 @@
             :to="{
               name: 'zone-index-view',
             }"
+            style="--icon: var(--icon-zones);"
           />
           <AppNavigator
             v-else
@@ -52,6 +54,7 @@
             :to="{
               name: 'zone-egress-list-view',
             }"
+            style="--icon: var(--icon-zone-egresses);"
           />
           <AppNavigator
             :active="child.name === 'mesh-index-view'"
@@ -60,6 +63,7 @@
             :to="{
               name: 'mesh-index-view',
             }"
+            style="--icon: var(--icon-meshes);"
           />
         </template>
 
@@ -71,6 +75,7 @@
             :to="{
               name: 'diagnostics',
             }"
+            style="--icon: var(--icon-configuration);"
           />
         </template>
 
@@ -113,5 +118,14 @@ router.afterEach(() => {
 <style lang="scss" scoped>
 .logo {
   max-height: 36px;
+}
+
+:deep(.app-sidebar) {
+  --icon-home: url('@/assets/images/navigation/icon-home.svg');
+  --icon-zones: url('@/assets/images/navigation/icon-zones.svg');
+  --icon-meshes: url('@/assets/images/navigation/icon-meshes.svg');
+  --icon-rbac: url('@/assets/images/navigation/icon-rbac.svg');
+  --icon-configuration: url('@/assets/images/navigation/icon-configuration.svg');
+  --icon-zone-egresses: url('@/assets/images/navigation/icon-zone-egresses.svg');
 }
 </style>
