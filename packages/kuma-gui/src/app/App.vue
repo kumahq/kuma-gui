@@ -63,6 +63,17 @@
           />
         </template>
 
+        <template #bottomNavigation>
+          <AppNavigator
+            :active="child.name === 'diagnostics'"
+            data-testid="diagnostics-navigator"
+            label="Configuration"
+            :to="{
+              name: 'diagnostics',
+            }"
+          />
+        </template>
+
         <AppView>
           <RouterView />
         </AppView>

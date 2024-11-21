@@ -117,33 +117,33 @@
               Onboarding
             </XAction>
           </XActionGroup>
-          <XAction
-            :to="{ name: 'diagnostics' }"
-            appearance="tertiary"
-            icon
-            data-testid="nav-item-diagnostics"
-          >
-            <XIcon
-              name="settings"
-            >
-              Diagnostics
-            </XIcon>
-          </XAction>
         </slot>
       </div>
     </header>
     <div
       class="app-content-container"
     >
-      <nav
-        v-if="$slots.navigation"
-        aria-label="Main"
-        class="app-sidebar"
-      >
-        <ul>
-          <slot name="navigation" />
-        </ul>
-      </nav>
+      <aside class="app-sidebar">
+        <div class="navigation-container">
+          <nav
+            v-if="$slots.navigation"
+            aria-label="Main"
+          >
+            <ul>
+              <slot name="navigation" />
+            </ul>
+          </nav>
+
+          <nav
+            v-if="$slots.bottomNavigation"
+            aria-label="Secondary"
+          >
+            <ul>
+              <slot name="bottomNavigation" />
+            </ul>
+          </nav>
+        </div>
+      </aside>
       <main
         class="app-main-content"
       >
@@ -235,24 +235,29 @@ header {
   gap: $kui-space-80;
 }
 // This wrapping element is necessary. It ensures that the sidebar can participate in a grid or flex container.
-nav {
+.app-sidebar {
   position: static;
 }
 
-nav ul {
-  list-style-type: none;
+.navigation-container {
+  position: fixed;
   padding: 0;
   width: var(--AppSidebarWidth);
-  position: fixed;
   z-index: 10;
   top: var(--AppHeaderHeight);
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  padding-top: $kui-space-40;
-  padding-right: $kui-space-40;
+  padding: $kui-space-40 $kui-space-40 $kui-space-80 0;
   border-right: $kui-border-width-10 solid $kui-color-border;
   background-color:  $kui-color-background;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+nav ul {
+  list-style-type: none;
 }
 nav :deep(.app-navigator) {
   margin-left: $kui-space-40;
