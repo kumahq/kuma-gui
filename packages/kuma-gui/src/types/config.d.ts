@@ -64,7 +64,7 @@ export interface Defaults {
   skipMeshCreation: boolean
 }
 
-export interface Configuration {
+export interface Diagnostics {
   debugEndpoints: boolean
   serverPort: number
 }
@@ -338,7 +338,7 @@ export interface Config {
   apiServer: ApiServer
   bootstrapServer: BootstrapServer
   defaults: Defaults
-  configuration: Configuration
+  diagnostics: Diagnostics
   dnsServer: DnsServer
   dpServer: DpServer
   environment: string

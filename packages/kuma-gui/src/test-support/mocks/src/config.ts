@@ -63,7 +63,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (_req) =>
       defaults: {
         skipMeshCreation: false,
       },
-      configuration: {
+      diagnostics: {
         debugEndpoints: false,
         serverPort: 5680,
       },

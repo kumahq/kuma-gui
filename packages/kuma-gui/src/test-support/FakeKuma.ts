@@ -450,7 +450,7 @@ function subscriptionConfig() {
     defaults: {
       skipMeshCreation: false,
     },
-    configuration: {
+    diagnostics: {
       debugEndpoints: false,
       serverPort: 6680,
     },
