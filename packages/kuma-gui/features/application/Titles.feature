@@ -11,7 +11,7 @@ Feature: application / titles
     Examples:
       | URL                                                          | Title               |
       | /                                                            | Overview            |
-      | /diagnostics                                                 | Diagnostics         |
+      | /configuration                                                 | Configuration         |
       | /onboarding                                                  | Welcome to Kuma!    |
       | /onboarding/deployment-types                                 | Deployment Types    |
       | /onboarding/configuration-types                              | Configuration Types |

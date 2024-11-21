@@ -7,13 +7,13 @@ type Token = ReturnType<typeof token>
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
-    [token('diagnostics.routes'), {
+    [token('configuration.routes'), {
       service: routes,
       labels: [
         app.routes,
       ],
     }],
-    [token('diagnostics.locales'), {
+    [token('configuration.locales'), {
       service: () => locales,
       labels: [
         app.enUs,

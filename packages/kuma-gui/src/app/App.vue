@@ -69,11 +69,11 @@
 
         <template #bottomNavigation>
           <AppNavigator
-            :active="child.name === 'diagnostics'"
-            data-testid="diagnostics-navigator"
+            :active="child.name === 'configuration'"
+            data-testid="configuration-navigator"
             label="Configuration"
             :to="{
-              name: 'diagnostics',
+              name: 'configuration',
             }"
             style="--icon: var(--icon-configuration);"
           />
