@@ -38,37 +38,31 @@ class Router<T> {
     throw new Error(`Matching route for '${path}' not found`)
   }
 }
-
 const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
 const noop: Callback = (_merge, _req, response) => response
 export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server, fs: FS): Mocker => {
   const router = new Router(fs)
   return (path, opts = {}, cb = noop) => {
-    // if path is `*` then that means mock everything, which currently means
-    // changing to `/`
-    path = path === '*' ? '/' : path
-    const baseUrl = env('KUMA_API_URL')
     const client = get(TOKENS.client)
     return cy.intercept(
       {
-        url: new RegExp(`${baseUrl}${path.replace(reEscape, '\\$&')}`),
+        url: path === '*' ? '**' : new RegExp(path.replace(reEscape, '\\$&')),
       },
       (req) => {
         try {
+          const url = new URL(req.url)
+          const { route, params } = router.match(url.pathname)
+          const endpoint = route
           const mockEnv: Env = (key, d = '') => {
             if (typeof opts[key as MockEnvKeys] !== 'undefined') {
               return opts[key as MockEnvKeys]
             }
             return env(key as AppEnvKeys, d)
           }
-          const path = req.url.replace(baseUrl, '')
-          const { route, params } = router.match(path)
-          const endpoint = route
           const fetch = endpoint({
             ...dependencies,
             env: mockEnv,
           })
-          const url = new URL(req.url)
           const body = req.body
 
           const request = {
@@ -97,10 +91,10 @@ export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server,
             body: response.body,
           })
         } catch (e) {
-          console.error(e)
           req.continue()
         }
       },
     )
+
   }
 }
