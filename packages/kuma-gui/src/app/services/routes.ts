@@ -1,4 +1,5 @@
 import type { Can } from '@/app/application'
+import { routes as dataPlanes } from '@/app/data-planes/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = (can: Can) => {
@@ -17,13 +18,7 @@ export const routes = (can: Can) => {
                 path: 'overview',
                 name: 'service-detail-view',
                 component: () => import('@/app/services/views/ServiceDetailView.vue'),
-                children: [
-                  {
-                    path: ':dataPlane',
-                    name: 'service-data-plane-summary-view',
-                    component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-                  },
-                ],
+                children: dataPlanes().summary('service'),
               },
             ],
           },
@@ -48,13 +43,7 @@ export const routes = (can: Can) => {
                 path: 'overview',
                 name: 'mesh-service-detail-view',
                 component: () => import('@/app/services/views/MeshServiceDetailView.vue'),
-                children: [
-                  {
-                    path: ':dataPlane',
-                    name: 'mesh-service-data-plane-summary-view',
-                    component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-                  },
-                ],
+                children: dataPlanes().summary('mesh-service'),
               },
               {
                 path: 'config',
@@ -74,13 +63,7 @@ export const routes = (can: Can) => {
                     path: 'overview',
                     name: 'mesh-multi-zone-service-detail-view',
                     component: () => import('@/app/services/views/MeshMultiZoneServiceDetailView.vue'),
-                    children: [
-                      {
-                        path: ':dataPlane',
-                        name: 'mesh-multi-zone-service-data-plane-summary-view',
-                        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-                      },
-                    ],
+                    children: dataPlanes().summary('mesh-multi-zone-service'),
                   },
                 ],
               },

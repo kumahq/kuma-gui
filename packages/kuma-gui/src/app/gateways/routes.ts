@@ -1,3 +1,4 @@
+import { routes as dataPlanes } from '@/app/data-planes/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
 export const routes = () => {
@@ -21,13 +22,7 @@ export const routes = () => {
                 path: 'dataplanes',
                 name: 'builtin-gateway-dataplanes-view',
                 component: () => import('@/app/gateways/views/BuiltinGatewayDataplanesView.vue'),
-                children: [
-                  {
-                    path: ':dataPlane',
-                    name: 'builtin-gateway-data-plane-summary-view',
-                    component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-                  },
-                ],
+                children: dataPlanes().summary('builtin-gateway'),
               },
               {
                 path: 'config',
@@ -45,13 +40,7 @@ export const routes = () => {
                 path: 'overview',
                 name: 'delegated-gateway-detail-view',
                 component: () => import('@/app/gateways/views/DelegatedGatewayDetailView.vue'),
-                children: [
-                  {
-                    path: ':dataPlane',
-                    name: 'delegated-gateway-data-plane-summary-view',
-                    component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-                  },
-                ],
+                children: dataPlanes().summary('delegated-gateway'),
               },
             ],
           },

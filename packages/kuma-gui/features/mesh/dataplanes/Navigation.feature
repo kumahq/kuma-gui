@@ -55,7 +55,9 @@ Feature: mesh / dataplanes / navigation
       Examples:
         | URL                                                                             |
         | /meshes/default/gateways/builtin/alarm-0-6064a9c9a-icpsl.kuma-system/dataplanes |
+        | /meshes/default/gateways/delegated/port-0-gateway_delegated/overview            |
         | /meshes/default/services/internal/microchip-0-internal/overview                 |
+        | /meshes/default/services/mesh-services/alarm-0-mesh-service/overview            |
         | /meshes/default/data-planes                                                     |
 
   Rule: In a non-namespaced environment
