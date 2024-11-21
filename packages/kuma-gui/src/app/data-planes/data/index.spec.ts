@@ -375,4 +375,36 @@ describe('DataplaneOverview', () => {
       },
     )
   })
+  describe('dataplane.config', () => {
+    test(
+      'config is derived from Dataplane and based on DataplaneOverview data',
+      async ({ fixture }) => {
+        const expected = {
+          type: 'Dataplane',
+          name: 'dp-name',
+          mesh: 'dp-mesh',
+          creationTime: '2021-02-19T07:06:16.384057Z',
+          modificationTime: '2021-02-29T07:06:00.00Z',
+          networking: {
+            address: '167.61.18.108',
+            type: 'sidecar',
+            inboundAddress: 'localhost',
+            inbounds: [],
+            outbounds: [],
+          },
+        }
+
+        const actual = await fixture.setup((item) => {
+          item.name = expected.name
+          item.mesh = expected.mesh
+          item.creationTime = expected.creationTime
+          item.modificationTime = expected.modificationTime
+          item.dataplane.networking = expected.networking
+
+          return item
+        })
+
+        expect(actual.config).toStrictEqual(expected)
+      })
+  })
 })

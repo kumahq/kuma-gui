@@ -56,6 +56,40 @@ export const routes = () => {
     ]
   }
 
+  const summary = (prefix?: string): RouteRecordRaw[] => {
+    const fullPrefix = prefix?.length ? `${prefix}-` : ''
+
+    return [
+      {
+        path: ':dataPlane',
+        name: `${fullPrefix}data-plane-summary-view`,
+        props: () => ({
+          routeName: `${fullPrefix}data-plane-summary-view`,
+        }),
+        redirect: { name: `${fullPrefix}data-plane-summary-overview-view` },
+        component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
+        children: [
+          {
+            path: 'summary-overview',
+            name: `${fullPrefix}data-plane-summary-overview-view`,
+            props: () => ({
+              routeName: `${fullPrefix}data-plane-summary-overview-view`,
+            }),
+            component: () => import('@/app/data-planes/views/DataPlaneSummaryOverviewView.vue'),
+          },
+          {
+            path: 'summary-config',
+            name: `${fullPrefix}data-plane-summary-config-view`,
+            props: () => ({
+              routeName: `${fullPrefix}data-plane-summary-config-view`,
+            }),
+            component: () => import('@/app/data-planes/views/DataPlaneSummaryConfigView.vue'),
+          },
+        ],
+      },
+    ]
+  }
+
   return {
     items: (): RouteRecordRaw[] => {
       return [
@@ -63,16 +97,11 @@ export const routes = () => {
           path: 'data-planes',
           name: 'data-plane-list-view',
           component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-          children: [
-            {
-              path: ':dataPlane',
-              name: 'data-plane-summary-view',
-              component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
-            },
-          ],
+          children: summary(),
         },
       ]
     },
     item,
+    summary,
   }
 }

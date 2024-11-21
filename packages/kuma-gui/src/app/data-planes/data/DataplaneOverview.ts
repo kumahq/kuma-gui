@@ -1,3 +1,4 @@
+import { Dataplane } from './Dataplane'
 import { DataplaneInsight } from './DataplaneInsight'
 import { DataplaneNetworking } from './DataplaneNetworking'
 import type { PaginatedApiListResponse } from '@/types/api.d'
@@ -6,21 +7,6 @@ import type {
   DataplaneWarning,
   LabelValue,
 } from '@/types/index.d'
-export type DataplaneOverview = PartialDataplaneOverview & {
-  dataplane: {
-    networking: DataplaneNetworking
-  }
-  id: string
-  namespace: string
-  labels: Exclude<PartialDataplaneOverview['labels'], undefined>
-  dataplaneInsight: DataplaneInsight
-  dataplaneType: 'standard' | 'builtin' | 'delegated'
-  status: 'online' | 'offline' | 'partially_degraded'
-  warnings: DataplaneWarning[]
-  isCertExpired: boolean
-  zone: string | undefined
-  services: string[]
-}
 
 // any collection of non-spaces followed by a `:` or `: ` followed by a
 // collection of non-spaces
@@ -39,6 +25,17 @@ const searchShortcuts: Record<string, string> = {
   zone: 'kuma.io/zone',
   protocol: 'kuma.io/protocol',
 }
+const states = {
+  online: 'online',
+  offline: 'offline',
+  partiallyDegraded: 'partially_degraded',
+} as const
+const dpTypes = {
+  builtin: 'builtin',
+  delegated: 'delegated',
+  standard: 'standard',
+} as const
+
 export const DataplaneOverview = {
   search(search: string) {
     const terms = [...search.matchAll(searchRe)].filter(item => item[0].length > 0).map(item => item[0].trim())
@@ -61,7 +58,7 @@ export const DataplaneOverview = {
       })(prev, item)
     }, { tag: [] }) || {}
   },
-  fromObject(item: PartialDataplaneOverview, canUseZones: boolean): DataplaneOverview {
+  fromObject(item: PartialDataplaneOverview, canUseZones: boolean) {
     const dataplaneInsight = DataplaneInsight.fromObject(item.dataplaneInsight)
 
     const networking = DataplaneNetworking.fromObject(item.dataplane.networking)
@@ -73,6 +70,15 @@ export const DataplaneOverview = {
     const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
 
+    const { config } = Dataplane.fromObject({
+      type: 'Dataplane',
+      name: item.name,
+      mesh: item.mesh,
+      creationTime: item.creationTime,
+      modificationTime: item.modificationTime,
+      networking: item.dataplane.networking,
+    })
+
     return {
       ...item,
       id: item.name,
@@ -83,9 +89,9 @@ export const DataplaneOverview = {
       },
       labels,
       dataplaneInsight,
-      dataplaneType: networking.type === 'gateway' ? 'builtin' : typeof networking.gateway !== 'undefined' ? 'delegated' : 'standard',
+      dataplaneType: networking.type === 'gateway' ? dpTypes.builtin : typeof networking.gateway !== 'undefined' ? dpTypes.delegated : dpTypes.standard,
       status: (() => {
-        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? 'online' : 'offline'
+        const state = typeof dataplaneInsight.connectedSubscription !== 'undefined' ? states.online : states.offline
         if (networking.gateway) {
           return state
         }
@@ -94,10 +100,10 @@ export const DataplaneOverview = {
         switch (true) {
           case unhealthyInbounds.length === networking.inbounds.length:
             // All inbounds being unhealthy means the Dataplane is offline.
-            return 'offline'
+            return states.offline
           case unhealthyInbounds.length > 0:
             // Some inbounds being unhealthy means the Dataplane is partially degraded.
-            return 'partially_degraded'
+            return states.partiallyDegraded
           default:
             // All inbounds being healthy means the Dataplane’s status is determined by whether it’s connected to a control plane.
             return state
@@ -107,10 +113,11 @@ export const DataplaneOverview = {
       isCertExpired,
       services,
       zone,
+      config,
     }
   },
 
-  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>, canUseZones: boolean): PaginatedApiListResponse<DataplaneOverview> {
+  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>, canUseZones: boolean) {
     return {
       ...partialDataplaneOverviews,
       items: Array.isArray(partialDataplaneOverviews.items)
@@ -191,3 +198,5 @@ function getWarnings({ version }: DataplaneInsight, tags: LabelValue[], canUseZo
 
   return warnings
 }
+
+export type DataplaneOverview = ReturnType<typeof DataplaneOverview.fromObject>
