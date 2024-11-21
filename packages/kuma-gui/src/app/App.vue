@@ -124,7 +124,6 @@ router.afterEach(() => {
   --icon-home: url('@/assets/images/navigation/icon-home.svg');
   --icon-zones: url('@/assets/images/navigation/icon-zones.svg');
   --icon-meshes: url('@/assets/images/navigation/icon-meshes.svg');
-  --icon-rbac: url('@/assets/images/navigation/icon-rbac.svg');
   --icon-configuration: url('@/assets/images/navigation/icon-configuration.svg');
   --icon-zone-egresses: url('@/assets/images/navigation/icon-zone-egresses.svg');
 }
