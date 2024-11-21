@@ -248,7 +248,7 @@ header {
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  padding: $kui-space-40 $kui-space-40 $kui-space-80 0;
+  padding: $kui-space-40 $kui-space-40 $kui-space-80 $kui-space-40;
   border-right: $kui-border-width-10 solid $kui-color-border;
   background-color:  $kui-color-background;
   display: flex;
@@ -258,6 +258,7 @@ header {
 
 nav ul {
   list-style-type: none;
+  padding: unset;
 }
 nav :deep(.app-navigator) + .app-navigator {
   margin-top: $kui-space-20;
@@ -266,7 +267,7 @@ nav :deep(.app-navigator) > a {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: $kui-space-40 $kui-space-60;
+  padding: $kui-space-40 $kui-space-60 $kui-space-40 $kui-space-70;
   border-radius: 5px;
   text-decoration: none;
   color: currentColor;

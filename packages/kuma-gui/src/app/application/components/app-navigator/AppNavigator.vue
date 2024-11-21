@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<{
     background-color: currentColor;
     height: 20px;
     width: 20px;
-    margin-right: 20px;
+    margin-right: $kui-space-80;
   }
 }
 </style>
