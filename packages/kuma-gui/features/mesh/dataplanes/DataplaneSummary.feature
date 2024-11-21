@@ -53,6 +53,6 @@ Feature: Dataplane summary
     Then the URL contains "/summary-overview"
     And the "[data-testid='data-plane-summary-overview-view']" element exists
     Then I click the "[data-testid='data-plane-summary-config-view-tab'] a" element
-    Then the URL contains "/config"
+    Then the URL contains "/summary-config"
     And the "[data-testid='data-plane-summary-config-view']" element exists
     And the "[data-testid='k-code-block']" element exists
