@@ -134,6 +134,11 @@
             </ul>
           </nav>
 
+          <div
+            role="separator"
+            class="navigation-separator"
+          />
+
           <nav
             v-if="$slots.bottomNavigation"
             aria-label="Secondary"
@@ -253,7 +258,13 @@ header {
   background-color:  $kui-color-background;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between;
+}
+
+.navigation-separator {
+  width: calc(100% - 2 * $kui-space-40);
+  margin: $kui-space-80 $kui-space-40;
+  height: 1px;
+  background-color: currentColor;
 }
 
 nav ul {
