@@ -12,7 +12,7 @@
       :breadcrumbs="[
         {
           to: {
-            name: 'configuration',
+            name: 'configuration-view',
           },
           text: t('configuration.routes.item.breadcrumbs'),
         },
