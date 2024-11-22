@@ -8,7 +8,7 @@ Feature: application / MainNavigation
       | meshes-nav         | [data-testid='meshes-navigator'] a         |
       | zones-nav          | [data-testid='zones-navigator'] a          |
       | zone-egresses-nav  | [data-testid='zone-egresses-navigator'] a  |
-      | configuration-nav    | [data-testid='configuration-navigator'] a       |
+      | configuration-nav  | [data-testid='configuration-navigator'] a  |
 
   Scenario Outline: The navigation shows the correct nav for <Mode>
     Given the environment
@@ -43,7 +43,7 @@ Feature: application / MainNavigation
       | Selector            | Title               |
       | $control-planes-nav | Overview            |
       | $zones-nav          | Zone Control Planes |
-      | $configuration-nav    | Configuration         |
+      | $configuration-nav  | Configuration       |
 
   Scenario: Pagination deeplinking
     Given the environment
