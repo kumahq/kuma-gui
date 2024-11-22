@@ -175,6 +175,10 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/${dataPath}`, { params })
   }
 
+  getDataplaneXds({ mesh, dppName }: { mesh: string, dppName: string, params?: any }, params?: any): Promise<Record<string, unknown>> {
+    return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/xds`, { params })
+  }
+
   getAllMeshServicesFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshService>> {
     return this.client.get(`/meshes/${mesh}/meshservices`, { params })
   }

@@ -20,7 +20,7 @@
         :src="uri(sources, '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds', {
           mesh: route.params.mesh,
           dataplane: route.params.dataPlane,
-          inbound: `${props.data.addressPort}`,
+          inbound: `${props.data.port}`,
         })"
         v-slot="{ data: raw, refresh }"
       >

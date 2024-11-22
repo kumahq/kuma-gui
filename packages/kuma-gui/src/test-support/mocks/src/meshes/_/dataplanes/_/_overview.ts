@@ -37,16 +37,16 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
     // temporarily overwrite the result of dataplaneNetworking as it doesn't
     // currently accept port plus we need to keep our ports synced.
     ; (networking.inbound ?? []).forEach((inbound, i) => {
-      // if (fake.datatype.boolean()) {
-      inbound.address = address
-      inbound.port = ports[i].port
-      inbound.servicePort = undefined
-      // } else {
-      //   inbound.port = fake.number.int({ min: 1, max: 65535 })
-      //   inbound.servicePort = ports[i].port
-      // }
-      inbound.tags['kuma.io/protocol'] = ports[i].protocol
-    })
+    // if (fake.datatype.boolean()) {
+    inbound.address = address
+    inbound.port = ports[i].port
+    inbound.servicePort = undefined
+    // } else {
+    //   inbound.port = fake.number.int({ min: 1, max: 65535 })
+    //   inbound.servicePort = ports[i].port
+    // }
+    inbound.tags['kuma.io/protocol'] = ports[i].protocol
+  })
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
