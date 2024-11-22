@@ -124,30 +124,23 @@
       class="app-content-container"
     >
       <aside class="app-sidebar">
-        <div class="navigation-container">
-          <nav
-            v-if="$slots.navigation"
-            aria-label="Main"
-          >
-            <ul>
-              <slot name="navigation" />
-            </ul>
-          </nav>
+        <nav
+          aria-label="Main"
+        >
+          <ul v-if="$slots.navigation">
+            <slot name="navigation" />
+          </ul>
 
           <div
+            v-if="$slots.navigation && $slots.bottomNavigation"
             role="separator"
             class="navigation-separator"
           />
 
-          <nav
-            v-if="$slots.bottomNavigation"
-            aria-label="Secondary"
-          >
-            <ul>
-              <slot name="bottomNavigation" />
-            </ul>
-          </nav>
-        </div>
+          <ul v-if="$slots.bottomNavigation">
+            <slot name="bottomNavigation" />
+          </ul>
+        </nav>
       </aside>
       <main
         class="app-main-content"
@@ -244,7 +237,7 @@ header {
   position: static;
 }
 
-.navigation-container {
+nav {
   position: fixed;
   padding: 0;
   width: var(--AppSidebarWidth);
@@ -270,6 +263,7 @@ header {
 nav ul {
   list-style-type: none;
   padding: unset;
+  margin: unset;
 }
 nav :deep(.app-navigator) + .app-navigator {
   margin-top: $kui-space-20;
