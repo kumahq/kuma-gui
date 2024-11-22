@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="configuration"
+    name="configuration-view"
     :params="{
       codeSearch: '',
       codeFilter: false,
