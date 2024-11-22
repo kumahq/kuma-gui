@@ -123,7 +123,7 @@
     <div
       class="app-content-container"
     >
-      <aside class="app-sidebar">
+      <div class="app-sidebar">
         <nav
           aria-label="Main"
         >
@@ -141,7 +141,7 @@
             <slot name="bottomNavigation" />
           </ul>
         </nav>
-      </aside>
+      </div>
       <main
         class="app-main-content"
       >
@@ -257,7 +257,7 @@ nav {
   width: calc(100% - 2 * $kui-space-40);
   margin: $kui-space-80 $kui-space-40;
   height: 1px;
-  background-color: currentColor;
+  background-color: $kui-color-border;
 }
 
 nav ul {
