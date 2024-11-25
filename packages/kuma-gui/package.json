@@ -49,7 +49,7 @@
     "@types/prismjs": "^1.26.5",
     "@types/semver": "^7.5.8",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@typescript-eslint/parser": "^8.16.0",
     "@vitejs/plugin-vue": "^5.2.0",
     "@vitest/coverage-istanbul": "^2.1.5",
     "@vue/test-utils": "^2.4.6",
