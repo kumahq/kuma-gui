@@ -23,7 +23,9 @@
         ]"
         :key="missingTLSPolicy"
       >
-        <AppView :docs="t('meshes.href.docs')">
+        <AppView
+          :docs="t('meshes.href.docs')"
+        >
           <template
             v-if="!props.mesh.mtlsBackend || missingTLSPolicy"
             #notifications
@@ -50,7 +52,9 @@
                   :start="t('common.formats.datetime', { value: Date.parse(props.mesh.creationTime) })"
                   :end="t('common.formats.datetime', { value: Date.parse(props.mesh.modificationTime) })"
                 />
-                <div class="columns">
+                <XLayout
+                  type="columns"
+                >
                   <template
                     v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
                     :key="policy"
@@ -84,13 +88,17 @@
                       </DefinitionCard>
                     </template>
                   </template>
-                </div>
+                </XLayout>
               </XLayout>
             </XCard>
 
-            <KCard>
-              <div class="stack">
-                <div class="columns">
+            <XCard>
+              <XLayout
+                type="stack"
+              >
+                <XLayout
+                  type="columns"
+                >
                   <ResourceStatus
                     :total="data?.services.total ?? 0"
                     data-testid="services-status"
@@ -136,9 +144,9 @@
                       </template>
                     </template>
                   </DefinitionCard>
-                </div>
-              </div>
-            </KCard>
+                </XLayout>
+              </XLayout>
+            </XCard>
             <ResourceCodeBlock
               :resource="mesh.config"
               v-slot="{ copy, copying }"

@@ -7,7 +7,7 @@
 </template>
 <script lang="ts" setup>
 const props = withDefaults(defineProps<{
-  type?: 'stack' | 'separated'
+  type?: 'stack' | 'separated' | 'columns'
   size?: 'small' | 'normal'
 }>(), {
   type: 'stack',
@@ -26,4 +26,18 @@ const props = withDefaults(defineProps<{
   flex-wrap: wrap;
   gap: $kui-space-40;
 }
+.columns {
+  --threshold: 40rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: $kui-space-80;
+}
+
+.columns > * {
+  flex-grow: 1;
+  flex-basis: calc((var(--threshold) - 100%) * 999);
+  min-inline-size: 0;
+}
+
 </style>
