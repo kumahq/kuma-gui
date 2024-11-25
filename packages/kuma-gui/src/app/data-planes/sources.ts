@@ -41,6 +41,7 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
   return {
     configs: configs.reduce((prev, item) => {
       const entries = Object.entries(item)
+
       const found = entries.reduce((prev, [key, value]) => {
         const found = cb(key, Array.isArray(value) ? value : [])
         if (found.length > 0) {
