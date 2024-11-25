@@ -71,15 +71,15 @@
     v-if="props.docs.length > 0"
     :to="{ name: 'app-view-docs' }"
   >
-    <KButton
+    <XAction
       appearance="secondary"
       icon
-      :to="props.docs"
+      :href="props.docs"
     >
       <XIcon
         name="docs"
       />
-    </KButton>
+    </XAction>
   </XTeleportTemplate>
 </template>
 
