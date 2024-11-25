@@ -1,12 +1,9 @@
 meshes:
-  x-empty-state:
-    title: 'No data'
-    body: !!text/markdown |
-      There are no Meshes present
-    action:
-      type: docs
-      label: Documentation
-      href: '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
+  docs: &meshes.docs
+    type: docs
+    label: Documentation
+    href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
+
   common:
     name: Name
     type: |
@@ -15,11 +12,21 @@ meshes:
         =1 { Mesh }
         other { Meshes }
       }
+
+  x-empty-state:
+    title: 'No data'
+    body: !!text/markdown |
+      There are no Meshes present
+    action:
+      <<: *meshes.docs
+
+
   components:
     mesh-insights-list:
       name: 'Name'
       services: 'Services'
       dataplanes: 'Data Plane Proxies (online/total)'
+
   routes:
     item:
       title: "{name}"
@@ -48,7 +55,7 @@ meshes:
     overview:
       title: Mesh overview
   href:
-    docs: '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
+    docs: *meshes.docs.href
   detail:
     services: 'Services'
     data_plane_proxies: 'Data Plane Proxies'
