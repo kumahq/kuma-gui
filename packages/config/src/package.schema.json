@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "definitions": {
+    "caretOnlyVersion": {
+      "type": "string",
+      "pattern": "^\\^"
+    },
+    "workspaceVersion": {
+      "type": "string",
+      "pattern": "^\\*$"
+    }
+  },
+  "properties": {
+    "engines": {
+      "not": {}
+    },
+    "dependencies": {
+      "type": "object",
+      "$comment": "To ignore a dependency to use a non-caret version follow the ignored-example below",
+      "patternProperties": {
+        "@kumahq/ignored-example": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/caretOnlyVersion"
+      }
+    },
+    "devDependencies": {
+      "type": "object",
+      "$comment": "To ignore a dependency to use a non-caret version follow the ignored-example below",
+      "patternProperties": {
+        "@kumahq/ignored-example": {
+          "type": "string"
+        },
+        "@kumahq/config": {
+          "$ref": "#/definitions/workspaceVersion"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/caretOnlyVersion"
+      }
+    },
+    "peerDependencies": {
+      "type": "object",
+      "$comment": "To ignore a dependency to use a non-caret version follow the ignored-example below",
+      "patternProperties": {
+        "@kumahq/ignored-example": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/caretOnlyVersion"
+      }
+    }
+  }
+}
