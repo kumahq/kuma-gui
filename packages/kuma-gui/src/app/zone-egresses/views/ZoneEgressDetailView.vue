@@ -12,47 +12,55 @@
         class="stack"
       >
         <KCard>
-          <div class="columns">
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.status') }}
-              </template>
-
-              <template #body>
-                <StatusBadge :status="props.data.state" />
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard
-              v-if="props.data.namespace.length > 0"
-            >
-              <template #title>
-                Namespace
-              </template>
-
-              <template #body>
-                {{ props.data.namespace }}
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.address') }}
-              </template>
-
-              <template #body>
-                <template v-if="props.data.zoneEgress.socketAddress.length > 0">
-                  <XCopyButton
-                    :text="props.data.zoneEgress.socketAddress"
-                  />
+          <XLayout
+            type="stack"
+          >
+            <XTimespan
+              :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
+              :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
+            />
+            <div class="columns">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
                 </template>
 
-                <template v-else>
-                  {{ t('common.detail.none') }}
+                <template #body>
+                  <StatusBadge :status="props.data.state" />
                 </template>
-              </template>
-            </DefinitionCard>
-          </div>
+              </DefinitionCard>
+
+              <DefinitionCard
+                v-if="props.data.namespace.length > 0"
+              >
+                <template #title>
+                  Namespace
+                </template>
+
+                <template #body>
+                  {{ props.data.namespace }}
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.address') }}
+                </template>
+
+                <template #body>
+                  <template v-if="props.data.zoneEgress.socketAddress.length > 0">
+                    <XCopyButton
+                      :text="props.data.zoneEgress.socketAddress"
+                    />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+            </div>
+          </XLayout>
         </KCard>
 
         <div

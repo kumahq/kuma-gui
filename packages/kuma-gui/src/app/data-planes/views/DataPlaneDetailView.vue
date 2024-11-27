@@ -42,6 +42,10 @@
             <div
               class="stack"
             >
+              <XTimespan
+                :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
+                :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
+              />
               <div
                 class="columns"
               >
@@ -129,41 +133,28 @@
                 </DefinitionCard>
               </div>
               <div
+                v-if="props.data.dataplane.networking.gateway"
                 class="columns"
               >
                 <DefinitionCard>
                   <template #title>
-                    {{ t('data-planes.routes.item.last_updated') }}
+                    {{ t('http.api.property.tags') }}
                   </template>
 
                   <template #body>
-                    {{ t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) }) }}
+                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
                   </template>
                 </DefinitionCard>
 
-                <template
-                  v-if="props.data.dataplane.networking.gateway"
-                >
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.tags') }}
-                    </template>
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.address') }}
+                  </template>
 
-                    <template #body>
-                      <TagList :tags="props.data.dataplane.networking.gateway.tags" />
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.address') }}
-                    </template>
-
-                    <template #body>
-                      <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
-                    </template>
-                  </DefinitionCard>
-                </template>
+                  <template #body>
+                    <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                  </template>
+                </DefinitionCard>
               </div>
             </div>
           </KCard>

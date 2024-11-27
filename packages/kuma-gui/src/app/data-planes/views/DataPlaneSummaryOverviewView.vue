@@ -110,7 +110,7 @@
             layout="horizontal"
           >
             <template #title>
-              {{ t('data-planes.routes.item.last_updated') }}
+              {{ t('http.api.property.modificationTime') }}
             </template>
 
             <template #body>

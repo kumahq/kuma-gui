@@ -39,48 +39,54 @@
               />
             </ul>
           </template>
-          <div class="stack">
-            <AppAboutSection
-              :title="t('meshes.routes.item.subtitle', { name: props.mesh.name })"
-              :created="t('common.formats.datetime', { value: Date.parse(props.mesh.creationTime) })"
-              :modified="t('common.formats.datetime', { value: Date.parse(props.mesh.modificationTime) })"
-            >
-              <div class="columns">
-                <template
-                  v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
-                  :key="policy"
-                >
+          <XLayout
+            type="stack"
+          >
+            <XCard>
+              <XLayout
+                type="stack"
+              >
+                <XTimespan
+                  :start="t('common.formats.datetime', { value: Date.parse(props.mesh.creationTime) })"
+                  :end="t('common.formats.datetime', { value: Date.parse(props.mesh.modificationTime) })"
+                />
+                <div class="columns">
                   <template
-                    v-for="enabled in [Object.entries(data?.policies ?? {}).find(([key, value]) => key === policy)]"
-                    :key="enabled"
+                    v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
+                    :key="policy"
                   >
-                    <DefinitionCard>
-                      <template #title>
-                        <XAction
-                          :to="{
-                            name: 'policy-list-view',
-                            params: {
-                              mesh: route.params.mesh,
-                              policyPath: `${policy.toLowerCase()}s`,
-                            },
-                          }"
-                        >
-                          {{ policy }}
-                        </XAction>
-                      </template>
+                    <template
+                      v-for="enabled in [Object.entries(data?.policies ?? {}).find(([key, value]) => key === policy)]"
+                      :key="enabled"
+                    >
+                      <DefinitionCard>
+                        <template #title>
+                          <XAction
+                            :to="{
+                              name: 'policy-list-view',
+                              params: {
+                                mesh: route.params.mesh,
+                                policyPath: `${policy.toLowerCase()}s`,
+                              },
+                            }"
+                          >
+                            {{ policy }}
+                          </XAction>
+                        </template>
 
-                      <template #body>
-                        <XBadge
-                          appearance="neutral"
-                        >
-                          {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
-                        </XBadge>
-                      </template>
-                    </DefinitionCard>
+                        <template #body>
+                          <XBadge
+                            appearance="neutral"
+                          >
+                            {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+                    </template>
                   </template>
-                </template>
-              </div>
-            </AppAboutSection>
+                </div>
+              </XLayout>
+            </XCard>
 
             <KCard>
               <div class="stack">
@@ -152,7 +158,7 @@
                 }"
               />
             </ResourceCodeBlock>
-          </div>
+          </XLayout>
         </AppView>
       </template>
     </DataSource>
@@ -160,8 +166,6 @@
 </template>
 
 <script lang="ts" setup>
-import { AppAboutSection } from '@kong-ui-public/app-layout'
-
 import type { Mesh } from '../data'
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
@@ -172,9 +176,3 @@ const props = defineProps<{
   mesh: Mesh
 }>()
 </script>
-
-<style lang="scss" scoped>
-:deep(.kong-ui-app-about-section .about-section-content) {
-  display: block;
-}
-</style>

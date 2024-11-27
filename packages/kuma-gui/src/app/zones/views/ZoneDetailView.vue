@@ -39,67 +39,75 @@
           class="stack"
         >
           <KCard>
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
-                </template>
-
-                <template #body>
-                  <StatusBadge :status="props.data.state" />
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                :class="{
-                  version: true,
-                  outdated: version?.outdated,
-                }"
-              >
-                <template #title>
-                  {{ t('zone-cps.routes.item.version') }}
-                  <template
-                    v-if="version?.outdated === true"
-                  >
-                    <KTooltip
-                      max-width="300"
-                    >
-                      <InfoIcon
-                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                        :size="KUI_ICON_SIZE_30"
-                      />
-                      <template #content>
-                        <div
-                          v-html="t('zone-cps.routes.item.version_warning')"
-                        />
-                      </template>
-                    </KTooltip>
+            <XLayout
+              type="stack"
+            >
+              <XTimespan
+                :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
+                :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
+              />
+              <div class="columns">
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.status') }}
                   </template>
-                </template>
 
-                <template #body>
-                  {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
-                </template>
-              </DefinitionCard>
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.type') }}
-                </template>
+                  <template #body>
+                    <StatusBadge :status="props.data.state" />
+                  </template>
+                </DefinitionCard>
+                <DefinitionCard
+                  :class="{
+                    version: true,
+                    outdated: version?.outdated,
+                  }"
+                >
+                  <template #title>
+                    {{ t('zone-cps.routes.item.version') }}
+                    <template
+                      v-if="version?.outdated === true"
+                    >
+                      <KTooltip
+                        max-width="300"
+                      >
+                        <InfoIcon
+                          :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                          :size="KUI_ICON_SIZE_30"
+                        />
+                        <template #content>
+                          <div
+                            v-html="t('zone-cps.routes.item.version_warning')"
+                          />
+                        </template>
+                      </KTooltip>
+                    </template>
+                  </template>
 
-                <template #body>
-                  {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
-                </template>
-              </DefinitionCard>
+                  <template #body>
+                    {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
+                  </template>
+                </DefinitionCard>
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('http.api.property.type') }}
+                  </template>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('zone-cps.routes.item.authentication_type') }}
-                </template>
+                  <template #body>
+                    {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
+                  </template>
+                </DefinitionCard>
 
-                <template #body>
-                  {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
-                </template>
-              </DefinitionCard>
-            </div>
+                <DefinitionCard>
+                  <template #title>
+                    {{ t('zone-cps.routes.item.authentication_type') }}
+                  </template>
+
+                  <template #body>
+                    {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
+                  </template>
+                </DefinitionCard>
+              </div>
+            </XLayout>
           </KCard>
 
           <div

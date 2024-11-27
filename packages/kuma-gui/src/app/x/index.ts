@@ -17,6 +17,7 @@ import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
+import XTimespan from './components/x-timespan/XTimespan.vue'
 import locales from './locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
@@ -47,6 +48,7 @@ declare module 'vue' {
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
+    XTimespan: typeof XTimespan
     XDisclosure: typeof XDisclosure
   }
 }
@@ -92,6 +94,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XTabs', XTabs],
           ['XTeleportTemplate', XTeleportTemplate],
           ['XTeleportSlot', XTeleportSlot],
+          ['XTimespan', XTimespan],
           ['XDisclosure', XDisclosure],
         ]
       },
