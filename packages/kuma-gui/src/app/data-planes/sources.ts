@@ -106,7 +106,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
     '/meshes/:mesh/dataplanes/:name/as/kubernetes': async (params) => {
       return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
     },
-
+    // @deprecated please use either /xds, /clusters or /stats endpoints (ie. without /data-path)
     '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': async (params) => {
       const { mesh, name } = params
       const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
@@ -115,6 +115,14 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         mesh,
         dppName: name,
         dataPath,
+      })
+    },
+    '/meshes/:mesh/dataplanes/:name/clusters': async (params) => {
+      const { mesh, name } = params
+      return api.getDataplaneData({
+        mesh,
+        dppName: name,
+        dataPath: 'clusters',
       })
     },
     '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds': async (params) => {
