@@ -81,12 +81,11 @@ export const DataplaneNetworking = {
         : inbounds.map((item) => {
           // inbound address, advertisedAddress, networkingAddress because externally accessible address
           const address = item.address ?? networking.advertisedAddress ?? networking.address
-          const port = item.servicePort ?? item.port
           return {
             ...item,
             // the name can be used to lookup listener envoy stats
-            name: `localhost_${port}`,
-            listenerAddress: `${address}_${port}`,
+            name: `localhost_${item.port}`,
+            listenerAddress: `${address}_${item.port}`,
             // If a health property is unset the inbound is considered healthy
             state: typeof item.state !== 'undefined' ? item.state : 'Ready',
             service: item.tags['kuma.io/service'],
@@ -94,7 +93,7 @@ export const DataplaneNetworking = {
             address,
             addressPort: `${address}:${item.port}`,
             // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address
-            serviceAddressPort: `${item.serviceAddress ?? address}:${port}`,
+            serviceAddressPort: `${item.serviceAddress ?? address}:${item.servicePort ?? item.port}`,
           }
         }),
       outbounds: DataplaneOutbound.fromCollection(outbounds),
