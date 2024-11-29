@@ -1,5 +1,8 @@
 const { dirname } = require('path')
+const { readFileSync: read } = require('fs')
 const $config = dirname(require.resolve('@kumahq/config'))
+
+const packageSchema = JSON.parse(read(`${$config}/package.schema.json`).toString())
 
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
@@ -44,12 +47,30 @@ const INLINE_NON_VOID_ELEMENTS = [
 ]
 
 /**
- * @param {{ tsConfigPath?: string, componentIgnorePatterns?: string[] }} [options]
+ * @param {{ tsConfigPath?: string, componentIgnorePatterns?: string[], versionIgnorePatterns: Record<string, unknown> }} [options]
  * @returns {import('eslint').ESLint.ConfigData}
  */
 function createEslintConfig(
-  { tsConfigPath = 'tsconfig.json', componentIgnorePatterns = [] } = { tsConfigPath: 'tsconfig.json', componentIgnorePatterns: [] }
+  {
+    tsConfigPath = 'tsconfig.json',
+    componentIgnorePatterns = [],
+    versionIgnorePatterns = {}
+  } = {
+    tsConfigPath: 'tsconfig.json',
+    componentIgnorePatterns: [],
+    versionIgnorePatterns: {}
+  }
 ) {
+
+  ((properties) => {
+    ['dependencies', 'devDependencies', 'peerDependencies'].forEach((item) => {
+      properties[item].patternProperties = {
+        ...properties[item].patternProperties,
+        ...versionIgnorePatterns[item] ?? {}
+      }
+    })
+  })(packageSchema.properties)
+
   return {
     root: true,
     parserOptions: {
@@ -107,12 +128,13 @@ function createEslintConfig(
       'no-unreachable': 'error',
       'json-schema-validator/no-invalid': ['error', {
         useSchemastoreCatalog: false,
+        mergeSchemas: true,
         schemas: [
           {
             fileMatch: ['package.json'],
             // our schema allows for ignoring individual dependencies if required
             // see ./package.schema.json patternProperties examples
-            schema: `${$config}/package.schema.json`
+            schema: packageSchema
           }
         ]
       }]

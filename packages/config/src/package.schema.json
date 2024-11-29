@@ -7,7 +7,7 @@
     },
     "workspaceVersion": {
       "type": "string",
-      "pattern": "^\\*$"
+      "pattern": "(^\\*$)|(^file:)"
     }
   },
   "properties": {
