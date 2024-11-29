@@ -31,11 +31,13 @@ export const ServiceInsight = {
   fromObject(partialServiceInsight: PartialServiceInsight): ServiceInsight {
     const serviceType = partialServiceInsight.serviceType ?? 'internal'
     const status = partialServiceInsight.status ?? 'not_available'
+    const addressPort = partialServiceInsight.addressPort?.replaceAll('_', '.')
 
     return {
       ...partialServiceInsight,
       serviceType,
       status,
+      addressPort,
     }
   },
 
