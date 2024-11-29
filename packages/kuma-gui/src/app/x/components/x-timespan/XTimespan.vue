@@ -7,18 +7,21 @@
     <div
       v-if="props.start.length > 0"
     >
-      <dt>Created</dt>
+      <dt>{{ t('http.api.property.creationTime') }}</dt>
       <dd>{{ props.start }}</dd>
     </div>
     <div
       v-if="props.end.length > 0"
     >
-      <dt>Modified</dt>
+      <dt>{{ t('http.api.property.modificationTime') }}</dt>
       <dd>{{ props.end }}</dd>
     </div>
   </dl>
 </template>
 <script lang="ts" setup>
+import { useI18n } from '@/app/application'
+
+const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
   start?: string
