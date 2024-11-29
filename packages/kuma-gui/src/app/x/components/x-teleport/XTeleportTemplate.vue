@@ -22,8 +22,8 @@ onMounted(() => {
   if (document.querySelector(`[data-x-teleport-id='${props.to.name}']`) !== null) {
     ready.value = true
   } else {
-    window.addEventListener('x-teleport-slot:mounted', (e: Event) => {
-      if (isCustomEvent(e) && e.detail?.name === props.to.name) {
+    window.addEventListener('x-teleport-slot:mounted', (e: CustomEvent<{ name: string }> | Event) => {
+      if ('detail' in e && e.detail?.name === props.to.name) {
         ready.value = true
       }
     }, { signal: controller.signal })
