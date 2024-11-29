@@ -53,7 +53,6 @@ data-planes:
       inbounds: 'Inbounds'
       inbound_name: '{service}'
       port: ':{port}'
-      last_updated: 'Last updated'
       namespace: 'Namespace'
       certificate_info: 'Certificate info'
       no_certificate: 'No certificate'

@@ -29,13 +29,21 @@
             </XCopyButton>
           </h1>
         </template>
-        <div class="stack">
-          <AppAboutSection
-            :title="t('hostname-generators.routes.item.subtitle', { name: data.name })"
-            :created="t('common.formats.datetime', { value: Date.parse(data.creationTime) })"
-            :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime) })"
-          >
-            <div class="columns">
+        <XLayout
+          type="stack"
+        >
+          <XCard>
+            <XLayout
+              type="stack"
+            >
+              <XTimespan
+                :start="t('common.formats.datetime', { value: Date.parse(data.creationTime) })"
+                :end="t('common.formats.datetime', { value: Date.parse(data.modificationTime) })"
+              />
+            </XLayout>
+            <div
+              class="columns"
+            >
               <template
                 v-for="labels in [{
                   ...data.spec.selector.meshService.matchLabels,
@@ -64,7 +72,7 @@
                 </DefinitionCard>
               </template>
             </div>
-          </AppAboutSection>
+          </XCard>
 
           <ResourceCodeBlock
             :resource="data.$raw"
@@ -85,22 +93,14 @@
               }"
             />
           </ResourceCodeBlock>
-        </div>
+        </XLayout>
       </AppView>
     </DataLoader>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
-import { AppAboutSection } from '@kong-ui-public/app-layout'
-
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>
-
-<style lang="scss" scoped>
-:deep(.kong-ui-app-about-section .about-section-content) {
-  display: block;
-}
-</style>

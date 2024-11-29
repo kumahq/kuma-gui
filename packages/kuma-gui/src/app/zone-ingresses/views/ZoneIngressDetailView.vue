@@ -12,71 +12,79 @@
         class="stack"
       >
         <KCard>
-          <div class="columns">
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.status') }}
-              </template>
+          <XLayout
+            type="stack"
+          >
+            <XTimespan
+              :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
+              :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
+            />
+            <div class="columns">
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.status') }}
+                </template>
 
-              <template #body>
-                <StatusBadge
-                  :status="props.data.state"
-                />
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard
-              v-if="props.data.namespace.length > 0"
-            >
-              <template #title>
-                Namespace
-              </template>
-
-              <template #body>
-                {{ props.data.namespace }}
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.address') }}
-              </template>
-
-              <template #body>
-                <template
-                  v-if="props.data.zoneIngress.socketAddress.length > 0"
-                >
-                  <XCopyButton
-                    :text="props.data.zoneIngress.socketAddress"
+                <template #body>
+                  <StatusBadge
+                    :status="props.data.state"
                   />
                 </template>
+              </DefinitionCard>
 
-                <template v-else>
-                  {{ t('common.detail.none') }}
-                </template>
-              </template>
-            </DefinitionCard>
-
-            <DefinitionCard>
-              <template #title>
-                {{ t('http.api.property.advertisedAddress') }}
-              </template>
-
-              <template #body>
-                <template
-                  v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
-                >
-                  <XCopyButton
-                    :text="props.data.zoneIngress.advertisedSocketAddress"
-                  />
+              <DefinitionCard
+                v-if="props.data.namespace.length > 0"
+              >
+                <template #title>
+                  Namespace
                 </template>
 
-                <template v-else>
-                  {{ t('common.detail.none') }}
+                <template #body>
+                  {{ props.data.namespace }}
                 </template>
-              </template>
-            </DefinitionCard>
-          </div>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.address') }}
+                </template>
+
+                <template #body>
+                  <template
+                    v-if="props.data.zoneIngress.socketAddress.length > 0"
+                  >
+                    <XCopyButton
+                      :text="props.data.zoneIngress.socketAddress"
+                    />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+
+              <DefinitionCard>
+                <template #title>
+                  {{ t('http.api.property.advertisedAddress') }}
+                </template>
+
+                <template #body>
+                  <template
+                    v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
+                  >
+                    <XCopyButton
+                      :text="props.data.zoneIngress.advertisedSocketAddress"
+                    />
+                  </template>
+
+                  <template v-else>
+                    {{ t('common.detail.none') }}
+                  </template>
+                </template>
+              </DefinitionCard>
+            </div>
+          </XLayout>
         </KCard>
 
         <div

@@ -91,6 +91,8 @@ common:
 http:
   api:
     property:
+      modificationTime: Modified
+      creationTime: Created
       tls: TLS
       mtls: mTLS
       mTLS: mTLS
