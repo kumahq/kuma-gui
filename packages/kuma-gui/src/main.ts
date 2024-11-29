@@ -2,8 +2,8 @@
 import './assets/styles/main.scss'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
+import { services as configuration } from '@/app/configuration'
 import { TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
-import { services as diagnostics } from '@/app/diagnostics'
 import { TOKENS } from '@/app/kuma'
 import { services as onboarding } from '@/app/onboarding'
 import { services as serviceMesh } from '@/app/service-mesh'
@@ -34,7 +34,7 @@ async function mountVueApplication() {
       ControlPlaneStatus: CONTROL_PLANES_TOKENS.ControlPlaneStatus,
       routes: $.routesLabel,
     }),
-    diagnostics({
+    configuration({
       ...$,
       routes: $.routesLabel,
     }),

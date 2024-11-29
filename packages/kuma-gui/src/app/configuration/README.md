@@ -1,5 +1,5 @@
 ---
 section: Modules
 ---
-# diagnostics
+# configuration
 

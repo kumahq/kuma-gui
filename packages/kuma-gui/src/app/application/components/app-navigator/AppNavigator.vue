@@ -25,3 +25,16 @@ const props = withDefaults(defineProps<{
   to: () => ({}),
 })
 </script>
+
+<style lang="scss" scoped>
+:deep(a) {
+  &::before {
+    content: '';
+    mask-image: var(--icon);
+    background-color: currentColor;
+    height: 20px;
+    width: 20px;
+    margin-right: $kui-space-40;
+  }
+}
+</style>

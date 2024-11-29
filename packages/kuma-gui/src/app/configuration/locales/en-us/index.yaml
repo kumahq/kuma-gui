@@ -1,0 +1,6 @@
+configuration:
+  routes:
+    item:
+      title: Configuration
+      breadcrumbs: Configuration
+

@@ -117,33 +117,31 @@
               Onboarding
             </XAction>
           </XActionGroup>
-          <XAction
-            :to="{ name: 'diagnostics' }"
-            appearance="tertiary"
-            icon
-            data-testid="nav-item-diagnostics"
-          >
-            <XIcon
-              name="settings"
-            >
-              Diagnostics
-            </XIcon>
-          </XAction>
         </slot>
       </div>
     </header>
     <div
       class="app-content-container"
     >
-      <nav
-        v-if="$slots.navigation"
-        aria-label="Main"
-        class="app-sidebar"
-      >
-        <ul>
-          <slot name="navigation" />
-        </ul>
-      </nav>
+      <div class="app-sidebar">
+        <nav
+          aria-label="Main"
+        >
+          <ul v-if="$slots.navigation">
+            <slot name="navigation" />
+          </ul>
+
+          <div
+            v-if="$slots.navigation && $slots.bottomNavigation"
+            role="separator"
+            class="navigation-separator"
+          />
+
+          <ul v-if="$slots.bottomNavigation">
+            <slot name="bottomNavigation" />
+          </ul>
+        </nav>
+      </div>
       <main
         class="app-main-content"
       >
@@ -235,27 +233,37 @@ header {
   gap: $kui-space-80;
 }
 // This wrapping element is necessary. It ensures that the sidebar can participate in a grid or flex container.
-nav {
+.app-sidebar {
   position: static;
 }
 
-nav ul {
-  list-style-type: none;
+nav {
+  position: fixed;
   padding: 0;
   width: var(--AppSidebarWidth);
-  position: fixed;
   z-index: 10;
   top: var(--AppHeaderHeight);
   bottom: 0;
   left: 0;
   overflow-y: auto;
-  padding-top: $kui-space-40;
-  padding-right: $kui-space-40;
+  padding: $kui-space-40 $kui-space-40 $kui-space-80 $kui-space-40;
   border-right: $kui-border-width-10 solid $kui-color-border;
   background-color:  $kui-color-background;
+  display: flex;
+  flex-flow: column nowrap;
 }
-nav :deep(.app-navigator) {
-  margin-left: $kui-space-40;
+
+.navigation-separator {
+  width: calc(100% - 2 * $kui-space-40);
+  margin: $kui-space-80 $kui-space-40;
+  height: 1px;
+  background-color: $kui-color-border;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: unset;
+  margin: unset;
 }
 nav :deep(.app-navigator) + .app-navigator {
   margin-top: $kui-space-20;
@@ -263,9 +271,8 @@ nav :deep(.app-navigator) + .app-navigator {
 nav :deep(.app-navigator) > a {
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: $kui-space-40 $kui-space-60;
+  padding: $kui-space-40 $kui-space-60 $kui-space-40 $kui-space-70;
   border-radius: 5px;
   text-decoration: none;
   color: currentColor;

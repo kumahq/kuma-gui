@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="diagnostics"
+    name="configuration-view"
     :params="{
       codeSearch: '',
       codeFilter: false,
@@ -12,16 +12,16 @@
       :breadcrumbs="[
         {
           to: {
-            name: 'diagnostics',
+            name: 'configuration-view',
           },
-          text: t('diagnostics.routes.item.breadcrumbs'),
+          text: t('configuration.routes.item.breadcrumbs'),
         },
       ]"
     >
       <template #title>
         <h1>
           <RouteTitle
-            :title="t('diagnostics.routes.item.title')"
+            :title="t('configuration.routes.item.title')"
           />
         </h1>
       </template>
@@ -32,7 +32,7 @@
           v-slot="{ data }"
         >
           <XCodeBlock
-            data-testid="code-block-diagnostics"
+            data-testid="code-block-configuration"
             language="json"
             :code="JSON.stringify(data, null, 2)"
             is-searchable
