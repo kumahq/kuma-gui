@@ -15,9 +15,6 @@ const props = defineProps<{
 }>()
 const controller = new AbortController()
 const ready = ref<boolean>(false)
-
-const isCustomEvent = (e: Event | CustomEvent): e is CustomEvent => 'detail' in e
-
 onMounted(() => {
   if (document.querySelector(`[data-x-teleport-id='${props.to.name}']`) !== null) {
     ready.value = true
