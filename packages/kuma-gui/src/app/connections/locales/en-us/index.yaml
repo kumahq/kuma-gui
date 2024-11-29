@@ -1,4 +1,5 @@
 connections:
+  include_endpoints: Include Endpoints
   routes:
     item:
       navigation:

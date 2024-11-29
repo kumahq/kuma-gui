@@ -9,11 +9,11 @@
       connection: '',
     }"
     name="connection-inbound-summary-xds-config-view"
-    v-slot="{ route, uri }"
+    v-slot="{ t, route, uri }"
   >
     <RouteTitle
       :render="false"
-      :title="`XDS Configuration`"
+      :title="t('connections.routes.item.navigation.xds')"
     />
     <AppView>
       <DataLoader
@@ -41,7 +41,7 @@
               appearance="primary"
               @click="refresh"
             >
-              Refresh
+              {{ t('common.refresh') }}
             </XAction>
           </template>
         </XCodeBlock>

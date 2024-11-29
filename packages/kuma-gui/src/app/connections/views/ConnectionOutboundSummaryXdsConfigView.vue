@@ -10,11 +10,11 @@
       includeEds: false,
     }"
     name="connection-outbound-summary-xds-config-view"
-    v-slot="{ route, uri }"
+    v-slot="{ t, route, uri }"
   >
     <RouteTitle
       :render="false"
-      :title="`XDS Configuration`"
+      :title="t('connections.routes.item.navigation.xds')"
     />
     <AppView>
       <DataLoader
@@ -40,14 +40,14 @@
           <template #primary-actions>
             <XCheckbox
               v-model="route.params.includeEds"
-              label="Include Endpoints"
+              :label="t('connections.include_endpoints')"
             />
             <XAction
               action="refresh"
               appearance="primary"
               @click="refresh"
             >
-              Refresh
+              {{ t('common.refresh') }}
             </XAction>
           </template>
         </XCodeBlock>
