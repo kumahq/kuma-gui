@@ -5,9 +5,17 @@
       "type": "string",
       "pattern": "^\\^"
     },
-    "workspaceVersion": {
+    "workspaceOnlyVersion": {
       "type": "string",
       "pattern": "(^\\*$)|(^file:)"
+    },
+    "caretOrWorkspaceOnlyVersion": {
+      "type": "string",
+      "pattern": "(^\\^)|(^\\*$)|(^file:)"
+    },
+    "rangeOnlyVersion": {
+      "type": "string",
+      "pattern": "^(?!\\d+\\.\\d+\\.\\d+).*"
     }
   },
   "properties": {
@@ -23,7 +31,7 @@
         }
       },
       "additionalProperties": {
-        "$ref": "#/definitions/caretOnlyVersion"
+        "$ref": "#/definitions/caretOrWorkspaceOnlyVersion"
       }
     },
     "devDependencies": {
@@ -32,13 +40,10 @@
       "patternProperties": {
         "@kumahq/ignored-example": {
           "type": "string"
-        },
-        "@kumahq/config": {
-          "$ref": "#/definitions/workspaceVersion"
         }
       },
       "additionalProperties": {
-        "$ref": "#/definitions/caretOnlyVersion"
+        "$ref": "#/definitions/caretOrWorkspaceOnlyVersion"
       }
     },
     "peerDependencies": {
@@ -50,7 +55,7 @@
         }
       },
       "additionalProperties": {
-        "$ref": "#/definitions/caretOnlyVersion"
+        "$ref": "#/definitions/rangeOnlyVersion"
       }
     }
   }
