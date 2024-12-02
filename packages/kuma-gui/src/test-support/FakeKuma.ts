@@ -81,6 +81,30 @@ export class KumaModule {
     }
   }
 
+  certificate(base64 = true) {
+    const cert = `-----BEGIN CERTIFICATE-----
+MIIDEDCCAfigAwIBAgIRAPIvM9KpPdmwDoc7bH0pf8cwDQYJKoZIhvcNAQELBQAw
+EjEQMA4GA1UEAxMHa3VtYS1jYTAeFw0yNDExMTExMjI2NTVaFw0zNDExMDkxMjI2
+NTVaMBIxEDAOBgNVBAMTB2t1bWEtY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+ggEKAoIBAQDWXjFtpTJ50O7buzrDYfXsywDoGzacfGe+ibG+H3YaHi9Bb4P/gYHd
+edtxKqB8kcOvc4pXz7w8kKXRkiRbbU1sra8Ia9t6U3vn14oRmmeYWCv98ULp8SZh
+D42X0Pp43SB5fN+lCPsQZ2qRTtSl/d+rbLlSjXKMEsH/seoGqyzjb/Hy49ZglcTz
+CnStCOHsgN44RKSBsyFFYrx1pQ1pI5e3rLLPHIw2zxSuy94q3yYSzGBh2GIwc6Iq
+/jO1gqzm237k0QJXaBupYT8Ay7DjXnoS/+9+mReEnfPhMM6KO6JkPAweaCfkLjHf
+Dx8nWROZ9eu8kVBbfEn7We1nzzobY7/dAgMBAAGjYTBfMA4GA1UdDwEB/wQEAwIC
+pDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDwYDVR0TAQH/BAUwAwEB
+/zAdBgNVHQ4EFgQULwj1m9yFN2dZhUfGR9+yUNXNrAswDQYJKoZIhvcNAQELBQAD
+ggEBAMPFcoqedOx1V0dVJ5u7HV+q9pIwoBztHYbETduQh1FSdOZNTljTBbcaHtD7
+TE1YsIVqt1q1KVMEVwVxb44ZOclavdMfofM1NxlJgnUn2Lhask7S2EpcsCALfOB9
+cXiQ4SD/KxQWlE+25OXmrxcpVG+nbAY2RSUAPRc+GG/YYMQxLpawKUwx8zkbl7mJ
+sWWnRiRqtJ6pNYTI3+qy4Y/pBcsX9rAFAlMGaNZiyo77Hd8C2gGTraj1T2qwKhAf
+jcrw4Z/qOwintpvJJVIrNKELr/zfQv5ugop05YC2h+rF1eSdwOGyzltnyunwi5kV
+gbXR5RnEs0hDxugaIknJMKk1b0g=
+-----END CERTIFICATE-----`
+    const encode = typeof window?.btoa === 'function' ? window.btoa : (str: string) => Buffer.from(str).toString('base64')
+    return base64 ? encode(cert) : cert
+  }
+
   origin() {
     return this.faker.helpers.arrayElement(['zone', 'global'])
   }
