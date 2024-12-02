@@ -58,7 +58,7 @@
     "cypress": "^13.16.0",
     "cypress-fail-fast": "^7.1.1",
     "cypress-fail-on-console-error": "^5.1.1",
-    "cypress-terminal-report": "^7.0.4",
+    "cypress-terminal-report": "^7.1.0",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.1",
     "glob": "^11.0.0",
