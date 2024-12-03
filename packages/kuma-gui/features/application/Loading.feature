@@ -2,8 +2,8 @@ Feature: application / loading
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                                                    |
-      | collection-loading | [data-testid$='-collection'] [data-testid='table-skeleton'] |
+      | Alias              | Selector                      |
+      | collection-loading | [data-testid='list-skeleton'] |
 
   Scenario: Collections show a loading view
     Given the environment

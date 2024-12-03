@@ -66,7 +66,14 @@
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <LoadingBlock
+          v-if="props.variant === 'default'"
           v-bind="$attrs"
+        />
+        <KSkeleton
+          v-else
+          data-testid="list-skeleton"
+          v-bind="$attrs"
+          type="table"
         />
       </slot>
       <slot
@@ -84,22 +91,27 @@
   typeOf(): any
 }" setup
 >
-import { computed, ref, useSlots } from 'vue'
+import { computed, ref, useSlots, provide } from 'vue'
 
 import type { TypeOf } from '@/app/application'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-
 const props = withDefaults(defineProps<{
   data?: unknown[]
   errors?: (Error | undefined)[]
   src?: T
   loader?: boolean
+  variant?: 'default' | 'list'
 }>(), {
   errors: () => [],
   data: () => [],
   src: '' as any,
   loader: true,
+  variant: 'default',
+})
+
+provide('data-loader', {
+  props,
 })
 
 const slots = useSlots()
