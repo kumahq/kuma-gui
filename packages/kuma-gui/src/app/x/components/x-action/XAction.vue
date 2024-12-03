@@ -145,6 +145,7 @@
         />
       </template>
     </KButton>
+
     <button
       v-else
       :class="`appearance-${props.appearance}`"
@@ -152,7 +153,15 @@
       v-bind="$attrs"
       @click="emit('click')"
     >
-      <slot name="default" />
+      <template
+        v-if="['docs'].includes(props.action)"
+      >
+        <XIcon
+          name="docs"
+          :size="KUI_ICON_SIZE_40"
+        />
+      </template>
+      <span><slot name="default" /></span>
     </button>
   </template>
 </template>
@@ -168,7 +177,6 @@ type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue
 type RouteLocationRawWithBooleanQuery = Omit<RouteLocationNamedRaw, 'query'> & {
   query?: BooleanLocationQueryRaw
 }
-
 const emit = defineEmits<{
   (event: 'click'): Event
 }>()
@@ -236,13 +244,14 @@ watch(() => props.mount, (val) => {
 </script>
 <style lang="scss" scoped>
 /* taken from styles/_base.scss `a` */
-button.appearance-anchor {
+button.appearance-anchor,
+button.appearance-anchor span {
   text-decoration: none;
   color: $kui-color-text-primary;
 }
 
-button.appearance-anchor:hover,
-button.appearance-anchor:focus {
+button.appearance-anchor:hover span,
+button.appearance-anchor:focus span {
   text-decoration: underline
 }
 .action-docs {
