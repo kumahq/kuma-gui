@@ -1,8 +1,8 @@
 zone-cps:
-  x-empty-state:
-    title: No Zones yet...
-    body: !!text/markdown |
-      There are no Zones present
+  docs: &zone-cps.docs
+    type: docs
+    label: Documentation
+    href: &zone-cps.docs.href '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
 
   common:
     name: Name
@@ -12,6 +12,13 @@ zone-cps:
         =1 { Zone }
         other { Zones }
       }
+
+  x-empty-state:
+    title: No Zones yet...
+    body: !!text/markdown |
+      There are no Zones present
+    action:
+      <<: *zone-cps.docs
 
   components:
     zone-control-planes-list:
@@ -52,14 +59,11 @@ zone-cps:
     subscriptions: 'KDS Connections'
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
-  empty_state:
-    title: 'No Zones yet …'
-    message: 'Create your first Zone to start managing your Mesh'
 
 zones:
   href:
     docs:
-      cta: '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
+      cta: *zone-cps.docs.href
   routes:
     create:
       title: 'Create & connect Zone'

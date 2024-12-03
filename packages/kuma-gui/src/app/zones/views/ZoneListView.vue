@@ -57,7 +57,7 @@
               #loadable
             >
               <DataCollection
-                type="zones"
+                type="zone-cps"
                 :items="data?.items ?? [undefined]"
                 :page="route.params.page"
                 :page-size="route.params.size"
