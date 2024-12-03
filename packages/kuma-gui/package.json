@@ -68,7 +68,7 @@
     "lint-staged": "^15.2.10",
     "lockfile-lint": "^4.14.0",
     "markdown-it": "^14.1.0",
-    "msw": "^2.6.5",
+    "msw": "^2.6.6",
     "postcss": "^8.4.49",
     "openapi-typescript": "^7.4.4",
     "postcss-html": "^1.7.0",
