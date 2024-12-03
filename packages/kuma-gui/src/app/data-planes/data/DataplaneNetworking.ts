@@ -79,7 +79,8 @@ export const DataplaneNetworking = {
           listenerAddress: '',
         }]
         : inbounds.map((item) => {
-          const address = item.address ?? networking.address
+          // inbound address, advertisedAddress, networkingAddress because externally accessible address
+          const address = item.address ?? networking.advertisedAddress ?? networking.address
           const port = item.servicePort ?? item.port
           return {
             ...item,
@@ -91,8 +92,7 @@ export const DataplaneNetworking = {
             service: item.tags['kuma.io/service'],
             protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
             address,
-            // inbound address, advertisedAddress, networkingAddress because externally accessible address
-            addressPort: `${item.address ?? networking.advertisedAddress ?? networking.address}:${item.port}`,
+            addressPort: `${address}:${item.port}`,
             // inbound serviceAddress, inbound address, networkingAddress because the internal services accessible address
             serviceAddressPort: `${item.serviceAddress ?? address}:${port}`,
           }

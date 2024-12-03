@@ -15,37 +15,29 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
 
   fake.kuma.seed()
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
-  const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
   const isMtlsEnabledOverride = env('KUMA_MTLS_ENABLED', '')
+  const defaultType = env('KUMA_DATAPLANE_TYPE', '')
 
-  let type: 'gateway_builtin' | 'gateway_delegated' | 'proxy' = 'proxy'
-  if (name.includes('-gateway_builtin') || env('KUMA_DATAPLANE_TYPE', 'standard') === 'builtin') {
-    type = 'gateway_builtin'
-  } else if (name.includes('-gateway_delegated') || env('KUMA_DATAPLANE_TYPE', 'standard') === 'delegated') {
-    type = 'gateway_delegated'
-  }
+  const outboundCount = parseInt(env('KUMA_DATAPLANEOUTBOUND_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
+  const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
-  const isMultizone = true && fake.datatype.boolean()
+  const type = (() => {
+    switch (true) {
+      case defaultType === 'builtin':
+      case name.includes('-gateway_builtin'):
+        return 'BUILTIN'
+      case defaultType === 'delegated':
+      case name.includes('-gateway_delegated'):
+        return 'DELEGATED'
+      default:
+        return 'STANDARD'
+    }
+  })()
+
+  const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
   const service = fake.hacker.noun()
-  const networking = {
-    ...fake.kuma.dataplaneNetworking({ type, inbounds: ports.length, isMultizone, service }),
-    address,
-  }
-
-    // temporarily overwrite the result of dataplaneNetworking as it doesn't
-    // currently accept port plus we need to keep our ports synced.
-    ; (networking.inbound ?? []).forEach((inbound, i) => {
-    if (fake.datatype.boolean()) {
-      inbound.port = ports[i].port
-      inbound.servicePort = undefined
-    } else {
-      inbound.port = fake.number.int({ min: 1, max: 65535 })
-      inbound.servicePort = ports[i].port
-    }
-    inbound.tags['kuma.io/protocol'] = ports[i].protocol
-  })
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
@@ -57,10 +49,54 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       type: 'DataplaneOverview',
       mesh,
       name,
-      creationTime: '2021-02-17T08:33:36.442044+01:00',
-      modificationTime: '2021-02-17T08:33:36.442044+01:00',
+      ...((modificationTime) => ({
+        creationTime: fake.kuma.date({ refDate: modificationTime }),
+        modificationTime,
+      }))(fake.kuma.date()),
       dataplane: {
-        networking,
+        networking: {
+          address,
+          ...(fake.datatype.boolean() ? {
+            advertisedAddress: fake.internet.ip(),
+          } : {}),
+          ...(type === 'STANDARD' ? {
+            // normal proxies have inbound and outbound
+            inbound: Array.from({ length: inboundCount }).map((_, i) => {
+              return {
+                address,
+                port: ports[i].port,
+                // these aren't synced, if they need seed syncing please move
+                // above with address
+                ...(fake.datatype.boolean() ? {
+                  serviceAddress: fake.internet.ip(),
+                } : {}),
+                ...(fake.datatype.boolean() ? {
+                  servicePort: fake.number.int({ min: 1, max: 65535 }),
+                } : {}),
+                tags: fake.kuma.tags({
+                  protocol: ports[i].protocol,
+                  service,
+                  zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+                }),
+              }
+            }),
+            outbound: Array.from({ length: outboundCount }).map((_, _i) => {
+              return {
+                port: fake.internet.port(),
+                tags: fake.kuma.tags({ service }),
+              }
+            }),
+          } : {
+            // anything but normal proxies are gateways with no inbound/outbound
+            gateway: {
+              tags: fake.kuma.tags({
+                service,
+                zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+              }),
+              type,
+            },
+          }),
+        },
       },
       ...(k8s
         ? {
@@ -89,7 +125,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 }, xcks,
               ))
               return {
-                lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                lastUpdateTime: fake.kuma.nanodate(),
                 total: fake.kuma.partitionInto(
                   {
                     responsesSent: xcks,
@@ -114,19 +150,19 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             })(),
             version: {
               kumaDp: {
-                version: '1.0.7',
-                gitTag: 'unknown',
-                gitCommit: 'unknown',
-                buildDate: 'unknown',
+                version: fake.helpers.arrayElement([fake.system.semver(), 'unknown']),
+                gitTag: fake.helpers.arrayElement([fake.system.semver(), 'unknown']),
+                gitCommit: fake.helpers.arrayElement([fake.git.commitSha(), 'unknown']),
+                buildDate: fake.helpers.arrayElement([fake.kuma.date(), 'unknown']),
                 kumaCpCompatible: fake.datatype.boolean(),
               },
-              envoy: {
-                version: '1.16.2',
-                build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL',
+              envoy: ((version) => ({
+                version,
+                build: `${fake.git.commitSha()}/${version}/Clean/RELEASE/BoringSSL`,
                 kumaDpCompatible: fake.datatype.boolean(),
-              },
+              }))(fake.system.semver()),
               dependencies: {
-                coredns: '1.8.3',
+                coredns: fake.system.semver(),
               },
             },
           }

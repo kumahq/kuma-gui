@@ -73,6 +73,7 @@ function createEslintConfig(
     },
     rules: {
       'comma-dangle': ['error', 'always-multiline'],
+      'multiline-ternary': 'off',
       'space-before-function-paren': ['error', {
         anonymous: 'always',
         named: 'never',

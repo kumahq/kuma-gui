@@ -87,4 +87,12 @@ Feature: application / MainNavigation
 
   Scenario: Tertiary navigation
     When I visit the "/meshes/default/data-planes/dp-name/overview/inbound/localhost_51112/stats" URL
+    And the URL "/meshes/default/dataplanes/dp-name/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            inbound:
+              - port: 51112
+      """
     And the "[data-testid='connection-inbound-summary-stats-view-tab'].active" element exists

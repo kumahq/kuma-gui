@@ -1,7 +1,9 @@
 connections:
+  include_endpoints: Include Endpoints
   routes:
     item:
       navigation:
         overview: 'Overview'
+        xds: 'XDS Configuration'
         stats: 'Stats'
         clusters: 'Clusters'

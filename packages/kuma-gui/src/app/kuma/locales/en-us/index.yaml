@@ -31,6 +31,7 @@ common:
       }
   not_applicable: N/A
   matchingsearch: " matching that search"
+  refresh: Refresh
   warnings:
     CERT_EXPIRED: !!text/markdown |
       The certificate for this dataplane has expired

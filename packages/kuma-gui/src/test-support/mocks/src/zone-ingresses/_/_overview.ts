@@ -76,7 +76,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
                     }, xcks,
                   ))
                   return {
-                    lastUpdateTime: '2021-07-13T09:03:11.614941842Z',
+                    lastUpdateTime: fake.kuma.nanodate(),
                     total: fake.kuma.partitionInto(
                       {
                         responsesSent: xcks,
@@ -101,17 +101,16 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
                 })(),
                 version: {
                   kumaDp: {
-                    version: fake.system.semver(),
-                    gitTag: fake.system.semver(),
-                    gitCommit: fake.git.commitSha(),
-                    buildDate: fake.kuma.date(),
+                    version: fake.helpers.arrayElement([fake.system.semver(), 'unknown']),
+                    gitTag: fake.helpers.arrayElement([fake.system.semver(), 'unknown']),
+                    gitCommit: fake.helpers.arrayElement([fake.git.commitSha(), 'unknown']),
+                    buildDate: fake.helpers.arrayElement([fake.kuma.date(), 'unknown']),
                   },
-                  envoy: ((sha, version) => ({
+                  envoy: ((version) => ({
                     version,
-                    build: `${sha}/${version}/Clean/RELEASE/BoringSSL`,
-                  }))(fake.git.commitSha(), fake.system.semver()),
+                    build: `${fake.git.commitSha()}/${version}/Clean/RELEASE/BoringSSL`,
+                  }))(fake.system.semver()),
                 },
-
               }
             }),
           }
