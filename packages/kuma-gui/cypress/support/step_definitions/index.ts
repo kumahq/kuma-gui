@@ -248,10 +248,12 @@ Then(/^the "(.*)" element(s)? contain[s]?$/, (selector: string, multiple = '', t
     })
   }
 })
-Then(/^the "(.*)" element contains "(.*)"$/, (selector: string, value: string) => {
+Then(/^the "(.*)" element( doesn't | )contain[s]? "(.*)"$/, (selector: string, assertion: string, value: string) => {
   $(selector).then(($el) => {
+    const negative = assertion !== ' '
+    const prefix = negative ? 'not.' : ''
     const chainer = $el[0].tagName === 'INPUT' ? 'have.value' : 'contain'
-    $(selector).should(chainer, value)
+    $(selector).should(`${prefix}${chainer}`, value)
   })
 })
 
