@@ -273,7 +273,20 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   tags<T extends Record<string, string | undefined>>({ protocol, service, zone }: T): Tags<T> {
-    const additionalTags = Object.fromEntries(this.faker.helpers.multiple(() => [this.faker.hacker.noun(), this.faker.hacker.noun()], { count: this.faker.number.int({ min: 1, max: 3 }) }))
+    const additionalTags = Object.fromEntries(
+      this.faker.helpers.multiple(
+        () => [
+          this.faker.helpers.arrayElement([
+            this.faker.hacker.noun(),
+            'k8s.kuma.io/service-name',
+            'not-kuma.io/service',
+            'not/kuma.io/service',
+          ]),
+          this.faker.hacker.noun(),
+        ],
+        { count: this.faker.number.int({ min: 1, max: 3 }) },
+      ),
+    )
 
     // @ts-ignore TS isn’t happy when the service tag is not always provided, but I don’t know how to type this out better.
     return {
