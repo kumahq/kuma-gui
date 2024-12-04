@@ -10,8 +10,9 @@
     <XBadge
       v-for="(tag, index) in tagList"
       :key="index"
-      class="tag"
-      :appearance="tag.isKuma ? 'info' : 'neutral'"
+      class="tag kv"
+      :data-kv-key="tag.label"
+      :data-kv-owner="tag.label.split('/')[0]"
     >
       <component
         :is="tag.route ? 'XAction' : 'span'"
@@ -31,7 +32,6 @@ import type { RouteLocationNamedRaw } from 'vue-router'
 
 interface LabelValueWithRoute extends LabelValue {
   route: RouteLocationNamedRaw | undefined
-  isKuma: boolean
 }
 
 const props = withDefaults(defineProps<{
@@ -49,9 +49,8 @@ const tagList = computed<LabelValueWithRoute[]>(() => {
   return labels.map((tag) => {
     const { label, value } = tag
     const route = getRoute(tag)
-    const isKuma = label.includes('.kuma.io/') || label.startsWith('kuma.io/')
 
-    return { label, value, route, isKuma }
+    return { label, value, route }
   })
 })
 const shouldTruncate = computed(() => props.shouldTruncate || Object.keys(tagList.value).length > 10)
@@ -93,8 +92,16 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   }
 }
 </script>
-
 <style lang="scss" scoped>
+
+.kv:not(:where(
+  [data-kv-owner$='.kuma.io'],
+  [data-kv-owner^='kuma.io']
+)) {
+  background-color: $kui-color-background-neutral-weaker !important;
+  color: $kui-color-text-neutral-strong !important;
+}
+
 .tag-list {
   display: inline-flex;
   flex-wrap: wrap;
