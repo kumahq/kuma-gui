@@ -7,11 +7,11 @@
     },
     "workspaceOnlyVersion": {
       "type": "string",
-      "pattern": "(^\\*$)|(^file:)"
+      "pattern": "(^\\*$)|(^file:)|(^workspace:)"
     },
     "caretOrWorkspaceOnlyVersion": {
       "type": "string",
-      "pattern": "(^\\^)|(^\\*$)|(^file:)"
+      "pattern": "(^\\^)|(^\\*$)|(^file:)|(^workspace:)"
     },
     "rangeOnlyVersion": {
       "type": "string",
