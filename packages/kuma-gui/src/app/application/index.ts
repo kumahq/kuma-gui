@@ -24,6 +24,7 @@ import { services as x } from '@/app/x'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
 export * from './services/can'
 export { runInDebug } from './utilities'
 export { defineSources } from './services/data-source'
@@ -83,6 +84,45 @@ const $ = {
   i18n: token<ReturnType<typeof I18n>>('i18n'),
   enUs: token('i18n.locale.enUs'),
 }
+
+const addModule = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
+  item.meta = {
+    ...(item.meta ?? {}),
+  }
+  if (typeof parent?.meta?.module !== 'undefined') {
+    item.meta.module = parent.meta.module
+  }
+}
+const addPath = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
+  item.meta = {
+    ...(item.meta ?? {}),
+  }
+  if (typeof parent?.meta?.path !== 'undefined') {
+    const path = String(parent.meta.path) ?? ''
+    item.meta.path = `${path}${path.length > 0 ? '.' : ''}${String(item.name)}`
+  }
+}
+const addRouteName = (item: RouteRecordRaw) => {
+  if (typeof item.name === 'undefined') {
+    return
+  }
+  const props = ((props) => {
+    switch (true) {
+      case typeof props === 'function':
+        return props
+      case typeof props === 'undefined':
+        return () => ({})
+      default:
+        return () => props
+    }
+  })(item.props)
+  item.props = (...args) => {
+    return {
+      ...props(...args),
+      routeName: item.name,
+    }
+  }
+}
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
 
@@ -114,6 +154,18 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       ],
       labels: [
         app.routes,
+      ],
+    }],
+    [token('application.routes.walkers'), {
+      service: () => {
+        return [
+          addModule,
+          addPath,
+          addRouteName,
+        ]
+      },
+      labels: [
+        app.routeWalkers,
       ],
     }],
     [token('application.locales'), {
