@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "definitions": {
+    "caretOnlyVersion": {
+      "type": "string",
+      "pattern": "^\\^"
+    },
+    "workspaceOnlyVersion": {
+      "type": "string",
+      "pattern": "(^\\*$)|(^file:)|(^workspace:)"
+    },
+    "caretOrWorkspaceOnlyVersion": {
+      "type": "string",
+      "pattern": "(^\\^)|(^\\*$)|(^file:)|(^workspace:)"
+    },
+    "rangeOnlyVersion": {
+      "type": "string",
+      "pattern": "^(?!\\d+\\.\\d+\\.\\d+).*"
+    }
+  },
+  "properties": {
+    "engines": {
+      "not": {}
+    },
+    "dependencies": {
+      "type": "object",
+      "$comment": "To ignore a dependency to use a non-caret version follow the ignored-example below",
+      "patternProperties": {
+        "@kumahq/ignored-example": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/caretOrWorkspaceOnlyVersion"
+      }
+    },
+    "devDependencies": {
+      "type": "object",
+      "$comment": "To ignore a dependency to use a non-caret version follow the ignored-example below",
+      "patternProperties": {
+        "@kumahq/ignored-example": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/caretOrWorkspaceOnlyVersion"
+      }
+    },
+    "peerDependencies": {
+      "type": "object",
+      "$comment": "To ignore a dependency to use a non-caret version follow the ignored-example below",
+      "patternProperties": {
+        "@kumahq/ignored-example": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/rangeOnlyVersion"
+      }
+    }
+  }
+}
