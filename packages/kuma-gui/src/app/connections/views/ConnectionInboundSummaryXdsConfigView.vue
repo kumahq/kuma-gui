@@ -50,8 +50,8 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
+import { sources } from '../sources'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
-import { sources } from '@/app/data-planes/sources'
 
 const props = defineProps<{
   data: DataplaneInbound
