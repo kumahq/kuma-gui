@@ -147,10 +147,6 @@
       >
         <div class="app-notifications">
           <slot name="notifications" />
-        </div>
-        <slot
-          name="notifications"
-        >
           <XAlert
             v-if="!can('use state')"
             class="mb-4"
@@ -163,7 +159,7 @@
               />
             </ul>
           </XAlert>
-        </slot>
+        </div>
         <slot name="default" />
       </main>
     </div>
