@@ -103,22 +103,23 @@ const addPath = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
   }
 }
 const addRouteName = (item: RouteRecordRaw) => {
-  if (typeof item.name !== 'undefined') {
-    const props = ((props) => {
-      switch (true) {
-        case typeof props === 'function':
-          return props
-        case typeof props === 'undefined':
-          return () => ({})
-        default:
-          return () => props
-      }
-    })(item.props)
-    item.props = (...args) => {
-      return {
-        ...props(...args),
-        routeName: item.name,
-      }
+  if (typeof item.name === 'undefined') {
+    return
+  }
+  const props = ((props) => {
+    switch (true) {
+      case typeof props === 'function':
+        return props
+      case typeof props === 'undefined':
+        return () => ({})
+      default:
+        return () => props
+    }
+  })(item.props)
+  item.props = (...args) => {
+    return {
+      ...props(...args),
+      routeName: item.name,
     }
   }
 }
