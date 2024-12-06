@@ -51,7 +51,7 @@
     "@whyframe/core": "^0.1.11",
     "@whyframe/vue": "^0.1.7",
     "autoprefixer": "^10.4.20",
-    "cypress": "^13.16.0",
+    "cypress": "^13.16.1",
     "cypress-fail-fast": "^7.1.1",
     "cypress-fail-on-console-error": "^5.1.1",
     "cypress-terminal-report": "^7.1.0",
