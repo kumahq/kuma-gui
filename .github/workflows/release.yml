@@ -84,7 +84,7 @@ jobs:
       - run: |
           make release/prune
 
-      - uses: Kong/public-shared-actions/security-actions/sca@28d20a1f492927f35b00b317acd78f669c45f88b
+      - uses: Kong/public-shared-actions/security-actions/sca@0ccacffed804d85da3f938a1b78c12831935f992
         id: sbom
         env:
           SYFT_SOURCE_NAME: ${{ github.repository }}
