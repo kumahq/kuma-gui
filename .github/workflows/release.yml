@@ -81,7 +81,7 @@ jobs:
       # 1. Removing the `@kuma/config` dependency from `packages/kuma-gui/package.json`.
       # 2. Deleting the `packages/config` directory.
       # 3. Updating `package-lock.json`.
-      # This reduces incorrect SBOM entries, decreasing cataloged dependencies from 872 to 157 at the time of this change..
+      # This reduces incorrect SBOM entries, decreasing cataloged dependencies from 872 to 157 at the time of this change.
       - run: |
           make release/prune
 
