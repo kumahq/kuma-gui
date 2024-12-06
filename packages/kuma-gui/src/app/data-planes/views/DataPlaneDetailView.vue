@@ -7,11 +7,15 @@
       inactive: false,
     }"
     name="data-plane-detail-view"
-    v-slot="{ route, t, can, me }"
+    v-slot="{ route, t, can, me, uri }"
   >
     <DataSource
-      :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
-      v-slot="{ data: traffic, error, refresh }: StatsSource"
+      :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
+        mesh: route.params.mesh,
+        name: route.params.dataPlane,
+        address: props.data.dataplane.networking.inboundAddress,
+      })"
+      v-slot="{ data: traffic, error, refresh }"
     >
       <AppView>
         <template
@@ -585,7 +589,7 @@ import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
-import type { StatsSource } from '@/app/connections/sources'
+import { sources } from '@/app/connections/sources'
 import type { Mesh } from '@/app/meshes/data'
 import { useRoute } from '@/app/vue'
 

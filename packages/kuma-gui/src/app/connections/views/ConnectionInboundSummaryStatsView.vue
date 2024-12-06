@@ -9,7 +9,7 @@
       connection: '',
     }"
     name="connection-inbound-summary-stats-view"
-    v-slot="{ route }"
+    v-slot="{ route, uri }"
   >
     <RouteTitle
       :render="false"
@@ -17,8 +17,12 @@
     />
     <AppView>
       <DataLoader
-        :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.dataplaneOverview.dataplane.networking.inboundAddress}`"
-        v-slot="{ data: stats, refresh }: StatsSource"
+        :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
+          mesh: route.params.mesh,
+          name: route.params.dataPlane,
+          address: props.dataplaneOverview.dataplane.networking.inboundAddress,
+        })"
+        v-slot="{ data: stats, refresh }"
       >
         <DataCollection
           :items="stats!.raw.split('\n')"
@@ -57,7 +61,7 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { StatsSource } from '../sources'
+import { sources } from '../sources'
 import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
 
 const props = defineProps<{
