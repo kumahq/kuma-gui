@@ -73,11 +73,22 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      # Syft, used to generate the SBOM, struggles with npm projects when:
+      # - Two packages, in the same repository, are separate npm workloads
+      #   which share a common `package-lock.json`.
+      # - One package (e.g., `packages/config`) defines peerDependencies and
+      #   is referenced as a devDependency in another package
+      #   (e.g., `packages/kuma-gui`).
+      # [...]
+      # More information in ./packages/kuma-gui/mk/release.mk
       - run: |
-          make install/sync
+          make release/prune
 
       - uses: Kong/public-shared-actions/security-actions/sca@28d20a1f492927f35b00b317acd78f669c45f88b
         id: sbom
+        env:
+          SYFT_SOURCE_NAME: ${{ github.repository }}
+          SYFT_SOURCE_VERSION: "${{ env.BRANCH }}@${{ env.SHA }}"
         with:
           asset_prefix: kuma-gui
           dir: '.'
@@ -85,6 +96,7 @@ jobs:
           fail_build: 'true' # Fail job if critical vulnerabilities are detected
 
       - run: |
+          make install/sync
           make build/sync
 
       - uses: actions/create-github-app-token@5d869da34e18e7287c1daad50e0b8ea0f506ce69 # v1.11.0
