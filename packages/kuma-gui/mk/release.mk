@@ -6,7 +6,7 @@
 # 1. Removing the `@kuma/config` dependency from `packages/kuma-gui/package.json`.
 # 2. Deleting the `packages/config` directory.
 # 3. Updating `package-lock.json`.
-# This reduces incorrect SBOM entries, dropping cataloged dependencies from 872 to 157.
+# This reduces incorrect SBOM entries, decreasing cataloged dependencies from 872 to 157 at the time of this change.
 .PHONY: .release/prune
 .release/prune:
 	@if [ -z "$(NPM_WORKFLOW_CONFIG_PATH)" ]; then \
