@@ -73,15 +73,14 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      # Syft, used to generate the SBOM, struggles with npm projects where:
-      # - One package (e.g., `packages/config`) defines peerDependencies.
-      # - Another package (e.g., `packages/kuma-gui`) relies on the first, with the same dependencies in devDependencies.
-      # Syft only considers `package-lock.json`, so it incorrectly includes peerDependencies in the SBOM as direct dependencies.
-      # The `release/prune` target addresses this by:
-      # 1. Removing the `@kuma/config` dependency from `packages/kuma-gui/package.json`.
-      # 2. Deleting the `packages/config` directory.
-      # 3. Updating `package-lock.json`.
-      # This reduces incorrect SBOM entries, decreasing cataloged dependencies from 872 to 157 at the time of this change.
+      # Syft, used to generate the SBOM, struggles with npm projects when:
+      # - Two packages, in the same repository, are separate npm workloads
+      #   which share a common `package-lock.json`.
+      # - One package (e.g., `packages/config`) defines peerDependencies and
+      #   is referenced as a devDependency in another package
+      #   (e.g., `packages/kuma-gui`).
+      # [...]
+      # More information in ./packages/kuma-gui/mk/release.mk
       - run: |
           make release/prune
 
@@ -95,11 +94,6 @@ jobs:
           dir: '.'
           config: .syft.yaml
           fail_build: 'true' # Fail job if critical vulnerabilities are detected
-
-      # Re-checkout the repository to discard changes made for generating correct SBOMs.
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          ref: ${{ env.BRANCH }}
 
       - run: |
           make install/sync
