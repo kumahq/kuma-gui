@@ -50,6 +50,7 @@ data-planes:
         delegated-gateway-data-plane-summary-overview-view: Overview
         delegated-gateway-data-plane-summary-config-view: YAML
       gateway: 'Gateway'
+      config: YAML
       inbounds: 'Inbounds'
       inbound_name: '{service}'
       port: ':{port}'
