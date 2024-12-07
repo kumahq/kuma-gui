@@ -48,7 +48,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/coverage-istanbul": "^2.1.8",
     "@vue/test-utils": "^2.4.6",
-    "@whyframe/core": "^0.1.11",
+    "@whyframe/core": "^0.1.12",
     "@whyframe/vue": "^0.1.7",
     "autoprefixer": "^10.4.20",
     "cypress": "^13.16.0",
