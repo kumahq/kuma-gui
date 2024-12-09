@@ -56,5 +56,5 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { sources } from '@/app/data-planes/sources'
+import { sources } from '../sources'
 </script>

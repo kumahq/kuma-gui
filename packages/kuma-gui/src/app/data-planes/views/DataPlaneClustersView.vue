@@ -8,7 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <AppView>
       <RouteTitle
@@ -17,7 +17,10 @@
       />
       <KCard>
         <DataLoader
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/data-path/clusters`"
+          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/clusters', {
+            mesh: route.params.mesh,
+            name: route.params.dataPlane,
+          })"
           v-slot="{ data, refresh }"
         >
           <XCodeBlock
@@ -46,3 +49,6 @@
     </AppView>
   </RouteView>
 </template>
+<script lang="ts" setup>
+import { sources } from '@/app/connections/sources'
+</script>
