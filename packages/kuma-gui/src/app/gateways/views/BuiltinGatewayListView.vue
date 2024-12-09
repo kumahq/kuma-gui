@@ -50,7 +50,7 @@
                     <XAction
                       data-action
                       :to="{
-                        name: 'builtin-gateway-detail-view',
+                        name: 'builtin-gateway-summary-view',
                         params: {
                           mesh: item.mesh,
                           gateway: item.id,
@@ -98,6 +98,30 @@
                 </template>
               </AppCollection>
             </DataCollection>
+            <RouterView
+              v-if="route.child()"
+              v-slot="{ Component }"
+            >
+              <SummaryView
+                @close="route.replace({
+                  name: 'builtin-gateway-list-view',
+                  params: {
+                    mesh: route.params.mesh,
+                  },
+                  query: {
+                    // TODO: Update page & size once the list endpoint is being filtered by zone
+                    page: 1,
+                    size: 100,
+                  },
+                })"
+              >
+                <component
+                  :is="Component"
+                  v-if="typeof data !== 'undefined'"
+                  :items="data.items"
+                />
+              </SummaryView>
+            </RouterView>
           </template>
         </DataLoader>
       </KCard>
@@ -108,5 +132,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import SummaryView from '@/app/common/SummaryView.vue'
 import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>
