@@ -42,7 +42,7 @@ import {
   MoreIcon,
   ChevronDownIcon,
   CogIcon,
-  AddIcon,
+  AddCircleIcon,
   HelpIcon,
   RefreshIcon,
   ProgressIcon,
@@ -74,7 +74,7 @@ const icons = {
   universal: DeployIcon,
   settings: CogIcon,
   help: HelpIcon,
-  create: AddIcon,
+  create: AddCircleIcon,
   refresh: RefreshIcon,
   progress: ProgressIcon,
 } as const
