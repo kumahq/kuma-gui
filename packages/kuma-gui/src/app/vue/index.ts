@@ -25,40 +25,20 @@ const $ = {
   routes: token<RouteRecordRaw[]>('vue.routes'),
   routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
   navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
+  routeWalkers: token<NavigationGuard[]>('vue.routes.walkers'),
 }
 
-// @TODO at some point we should expose this as an extendable thing
-// similar to navigationGuards. We'd then do this specific functionality in
-// `@app/application` as it relates to RouteView
-const addModule = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
-  item.meta = {
-    ...(item.meta ?? {}),
-  }
-  if (typeof parent?.meta?.module !== 'undefined') {
-    item.meta.module = parent.meta.module
-  }
-}
-const addPath = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
-  item.meta = {
-    ...(item.meta ?? {}),
-  }
-  if (typeof parent?.meta?.path !== 'undefined') {
-    const path = String(parent.meta.path) ?? ''
-    item.meta.path = `${path}${path.length > 0 ? '.' : ''}${String(item.name)}`
-  }
-}
-function walkRoutes(routes: RouteRecordRaw[], parent?: RouteRecordRaw) {
+type RouteWalker = (item: RouteRecordRaw, parent?: RouteRecordRaw) => void
+function walkRoutes(walker: RouteWalker, routes: RouteRecordRaw[], parent?: RouteRecordRaw) {
   routes.forEach((item) => {
-    // this is very specific to app/application
-    addModule(item, parent)
-    addPath(item, parent)
-    //
+    walker(item, parent)
     if (typeof item.children !== 'undefined') {
-      walkRoutes(item.children, item)
+      walkRoutes(walker, item.children, item)
     }
   })
   return routes
 }
+
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [$.app, {
@@ -90,10 +70,14 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         env: (str: 'KUMA_BASE_PATH') => string,
         routes: RouteRecordRaw[],
         guards: NavigationGuard[],
+        walkers: RouteWalker[],
       ) => {
+
         const router = createRouter({
           history: createWebHistory(env('KUMA_BASE_PATH')),
-          routes: walkRoutes([
+          routes: walkRoutes((item, parent) => {
+            walkers.forEach(walker => walker(item, parent))
+          }, [
             {
               path: '/',
               name: 'app',
@@ -117,6 +101,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.env,
         $.routes,
         $.navigationGuards,
+        $.routeWalkers,
       ],
     }],
 

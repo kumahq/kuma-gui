@@ -4,6 +4,7 @@
 SHELL := /usr/bin/env bash
 MK := ./mk
 NODE_VERSION:=v$(shell cat ../../.nvmrc)
+NPM_WORKFLOW_CONFIG_PATH ?= $(shell readlink -f ../config)
 
 ## make help: if you're aren't sure use `make help`
 .DEFAULT_GOAL := help
@@ -14,6 +15,7 @@ include $(MK)/install.mk
 include $(MK)/check.mk
 include $(MK)/test.mk
 include $(MK)/build.mk
+include $(MK)/release.mk
 
 ## These make targets are only used by CI and is therefore are not exposed in help
 .PHONY: build/sync
@@ -59,3 +61,5 @@ test/e2e: .test/e2e ## Run browser-based e2e tests against a running GUI, you ma
 .PHONY: build ## Dev: build a production artifact in `./dist`
 build: .build
 
+.PHONY: release/prune
+release/prune: .release/prune

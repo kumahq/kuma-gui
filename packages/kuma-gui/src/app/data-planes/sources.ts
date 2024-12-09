@@ -30,37 +30,6 @@ export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
 }
-const prop = <K extends PropertyKey>(obj: unknown, key: K | null | undefined): obj is Record<K, unknown> => {
-  return key != null && obj != null && typeof obj === 'object' && key in obj
-}
-const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[]) => unknown[]) => {
-  const { configs } = data
-  if (!Array.isArray(configs)) {
-    return { configs: [] }
-  }
-  return {
-    configs: configs.reduce((prev, item) => {
-      const entries = Object.entries(item)
-
-      const found = entries.reduce((prev, [key, value]) => {
-        const found = cb(key, Array.isArray(value) ? value : [])
-        if (found.length > 0) {
-          if (typeof prev[key] === 'undefined') {
-            prev[key] = []
-          }
-          prev[key] = prev[key].concat(found)
-        }
-        return prev
-      }, {} as typeof configs[number])
-
-      if (Object.keys(found).length > 0) {
-        return prev.concat(found)
-      }
-      return prev
-
-    }, [] as typeof configs),
-  }
-}
 export const sources = (source: Source, api: KumaApi, can: Can) => {
   return defineSources({
     // always resolves and keeps polling until we have at least one dataplane and all dataplanes are online
@@ -105,85 +74,6 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
 
     '/meshes/:mesh/dataplanes/:name/as/kubernetes': async (params) => {
       return api.getDataplaneFromMesh(params, { format: 'kubernetes' })
-    },
-    // @deprecated please use either /xds, /clusters or /stats endpoints (ie. without /data-path)
-    '/meshes/:mesh/dataplanes/:name/data-path/:dataPath': async (params) => {
-      const { mesh, name } = params
-      const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
-
-      return api.getDataplaneData({
-        mesh,
-        dppName: name,
-        dataPath,
-      })
-    },
-    '/meshes/:mesh/dataplanes/:name/clusters': async (params) => {
-      const { mesh, name } = params
-      return api.getDataplaneData({
-        mesh,
-        dppName: name,
-        dataPath: 'clusters',
-      })
-    },
-    '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds': async (params) => {
-      const { mesh, dataplane, inbound } = params
-
-      // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await api.getDataplaneXds({
-        mesh,
-        dppName: dataplane,
-      }, {
-        include_eds: false,
-      })
-      return filter(res, (key: string, arr: unknown[]) => {
-        switch (key) {
-          case 'dynamic_listeners':
-            // dynamic_listeners[].name === 'inbound:<ignored>:0000'
-            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`))
-          case 'dynamic_active_clusters':
-            // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`))
-        }
-        return []
-      })
-    },
-    '/meshes/:mesh/dataplanes/:dataplane/outbound/:outbound/xds/:endpoints': async (params) => {
-      const { mesh, dataplane, outbound, endpoints } = params
-
-      // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await api.getDataplaneXds({
-        mesh,
-        dppName: dataplane,
-      }, {
-        include_eds: endpoints,
-      })
-      return filter(res, (key: string, arr: unknown[]) => {
-        switch (key) {
-          case 'dynamic_listeners':
-            // this one won't work yet see
-            // https://github.com/kumahq/kuma/issues/12093
-            // dynamic_listeners[].name === 'outbound:<outbound>'
-            return arr.filter(item => prop(item, 'name') && item.name === `outbound:${outbound}`)
-          case 'dynamic_active_clusters':
-            // dynamic_active_clusters[].cluster.name === outbound
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
-          case 'dynamic_endpoint_configs':
-            // dynamic_endpoint_configs[].endpoint_config.cluster_name === outbound
-            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && item.endpoint_config?.cluster_name === outbound)
-        }
-        return []
-      })
-    },
-    '/meshes/:mesh/dataplanes/:name/xds/:endpoints': async (params) => {
-      const { mesh, name, endpoints } = params
-
-      return api.getDataplaneData({
-        mesh,
-        dppName: name,
-        dataPath: 'xds',
-      }, {
-        include_eds: endpoints,
-      })
     },
 
     '/meshes/:mesh/dataplanes/:name/sidecar-dataplane-policies': async (params) => {

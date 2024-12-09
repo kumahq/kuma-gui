@@ -8,7 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -17,8 +17,12 @@
     <AppView>
       <KCard>
         <DataLoader
-          :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/stats/${props.data.dataplane.networking.inboundAddress}`"
-          v-slot="{ data: statsData, refresh }: StatsSource"
+          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
+            mesh: route.params.mesh,
+            name: route.params.dataPlane,
+            address: props.data.dataplane.networking.inboundAddress,
+          })"
+          v-slot="{ data: statsData, refresh }"
         >
           <XCodeBlock
             language="json"
@@ -49,7 +53,7 @@
 
 <script lang="ts" setup>
 import type { DataplaneOverview } from '../sources'
-import type { StatsSource } from '@/app/connections/sources'
+import { sources } from '@/app/connections/sources'
 
 const props = defineProps<{
   data: DataplaneOverview
