@@ -1,4 +1,3 @@
-import { i18nTComponent } from '@kong-ui-public/i18n'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
 
@@ -55,7 +54,6 @@ declare module 'vue' {
     DataCollection: typeof DataCollection
     RouteView: typeof RouteView
     RouteTitle: typeof RouteTitle
-    I18nT: ReturnType<typeof i18nTComponent>
   }
   interface ComponentCustomProperties {
     $routeName?: string
@@ -127,7 +125,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
 
     [token('application.components'), {
-      service: (i18n: ReturnType<typeof I18n>) => {
+      service: () => {
         return [
           ['AppView', AppView],
           ['DataLoader', DataLoader],
@@ -136,12 +134,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['DataCollection', DataCollection],
           ['RouteView', RouteView],
           ['RouteTitle', RouteTitle],
-          ['I18nT', i18nTComponent(i18n)],
         ]
       },
-      arguments: [
-        app.i18n,
-      ],
       labels: [
         app.components,
       ],

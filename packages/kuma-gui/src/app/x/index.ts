@@ -8,6 +8,7 @@ import XCodeBlock from './components/x-code-block/XCodeBlock.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
 import XEmptyState from './components/x-empty-state/XEmptyState.vue'
+import XI18n from './components/x-i18n/XI18n.vue'
 import XIcon from './components/x-icon/XIcon.vue'
 import XInput from './components/x-input/XInput.vue'
 import XLayout from './components/x-layout/XLayout.vue'
@@ -32,6 +33,7 @@ declare module 'vue' {
     XCheckbox: typeof KCheckbox
     //
     XIcon: typeof XIcon
+    XI18n: typeof XI18n
     XInput: typeof XInput
     XAction: typeof XAction
     XAlert: typeof KAlert
@@ -85,6 +87,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XCodeBlock', XCodeBlock],
           ['XEmptyState', XEmptyState],
           ['XIcon', XIcon],
+          ['XI18n', XI18n],
           ['XInput', XInput],
           ['XLayout', XLayout],
           ['XPrompt', XPrompt],
