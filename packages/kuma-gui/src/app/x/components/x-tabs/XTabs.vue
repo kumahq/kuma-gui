@@ -87,6 +87,8 @@ watch(() => slots, () => {
   border-radius: inherit;
   color: inherit;
   outline: inherit;
+  /* TODO(jc): This can be removed if we ever get rid of the global link styling  */
+  text-decoration: none !important;
 }
 :deep(.tab-link) > *:focus-visible {
   background-color: $kui-color-background-neutral-weaker;
