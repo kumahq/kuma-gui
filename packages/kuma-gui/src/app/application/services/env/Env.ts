@@ -23,6 +23,7 @@ type EnvProps = {
   KUMA_MODE: string
   KUMA_ENVIRONMENT: string
   KUMA_STORE_TYPE: string
+  KUMA_ZONE_TRAFFIC: string
 }
 export type EnvVars = EnvArgs & EnvProps
 
