@@ -97,7 +97,11 @@ export const handler = (fs: FS, env: AEnv) => {
         method: request.method,
         url: new URL(request.url),
         body: request.body ? JSON.parse(await new Response(request.body).text() || '{}') : {},
-        params,
+        params: Object.fromEntries(
+          Object.entries(params).filter(
+            (entry): entry is [string, string | readonly string[]] => typeof entry[1] !== 'undefined',
+          ),
+        ),
       })
 
       if (typeof response === 'undefined') {
