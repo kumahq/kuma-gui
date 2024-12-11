@@ -109,9 +109,8 @@
                     mesh: route.params.mesh,
                   },
                   query: {
-                    // TODO: Update page & size once the list endpoint is being filtered by zone
                     page: 1,
-                    size: 100,
+                    size: 50,
                   },
                 })"
               >
