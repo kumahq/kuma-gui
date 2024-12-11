@@ -62,6 +62,13 @@ export const routes = () => {
               path: 'builtin',
               name: 'builtin-gateway-list-view',
               component: () => import('@/app/gateways/views/BuiltinGatewayListView.vue'),
+              children: [
+                {
+                  path: ':gateway',
+                  name: 'builtin-gateway-summary-view',
+                  component: () => import('@/app/gateways/views/BuiltinGatewaySummaryView.vue'),
+                },
+              ],
             },
             {
               path: 'delegated',
