@@ -123,13 +123,7 @@ export const ConnectionCollection = {
       : {}
 
     // pick out the outbounds which aren't internal outbounds
-    const filteredCluster = Object.fromEntries(Object.entries(cluster).filter(([key, _value]) => ![
-      // if we don't exclude localhost_ we end up with  a `localhost_`
-      // outbound, which is the cluster of the inbound. Whilst we don't want
-      // to show this now, we might want to later as it can show how envoy
-      // might be interacting with the traffic vs the cluster/service itself
-      'localhost_',
-      //
+    const withoutInternals = Object.fromEntries(Object.entries(cluster).filter(([key, _value]) => ![
       '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
       'admin',
       'async-client',
@@ -143,7 +137,7 @@ export const ConnectionCollection = {
     ].some(item => key.startsWith(item))))
     return {
       listener,
-      cluster: filteredCluster,
+      cluster: withoutInternals,
     }
   },
 }
