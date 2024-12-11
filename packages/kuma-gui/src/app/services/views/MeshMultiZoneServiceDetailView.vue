@@ -8,57 +8,63 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route }"
+    v-slot="{ route, t }"
   >
     <AppView>
-      <div
-        class="stack"
-      >
-        <KCard>
-          <div class="columns">
-            <DefinitionCard>
-              <template
-                #title
-              >
-                Ports
+      <XLayout type="stack">
+        <XAboutSection
+          :title="t('services.mesh-multi-zone-service.about.title')"
+          :created="props.data.creationTime ? t('common.formats.datetime', { value: Date.parse(props.data.creationTime) }) : undefined"
+          :modified="props.data.modificationTime ? t('common.formats.datetime', { value: Date.parse(props.data.modificationTime)}) : undefined"
+        >
+          <DefinitionCard layout="horizontal">
+            <template
+              #title
+            >
+              {{ t('http.api.property.ports') }}:
+            </template>
+            <template
+              #body
+            >
+              <template v-if="props.data.spec.ports.length">
+                <KumaPort
+                  v-for="connection in props.data.spec.ports"
+                  :key="connection.port"
+                  :port="{
+                    ...connection,
+                    targetPort: undefined,
+                  }"
+                />
               </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <KumaPort
-                    v-for="connection in props.data.spec.ports"
-                    :key="connection.port"
-                    :port="{
-                      ...connection,
-                      targetPort: undefined,
-                    }"
-                  />
-                </KTruncate>
+              <template v-else>
+                {{ t('common.detail.none') }}
               </template>
-            </DefinitionCard>
-            <DefinitionCard>
-              <template
-                #title
-              >
-                Selector
+            </template>
+          </DefinitionCard>
+          <DefinitionCard layout="horizontal">
+            <template
+              #title
+            >
+              {{ t('http.api.property.selector') }}:
+            </template>
+            <template
+              #body
+            >
+              <template v-if="Object.keys(data.spec.selector.meshService.matchLabels).length">
+                <XBadge
+                  v-for="(value, key) in data.spec.selector.meshService.matchLabels"
+                  :key="`${key}:${value}`"
+                  appearance="info"
+                >
+                  {{ key }}:{{ value }}
+                </XBadge>
               </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <XBadge
-                    v-for="(value, key) in data.spec.selector.meshService.matchLabels"
-                    :key="`${key}:${value}`"
-                    appearance="info"
-                  >
-                    {{ key }}:{{ value }}
-                  </XBadge>
-                </KTruncate>
+              <template v-else>
+                {{ t('common.detail.none') }}
               </template>
-            </DefinitionCard>
-          </div>
-        </KCard>
+            </template>
+          </DefinitionCard>
+        </XAboutSection>
 
         <div>
           <ResourceCodeBlock
@@ -84,7 +90,7 @@
             />
           </ResourceCodeBlock>
         </div>
-      </div>
+      </XLayout>
     </AppView>
   </RouteView>
 </template>

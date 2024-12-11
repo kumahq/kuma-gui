@@ -34,81 +34,84 @@
             />
           </ul>
         </template>
-        <div
+        <XLayout
           data-testid="detail-view-details"
-          class="stack"
+          type="stack"
         >
-          <KCard>
-            <XLayout
-              type="stack"
+          <XAboutSection
+            :title="t('zone-cps.detail.about.title')"
+            :created="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
+            :modified="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
+          >
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.status') }}:
+              </template>
+
+              <template #body>
+                <StatusBadge :status="props.data.state" />
+              </template>
+            </DefinitionCard>
+            <DefinitionCard
+              layout="horizontal"
+              :class="{
+                version: true,
+                outdated: version?.outdated,
+              }"
             >
-              <XTimespan
-                :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
-                :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
-              />
-              <div class="columns">
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.status') }}
-                  </template>
+              <template #title>
+                {{ t('zone-cps.routes.item.version') }}:
+              </template>
 
-                  <template #body>
-                    <StatusBadge :status="props.data.state" />
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
-                  :class="{
-                    version: true,
-                    outdated: version?.outdated,
-                  }"
-                >
-                  <template #title>
-                    {{ t('zone-cps.routes.item.version') }}
-                    <template
-                      v-if="version?.outdated === true"
-                    >
-                      <KTooltip
-                        max-width="300"
-                      >
-                        <InfoIcon
-                          :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                          :size="KUI_ICON_SIZE_30"
-                        />
-                        <template #content>
-                          <div
-                            v-html="t('zone-cps.routes.item.version_warning')"
-                          />
-                        </template>
-                      </KTooltip>
-                    </template>
-                  </template>
-
-                  <template #body>
+              <template #body>
+                <XLayout type="separated">
+                  <XBadge appearance="decorative">
                     {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
+                  </XBadge>
+                  <template
+                    v-if="version?.outdated === true"
+                  >
+                    <KTooltip
+                      max-width="300"
+                    >
+                      <InfoIcon
+                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                      <template #content>
+                        <div
+                          v-html="t('zone-cps.routes.item.version_warning')"
+                        />
+                      </template>
+                    </KTooltip>
                   </template>
-                </DefinitionCard>
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.type') }}
-                  </template>
+                </XLayout>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.type') }}:
+              </template>
 
-                  <template #body>
-                    {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
-                  </template>
-                </DefinitionCard>
+              <template #body>
+                <XBadge appearance="decorative">
+                  {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
+                </XBadge>
+              </template>
+            </DefinitionCard>
 
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('zone-cps.routes.item.authentication_type') }}
-                  </template>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('zone-cps.routes.item.authentication_type') }}:
+              </template>
 
-                  <template #body>
-                    {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
-                  </template>
-                </DefinitionCard>
-              </div>
-            </XLayout>
-          </KCard>
+              <template #body>
+                <XBadge appearance="decorative">
+                  {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
+                </XBadge>
+              </template>
+            </DefinitionCard>
+          </XAboutSection>
 
           <div
             v-if="props.data.zoneInsight.subscriptions.length > 0"
@@ -194,7 +197,7 @@
               </SummaryView>
             </RouterView>
           </div>
-        </div>
+        </XLayout>
       </AppView>
     </DataSource>
   </RouteView>

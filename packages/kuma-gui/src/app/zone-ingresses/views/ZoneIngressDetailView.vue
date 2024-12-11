@@ -8,84 +8,83 @@
     v-slot="{ t, me, route }"
   >
     <AppView>
-      <div
-        class="stack"
-      >
-        <KCard>
-          <XLayout
-            type="stack"
+      <XLayout type="stack">
+        <XAboutSection
+          :title="t('zone-ingresses.routes.item.about.title')"
+          :created="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
+          :modified="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
+        >
+          <DefinitionCard layout="horizontal">
+            <template #title>
+              {{ t('http.api.property.status') }}:
+            </template>
+
+            <template #body>
+              <StatusBadge
+                :status="props.data.state"
+              />
+            </template>
+          </DefinitionCard>
+
+          <DefinitionCard
+            v-if="props.data.namespace.length > 0"
+            layout="horizontal"
           >
-            <XTimespan
-              :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
-              :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
-            />
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
-                </template>
+            <template #title>
+              {{ t('http.api.property.namespace') }}:
+            </template>
 
-                <template #body>
-                  <StatusBadge
-                    :status="props.data.state"
-                  />
-                </template>
-              </DefinitionCard>
+            <template #body>
+              <XBadge appearance="decorative">
+                {{ props.data.namespace }}
+              </XBadge>
+            </template>
+          </DefinitionCard>
 
-              <DefinitionCard
-                v-if="props.data.namespace.length > 0"
+          <DefinitionCard layout="horizontal">
+            <template #title>
+              {{ t('http.api.property.address') }}:
+            </template>
+
+            <template #body>
+              <template
+                v-if="props.data.zoneIngress.socketAddress.length > 0"
               >
-                <template #title>
-                  Namespace
-                </template>
+                <XBadge appearance="decorative">
+                  <XCopyButton
+                    :text="props.data.zoneIngress.socketAddress"
+                  />
+                </XBadge>
+              </template>
 
-                <template #body>
-                  {{ props.data.namespace }}
-                </template>
-              </DefinitionCard>
+              <template v-else>
+                {{ t('common.detail.none') }}
+              </template>
+            </template>
+          </DefinitionCard>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
+          <DefinitionCard layout="horizontal">
+            <template #title>
+              {{ t('http.api.property.advertisedAddress') }}:
+            </template>
 
-                <template #body>
-                  <template
-                    v-if="props.data.zoneIngress.socketAddress.length > 0"
-                  >
-                    <XCopyButton
-                      :text="props.data.zoneIngress.socketAddress"
-                    />
-                  </template>
+            <template #body>
+              <template
+                v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
+              >
+                <XBadge appearance="decorative">
+                  <XCopyButton
+                    :text="props.data.zoneIngress.advertisedSocketAddress"
+                  />
+                </XBadge>
+              </template>
 
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-              </DefinitionCard>
-
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.advertisedAddress') }}
-                </template>
-
-                <template #body>
-                  <template
-                    v-if="props.data.zoneIngress.advertisedSocketAddress.length > 0"
-                  >
-                    <XCopyButton
-                      :text="props.data.zoneIngress.advertisedSocketAddress"
-                    />
-                  </template>
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-              </DefinitionCard>
-            </div>
-          </XLayout>
-        </KCard>
+              <template v-else>
+                {{ t('common.detail.none') }}
+              </template>
+            </template>
+          </DefinitionCard>
+        </XAboutSection>
 
         <div
           v-if="props.data.zoneIngressInsight.subscriptions.length > 0"
@@ -169,7 +168,7 @@
             </SummaryView>
           </RouterView>
         </div>
-      </div>
+      </XLayout>
     </AppView>
   </RouteView>
 </template>

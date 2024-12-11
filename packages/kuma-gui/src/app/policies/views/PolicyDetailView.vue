@@ -13,45 +13,55 @@
     v-slot="{ route, t, uri, can, me }"
   >
     <AppView>
-      <KCard>
-        <div class="columns">
-          <DefinitionCard>
-            <template
-              #title
-            >
-              Type
-            </template>
-            <template
-              #body
-            >
+      <XAboutSection
+        :title="t('policies.detail.about.title')"
+        :created="t('common.formats.datetime', { value: Date.parse(props.data.creationTime)})"
+        :modified="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime)})"
+      >
+        <DefinitionCard layout="horizontal">
+          <template
+            #title
+          >
+            {{ t('http.api.property.type') }}:
+          </template>
+          <template
+            #body
+          >
+            <XBadge appearance="decorative">
               {{ props.data.type }}
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="props.data.namespace.length > 0"
+            </XBadge>
+          </template>
+        </DefinitionCard>
+        <DefinitionCard
+          v-if="props.data.namespace.length > 0"
+          layout="horizontal"
+        >
+          <template
+            #title
           >
-            <template
-              #title
-            >
-              Namespace
-            </template>
-            <template
-              #body
-            >
+            {{ t('http.api.property.namespace') }}:
+          </template>
+          <template
+            #body
+          >
+            <XBadge appearance="decorative">
               {{ props.data.namespace }}
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="can('use zones') && props.data.zone"
+            </XBadge>
+          </template>
+        </DefinitionCard>
+        <DefinitionCard
+          v-if="can('use zones') && props.data.zone"
+          layout="horizontal"
+        >
+          <template
+            #title
           >
-            <template
-              #title
-            >
-              Zone
-            </template>
-            <template
-              #body
-            >
+            {{ t('http.api.property.zone') }}:
+          </template>
+          <template
+            #body
+          >
+            <XBadge appearance="decorative">
               <XAction
                 :to="{
                   name: 'zone-cp-detail-view',
@@ -62,32 +72,33 @@
               >
                 {{ props.data.zone }}
               </XAction>
-            </template>
-          </DefinitionCard>
-          <DefinitionCard
-            v-if="props.data.spec"
-          >
-            <template #title>
-              {{ t('http.api.property.targetRef') }}
-            </template>
+            </XBadge>
+          </template>
+        </DefinitionCard>
+        <DefinitionCard
+          v-if="props.data.spec"
+          layout="horizontal"
+        >
+          <template #title>
+            {{ t('http.api.property.targetRef') }}:
+          </template>
 
-            <template #body>
-              <XBadge
-                v-if="props.data.spec.targetRef"
-                appearance="neutral"
-              >
-                {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
-              </XBadge>
-              <XBadge
-                v-else
-                appearance="neutral"
-              >
-                Mesh
-              </XBadge>
-            </template>
-          </DefinitionCard>
-        </div>
-      </KCard>
+          <template #body>
+            <XBadge
+              v-if="props.data.spec.targetRef"
+              appearance="neutral"
+            >
+              {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
+            </XBadge>
+            <XBadge
+              v-else
+              appearance="neutral"
+            >
+              {{ t('http.api.property.mesh') }}
+            </XBadge>
+          </template>
+        </DefinitionCard>
+      </XAboutSection>
       <div>
         <h3>
           Affected Data Plane Proxies

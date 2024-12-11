@@ -18,53 +18,59 @@
       <div
         class="stack"
       >
-        <KCard>
-          <DataLoader
-            :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
-              mesh: route.params.mesh,
-              name: route.params.service,
-            })"
-            v-slot="{ data }"
+        <DataLoader
+          :src="uri(sources, `/meshes/:mesh/service-insights/:name`, {
+            mesh: route.params.mesh,
+            name: route.params.service,
+          })"
+          v-slot="{ data }"
+        >
+          <XAboutSection
+            :title="t('services.internal-service.about.title')"
+            :created="data.creationTime ? t('common.formats.datetime', { value: Date.parse(data.creationTime) }) : undefined"
+            :modified="data.modificationTime ? t('common.formats.datetime', { value: Date.parse(data.modificationTime)}) : undefined"
           >
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.status') }}:
+              </template>
+
+              <template #body>
+                <StatusBadge :status="data.status" />
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.address') }}:
+              </template>
+
+              <template #body>
+                <template v-if="data.addressPort">
+                  <XBadge appearance="decorative">
+                    <TextWithCopyButton
+                      :text="data.addressPort"
+                    />
+                  </XBadge>
                 </template>
 
-                <template #body>
-                  <StatusBadge :status="data.status" />
+                <template v-else>
+                  {{ t('common.detail.none') }}
                 </template>
-              </DefinitionCard>
+              </template>
+            </DefinitionCard>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
-
-                <template #body>
-                  <TextWithCopyButton
-                    v-if="data.addressPort"
-                    :text="data.addressPort"
-                  />
-
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
-              </DefinitionCard>
-
-              <ResourceStatus
-                :online="data.dataplanes?.online ?? 0"
-                :total="data.dataplanes?.total ?? 0"
-              >
-                <template #title>
-                  {{ t('http.api.property.dataPlaneProxies') }}
-                </template>
-              </ResourceStatus>
-            </div>
-          </DataLoader>
-        </KCard>
+            <ResourceStatus
+              layout="horizontal"
+              :online="data.dataplanes?.online ?? 0"
+              :total="data.dataplanes?.total ?? 0"
+            >
+              <template #title>
+                {{ t('http.api.property.dataPlaneProxies') }}:
+              </template>
+            </ResourceStatus>
+          </XAboutSection>
+        </DataLoader>
 
         <div>
           <h3>

@@ -18,6 +18,8 @@ zone-ingresses:
       config: 'YAML'
       subscriptions:
         title: 'XDS connections'
+      about:
+        title: About this Zone Ingress
     items:
       title: Ingresses
       breadcrumbs: Ingresses

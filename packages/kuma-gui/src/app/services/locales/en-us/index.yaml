@@ -48,15 +48,25 @@ services:
     config: YAML
     data_plane_proxies: Data Plane Proxies
     no_matching_external_service: 'No matching ExternalService was found for service {name}'
+    empty: None
   href:
     docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
+  internal-service:
+    about:
+      title: About this Internal Service
   mesh-service:
+    about:
+      title: About this MeshService
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}'
   mesh-multi-zone-service:
+    about:
+      title: About this Mesh MultiZone Service
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshmultizoneservice/?{KUMA_UTM_QUERY_PARAMS}'
   mesh-external-service:
+    about:
+      title: About this Mesh External Service
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshexternalservice/?{KUMA_UTM_QUERY_PARAMS}'
     notifications:

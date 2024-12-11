@@ -1,5 +1,6 @@
 import Kongponents, { KTooltip, KCard, KPop, KInputSwitch, KAlert, KCheckbox } from '@kong/kongponents'
 
+import XAboutSection from './components/x-about-section/XAboutSection.vue'
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
 import XBadge from './components/x-badge/XBadge.vue'
@@ -53,6 +54,7 @@ declare module 'vue' {
     XTeleportSlot: typeof XTeleportSlot
     XTimespan: typeof XTimespan
     XDisclosure: typeof XDisclosure
+    XAboutSection: typeof XAboutSection
   }
 }
 
@@ -101,6 +103,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XTeleportSlot', XTeleportSlot],
           ['XTimespan', XTimespan],
           ['XDisclosure', XDisclosure],
+          ['XAboutSection', XAboutSection],
         ]
       },
       labels: [

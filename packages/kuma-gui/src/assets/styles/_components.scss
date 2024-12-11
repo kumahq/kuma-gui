@@ -48,3 +48,12 @@ Adapted from https://every-layout.dev/layouts/switcher/.
   flex-basis: calc((var(--threshold) - 100%) * 999);
   min-inline-size: 0;
 }
+
+/*
+.columns-with--borders
+
+Variant of .columns with a vertical border at the right side of each column (except the last).
+*/
+.columns-with-borders>*:not(:last-child) {
+  border-right: $kui-border-width-10 solid $kui-color-border;
+}

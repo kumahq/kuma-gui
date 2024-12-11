@@ -57,5 +57,7 @@ delegated-gateways:
       title: Delegated Gateways
   detail:
     data_plane_proxies: Data Plane Proxies
+    about:
+      title: About this Delegated Gateway
   href:
     docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated?{KUMA_UTM_QUERY_PARAMS}'

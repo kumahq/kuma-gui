@@ -15,46 +15,52 @@
     v-slot="{ can, route, t, uri, me }"
   >
     <AppView>
-      <div
-        class="stack"
-      >
-        <KCard>
-          <div class="columns">
-            <DefinitionCard>
-              <template #title>
-                State
-              </template>
+      <XLayout type="stack">
+        <XAboutSection
+          :title="t('services.mesh-service.about.title')"
+          :created="props.data.creationTime ? t('common.formats.datetime', { value: Date.parse(props.data.creationTime) }) : undefined"
+          :modified="props.data.modificationTime ? t('common.formats.datetime', { value: Date.parse(props.data.modificationTime)}) : undefined"
+        >
+          <DefinitionCard layout="horizontal">
+            <template #title>
+              {{ t('http.api.property.state') }}:
+            </template>
 
-              <template #body>
-                <XBadge
-                  :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
-                >
-                  {{ props.data.spec.state }}
-                </XBadge>
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="props.data.namespace.length > 0"
-            >
-              <template #title>
-                Namespace
-              </template>
+            <template #body>
+              <XBadge
+                :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
+              >
+                {{ props.data.spec.state }}
+              </XBadge>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="props.data.namespace.length > 0"
+            layout="horizontal"
+          >
+            <template #title>
+              {{ t('http.api.property.namespace') }}:
+            </template>
 
-              <template #body>
+            <template #body>
+              <XBadge appearance="decorative">
                 {{ props.data.namespace }}
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="can('use zones') && props.data.zone"
+              </XBadge>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="can('use zones') && props.data.zone"
+            layout="horizontal"
+          >
+            <template
+              #title
             >
-              <template
-                #title
-              >
-                Zone
-              </template>
-              <template
-                #body
-              >
+              {{ t('http.api.property.zone') }}:
+            </template>
+            <template
+              #body
+            >
+              <XBadge appearance="decorative">
                 <XAction
                   :to="{
                     name: 'zone-cp-detail-view',
@@ -65,57 +71,62 @@
                 >
                   {{ props.data.zone }}
                 </XAction>
+              </XBadge>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard layout="horizontal">
+            <template
+              #title
+            >
+              {{ t('http.api.property.ports') }}:
+            </template>
+            <template
+              #body
+            >
+              <template v-if="props.data.spec.ports.length">
+                <KumaPort
+                  v-for="connection in props.data.spec.ports"
+                  :key="connection.port"
+                  :port="{
+                    ...connection,
+                    targetPort: undefined,
+                  }"
+                />
               </template>
-            </DefinitionCard>
-            <DefinitionCard>
-              <template
-                #title
-              >
-                Ports
+              <template v-else>
+                {{ t('common.detail.none') }}
               </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <KumaPort
-                    v-for="connection in props.data.spec.ports"
-                    :key="connection.port"
-                    :port="{
-                      ...connection,
-                      targetPort: undefined,
-                    }"
-                  />
-                </KTruncate>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard layout="horizontal">
+            <template
+              #title
+            >
+              {{ t('http.api.property.selector') }}:
+            </template>
+            <template
+              #body
+            >
+              <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
+                <XBadge
+                  v-for="(value, key) in props.data.spec.selector.dataplaneTags"
+                  :key="`${key}:${value}`"
+                  appearance="info"
+                >
+                  {{ key }}:{{ value }}
+                </XBadge>
               </template>
-            </DefinitionCard>
-            <DefinitionCard>
-              <template
-                #title
-              >
-                Selector
+              <template v-else>
+                {{ t('common.detail.none') }}
               </template>
-              <template
-                #body
-              >
-                <KTruncate>
-                  <XBadge
-                    v-for="(value, key) in data.spec.selector.dataplaneTags"
-                    :key="`${key}:${value}`"
-                    appearance="info"
-                  >
-                    {{ key }}:{{ value }}
-                  </XBadge>
-                </KTruncate>
-              </template>
-            </DefinitionCard>
-          </div>
-        </KCard>
+            </template>
+          </DefinitionCard>
+        </XAboutSection>
 
         <div>
           <h3>
             {{ t('services.detail.data_plane_proxies') }}
           </h3>
-
           <KCard
             class="mt-4"
           >
@@ -299,7 +310,7 @@
             </DataLoader>
           </KCard>
         </div>
-      </div>
+      </XLayout>
     </AppView>
   </RouteView>
 </template>

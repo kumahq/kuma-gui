@@ -59,6 +59,8 @@ zone-cps:
     subscriptions: 'KDS Connections'
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
+    about:
+      title: About this Zone Control Plane
 
 zones:
   href:

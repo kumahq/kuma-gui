@@ -21,31 +21,37 @@
           })"
           v-slot="{ data }"
         >
-          <KCard
-            data-testid="external-service-details"
+          {{ console.log('test', data) }}
+          <XAboutSection
+            :title="t('external-services.detail.about.title')"
+            :created="t('common.formats.datetime', { value: Date.parse(data.creationTime)})"
+            :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime)})"
           >
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.address') }}:
+              </template>
 
-                <template #body>
+              <template #body>
+                <XBadge appearance="decorative">
                   <TextWithCopyButton :text="data.networking.address" />
-                </template>
-              </DefinitionCard>
+                </XBadge>
+              </template>
+            </DefinitionCard>
 
-              <DefinitionCard v-if="data.tags">
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
+            <DefinitionCard
+              v-if="data.tags"
+              layout="horizontal"
+            >
+              <template #title>
+                {{ t('http.api.property.tags') }}:
+              </template>
 
-                <template #body>
-                  <TagList :tags="data.tags" />
-                </template>
-              </DefinitionCard>
-            </div>
-          </KCard>
+              <template #body>
+                <TagList :tags="data.tags" />
+              </template>
+            </DefinitionCard>
+          </XAboutSection>
 
           <div>
             <h3>{{ t('external-services.detail.config') }}</h3>
