@@ -73,6 +73,11 @@ export const sources = (source: Source, api: KumaApi) => {
         : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.address}_`) && !value.$clusterName.startsWith('_')))
 
       const outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
+        // if we don't exclude localhost_ we end up with  a `localhost_`
+        // outbound, which is the cluster of the inbound. Whilst we don't want
+        // to show this now, we might want to later as it can show how envoy
+        // might be interacting with the traffic vs the cluster/service itself
+        'localhost_',
         'inbound_passthrough_',
         'outbound_passthrough_',
       ].some(item => key.startsWith(item))))
