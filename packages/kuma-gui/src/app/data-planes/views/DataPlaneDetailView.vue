@@ -22,7 +22,9 @@
           v-if="warnings.length > 0 || error"
           #notifications
         >
-          <ul data-testid="dataplane-warnings">
+          <ul
+            data-testid="dataplane-warnings"
+          >
             <li
               v-for="warning in warnings"
               :key="warning.kind"
@@ -38,20 +40,21 @@
           </ul>
         </template>
 
-        <div
-          class="stack"
+        <XLayout
+          type="stack"
           data-testid="dataplane-details"
         >
-          <KCard>
-            <div
-              class="stack"
+          <XCard>
+            <XLayout
+              type="stack"
             >
               <XTimespan
                 :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
                 :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
               />
-              <div
-                class="columns"
+
+              <XLayout
+                type="columns"
               >
                 <DefinitionCard>
                   <template #title>
@@ -135,8 +138,9 @@
                     {{ props.data.namespace }}
                   </template>
                 </DefinitionCard>
-              </div>
-              <div
+              </XLayout>
+
+              <XLayout
                 v-if="props.data.dataplane.networking.gateway"
                 class="columns"
               >
@@ -159,15 +163,17 @@
                     <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
                   </template>
                 </DefinitionCard>
-              </div>
-            </div>
-          </KCard>
+              </XLayout>
+            </XLayout>
+          </XCard>
 
-          <KCard
+          <XCard
             class="traffic"
             data-testid="dataplane-traffic"
           >
-            <div class="columns">
+            <XLayout
+              type="columns"
+            >
               <ConnectionTraffic>
                 <template #title>
                   <ForwardIcon
@@ -177,34 +183,35 @@
                   />
                   Inbounds
                 </template>
-                <ConnectionGroup
-                  type="inbound"
-                  data-testid="dataplane-inbounds"
+
+                <!-- if we are a builtin gateway proxy i.e. a 'gateway' proxy -->
+                <!-- use its first and only inbounds as a template  -->
+                <!-- and fill the inbounds out from the stats once they are loaded -->
+                <template
+                  v-for="inbounds in [props.data.dataplane.networking.type === 'gateway' ? Object.entries<any>(traffic?.inbounds ?? {}).reduce<DataplaneInbound[]>((prev, [key, value]) => {
+                    // As we are just 'finding' inbounds from stats without knowing them
+                    // from the dataplane overview API request, we will wrongly 'find'
+                    // the envoy admin inbound that is used for kumas /stats API. Ignore
+                    // the envoy admin inbound when we find it
+                    const port = key.split('_').at(-1)
+                    if(port === (props.data.dataplane.networking.admin?.port ?? '9901')) {
+                      return prev
+                    }
+                    return prev.concat([
+                      {
+                        ...props.data.dataplane.networking.inbounds[0],
+                        name: key,
+                        port: Number(port),
+                        protocol: ['http', 'tcp'].find(item => typeof value[item] !== 'undefined') ?? 'tcp',
+                        addressPort: `${props.data.dataplane.networking.inbounds[0].address}:${port}`,
+                      },
+                    ])
+                  }, []) : props.data.dataplane.networking.inbounds]"
+                  :key="inbounds"
                 >
-                  <!-- if we are a builtin gateway proxy i.e. a 'gateway' proxy -->
-                  <!-- use its first and only inbounds as a template  -->
-                  <!-- and fill the inbounds out from the stats once they are loaded -->
-                  <template
-                    v-for="inbounds in [props.data.dataplane.networking.type === 'gateway' ? Object.entries<any>(traffic?.inbounds ?? {}).reduce<DataplaneInbound[]>((prev, [key, value]) => {
-                      // As we are just 'finding' inbounds from stats without knowing them
-                      // from the dataplane overview API request, we will wrongly 'find'
-                      // the envoy admin inbound that is used for kumas /stats API. Ignore
-                      // the envoy admin inbound when we find it
-                      const port = key.split('_').at(-1)
-                      if(port === (props.data.dataplane.networking.admin?.port ?? '9901')) {
-                        return prev
-                      }
-                      return prev.concat([
-                        {
-                          ...props.data.dataplane.networking.inbounds[0],
-                          name: key,
-                          port: Number(port),
-                          protocol: ['http', 'tcp'].find(item => typeof value[item] !== 'undefined') ?? 'tcp',
-                          addressPort: `${props.data.dataplane.networking.inbounds[0].address}:${port}`,
-                        },
-                      ])
-                    }, []) : props.data.dataplane.networking.inbounds]"
-                    :key="inbounds"
+                  <ConnectionGroup
+                    type="inbound"
+                    data-testid="dataplane-inbounds"
                   >
                     <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
                     <DataCollection
@@ -221,7 +228,9 @@
                           </p>
                         </XEmptyState>
                       </template>
-                      <template #default="{ items: _inbounds }">
+                      <template
+                        #default="{ items: _inbounds }"
+                      >
                         <XLayout
                           type="stack"
                           size="small"
@@ -269,8 +278,8 @@
                         </XLayout>
                       </template>
                     </DataCollection>
-                  </template>
-                </ConnectionGroup>
+                  </ConnectionGroup>
+                </template>
               </ConnectionTraffic>
 
               <ConnectionTraffic>
@@ -305,26 +314,31 @@
                 </template>
                 <!-- we don't want to show an error here -->
                 <!-- instead we show a No Data EmptyState -->
-                <template v-if="typeof error === 'undefined'">
-                  <LoadingBlock v-if="typeof traffic === 'undefined'" />
+                <template
+                  v-if="typeof error === 'undefined'"
+                >
+                  <LoadingBlock
+                    v-if="typeof traffic === 'undefined'"
+                  />
                   <template
                     v-else
                   >
+                    <ConnectionGroup
+                      type="passthrough"
+                    >
+                      <ConnectionCard
+                        :protocol="`passthrough`"
+                        :traffic="traffic.passthrough"
+                      >
+                        Non mesh traffic
+                      </ConnectionCard>
+                    </ConnectionGroup>
+
                     <!-- Outbounds for gateways report actual traffic on the upstream so we switch to upstream here for non-standard-->
                     <template
                       v-for="direction in ['upstream'] as const"
                       :key="direction"
                     >
-                      <ConnectionGroup
-                        type="passthrough"
-                      >
-                        <ConnectionCard
-                          :protocol="`passthrough`"
-                          :traffic="traffic.passthrough"
-                        >
-                          Non mesh traffic
-                        </ConnectionCard>
-                      </ConnectionGroup>
                       <DataCollection
                         :predicate="route.params.inactive ? undefined : ([key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
                         :items="Object.entries<any>(traffic.outbounds)"
@@ -384,8 +398,8 @@
                   <XEmptyState />
                 </template>
               </ConnectionTraffic>
-            </div>
-          </KCard>
+            </XLayout>
+          </XCard>
 
           <RouterView
             v-slot="child"
@@ -567,7 +581,7 @@
               </template>
             </AppCollection>
           </div>
-        </div>
+        </XLayout>
       </AppView>
     </DataSource>
   </RouteView>

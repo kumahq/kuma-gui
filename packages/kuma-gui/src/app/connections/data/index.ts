@@ -121,9 +121,23 @@ export const ConnectionCollection = {
           return [cluster, stats]
         }))
       : {}
+
+    // pick out the outbounds which aren't internal outbounds
+    const withoutInternals = Object.fromEntries(Object.entries(cluster).filter(([key, _value]) => ![
+      '_', // most internal names will be prefixed by `_` the rest will become legacy internal names
+      'admin',
+      'async-client',
+      'kuma_readiness',
+      'kuma_envoy_admin',
+      'probe_listener',
+      'access_log_sink',
+      'ads_cluster',
+      'meshtrace_zipkin',
+      'meshtrace_opentelemetry',
+    ].some(item => key.startsWith(item))))
     return {
       listener,
-      cluster,
+      cluster: withoutInternals,
     }
   },
 }
