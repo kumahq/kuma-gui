@@ -51,6 +51,10 @@
                       data-action
                       :to="{
                         name: 'builtin-gateway-summary-view',
+                        query: {
+                          size: route.params.size,
+                          page: route.params.page,
+                        },
                         params: {
                           mesh: item.mesh,
                           gateway: item.id,
@@ -109,8 +113,8 @@
                     mesh: route.params.mesh,
                   },
                   query: {
-                    page: 1,
-                    size: 50,
+                    page: route.params.page,
+                    size: route.params.size,
                   },
                 })"
               >
