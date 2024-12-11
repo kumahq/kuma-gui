@@ -66,9 +66,6 @@ export const routes = () => {
                 {
                   path: ':gateway',
                   name: 'builtin-gateway-summary-view',
-                  props: () => ({
-                    routeName: 'builtin-gateway-summary-view',
-                  }),
                   component: () => import('@/app/gateways/views/BuiltinGatewaySummaryView.vue'),
                 },
               ],
