@@ -8,7 +8,7 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t, uri }"
+    v-slot="{ route, t, uri, can }"
   >
     <DataCollection
       :items="props.items"
@@ -53,7 +53,9 @@
               </h2>
             </template>
 
-            <XLayout type="stack">
+            <XLayout
+              type="stack"
+            >
               <div
                 class="stack-with-borders"
               >
@@ -65,12 +67,13 @@
                   </template>
 
                   <template #body>
-                    <div
-                      class="status-with-reason"
+                    <XLayout
+                      type="separated"
                     >
                       <StatusBadge
                         :status="item.status"
                       />
+
                       <DataCollection
                         v-if="item.dataplaneType === 'standard'"
                         :items="item.dataplane.networking.inbounds"
@@ -78,26 +81,21 @@
                         :empty="false"
                         v-slot="{ items : inbounds }"
                       >
-                        <KTooltip
-                          class="reason-tooltip"
+                        <XIcon
+                          name="info"
+                          :color="KUI_COLOR_TEXT_NEUTRAL"
                         >
-                          <InfoIcon
-                            :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                            :size="KUI_ICON_SIZE_30"
-                          />
-                          <template #content>
-                            <ul>
-                              <li
-                                v-for="inbound in inbounds"
-                                :key="`${inbound.service}:${inbound.port}`"
-                              >
-                                {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                              </li>
-                            </ul>
-                          </template>
-                        </KTooltip>
+                          <ul>
+                            <li
+                              v-for="inbound in inbounds"
+                              :key="`${inbound.service}:${inbound.port}`"
+                            >
+                              {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                            </li>
+                          </ul>
+                        </XIcon>
                       </DataCollection>
-                    </div>
+                    </XLayout>
                   </template>
                 </DefinitionCard>
 
@@ -163,86 +161,83 @@
                 </DefinitionCard>
               </div>
 
-              <div
+              <XLayout
                 v-if="item.dataplane.networking.gateway"
+                type="stack"
               >
                 <h3>{{ t('data-planes.routes.item.gateway') }}</h3>
 
                 <div
-                  class="mt-4"
+                  class="stack-with-borders"
                 >
-                  <div
-                    class="stack-with-borders"
+                  <DefinitionCard
+                    layout="horizontal"
                   >
-                    <DefinitionCard
-                      layout="horizontal"
-                    >
-                      <template #title>
-                        {{ t('http.api.property.tags') }}
-                      </template>
+                    <template #title>
+                      {{ t('http.api.property.tags') }}
+                    </template>
 
-                      <template #body>
-                        <TagList
-                          alignment="right"
-                          :tags="item.dataplane.networking.gateway.tags"
-                        />
-                      </template>
-                    </DefinitionCard>
+                    <template #body>
+                      <TagList
+                        alignment="right"
+                        :tags="item.dataplane.networking.gateway.tags"
+                      />
+                    </template>
+                  </DefinitionCard>
 
-                    <DefinitionCard
-                      layout="horizontal"
-                    >
-                      <template #title>
-                        {{ t('http.api.property.address') }}
-                      </template>
+                  <DefinitionCard
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('http.api.property.address') }}
+                    </template>
 
-                      <template #body>
-                        <TextWithCopyButton
-                          :text="`${item.dataplane.networking.address}`"
-                        />
-                      </template>
-                    </DefinitionCard>
-                  </div>
+                    <template #body>
+                      <XCopyButton
+                        :text="`${item.dataplane.networking.address}`"
+                      />
+                    </template>
+                  </DefinitionCard>
                 </div>
-              </div>
+              </XLayout>
             </XLayout>
 
-            <div>
+            <XLayout
+              type="stack"
+            >
               <h3>
                 {{ t('data-planes.routes.item.config') }}
               </h3>
 
-              <div class="mt-4">
-                <ResourceCodeBlock
-                  :resource="item.config"
-                  language="yaml"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  v-slot="{ copy, copying }"
-                >
-                  <DataSource
-                    v-if="copying"
-                    :src="uri(sources, `/meshes/:mesh/dataplanes/:name/as/kubernetes`, {
-                      mesh: route.params.mesh,
-                      name: route.params.dataPlane,
-                    }, {
-                      cacheControl: 'no-store',
-                    })"
-                    @change="(data) => {
-                      copy((resolve) => resolve(data))
-                    }"
-                    @error="(e) => {
-                      copy((_resolve, reject) => reject(e))
-                    }"
-                  />
-                </ResourceCodeBlock>
-              </div>
-            </div>
+              <ResourceCodeBlock
+                :resource="item.config"
+                language="yaml"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                v-slot="{ copy, copying }"
+              >
+                <DataSource
+                  v-if="copying"
+                  :src="uri(sources, `/meshes/:mesh/dataplanes/:name/as/kubernetes`, {
+                    mesh: route.params.mesh,
+                    name: route.params.dataPlane,
+                  }, {
+                    cacheControl: 'no-store',
+                  })"
+                  @change="(data) => {
+                    copy((resolve) => resolve(data))
+                  }"
+                  @error="(e) => {
+                    copy((_resolve, reject) => reject(e))
+                  }"
+                />
+              </ResourceCodeBlock>
+            </XLayout>
           </AppView>
         </template>
       </template>
@@ -251,19 +246,14 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon } from '@kong/icons'
+import { KUI_COLOR_TEXT_NEUTRAL } from '@kong/design-tokens'
 
 import { DataplaneOverview } from '../data'
 import { sources } from '../sources'
-import { useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
-
-const can = useCan()
 
 const props = defineProps<{
   items: DataplaneOverview[]
