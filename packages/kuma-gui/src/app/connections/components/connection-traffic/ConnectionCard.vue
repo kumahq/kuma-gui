@@ -10,6 +10,7 @@
       />
       <div class="title">
         <XBadge
+          v-if="props.protocol !== ''"
           class="protocol"
           :appearance="props.protocol === 'passthrough' ? 'success' : 'info'"
         >
