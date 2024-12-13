@@ -23,6 +23,7 @@
         >
           {{ console.log('test', data) }}
           <XAboutSection
+            data-testid="external-service-details"
             :title="t('external-services.detail.about.title')"
             :created="t('common.formats.datetime', { value: Date.parse(data.creationTime)})"
             :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime)})"
