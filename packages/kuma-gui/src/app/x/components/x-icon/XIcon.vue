@@ -46,6 +46,7 @@ import {
   HelpIcon,
   RefreshIcon,
   ProgressIcon,
+  InfoIcon,
 } from '@kong/icons'
 import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
@@ -77,12 +78,13 @@ const icons = {
   create: AddCircleIcon,
   refresh: RefreshIcon,
   progress: ProgressIcon,
+  info: InfoIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()
 
 const props = withDefaults(defineProps<{
-  name: keyof typeof icons
+  name: keyof typeof icons // @TODO(jc) :variant
   placement?: PopPlacements
   color?: string
   size?: string
