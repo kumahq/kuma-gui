@@ -8,8 +8,5 @@ export const features = (env: Env['var']): Features => {
     'create zones': () => {
       return false
     },
-    'read zone-traffic': () => {
-      return !!JSON.parse(env('KUMA_ZONE_TRAFFIC', '0'))
-    },
   }
 }
