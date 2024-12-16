@@ -13,14 +13,18 @@
 
     <template #body>
       <div class="status">
-        <span
-          v-if="props.online !== null"
-          class="status-online"
-          :class="{ [`status-online--${statusAppearance}`]: statusAppearance !== null }"
-        >{{ props.online }}</span><span
-          v-if="props.online !== null"
-          class="status-separator"
-        >/</span><span class="status-total">{{ props.total }}</span>
+        <template v-if="typeof props.online !== 'undefined'">
+          <span
+            class="status-online"
+            :class="{ [`status-online--${statusAppearance}`]: typeof statusAppearance !== 'undefined' }"
+          >
+            {{ props.online }}
+          </span>
+          <span class="status-separator">
+            /
+          </span>
+        </template>
+        <span class="status-total">{{ props.total }}</span>
       </div>
     </template>
   </DefinitionCard>
@@ -33,23 +37,23 @@ import DefinitionCard from './DefinitionCard.vue'
 
 const props = withDefaults(defineProps<{
   total: number
-  online?: number | null
+  online?: number
 }>(), {
-  online: null,
+  online: undefined,
 })
 
 const statusAppearance = computed(() => {
-  if (props.online !== null) {
-    const ratio = props.online / props.total
+  if (typeof props.online === 'undefined') return undefined
 
-    if (ratio <= 0.5) {
-      return 'danger'
-    } else if (ratio < 1) {
-      return 'warning'
-    }
+  const ratio = props.online / props.total
+
+  if (ratio <= 0.5) {
+    return 'danger'
+  } else if (ratio < 1) {
+    return 'warning'
   }
 
-  return null
+  return undefined
 })
 </script>
 
