@@ -16,7 +16,7 @@
         <template v-if="typeof props.online !== 'undefined'">
           <span
             class="status-online"
-            :class="{ [`status-online--${statusAppearance}`]: statusAppearance !== null }"
+            :class="{ [`status-online--${statusAppearance}`]: typeof statusAppearance !== undefined }"
           >{{ props.online }}</span><span class="status-separator">/</span>
         </template><span class="status-total">{{ props.total }}</span>
       </div>
