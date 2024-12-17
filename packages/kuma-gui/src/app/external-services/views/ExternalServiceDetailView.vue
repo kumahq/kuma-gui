@@ -34,7 +34,7 @@
 
               <template #body>
                 <XBadge appearance="decorative">
-                  <TextWithCopyButton :text="data.networking.address" />
+                  <XCopyButton :text="data.networking.address" />
                 </XBadge>
               </template>
             </DefinitionCard>
@@ -96,6 +96,5 @@
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>

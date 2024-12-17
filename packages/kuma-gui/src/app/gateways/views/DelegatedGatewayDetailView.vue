@@ -43,9 +43,7 @@
                   v-if="data.addressPort"
                   appearance="decorative"
                 >
-                  <TextWithCopyButton
-                    :text="data.addressPort"
-                  />
+                  <XCopyButton :text="data.addressPort" />
                 </XBadge>
 
                 <template v-else>
@@ -247,14 +245,12 @@
 </template>
 
 <script lang="ts" setup>
-
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
 </script>

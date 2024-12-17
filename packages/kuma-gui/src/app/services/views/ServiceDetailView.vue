@@ -48,9 +48,7 @@
               <template #body>
                 <template v-if="data.addressPort">
                   <XBadge appearance="decorative">
-                    <TextWithCopyButton
-                      :text="data.addressPort"
-                    />
+                    <XCopyButton :text="data.addressPort" />
                   </XBadge>
                 </template>
 
@@ -270,7 +268,6 @@ import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
 </script>
 

@@ -145,7 +145,7 @@
 
               <template #body>
                 <XBadge appearance="decorative">
-                  <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
+                  <XCopyButton :text="`${props.data.dataplane.networking.address}`" />
                 </XBadge>
               </template>
             </DefinitionCard>
@@ -587,7 +587,6 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
