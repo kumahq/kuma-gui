@@ -14,10 +14,3 @@ const props = withDefaults(defineProps<{
   maxWidth: 'auto',
 })
 </script>
-
-<style lang="scss" scoped>
-:deep(a) {
-  text-decoration: underline;
-  color: currentColor;
-}
-</style>
