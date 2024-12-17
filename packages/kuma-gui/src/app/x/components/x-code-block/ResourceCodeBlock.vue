@@ -36,7 +36,7 @@
                 if (expanded) {
                   toggle()
                 }
-                cb((text: Object) => copy(toYamlRepresentation(text)), (e: unknown) => console.error(e))
+                cb((text: Object) => copy(toYamlRepresentation(text)), onCopyReject)
               }"
               :copying="expanded"
             />
@@ -88,4 +88,6 @@ function toYamlRepresentation(resource: Object): string {
   }
   return YAML.stringify(resource)
 }
+
+const onCopyReject: Parameters<CopyCallback>[1] = (e: unknown) => console.error(e)
 </script>
