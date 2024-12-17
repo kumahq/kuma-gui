@@ -32,47 +32,42 @@
         <XLayout
           type="stack"
         >
-          <XCard>
-            <XLayout
-              type="stack"
+          <XAboutSection
+            :title="t('hostname-generators.routes.item.about.title')"
+            :created="t('common.formats.datetime', { value: Date.parse(data.creationTime) })"
+            :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime) })"
+          >
+            <template
+              v-for="labels in [{
+                ...data.spec.selector.meshService.matchLabels,
+                ...data.spec.selector.meshExternalService.matchLabels,
+                ...data.spec.selector.meshMultiZoneService.matchLabels,
+              }]"
+              :key="typeof labels"
             >
-              <XTimespan
-                :start="t('common.formats.datetime', { value: Date.parse(data.creationTime) })"
-                :end="t('common.formats.datetime', { value: Date.parse(data.modificationTime) })"
-              />
-            </XLayout>
-            <div
-              class="columns"
-            >
-              <template
-                v-for="labels in [{
-                  ...data.spec.selector.meshService.matchLabels,
-                  ...data.spec.selector.meshExternalService.matchLabels,
-                  ...data.spec.selector.meshMultiZoneService.matchLabels,
-                }]"
-                :key="typeof labels"
+              <DefinitionCard
+                v-if="Object.keys(labels).length"
+                layout="horizontal"
               >
-                <DefinitionCard v-if="Object.keys(labels).length">
-                  <template #title>
-                    Tags
-                  </template>
+                <template #title>
+                  {{ t('http.api.property.tags') }}:
+                </template>
 
-                  <template #body>
-                    <XLayout type="separated">
-                      <template
-                        v-for="(value, key) in labels"
-                        :key="key"
-                      >
-                        <XBadge>
-                          {{ key }}:{{ value }}
-                        </XBadge>
-                      </template>
-                    </XLayout>
-                  </template>
-                </DefinitionCard>
-              </template>
-            </div>
-          </XCard>
+                <template #body>
+                  <XLayout type="separated">
+                    <template
+                      v-for="(value, key) in labels"
+                      :key="key"
+                    >
+                      <XBadge>
+                        {{ key }}:{{ value }}
+                      </XBadge>
+                    </template>
+                  </XLayout>
+                </template>
+              </DefinitionCard>
+            </template>
+          </XAboutSection>
 
           <ResourceCodeBlock
             :resource="data.$raw"
