@@ -31,10 +31,6 @@ import { AppAboutSection } from '@kong-ui-public/app-layout'
       font-size: $kui-font-size-20;
       font-weight: normal;
     }
-
-    .x-layout.separated {
-      align-items: center;
-    }
   }
 }
 </style>
