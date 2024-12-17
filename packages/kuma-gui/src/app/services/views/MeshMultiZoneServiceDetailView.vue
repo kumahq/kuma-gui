@@ -21,7 +21,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.ports') }}:
+              {{ t('http.api.property.ports') }}
             </template>
             <template
               #body
@@ -45,7 +45,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.selector') }}:
+              {{ t('http.api.property.selector') }}
             </template>
             <template
               #body

@@ -23,7 +23,7 @@
         >
           <DefinitionCard layout="horizontal">
             <template #title>
-              {{ t('http.api.property.state') }}:
+              {{ t('http.api.property.state') }}
             </template>
 
             <template #body>
@@ -39,7 +39,7 @@
             layout="horizontal"
           >
             <template #title>
-              {{ t('http.api.property.namespace') }}:
+              {{ t('http.api.property.namespace') }}
             </template>
 
             <template #body>
@@ -55,7 +55,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.zone') }}:
+              {{ t('http.api.property.zone') }}
             </template>
             <template
               #body
@@ -78,7 +78,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.ports') }}:
+              {{ t('http.api.property.ports') }}
             </template>
             <template
               #body
@@ -102,7 +102,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.selector') }}:
+              {{ t('http.api.property.selector') }}
             </template>
             <template
               #body

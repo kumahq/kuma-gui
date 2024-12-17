@@ -68,7 +68,7 @@
                           },
                         }"
                       >
-                        {{ policy }}:
+                        {{ policy }}
                       </XAction>
                     </template>
 

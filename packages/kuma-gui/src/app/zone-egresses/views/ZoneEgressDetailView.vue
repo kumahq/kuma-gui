@@ -16,7 +16,7 @@
         >
           <DefinitionCard layout="horizontal">
             <template #title>
-              {{ t('http.api.property.status') }}:
+              {{ t('http.api.property.status') }}
             </template>
 
             <template #body>
@@ -29,7 +29,7 @@
             layout="horizontal"
           >
             <template #title>
-              {{ t('http.api.property.namespace') }}:
+              {{ t('http.api.property.namespace') }}
             </template>
 
             <template #body>
@@ -41,7 +41,7 @@
 
           <DefinitionCard layout="horizontal">
             <template #title>
-              {{ t('http.api.property.address') }}:
+              {{ t('http.api.property.address') }}
             </template>
 
             <template #body>

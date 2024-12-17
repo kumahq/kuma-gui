@@ -22,7 +22,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.namespace') }}:
+              {{ t('http.api.property.namespace') }}
             </template>
 
             <template
@@ -40,7 +40,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.zone') }}:
+              {{ t('http.api.property.zone') }}
             </template>
             <template
               #body
@@ -67,7 +67,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.port') }}:
+              {{ t('http.api.property.port') }}
             </template>
             <template
               #body
@@ -85,7 +85,7 @@
             <template
               #title
             >
-              {{ t('http.api.property.tls') }}:
+              {{ t('http.api.property.tls') }}
             </template>
             <template
               #body

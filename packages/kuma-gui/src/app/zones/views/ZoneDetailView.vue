@@ -45,7 +45,7 @@
           >
             <DefinitionCard layout="horizontal">
               <template #title>
-                {{ t('http.api.property.status') }}:
+                {{ t('http.api.property.status') }}
               </template>
 
               <template #body>
@@ -60,7 +60,7 @@
               }"
             >
               <template #title>
-                {{ t('zone-cps.routes.item.version') }}:
+                {{ t('zone-cps.routes.item.version') }}
               </template>
 
               <template #body>
@@ -90,7 +90,7 @@
             </DefinitionCard>
             <DefinitionCard layout="horizontal">
               <template #title>
-                {{ t('http.api.property.type') }}:
+                {{ t('http.api.property.type') }}
               </template>
 
               <template #body>
@@ -102,7 +102,7 @@
 
             <DefinitionCard layout="horizontal">
               <template #title>
-                {{ t('zone-cps.routes.item.authentication_type') }}:
+                {{ t('zone-cps.routes.item.authentication_type') }}
               </template>
 
               <template #body>

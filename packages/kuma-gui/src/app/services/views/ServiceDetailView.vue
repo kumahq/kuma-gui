@@ -32,7 +32,7 @@
           >
             <DefinitionCard layout="horizontal">
               <template #title>
-                {{ t('http.api.property.status') }}:
+                {{ t('http.api.property.status') }}
               </template>
 
               <template #body>
@@ -42,7 +42,7 @@
 
             <DefinitionCard layout="horizontal">
               <template #title>
-                {{ t('http.api.property.address') }}:
+                {{ t('http.api.property.address') }}
               </template>
 
               <template #body>
@@ -64,7 +64,7 @@
               :total="data.dataplanes?.total ?? 0"
             >
               <template #title>
-                {{ t('http.api.property.dataPlaneProxies') }}:
+                {{ t('http.api.property.dataPlaneProxies') }}
               </template>
             </ResourceStatus>
           </XAboutSection>

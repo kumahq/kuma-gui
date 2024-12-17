@@ -50,7 +50,7 @@
                 layout="horizontal"
               >
                 <template #title>
-                  {{ t('http.api.property.tags') }}:
+                  {{ t('http.api.property.tags') }}
                 </template>
 
                 <template #body>

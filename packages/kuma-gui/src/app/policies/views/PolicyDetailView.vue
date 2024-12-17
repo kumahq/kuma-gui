@@ -22,7 +22,7 @@
           <template
             #title
           >
-            {{ t('http.api.property.type') }}:
+            {{ t('http.api.property.type') }}
           </template>
           <template
             #body
@@ -39,7 +39,7 @@
           <template
             #title
           >
-            {{ t('http.api.property.namespace') }}:
+            {{ t('http.api.property.namespace') }}
           </template>
           <template
             #body
@@ -56,7 +56,7 @@
           <template
             #title
           >
-            {{ t('http.api.property.zone') }}:
+            {{ t('http.api.property.zone') }}
           </template>
           <template
             #body
@@ -80,7 +80,7 @@
           layout="horizontal"
         >
           <template #title>
-            {{ t('http.api.property.targetRef') }}:
+            {{ t('http.api.property.targetRef') }}
           </template>
 
           <template #body>
