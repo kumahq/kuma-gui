@@ -13,7 +13,7 @@
     v-slot="{ route, t, uri, can, me }"
   >
     <AppView>
-      <XAboutSection
+      <XAboutCard
         :title="t('policies.detail.about.title')"
         :created="props.data.creationTime"
         :modified="props.data.modificationTime"
@@ -98,7 +98,7 @@
             </XBadge>
           </template>
         </DefinitionCard>
-      </XAboutSection>
+      </XAboutCard>
       <div>
         <h3>
           Affected Data Plane Proxies

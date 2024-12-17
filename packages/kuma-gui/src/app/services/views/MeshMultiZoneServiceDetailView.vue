@@ -12,7 +12,7 @@
   >
     <AppView>
       <XLayout type="stack">
-        <XAboutSection
+        <XAboutCard
           :title="t('services.mesh-multi-zone-service.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
@@ -64,7 +64,7 @@
               </template>
             </template>
           </DefinitionCard>
-        </XAboutSection>
+        </XAboutCard>
 
         <div>
           <ResourceCodeBlock

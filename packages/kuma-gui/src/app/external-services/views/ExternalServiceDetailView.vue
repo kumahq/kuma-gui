@@ -21,7 +21,7 @@
           })"
           v-slot="{ data }"
         >
-          <XAboutSection
+          <XAboutCard
             data-testid="external-service-details"
             :title="t('external-services.detail.about.title')"
             :created="data.creationTime"
@@ -53,7 +53,7 @@
                 <TagList :tags="data.tags" />
               </template>
             </DefinitionCard>
-          </XAboutSection>
+          </XAboutCard>
 
           <div>
             <h3>{{ t('external-services.detail.config') }}</h3>

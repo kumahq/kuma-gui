@@ -17,7 +17,7 @@
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
           v-slot="{ data }: ServiceInsightSource"
         >
-          <XAboutSection
+          <XAboutCard
             v-if="data"
             :title="t('delegated-gateways.detail.about.title')"
             :created="data.creationTime"
@@ -61,7 +61,7 @@
                 {{ t('http.api.property.dataPlaneProxies') }}
               </template>
             </ResourceStatus>
-          </XAboutSection>
+          </XAboutCard>
         </DataLoader>
 
         <div>

@@ -10,7 +10,7 @@
   >
     <AppView>
       <XLayout type="stack">
-        <XAboutSection
+        <XAboutCard
           :title="t('services.mesh-external-service.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
@@ -97,7 +97,7 @@
               </XBadge>
             </template>
           </DefinitionCard>
-        </XAboutSection>
+        </XAboutCard>
 
         <ResourceCodeBlock
           :resource="props.data.config"

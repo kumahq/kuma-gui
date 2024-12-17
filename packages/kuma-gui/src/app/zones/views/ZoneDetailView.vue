@@ -38,7 +38,7 @@
           data-testid="detail-view-details"
           type="stack"
         >
-          <XAboutSection
+          <XAboutCard
             :title="t('zone-cps.detail.about.title')"
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
@@ -111,7 +111,7 @@
                 </XBadge>
               </template>
             </DefinitionCard>
-          </XAboutSection>
+          </XAboutCard>
 
           <div
             v-if="props.data.zoneInsight.subscriptions.length > 0"

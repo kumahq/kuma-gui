@@ -9,7 +9,7 @@
   >
     <AppView>
       <XLayout type="stack">
-        <XAboutSection
+        <XAboutCard
           :title="t('zone-egresses.routes.item.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
@@ -57,7 +57,7 @@
               </template>
             </template>
           </DefinitionCard>
-        </XAboutSection>
+        </XAboutCard>
 
         <div
           v-if="props.data.zoneEgressInsight.subscriptions.length > 0"

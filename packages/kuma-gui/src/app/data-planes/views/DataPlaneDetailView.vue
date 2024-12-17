@@ -42,7 +42,7 @@
           type="stack"
           data-testid="dataplane-details"
         >
-          <XAboutSection
+          <XAboutCard
             :title="t('data-planes.routes.item.about.title')"
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
@@ -165,7 +165,7 @@
                 </template>
               </DefinitionCard>
             </template>
-          </XAboutSection>
+          </XAboutCard>
 
           <KCard
             class="traffic"

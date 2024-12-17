@@ -25,7 +25,7 @@
           })"
           v-slot="{ data }"
         >
-          <XAboutSection
+          <XAboutCard
             :title="t('services.internal-service.about.title')"
             :created="data.creationTime"
             :modified="data.modificationTime"
@@ -69,7 +69,7 @@
                 {{ t('http.api.property.dataPlaneProxies') }}
               </template>
             </ResourceStatus>
-          </XAboutSection>
+          </XAboutCard>
         </DataLoader>
 
         <div>

@@ -44,7 +44,7 @@
           <XLayout
             type="stack"
           >
-            <XAboutSection
+            <XAboutCard
               :title="t('meshes.routes.item.about.title')"
               :created="props.mesh.creationTime"
               :modified="props.mesh.modificationTime"
@@ -103,7 +103,7 @@
                   </template>
                 </template>
               </DefinitionCard>
-            </XAboutSection>
+            </XAboutCard>
 
             <XCard>
               <XLayout

@@ -32,7 +32,7 @@
         <XLayout
           type="stack"
         >
-          <XAboutSection
+          <XAboutCard
             :title="t('hostname-generators.routes.item.about.title')"
             :created="data.creationTime"
             :modified="data.modificationTime"
@@ -67,7 +67,7 @@
                 </template>
               </DefinitionCard>
             </template>
-          </XAboutSection>
+          </XAboutCard>
 
           <ResourceCodeBlock
             :resource="data.$raw"
