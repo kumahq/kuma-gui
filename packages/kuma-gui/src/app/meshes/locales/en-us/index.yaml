@@ -43,6 +43,8 @@ meshes:
         mTLS is not enabled on this mesh. <a href="{KUMA_DOCS_URL}/policies/mutual-tls/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Consider enabling mTLS to get the most of out of {KUMA_PRODUCT_NAME}</a>
       mtp-warning: !!text/markdown |
         mTLS is enabled but you do not have a <a href="{KUMA_DOCS_URL}/policies/meshtrafficpermission/?{KUMA_UTM_QUERY_PARAMS}">MeshTrafficPermission policy</a> for this mesh.
+      about:
+        title: About this Mesh
     items:
       title: Meshes
       breadcrumbs: Meshes

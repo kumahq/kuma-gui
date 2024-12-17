@@ -38,130 +38,134 @@
           </ul>
         </template>
 
-        <div
-          class="stack"
+        <XLayout
+          type="stack"
           data-testid="dataplane-details"
         >
-          <KCard>
-            <div
-              class="stack"
-            >
-              <XTimespan
-                :start="t('common.formats.datetime', { value: Date.parse(props.data.creationTime) })"
-                :end="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime) })"
-              />
-              <div
-                class="columns"
-              >
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.status') }}
-                  </template>
+          <XAboutCard
+            :title="t('data-planes.routes.item.about.title')"
+            :created="props.data.creationTime"
+            :modified="props.data.modificationTime"
+          >
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.status') }}
+              </template>
 
-                  <template #body>
-                    <div class="status-with-reason">
-                      <StatusBadge :status="props.data.status" />
-                      <DataCollection
-                        v-if="props.data.dataplaneType === 'standard'"
-                        :items="props.data.dataplane.networking.inbounds"
-                        :predicate="item => item.state !== 'Ready'"
-                        :empty="false"
-                        v-slot="{ items : unhealthyInbounds }"
-                      >
-                        <KTooltip
-                          class="reason-tooltip"
-                        >
-                          <InfoIcon
-                            :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                            :size="KUI_ICON_SIZE_30"
-                          />
-                          <template #content>
-                            <ul>
-                              <li
-                                v-for="inbound in unhealthyInbounds"
-                                :key="`${inbound.service}:${inbound.port}`"
-                              >
-                                {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                              </li>
-                            </ul>
-                          </template>
-                        </KTooltip>
-                      </DataCollection>
-                    </div>
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard
-                  v-if="can('use zones') && props.data.zone"
-                >
-                  <template
-                    #title
+              <template #body>
+                <div class="status-with-reason">
+                  <StatusBadge :status="props.data.status" />
+                  <DataCollection
+                    v-if="props.data.dataplaneType === 'standard'"
+                    :items="props.data.dataplane.networking.inbounds"
+                    :predicate="item => item.state !== 'Ready'"
+                    :empty="false"
+                    v-slot="{ items : unhealthyInbounds }"
                   >
-                    Zone
-                  </template>
-                  <template
-                    #body
-                  >
-                    <XAction
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: props.data.zone,
-                        },
-                      }"
+                    <KTooltip
+                      class="reason-tooltip"
                     >
-                      {{ props.data.zone }}
-                    </XAction>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard>
-                  <template #title>
-                    Type
-                  </template>
+                      <InfoIcon
+                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
+                        :size="KUI_ICON_SIZE_30"
+                      />
+                      <template #content>
+                        <ul>
+                          <li
+                            v-for="inbound in unhealthyInbounds"
+                            :key="`${inbound.service}:${inbound.port}`"
+                          >
+                            {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                          </li>
+                        </ul>
+                      </template>
+                    </KTooltip>
+                  </DataCollection>
+                </div>
+              </template>
+            </DefinitionCard>
 
-                  <template #body>
-                    {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard
-                  v-if="props.data.namespace.length > 0"
-                >
-                  <template #title>
-                    Namespace
-                  </template>
-
-                  <template #body>
-                    {{ props.data.namespace }}
-                  </template>
-                </DefinitionCard>
-              </div>
-              <div
-                v-if="props.data.dataplane.networking.gateway"
-                class="columns"
+            <DefinitionCard
+              v-if="can('use zones') && props.data.zone"
+              layout="horizontal"
+            >
+              <template
+                #title
               >
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.tags') }}
-                  </template>
+                {{ t('http.api.property.zone') }}
+              </template>
+              <template
+                #body
+              >
+                <XBadge appearance="decorative">
+                  <XAction
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: props.data.zone,
+                      },
+                    }"
+                  >
+                    {{ props.data.zone }}
+                  </XAction>
+                </XBadge>
+              </template>
+            </DefinitionCard>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.proptery.type') }}
+              </template>
 
-                  <template #body>
-                    <TagList :tags="props.data.dataplane.networking.gateway.tags" />
-                  </template>
-                </DefinitionCard>
+              <template #body>
+                <XBadge appearance="decorative">
+                  {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
+                </XBadge>
+              </template>
+            </DefinitionCard>
 
-                <DefinitionCard>
-                  <template #title>
-                    {{ t('http.api.property.address') }}
-                  </template>
+            <DefinitionCard
+              v-if="props.data.namespace.length > 0"
+              layout="horizontal"
+            >
+              <template #title>
+                {{ t('http.api.property.namespace') }}
+              </template>
 
-                  <template #body>
-                    <TextWithCopyButton :text="`${props.data.dataplane.networking.address}`" />
-                  </template>
-                </DefinitionCard>
-              </div>
-            </div>
-          </KCard>
+              <template #body>
+                <XBadge appearance="decorative">
+                  {{ props.data.namespace }}
+                </XBadge>
+              </template>
+            </DefinitionCard>
+
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.address') }}
+              </template>
+
+              <template #body>
+                <XCopyButton
+                  variant="badge"
+                  format="default"
+                  :text="`${props.data.dataplane.networking.address}`"
+                />
+              </template>
+            </DefinitionCard>
+
+            <template
+              v-if="props.data.dataplane.networking.gateway"
+            >
+              <DefinitionCard layout="horizontal">
+                <template #title>
+                  {{ t('http.api.property.tags') }}
+                </template>
+
+                <template #body>
+                  <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                </template>
+              </DefinitionCard>
+            </template>
+          </XAboutCard>
 
           <KCard
             class="traffic"
@@ -567,7 +571,7 @@
               </template>
             </AppCollection>
           </div>
-        </div>
+        </XLayout>
       </AppView>
     </DataSource>
   </RouteView>
@@ -585,7 +589,6 @@ import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'

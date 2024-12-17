@@ -6,7 +6,10 @@
       </div>
     </div>
 
-    <div class="columns">
+    <XLayout
+      type="columns"
+      class="columns-with-borders"
+    >
       <ResourceStatus
         v-if="props.canUseZones"
         :total="props.globalInsight.zones.controlPlanes.total"
@@ -62,11 +65,12 @@
           {{ t('main-overview.detail.health.data_plane_proxies') }}
         </template>
       </ResourceStatus>
-    </div>
+    </XLayout>
   </KCard>
 </template>
 
 <script lang="ts" setup>
+
 import { useI18n } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { GlobalInsight } from '@/app/control-planes/data'

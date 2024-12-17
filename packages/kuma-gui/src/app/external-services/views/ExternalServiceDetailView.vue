@@ -21,31 +21,39 @@
           })"
           v-slot="{ data }"
         >
-          <KCard
+          <XAboutCard
             data-testid="external-service-details"
+            :title="t('external-services.detail.about.title')"
+            :created="data.creationTime"
+            :modified="data.modificationTime"
           >
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.address') }}
+              </template>
 
-                <template #body>
-                  <TextWithCopyButton :text="data.networking.address" />
-                </template>
-              </DefinitionCard>
+              <template #body>
+                <XCopyButton
+                  variant="badge"
+                  format="default"
+                  :text="data.networking.address"
+                />
+              </template>
+            </DefinitionCard>
 
-              <DefinitionCard v-if="data.tags">
-                <template #title>
-                  {{ t('http.api.property.tags') }}
-                </template>
+            <DefinitionCard
+              v-if="data.tags"
+              layout="horizontal"
+            >
+              <template #title>
+                {{ t('http.api.property.tags') }}
+              </template>
 
-                <template #body>
-                  <TagList :tags="data.tags" />
-                </template>
-              </DefinitionCard>
-            </div>
-          </KCard>
+              <template #body>
+                <TagList :tags="data.tags" />
+              </template>
+            </DefinitionCard>
+          </XAboutCard>
 
           <div>
             <h3>{{ t('external-services.detail.config') }}</h3>
@@ -90,6 +98,5 @@
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>

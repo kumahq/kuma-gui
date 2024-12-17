@@ -6,40 +6,46 @@
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, can }"
+    v-slot="{ route, can, t }"
   >
     <AppView>
-      <div
-        class="stack"
-      >
-        <KCard>
-          <div class="columns">
-            <DefinitionCard
-              v-if="props.data.namespace.length > 0"
+      <XLayout type="stack">
+        <XAboutCard
+          :title="t('services.mesh-external-service.about.title')"
+          :created="props.data.creationTime"
+          :modified="props.data.modificationTime"
+        >
+          <DefinitionCard
+            v-if="props.data.namespace.length > 0"
+            layout="horizontal"
+          >
+            <template
+              #title
             >
-              <template
-                #title
-              >
-                Namespace
-              </template>
+              {{ t('http.api.property.namespace') }}
+            </template>
 
-              <template
-                #body
-              >
-                {{ props.data.namespace }}
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="can('use zones') && props.data.zone"
+            <template
+              #body
             >
-              <template
-                #title
-              >
-                Zone
-              </template>
-              <template
-                #body
-              >
+              <XBadge appearance="decorative">
+                {{ props.data.namespace }}
+              </XBadge>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="can('use zones') && props.data.zone"
+            layout="horizontal"
+          >
+            <template
+              #title
+            >
+              {{ t('http.api.property.zone') }}
+            </template>
+            <template
+              #body
+            >
+              <XBadge appearance="decorative">
                 <XAction
                   :to="{
                     name: 'zone-cp-detail-view',
@@ -50,46 +56,49 @@
                 >
                   {{ props.data.zone }}
                 </XAction>
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="data.spec.match"
-              class="port"
+              </XBadge>
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="data.spec.match"
+            layout="horizontal"
+            class="port"
+          >
+            <template
+              #title
             >
-              <template
-                #title
-              >
-                Port
-              </template>
-              <template
-                #body
-              >
-                <KumaPort
-                  :port="data.spec.match"
-                />
-              </template>
-            </DefinitionCard>
-            <DefinitionCard
-              v-if="data.spec.match"
-              class="tls"
+              {{ t('http.api.property.port') }}
+            </template>
+            <template
+              #body
             >
-              <template
-                #title
+              <KumaPort
+                :port="data.spec.match"
+              />
+            </template>
+          </DefinitionCard>
+          <DefinitionCard
+            v-if="data.spec.match"
+            layout="horizontal"
+            class="tls"
+          >
+            <template
+              #title
+            >
+              {{ t('http.api.property.tls') }}
+            </template>
+            <template
+              #body
+            >
+              <XBadge
+                :appearance="data.spec.tls?.enabled ? 'success' : 'neutral'"
               >
-                TLS
-              </template>
-              <template
-                #body
-              >
-                <XBadge
-                  appearance="neutral"
-                >
-                  {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                </XBadge>
-              </template>
-            </DefinitionCard>
-          </div>
-        </KCard>
+                {{ data.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+              </XBadge>
+            </template>
+          </DefinitionCard>
+        </XAboutCard>
+
         <ResourceCodeBlock
           :resource="props.data.config"
           is-searchable
@@ -112,7 +121,7 @@
             }"
           />
         </ResourceCodeBlock>
-      </div>
+      </XLayout>
     </AppView>
   </RouteView>
 </template>

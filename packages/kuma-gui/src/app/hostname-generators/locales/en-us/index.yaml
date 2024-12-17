@@ -19,6 +19,8 @@ hostname-generators:
       subtitle: "{name} HostnameGenerator"
       breadcrumbs: Hostname Generators
       config: YAML
+      about:
+        title: About this Hostname Generator
     items:
       title: Hostname Generators
       breadcrumbs: Hostname Generators

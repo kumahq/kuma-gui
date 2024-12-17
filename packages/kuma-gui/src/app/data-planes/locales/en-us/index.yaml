@@ -49,6 +49,8 @@ data-planes:
         builtin-gateway-data-plane-summary-config-view: YAML
         delegated-gateway-data-plane-summary-overview-view: Overview
         delegated-gateway-data-plane-summary-config-view: YAML
+      about:
+        title: About this Data Plane Proxy
       gateway: 'Gateway'
       config: YAML
       inbounds: 'Inbounds'

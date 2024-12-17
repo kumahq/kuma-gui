@@ -1,5 +1,6 @@
 import Kongponents, { KTooltip, KCard, KPop, KInputSwitch, KAlert, KCheckbox } from '@kong/kongponents'
 
+import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
 import XBadge from './components/x-badge/XBadge.vue'
@@ -18,7 +19,6 @@ import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
-import XTimespan from './components/x-timespan/XTimespan.vue'
 import locales from './locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
@@ -51,8 +51,8 @@ declare module 'vue' {
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
-    XTimespan: typeof XTimespan
     XDisclosure: typeof XDisclosure
+    XAboutCard: typeof XAboutCard
   }
 }
 
@@ -99,8 +99,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XTabs', XTabs],
           ['XTeleportTemplate', XTeleportTemplate],
           ['XTeleportSlot', XTeleportSlot],
-          ['XTimespan', XTimespan],
           ['XDisclosure', XDisclosure],
+          ['XAboutCard', XAboutCard],
         ]
       },
       labels: [

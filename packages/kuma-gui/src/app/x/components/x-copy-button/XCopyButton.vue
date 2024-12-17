@@ -21,6 +21,7 @@
       :aria-hidden="props.text.length === 0"
       :format="props.format === 'custom' ? 'hidden' : props.format"
       :text="props.text.length === 0 ? _text : props.text"
+      :badge="props.variant === 'badge'"
     />
     <slot
       v-if="copy && props.text.length === 0"
@@ -50,9 +51,11 @@ const copy = async (text: string) => {
 const props = withDefaults(defineProps<{
   text?: string
   format?: Format | 'custom'
+  variant?: 'badge'
 }>(), {
   text: '',
   format: 'custom',
+  variant: undefined,
 })
 
 </script>

@@ -28,6 +28,8 @@ policies:
   detail:
     affected_dpps: 'Affected Data Plane Proxies'
     dataplane_input_placeholder: 'Filter by name'
+    about:
+      title: About this Policy
   type:
     # CircuitBreaker:
     #   description: 'About CircuitBreaker ...'

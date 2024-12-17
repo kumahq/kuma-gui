@@ -44,53 +44,66 @@
           <XLayout
             type="stack"
           >
-            <XCard>
-              <XLayout
-                type="stack"
+            <XAboutCard
+              :title="t('meshes.routes.item.about.title')"
+              :created="props.mesh.creationTime"
+              :modified="props.mesh.modificationTime"
+            >
+              <template
+                v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
+                :key="policy"
               >
-                <XTimespan
-                  :start="t('common.formats.datetime', { value: Date.parse(props.mesh.creationTime) })"
-                  :end="t('common.formats.datetime', { value: Date.parse(props.mesh.modificationTime) })"
-                />
-                <XLayout
-                  type="columns"
+                <template
+                  v-for="enabled in [Object.entries(data?.policies ?? {}).find(([key]) => key === policy)]"
+                  :key="enabled"
                 >
-                  <template
-                    v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"
-                    :key="policy"
-                  >
-                    <template
-                      v-for="enabled in [Object.entries(data?.policies ?? {}).find(([key, value]) => key === policy)]"
-                      :key="enabled"
-                    >
-                      <DefinitionCard>
-                        <template #title>
-                          <XAction
-                            :to="{
-                              name: 'policy-list-view',
-                              params: {
-                                mesh: route.params.mesh,
-                                policyPath: `${policy.toLowerCase()}s`,
-                              },
-                            }"
-                          >
-                            {{ policy }}
-                          </XAction>
-                        </template>
-
-                        <template #body>
-                          <XBadge
-                            appearance="neutral"
-                          >
-                            {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
-                          </XBadge>
-                        </template>
-                      </DefinitionCard>
+                  <DefinitionCard layout="horizontal">
+                    <template #title>
+                      <XAction
+                        :to="{
+                          name: 'policy-list-view',
+                          params: {
+                            mesh: route.params.mesh,
+                            policyPath: `${policy.toLowerCase()}s`,
+                          },
+                        }"
+                      >
+                        {{ policy }}
+                      </XAction>
                     </template>
+
+                    <template #body>
+                      <XBadge
+                        :appearance="enabled ? 'success' : 'neutral'"
+                      >
+                        {{ enabled ? t('meshes.detail.enabled') : t('meshes.detail.disabled') }}
+                      </XBadge>
+                    </template>
+                  </DefinitionCard>
+                </template>
+              </template>
+
+              <DefinitionCard layout="horizontal">
+                <template #title>
+                  {{ t('http.api.property.mtls') }}
+                </template>
+
+                <template #body>
+                  <XBadge
+                    v-if="!props.mesh.mtlsBackend"
+                    appearance="neutral"
+                  >
+                    {{ t('meshes.detail.disabled') }}
+                  </XBadge>
+
+                  <template v-else>
+                    <XBadge appearance="info">
+                      {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
+                    </XBadge>
                   </template>
-                </XLayout>
-              </XLayout>
-            </XCard>
+                </template>
+              </DefinitionCard>
+            </XAboutCard>
 
             <XCard>
               <XLayout
@@ -98,6 +111,7 @@
               >
                 <XLayout
                   type="columns"
+                  class="columns-with-borders"
                 >
                   <ResourceStatus
                     :total="data?.services.total ?? 0"
@@ -126,24 +140,6 @@
                       {{ t('meshes.detail.policies') }}
                     </template>
                   </ResourceStatus>
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.mtls') }}
-                    </template>
-
-                    <template #body>
-                      <XBadge
-                        v-if="!props.mesh.mtlsBackend"
-                        appearance="neutral"
-                      >
-                        {{ t('meshes.detail.disabled') }}
-                      </XBadge>
-
-                      <template v-else>
-                        {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
-                      </template>
-                    </template>
-                  </DefinitionCard>
                 </XLayout>
               </XLayout>
             </XCard>

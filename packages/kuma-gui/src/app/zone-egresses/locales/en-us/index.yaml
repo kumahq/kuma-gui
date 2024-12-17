@@ -17,6 +17,8 @@ zone-egresses:
       config: 'YAML'
       subscriptions:
         title: 'XDS connections'
+      about:
+        title: About this Zone Egress
     items:
       title: Egresses
       breadcrumbs: Egresses

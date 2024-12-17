@@ -34,6 +34,15 @@ const props = withDefaults(defineProps<{
 .definition-card--horizontal {
   justify-content: space-between;
   align-items: baseline;
+
+  .definition-card-title {
+    gap: unset;
+
+    &::after {
+      content: ": ";
+      display: inline;
+    }
+  }
 }
 
 .definition-card--vertical {

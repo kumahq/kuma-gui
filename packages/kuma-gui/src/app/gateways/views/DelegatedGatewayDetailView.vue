@@ -12,50 +12,56 @@
     v-slot="{ can, route, t, me }"
   >
     <AppView>
-      <div class="stack">
+      <XLayout type="stack">
         <DataLoader
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
           v-slot="{ data }: ServiceInsightSource"
         >
-          <KCard v-if="data">
-            <div class="columns">
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.status') }}
-                </template>
+          <XAboutCard
+            v-if="data"
+            :title="t('delegated-gateways.detail.about.title')"
+            :created="data.creationTime"
+            :modified="data.modificationTime"
+          >
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.status') }}
+              </template>
 
-                <template #body>
-                  <StatusBadge :status="data.status" />
-                </template>
-              </DefinitionCard>
+              <template #body>
+                <StatusBadge :status="data.status" />
+              </template>
+            </DefinitionCard>
 
-              <DefinitionCard>
-                <template #title>
-                  {{ t('http.api.property.address') }}
-                </template>
+            <DefinitionCard layout="horizontal">
+              <template #title>
+                {{ t('http.api.property.address') }}
+              </template>
 
-                <template #body>
-                  <TextWithCopyButton
-                    v-if="data.addressPort"
-                    :text="data.addressPort"
-                  />
+              <template #body>
+                <XCopyButton
+                  v-if="data.addressPort"
+                  variant="badge"
+                  format="default"
+                  :text="data.addressPort"
+                />
 
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
+                <template v-else>
+                  {{ t('common.detail.none') }}
                 </template>
-              </DefinitionCard>
+              </template>
+            </DefinitionCard>
 
-              <ResourceStatus
-                :online="data.dataplanes?.online ?? 0"
-                :total="data.dataplanes?.total ?? 0"
-              >
-                <template #title>
-                  {{ t('http.api.property.dataPlaneProxies') }}
-                </template>
-              </ResourceStatus>
-            </div>
-          </KCard>
+            <ResourceStatus
+              layout="horizontal"
+              :online="data.dataplanes?.online ?? 0"
+              :total="data.dataplanes?.total ?? 0"
+            >
+              <template #title>
+                {{ t('http.api.property.dataPlaneProxies') }}
+              </template>
+            </ResourceStatus>
+          </XAboutCard>
         </DataLoader>
 
         <div>
@@ -233,7 +239,7 @@
             </DataLoader>
           </KCard>
         </div>
-      </div>
+      </XLayout>
     </AppView>
   </RouteView>
 </template>
@@ -245,7 +251,6 @@ import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
 </script>
