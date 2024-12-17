@@ -41,11 +41,6 @@ const props = withDefaults(defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.status-separator,
-.status-separator + .status-total {
-  color: $kui-color-text-neutral;
-}
-
 .status-online {
   color: var(--status-color, currentColor);
 }
