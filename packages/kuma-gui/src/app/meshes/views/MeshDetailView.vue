@@ -82,6 +82,27 @@
                   </DefinitionCard>
                 </template>
               </template>
+
+              <DefinitionCard layout="horizontal">
+                <template #title>
+                  {{ t('http.api.property.mtls') }}
+                </template>
+
+                <template #body>
+                  <XBadge
+                    v-if="!props.mesh.mtlsBackend"
+                    appearance="neutral"
+                  >
+                    {{ t('meshes.detail.disabled') }}
+                  </XBadge>
+
+                  <template v-else>
+                    <XBadge appearance="info">
+                      {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
+                    </XBadge>
+                  </template>
+                </template>
+              </DefinitionCard>
             </XAboutSection>
 
             <XCard>
@@ -118,24 +139,6 @@
                       {{ t('meshes.detail.policies') }}
                     </template>
                   </ResourceStatus>
-                  <DefinitionCard>
-                    <template #title>
-                      {{ t('http.api.property.mtls') }}
-                    </template>
-
-                    <template #body>
-                      <XBadge
-                        v-if="!props.mesh.mtlsBackend"
-                        appearance="neutral"
-                      >
-                        {{ t('meshes.detail.disabled') }}
-                      </XBadge>
-
-                      <template v-else>
-                        {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
-                      </template>
-                    </template>
-                  </DefinitionCard>
                 </XLayout>
               </XLayout>
             </XCard>
