@@ -143,6 +143,7 @@ function createEslintConfig(
       {
         files: ['*.vue'],
         rules: {
+          'vue/no-console': 'error',
           'vue/attributes-order': ['error', {
             order: [
               'DEFINITION',
