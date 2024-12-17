@@ -21,7 +21,6 @@
           })"
           v-slot="{ data }"
         >
-          {{ console.log('test', data) }}
           <XAboutSection
             data-testid="external-service-details"
             :title="t('external-services.detail.about.title')"
