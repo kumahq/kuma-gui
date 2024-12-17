@@ -14,10 +14,15 @@
     <template #body>
       <div class="status">
         <template v-if="typeof props.online !== 'undefined'">
-          <span
-            class="status-online"
-            :class="{ [`status-online--${statusAppearance}`]: typeof statusAppearance !== undefined }"
-          >{{ props.online }}</span><span class="status-separator">/</span>
+          <template
+            v-for="ratio in [props.online / props.total]"
+            :key="typeof ratio"
+          >
+            <span
+              class="status-online"
+              :class="{ [`status-online--${ratio <= 0.5 ? 'danger' : 'warning'}`]: ratio < 1 }"
+            >{{ props.online }}</span><span class="status-separator">/</span>
+          </template>
         </template><span class="status-total">{{ props.total }}</span>
       </div>
     </template>
@@ -25,8 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 import DefinitionCard from './DefinitionCard.vue'
 
 const props = withDefaults(defineProps<{
@@ -34,20 +37,6 @@ const props = withDefaults(defineProps<{
   online?: number
 }>(), {
   online: undefined,
-})
-
-const statusAppearance = computed(() => {
-  if (typeof props.online === 'undefined') return undefined
-
-  const ratio = props.online / props.total
-
-  if (ratio <= 0.5) {
-    return 'danger'
-  } else if (ratio < 1) {
-    return 'warning'
-  }
-
-  return undefined
 })
 </script>
 
