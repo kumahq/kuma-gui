@@ -13,52 +13,34 @@
 
     <template #body>
       <div class="status">
-        <span
-          v-if="props.online !== null"
-          class="status-online"
-          :class="{ [`status-online--${statusAppearance}`]: statusAppearance !== null }"
-        >{{ props.online }}</span><span
-          v-if="props.online !== null"
-          class="status-separator"
-        >/</span><span class="status-total">{{ props.total }}</span>
+        <template v-if="typeof props.online !== 'undefined'">
+          <template
+            v-for="ratio in [props.online / props.total]"
+            :key="typeof ratio"
+          >
+            <span
+              class="status-online"
+              :class="{ [`status-online--${ratio <= 0.5 ? 'danger' : 'warning'}`]: ratio < 1 }"
+            >{{ props.online }}</span><span class="status-separator">/</span>
+          </template>
+        </template><span class="status-total">{{ props.total }}</span>
       </div>
     </template>
   </DefinitionCard>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 import DefinitionCard from './DefinitionCard.vue'
 
 const props = withDefaults(defineProps<{
   total: number
-  online?: number | null
+  online?: number
 }>(), {
-  online: null,
-})
-
-const statusAppearance = computed(() => {
-  if (props.online !== null) {
-    const ratio = props.online / props.total
-
-    if (ratio <= 0.5) {
-      return 'danger'
-    } else if (ratio < 1) {
-      return 'warning'
-    }
-  }
-
-  return null
+  online: undefined,
 })
 </script>
 
 <style lang="scss" scoped>
-.status-separator,
-.status-separator + .status-total {
-  color: $kui-color-text-neutral;
-}
-
 .status-online {
   color: var(--status-color, currentColor);
 }
