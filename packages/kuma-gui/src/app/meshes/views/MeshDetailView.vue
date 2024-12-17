@@ -111,6 +111,7 @@
               >
                 <XLayout
                   type="columns"
+                  class="columns-with-borders"
                 >
                   <ResourceStatus
                     :total="data?.services.total ?? 0"
