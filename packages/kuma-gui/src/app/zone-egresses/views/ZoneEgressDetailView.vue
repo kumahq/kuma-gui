@@ -45,13 +45,12 @@
             </template>
 
             <template #body>
-              <template v-if="props.data.zoneEgress.socketAddress.length > 0">
-                <XBadge appearance="decorative">
-                  <XCopyButton
-                    :text="props.data.zoneEgress.socketAddress"
-                  />
-                </XBadge>
-              </template>
+              <XCopyButton
+                v-if="props.data.zoneEgress.socketAddress.length > 0"
+                variant="badge"
+                format="default"
+                :text="props.data.zoneEgress.socketAddress"
+              />
 
               <template v-else>
                 {{ t('common.detail.none') }}

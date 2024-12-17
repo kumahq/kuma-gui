@@ -50,11 +50,11 @@
               <template
                 v-if="props.data.zoneIngress.socketAddress.length > 0"
               >
-                <XBadge appearance="decorative">
-                  <XCopyButton
-                    :text="props.data.zoneIngress.socketAddress"
-                  />
-                </XBadge>
+                <XCopyButton
+                  variant="badge"
+                  format="default"
+                  :text="props.data.zoneIngress.socketAddress"
+                />
               </template>
 
               <template v-else>

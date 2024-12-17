@@ -39,12 +39,12 @@
               </template>
 
               <template #body>
-                <XBadge
+                <XCopyButton
                   v-if="data.addressPort"
-                  appearance="decorative"
-                >
-                  <XCopyButton :text="data.addressPort" />
-                </XBadge>
+                  variant="badge"
+                  format="default"
+                  :text="data.addressPort"
+                />
 
                 <template v-else>
                   {{ t('common.detail.none') }}

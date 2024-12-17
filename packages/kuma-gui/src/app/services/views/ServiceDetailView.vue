@@ -47,9 +47,11 @@
 
               <template #body>
                 <template v-if="data.addressPort">
-                  <XBadge appearance="decorative">
-                    <XCopyButton :text="data.addressPort" />
-                  </XBadge>
+                  <XCopyButton
+                    variant="badge"
+                    format="default"
+                    :text="data.addressPort"
+                  />
                 </template>
 
                 <template v-else>

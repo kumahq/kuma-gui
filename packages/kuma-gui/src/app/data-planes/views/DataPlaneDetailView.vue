@@ -144,9 +144,11 @@
               </template>
 
               <template #body>
-                <XBadge appearance="decorative">
-                  <XCopyButton :text="`${props.data.dataplane.networking.address}`" />
-                </XBadge>
+                <XCopyButton
+                  variant="badge"
+                  format="default"
+                  :text="`${props.data.dataplane.networking.address}`"
+                />
               </template>
             </DefinitionCard>
 

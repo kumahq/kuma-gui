@@ -33,9 +33,11 @@
               </template>
 
               <template #body>
-                <XBadge appearance="decorative">
-                  <XCopyButton :text="data.networking.address" />
-                </XBadge>
+                <XCopyButton
+                  variant="badge"
+                  format="default"
+                  :text="data.networking.address"
+                />
               </template>
             </DefinitionCard>
 
