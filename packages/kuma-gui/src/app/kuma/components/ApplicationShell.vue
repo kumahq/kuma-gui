@@ -188,7 +188,7 @@ html.is-fullscreen {
   }
 }
 html.no-navigation {
-  .application-shell > .app-content-container > nav {
+  .application-shell > .app-content-container .app-sidebar > nav {
     display: none;
   }
 }
