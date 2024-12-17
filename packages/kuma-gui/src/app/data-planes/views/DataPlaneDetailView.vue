@@ -113,7 +113,7 @@
             </DefinitionCard>
             <DefinitionCard layout="horizontal">
               <template #title>
-                Type:
+                {{ t('http.api.proptery.type') }}
               </template>
 
               <template #body>
