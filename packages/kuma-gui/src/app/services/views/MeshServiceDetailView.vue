@@ -18,8 +18,8 @@
       <XLayout type="stack">
         <XAboutSection
           :title="t('services.mesh-service.about.title')"
-          :created="props.data.creationTime ? t('common.formats.datetime', { value: Date.parse(props.data.creationTime) }) : undefined"
-          :modified="props.data.modificationTime ? t('common.formats.datetime', { value: Date.parse(props.data.modificationTime)}) : undefined"
+          :created="props.data.creationTime"
+          :modified="props.data.modificationTime"
         >
           <DefinitionCard layout="horizontal">
             <template #title>

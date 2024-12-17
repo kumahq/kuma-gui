@@ -1,5 +1,8 @@
 <template>
-  <AppAboutSection>
+  <AppAboutSection
+    :created="props.created ? t('common.formats.datetime', { value: Date.parse(props.created)}) : undefined"
+    :modified="props.modified ? t('common.formats.datetime', { value: Date.parse(props.modified)}) : undefined"
+  >
     <template
       v-for="(_, slotName) in $slots"
       :key="slotName"
@@ -15,6 +18,11 @@
 
 <script setup lang="ts">
 import { AppAboutSection } from '@kong-ui-public/app-layout'
+import { useI18n } from '@kong-ui-public/i18n'
+
+const { t } = useI18n()
+
+const props = defineProps<{ created?: string, modified?: string}>()
 </script>
 
 <style lang="scss" scoped>

@@ -15,8 +15,8 @@
     <AppView>
       <XAboutSection
         :title="t('policies.detail.about.title')"
-        :created="t('common.formats.datetime', { value: Date.parse(props.data.creationTime)})"
-        :modified="t('common.formats.datetime', { value: Date.parse(props.data.modificationTime)})"
+        :created="props.data.creationTime"
+        :modified="props.data.modificationTime"
       >
         <DefinitionCard layout="horizontal">
           <template

@@ -46,8 +46,8 @@
           >
             <XAboutSection
               :title="t('meshes.routes.item.about.title')"
-              :created="t('common.formats.datetime', { value: Date.parse(props.mesh.creationTime) })"
-              :modified="t('common.formats.datetime', { value: Date.parse(props.mesh.modificationTime) })"
+              :created="props.mesh.creationTime"
+              :modified="props.mesh.modificationTime"
             >
               <template
                 v-for="policy in ['MeshTrafficPermission', 'MeshMetric', 'MeshAccessLog', 'MeshTrace']"

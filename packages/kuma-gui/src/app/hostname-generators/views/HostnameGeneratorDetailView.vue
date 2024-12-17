@@ -34,8 +34,8 @@
         >
           <XAboutSection
             :title="t('hostname-generators.routes.item.about.title')"
-            :created="t('common.formats.datetime', { value: Date.parse(data.creationTime) })"
-            :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime) })"
+            :created="data.creationTime"
+            :modified="data.modificationTime"
           >
             <template
               v-for="labels in [{

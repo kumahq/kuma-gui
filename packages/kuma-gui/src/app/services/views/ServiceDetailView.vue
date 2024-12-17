@@ -27,8 +27,8 @@
         >
           <XAboutSection
             :title="t('services.internal-service.about.title')"
-            :created="data.creationTime ? t('common.formats.datetime', { value: Date.parse(data.creationTime) }) : undefined"
-            :modified="data.modificationTime ? t('common.formats.datetime', { value: Date.parse(data.modificationTime)}) : undefined"
+            :created="data.creationTime"
+            :modified="data.modificationTime"
           >
             <DefinitionCard layout="horizontal">
               <template #title>

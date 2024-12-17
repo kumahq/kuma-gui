@@ -20,8 +20,8 @@
           <XAboutSection
             v-if="data"
             :title="t('delegated-gateways.detail.about.title')"
-            :created="t('common.formats.datetime', { value: Date.parse(data.creationTime)})"
-            :modified="t('common.formats.datetime', { value: Date.parse(data.modificationTime)})"
+            :created="data.creationTime"
+            :modified="data.modificationTime"
           >
             <DefinitionCard layout="horizontal">
               <template #title>
