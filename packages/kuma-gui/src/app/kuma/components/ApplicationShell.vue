@@ -195,6 +195,9 @@ html.no-navigation {
 </style>
 
 <style lang="scss" scoped>
+.upgrade-alert :deep(.k-button) {
+  color: $kui-color-text-inverse !important;
+}
 .app-content-container {
   padding-top: var(--AppHeaderHeight, initial);
   display: var(--AppDisplay);
