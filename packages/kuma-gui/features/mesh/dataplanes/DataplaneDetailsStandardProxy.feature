@@ -25,14 +25,14 @@ Feature: Dataplane details for standard Data Plane Proxy
             inbound:
               - health:
                   ready: true
+                  state: Ready
                 address: !!js/undefined
         dataplaneInsight:
           mTLS: !!js/undefined
           subscriptions:
             - connectTime: 2021-02-17T07:33:36.412683Z
               disconnectTime: 2021-02-17T07:33:36.412683Z
-            - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
-              connectTime: 2021-02-17T07:33:37.412683Z
+            - connectTime: 2021-02-17T07:33:37.412683Z
               disconnectTime: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL

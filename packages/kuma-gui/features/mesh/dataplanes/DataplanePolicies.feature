@@ -374,7 +374,7 @@ Feature: Dataplane policies
         """
         KUMA_MODE: zone
         """
-      When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
+      When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/policies" URL
       Then the "$to-rules" element exists
       And the "$legacy-sidecar-policies" element doesn't exist
       And the "$legacy-gateway-policies" element exists

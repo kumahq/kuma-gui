@@ -163,8 +163,15 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return k8s ? this.k8s.dataplaneSuffix() : ''
   }
 
-  nanodate() {
-    const d = this.faker.date.past()
+  inboundState() {
+    return this.faker.helpers.arrayElement(['Ready', 'NotReady', 'Ignored'])
+  }
+
+  nanodate(options: { refDate?: string | Date } = {}) {
+    if (options.refDate) {
+      options.refDate = new Date(Date.parse(String(options.refDate)))
+    }
+    const d = this.faker.date.past(options)
     // e.g. '2021-07-13T08:41:04.556796688Z'
     return `${d.toISOString().slice(0, -1)}${this.faker.number.int({ min: 1000, max: 999999 })}Z`
   }

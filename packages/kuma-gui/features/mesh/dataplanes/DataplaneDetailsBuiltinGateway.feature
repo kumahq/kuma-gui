@@ -63,7 +63,7 @@ Feature: Dataplane details for built-in gateway
       """
       KUMA_MODE: zone
       """
-    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/policies" responds with
+    And the URL "/meshes/default/dataplanes/dataplane-gateway-builtin-1/policies" responds with
       """
       body:
         listeners:
@@ -81,7 +81,7 @@ Feature: Dataplane details for built-in gateway
           TrafficTrace:
             name: traffic-trace-1
       """
-    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/policies" URL
+    When I visit the "/meshes/default/data-planes/dataplane-gateway-builtin-1/policies" URL
     Then the "$policies-view" element contains "traffic-log-1"
     And the "$policies-view" element contains "traffic-trace-1"
     When I click the "$route-item-button" element
