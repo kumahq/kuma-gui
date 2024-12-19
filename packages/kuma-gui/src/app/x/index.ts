@@ -1,8 +1,9 @@
-import Kongponents, { KTooltip, KCard, KPop, KInputSwitch, KAlert, KCheckbox } from '@kong/kongponents'
+import Kongponents, { KTooltip, KCard, KPop, KInputSwitch, KCheckbox } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
 import XActionGroup from './components/x-action-group/XActionGroup.vue'
+import XAlert from './components/x-alert/XAlert.vue'
 import XBadge from './components/x-badge/XBadge.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
 import XCodeBlock from './components/x-code-block/XCodeBlock.vue'
@@ -27,13 +28,13 @@ type Token = ReturnType<typeof token>
 
 declare module 'vue' {
   export interface GlobalComponents {
-    XAlert: typeof KAlert
     XCard: typeof KCard
     XPop: typeof KPop
     XInputSwitch: typeof KInputSwitch
     XCheckbox: typeof KCheckbox
     XTooltip: typeof KTooltip
     //
+    XAlert: typeof XAlert
     XIcon: typeof XIcon
     XI18n: typeof XI18n
     XInput: typeof XInput
@@ -75,7 +76,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.xVueComponents, {
       service: () => {
         return [
-          ['XAlert', KAlert],
+          ['XAlert', XAlert],
           ['XCard', KCard],
           ['XPop', KPop],
           ['XInputSwitch', KInputSwitch],

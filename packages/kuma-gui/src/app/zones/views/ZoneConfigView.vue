@@ -57,7 +57,7 @@
             v-else
             class="mt-4"
             data-testid="warning-no-subscriptions"
-            appearance="warning"
+            variant="warning"
           >
             {{ t('zone-cps.detail.no_subscriptions') }}
           </XAlert>

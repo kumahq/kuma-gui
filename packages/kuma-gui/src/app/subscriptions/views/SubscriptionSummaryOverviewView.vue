@@ -91,7 +91,7 @@
       </div>
       <XAlert
         v-if="Object.keys(props.data.status.acknowledgements).length === 0"
-        appearance="info"
+        variant="info"
       >
         <template #icon>
           <PortalIcon />

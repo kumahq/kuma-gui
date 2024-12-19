@@ -53,7 +53,7 @@
       <aside v-if="$slots.notifications">
         <XAlert
           class="mb-4"
-          appearance="warning"
+          variant="warning"
         >
           <slot name="notifications" />
         </XAlert>
