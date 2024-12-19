@@ -1,53 +1,53 @@
 <template>
-  <XLayout
-    type="stack"
+  <template
+    v-if="slots.item"
   >
     <template
-      v-if="slots.item"
+      v-for="item in [props.items.find(props.predicate)]"
+      :key="item"
     >
-      <div>
-        <template
-          v-for="item in [props.items.find(props.predicate)]"
-          :key="item"
-        >
-          <slot
-            v-if="item"
-            name="item"
-            :item="item as T"
-          />
-          <slot
-            v-else
-            name="empty"
-            :items="items"
-          >
-            <XEmptyState
-              v-if="props.empty"
-              :type="props.type"
-            />
-          </slot>
-        </template>
-      </div>
-    </template>
-    <template
-      v-else
-    >
-      <div>
-        <slot
-          v-if="items.length === 0"
-          name="empty"
-          :items="items"
-        >
-          <XEmptyState
-            v-if="props.empty"
-            :type="props.type"
-          />
-        </slot>
-        <slot
-          v-else
-          name="default"
-          :items="paginated"
+      <slot
+        v-if="item"
+        name="item"
+        :item="item as T"
+      />
+      <slot
+        v-else
+        name="empty"
+        :items="items"
+      >
+        <XEmptyState
+          v-if="props.empty"
+          :type="props.type"
         />
-      </div>
+      </slot>
+    </template>
+  </template>
+
+  <template
+    v-else
+  >
+    <slot
+      v-if="items.length === 0"
+      name="empty"
+      :items="items"
+    >
+      <XEmptyState
+        v-if="props.empty"
+        :type="props.type"
+      />
+    </slot>
+
+    <XLayout
+      v-else
+      class="data-collection"
+      type="stack"
+    >
+      <slot
+        name="default"
+        :items="paginated"
+      />
+
       <slot
         v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
         name="pagination"
@@ -77,8 +77,8 @@
           }"
         />
       </slot>
-    </template>
-  </XLayout>
+    </XLayout>
+  </template>
 </template>
 <script lang="ts" generic="T" setup>
 import { useThrottleFn } from '@vueuse/core'
