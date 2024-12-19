@@ -4,8 +4,9 @@
     :params="{
       subscription: '',
       zoneEgress: '',
+      inactive: false,
     }"
-    v-slot="{ t, route, me }"
+    v-slot="{ t, route, me, uri }"
   >
     <AppView>
       <XLayout type="stack">
@@ -59,6 +60,104 @@
           </DefinitionCard>
         </XAboutCard>
 
+        <DataLoader
+          :src="uri(sources, '/connections/stats/for/zone-egress/:name/:socketAddress', {
+            name: route.params.zoneEgress,
+            socketAddress: props.data.zoneEgress.socketAddress,
+          })"
+          v-slot="{ data: traffic, refresh }"
+        >
+          <XCard>
+            <XLayout
+              type="columns"
+            >
+              <ConnectionTraffic>
+                <XLayout
+                  type="stack"
+                  size="small"
+                >
+                  <template
+                    v-for="[name, stats] in Object.entries(traffic.inbounds)"
+                    :key="`${name}`"
+                  >
+                    <ConnectionCard
+                      protocol=""
+                      :traffic="stats"
+                    >
+                      :{{ name.split('_').at(-1) }}
+                    </ConnectionCard>
+                  </template>
+                </XLayout>
+              </ConnectionTraffic>
+              <ConnectionTraffic>
+                <template
+                  #actions
+                >
+                  <XInputSwitch
+                    v-model="route.params.inactive"
+                    data-testid="dataplane-outbounds-inactive-toggle"
+                  >
+                    <template #label>
+                      Show inactive
+                    </template>
+                  </XInputSwitch>
+
+                  <XAction
+                    action="refresh"
+                    appearance="primary"
+                    @click="refresh"
+                  >
+                    Refresh
+                  </XAction>
+                </template>
+
+                <!-- Outbounds for gateways report actual traffic on the upstream so we switch to upstream here for non-standard-->
+                <template
+                  v-for="direction in ['upstream'] as const"
+                  :key="direction"
+                >
+                  <DataCollection
+                    :predicate="route.params.inactive ? undefined : ([_key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
+                    :items="Object.entries<any>(traffic.outbounds)"
+                    v-slot="{ items: outbounds }"
+                  >
+                    <ConnectionGroup
+                      v-if="outbounds.length > 0"
+                      type="outbound"
+                    >
+                      <!-- the outbound name is the service name potentially with a 16 digit hash appended -->
+                      <!-- that potential hash follows a hypen and can contain digits and a-f -->
+                      <!-- so we replace this with `` if we find it to get the service name for linking -->
+                      <template
+                        v-for="_hash in [/-([a-f0-9]){16}$/]"
+                        :key="_hash"
+                      >
+                        <XLayout
+                          type="stack"
+                          size="small"
+                        >
+                          <template
+                            v-for="[name, outbound] in outbounds"
+                            :key="`${name}`"
+                          >
+                            <ConnectionCard
+                              data-testid="dataplane-outbound"
+                              protocol=""
+                              :traffic="outbound"
+                              :direction="direction"
+                            >
+                              {{ name }}
+                            </ConnectionCard>
+                          </template>
+                        </XLayout>
+                      </template>
+                    </ConnectionGroup>
+                  </DataCollection>
+                </template>
+              </ConnectionTraffic>
+            </XLayout>
+          </XCard>
+        </DataLoader>
         <div
           v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
         >
@@ -152,7 +251,10 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-
+import ConnectionCard from '@/app/connections/components/connection-traffic/ConnectionCard.vue'
+import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
+import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
+import { sources } from '@/app/connections/sources'
 const props = defineProps<{
   data: ZoneEgressOverview
 }>()
