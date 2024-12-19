@@ -57,6 +57,22 @@ export const sources = (source: Source, api: KumaApi) => {
         raw: res,
       }
     },
+
+    '/connections/stats/for/zone-egress/:name/:socketAddress': async (params) => {
+      const { name, socketAddress } = params
+      const res = await api.getZoneEgressData({
+        zoneEgressName: name,
+        dataPath: 'stats',
+      })
+      const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
+      return {
+        inbounds: Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_')))),
+        outbounds: connections.cluster,
+        $raw: res,
+        raw: res,
+      }
+    },
+
     '/meshes/:mesh/dataplanes/:name/stats/:address': async (params) => {
       const { mesh, name } = params
       const res = await api.getDataplaneData({

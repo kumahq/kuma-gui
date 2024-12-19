@@ -92,9 +92,7 @@
         })"
         v-slot="{ data: traffic, refresh }"
       >
-        <XCard
-          class="traffic"
-        >
+        <XCard>
           <XLayout
             type="columns"
           >
