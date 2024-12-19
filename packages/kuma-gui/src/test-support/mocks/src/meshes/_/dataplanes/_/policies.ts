@@ -3,7 +3,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const { mesh } = req.params
 
-  if (req.params.name.includes('-gateway_builtin')) {
+  if (req.params.name.includes('-builtin')) {
     return {
       headers: {},
       body: {

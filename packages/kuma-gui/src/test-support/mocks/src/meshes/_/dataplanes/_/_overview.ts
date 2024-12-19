@@ -24,10 +24,10 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const type = (() => {
     switch (true) {
       case defaultType === 'builtin':
-      case name.includes('-gateway_builtin'):
+      case name.includes('-builtin'):
         return 'BUILTIN'
       case defaultType === 'delegated':
-      case name.includes('-gateway_delegated'):
+      case name.includes('-delegated'):
         return 'DELEGATED'
       default:
         return 'STANDARD'
@@ -78,6 +78,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                   service,
                   zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
                 }),
+                ...(fake.datatype.boolean() ? {
+                  state: fake.kuma.inboundState(),
+                } : {}),
               }
             }),
             outbound: Array.from({ length: outboundCount }).map((_, _i) => {
