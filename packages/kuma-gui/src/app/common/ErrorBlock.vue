@@ -82,7 +82,7 @@
       v-else
     >
       <XAlert
-        appearance="danger"
+        variant="danger"
       >
         <div
           class="error-block-message"
