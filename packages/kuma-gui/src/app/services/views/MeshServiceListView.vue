@@ -16,7 +16,7 @@
     <AppView
       :docs="t('services.mesh-service.href.docs')"
     >
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/mesh-services', {
             mesh: route.params.mesh,
@@ -165,7 +165,7 @@
             </DataCollection>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

@@ -24,7 +24,7 @@
           <div
             class="policy-list-content"
           >
-            <KCard
+            <XCard
               class="policy-type-list"
               data-testid="policy-type-list"
             >
@@ -80,7 +80,7 @@
                   </DataCollection>
                 </template>
               </DataLoader>
-            </KCard>
+            </XCard>
             <div class="policy-list">
               <RouterView v-slot="{ Component }">
                 <component

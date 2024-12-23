@@ -15,7 +15,7 @@
       :title="t('data-planes.routes.item.navigation.data-plane-config-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/:name`, {
             mesh: route.params.mesh,
@@ -51,7 +51,7 @@
             />
           </ResourceCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

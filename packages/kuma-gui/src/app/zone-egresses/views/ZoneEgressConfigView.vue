@@ -14,7 +14,7 @@
       :title="t('zone-egresses.routes.item.navigation.zone-egress-config-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/zone-egresses/:name`, {
             name: route.params.zoneEgress,
@@ -48,7 +48,7 @@
             />
           </ResourceCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

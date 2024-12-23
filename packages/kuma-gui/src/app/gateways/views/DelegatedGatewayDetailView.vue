@@ -67,7 +67,7 @@
         <div>
           <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
 
-          <KCard
+          <XCard
             class="mt-4"
           >
             <search>
@@ -237,7 +237,7 @@
                 </DataCollection>
               </template>
             </DataLoader>
-          </KCard>
+          </XCard>
         </div>
       </XLayout>
     </AppView>

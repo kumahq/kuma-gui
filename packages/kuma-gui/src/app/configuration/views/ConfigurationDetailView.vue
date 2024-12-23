@@ -26,7 +26,7 @@
         </h1>
       </template>
 
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/config`, {})"
           v-slot="{ data }"
@@ -44,7 +44,7 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           />
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

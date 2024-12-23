@@ -14,7 +14,7 @@
       :title="t('zone-ingresses.routes.item.navigation.zone-ingress-config-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/zone-ingresses/:name`, {
             name: route.params.zoneIngress,
@@ -48,7 +48,7 @@
             />
           </ResourceCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

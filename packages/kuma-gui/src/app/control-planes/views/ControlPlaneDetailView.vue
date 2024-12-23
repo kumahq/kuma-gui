@@ -29,7 +29,7 @@
         </DataLoader>
 
         <div class="columns">
-          <KCard
+          <XCard
             v-if="can('use zones')"
           >
             <DataLoader
@@ -67,9 +67,9 @@
                 />
               </template>
             </DataLoader>
-          </KCard>
+          </XCard>
 
-          <KCard>
+          <XCard>
             <DataLoader
               :src="uri(MeshSources, '/mesh-insights', {}, {
                 page: 1,
@@ -100,7 +100,7 @@
                 />
               </template>
             </DataLoader>
-          </KCard>
+          </XCard>
         </div>
       </div>
     </AppView>

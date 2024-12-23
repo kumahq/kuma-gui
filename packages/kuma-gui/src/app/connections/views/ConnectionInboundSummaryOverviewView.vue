@@ -106,7 +106,7 @@
                   v-for="(rules, key) in Object.groupBy(items, item => item.type)"
                   :key="key"
                 >
-                  <KCard>
+                  <XCard>
                     <AccordionItem>
                       <template #accordion-header>
                         <PolicyTypeTag
@@ -199,7 +199,7 @@
                         </div>
                       </template>
                     </AccordionItem>
-                  </KCard>
+                  </XCard>
                 </template>
               </AccordionList>
             </div>

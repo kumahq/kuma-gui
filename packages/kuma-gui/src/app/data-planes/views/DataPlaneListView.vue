@@ -19,7 +19,7 @@
       :docs="t('data-planes.href.docs.data_plane_proxy')"
     >
       <div v-html="t('data-planes.routes.items.intro', {}, { defaultMessage: '' })" />
-      <KCard>
+      <XCard>
         <search>
           <FilterBar
             class="data-plane-proxy-filter"
@@ -280,7 +280,7 @@
             </DataCollection>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

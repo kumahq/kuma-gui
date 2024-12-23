@@ -14,7 +14,7 @@
       :title="t('zone-egresses.routes.item.navigation.zone-egress-clusters-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="`/zone-egresses/${route.params.zoneEgress}/data-path/clusters`"
           v-slot="{ data, refresh }"
@@ -41,7 +41,7 @@
             </template>
           </XCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

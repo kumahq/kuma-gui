@@ -1,5 +1,5 @@
 <template>
-  <KCard>
+  <XCard>
     <div class="card-header">
       <div class="card-title">
         <h2>{{ t('main-overview.detail.health.title') }}</h2>
@@ -66,7 +66,7 @@
         </template>
       </ResourceStatus>
     </XLayout>
-  </KCard>
+  </XCard>
 </template>
 
 <script lang="ts" setup>

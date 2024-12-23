@@ -30,7 +30,7 @@
       </template>
       <div v-html="t('zone-egresses.routes.items.intro', {}, { defaultMessage: '' })" />
       <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/zone-cps/:name/egresses`, {
             name: route.params.zone || '*',
@@ -140,7 +140,7 @@
             </DataCollection>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

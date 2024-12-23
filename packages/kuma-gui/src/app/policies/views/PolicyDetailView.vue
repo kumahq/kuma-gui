@@ -103,7 +103,7 @@
         <h3>
           Affected Data Plane Proxies
         </h3>
-        <KCard
+        <XCard
           class="mt-4"
         >
           <DataLoader
@@ -215,7 +215,7 @@
               </DataCollection>
             </template>
           </DataLoader>
-        </KCard>
+        </XCard>
       </div>
     </AppView>
   </RouteView>
