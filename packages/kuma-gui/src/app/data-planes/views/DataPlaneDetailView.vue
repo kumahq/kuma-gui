@@ -316,7 +316,7 @@
                 <template
                   v-if="typeof error === 'undefined'"
                 >
-                  <LoadingBlock
+                  <XProgress
                     v-if="typeof traffic === 'undefined'"
                   />
                   <template
@@ -593,7 +593,6 @@ import { computed } from 'vue'
 import type { DataplaneOverview, DataplaneInbound } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import TagList from '@/app/common/TagList.vue'

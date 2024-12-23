@@ -139,8 +139,8 @@
       </dl>
     </template>
     <template v-else>
-      <KSkeletonBox
-        width="10"
+      <XProgress
+        variant="line"
       />
     </template>
   </DataCard>
