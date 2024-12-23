@@ -20,7 +20,7 @@
       </template>
       <div class="stack">
         <div v-html="t('hostname-generators.routes.items.intro', {}, { defaultMessage: '' })" />
-        <KCard>
+        <XCard>
           <DataLoader
             :src="uri(sources, '/hostname-generators', {}, {
               page: route.params.page,
@@ -112,7 +112,7 @@
               </DataCollection>
             </template>
           </DataLoader>
-        </KCard>
+        </XCard>
       </div>
     </AppView>
   </RouteView>

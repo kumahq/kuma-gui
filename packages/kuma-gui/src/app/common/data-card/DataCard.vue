@@ -1,5 +1,5 @@
 <template>
-  <KCard
+  <XCard
     class="data-card"
   >
     <dl>
@@ -12,7 +12,7 @@
         </dd>
       </div>
     </dl>
-  </KCard>
+  </XCard>
 </template>
 <style lang="scss" scoped>
 .data-card {

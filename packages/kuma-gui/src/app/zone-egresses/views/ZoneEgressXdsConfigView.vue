@@ -15,7 +15,7 @@
       :title="t('zone-egresses.routes.item.navigation.zone-egress-xds-config-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, '/zone-egresses/:name/xds/:endpoints', {
             name: route.params.zoneEgress,
@@ -49,7 +49,7 @@
             </template>
           </XCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

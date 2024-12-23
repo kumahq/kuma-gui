@@ -8,7 +8,7 @@
       :title="t('zone-ingresses.routes.item.navigation.zone-ingress-services-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataCollection
           type="services"
           :items="props.data.zoneIngress.availableServices"
@@ -77,7 +77,7 @@
             </template>
           </AppCollection>
         </DataCollection>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

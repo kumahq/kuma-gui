@@ -1,12 +1,12 @@
 <template>
-  <KCard
+  <XCard
     class="service-traffic-group"
     :class="`type-${props.type}`"
   >
     <div class="body">
       <slot name="default" />
     </div>
-  </KCard>
+  </XCard>
 </template>
 <script lang="ts" setup>
 const props = defineProps<{

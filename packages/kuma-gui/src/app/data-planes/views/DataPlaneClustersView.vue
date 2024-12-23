@@ -15,7 +15,7 @@
         :render="false"
         :title="t('data-planes.routes.item.navigation.data-plane-clusters-view')"
       />
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/dataplanes/:name/clusters', {
             mesh: route.params.mesh,
@@ -45,7 +45,7 @@
             </template>
           </XCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

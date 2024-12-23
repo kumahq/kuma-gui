@@ -49,7 +49,7 @@
                     :empty="false"
                     v-slot="{ items }"
                   >
-                    <KCard>
+                    <XCard>
                       <h3>
                         {{ t(`data-planes.routes.item.rules.${ruleType}`) }}
                       </h3>
@@ -60,7 +60,7 @@
                         :types="policyTypes"
                         :data-testid="`${ruleType}-rule-list`"
                       />
-                    </KCard>
+                    </XCard>
                   </DataCollection>
                 </template>
 
@@ -72,7 +72,7 @@
                   :empty="false"
                   v-slot="{ items }"
                 >
-                  <KCard>
+                  <XCard>
                     <h3 class="mb-2">
                       {{ t('data-planes.routes.item.rules.from') }}
                     </h3>
@@ -94,7 +94,7 @@
                         />
                       </div>
                     </template>
-                  </KCard>
+                  </XCard>
                 </DataCollection>
               </DataCollection>
             </DataLoader>
@@ -118,7 +118,7 @@
                       <h3>
                         {{ t('data-planes.routes.item.legacy_policies') }}
                       </h3>
-                      <KCard
+                      <XCard
                         class="mt-4"
                       >
                         <BuiltinGatewayPolicies
@@ -126,7 +126,7 @@
                           :gateway-dataplane="gatewayDataplane"
                           data-testid="builtin-gateway-dataplane-policies"
                         />
-                      </KCard>
+                      </XCard>
                     </DataCollection>
                   </DataLoader>
                 </template>
@@ -148,7 +148,7 @@
                       <h3>
                         {{ t('data-planes.routes.item.legacy_policies') }}
                       </h3>
-                      <KCard
+                      <XCard
                         class="mt-4"
                       >
                         <PolicyTypeEntryList
@@ -156,7 +156,7 @@
                           :types="policyTypes"
                           data-testid="sidecar-dataplane-policies"
                         />
-                      </KCard>
+                      </XCard>
                     </DataCollection>
                   </DataLoader>
                 </template>

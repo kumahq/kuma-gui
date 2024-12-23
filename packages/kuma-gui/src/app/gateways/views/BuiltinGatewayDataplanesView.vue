@@ -20,7 +20,7 @@
         <div
           class="stack"
         >
-          <KCard>
+          <XCard>
             <search>
               <FilterBar
                 class="data-plane-proxy-filter"
@@ -192,7 +192,7 @@
                 </DataCollection>
               </template>
             </DataLoader>
-          </KCard>
+          </XCard>
         </div>
       </DataSource>
     </AppView>

@@ -439,7 +439,7 @@
                 ]"
                 :key="mTLS"
               >
-                <KCard
+                <XCard
                   class="mt-4"
                 >
                   <div class="columns">
@@ -499,7 +499,7 @@
                       </template>
                     </DefinitionCard>
                   </div>
-                </KCard>
+                </XCard>
               </template>
             </template>
 

@@ -23,7 +23,7 @@
       <template #item="{ item: type }">
         <AppView>
           <div class="stack">
-            <KCard>
+            <XCard>
               <header>
                 <div>
                   <XBadge
@@ -64,9 +64,9 @@
                 </h3>
               </header>
               <div v-html="t(`policies.type.${type.name}.description`, undefined, { defaultMessage: t('policies.collection.description') })" />
-            </KCard>
+            </XCard>
 
-            <KCard>
+            <XCard>
               <search>
                 <form
                   @submit.prevent
@@ -265,7 +265,7 @@
                   </RouterView>
                 </template>
               </DataLoader>
-            </KCard>
+            </XCard>
           </div>
         </AppView>
       </template>
