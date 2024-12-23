@@ -72,7 +72,10 @@
                 <template
                   #ports="{ row: item }"
                 >
-                  <KTruncate>
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
                     <KumaPort
                       v-for="connection in item.spec.ports"
                       :key="connection.port"
@@ -81,12 +84,15 @@
                         targetPort: undefined,
                       }"
                     />
-                  </KTruncate>
+                  </XLayout>
                 </template>
                 <template
                   #labels="{ row: item }"
                 >
-                  <KTruncate>
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
                     <XBadge
                       v-for="(value, key) in item.spec.selector.meshService.matchLabels"
                       :key="`${key}:${value}`"
@@ -94,7 +100,7 @@
                     >
                       {{ key }}:{{ value }}
                     </XBadge>
-                  </KTruncate>
+                  </XLayout>
                 </template>
                 <template #actions="{ row: item }">
                   <XActionGroup>
