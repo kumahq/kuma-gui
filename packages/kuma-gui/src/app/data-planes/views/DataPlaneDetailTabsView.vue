@@ -5,11 +5,14 @@
       mesh: '',
       dataPlane: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="`/meshes/${route.params.mesh}/dataplane-overviews/${route.params.dataPlane}`"
-      v-slot="{ data, error }: DataplaneOverviewSource"
+      :src="uri(sources, '/meshes/:mesh/dataplane-overviews/:name', {
+        mesh: route.params.mesh,
+        name: route.params.dataPlane,
+      })"
+      v-slot="{ data, error }"
     >
       <AppView
         :breadcrumbs="[
@@ -38,13 +41,122 @@
           #title
         >
           <h1>
-            <TextWithCopyButton :text="data.name">
+            <XCopyButton
+              :text="data.name"
+            >
               <RouteTitle
                 :title="t('data-planes.routes.item.title', { name: data.name })"
               />
-            </TextWithCopyButton>
+            </XCopyButton>
           </h1>
         </template>
+        <template
+          #actions
+        >
+          <XDisclosure
+            v-slot="{ expanded, toggle }"
+          >
+            <XAction
+              appearance="primary"
+              @click="toggle"
+            >
+              Download Bundle
+            </XAction>
+            <XTeleportTemplate
+              v-if="expanded"
+              :to="{ name: 'modal-layer' }"
+            >
+              <XDisclosure
+                v-slot="{ expanded: downloading, toggle: download }"
+              >
+                <form
+                  @submit.prevent="download"
+                >
+                  <XModal
+                    :title="t('data-planes.routes.item.download.title')"
+                    @cancel="toggle"
+                  >
+                    <fieldset
+                      :disabled="downloading"
+                    >
+                      <XI18n
+                        t="data-planes.routes.item.download.description"
+                      />
+                      <ul>
+                        <template
+                          v-for="(spec, key) in specs"
+                          :key="typeof spec"
+                        >
+                          <li
+                            v-if="key !== 'eds'"
+                          >
+                            <XCheckbox
+                              v-model="specs[key]"
+                            >
+                              {{ t(`data-planes.routes.item.download.options.${key}`) }}
+                            </XCheckbox>
+                            <ul
+                              v-if="key === 'xds'"
+                            >
+                              <li>
+                                <XCheckbox v-model="specs.eds">
+                                  {{ t('data-planes.routes.item.download.options.eds') }}
+                                </XCheckbox>
+                              </li>
+                            </ul>
+                          </li>
+                        </template>
+                      </ul>
+                    </fieldset>
+                    <template
+                      #footer-actions
+                    >
+                      <XLayout
+                        type="separated"
+                      >
+                        <DataLoader
+                          variant="spinner"
+                          :src="downloading ? uri(sources, '/meshes/:mesh/dataplanes/:name/as/tarball/:spec', {
+                            mesh: route.params.mesh,
+                            name: route.params.dataPlane,
+                            spec: JSON.stringify(
+                              specs,
+                            ),
+                          }, {
+                            cacheControl: 'no-cache',
+                          }) : ''"
+                          @change="downloadBundle"
+                          @error="download"
+                        >
+                          <template
+                            #error
+                          >
+                            <XAlert
+                              appearance="warning"
+                              show-icon
+                            >
+                              <XI18n
+                                t="data-planes.routes.item.download.error"
+                              />
+                            </XAlert>
+                          </template>
+                        </DataLoader>
+                        <XAction
+                          appearance="primary"
+                          type="submit"
+                          :disabled="downloading"
+                        >
+                          {{ t('data-planes.routes.item.download.action') }}
+                        </XAction>
+                      </XLayout>
+                    </template>
+                  </XModal>
+                </form>
+              </XDisclosure>
+            </XTeleportTemplate>
+          </XDisclosure>
+        </template>
+
         <DataLoader
           :data="[data]"
           :errors="[error]"
@@ -79,10 +191,40 @@
 </template>
 
 <script lang="ts" setup>
-import { DataplaneOverviewSource } from '../sources'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
+import { ref } from 'vue'
+
+import { sources } from '../sources'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
+
+const specs = ref({
+  eds: false,
+  xds: false,
+  dataplane: false,
+  // policies: false,
+  clusters: false,
+  stats: false,
+})
+const downloadBundle = async (bundle: { name: string, url: string }) => {
+  const a = document.createElement('a')
+  a.download = bundle.name
+  a.href = bundle.url
+  setTimeout(() => { window.URL.revokeObjectURL(a.href) }, 60000)
+  await Promise.resolve()
+  a.click()
+
+}
 </script>
+<style lang="scss" scoped>
+  form {
+    :deep(p) {
+      margin-bottom: 1em !important;
+    }
+    ul {
+      margin: 0;
+      list-style-type: none;
+    }
+  }
+</style>

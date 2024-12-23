@@ -49,6 +49,20 @@ data-planes:
         builtin-gateway-data-plane-summary-config-view: YAML
         delegated-gateway-data-plane-summary-overview-view: Overview
         delegated-gateway-data-plane-summary-config-view: YAML
+      download:
+        title: Download bundle
+        description: !!text/markdown |
+          Include the following:
+        error: !!text/markdown |
+          Unable to generate bundle, please try again.
+        action: Download
+        options:
+          xds: XDS Configuration
+          eds: Include EDS
+          dataplane: Dataplane Configuration
+          policies: Poilicies
+          clusters: Envoy Clusters Logs
+          stats: Envoy Stats Logs
       about:
         title: About this Data Plane Proxy
       gateway: 'Gateway'
