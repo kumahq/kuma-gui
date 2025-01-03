@@ -57,7 +57,7 @@
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
-    "lint-staged": "^15.2.11",
+    "lint-staged": "^15.3.0",
     "lockfile-lint": "^4.14.0",
     "markdown-it": "^14.1.0",
     "msw": "^2.7.0",
