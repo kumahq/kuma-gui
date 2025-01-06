@@ -3,6 +3,9 @@ inbounds:
     title: No inbounds
 outbounds:
   x-empty-state:
+    title: No outbounds
+activeOutbounds:
+  x-empty-state:
     title: No active outbounds
 connections:
   include_endpoints: Include Endpoints

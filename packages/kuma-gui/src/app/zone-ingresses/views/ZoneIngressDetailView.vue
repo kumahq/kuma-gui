@@ -149,41 +149,47 @@
               >
                 <DataCollection
                   type="outbounds"
-                  :predicate="route.params.inactive ? undefined : ([_key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
                   :items="Object.entries<any>(traffic.outbounds)"
-                  v-slot="{ items: outbounds }"
+                  v-slot="{ items: outboundEntries }"
                 >
-                  <ConnectionGroup
-                    v-if="outbounds.length > 0"
-                    type="outbound"
+                  <DataCollection
+                    type="activeOutbounds"
+                    :predicate="route.params.inactive ? undefined : ([_key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
+                    :items="outboundEntries"
+                    v-slot="{ items: outbounds }"
                   >
-                    <!-- the outbound name is the service name potentially with a 16 digit hash appended -->
-                    <!-- that potential hash follows a hypen and can contain digits and a-f -->
-                    <!-- so we replace this with `` if we find it to get the service name for linking -->
-                    <template
-                      v-for="_hash in [/-([a-f0-9]){16}$/]"
-                      :key="_hash"
+                    <ConnectionGroup
+                      v-if="outbounds.length > 0"
+                      type="outbound"
                     >
-                      <XLayout
-                        type="stack"
-                        size="small"
+                      <!-- the outbound name is the service name potentially with a 16 digit hash appended -->
+                      <!-- that potential hash follows a hypen and can contain digits and a-f -->
+                      <!-- so we replace this with `` if we find it to get the service name for linking -->
+                      <template
+                        v-for="_hash in [/-([a-f0-9]){16}$/]"
+                        :key="_hash"
                       >
-                        <template
-                          v-for="[name, outbound] in outbounds"
-                          :key="`${name}`"
+                        <XLayout
+                          type="stack"
+                          size="small"
                         >
-                          <ConnectionCard
-                            data-testid="dataplane-outbound"
-                            protocol=""
-                            :traffic="outbound"
-                            :direction="direction"
+                          <template
+                            v-for="[name, outbound] in outbounds"
+                            :key="`${name}`"
                           >
-                            {{ name }}
-                          </ConnectionCard>
-                        </template>
-                      </XLayout>
-                    </template>
-                  </ConnectionGroup>
+                            <ConnectionCard
+                              data-testid="dataplane-outbound"
+                              protocol=""
+                              :traffic="outbound"
+                              :direction="direction"
+                            >
+                              {{ name }}
+                            </ConnectionCard>
+                          </template>
+                        </XLayout>
+                      </template>
+                    </ConnectionGroup>
+                  </DataCollection>
                 </DataCollection>
               </template>
             </ConnectionTraffic>
