@@ -76,17 +76,23 @@
                   type="stack"
                   size="small"
                 >
-                  <template
-                    v-for="[name, stats] in Object.entries(traffic.inbounds)"
-                    :key="`${name}`"
+                  <DataCollection
+                    type="inbounds"
+                    :items="Object.entries(traffic.inbounds)"
+                    v-slot="{ items }"
                   >
-                    <ConnectionCard
-                      protocol=""
-                      :traffic="stats"
+                    <template
+                      v-for="[name, stats] in items"
+                      :key="`${name}`"
                     >
-                      :{{ name.split('_').at(-1) }}
-                    </ConnectionCard>
-                  </template>
+                      <ConnectionCard
+                        protocol=""
+                        :traffic="stats"
+                      >
+                        :{{ name.split('_').at(-1) }}
+                      </ConnectionCard>
+                    </template>
+                  </DataCollection>
                 </XLayout>
               </ConnectionTraffic>
               <ConnectionTraffic>
@@ -117,6 +123,7 @@
                   :key="direction"
                 >
                   <DataCollection
+                    type="outbounds"
                     :predicate="route.params.inactive ? undefined : ([_key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
                     :items="Object.entries<any>(traffic.outbounds)"
                     v-slot="{ items: outbounds }"
