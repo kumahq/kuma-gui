@@ -1,17 +1,22 @@
 <template>
-  <div
+  <component
+    :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
     :class="['x-layout', props.type, props.size]"
   >
     <slot name="default" />
-  </div>
+  </component>
 </template>
 <script lang="ts" setup>
+import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
+  // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
   size?: 'small' | 'normal'
+  truncate?: boolean
 }>(), {
   type: 'stack',
   size: 'normal',
+  truncate: false,
 })
 </script>
 <style lang="scss" scoped>
@@ -21,7 +26,7 @@ const props = withDefaults(defineProps<{
 .stack.small > * + * {
   margin-block-start: $kui-space-40;
 }
-.separated {
+.separated:not(.k-truncate) {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;

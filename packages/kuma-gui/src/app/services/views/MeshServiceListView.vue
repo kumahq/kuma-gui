@@ -113,7 +113,10 @@
                 <template
                   #ports="{ row: item }"
                 >
-                  <KTruncate>
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
                     <KumaPort
                       v-for="connection in item.spec.ports"
                       :key="connection.port"
@@ -122,7 +125,7 @@
                         targetPort: undefined,
                       }"
                     />
-                  </KTruncate>
+                  </XLayout>
                 </template>
                 <template #actions="{ row: item }">
                   <XActionGroup>

@@ -127,7 +127,10 @@
                 <template
                   #body
                 >
-                  <KTruncate>
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
                     <KumaPort
                       v-for="connection in item.spec.ports"
                       :key="connection.port"
@@ -136,7 +139,7 @@
                         targetPort: undefined,
                       }"
                     />
-                  </KTruncate>
+                  </XLayout>
                 </template>
               </DefinitionCard>
               <DefinitionCard layout="horizontal">
@@ -148,7 +151,10 @@
                 <template
                   #body
                 >
-                  <KTruncate>
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
                     <XBadge
                       v-for="(value, key) in item.spec.selector.dataplaneTags"
                       :key="`${key}:${value}`"
@@ -156,7 +162,7 @@
                     >
                       {{ key }}:{{ value }}
                     </XBadge>
-                  </KTruncate>
+                  </XLayout>
                 </template>
               </DefinitionCard>
             </div>

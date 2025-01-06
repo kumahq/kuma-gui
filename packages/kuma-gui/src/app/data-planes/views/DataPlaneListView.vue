@@ -136,9 +136,10 @@
                 </template>
 
                 <template #services="{ row }">
-                  <KTruncate
+                  <XLayout
                     v-if="row.services.length > 0"
-                    width="auto"
+                    type="separated"
+                    truncate
                   >
                     <div
                       v-for="(service, index) in row.services"
@@ -174,7 +175,7 @@
                         </template>
                       </TextWithCopyButton>
                     </div>
-                  </KTruncate>
+                  </XLayout>
 
                   <template v-else>
                     {{ t('common.collection.none') }}
