@@ -16,7 +16,7 @@
     <AppView
       :docs="t('services.mesh-multi-zone-service.href.docs')"
     >
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/mesh-multi-zone-services', {
             mesh: route.params.mesh,
@@ -137,7 +137,7 @@
             </DataCollection>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

@@ -39,7 +39,7 @@
           </ul>
         </template>
 
-        <KCard>
+        <XCard>
           <XCodeBlock
             v-if="Object.keys(props.data.zoneInsight.config).length > 0"
             language="json"
@@ -61,7 +61,7 @@
           >
             {{ t('zone-cps.detail.no_subscriptions') }}
           </XAlert>
-        </KCard>
+        </XCard>
       </AppView>
     </DataSource>
   </RouteView>

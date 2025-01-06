@@ -35,7 +35,7 @@
           @change="getEgresses"
         />
         <div v-html="t('zone-cps.routes.items.intro', {}, { defaultMessage: '' })" />
-        <KCard>
+        <XCard>
           <XTeleportTemplate
             v-if="can('create zones') && (data?.items ?? []).length > 0"
             :to="{ name: 'zone-cp-list-view-actions'}"
@@ -223,7 +223,7 @@
               </DataCollection>
             </template>
           </DataLoader>
-        </KCard>
+        </XCard>
         <RouterView
           v-if="route.params.zone"
           v-slot="child"

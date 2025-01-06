@@ -18,7 +18,7 @@
       :docs="t('zone-ingresses.href.docs')"
     >
       <div v-html="t('zone-ingresses.routes.items.intro', {}, { defaultMessage: '' })" />
-      <KCard>
+      <XCard>
         <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
         <DataLoader
           :src="uri(sources, `/zone-cps/:name/ingresses`, {
@@ -141,7 +141,7 @@
             </DataCollection>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

@@ -11,7 +11,7 @@
     v-slot="{ route }"
   >
     <AppView>
-      <KCard>
+      <XCard>
         <ResourceCodeBlock
           :resource="props.data.config"
           is-searchable
@@ -34,7 +34,7 @@
             }"
           />
         </ResourceCodeBlock>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

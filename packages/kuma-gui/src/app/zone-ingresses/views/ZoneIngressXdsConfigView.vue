@@ -15,7 +15,7 @@
       :title="t('zone-ingresses.routes.item.navigation.zone-ingress-xds-config-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, '/zone-ingresses/:name/xds/:endpoints', {
             name: route.params.zoneIngress,
@@ -49,7 +49,7 @@
             </template>
           </XCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

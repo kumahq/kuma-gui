@@ -1,5 +1,5 @@
 <template>
-  <KCard>
+  <XCard>
     <div class="stack">
       <div class="columns">
         <ResourceStatus
@@ -49,7 +49,7 @@
         </DefinitionCard>
       </div>
     </div>
-  </KCard>
+  </XCard>
 </template>
 
 <script lang="ts" setup>

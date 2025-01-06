@@ -15,7 +15,7 @@
       :title="t('builtin-gateways.routes.item.navigation.builtin-gateway-config-view')"
     />
     <AppView>
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/mesh-gateways/:name`, {
             mesh: route.params.mesh,
@@ -52,7 +52,7 @@
             />
           </ResourceCodeBlock>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

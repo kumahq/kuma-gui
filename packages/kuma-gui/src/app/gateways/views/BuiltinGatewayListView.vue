@@ -12,7 +12,7 @@
     <AppView
       :docs="t('builtin-gateways.href.docs')"
     >
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/mesh-gateways`, {
             mesh: route.params.mesh,
@@ -127,7 +127,7 @@
             </RouterView>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

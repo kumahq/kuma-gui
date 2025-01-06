@@ -11,7 +11,7 @@
     <AppView
       :docs="t('delegated-gateways.href.docs')"
     >
-      <KCard>
+      <XCard>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/service-insights/of/:serviceType`, {
             mesh: route.params.mesh,
@@ -109,7 +109,7 @@
             </DataCollection>
           </template>
         </DataLoader>
-      </KCard>
+      </XCard>
     </AppView>
   </RouteView>
 </template>
