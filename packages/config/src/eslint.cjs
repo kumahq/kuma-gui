@@ -90,7 +90,6 @@ function createEslintConfig(
     extends: [
       'eslint:recommended',
       'plugin:vue/vue3-recommended',
-      'standard',
       '@vue/typescript',
       'plugin:import/recommended',
       'plugin:import/typescript',
