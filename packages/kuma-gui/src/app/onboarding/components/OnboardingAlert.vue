@@ -10,7 +10,6 @@
       <XAlert
         v-if="data?.closed !== true"
         variant="success"
-        dismissible
         data-testid="onboarding-notification"
         @dismiss="async () => {
           submit({

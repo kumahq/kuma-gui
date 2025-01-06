@@ -1,7 +1,7 @@
 <template>
   <KAlert
     :appearance="props.variant"
-    :dismissible="props.dismissable"
+    :dismissible="typeof attrs.onDismiss === 'function'"
   >
     <template
       v-for="(_, key) in slots"
@@ -14,18 +14,17 @@
 </template>
 <script lang="ts" setup>
 import { KAlert } from '@kong/kongponents'
-import { useSlots } from 'vue'
+import { useSlots, useAttrs } from 'vue'
 
 import type { AlertAppearance } from '@kong/kongponents'
 
 const slots = useSlots()
+const attrs = useAttrs()
 
 const props = withDefaults(defineProps<{
   variant?: AlertAppearance
-  dismissable?: boolean
 }>(), {
   variant: 'warning',
-  dismissable: false,
 })
 </script>
 <style lang="scss" scoped>
