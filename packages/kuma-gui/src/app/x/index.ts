@@ -1,4 +1,4 @@
-import Kongponents, { KTooltip, KCard, KPop, KInputSwitch, KCheckbox } from '@kong/kongponents'
+import Kongponents, { KTooltip, KCard, KPop, KInputSwitch, KCheckbox, KRadio } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
@@ -32,6 +32,7 @@ declare module 'vue' {
     XPop: typeof KPop
     XInputSwitch: typeof KInputSwitch
     XCheckbox: typeof KCheckbox
+    XRadio: typeof KRadio
     XTooltip: typeof KTooltip
     //
     XAlert: typeof XAlert
@@ -81,6 +82,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XPop', KPop],
           ['XInputSwitch', KInputSwitch],
           ['XCheckbox', KCheckbox],
+          ['XRadio', KRadio],
           ['XTooltip', KTooltip],
           //
           ['XAction', XAction],
