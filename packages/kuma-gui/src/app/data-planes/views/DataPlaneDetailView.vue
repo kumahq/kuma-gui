@@ -508,7 +508,7 @@
             >
               <XAlert
                 class="mt-4"
-                appearance="warning"
+                variant="warning"
               >
                 <div
                   v-html="t('data-planes.routes.item.mtls.disabled')"
