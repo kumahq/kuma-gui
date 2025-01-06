@@ -52,7 +52,7 @@
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
-                  <TextWithCopyButton
+                  <XCopyButton
                     :text="item.name"
                   >
                     <XAction
@@ -71,7 +71,7 @@
                     >
                       {{ item.name }}
                     </XAction>
-                  </TextWithCopyButton>
+                  </XCopyButton>
                 </template>
                 <template
                   #namespace="{ row: item }"
@@ -177,5 +177,4 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

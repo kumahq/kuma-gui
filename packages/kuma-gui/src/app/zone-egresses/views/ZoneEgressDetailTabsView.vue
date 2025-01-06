@@ -48,11 +48,11 @@
           <h1
             v-if="data"
           >
-            <TextWithCopyButton :text="data.name">
+            <XCopyButton :text="data.name">
               <RouteTitle
                 :title="t('zone-egresses.routes.item.title', { name: data.name })"
               />
-            </TextWithCopyButton>
+            </XCopyButton>
           </h1>
         </template>
 
@@ -90,5 +90,4 @@
 
 <script lang="ts" setup>
 import { ZoneEgressOverviewSource } from '../sources'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

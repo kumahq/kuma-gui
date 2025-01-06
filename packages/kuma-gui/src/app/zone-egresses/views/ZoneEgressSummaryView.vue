@@ -94,7 +94,7 @@
                   <template
                     v-if="item.zoneEgress.socketAddress.length > 0"
                   >
-                    <TextWithCopyButton
+                    <XCopyButton
                       :text="item.zoneEgress.socketAddress"
                     />
                   </template>
@@ -146,7 +146,6 @@
 import type { ZoneEgressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{

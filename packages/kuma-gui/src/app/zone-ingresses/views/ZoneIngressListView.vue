@@ -73,7 +73,7 @@
                 </template>
 
                 <template #socketAddress="{ row: item }">
-                  <TextWithCopyButton
+                  <XCopyButton
                     v-if="item.zoneIngress.socketAddress.length > 0"
                     :text="item.zoneIngress.socketAddress"
                   />
@@ -83,7 +83,7 @@
                 </template>
 
                 <template #advertisedSocketAddress="{ row: item }">
-                  <TextWithCopyButton
+                  <XCopyButton
                     v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
                     :text="item.zoneIngress.advertisedSocketAddress"
                   />
@@ -151,7 +151,6 @@ import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { ZoneOverview } from '@/app/zones/data'
 const _props = defineProps<{
   data: ZoneOverview

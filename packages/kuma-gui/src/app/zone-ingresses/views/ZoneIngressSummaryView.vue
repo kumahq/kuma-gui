@@ -93,7 +93,7 @@
                   <template
                     v-if="item.zoneIngress.socketAddress.length > 0"
                   >
-                    <TextWithCopyButton
+                    <XCopyButton
                       :text="item.zoneIngress.socketAddress"
                     />
                   </template>
@@ -115,7 +115,7 @@
                   <template
                     v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
                   >
-                    <TextWithCopyButton
+                    <XCopyButton
                       :text="item.zoneIngress.advertisedSocketAddress"
                     />
                   </template>
@@ -167,7 +167,6 @@
 import type { ZoneIngressOverview } from '../data'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
