@@ -65,15 +65,9 @@
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
-        <LoadingBlock
-          v-if="props.variant === 'default'"
+        <XProgress
           v-bind="$attrs"
-        />
-        <KSkeleton
-          v-else
-          data-testid="list-skeleton"
-          v-bind="$attrs"
-          type="table"
+          :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
       </slot>
       <slot
@@ -95,13 +89,12 @@ import { computed, ref, useSlots, provide } from 'vue'
 
 import type { TypeOf } from '@/app/application'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
 const props = withDefaults(defineProps<{
   data?: unknown[]
   errors?: (Error | undefined)[]
   src?: T
   loader?: boolean
-  variant?: 'default' | 'list'
+  variant?: 'default' | 'list' | 'spinner'
 }>(), {
   errors: () => [],
   data: () => [],

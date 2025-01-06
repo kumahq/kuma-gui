@@ -14,6 +14,7 @@ import XI18n from './components/x-i18n/XI18n.vue'
 import XIcon from './components/x-icon/XIcon.vue'
 import XInput from './components/x-input/XInput.vue'
 import XLayout from './components/x-layout/XLayout.vue'
+import XProgress from './components/x-progress/XProgress.vue'
 import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
 import XSelect from './components/x-select/XSelect.vue'
@@ -49,6 +50,7 @@ declare module 'vue' {
     XLayout: typeof XLayout
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
+    XProgress: typeof XProgress
     XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate
@@ -98,6 +100,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XLayout', XLayout],
           ['XPrompt', XPrompt],
           ['XProvider', XProvider],
+          ['XProgress', XProgress],
           ['XSelect', XSelect],
           ['XTabs', XTabs],
           ['XTeleportTemplate', XTeleportTemplate],
