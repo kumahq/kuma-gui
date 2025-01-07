@@ -214,6 +214,7 @@
                   >
                     <!-- don't show a card for anything on port 49151 as those are service-less inbounds -->
                     <DataCollection
+                      type="inbounds"
                       :items="inbounds"
                       :predicate="(item) => item.port !== 49151"
                     >
@@ -338,6 +339,7 @@
                       :key="direction"
                     >
                       <DataCollection
+                        type="outbounds"
                         :predicate="route.params.inactive ? undefined : ([key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
                         :items="Object.entries<any>(traffic.outbounds)"
                         v-slot="{ items: outbounds }"
