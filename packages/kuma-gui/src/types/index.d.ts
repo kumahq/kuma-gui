@@ -253,7 +253,7 @@ export type Subscription = {
 }
 
 export type KDSSubscription = {
-  version: any
+  version: Version
 
   config: string
   zoneInstanceId?: string
@@ -488,7 +488,7 @@ export interface MatchedPolicyType extends MeshEntity {
   sources?: PolicyMatch[]
   destinations?: PolicyMatch[]
   selectors?: Array<{ match: Record<string, string> }>
-  conf?: any
+  conf?: unknown
 }
 
 export interface SidecarDataplane {
@@ -822,7 +822,7 @@ export interface TlsConfDataSource {
   inlineString?: string
 }
 
-export interface TlsConfOptions { }
+export type TlsConfOptions = Record<string, unknown>
 
 export interface MeshGatewayTlsConf {
   mode?: 'TERMINATE' | 'PASSTHROUGH'
