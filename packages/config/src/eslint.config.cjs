@@ -4,6 +4,7 @@ const vuePlugin = require('eslint-plugin-vue')
 const { defineConfig, createConfig: vueTsEslintConfig } = require('@vue/eslint-config-typescript')
 const importPlugin = require('eslint-plugin-import')
 const stylistic = require('@stylistic/eslint-plugin')
+const eslint = require('@eslint/js')
 const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
 const globals = require('globals')
 
@@ -137,6 +138,7 @@ function createEslintConfig(
   }
 
   return [
+    eslint.configs.recommended,
     ...vueTsConfig,
     ...importConfig,
     ...jsonSchemaValidatorConfig,
