@@ -94,7 +94,7 @@ describe('makeRequest', () => {
     [
       function () {
         // We specifically want to test this edge case.
-        // eslint-disable-next-line prefer-promise-reject-errors
+         
         return Promise.reject('Now that’s just great')
       },
       new Error('An unknown network error occurred.'),

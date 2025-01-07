@@ -42,11 +42,11 @@ const slots = useSlots()
 
 const items = computed(() => {
   const items = Object.keys(slots).reduce<
-  {
-    value: string
-    label: string
-    selected: boolean
-  }[]
+    {
+      value: string
+      label: string
+      selected: boolean
+    }[]
   >((prev, key) => {
     const pos = key.lastIndexOf('-option')
     if (pos !== -1) {
