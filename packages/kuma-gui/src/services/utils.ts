@@ -1,11 +1,11 @@
 import {
   createContainer,
   token,
-  Token,
-  TokenType,
-  TokenValue,
-  RequiredToken,
-  OptionalToken,
+  type Token,
+  type TokenType,
+  type TokenValue,
+  type RequiredToken,
+  type OptionalToken,
   injected,
 } from 'brandi'
 import deepmerge from 'deepmerge'
