@@ -1,5 +1,6 @@
-const { createEslintConfig } = require('./eslint.cjs')
-const { createStylelintConfig } = require('./stylelint.cjs')
+const { createEslintConfig } = require('./eslint.config.cjs')
+const { createStylelintConfig } = require('./stylelint.config.cjs')
+
 module.exports = {
   eslint: createEslintConfig,
   stylelint: createStylelintConfig,

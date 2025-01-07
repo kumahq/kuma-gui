@@ -16,7 +16,7 @@ check/node:
 .PHONY: lint/js
 lint/js:
 	@npx eslint \
-		$(if $(CI),,--fix) --ext .js,.ts,.vue,.json \
+		$(if $(CI),,--fix) \
 		.
 
 .PHONY: lint/ts
