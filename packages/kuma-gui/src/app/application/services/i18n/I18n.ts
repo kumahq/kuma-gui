@@ -9,7 +9,7 @@ declare module 'intl-messageformat' {
   }
 }
 
-interface I18nRecord {
+export interface I18nRecord {
   [key: string]: I18nRecord | string
 }
 
@@ -39,8 +39,14 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
   const globals = {
     KUMA_VERSION: env('KUMA_VERSION'),
     KUMA_DOCS_URL: env('KUMA_DOCS_URL'),
-    KUMA_UTM_QUERY_PARAMS: i18n.t('common.product.utm_query_params' as Parameters<typeof i18n['t']>[0]),
-    KUMA_PRODUCT_NAME: i18n.t('common.product.name' as Parameters<typeof i18n['t']>[0]),
+    KUMA_UTM_QUERY_PARAMS: '',
+    KUMA_PRODUCT_NAME: '',
+  }
+  try {
+    globals.KUMA_UTM_QUERY_PARAMS = i18n.t('common.product.utm_query_params' as Parameters<typeof i18n['t']>[0])
+    globals.KUMA_PRODUCT_NAME = i18n.t('common.product.name' as Parameters<typeof i18n['t']>[0])
+  } catch (e) {
+    // passthrough
   }
   return {
     ...i18n,
