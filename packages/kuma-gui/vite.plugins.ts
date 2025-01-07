@@ -21,7 +21,7 @@ export const htmlVars = {
 const exists = async (path: string) => {
   try {
     return (await stat(path)).isFile()
-  } catch (e) {
+  } catch {
     return false
   }
 }
