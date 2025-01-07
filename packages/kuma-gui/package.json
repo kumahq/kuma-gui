@@ -62,7 +62,7 @@
     "markdown-it": "^14.1.0",
     "msw": "^2.7.0",
     "postcss": "^8.4.49",
-    "openapi-typescript": "^7.4.4",
+    "openapi-typescript": "^7.5.2",
     "postcss-html": "^1.7.0",
     "sass": "^1.83.1",
     "shiki": "^1.26.1",
