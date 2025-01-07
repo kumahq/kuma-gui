@@ -77,7 +77,7 @@ function createEslintConfig(
   })(packageSchema.properties)
 
   const vueTsConfig = defineConfig(
-    ...vuePlugin.configs['flat/essential'],
+    ...vuePlugin.configs['flat/recommended'],
     vueTsEslintConfig(),
   )
 
