@@ -9,6 +9,7 @@ const config = [
       'dist/*',
       'node_modules/*',
       'src/types/auto-generated.d.ts',
+      'public/mockServiceWorker.js',
       '**/.*'
     ]
   },
