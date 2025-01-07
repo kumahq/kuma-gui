@@ -6,8 +6,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
 
 on:
-  pull_request_target:
-    types: [closed]
+  push:
     branches: [master, 'release-[0-9]+.[0-9]+']
 
 permissions: {}
