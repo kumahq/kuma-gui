@@ -22,11 +22,12 @@ jobs:
         with:
           github-token: ${{ secrets.NOTIFY_BOT_PAT_TOKEN }}
           script: |
+            const branch = process.env.GITHUB_REF_NAME;
             return github.rest.repos.createDispatchEvent({
               owner: '${{ vars.NOTIFY_REPO_OWNER }}',
               repo: '${{ vars.NOTIFY_REPO_NAME }}',
               event_type: '${{ vars.NOTIFY_EVENT_TYPE }}',
               client_payload: {
-                branch: context.payload.pull_request.base.ref,
+                branch
               },
             })
