@@ -1,7 +1,7 @@
 import { test as _test } from 'vitest'
 export { server } from '@/test-support'
 
-type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> };
+type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> }
 
 const freeze = (obj: any) => {
   Object.keys(obj).forEach(prop => {

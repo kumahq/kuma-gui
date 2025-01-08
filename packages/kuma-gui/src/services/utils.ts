@@ -21,17 +21,17 @@ export type {
 
 type InjectionHooks<T extends TokenValue[]> = {
   [K in keyof T]: T[K] extends TokenValue ? () => TokenType<T[K]> : never;
-};
+}
 
 type UnknownConstructor<T> = new (
   ...args: never[]
-) => T;
+) => T
 
-type UnknownFunction<T = unknown> = (...args: never[]) => T;
+type UnknownFunction<T = unknown> = (...args: never[]) => T
 
 type UnknownCreator<T = unknown> =
   | UnknownConstructor<T>
-  | UnknownFunction<T>;
+  | UnknownFunction<T>
 
 type DependencyDefinition = {
   constant?: unknown

@@ -136,6 +136,8 @@ function createEslintConfig(
         },
       }],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': ['error', 'never'],
     }
   }
 

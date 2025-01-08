@@ -23,7 +23,7 @@ type ExtractRouteParams<T extends PropertyKey> =
       ? { [k in Param | keyof ExtractRouteParams<Rest>]: string }
       : T extends `${infer _Start}:${infer Param}`
         ? { [k in Param]: string }
-        : {};
+        : {}
 
 export type ExtractSources<T extends Record<PropertyKey, unknown>> = {
   [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams) => T[Route]

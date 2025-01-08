@@ -35,7 +35,7 @@ const sym = Symbol('')
 
 type DataSource = ReturnType<typeof data.source>
 
-type Close = () => void;
+type Close = () => void
 
 let source: DataSource | undefined
 let controller = new AbortController()

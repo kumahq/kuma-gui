@@ -2,23 +2,23 @@
 function createStylelintConfig() {
   return {
     extends: [
-      "stylelint-config-html",
-      "stylelint-config-recommended-scss",
-      "stylelint-config-recommended-vue/scss",
+      'stylelint-config-html',
+      'stylelint-config-recommended-scss',
+      'stylelint-config-recommended-vue/scss',
     ],
-    plugins: ["@kong/design-tokens/stylelint-plugin"],
-    ignoreFiles: ["dist/**/*"],
+    plugins: ['@kong/design-tokens/stylelint-plugin'],
+    ignoreFiles: ['dist/**/*'],
     rules: {
-      "@kong/design-tokens/use-proper-token": [
+      '@kong/design-tokens/use-proper-token': [
         true,
         {
           disableFix: true,
-          severity: "error",
+          severity: 'error',
         },
       ],
-      "no-duplicate-selectors": [null],
+      'no-duplicate-selectors': [null],
     },
-  };
+  }
 }
 
 module.exports = {

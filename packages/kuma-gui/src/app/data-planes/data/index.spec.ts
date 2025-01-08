@@ -80,7 +80,7 @@ describe('DataplaneOverview', () => {
   ))
   describe('labels', () => {
     test(
-      "if labels isn't set we default it to {}",
+      'if labels isn\'t set we default it to {}',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.labels !== 'undefined') {
@@ -117,7 +117,7 @@ describe('DataplaneOverview', () => {
 
   describe('dataplane.dataplaneType', () => {
     test(
-      "an empty networking.gateway.type gets set to the default of 'delegated'",
+      'an empty networking.gateway.type gets set to the default of \'delegated\'',
       async ({ fixture }) => {
         expect.assertions(2)
         const actual = await fixture.setup((item) => {
@@ -338,7 +338,7 @@ describe('DataplaneOverview', () => {
   })
   describe('dataplane.inbounds', () => {
     test(
-      "if state isn't set we default it to Ready",
+      'if state isn\'t set we default it to Ready',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (item.dataplane.networking.inbound?.length === 1) {
@@ -359,7 +359,7 @@ describe('DataplaneOverview', () => {
       },
     )
     test(
-      "if state is set we don't overwrite it",
+      'if state is set we don\'t overwrite it',
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (item.dataplane.networking.inbound?.length === 1) {
