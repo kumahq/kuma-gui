@@ -1,4 +1,5 @@
 Feature: mesh / dataplanes / connections / clusterNames
+
   Scenario: MeshServices type clusterNames with hashes are matched correctly
     Given the CSS selectors
       | Alias    | Selector                           |
@@ -22,4 +23,3 @@ Feature: mesh / dataplanes / connections / clusterNames
       """
     When I visit the "/meshes/mesh-name/data-planes/edge-gateway-546b7bbbc9-mkhx6.kuma-demo/overview?inactive" URL
     And the "$outbound" element contains "default_demo-app_kuma-demo_default_msvc_5000"
-
