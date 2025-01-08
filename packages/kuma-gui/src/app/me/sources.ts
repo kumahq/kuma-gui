@@ -32,7 +32,7 @@ export const sources = (prefix: string = 'me', storage: Storage = window.localSt
     },
     '/me/:route/:data': async (params) => {
       const json = JSON.parse(params.data)
-      const res = merge(await get(params.route), json)
+      const res = merge<Record<string, unknown>>(await get(params.route), json)
 
       set(params.route, res)
     },
