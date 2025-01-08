@@ -66,6 +66,7 @@
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <XProgress
+          v-if="props.src !== ''"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
