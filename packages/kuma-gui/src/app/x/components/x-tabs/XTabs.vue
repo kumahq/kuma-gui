@@ -67,7 +67,10 @@ const rewrite = () => {
   const $tabindexed = $el.querySelectorAll('[tabindex="0"]')
   const $id = $el.querySelectorAll('[id]')
 
-  $tablist && ['role', 'aria-label'].forEach(attr => $tablist.removeAttribute(attr))
+  if($tablist) {
+    ['role', 'aria-label'].forEach(attr => $tablist.removeAttribute(attr))
+  }
+  
   ;['role'].forEach(attr => Array.from($tabs).forEach(item => item.removeAttribute(attr)))
   ;['tabindex'].forEach(attr => Array.from($tabindexed).forEach(item => item.removeAttribute(attr)))
 
