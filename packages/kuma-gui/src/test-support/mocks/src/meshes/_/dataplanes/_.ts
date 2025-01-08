@@ -11,7 +11,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
     type = 'gateway_delegated'
   }
 
-  const isMultizone = true && fake.datatype.boolean()
+  const isMultizone = fake.datatype.boolean()
 
   return {
     headers: {},

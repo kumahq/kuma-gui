@@ -96,7 +96,7 @@ const addPath = (item: RouteRecordRaw, parent?: RouteRecordRaw) => {
     ...(item.meta ?? {}),
   }
   if (typeof parent?.meta?.path !== 'undefined') {
-    const path = String(parent.meta.path) ?? ''
+    const path = String(parent.meta.path ?? '')
     item.meta.path = `${path}${path.length > 0 ? '.' : ''}${String(item.name)}`
   }
 }
