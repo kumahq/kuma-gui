@@ -122,7 +122,7 @@ const allData = computed(() => {
 
 const allErrors = computed(() => {
   const errors = typeof srcError.value === 'undefined' ? props.errors : ([srcError.value] as (Error | undefined)[]).concat(props.errors)
-  return errors.filter(<T, >(item: T): item is NonNullable<T> => Boolean(item))
+  return errors.filter(<T>(item: T): item is NonNullable<T> => Boolean(item))
 })
 
 </script>

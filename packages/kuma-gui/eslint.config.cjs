@@ -10,8 +10,8 @@ const config = [
       'node_modules/*',
       'src/types/auto-generated.d.ts',
       'public/mockServiceWorker.js',
-      '**/.*'
-    ]
+      '**/.*',
+    ],
   },
 ]
 
