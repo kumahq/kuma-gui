@@ -6,11 +6,9 @@ const config = [
   ...eslint({}),
   {
     ignores: [
-      'dist/*',
-      'node_modules/*',
       'src/types/auto-generated.d.ts',
       'public/mockServiceWorker.js',
-      '**/.*',
+      '.vitepress',
     ],
   },
 ]

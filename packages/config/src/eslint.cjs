@@ -161,6 +161,10 @@ function createEslintConfig(
         '**/*.vue',
         '**/*.json'
       ],
+      ignores: [
+        'dist/*',
+        'node_modules/*',
+      ],
       settings: {
         'import/resolver': {
           typescript: {
