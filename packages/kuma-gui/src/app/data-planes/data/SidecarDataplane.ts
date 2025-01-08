@@ -71,12 +71,16 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, sidecarDatapla
   if (sidecarDataplane.type === 'inbound' && Array.isArray(policy.sources)) {
     for (const { match } of policy.sources) {
       const sourceTags: LabelValue[] = [{ label: 'kuma.io/service', value: match['kuma.io/service'] }]
+      // FIXME: below ts error
+      // @ts-expect-error type mismatch config and policy.conf: {} vs string. PolicyTypeEntryConnection expects config as string | undefined
       const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
 
       policyTypeEntryConnections.push(connection)
     }
   } else {
     const sourceTags: LabelValue[] = []
+    // FIXME: below ts error
+    // @ts-expect-error type mismatch config and policy.conf: {} vs string. PolicyTypeEntryConnection expects config as string | undefined
     const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
 
     policyTypeEntryConnections.push(connection)
