@@ -1,4 +1,5 @@
 import { TarWriter } from '@gera2ld/tarjs'
+import createClient from 'openapi-fetch'
 
 import {
   Dataplane,
@@ -12,6 +13,7 @@ import { YAML } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
+import type { paths } from '@/types/auto-generated.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
 
 export type { Dataplane, DataplaneOverview } from './data'
@@ -34,6 +36,10 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 export const sources = (source: Source, api: KumaApi, can: Can) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
   return defineSources({
     // always resolves and keeps polling until we have at least one dataplane and all dataplanes are online
     '/dataplanes/poll': (params) => {
@@ -93,6 +99,23 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
                   mesh,
                   name,
                 })),
+              }
+            })
+            break
+          case 'policies':
+            prev.push(async () => {
+              const res = await http.GET('/meshes/{mesh}/{resourceType}/{resourceName}/_rules', {
+                params: {
+                  path: {
+                    mesh,
+                    resourceType: 'dataplanes',
+                    resourceName: name,
+                  },
+                },
+              })
+              return {
+                name: 'policies.json',
+                content: JSON.stringify(res!, null, 2),
               }
             })
             break

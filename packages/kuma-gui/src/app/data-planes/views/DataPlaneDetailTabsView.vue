@@ -202,10 +202,10 @@ const props = defineProps<{
 const specs = ref({
   eds: false,
   xds: false,
-  dataplane: false,
-  // policies: false,
   clusters: false,
   stats: false,
+  dataplane: false,
+  policies: false,
 })
 const downloadBundle = async (bundle: { name: string, url: string }) => {
   const a = document.createElement('a')

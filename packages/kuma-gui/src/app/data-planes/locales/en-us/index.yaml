@@ -60,7 +60,7 @@ data-planes:
           xds: XDS Configuration
           eds: Include EDS
           dataplane: Dataplane Configuration
-          policies: Poilicies
+          policies: Policies
           clusters: Envoy Clusters Logs
           stats: Envoy Stats Logs
       about:
