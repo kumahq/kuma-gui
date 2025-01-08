@@ -1,4 +1,4 @@
-const { resolve } = require('node:path')
+const { resolve, dirname } = require('node:path')
 const { readFileSync: read } = require('node:fs')
 const vuePlugin = require('eslint-plugin-vue')
 const { defineConfig, createConfig: vueTsEslintConfig } = require('@vue/eslint-config-typescript')
@@ -7,8 +7,9 @@ const stylistic = require('@stylistic/eslint-plugin')
 const eslint = require('@eslint/js')
 const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
 const globals = require('globals')
+const $config = dirname(require.resolve('@kumahq/config'))
 
-const packageSchema = JSON.parse(read(resolve(__dirname, `./package.schema.json`)).toString())
+const packageSchema = JSON.parse(read(resolve(`${$config}/package.schema.json`)).toString())
 
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
