@@ -1,14 +1,17 @@
 import {
   createContainer,
   token,
-  type Token,
-  type TokenType,
-  type TokenValue,
-  type RequiredToken,
-  type OptionalToken,
   injected,
 } from 'brandi'
 import deepmerge from 'deepmerge'
+
+import type {
+  Token,
+  TokenType,
+  TokenValue,
+  RequiredToken,
+  OptionalToken,
+} from 'brandi'
 
 export {
   token,
