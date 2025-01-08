@@ -56,8 +56,7 @@ describe('DataSourcePool', () => {
     // acquire 10 times, with the last one being a different URI
     // they should all be the same instance apart from the last one
     Array.from({ length: 10 }).map((_, i) => i !== 9 ? data.source('/one') : data.source('/two')).reduce((prev, item, i) => {
-      const isSame = i !== 9
-      expect(prev === item).toBe(isSame)
+      i !== 9 ? expect(prev === item).toBe(true) : expect(prev === item).toBe(false)
       return item
     }, data.source('/one'))
     data.destroy()
