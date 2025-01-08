@@ -52,7 +52,7 @@
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
-                  <TextWithCopyButton :text="item.name">
+                  <XCopyButton :text="item.name">
                     <XAction
                       data-action
                       :to="{
@@ -69,11 +69,11 @@
                     >
                       {{ item.name }}
                     </XAction>
-                  </TextWithCopyButton>
+                  </XCopyButton>
                 </template>
 
                 <template #addressPort="{ row }">
-                  <TextWithCopyButton
+                  <XCopyButton
                     v-if="row.addressPort"
                     :text="row.addressPort"
                   />
@@ -152,5 +152,4 @@ import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

@@ -58,7 +58,7 @@
           </template>
 
           <template #body>
-            <TextWithCopyButton
+            <XCopyButton
               :text="`${props.data.addressPort}`"
             />
           </template>
@@ -72,7 +72,7 @@
           </template>
 
           <template #body>
-            <TextWithCopyButton
+            <XCopyButton
               :text="`${props.data.serviceAddressPort}`"
             />
           </template>
@@ -217,7 +217,6 @@ import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
