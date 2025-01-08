@@ -822,7 +822,7 @@ export interface TlsConfDataSource {
   inlineString?: string
 }
 
-export type TlsConfOptions = Record<string, unknown>
+export interface TlsConfOptions { }
 
 export interface MeshGatewayTlsConf {
   mode?: 'TERMINATE' | 'PASSTHROUGH'
