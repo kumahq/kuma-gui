@@ -47,7 +47,7 @@
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
-                  <TextWithCopyButton :text="item.name">
+                  <XCopyButton :text="item.name">
                     <XAction
                       :to="{
                         name: 'external-service-detail-view',
@@ -63,11 +63,11 @@
                     >
                       {{ item.name }}
                     </XAction>
-                  </TextWithCopyButton>
+                  </XCopyButton>
                 </template>
 
                 <template #address="{ row }">
-                  <TextWithCopyButton
+                  <XCopyButton
                     v-if="row.networking.address"
                     :text="row.networking.address"
                   />
@@ -104,5 +104,4 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

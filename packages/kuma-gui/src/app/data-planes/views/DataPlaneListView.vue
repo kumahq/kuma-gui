@@ -145,7 +145,7 @@
                       v-for="(service, index) in row.services"
                       :key="index"
                     >
-                      <TextWithCopyButton :text="service">
+                      <XCopyButton :text="service">
                         <XAction
                           v-if="row.dataplaneType === 'standard'"
                           :to="{
@@ -173,7 +173,7 @@
                         <template v-else>
                           {{ service }}
                         </template>
-                      </TextWithCopyButton>
+                      </XCopyButton>
                     </div>
                   </XLayout>
 
@@ -294,7 +294,6 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh

@@ -41,11 +41,11 @@
           <h1
             v-if="data"
           >
-            <TextWithCopyButton :text="route.params.service">
+            <XCopyButton :text="route.params.service">
               <RouteTitle
                 :title="t('services.routes.item.title', { name: data.name })"
               />
-            </TextWithCopyButton>
+            </XCopyButton>
           </h1>
         </template>
 
@@ -85,5 +85,4 @@
 
 <script lang="ts" setup>
 import { sources } from '../sources'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

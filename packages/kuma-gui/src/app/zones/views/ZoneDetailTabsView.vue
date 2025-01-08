@@ -23,11 +23,11 @@
       >
         <template #title>
           <h1>
-            <TextWithCopyButton :text="route.params.zone">
+            <XCopyButton :text="route.params.zone">
               <RouteTitle
                 :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
               />
-            </TextWithCopyButton>
+            </XCopyButton>
           </h1>
         </template>
 
@@ -121,5 +121,4 @@
 
 <script lang="ts" setup>
 import type { ZoneOverviewSource } from '../sources'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 </script>

@@ -49,7 +49,7 @@
           data-testid="error-trace"
           max-width="auto"
         >
-          trace: <TextWithCopyButton :text="error.instance" />
+          trace: <XCopyButton :text="error.instance" />
         </XBadge>
       </div>
 
@@ -121,7 +121,6 @@ import { DangerIcon } from '@kong/icons'
 import { inject } from 'vue'
 
 import { useI18n } from '@/app/application'
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 
 const { t } = useI18n()

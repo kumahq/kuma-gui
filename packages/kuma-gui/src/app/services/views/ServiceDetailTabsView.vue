@@ -32,11 +32,11 @@
     >
       <template #title>
         <h1>
-          <TextWithCopyButton :text="route.params.service">
+          <XCopyButton :text="route.params.service">
             <RouteTitle
               :title="t('services.routes.item.title', { name: route.params.service })"
             />
-          </TextWithCopyButton>
+          </XCopyButton>
         </h1>
       </template>
 
@@ -60,7 +60,3 @@
     </AppView>
   </RouteView>
 </template>
-
-<script lang="ts" setup>
-import TextWithCopyButton from '@/app/common/TextWithCopyButton.vue'
-</script>
