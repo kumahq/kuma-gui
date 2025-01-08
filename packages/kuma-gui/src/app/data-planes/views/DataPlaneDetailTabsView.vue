@@ -92,6 +92,11 @@
                           >
                             <XCheckbox
                               v-model="specs[key]"
+                              @change="(bool: boolean) => {
+                                if(key === 'xds' && !bool) {
+                                  specs.eds = false
+                                }
+                              }"
                             >
                               {{ t(`data-planes.routes.item.download.options.${key}`) }}
                             </XCheckbox>
@@ -99,7 +104,10 @@
                               v-if="key === 'xds'"
                             >
                               <li>
-                                <XCheckbox v-model="specs.eds">
+                                <XCheckbox
+                                  v-model="specs.eds"
+                                  :disabled="!specs.xds"
+                                >
                                   {{ t('data-planes.routes.item.download.options.eds') }}
                                 </XCheckbox>
                               </li>
@@ -114,37 +122,42 @@
                       <XLayout
                         type="separated"
                       >
-                        <DataLoader
-                          variant="spinner"
-                          :src="downloading ? uri(sources, '/meshes/:mesh/dataplanes/:name/as/tarball/:spec', {
-                            mesh: route.params.mesh,
-                            name: route.params.dataPlane,
-                            spec: JSON.stringify(
-                              specs,
-                            ),
-                          }, {
-                            cacheControl: 'no-cache',
-                          }) : ''"
-                          @change="downloadBundle"
-                          @error="download"
+                        <template
+                          v-for="bundle in [downloadBundle(toggle)]"
+                          :key="typeof bundle"
                         >
-                          <template
-                            #error
+                          <DataLoader
+                            variant="spinner"
+                            :src="downloading ? uri(sources, '/meshes/:mesh/dataplanes/:name/as/tarball/:spec', {
+                              mesh: route.params.mesh,
+                              name: route.params.dataPlane,
+                              spec: JSON.stringify(
+                                specs,
+                              ),
+                            }, {
+                              cacheControl: 'no-cache',
+                            }) : ''"
+                            @change="bundle"
+                            @error="download"
                           >
-                            <XAlert
-                              appearance="warning"
-                              show-icon
+                            <template
+                              #error
                             >
-                              <XI18n
-                                t="data-planes.routes.item.download.error"
-                              />
-                            </XAlert>
-                          </template>
-                        </DataLoader>
+                              <XAlert
+                                appearance="warning"
+                                show-icon
+                              >
+                                <XI18n
+                                  t="data-planes.routes.item.download.error"
+                                />
+                              </XAlert>
+                            </template>
+                          </DataLoader>
+                        </template>
                         <XAction
                           appearance="primary"
                           type="submit"
-                          :disabled="downloading"
+                          :disabled="downloading || Object.values(specs).every(bool => !bool)"
                         >
                           {{ t('data-planes.routes.item.download.action') }}
                         </XAction>
@@ -207,14 +220,15 @@ const specs = ref({
   clusters: false,
   stats: false,
 })
-const downloadBundle = async (bundle: { name: string, url: string }) => {
+const downloadBundle = (close: () => void) => async (bundle: { name: string, url: string }) => {
   const a = document.createElement('a')
   a.download = bundle.name
   a.href = bundle.url
   setTimeout(() => { window.URL.revokeObjectURL(a.href) }, 60000)
   await Promise.resolve()
   a.click()
-
+  await Promise.resolve()
+  close()
 }
 </script>
 <style lang="scss" scoped>
