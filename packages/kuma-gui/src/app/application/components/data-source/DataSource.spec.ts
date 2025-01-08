@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest'
 import DataSource from './DataSource.vue'
 
 describe('DataSource', () => {
-  test('passing an empty uri doesn\'t fire change', async () => {
+  test("passing an empty uri doesn't fire change", async () => {
     const wrapper = mount(DataSource, {
       props: {
         src: '',

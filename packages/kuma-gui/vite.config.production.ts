@@ -52,7 +52,7 @@ export const config: UserConfigFn = () => {
                 // If we ever need !!text/markdown for anything else we should do something like !!text/icu+markdown
                 const str = md.render(data)
 
-                return str.replace(/</g, '\'<\'')
+                return str.replace(/</g, "'<'")
                   .replace(/%7B/g, '{')
                   .replace(/%7D/g, '}')
               },

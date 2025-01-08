@@ -19,7 +19,7 @@ describe('ZoneEgressOverview', () => {
   //
   describe('labels', () => {
     test(
-      'if labels isn\'t set we default it to {}',
+      "if labels isn't set we default it to {}",
       async ({ fixture }) => {
         const actual = await fixture.setup((item) => {
           if (typeof item.labels !== 'undefined') {

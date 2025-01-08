@@ -86,12 +86,12 @@ describe('ErrorBlock.vue', () => {
         invalidParameters: [
           {
             field: 'name',
-            reason: 'invalid characters. Valid characters are numbers, lowercase latin letters and \'-\', \'_\' symbols.',
+            reason: "invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols.",
           },
         ],
       }),
       expectedInvalidParameters: [
-        'Field name: invalid characters. Valid characters are numbers, lowercase latin letters and \'-\', \'_\' symbols.',
+        "Field name: invalid characters. Valid characters are numbers, lowercase latin letters and '-', '_' symbols.",
       ],
     },
   ])('has expected invalid parameters for ApiError', ({ error, expectedInvalidParameters }) => {
