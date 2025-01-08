@@ -283,6 +283,27 @@ function createEslintConfig(
         'no-useless-constructor': 'off',
         '@typescript-eslint/no-useless-constructor': 'error',
       },
+    },
+    {
+      // temporarily disabling the following rules
+      files: ['**/*.ts', '**/*.vue'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-empty-object-type': 'off'
+      }
+    },
+    {
+      // temporarily keep supporting commonjs modules (e.g. this file)
+      files: ['**/*.cjs'],
+      languageOptions: {
+        globals: {
+          ...globals.commonjs,
+        }
+      },
+      rules: {
+        '@typescript-eslint/no-require-imports': 'off'
+      }
     }
   ]
 }
