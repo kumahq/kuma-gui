@@ -236,7 +236,7 @@ const routerBack = (...args: RouteReplaceParams) => {
       router.back()
       return
     }
-  } catch (_) {
+  } catch {
     // passthrough
   }
   routeReplace(...args)
