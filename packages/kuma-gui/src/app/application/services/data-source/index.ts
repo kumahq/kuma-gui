@@ -75,6 +75,7 @@ type Hideable = EventTarget & { hidden: boolean }
 export const getSource = (doc: Hideable) => {
   return (cb: (source: RetryingEventSource) => Promise<unknown>, config: Configuration = {}) => {
     return new CallableEventSource<Configuration>(async function * (this: RetryingEventSource) {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this
       let attempts = 0
       let iterations = 0
