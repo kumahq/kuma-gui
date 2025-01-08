@@ -194,6 +194,7 @@ function createEslintConfig(
         'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
         'padded-blocks': 'off',
         'no-unreachable': 'error',
+        'prefer-promise-reject-errors': 'error',
       },
     },
     {
