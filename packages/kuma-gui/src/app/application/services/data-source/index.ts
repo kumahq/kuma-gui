@@ -23,7 +23,7 @@ type ExtractRouteParams<T extends PropertyKey> =
       ? { [k in Param | keyof ExtractRouteParams<Rest>]: string }
       : T extends `${infer _Start}:${infer Param}`
         ? { [k in Param]: string }
-        : {};
+        : {}
 
 export type ExtractSources<T extends Record<PropertyKey, unknown>> = {
   [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams) => T[Route]
@@ -75,6 +75,8 @@ type Hideable = EventTarget & { hidden: boolean }
 export const getSource = (doc: Hideable) => {
   return (cb: (source: RetryingEventSource) => Promise<unknown>, config: Configuration = {}) => {
     return new CallableEventSource<Configuration>(async function * (this: RetryingEventSource) {
+      // TODO: refactor and remove eslint-disable directive
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this
       let attempts = 0
       let iterations = 0

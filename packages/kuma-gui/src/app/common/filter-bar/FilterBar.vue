@@ -123,12 +123,12 @@ type FilterFieldDefinition = {
 }
 
 const props = withDefaults(defineProps<
-{
-  fields: Record<string, FilterFieldDefinition>
-  placeholder?: string
-  query?: string
-  id?: string
-}
+  {
+    fields: Record<string, FilterFieldDefinition>
+    placeholder?: string
+    query?: string
+    id?: string
+  }
 >(), {
   query: '',
   placeholder: '',

@@ -6,7 +6,7 @@ import { provide } from 'vue'
 
 const props = defineProps<{
   name: string
-  service: Object
+  service: object
 }>()
 provide(props.name, props.service)
 

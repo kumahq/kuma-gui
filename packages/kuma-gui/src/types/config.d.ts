@@ -1,6 +1,6 @@
 export interface AccessScope {
-  groups: String[]
-  users: String[]
+  groups: string[]
+  users: string[]
 }
 
 export interface Access {

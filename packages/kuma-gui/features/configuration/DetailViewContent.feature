@@ -2,11 +2,11 @@ Feature: Configuration: Detail view content
 
   Background:
     Given the CSS selectors
-      | Alias                         | Selector                                |
-      | details                       | [data-testid='code-block-configuration']|
-      | code-block-search-input       | [data-testid='code-block-search-input'] |
-      | code-block-regexp-mode-button | [data-testid='regexp-mode-button']      |
-      | code-block-filter-mode-button | [data-testid='filter-mode-button']      |
+      | Alias                         | Selector                                 |
+      | details                       | [data-testid='code-block-configuration'] |
+      | code-block-search-input       | [data-testid='code-block-search-input']  |
+      | code-block-regexp-mode-button | [data-testid='regexp-mode-button']       |
+      | code-block-filter-mode-button | [data-testid='filter-mode-button']       |
 
   Scenario: Configuration detail view has expected content
     Given the environment

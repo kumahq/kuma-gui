@@ -91,10 +91,10 @@ import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
 import type { BreadcrumbItem } from '@kong/kongponents'
 type AppView = {
-  addBreadcrumbs: (items: BreadcrumbItem[], sym: Symbol) => void
-  removeBreadcrumbs: (sym: Symbol) => void
+  addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
+  removeBreadcrumbs: (sym: symbol) => void
 }
-type Breadcrumbs = Map<Symbol, BreadcrumbItem[]>
+type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
 const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
 
@@ -125,7 +125,7 @@ const refresh = (map: Breadcrumbs) => {
 }
 
 const appView: AppView = {
-  addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: Symbol) => {
+  addBreadcrumbs: (items: BreadcrumbItem[] | undefined, sym: symbol) => {
     if (typeof items !== 'undefined') {
       if (map.has(sym)) {
         const current = map.get(sym)
@@ -141,7 +141,7 @@ const appView: AppView = {
       refresh(map)
     }
   },
-  removeBreadcrumbs: (sym: Symbol) => {
+  removeBreadcrumbs: (sym: symbol) => {
     if (map.has(sym)) {
       map.delete(sym)
       refresh(map)

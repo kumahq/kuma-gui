@@ -36,7 +36,7 @@
                 if (expanded) {
                   toggle()
                 }
-                cb((text: Object) => copy(toYamlRepresentation(text)), onCopyReject)
+                cb((text: object) => copy(toYamlRepresentation(text)), onCopyReject)
               }"
               :copying="expanded"
             />
@@ -52,13 +52,13 @@ import { computed } from 'vue'
 
 import { useI18n, YAML } from '@/app/application'
 
-type Resolve = (data: Object) => void
+type Resolve = (data: object) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
 
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  resource: Object
+  resource: object
   codeMaxHeight?: string
   isSearchable?: boolean
   query?: string
@@ -79,7 +79,7 @@ const emit = defineEmits<{
 }>()
 
 const yamlUniversal = computed(() => toYamlRepresentation(props.resource))
-function toYamlRepresentation(resource: Object): string {
+function toYamlRepresentation(resource: object): string {
   if ('creationTime' in resource) {
     delete resource.creationTime
   }

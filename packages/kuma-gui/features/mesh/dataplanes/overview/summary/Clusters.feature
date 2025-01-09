@@ -1,4 +1,5 @@
 Feature: mesh / dataplanes / connections / clusters
+
   Scenario: The inbound clusters tab correctly filters by 'localhost_<port>'
     Given the CSS selectors
       | Alias | Selector                                                                              |
@@ -36,7 +37,6 @@ Feature: mesh / dataplanes / connections / clusters
       body: |
         cluster.mesh-name_service_namespace_default_msvc_9090.assignment_stale: 0
       """
-
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/clusters" responds with
       """
       body: |

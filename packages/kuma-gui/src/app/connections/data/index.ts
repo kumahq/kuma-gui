@@ -170,7 +170,7 @@ const parse = (lines: string): Record<string, any> => {
     const val = ((val) => {
       try {
         return JSON.parse(val)
-      } catch (e) {
+      } catch {
         return val
       }
     })(value.join(':').trim())

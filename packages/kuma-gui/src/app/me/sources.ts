@@ -3,7 +3,7 @@ import merge from 'deepmerge'
 import { defineSources } from '../application/services/data-source'
 
 export const sources = (prefix: string = 'me', storage: Storage = window.localStorage) => {
-  const get = async (key: string): Promise<Object> => {
+  const get = async (key: string): Promise<object> => {
     try {
       return JSON.parse(storage.getItem(`${prefix}:${key}`) ?? '{}')
     } catch (e) {
@@ -11,7 +11,7 @@ export const sources = (prefix: string = 'me', storage: Storage = window.localSt
     }
     return {}
   }
-  const set = async (key: string, value: Object): Promise<Object> => {
+  const set = async (key: string, value: object): Promise<object> => {
     try {
       storage.setItem(`${prefix}:${key}`, JSON.stringify(value))
       return value
@@ -32,7 +32,7 @@ export const sources = (prefix: string = 'me', storage: Storage = window.localSt
     },
     '/me/:route/:data': async (params) => {
       const json = JSON.parse(params.data)
-      const res = merge(await get(params.route), json)
+      const res = merge<object>(await get(params.route), json)
 
       set(params.route, res)
     },

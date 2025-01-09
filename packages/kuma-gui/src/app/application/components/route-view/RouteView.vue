@@ -75,10 +75,10 @@ import type { RouteRecordRaw, RouteLocationNormalizedLoaded } from 'vue-router'
 export type RouteView = {
   name: string
   from: Ref
-  addTitle: (item: string, sym: Symbol) => void
-  removeTitle: (sym: Symbol) => void
-  addAttrs: (item: Partial<Record<string, string>>, sym: Symbol) => void
-  removeAttrs: (sym: Symbol) => void
+  addTitle: (item: string, sym: symbol) => void
+  removeTitle: (sym: symbol) => void
+  addAttrs: (item: Partial<Record<string, string>>, sym: symbol) => void
+  removeAttrs: (sym: symbol) => void
 }
 
 type StringNamedRouteRecordRaw = RouteRecordRaw & {
@@ -124,8 +124,8 @@ class UniqueId {
 const name = computed(() => props.name)
 const submit = ref((_args: any) => {})
 const title = ref<HTMLDivElement | null>(null)
-const titles = new Map<Symbol, string>()
-const attributes = new Map<Symbol, SupportedAttrs>()
+const titles = new Map<symbol, string>()
+const attributes = new Map<symbol, SupportedAttrs>()
 const from = ref<RouteLocationNormalizedLoaded | undefined>()
 
 const joinTitle = (titles: string[]) => {
@@ -143,7 +143,7 @@ const child = () => {
 const routeView = {
   name: props.name,
   from,
-  addTitle: (item: string, sym: Symbol) => {
+  addTitle: (item: string, sym: symbol) => {
     const $title = title.value
     if ($title) {
       $title.innerHTML = t('components.route-view.route-announcer', { title: item })
@@ -152,15 +152,15 @@ const routeView = {
     titles.set(sym, item)
     setTitle(joinTitle([...titles.values()]))
   },
-  removeTitle: (sym: Symbol) => {
+  removeTitle: (sym: symbol) => {
     titles.delete(sym)
     setTitle(joinTitle([...titles.values()]))
   },
-  addAttrs: (item: SupportedAttrs, sym: Symbol) => {
+  addAttrs: (item: SupportedAttrs, sym: symbol) => {
     attributes.set(sym, item)
     setAttrs([...attributes.values()])
   },
-  removeAttrs: (sym: Symbol) => {
+  removeAttrs: (sym: symbol) => {
     attributes.delete(sym)
     setAttrs([...attributes.values()])
   },
@@ -236,7 +236,7 @@ const routerBack = (...args: RouteReplaceParams) => {
       router.back()
       return
     }
-  } catch (_) {
+  } catch {
     // passthrough
   }
   routeReplace(...args)
