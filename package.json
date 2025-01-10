@@ -2,6 +2,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "overrides": {
+    "reflect-metadata": "^0.2.2"
+  },
   "engines": {
     "node": ">=20.9",
     "npm": "^10.0.0"
