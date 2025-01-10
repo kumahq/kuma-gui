@@ -117,10 +117,10 @@ jobs:
           path: ./packages/kuma-gui/main-application
 
       - env:
-          GRYPE_JSON_REPORT: steps.sbom.outputs.grype-json-report
-          GRYPE_SARIF_REPORT: steps.sbom.outputs.grype-json-report
-          SBOM_SPDX_REPORT: steps.sbom.outputs.sbom-spdx-report
-          SBOM_CYCLONEDX_REPORT: steps.sbom.outputs.sbom-cyclonedx-report
+          GRYPE_JSON_REPORT: ${{ steps.sbom.outputs.grype-json-report }}
+          GRYPE_SARIF_REPORT: ${{ steps.sbom.outputs.grype-json-report }}
+          SBOM_SPDX_REPORT: ${{ steps.sbom.outputs.sbom-spdx-report }}
+          SBOM_CYCLONEDX_REPORT: ${{ steps.sbom.outputs.sbom-cyclonedx-report }}
         run: |
           cd main-application
 
