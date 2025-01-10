@@ -55,9 +55,6 @@ jobs:
   lint-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/kuma-gui
     strategy:
       matrix:
         package: ['kuma-gui', 'config']
