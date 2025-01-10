@@ -61,19 +61,19 @@ function createEslintConfig(
   {
     tsConfigPath = 'tsconfig.json',
     componentIgnorePatterns = [],
-    versionIgnorePatterns = {}
+    versionIgnorePatterns = {},
   } = {
     tsConfigPath: 'tsconfig.json',
     componentIgnorePatterns: [],
-    versionIgnorePatterns: {}
-  }
+    versionIgnorePatterns: {},
+  },
 ) {
 
   ((properties) => {
     ['dependencies', 'devDependencies', 'peerDependencies'].forEach((item) => {
       properties[item].patternProperties = {
         ...properties[item].patternProperties,
-        ...versionIgnorePatterns[item] ?? {}
+        ...versionIgnorePatterns[item] ?? {},
       }
     })
   })(packageSchema.properties)
@@ -84,31 +84,36 @@ function createEslintConfig(
   )
 
   const importConfig = [
-    importPlugin.flatConfigs.recommended
+    importPlugin.flatConfigs.recommended,
+    {
+      rules: {
+        'import/no-extraneous-dependencies': 'error',
+      },
+    },
   ]
 
   const jsonSchemaValidatorConfig = [
     ...jsonSchemaValidatorPlugin.configs['flat/recommended'],
     {
-    rules: {
-      'json-schema-validator/no-invalid': ['error', {
-        useSchemastoreCatalog: false,
-        mergeSchemas: true,
-        schemas: [
-          {
-            fileMatch: ['package.json'],
-            // our schema allows for ignoring individual dependencies if required
-            // see ./package.schema.json patternProperties examples
-            schema: packageSchema
-          }
-        ]
-      }]}
-    }
+      rules: {
+        'json-schema-validator/no-invalid': ['error', {
+          useSchemastoreCatalog: false,
+          mergeSchemas: true,
+          schemas: [
+            {
+              fileMatch: ['package.json'],
+              // our schema allows for ignoring individual dependencies if required
+              // see ./package.schema.json patternProperties examples
+              schema: packageSchema,
+            },
+          ],
+        }]},
+    },
   ]
 
   const stylisticConfig = {
     plugins: {
-      '@stylistic': stylistic
+      '@stylistic': stylistic,
     },
     rules: {
       // Turns off some non-TypeScript rules in favor of their specific TypeScript rules to avoid false negatives:
@@ -138,7 +143,7 @@ function createEslintConfig(
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
       '@stylistic/semi': ['error', 'never'],
-    }
+    },
   }
 
   return [
@@ -153,13 +158,13 @@ function createEslintConfig(
         sourceType: 'module',
         globals: {
           ...globals.browser,
-        }
+        },
       },
       files: [
         '**/*.js',
         '**/*.ts',
         '**/*.vue',
-        '**/*.json'
+        '**/*.json',
       ],
       ignores: [
         'dist/*',
@@ -301,9 +306,9 @@ function createEslintConfig(
         '@typescript-eslint/no-empty-object-type': 'off',
         '@typescript-eslint/no-unused-expressions': ['error', {
           allowTernary: true,
-          allowShortCircuit: true
+          allowShortCircuit: true,
         }],
-      }
+      },
     },
     {
       // temporarily keep supporting commonjs modules (e.g. this file)
@@ -311,15 +316,15 @@ function createEslintConfig(
       languageOptions: {
         globals: {
           ...globals.commonjs,
-        }
+        },
       },
       rules: {
-        '@typescript-eslint/no-require-imports': 'off'
-      }
-    }
+        '@typescript-eslint/no-require-imports': 'off',
+      },
+    },
   ]
 }
 
 module.exports = {
-  createEslintConfig
+  createEslintConfig,
 }
