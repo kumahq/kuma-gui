@@ -116,18 +116,13 @@ jobs:
           ref: ${{ env.BRANCH }}
           path: ./packages/kuma-gui/main-application
 
-      - env:
-          GRYPE_JSON_REPORT: ${{ steps.sbom.outputs.grype-json-report }}
-          GRYPE_SARIF_REPORT: ${{ steps.sbom.outputs.grype-json-report }}
-          SBOM_SPDX_REPORT: ${{ steps.sbom.outputs.sbom-spdx-report }}
-          SBOM_CYCLONEDX_REPORT: ${{ steps.sbom.outputs.sbom-cyclonedx-report }}
-        run: |
+      - run: |
           cd main-application
 
           echo 'Copying Grype and SBOM reports ...'
           mkdir -p ${{ vars.HOST_REPORTS_DIRECTORY }}
-          rm -f ${{ vars.HOST_REPORTS_DIRECTORY }}/{"$GRYPE_JSON_REPORT","$GRYPE_SARIF_REPORT","$SBOM_SPDX_REPORT","$SBOM_CYCLONEDX_REPORT"}
-          mv ../../../{"$GRYPE_JSON_REPORT","$GRYPE_SARIF_REPORT","$SBOM_SPDX_REPORT","$SBOM_CYCLONEDX_REPORT"} ${{ vars.HOST_REPORTS_DIRECTORY }}
+          rm -f ${{ vars.HOST_REPORTS_DIRECTORY }}/kuma-gui*.{json,sarif}
+          mv ../../../kuma-gui*.{json,sarif} ${{ vars.HOST_REPORTS_DIRECTORY }}
 
           echo 'Replacing GUI dist files ...'
           rm -rf ${{ vars.HOST_DIST_DIRECTORY }}
