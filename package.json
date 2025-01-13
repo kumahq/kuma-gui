@@ -3,7 +3,7 @@
     "packages/*"
   ],
   "overrides": {
-    "reflect-metadata": "^0.2.2"
+    "@cucumber/messages": "^27.0.2"
   },
   "engines": {
     "node": ">=20.9",
