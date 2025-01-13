@@ -11,7 +11,7 @@ check/node:
 .lint: lint/js lint/ts lint/css lint/lock lint/gherkin
 
 .PHONY: .lint/script
-.lint/script: lint/js lint/ts  ## Dev: Run lint checs on both JS/TS
+.lint/script: lint/js lint/ts  ## Dev: Run lint checks on both JS/TS
 
 .PHONY: lint/js
 lint/js:

@@ -8,5 +8,6 @@
 
 .PHONY: .clean
 .clean:
-	find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
+	@echo "Recursively removing all node_modules/ directories in `pwd`..."; \
+		find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +
 
