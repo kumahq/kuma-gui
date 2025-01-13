@@ -5,9 +5,7 @@ include $(MK)/install.mk
 include $(MK)/check.mk
 
 .PHONY: clean
-clean:
-	@echo "Recursively removing all node_modules/ directories in `pwd`..."; \
-		$(MAKE) .clean
+clean: .clean ## Dev: Remove all `node_modules` recursively
 
 .PHONY: install
 install: .install ## Dev: Install all dependencies
