@@ -61,8 +61,8 @@ data-planes:
           eds: Include EDS
           dataplane: Dataplane Configuration
           policies: Policies
-          clusters: Envoy Clusters Logs
-          stats: Envoy Stats Logs
+          clusters: Envoy Clusters
+          stats: Envoy Stats
       about:
         title: About this Data Plane Proxy
       gateway: 'Gateway'

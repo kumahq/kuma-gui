@@ -128,7 +128,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
                   dppName: name,
                 }, {
                   include_eds: spec.eds,
-                })),
+                }), null, 2),
               }
             })
             break
