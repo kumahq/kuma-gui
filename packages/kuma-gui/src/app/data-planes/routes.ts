@@ -1,4 +1,4 @@
-import { routes as connections } from '@/app/connections/routes'
+import { routes as connections, networking } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -15,7 +15,27 @@ export const routes = () => {
             name: 'data-plane-detail-view',
             component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
             children: [
-              ...connections(),
+              ...connections('data-plane').map(item => {
+                if (item.name === 'data-plane-connection-inbound-summary-view' && item.children) {
+                  item.children.unshift(
+                    {
+                      path: 'overview',
+                      name: 'data-plane-connection-inbound-summary-overview-view',
+                      component: () => import('@/app/data-planes/views/DataPlaneInboundSummaryOverviewView.vue'),
+                    },
+                  )
+                }
+                if (item.name === 'data-plane-connection-outbound-summary-view' && item.children) {
+                  item.children.unshift(
+                    {
+                      path: 'overview',
+                      name: 'data-plane-connection-outbound-summary-overview-view',
+                      component: () => import('@/app/data-planes/views/DataPlaneOutboundSummaryOverviewView.vue'),
+                    },
+                  )
+                }
+                return item
+              }),
               ...subscriptions('data-plane'),
             ],
           },
@@ -31,21 +51,7 @@ export const routes = () => {
               },
             ],
           },
-          {
-            path: 'xds-config',
-            name: 'data-plane-xds-config-view',
-            component: () => import('@/app/data-planes/views/DataPlaneXdsConfigView.vue'),
-          },
-          {
-            path: 'stats',
-            name: 'data-plane-stats-view',
-            component: () => import('@/app/data-planes/views/DataPlaneStatsView.vue'),
-          },
-          {
-            path: 'clusters',
-            name: 'data-plane-clusters-view',
-            component: () => import('@/app/data-planes/views/DataPlaneClustersView.vue'),
-          },
+          ...networking('data-plane'),
           {
             path: 'config',
             name: 'data-plane-config-view',

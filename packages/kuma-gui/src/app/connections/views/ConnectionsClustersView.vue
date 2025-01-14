@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="data-plane-clusters-view"
+    :name="props.routeName"
     :params="{
       mesh: '',
       dataPlane: '',
@@ -50,5 +50,8 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { sources } from '@/app/connections/sources'
+import { sources } from '../sources'
+const props = defineProps<{
+  routeName: string
+}>()
 </script>

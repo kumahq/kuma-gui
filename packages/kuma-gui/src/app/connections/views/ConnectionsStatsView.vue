@@ -1,33 +1,32 @@
 <template>
   <RouteView
-    name="data-plane-xds-config-view"
+    :name="props.routeName"
     :params="{
       mesh: '',
       dataPlane: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      includeEds: false,
     }"
     v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
-      :title="t('data-planes.routes.item.navigation.data-plane-xds-config-view')"
+      :title="t('data-planes.routes.item.navigation.data-plane-stats-view')"
     />
     <AppView>
       <XCard>
         <DataLoader
-          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/xds/:endpoints', {
+          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
             mesh: route.params.mesh,
             name: route.params.dataPlane,
-            endpoints: String(route.params.includeEds),
+            address: props.networking.inboundAddress,
           })"
-          v-slot="{ data, refresh }"
+          v-slot="{ data: statsData, refresh }"
         >
           <XCodeBlock
             language="json"
-            :code="JSON.stringify(data, null, 2)"
+            :code="statsData!.raw"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -37,10 +36,6 @@
             @reg-exp-mode-change="route.update({ codeRegExp: $event })"
           >
             <template #primary-actions>
-              <XCheckbox
-                v-model="route.params.includeEds"
-                label="Include Endpoints"
-              />
               <XAction
                 action="refresh"
                 appearance="primary"
@@ -57,5 +52,11 @@
 </template>
 
 <script lang="ts" setup>
-import { sources } from '@/app/connections/sources'
+import { sources } from '../sources'
+import type { DataplaneNetworking } from '@/app/data-planes/data'
+
+const props = defineProps<{
+  networking: DataplaneNetworking
+  routeName: string
+}>()
 </script>

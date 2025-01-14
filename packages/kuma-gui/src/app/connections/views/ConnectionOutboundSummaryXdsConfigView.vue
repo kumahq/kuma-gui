@@ -9,7 +9,7 @@
       connection: '',
       includeEds: false,
     }"
-    name="connection-outbound-summary-xds-config-view"
+    :name="props.routeName"
     v-slot="{ t, route, uri }"
   >
     <RouteTitle
@@ -57,4 +57,7 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
+const props = defineProps<{
+  routeName: string
+}>()
 </script>

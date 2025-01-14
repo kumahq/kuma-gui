@@ -5,7 +5,7 @@
       dataPlane: '',
       connection: '',
     }"
-    name="connection-outbound-summary-overview-view"
+    :name="props.routeName"
     v-slot="{ t, route, uri }"
   >
     <AppView>
@@ -266,7 +266,6 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
-import type { DataplaneOverview } from '@/app/data-planes/data/'
 import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import { ResourceRule } from '@/app/rules/data/ResourceRule'
@@ -274,7 +273,7 @@ import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: Record<string, any>
-  dataplaneOverview: DataplaneOverview
+  routeName: string
 }>()
 
 const ruleForCluster = (cluster: any, rule: ResourceRule) => {
