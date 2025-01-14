@@ -2,6 +2,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "overrides": {
+    "@cucumber/messages": "^27.0.2"
+  },
   "engines": {
     "node": ">=20.9",
     "npm": "^10.0.0"
