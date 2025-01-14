@@ -1,5 +1,5 @@
 SHELL := /usr/bin/env bash
-MK := ./packages/kuma-gui/mk
+MK := ./packages/config/src/mk
 
 include $(MK)/install.mk
 include $(MK)/check.mk

@@ -1,4 +1,4 @@
-MK := ../kuma-gui/mk
+MK := ./src/mk
 
 include $(MK)/check.mk
 

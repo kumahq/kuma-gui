@@ -1,5 +1,4 @@
 {
-  "*.{js,ts,vue}": "make -C ./packages/kuma-gui -j2 lint/script",
-  "*.{css,scss,vue}": "make -C ./packages/kuma-gui lint/css",
-  "package-lock.json": "make -C ./packages/kuma-gui lint/lock"
+  "*.{cjs,js,ts,vue}": "make -j2 .lint/script",
+  "*.{css,scss,vue}": "make lint/css"
 }

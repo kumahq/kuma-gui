@@ -2,7 +2,7 @@
 # It should only be used for adding "non-dot" aliases and documentation
 
 SHELL := /usr/bin/env bash
-MK := ./mk
+MK := ../config/src/mk
 NODE_VERSION:=v$(shell cat ../../.nvmrc)
 NPM_WORKFLOW_CONFIG_PATH ?= $(shell readlink -f ../config)
 
