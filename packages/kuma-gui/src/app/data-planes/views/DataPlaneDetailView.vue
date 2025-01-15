@@ -261,7 +261,7 @@
                                 <XAction
                                   data-action
                                   :to="{
-                                    name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'connection-inbound-summary-overview-view')(String(_route.name)),
+                                    name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'data-plane-connection-inbound-summary-overview-view')(String(_route.name)),
                                     params: {
                                       connection: item.name,
                                     },
@@ -374,7 +374,7 @@
                                   <XAction
                                     data-action
                                     :to="{
-                                      name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'connection-outbound-summary-overview-view')(String(_route.name)),
+                                      name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'data-plane-connection-outbound-summary-overview-view')(String(_route.name)),
                                       params: {
                                         connection: name,
                                       },
@@ -424,7 +424,7 @@
               <component
                 :is="child.Component"
                 :data="route.params.subscription.length > 0 ? props.data.dataplaneInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? props.data.dataplane.networking.inbounds : traffic?.outbounds || {}"
-                :dataplane-overview="props.data"
+                :networking="props.data.dataplane.networking"
               />
             </SummaryView>
           </RouterView>

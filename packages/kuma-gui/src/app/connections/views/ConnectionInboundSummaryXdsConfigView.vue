@@ -8,7 +8,7 @@
       dataPlane: '',
       connection: '',
     }"
-    name="connection-inbound-summary-xds-config-view"
+    :name="props.routeName"
     v-slot="{ t, route, uri }"
   >
     <RouteTitle
@@ -51,10 +51,10 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
+import type { DataplaneInbound } from '@/app/data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneInbound
-  dataplaneOverview: DataplaneOverview
+  routeName: string
 }>()
 </script>

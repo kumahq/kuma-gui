@@ -190,10 +190,13 @@
             </template>
           </XTabs>
 
-          <RouterView v-slot="child">
+          <RouterView
+            v-slot="{ Component }"
+          >
             <component
-              :is="child.Component"
+              :is="Component"
               :data="data"
+              :networking="data?.dataplane.networking"
               :mesh="props.mesh"
             />
           </RouterView>

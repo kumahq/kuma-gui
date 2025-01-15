@@ -8,7 +8,7 @@
       dataPlane: '',
       connection: '',
     }"
-    name="connection-outbound-summary-stats-view"
+    :name="props.routeName"
     v-slot="{ route, uri }"
   >
     <RouteTitle
@@ -20,7 +20,7 @@
         :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
           mesh: route.params.mesh,
           name: route.params.dataPlane,
-          address: props.dataplaneOverview.dataplane.networking.inboundAddress,
+          address: props.networking.inboundAddress,
         })"
 
         v-slot="{ data, refresh }"
@@ -58,8 +58,9 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
-import type { DataplaneOverview } from '@/app/data-planes/data/'
+import type { DataplaneNetworking } from '@/app/data-planes/data/'
 const props = defineProps<{
-  dataplaneOverview: DataplaneOverview
+  networking: DataplaneNetworking
+  routeName: string
 }>()
 </script>

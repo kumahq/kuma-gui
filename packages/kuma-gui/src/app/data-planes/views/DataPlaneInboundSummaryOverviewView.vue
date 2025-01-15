@@ -5,7 +5,7 @@
       dataPlane: '',
       connection: '',
     }"
-    name="connection-inbound-summary-overview-view"
+    :name="props.routeName"
     v-slot="{ t, route, uri }"
   >
     <AppView>
@@ -224,5 +224,6 @@ import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
   data: DataplaneInbound
+  routeName: string
 }>()
 </script>

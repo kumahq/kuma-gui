@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="connection-inbound-summary-view"
+    :name="props.routeName"
     :params="{
       connection: '',
       inactive: false,
@@ -11,7 +11,7 @@
     <!-- otherwise find the exact inbound -->
     <DataCollection
       :items="props.data"
-      :predicate="props.dataplaneOverview.dataplane.networking.type === 'gateway' ? (item) => true : (item) => item.name === route.params.connection"
+      :predicate="props.networking.type === 'gateway' ? (item) => true : (item) => item.name === route.params.connection"
       :find="true"
       v-slot="{ items }"
     >
@@ -38,7 +38,7 @@
                 },
               }"
             >
-              {{ t(`connections.routes.item.navigation.${name.split('-')[3]}`) }}
+              {{ t(`connections.routes.item.navigation.${name.split('-')[5]}`) }}
             </XAction>
           </template>
         </XTabs>
@@ -47,7 +47,7 @@
           <component
             :is="child.Component"
             :data="items[0]"
-            :dataplane-overview="props.dataplaneOverview"
+            :networking="props.networking"
           />
         </RouterView>
       </AppView>
@@ -56,10 +56,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneInbound, DataplaneOverview } from '@/app/data-planes/data/'
+import type { DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data/'
 
 const props = defineProps<{
   data: DataplaneInbound[]
-  dataplaneOverview: DataplaneOverview
+  networking: DataplaneNetworking
+  routeName: string
 }>()
 </script>

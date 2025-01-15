@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="connection-outbound-summary-view"
+    :name="props.routeName"
     :params="{
       connection: '',
       inactive: false,
@@ -29,7 +29,7 @@
 
             }"
           >
-            {{ t(`connections.routes.item.navigation.${item.name.split('-')[3]}`) }}
+            {{ t(`connections.routes.item.navigation.${item.name.split('-')[5]}`) }}
           </XAction>
         </template>
       </XTabs>
@@ -43,7 +43,7 @@
           <component
             :is="Component"
             :data="items[0][1]"
-            :dataplane-overview="props.dataplaneOverview"
+            :dataplane-overview="props.networking"
           />
         </DataCollection>
       </RouterView>
@@ -52,9 +52,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneOverview } from '@/app/data-planes/data/'
+import type { DataplaneNetworking } from '@/app/data-planes/data/'
 const props = defineProps<{
   data: Record<string, any>
-  dataplaneOverview: DataplaneOverview
+  networking: DataplaneNetworking
+  routeName: string
 }>()
 </script>

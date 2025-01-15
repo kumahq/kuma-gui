@@ -8,7 +8,7 @@
       dataPlane: '',
       connection: '',
     }"
-    name="connection-outbound-summary-clusters-view"
+    :name="props.routeName"
     v-slot="{ route, uri }"
   >
     <RouteTitle
@@ -61,4 +61,7 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
+const props = defineProps<{
+  routeName: string
+}>()
 </script>
