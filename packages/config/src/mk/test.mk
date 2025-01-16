@@ -26,6 +26,7 @@ ifdef KUMA_TEST_BROWSER
 			--e2e \
 			--browser $(KUMA_TEST_BROWSER)
 else
+	@while ! nc -z localhost 5681; do sleep 1; done;
 	@CYPRESS_video=true \
 	TZ=UTC \
 		npx cypress \
