@@ -43,7 +43,7 @@
           name: props.name,
           update: routeUpdate,
           replace: routeReplace,
-          params: routeParams,
+          params: reactivePropsParams,
           back: routerBack,
           children,
           child,
@@ -172,10 +172,24 @@ const routeView = {
     setAttrs([...attributes.values()])
   },
 }
-const routeParams = reactive<Params>(structuredClone(props.params) as Params)
+const reactivePropsParams = reactive<Params>(structuredClone(props.params) as Params)
+const routeParams = ref<typeof route.params>(route.params)
+const redirected = ref<boolean>(false)
+
+watch(() => route.params, () => {
+  if(route.name === props.name) {
+    // in case there is a mismatch in current stored route params and actual route params (URL)
+    // this means a navigation happened and the refs can be reset 
+    Object.entries(route.params).forEach(([key, value]) => {
+      if(routeParams.value[key] !== value) {
+        redirected.value = false
+        routeParams.value = route.params
+      }
+    })
+  }
+})
 
 // when any URL params change, normalize/validate/default and reset our actual application params
-const redirected = ref<boolean>(false)
 watch(() => {
   return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
 }, async () => {
@@ -201,21 +215,21 @@ watch(() => {
     const param = urlParam(typeof params[prop] === 'undefined' ? '' : params[prop])
     prev[prop] = normalizeUrlParam(param, def)
     return prev
-  }, routeParams as Record<string, string | number | boolean>)
+  }, reactivePropsParams as Record<string, string | number | boolean>)
 
   // only one first load, if any params are missing from the URL/query
   // redirect/add the query params to the URL.
   // this ensures any JS applied defaults are reflected in the URL
   if(!redirected.value) {
-    // we only want query params here
-    const params = Object.entries(routeParams || {}).reduce((prev, [key, value]) => {
+  // we only want query params here
+    const params = Object.entries(reactivePropsParams || {}).reduce((prev, [key, value]) => {
       if (typeof route.params[key] === 'undefined') {
         prev[key] = value
       }
       return prev
     }, {} as Record<string, string | boolean | undefined>)
     if (Object.keys(params).length > 0) {
-      router.replace({
+      await router.replace({
         query: cleanQuery(params, route.query),
       })
     }
