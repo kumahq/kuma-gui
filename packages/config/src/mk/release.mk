@@ -37,14 +37,14 @@
 # from 872 to 157 at the time of this change.
 .PHONY: .release/prune
 .release/prune:
-	@if [ -z "$(NPM_WORKFLOW_CONFIG_PATH)" ]; then \
-		echo "Error: NPM_WORKFLOW_CONFIG_PATH is not set or empty."; \
+	@if [ -z "$(KUMAHQ_CONFIG)" ]; then \
+		echo "Error: KUMAHQ_CONFIG is not set or empty."; \
 		exit 1; \
 	fi
-	@if [ ! -d "$(NPM_WORKFLOW_CONFIG_PATH)" ]; then \
-		echo "Error: NPM_WORKFLOW_CONFIG_PATH does not exist or is not a directory: $(NPM_WORKFLOW_CONFIG_PATH)"; \
+	@if [ ! -d "$(KUMAHQ_CONFIG)" ]; then \
+		echo "Error: KUMAHQ_CONFIG does not exist or is not a directory: $(KUMAHQ_CONFIG)"; \
 		exit 1; \
 	fi
-	npm pkg delete devDependencies.@kumahq/config
-	rm -rf $(NPM_WORKFLOW_CONFIG_PATH)
-	npm install --package-lock-only
+	@echo '$(shell node -e "console.log(require('@kumahq/config').ci.depsToDevDeps('$(KUMAHQ_CONFIG)/package.json'))")' \
+		> $(KUMAHQ_CONFIG)/package.json
+	@npm install --package-lock-only

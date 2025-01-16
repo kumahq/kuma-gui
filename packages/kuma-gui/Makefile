@@ -2,14 +2,14 @@
 # It should only be used for adding "non-dot" aliases and documentation
 
 SHELL := /usr/bin/env bash
-MK := ../config/src/mk
-NODE_VERSION:=v$(shell cat ../../.nvmrc)
-NPM_WORKFLOW_CONFIG_PATH ?= $(shell readlink -f ../config)
+
+KUMAHQ_CONFIG := $(shell npm query .workspace | jq -r '.[] | select(.name == "@kumahq/config") | .path')
+MK := $(KUMAHQ_CONFIG)/src/mk
 
 ## make help: if you're aren't sure use `make help`
 .DEFAULT_GOAL := help
-
 include $(MK)/help.mk
+
 include $(MK)/run.mk
 include $(MK)/install.mk
 include $(MK)/check.mk
@@ -27,6 +27,9 @@ install/sync: .install/sync
 
 .PHONY: help
 help: .help ## Display this help screen
+
+.PHONY: clean
+clean: .clean ## Dev: Delete all node_modules directories
 
 .PHONY: install
 install: .install ## Dev: install all dependencies (runs before `make run`)
