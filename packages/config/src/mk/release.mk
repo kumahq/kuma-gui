@@ -35,16 +35,21 @@
 #
 # This reduces incorrect SBOM entries, decreasing cataloged dependencies
 # from 872 to 157 at the time of this change.
+.PHONY: .sbom/exclude
+.sbom/exclude: EXCLUDE_PATH?=$(KUMAHQ_CONFIG)
+.sbom/exclude:
+	@if [ -z "$(EXCLUDE_PATH)" ]; then \
+		echo "Error: EXCLUDE_PATH is not set or empty."; \
+		exit 1; \
+	fi
+	@if [ ! -d "$(EXCLUDE_PATH)" ]; then \
+		echo "Error: EXCLUDE_PATH does not exist or is not a directory: $(EXCLUDE_PATH)"; \
+		exit 1; \
+	fi
+	@echo '$(shell node -e "console.log(require('@kumahq/config').ci.depsToDevDeps('$(EXCLUDE_PATH)/package.json'))")' \
+		> $(EXCLUDE_PATH)/package.json
+
 .PHONY: .release/prune
 .release/prune:
-	@if [ -z "$(NPM_WORKFLOW_CONFIG_PATH)" ]; then \
-		echo "Error: NPM_WORKFLOW_CONFIG_PATH is not set or empty."; \
-		exit 1; \
-	fi
-	@if [ ! -d "$(NPM_WORKFLOW_CONFIG_PATH)" ]; then \
-		echo "Error: NPM_WORKFLOW_CONFIG_PATH does not exist or is not a directory: $(NPM_WORKFLOW_CONFIG_PATH)"; \
-		exit 1; \
-	fi
-	npm pkg delete devDependencies.@kumahq/config
-	rm -rf $(NPM_WORKFLOW_CONFIG_PATH)
-	npm install --package-lock-only
+	@$(MAKE) .sbom/exclude EXCLUDE_PATH=$(KUMAHQ_CONFIG)
+	@npm install --package-lock-only
