@@ -1,7 +1,7 @@
 <template>
   <component
     :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
-    :class="['x-layout', props.type, props.size]"
+    :class="['x-layout', props.type, props.size, props.space]"
   >
     <slot name="default" />
   </component>
@@ -12,11 +12,13 @@ const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
   size?: 'small' | 'normal'
+  space?: 'full'
   truncate?: boolean
 }>(), {
   type: 'stack',
   size: 'normal',
   truncate: false,
+  space: undefined,
 })
 </script>
 <style lang="scss" scoped>
@@ -31,6 +33,11 @@ const props = withDefaults(defineProps<{
   flex-wrap: wrap;
   align-items: center;
   gap: $kui-space-40;
+
+  &.full {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 .columns {
   --threshold: 40rem;
