@@ -45,7 +45,7 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
   try {
     globals.KUMA_UTM_QUERY_PARAMS = i18n.t('common.product.utm_query_params' as Parameters<typeof i18n['t']>[0])
     globals.KUMA_PRODUCT_NAME = i18n.t('common.product.name' as Parameters<typeof i18n['t']>[0])
-  } catch (e) {
+  } catch {
     // passthrough
   }
   return {

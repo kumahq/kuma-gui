@@ -2,54 +2,66 @@
 
 The `XI18n` component offers several ways to translate/localize strings.
 
+Please note the `:strings` property is primarily used for testing purposes.
+
 <Story
-  :params="{param: 'param'}"
-  v-slot="{ params }"
+  height="600"
 >
-  <figure>
     <XI18n
       v-slot="{ t }"
     >
-      {{ t('http.api.property.usingT') }}
+      {{ t('http.api.property.usingExportedT') }}
     </XI18n>
-    <figcaption>Using exported `t`</figcaption>
-  </figure>
-  <figure>
+    <hr />
     <XI18n
       prefix="http.api.property"
       v-slot="{ t }"
     >
-      {{ t('prefixingWithT') }}
+      {{ t('.httpPropertyPrefixingWithExportedT') }}
     </XI18n>
-    <figcaption>Prefixing exported `t`</figcaption>
-  </figure>
-  <figure>
+    <hr />
     <XI18n
-      t="http.api.property.<strong>hi</strong>"
-    >
-    </XI18n>
-    <figcaption>Prefixing exported `t`</figcaption>
-  </figure>
-  <figure>
-    <XI18n
-      :strings="{ hi: 'there' }"
+      prefix="http.api.property"
       v-slot="{ t }"
     >
-      {{ t('hi') }}
+      {{ t('.<strong>unlikely path with HTML</strong>') }}
     </XI18n>
-    <figcaption>Prefixing exported `t`</figcaption>
-  </figure>
-  <figure>
+    <hr />
     <XI18n
-      :strings="{ hi: 'there { var }' }"
-      t="hi"
+      prefix="http.api.property.<strong>unlikely path with HTML</strong>"
+      v-slot="{ t }"
+    >
+      {{ t('and <strong>some more</strong>') }}
+    </XI18n>
+    <hr />
+    <XI18n
+      path="http.api.property.<strong>unlikely path with HTML</strong>"
+    />
+    <hr />
+    <XI18n
+      :strings="{ path: 'strings prop' }"
+      v-slot="{ t }"
+    >
+      {{ t('path') }}
+    </XI18n>
+    <hr />
+    <XI18n
+      :strings="(e) => ({ path: e('<strong>slotted i18n text</strong> that allows{ var }') })"
+      path="path"
     >
       <template
         #var
       >
-        <strong>here {{'<strong>there</strong>'}}</strong>
+        <XAction appearance="primary"> components {{'<strong>and escaped HTML</strong>'}}</XAction>
       </template>
     </XI18n>
-    <figcaption>Prefixing exported `t`</figcaption>
-  </figure>
+<template
+  v-for="html in ['<strong>escaped HTML</strong>']"
+>
+    <XI18n
+      :strings="(e) => ({ path: e('<strong>inline i18n text</strong> that allows { var }') })"
+      path="path"
+      :params="{ var: html }"
+    />
+</template>
 </Story>
