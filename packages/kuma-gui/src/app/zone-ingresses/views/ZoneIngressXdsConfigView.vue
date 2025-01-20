@@ -36,8 +36,9 @@
           >
             <template #primary-actions>
               <XCheckbox
-                v-model="route.params.includeEds"
+                :model-value="route.params.includeEds"
                 label="Include Endpoints"
+                @change="(value) => route.update({ includeEds: value})"
               />
               <XAction
                 action="refresh"
