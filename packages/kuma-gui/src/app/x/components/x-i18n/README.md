@@ -17,7 +17,8 @@ Please note the `:strings` property is primarily used for testing purposes.
       prefix="http.api.property"
       v-slot="{ t }"
     >
-      {{ t('.httpPropertyPrefixingWithExportedT') }}
+      {{ t('.httpPropertyPrefixingWithExportedT') }}<br />
+      {{ t('http.api.property.withoutPrefix') }}<br />
     </XI18n>
     <hr />
     <XI18n
@@ -25,13 +26,6 @@ Please note the `:strings` property is primarily used for testing purposes.
       v-slot="{ t }"
     >
       {{ t('.<strong>unlikely path with HTML</strong>') }}
-    </XI18n>
-    <hr />
-    <XI18n
-      prefix="http.api.property.<strong>unlikely path with HTML</strong>"
-      v-slot="{ t }"
-    >
-      {{ t('and <strong>some more</strong>') }}
     </XI18n>
     <hr />
     <XI18n

@@ -67,11 +67,11 @@ const props = withDefaults(defineProps<{
 const i18n = typeof props.strings !== 'undefined' ? createI18n(typeof props.strings === 'function' ? props.strings(icuEscapeHtml) : props.strings, useEnv()) : useI18n()
 
 const t = (...rest: Parameters<typeof i18n['t']>) => {
-  rest[0] = `${props.prefix}${rest[0]}`
+  rest[0] = `${rest[0].startsWith('.') ? props.prefix : ''}${rest[0]}`
   return i18n.t(...rest)
 }
 const safeT = (...rest: Parameters<typeof i18n['t']>) => {
-  rest[0] =`${props.prefix.length > 0 ? `${escapeHtml(props.prefix)}` : ''}${escapeHtml(rest[0])}`
+  rest[0] =`${rest[0].startsWith('.') && props.prefix.length > 0 ? `${escapeHtml(props.prefix)}` : ''}${escapeHtml(rest[0])}`
   if(typeof rest[1] !== 'undefined') {
     rest[1] = Object.fromEntries(Object.entries(props.params).map(([key, value]) => [key, typeof value === 'string' ? escapeHtml(value) : '']))
     // we overwrite any params with safe hardcoded Teleport slots,
