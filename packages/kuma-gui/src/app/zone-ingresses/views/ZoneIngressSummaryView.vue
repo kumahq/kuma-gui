@@ -84,9 +84,7 @@
                 </XLayout>
               </header>
               <template v-if="route.params.format === 'structured'">
-                <XLayout
-                  type="stack"
-                  size="none"
+                <div
                   class="stack-with-borders"
                   data-testid="structured-view"
                 >
@@ -160,7 +158,7 @@
                       </template>
                     </template>
                   </DefinitionCard>
-                </XLayout>
+                </div>
               </template>
               <template v-else>
                 <div>

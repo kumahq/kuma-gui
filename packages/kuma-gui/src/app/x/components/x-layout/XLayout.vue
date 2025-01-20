@@ -11,7 +11,7 @@ import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
-  size?: 'small' | 'normal' | 'max' | 'none'
+  size?: 'small' | 'normal' | 'max'
   truncate?: boolean
 }>(), {
   type: 'stack',
