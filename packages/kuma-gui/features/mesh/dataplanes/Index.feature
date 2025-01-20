@@ -31,11 +31,10 @@ Feature: mesh / dataplanes / index
             networking:
               gateway: !!js/undefined
               inbound:
-                - health:
-                    ready: true
-                  tags:
+                - tags:
                     kuma.io/service: service-1
                     kuma.io/zone: zone-1
+                  state: Ready
           dataplaneInsight:
             mTLS:
               certificateExpirationTime: 2023-11-03T09:10:17Z
@@ -79,10 +78,9 @@ Feature: mesh / dataplanes / index
               networking:
                 gateway: !!js/undefined
                 inbound:
-                  - health:
-                      ready: true
-                    tags:
+                  - tags:
                       kuma.io/service: !!js/undefined
+                    state: NotReady
             dataplaneInsight:
               mTLS:
                 certificateExpirationTime: !!js/undefined
