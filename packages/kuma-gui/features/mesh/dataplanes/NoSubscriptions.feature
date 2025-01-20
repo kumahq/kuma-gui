@@ -12,11 +12,6 @@ Feature: dataplanes / no-subscriptions
       """
     And the URL "/meshes/default/dataplanes/backend/_overview" responds with
       """
-      body:
-        dataplane:
-          networking:
-            inbound:
-              - state: NotReady
       """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     And the "$detail-view" element contains "backend"
