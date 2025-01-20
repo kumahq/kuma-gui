@@ -50,9 +50,12 @@ Feature: Zone Ingress summary
     When I visit the "/zones/zone-1/ingresses/zone-ingress-1?page=2&size=50" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
-    When I select "yaml" from the "$select-preference" element
-    Then the "[data-testid='k-code-block']" element exists
+    When I click the "$select-preference" element
+    When I click the "[data-testid='select-item-yaml'] button" element
+    Then the URL contains "format=yaml"
+    And the "[data-testid='k-code-block']" element exists
     When I select "structured" from the "$select-preference" element
-    Then the "$structured-view" element exists
+    Then the URL contains "format=structured"
+    And the "$structured-view" element exists
 
 
