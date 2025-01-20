@@ -3,7 +3,8 @@
 
 SHELL := /usr/bin/env bash
 
-KUMAHQ_CONFIG := $(shell npm query .workspace | jq -r '.[] | select(.name == "@kumahq/config") | .path')
+NPM_WORKSPACE_ROOT := $(shell npm prefix)
+KUMAHQ_CONFIG := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/config") | .key')
 MK := $(KUMAHQ_CONFIG)/src/mk
 
 ## make help: if you're aren't sure use `make help`

@@ -1,6 +1,6 @@
 NPM_WORKSPACE_ROOT := $(shell npm prefix)
 NODE_VERSION := v$(shell cat $(NPM_WORKSPACE_ROOT)/.nvmrc)
-KUMAHQ_CONFIG := $(shell npm query .workspace | jq -r '.[] | select(.name == "@kumahq/config") | .path')
+KUMAHQ_CONFIG := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/config") | .key')
 
 .PHONY: .help
 .help: ## Display this help screen
@@ -21,10 +21,10 @@ KUMAHQ_CONFIG := $(shell npm query .workspace | jq -r '.[] | select(.name == "@k
 .PHONY: confirm
 confirm:
 	@if [[ -z "$(CI)" ]]; then \
-		CONFIRM="" ; \
+		REPLY="" ; \
 		read -p "=== Please confirm [y/n]: " -r ; \
-		if [[ ! $$CONFIRM =~ ^[Yy]$$ ]]; then \
-			echo "Aborting" ; \
+		if [[ ! $$REPLY =~ ^[Yy]$$ ]]; then \
+			echo $$REPLY ; \
 			exit 1 ; \
 		else \
 			exit 0; \
