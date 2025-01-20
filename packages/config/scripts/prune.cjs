@@ -10,6 +10,6 @@ module.exports = {
         ...pkg.dependencies,
         ...pkg.devDependencies,
       },
-    })
+    }, null, 2)
   },
 }

@@ -46,8 +46,9 @@
 		echo "Error: EXCLUDE_PATH does not exist or is not a directory: $(EXCLUDE_PATH)"; \
 		exit 1; \
 	fi
-	@echo '$(shell cd $(KUMAHQ_CONFIG) && node -e "console.log(require('./scripts/prune.cjs').depsToDevDeps('$(EXCLUDE_PATH)/package.json'))")' \
-		> $(EXCLUDE_PATH)/package.json
+	@node -e "console.log(require('$(KUMAHQ_CONFIG)/scripts/prune.cjs').depsToDevDeps('$(EXCLUDE_PATH)/package.json'))" > $(EXCLUDE_PATH)/package-pruned.json
+	@rm $(EXCLUDE_PATH)/package.json
+	@mv $(EXCLUDE_PATH)/package-pruned.json $(EXCLUDE_PATH)/package.json
 
 .PHONY: .release/prune
 .release/prune:
