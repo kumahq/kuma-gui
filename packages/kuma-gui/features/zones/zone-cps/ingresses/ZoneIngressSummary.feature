@@ -47,7 +47,7 @@ Feature: Zone Ingress summary
       """
       KUMA_ZONEINGRESS_COUNT: 1
       """
-    When I visit the "/zones/zone-1/ingresses/zone-ingress-1?page=2&size=50" URL
+    When I visit the "/zones/zone-1/ingresses/zone-ingress-1" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element
