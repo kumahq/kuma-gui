@@ -43,7 +43,7 @@
           <component
             :is="Component"
             :data="items[0][1]"
-            :dataplane-overview="props.networking"
+            :networking="props.networking"
           />
         </DataCollection>
       </RouterView>

@@ -1,18 +1,5 @@
 const { sync: globSync } = require('glob')
-const { readFileSync: read } = require('fs')
 
-const depsToDevDeps = (path) => {
-  const pkg = JSON.parse(read(path, 'utf-8'))
-  return JSON.stringify({
-    ...pkg,
-    dependencies: {},
-    peerDependencies: {},
-    devDependencies: {
-      ...pkg.dependencies,
-      ...pkg.devDependencies,
-    },
-  })
-}
 /**
  * @param {number} length
  * @param {string} prefix
@@ -46,5 +33,4 @@ function shuffleArray(array) {
 
 module.exports = {
   getPartitionedTestFiles,
-  depsToDevDeps,
 }
