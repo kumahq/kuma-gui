@@ -80,6 +80,7 @@ Feature: mesh / dataplanes / index
                 inbound:
                   - tags:
                       kuma.io/service: !!js/undefined
+                    state: Ready
             dataplaneInsight:
               mTLS:
                 certificateExpirationTime: !!js/undefined
