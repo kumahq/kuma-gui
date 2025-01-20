@@ -10,9 +10,6 @@ Feature: dataplanes / no-subscriptions
       KUMA_SUBSCRIPTION_COUNT: 0
       KUMA_DATAPLANEINBOUND_COUNT: 1
       """
-    And the URL "/meshes/default/dataplanes/backend/_overview" responds with
-      """
-      """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     And the "$detail-view" element contains "backend"
     And the "$overview-content" element contains "offline"
