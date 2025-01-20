@@ -1,7 +1,7 @@
 <template>
   <component
     :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
-    :class="['x-layout', props.type, props.size, props.space]"
+    :class="['x-layout', props.type, props.size]"
   >
     <slot name="default" />
   </component>
@@ -11,14 +11,12 @@ import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
-  size?: 'small' | 'normal'
-  space?: 'full'
+  size?: 'small' | 'normal' | 'max'
   truncate?: boolean
 }>(), {
   type: 'stack',
   size: 'normal',
   truncate: false,
-  space: undefined,
 })
 </script>
 <style lang="scss" scoped>
@@ -28,14 +26,16 @@ const props = withDefaults(defineProps<{
 .stack.small > * + * {
   margin-block-start: $kui-space-40;
 }
+.max {
+  width: 100%;
+}
 .separated:not(.k-truncate) {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: $kui-space-40;
 
-  &.full {
-    width: 100%;
+  &.max {
     justify-content: space-between;
   }
 }

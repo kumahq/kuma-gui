@@ -54,12 +54,12 @@
             </template>
 
             <XLayout
-              variant="stack"
+              type="stack"
             >
               <header>
                 <XLayout
                   type="separated"
-                  space="full"
+                  size="max"
                 >
                   <h3>
                     {{ t('zone-ingresses.routes.item.config') }}
@@ -85,7 +85,7 @@
               </header>
               <template v-if="route.params.format === 'structured'">
                 <XLayout
-                  variant="stack"
+                  type="stack"
                   data-testid="structured-view"
                 >
                   <DefinitionCard
