@@ -86,6 +86,7 @@
               <template v-if="route.params.format === 'structured'">
                 <XLayout
                   type="stack"
+                  size="unset"
                   class="stack-with-borders"
                   data-testid="structured-view"
                 >
