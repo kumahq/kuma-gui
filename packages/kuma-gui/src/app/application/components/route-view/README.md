@@ -96,7 +96,7 @@ Defining these "dependencies" here has several advantages:
 5. Route params can be used as a state for input elements. In order to retrieve and update the route properties
    we can use events. For example `<KCheckBox :model-value="route.params.checked" @change="(value) => route.update({ checked: value })" />`
    will automatically sync the checkbox state to the `?checked` query parameter. This aims to make it easier to maintain
-   state in the browser URL and harder not to. Note that this does not work when using the bi-directional `v-model` attribute.
+   state in the browser URL and harder not to. Note that this does not work when using the two-way binding attribute `v-model`.
 
 ## Setting the `<title>` of the page
 
