@@ -84,76 +84,81 @@
                 </XLayout>
               </header>
               <template v-if="route.params.format === 'structured'">
-                <DefinitionCard
-                  layout="horizontal"
+                <XLayout
+                  variant="stack"
+                  data-testid="structured-view"
                 >
-                  <template #title>
-                    {{ t('http.api.property.status') }}
-                  </template>
+                  <DefinitionCard
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('http.api.property.status') }}
+                    </template>
 
-                  <template #body>
-                    <StatusBadge
-                      :status="item.state"
-                    />
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard
-                  v-if="item.namespace.length > 0"
-                  layout="horizontal"
-                >
-                  <template #title>
-                    {{ t('data-planes.routes.item.namespace') }}
-                  </template>
-
-                  <template #body>
-                    {{ item.namespace }}
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template #title>
-                    {{ t('http.api.property.address') }}
-                  </template>
-
-                  <template #body>
-                    <template
-                      v-if="item.zoneIngress.socketAddress.length > 0"
-                    >
-                      <XCopyButton
-                        :text="item.zoneIngress.socketAddress"
+                    <template #body>
+                      <StatusBadge
+                        :status="item.state"
                       />
                     </template>
+                  </DefinitionCard>
 
-                    <template v-else>
-                      {{ t('common.detail.none') }}
-                    </template>
-                  </template>
-                </DefinitionCard>
-
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template #title>
-                    {{ t('http.api.property.advertisedAddress') }}
-                  </template>
-
-                  <template #body>
-                    <template
-                      v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
-                    >
-                      <XCopyButton
-                        :text="item.zoneIngress.advertisedSocketAddress"
-                      />
+                  <DefinitionCard
+                    v-if="item.namespace.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('data-planes.routes.item.namespace') }}
                     </template>
 
-                    <template v-else>
-                      {{ t('common.detail.none') }}
+                    <template #body>
+                      {{ item.namespace }}
                     </template>
-                  </template>
-                </DefinitionCard>
+                  </DefinitionCard>
+
+                  <DefinitionCard
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('http.api.property.address') }}
+                    </template>
+
+                    <template #body>
+                      <template
+                        v-if="item.zoneIngress.socketAddress.length > 0"
+                      >
+                        <XCopyButton
+                          :text="item.zoneIngress.socketAddress"
+                        />
+                      </template>
+
+                      <template v-else>
+                        {{ t('common.detail.none') }}
+                      </template>
+                    </template>
+                  </DefinitionCard>
+
+                  <DefinitionCard
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('http.api.property.advertisedAddress') }}
+                    </template>
+
+                    <template #body>
+                      <template
+                        v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
+                      >
+                        <XCopyButton
+                          :text="item.zoneIngress.advertisedSocketAddress"
+                        />
+                      </template>
+
+                      <template v-else>
+                        {{ t('common.detail.none') }}
+                      </template>
+                    </template>
+                  </DefinitionCard>
+                </XLayout>
               </template>
               <template v-else>
                 <div>

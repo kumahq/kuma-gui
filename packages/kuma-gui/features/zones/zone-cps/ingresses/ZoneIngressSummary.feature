@@ -6,6 +6,8 @@ Feature: Zone Ingress summary
       | item                 | [data-testid='zone-ingress-collection'] tbody tr |
       | summary              | [data-testid='summary']                          |
       | close-summary-button | $summary [data-testid='slideout-close-icon']     |
+      | select-preference    | $summary [data-testid='select-input']            |
+      | structured-view      | $summary [data-testid='structured-view']         |
     And the URL "/zone-ingresses/_overview" responds with
       """
       body:
@@ -39,3 +41,18 @@ Feature: Zone Ingress summary
       """
     When I visit the "/zones/zone-1/ingresses/zone-ingress-1?page=2&size=50" URL
     Then the "$summary" element exists
+
+  Scenario: Switching to YAML format and back
+    Given the environment
+      """
+      KUMA_ZONEINGRESS_COUNT: 1
+      """
+    When I visit the "/zones/zone-1/ingresses/zone-ingress-1?page=2&size=50" URL
+    Then the "$select-preference" element exists
+    And the "$structured-view" element exists
+    When I select "yaml" from the "$select-preference" element
+    Then the "[data-testid='k-code-block']" element exists
+    When I select "structured" from the "$select-preference" element
+    Then the "$structured-view" element exists
+
+

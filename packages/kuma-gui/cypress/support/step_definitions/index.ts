@@ -150,6 +150,11 @@ When(/^I click the "(.*)" element(?: and select "(.*)")?$/, (selector: string, v
   }
 })
 
+When(/^I select "(.*)" from the "(.*)" element$/, (value: string, selector: string) => {
+  $(selector).click()
+  $(`[data-testid="select-item-${value}"] button`).click()
+})
+
 When(/^I (.*) on the "(.*)" element$/, (event: string, selector: string) => {
   switch (event) {
     case 'hover':
