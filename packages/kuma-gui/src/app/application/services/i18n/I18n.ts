@@ -9,7 +9,7 @@ declare module 'intl-messageformat' {
   }
 }
 
-export interface I18nRecord {
+interface I18nRecord {
   [key: string]: I18nRecord | string
 }
 
