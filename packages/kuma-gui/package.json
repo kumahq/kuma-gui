@@ -41,7 +41,7 @@
     "@types/prismjs": "^1.26.5",
     "@types/semver": "^7.5.8",
     "@vitejs/plugin-vue": "^5.2.1",
-    "@vitest/coverage-istanbul": "^2.1.8",
+    "@vitest/coverage-istanbul": "^3.0.2",
     "@vue/test-utils": "^2.4.6",
     "@whyframe/core": "^0.1.12",
     "@whyframe/vue": "^0.1.7",
