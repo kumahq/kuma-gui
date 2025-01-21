@@ -100,7 +100,8 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
 :deep(pre[class*=language-]),
 :deep(code[class*=language-]) {
   background: unset !important;
-  padding: unset !important;
+  padding-top: unset !important;
+  padding-bottom: unset !important;
   border: unset !important;
   border-radius: unset !important;
   box-shadow: unset !important;
