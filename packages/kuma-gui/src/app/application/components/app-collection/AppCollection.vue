@@ -29,13 +29,12 @@
     <template
       v-for="key in Object.keys(slots)"
       :key="key"
-      #[key]="{ row, rowValue }"
+      #[key]="{ row }"
     >
       <slot
         v-if="(props.items ?? []).length > 0"
         :name="key"
         :row="row as Row"
-        :row-value="rowValue"
       />
     </template>
   </KTable>
@@ -43,7 +42,7 @@
 
 <script lang="ts" setup generic="Row extends {}">
 import { KTable } from '@kong/kongponents'
-import { useSlots, ref, watch, Ref, inject } from 'vue'
+import { ref, watch, Ref, inject } from 'vue'
 
 import { runInDebug } from '../../'
 import type { TableHeader as KTableHeader, TablePreferences } from '@kong/kongponents'
@@ -85,7 +84,11 @@ const emit = defineEmits<{
   (e: 'resize', value: ResizeValue): void
 }>()
 
-const slots = useSlots()
+const slots = defineSlots<{
+  [key: string]: (props: {
+    row: Row
+  }) => any
+}>()
 
 const items = ref(props.items) as Ref<typeof props.items>
 const cacheKey = ref<number>(0)

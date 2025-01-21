@@ -25,7 +25,7 @@
 </template>
 <script lang="ts" setup>
 import { KSelect } from '@kong/kongponents'
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
 
 const emit = defineEmits<{
   (event: 'change', value: string): void
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<{
   selected: '',
 })
 
-const slots = useSlots()
+const slots = defineSlots()
 
 const items = computed(() => {
   const items = Object.keys(slots).reduce<

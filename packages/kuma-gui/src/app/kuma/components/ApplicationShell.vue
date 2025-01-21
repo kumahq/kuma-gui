@@ -127,17 +127,17 @@
         <nav
           aria-label="Main"
         >
-          <ul v-if="$slots.navigation">
+          <ul v-if="slots.navigation">
             <slot name="navigation" />
           </ul>
 
           <div
-            v-if="$slots.navigation && $slots.bottomNavigation"
+            v-if="slots.navigation && slots.bottomNavigation"
             role="separator"
             class="navigation-separator"
           />
 
-          <ul v-if="$slots.bottomNavigation">
+          <ul v-if="slots.bottomNavigation">
             <slot name="bottomNavigation" />
           </ul>
         </nav>
@@ -169,6 +169,8 @@
 import GithubButton from 'vue-github-button'
 
 import { useEnv, useI18n, useCan } from '@/app/application'
+
+const slots = defineSlots()
 
 const env = useEnv()
 const can = useCan()

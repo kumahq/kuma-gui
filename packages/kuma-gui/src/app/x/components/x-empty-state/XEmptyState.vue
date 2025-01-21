@@ -41,7 +41,7 @@
         </template>
 
         <template
-          v-if="$slots.default"
+          v-if="slots.default"
         >
           <slot name="default" />
         </template>
@@ -80,10 +80,12 @@ import { KEmptyState } from '@kong/kongponents'
 
 import { useI18n } from '@/app/application'
 
-const { t } = useI18n()
 const props = withDefaults(defineProps<{
   type?: string
 }>(), {
   type: '',
 })
+const slots = defineSlots()
+
+const { t } = useI18n()
 </script>
