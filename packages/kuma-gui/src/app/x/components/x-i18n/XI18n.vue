@@ -66,23 +66,35 @@ const props = withDefaults(defineProps<{
 
 const i18n = typeof props.strings !== 'undefined' ? createI18n(typeof props.strings === 'function' ? props.strings(icuEscapeHtml) : props.strings, useEnv()) : useI18n()
 
-const t = (...rest: Parameters<typeof i18n['t']>) => {
-  rest[0] = `${rest[0].startsWith('.') ? props.prefix : ''}${rest[0]}`
-  return i18n.t(...rest)
+type ParametersExceptFirst<T> = T extends (_arg1: any, ...rest: infer R) => any ? R : never
+type ParametersExceptFirstTwo<T> = T extends (_arg1: any, _arg2: any, ...rest: infer R) => any ? R : never
+
+const t = (key: Parameters<typeof i18n['t']>[0], ...rest: ParametersExceptFirst<typeof i18n['t']>) => {
+  return i18n.t(`${key.startsWith('.') ? props.prefix : ''}${key}`, ...rest)
 }
-const safeT = (...rest: Parameters<typeof i18n['t']>) => {
-  rest[0] =`${rest[0].startsWith('.') && props.prefix.length > 0 ? `${escapeHtml(props.prefix)}` : ''}${escapeHtml(rest[0])}`
-  if(typeof rest[1] !== 'undefined') {
-    rest[1] = Object.fromEntries(Object.entries(props.params).map(([key, value]) => [key, typeof value === 'string' ? escapeHtml(value) : '']))
-    // we overwrite any params with safe hardcoded Teleport slots,
-    // once `t` renders these we teleport the slot content into them
-    // meaning the slot content is dealt with/escaped by Vue as normal
-    rest[1] = Object.keys(slots).reduce<NonNullable<typeof rest[1]>>((prev, key) => {
-      prev[key] = `<span data-x-teleport-id="${id}-${key}"></span>`
-      return prev
-    }, rest[1])
-  }
-  return i18n.t(...rest)
+const safeT = (
+  key: Parameters<typeof i18n['t']>[0],
+  params: Parameters<typeof i18n['t']>[1] = {},
+  ...rest: ParametersExceptFirstTwo<typeof i18n['t']>
+) => {
+  // escape any param values, if the value isn't a string, empty it out we
+  // aren't allowing nested icu params currently
+  const escapedParams = Object.fromEntries(Object.entries(params).map(([key, value]) => [key, typeof value === 'string' ? escapeHtml(value) : '']))
+
+  // we overwrite any params with safe hardcoded Teleport slots,
+  // once `t` renders these we teleport the slot content into them
+  // meaning the slot content is dealt with/escaped by Vue as normal
+  const slotsOrParams = Object.keys(slots).reduce<typeof params>((prev, key) => {
+    prev[key] = `<span data-x-teleport-id="${id}-${key}"></span>`
+    return prev
+  }, escapedParams)
+
+  // make sure the prefix and key are also escaped
+  return i18n.t(
+    `${key.startsWith('.') && props.prefix.length > 0 ? `${escapeHtml(props.prefix)}` : ''}${escapeHtml(key)}`,
+    slotsOrParams,
+    ...rest,
+  )
 }
 
 </script>
