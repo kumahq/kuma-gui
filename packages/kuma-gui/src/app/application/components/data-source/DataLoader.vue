@@ -41,7 +41,7 @@
     >
       <slot
         name="error"
-        :data="srcData"
+        :data="srcData as TypeOf<T>"
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
@@ -61,7 +61,7 @@
       <slot
         v-if="props.loader && typeof slots.loadable === 'undefined'"
         name="connecting"
-        :data="srcData"
+        :data="undefined"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
@@ -86,7 +86,7 @@
   typeOf(): any
 }" setup
 >
-import { computed, ref, useSlots, provide } from 'vue'
+import { computed, ref, provide } from 'vue'
 
 import type { TypeOf } from '@/app/application'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -103,12 +103,38 @@ const props = withDefaults(defineProps<{
   loader: true,
   variant: 'default',
 })
+const slots = defineSlots<{
+  default(props: {
+    data: NonNullable<TypeOf<T>>
+    error: Error | undefined
+    refresh: () => void
+  }): any
+  connecting(props: {
+    data: undefined
+    error: Error | undefined
+    refresh: () => void
+  }): any
+  error(props: {
+    data: NonNullable<TypeOf<T>>
+    error: Error | undefined
+    refresh: () => void
+  }): any
+  disconnected(props: {
+    data: NonNullable<TypeOf<T>>
+    error: Error | undefined
+    refresh: () => void
+  }): any
+  loadable(props: {
+    data: NonNullable<TypeOf<T>>
+    error: Error | undefined
+    refresh: () => void
+  }): any
+}>()
 
 provide('data-loader', {
   props,
 })
 
-const slots = useSlots()
 
 const srcData = ref<unknown>(undefined)
 const srcError = ref<Error | undefined>(undefined)

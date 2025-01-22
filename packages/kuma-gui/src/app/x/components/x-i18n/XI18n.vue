@@ -16,14 +16,14 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { useSlots, computed } from 'vue'
+import { computed } from 'vue'
 
 import { useI18n, uniqueId } from '@/app/application'
 const { t: _t } = useI18n()
 const props = defineProps<{
   t: string
 }>()
-const slots = useSlots()
+const slots = defineSlots()
 const id = uniqueId('x-i18n')
 
 const params = computed(() => {

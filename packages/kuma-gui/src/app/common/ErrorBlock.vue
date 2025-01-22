@@ -54,7 +54,7 @@
       </div>
 
       <div class="error-block-message mt-4">
-        <slot v-if="$slots.default" />
+        <slot v-if="slots.default" />
         <template
           v-else-if="props.error instanceof ApiError"
         >
@@ -87,7 +87,7 @@
         <div
           class="error-block-message"
         >
-          <slot v-if="$slots.default" />
+          <slot v-if="slots.default" />
           <template
             v-else-if="props.error instanceof ApiError"
           >
@@ -123,8 +123,6 @@ import { inject } from 'vue'
 import { useI18n } from '@/app/application'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 
-const { t } = useI18n()
-const prompt = inject('x-prompt', undefined)
 
 const props = withDefaults(defineProps<{
   error: Error
@@ -132,6 +130,10 @@ const props = withDefaults(defineProps<{
 }>(), {
   appearance: 'warning',
 })
+const slots = defineSlots()
+
+const { t } = useI18n()
+const prompt = inject('x-prompt', undefined)
 </script>
 
 <style lang="scss" scoped>
