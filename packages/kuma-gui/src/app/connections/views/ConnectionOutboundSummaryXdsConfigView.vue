@@ -39,7 +39,7 @@
         >
           <template #primary-actions>
             <XCheckbox
-              :model-value="route.params.includeEds"
+              :checked="route.params.includeEds"
               :label="t('connections.include_endpoints')"
               @change="(value) => route.update({ includeEds: value})"
             />

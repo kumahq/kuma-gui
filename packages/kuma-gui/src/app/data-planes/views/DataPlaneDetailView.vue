@@ -288,7 +288,7 @@
                   #actions
                 >
                   <XInputSwitch
-                    :model-value="route.params.inactive"
+                    :checked="route.params.inactive"
                     data-testid="dataplane-outbounds-inactive-toggle"
                     @change="(value) => route.update({ inactive: value})"
                   >
