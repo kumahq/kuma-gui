@@ -13,6 +13,5 @@
 </template>
 <script lang="ts" setup>
 import { KModal } from '@kong/kongponents'
-import { useSlots } from 'vue'
-const slots = useSlots()
+const slots = defineSlots()
 </script>
