@@ -43,7 +43,6 @@ import { escapeHtml } from '@vue/shared'
 import { useI18n, uniqueId, useEnv } from '@/app/application'
 import createI18n from '@/app/application/services/i18n/I18n'
 
-const slots = defineSlots()
 const id = uniqueId('x-i18n')
 
 const icuEscapeHtml = (str: string) => str.replace(/</g, "'<'")
@@ -61,6 +60,7 @@ const props = withDefaults(defineProps<{
   path: '',
   params: () => ({}),
 })
+const slots = defineSlots()
 
 const i18n = typeof props.strings !== 'undefined' ? createI18n(typeof props.strings === 'function' ? props.strings(icuEscapeHtml) : props.strings, useEnv()) : useI18n()
 

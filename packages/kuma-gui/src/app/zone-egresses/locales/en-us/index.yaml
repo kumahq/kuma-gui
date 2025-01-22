@@ -14,7 +14,7 @@ zone-egresses:
         zone-egress-clusters-view: 'Clusters'
         zone-egress-config-view: 'YAML'
       overview: 'Overview'
-      config: 'YAML'
+      config: 'Configuration'
       subscriptions:
         title: 'XDS connections'
       about:
@@ -22,6 +22,10 @@ zone-egresses:
     items:
       title: Egresses
       breadcrumbs: Egresses
+      format: Format
+      formats:
+        yaml: YAML
+        structured: Structured
       intro: !!text/markdown |
         A Zone Egress is specialized gateway that manages and routes outbound traffic from services with a zone to external destinations outside the mesh.
   href:

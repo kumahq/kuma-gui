@@ -7,6 +7,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      format: 'structured',
     }"
     v-slot="{ route, t }"
   >
@@ -37,69 +38,95 @@
             </h2>
           </template>
 
-          <div
-            class="stack"
+          <XLayout
+            type="stack"
           >
-            <div
-              class="stack-with-borders"
-            >
-              <DefinitionCard
-                layout="horizontal"
+            <header>
+              <XLayout
+                type="separated"
+                size="max"
               >
-                <template
-                  #title
-                >
-                  Ports
-                </template>
-                <template
-                  #body
-                >
-                  <XLayout
-                    type="separated"
-                    truncate
+                <h3>
+                  {{ t('services.routes.item.config') }}
+                </h3>
+                <div>
+                  <XSelect
+                    :label="t('services.routes.item.format')"
+                    :selected="route.params.format"
+                    @change="(value) => {
+                      route.update({ format: value })
+                    }"
                   >
-                    <KumaPort
-                      v-for="connection in item.spec.ports"
-                      :key="connection.port"
-                      :port="{
-                        ...connection,
-                        targetPort: undefined,
-                      }"
-                    />
-                  </XLayout>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                layout="horizontal"
-              >
-                <template
-                  #title
-                >
-                  Selector
-                </template>
-                <template
-                  #body
-                >
-                  <XLayout
-                    type="separated"
-                    truncate
-                  >
-                    <XBadge
-                      v-for="(value, key) in item.spec.selector.meshService.matchLabels"
-                      :key="`${key}:${value}`"
-                      appearance="info"
+                    <template
+                      v-for="value in ['structured', 'yaml']"
+                      :key="value"
+                      #[`${value}-option`]
                     >
-                      {{ key }}:{{ value }}
-                    </XBadge>
-                  </XLayout>
-                </template>
-              </DefinitionCard>
-            </div>
-            <div>
-              <h3>
-                {{ t('services.routes.item.config') }}
-              </h3>
-
+                      {{ t(`services.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </div>
+              </XLayout>
+            </header>
+            <template v-if="route.params.format === 'structured'">
+              <div
+                class="stack-with-borders"
+                data-testid="structured-view"
+              >
+                <DefinitionCard
+                  layout="horizontal"
+                >
+                  <template
+                    #title
+                  >
+                    Ports
+                  </template>
+                  <template
+                    #body
+                  >
+                    <XLayout
+                      type="separated"
+                      truncate
+                    >
+                      <KumaPort
+                        v-for="connection in item.spec.ports"
+                        :key="connection.port"
+                        :port="{
+                          ...connection,
+                          targetPort: undefined,
+                        }"
+                      />
+                    </XLayout>
+                  </template>
+                </DefinitionCard>
+                <DefinitionCard
+                  layout="horizontal"
+                >
+                  <template
+                    #title
+                  >
+                    Selector
+                  </template>
+                  <template
+                    #body
+                  >
+                    <XLayout
+                      type="separated"
+                      truncate
+                    >
+                      <XBadge
+                        v-for="(value, key) in item.spec.selector.meshService.matchLabels"
+                        :key="`${key}:${value}`"
+                        appearance="info"
+                      >
+                        {{ key }}:{{ value }}
+                      </XBadge>
+                    </XLayout>
+                  </template>
+                </DefinitionCard>
+              </div>
+            </template>
+            <template v-else>
               <div class="mt-4">
                 <ResourceCodeBlock
                   :resource="item.config"
@@ -124,8 +151,8 @@
                   />
                 </ResourceCodeBlock>
               </div>
-            </div>
-          </div>
+            </template>
+          </XLayout>
         </AppView>
       </template>
     </DataCollection>

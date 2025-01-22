@@ -43,40 +43,44 @@
       class="data-collection"
       type="stack"
     >
-      <slot
-        name="default"
-        :items="paginated"
-      />
-
-      <slot
-        v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
-        name="pagination"
-        :items="paginated"
-      >
-        <KPagination
-          :class="{
-            pagination: true,
-            'with-paging': props.page !== 0 && props.total > 0 && props.total !== props.items.length,
-            'with-sizing': props.pageSize !== 0,
-          }"
-          :total-count="props.total"
-          :current-page="props.page"
-          :initial-page-size="props.pageSize || props.total"
-          :page-sizes="[15, 30, 50, 75, 100]"
-          @page-change="({ page }: PaginationChangeEvent) => {
-            change({
-              page,
-              size: props.pageSize,
-            })
-          }"
-          @page-size-change="({ pageSize }: SizeChangeEvent) => {
-            change({
-              page: props.page,
-              size: pageSize,
-            })
-          }"
+      <div>
+        <slot
+          name="default"
+          :items="paginated"
         />
-      </slot>
+      </div>
+      <div
+        v-if="typeof props.items?.[0] !== 'undefined' && !(props.page === 0 && props.pageSize === 0 && props.total === 0)"
+      >
+        <slot
+          name="pagination"
+          :items="paginated"
+        >
+          <KPagination
+            :class="{
+              pagination: true,
+              'with-paging': props.page !== 0 && props.total > 0 && props.total !== props.items.length,
+              'with-sizing': props.pageSize !== 0,
+            }"
+            :total-count="props.total"
+            :current-page="props.page"
+            :initial-page-size="props.pageSize || props.total"
+            :page-sizes="[15, 30, 50, 75, 100]"
+            @page-change="({ page }: PaginationChangeEvent) => {
+              change({
+                page,
+                size: props.pageSize,
+              })
+            }"
+            @page-size-change="({ pageSize }: SizeChangeEvent) => {
+              change({
+                page: props.page,
+                size: pageSize,
+              })
+            }"
+          />
+        </slot>
+      </div>
     </XLayout>
   </template>
 </template>

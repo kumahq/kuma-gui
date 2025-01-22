@@ -59,5 +59,3 @@ Feature: Zone Ingress summary
     When I click the "[data-testid='select-item-structured'] button" element
     Then the URL contains "format=structured"
     And the "$structured-view" element exists
-
-

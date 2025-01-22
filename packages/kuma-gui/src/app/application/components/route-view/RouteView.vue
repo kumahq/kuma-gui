@@ -174,18 +174,6 @@ const routeView = {
 }
 const routeParams = reactive<Params>(structuredClone(props.params) as Params)
 
-// Updates the URL for route params if used as a modelValue (for boolean props only)
-watch(routeParams, (val) => {
-  if (route.name === props.name) {
-    const booleans = Object.fromEntries(Object.entries(val).filter(([key, _value]) => {
-      return typeof props.params[key] === 'boolean'
-    }))
-    if (Object.keys(booleans).length > 0) {
-      routeUpdate(booleans)
-    }
-  }
-})
-
 // when any URL params change, normalize/validate/default and reset our actual application params
 const redirected = ref<boolean>(false)
 watch(() => {

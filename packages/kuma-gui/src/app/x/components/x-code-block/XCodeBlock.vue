@@ -1,7 +1,7 @@
 <template>
   <div>
     <template
-      v-if="$slots['primary-actions']"
+      v-if="slots['primary-actions']"
     >
       <div
         class="toolbar"
@@ -27,7 +27,7 @@
       @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
     >
       <template
-        v-if="$slots['secondary-actions']"
+        v-if="slots['secondary-actions']"
         #secondary-actions
       >
         <slot name="secondary-actions" />
@@ -62,6 +62,7 @@ const props = withDefaults(defineProps<{
   isFilterMode: false,
   isRegExpMode: false,
 })
+const slots = defineSlots()
 
 const emit = defineEmits<{
   (event: 'query-change', query: string): void

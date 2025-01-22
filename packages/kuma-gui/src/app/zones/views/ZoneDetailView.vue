@@ -65,7 +65,9 @@
 
               <template #body>
                 <XLayout type="separated">
-                  <XBadge appearance="decorative">
+                  <XBadge
+                    :appearance="version?.outdated === true ? 'warning' : 'decorative'"
+                  >
                     {{ props.data.zoneInsight.version?.kumaCp?.version ?? '—' }}
                   </XBadge>
                   <template

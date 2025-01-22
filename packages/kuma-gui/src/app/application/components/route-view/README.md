@@ -93,12 +93,6 @@ Defining these "dependencies" here has several advantages:
 4. Boolean route params are transformed correctly for the URL. In the above
    example the resulting query parameter will be the existence of `?checked`
    not `?checked=true` and `?checked=false`
-5. Route params can be used as `v-model` values. Ideally we usually use events
-   to change route properties, but for components that only support `v-model`
-   you can use the route.param as the v-model. For example `<KCheckBox
-   v-model="route.params.checked" />` will automatically sync the checkbox state
-   to the `?checked` query parameter. This aims to make it easier to maintain
-   state in the browser URL and harder not to
 
 ## Setting the `<title>` of the page
 

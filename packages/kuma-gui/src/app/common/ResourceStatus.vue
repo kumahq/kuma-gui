@@ -1,7 +1,7 @@
 <template>
   <DefinitionCard>
     <template
-      v-if="$slots.icon"
+      v-if="slots.icon"
       #icon
     >
       <slot name="icon" />
@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   online: undefined,
 })
+const slots = defineSlots()
 </script>
 
 <style lang="scss" scoped>

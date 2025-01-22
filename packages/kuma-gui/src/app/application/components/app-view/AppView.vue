@@ -17,7 +17,7 @@
       }"
     >
       <header
-        v-if="$slots.title || $slots.actions"
+        v-if="slots.title || slots.actions"
         class="app-view-title-bar"
       >
         <KongIcon v-if="props.fullscreen" />
@@ -41,7 +41,7 @@
           class="actions"
         >
           <XTeleportSlot
-            v-if="$slots.title"
+            v-if="slots.title"
             name="app-view-docs"
           />
           <slot name="actions">
@@ -50,7 +50,9 @@
         </div>
       </header>
 
-      <aside v-if="$slots.notifications">
+      <aside
+        v-if="slots.notifications"
+      >
         <XAlert
           class="mb-4"
           variant="warning"
@@ -96,10 +98,6 @@ type AppView = {
 }
 type Breadcrumbs = Map<symbol, BreadcrumbItem[]>
 
-const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
-
-const summary: string = inject('app-summary-view', '')
-provide('app-summary-view', '')
 
 const props = withDefaults(defineProps<{
   breadcrumbs?: BreadcrumbItem[] | null
@@ -110,7 +108,12 @@ const props = withDefaults(defineProps<{
   fullscreen: false,
   docs: '',
 })
+const slots = defineSlots()
 
+const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
+
+const summary: string = inject('app-summary-view', '')
+provide('app-summary-view', '')
 const map: Breadcrumbs = new Map()
 const _breadcrumbs = ref<BreadcrumbItem[]>([])
 const symbol = Symbol('app-view')

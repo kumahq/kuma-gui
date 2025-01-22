@@ -100,8 +100,9 @@
                   #actions
                 >
                   <XInputSwitch
-                    v-model="route.params.inactive"
+                    :checked="route.params.inactive"
                     data-testid="dataplane-outbounds-inactive-toggle"
+                    @change="(value) => route.update({ inactive: value})"
                   >
                     <template #label>
                       Show inactive
