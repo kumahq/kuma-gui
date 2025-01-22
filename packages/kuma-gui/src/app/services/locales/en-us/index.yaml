@@ -20,7 +20,11 @@ services:
         mesh-external-service-detail-view: 'Overview'
         mesh-external-service-config-view: 'YAML'
       overview: 'Overview'
-      config: 'YAML'
+      config: 'Configuration'
+      format: Format
+      formats:
+        yaml: YAML
+        structured: Structured
     items:
       title: Services
       navigation:
