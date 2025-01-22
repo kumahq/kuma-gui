@@ -46,7 +46,7 @@ Feature: Policy summary
       """
       KUMA_MESHFAULTINJECTION_COUNT: 1
       """
-    When I visit the "/meshes/default/policies/meshfaultinjections" URL
+    When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1" URL
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element
