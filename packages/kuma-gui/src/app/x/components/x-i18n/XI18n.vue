@@ -39,13 +39,11 @@
 <script lang="ts" setup>
 // eslint-disable-next-line vue/prefer-import-from-vue
 import { escapeHtml } from '@vue/shared'
-import { useSlots } from 'vue'
 
 import { useI18n, uniqueId, useEnv } from '@/app/application'
 import createI18n from '@/app/application/services/i18n/I18n'
 
-
-const slots = useSlots()
+const slots = defineSlots()
 const id = uniqueId('x-i18n')
 
 const icuEscapeHtml = (str: string) => str.replace(/</g, "'<'")
@@ -66,16 +64,14 @@ const props = withDefaults(defineProps<{
 
 const i18n = typeof props.strings !== 'undefined' ? createI18n(typeof props.strings === 'function' ? props.strings(icuEscapeHtml) : props.strings, useEnv()) : useI18n()
 
-type ParametersExceptFirst<T> = T extends (_arg1: any, ...rest: infer R) => any ? R : never
-type ParametersExceptFirstTwo<T> = T extends (_arg1: any, _arg2: any, ...rest: infer R) => any ? R : never
-
-const t = (key: Parameters<typeof i18n['t']>[0], ...rest: ParametersExceptFirst<typeof i18n['t']>) => {
+type TFunction = typeof i18n['t']
+const t: TFunction = (key, ...rest) => {
   return i18n.t(`${key.startsWith('.') ? props.prefix : ''}${key}`, ...rest)
 }
-const safeT = (
-  key: Parameters<typeof i18n['t']>[0],
-  params: Parameters<typeof i18n['t']>[1] = {},
-  ...rest: ParametersExceptFirstTwo<typeof i18n['t']>
+const safeT: TFunction = (
+  key,
+  params = {},
+  ...rest
 ) => {
   // escape any param values, if the value isn't a string, empty it out we
   // aren't allowing nested icu params currently
