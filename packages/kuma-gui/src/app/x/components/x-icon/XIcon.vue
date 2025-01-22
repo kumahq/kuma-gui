@@ -1,7 +1,6 @@
 <template>
   <component
     :is="slots.default ? XTooltip : XAnonymous"
-    :placement="props.placement"
   >
     <!-- we hardcode decorative to false for the moment due to an issue with kong/icons -->
     <component
@@ -55,7 +54,6 @@ import { useSlots, useAttrs } from 'vue'
 import { uniqueId } from '@/app/application'
 import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
 import XTooltip from '@/app/x/components/x-tooltip/XTooltip.vue'
-import type { PopPlacements } from '@kong/kongponents'
 
 defineOptions({
   inheritAttrs: false,
@@ -90,7 +88,6 @@ const slots = useSlots()
 
 const props = withDefaults(defineProps<{
   name: keyof typeof icons // @TODO(jc) :variant
-  placement?: PopPlacements
   color?: string
   size?: string
 }>(), {
