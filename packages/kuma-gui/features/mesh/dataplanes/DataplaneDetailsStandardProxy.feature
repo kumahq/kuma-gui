@@ -23,10 +23,8 @@ Feature: Dataplane details for standard Data Plane Proxy
             advertisedAddress: !!js/undefined
             gateway: !!js/undefined
             inbound:
-              - health:
-                  ready: true
-                  state: Ready
-                address: !!js/undefined
+              - address: !!js/undefined
+                state: Ready
         dataplaneInsight:
           mTLS: !!js/undefined
           subscriptions:

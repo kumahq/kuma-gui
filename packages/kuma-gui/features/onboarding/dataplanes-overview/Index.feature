@@ -69,8 +69,7 @@ Feature: onboarding / dataplanes-overview / index
             dataplane:
               networking:
                 inbounds:
-                  - health:
-                      ready: true
+                  - state: Ready
             dataplaneInsight:
               subscriptions:
                 - connectTime: 2021-02-17T07:33:36.412683Z

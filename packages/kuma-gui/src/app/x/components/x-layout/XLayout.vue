@@ -11,7 +11,7 @@ import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
-  size?: 'small' | 'normal'
+  size?: 'small' | 'normal' | 'max'
   truncate?: boolean
 }>(), {
   type: 'stack',
@@ -26,11 +26,18 @@ const props = withDefaults(defineProps<{
 .stack.small > * + * {
   margin-block-start: $kui-space-40;
 }
+.max {
+  width: 100%;
+}
 .separated:not(.k-truncate) {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: $kui-space-40;
+
+  &.max {
+    justify-content: space-between;
+  }
 }
 .columns {
   --threshold: 40rem;
