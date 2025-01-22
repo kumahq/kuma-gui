@@ -14,18 +14,18 @@
 </template>
 <script lang="ts" setup>
 import { KAlert } from '@kong/kongponents'
-import { useSlots, useAttrs } from 'vue'
+import { useAttrs } from 'vue'
 
 import type { AlertAppearance } from '@kong/kongponents'
-
-const slots = useSlots()
-const attrs = useAttrs()
 
 const props = withDefaults(defineProps<{
   variant?: AlertAppearance
 }>(), {
   variant: 'warning',
 })
+const slots = defineSlots()
+
+const attrs = useAttrs()
 </script>
 <style lang="scss" scoped>
 :deep(.k-button.primary) {

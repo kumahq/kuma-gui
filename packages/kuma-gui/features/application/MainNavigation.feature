@@ -95,4 +95,4 @@ Feature: application / MainNavigation
             inbound:
               - port: 51112
       """
-      And the "[data-testid='data-plane-connection-inbound-summary-stats-view-tab'].active" element exists
+    And the "[data-testid='data-plane-connection-inbound-summary-stats-view-tab'].active" element exists

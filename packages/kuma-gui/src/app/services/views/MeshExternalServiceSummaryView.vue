@@ -7,6 +7,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      format: 'structured',
     }"
     v-slot="{ route, t, can }"
   >
@@ -37,87 +38,113 @@
             </h2>
           </template>
 
-          <div
-            class="stack"
+          <XLayout
+            type="stack"
           >
-            <div
-              class="stack-with-borders"
-            >
-              <DefinitionCard
-                v-if="item.namespace.length > 0"
-                layout="horizontal"
+            <header>
+              <XLayout
+                type="separated"
+                size="max"
               >
-                <template
-                  #title
-                >
-                  Namespace
-                </template>
-
-                <template
-                  #body
-                >
-                  {{ item.namespace }}
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                v-if="can('use zones') && item.zone"
-                layout="horizontal"
-              >
-                <template
-                  #title
-                >
-                  Zone
-                </template>
-                <template
-                  #body
-                >
-                  <XAction
-                    :to="{
-                      name: 'zone-cp-detail-view',
-                      params: {
-                        zone: item.zone,
-                      },
+                <h3>
+                  {{ t('services.routes.item.config') }}
+                </h3>
+                <div>
+                  <XSelect
+                    :label="t('services.routes.item.format')"
+                    :selected="route.params.format"
+                    @change="(value) => {
+                      route.update({ format: value })
                     }"
                   >
-                    {{ item.zone }}
-                  </XAction>
-                </template>
-              </DefinitionCard>
-              <DefinitionCard
-                v-if="item.spec.match"
-                layout="horizontal"
+                    <template
+                      v-for="value in ['structured', 'yaml']"
+                      :key="value"
+                      #[`${value}-option`]
+                    >
+                      {{ t(`services.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </div>
+              </XLayout>
+            </header>
+            <template v-if="route.params.format === 'structured'">
+              <div
+                class="stack-with-borders"
+                data-testid="structured-view"
               >
-                <template #title>
-                  Port
-                </template>
-                <template #body>
-                  <KumaPort
-                    :port="item.spec.match"
-                  />
-                </template>
-              </DefinitionCard>
-              <DefinitionCard layout="horizontal">
-                <template
-                  #title
+                <DefinitionCard
+                  v-if="item.namespace.length > 0"
+                  layout="horizontal"
                 >
-                  TLS
-                </template>
-                <template
-                  #body
-                >
-                  <XBadge
-                    appearance="neutral"
+                  <template
+                    #title
                   >
-                    {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
-                  </XBadge>
-                </template>
-              </DefinitionCard>
-            </div>
-            <div>
-              <h3>
-                {{ t('services.routes.item.config') }}
-              </h3>
+                    Namespace
+                  </template>
 
+                  <template
+                    #body
+                  >
+                    {{ item.namespace }}
+                  </template>
+                </DefinitionCard>
+                <DefinitionCard
+                  v-if="can('use zones') && item.zone"
+                  layout="horizontal"
+                >
+                  <template
+                    #title
+                  >
+                    Zone
+                  </template>
+                  <template
+                    #body
+                  >
+                    <XAction
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: item.zone,
+                        },
+                      }"
+                    >
+                      {{ item.zone }}
+                    </XAction>
+                  </template>
+                </DefinitionCard>
+                <DefinitionCard
+                  v-if="item.spec.match"
+                  layout="horizontal"
+                >
+                  <template #title>
+                    Port
+                  </template>
+                  <template #body>
+                    <KumaPort
+                      :port="item.spec.match"
+                    />
+                  </template>
+                </DefinitionCard>
+                <DefinitionCard layout="horizontal">
+                  <template
+                    #title
+                  >
+                    TLS
+                  </template>
+                  <template
+                    #body
+                  >
+                    <XBadge
+                      appearance="neutral"
+                    >
+                      {{ item.spec.tls?.enabled ? 'Enabled' : 'Disabled' }}
+                    </XBadge>
+                  </template>
+                </DefinitionCard>
+              </div>
+            </template>
+            <template v-else>
               <div class="mt-4">
                 <ResourceCodeBlock
                   :resource="item.config"
@@ -142,8 +169,8 @@
                   />
                 </ResourceCodeBlock>
               </div>
-            </div>
-          </div>
+            </template>
+          </XLayout>
         </AppView>
       </template>
     </DataCollection>

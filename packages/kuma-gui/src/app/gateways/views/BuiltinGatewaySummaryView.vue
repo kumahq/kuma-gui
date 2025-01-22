@@ -7,6 +7,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      format: 'structured',
     }"
     v-slot="{ route, t }"
   >
@@ -52,53 +53,81 @@
                 </XAction>
               </h2>
             </template>
-
-            <div
-              class="stack-with-borders"
-            >
-              <DefinitionCard
-                v-if="item.namespace.length > 0"
-                layout="horizontal"
-              >
-                <template #title>
-                  {{ t('gateways.routes.item.namespace') }}
-                </template>
-
-                <template #body>
-                  {{ item.namespace }}
-                </template>
-              </DefinitionCard>
-            </div>
-            <div>
-              <h3>
-                {{ t('gateways.routes.item.config') }}
-              </h3>
-
-              <div class="mt-4">
-                <ResourceCodeBlock
-                  :resource="item.config"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  v-slot="{ copy, copying }"
+            <XLayout type="stack">
+              <header>
+                <XLayout
+                  type="separated"
+                  size="max"
                 >
-                  <DataSource
-                    v-if="copying"
-                    :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}/as/kubernetes?no-store`"
-                    @change="(data) => {
-                      copy((resolve) => resolve(data))
-                    }"
-                    @error="(e) => {
-                      copy((_resolve, reject) => reject(e))
-                    }"
-                  />
-                </ResourceCodeBlock>
-              </div>
-            </div>
+                  <h3>
+                    {{ t('gateways.routes.item.config') }}
+                  </h3>
+                  <div>
+                    <XSelect
+                      :label="t('gateways.routes.item.format')"
+                      :selected="route.params.format"
+                      @change="(value) => {
+                        route.update({ format: value })
+                      }"
+                    >
+                      <template
+                        v-for="value in ['structured', 'yaml']"
+                        :key="value"
+                        #[`${value}-option`]
+                      >
+                        {{ t(`gateways.routes.item.formats.${value}`) }}
+                      </template>
+                    </XSelect>
+                  </div>
+                </XLayout>
+              </header>
+
+              <template v-if="route.params.format === 'structured'">
+                <div
+                  class="stack-with-borders"
+                  data-testid="structured-view"
+                >
+                  <DefinitionCard
+                    v-if="item.namespace.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.namespace') }}
+                    </template>
+
+                    <template #body>
+                      {{ item.namespace }}
+                    </template>
+                  </DefinitionCard>
+                </div>
+              </template>
+              <template v-else>
+                <div class="mt-4">
+                  <ResourceCodeBlock
+                    :resource="item.config"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                    v-slot="{ copy, copying }"
+                  >
+                    <DataSource
+                      v-if="copying"
+                      :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}/as/kubernetes?no-store`"
+                      @change="(data) => {
+                        copy((resolve) => resolve(data))
+                      }"
+                      @error="(e) => {
+                        copy((_resolve, reject) => reject(e))
+                      }"
+                    />
+                  </ResourceCodeBlock>
+                </div>
+              </template>
+            </XLayout>
           </AppView>
         </template>
       </template>

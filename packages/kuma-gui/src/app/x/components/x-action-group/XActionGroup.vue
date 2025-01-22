@@ -17,7 +17,7 @@
       >
         <template #default>
           <slot
-            v-if="$slots.control"
+            v-if="slots.control"
             name="control"
           />
           <XAction
@@ -54,6 +54,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   expanded: false,
 })
+const slots = defineSlots()
 
 </script>
 <style lang="scss" scoped>

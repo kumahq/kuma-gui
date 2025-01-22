@@ -2,7 +2,7 @@ Feature: mesh / dataplanes / connections / clusters
 
   Scenario: The inbound clusters tab correctly filters by 'localhost_<port>'
     Given the CSS selectors
-      | Alias | Selector                                                                              |
+      | Alias | Selector                                                                                         |
       | code  | [data-testid='data-plane-connection-inbound-summary-clusters-view'] [data-testid='k-code-block'] |
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/_overview" responds with
       """
@@ -30,7 +30,7 @@ Feature: mesh / dataplanes / connections / clusters
 
   Scenario: The outbound clusters tab correctly filters by '<clusterName>'
     Given the CSS selectors
-      | Alias | Selector                                                                               |
+      | Alias | Selector                                                                                          |
       | code  | [data-testid='data-plane-connection-outbound-summary-clusters-view'] [data-testid='k-code-block'] |
     And the URL "/meshes/mesh-name/dataplanes/service-64cbb7b8b5-6g94n.namespace/stats" responds with
       """

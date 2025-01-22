@@ -24,25 +24,25 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useSlots, useAttrs, computed, onMounted, ref, watch } from 'vue'
+import { useAttrs, computed, onMounted, ref, watch } from 'vue'
 
 import type { Tab } from '@kong/kongponents'
-
-const $ref = ref<HTMLDivElement | null>(null)
 
 defineOptions({
   inheritAttrs: false,
 })
-const attrs = useAttrs()
-const $attrs = Object.fromEntries(Object.entries(attrs).filter(([key, _value]) => !['aria-label'].includes(key)))
 
-const slots = useSlots()
+const slots = defineSlots()
 
 const props = withDefaults(defineProps<{
   selected?: string
 }>(), {
   selected: '',
 })
+
+const attrs = useAttrs()
+const $attrs = Object.fromEntries(Object.entries(attrs).filter(([key, _value]) => !['aria-label'].includes(key)))
+const $ref = ref<HTMLDivElement | null>(null)
 
 const items = computed(() => {
   return Object.keys(slots).reduce<Tab[]>((prev, key) => {

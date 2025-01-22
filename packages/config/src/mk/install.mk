@@ -6,6 +6,10 @@
 .install/sync:
 	npm clean-install
 
+.PHONY: .dedupe
+.dedupe:
+	@npm dedupe
+
 .PHONY: .clean
 .clean:
 	@echo "Recursively removing all node_modules/ directories in $(NPM_WORKSPACE_ROOT)..."

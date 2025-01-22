@@ -16,12 +16,11 @@
 </template>
 <script lang="ts" setup>
 import { KBreadcrumbs } from '@kong/kongponents'
-import { useSlots } from 'vue'
 
 import type { BreadcrumbItem } from '@kong/kongponents'
 
-const slots = useSlots()
 const props = defineProps<{
   items: BreadcrumbItem[]
 }>()
+const slots = defineSlots()
 </script>
