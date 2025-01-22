@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="slots.default ? KTooltip : AnonymousComponent"
+    :is="slots.default ? KTooltip : XAnonymous"
     :placement="props.placement"
   >
     <!-- we hardcode decorative to false for the moment due to an issue with kong/icons -->
@@ -52,7 +52,7 @@ import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
 
 import { uniqueId } from '@/app/application'
-import AnonymousComponent from '@/app/application/components/anonymous-component/AnonymousComponent.vue'
+import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
 
 defineOptions({
   inheritAttrs: false,
