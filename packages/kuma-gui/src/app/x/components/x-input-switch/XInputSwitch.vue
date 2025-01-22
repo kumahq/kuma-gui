@@ -3,7 +3,7 @@
     :model-value="props.checked"
   >
     <template
-      v-for="(_, slotName) in $slots"
+      v-for="(_, slotName) in slots"
       :key="slotName"
       #[slotName]="slotProps"
     >
@@ -19,4 +19,5 @@
 import { KInputSwitch } from '@kong/kongponents'
 
 const props = defineProps<{ checked?: boolean }>()
+const slots = defineSlots()
 </script>
