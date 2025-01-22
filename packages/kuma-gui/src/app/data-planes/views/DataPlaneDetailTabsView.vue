@@ -80,7 +80,7 @@
                       :disabled="downloading"
                     >
                       <XI18n
-                        t="data-planes.routes.item.download.description"
+                        path="data-planes.routes.item.download.description"
                       />
                       <ul>
                         <template
