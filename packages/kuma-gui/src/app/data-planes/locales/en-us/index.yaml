@@ -66,7 +66,11 @@ data-planes:
       about:
         title: About this Data Plane Proxy
       gateway: 'Gateway'
-      config: YAML
+      config: Configuration
+      format: Format
+      formats:
+        yaml: YAML
+        structured: Structured
       inbounds: 'Inbounds'
       inbound_name: '{service}'
       port: ':{port}'
