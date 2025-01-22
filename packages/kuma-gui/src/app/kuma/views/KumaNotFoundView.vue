@@ -4,7 +4,7 @@
   >
     <AppView>
       <div class="overview">
-        <KEmptyState>
+        <XEmptyState>
           <template #icon>
             <XIcon
               name="warning"
@@ -30,7 +30,7 @@
               Go Home
             </XAction>
           </template>
-        </KEmptyState>
+        </XEmptyState>
       </div>
     </AppView>
   </RouteView>

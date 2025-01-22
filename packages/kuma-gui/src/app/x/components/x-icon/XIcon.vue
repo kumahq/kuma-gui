@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="slots.default ? KTooltip : XAnonymous"
+    :is="slots.default ? XTooltip : XAnonymous"
     :placement="props.placement"
   >
     <!-- we hardcode decorative to false for the moment due to an issue with kong/icons -->
@@ -31,6 +31,8 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
+  ForwardIcon,
+  GatewayIcon,
   WarningIcon,
   PortalIcon,
   MeshIcon,
@@ -48,11 +50,12 @@ import {
   ProgressIcon,
   InfoIcon,
 } from '@kong/icons'
-import { KTooltip, PopPlacements } from '@kong/kongponents'
 import { useSlots, useAttrs } from 'vue'
 
 import { uniqueId } from '@/app/application'
 import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
+import XTooltip from '@/app/x/components/x-tooltip/XTooltip.vue'
+import type { PopPlacements } from '@kong/kongponents'
 
 defineOptions({
   inheritAttrs: false,
@@ -62,6 +65,8 @@ const attrs = useAttrs()
 const icons = {
   standard: 'span',
   'policy-role-producer': 'span',
+  inbound: ForwardIcon,
+  outbound: GatewayIcon,
   builtin: PortalIcon,
   delegated: PortalIcon,
   warning: WarningIcon,

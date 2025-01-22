@@ -73,19 +73,13 @@
                   <template
                     v-if="version?.outdated === true"
                   >
-                    <KTooltip
-                      max-width="300"
+                    <XIcon
+                      name="info"
                     >
-                      <InfoIcon
-                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                        :size="KUI_ICON_SIZE_30"
+                      <div
+                        v-html="t('zone-cps.routes.item.version_warning')"
                       />
-                      <template #content>
-                        <div
-                          v-html="t('zone-cps.routes.item.version_warning')"
-                        />
-                      </template>
-                    </KTooltip>
+                    </XIcon>
                   </template>
                 </XLayout>
               </template>
@@ -206,9 +200,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon } from '@kong/icons'
-
 import type { ZoneOverview } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
@@ -220,8 +211,3 @@ const props = defineProps<{
   data: ZoneOverview
 }>()
 </script>
-<style lang="scss" scoped>
-.version.outdated :deep(.definition-card-container) {
-  color: #{$kui-color-text-warning};
-}
-</style>

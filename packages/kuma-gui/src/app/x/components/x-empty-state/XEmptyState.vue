@@ -20,6 +20,11 @@
         data-testid="empty-block"
       >
         <template
+          #icon
+        >
+          <slot name="icon" />
+        </template>
+        <template
           #title
         >
           <slot

@@ -144,19 +144,15 @@ For more detail see:
 ## GUI Components
 
 Apart from our `Data*` components we also have a set of `X*` components which
-are generic GUI specific components. We also use the
-[Kongponents](https://kongponents.konghq.com/) component library which
-use `K*` a naming scheme.
+are generic GUI specific components.
 
 These 'x' components are generally 'thin wrappers' over either native Vue
 components or Kongponents to make them easier to work with.
 
-We globally import our generic GUI `X*`, our `Data*` components and `K*`
-[Kongponents](https://kongponents.konghq.com/)
+We globally import our generic GUI `X*` and our `Data*` components.
 
 Links:
 
-- K\* Kongponents <https://kongponents.konghq.com/>
 - X\* components [These docs](/src/app/x/README)
 - Data\* Components [These docs](/src/app/application/components/data-source/README)
 - Design Tokens from <https://github.com/Kong/design-tokens>

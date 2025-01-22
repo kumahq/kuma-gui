@@ -6,7 +6,9 @@ section: Packages
 Our application level UI components.
 
 These 'x' components are generally 'thin wrappers' over either native Vue
-components or Kongponents to make them easier to work with.
+components or [Kongponents](https://kongponents.konghq.com/) to make them
+easier to work with.
+
 
 For example:
 
