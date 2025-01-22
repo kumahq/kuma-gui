@@ -8,6 +8,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      format: 'structured',
     }"
     v-slot="{ route, t }"
   >
@@ -41,7 +42,38 @@
           <PolicySummary
             v-if="data"
             :policy="data"
+            :format="route.params.format"
           >
+            <template #header>
+              <header>
+                <XLayout
+                  type="separated"
+                  size="max"
+                >
+                  <h3>
+                    {{ t('policies.routes.item.config') }}
+                  </h3>
+                  <div v-if="data.spec">
+                    <XSelect
+                      :label="t('policies.routes.item.format')"
+                      :selected="route.params.format"
+                      @change="(value) => {
+                        route.update({ format: value })
+                      }"
+                    >
+                      <template
+                        v-for="value in ['structured', 'yaml']"
+                        :key="value"
+                        #[`${value}-option`]
+                      >
+                        {{ t(`policies.routes.item.formats.${value}`) }}
+                      </template>
+                    </XSelect>
+                  </div>
+                </XLayout>
+              </header>
+            </template>
+            
             <ResourceCodeBlock
               :resource="data.config"
               is-searchable

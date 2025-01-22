@@ -1,13 +1,13 @@
 <template>
-  <div
-    class="stack"
+  <XLayout
+    type="stack"
   >
-    <div v-if="props.policy.spec">
-      <h3>
-        {{ t('policies.routes.item.overview') }}
-      </h3>
-
-      <div class="mt-4 stack-with-borders">
+    <slot name="header" />
+    <template v-if="props.policy.spec && props.format === 'structured'">
+      <div
+        class="mt-4 stack-with-borders"
+        data-testid="structured-view"
+      >
         <DefinitionCard
           layout="horizontal"
         >
@@ -67,21 +67,19 @@
           </template>
         </DefinitionCard>
       </div>
-    </div>
-
-    <div>
-      <h3>
-        {{ t('policies.routes.item.config') }}
-      </h3>
-
-      <div class="mt-4">
-        <slot />
+    </template>
+    <template v-else>
+      <div>
+        <div class="mt-4">
+          <slot />
+        </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </XLayout>
 </template>
 
 <script lang="ts" setup>
+
 import type { Policy } from '../data'
 import { useI18n, useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
@@ -91,5 +89,6 @@ const can = useCan()
 
 const props = defineProps<{
   policy: Policy
+  format: string
 }>()
 </script>

@@ -7,8 +7,11 @@ policies:
     item:
       title: "{name}"
       breadcrumbs: Policies
-      overview: 'Overview'
-      config: 'YAML'
+      config: 'Configuration'
+      format: Format
+      formats:
+        yaml: YAML
+        structured: Structured
       navigation:
         policy-detail-view: Overview
         policy-detail-config-view: YAML

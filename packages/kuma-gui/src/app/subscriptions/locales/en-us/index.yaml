@@ -1,6 +1,11 @@
 subscriptions:
   routes:
     item:
+      config: Configuration
+      format: Format
+      formats:
+        yaml: YAML
+        structured: Structured
       navigation:
         zone-cp-subscription-summary-overview-view: Overview
         zone-cp-subscription-summary-config-view: YAML
