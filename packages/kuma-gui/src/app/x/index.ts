@@ -1,4 +1,4 @@
-import Kongponents, { KTooltip, KCard, KPop, KRadio } from '@kong/kongponents'
+import Kongponents, { KCard, KPop, KRadio } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
@@ -25,6 +25,7 @@ import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
+import XTooltip from './components/x-tooltip/XTooltip.vue'
 import locales from './locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
@@ -36,7 +37,6 @@ declare module 'vue' {
     XCard: typeof KCard
     XPop: typeof KPop
     XRadio: typeof KRadio
-    XTooltip: typeof KTooltip
     //
     XAlert: typeof XAlert
     XAnonymous: typeof XAnonymous
@@ -59,6 +59,7 @@ declare module 'vue' {
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate
     XTeleportSlot: typeof XTeleportSlot
+    XTooltip: typeof XTooltip
     XDisclosure: typeof XDisclosure
     XAboutCard: typeof XAboutCard
     XInputSwitch: typeof XInputSwitch
@@ -89,7 +90,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XCard', KCard],
           ['XPop', KPop],
           ['XRadio', KRadio],
-          ['XTooltip', KTooltip],
           //
           ['XAction', XAction],
           ['XActionGroup', XActionGroup],
@@ -111,6 +111,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XTabs', XTabs],
           ['XTeleportTemplate', XTeleportTemplate],
           ['XTeleportSlot', XTeleportSlot],
+          ['XTooltip', XTooltip],
           ['XDisclosure', XDisclosure],
           ['XAboutCard', XAboutCard],
           ['XInputSwitch', XInputSwitch],
