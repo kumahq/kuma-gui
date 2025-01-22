@@ -2,6 +2,7 @@
   <component
     :is="slots.default ? KTooltip : XAnonymous"
     :placement="props.placement"
+    max-width="400"
   >
     <!-- we hardcode decorative to false for the moment due to an issue with kong/icons -->
     <component
@@ -31,6 +32,8 @@
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_30 } from '@kong/design-tokens'
 import {
+  ForwardIcon,
+  GatewayIcon,
   WarningIcon,
   PortalIcon,
   MeshIcon,
@@ -62,6 +65,8 @@ const attrs = useAttrs()
 const icons = {
   standard: 'span',
   'policy-role-producer': 'span',
+  inbound: ForwardIcon,
+  outbound: GatewayIcon,
   builtin: PortalIcon,
   delegated: PortalIcon,
   warning: WarningIcon,

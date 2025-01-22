@@ -53,7 +53,9 @@
               </template>
 
               <template #body>
-                <div class="status-with-reason">
+                <XLayout
+                  type="separated"
+                >
                   <StatusBadge :status="props.data.status" />
                   <DataCollection
                     v-if="props.data.dataplaneType === 'standard'"
@@ -62,26 +64,20 @@
                     :empty="false"
                     v-slot="{ items : unhealthyInbounds }"
                   >
-                    <KTooltip
-                      class="reason-tooltip"
+                    <XIcon
+                      name="info"
                     >
-                      <InfoIcon
-                        :color="KUI_COLOR_BACKGROUND_NEUTRAL"
-                        :size="KUI_ICON_SIZE_30"
-                      />
-                      <template #content>
-                        <ul>
-                          <li
-                            v-for="inbound in unhealthyInbounds"
-                            :key="`${inbound.service}:${inbound.port}`"
-                          >
-                            {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                          </li>
-                        </ul>
-                      </template>
-                    </KTooltip>
+                      <ul>
+                        <li
+                          v-for="inbound in unhealthyInbounds"
+                          :key="`${inbound.service}:${inbound.port}`"
+                        >
+                          {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
+                        </li>
+                      </ul>
+                    </XIcon>
                   </DataCollection>
-                </div>
+                </XLayout>
               </template>
             </DefinitionCard>
 
@@ -176,12 +172,10 @@
             >
               <ConnectionTraffic>
                 <template #title>
-                  <ForwardIcon
-                    display="inline-block"
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                  Inbounds
+                  <XLayout type="separated">
+                    <XIcon name="inbound" />
+                    <span>Inbounds</span>
+                  </XLayout>
                 </template>
                 <!-- if we are a builtin gateway proxy i.e. a 'gateway' proxy -->
                 <!-- use its first and only inbounds as a template  -->
@@ -306,12 +300,10 @@
                   </XAction>
                 </template>
                 <template #title>
-                  <GatewayIcon
-                    display="inline-block"
-                    decorative
-                    :size="KUI_ICON_SIZE_30"
-                  />
-                  <span>Outbounds</span>
+                  <XLayout type="separated">
+                    <XIcon name="outbound" />
+                    <span>Outbounds</span>
+                  </XLayout>
                 </template>
                 <!-- we don't want to show an error here -->
                 <!-- instead we show a No Data EmptyState -->
@@ -589,8 +581,6 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_BACKGROUND_NEUTRAL, KUI_ICON_SIZE_30 } from '@kong/design-tokens'
-import { InfoIcon, ForwardIcon, GatewayIcon } from '@kong/icons'
 import { computed } from 'vue'
 
 import type { DataplaneOverview, DataplaneInbound } from '../data'
@@ -639,23 +629,5 @@ const warnings = computed(() => props.data.warnings.concat(...(props.data.isCert
   .traffic .columns {
     background: none;
   }
-}
-
-.status-with-reason {
-  display: flex;
-  align-items: center;
-  gap: $kui-space-50;
-}
-
-.reason-tooltip :deep(.kong-icon) {
-  display: flex;
-  align-items: center;
-}
-
-.inbound-list > * + * {
-  border: 1px solid red;
-  margin-block-start: $kui-space-60;
-  border-top: $kui-border-width-10 solid $kui-color-border;
-  padding-block-start: $kui-space-60;
 }
 </style>
