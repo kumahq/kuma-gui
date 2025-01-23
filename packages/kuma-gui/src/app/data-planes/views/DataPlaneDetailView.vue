@@ -27,8 +27,12 @@
               v-for="warning in warnings"
               :key="warning.kind"
               :data-testid="`warning-${warning.kind}`"
-              v-html="t(`common.warnings.${warning.kind}`, warning.payload)"
-            />
+            >
+              <XI18n
+                :path="`common.warnings.${warning.kind}`"
+                :params="warning.payload"
+              />
+            </li>
             <li
               v-if="error"
               :data-testid="`warning-stats-loading`"
@@ -505,8 +509,8 @@
                 class="mt-4"
                 variant="warning"
               >
-                <div
-                  v-html="t('data-planes.routes.item.mtls.disabled')"
+                <XI18n
+                  path="data-planes.routes.item.mtls.disabled"
                 />
               </XAlert>
             </template>

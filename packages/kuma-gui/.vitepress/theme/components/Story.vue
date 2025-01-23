@@ -15,7 +15,9 @@
       <div class="language-vue vp-adaptive-theme">
         <button title="Copy Code" class="copy"></button>
         <span class="lang">vue</span>
+        <!-- eslint-disable vue/no-v-html -->
         <div v-html="vueSource"></div>
+        <!-- eslint-enable -->
       </div>
     </details>
 
@@ -40,7 +42,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   height: 300
 })
-const iframe = ref<HTMLIFrameElement>(null)
+const iframe = ref<HTMLIFrameElement | null>(null)
 const htmlSource = ref<string>('')
 const highlighter = ref<Awaited<ReturnType<typeof getHighlighter>> | undefined>()
 

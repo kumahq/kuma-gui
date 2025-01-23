@@ -33,12 +33,18 @@
             <ul>
               <li
                 v-if="!props.mesh.mtlsBackend"
-                v-html="t('meshes.routes.item.mtls-warning')"
-              />
+              >
+                <XI18n
+                  path="meshes.routes.item.mtls-warning"
+                />
+              </li>
               <li
                 v-if="props.mesh.mtlsBackend && missingTLSPolicy"
-                v-html="t('meshes.routes.item.mtp-warning')"
-              />
+              >
+                <XI18n
+                  path="meshes.routes.item.mtp-warning"
+                />
+              </li>
             </ul>
           </template>
           <XLayout

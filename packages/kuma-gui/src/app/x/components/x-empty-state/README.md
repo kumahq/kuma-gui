@@ -19,9 +19,9 @@ on its own.
 
 But it also has title and default slots to allow you to alter the text. Please
 use semantic elements when changing the default state. You should use `p` tags
-or `<div v-html="t('markdown')" />` for default/body content and the correct
-level of `h*` tag for the title depending on your page and the position/level
-of the empty state.
+or `<XI18n path="i18n.path.to.markdown" />` for default/body content and the
+correct level of `h*` tag for the title depending on your page and the
+position/level of the empty state.
 
 <Story>
   <XEmptyState>

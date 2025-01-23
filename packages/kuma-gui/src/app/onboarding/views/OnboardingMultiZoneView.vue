@@ -26,9 +26,9 @@
             </template>
 
             <template #content>
-              <div
+              <XI18n
                 class="onboarding-multi-zone-view-body"
-                v-html="t('onboarding.routes.multizone.body')"
+                path="onboarding.routes.multizone.body"
               />
 
               <div>
@@ -44,15 +44,16 @@
                     }]"
                     :key="status"
                   >
-                    <div
+                    <XI18n
                       class="onboarding-multi-zone-view-status"
                       :data-testid="`zone-${status.zone}-ingress-${status.ingress}`"
-                      v-html="t('onboarding.routes.multizone.status', {
+                      path="onboarding.routes.multizone.status"
+                      :params="{
                         zone: status.zone,
                         ingress: status.ingress,
-                      })"
-                    />
 
+                      }"
+                    />
                     <div
                       v-if="(['zone', 'ingress'] as const).some(item => status[item] === 'offline')"
                       class="onboarding-multi-zone-view-status-loading"

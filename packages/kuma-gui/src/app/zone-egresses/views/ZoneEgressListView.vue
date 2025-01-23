@@ -28,7 +28,10 @@
           />
         </h1>
       </template>
-      <div v-html="t('zone-egresses.routes.items.intro', {}, { defaultMessage: '' })" />
+      <XI18n
+        path="zone-egresses.routes.items.intro"
+        default-message=""
+      />
       <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
       <XCard>
         <DataLoader

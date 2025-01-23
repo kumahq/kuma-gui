@@ -5,6 +5,7 @@ const { defineConfig, createConfig: vueTsEslintConfig } = require('@vue/eslint-c
 const importPlugin = require('eslint-plugin-import')
 const stylistic = require('@stylistic/eslint-plugin')
 const eslint = require('@eslint/js')
+const nounsanitized = require('eslint-plugin-no-unsanitized')
 const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
 const globals = require('globals')
 const $config = dirname(require.resolve('@kumahq/config'))
@@ -107,7 +108,8 @@ function createEslintConfig(
               schema: packageSchema,
             },
           ],
-        }]},
+        }],
+      },
     },
   ]
 
@@ -148,6 +150,7 @@ function createEslintConfig(
 
   return [
     eslint.configs.recommended,
+    nounsanitized.configs.recommended,
     ...vueTsConfig,
     ...importConfig,
     ...jsonSchemaValidatorConfig,
@@ -228,7 +231,7 @@ function createEslintConfig(
           ignoreWhenEmpty: true,
           ignores: ['router-link', 'pre', ...INLINE_NON_VOID_ELEMENTS],
         }],
-        'vue/no-v-html': 'off',
+        'vue/no-v-html': 'error',
         // Reason: https://github.com/vuejs/eslint-plugin-vue/issues/2259
         'vue/no-setup-props-destructure': 'off',
         'vue/comma-dangle': ['error', 'always-multiline'],

@@ -29,13 +29,17 @@
               v-for="warning in props.data.warnings"
               :key="warning.kind"
               :data-testid="`warning-${warning.kind}`"
-              v-html="t(`common.warnings.${warning.kind}`, {
-                ...warning.payload,
-                ...(warning.kind === 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS' ? {
-                  globalCpVersion: version?.version ?? '',
-                } : {}),
-              })"
-            />
+            >
+              <XI18n
+                :path="`common.warnings.${warning.kind}`"
+                :params="{
+                  zoneCpVersion: warning.payload.zoneCpVersion ?? '',
+                  ...(warning.kind === 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS' ? {
+                    globalCpVersion: version?.version ?? '',
+                  } : {}),
+                }"
+              />
+            </li>
           </ul>
         </template>
 

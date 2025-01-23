@@ -77,8 +77,12 @@
                     >
                       {{ t('common.delete_modal.title', { type: 'Zone' }) }}
                     </template>
-                    <div
-                      v-html="t('common.delete_modal.text', { type: 'Zone', name: data.name })"
+                    <XI18n
+                      path="common.delete_modal.text"
+                      :params="{
+                        type: 'Zone',
+                        name: data.name,
+                      }"
                     />
                     <DataLoader
                       class="mt-4"

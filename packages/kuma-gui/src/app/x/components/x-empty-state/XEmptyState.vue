@@ -1,96 +1,96 @@
 <template>
-  <template
-    v-for="prefix in [props.type.length > 0 ? `${props.type}.` : 'components.']"
-    :key="prefix"
+  <XI18n
+    v-slot="{ t }"
   >
     <template
-      v-for="{title, body, href, actionLabel, actionType} in [
-        {
-          title: t(`${prefix}x-empty-state.title`, undefined, { defaultMessage: t('components.x-empty-state.title') }),
-          body: t(`${prefix}x-empty-state.body`, undefined, { defaultMessage: t('components.x-empty-state.body') }),
-          href: t(`${prefix}x-empty-state.action.href`, undefined, { defaultMessage: '' }),
-          actionLabel: t(`${prefix}x-empty-state.action.label`, undefined, { defaultMessage: '' }),
-          actionType: t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }),
-        },
-      ]"
-      :key="title"
+      v-for="prefix in [props.type.length > 0 ? `${props.type}.` : 'components.']"
+      :key="prefix"
     >
-      <KEmptyState
-        class="x-empty-state"
-        data-testid="empty-block"
+      <template
+        v-for="{title, body, href, actionLabel, actionType} in [
+          {
+            title: t(`${prefix}x-empty-state.title`, undefined, { defaultMessage: t('components.x-empty-state.title') }),
+            body: t(`${prefix}x-empty-state.body`, undefined, { defaultMessage: t('components.x-empty-state.body') }),
+            href: t(`${prefix}x-empty-state.action.href`, undefined, { defaultMessage: '' }),
+            actionLabel: t(`${prefix}x-empty-state.action.label`, undefined, { defaultMessage: '' }),
+            actionType: t(`${prefix}x-empty-state.action.type`, undefined, { defaultMessage: '' }),
+          },
+        ]"
+        :key="title"
       >
-        <template
-          #icon
+        <KEmptyState
+          class="x-empty-state"
+          data-testid="empty-block"
         >
-          <slot name="icon" />
-        </template>
-        <template
-          #title
-        >
-          <slot
-            name="title"
+          <template
+            #icon
           >
-            <template
-              v-if="title.length > 0"
+            <slot name="icon" />
+          </template>
+          <template
+            #title
+          >
+            <slot
+              name="title"
             >
-              <header>
-                <!-- eslint-disable vue/no-v-text-v-html-on-component -->
-                <component
-                  :is="`h2`"
-                  v-html="title"
-                />
-                <!-- eslint-enable -->
-              </header>
-            </template>
-          </slot>
-        </template>
+              <template
+                v-if="title.length > 0"
+              >
+                <header>
+                  <h2>
+                    <XI18n
+                      :path="`${prefix}x-empty-state.title`"
+                      :default-message="t('components.x-empty-state.title')"
+                    />
+                  </h2>
+                </header>
+              </template>
+            </slot>
+          </template>
 
-        <template
-          v-if="slots.default"
-        >
-          <slot name="default" />
-        </template>
-        <template
-          v-else-if="body.length > 0"
-        >
-          <div
-            v-html="body"
-          />
-        </template>
-
-        <template
-          #action
-        >
-          <slot name="action">
-            <XAction
-              v-if="href.length > 0"
-              :action="(['docs', 'create'] as const).find((item) => item === actionType)"
-              :href="href"
-            >
-              {{ actionLabel }}
-            </XAction>
-            <XTeleportSlot
-              v-else
-              :name="`${props.type}-x-empty-state-actions`"
+          <template
+            v-if="slots.default"
+          >
+            <slot name="default" />
+          </template>
+          <template
+            v-else-if="body.length > 0"
+          >
+            <XI18n
+              :path="`${prefix}x-empty-state.body`"
+              :default-message="t('components.x-empty-state.body')"
             />
-          </slot>
-        </template>
-      </KEmptyState>
+          </template>
+
+          <template
+            #action
+          >
+            <slot name="action">
+              <XAction
+                v-if="href.length > 0"
+                :action="(['docs', 'create'] as const).find((item) => item === actionType)"
+                :href="href"
+              >
+                {{ actionLabel }}
+              </XAction>
+              <XTeleportSlot
+                v-else
+                :name="`${props.type}-x-empty-state-actions`"
+              />
+            </slot>
+          </template>
+        </KEmptyState>
+      </template>
     </template>
-  </template>
+  </XI18n>
 </template>
 
 <script lang="ts" setup>
 import { KEmptyState } from '@kong/kongponents'
-
-import { useI18n } from '@/app/application'
-
 const props = withDefaults(defineProps<{
   type?: string
 }>(), {
   type: '',
 })
 const slots = defineSlots()
-
-const { t } = useI18n()
 </script>

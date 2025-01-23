@@ -34,7 +34,10 @@
           :src="`/zone-egress-overviews?page=1&size=100`"
           @change="getEgresses"
         />
-        <div v-html="t('zone-cps.routes.items.intro', {}, { defaultMessage: '' })" />
+        <XI18n
+          path="zone-cps.routes.items.intro"
+          default-message=""
+        />
         <XCard>
           <XTeleportTemplate
             v-if="can('create zones') && (data?.items ?? []).length > 0"
@@ -205,8 +208,12 @@
                               >
                                 {{ t('common.delete_modal.title', { type: 'Zone' }) }}
                               </template>
-                              <div
-                                v-html="t('common.delete_modal.text', { type: 'Zone', name: row.name })"
+                              <XI18n
+                                path="common.delete_modal.text"
+                                :params="{
+                                  type: 'Zone',
+                                  name: row.name,
+                                }"
                               />
                               <DataLoader
                                 class="mt-4"
