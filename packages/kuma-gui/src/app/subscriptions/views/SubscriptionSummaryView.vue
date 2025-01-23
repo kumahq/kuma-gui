@@ -8,7 +8,7 @@
       codeRegExp: false,
       format: 'structured',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, me }"
   >
     <DataCollection
       :items="props.data"
@@ -38,6 +38,7 @@
                     :label="t('subscriptions.routes.item.format')"
                     :selected="route.params.format"
                     @change="(value) => {
+                      me.set({ params: { format: value }}, true)
                       route.update({ format: value })
                     }"
                   >

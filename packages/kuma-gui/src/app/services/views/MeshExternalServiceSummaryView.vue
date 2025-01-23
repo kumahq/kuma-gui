@@ -9,7 +9,7 @@
       codeRegExp: false,
       format: 'structured',
     }"
-    v-slot="{ route, t, can }"
+    v-slot="{ route, t, can, me }"
   >
     <DataCollection
       :items="props.items"
@@ -54,6 +54,7 @@
                     :label="t('services.routes.item.format')"
                     :selected="route.params.format"
                     @change="(value) => {
+                      me.set({ params: { format: value }}, true)
                       route.update({ format: value })
                     }"
                   >

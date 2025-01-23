@@ -10,7 +10,7 @@
       codeRegExp: false,
       format: 'structured',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, me }"
   >
     <DataSource
       :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}`"
@@ -58,6 +58,7 @@
                       :label="t('policies.routes.item.format')"
                       :selected="route.params.format"
                       @change="(value) => {
+                        me.set({ params: { format: value }}, true)
                         route.update({ format: value })
                       }"
                     >

@@ -19,7 +19,9 @@
       <!-- eslint-disable vue/no-lone-template -->
       <template
         :ref="() => {
-          submit = _submit
+          submit = (_args: any, useGlobal = false) => {
+            _submit({ ..._args, global: useGlobal })
+          }
         }"
       />
     </DataSink>
@@ -129,7 +131,8 @@ class UniqueId {
 }
 
 const name = computed(() => props.name)
-const submit = ref((_args: any) => {})
+const submit = ref((_args: any, _useGlobal?: boolean) => {})
+provide('setMe', submit)
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<symbol, string>()
 const attributes = new Map<symbol, SupportedAttrs>()
