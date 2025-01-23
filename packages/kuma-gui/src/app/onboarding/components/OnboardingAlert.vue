@@ -20,8 +20,11 @@
         }"
       >
         <div class="onboarding-alert-content">
-          <div
-            v-html="t('main-overview.detail.onboarding.message', { name: t('common.product.name') })"
+          <XI18n
+            path="main-overview.detail.onboarding.message"
+            :params="{
+              name: t('common.product.name'),
+            }"
           />
 
           <XAction

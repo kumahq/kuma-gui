@@ -18,7 +18,10 @@
     <AppView
       :docs="t('data-planes.href.docs.data_plane_proxy')"
     >
-      <div v-html="t('data-planes.routes.items.intro', {}, { defaultMessage: '' })" />
+      <XI18n
+        path="data-planes.routes.items.intro"
+        default-message=""
+      />
       <XCard>
         <search>
           <FilterBar

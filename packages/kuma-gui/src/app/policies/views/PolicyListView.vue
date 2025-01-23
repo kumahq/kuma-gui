@@ -63,7 +63,10 @@
                   </PolicyTypeTag>
                 </h3>
               </header>
-              <div v-html="t(`policies.type.${type.name}.description`, undefined, { defaultMessage: t('policies.collection.description') })" />
+              <XI18n
+                :path="`policies.type.${type.name}.description`"
+                default-message="t('policies.collection.description')"
+              />
             </XCard>
 
             <XCard>
@@ -112,8 +115,12 @@
                             {{ t('policies.x-empty-state.title') }}
                           </h3>
                         </template>
-                        <div
-                          v-html="t('policies.x-empty-state.body', { type: type.name, suffix: route.params.s.length > 0 ? t('common.matchingsearch') : '' })"
+                        <XI18n
+                          path="policies.x-empty-state.body"
+                          :params="{
+                            type: type.name,
+                            suffix: route.params.s.length > 0 ? t('common.matchingsearch') : '',
+                          }"
                         />
                         <template
                           #action

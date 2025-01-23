@@ -39,7 +39,7 @@ export function highlightElement(preElement: Element, codeElement: Element, code
   }
 
   // Ensures Prism operates on the raw code and not on an already highlighted DOM fragment.
-  codeElement.innerHTML = code
+  codeElement.textContent = code
 
   Prism.highlightElement(codeElement)
 }

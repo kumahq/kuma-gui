@@ -41,8 +41,9 @@
           </DataCollection>
         </template>
 
-        <div
-          v-html="t(`gateways.routes.items.navigation.${route.child()?.name}.description`, {}, { defaultMessage: '' })"
+        <XI18n
+          :path="`gateways.routes.items.navigation.${route.child()?.name}.description`"
+          default-message=""
         />
 
         <RouterView

@@ -153,7 +153,7 @@ const routeView = {
   addTitle: (item: string, sym: symbol) => {
     const $title = title.value
     if ($title) {
-      $title.innerHTML = t('components.route-view.route-announcer', { title: item })
+      $title.textContent = t('components.route-view.route-announcer', { title: item })
     }
 
     titles.set(sym, item)

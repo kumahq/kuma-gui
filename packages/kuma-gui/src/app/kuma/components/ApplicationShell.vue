@@ -155,8 +155,11 @@
             <ul>
               <li
                 data-testid="warning-GLOBAL_STORE_TYPE_MEMORY"
-                v-html="t('common.warnings.GLOBAL_STORE_TYPE_MEMORY')"
-              />
+              >
+                <XI18n
+                  path="common.warnings.GLOBAL_STORE_TYPE_MEMORY"
+                />
+              </li>
             </ul>
           </XAlert>
         </div>
