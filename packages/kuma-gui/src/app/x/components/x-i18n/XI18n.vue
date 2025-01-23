@@ -4,7 +4,14 @@
   >
     <!-- eslint-disable vue/no-v-html -->
     <div
-      v-html="safeT(props.path, props.params)"
+      class="x-i18n"
+      data-testid="x-i18n"
+      v-bind="attrs"
+      v-html="safeT(
+        props.path,
+        props.params,
+        typeof props.defaultMessage !== 'undefined' ? { defaultMessage: props.defaultMessage}: undefined,
+      )"
     />
     <!-- eslint-enable -->
     <template
@@ -39,6 +46,7 @@
 <script lang="ts" setup>
 // eslint-disable-next-line vue/prefer-import-from-vue
 import { escapeHtml } from '@vue/shared'
+import { useAttrs } from 'vue'
 
 import { useI18n, uniqueId, useEnv } from '@/app/application'
 import createI18n from '@/app/application/services/i18n/I18n'
@@ -54,13 +62,17 @@ const props = withDefaults(defineProps<{
   prefix?: string
   path?: string
   params?: Record<string, string>
+  defaultMessage?: string
 }>(), {
   strings: undefined,
   prefix: '',
   path: '',
   params: () => ({}),
+  defaultMessage: undefined,
 })
 const slots = defineSlots()
+
+const attrs = useAttrs()
 
 const i18n = typeof props.strings !== 'undefined' ? createI18n(typeof props.strings === 'function' ? props.strings(icuEscapeHtml) : props.strings, useEnv()) : useI18n()
 
@@ -71,7 +83,7 @@ const t: TFunction = (key, ...rest) => {
 const safeT: TFunction = (
   key,
   params = {},
-  ...rest
+  options,
 ) => {
   // escape any param values, if the value isn't a string, empty it out we
   // aren't allowing nested icu params currently
@@ -85,11 +97,11 @@ const safeT: TFunction = (
     return prev
   }, escapedParams)
 
-  // make sure the prefix and key are also escaped
+  // make sure the prefix and key and options.defaultMessage are also escaped
   return i18n.t(
     `${key.startsWith('.') && props.prefix.length > 0 ? `${escapeHtml(props.prefix)}` : ''}${escapeHtml(key)}`,
     slotsOrParams,
-    ...rest,
+    typeof options?.defaultMessage !== 'undefined' ? { defaultMessage: escapeHtml(options.defaultMessage)} : options,
   )
 }
 

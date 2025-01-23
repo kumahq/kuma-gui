@@ -24,8 +24,8 @@
     >
       <template
         v-for="warnings in [[
-          [t('services.mesh-external-service.notifications.mtls-warning'), typeof props.mesh.mtlsBackend === 'undefined'],
-          [t('services.mesh-external-service.notifications.no-zone-egress'), egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')],
+          ['services.mesh-external-service.notifications.mtls-warning', typeof props.mesh.mtlsBackend === 'undefined'],
+          ['services.mesh-external-service.notifications.no-zone-egress', egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')],
         ].filter(([_, bool]) => bool).map(item => item[0] as string)]"
         :key="typeof warnings"
       >
@@ -40,8 +40,11 @@
               <li
                 v-for="warning in warnings"
                 :key="warning"
-                v-html="warning"
-              />
+              >
+                <XI18n
+                  :path="warning"
+                />
+              </li>
             </ul>
           </template>
           <XCard>

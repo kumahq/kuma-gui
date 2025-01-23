@@ -17,7 +17,10 @@
     <AppView
       :docs="t('zone-ingresses.href.docs')"
     >
-      <div v-html="t('zone-ingresses.routes.items.intro', {}, { defaultMessage: '' })" />
+      <XI18n
+        path="zone-ingresses.routes.items.intro"
+        default-message=""
+      />
       <XCard>
         <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
         <DataLoader

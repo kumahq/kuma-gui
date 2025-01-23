@@ -19,8 +19,9 @@
         </h1>
       </template>
 
-      <div
-        v-html="t('meshes.routes.items.intro', {}, { defaultMessage: '' })"
+      <XI18n
+        path="meshes.routes.items.intro"
+        default-message=""
       />
 
       <XCard>
