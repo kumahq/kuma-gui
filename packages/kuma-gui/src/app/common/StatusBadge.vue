@@ -1,5 +1,5 @@
 <template>
-  <component :is="props.status === 'not_available' ? KTooltip : XAnonymous">
+  <component :is="props.status === 'not_available' ? XTooltip : XAnonymous">
     <XBadge
       class="status-badge"
       :appearance="BADGE_APPEARANCE[props.status]"
@@ -18,10 +18,10 @@
 </template>
 
 <script lang="ts" setup>
-import { KTooltip } from '@kong/kongponents'
 
 import { useI18n } from '@/app/application'
 import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
+import XTooltip from '@/app/x/components/x-tooltip/XTooltip.vue'
 import { StatusKeyword } from '@/types/index.d'
 import type { BadgeAppearance } from '@kong/kongponents'
 
