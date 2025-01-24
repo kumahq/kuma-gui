@@ -210,9 +210,6 @@ watch(() => {
     let param = params[key]
     if((value === Number || typeof value === 'number')) {
       param = params[key] ? Number(params[key]) : get(stored, `params.${key}`, params[key])
-    } 
-    if(value === String || typeof value === 'string') {
-      param = param?.length ? params[key] : undefined
     }
     acc[key] = param ?? value
     return acc
