@@ -113,17 +113,16 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   justify-content: flex-end;
 }
 
-
 .tag :deep(a) {
   color: currentColor;
+}
+.tag :deep(a):hover {
+  text-decoration: underline;
 }
 .tag :deep(span.label) {
   font-weight: $kui-font-weight-regular;
 }
 .tag :deep(span.value) {
   font-weight: $kui-font-weight-semibold;
-}
-.tag :deep(a):hover {
-  text-decoration: underline;
 }
 </style>
