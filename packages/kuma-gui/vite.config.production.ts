@@ -91,12 +91,6 @@ export const config: UserConfigFn = () => {
       setupFiles: [
         './test-support/main.ts',
       ],
-      coverage: {
-        provider: 'istanbul',
-        reporter: ['text', 'lcovonly'],
-        include: ['src'],
-        exclude: ['src/test-support/mocks/**'],
-      },
       deps: {
         optimizer: {
           web: {
