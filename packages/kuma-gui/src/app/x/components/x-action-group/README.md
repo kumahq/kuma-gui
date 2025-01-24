@@ -9,7 +9,9 @@ open the group. This can be customized via the `control` slot.
 The below shows examples of each layout.
 
 <Story height="340">
-  <div style="display: grid;grid-template-columns: repeat(2, calc(50% -10px));gap: 20px;">
+  <div
+    v-style="'display: grid;grid-template-columns: repeat(2, calc(50% -10px));gap: 20px;'"
+  >
     <XActionGroup
       :expanded="false"
     >

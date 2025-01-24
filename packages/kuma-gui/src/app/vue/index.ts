@@ -6,7 +6,7 @@ import {
 
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
-import type { Component } from 'vue'
+import type { Component, Directive } from 'vue'
 import type { Router, RouteRecordRaw, NavigationGuard } from 'vue-router'
 export { useRoute } from 'vue-router'
 
@@ -15,12 +15,14 @@ type Token = ReturnType<typeof token>
 type VueApp = ReturnType<typeof createApp>
 export type PluginDefinition = Parameters<VueApp['use']>
 export type ComponentDefinition = [string, Component]
+export type DirectiveDefinition = [string, Directive]
 
 const $ = {
   app: token<(App: Component) => Promise<VueApp>>('vue.app'),
   router: token<Router>('vue.router'),
 
   components: token('vue.components'),
+  directives: token<DirectiveDefinition[]>('vue.directives'),
   plugins: token<PluginDefinition[]>('vue.plugins'),
   routes: token<RouteRecordRaw[]>('vue.routes'),
   routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
@@ -44,6 +46,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [$.app, {
       service: (
         components: ComponentDefinition[],
+        directives: DirectiveDefinition[],
         plugins: PluginDefinition[],
       ) => {
         return async (App: Component) => {
@@ -53,8 +56,12 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             app.use(...args)
           })
 
-          components.forEach(([name, component]: [string, Component]) => {
-            app.component(name, component)
+          components.forEach(([name, item]) => {
+            app.component(name, item)
+          })
+
+          directives.forEach(([name, item]) => {
+            app.directive(name, item)
           })
 
           return app
@@ -62,6 +69,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
       arguments: [
         $.components,
+        $.directives,
         $.plugins,
       ],
     }],

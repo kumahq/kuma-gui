@@ -13,14 +13,20 @@ the `XAction` a `to`/`href` or a `@click` event.
   >
     External link to Github Repo
   </XAction>
-  <hr style="margin: 20px auto;" />
+  <hr
+    v-style="'margin: 20px auto'"
+  />
   <XAction
     @click="() => console.log('Hi')"
   >
     Native Button that `console.log`s `Hi` on click
   </XAction>
-  <hr style="margin: 20px auto;" />
-  <div style="display: grid;gap: 20px;grid-template-columns: repeat(2, calc(50% - 10px));">
+  <hr
+    v-style="'margin: 20px auto'"
+  />
+  <div
+    v-style="'display: grid;gap: 20px;grid-template-columns: repeat(2, calc(50% - 10px))'"
+  >
     <XAction
       appearance="primary"
       @click="() => console.log('Hi')"

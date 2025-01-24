@@ -4,7 +4,7 @@
     :error="error"
     :refresh="refresh"
   />
-  <span />
+  <span v-bind="attrs" />
 </template>
 
 <script lang="ts" generic="T extends string | {
@@ -12,11 +12,12 @@
   typeOf(): any
 }" setup
 >
-import { watch, ref, onBeforeUnmount } from 'vue'
+import { watch, ref, onBeforeUnmount, useAttrs } from 'vue'
 
 import { useDataSourcePool } from '@/app/application'
 import type { TypeOf } from '@/app/application'
 
+const attrs = useAttrs()
 const data = useDataSourcePool()
 
 const props = defineProps<{

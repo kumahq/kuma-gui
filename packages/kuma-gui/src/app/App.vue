@@ -3,10 +3,10 @@
   <!-- we want to make sure they are retrieved/correctly set -->
   <DataSource
     :src="`/control-plane/addresses`"
-    v-slot="{data: addresses}: ControlPlaneAddressesSource"
+    v-slot="{ data: addresses }: ControlPlaneAddressesSource"
   >
     <RouteView
-      v-if="typeof addresses !== 'undefined'"
+      v-if="typeof addresses !== 'undefined' && child.name !== ''"
       name="app"
       :attrs="{
         class: 'kuma-ready',
@@ -28,54 +28,54 @@
 
         <template #navigation>
           <AppNavigator
+            v-style="'--icon: var(--icon-home)'"
             data-testid="control-planes-navigator"
             :active="child.name === 'home'"
             label="Home"
             :to="{
               name: 'home',
             }"
-            style="--icon: var(--icon-home);"
           />
           <AppNavigator
             v-if="can('use zones')"
+            v-style="'--icon: var(--icon-zones)'"
             data-testid="zones-navigator"
             :active="child.name === 'zone-index-view'"
             label="Zones"
             :to="{
               name: 'zone-index-view',
             }"
-            style="--icon: var(--icon-zones);"
           />
           <AppNavigator
             v-else
+            v-style="'--icon: var(--icon-zone-egresses)'"
             data-testid="zone-egresses-navigator"
             :active="child.name === 'zone-egress-index-view'"
             label="Zone Egresses"
             :to="{
               name: 'zone-egress-list-view',
             }"
-            style="--icon: var(--icon-zone-egresses);"
           />
           <AppNavigator
+            v-style="'--icon: var(--icon-meshes)'"
             :active="child.name === 'mesh-index-view'"
             data-testid="meshes-navigator"
             label="Meshes"
             :to="{
               name: 'mesh-index-view',
             }"
-            style="--icon: var(--icon-meshes);"
           />
         </template>
 
         <template #bottomNavigation>
           <AppNavigator
+            v-style="'--icon: var(--icon-configuration)'"
             :active="child.name === 'configuration-view'"
             data-testid="configuration-navigator"
             label="Configuration"
             :to="{
               name: 'configuration-view',
             }"
-            style="--icon: var(--icon-configuration);"
           />
         </template>
 
