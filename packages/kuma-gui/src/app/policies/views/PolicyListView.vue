@@ -3,7 +3,7 @@
     name="policy-list-view"
     :params="{
       page: 1,
-      size: 50,
+      size: Number,
       mesh: '',
       policyPath: '',
       policy: '',
