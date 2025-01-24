@@ -183,7 +183,7 @@ onBeforeRouteUpdate((to, from) => {
       const toValue = to.query[key]
 
       if(fromValue !== toValue) {
-        submit.value({ params: { [key]: toValue }, global: true})
+        submit.value({ params: { [key]: toValue }, global: true })
       }
     }
   }
