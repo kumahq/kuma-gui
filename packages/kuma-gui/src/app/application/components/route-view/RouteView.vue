@@ -130,7 +130,7 @@ class UniqueId {
 }
 
 const name = computed(() => props.name)
-const submit = ref((_args: any, _useGlobal?: boolean) => {})
+const submit = ref((_args: any) => {})
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<symbol, string>()
 const attributes = new Map<symbol, SupportedAttrs>()
