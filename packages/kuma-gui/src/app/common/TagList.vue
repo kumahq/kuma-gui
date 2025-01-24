@@ -18,7 +18,7 @@
         :is="tag.route ? 'XAction' : 'span'"
         :to="tag.route"
       >
-        {{ tag.label }}:<b>{{ tag.value }}</b>
+        <span class="label">{{ tag.label }}</span>:<span class="value">{{ tag.value }}</span>
       </component>
     </XBadge>
   </component>
@@ -113,11 +113,16 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
   justify-content: flex-end;
 }
 
-.tag {
-  font-weight: $kui-font-weight-regular;
-}
-
 .tag :deep(a) {
   color: currentColor;
+}
+.tag :deep(a):hover {
+  text-decoration: underline;
+}
+.tag :deep(span.label) {
+  font-weight: $kui-font-weight-regular;
+}
+.tag :deep(span.value) {
+  font-weight: $kui-font-weight-semibold;
 }
 </style>
