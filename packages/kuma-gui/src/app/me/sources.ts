@@ -19,6 +19,7 @@ export const sources = ({ get, set }: Storage) => {
         {
           params: {
             size: 50,
+            format: 'structured',
           },
         },
         app,

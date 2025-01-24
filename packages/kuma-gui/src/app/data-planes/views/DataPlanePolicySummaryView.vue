@@ -8,9 +8,9 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      format: 'structured',
+      format: String,
     }"
-    v-slot="{ route, t, me }"
+    v-slot="{ route, t }"
   >
     <DataSource
       :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}`"
@@ -58,7 +58,6 @@
                       :label="t('policies.routes.item.format')"
                       :selected="route.params.format"
                       @change="(value) => {
-                        me.set({ params: { format: value }}, true)
                         route.update({ format: value })
                       }"
                     >

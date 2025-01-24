@@ -77,7 +77,6 @@
                 page: props.page,
                 size: pageSize,
               })
-              setMe?.({ params: { size: pageSize }}, true)
             }"
           />
         </slot>
@@ -87,9 +86,7 @@
 </template>
 <script lang="ts" generic="T" setup>
 import { useThrottleFn } from '@vueuse/core'
-import { computed, inject, useSlots } from 'vue'
-
-const setMe = inject<(_args: any, useGlobal: boolean) => void>('setMe')
+import { computed, useSlots } from 'vue'
 
 type PaginationChangeEvent = {
   page: number

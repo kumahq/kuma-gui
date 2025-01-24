@@ -3,7 +3,7 @@
     name="zone-cp-list-view"
     :params="{
       page: 1,
-      size: 50,
+      size: Number,
       zone: '',
     }"
     v-slot="{ route, t, can, uri, me }"

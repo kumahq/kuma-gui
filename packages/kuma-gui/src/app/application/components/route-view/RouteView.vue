@@ -19,9 +19,7 @@
       <!-- eslint-disable vue/no-lone-template -->
       <template
         :ref="() => {
-          submit = (_args: any, useGlobal = false) => {
-            _submit({ ..._args, global: useGlobal })
-          }
+          submit = _submit
         }"
       />
     </DataSink>
@@ -55,9 +53,9 @@
     </DataSource>
   </div>
 </template>
-<script lang="ts" setup generic="T extends Record<string, string | number | boolean> = {}">
+<script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
 import { useCan, useI18n, uniqueId, useEnv, get } from '../../index'
@@ -104,7 +102,8 @@ const route = useRoute()
 const router = useRouter()
 const sym = Symbol('route-view')
 
-type Params = { [P in keyof T]: T[P] }
+type PrimitiveParams = Record<string, string | number | boolean>
+type Params = { [P in keyof T]: T[P] extends NumberConstructor ? number : T[P] extends StringConstructor ? string : T[P] }
 type RouteReplaceParams = Parameters<typeof router['push']>
 
 const setTitle = createTitleSetter(document)
@@ -132,7 +131,6 @@ class UniqueId {
 
 const name = computed(() => props.name)
 const submit = ref((_args: any, _useGlobal?: boolean) => {})
-provide('setMe', submit)
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<symbol, string>()
 const attributes = new Map<symbol, SupportedAttrs>()
@@ -175,7 +173,21 @@ const routeView = {
     setAttrs([...attributes.values()])
   },
 }
-const routeParams = reactive<Params>(structuredClone(props.params) as Params)
+const routeParams = reactive<Params>({} as Params)
+
+onBeforeRouteUpdate((to, from) => {
+  if(route.name === props.name) {
+    // Check for certain query search params to be stored as global user preference
+    for (const key of ['size', 'format']) {
+      const fromValue = from.query[key]
+      const toValue = to.query[key]
+
+      if(fromValue !== toValue) {
+        submit.value({ params: { [key]: toValue }, global: true})
+      }
+    }
+  }
+})
 
 // when any URL params change, normalize/validate/default and reset our actual application params
 const redirected = ref<boolean>(false)
@@ -185,26 +197,32 @@ watch(() => {
   const stored = await meResponse
 
   // merge params in order of importance/priority:
-  // 1. Anything stored by the user in storage
+  // 1. Anything that is provided as props.params (defaults)
+  // 2. Anything stored by the user in storage
   // 2. URL query params
   // 3. URL path params
   const params = {
+    ...props.params,
     ...get(stored, 'params', {}),
     ...route.query,
     ...route.params,
   }
 
+  const propsParams = Object.entries(props.params).reduce((acc, [key, value]) => {
+    const param = value === Number || typeof value === 'number' ? Number(params[key]) : value === String ? String(params[key]) : params[key]
+    acc[key] = param ?? value
+    return acc
+  }, {} as PrimitiveParams)
+
   // normalize/validate/default all params using the RouteView :params
   // 1. Ignore any `?param[]=0` type params, we just take the first one
   // 2. Using normalizeUrlParam and the type information from RouteView :params convert things to the correct type i.e. null > false
   // 3. Use RouteView :params to set any params that are empty, i.e. use RouteView :params as defaults.
-  Object.entries({
-    ...props.params,
-  }).reduce((prev, [prop, def]) => {
+  Object.entries(propsParams).reduce((prev, [prop, def]) => {
     const param = urlParam(typeof params[prop] === 'undefined' ? '' : params[prop])
     prev[prop] = normalizeUrlParam(param, def)
     return prev
-  }, routeParams as Record<string, string | number | boolean>)
+  }, routeParams as PrimitiveParams)
 
   // only one first load, if any params are missing from the URL/query
   // redirect/add the query params to the URL.
@@ -216,7 +234,7 @@ watch(() => {
         prev[key] = value
       }
       return prev
-    }, {} as Record<string, string | boolean | undefined>)
+    }, {} as Partial<PrimitiveParams>)
     if (Object.keys(params).length > 0) {
       router.replace({
         query: cleanQuery(params, route.query),
@@ -226,10 +244,9 @@ watch(() => {
   }
 }, { immediate: true })
 
-type RouteParams = Record<string, string | boolean | number | undefined>
-let newParams: RouteParams = {}
+let newParams: Partial<PrimitiveParams> = {}
 
-const routerPush = (params: RouteParams) => {
+const routerPush = (params: Partial<PrimitiveParams>) => {
   router.push({
     name: props.name,
     query: cleanQuery(params, route.query),
@@ -237,7 +254,7 @@ const routerPush = (params: RouteParams) => {
   newParams = {}
 }
 
-const routeUpdate = (params: RouteParams): void => {
+const routeUpdate = (params: Partial<PrimitiveParams>): void => {
   newParams = {
     ...newParams,
     ...params,

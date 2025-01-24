@@ -6,9 +6,9 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      format: 'structured',
+      format: String,
     }"
-    v-slot="{ route, t, me }"
+    v-slot="{ route, t }"
   >
     <DataCollection
       :items="props.items"
@@ -70,7 +70,6 @@
                       :label="t('zone-ingresses.routes.items.format')"
                       :selected="route.params.format"
                       @change="(value) => {
-                        me.set({ params: { format: value }}, true)
                         route.update({ format: value })
                       }"
                     >

@@ -3,7 +3,7 @@
     name="data-plane-list-view"
     :params="{
       page: 1,
-      size: 50,
+      size: Number,
       dataplaneType: 'all',
       s: '',
       mesh: '',
