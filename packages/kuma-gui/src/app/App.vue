@@ -6,7 +6,7 @@
     v-slot="{ data: addresses }: ControlPlaneAddressesSource"
   >
     <RouteView
-      v-if="typeof addresses !== 'undefined' && child.name !== ''"
+      v-if="typeof addresses !== 'undefined'"
       name="app"
       :attrs="{
         class: 'kuma-ready',

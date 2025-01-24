@@ -1,5 +1,7 @@
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
+// @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
+import difference from 'set.prototype.difference'
 
 import AppView from './components/app-view/AppView.vue'
 import DataCollection from './components/data-collection/DataCollection.vue'
@@ -40,6 +42,10 @@ if (!('structuredClone' in globalThis)) {
 // temporary Object.groupBy polyfill
 // TODO(jc): delete this once we get to 2026
 groupBy.shim()
+
+// temporary Set.prototype.difference polyfill
+// TODO(jc): delete this once we get to 2026
+difference.shim()
 
 export type { DataSourceResponse, Source, TypeOf } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
