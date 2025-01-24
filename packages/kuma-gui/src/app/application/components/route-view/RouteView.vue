@@ -197,19 +197,23 @@ watch(() => {
   const stored = await meResponse
 
   // merge params in order of importance/priority:
-  // 1. Anything that is provided as props.params (defaults)
-  // 2. Anything stored by the user in storage
+  // 1. Anything stored by the user in storage
   // 2. URL query params
   // 3. URL path params
   const params = {
-    ...props.params,
     ...get(stored, 'params', {}),
     ...route.query,
     ...route.params,
   }
 
   const propsParams = Object.entries(props.params).reduce((acc, [key, value]) => {
-    const param = value === Number || typeof value === 'number' ? Number(params[key]) : value === String ? String(params[key]) : params[key]
+    let param = params[key]
+    if((value === Number || typeof value === 'number')) {
+      param = params[key] ? Number(params[key]) : get(stored, `params.${key}`, params[key])
+    } 
+    if(value === String || typeof value === 'string') {
+      param = param?.length ? params[key] : undefined
+    }
     acc[key] = param ?? value
     return acc
   }, {} as PrimitiveParams)
