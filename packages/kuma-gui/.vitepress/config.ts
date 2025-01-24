@@ -27,7 +27,7 @@ const md = markdown(
   },
 )
 
-const h1re = /^#+\s+.+/
+const h1re = /#+\s+.+/
 
 const get = (path: string) => {
   const items = globSync(path)
@@ -45,6 +45,9 @@ const get = (path: string) => {
 const files = get('{src,docs}/**/*.md')
 const sections = Object.groupBy(files.filter(({ data }) => typeof data.section !== 'undefined'), (item) => {
   return item.data.section
+})
+const directives = files.filter((item) => {
+  return item.data.type === 'directive'
 })
 const components = files.filter((item) => {
   // we default to type: component seeing as thats the thing we will use docs for most
@@ -132,6 +135,16 @@ export default defineConfig({
           }) ?? []
         }
       }),
+      {
+        text: 'Directive Index',
+        collapsed: false,
+        items: directives.map((item) => {
+          return {
+            text: item.data.title,
+            link: item.path,
+          }
+        })
+      },
       {
         text: 'Component Index',
         collapsed: false,

@@ -30,12 +30,16 @@ onMounted(async () => {
           [$.app, {
             service: (
               components,
+              directives,
               plugins,
               globals,
             ) => {
               return async (app) => {
-                components.forEach(([name, component]) => {
-                  app.component(name, component)
+                components.forEach(([name, item]) => {
+                  app.component(name, item)
+                })
+                directives.forEach(([name, item]) => {
+                  app.directive(name, item)
                 })
 
                 plugins.forEach(([...args]) => {
@@ -51,6 +55,7 @@ onMounted(async () => {
             },
             arguments: [
               $.components,
+              $.directives,
               $.plugins,
               $.globals,
             ],

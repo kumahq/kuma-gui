@@ -26,9 +26,11 @@ import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
 import XTooltip from './components/x-tooltip/XTooltip.vue'
+import vStyle from './directives/style'
 import locales from './locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
+
 
 type Token = ReturnType<typeof token>
 
@@ -120,6 +122,16 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
       labels: [
         app.components,
+      ],
+    }],
+    [token('x.directives'), {
+      service: () => {
+        return [
+          ['style', vStyle()],
+        ]
+      },
+      labels: [
+        app.directives,
       ],
     }],
     [token('x.locales'), {

@@ -240,11 +240,19 @@ function createEslintConfig(
             key: 'data-test-id',
             message: 'Using "data-test-id" is not allowed. Use "data-testid" instead.',
           },
+          {
+            key: 'style',
+            message: 'Using "style" is not allowed. Use "v-style" instead.',
+          },
         ],
         'vue/no-restricted-v-bind': ['error',
           {
             argument: 'data-test-id',
             message: 'Using "data-test-id" is not allowed. Use "data-testid" instead.',
+          },
+          {
+            argument: 'style',
+            message: 'Using "style" is not allowed. Use "v-style" instead.',
           },
         ],
         'vue/no-undef-components': ['error', {
