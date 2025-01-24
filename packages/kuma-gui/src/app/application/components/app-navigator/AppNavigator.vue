@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<{
 :deep(a) {
   &::before {
     content: '';
+    -webkit-mask-image: var(--icon);
     mask-image: var(--icon);
     background-color: currentColor;
     height: 20px;
