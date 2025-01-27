@@ -208,7 +208,7 @@ watch(() => {
 
   const propsParams = Object.entries(props.params).reduce((acc, [key, value]) => {
     let param = params[key]
-    if((value === Number || typeof value === 'number')) {
+    if(value === Number || typeof value === 'number') {
       param = params[key] ? Number(params[key]) : get(stored, `params.${key}`, params[key])
     }
     acc[key] = param ?? value
