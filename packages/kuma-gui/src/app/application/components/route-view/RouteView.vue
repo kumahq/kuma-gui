@@ -206,20 +206,11 @@ watch(() => {
     ...route.params,
   }
 
-  const propsParams = Object.entries(props.params).reduce((acc, [key, value]) => {
-    let param = params[key]
-    if(value === Number || typeof value === 'number') {
-      param = params[key] ? Number(params[key]) : get(stored, `params.${key}`, params[key])
-    }
-    acc[key] = param ?? value
-    return acc
-  }, {} as PrimitiveParams)
-
   // normalize/validate/default all params using the RouteView :params
   // 1. Ignore any `?param[]=0` type params, we just take the first one
   // 2. Using normalizeUrlParam and the type information from RouteView :params convert things to the correct type i.e. null > false
   // 3. Use RouteView :params to set any params that are empty, i.e. use RouteView :params as defaults.
-  Object.entries(propsParams).reduce((prev, [prop, def]) => {
+  Object.entries(props.params).reduce((prev, [prop, def]) => {
     const param = urlParam(typeof params[prop] === 'undefined' ? '' : params[prop])
     prev[prop] = normalizeUrlParam(param, def)
     return prev
