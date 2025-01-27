@@ -26,9 +26,10 @@
     <DataSource
       :src="uri(sources, '/me/:route', {
         route: props.name,
+      }, {
+        cacheControl: 'no-cache',
       })"
       @change="(value) => {
-        meStored = value
         return resolve(value)
       }"
       v-slot="{ data: me, refresh: _refresh }"
@@ -63,7 +64,7 @@
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
 import { useCan, useI18n, uniqueId, useEnv, get } from '../../index'
@@ -104,7 +105,6 @@ let resolve: (resolved: object) => void
 const meResponse = new Promise((r) => {
   resolve = r
 })
-const meStored = ref<any>({})
 
 const htmlAttrs = useAttrs()
 const { t } = useI18n()
@@ -186,26 +186,21 @@ const routeView = {
 }
 const routeParams = reactive<Params>({} as Params)
 
-onBeforeRouteUpdate(() => {
-  // Make sure to always update the me storage
-  refresh.value()
-})
-
 // when any URL params change, normalize/validate/default and reset our actual application params
 const redirected = ref<boolean>(false)
+
 watch(() => {
   return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
 }, async () => {
-  await meResponse
-  const stored = get(meStored, 'value.params', {})
+  const stored = await meResponse
 
   // merge params in order of importance/priority:
   // 1. Anything stored by the user in storage
   // 2. URL query params
   // 3. URL path params
   const params = {
-    ...stored,
-    ...route.query,
+    ...get(stored, 'params', {}),
+    ...Object.fromEntries(Object.entries(route.query).filter(([_, val]) => val && val.length > 0)),
     ...route.params,
   }
 
@@ -260,7 +255,7 @@ const routeUpdate = (params: Partial<PrimitiveParams>): void => {
       submit.value({ params: { [key]: newParams[key] }, global: true })
     }
   }
-  
+
   routerPush(newParams)
 }
 
