@@ -186,26 +186,9 @@ const routeView = {
 }
 const routeParams = reactive<Params>({} as Params)
 
-onBeforeRouteUpdate((to, from) => {
-  if(route.name === props.name) {
-    // Check for certain query search params to be stored as global user preference
-    for (const key of ['size', 'format']) {
-      const fromValue = from.query[key]
-      const toValue = to.query[key]
-
-      if(fromValue !== toValue) {
-        submit.value({ params: { [key]: toValue }, global: true })
-      }
-    }
-  }
-})
-
-onBeforeRouteUpdate(async () => {
-  // Make sure that the me resource is always up to date
-  const { value: refreshMe } = refresh
-  if(route.name === props.name) {
-    refreshMe()
-  }
+onBeforeRouteUpdate(() => {
+  // Make sure to always update the me storage
+  refresh.value()
 })
 
 // when any URL params change, normalize/validate/default and reset our actual application params
@@ -271,6 +254,13 @@ const routeUpdate = (params: Partial<PrimitiveParams>): void => {
     ...newParams,
     ...params,
   }
+
+  for (const key of ['size', 'format']) {
+    if(newParams[key]) {
+      submit.value({ params: { [key]: newParams[key] }, global: true })
+    }
+  }
+  
   routerPush(newParams)
 }
 
