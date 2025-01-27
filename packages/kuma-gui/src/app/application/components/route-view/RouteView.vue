@@ -27,9 +27,17 @@
       :src="uri(sources, '/me/:route', {
         route: props.name,
       })"
-      @change="resolve"
-      v-slot="{ data: me }"
+      @change="(value) => {
+        meStored = value
+        return resolve(value)
+      }"
+      v-slot="{ data: me, refresh: _refresh }"
     >
+      <template
+        :ref="() => {
+          refresh = _refresh
+        }"
+      />
       <slot
         v-if="me && submit && redirected"
         :id="UniqueId"
@@ -92,9 +100,11 @@ const env = useEnv()
 const can = useCan()
 const uri = useUri()
 
-
 let resolve: (resolved: object) => void
-const meResponse = new Promise((r) => resolve = r)
+const meResponse = new Promise((r) => {
+  resolve = r
+})
+const meStored = ref<any>({})
 
 const htmlAttrs = useAttrs()
 const { t } = useI18n()
@@ -131,6 +141,7 @@ class UniqueId {
 
 const name = computed(() => props.name)
 const submit = ref((_args: any) => {})
+const refresh = ref(() => {})
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<symbol, string>()
 const attributes = new Map<symbol, SupportedAttrs>()
@@ -189,19 +200,28 @@ onBeforeRouteUpdate((to, from) => {
   }
 })
 
+onBeforeRouteUpdate(async () => {
+  // Make sure that the me resource is always up to date
+  const { value: refreshMe } = refresh
+  if(route.name === props.name) {
+    refreshMe()
+  }
+})
+
 // when any URL params change, normalize/validate/default and reset our actual application params
 const redirected = ref<boolean>(false)
 watch(() => {
   return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
 }, async () => {
-  const stored = await meResponse
+  await meResponse
+  const stored = get(meStored, 'value.params', {})
 
   // merge params in order of importance/priority:
   // 1. Anything stored by the user in storage
   // 2. URL query params
   // 3. URL path params
   const params = {
-    ...get(stored, 'params', {}),
+    ...stored,
     ...route.query,
     ...route.params,
   }
