@@ -19,7 +19,7 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = `${fake.word.noun()}-${id}`
 
         const displayName = `${name}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
@@ -33,7 +33,7 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
           labels: {
             'kuma.io/display-name': displayName,
             'kuma.io/origin': fake.kuma.origin(),
-            'kuma.io/zone': fake.hacker.noun(),
+            'kuma.io/zone': fake.word.noun(),
             ...(k8s
               ? {
                 'k8s.kuma.io/namespace': nspace,

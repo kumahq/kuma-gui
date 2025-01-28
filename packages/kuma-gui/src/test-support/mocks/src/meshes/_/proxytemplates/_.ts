@@ -13,7 +13,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       selectors: [
         {
           match: {
-            service: fake.hacker.noun(),
+            service: fake.word.noun(),
           },
         },
       ],

@@ -2,7 +2,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 
 export default ({ env, fake }: EndpointDependencies): MockResponder => (_req) => {
   const mode = env('KUMA_MODE', 'global') === 'global' ? 'global' : 'zone'
-  const zoneName = mode === 'zone' ? fake.hacker.noun() : undefined
+  const zoneName = mode === 'zone' ? fake.word.noun() : undefined
 
   return {
     headers: {},

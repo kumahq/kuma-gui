@@ -37,7 +37,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const isMultizone = fake.datatype.boolean()
   const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
-  const service = fake.hacker.noun()
+  const service = fake.word.noun()
 
   const parts = String(name).split('.')
   const displayName = parts.slice(0, -1).join('.')
@@ -76,7 +76,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 tags: fake.kuma.tags({
                   protocol: ports[i].protocol,
                   service,
-                  zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+                  zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                 }),
                 ...(fake.datatype.boolean() ? {
                   state: fake.kuma.inboundState(),
@@ -94,7 +94,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             gateway: {
               tags: fake.kuma.tags({
                 service,
-                zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+                zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
               }),
               type,
             },
@@ -114,7 +114,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
           return {
             id: fake.string.uuid(),
-            controlPlaneInstanceId: fake.hacker.noun(),
+            controlPlaneInstanceId: fake.word.noun(),
             ...fake.kuma.connection(item, i, arr),
             generation: fake.number.int({ min: 1, max: 500 }),
             status: (() => {

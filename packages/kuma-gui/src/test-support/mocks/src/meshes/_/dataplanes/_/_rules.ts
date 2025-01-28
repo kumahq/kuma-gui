@@ -41,7 +41,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         labels: {
           'kuma.io/display-name': displayName,
           'kuma.io/origin': fake.kuma.origin(),
-          'kuma.io/zone': fake.hacker.noun(),
+          'kuma.io/zone': fake.word.noun(),
           ...(k8s
             ? {
               'k8s.kuma.io/namespace': nspace,
@@ -54,7 +54,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           return {
             type: fake.kuma.policyName(),
             toResourceRules: Array.from({ length: toResourceRuleCount }).map(() => {
-              const clusterName = env('KUMA_CLUSTER_NAME', `${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`)
+              const clusterName = env('KUMA_CLUSTER_NAME', `${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`)
               const [mesh, service, nspace, zone] = clusterName.split('_')
 
               return {
@@ -76,7 +76,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 },
                 resourceSectionName: '',
                 origin: Array.from({ length: fake.number.int({ min: 1, max: 3 }) }).map(() => {
-                  const displayName = fake.hacker.noun()
+                  const displayName = fake.word.noun()
                   const nspace = fake.k8s.namespace()
                   const id = `${name}.${nspace}`
                   return {
@@ -87,7 +87,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                       labels: {
                         'kuma.io/display-name': displayName,
                         'kuma.io/origin': fake.kuma.origin(),
-                        'kuma.io/zone': fake.hacker.noun(),
+                        'kuma.io/zone': fake.word.noun(),
                         ...(k8s
                           ? {
                             'k8s.kuma.io/namespace': nspace,

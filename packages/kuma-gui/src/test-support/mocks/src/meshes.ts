@@ -10,7 +10,7 @@ export default ({ fake, env, pager }: EndpointDependencies): MockResponder => (r
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
-        const name = i === 0 ? 'default' : `${fake.hacker.noun()}-${i}`
+        const name = i === 0 ? 'default' : `${fake.word.noun()}-${i}`
 
         return {
           name,

@@ -15,14 +15,14 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       sources: [
         {
           match: {
-            service: fake.hacker.noun(),
+            service: fake.word.noun(),
           },
         },
       ],
       destinations: [
         {
           match: {
-            service: fake.hacker.noun(),
+            service: fake.word.noun(),
           },
         },
       ],
