@@ -7,6 +7,10 @@ updates:
       interval: "weekly"
     labels:
       - "dependencies"
+    groups:
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
 
   - package-ecosystem: "github-actions"
     open-pull-requests-limit: 50
