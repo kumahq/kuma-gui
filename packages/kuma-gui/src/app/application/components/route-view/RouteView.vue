@@ -201,7 +201,7 @@ watch(() => {
   // 3. URL path params
   const params = {
     ...get(stored, 'params', {}),
-    ...Object.fromEntries(Object.entries(route.query).filter(([_, val]) => val && val.length > 0)),
+    ...Object.fromEntries(Object.entries(route.query).filter(([_, val]) => (typeof val !== 'undefined' && typeof val !== 'string') || val?.length > 0)),
     ...route.params,
   }
 
