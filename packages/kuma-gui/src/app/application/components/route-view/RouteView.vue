@@ -30,6 +30,7 @@
         cacheControl: 'no-cache',
       })"
       @change="(value) => {
+        meStored = value
         return resolve(value)
       }"
       v-slot="{ data: me, refresh: _refresh }"
@@ -64,7 +65,7 @@
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
 import { useCan, useI18n, uniqueId, useEnv, get } from '../../index'
@@ -105,6 +106,7 @@ let resolve: (resolved: object) => void
 const meResponse = new Promise((r) => {
   resolve = r
 })
+const meStored = ref<any>({})
 
 const htmlAttrs = useAttrs()
 const { t } = useI18n()
@@ -190,10 +192,18 @@ const routeParams = reactive<Params>({} as Params)
 // when any URL params change, normalize/validate/default and reset our actual application params
 const redirected = ref<boolean>(false)
 
+onBeforeRouteUpdate(() => {
+  if(route.name === props.name) {
+    // Make sure to always update stored preferences (/me)
+    refresh.value()
+  }
+})
+
 watch(() => {
   return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
 }, async () => {
-  const stored = await meResponse
+  await meResponse
+  const stored = meStored.value
 
   // merge params in order of importance/priority:
   // 1. Anything stored by the user in storage
