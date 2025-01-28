@@ -74,7 +74,7 @@ type Hideable = EventTarget & { hidden: boolean }
 
 export const getSource = (doc: Hideable) => {
   return (cb: (source: RetryingEventSource) => Promise<unknown>, config: Configuration = {}) => {
-    return new CallableEventSource<Configuration>(async function * (this: RetryingEventSource) {
+    return new CallableEventSource<Configuration>(async function* (this: RetryingEventSource) {
       // TODO: refactor and remove eslint-disable directive
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this
@@ -140,7 +140,7 @@ export const create: Creator = (src, router) => {
       size: parseInt(queryParams.get('size') || '0'),
       page: parseInt(queryParams.get('page') || '0'),
       search: queryParams.get('search') || '',
-      cacheControl: ['no-store', 'no-cache'].reduce((prev, item) => queryParams.has(item) ? item : prev, ''),
+      cacheControl: ['no-store', 'no-cache'].reduce((prev, item) => queryParams.has(item) ? item : prev, queryParams.get('cacheControl') ?? ''),
     },
     ...route.params,
   }
