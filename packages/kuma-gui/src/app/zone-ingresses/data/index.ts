@@ -32,6 +32,10 @@ const InternalZoneIngress = {
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
+      networking: {
+        ...item.networking,
+        inboundAddress: `${item.networking.address}:${item.networking.port}`,
+      },
     }
   },
 }

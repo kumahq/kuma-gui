@@ -93,6 +93,19 @@ export default class KumaApi extends Api {
     return this.client.get(`/zoneingresses/${zoneIngressName}/${dataPath}`, { params })
   }
 
+  getZoneIngressXds({ name }: { name: string, params?: any }, params?: any): Promise<Record<string, unknown>> {
+    return this.client.get(`/zoneingresses/${name}/xds`, { params })
+  }
+
+  getZoneIngressStats({ name }: { name: string, params?: any }, params?: any): Promise<string> {
+    return this.client.get(`/zoneingresses/${name}/stats`, { params })
+  }
+
+  getZoneIngressClusters({ name }: { name: string, params?: any }, params?: any): Promise<string> {
+    return this.client.get(`/zoneingresses/${name}/clusters`, { params })
+  }
+
+
   getAllZoneIngressOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneIngressOverview>> {
     return this.client.get('/zone-ingresses/_overview', { params })
   }
@@ -110,6 +123,18 @@ export default class KumaApi extends Api {
    */
   getZoneEgressData({ zoneEgressName, dataPath }: { zoneEgressName: string, dataPath: 'xds' | 'stats' | 'clusters' }, params?: any): Promise<string> {
     return this.client.get(`/zoneegresses/${zoneEgressName}/${dataPath}`, { params })
+  }
+
+  getZoneEgressXds({ name }: { name: string, params?: any }, params?: any): Promise<Record<string, unknown>> {
+    return this.client.get(`/zoneegresses/${name}/xds`, { params })
+  }
+
+  getZoneEgressStats({ name }: { name: string, params?: any }, params?: any): Promise<string> {
+    return this.client.get(`/zoneegresses/${name}/stats`, { params })
+  }
+
+  getZoneEgressClusters({ name }: { name: string, params?: any }, params?: any): Promise<string> {
+    return this.client.get(`/zoneegresses/${name}/clusters`, { params })
   }
 
   getAllZoneEgressOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneEgressOverview>> {

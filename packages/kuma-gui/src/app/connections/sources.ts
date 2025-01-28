@@ -72,6 +72,74 @@ export const sources = (source: Source, api: KumaApi) => {
         raw: res,
       }
     },
+    '/connections/clusters/for/zone-ingress/:name': async (params) => {
+      const { name } = params
+      return api.getZoneIngressData({ zoneIngressName: name, dataPath: 'clusters' })
+    },
+
+    '/connections/clusters/for/zone-egress/:name': async (params) => {
+      const { name } = params
+      return api.getZoneEgressData({ zoneEgressName: name, dataPath: 'clusters' })
+    },
+
+    '/connections/xds/for/zone-ingress/:name/outbound/:outbound/endpoints/:endpoints': async (params) => {
+      const { name, outbound, endpoints } = params
+
+      // we don't ask for endpoints because we don't need them for inbound filtering
+      const res = await api.getZoneIngressXds({
+        name,
+      }, {
+        include_eds: endpoints,
+      })
+      return filter(res, (key: string, arr: unknown[]) => {
+        switch (key) {
+          case 'dynamic_listeners':
+            // this one won't work yet see
+            // https://github.com/kumahq/kuma/issues/12093
+            // dynamic_listeners[].name === 'outbound:<outbound>'
+            return arr.filter(item => prop(item, 'name') && item.name === `outbound:${outbound}`)
+          case 'dynamic_active_clusters':
+            // dynamic_active_clusters[].cluster.name === outbound
+            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
+          case 'dynamic_endpoint_configs':
+            // dynamic_endpoint_configs[].endpoint_config.cluster_name === outbound
+            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && item.endpoint_config?.cluster_name === outbound)
+        }
+        return []
+      })
+    },
+    '/connections/xds/for/zone-ingress/:name/inbound/:inbound': async (params) => {
+      const { name, inbound } = params
+
+      // we don't ask for endpoints because we don't need them for inbound filtering
+      const res = await api.getZoneIngressXds({
+        name,
+      }, {
+        include_eds: false,
+      })
+      console.log(inbound)
+      return filter(res, (key: string, arr: unknown[]) => {
+        switch (key) {
+          case 'dynamic_listeners':
+            // dynamic_listeners[].name === 'inbound:<ignored>:0000'
+            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`))
+          case 'dynamic_active_clusters':
+            // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
+            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`))
+        }
+        return []
+      })
+    },
+
+    '/connections/xds/for/zone-ingress/:name': async (params) => {
+      const { name } = params
+      return api.getZoneIngressData({ zoneIngressName: name, dataPath: 'xds' })
+    },
+
+    '/connections/xds/for/zone-egress/:name': async (params) => {
+      const { name } = params
+      return api.getZoneEgressData({ zoneEgressName: name, dataPath: 'xds' })
+    },
 
     '/meshes/:mesh/dataplanes/:name/stats/:address': async (params) => {
       const { mesh, name } = params
