@@ -47,7 +47,7 @@
           back: routerBack,
           children,
           child,
-          from,
+          from: getFrom,
         }"
       />
     </DataSource>
@@ -134,6 +134,7 @@ const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<symbol, string>()
 const attributes = new Map<symbol, SupportedAttrs>()
 const from = ref<RouteLocationNormalizedLoaded | undefined>()
+const getFrom = () => from.value
 
 const joinTitle = (titles: string[]) => {
   return titles.reverse().concat(t('components.route-view.title', { name: t('common.product.name') })).join(' | ')
