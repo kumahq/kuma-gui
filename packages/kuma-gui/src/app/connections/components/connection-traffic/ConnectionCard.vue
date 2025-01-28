@@ -26,6 +26,17 @@
       </div>
     </template>
 
+    <template v-if="props.portName">
+      <dl>
+        <div>
+          <dt>Name</dt>
+          <dd>
+            {{ props.portName }}
+          </dd>
+        </div>
+      </dl>
+    </template>
+
     <template
       v-if="props.traffic"
     >
@@ -157,10 +168,12 @@ const props = withDefaults(defineProps<{
   service?: string
   traffic?: Record<string, any>
   direction?: 'upstream' | 'downstream'
+  portName?: string
 }>(), {
   service: '',
   traffic: undefined,
   direction: 'downstream',
+  portName: undefined,
 })
 const click = (e: MouseEvent) => {
   const $target = e.target as HTMLElement

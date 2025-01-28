@@ -303,6 +303,7 @@ export type DataplaneInbound = {
   serviceAddress?: string
   tags: ServiceTags
   state?: 'Ready' | 'NotReady' | 'Ignored'
+  name?: string
 }
 
 export type DataplaneOutbound = {
