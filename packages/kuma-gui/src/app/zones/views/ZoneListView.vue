@@ -36,7 +36,7 @@
         />
         <XI18n
           path="zone-cps.routes.items.intro"
-          default-message=""
+          default-path="common.i18n.ignore-error"
         />
         <XCard>
           <XTeleportTemplate

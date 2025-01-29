@@ -10,7 +10,7 @@
       v-html="safeT(
         props.path,
         props.params,
-        typeof props.defaultMessage !== 'undefined' ? { defaultMessage: props.defaultMessage}: undefined,
+        typeof props.defaultPath === 'string' ? { defaultMessage: safeT(props.defaultPath)}: undefined,
       )"
     />
     <!-- eslint-enable -->
@@ -62,13 +62,13 @@ const props = withDefaults(defineProps<{
   prefix?: string
   path?: string
   params?: Record<string, string>
-  defaultMessage?: string
+  defaultPath?: string
 }>(), {
   strings: undefined,
   prefix: '',
   path: '',
   params: () => ({}),
-  defaultMessage: undefined,
+  defaultPath: undefined,
 })
 const slots = defineSlots()
 
@@ -101,7 +101,7 @@ const safeT: TFunction = (
   return i18n.t(
     `${key.startsWith('.') && props.prefix.length > 0 ? `${escapeHtml(props.prefix)}` : ''}${escapeHtml(key)}`,
     slotsOrParams,
-    typeof options?.defaultMessage !== 'undefined' ? { defaultMessage: escapeHtml(options.defaultMessage)} : options,
+    typeof options?.defaultMessage !== 'undefined' ? { defaultMessage: options.defaultMessage} : options,
   )
 }
 

@@ -1,4 +1,6 @@
 common:
+  i18n:
+    ignore-error: ""
   product:
     name: Kuma
     utm_query_params: utm_source=Kuma&utm_medium=Kuma

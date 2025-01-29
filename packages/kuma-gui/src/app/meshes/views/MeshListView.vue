@@ -21,7 +21,7 @@
 
       <XI18n
         path="meshes.routes.items.intro"
-        default-message=""
+        default-path="common.i18n.ignore-error"
       />
 
       <XCard>
