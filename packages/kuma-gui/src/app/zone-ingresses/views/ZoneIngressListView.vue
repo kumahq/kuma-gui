@@ -19,7 +19,7 @@
     >
       <XI18n
         path="zone-ingresses.routes.items.intro"
-        default-message=""
+        default-path="common.i18n.ignore-error"
       />
       <XCard>
         <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
