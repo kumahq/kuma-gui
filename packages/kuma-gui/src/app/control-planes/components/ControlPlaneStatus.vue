@@ -19,9 +19,23 @@
         <template #icon>
           <img src="@/assets/images/icon-location-on.svg?url">
         </template>
-
+      
         <template #title>
           {{ t('main-overview.detail.health.zone_control_planes') }}
+        </template>
+
+        <template
+          v-if="props.globalInsight.zones.controlPlanes.total !== props.globalInsight.zones.controlPlanes.online"
+          #info
+        >
+          <XIcon
+            name="info"
+            :color="KUI_COLOR_TEXT_NEUTRAL"
+          >
+            <XI18n
+              path="main-overview.detail.health.info.zone-cps"
+            />
+          </XIcon>
         </template>
       </ResourceStatus>
 
@@ -50,6 +64,20 @@
         <template #title>
           {{ t('main-overview.detail.health.services') }}
         </template>
+
+        <template
+          v-if="props.globalInsight.services.internal.total !== props.globalInsight.services.internal.online"
+          #info
+        >
+          <XIcon
+            name="info"
+            :color="KUI_COLOR_TEXT_NEUTRAL"
+          >
+            <XI18n
+              path="main-overview.detail.health.info.services"
+            />
+          </XIcon>
+        </template>
       </ResourceStatus>
 
       <ResourceStatus
@@ -64,12 +92,27 @@
         <template #title>
           {{ t('main-overview.detail.health.data_plane_proxies') }}
         </template>
+
+        <template
+          v-if="props.globalInsight.dataplanes.standard.total !== props.globalInsight.dataplanes.standard.online"
+          #info
+        >
+          <XIcon
+            name="info"
+            :color="KUI_COLOR_TEXT_NEUTRAL"
+          >
+            <XI18n
+              path="main-overview.detail.health.info.dpps"
+            />
+          </XIcon>
+        </template>
       </ResourceStatus>
     </XLayout>
   </XCard>
 </template>
 
 <script lang="ts" setup>
+import { KUI_COLOR_TEXT_NEUTRAL } from '@kong/design-tokens'
 
 import { useI18n } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
