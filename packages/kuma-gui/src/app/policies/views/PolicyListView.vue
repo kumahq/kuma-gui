@@ -65,7 +65,7 @@
               </header>
               <XI18n
                 :path="`policies.type.${type.name}.description`"
-                default-message="t('policies.collection.description')"
+                default-path="policies.collection.description"
               />
             </XCard>
 
