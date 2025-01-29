@@ -30,16 +30,10 @@
         cacheControl: 'no-cache',
       })"
       @change="(value) => {
-        meStored = value
         return resolve(value)
       }"
-      v-slot="{ data: me, refresh: _refresh }"
+      v-slot="{ data: me }"
     >
-      <template
-        :ref="() => {
-          refresh = _refresh
-        }"
-      />
       <slot
         v-if="me && submit && redirected"
         :id="UniqueId"
@@ -65,7 +59,7 @@
 </template>
 <script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { ROUTE_VIEW_PARENT, ROUTE_VIEW_ROOT } from '.'
 import { useCan, useI18n, uniqueId, useEnv, get } from '../../index'
@@ -106,7 +100,6 @@ let resolve: (resolved: object) => void
 const meResponse = new Promise((r) => {
   resolve = r
 })
-const meStored = ref<any>({})
 
 const htmlAttrs = useAttrs()
 const { t } = useI18n()
@@ -143,7 +136,6 @@ class UniqueId {
 
 const name = computed(() => props.name)
 const submit = ref((_args: any) => {})
-const refresh = ref(() => {})
 const title = ref<HTMLDivElement | null>(null)
 const titles = new Map<symbol, string>()
 const attributes = new Map<symbol, SupportedAttrs>()
@@ -192,25 +184,19 @@ const routeParams = reactive<Params>({} as Params)
 // when any URL params change, normalize/validate/default and reset our actual application params
 const redirected = ref<boolean>(false)
 
-onBeforeRouteUpdate(() => {
-  if(route.name === props.name) {
-    // Make sure to always update stored preferences (/me)
-    refresh.value()
-  }
-})
-
+let local = {}
 watch(() => {
   return Object.keys(props.params).map((item) => { return route.params[item] || route.query[item] })
 }, async () => {
-  await meResponse
-  const stored = meStored.value
+  const me = get(await meResponse, 'params', {})
 
   // merge params in order of importance/priority:
   // 1. Anything stored by the user in storage
   // 2. URL query params
   // 3. URL path params
   const params = {
-    ...get(stored, 'params', {}),
+    ...me,
+    ...local,
     ...Object.fromEntries(Object.entries(route.query).filter(([_, val]) => (typeof val !== 'undefined' && typeof val !== 'string') || val?.length > 0)),
     ...route.params,
   }
@@ -228,46 +214,51 @@ watch(() => {
   // only one first load, if any params are missing from the URL/query
   // redirect/add the query params to the URL.
   // this ensures any JS applied defaults are reflected in the URL
-  if(!redirected.value) {
-    // we only want query params here
-    const params = Object.entries(routeParams || {}).reduce((prev, [key, value]) => {
-      if (typeof route.params[key] === 'undefined') {
-        prev[key] = value
-      }
-      return prev
-    }, {} as Partial<PrimitiveParams>)
-    if (Object.keys(params).length > 0) {
-      router.replace({
-        query: cleanQuery(params, route.query),
-      })
+  const _params = Object.entries(routeParams || {}).reduce((prev, [key, value]) => {
+    if (typeof route.params[key] === 'undefined') {
+      prev[key] = value
     }
-    redirected.value = true
+    return prev
+  }, {} as Partial<PrimitiveParams>)
+  if(Object.keys(_params).length > 0) {
+    // we only want query params here
+    router.replace({
+      query: cleanQuery(_params, route.query),
+    })
   }
+  redirected.value = true
 }, { immediate: true })
 
 let newParams: Partial<PrimitiveParams> = {}
-
-const routerPush = (params: Partial<PrimitiveParams>) => {
-  router.push({
-    name: props.name,
-    query: cleanQuery(params, route.query),
-  })
-  newParams = {}
-}
-
 const routeUpdate = (params: Partial<PrimitiveParams>): void => {
   newParams = {
     ...newParams,
     ...params,
   }
-
-  for (const key of ['size', 'format']) {
-    if(newParams[key]) {
-      submit.value({ params: { [key]: newParams[key] }, global: true })
+  // we look for special Number and String RouteView::params and if we find
+  // them we store them locally and also send them to user storage we store
+  // them locally, instead of saving them in storage and then refreshing to
+  // avoid causing any re-renders due to the refreshed DataSource
+  // TODO: ideally we wouldn't have locally stored state like this, and we
+  // would instead use a single source of truth which in this case would be
+  // localStorage
+  local = Object.entries(params).reduce((prev, [key, value]) => {
+    if([Number, String].some(item => props.params[key] === item)) {
+      prev[key] = value
     }
-  }
+    return prev
+  }, {} as Partial<PrimitiveParams>)
 
+  if(Object.keys(local).length > 0) {
+    submit.value({ params: local, global: true })
+  }
   routerPush(newParams)
+}
+const routerPush = (params: Partial<PrimitiveParams>) => {
+  router.push({
+    query: cleanQuery(params, route.query),
+  })
+  newParams = {}
 }
 
 const routeReplace = (...args: RouteReplaceParams) => {
