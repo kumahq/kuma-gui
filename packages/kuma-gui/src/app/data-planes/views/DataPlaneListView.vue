@@ -20,7 +20,7 @@
     >
       <XI18n
         path="data-planes.routes.items.intro"
-        default-message=""
+        default-path="common.i18n.ignore-error"
       />
       <XCard>
         <search>

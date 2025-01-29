@@ -30,7 +30,7 @@
       </template>
       <XI18n
         path="zone-egresses.routes.items.intro"
-        default-message=""
+        default-path="common.i18n.ignore-error"
       />
       <!-- TODO: Update page & size once the list endpoint is being filtered by zone -->
       <XCard>

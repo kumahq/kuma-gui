@@ -43,7 +43,7 @@
 
         <XI18n
           :path="`gateways.routes.items.navigation.${route.child()?.name}.description`"
-          default-message=""
+          default-path="common.i18n.ignore-error"
         />
 
         <RouterView

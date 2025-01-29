@@ -20,7 +20,7 @@
       </template>
       <XI18n
         path="hostname-generators.routes.items.intro"
-        default-message=""
+        default-path="common.i18n.ignore-error"
       />
       <XCard>
         <DataLoader
