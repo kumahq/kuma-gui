@@ -29,9 +29,7 @@
       }, {
         cacheControl: 'no-cache',
       })"
-      @change="(value) => {
-        return resolve(value)
-      }"
+      @change="resolve"
       v-slot="{ data: me }"
     >
       <slot
