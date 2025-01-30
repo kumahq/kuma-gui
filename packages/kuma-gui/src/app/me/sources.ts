@@ -19,6 +19,7 @@ export const sources = ({ get, set }: Storage) => {
         {
           params: {
             size: 50,
+            format: 'structured',
           },
         },
         app,
@@ -26,9 +27,10 @@ export const sources = ({ get, set }: Storage) => {
       )
     },
     '/me/:route/:data': async (params) => {
-      const json = JSON.parse(params.data)
-      const res = merge<object>(await get(params.route), json)
-      set(params.route, res)
+      const { $global, ...json } = JSON.parse(params.data)
+      const targetRoute = $global ? '/' : params.route
+      const res = merge<object>(await get(targetRoute), json)
+      set(targetRoute, res)
     },
   })
 }

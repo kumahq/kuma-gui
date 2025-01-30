@@ -60,6 +60,36 @@ Feature: application / MainNavigation
     And the URL contains "page=1&size=50"
     And the URL doesn't contain "mesh=default"
 
+  Scenario: Pagination from localStorage
+    Given the localStorage
+      """
+      kumahq.kuma-gui:/:
+        params:
+          size: 75
+      """
+    When I visit the "/meshes" URL
+    Then the URL contains "size=75"
+
+  Scenario: Format from localStorage
+    Given the localStorage
+      """
+      kumahq.kuma-gui:/:
+        params:
+          format: yaml
+      """      
+    And the URL "/meshes/default/meshservices" responds with
+      """
+      body:
+        items:
+        - name: monitor-proxy-0.kuma-demo
+          labels:
+            kuma.io/display-name: monitor-proxy-0
+            k8s.kuma.io/namespace: kuma-demo
+      """
+    When I visit the "/meshes/default/services/mesh-services/monitor-proxy-0.kuma-demo" URL
+    Then the URL contains "format=yaml"
+    And the "[data-testid='k-code-block']" element exists
+
   Scenario: History navigation
     Given the environment
       """
