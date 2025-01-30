@@ -250,7 +250,7 @@ const routeUpdate = (params: Partial<PrimitiveParams>): void => {
   }, {} as Partial<PrimitiveParams>)
 
   if(Object.keys(local).length > 0) {
-    submit.value({ params: local, global: true })
+    submit.value({ params: local, $global: true })
   }
   routerPush(newParams)
 }

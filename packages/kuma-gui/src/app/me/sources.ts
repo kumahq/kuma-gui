@@ -27,8 +27,8 @@ export const sources = ({ get, set }: Storage) => {
       )
     },
     '/me/:route/:data': async (params) => {
-      const { global: useGlobal = false, ...json } = JSON.parse(params.data)
-      const targetRoute = useGlobal ? '/' : params.route
+      const { $global, ...json } = JSON.parse(params.data)
+      const targetRoute = $global ? '/' : params.route
       const res = merge<object>(await get(targetRoute), json)
       set(targetRoute, res)
     },
