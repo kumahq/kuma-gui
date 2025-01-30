@@ -78,6 +78,19 @@
           {{ t('main-overview.detail.health.data_plane_proxies') }}
         </template>
       </ResourceStatus>
+
+      <ResourceStatus
+        :total="props.globalInsight.policies.total"
+        data-testid="policies-status"
+      >
+        <template #icon>
+          <XIcon name="service-document" />
+        </template>
+
+        <template #title>
+          {{ t('main-overview.detail.health.policies') }}
+        </template>
+      </ResourceStatus>
     </XLayout>
   </XCard>
 </template>
