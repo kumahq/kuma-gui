@@ -14,10 +14,6 @@ main-overview:
       meshes: 'Meshes'
       services: 'Services'
       data_plane_proxies: 'Data Plane Proxies'
-      info:
-        zone-cps: Some of the Zone CPs are either offline or disabled. A reason for that could be that the Zone CPs are not properly connected to the Global CP and the versions are compatible.
-        dpps: Some of the Data Plane Proxies are offline. Consider adding the Mesh Health Check policy to collect more information about the health of Data Plane Proxies.
-        services: Some of the services are offline. Consider adding Service Health Probes to collect more information about the health of the services.
     zone_control_planes:
       title: 'Zones'
     meshes:

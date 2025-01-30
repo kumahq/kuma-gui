@@ -20,7 +20,6 @@
             >{{ props.online }}</span><span class="status-separator">/</span>
           </template><span>{{ props.total }}</span>
         </div>
-        <slot name="info" />
       </XLayout>
     </template>
   </DefinitionCard>
