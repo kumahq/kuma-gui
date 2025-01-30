@@ -1,5 +1,5 @@
 <template>
-  <XCard>
+  <XCard class="health-card">
     <div class="card-header">
       <div class="card-title">
         <h2>{{ t('main-overview.detail.health.title') }}</h2>
@@ -109,6 +109,11 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
+.health-card {
+  container-type: inline-size;
+  container-name: health-card;
+}
+
 .card-header {
   margin-bottom: $kui-space-50;
   min-height: 42px;
@@ -117,5 +122,11 @@ const props = defineProps<{
 .icon {
   height: $kui-icon-size-30;
   width: $kui-icon-size-30;
+}
+
+@container health-card (max-width: 39.938rem) {
+  .columns-with-borders > * {
+    border-right: unset;
+  }
 }
 </style>
