@@ -16,7 +16,11 @@
         data-testid="zone-control-planes-status"
       >
         <template #icon>
-          <img src="@/assets/images/icon-location-on.svg?url">
+          <img
+            class="icon"
+            src="@/assets/images/navigation/icon-zones.svg?url"
+            alt="Zones Icon"
+          >
         </template>
       
         <template #title>
@@ -29,7 +33,11 @@
         data-testid="meshes-status"
       >
         <template #icon>
-          <img src="@/assets/images/icon-circles-ext.svg?url">
+          <img
+            class="icon"
+            src="@/assets/images/navigation/icon-meshes.svg?url"
+            alt="Meshes Icon"
+          >
         </template>
 
         <template #title>
@@ -42,7 +50,11 @@
         data-testid="services-status"
       >
         <template #icon>
-          <img src="@/assets/images/icon-wifi-tethering.svg?url">
+          <img
+            class="icon"
+            src="@/assets/images/icon-wifi-tethering.svg?url"
+            alt="Services Icon"
+          >
         </template>
 
         <template #title>
@@ -55,7 +67,11 @@
         data-testid="data-plane-proxies-status"
       >
         <template #icon>
-          <img src="@/assets/images/icon-wifi-tethering.svg?url">
+          <img
+            class="icon"
+            src="@/assets/images/icon-wifi-tethering.svg?url"
+            alt="DPPs Icon"
+          >
         </template>
 
         <template #title>
@@ -83,5 +99,10 @@ const props = defineProps<{
 .card-header {
   margin-bottom: $kui-space-50;
   min-height: 42px;
+}
+
+.icon {
+  height: $kui-icon-size-30;
+  width: $kui-icon-size-30;
 }
 </style>
