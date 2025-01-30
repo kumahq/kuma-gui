@@ -1,6 +1,7 @@
 import jsYaml from 'js-yaml'
 
-type URLParamDefault = string | number | boolean
+type URLParamDefault = string | number | boolean | NumberConstructor | StringConstructor
+type URLParamValues = string | number | boolean
 type URLParamValue = string | null
 
 export const runInDebug = (func: () => void) => {
@@ -90,20 +91,28 @@ export const urlParam = function <T extends URLParamValue> (param: T | T[]): T {
 }
 
 //
-export const normalizeUrlParam = (param: URLParamValue, def: URLParamDefault): URLParamDefault => {
+export const normalizeUrlParam = (param: URLParamValue, definition: URLParamDefault): URLParamValues => {
   switch (true) {
-    case typeof def === 'boolean':
-      return param === null ? true : def
-    case typeof def === 'number': {
-      const value = param === null || param.length === 0 ? def : Number(decodeURIComponent(param))
+    case typeof definition === 'boolean':
+      return param === null ? true : definition
+    case definition === Number:
+      // We are using ?? here because we hardcode the defaults for String/Number
+      // so they can never be null
+      return Number(decodeURIComponent(param ?? ''))
+    case typeof definition === 'number': {
+      const value = param === null || param.length === 0 ? definition : Number(decodeURIComponent(param))
       if (isNaN(value)) {
-        return Number(def)
+        return Number(definition)
       } else {
         return value
       }
     }
-    case typeof def === 'string': {
-      return param === null || param.length === 0 ? def : decodeURIComponent(param)
+    case definition === String:
+      // We are using ?? here because we hardcode the defaults for String/Number
+      // so they can never be null
+      return decodeURIComponent(String(param ?? ''))
+    case typeof definition === 'string': {
+      return param === null || param.length === 0 ? definition : decodeURIComponent(param)
     }
   }
   throw new TypeError('URL parameters can only be string | number | boolean')
