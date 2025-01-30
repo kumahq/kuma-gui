@@ -82,13 +82,16 @@ watch(() => slots, () => {
 })
 </script>
 <style lang="scss" scoped>
+:deep(.tab-link) {
+  /* TODO(jc): override KTab's div styling  */
+  padding: 0 !important;
+}
 :deep(.tab-link) > * {
   transition: inherit;
   border-radius: inherit;
   color: inherit;
   outline: inherit;
-  /* TODO(jc): This can be removed if we ever get rid of the global link styling  */
-  text-decoration: none !important;
+  padding: $kui-space-30 $kui-space-50;
 }
 :deep(.tab-link) > *:focus-visible {
   background-color: $kui-color-background-neutral-weaker;
