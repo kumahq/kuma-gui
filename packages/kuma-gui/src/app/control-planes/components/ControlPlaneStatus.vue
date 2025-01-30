@@ -70,7 +70,7 @@
           <img
             class="icon"
             src="@/assets/images/icon-wifi-tethering.svg?url"
-            alt="DPPs Icon"
+            alt="Data Plane Proxies Icon"
           >
         </template>
 
