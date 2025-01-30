@@ -93,12 +93,12 @@ export const urlParam = function <T extends URLParamValue> (param: T | T[]): T {
 //
 export const normalizeUrlParam = (param: URLParamValue, definition: URLParamDefault): URLParamValues => {
   switch (true) {
-    case definition === Number:
-      return Number(param)
-    case definition === String:
-      return String(param)
     case typeof definition === 'boolean':
       return param === null ? true : definition
+    case definition === Number:
+      // We are using ?? here because we hardcode the defaults for String/Number
+      // so they can never be null
+      return Number(decodeURIComponent(param ?? ''))
     case typeof definition === 'number': {
       const value = param === null || param.length === 0 ? definition : Number(decodeURIComponent(param))
       if (isNaN(value)) {
@@ -107,6 +107,10 @@ export const normalizeUrlParam = (param: URLParamValue, definition: URLParamDefa
         return value
       }
     }
+    case definition === String:
+      // We are using ?? here because we hardcode the defaults for String/Number
+      // so they can never be null
+      return decodeURIComponent(String(param ?? ''))
     case typeof definition === 'string': {
       return param === null || param.length === 0 ? definition : decodeURIComponent(param)
     }
