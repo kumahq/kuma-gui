@@ -247,6 +247,7 @@
                                 data-testid="dataplane-inbound"
                                 :protocol="item.protocol"
                                 :service="can('use service-insights', props.mesh) ? item.tags['kuma.io/service'] : ''"
+                                :port-name="item.portName"
                                 :traffic="typeof error === 'undefined' ?
                                   stats :
                                   {

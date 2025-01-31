@@ -81,6 +81,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 ...(fake.datatype.boolean() ? {
                   state: fake.kuma.inboundState(),
                 } : {}),
+                ...(fake.datatype.boolean() && { name: `${fake.word.noun()}-port` }),
               }
             }),
             outbound: Array.from({ length: outboundCount }).map((_, _i) => {
