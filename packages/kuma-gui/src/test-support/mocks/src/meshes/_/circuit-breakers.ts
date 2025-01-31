@@ -14,7 +14,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = `${fake.word.noun()}-${id}`
         return {
           type: 'CircuitBreaker',
           mesh: params.mesh,
@@ -25,14 +25,14 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             {
               match: {
                 region: 'us',
-                service: `${fake.hacker.noun()}`,
+                service: `${fake.word.noun()}`,
               },
             },
           ],
           destinations: [
             {
               match: {
-                service: `${fake.hacker.noun()}`,
+                service: `${fake.word.noun()}`,
               },
             },
           ],

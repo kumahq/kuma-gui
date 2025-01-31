@@ -3,7 +3,7 @@
     name="mesh-multi-zone-service-list-view"
     :params="{
       page: 1,
-      size: 50,
+      size: Number,
       mesh: '',
       service: '',
     }"
@@ -31,6 +31,10 @@
             <DataCollection
               type="services"
               :items="data?.items ?? [undefined]"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="data?.total"
+              @change="route.update"
             >
               <AppCollection
                 :headers="[
@@ -39,12 +43,8 @@
                   { ...me.get('headers.labels'), label: 'Selector', key: 'labels' },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
-                :page-number="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
                 :items="data?.items"
                 :is-selected-row="(item) => item.name === route.params.service"
-                @change="route.update"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">

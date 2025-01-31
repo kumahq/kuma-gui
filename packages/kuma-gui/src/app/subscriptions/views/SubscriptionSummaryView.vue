@@ -6,7 +6,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      format: 'structured',
+      format: String,
     }"
     v-slot="{ route, t }"
   >

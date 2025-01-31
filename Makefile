@@ -11,6 +11,7 @@ MK := $(KUMAHQ_CONFIG)/src/mk
 .DEFAULT_GOAL := help
 include $(MK)/help.mk
 
+include $(MK)/decorators.mk
 include $(MK)/install.mk
 include $(MK)/check.mk
 

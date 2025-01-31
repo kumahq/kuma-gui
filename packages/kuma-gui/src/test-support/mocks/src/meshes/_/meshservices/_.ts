@@ -30,14 +30,14 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
             'kuma.io/display-name': parts.slice(0, -1).join('.'),
             'k8s.kuma.io/namespace': parts.pop()!,
             'kuma.io/origin': 'zone',
-            'kuma.io/zone': fake.hacker.noun(),
+            'kuma.io/zone': fake.word.noun(),
           },
         }
         : {}),
       spec: {
         ports: Array.from({ length: 5 }).map(_ => (
           {
-            name: fake.helpers.arrayElement([fake.hacker.noun(), String(fake.internet.port())]),
+            name: fake.helpers.arrayElement([fake.word.noun(), String(fake.internet.port())]),
             port: fake.internet.port(),
             targetPort: fake.internet.port(),
             appProtocol: fake.kuma.protocol(),

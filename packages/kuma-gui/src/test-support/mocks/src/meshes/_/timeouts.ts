@@ -8,7 +8,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
     body: {
       total,
       items: Array.from({ length: total }).map((_, i) => {
-        const name = `${fake.hacker.noun()}-${i}`
+        const name = `${fake.word.noun()}-${i}`
         return {
           type: 'Timeout',
           mesh: params.mesh,

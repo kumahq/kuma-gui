@@ -3,7 +3,7 @@
     name="data-plane-list-view"
     :params="{
       page: 1,
-      size: 50,
+      size: Number,
       dataplaneType: 'all',
       s: '',
       mesh: '',
@@ -20,7 +20,7 @@
     >
       <XI18n
         path="data-planes.routes.items.intro"
-        default-message=""
+        default-path="common.i18n.ignore-error"
       />
       <XCard>
         <search>

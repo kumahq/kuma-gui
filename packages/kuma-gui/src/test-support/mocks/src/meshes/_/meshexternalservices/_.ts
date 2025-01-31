@@ -30,7 +30,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
             'kuma.io/display-name': displayName,
             'k8s.kuma.io/namespace': nspace,
             'kuma.io/origin': 'zone',
-            'kuma.io/zone': fake.hacker.noun(),
+            'kuma.io/zone': fake.word.noun(),
           },
         }
         : {}),

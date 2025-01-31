@@ -56,7 +56,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const type = filterType || fake.helpers.arrayElement(['BUILTIN', 'DELEGATED', 'STANDARD'])
         // we include the type in the name so when we link using the name
         // we keep the type in the URL so the corresponding item mock knows the type
-        const name = `${fake.hacker.noun()}-${type.toLowerCase()}`
+        const name = `${fake.word.noun()}-${type.toLowerCase()}`
         const displayName = `${_name || name}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
         const service = tags['kuma.io/service']
@@ -91,7 +91,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     tags: fake.kuma.tags({
                       protocol: fake.kuma.protocol(),
                       service,
-                      zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+                      zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                     }),
                     ...(fake.datatype.boolean() ? {
                       state: fake.kuma.inboundState(),
@@ -109,7 +109,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 gateway: {
                   tags: fake.kuma.tags({
                     service,
-                    zone: isMultizone && fake.datatype.boolean() ? fake.hacker.noun() : undefined,
+                    zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
                   }),
                   type,
                 },
@@ -129,7 +129,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: fake.string.uuid(),
-                controlPlaneInstanceId: `${fake.hacker.noun()}-${i}`,
+                controlPlaneInstanceId: `${fake.word.noun()}-${i}`,
                 ...fake.kuma.connection(item, i, arr),
                 status: (() => {
                   const xcks = fake.number.int({ min: 100, max: 500 })

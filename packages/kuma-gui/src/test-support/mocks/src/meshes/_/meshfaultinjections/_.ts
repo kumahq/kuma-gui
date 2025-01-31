@@ -28,7 +28,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
           {
             targetRef: {
               kind: 'MeshService',
-              name: fake.hacker.noun(),
+              name: fake.word.noun(),
             },
             default: {
               http: [

@@ -15,7 +15,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = `${fake.word.noun()}-${id}`
 
         const displayName = `${name}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
@@ -39,7 +39,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               {
                 targetRef: {
                   kind: 'MeshService',
-                  name: fake.hacker.noun(),
+                  name: fake.word.noun(),
                 },
                 default: {
                   http: [

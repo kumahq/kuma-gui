@@ -40,7 +40,7 @@
                   <h2>
                     <XI18n
                       :path="`${prefix}x-empty-state.title`"
-                      :default-message="t('components.x-empty-state.title')"
+                      default-path="components.x-empty-state.title"
                     />
                   </h2>
                 </header>
@@ -58,7 +58,7 @@
           >
             <XI18n
               :path="`${prefix}x-empty-state.body`"
-              :default-message="t('components.x-empty-state.body')"
+              default-path="components.x-empty-state.body"
             />
           </template>
 

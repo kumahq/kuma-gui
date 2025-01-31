@@ -26,7 +26,7 @@ export class K8sModule {
   }
 
   namespace() {
-    return this.faker.helpers.arrayElement([this.faker.hacker.noun(), 'kuma-system'])
+    return this.faker.helpers.arrayElement([this.faker.word.noun(), 'kuma-system'])
   }
 
   namespaceSuffix() {
@@ -150,12 +150,12 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   serviceName(serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' = 'internal') {
-    const prefix = `${this.faker.hacker.noun()}-`
+    const prefix = `${this.faker.word.noun()}-`
 
     if (serviceType === 'gateway_delegated' || serviceType === 'gateway_builtin') {
       return prefix + serviceType
     } else {
-      return prefix + `${this.faker.hacker.noun()}_svc.mesh:80_${serviceType}`
+      return prefix + `${this.faker.word.noun()}_svc.mesh:80_${serviceType}`
     }
   }
 
@@ -284,12 +284,12 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       this.faker.helpers.multiple(
         () => [
           this.faker.helpers.arrayElement([
-            this.faker.hacker.noun(),
+            this.faker.word.noun(),
             'k8s.kuma.io/service-name',
             'not-kuma.io/service',
             'not/kuma.io/service',
           ]),
-          this.faker.hacker.noun(),
+          this.faker.word.noun(),
         ],
         { count: this.faker.number.int({ min: 1, max: 3 }) },
       ),
@@ -332,7 +332,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
           gateway: {
             tags: this.tags({
               service: service ?? this.serviceName(type),
-              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
+              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.word.noun() : undefined,
             }),
             ...(dataplaneType && { type: dataplaneType }),
           },
@@ -349,7 +349,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
             const tags = this.tags({
               protocol: this.protocol(),
               service: service ?? this.serviceName(),
-              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.hacker.noun() : undefined,
+              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.word.noun() : undefined,
             })
 
             return {
@@ -379,8 +379,8 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   dataplaneMtls() {
-    const issuedBackend = this.faker.hacker.noun()
-    const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(this.faker.hacker.noun))
+    const issuedBackend = this.faker.word.noun()
+    const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(() => this.faker.word.noun()))
 
     return {
       certificateExpirationTime: this.faker.date.anytime(),

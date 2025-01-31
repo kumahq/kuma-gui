@@ -3,7 +3,7 @@
     name="policy-list-view"
     :params="{
       page: 1,
-      size: 50,
+      size: Number,
       mesh: '',
       policyPath: '',
       policy: '',
@@ -65,7 +65,7 @@
               </header>
               <XI18n
                 :path="`policies.type.${type.name}.description`"
-                default-message="t('policies.collection.description')"
+                default-path="policies.collection.description"
               />
             </XCard>
 

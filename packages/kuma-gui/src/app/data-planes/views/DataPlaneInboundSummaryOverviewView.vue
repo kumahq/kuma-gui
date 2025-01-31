@@ -77,6 +77,20 @@
             />
           </template>
         </DefinitionCard>
+        <DefinitionCard
+          v-if="props.data.portName.length > 0"
+          layout="horizontal"
+        >
+          <template #title>
+            Name
+          </template>
+
+          <template #body>
+            <XCopyButton
+              :text="`${props.data.portName}`"
+            />
+          </template>
+        </DefinitionCard>
       </div>
       <div
         v-if="props.data"
