@@ -15,7 +15,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       sources: [
         {
           match: {
-            service: fake.hacker.noun(),
+            service: fake.word.noun(),
             version: '1.0',
           },
         },
@@ -23,7 +23,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       destinations: [
         {
           match: {
-            service: fake.hacker.noun(),
+            service: fake.word.noun(),
           },
         },
       ],

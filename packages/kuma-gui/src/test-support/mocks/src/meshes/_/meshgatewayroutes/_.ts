@@ -34,7 +34,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
               backends: [
                 {
                   destination: {
-                    'kuma.io/service': fake.hacker.noun(),
+                    'kuma.io/service': fake.word.noun(),
                   },
                 },
               ],

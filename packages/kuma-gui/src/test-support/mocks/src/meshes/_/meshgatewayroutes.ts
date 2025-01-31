@@ -8,7 +8,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
     body: {
       total,
       items: Array.from({ length: total }).map((_, i) => {
-        const name = `${fake.hacker.noun()}-${i}`
+        const name = `${fake.word.noun()}-${i}`
         return {
           type: 'MeshGatewayRoute',
           mesh: params.mesh,
@@ -37,7 +37,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
                   backends: [
                     {
                       destination: {
-                        'kuma.io/service': `${fake.hacker.noun()}`,
+                        'kuma.io/service': `${fake.word.noun()}`,
                       },
                     },
                   ],

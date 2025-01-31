@@ -13,7 +13,7 @@ export default ({ fake, pager }: EndpointDependencies): MockResponder => (req) =
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = `${fake.word.noun()}-${id}`
 
         return {
           type: 'TrafficPermission',
@@ -22,14 +22,14 @@ export default ({ fake, pager }: EndpointDependencies): MockResponder => (req) =
           sources: [
             {
               match: {
-                service: `${fake.hacker.noun()}`,
+                service: `${fake.word.noun()}`,
               },
             },
           ],
           destinations: [
             {
               match: {
-                service: `${fake.hacker.noun()}`,
+                service: `${fake.word.noun()}`,
               },
             },
           ],

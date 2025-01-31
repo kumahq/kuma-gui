@@ -48,10 +48,10 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const isMtlsEnabled = isMtlsEnabledOverride !== '' ? isMtlsEnabledOverride === 'true' : fake.datatype.boolean()
 
         const type = filterType ?? fake.helpers.arrayElement(['gateway_builtin', 'gateway_delegated', 'proxy'])
-        const mesh = `${fake.hacker.noun()}-${id}`
+        const mesh = `${fake.word.noun()}-${id}`
         const service = tags['kuma.io/service']
 
-        const displayName = `${_name || fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const displayName = `${_name || fake.word.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
 
         return {
@@ -76,7 +76,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
-                controlPlaneInstanceId: `${fake.hacker.noun()}-${i}`,
+                controlPlaneInstanceId: `${fake.word.noun()}-${i}`,
                 ...fake.kuma.connection(item, i, arr),
                 status: {
                   lastUpdateTime: '2021-02-17T10:48:03.638434Z',

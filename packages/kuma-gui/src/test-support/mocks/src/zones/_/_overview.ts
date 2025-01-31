@@ -31,10 +31,10 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 id: fake.string.uuid(),
                 ...(fake.datatype.boolean()
                   ? {
-                    globalInstanceId: `global-${fake.hacker.noun()}`,
+                    globalInstanceId: `global-${fake.word.noun()}`,
                   }
                   : {}),
-                zoneInstanceId: `zone-${fake.hacker.noun()}`,
+                zoneInstanceId: `zone-${fake.word.noun()}`,
                 version: {
                   kumaCp: {
                     version: fake.kuma.version(),
