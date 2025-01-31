@@ -60,6 +60,7 @@ import _140 from './src/meshes/_/meshmultizoneservices'
 import _141 from './src/meshes/_/meshmultizoneservices/_'
 import _136 from './src/meshes/_/meshservices'
 import _137 from './src/meshes/_/meshservices/_'
+import _170 from './src/meshes/_/meshservices/_/_hostnames'
 import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
@@ -166,6 +167,7 @@ export const fs: FS = {
   '/meshes/:mesh/meshexternalservices/:name': _139,
   '/meshes/:mesh/meshhttproutes': _132,
   '/meshes/:mesh/meshhttproutes/:name': _133,
+  '/meshes/:mesh/:serviceType/:serviceName/_hostnames': _170,
   // policies
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,

@@ -7,6 +7,7 @@ import {
   ExternalService,
   ServiceInsight,
 } from './data'
+import { InspectHostname } from './data/InspectHostname'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -221,6 +222,22 @@ export const sources = (api: KumaApi) => {
       return api.getExternalService({ mesh, name }, {
         format: 'kubernetes',
       })
+    },
+
+    '/meshes/:mesh/:serviceType/:serviceName/_hostnames': async (params) => {
+      const { mesh, serviceType, serviceName } = params as typeof params & paths['/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames']['get']['parameters']['path']
+
+      const response = await http.GET('/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames', {
+        params: {
+          path: {
+            mesh,
+            serviceType,
+            serviceName,
+          },
+        },
+      })
+
+      return InspectHostname.fromCollection(response.data!)
     },
   })
 }

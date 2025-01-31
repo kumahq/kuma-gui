@@ -48,6 +48,8 @@ import {
   RefreshIcon,
   ProgressIcon,
   InfoIcon,
+  PlugIcon,
+  VitalsIcon,
 } from '@kong/icons'
 import { useSlots, useAttrs } from 'vue'
 
@@ -82,6 +84,8 @@ const icons = {
   refresh: RefreshIcon,
   progress: ProgressIcon,
   info: InfoIcon,
+  connected: PlugIcon,
+  heartbeat: VitalsIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

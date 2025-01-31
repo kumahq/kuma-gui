@@ -76,7 +76,7 @@ Feature: application / MainNavigation
       kumahq.kuma-gui:/:
         params:
           format: yaml
-      """      
+      """
     And the URL "/meshes/default/meshservices" responds with
       """
       body:

@@ -53,6 +53,14 @@ services:
     data_plane_proxies: Data Plane Proxies
     no_matching_external_service: 'No matching ExternalService was found for service {name}'
     empty: None
+    dpp-status:
+      title: Status of Data Plane Proxies
+      connected: Connected
+      healthy: Healthy
+    hostnames:
+      title: Hostnames
+      hostname: Hostname
+      zone: Zone
   href:
     docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
   internal-service:

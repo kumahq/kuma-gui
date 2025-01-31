@@ -95,33 +95,7 @@ export interface paths {
          * Get a proxy XDS config on a CP
          * @description Returns the configuration of the proxy ([xds](https://www.envoyproxy.io/docs/envoy/latest/api-docs/xds_protocol) configuration).
          */
-        get: {
-            parameters: {
-                query?: {
-                    /** @description When computing XDS config the CP takes into account policies with 'kuma.io/effect: shadow' label
-                     *      */
-                    shadow?: boolean;
-                    /** @description An array of extra fields to include in the response. When `include=diff` the server computes a diff in JSONPatch format
-                     *     between the current proxy XDS config and the config returned in the 'xds' field.
-                     *      */
-                    include?: "diff"[];
-                };
-                header?: never;
-                path: {
-                    /** @description The mesh of the DPP to get the diff for. */
-                    mesh: string;
-                    /** @description The name of the DPP within the mesh to get the diff for. */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["InspectDataplanesConfigResponse"];
-                400: components["responses"]["BadRequest"];
-                500: components["responses"]["InternalServerError"];
-            };
-        };
+        get: operations["get-meshes-mesh-dataplanes-name-config"];
         put?: never;
         post?: never;
         delete?: never;
@@ -150,6 +124,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Returns hostnames for service
+         * @description Returns hostnames for a service
+         */
+        get: operations["inspect-hostnames"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/meshaccesslogs/{name}": {
         parameters: {
             query?: never;
@@ -158,88 +152,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshAccessLog entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshAccessLog */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshAccessLogItem"];
-            };
-        };
+        get: operations["getMeshAccessLog"];
         /** Creates or Updates MeshAccessLog entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshAccessLog */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshAccessLogItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshAccessLog"];
         post?: never;
         /** Deletes MeshAccessLog entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshAccessLog */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshAccessLog"];
         options?: never;
         head?: never;
         patch?: never;
@@ -253,21 +171,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshAccessLog in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshAccessLogList"];
-            };
-        };
+        get: operations["getMeshAccessLogList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -284,88 +188,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshCircuitBreaker entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshCircuitBreaker */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshCircuitBreakerItem"];
-            };
-        };
+        get: operations["getMeshCircuitBreaker"];
         /** Creates or Updates MeshCircuitBreaker entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshCircuitBreaker */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshCircuitBreakerItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshCircuitBreaker"];
         post?: never;
         /** Deletes MeshCircuitBreaker entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshCircuitBreaker */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshCircuitBreaker"];
         options?: never;
         head?: never;
         patch?: never;
@@ -379,21 +207,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshCircuitBreaker in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshCircuitBreakerList"];
-            };
-        };
+        get: operations["getMeshCircuitBreakerList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -410,88 +224,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshFaultInjection entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshFaultInjection */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshFaultInjectionItem"];
-            };
-        };
+        get: operations["getMeshFaultInjection"];
         /** Creates or Updates MeshFaultInjection entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshFaultInjection */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshFaultInjectionItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshFaultInjection"];
         post?: never;
         /** Deletes MeshFaultInjection entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshFaultInjection */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshFaultInjection"];
         options?: never;
         head?: never;
         patch?: never;
@@ -505,21 +243,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshFaultInjection in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshFaultInjectionList"];
-            };
-        };
+        get: operations["getMeshFaultInjectionList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -536,88 +260,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshHealthCheck entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshHealthCheck */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshHealthCheckItem"];
-            };
-        };
+        get: operations["getMeshHealthCheck"];
         /** Creates or Updates MeshHealthCheck entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshHealthCheck */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshHealthCheckItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshHealthCheck"];
         post?: never;
         /** Deletes MeshHealthCheck entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshHealthCheck */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshHealthCheck"];
         options?: never;
         head?: never;
         patch?: never;
@@ -631,21 +279,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshHealthCheck in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshHealthCheckList"];
-            };
-        };
+        get: operations["getMeshHealthCheckList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -662,88 +296,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshHTTPRoute entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshHTTPRoute */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshHTTPRouteItem"];
-            };
-        };
+        get: operations["getMeshHTTPRoute"];
         /** Creates or Updates MeshHTTPRoute entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshHTTPRoute */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshHTTPRouteItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshHTTPRoute"];
         post?: never;
         /** Deletes MeshHTTPRoute entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshHTTPRoute */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshHTTPRoute"];
         options?: never;
         head?: never;
         patch?: never;
@@ -757,21 +315,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshHTTPRoute in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshHTTPRouteList"];
-            };
-        };
+        get: operations["getMeshHTTPRouteList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -788,88 +332,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshLoadBalancingStrategy entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshLoadBalancingStrategy */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshLoadBalancingStrategyItem"];
-            };
-        };
+        get: operations["getMeshLoadBalancingStrategy"];
         /** Creates or Updates MeshLoadBalancingStrategy entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshLoadBalancingStrategy */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshLoadBalancingStrategyItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshLoadBalancingStrategy"];
         post?: never;
         /** Deletes MeshLoadBalancingStrategy entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshLoadBalancingStrategy */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshLoadBalancingStrategy"];
         options?: never;
         head?: never;
         patch?: never;
@@ -883,21 +351,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshLoadBalancingStrategy in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshLoadBalancingStrategyList"];
-            };
-        };
+        get: operations["getMeshLoadBalancingStrategyList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -914,88 +368,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshMetric entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshMetric */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshMetricItem"];
-            };
-        };
+        get: operations["getMeshMetric"];
         /** Creates or Updates MeshMetric entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshMetric */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshMetricItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshMetricCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshMetricCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshMetric"];
         post?: never;
         /** Deletes MeshMetric entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshMetric */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshMetric"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1009,21 +387,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshMetric in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshMetricList"];
-            };
-        };
+        get: operations["getMeshMetricList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1040,88 +404,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshPassthrough entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshPassthrough */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshPassthroughItem"];
-            };
-        };
+        get: operations["getMeshPassthrough"];
         /** Creates or Updates MeshPassthrough entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshPassthrough */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshPassthroughItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshPassthrough"];
         post?: never;
         /** Deletes MeshPassthrough entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshPassthrough */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshPassthrough"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1135,21 +423,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshPassthrough in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshPassthroughList"];
-            };
-        };
+        get: operations["getMeshPassthroughList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1166,88 +440,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshProxyPatch entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshProxyPatch */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshProxyPatchItem"];
-            };
-        };
+        get: operations["getMeshProxyPatch"];
         /** Creates or Updates MeshProxyPatch entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshProxyPatch */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshProxyPatchItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshProxyPatch"];
         post?: never;
         /** Deletes MeshProxyPatch entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshProxyPatch */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshProxyPatch"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1261,21 +459,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshProxyPatch in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshProxyPatchList"];
-            };
-        };
+        get: operations["getMeshProxyPatchList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1292,88 +476,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshRateLimit entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshRateLimit */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshRateLimitItem"];
-            };
-        };
+        get: operations["getMeshRateLimit"];
         /** Creates or Updates MeshRateLimit entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshRateLimit */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshRateLimitItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshRateLimit"];
         post?: never;
         /** Deletes MeshRateLimit entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshRateLimit */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshRateLimit"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1387,21 +495,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshRateLimit in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshRateLimitList"];
-            };
-        };
+        get: operations["getMeshRateLimitList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1418,88 +512,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshRetry entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshRetry */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshRetryItem"];
-            };
-        };
+        get: operations["getMeshRetry"];
         /** Creates or Updates MeshRetry entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshRetry */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshRetryItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshRetryCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshRetryCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshRetry"];
         post?: never;
         /** Deletes MeshRetry entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshRetry */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshRetry"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1513,21 +531,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshRetry in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshRetryList"];
-            };
-        };
+        get: operations["getMeshRetryList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1544,88 +548,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshTCPRoute entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTCPRoute */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTCPRouteItem"];
-            };
-        };
+        get: operations["getMeshTCPRoute"];
         /** Creates or Updates MeshTCPRoute entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTCPRoute */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshTCPRouteItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshTCPRoute"];
         post?: never;
         /** Deletes MeshTCPRoute entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTCPRoute */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshTCPRoute"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1639,21 +567,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshTCPRoute in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTCPRouteList"];
-            };
-        };
+        get: operations["getMeshTCPRouteList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1670,88 +584,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshTimeout entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTimeout */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTimeoutItem"];
-            };
-        };
+        get: operations["getMeshTimeout"];
         /** Creates or Updates MeshTimeout entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTimeout */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshTimeoutItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshTimeout"];
         post?: never;
         /** Deletes MeshTimeout entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTimeout */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshTimeout"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1765,21 +603,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshTimeout in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTimeoutList"];
-            };
-        };
+        get: operations["getMeshTimeoutList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1796,88 +620,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshTLS entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTLS */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTLSItem"];
-            };
-        };
+        get: operations["getMeshTLS"];
         /** Creates or Updates MeshTLS entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTLS */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshTLSItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTLSCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTLSCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshTLS"];
         post?: never;
         /** Deletes MeshTLS entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTLS */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshTLS"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1891,21 +639,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshTLS in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTLSList"];
-            };
-        };
+        get: operations["getMeshTLSList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1922,88 +656,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshTrace entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTrace */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTraceItem"];
-            };
-        };
+        get: operations["getMeshTrace"];
         /** Creates or Updates MeshTrace entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTrace */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshTraceItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTraceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTraceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshTrace"];
         post?: never;
         /** Deletes MeshTrace entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTrace */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshTrace"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2017,21 +675,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshTrace in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTraceList"];
-            };
-        };
+        get: operations["getMeshTraceList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2048,88 +692,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshTrafficPermission entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTrafficPermission */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTrafficPermissionItem"];
-            };
-        };
+        get: operations["getMeshTrafficPermission"];
         /** Creates or Updates MeshTrafficPermission entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTrafficPermission */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshTrafficPermissionItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshTrafficPermission"];
         post?: never;
         /** Deletes MeshTrafficPermission entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshTrafficPermission */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshTrafficPermission"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2143,21 +711,79 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshTrafficPermission in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshTrafficPermissionList"];
-            };
+        get: operations["getMeshTrafficPermissionList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
+        /** Returns Mesh entity */
+        get: operations["getMesh"];
+        /** Creates or Updates Mesh entity */
+        put: operations["putMesh"];
+        post?: never;
+        /** Deletes Mesh entity */
+        delete: operations["deleteMesh"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of Mesh in the mesh. */
+        get: operations["getMeshList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshgateways/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns MeshGateway entity */
+        get: operations["getMeshGateway"];
+        /** Creates or Updates MeshGateway entity */
+        put: operations["putMeshGateway"];
+        post?: never;
+        /** Deletes MeshGateway entity */
+        delete: operations["deleteMeshGateway"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/meshgateways": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of MeshGateway in the mesh. */
+        get: operations["getMeshGatewayList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2174,82 +800,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns HostnameGenerator entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the HostnameGenerator */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["HostnameGeneratorItem"];
-            };
-        };
+        get: operations["getHostnameGenerator"];
         /** Creates or Updates HostnameGenerator entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the HostnameGenerator */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["HostnameGeneratorItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putHostnameGenerator"];
         post?: never;
         /** Deletes HostnameGenerator entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the HostnameGenerator */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteHostnameGenerator"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2263,18 +819,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of HostnameGenerator in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["HostnameGeneratorList"];
-            };
-        };
+        get: operations["getHostnameGeneratorList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2291,88 +836,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshExternalService entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshExternalService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshExternalServiceItem"];
-            };
-        };
+        get: operations["getMeshExternalService"];
         /** Creates or Updates MeshExternalService entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshExternalService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshExternalServiceItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshExternalService"];
         post?: never;
         /** Deletes MeshExternalService entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshExternalService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshExternalService"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2386,21 +855,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshExternalService in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshExternalServiceList"];
-            };
-        };
+        get: operations["getMeshExternalServiceList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2417,88 +872,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshMultiZoneService entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshMultiZoneService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshMultiZoneServiceItem"];
-            };
-        };
+        get: operations["getMeshMultiZoneService"];
         /** Creates or Updates MeshMultiZoneService entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshMultiZoneService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshMultiZoneServiceItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshMultiZoneService"];
         post?: never;
         /** Deletes MeshMultiZoneService entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshMultiZoneService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshMultiZoneService"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2512,21 +891,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshMultiZoneService in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshMultiZoneServiceList"];
-            };
-        };
+        get: operations["getMeshMultiZoneServiceList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2543,88 +908,12 @@ export interface paths {
             cookie?: never;
         };
         /** Returns MeshService entity */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshServiceItem"];
-            };
-        };
+        get: operations["getMeshService"];
         /** Creates or Updates MeshService entity */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            /** @description Put request */
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["MeshServiceItem"];
-                };
-            };
-            responses: {
-                /** @description Updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshServiceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-                /** @description Created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["MeshServiceCreateOrUpdateSuccessResponse"];
-                    };
-                };
-            };
-        };
+        put: operations["putMeshService"];
         post?: never;
         /** Deletes MeshService entity */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                    /** @description name of the MeshService */
-                    name: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful response */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["deleteMeshService"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2638,21 +927,7 @@ export interface paths {
             cookie?: never;
         };
         /** Returns a list of MeshService in the mesh. */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description name of the mesh */
-                    mesh: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                200: components["responses"]["MeshServiceList"];
-            };
-        };
+        get: operations["getMeshServiceList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2810,7 +1085,7 @@ export interface components {
          * GlobalInsight
          * @description Global Insight contains statistics for all main resources
          */
-        GlobalInsight: {
+        "schemas-GlobalInsight": {
             /**
              * Format: date-time
              * @description Time of Global Insight creation
@@ -2832,29 +1107,35 @@ export interface components {
                 [key: string]: components["schemas"]["ResourceStats"];
             };
         };
-        /** @description information about a policy */
-        PolicyDescription: {
-            /** @description whether this policy uses targetRef matching */
-            isTargetRef: boolean;
-            /** @description indicates that this policy can be used as an outbound policy */
-            hasToTargetRef: boolean;
-            /** @description indicates that this policy can be used as an inbound policy */
-            hasFromTargetRef: boolean;
+        GlobalInsight: components["schemas"]["schemas-GlobalInsight"];
+        /**
+         * InspectHostnames
+         * @description A list of hostnames
+         */
+        InspectHostnames: {
+            /** @example 200 */
+            total: number;
+            items: components["schemas"]["InspectHostname"][];
         };
-        /** @description Description of a resource type, this is useful for dynamically generated clients and the gui */
-        ResourceTypeDescription: {
-            /** @description the name of the resource type */
+        /**
+         * InspectHostname
+         * @description An supported hostname along with the zones it exists in
+         */
+        InspectHostname: {
+            /**
+             * @description Generated hostname
+             * @example redis.redis-system.svc.east.mesh.local
+             */
+            hostname: string;
+            zones: components["schemas"]["InspectHostnameZone"][];
+        };
+        /**
+         * InspectHostnameZone
+         * @description A name of the zone in which the hostname is available
+         */
+        InspectHostnameZone: {
+            /** @example east */
             name: string;
-            /** @enum {string} */
-            scope: "Global" | "Mesh";
-            readOnly: boolean;
-            /** @description the path to use for accessing this resource. If scope is `Global` then it will be `/<path>` otherwise it will be `/meshes/<path>` */
-            path: string;
-            singularDisplayName: string;
-            pluralDisplayName: string;
-            /** @description description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global). */
-            includeInFederation: boolean;
-            policy?: components["schemas"]["PolicyDescription"];
         };
         /** Invalid Parameters */
         InvalidParameters: {
@@ -2896,6 +1177,30 @@ export interface components {
             /** @description TODO */
             invalid_parameters?: components["schemas"]["InvalidParameters"][];
         };
+        /** @description information about a policy */
+        PolicyDescription: {
+            /** @description whether this policy uses targetRef matching */
+            isTargetRef: boolean;
+            /** @description indicates that this policy can be used as an outbound policy */
+            hasToTargetRef: boolean;
+            /** @description indicates that this policy can be used as an inbound policy */
+            hasFromTargetRef: boolean;
+        };
+        /** @description Description of a resource type, this is useful for dynamically generated clients and the gui */
+        ResourceTypeDescription: {
+            /** @description the name of the resource type */
+            name: string;
+            /** @enum {string} */
+            scope: "Global" | "Mesh";
+            readOnly: boolean;
+            /** @description the path to use for accessing this resource. If scope is `Global` then it will be `/<path>` otherwise it will be `/meshes/<path>` */
+            path: string;
+            singularDisplayName: string;
+            pluralDisplayName: string;
+            /** @description description resources of this type should be included in federetion-with-policies export profile (especially useful for moving from non-federated to federated or migrating to a new global). */
+            includeInFederation: boolean;
+            policy?: components["schemas"]["PolicyDescription"];
+        };
         Meta: {
             /**
              * @description the type of this resource
@@ -2925,6 +1230,7 @@ export interface components {
                 [key: string]: string;
             };
         };
+        /** @description a rule that affects the entire proxy */
         ProxyRule: {
             /** @description The actual conf generated */
             conf: {
@@ -2986,7 +1292,6 @@ export interface components {
              * @example MeshRetry
              */
             type: string;
-            /** @description a rule that affects the entire proxy */
             proxyRule?: components["schemas"]["ProxyRule"];
             /** @description a set of rules for the outbounds of this proxy. The field is not set when 'meshService.mode' on Mesh is set to 'Exclusive'. */
             toRules?: components["schemas"]["Rule"][];
@@ -3014,7 +1319,20 @@ export interface components {
             op: "add" | "remove" | "test";
             /** @description A JSON Pointer path indicating the part of the document to operate on. */
             path: string;
+            /** @description The value to be used within the operations. */
             value: unknown;
+        };
+        NotFoundError: components["schemas"]["Error"] & {
+            /** @example 404 */
+            status?: unknown;
+            /** @example Not Found */
+            title?: unknown;
+            /** @example https://httpstatuses.com/404 */
+            type?: unknown;
+            /** @example kong:trace:1234567890 */
+            instance?: unknown;
+            /** @example Not found */
+            detail?: unknown;
         };
         MeshAccessLogItem: {
             /**
@@ -3157,7 +1475,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -3192,7 +1510,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -3340,7 +1658,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -3623,7 +1941,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -3658,7 +1976,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -3902,7 +2220,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4015,7 +2333,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4050,7 +2368,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4123,7 +2441,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4197,7 +2515,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4351,7 +2669,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4425,7 +2743,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4469,7 +2787,7 @@ export interface components {
                                  * @description Kind of the referenced resource
                                  * @enum {string}
                                  */
-                                kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                                kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                                 /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                                  *     Name and Namespace can be used. */
                                 labels?: {
@@ -4524,7 +2842,7 @@ export interface components {
                                          * @description Kind of the referenced resource
                                          * @enum {string}
                                          */
-                                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                                          *     Name and Namespace can be used. */
                                         labels?: {
@@ -4669,7 +2987,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4743,7 +3061,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4836,7 +3154,7 @@ export interface components {
                                      *     If true, and there is already a hash computed, ignore rest of the list of hash polices. */
                                     terminal?: boolean;
                                     /** @enum {string} */
-                                    type: "Header" | "Cookie" | "SourceIP" | "QueryParameter" | "FilterState";
+                                    type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
                                 }[];
                                 /**
                                  * Format: int32
@@ -4903,7 +3221,7 @@ export interface components {
                                      *     If true, and there is already a hash computed, ignore rest of the list of hash polices. */
                                     terminal?: boolean;
                                     /** @enum {string} */
-                                    type: "Header" | "Cookie" | "SourceIP" | "QueryParameter" | "FilterState";
+                                    type: "Header" | "Cookie" | "Connection" | "SourceIP" | "QueryParameter" | "FilterState";
                                 }[];
                                 /**
                                  * Format: int32
@@ -4985,7 +3303,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5162,7 +3480,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5231,7 +3549,10 @@ export interface components {
                 default?: {
                     /** @description AppendMatch is a list of destinations that should be allowed through the sidecar. */
                     appendMatch?: {
-                        /** @description Port defines the port to which a user makes a request. */
+                        /**
+                         * Format: int32
+                         * @description Port defines the port to which a user makes a request.
+                         */
                         port?: number;
                         /**
                          * @description Protocol defines the communication protocol. Possible values: `tcp`, `tls`, `grpc`, `http`, `http2`.
@@ -5263,7 +3584,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5588,7 +3909,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5723,7 +4044,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5758,7 +4079,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5854,7 +4175,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5928,7 +4249,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -6174,7 +4495,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -6248,7 +4569,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -6288,7 +4609,7 @@ export interface components {
                                  * @description Kind of the referenced resource
                                  * @enum {string}
                                  */
-                                kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                                kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                                 /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                                  *     Name and Namespace can be used. */
                                 labels?: {
@@ -6330,7 +4651,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -6439,7 +4760,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -6466,6 +4787,43 @@ export interface components {
                         };
                     };
                 }[];
+                /** @description Rules defines inbound timeout configurations. Currently limited to exactly one rule containing
+                 *     default timeouts that apply to all inbound traffic, as L7 matching is not yet implemented. */
+                rules?: {
+                    /** @description Default contains configuration of the inbound timeouts */
+                    default?: {
+                        /** @description ConnectionTimeout specifies the amount of time proxy will wait for an TCP connection to be established.
+                         *     Default value is 5 seconds. Cannot be set to 0. */
+                        connectionTimeout?: string;
+                        /** @description Http provides configuration for HTTP specific timeouts */
+                        http?: {
+                            /** @description MaxConnectionDuration is the time after which a connection will be drained and/or closed,
+                             *     starting from when it was first established. Setting this timeout to 0 will disable it.
+                             *     Disabled by default. */
+                            maxConnectionDuration?: string;
+                            /** @description MaxStreamDuration is the maximum time that a stream’s lifetime will span.
+                             *     Setting this timeout to 0 will disable it. Disabled by default. */
+                            maxStreamDuration?: string;
+                            /** @description RequestHeadersTimeout The amount of time that proxy will wait for the request headers to be received. The timer is
+                             *     activated when the first byte of the headers is received, and is disarmed when the last byte of
+                             *     the headers has been received. If not specified or set to 0, this timeout is disabled.
+                             *     Disabled by default. */
+                            requestHeadersTimeout?: string;
+                            /** @description RequestTimeout The amount of time that proxy will wait for the entire request to be received.
+                             *     The timer is activated when the request is initiated, and is disarmed when the last byte of the request is sent,
+                             *     OR when the response is initiated. Setting this timeout to 0 will disable it.
+                             *     Default is 15s. */
+                            requestTimeout?: string;
+                            /** @description StreamIdleTimeout is the amount of time that proxy will allow a stream to exist with no activity.
+                             *     Setting this timeout to 0 will disable it. Default is 30m */
+                            streamIdleTimeout?: string;
+                        };
+                        /** @description IdleTimeout is defined as the period in which there are no bytes sent or received on connection
+                         *     Setting this timeout to 0 will disable it. Be cautious when disabling it because
+                         *     it can lead to connection leaking. Default value is 1h. */
+                        idleTimeout?: string;
+                    };
+                }[];
                 /** @description TargetRef is a reference to the resource the policy takes an effect on.
                  *     The resource could be either a real store object or virtual resource
                  *     defined inplace. */
@@ -6474,7 +4832,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -6543,7 +4901,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -6644,7 +5002,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -6679,7 +5037,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -6863,7 +5221,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -6946,7 +5304,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -6981,7 +5339,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute";
+                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -7022,6 +5380,268 @@ export interface components {
             modificationTime?: string;
         };
         MeshTrafficPermissionCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            warnings?: string[];
+        };
+        MeshItem: {
+            /** @description Constraints that applies to the mesh and its entities */
+            constraints?: {
+                /** @description DataplaneProxyMembership defines a set of requirements for data plane
+                 *     proxies to be a member of the mesh. */
+                dataplaneProxy?: {
+                    /** @description Requirements defines a set of requirements that data plane proxies must
+                     *     fulfill in order to join the mesh. A data plane proxy must fulfill at
+                     *     least one requirement in order to join the mesh. Empty list of allowed
+                     *     requirements means that any proxy that is not explicitly denied can join. */
+                    requirements?: {
+                        /** @description Tags defines set of required tags. You can specify '*' in value to
+                         *     require non empty value of tag */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                    /** @description Restrictions defines a set of restrictions that data plane proxies cannot
+                     *     fulfill in order to join the mesh. A data plane proxy cannot fulfill any
+                     *     requirement in order to join the mesh.
+                     *     Restrictions takes precedence over requirements. */
+                    restrictions?: {
+                        /** @description Tags defines set of required tags. You can specify '*' in value to
+                         *     require non empty value of tag */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                };
+            };
+            labels?: {
+                [key: string]: string;
+            };
+            /** @description Logging settings.
+             *     +optional */
+            logging?: {
+                /** @description List of available logging backends */
+                backends?: {
+                    /** @description Configuration of the backend */
+                    conf?: Record<string, never>;
+                    /** @description Format of access logs. Placeholders available on
+                     *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log */
+                    format?: string;
+                    /** @description Name of the backend, can be then used in Mesh.logging.defaultBackend or in
+                     *     TrafficLogging */
+                    name?: string;
+                    /** @description Type of the backend (Kuma ships with 'tcp' and 'file') */
+                    type?: string;
+                }[];
+                /** @description Name of the default backend */
+                defaultBackend?: string;
+            };
+            meshServices?: {
+                mode?: string | number;
+            };
+            /** @description Configuration for metrics collected and exposed by dataplanes.
+             *
+             *     Settings defined here become defaults for every dataplane in a given Mesh.
+             *     Additionally, it is also possible to further customize this configuration
+             *     for each dataplane individually using Dataplane resource.
+             *     +optional */
+            metrics?: {
+                /** @description List of available Metrics backends */
+                backends?: {
+                    /** @description Configuration of the backend */
+                    conf?: Record<string, never>;
+                    /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
+                    name?: string;
+                    /** @description Type of the backend (Kuma ships with 'prometheus') */
+                    type?: string;
+                }[];
+                /** @description Name of the enabled backend */
+                enabledBackend?: string;
+            };
+            /** @description mTLS settings.
+             *     +optional */
+            mtls?: {
+                /** @description List of available Certificate Authority backends */
+                backends?: {
+                    /** @description Configuration of the backend */
+                    conf?: Record<string, never>;
+                    /** @description Dataplane certificate settings */
+                    dpCert?: {
+                        /** @description Timeout on request to CA for DP certificate generation and retrieval */
+                        requestTimeout?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /** @description Rotation settings */
+                        rotation?: {
+                            /** @description Time after which generated certificate for Dataplane will expire */
+                            expiration?: string;
+                        };
+                    };
+                    /** @description Mode defines the behaviour of inbound listeners with regard to traffic
+                     *     encryption */
+                    mode?: string | number;
+                    /** @description Name of the backend */
+                    name?: string;
+                    rootChain?: {
+                        /** @description Timeout on request for to CA for root certificate chain.
+                         *     If not specified, defaults to 10s. */
+                        requestTimeout?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                    };
+                    /** @description Type of the backend. Has to be one of the loaded plugins (Kuma ships with
+                     *     builtin and provided) */
+                    type?: string;
+                }[];
+                /** @description Name of the enabled backend */
+                enabledBackend?: string;
+                /** @description If enabled, skips CA validation. */
+                skipValidation?: boolean;
+            };
+            name: string;
+            /** @description Networking settings of the mesh */
+            networking?: {
+                /** @description Outbound settings */
+                outbound?: {
+                    /** @description Control the passthrough cluster */
+                    passthrough?: boolean;
+                };
+            };
+            /** @description Routing settings of the mesh */
+            routing?: {
+                /** @description If true, blocks traffic to MeshExternalServices.
+                 *     Default: false */
+                defaultForbidMeshExternalServiceAccess?: boolean;
+                /** @description Enable the Locality Aware Load Balancing */
+                localityAwareLoadBalancing?: boolean;
+                /** @description Enable routing traffic to services in other zone or external services
+                 *     through ZoneEgress. Default: false */
+                zoneEgress?: boolean;
+            };
+            /** @description List of policies to skip creating by default when the mesh is created.
+             *     e.g. TrafficPermission, MeshRetry, etc. An '*' can be used to skip all
+             *     policies. */
+            skipCreatingInitialPolicies?: string[];
+            /** @description Tracing settings.
+             *     +optional */
+            tracing?: {
+                /** @description List of available tracing backends */
+                backends?: {
+                    /** @description Configuration of the backend */
+                    conf?: Record<string, never>;
+                    /** @description Name of the backend, can be then used in Mesh.tracing.defaultBackend or in
+                     *     TrafficTrace */
+                    name?: string;
+                    /** @description Percentage of traces that will be sent to the backend (range 0.0 - 100.0).
+                     *     Empty value defaults to 100.0% */
+                    sampling?: number;
+                    /** @description Type of the backend (Kuma ships with 'zipkin') */
+                    type?: string;
+                }[];
+                /** @description Name of the default backend */
+                defaultBackend?: string;
+            };
+            type: string;
+        };
+        MeshCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            warnings?: string[];
+        };
+        MeshGatewayItem: {
+            /** @description The desired configuration of the MeshGateway. */
+            conf?: {
+                /** @description Listeners define logical endpoints that are bound on this MeshGateway's
+                 *     address(es). */
+                listeners?: {
+                    /** @description CrossMesh enables traffic to flow to this listener only from other
+                     *     meshes. */
+                    crossMesh?: boolean;
+                    /** @description Hostname specifies the virtual hostname to match for protocol types that
+                     *     define this concept. When unspecified, "", or `*`, all hostnames are
+                     *     matched. This field can be omitted for protocols that don't require
+                     *     hostname based matching. */
+                    hostname?: string;
+                    /** @description Port is the network port. Multiple listeners may use the
+                     *     same port, subject to the Listener compatibility rules. */
+                    port?: number;
+                    /** @description Protocol specifies the network protocol this listener expects to receive. */
+                    protocol?: string | number;
+                    /** @description Resources is used to specify listener-specific resource settings. */
+                    resources?: {
+                        connection_limit?: number;
+                    };
+                    /** @description Tags specifies a unique combination of tags that routes can use
+                     *     to match themselves to this listener.
+                     *
+                     *     When matching routes to listeners, the control plane constructs a
+                     *     set of matching tags for each listener by forming the union of the
+                     *     gateway tags and the listener tags. A route will be attached to the
+                     *     listener if all of the route's tags are preset in the matching tags */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                    /** @description TLS is the TLS configuration for the Listener. This field
+                     *     is required if the Protocol field is "HTTPS" or "TLS" and
+                     *     ignored otherwise. */
+                    tls?: {
+                        /** @description Certificates is an array of datasources that contain TLS
+                         *     certificates and private keys.  Each datasource must contain a
+                         *     sequence of PEM-encoded objects. The server certificate and private
+                         *     key are required, but additional certificates are allowed and will
+                         *     be added to the certificate chain.  The server certificate must
+                         *     be the first certificate in the datasource.
+                         *
+                         *     When multiple certificate datasources are configured, they must have
+                         *     different key types. In practice, this means that one datasource
+                         *     should contain an RSA key and certificate, and the other an
+                         *     ECDSA key and certificate. */
+                        certificates?: {
+                            /** @description Types that are assignable to Type:
+                             *
+                             *     	*DataSource_Secret
+                             *     	*DataSource_File
+                             *     	*DataSource_Inline
+                             *     	*DataSource_InlineString */
+                            Type: unknown;
+                        }[];
+                        /** @description Mode defines the TLS behavior for the TLS session initiated
+                         *     by the client. */
+                        mode?: string | number;
+                        /** @description Options should eventually configure how TLS is configured. This
+                         *     is where cipher suite and version configuration can be specified,
+                         *     client certificates enforced, and so on. */
+                        options?: Record<string, never>;
+                    };
+                }[];
+            };
+            labels?: {
+                [key: string]: string;
+            };
+            mesh: string;
+            name: string;
+            /** @description Selectors is a list of selectors that are used to match builtin
+             *     gateway dataplanes that will receive this MeshGateway configuration. */
+            selectors?: {
+                /** @description Tags to match, can be used for both source and destinations */
+                match?: {
+                    [key: string]: string;
+                };
+            }[];
+            /** @description Tags is the set of tags common to all of the gateway's listeners.
+             *
+             *     This field must not include a `kuma.io/service` tag (the service is always
+             *     defined on the dataplanes). */
+            tags?: {
+                [key: string]: string;
+            };
+            type: string;
+        };
+        MeshGatewayCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
@@ -7562,6 +6182,15 @@ export interface components {
                 "application/json": components["schemas"]["InspectRules"];
             };
         };
+        /** @description A response containing hostnames that match a service. */
+        InspectHostnamesResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["InspectHostnames"];
+            };
+        };
         /** @description Bad Request */
         BadRequest: {
             headers: {
@@ -7572,12 +6201,21 @@ export interface components {
             };
         };
         /** @description Internal Server Error */
-        InternalServerError: {
+        Internal: {
             headers: {
                 [name: string]: unknown;
             };
             content: {
                 "application/problem+json": components["schemas"]["Error"];
+            };
+        };
+        /** @description Not Found */
+        NotFound: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["NotFoundError"];
             };
         };
         /** @description Successful response */
@@ -7965,6 +6603,54 @@ export interface components {
             };
         };
         /** @description Successful response */
+        MeshItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshItem"];
+            };
+        };
+        /** @description List */
+        MeshList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
+        MeshGatewayItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["MeshGatewayItem"];
+            };
+        };
+        /** @description List */
+        MeshGatewayList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["MeshGatewayItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
         HostnameGeneratorItem: {
             headers: {
                 [name: string]: unknown;
@@ -8076,7 +6762,11 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            200: components["responses"]["IndexResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
     };
     "get-resource-type-description": {
         parameters: {
@@ -8089,7 +6779,7 @@ export interface operations {
         responses: {
             200: components["responses"]["ResourceTypeDescriptionListResponse"];
             400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
+            500: components["responses"]["Internal"];
         };
     };
     "get-global-insight": {
@@ -8103,7 +6793,7 @@ export interface operations {
         responses: {
             200: components["responses"]["GlobalInsightResponse"];
             400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
+            500: components["responses"]["Internal"];
         };
     };
     "inspect-dataplanes-rules": {
@@ -8133,7 +6823,34 @@ export interface operations {
         responses: {
             200: components["responses"]["InspectRulesResponse"];
             400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "get-meshes-mesh-dataplanes-name-config": {
+        parameters: {
+            query?: {
+                /** @description When computing XDS config the CP takes into account policies with 'kuma.io/effect: shadow' label
+                 *      */
+                shadow?: boolean;
+                /** @description An array of extra fields to include in the response. When `include=diff` the server computes a diff in JSONPatch format
+                 *     between the current proxy XDS config and the config returned in the 'xds' field.
+                 *      */
+                include?: "diff"[];
+            };
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the diff for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the diff for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["InspectDataplanesConfigResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
         };
     };
     "inspect-resources": {
@@ -8170,7 +6887,2132 @@ export interface operations {
         responses: {
             200: components["responses"]["InspectDataplanesForPolicyResponse"];
             400: components["responses"]["BadRequest"];
-            500: components["responses"]["InternalServerError"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    "inspect-hostnames": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The mesh the service is part of
+                 * @example default
+                 */
+                mesh: string;
+                /**
+                 * @description The type of the service
+                 * @example meshservices
+                 */
+                serviceType: "meshservices" | "meshmultizoneservices" | "meshexternalservices";
+                /**
+                 * @description The name of the service
+                 * @example redis
+                 */
+                serviceName: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["InspectHostnamesResponse"];
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    getMeshAccessLog: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshAccessLog */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshAccessLogItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshAccessLog: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshAccessLog */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshAccessLogItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshAccessLogCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshAccessLog: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshAccessLog */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshAccessLogList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshAccessLogList"];
+        };
+    };
+    getMeshCircuitBreaker: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshCircuitBreaker */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshCircuitBreakerItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshCircuitBreaker: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshCircuitBreaker */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshCircuitBreakerItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshCircuitBreakerCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshCircuitBreaker: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshCircuitBreaker */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshCircuitBreakerList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshCircuitBreakerList"];
+        };
+    };
+    getMeshFaultInjection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshFaultInjection */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshFaultInjectionItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshFaultInjection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshFaultInjection */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshFaultInjectionItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshFaultInjectionCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshFaultInjection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshFaultInjection */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshFaultInjectionList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshFaultInjectionList"];
+        };
+    };
+    getMeshHealthCheck: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshHealthCheck */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshHealthCheckItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshHealthCheck: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshHealthCheck */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshHealthCheckItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshHealthCheckCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshHealthCheck: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshHealthCheck */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshHealthCheckList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshHealthCheckList"];
+        };
+    };
+    getMeshHTTPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshHTTPRoute */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshHTTPRouteItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshHTTPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshHTTPRoute */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshHTTPRouteItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshHTTPRouteCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshHTTPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshHTTPRoute */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshHTTPRouteList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshHTTPRouteList"];
+        };
+    };
+    getMeshLoadBalancingStrategy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshLoadBalancingStrategy */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshLoadBalancingStrategyItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshLoadBalancingStrategy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshLoadBalancingStrategy */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshLoadBalancingStrategyItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshLoadBalancingStrategy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshLoadBalancingStrategy */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshLoadBalancingStrategyList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshLoadBalancingStrategyList"];
+        };
+    };
+    getMeshMetric: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshMetric */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshMetricItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshMetric: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshMetric */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshMetricItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshMetricCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshMetricCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshMetric: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshMetric */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshMetricList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshMetricList"];
+        };
+    };
+    getMeshPassthrough: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshPassthrough */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshPassthroughItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshPassthrough: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshPassthrough */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshPassthroughItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshPassthroughCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshPassthrough: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshPassthrough */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshPassthroughList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshPassthroughList"];
+        };
+    };
+    getMeshProxyPatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshProxyPatch */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshProxyPatchItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshProxyPatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshProxyPatch */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshProxyPatchItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshProxyPatchCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshProxyPatch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshProxyPatch */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshProxyPatchList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshProxyPatchList"];
+        };
+    };
+    getMeshRateLimit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshRateLimit */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshRateLimitItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshRateLimit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshRateLimit */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshRateLimitItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshRateLimitCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshRateLimit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshRateLimit */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshRateLimitList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshRateLimitList"];
+        };
+    };
+    getMeshRetry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshRetry */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshRetryItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshRetry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshRetry */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshRetryItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshRetryCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshRetryCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshRetry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshRetry */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshRetryList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshRetryList"];
+        };
+    };
+    getMeshTCPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTCPRoute */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTCPRouteItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshTCPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTCPRoute */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTCPRouteItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTCPRouteCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshTCPRoute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTCPRoute */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshTCPRouteList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTCPRouteList"];
+        };
+    };
+    getMeshTimeout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTimeout */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTimeoutItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshTimeout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTimeout */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTimeoutItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTimeoutCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshTimeout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTimeout */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshTimeoutList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTimeoutList"];
+        };
+    };
+    getMeshTLS: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTLS */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTLSItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshTLS: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTLS */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTLSItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTLSCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTLSCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshTLS: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTLS */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshTLSList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTLSList"];
+        };
+    };
+    getMeshTrace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrace */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTraceItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshTrace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrace */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTraceItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTraceCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTraceCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshTrace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrace */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshTraceList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTraceList"];
+        };
+    };
+    getMeshTrafficPermission: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrafficPermission */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTrafficPermissionItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshTrafficPermission: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrafficPermission */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshTrafficPermissionItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshTrafficPermissionCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshTrafficPermission: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshTrafficPermission */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshTrafficPermissionList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshTrafficPermissionList"];
+        };
+    };
+    getMesh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the Mesh */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMesh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the Mesh */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMesh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the Mesh */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshList"];
+        };
+    };
+    getMeshGateway: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshGateway */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshGatewayItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshGateway: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshGateway */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshGatewayItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshGatewayCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshGatewayCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshGateway: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshGateway */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshGatewayList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshGatewayList"];
+        };
+    };
+    getHostnameGenerator: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the HostnameGenerator */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["HostnameGeneratorItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putHostnameGenerator: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the HostnameGenerator */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostnameGeneratorItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HostnameGeneratorCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteHostnameGenerator: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the HostnameGenerator */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getHostnameGeneratorList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["HostnameGeneratorList"];
+        };
+    };
+    getMeshExternalService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshExternalService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshExternalServiceItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshExternalService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshExternalService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshExternalServiceItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshExternalServiceCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshExternalService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshExternalService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshExternalServiceList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshExternalServiceList"];
+        };
+    };
+    getMeshMultiZoneService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshMultiZoneService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshMultiZoneServiceItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshMultiZoneService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshMultiZoneService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshMultiZoneServiceItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshMultiZoneServiceCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshMultiZoneService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshMultiZoneService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshMultiZoneServiceList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshMultiZoneServiceList"];
+        };
+    };
+    getMeshService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshServiceItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putMeshService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeshServiceItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshServiceCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeshServiceCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteMeshService: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the MeshService */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getMeshServiceList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["MeshServiceList"];
         };
     };
 }
