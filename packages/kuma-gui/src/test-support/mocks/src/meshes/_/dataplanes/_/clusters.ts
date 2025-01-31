@@ -11,7 +11,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
 
   // Allows the service tag to be synchronized between overview and stats.
   fake.kuma.seed(name as string)
-  const service = fake.hacker.noun()
+  const service = fake.word.noun()
 
   if (type === 'gateway_builtin') {
     return {
@@ -242,7 +242,7 @@ kuma:envoy:admin::127.0.0.1:9901::local_origin_success_rate::-1`,
   const inboundCount = parseInt(env('KUMA_DATAPLANEINBOUND_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const ports = Array.from({ length: inboundCount }).map(() => fake.number.int({ min: 1, max: 65535 }))
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
-  const services = Array.from({ length: serviceCount }).map(() => `${fake.hacker.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`)
+  const services = Array.from({ length: serviceCount }).map(() => `${fake.word.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`)
   //
 
   fake.kuma.seed()

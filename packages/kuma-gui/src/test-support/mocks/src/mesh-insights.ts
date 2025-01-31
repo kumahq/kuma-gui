@@ -12,7 +12,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = id === 0 ? 'default' : `${fake.hacker.noun()}-${id}`
+        const name = id === 0 ? 'default' : `${fake.word.noun()}-${id}`
 
         const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 

@@ -17,7 +17,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const mesh = req.params.mesh as string
         const nameQueryParam = req.url.searchParams.get('name')
-        const name = nameQueryParam ?? `${fake.hacker.noun()}-external-${id}`
+        const name = nameQueryParam ?? `${fake.word.noun()}-external-${id}`
 
         return {
           type: 'ExternalService',

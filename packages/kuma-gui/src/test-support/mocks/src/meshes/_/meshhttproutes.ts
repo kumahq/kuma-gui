@@ -17,7 +17,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = `${fake.word.noun()}-${id}`
 
         return {
           type: 'MeshHTTPRoute',
@@ -31,7 +31,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               'kuma.io/display-name': 'demo-app',
               'kuma.io/mesh': 'default',
               'kuma.io/origin': 'zone',
-              'kuma.io/zone': fake.hacker.noun(),
+              'kuma.io/zone': fake.word.noun(),
             },
           }),
           spec: {

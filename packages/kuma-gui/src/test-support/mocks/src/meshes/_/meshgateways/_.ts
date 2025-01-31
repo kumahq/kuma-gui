@@ -27,7 +27,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
       labels: {
         'kuma.io/display-name': displayName,
         'kuma.io/origin': fake.kuma.origin(),
-        'kuma.io/zone': fake.hacker.noun(),
+        'kuma.io/zone': fake.word.noun(),
         ...(k8s
           ? {
             'k8s.kuma.io/namespace': nspace,

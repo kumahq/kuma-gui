@@ -2,7 +2,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const { name } = req.params
-  const zoneName = fake.hacker.noun()
+  const zoneName = fake.word.noun()
 
   return {
     headers: {},

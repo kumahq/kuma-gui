@@ -20,7 +20,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const serviceType = serviceTypes || fake.datatype.boolean() ? fake.kuma.serviceType({ serviceTypes }) : undefined
         const mesh = req.params.mesh as string
-        const name = `${fake.hacker.noun()}-${id}-${serviceType}`
+        const name = `${fake.word.noun()}-${id}-${serviceType}`
         const addressPort = serviceType !== 'external' ? `${name}.mesh:${fake.internet.port()}` : undefined
         const status = serviceType !== 'external' ? fake.kuma.serviceStatusKeyword() : undefined
         const dataplanes = serviceType !== 'external' ? fake.kuma.healthStatus() : undefined

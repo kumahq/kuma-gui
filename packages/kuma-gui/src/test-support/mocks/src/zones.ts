@@ -13,7 +13,7 @@ export default ({ fake, env, pager }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.hacker.noun()}-${id}`
+        const name = `${fake.word.noun()}-${id}`
         return {
           type: 'Zone',
           name,

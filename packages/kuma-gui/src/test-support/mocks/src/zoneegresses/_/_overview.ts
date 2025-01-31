@@ -7,7 +7,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   const displayName = parts.slice(0, -1).join('.')
   const nspace = parts.pop()
 
-  const zoneName = fake.hacker.noun()
+  const zoneName = fake.word.noun()
 
   const subscriptionCount = parseInt(env('KUMA_SUBSCRIPTION_COUNT', `${fake.number.int({ min: 1, max: 10 })}`))
 
@@ -42,7 +42,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
             subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
               return {
                 id: fake.string.uuid(),
-                controlPlaneInstanceId: fake.hacker.noun(),
+                controlPlaneInstanceId: fake.word.noun(),
                 ...fake.kuma.connection(item, i, arr),
                 generation: 409,
                 status: {
