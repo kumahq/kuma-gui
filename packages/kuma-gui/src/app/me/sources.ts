@@ -15,15 +15,18 @@ export const sources = ({ get, set }: Storage) => {
         get('/'),
         get(params.route),
       ])
-      return merge(
-        {
-          params: {
-            size: 50,
-            format: 'structured',
+
+      return merge.all(
+        [
+          {
+            params: {
+              size: 50,
+              format: 'structured',
+            },
           },
-        },
-        app,
-        route,
+          app,
+          route,
+        ],
       )
     },
     '/me/:route/:data': async (params) => {
