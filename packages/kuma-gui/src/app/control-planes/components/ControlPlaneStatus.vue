@@ -128,6 +128,7 @@ const props = defineProps<{
   width: $kui-icon-size-30;
 }
 
+// 639px <-> 39.938rem (with base 16px font-size)
 @container health-card (max-width: 39.938rem) {
   .columns-with-borders > * {
     border-right: unset;
