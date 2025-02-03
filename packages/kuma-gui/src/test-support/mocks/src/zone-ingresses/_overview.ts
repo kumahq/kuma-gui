@@ -14,7 +14,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
 
-        const displayName = `${fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const displayName = `${fake.word.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
 
         const zoneName = env('KUMA_ZONE_NAME', 'zone-0')
@@ -44,12 +44,12 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               advertisedPort: fake.internet.port(),
             },
             availableServices: Array.from({ length: serviceCount }).map(_ => {
-              const mesh = `${fake.hacker.noun()}-app`
+              const mesh = `${fake.word.noun()}-app`
               return {
                 tags: {
                   app: mesh,
                   'kuma.io/protocol': fake.kuma.protocol(),
-                  'kuma.io/service': `${mesh}_${fake.hacker.noun()}_svc_${fake.number.int({ min: 0, max: 65535 })}`,
+                  'kuma.io/service': `${mesh}_${fake.word.noun()}_svc_${fake.number.int({ min: 0, max: 65535 })}`,
                   'kuma.io/zone': zoneName,
                   'pod-template-hash': fake.string.alphanumeric({ casing: 'lower', length: 10 }),
                 },
@@ -64,7 +64,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
                   return {
                     id: fake.string.uuid(),
-                    controlPlaneInstanceId: fake.hacker.noun(),
+                    controlPlaneInstanceId: fake.word.noun(),
                     ...fake.kuma.connection(item, i, arr),
                     generation: fake.number.int({ min: 1, max: 500 }),
                     status: (() => {

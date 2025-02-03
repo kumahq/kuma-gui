@@ -16,6 +16,7 @@ export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   addressPort: string
   serviceAddressPort: string
   listenerAddress: string
+  portName: string
 }
 export type DataplaneOutbound = PartialDataplaneOutbound & Connection & {
 }
@@ -77,6 +78,8 @@ export const DataplaneNetworking = {
           serviceAddressPort: '',
           // we never set this currently as we never need it for a gateway
           listenerAddress: '',
+          // not available for gateway
+          portName: '',
         }]
         : inbounds.map((item) => {
           // inbound address, advertisedAddress, networkingAddress because externally accessible address
@@ -85,6 +88,8 @@ export const DataplaneNetworking = {
             ...item,
             // the name can be used to lookup listener envoy stats
             name: `localhost_${item.port}`,
+            // the portName adds another way of referencing the port, usable with MeshService
+            portName: item.name?.length ? item.name : '',
             listenerAddress: `${address}_${item.port}`,
             // If a health property is unset the inbound is considered healthy
             state: typeof item.state !== 'undefined' ? item.state : 'Ready',
