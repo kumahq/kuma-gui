@@ -14,7 +14,7 @@
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/app-layout": "^4.3.7",
     "@kong-ui-public/i18n": "^2.2.10",
-    "@kong/icons": "^1.20.2",
+    "@kong/icons": "^1.20.4",
     "@kong/kongponents": "^9.18.4",
     "@vue/shared": "^3.5.13",
     "@vueuse/core": "^12.5.0",
