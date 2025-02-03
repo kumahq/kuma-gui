@@ -84,7 +84,7 @@
         data-testid="policies-status"
       >
         <template #icon>
-          <XIcon name="service-document" />
+          <XIcon name="policy" />
         </template>
 
         <template #title>

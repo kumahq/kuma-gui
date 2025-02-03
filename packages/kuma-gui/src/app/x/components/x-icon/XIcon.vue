@@ -83,7 +83,7 @@ const icons = {
   refresh: RefreshIcon,
   progress: ProgressIcon,
   info: InfoIcon,
-  'service-document': ServiceDocumentIcon,
+  policy: ServiceDocumentIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()
