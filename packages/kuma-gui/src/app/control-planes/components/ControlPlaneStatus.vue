@@ -84,7 +84,11 @@
         data-testid="policies-status"
       >
         <template #icon>
-          <XIcon name="policy" />
+          <img
+            class="icon"
+            src="@/assets/images/policy.svg?url"
+            alt=""
+          >
         </template>
 
         <template #title>
