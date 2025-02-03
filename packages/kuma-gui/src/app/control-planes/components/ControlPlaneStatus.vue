@@ -19,7 +19,7 @@
           <img
             class="icon"
             src="@/assets/images/navigation/icon-zones.svg?url"
-            alt="Zones Icon"
+            alt=""
           >
         </template>
       
@@ -36,7 +36,7 @@
           <img
             class="icon"
             src="@/assets/images/navigation/icon-meshes.svg?url"
-            alt="Meshes Icon"
+            alt=""
           >
         </template>
 
@@ -53,7 +53,7 @@
           <img
             class="icon"
             src="@/assets/images/icon-wifi-tethering.svg?url"
-            alt="Services Icon"
+            alt=""
           >
         </template>
 
@@ -70,7 +70,7 @@
           <img
             class="icon"
             src="@/assets/images/icon-wifi-tethering.svg?url"
-            alt="Data Plane Proxies Icon"
+            alt=""
           >
         </template>
 
