@@ -18,7 +18,7 @@
         <template #icon>
           <img
             class="icon"
-            src="@/assets/images/navigation/icon-zones.svg?url"
+            src="@/assets/images/zone.svg?url"
             alt=""
           >
         </template>
@@ -35,7 +35,7 @@
         <template #icon>
           <img
             class="icon"
-            src="@/assets/images/navigation/icon-meshes.svg?url"
+            src="@/assets/images/mesh.svg?url"
             alt=""
           >
         </template>
