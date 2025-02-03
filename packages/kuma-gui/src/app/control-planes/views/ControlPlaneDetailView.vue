@@ -50,7 +50,7 @@
                     <XAction
                       :to="{ name: 'zone-cp-list-view' }"
                     >
-                      {{ t('main-overview.detail.health.view_all') }}
+                      {{ t('main-overview.detail.vcp-stats.view_all') }}
                     </XAction>
                   </div>
                   <div
@@ -88,7 +88,7 @@
                     <XAction
                       :to="{ name: 'mesh-list-view' }"
                     >
-                      {{ t('main-overview.detail.health.view_all') }}
+                      {{ t('main-overview.detail.vcp-stats.view_all') }}
                     </XAction>
                   </div>
                 </div>

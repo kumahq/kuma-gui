@@ -1,8 +1,8 @@
 <template>
-  <XCard class="health-card">
+  <XCard class="vcp-stats-card">
     <div class="card-header">
       <div class="card-title">
-        <h2>{{ t('main-overview.detail.health.title') }}</h2>
+        <h2>{{ t('main-overview.detail.vcp-stats.title') }}</h2>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
         </template>
       
         <template #title>
-          {{ t('main-overview.detail.health.zone_control_planes') }}
+          {{ t('main-overview.detail.vcp-stats.zone_control_planes') }}
         </template>
       </ResourceStatus>
 
@@ -41,7 +41,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.health.meshes') }}
+          {{ t('main-overview.detail.vcp-stats.meshes') }}
         </template>
       </ResourceStatus>
 
@@ -58,7 +58,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.health.services') }}
+          {{ t('main-overview.detail.vcp-stats.services') }}
         </template>
       </ResourceStatus>
 
@@ -75,7 +75,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.health.data_plane_proxies') }}
+          {{ t('main-overview.detail.vcp-stats.data_plane_proxies') }}
         </template>
       </ResourceStatus>
 
@@ -92,7 +92,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.health.policies') }}
+          {{ t('main-overview.detail.vcp-stats.policies') }}
         </template>
       </ResourceStatus>
     </XLayout>
@@ -113,9 +113,9 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.health-card {
+.vcp-stats-card {
   container-type: inline-size;
-  container-name: health-card;
+  container-name: vcp-stats-card;
 }
 
 .card-header {
@@ -129,7 +129,7 @@ const props = defineProps<{
 }
 
 // 639px <-> 39.938rem (with base 16px font-size)
-@container health-card (max-width: 39.938rem) {
+@container vcp-stats-card (max-width: 39.938rem) {
   .columns-with-borders > * {
     border-right: unset;
   }
