@@ -135,15 +135,15 @@
               serviceName: route.params.service,
             })"
           >
-            <template #loadable="{ data: inspectHostnames }">
+            <template #loadable="{ data: hostnames }">
               <DataCollection
                 type="hostnames"
-                :items="inspectHostnames?.items ?? [undefined]"
+                :items="hostnames?.items ?? [undefined]"
               >
                 <AppCollection
                   type="hostnames-collection"
                   data-testid="hostnames-collection"
-                  :items="inspectHostnames?.items"
+                  :items="hostnames?.items"
                   :headers="[
                     { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
                     { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
