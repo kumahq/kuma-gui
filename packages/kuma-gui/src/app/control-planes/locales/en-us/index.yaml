@@ -7,7 +7,7 @@ main-overview:
       message: !!text/markdown |
         **Welcome to {name}!** We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
       get_started_link: 'Get started'
-    vcp-stats:
+    about:
       title: 'Global Control Plane stats'
       view_all: '(view all)'
       zone_control_planes: 'Zones'

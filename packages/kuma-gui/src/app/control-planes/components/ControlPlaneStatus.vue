@@ -1,8 +1,8 @@
 <template>
-  <XCard class="vcp-stats-card">
+  <XCard class="about-card">
     <div class="card-header">
       <div class="card-title">
-        <h2>{{ t('main-overview.detail.vcp-stats.title') }}</h2>
+        <h2>{{ t('main-overview.detail.about.title') }}</h2>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
         </template>
       
         <template #title>
-          {{ t('main-overview.detail.vcp-stats.zone_control_planes') }}
+          {{ t('main-overview.detail.about.zone_control_planes') }}
         </template>
       </ResourceStatus>
 
@@ -41,7 +41,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.vcp-stats.meshes') }}
+          {{ t('main-overview.detail.about.meshes') }}
         </template>
       </ResourceStatus>
 
@@ -58,7 +58,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.vcp-stats.services') }}
+          {{ t('main-overview.detail.about.services') }}
         </template>
       </ResourceStatus>
 
@@ -75,7 +75,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.vcp-stats.data_plane_proxies') }}
+          {{ t('main-overview.detail.about.data_plane_proxies') }}
         </template>
       </ResourceStatus>
 
@@ -92,7 +92,7 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.vcp-stats.policies') }}
+          {{ t('main-overview.detail.about.policies') }}
         </template>
       </ResourceStatus>
     </XLayout>
@@ -113,9 +113,9 @@ const props = defineProps<{
 </script>
 
 <style lang="scss" scoped>
-.vcp-stats-card {
+.about-card {
   container-type: inline-size;
-  container-name: vcp-stats-card;
+  container-name: about-card;
 }
 
 .card-header {
@@ -129,7 +129,7 @@ const props = defineProps<{
 }
 
 // 639px <-> 39.938rem (with base 16px font-size)
-@container vcp-stats-card (max-width: 39.938rem) {
+@container about-card (max-width: 39.938rem) {
   .columns-with-borders > * {
     border-right: unset;
   }
