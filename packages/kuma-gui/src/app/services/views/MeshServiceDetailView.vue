@@ -183,7 +183,6 @@
           </DataLoader>
         </XCard>
 
-
         <XCard>
           <template #title>
             {{ t('services.detail.dpp-status.title') }}

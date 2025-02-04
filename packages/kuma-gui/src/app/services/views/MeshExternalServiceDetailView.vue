@@ -2,11 +2,13 @@
   <RouteView
     name="mesh-external-service-detail-view"
     :params="{
+      mesh: '',
+      service: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, can, t }"
+    v-slot="{ route, can, t, uri, me }"
   >
     <AppView>
       <XLayout type="stack">
@@ -99,6 +101,68 @@
           </DefinitionCard>
         </XAboutCard>
 
+
+        
+        <XCard>
+          <template #title>
+            {{ t('services.detail.hostnames.title') }}
+          </template>
+
+          <DataLoader
+            :src="uri(servicesSources, '/meshes/:mesh/:serviceType/:serviceName/_hostnames', {
+              mesh: route.params.mesh,
+              serviceType: 'meshexternalservices',
+              serviceName: route.params.service,
+            })"
+          >
+            <template #loadable="{ data: inspectHostnames }">
+              <DataCollection
+                type="inspect-hostnames"
+                :items="inspectHostnames?.items ?? [undefined]"
+              >
+                <AppCollection
+                  type="inspect-hostname-collection"
+                  data-testid="inspect-hostnames-collection"
+                  :items="inspectHostnames?.items"
+                  :headers="[
+                    { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
+                    { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
+                  ]"
+                  @resize="me.set"
+                >
+                  <template #hostname="{ row: item }">
+                    <b>
+                      <XCopyButton
+                        :text="item.hostname"
+                      />
+                    </b>
+                  </template>
+                  <template #zones="{ row: item }">
+                    <XLayout type="separated">
+                      <XBadge
+                        v-for="(zone, index) of item.zones"
+                        :key="index"
+                        appearance="decorative"
+                      >
+                        <XAction
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: zone.name,
+                            },
+                          }"
+                        >
+                          {{ zone.name }}
+                        </XAction>
+                      </XBadge>
+                    </XLayout>
+                  </template>
+                </AppCollection>
+              </DataCollection>
+            </template>
+          </DataLoader>
+        </XCard>
+
         <ResourceCodeBlock
           :resource="props.data.config"
           is-searchable
@@ -128,7 +192,9 @@
 
 <script lang="ts" setup>
 import type { MeshExternalService } from '../data'
+import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import { sources as servicesSources } from '@/app/services/sources'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{

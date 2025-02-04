@@ -36,15 +36,3 @@ Feature: mesh / mesh-services / item
     When I visit the "/meshes/default/services/mesh-services/my-meshservice/overview" URL
     Then the "[data-testid='connected-dpps']" element contains "3/4"
     And the "[data-testid='healthy-dpps']" element contains "2"
-
-  Scenario: Inspect Hostnames table exists
-    Given the URL "/meshes/default/meshservices/my-meshservice/_hostnames" responds with
-      """
-      body:
-        items:
-          - hostname: my-meshservice.svc.mesh.local
-            zones:
-              - name: zone-1
-      """
-    When I visit the "/meshes/default/services/mesh-services/my-meshservice/overview" URL
-    Then the "$hostnames" element exists 1 times

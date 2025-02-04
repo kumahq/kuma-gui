@@ -11,6 +11,7 @@ Feature: mesh / services / item
       | action        | $item:nth-child(1) [data-action]                                                          |
       | input-search  | [data-testid='filter-bar-filter-input']                                                   |
       | button-search | [data-testid='filter-bar-submit-query-button']                                            |
+      | hostnames     | [data-testid='inspect-hostnames-collection'] tbody tr                                     |
 
   Scenario Outline: Shows correct tabs for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with
@@ -131,3 +132,24 @@ Feature: mesh / services / item
       When I click the "$action-group" element
       And I click the "$view" element
       Then the URL contains "/meshes/default/data-planes/fake-dataplane/overview"
+
+  Rule: With a mesh service of type mesh-service, mesh-multi-zone-service or mesh-external-service
+
+    Scenario: Hostnames listing exists for different mesh service types
+      Given the URL "<API>" responds with
+        """
+        body:
+          items:
+            - hostname: my-meshservice.<SVC>.mesh.local
+              zones:
+                - name: zone-1
+          total: 1
+        """
+      When I visit the "<URL>" URL
+      Then the "$hostnames" element exists
+
+      Examples:
+        | API                                                             | URL                                                                       | SVC    |
+        | /meshes/default/meshservices/my-meshservice/_hostnames          | /meshes/default/services/mesh-services/my-meshservice/overview            | svc    |
+        | /meshes/default/meshexternalservices/my-meshservice/_hostnames  | /meshes/default/services/mesh-external-services/my-meshservice/overview   | extsvc |
+        | /meshes/default/meshmultizoneservices/my-meshservice/_hostnames | /meshes/default/services/mesh-multi-zone-services/my-meshservice/overview | mzsvc  |
