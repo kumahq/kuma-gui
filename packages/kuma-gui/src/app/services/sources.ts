@@ -7,7 +7,7 @@ import {
   ExternalService,
   ServiceInsight,
 } from './data'
-import { InspectHostname } from './data/InspectHostname'
+import { Hostname } from './data/Hostname'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -237,7 +237,7 @@ export const sources = (api: KumaApi) => {
         },
       })
 
-      return InspectHostname.fromCollection(response.data!)
+      return Hostname.fromCollection(response.data!)
     },
   })
 }
