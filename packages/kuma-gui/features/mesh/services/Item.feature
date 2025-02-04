@@ -11,7 +11,7 @@ Feature: mesh / services / item
       | action        | $item:nth-child(1) [data-action]                                                          |
       | input-search  | [data-testid='filter-bar-filter-input']                                                   |
       | button-search | [data-testid='filter-bar-submit-query-button']                                            |
-      | hostnames     | [data-testid='inspect-hostnames-collection'] tbody tr                                     |
+      | hostnames     | [data-testid='hostnames-collection'] tbody tr                                             |
 
   Scenario Outline: Shows correct tabs for service type <ServiceType>
     Given the URL "/meshes/default/service-insights/firewall-1" responds with

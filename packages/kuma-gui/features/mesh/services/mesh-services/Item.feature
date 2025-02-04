@@ -2,9 +2,9 @@ Feature: mesh / mesh-services / item
 
   Background:
     Given the CSS selectors
-      | Alias      | Selector                                              |
-      | dataplanes | [data-testid='data-plane-collection'] tbody tr        |
-      | hostnames  | [data-testid='inspect-hostnames-collection'] tbody tr |
+      | Alias      | Selector                                       |
+      | dataplanes | [data-testid='data-plane-collection'] tbody tr |
+      | hostnames  | [data-testid='hostnames-collection'] tbody tr  |
 
   Scenario: The dataplane table exists
     Given the environment

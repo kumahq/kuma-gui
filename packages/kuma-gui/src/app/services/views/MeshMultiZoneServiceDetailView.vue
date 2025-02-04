@@ -80,12 +80,12 @@
           >
             <template #loadable="{ data: inspectHostnames }">
               <DataCollection
-                type="inspect-hostnames"
+                type="hostnames"
                 :items="inspectHostnames?.items ?? [undefined]"
               >
                 <AppCollection
-                  type="inspect-hostname-collection"
-                  data-testid="inspect-hostnames-collection"
+                  type="hostnames-collection"
+                  data-testid="hostnames-collection"
                   :items="inspectHostnames?.items"
                   :headers="[
                     { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },

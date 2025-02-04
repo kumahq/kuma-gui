@@ -135,7 +135,7 @@ export interface paths {
          * Returns hostnames for service
          * @description Returns hostnames for a service
          */
-        get: operations["inspect-hostnames"];
+        get: operations["hostnames"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6890,7 +6890,7 @@ export interface operations {
             500: components["responses"]["Internal"];
         };
     };
-    "inspect-hostnames": {
+    "hostnames": {
         parameters: {
             query?: never;
             header?: never;
