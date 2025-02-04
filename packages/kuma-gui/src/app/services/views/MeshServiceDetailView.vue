@@ -125,41 +125,6 @@
 
         <XCard>
           <template #title>
-            {{ t('services.detail.dpp-status.title') }}
-          </template>
-
-          <XLayout
-            type="columns"
-            class="columns-with-borders"
-          >
-            <ResourceStatus
-              :total="props.data.status.dataplaneProxies.total"
-              :online="props.data.status.dataplaneProxies.connected"
-              data-testid="connected-dpps"
-            >
-              <template #icon>
-                <XIcon name="connected" />
-              </template>
-              <template #title>
-                {{ t('services.detail.dpp-status.connected') }}
-              </template>
-            </ResourceStatus>
-
-            <ResourceStatus
-              :total="props.data.status.dataplaneProxies.healthy"
-              data-testid="healthy-dpps"
-            >
-              <template #icon>
-                <XIcon name="heartbeat" />
-              </template>
-              <template #title>
-                {{ t('services.detail.dpp-status.healthy') }}
-              </template>
-            </ResourceStatus>
-          </XLayout>
-        </XCard>
-        <XCard>
-          <template #title>
             {{ t('services.detail.hostnames.title') }}
           </template>
 
@@ -216,6 +181,43 @@
               </DataCollection>
             </template>
           </DataLoader>
+        </XCard>
+
+
+        <XCard>
+          <template #title>
+            {{ t('services.detail.dpp-status.title') }}
+          </template>
+
+          <XLayout
+            type="columns"
+            class="columns-with-borders"
+          >
+            <ResourceStatus
+              :total="props.data.status.dataplaneProxies.total"
+              :online="props.data.status.dataplaneProxies.connected"
+              data-testid="connected-dpps"
+            >
+              <template #icon>
+                <XIcon name="connected" />
+              </template>
+              <template #title>
+                {{ t('services.detail.dpp-status.connected') }}
+              </template>
+            </ResourceStatus>
+
+            <ResourceStatus
+              :total="props.data.status.dataplaneProxies.healthy"
+              data-testid="healthy-dpps"
+            >
+              <template #icon>
+                <XIcon name="heartbeat" />
+              </template>
+              <template #title>
+                {{ t('services.detail.dpp-status.healthy') }}
+              </template>
+            </ResourceStatus>
+          </XLayout>
         </XCard>
 
         <div>
