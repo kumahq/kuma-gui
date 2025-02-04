@@ -122,8 +122,8 @@ router.afterEach(() => {
 
 :deep(.app-sidebar) {
   --icon-home: url('@/assets/images/navigation/icon-home.svg');
-  --icon-zones: url('@/assets/images/navigation/icon-zones.svg');
-  --icon-meshes: url('@/assets/images/navigation/icon-meshes.svg');
+  --icon-zones: url('@/assets/images/zone.svg');
+  --icon-meshes: url('@/assets/images/mesh.svg');
   --icon-configuration: url('@/assets/images/navigation/icon-configuration.svg');
   --icon-zone-egresses: url('@/assets/images/navigation/icon-zone-egresses.svg');
 }
