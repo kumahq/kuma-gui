@@ -4,9 +4,8 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneIngress: '',
+      zoneEgress: '',
       connection: '',
-      includeEds: false,
     }"
     :name="props.routeName"
     v-slot="{ t, route, uri }"
@@ -17,11 +16,10 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/xds/for/:proxyType/:name/outbound/:outbound/endpoints/:endpoints', {
-          name: route.params.zoneIngress,
-          outbound: route.params.connection,
-          endpoints: String(route.params.includeEds),
-          proxyType: 'zone-ingress',
+        :src="uri(sources, '/connections/xds/for/:proxyType/:name/inbound/:inbound', {
+          name: route.params.zoneEgress,
+          inbound: `${props.data.networking?.port}`,
+          proxyType: 'zone-egress',
         })"
         v-slot="{ data: raw, refresh }"
       >
@@ -37,11 +35,6 @@
           @reg-exp-mode-change="route.update({ codeRegExp: $event })"
         >
           <template #primary-actions>
-            <XCheckbox
-              :checked="route.params.includeEds"
-              :label="t('connections.include_endpoints')"
-              @change="(value) => route.update({ includeEds: value})"
-            />
             <XAction
               action="refresh"
               appearance="primary"
@@ -57,7 +50,10 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '@/app/connections/sources'
+import type { ZoneEgress } from '@/app/zone-egresses/data/'
+
 const props = defineProps<{
+  data: ZoneEgress
   routeName: string
 }>()
 </script>

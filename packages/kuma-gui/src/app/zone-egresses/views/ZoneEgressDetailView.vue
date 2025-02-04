@@ -61,9 +61,10 @@
         </XAboutCard>
 
         <DataLoader
-          :src="uri(sources, '/connections/stats/for/zone-egress/:name/:socketAddress', {
+          :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
             name: route.params.zoneEgress,
             socketAddress: props.data.zoneEgress.socketAddress,
+            proxyType: 'zone-egress',
           })"
           v-slot="{ data: traffic, refresh }"
         >
@@ -89,7 +90,20 @@
                         protocol=""
                         :traffic="stats"
                       >
-                        :{{ name.split('_').at(-1) }}
+                        <XAction
+                          data-action
+                          :to="{
+                            name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'zone-egress-connection-inbound-summary-stats-view')(String(_route.name)),
+                            params: {
+                              connection: name,
+                            },
+                            query: {
+                              inactive: route.params.inactive,
+                            },
+                          }"
+                        >
+                          :{{ name.split('_').at(-1) }}
+                        </XAction>
                       </ConnectionCard>
                     </template>
                   </DataCollection>
@@ -159,7 +173,20 @@
                                 :traffic="outbound"
                                 :direction="direction"
                               >
-                                {{ name }}
+                                <XAction
+                                  data-action
+                                  :to="{
+                                    name: ((name) => name.includes('bound') ? name.replace('-inbound-', '-outbound-') : 'zone-egress-connection-outbound-summary-stats-view')(String(_route.name)),
+                                    params: {
+                                      connection: name,
+                                    },
+                                    query: {
+                                      inactive: route.params.inactive,
+                                    },
+                                  }"
+                                >
+                                  {{ name }}
+                                </XAction>
                               </ConnectionCard>
                             </template>
                           </XLayout>
@@ -171,6 +198,28 @@
               </ConnectionTraffic>
             </XLayout>
           </XCard>
+          <RouterView
+            v-slot="child"
+          >
+            <SummaryView
+              v-if="child.route.name !== route.name"
+              width="670px"
+              @close="function () {
+                route.replace({
+                  name: 'zone-egress-detail-view',
+                  params: {
+                    zoneEgress: route.params.zoneEgress,
+                  },
+                })
+              }"
+            >
+              <component
+                :is="child.Component"
+                :data="route.params.subscription.length > 0 ? props.data.zoneEgressInsight.subscriptions : (child.route.name as string).includes('-inbound-') ? [props.data.zoneEgress] : traffic?.outbounds || {}"
+                :networking="props.data.zoneEgress.networking"
+              />
+            </SummaryView>
+          </RouterView>
         </DataLoader>
         <div
           v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
@@ -232,27 +281,6 @@
               </template>
             </template>
           </AppCollection>
-          <RouterView
-            v-slot="{ Component }"
-          >
-            <SummaryView
-              v-if="route.child()"
-              width="670px"
-              @close="function () {
-                route.replace({
-                  name: 'zone-egress-detail-view',
-                  params: {
-                    zoneEgress: route.params.zoneEgress,
-                  },
-                })
-              }"
-            >
-              <component
-                :is="Component"
-                :data="props.data.zoneEgressInsight.subscriptions"
-              />
-            </SummaryView>
-          </RouterView>
         </div>
       </XLayout>
     </AppView>
@@ -269,7 +297,15 @@ import ConnectionCard from '@/app/connections/components/connection-traffic/Conn
 import ConnectionGroup from '@/app/connections/components/connection-traffic/ConnectionGroup.vue'
 import ConnectionTraffic from '@/app/connections/components/connection-traffic/ConnectionTraffic.vue'
 import { sources } from '@/app/connections/sources'
+import { useRoute } from '@/app/vue'
+
 const props = defineProps<{
   data: ZoneEgressOverview
 }>()
+const _route = useRoute()
 </script>
+<style lang="scss" scoped>
+.service-traffic-card {
+  cursor: pointer;
+}
+</style>

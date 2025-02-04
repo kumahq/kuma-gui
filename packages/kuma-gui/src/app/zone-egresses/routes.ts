@@ -14,7 +14,59 @@ export const routes = (prefix = 'egresses') => {
             path: 'overview',
             name: 'zone-egress-detail-view',
             component: () => import('@/app/zone-egresses/views/ZoneEgressDetailView.vue'),
-            children: subscriptions('zone-egress'),
+            children: [
+              ...((prefix) => {
+                return [
+                  {
+                    path: 'inbound/:connection',
+                    name: `${prefix}-connection-inbound-summary-view`,
+                    component: () => import('@/app/zone-egresses/views/ConnectionInboundSummaryView.vue'),
+                    children: [
+                      {
+                        path: 'stats',
+                        name: `${prefix}-connection-inbound-summary-stats-view`,
+                        component: () => import('@/app/zone-egresses/views/ConnectionInboundSummaryStatsView.vue'),
+                      },
+                      {
+                        path: 'clusters',
+                        name: `${prefix}-connection-inbound-summary-clusters-view`,
+                        component: () => import('@/app/zone-egresses/views/ConnectionInboundSummaryClustersView.vue'),
+                      },
+                      {
+                        path: 'xds-config',
+                        name: `${prefix}-connection-inbound-summary-xds-config-view`,
+                        component: () => import('@/app/zone-egresses/views/ConnectionInboundSummaryXdsConfigView.vue'),
+                      },
+                    ],
+                  },
+
+                  {
+                    path: 'outbound/:connection',
+                    name: `${prefix}-connection-outbound-summary-view`,
+                    component: () => import('@/app/zone-egresses/views/ConnectionOutboundSummaryView.vue'),
+                    children: [
+                      {
+                        path: 'stats',
+                        name: `${prefix}-connection-outbound-summary-stats-view`,
+                        component: () => import('@/app/zone-egresses/views/ConnectionOutboundSummaryStatsView.vue'),
+                      },
+                      {
+                        path: 'clusters',
+                        name: `${prefix}-connection-outbound-summary-clusters-view`,
+                        component: () => import('@/app/zone-egresses/views/ConnectionOutboundSummaryClustersView.vue'),
+                      },
+                      {
+                        path: 'xds-config',
+                        name: `${prefix}-connection-outbound-summary-xds-config-view`,
+                        component: () => import('@/app/zone-egresses/views/ConnectionOutboundSummaryXdsConfigView.vue'),
+                      },
+                    ],
+                  },
+
+                ]
+              })('zone-egress'),
+              ...subscriptions('zone-egress'),
+            ],
           },
           {
             path: 'xds-config',

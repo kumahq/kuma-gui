@@ -4,7 +4,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneIngress: '',
+      zoneEgress: '',
       connection: '',
       includeEds: false,
     }"
@@ -18,10 +18,10 @@
     <AppView>
       <DataLoader
         :src="uri(sources, '/connections/xds/for/:proxyType/:name/outbound/:outbound/endpoints/:endpoints', {
-          name: route.params.zoneIngress,
+          name: route.params.zoneEgress,
           outbound: route.params.connection,
           endpoints: String(route.params.includeEds),
-          proxyType: 'zone-ingress',
+          proxyType: 'zone-egress',
         })"
         v-slot="{ data: raw, refresh }"
       >

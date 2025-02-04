@@ -4,7 +4,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneIngress: '',
+      zoneEgress: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -17,13 +17,13 @@
     <AppView>
       <DataLoader
         :src="uri(sources, '/connections/clusters/for/:proxyType/:name', {
-          name: route.params.zoneIngress,
-          proxyType: 'zone-ingress',
+          name: route.params.zoneEgress,
+          proxyType: 'zone-egress',
         })"
-        v-slot="{ data , refresh }"
+        v-slot="{ data, refresh }"
       >
         <template
-          v-for="prefix in [route.params.connection.replace('_', ':')]"
+          v-for="prefix in [route.params.connection]"
           :key="typeof prefix"
         >
           <DataCollection

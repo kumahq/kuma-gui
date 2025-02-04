@@ -4,7 +4,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneIngress: '',
+      zoneEgress: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -17,21 +17,22 @@
     <AppView>
       <DataLoader
         :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
-          name: route.params.zoneIngress,
+          name: route.params.zoneEgress,
           socketAddress: props.networking.inboundAddress,
-          proxyType: 'zone-ingress',
+          proxyType: 'zone-egress',
         })"
-
-        v-slot="{ data, refresh }"
+        v-slot="{ data: stats, refresh }"
       >
         <DataCollection
-          :items="data!.raw.split('\n')"
-          :predicate="item => item.includes(`.${route.params.connection}.`)"
+          :items="stats!.raw.split('\n')"
+          :predicate="item => [
+            `listener.${route.params.connection}`,
+          ].some(prefix => item.startsWith(prefix))"
           v-slot="{ items: lines }"
         >
           <XCodeBlock
             language="json"
-            :code="lines.map((item) => item.replace(`${route.params.connection}.`, '')).join('\n')"
+            :code="lines.map(item => item.replace(`${route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -57,8 +58,10 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '@/app/connections/sources'
-import type { DataplaneNetworking } from '@/app/data-planes/data/'
+import type { DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data/'
+
 const props = defineProps<{
+  data: DataplaneInbound
   networking: DataplaneNetworking
   routeName: string
 }>()

@@ -16,8 +16,9 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/clusters/for/zone-ingress/:name', {
+        :src="uri(sources, '/connections/clusters/for/:proxyType/:name', {
           name: route.params.zoneIngress,
+          proxyType: 'zone-ingress',
         })"
         v-slot="{ data, refresh }"
       >

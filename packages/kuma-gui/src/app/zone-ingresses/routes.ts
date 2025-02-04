@@ -27,11 +27,11 @@ export const routes = (prefix = 'ingresses') => {
                         name: `${prefix}-connection-inbound-summary-stats-view`,
                         component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryStatsView.vue'),
                       },
-                      // {
-                      //   path: 'clusters',
-                      //   name: `${prefix}-connection-inbound-summary-clusters-view`,
-                      //   component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryClustersView.vue'),
-                      // },
+                      {
+                        path: 'clusters',
+                        name: `${prefix}-connection-inbound-summary-clusters-view`,
+                        component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryClustersView.vue'),
+                      },
                       {
                         path: 'xds-config',
                         name: `${prefix}-connection-inbound-summary-xds-config-view`,

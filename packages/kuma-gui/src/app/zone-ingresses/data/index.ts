@@ -9,49 +9,23 @@ export type { AvailableService } from '@/types/index.d'
 
 type PartialInternalZoneIngress = PartialZoneIngressOverview['zoneIngress']
 
-// TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
-type InternalZoneIngress = {
-  socketAddress: string
-  advertisedSocketAddress: string
-} & Required<Pick<PartialInternalZoneIngress, 'availableServices'>> & PartialInternalZoneIngress
-
-export type ZoneIngress = {
-  config: PartialZoneIngress
-  socketAddress: string
-  advertisedSocketAddress: string
-} & Required<Pick<PartialZoneIngress, 'availableServices'>> & PartialZoneIngress
-// end TODO
-
 export type ZoneIngressInsight = PartialZoneIngressInsight & DiscoverySubscriptionCollection & {}
 
-// TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
-const InternalZoneIngress = {
-  fromObject: (item: PartialInternalZoneIngress): InternalZoneIngress => {
-    return {
-      ...item,
-      availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
-      socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
-      advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
-      networking: {
-        ...item.networking,
-        inboundAddress: `${item.networking.address}:${item.networking.port}`,
-      },
-    }
-  },
-}
-
 export const ZoneIngress = {
-  fromObject: (item: PartialZoneIngress): ZoneIngress => {
+  fromObject: (item: PartialZoneIngress) => {
     return {
       ...item,
       config: item,
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
+      networking: {
+        ...item.networking,
+        inboundAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      },
     }
   },
 }
-// end TODO
 export const ZoneIngressInsight = {
   fromObject: (item: PartialZoneIngressInsight | undefined): ZoneIngressInsight => {
     return {
@@ -60,6 +34,22 @@ export const ZoneIngressInsight = {
     }
   },
 }
+// TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
+const InternalZoneIngress = {
+  fromObject: (item: PartialInternalZoneIngress) => {
+    return {
+      ...item,
+      availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
+      socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',
+      networking: {
+        ...item.networking,
+        inboundAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      },
+    }
+  },
+}
+
 export const ZoneIngressOverview = {
   fromObject: (item: PartialZoneIngressOverview) => {
     const zoneIngressInsight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
@@ -97,3 +87,4 @@ export const ZoneIngressOverview = {
 }
 
 export type ZoneIngressOverview = ReturnType<typeof ZoneIngressOverview.fromObject>
+export type ZoneIngress = ReturnType<typeof ZoneIngress.fromObject>

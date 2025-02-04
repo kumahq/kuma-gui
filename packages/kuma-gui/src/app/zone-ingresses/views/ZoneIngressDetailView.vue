@@ -86,9 +86,10 @@
         </DefinitionCard>
       </XAboutCard>
       <DataLoader
-        :src="uri(sources, '/connections/stats/for/zone-ingress/:name/:socketAddress', {
+        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
           name: route.params.zoneIngress,
           socketAddress: props.data.zoneIngress.socketAddress,
+          proxyType: 'zone-ingress',
         })"
         v-slot="{ data: traffic, refresh }"
       >
@@ -333,7 +334,7 @@ const props = defineProps<{
 const _route = useRoute()
 </script>
 <style lang="scss" scoped>
-.service-traffic-group:not(.type-passthrough) .service-traffic-card {
+.service-traffic-card {
   cursor: pointer;
 }
 </style>

@@ -4,7 +4,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneIngress: '',
+      zoneEgress: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -17,9 +17,9 @@
     <AppView>
       <DataLoader
         :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
-          name: route.params.zoneIngress,
+          name: route.params.zoneEgress,
           socketAddress: props.networking.inboundAddress,
-          proxyType: 'zone-ingress',
+          proxyType: 'zone-egress',
         })"
 
         v-slot="{ data, refresh }"

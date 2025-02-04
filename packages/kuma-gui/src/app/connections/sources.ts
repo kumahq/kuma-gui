@@ -43,12 +43,23 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
 }
 export const sources = (source: Source, api: KumaApi) => {
   return defineSources({
-    '/connections/stats/for/zone-ingress/:name/:socketAddress': async (params) => {
-      const { name, socketAddress } = params
-      const res = await api.getZoneIngressData({
-        zoneIngressName: name,
-        dataPath: 'stats',
-      })
+    '/connections/stats/for/:proxyType/:name/:socketAddress': async (params) => {
+      const { name, socketAddress, proxyType } = params
+
+      const res = await (() => {
+        switch (proxyType) {
+          case 'zone-ingress':
+            return api.getZoneIngressStats({
+              name,
+            })
+          case 'zone-egress':
+            return api.getZoneEgressStats({
+              name,
+            })
+          default:
+            throw new Error('incorrect value for proxyType')
+        }
+      })()
       const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
       return {
         inbounds: Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_')))),
@@ -58,39 +69,47 @@ export const sources = (source: Source, api: KumaApi) => {
       }
     },
 
-    '/connections/stats/for/zone-egress/:name/:socketAddress': async (params) => {
-      const { name, socketAddress } = params
-      const res = await api.getZoneEgressData({
-        zoneEgressName: name,
-        dataPath: 'stats',
-      })
-      const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
-      return {
-        inbounds: Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_')))),
-        outbounds: connections.cluster,
-        $raw: res,
-        raw: res,
-      }
-    },
-    '/connections/clusters/for/zone-ingress/:name': async (params) => {
-      const { name } = params
-      return api.getZoneIngressData({ zoneIngressName: name, dataPath: 'clusters' })
-    },
-
-    '/connections/clusters/for/zone-egress/:name': async (params) => {
-      const { name } = params
-      return api.getZoneEgressData({ zoneEgressName: name, dataPath: 'clusters' })
+    '/connections/clusters/for/:proxyType/:name': async (params) => {
+      const { name, proxyType } = params
+      const res = await (() => {
+        switch (proxyType) {
+          case 'zone-ingress':
+            return api.getZoneIngressClusters({
+              name,
+            })
+          case 'zone-egress':
+            return api.getZoneEgressClusters({
+              name,
+            })
+          default:
+            throw new Error('incorrect value for proxyType')
+        }
+      })()
+      return res
     },
 
-    '/connections/xds/for/zone-ingress/:name/outbound/:outbound/endpoints/:endpoints': async (params) => {
-      const { name, outbound, endpoints } = params
+    '/connections/xds/for/:proxyType/:name/outbound/:outbound/endpoints/:endpoints': async (params) => {
+      const { name, outbound, endpoints, proxyType } = params
 
-      // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await api.getZoneIngressXds({
-        name,
-      }, {
-        include_eds: endpoints,
-      })
+      const res = await (() => {
+        switch (proxyType) {
+          case 'zone-ingress':
+            return api.getZoneIngressXds({
+              name,
+            }, {
+              include_eds: endpoints,
+            })
+          case 'zone-egress':
+            return api.getZoneEgressXds({
+              name,
+            }, {
+              include_eds: endpoints,
+            })
+          default:
+            throw new Error('incorrect value for proxyType')
+        }
+      })()
+
       return filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
           case 'dynamic_listeners':
@@ -108,16 +127,29 @@ export const sources = (source: Source, api: KumaApi) => {
         return []
       })
     },
-    '/connections/xds/for/zone-ingress/:name/inbound/:inbound': async (params) => {
-      const { name, inbound } = params
+    '/connections/xds/for/:proxyType/:name/inbound/:inbound': async (params) => {
+      const { name, inbound, proxyType } = params
 
       // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await api.getZoneIngressXds({
-        name,
-      }, {
-        include_eds: false,
-      })
-      console.log(inbound)
+      const res = await (() => {
+        switch (proxyType) {
+          case 'zone-ingress':
+            return api.getZoneIngressXds({
+              name,
+            }, {
+              include_eds: false,
+            })
+          case 'zone-egress':
+            return api.getZoneEgressXds({
+              name,
+            }, {
+              include_eds: false,
+            })
+          default:
+            throw new Error('incorrect value for proxyType')
+        }
+      })()
+
       return filter(res, (key: string, arr: unknown[]) => {
         switch (key) {
           case 'dynamic_listeners':
@@ -129,16 +161,6 @@ export const sources = (source: Source, api: KumaApi) => {
         }
         return []
       })
-    },
-
-    '/connections/xds/for/zone-ingress/:name': async (params) => {
-      const { name } = params
-      return api.getZoneIngressData({ zoneIngressName: name, dataPath: 'xds' })
-    },
-
-    '/connections/xds/for/zone-egress/:name': async (params) => {
-      const { name } = params
-      return api.getZoneEgressData({ zoneEgressName: name, dataPath: 'xds' })
     },
 
     '/meshes/:mesh/dataplanes/:name/stats/:address': async (params) => {

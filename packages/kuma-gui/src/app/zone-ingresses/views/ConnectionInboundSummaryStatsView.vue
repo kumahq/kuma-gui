@@ -16,9 +16,10 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/stats/for/zone-ingress/:name/:socketAddress', {
+        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
           name: route.params.zoneIngress,
           socketAddress: props.networking.inboundAddress,
+          proxyType: 'zone-ingress',
         })"
         v-slot="{ data: stats, refresh }"
       >

@@ -16,9 +16,10 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/xds/for/zone-ingress/:name/inbound/:inbound', {
+        :src="uri(sources, '/connections/xds/for/:proxyType/:name/inbound/:inbound', {
           name: route.params.zoneIngress,
           inbound: `${props.data.networking?.port}`,
+          proxyType: 'zone-ingress',
         })"
         v-slot="{ data: raw, refresh }"
       >
