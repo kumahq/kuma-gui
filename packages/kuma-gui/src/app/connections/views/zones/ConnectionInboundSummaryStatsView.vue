@@ -25,7 +25,7 @@
         v-slot="{ data: stats, refresh }"
       >
         <DataCollection
-          :items="stats!.raw.split('\n')"
+          :items="stats.raw.split('\n')"
           :predicate="item => [
             `listener.${route.params.connection}`,
           ].some(prefix => item.startsWith(prefix))"
