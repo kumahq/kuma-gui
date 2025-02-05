@@ -22,11 +22,16 @@ export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCo
 
 export type ExternalServiceSource = DataSourceResponse<ExternalService | null>
 
+const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
+  return arr.includes(item as T[number])
+}
+
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: '',
     fetch: api.client.fetch,
   })
+
   return defineSources({
     '/meshes/:mesh/mesh-services': async (params) => {
       const { mesh, size } = params
@@ -225,7 +230,12 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/:serviceType/:serviceName/_hostnames': async (params) => {
-      const { mesh, serviceType, serviceName } = params as typeof params & paths['/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames']['get']['parameters']['path']
+      const { mesh, serviceType, serviceName } = params
+      const isValidServiceType = includes(['meshservices', 'meshexternalservices', 'meshmultizoneservices'] as const, serviceType)
+
+      if(!isValidServiceType) {
+        throw new Error(`Incorrect value for :serviceType, got ${serviceType}.`)
+      }
 
       const response = await http.GET('/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames', {
         params: {
