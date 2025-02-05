@@ -1,3 +1,4 @@
+import { zones as connections } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -5,7 +6,7 @@ export const routes = (prefix = 'egresses') => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
-        path: `${prefix}/:zoneEgress`,
+        path: `:proxyType(${prefix})/:proxy`,
         name: 'zone-egress-detail-tabs-view',
         component: () => import('@/app/zone-egresses/views/ZoneEgressDetailTabsView.vue'),
         redirect: { name: 'zone-egress-detail-view' },
@@ -14,7 +15,10 @@ export const routes = (prefix = 'egresses') => {
             path: 'overview',
             name: 'zone-egress-detail-view',
             component: () => import('@/app/zone-egresses/views/ZoneEgressDetailView.vue'),
-            children: subscriptions('zone-egress'),
+            children: [
+              ...connections('zone-egress'),
+              ...subscriptions('zone-egress'),
+            ],
           },
           {
             path: 'xds-config',
@@ -50,7 +54,7 @@ export const routes = (prefix = 'egresses') => {
           component: () => import('@/app/zone-egresses/views/ZoneEgressListView.vue'),
           children: [
             {
-              path: ':zoneEgress',
+              path: ':proxy',
               name: 'zone-egress-summary-view',
               component: () => import('@/app/zone-egresses/views/ZoneEgressSummaryView.vue'),
             },

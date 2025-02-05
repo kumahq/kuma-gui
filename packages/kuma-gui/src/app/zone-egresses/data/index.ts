@@ -8,39 +8,21 @@ import type {
 
 type PartialInternalZoneEgress = PartialZoneEgressOverview['zoneEgress']
 
-// TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
-type InternalZoneEgress = {
-  socketAddress: string
-} & PartialInternalZoneEgress
-
-export type ZoneEgress = {
-  config: PartialZoneEgress
-  socketAddress: string
-} & PartialZoneEgress
-// end TODO
-
 export type ZoneEgressInsight = PartialZoneEgressInsight & DiscoverySubscriptionCollection & {}
 
-// TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
-const InternalZoneEgress = {
-  fromObject: (item: PartialInternalZoneEgress): InternalZoneEgress => {
-    return {
-      ...item,
-      socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
-    }
-  },
-}
-
 export const ZoneEgress = {
-  fromObject: (item: PartialZoneEgress): ZoneEgress => {
+  fromObject: (item: PartialZoneEgress) => {
     return {
       ...item,
       config: item,
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      networking: {
+        ...item.networking,
+        inboundAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      },
     }
   },
 }
-// end TODO
 export const ZoneEgressInsight = {
   fromObject: (item: PartialZoneEgressInsight | undefined): ZoneEgressInsight => {
     return {
@@ -49,6 +31,20 @@ export const ZoneEgressInsight = {
     }
   },
 }
+// TODO(jc) Theres probably a better way to not copy/pasta this i.e. make `Entity` composable
+const InternalZoneEgress = {
+  fromObject: (item: PartialInternalZoneEgress) => {
+    return {
+      ...item,
+      socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      networking: {
+        ...item.networking,
+        inboundAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
+      },
+    }
+  },
+}
+
 export const ZoneEgressOverview = {
   fromObject: (item: PartialZoneEgressOverview) => {
     const zoneEgressInsight = ZoneEgressInsight.fromObject(item.zoneEgressInsight)
@@ -86,3 +82,4 @@ export const ZoneEgressOverview = {
 }
 
 export type ZoneEgressOverview = ReturnType<typeof ZoneEgressOverview.fromObject>
+export type ZoneEgress = ReturnType<typeof ZoneEgress.fromObject>

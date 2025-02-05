@@ -2,12 +2,12 @@
   <RouteView
     name="zone-egress-clusters-view"
     :params="{
-      zoneEgress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <RouteTitle
       :render="false"
@@ -16,7 +16,10 @@
     <AppView>
       <XCard>
         <DataLoader
-          :src="`/zone-egresses/${route.params.zoneEgress}/data-path/clusters`"
+          :src="uri(sources, '/zone-egresses/:name/data-path/:dataPath', {
+            name: route.params.proxy,
+            dataPath: 'clusters',
+          })"
           v-slot="{ data, refresh }"
         >
           <XCodeBlock
@@ -45,3 +48,6 @@
     </AppView>
   </RouteView>
 </template>
+<script lang="ts" setup>
+import { sources } from '@/app/zone-egresses/sources'
+</script>
