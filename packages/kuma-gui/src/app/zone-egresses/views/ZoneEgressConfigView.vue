@@ -2,7 +2,7 @@
   <RouteView
     name="zone-egress-config-view"
     :params="{
-      zoneEgress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -17,7 +17,7 @@
       <XCard>
         <DataLoader
           :src="uri(sources, `/zone-egresses/:name`, {
-            name: route.params.zoneEgress,
+            name: route.params.proxy,
           })"
           v-slot="{ data }"
         >
@@ -35,7 +35,7 @@
             <DataSource
               v-if="copying"
               :src="uri(sources, `/zone-egresses/:name/as/kubernetes`, {
-                name: route.params.zoneEgress,
+                name: route.params.proxy,
               }, {
                 cacheControl: 'no-store',
               })"

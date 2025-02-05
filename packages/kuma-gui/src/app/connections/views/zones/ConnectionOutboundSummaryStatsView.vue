@@ -4,7 +4,8 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneIngress: '',
+      proxy: '',
+      proxyType: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -17,9 +18,9 @@
     <AppView>
       <DataLoader
         :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
-          name: route.params.zoneIngress,
+          name: route.params.proxy,
           socketAddress: props.networking.inboundAddress,
-          proxyType: 'zone-ingress',
+          proxyType: route.params.proxyType === 'ingresses' ? 'zone-ingress' : 'zone-egress',
         })"
 
         v-slot="{ data, refresh }"
@@ -57,9 +58,10 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '@/app/connections/sources'
-import type { DataplaneNetworking } from '@/app/data-planes/data/'
+import type { ZoneEgress } from '@/app/zone-egresses/data/'
+import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 const props = defineProps<{
-  networking: DataplaneNetworking
+  networking: ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
 }>()
 </script>

@@ -3,7 +3,7 @@
     name="zone-egress-detail-view"
     :params="{
       subscription: '',
-      zoneEgress: '',
+      proxy: '',
       inactive: false,
     }"
     v-slot="{ t, route, me, uri }"
@@ -62,7 +62,7 @@
 
         <DataLoader
           :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
-            name: route.params.zoneEgress,
+            name: route.params.proxy,
             socketAddress: props.data.zoneEgress.socketAddress,
             proxyType: 'zone-egress',
           })"
@@ -208,7 +208,8 @@
                 route.replace({
                   name: 'zone-egress-detail-view',
                   params: {
-                    zoneEgress: route.params.zoneEgress,
+                    proxyType: 'egresses',
+                    proxy: route.params.proxy,
                   },
                 })
               }"

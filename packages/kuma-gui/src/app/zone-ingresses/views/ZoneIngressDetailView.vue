@@ -3,7 +3,7 @@
     name="zone-ingress-detail-view"
     :params="{
       subscription: '',
-      zoneIngress: '',
+      proxy: '',
       inactive: false,
     }"
     v-slot="{ t, me, route, uri }"
@@ -87,7 +87,7 @@
       </XAboutCard>
       <DataLoader
         :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
-          name: route.params.zoneIngress,
+          name: route.params.proxy,
           socketAddress: props.data.zoneIngress.socketAddress,
           proxyType: 'zone-ingress',
         })"
@@ -121,6 +121,7 @@
                           name: ((name) => name.includes('bound') ? name.replace('-outbound-', '-inbound-') : 'zone-ingress-connection-inbound-summary-stats-view')(String(_route.name)),
                           params: {
                             connection: name,
+                            proxyType: 'ingresses',
                           },
                           query: {
                             inactive: route.params.inactive,
@@ -234,7 +235,8 @@
               route.replace({
                 name: 'zone-ingress-detail-view',
                 params: {
-                  zoneIngress: route.params.zoneIngress,
+                  proxy: route.params.proxy,
+                  proxyType: 'ingresses',
                 },
                 query: {
                   inactive: route.params.inactive ? null : undefined,

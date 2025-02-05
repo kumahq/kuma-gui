@@ -1,3 +1,4 @@
+import { zones as connections } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -5,7 +6,7 @@ export const routes = (prefix = 'ingresses') => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
-        path: `${prefix}/:zoneIngress`,
+        path: `:proxyType(${prefix})/:proxy`,
         name: 'zone-ingress-detail-tabs-view',
         component: () => import('@/app/zone-ingresses/views/ZoneIngressDetailTabsView.vue'),
         redirect: { name: 'zone-ingress-detail-view' },
@@ -15,56 +16,7 @@ export const routes = (prefix = 'ingresses') => {
             name: 'zone-ingress-detail-view',
             component: () => import('@/app/zone-ingresses/views/ZoneIngressDetailView.vue'),
             children: [
-              ...((prefix) => {
-                return [
-                  {
-                    path: 'inbound/:connection',
-                    name: `${prefix}-connection-inbound-summary-view`,
-                    component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryView.vue'),
-                    children: [
-                      {
-                        path: 'stats',
-                        name: `${prefix}-connection-inbound-summary-stats-view`,
-                        component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryStatsView.vue'),
-                      },
-                      {
-                        path: 'clusters',
-                        name: `${prefix}-connection-inbound-summary-clusters-view`,
-                        component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryClustersView.vue'),
-                      },
-                      {
-                        path: 'xds-config',
-                        name: `${prefix}-connection-inbound-summary-xds-config-view`,
-                        component: () => import('@/app/zone-ingresses/views/ConnectionInboundSummaryXdsConfigView.vue'),
-                      },
-                    ],
-                  },
-
-                  {
-                    path: 'outbound/:connection',
-                    name: `${prefix}-connection-outbound-summary-view`,
-                    component: () => import('@/app/zone-ingresses/views/ConnectionOutboundSummaryView.vue'),
-                    children: [
-                      {
-                        path: 'stats',
-                        name: `${prefix}-connection-outbound-summary-stats-view`,
-                        component: () => import('@/app/zone-ingresses/views/ConnectionOutboundSummaryStatsView.vue'),
-                      },
-                      {
-                        path: 'clusters',
-                        name: `${prefix}-connection-outbound-summary-clusters-view`,
-                        component: () => import('@/app/zone-ingresses/views/ConnectionOutboundSummaryClustersView.vue'),
-                      },
-                      {
-                        path: 'xds-config',
-                        name: `${prefix}-connection-outbound-summary-xds-config-view`,
-                        component: () => import('@/app/zone-ingresses/views/ConnectionOutboundSummaryXdsConfigView.vue'),
-                      },
-                    ],
-                  },
-
-                ]
-              })('zone-ingress'),
+              ...connections('zone-ingress'),
               ...subscriptions('zone-ingress'),
             ],
           },
@@ -107,7 +59,7 @@ export const routes = (prefix = 'ingresses') => {
           component: () => import('@/app/zone-ingresses/views/ZoneIngressListView.vue'),
           children: [
             {
-              path: ':zoneIngress',
+              path: ':proxy',
               name: 'zone-ingress-summary-view',
               component: () => import('@/app/zone-ingresses/views/ZoneIngressSummaryView.vue'),
             },

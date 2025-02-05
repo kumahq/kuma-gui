@@ -4,7 +4,8 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      zoneEgress: '',
+      proxy: '',
+      proxyType: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -17,8 +18,8 @@
     <AppView>
       <DataLoader
         :src="uri(sources, '/connections/clusters/for/:proxyType/:name', {
-          name: route.params.zoneEgress,
-          proxyType: 'zone-egress',
+          name: route.params.proxy,
+          proxyType: route.params.proxyType === 'ingresses' ? 'zone-ingress' : 'zone-egress',
         })"
         v-slot="{ data , refresh }"
       >

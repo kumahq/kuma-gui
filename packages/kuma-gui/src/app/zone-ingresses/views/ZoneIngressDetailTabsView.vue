@@ -3,12 +3,12 @@
     name="zone-ingress-detail-tabs-view"
     :params="{
       zone: '',
-      zoneIngress: '',
+      proxy: '',
     }"
     v-slot="{ route, t }"
   >
     <DataSource
-      :src="`/zone-ingress-overviews/${route.params.zoneIngress}`"
+      :src="`/zone-ingress-overviews/${route.params.proxy}`"
       v-slot="{ data, error }: ZoneIngressOverviewSource"
     >
       <AppView

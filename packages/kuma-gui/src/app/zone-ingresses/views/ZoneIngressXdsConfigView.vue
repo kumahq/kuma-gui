@@ -2,7 +2,7 @@
   <RouteView
     name="zone-ingress-xds-config-view"
     :params="{
-      zoneIngress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -18,7 +18,7 @@
       <XCard>
         <DataLoader
           :src="uri(sources, '/zone-ingresses/:name/xds/:endpoints', {
-            name: route.params.zoneIngress,
+            name: route.params.proxy,
             endpoints: String(route.params.includeEds),
           })"
           v-slot="{ data, refresh }"

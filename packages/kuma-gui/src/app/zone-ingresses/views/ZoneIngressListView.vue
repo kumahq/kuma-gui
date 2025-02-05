@@ -6,7 +6,7 @@
       /* page: 1, */
       /* size: me.pageSize, */
       zone: '',
-      zoneIngress: '',
+      proxy: '',
     }"
     v-slot="{ route, t, me, uri }"
   >
@@ -52,7 +52,7 @@
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :items="ingresses?.items"
-                :is-selected-row="(row) => row.name === route.params.zoneIngress"
+                :is-selected-row="(row) => row.name === route.params.proxy"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
@@ -62,7 +62,8 @@
                       name: 'zone-ingress-summary-view',
                       params: {
                         zone: route.params.zone,
-                        zoneIngress: item.id,
+                        proxy: item.id,
+                        proxyType: 'ingresses',
                       },
                       query: {
                         // TODO: Update page & size once the list endpoint is being filtered by zone
@@ -107,7 +108,8 @@
                       :to="{
                         name: 'zone-ingress-detail-view',
                         params: {
-                          zoneIngress: item.id,
+                          proxy: item.id,
+                          proxyType: 'ingresses',
                         },
                       }"
                     >

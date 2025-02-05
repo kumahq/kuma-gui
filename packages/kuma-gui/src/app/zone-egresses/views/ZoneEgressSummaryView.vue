@@ -2,7 +2,7 @@
   <RouteView
     name="zone-egress-summary-view"
     :params="{
-      zoneEgress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -12,7 +12,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.zoneEgress"
+      :predicate="item => item.id === route.params.proxy"
       :find="true"
     >
       <template #empty>
@@ -43,7 +43,8 @@
                     name: 'zone-egress-detail-view',
                     params: {
                       zone: item.zoneEgress.zone,
-                      zoneEgress: item.id,
+                      proxyType: 'egresses',
+                      proxy: item.id,
                     },
                   }"
                 >
@@ -96,14 +97,14 @@
                     <template #title>
                       {{ t('http.api.property.status') }}
                     </template>
-                
+
                     <template #body>
                       <StatusBadge
                         :status="item.state"
                       />
                     </template>
                   </DefinitionCard>
-              
+
                   <DefinitionCard
                     v-if="item.namespace.length > 0"
                     layout="horizontal"
@@ -111,19 +112,19 @@
                     <template #title>
                       {{ t('data-planes.routes.item.namespace') }}
                     </template>
-              
+
                     <template #body>
                       {{ item.namespace }}
                     </template>
                   </DefinitionCard>
-            
+
                   <DefinitionCard
                     layout="horizontal"
                   >
                     <template #title>
                       {{ t('http.api.property.address') }}
                     </template>
-            
+
                     <template #body>
                       <template
                         v-if="item.zoneEgress.socketAddress.length > 0"
@@ -132,7 +133,7 @@
                           :text="item.zoneEgress.socketAddress"
                         />
                       </template>
-            
+
                       <template v-else>
                         {{ t('common.detail.none') }}
                       </template>
@@ -156,7 +157,7 @@
                     >
                       <DataSource
                         v-if="copying"
-                        :src="`/zone-egresses/${route.params.zoneEgress}/as/kubernetes?no-store`"
+                        :src="`/zone-egresses/${route.params.proxy}/as/kubernetes?no-store`"
                         @change="(data) => {
                           copy((resolve) => resolve(data))
                         }"

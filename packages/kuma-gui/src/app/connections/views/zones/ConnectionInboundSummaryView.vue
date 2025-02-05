@@ -54,12 +54,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataplaneNetworking } from '@/app/data-planes/data/'
 import type { ZoneEgress } from '@/app/zone-egresses/data/'
+import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 
 const props = defineProps<{
-  data: ZoneEgress[]
-  networking: DataplaneNetworking
+  data: ZoneIngress[] | ZoneEgress[]
+  networking: ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
 }>()
 </script>

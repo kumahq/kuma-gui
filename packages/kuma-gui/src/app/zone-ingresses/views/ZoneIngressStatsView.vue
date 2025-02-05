@@ -2,7 +2,7 @@
   <RouteView
     name="zone-ingress-stats-view"
     :params="{
-      zoneIngress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -16,7 +16,7 @@
     <AppView>
       <XCard>
         <DataLoader
-          :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/stats`"
+          :src="`/zone-ingresses/${route.params.proxy}/data-path/stats`"
           v-slot="{ data, refresh }"
         >
           <XCodeBlock
