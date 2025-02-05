@@ -133,6 +133,6 @@ const props = defineProps<{
 </script>
 <style scoped>
 h2 {
-  --icon-before: url('@/assets/images/icon-circles-ext.svg?inline') !important;
+  --icon-before: url('@/assets/images/policy.svg?inline') !important;
 }
 </style>

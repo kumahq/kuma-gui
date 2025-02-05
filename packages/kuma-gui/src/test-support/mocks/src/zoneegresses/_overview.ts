@@ -13,7 +13,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
 
-        const displayName = `${fake.hacker.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const displayName = `${fake.word.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
 
         const zoneName = env('KUMA_ZONE_NAME', 'zone-0')
@@ -49,7 +49,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
                   return {
                     id: fake.string.uuid(),
-                    controlPlaneInstanceId: fake.hacker.noun(),
+                    controlPlaneInstanceId: fake.word.noun(),
                     ...fake.kuma.connection(item, i, arr),
                     generation: 409,
                     status: {

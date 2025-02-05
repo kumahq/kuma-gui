@@ -23,7 +23,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           'kuma.io/display-name': 'demo-app',
           'kuma.io/mesh': 'default',
           'kuma.io/origin': 'zone',
-          'kuma.io/zone': fake.hacker.noun(),
+          'kuma.io/zone': fake.word.noun(),
         },
       }),
       spec: {

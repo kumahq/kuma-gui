@@ -13,7 +13,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       creationTime: '2020-05-12T12:31:45.606217+02:00',
       modificationTime: '2020-05-12T12:31:45.606217+02:00',
       conf: {
-        backend: fake.hacker.noun(),
+        backend: fake.word.noun(),
       },
       selectors: [
         {

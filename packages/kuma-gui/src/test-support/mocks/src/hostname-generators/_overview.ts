@@ -15,7 +15,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i): HostnameGeneratorItem => {
         const meshServiceTypeSelector = fake.kuma.meshServiceTypeSelector()
-        const namespace = fake.hacker.noun()
+        const namespace = fake.word.noun()
         const displayName = `${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
         const creationTime = fake.date.past()
 
@@ -29,7 +29,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               'kuma.io/env': fake.kuma.env(),
               'kuma.io/mesh': 'default',
               'kuma.io/origin': fake.kuma.origin(),
-              'kuma.io/zone': fake.hacker.noun(),
+              'kuma.io/zone': fake.word.noun(),
             }
             : {},
           spec: {

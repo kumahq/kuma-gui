@@ -16,9 +16,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const serviceCount = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 7, max: 50 })}`))
   const services = Array.from({ length: serviceCount }).map(() => {
     if (fake.datatype.boolean()) {
-      return `${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.hacker.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`
+      return `${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.word.noun()}_${fake.helpers.arrayElement(['msvc', 'mzsvc', 'extsvc'])}_${fake.number.int({ min: 1, max: 65535 })}`
     } else {
-      return `${fake.hacker.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
+      return `${fake.word.noun()}_svc_${fake.number.int({ min: 1, max: 65535 })}`
     }
   })
   if (env('KUMA_CLUSTER_NAME', '').length > 0) {

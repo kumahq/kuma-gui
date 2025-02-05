@@ -8,7 +8,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
     body: {
       total,
       items: Array.from({ length: total }).map((_, i) => {
-        const name = `${fake.hacker.noun()}-${i}`
+        const name = `${fake.word.noun()}-${i}`
         return {
           type: 'HealthCheck',
           mesh: params.mesh,
@@ -16,14 +16,14 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
           sources: [
             {
               match: {
-                service: `${fake.hacker.noun()}`,
+                service: `${fake.word.noun()}`,
               },
             },
           ],
           destinations: [
             {
               match: {
-                service: `${fake.hacker.noun()}`,
+                service: `${fake.word.noun()}`,
               },
             },
           ],

@@ -15,7 +15,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const shouldHaveZoneInsight = subscriptionCount !== 0 || fake.datatype.boolean()
 
         const id = offset + i
-        const name = i === 0 ? 'zone-0' : `${fake.hacker.noun()}-${id}`
+        const name = i === 0 ? 'zone-0' : `${fake.word.noun()}-${id}`
 
         return {
           type: 'ZoneOverview',
@@ -35,7 +35,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     },
                   }),
                   id: fake.string.uuid(),
-                  globalInstanceId: fake.hacker.noun(),
+                  globalInstanceId: fake.word.noun(),
                   ...fake.kuma.connection(item, i, arr),
                   status: {
                     lastUpdateTime: '2021-02-19T07:06:16.384057Z',
