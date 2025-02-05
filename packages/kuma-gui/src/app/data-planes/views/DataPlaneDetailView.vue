@@ -2,7 +2,7 @@
   <RouteView
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
       subscription: '',
       inactive: false,
     }"
@@ -12,7 +12,7 @@
     <DataSource
       :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
         mesh: route.params.mesh,
-        name: route.params.dataPlane,
+        name: route.params.proxy,
         address: props.data.dataplane.networking.inboundAddress,
       })"
       v-slot="{ data: traffic, error, refresh }"
@@ -410,7 +410,7 @@
                   name: 'data-plane-detail-view',
                   params: {
                     mesh: route.params.mesh,
-                    dataPlane: route.params.dataPlane,
+                    proxy: route.params.proxy,
                   },
                   query: {
                     inactive: route.params.inactive ? null : undefined,

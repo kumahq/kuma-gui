@@ -3,7 +3,7 @@
     :name="props.routeName"
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -19,7 +19,7 @@
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
             mesh: route.params.mesh,
-            name: route.params.dataPlane,
+            name: route.params.proxy,
             address: props.networking.inboundAddress,
           })"
           v-slot="{ data: statsData, refresh }"

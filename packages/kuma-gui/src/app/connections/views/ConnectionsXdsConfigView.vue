@@ -3,7 +3,7 @@
     :name="props.routeName"
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -20,7 +20,7 @@
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/dataplanes/:name/xds/:endpoints', {
             mesh: route.params.mesh,
-            name: route.params.dataPlane,
+            name: route.params.proxy,
             endpoints: String(route.params.includeEds),
           })"
           v-slot="{ data, refresh }"

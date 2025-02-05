@@ -3,7 +3,7 @@
     name="data-plane-policies-view"
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
     }"
     v-slot="{ can, route, t, uri }"
   >
@@ -27,7 +27,7 @@
             <DataLoader
               :src="uri(sources, '/meshes/:mesh/rules/for/:dataplane', {
                 mesh: route.params.mesh,
-                dataplane: route.params.dataPlane,
+                dataplane: route.params.proxy,
               })"
               :data="[policyTypesData]"
               :errors="[policyTypesError]"
@@ -105,7 +105,7 @@
                 <!-- builtin gateways have different data/visuals than other types of dataplanes -->
                 <template v-if="props.data.dataplaneType === 'builtin'">
                   <DataLoader
-                    :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/gateway-dataplane-policies`"
+                    :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
                     :data="[policyTypesData]"
                     :errors="[policyTypesError]"
                     v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
@@ -134,7 +134,7 @@
                 <!-- anything but builtin gateways -->
                 <template v-else>
                   <DataLoader
-                    :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.dataPlane}/sidecar-dataplane-policies`"
+                    :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
                     :data="[policyTypesData]"
                     :errors="[policyTypesError]"
                     v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
@@ -174,7 +174,7 @@
             name: 'data-plane-policies-view',
             params: {
               mesh: route.params.mesh,
-              dataPlane: route.params.dataPlane,
+              proxy: route.params.proxy,
             },
           })"
         >

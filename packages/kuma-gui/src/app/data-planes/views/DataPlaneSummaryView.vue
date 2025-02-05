@@ -3,7 +3,7 @@
     :name="props.routeName"
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -13,7 +13,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.dataPlane"
+      :predicate="item => item.id === route.params.proxy"
     >
       <template #empty>
         <XEmptyState>
@@ -43,7 +43,7 @@
                   :to="{
                     name: 'data-plane-detail-view',
                     params: {
-                      dataPlane: item.id,
+                      proxy: item.id,
                     },
                   }"
                 >
@@ -256,7 +256,7 @@
                     v-if="copying"
                     :src="uri(sources, `/meshes/:mesh/dataplanes/:name/as/kubernetes`, {
                       mesh: route.params.mesh,
-                      name: route.params.dataPlane,
+                      name: route.params.proxy,
                     }, {
                       cacheControl: 'no-store',
                     })"

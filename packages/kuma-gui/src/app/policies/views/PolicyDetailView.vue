@@ -8,7 +8,7 @@
       mesh: '',
       policy: '',
       policyPath: '',
-      dataPlane: '',
+      proxy: '',
     }"
     v-slot="{ route, t, uri, can, me }"
   >
@@ -135,7 +135,7 @@
                     { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                   ]"
                   :items="dataplanes?.items"
-                  :is-selected-row="(row) => row.id === route.params.dataPlane"
+                  :is-selected-row="(row) => row.id === route.params.proxy"
                   @resize="me.set"
                 >
                   <template #name="{ row: item }">
@@ -144,7 +144,7 @@
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
-                          dataPlane: item.id,
+                          proxy: item.id,
                         },
                       }"
                     >
@@ -180,7 +180,7 @@
                         :to="{
                           name: 'data-plane-detail-view',
                           params: {
-                            dataPlane: item.id,
+                            proxy: item.id,
                           },
                         }"
                       >
