@@ -55,7 +55,7 @@
     </DataSource>
   </div>
 </template>
-<script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String> = {}">
+<script lang="ts" setup generic="T extends Record<string, string | number | boolean | typeof Number | typeof String | typeof Boolean> = {}">
 import { computed, provide, inject, ref, watch, onBeforeUnmount, reactive, useAttrs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -106,7 +106,13 @@ const router = useRouter()
 const sym = Symbol('route-view')
 
 type PrimitiveParams = Record<string, string | number | boolean>
-type Params = { [P in keyof T]: T[P] extends NumberConstructor ? number : T[P] extends StringConstructor ? string : T[P] }
+type Params = {
+  [P in keyof T]:
+  T[P] extends NumberConstructor ? number :
+    T[P] extends StringConstructor ? string :
+      T[P] extends BooleanConstructor ? boolean :
+        T[P]
+}
 type RouteReplaceParams = Parameters<typeof router['push']>
 
 const setTitle = createTitleSetter(document)
@@ -241,7 +247,7 @@ const routeUpdate = (params: Partial<PrimitiveParams>): void => {
   // would instead use a single source of truth which in this case would be
   // localStorage
   local = Object.entries(params).reduce((prev, [key, value]) => {
-    if([Number, String].some(item => props.params[key] === item)) {
+    if([Number, String, Boolean].some(item => props.params[key] === item)) {
       prev[key] = value
     }
     return prev

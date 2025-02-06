@@ -1,6 +1,6 @@
 import jsYaml from 'js-yaml'
 
-type URLParamDefault = string | number | boolean | NumberConstructor | StringConstructor
+type URLParamDefault = string | number | boolean | NumberConstructor | StringConstructor | BooleanConstructor
 type URLParamValues = string | number | boolean
 type URLParamValue = string | null
 
@@ -93,6 +93,8 @@ export const urlParam = function <T extends URLParamValue> (param: T | T[]): T {
 //
 export const normalizeUrlParam = (param: URLParamValue, definition: URLParamDefault): URLParamValues => {
   switch (true) {
+    case definition === Boolean:
+      return param === null ? true : !!param
     case typeof definition === 'boolean':
       return param === null ? true : definition
     case definition === Number:

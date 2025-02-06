@@ -4,7 +4,7 @@
     :params="{
       subscription: '',
       proxy: '',
-      inactive: false,
+      inactive: Boolean,
     }"
     v-slot="{ t, me, route, uri }"
   >

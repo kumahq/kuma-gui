@@ -7,7 +7,7 @@
       proxy: '',
       proxyType: '',
       connection: '',
-      includeEds: false,
+      includeEds: Boolean,
     }"
     :name="props.routeName"
     v-slot="{ t, route, uri }"

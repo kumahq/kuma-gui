@@ -2,8 +2,8 @@
   <RouteView
     :name="props.routeName"
     :params="{
+      inactive: Boolean,
       connection: '',
-      inactive: false,
     }"
     v-slot="{ route, t }"
   >
