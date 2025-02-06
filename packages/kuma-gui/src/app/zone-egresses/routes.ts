@@ -1,4 +1,4 @@
-import { zones as connections } from '@/app/connections/routes'
+import { zones as connections, networking } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -20,21 +20,7 @@ export const routes = (prefix = 'egresses') => {
               ...subscriptions('zone-egress'),
             ],
           },
-          {
-            path: 'xds-config',
-            name: 'zone-egress-xds-config-view',
-            component: () => import('@/app/connections/views/ConnectionsXdsConfigView.vue'),
-          },
-          {
-            path: 'stats',
-            name: 'zone-egress-stats-view',
-            component: () => import('@/app/zone-egresses/views/ZoneEgressStatsView.vue'),
-          },
-          {
-            path: 'clusters',
-            name: 'zone-egress-clusters-view',
-            component: () => import('@/app/connections/views/ConnectionsClustersView.vue'),
-          },
+          ...networking('zone-egress'),
           {
             path: 'config',
             name: 'zone-egress-config-view',

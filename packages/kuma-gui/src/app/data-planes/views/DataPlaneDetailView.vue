@@ -3,6 +3,7 @@
     :params="{
       mesh: '',
       proxy: '',
+      proxyType: '',
       subscription: '',
       inactive: false,
     }"
@@ -10,10 +11,11 @@
     v-slot="{ route, t, can, me, uri }"
   >
     <DataSource
-      :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
-        mesh: route.params.mesh,
+      :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
+        proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
         name: route.params.proxy,
-        address: props.data.dataplane.networking.inboundAddress,
+        mesh: route.params.mesh || '*',
+        socketAddress: props.data.dataplane.networking.inboundAddress,
       })"
       v-slot="{ data: traffic, error, refresh }"
     >

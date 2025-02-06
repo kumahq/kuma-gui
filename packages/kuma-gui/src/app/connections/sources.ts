@@ -43,11 +43,16 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
 }
 export const sources = (source: Source, api: KumaApi) => {
   return defineSources({
-    '/connections/stats/for/:proxyType/:name/:socketAddress': async (params) => {
-      const { name, socketAddress, proxyType } = params
+    '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {
+      const { name, mesh, socketAddress, proxyType } = params
 
       const res = await (() => {
         switch (proxyType) {
+          case 'dataplane':
+            return api.getDataplaneStats({
+              mesh,
+              dppName: name,
+            })
           case 'zone-ingress':
             return api.getZoneIngressStats({
               name,
@@ -61,9 +66,39 @@ export const sources = (source: Source, api: KumaApi) => {
         }
       })()
       const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
+
+      let inbounds, outbounds, passthrough
+      if (proxyType === 'dataplane') {
+        // pick out the listeners/inbounds that start with our ip address (the.ip.address.1_port000)
+        inbounds = params.socketAddress === 'localhost'
+          ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_')))
+          : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.socketAddress}_`) && !value.$clusterName.startsWith('_')))
+
+        outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
+          // if we don't exclude localhost_ we end up with  a `localhost_`
+          // outbound, which is the cluster of the inbound. Whilst we don't want
+          // to show this now, we might want to later as it can show how envoy
+          // might be interacting with the traffic vs the cluster/service itself
+          'localhost_',
+          'inbound_passthrough_',
+          'outbound_passthrough_',
+        ].some(item => key.startsWith(item))))
+
+        // pick out outbounds passthrough
+        passthrough = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => [
+          'outbound_passthrough_',
+        ].some(item => key.startsWith(item))))
+
+      } else {
+        inbounds = Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_'))))
+        outbounds = connections.cluster
+        passthrough = {}
+      }
+
       return {
-        inbounds: Object.fromEntries(Object.entries(connections.listener).filter(([key, _value]) => key.startsWith(socketAddress.replace(':', '_')))),
-        outbounds: connections.cluster,
+        passthrough,
+        inbounds,
+        outbounds,
         $raw: res,
         raw: res,
       }
@@ -197,44 +232,6 @@ export const sources = (source: Source, api: KumaApi) => {
       })
     },
 
-    '/meshes/:mesh/dataplanes/:name/stats/:address': async (params) => {
-      const { mesh, name } = params
-      const res = await api.getDataplaneData({
-        mesh,
-        dppName: name,
-        dataPath: 'stats',
-      })
-
-      const connections = ConnectionCollection.fromObject(Stat.fromCollection(res))
-
-      // pick out the listeners/inbounds that start with our ip address (the.ip.address.1_port000)
-      const inbounds = params.address === 'localhost'
-        ? Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => key.startsWith('localhost_')))
-        : Object.fromEntries(Object.entries(connections.listener).filter(([key, value]) => key.startsWith(`${params.address}_`) && !value.$clusterName.startsWith('_')))
-
-      const outbounds = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => ![
-        // if we don't exclude localhost_ we end up with  a `localhost_`
-        // outbound, which is the cluster of the inbound. Whilst we don't want
-        // to show this now, we might want to later as it can show how envoy
-        // might be interacting with the traffic vs the cluster/service itself
-        'localhost_',
-        'inbound_passthrough_',
-        'outbound_passthrough_',
-      ].some(item => key.startsWith(item))))
-
-      // pick out outbounds passthrough
-      const passthrough = Object.fromEntries(Object.entries(connections.cluster).filter(([key, _value]) => [
-        'outbound_passthrough_',
-      ].some(item => key.startsWith(item))))
-
-      return {
-        passthrough,
-        inbounds,
-        outbounds,
-        $raw: res,
-        raw: res,
-      }
-    },
     '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds': async (params) => {
       const { mesh, dataplane, inbound } = params
 

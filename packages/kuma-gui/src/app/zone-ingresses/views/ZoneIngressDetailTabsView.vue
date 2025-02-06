@@ -80,6 +80,7 @@
           <RouterView v-slot="child">
             <component
               :is="child.Component"
+              :networking="data?.zoneIngress.networking"
               :data="data"
             />
           </RouterView>
