@@ -1,7 +1,7 @@
 <template>
   <component
     :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
-    :class="['x-layout', props.type, props.size]"
+    :class="['x-layout', props.type, props.size, props.justify]"
   >
     <slot name="default" />
   </component>
@@ -12,10 +12,12 @@ const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
   size?: 'small' | 'normal' | 'max'
+  justify?: 'start' | 'around' | 'between' | 'end'
   truncate?: boolean
 }>(), {
   type: 'stack',
   size: 'normal',
+  justify: 'start',
   truncate: false,
 })
 </script>
@@ -26,17 +28,25 @@ const props = withDefaults(defineProps<{
 .stack.small > * + * {
   margin-block-start: $kui-space-40;
 }
-.max {
-  width: 100%;
-}
 .separated:not(.k-truncate) {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: $kui-space-40;
+  width: 100%;
 
-  &.max {
+  &.start {
+    justify-content: flex-start;
+  }
+  &.max,
+  &.between {
     justify-content: space-between;
+  }
+  &.around {
+    justify-content: space-around;
+  }
+  &.end {
+    justify-content: flex-end;
   }
 }
 .columns {
