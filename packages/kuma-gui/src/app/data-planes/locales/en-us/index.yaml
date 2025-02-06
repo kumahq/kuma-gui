@@ -93,8 +93,6 @@ data-planes:
           title: Certificate issued by
         supported_backends:
           title: Supported CAs
-        disabled: !!text/markdown |
-          This Data Plane Proxy does not have mTLS configured, yet  — <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
       subscriptions:
         title: XDS Connections
       rules:

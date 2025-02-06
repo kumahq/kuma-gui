@@ -37,6 +37,8 @@ common:
   warnings:
     CERT_EXPIRED: !!text/markdown |
       The certificate for this dataplane has expired
+    DPP_NO_MTLS: !!text/markdown |
+      This Data Plane Proxy does not have mTLS configured, yet  — <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
     ZONE_STORE_TYPE_MEMORY: !!text/markdown |
       This zone is using the `memory` store type. **Don't** use this store in production because the state isn't persisted. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
     GLOBAL_STORE_TYPE_MEMORY: !!text/markdown |

@@ -113,10 +113,13 @@
             </DefinitionCard>
           </XAboutCard>
 
-          <div
+          <XCard
             v-if="props.data.zoneInsight.subscriptions.length > 0"
           >
-            <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
+            <template #title>
+              {{ t('zone-cps.detail.subscriptions') }}
+            </template>
+
             <AppCollection
               :headers="[
                 { ...me.get('headers.zoneInstanceId'), label: t('zone-cps.routes.items.headers.zoneInstanceId'), key: 'zoneInstanceId' },
@@ -196,7 +199,7 @@
                 </component>
               </SummaryView>
             </RouterView>
-          </div>
+          </XCard>
         </XLayout>
       </AppView>
     </DataSource>

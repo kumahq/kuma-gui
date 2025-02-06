@@ -56,7 +56,7 @@ Feature: Dataplane details for built-in gateway
       |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
-    And the "$warnings" element doesn't exist
+    And the "$warnings" element exists
 
   Scenario: Policies tab has expected content
     Given the environment
