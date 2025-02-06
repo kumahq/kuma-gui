@@ -6,8 +6,8 @@ import {
   MeshExternalService,
   ExternalService,
   ServiceInsight,
+  Hostname,
 } from './data'
-import { Hostname } from './data/Hostname'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
