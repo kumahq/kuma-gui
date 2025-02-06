@@ -24,32 +24,29 @@
             </h2>
           </template>
 
-          <XLayout type="stack">
+          <XLayout
+            type="stack"
+          >
             <header>
               <XLayout
                 type="separated"
-                size="max"
+                justify="end"
               >
-                <h3>
-                  {{ t('subscriptions.routes.item.config') }}
-                </h3>
-                <div>
-                  <XSelect
-                    :label="t('subscriptions.routes.item.format')"
-                    :selected="route.params.format"
-                    @change="(value) => {
-                      route.update({ format: value })
-                    }"
+                <XSelect
+                  :label="t('subscriptions.routes.item.format')"
+                  :selected="route.params.format"
+                  @change="(value) => {
+                    route.update({ format: value })
+                  }"
+                >
+                  <template
+                    v-for="value in ['structured', 'yaml']"
+                    :key="value"
+                    #[`${value}-option`]
                   >
-                    <template
-                      v-for="value in ['structured', 'yaml']"
-                      :key="value"
-                      #[`${value}-option`]
-                    >
-                      {{ t(`subscriptions.routes.item.formats.${value}`) }}
-                    </template>
-                  </XSelect>
-                </div>
+                    {{ t(`subscriptions.routes.item.formats.${value}`) }}
+                  </template>
+                </XSelect>
               </XLayout>
             </header>
 

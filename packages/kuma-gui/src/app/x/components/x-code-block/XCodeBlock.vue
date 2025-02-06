@@ -1,13 +1,16 @@
 <template>
-  <div>
+  <XLayout
+    type="stack"
+  >
     <template
       v-if="slots['primary-actions']"
     >
-      <div
-        class="toolbar"
+      <XLayout
+        type="separated"
+        justify="end"
       >
         <slot name="primary-actions" />
-      </div>
+      </XLayout>
     </template>
     <KCodeBlock
       :id="id"
@@ -33,7 +36,7 @@
         <slot name="secondary-actions" />
       </template>
     </KCodeBlock>
-  </div>
+  </XLayout>
 </template>
 
 <script lang="ts" setup>
@@ -82,13 +85,6 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
 </script>
 
 <style lang="scss" scoped>
-.toolbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: $kui-space-60;
-  margin-bottom: $kui-space-60;
-}
 // Makes code block actions sticky
 :deep(.code-block-actions) {
   position: sticky;

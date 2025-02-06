@@ -17,7 +17,7 @@ zone-ingresses:
       overview: 'Overview'
       config: Configuration
       subscriptions:
-        title: 'XDS connections'
+        title: 'XDS Connections'
       about:
         title: About this Zone Ingress
     items:

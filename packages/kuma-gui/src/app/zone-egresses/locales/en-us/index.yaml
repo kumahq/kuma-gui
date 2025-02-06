@@ -16,7 +16,7 @@ zone-egresses:
       overview: 'Overview'
       config: 'Configuration'
       subscriptions:
-        title: 'XDS connections'
+        title: 'XDS Connections'
       about:
         title: About this Zone Egress
     items:
