@@ -8,6 +8,7 @@ import type {
 export * from './MeshService'
 export * from './MeshMultiZoneService'
 export * from './MeshExternalService'
+export * from './Hostname'
 
 export type ExternalService = PartialExternalService & {
   config: PartialExternalService

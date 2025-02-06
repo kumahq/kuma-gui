@@ -6,6 +6,7 @@ import {
   MeshExternalService,
   ExternalService,
   ServiceInsight,
+  Hostname,
 } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
@@ -21,11 +22,16 @@ export type ServiceInsightCollectionSource = DataSourceResponse<ServiceInsightCo
 
 export type ExternalServiceSource = DataSourceResponse<ExternalService | null>
 
+const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
+  return arr.includes(item as T[number])
+}
+
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: '',
     fetch: api.client.fetch,
   })
+
   return defineSources({
     '/meshes/:mesh/mesh-services': async (params) => {
       const { mesh, size } = params
@@ -221,6 +227,27 @@ export const sources = (api: KumaApi) => {
       return api.getExternalService({ mesh, name }, {
         format: 'kubernetes',
       })
+    },
+
+    '/meshes/:mesh/:serviceType/:serviceName/_hostnames': async (params) => {
+      const { mesh, serviceType, serviceName } = params
+      const isValidServiceType = includes(['meshservices', 'meshexternalservices', 'meshmultizoneservices'] as const, serviceType)
+
+      if(!isValidServiceType) {
+        throw new Error(`Incorrect value for :serviceType, got ${serviceType}.`)
+      }
+
+      const response = await http.GET('/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames', {
+        params: {
+          path: {
+            mesh,
+            serviceType,
+            serviceName,
+          },
+        },
+      })
+
+      return Hostname.fromCollection(response.data!)
     },
   })
 }

@@ -43,6 +43,7 @@ import _29 from './src/meshes/_/health-checks'
 import _30 from './src/meshes/_/health-checks/_'
 import _138 from './src/meshes/_/meshexternalservices'
 import _139 from './src/meshes/_/meshexternalservices/_'
+import _172 from './src/meshes/_/meshexternalservices/_/_hostnames'
 import _52 from './src/meshes/_/meshfaultinjections'
 import _53 from './src/meshes/_/meshfaultinjections/_'
 import _54 from './src/meshes/_/meshfaultinjections/_/_resources/dataplanes'
@@ -58,8 +59,10 @@ import _132 from './src/meshes/_/meshhttproutes'
 import _133 from './src/meshes/_/meshhttproutes/_'
 import _140 from './src/meshes/_/meshmultizoneservices'
 import _141 from './src/meshes/_/meshmultizoneservices/_'
+import _171 from './src/meshes/_/meshmultizoneservices/_/_hostnames'
 import _136 from './src/meshes/_/meshservices'
 import _137 from './src/meshes/_/meshservices/_'
+import _170 from './src/meshes/_/meshservices/_/_hostnames'
 import _35 from './src/meshes/_/proxytemplates'
 import _36 from './src/meshes/_/proxytemplates/_'
 import _37 from './src/meshes/_/rate-limits'
@@ -166,6 +169,9 @@ export const fs: FS = {
   '/meshes/:mesh/meshexternalservices/:name': _139,
   '/meshes/:mesh/meshhttproutes': _132,
   '/meshes/:mesh/meshhttproutes/:name': _133,
+  '/meshes/:mesh/meshservices/:serviceName/_hostnames': _170,
+  '/meshes/:mesh/meshmultizoneservices/:serviceName/_hostnames': _171,
+  '/meshes/:mesh/meshexternalservices/:serviceName/_hostnames': _172,
   // policies
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
