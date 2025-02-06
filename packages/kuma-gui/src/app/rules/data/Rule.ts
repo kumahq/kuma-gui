@@ -1,5 +1,5 @@
 import { ResourceRule } from './ResourceRule'
-import type { components } from '@/types/auto-generated.d'
+import type { components } from '@kumahq/kuma-http-api'
 type Entity = components['schemas']['Rule']
 type InspectRules = components['schemas']['InspectRules']
 export const Rule = {
