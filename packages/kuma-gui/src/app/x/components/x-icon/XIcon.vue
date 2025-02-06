@@ -85,7 +85,7 @@ const icons = {
   progress: ProgressIcon,
   info: InfoIcon,
   connected: PlugIcon,
-  heartbeat: VitalsIcon,
+  health: VitalsIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()
