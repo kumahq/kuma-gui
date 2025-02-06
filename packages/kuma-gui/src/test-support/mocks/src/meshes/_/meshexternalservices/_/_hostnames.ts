@@ -1,6 +1,8 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import { paths } from '@/types/auto-generated'
 
+type HostnamesResponse = paths['/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const total = fake.number.int({ min: 1, max: 5 })
   const [displayName] = (req.params.serviceName as string).split('.')
@@ -18,7 +20,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
         })), 
       }
     }),
-  } satisfies paths['/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames']['get']['responses']['200']['content']['application/json']
+  } satisfies HostnamesResponse
 
   return {
     headers: {},
