@@ -3,7 +3,7 @@
     :name="props.routeName"
     :params="{
       connection: '',
-      inactive: false,
+      inactive: Boolean,
     }"
     v-slot="{ route, t }"
   >

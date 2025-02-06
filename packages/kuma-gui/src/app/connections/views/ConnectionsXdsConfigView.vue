@@ -8,7 +8,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      includeEds: false,
+      includeEds: Boolean,
     }"
     v-slot="{ route, t, uri }"
   >

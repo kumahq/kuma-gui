@@ -1,10 +1,10 @@
 <template>
   <RouteView
     :params="{
+      inactive: Boolean,
       mesh: '',
       proxy: '',
       subscription: '',
-      inactive: false,
     }"
     name="data-plane-detail-view"
     v-slot="{ route, t, can, me, uri }"
