@@ -4,8 +4,8 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      mesh: '',
-      dataPlane: '',
+      proxy: '',
+      proxyType: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -17,26 +17,22 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
-          mesh: route.params.mesh,
-          name: route.params.dataPlane,
-          address: props.networking.inboundAddress,
+        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
+          name: route.params.proxy,
+          socketAddress: props.networking.inboundAddress,
+          proxyType: route.params.proxyType === 'ingresses' ? 'zone-ingress' : 'zone-egress',
         })"
-        v-slot="{ data: stats, refresh }"
+
+        v-slot="{ data, refresh }"
       >
         <DataCollection
-          :items="stats.raw.split('\n')"
-          :predicate="item => [
-            `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
-            `cluster.${props.data.name}.`,
-            `http.${props.data.name}.`,
-            `tcp.${props.data.name}.`,
-          ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`))"
+          :items="data.raw.split('\n')"
+          :predicate="item => item.includes(`.${route.params.connection}.`)"
           v-slot="{ items: lines }"
         >
           <XCodeBlock
             language="json"
-            :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
+            :code="lines.map((item) => item.replace(`${route.params.connection}.`, '')).join('\n')"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"
@@ -61,12 +57,11 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { sources } from '../sources'
-import type { DataplaneInbound, DataplaneNetworking } from '@/app/data-planes/data/'
-
+import { sources } from '@/app/connections/sources'
+import type { ZoneEgress } from '@/app/zone-egresses/data/'
+import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 const props = defineProps<{
-  data: DataplaneInbound
-  networking: DataplaneNetworking
+  networking: ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
 }>()
 </script>

@@ -2,7 +2,7 @@
   <RouteView
     name="zone-ingress-clusters-view"
     :params="{
-      zoneIngress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -16,7 +16,7 @@
     <AppView>
       <XCard>
         <DataLoader
-          :src="`/zone-ingresses/${route.params.zoneIngress}/data-path/clusters`"
+          :src="`/zone-ingresses/${route.params.proxy}/data-path/clusters`"
           v-slot="{ data, refresh }"
         >
           <XCodeBlock

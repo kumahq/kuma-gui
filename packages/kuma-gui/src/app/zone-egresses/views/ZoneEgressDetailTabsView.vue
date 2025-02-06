@@ -3,13 +3,15 @@
     name="zone-egress-detail-tabs-view"
     :params="{
       zone: '',
-      zoneEgress: '',
+      proxy: '',
     }"
-    v-slot="{ route, can, t }"
+    v-slot="{ route, can, t, uri }"
   >
     <DataSource
-      :src="`/zone-egress-overviews/${route.params.zoneEgress}`"
-      v-slot="{ data, error }: ZoneEgressOverviewSource"
+      :src="uri(sources, '/zone-egress-overviews/:name', {
+        name: route.params.proxy,
+      })"
+      v-slot="{ data, error }"
     >
       <AppView
         :docs="t('zone-ingresses.href.docs')"
@@ -89,5 +91,5 @@
 </template>
 
 <script lang="ts" setup>
-import { ZoneEgressOverviewSource } from '../sources'
+import { sources } from '../sources'
 </script>

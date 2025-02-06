@@ -6,7 +6,8 @@
       /* page: 1, */
       /* size: me.pageSize, */
       zone: '',
-      zoneEgress: '',
+      proxy: '',
+      proxyType: '',
     }"
     v-slot="{ route, t, me, uri, can }"
   >
@@ -62,7 +63,7 @@
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :items="egresses?.items"
-                :is-selected-row="(row) => row.name === route.params.zoneEgress"
+                :is-selected-row="(row) => row.name === route.params.proxy"
                 @resize="me.set"
               >
                 <template #name="{ row: item }">
@@ -72,7 +73,7 @@
                       name: 'zone-egress-summary-view',
                       params: {
                         zone: route.params.zone,
-                        zoneEgress: item.id,
+                        proxy: item.id,
                       },
                       query: {
                         // TODO: Update page & size once the list endpoint is being filtered by zone
@@ -107,7 +108,8 @@
                       :to="{
                         name: 'zone-egress-detail-view',
                         params: {
-                          zoneEgress: item.id,
+                          proxyType: 'egresses',
+                          proxy: item.id,
                         },
                       }"
                     >
@@ -125,6 +127,7 @@
                     name: 'zone-egress-list-view',
                     params: {
                       zone: route.params.zone,
+                      proxyType: route.params.proxyType,
                     },
                     query: {
                       // TODO: Update page & size once the list endpoint is being filtered by zone

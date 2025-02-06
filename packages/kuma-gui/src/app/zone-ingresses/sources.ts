@@ -8,7 +8,6 @@ const includes = <T extends readonly string[]>(arr: T, item: string): item is T[
   return arr.includes(item as T[number])
 }
 
-export type ZoneIngressSource = DataSourceResponse<ZoneIngress>
 export type ZoneIngressOverviewCollection = CollectionResponse<ZoneIngressOverview>
 export type ZoneIngressOverviewSource = DataSourceResponse<ZoneIngressOverview>
 export type ZoneIngressOverviewCollectionSource = DataSourceResponse<ZoneIngressOverviewCollection>

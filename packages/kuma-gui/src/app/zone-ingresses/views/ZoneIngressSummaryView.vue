@@ -2,7 +2,7 @@
   <RouteView
     name="zone-ingress-summary-view"
     :params="{
-      zoneIngress: '',
+      proxy: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -12,7 +12,7 @@
   >
     <DataCollection
       :items="props.items"
-      :predicate="item => item.id === route.params.zoneIngress"
+      :predicate="item => item.id === route.params.proxy"
       :find="true"
     >
       <template #empty>
@@ -42,7 +42,8 @@
                     name: 'zone-ingress-detail-view',
                     params: {
                       zone: item.zoneIngress.zone,
-                      zoneIngress: item.id,
+                      proxyType: 'ingresses',
+                      proxy: item.id,
                     },
                   }"
                 >
@@ -176,7 +177,7 @@
                     >
                       <DataSource
                         v-if="copying"
-                        :src="`/zone-ingresses/${route.params.zoneIngress}/as/kubernetes?no-store`"
+                        :src="`/zone-ingresses/${route.params.proxy}/as/kubernetes?no-store`"
                         @change="(data) => {
                           copy((resolve) => resolve(data))
                         }"
