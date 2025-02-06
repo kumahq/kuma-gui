@@ -26,7 +26,7 @@
         >
           <XCodeBlock
             language="json"
-            :code="statsData!.raw"
+            :code="statsData.raw"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"

@@ -25,7 +25,7 @@
         v-slot="{ data: stats, refresh }"
       >
         <DataCollection
-          :items="stats!.raw.split('\n')"
+          :items="stats.raw.split('\n')"
           :predicate="item => [
             `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
             `cluster.${props.data.name}.`,

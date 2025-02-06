@@ -26,7 +26,7 @@
         v-slot="{ data, refresh }"
       >
         <DataCollection
-          :items="data!.raw.split('\n')"
+          :items="data.raw.split('\n')"
           :predicate="item => item.includes(`.${route.params.connection}.`)"
           v-slot="{ items: lines }"
         >
