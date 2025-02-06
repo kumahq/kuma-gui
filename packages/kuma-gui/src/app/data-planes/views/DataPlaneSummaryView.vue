@@ -292,3 +292,13 @@ const props = defineProps<{
   routeName: string
 }>()
 </script>
+<style lang="scss" scoped>
+h2 {
+  --icon-before: url('@/assets/images/east-west.svg?inline') !important;
+
+  &.type-delegated,
+  &.type-builtin {
+    --icon-before: url('@/assets/images/gateway.svg?inline') !important;
+  }
+}
+</style>
