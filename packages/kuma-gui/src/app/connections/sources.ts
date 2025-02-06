@@ -69,10 +69,15 @@ export const sources = (source: Source, api: KumaApi) => {
       }
     },
 
-    '/connections/clusters/for/:proxyType/:name': async (params) => {
-      const { name, proxyType } = params
+    '/connections/clusters/for/:proxyType/:name/:mesh': async (params) => {
+      const { name, mesh, proxyType } = params
       const res = await (() => {
         switch (proxyType) {
+          case 'dataplane':
+            return api.getDataplaneClusters({
+              mesh,
+              dppName: name,
+            })
           case 'zone-ingress':
             return api.getZoneIngressClusters({
               name,
@@ -80,6 +85,35 @@ export const sources = (source: Source, api: KumaApi) => {
           case 'zone-egress':
             return api.getZoneEgressClusters({
               name,
+            })
+          default:
+            throw new Error('incorrect value for proxyType')
+        }
+      })()
+      return res
+    },
+    '/connections/xds/for/:proxyType/:name/:mesh/:endpoints': async (params) => {
+      const { mesh, name, endpoints, proxyType } = params
+      const res = await (() => {
+        switch (proxyType) {
+          case 'dataplane':
+            return api.getDataplaneXds({
+              mesh,
+              dppName: name,
+            }, {
+              include_eds: endpoints,
+            })
+          case 'zone-ingress':
+            return api.getZoneIngressXds({
+              name,
+            }, {
+              include_eds: endpoints,
+            })
+          case 'zone-egress':
+            return api.getZoneEgressXds({
+              name,
+            }, {
+              include_eds: endpoints,
             })
           default:
             throw new Error('incorrect value for proxyType')
@@ -200,25 +234,6 @@ export const sources = (source: Source, api: KumaApi) => {
         $raw: res,
         raw: res,
       }
-    },
-    '/meshes/:mesh/dataplanes/:name/clusters': async (params) => {
-      const { mesh, name } = params
-      return api.getDataplaneData({
-        mesh,
-        dppName: name,
-        dataPath: 'clusters',
-      })
-    },
-    '/meshes/:mesh/dataplanes/:name/xds/:endpoints': async (params) => {
-      const { mesh, name, endpoints } = params
-
-      return api.getDataplaneData({
-        mesh,
-        dppName: name,
-        dataPath: 'xds',
-      }, {
-        include_eds: endpoints,
-      })
     },
     '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds': async (params) => {
       const { mesh, dataplane, inbound } = params

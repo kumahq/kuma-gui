@@ -4,6 +4,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      mesh: '',
       proxy: '',
       proxyType: '',
       connection: '',
@@ -17,9 +18,10 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/clusters/for/:proxyType/:name', {
-          name: route.params.proxy,
+        :src="uri(sources, '/connections/clusters/for/:proxyType/:name/:mesh', {
           proxyType: route.params.proxyType === 'ingresses' ? 'zone-ingress' : 'zone-egress',
+          name: route.params.proxy,
+          mesh: route.params.mesh || '*',
         })"
         v-slot="{ data, refresh }"
       >

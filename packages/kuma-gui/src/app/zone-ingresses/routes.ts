@@ -28,7 +28,7 @@ export const routes = (prefix = 'ingresses') => {
           {
             path: 'xds-config',
             name: 'zone-ingress-xds-config-view',
-            component: () => import('@/app/zone-ingresses/views/ZoneIngressXdsConfigView.vue'),
+            component: () => import('@/app/connections/views/ConnectionsXdsConfigView.vue'),
           },
           {
             path: 'stats',
@@ -38,7 +38,7 @@ export const routes = (prefix = 'ingresses') => {
           {
             path: 'clusters',
             name: 'zone-ingress-clusters-view',
-            component: () => import('@/app/zone-ingresses/views/ZoneIngressClustersView.vue'),
+            component: () => import('@/app/connections/views/ConnectionsClustersView.vue'),
           },
           {
             path: 'config',

@@ -23,7 +23,7 @@ export const routes = (prefix = 'egresses') => {
           {
             path: 'xds-config',
             name: 'zone-egress-xds-config-view',
-            component: () => import('@/app/zone-egresses/views/ZoneEgressXdsConfigView.vue'),
+            component: () => import('@/app/connections/views/ConnectionsXdsConfigView.vue'),
           },
           {
             path: 'stats',
@@ -33,7 +33,7 @@ export const routes = (prefix = 'egresses') => {
           {
             path: 'clusters',
             name: 'zone-egress-clusters-view',
-            component: () => import('@/app/zone-egresses/views/ZoneEgressClustersView.vue'),
+            component: () => import('@/app/connections/views/ConnectionsClustersView.vue'),
           },
           {
             path: 'config',
