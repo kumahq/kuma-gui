@@ -126,7 +126,7 @@
           </DataLoader>
         </XCard>
 
-        <div>
+        <XCard>
           <ResourceCodeBlock
             :resource="props.data.config"
             is-searchable
@@ -149,7 +149,7 @@
               }"
             />
           </ResourceCodeBlock>
-        </div>
+        </XCard>
       </XLayout>
     </AppView>
   </RouteView>

@@ -72,191 +72,189 @@
           </XAboutCard>
         </DataLoader>
 
-        <div>
-          <h3>
+        <XCard
+          class="mt-4"
+        >
+          <template #title>
             {{ t('services.detail.data_plane_proxies') }}
-          </h3>
+          </template>
 
-          <XCard
-            class="mt-4"
-          >
-            <search>
-              <FilterBar
-                class="data-plane-proxy-filter"
-                :placeholder="`name:dataplane-name`"
-                :query="route.params.s"
-                :fields="{
-                  name: { description: 'filter by name or parts of a name' },
-                  protocol: { description: 'filter by “kuma.io/protocol” value' },
-                  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                  ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                }"
-                @change="(e) => route.update({
-                  ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                })"
-              />
-            </search>
-            <DataLoader
-              :src="uri(dataplaneSources, `/meshes/:mesh/dataplanes/for/service-insight/:service`, {
-                mesh: route.params.mesh,
-                service: route.params.service,
-              }, {
-                page: route.params.page,
-                size: route.params.size,
-                search: route.params.s,
+          <search>
+            <FilterBar
+              class="data-plane-proxy-filter"
+              :placeholder="`name:dataplane-name`"
+              :query="route.params.s"
+              :fields="{
+                name: { description: 'filter by name or parts of a name' },
+                protocol: { description: 'filter by “kuma.io/protocol” value' },
+                tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+                ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
+              }"
+              @change="(e) => route.update({
+                ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
               })"
+            />
+          </search>
+          <DataLoader
+            :src="uri(dataplaneSources, `/meshes/:mesh/dataplanes/for/service-insight/:service`, {
+              mesh: route.params.mesh,
+              service: route.params.service,
+            }, {
+              page: route.params.page,
+              size: route.params.size,
+              search: route.params.s,
+            })"
+          >
+            <template
+              #loadable="{ data }"
             >
-              <template
-                #loadable="{ data }"
+              <DataCollection
+                type="data-planes"
+                :items="data?.items ?? [undefined]"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                :total="data?.total"
+                @change="route.update"
               >
-                <DataCollection
-                  type="data-planes"
-                  :items="data?.items ?? [undefined]"
-                  :page="route.params.page"
-                  :page-size="route.params.size"
-                  :total="data?.total"
-                  @change="route.update"
+                <AppCollection
+                  class="data-plane-collection"
+                  data-testid="data-plane-collection"
+                  :headers="[
+                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                    { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                    ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                    { ...me.get('headers.certificate'), label: 'Certificate Info', key: 'certificate' },
+                    { ...me.get('headers.status'), label: 'Status', key: 'status' },
+                    { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
+                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                  ]"
+                  :items="data?.items"
+                  :is-selected-row="(row) => row.name === route.params.proxy"
+                  @resize="me.set"
                 >
-                  <AppCollection
-                    class="data-plane-collection"
-                    data-testid="data-plane-collection"
-                    :headers="[
-                      { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                      { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                      ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                      { ...me.get('headers.certificate'), label: 'Certificate Info', key: 'certificate' },
-                      { ...me.get('headers.status'), label: 'Status', key: 'status' },
-                      { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
-                      { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                    ]"
-                    :items="data?.items"
-                    :is-selected-row="(row) => row.name === route.params.proxy"
-                    @resize="me.set"
-                  >
-                    <template #name="{ row: item }">
-                      <XAction
-                        data-action
-                        class="name-link"
-                        :to="{
-                          name: 'service-data-plane-summary-view',
-                          params: {
-                            mesh: item.mesh,
-                            proxy: item.id,
-                          },
-                          query: {
-                            page: route.params.page,
-                            size: route.params.size,
-                            s: route.params.s,
-                          },
-                        }"
-                      >
-                        {{ item.name }}
-                      </XAction>
-                    </template>
-
-                    <template #namespace="{ row: item }">
-                      {{ item.namespace }}
-                    </template>
-
-                    <template #zone="{ row }">
-                      <XAction
-                        v-if="row.zone"
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: row.zone,
-                          },
-                        }"
-                      >
-                        {{ row.zone }}
-                      </XAction>
-
-                      <template v-else>
-                        {{ t('common.collection.none') }}
-                      </template>
-                    </template>
-
-                    <template #certificate="{ row }">
-                      <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
-                        {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
-                      </template>
-
-                      <template v-else>
-                        {{ t('data-planes.components.data-plane-list.certificate.none') }}
-                      </template>
-                    </template>
-
-                    <template #status="{ row }">
-                      <StatusBadge :status="row.status" />
-                    </template>
-
-                    <template #warnings="{ row }">
-                      <XIcon
-                        v-if="row.isCertExpired || row.warnings.length > 0"
-                        class="mr-1"
-                        name="warning"
-                      >
-                        <ul>
-                          <template v-if="row.warnings.length > 0">
-                            <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
-                          </template>
-
-                          <template v-if="row.isCertExpired">
-                            <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
-                          </template>
-                        </ul>
-                      </XIcon>
-
-                      <template v-else>
-                        {{ t('common.collection.none') }}
-                      </template>
-                    </template>
-
-                    <template #actions="{ row: item }">
-                      <XActionGroup>
-                        <XAction
-                          :to="{
-                            name: 'data-plane-detail-view',
-                            params: {
-                              proxy: item.id,
-                            },
-                          }"
-                        >
-                          {{ t('common.collection.actions.view') }}
-                        </XAction>
-                      </XActionGroup>
-                    </template>
-                  </AppCollection>
-
-                  <RouterView
-                    v-slot="{ Component }"
-                  >
-                    <SummaryView
-                      v-if="route.child()"
-                      @close="route.replace({
-                        name: route.name,
+                  <template #name="{ row: item }">
+                    <XAction
+                      data-action
+                      class="name-link"
+                      :to="{
+                        name: 'service-data-plane-summary-view',
                         params: {
-                          mesh: route.params.mesh,
+                          mesh: item.mesh,
+                          proxy: item.id,
                         },
                         query: {
                           page: route.params.page,
                           size: route.params.size,
                           s: route.params.s,
                         },
-                      })"
+                      }"
                     >
-                      <component
-                        :is="Component"
-                        v-if="typeof data !== 'undefined'"
-                        :items="data.items"
-                      />
-                    </SummaryView>
-                  </RouterView>
-                </DataCollection>
-              </template>
-            </DataLoader>
-          </XCard>
-        </div>
+                      {{ item.name }}
+                    </XAction>
+                  </template>
+
+                  <template #namespace="{ row: item }">
+                    {{ item.namespace }}
+                  </template>
+
+                  <template #zone="{ row }">
+                    <XAction
+                      v-if="row.zone"
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: row.zone,
+                        },
+                      }"
+                    >
+                      {{ row.zone }}
+                    </XAction>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #certificate="{ row }">
+                    <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                      {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
+                    </template>
+
+                    <template v-else>
+                      {{ t('data-planes.components.data-plane-list.certificate.none') }}
+                    </template>
+                  </template>
+
+                  <template #status="{ row }">
+                    <StatusBadge :status="row.status" />
+                  </template>
+
+                  <template #warnings="{ row }">
+                    <XIcon
+                      v-if="row.isCertExpired || row.warnings.length > 0"
+                      class="mr-1"
+                      name="warning"
+                    >
+                      <ul>
+                        <template v-if="row.warnings.length > 0">
+                          <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
+                        </template>
+
+                        <template v-if="row.isCertExpired">
+                          <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
+                        </template>
+                      </ul>
+                    </XIcon>
+
+                    <template v-else>
+                      {{ t('common.collection.none') }}
+                    </template>
+                  </template>
+
+                  <template #actions="{ row: item }">
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'data-plane-detail-view',
+                          params: {
+                            proxy: item.id,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
+                  </template>
+                </AppCollection>
+
+                <RouterView
+                  v-slot="{ Component }"
+                >
+                  <SummaryView
+                    v-if="route.child()"
+                    @close="route.replace({
+                      name: route.name,
+                      params: {
+                        mesh: route.params.mesh,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                        s: route.params.s,
+                      },
+                    })"
+                  >
+                    <component
+                      :is="Component"
+                      v-if="typeof data !== 'undefined'"
+                      :items="data.items"
+                    />
+                  </SummaryView>
+                </RouterView>
+              </DataCollection>
+            </template>
+          </DataLoader>
+        </XCard>
       </div>
     </AppView>
   </RouteView>

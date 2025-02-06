@@ -428,8 +428,6 @@
           </RouterView>
 
           <div data-testid="dataplane-mtls">
-            <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
-
             <template
               v-if="props.data.dataplaneInsight.mTLS"
             >
@@ -442,6 +440,10 @@
                 <XCard
                   class="mt-4"
                 >
+                  <template #title>
+                    {{ t('data-planes.routes.item.mtls.title') }}
+                  </template>
+
                   <div class="columns">
                     <DefinitionCard>
                       <template #title>
@@ -502,82 +504,74 @@
                 </XCard>
               </template>
             </template>
-
-            <template
-              v-else
-            >
-              <XAlert
-                class="mt-4"
-                variant="warning"
-              >
-                <XI18n
-                  path="data-planes.routes.item.mtls.disabled"
-                />
-              </XAlert>
-            </template>
           </div>
 
           <div
             v-if="props.data.dataplaneInsight.subscriptions.length > 0"
             data-testid="dataplane-subscriptions"
           >
-            <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
-            <AppCollection
-              :headers="[
-                { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
-                { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
-                { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
-                { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
-                { ...me.get('headers.responses'), label: t('http.api.property.responses'), key: 'responses' },
-              ]"
-              :is-selected-row="item => item.id === route.params.subscription"
-              :items="props.data.dataplaneInsight.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
-              @resize="me.set"
-            >
-              <template
-                #instanceId="{ row: item }"
-              >
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'data-plane-subscription-summary-view',
-                    params: {
-                      subscription: item.id,
-                    },
-                  }"
-                >
-                  {{ item.controlPlaneInstanceId }}
-                </XAction>
+            <XCard>
+              <template #title>
+                {{ t('data-planes.routes.item.subscriptions.title') }}
               </template>
-              <template
-                #version="{ row: item }"
-              >
-                {{ item.version?.kumaDp?.version ?? '-' }}
-              </template>
-              <template
-                #connected="{ row: item }"
-              >
-                {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
-              </template>
-              <template
-                #disconnected="{ row: item }"
+              
+              <AppCollection
+                :headers="[
+                  { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
+                  { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
+                  { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
+                  { ...me.get('headers.disconnected'), label: t('http.api.property.disconnected'), key: 'disconnected' },
+                  { ...me.get('headers.responses'), label: t('http.api.property.responses'), key: 'responses' },
+                ]"
+                :is-selected-row="item => item.id === route.params.subscription"
+                :items="props.data.dataplaneInsight.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
+                @resize="me.set"
               >
                 <template
-                  v-if="item.disconnectTime"
+                  #instanceId="{ row: item }"
                 >
-                  {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
+                  <XAction
+                    data-action
+                    :to="{
+                      name: 'data-plane-subscription-summary-view',
+                      params: {
+                        subscription: item.id,
+                      },
+                    }"
+                  >
+                    {{ item.controlPlaneInstanceId }}
+                  </XAction>
                 </template>
-              </template>
-              <template
-                #responses="{ row: item }"
-              >
                 <template
-                  v-for="responses in [item.status?.total ?? {}]"
+                  #version="{ row: item }"
                 >
-                  {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                  {{ item.version?.kumaDp?.version ?? '-' }}
                 </template>
-              </template>
-            </AppCollection>
+                <template
+                  #connected="{ row: item }"
+                >
+                  {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
+                </template>
+                <template
+                  #disconnected="{ row: item }"
+                >
+                  <template
+                    v-if="item.disconnectTime"
+                  >
+                    {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
+                  </template>
+                </template>
+                <template
+                  #responses="{ row: item }"
+                >
+                  <template
+                    v-for="responses in [item.status?.total ?? {}]"
+                  >
+                    {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                  </template>
+                </template>
+              </AppCollection>
+            </XCard>
           </div>
         </XLayout>
       </AppView>
@@ -608,7 +602,12 @@ const props = defineProps<{
   mesh: Mesh
 }>()
 
-const warnings = computed(() => props.data.warnings.concat(...(props.data.isCertExpired ? [{ kind: 'CERT_EXPIRED' }] : [])))
+const warnings = computed(() =>
+  props.data.warnings.concat(
+    ...(props.data.isCertExpired ? [{ kind: 'CERT_EXPIRED' }] : []),
+    ...(!props.data.dataplaneInsight.mTLS ? [{ kind: 'DPP_NO_MTLS' }] : []),
+  ),
+)
 </script>
 
 <style lang="scss" scoped>

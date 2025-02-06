@@ -149,25 +149,28 @@
                 </XLayout>
               </XLayout>
             </XCard>
-            <ResourceCodeBlock
-              :resource="mesh.config"
-              v-slot="{ copy, copying }"
-            >
-              <DataSource
-                v-if="copying"
-                :src="uri(sources, '/meshes/:name/as/kubernetes', {
-                  name: route.params.mesh,
-                }, {
-                  cacheControl: 'no-store',
-                })"
-                @change="(data) => {
-                  copy((resolve) => resolve(data))
-                }"
-                @error="(e) => {
-                  copy((_resolve, reject) => reject(e))
-                }"
-              />
-            </ResourceCodeBlock>
+
+            <XCard>
+              <ResourceCodeBlock
+                :resource="mesh.config"
+                v-slot="{ copy, copying }"
+              >
+                <DataSource
+                  v-if="copying"
+                  :src="uri(sources, '/meshes/:name/as/kubernetes', {
+                    name: route.params.mesh,
+                  }, {
+                    cacheControl: 'no-store',
+                  })"
+                  @change="(data) => {
+                    copy((resolve) => resolve(data))
+                  }"
+                  @error="(e) => {
+                    copy((_resolve, reject) => reject(e))
+                  }"
+                />
+              </ResourceCodeBlock>
+            </XCard>
           </XLayout>
         </AppView>
       </template>

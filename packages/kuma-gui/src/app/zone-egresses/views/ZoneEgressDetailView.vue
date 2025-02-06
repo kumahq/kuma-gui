@@ -222,10 +222,13 @@
             </SummaryView>
           </RouterView>
         </DataLoader>
-        <div
+        <XCard
           v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
         >
-          <h2>{{ t('zone-egresses.routes.item.subscriptions.title') }}</h2>
+          <template #title>
+            {{ t('zone-egresses.routes.item.subscriptions.title') }}
+          </template>
+        
           <AppCollection
             :headers="[
               { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
@@ -282,7 +285,7 @@
               </template>
             </template>
           </AppCollection>
-        </div>
+        </XCard>
       </XLayout>
     </AppView>
   </RouteView>
