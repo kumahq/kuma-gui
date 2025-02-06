@@ -6,7 +6,7 @@ export const routes = () => {
   const item = (): RouteRecordRaw[] => {
     return [
       {
-        path: 'data-planes/:dataPlane',
+        path: 'data-planes/:proxy',
         name: 'data-plane-detail-tabs-view',
         component: () => import('@/app/data-planes/views/DataPlaneDetailTabsView.vue'),
         children: [
@@ -67,7 +67,7 @@ export const routes = () => {
 
     return [
       {
-        path: ':dataPlane',
+        path: ':proxy',
         name: `${fullPrefix}data-plane-summary-view`,
         component: () => import('@/app/data-planes/views/DataPlaneSummaryView.vue'),
       },

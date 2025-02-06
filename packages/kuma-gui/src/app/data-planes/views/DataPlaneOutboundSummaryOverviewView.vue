@@ -2,7 +2,7 @@
   <RouteView
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
       connection: '',
     }"
     :name="props.routeName"
@@ -48,7 +48,7 @@
                 <DataLoader
                   :src="uri(sources, `/meshes/:mesh/rules/for/:dataplane`, {
                     mesh: route.params.mesh,
-                    dataplane: route.params.dataPlane,
+                    dataplane: route.params.proxy,
                   })"
                   v-slot="{ data: rulesData }"
                 >

@@ -8,7 +8,7 @@
       page: 1,
       size: Number,
       s: '',
-      dataPlane: '',
+      proxy: '',
     }"
     v-slot="{ can, route, t, me }"
   >
@@ -67,7 +67,7 @@
                       { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                     ]"
                     :items="dataplanesData?.items"
-                    :is-selected-row="(row) => row.name === route.params.dataPlane"
+                    :is-selected-row="(row) => row.name === route.params.proxy"
                     @resize="me.set"
                   >
                     <template #namespace="{ row }">
@@ -83,7 +83,7 @@
                           name: 'builtin-gateway-data-plane-summary-view',
                           params: {
                             mesh: row.mesh,
-                            dataPlane: row.id,
+                            proxy: row.id,
                           },
                           query: {
                             page: route.params.page,
@@ -156,7 +156,7 @@
                           :to="{
                             name: 'data-plane-detail-view',
                             params: {
-                              dataPlane: item.id,
+                              proxy: item.id,
                             },
                           }"
                         >
@@ -166,7 +166,7 @@
                     </template>
                   </AppCollection>
                   <RouterView
-                    v-if="route.params.dataPlane"
+                    v-if="route.params.proxy"
                     v-slot="child"
                   >
                     <SummaryView

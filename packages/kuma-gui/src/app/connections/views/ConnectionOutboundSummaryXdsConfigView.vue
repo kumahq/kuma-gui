@@ -5,7 +5,7 @@
       codeFilter: false,
       codeRegExp: false,
       mesh: '',
-      dataPlane: '',
+      proxy: '',
       connection: '',
       includeEds: false,
     }"
@@ -20,7 +20,7 @@
       <DataLoader
         :src="uri(sources, '/meshes/:mesh/dataplanes/:dataplane/outbound/:outbound/xds/:endpoints', {
           mesh: route.params.mesh,
-          dataplane: route.params.dataPlane,
+          dataplane: route.params.proxy,
           outbound: route.params.connection,
           endpoints: String(route.params.includeEds),
         })"

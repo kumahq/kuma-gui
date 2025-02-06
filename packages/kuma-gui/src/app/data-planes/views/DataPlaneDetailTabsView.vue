@@ -3,14 +3,14 @@
     name="data-plane-detail-tabs-view"
     :params="{
       mesh: '',
-      dataPlane: '',
+      proxy: '',
     }"
     v-slot="{ route, t, uri }"
   >
     <DataSource
       :src="uri(sources, '/meshes/:mesh/dataplane-overviews/:name', {
         mesh: route.params.mesh,
-        name: route.params.dataPlane,
+        name: route.params.proxy,
       })"
       v-slot="{ data, error }"
     >
@@ -130,7 +130,7 @@
                             variant="spinner"
                             :src="downloading ? uri(sources, '/meshes/:mesh/dataplanes/:name/as/tarball/:spec', {
                               mesh: route.params.mesh,
-                              name: route.params.dataPlane,
+                              name: route.params.proxy,
                               spec: JSON.stringify(
                                 specs,
                               ),

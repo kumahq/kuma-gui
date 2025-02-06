@@ -7,7 +7,7 @@
       dataplaneType: 'all',
       s: '',
       mesh: '',
-      dataPlane: '',
+      proxy: '',
     }"
     v-slot="{ can, route, t, me, uri }"
   >
@@ -102,7 +102,7 @@
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                 ]"
                 :items="data?.items"
-                :is-selected-row="(row) => row.name === route.params.dataPlane"
+                :is-selected-row="(row) => row.name === route.params.proxy"
                 @resize="me.set"
               >
                 <template #type="{ row: item }">
@@ -120,7 +120,7 @@
                       name: 'data-plane-summary-view',
                       params: {
                         mesh: item.mesh,
-                        dataPlane: item.id,
+                        proxy: item.id,
                       },
                       query: {
                         page: route.params.page,
@@ -247,7 +247,7 @@
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
-                          dataPlane: item.id,
+                          proxy: item.id,
                         },
                       }"
                     >
