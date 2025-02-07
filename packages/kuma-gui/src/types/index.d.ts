@@ -1,4 +1,4 @@
-import type { components } from '@/types/auto-generated.d'
+import type { components } from '@kumahq/kuma-http-api'
 type ResourceRule = components['schemas']['ResourceRule']
 /**
  * Creates an “unsaved” variant of a resource type which is missing the fields that are only present on an object once its saved in the database.

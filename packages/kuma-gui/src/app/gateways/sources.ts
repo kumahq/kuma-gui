@@ -6,7 +6,7 @@ import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { Rule } from '@/app/rules/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type { paths } from '@/types/auto-generated.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type { MeshGateway } from './data'
 

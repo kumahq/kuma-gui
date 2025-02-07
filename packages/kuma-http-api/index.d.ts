@@ -135,7 +135,7 @@ export interface paths {
          * Returns hostnames for service
          * @description Returns hostnames for a service
          */
-        get: operations["hostnames"];
+        get: operations["inspect-hostnames"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1502,6 +1502,122 @@ export interface components {
                         };
                     };
                 }[];
+                /** @description Rules defines inbound access log configurations. Currently limited to
+                 *     selecting all inbound traffic, as L7 matching is not yet implemented. */
+                rules?: {
+                    /** @description Default contains configuration of the inbound access logging */
+                    default?: {
+                        backends?: {
+                            /** @description FileBackend defines configuration for file based access logs */
+                            file?: {
+                                /** @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators */
+                                format?: {
+                                    /** @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ] */
+                                    json?: {
+                                        key?: string;
+                                        value?: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                                /**
+                                 * @description Path to a file that logs will be written to
+                                 * @example /tmp/access.log
+                                 */
+                                path: string;
+                            };
+                            /** @description Defines an OpenTelemetry logging backend. */
+                            openTelemetry?: {
+                                /**
+                                 * @description Attributes can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example [
+                                 *       {
+                                 *         "key": "mesh",
+                                 *         "value": "%KUMA_MESH%"
+                                 *       }
+                                 *     ]
+                                 */
+                                attributes?: {
+                                    key?: string;
+                                    value?: string;
+                                }[];
+                                /**
+                                 * @description Body is a raw string or an OTLP any value as described at
+                                 *     https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md#field-body
+                                 *     It can contain placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators
+                                 * @example {
+                                 *       "kvlistValue": {
+                                 *         "values": [
+                                 *           {
+                                 *             "key": "mesh",
+                                 *             "value": {
+                                 *               "stringValue": "%KUMA_MESH%"
+                                 *             }
+                                 *           }
+                                 *         ]
+                                 *       }
+                                 *     }
+                                 */
+                                body?: unknown;
+                                /**
+                                 * @description Endpoint of OpenTelemetry collector. An empty port defaults to 4317.
+                                 * @example otel-collector:4317
+                                 */
+                                endpoint: string;
+                            };
+                            /** @description TCPBackend defines a TCP logging backend. */
+                            tcp?: {
+                                /**
+                                 * @description Address of the TCP logging backend
+                                 * @example 127.0.0.1:5000
+                                 */
+                                address: string;
+                                /** @description Format of access logs. Placeholders available on
+                                 *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#command-operators */
+                                format?: {
+                                    /** @example [
+                                     *       {
+                                     *         "key": "start_time",
+                                     *         "value": "%START_TIME%"
+                                     *       },
+                                     *       {
+                                     *         "key": "bytes_received",
+                                     *         "value": "%BYTES_RECEIVED%"
+                                     *       }
+                                     *     ] */
+                                    json?: {
+                                        key?: string;
+                                        value?: string;
+                                    }[];
+                                    /** @default false */
+                                    omitEmptyValues: boolean;
+                                    /** @example [%START_TIME%] %KUMA_MESH% %UPSTREAM_HOST% */
+                                    plain?: string;
+                                    /** @enum {string} */
+                                    type: "Plain" | "Json";
+                                };
+                            };
+                            /** @enum {string} */
+                            type: "Tcp" | "File" | "OpenTelemetry";
+                        }[];
+                    };
+                }[];
                 /** @description TargetRef is a reference to the resource the policy takes an effect on.
                  *     The resource could be either a real store object or virtual resource
                  *     defined in-place. */
@@ -1691,20 +1807,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshAccessLogCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshAccessLogDeleteSuccessResponse: Record<string, never>;
         MeshCircuitBreakerItem: {
             /**
              * @description the type of the resource
@@ -2253,20 +2370,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshCircuitBreakerCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshCircuitBreakerDeleteSuccessResponse: Record<string, never>;
         MeshFaultInjectionItem: {
             /**
              * @description the type of the resource
@@ -2474,20 +2592,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshFaultInjectionCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshFaultInjectionDeleteSuccessResponse: Record<string, never>;
         MeshHealthCheckItem: {
             /**
              * @description the type of the resource
@@ -2702,20 +2821,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshHealthCheckCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshHealthCheckDeleteSuccessResponse: Record<string, never>;
         MeshHTTPRouteItem: {
             /**
              * @description the type of the resource
@@ -3020,20 +3140,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshHTTPRouteCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshHTTPRouteDeleteSuccessResponse: Record<string, never>;
         MeshLoadBalancingStrategyItem: {
             /**
              * @description the type of the resource
@@ -3336,20 +3457,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshLoadBalancingStrategyCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshLoadBalancingStrategyDeleteSuccessResponse: Record<string, never>;
         MeshMetricItem: {
             /**
              * @description the type of the resource
@@ -3512,20 +3634,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshMetricCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshMetricDeleteSuccessResponse: Record<string, never>;
         MeshPassthroughItem: {
             /**
              * @description the type of the resource
@@ -3616,20 +3739,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshPassthroughCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshPassthroughDeleteSuccessResponse: Record<string, never>;
         MeshProxyPatchItem: {
             /**
              * @description the type of the resource
@@ -3941,20 +4065,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshProxyPatchCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshProxyPatchDeleteSuccessResponse: Record<string, never>;
         MeshRateLimitItem: {
             /**
              * @description the type of the resource
@@ -4068,6 +4193,70 @@ export interface components {
                          *     `MeshSubset` and `MeshServiceSubset` */
                         tags?: {
                             [key: string]: string;
+                        };
+                    };
+                }[];
+                /** @description Rules defines inbound rate limiting configurations. Currently limited to
+                 *     selecting all inbound traffic, as L7 matching is not yet implemented. */
+                rules?: {
+                    /** @description Default contains configuration of the inbound rate limits */
+                    default?: {
+                        /** @description LocalConf defines local http or/and tcp rate limit configuration */
+                        local?: {
+                            /** @description LocalHTTP defines configuration of local HTTP rate limiting
+                             *     https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/local_rate_limit_filter */
+                            http?: {
+                                /** @description Define if rate limiting should be disabled. */
+                                disabled?: boolean;
+                                /** @description Describes the actions to take on a rate limit event */
+                                onRateLimit?: {
+                                    /** @description The Headers to be added to the HTTP response on a rate limit event */
+                                    headers?: {
+                                        add?: {
+                                            name: string;
+                                            value: string;
+                                        }[];
+                                        set?: {
+                                            name: string;
+                                            value: string;
+                                        }[];
+                                    };
+                                    /**
+                                     * Format: int32
+                                     * @description The HTTP status code to be set on a rate limit event
+                                     */
+                                    status?: number;
+                                };
+                                /** @description Defines how many requests are allowed per interval. */
+                                requestRate?: {
+                                    /** @description The interval the number of units is accounted for. */
+                                    interval: string;
+                                    /**
+                                     * Format: int32
+                                     * @description Number of units per interval (depending on usage it can be a number of requests,
+                                     *     or a number of connections).
+                                     */
+                                    num: number;
+                                };
+                            };
+                            /** @description LocalTCP defines confguration of local TCP rate limiting
+                             *     https://www.envoyproxy.io/docs/envoy/latest/configuration/listeners/network_filters/local_rate_limit_filter */
+                            tcp?: {
+                                /** @description Defines how many connections are allowed per interval. */
+                                connectionRate?: {
+                                    /** @description The interval the number of units is accounted for. */
+                                    interval: string;
+                                    /**
+                                     * Format: int32
+                                     * @description Number of units per interval (depending on usage it can be a number of requests,
+                                     *     or a number of connections).
+                                     */
+                                    num: number;
+                                };
+                                /** @description Define if rate limiting should be disabled.
+                                 *     Default: false */
+                                disabled?: boolean;
+                            };
                         };
                     };
                 }[];
@@ -4208,20 +4397,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshRateLimitCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshRateLimitDeleteSuccessResponse: Record<string, never>;
         MeshRetryItem: {
             /**
              * @description the type of the resource
@@ -4528,20 +4718,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshRetryCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshRetryDeleteSuccessResponse: Record<string, never>;
         MeshTCPRouteItem: {
             /**
              * @description the type of the resource
@@ -4684,20 +4875,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshTCPRouteCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshTCPRouteDeleteSuccessResponse: Record<string, never>;
         MeshTimeoutItem: {
             /**
              * @description the type of the resource
@@ -4934,20 +5126,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshTimeoutCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshTimeoutDeleteSuccessResponse: Record<string, never>;
         MeshTLSItem: {
             /**
              * @description the type of the resource
@@ -5069,20 +5262,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshTLSCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshTLSDeleteSuccessResponse: Record<string, never>;
         MeshTraceItem: {
             /**
              * @description the type of the resource
@@ -5253,20 +5447,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshTraceCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshTraceDeleteSuccessResponse: Record<string, never>;
         MeshTrafficPermissionItem: {
             /**
              * @description the type of the resource
@@ -5371,19 +5566,43 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         MeshTrafficPermissionCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
+        };
+        MeshTrafficPermissionDeleteSuccessResponse: Record<string, never>;
+        BuiltinCertificateAuthorityConfig: {
+            caCert?: {
+                /** Format: uint32 */
+                RSAbits?: number;
+                expiration?: string;
+            };
+        };
+        DatadogTracingBackendConfig: {
+            /** @description Address of datadog collector. */
+            address?: string;
+            /** @description Port of datadog collector */
+            port?: number;
+            /** @description Determines if datadog service name should be split based on traffic
+             *     direction and destination. For example, with `splitService: true` and a
+             *     `backend` service that communicates with a couple of databases, you would
+             *     get service names like `backend_INBOUND`, `backend_OUTBOUND_db1`, and
+             *     `backend_OUTBOUND_db2` in Datadog. Default: false */
+            splitService?: boolean;
+        };
+        FileLoggingBackendConfig: {
+            /** @description Path to a file that logs will be written to */
+            path?: string;
         };
         MeshItem: {
             /** @description Constraints that applies to the mesh and its entities */
@@ -5423,8 +5642,7 @@ export interface components {
             logging?: {
                 /** @description List of available logging backends */
                 backends?: {
-                    /** @description Configuration of the backend */
-                    conf?: Record<string, never>;
+                    conf?: components["schemas"]["FileLoggingBackendConfig"] | components["schemas"]["TcpLoggingBackendConfig"];
                     /** @description Format of access logs. Placeholders available on
                      *     https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log */
                     format?: string;
@@ -5449,8 +5667,7 @@ export interface components {
             metrics?: {
                 /** @description List of available Metrics backends */
                 backends?: {
-                    /** @description Configuration of the backend */
-                    conf?: Record<string, never>;
+                    conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
                     /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
                     name?: string;
                     /** @description Type of the backend (Kuma ships with 'prometheus') */
@@ -5464,8 +5681,7 @@ export interface components {
             mtls?: {
                 /** @description List of available Certificate Authority backends */
                 backends?: {
-                    /** @description Configuration of the backend */
-                    conf?: Record<string, never>;
+                    conf?: components["schemas"]["ProvidedCertificateAuthorityConfig"] | components["schemas"]["BuiltinCertificateAuthorityConfig"];
                     /** @description Dataplane certificate settings */
                     dpCert?: {
                         /** @description Timeout on request to CA for DP certificate generation and retrieval */
@@ -5530,8 +5746,7 @@ export interface components {
             tracing?: {
                 /** @description List of available tracing backends */
                 backends?: {
-                    /** @description Configuration of the backend */
-                    conf?: Record<string, never>;
+                    conf?: components["schemas"]["DatadogTracingBackendConfig"] | components["schemas"]["ZipkinTracingBackendConfig"];
                     /** @description Name of the backend, can be then used in Mesh.tracing.defaultBackend or in
                      *     TrafficTrace */
                     name?: string;
@@ -5550,7 +5765,95 @@ export interface components {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
+        };
+        MeshDeleteSuccessResponse: Record<string, never>;
+        TcpLoggingBackendConfig: {
+            /** @description Address to TCP service that will receive logs */
+            address?: string;
+        };
+        PrometheusMetricsBackendConfig: {
+            /** @description Map with the configuration of applications which metrics are going to be
+             *     scrapped by kuma-dp. */
+            aggregate?: {
+                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
+                address?: string;
+                /** @description If false then the application won't be scrapped. If nil, then it is treated
+                 *     as true and kuma-dp scrapes metrics from the service. */
+                enabled?: boolean;
+                /** @description Name which identify given configuration. */
+                name?: string;
+                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
+                path?: string;
+                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
+                port?: number;
+            }[];
+            /** @description Configuration of Envoy's metrics. */
+            envoy?: {
+                /** @description FilterRegex value that is going to be passed to Envoy for filtering
+                 *     Envoy metrics. */
+                filterRegex?: string;
+                /** @description If true then return metrics that Envoy has updated (counters incremented
+                 *     at least once, gauges changed at least once, and histograms added to at
+                 *     least once). If nil, then it is treated as false. */
+                usedOnly?: boolean;
+            };
+            /** @description Path on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics. */
+            path?: string;
+            /** @description Port on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics. */
+            port?: number;
+            /** @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
+             *     is enabled in Mesh. If nil, then it is treated as false. */
+            skipMTLS?: boolean;
+            /** @description Tags associated with an application this dataplane is deployed next to,
+             *     e.g. service=web, version=1.0.
+             *     `service` tag is mandatory. */
+            tags?: {
+                [key: string]: string;
+            };
+            /** @description Configuration of TLS for prometheus listener. */
+            tls?: {
+                /** @description mode defines how configured is the TLS for Prometheus.
+                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
+                 *     `activeMTLSBackend`. */
+                mode?: string | number;
+            };
+        };
+        ProvidedCertificateAuthorityConfig: {
+            cert?: {
+                /** @description Types that are assignable to Type:
+                 *
+                 *     	*DataSource_Secret
+                 *     	*DataSource_File
+                 *     	*DataSource_Inline
+                 *     	*DataSource_InlineString */
+                Type: unknown;
+            };
+            key?: {
+                /** @description Types that are assignable to Type:
+                 *
+                 *     	*DataSource_Secret
+                 *     	*DataSource_File
+                 *     	*DataSource_Inline
+                 *     	*DataSource_InlineString */
+                Type: unknown;
+            };
+        };
+        ZipkinTracingBackendConfig: {
+            /** @description Version of the API. values: httpJson, httpJsonV1, httpProto. Default:
+             *     httpJson see
+             *     https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/trace/v3/trace.proto#envoy-v3-api-enum-config-trace-v3-zipkinconfig-collectorendpointversion */
+            apiVersion?: string;
+            /** @description Determines whether client and server spans will share the same span
+             *     context. Default: true.
+             *     https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/trace/v3/zipkin.proto#config-trace-v3-zipkinconfig */
+            sharedSpanContext?: boolean;
+            /** @description Generate 128bit traces. Default: false */
+            traceId128bit?: boolean;
+            /** @description Address of Zipkin collector. */
+            url?: string;
         };
         MeshGatewayItem: {
             /** @description The desired configuration of the MeshGateway. */
@@ -5645,8 +5948,9 @@ export interface components {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshGatewayDeleteSuccessResponse: Record<string, never>;
         HostnameGeneratorItem: {
             /**
              * @description the type of the resource
@@ -5685,20 +5989,21 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
         };
         HostnameGeneratorCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        HostnameGeneratorDeleteSuccessResponse: Record<string, never>;
         MeshExternalServiceItem: {
             /**
              * @description the type of the resource
@@ -5845,15 +6150,15 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
             /** @description Status is the current status of the Kuma MeshExternalService resource. */
-            status?: {
+            readonly status?: {
                 /** @description Addresses section for generated domains */
                 addresses?: {
                     hostname?: string;
@@ -5897,8 +6202,9 @@ export interface components {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshExternalServiceDeleteSuccessResponse: Record<string, never>;
         MeshMultiZoneServiceItem: {
             /**
              * @description the type of the resource
@@ -5945,15 +6251,15 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
             /** @description Status is the current status of the Kuma MeshMultiZoneService resource. */
-            status?: {
+            readonly status?: {
                 /** @description Addresses is a list of addresses generated by HostnameGenerator */
                 addresses?: {
                     hostname?: string;
@@ -6005,8 +6311,9 @@ export interface components {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshMultiZoneServiceDeleteSuccessResponse: Record<string, never>;
         MeshServiceItem: {
             /**
              * @description the type of the resource
@@ -6062,15 +6369,15 @@ export interface components {
              * @description Time at which the resource was created
              * @example 0001-01-01T00:00:00Z
              */
-            creationTime?: string;
+            readonly creationTime?: string;
             /**
              * Format: date-time
              * @description Time at which the resource was updated
              * @example 0001-01-01T00:00:00Z
              */
-            modificationTime?: string;
+            readonly modificationTime?: string;
             /** @description Status is the current status of the Kuma MeshService resource. */
-            status?: {
+            readonly status?: {
                 addresses?: {
                     hostname?: string;
                     hostnameGeneratorRef?: {
@@ -6124,8 +6431,9 @@ export interface components {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
              *     Warning messages describe a problem the client making the API request should correct or be aware of.
              *      */
-            warnings?: string[];
+            readonly warnings?: string[];
         };
+        MeshServiceDeleteSuccessResponse: Record<string, never>;
     };
     responses: {
         /** @description A response for the index endpoint */
@@ -6890,7 +7198,7 @@ export interface operations {
             500: components["responses"]["Internal"];
         };
     };
-    "hostnames": {
+    "inspect-hostnames": {
         parameters: {
             query?: never;
             header?: never;
@@ -6997,7 +7305,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshAccessLogDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7093,7 +7403,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshCircuitBreakerDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7189,7 +7501,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshFaultInjectionDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7285,7 +7599,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshHealthCheckDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7381,7 +7697,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshHTTPRouteDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7477,7 +7795,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshLoadBalancingStrategyDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7573,7 +7893,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshMetricDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7669,7 +7991,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshPassthroughDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7765,7 +8089,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshProxyPatchDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7861,7 +8187,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshRateLimitDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -7957,7 +8285,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshRetryDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8053,7 +8383,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshTCPRouteDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8149,7 +8481,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshTimeoutDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8245,7 +8579,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshTLSDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8341,7 +8677,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshTraceDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8437,7 +8775,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshTrafficPermissionDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8527,7 +8867,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8620,7 +8962,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshGatewayDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8710,7 +9054,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["HostnameGeneratorDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8803,7 +9149,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshExternalServiceDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8899,7 +9247,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshMultiZoneServiceDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };
@@ -8995,7 +9345,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["MeshServiceDeleteSuccessResponse"];
+                };
             };
             404: components["responses"]["NotFound"];
         };

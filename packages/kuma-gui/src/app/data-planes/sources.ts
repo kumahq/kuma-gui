@@ -13,8 +13,8 @@ import { YAML } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
-import type { paths } from '@/types/auto-generated.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export type { Dataplane, DataplaneOverview } from './data'
 

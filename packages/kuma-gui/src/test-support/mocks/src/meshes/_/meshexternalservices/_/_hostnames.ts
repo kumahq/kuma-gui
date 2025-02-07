@@ -1,5 +1,5 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import { paths } from '@/types/auto-generated'
+import type { paths } from '@kumahq/kuma-http-api'
 
 type HostnamesResponse = paths['/meshes/{mesh}/{serviceType}/{serviceName}/_hostnames']['get']['responses']['200']['content']['application/json']
 
@@ -15,9 +15,9 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
 
       return {
         hostname: hostnameTemplate.replace('{{ .DisplayName }}', displayName).replace('{{ .Namespace }}', namespace),
-        zones: Array.from({ length: fake.number.int({ min: 1, max: 5 })}).map(() => ({
+        zones: Array.from({ length: fake.number.int({ min: 1, max: 5 }) }).map(() => ({
           name: fake.word.noun(),
-        })), 
+        })),
       }
     }),
   } satisfies HostnamesResponse
