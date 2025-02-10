@@ -2,9 +2,9 @@
   <RouteView
     name="zone-egress-detail-view"
     :params="{
+      inactive: Boolean,
       subscription: '',
       proxy: '',
-      inactive: false,
     }"
     v-slot="{ t, route, me, uri }"
   >
