@@ -1,4 +1,4 @@
-import type { components, paths } from '@/types/auto-generated'
+import type { components, paths } from '@kumahq/kuma-http-api'
 
 export type HostnameGeneratorList = components['responses']['HostnameGeneratorList']['content']['application/json']
 export type HostnameGeneratorItem = components['responses']['HostnameGeneratorItem']['content']['application/json']

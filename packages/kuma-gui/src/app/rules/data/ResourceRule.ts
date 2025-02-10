@@ -1,4 +1,4 @@
-import type { components } from '@/types/auto-generated.d'
+import type { components } from '@kumahq/kuma-http-api'
 type Entity = components['schemas']['ResourceRule']
 type Collection = Entity[]
 

@@ -5,7 +5,7 @@ import {
 } from './data'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { paths } from '@/types/auto-generated.d'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export const sources = (source: Source, api: KumaApi) => {
   const http = createClient<paths>({
