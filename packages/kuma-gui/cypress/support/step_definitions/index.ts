@@ -98,6 +98,10 @@ Given('the URL {string} responds with', (url: string, yaml: string) => {
   })
 })
 
+Given('the date is {string}', (datetime: string) => {
+  cy.clock(new Date(datetime).getTime(), ['Date'])
+})
+
 // act
 
 When('I visit the {string} URL', function (path: string) {

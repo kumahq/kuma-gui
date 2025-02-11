@@ -31,7 +31,12 @@ Feature: Dataplane details for built-in gateway
                 kuma.io/zone: zone-1
             inbound: !!js/undefined
         dataplaneInsight:
-          mTLS: !!js/undefined
+          mTLS:
+            certificateExpirationTime: 2023-10-31T00:00:00Z
+            lastCertificateRegeneration: 2023-10-01T00:00:00Z
+            certificateRegenerations: 5
+            issuedBackend: foo
+            supportedBackends: foobar
           subscriptions:
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
@@ -47,6 +52,7 @@ Feature: Dataplane details for built-in gateway
                 envoy:
                   kumaDpCompatible: true
       """
+    And the date is "2023-10-14T00:00:00Z"
     When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
     Then the page title contains "dataplane-gateway_builtin-1"
     And the "$detail-view" element contains "dataplane-gateway_builtin-1"
@@ -56,7 +62,7 @@ Feature: Dataplane details for built-in gateway
       |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
-    And the "$warnings" element exists
+    And the "$warnings" element doesn't exists
 
   Scenario: Policies tab has expected content
     Given the environment
@@ -87,3 +93,13 @@ Feature: Dataplane details for built-in gateway
     When I click the "$route-item-button" element
     Then the "$policies-view" element contains "circuit-breaker-1"
     And the "$policies-view" element contains "demo-app_kuma-demo_svc_5000"
+
+  Scenario: Overview tab shows warning when no mTLS is set
+    And the URL "/meshes/default/dataplanes/dataplane-gateway_builtin-1/_overview" responds with
+      """
+      body:
+        dataplaneInsight:
+          mTLS: !!js/undefined
+      """
+    When I visit the "/meshes/default/data-planes/dataplane-gateway_builtin-1/overview" URL
+    Then the "$warnings" element exists
