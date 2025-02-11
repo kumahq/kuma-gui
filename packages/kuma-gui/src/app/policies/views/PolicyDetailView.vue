@@ -99,48 +99,83 @@
           </template>
         </DefinitionCard>
       </XAboutCard>
-      <div>
-        <h3>
-          Affected Data Plane Proxies
-        </h3>
-        <XCard
-          class="mt-4"
+      
+      <XCard>
+        <template #title>
+          <h3>Affected Data Plane Proxies</h3>
+        </template>
+          
+        <DataLoader
+          :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes', {
+            mesh: route.params.mesh,
+            path: route.params.policyPath,
+            name: route.params.policy,
+          },{
+            page: route.params.page,
+            size: route.params.size,
+          })"
         >
-          <DataLoader
-            :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/dataplanes', {
-              mesh: route.params.mesh,
-              path: route.params.policyPath,
-              name: route.params.policy,
-            },{
-              page: route.params.page,
-              size: route.params.size,
-            })"
+          <template
+            #loadable="{ data: dataplanes }"
           >
-            <template
-              #loadable="{ data: dataplanes }"
+            <DataCollection
+              type="data-planes"
+              :items="dataplanes?.items ?? [undefined]"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="dataplanes?.total"
+              @change="route.update"
             >
-              <DataCollection
-                type="data-planes"
-                :items="dataplanes?.items ?? [undefined]"
-                :page="route.params.page"
-                :page-size="route.params.size"
-                :total="dataplanes?.total"
-                @change="route.update"
+              <AppCollection
+                :headers="[
+                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                  { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :items="dataplanes?.items"
+                :is-selected-row="(row) => row.id === route.params.proxy"
+                @resize="me.set"
               >
-                <AppCollection
-                  :headers="[
-                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                    { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                    ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                  ]"
-                  :items="dataplanes?.items"
-                  :is-selected-row="(row) => row.id === route.params.proxy"
-                  @resize="me.set"
-                >
-                  <template #name="{ row: item }">
+                <template #name="{ row: item }">
+                  <XAction
+                    data-action
+                    :to="{
+                      name: 'data-plane-detail-view',
+                      params: {
+                        proxy: item.id,
+                      },
+                    }"
+                  >
+                    {{ item.name }}
+                  </XAction>
+                </template>
+
+                <template #namespace="{ row: item }">
+                  {{ item.namespace }}
+                </template>
+
+                <template #zone="{ row }">
+                  <XAction
+                    v-if="row.zone"
+                    :to="{
+                      name: 'zone-cp-detail-view',
+                      params: {
+                        zone: row.zone,
+                      },
+                    }"
+                  >
+                    {{ row.zone }}
+                  </XAction>
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #actions="{ row: item }">
+                  <XActionGroup>
                     <XAction
-                      data-action
                       :to="{
                         name: 'data-plane-detail-view',
                         params: {
@@ -148,75 +183,38 @@
                         },
                       }"
                     >
-                      {{ item.name }}
+                      {{ t('common.collection.actions.view') }}
                     </XAction>
-                  </template>
-
-                  <template #namespace="{ row: item }">
-                    {{ item.namespace }}
-                  </template>
-
-                  <template #zone="{ row }">
-                    <XAction
-                      v-if="row.zone"
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: row.zone,
-                        },
-                      }"
-                    >
-                      {{ row.zone }}
-                    </XAction>
-
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
-                  </template>
-
-                  <template #actions="{ row: item }">
-                    <XActionGroup>
-                      <XAction
-                        :to="{
-                          name: 'data-plane-detail-view',
-                          params: {
-                            proxy: item.id,
-                          },
-                        }"
-                      >
-                        {{ t('common.collection.actions.view') }}
-                      </XAction>
-                    </XActionGroup>
-                  </template>
-                </AppCollection>
-                <RouterView
-                  v-slot="{ Component }"
+                  </XActionGroup>
+                </template>
+              </AppCollection>
+              <RouterView
+                v-slot="{ Component }"
+              >
+                <SummaryView
+                  v-if="route.child()"
+                  @close="route.replace({
+                    params: {
+                      mesh: route.params.mesh,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                      s: route.params.s,
+                    },
+                  })"
                 >
-                  <SummaryView
-                    v-if="route.child()"
-                    @close="route.replace({
-                      params: {
-                        mesh: route.params.mesh,
-                      },
-                      query: {
-                        page: route.params.page,
-                        size: route.params.size,
-                        s: route.params.s,
-                      },
-                    })"
-                  >
-                    <component
-                      :is="Component"
-                      v-if="typeof dataplanes !== 'undefined'"
-                      :items="dataplanes.items"
-                    />
-                  </SummaryView>
-                </RouterView>
-              </DataCollection>
-            </template>
-          </DataLoader>
-        </XCard>
-      </div>
+                  <component
+                    :is="Component"
+                    v-if="typeof dataplanes !== 'undefined'"
+                    :items="dataplanes.items"
+                  />
+                </SummaryView>
+              </RouterView>
+            </DataCollection>
+          </template>
+        </DataLoader>
+      </XCard>
     </AppView>
   </RouteView>
 </template>

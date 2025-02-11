@@ -55,8 +55,10 @@
             </DefinitionCard>
           </XAboutCard>
 
-          <div>
-            <h3>{{ t('external-services.detail.config') }}</h3>
+          <XCard>
+            <template #title>
+              <h3>{{ t('external-services.detail.config') }}</h3>
+            </template>
 
             <ResourceCodeBlock
               class="mt-4"
@@ -87,7 +89,7 @@
                 }"
               />
             </ResourceCodeBlock>
-          </div>
+          </XCard>
         </DataLoader>
       </div>
     </AppView>
