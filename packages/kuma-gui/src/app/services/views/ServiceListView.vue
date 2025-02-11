@@ -35,16 +35,7 @@
               :page="route.params.page"
               :page-size="route.params.size"
               :total="data?.total"
-              @change="(value) => {
-                let { page } = value
-                if(route.params.size !== value.size) {
-                  const offset = route.params.size * Math.max(route.params.page - 1, 0)
-                  page = Math.floor(offset / value.size) + 1
-                }
-                return route.update({
-                  ...value, page,
-                })
-              }"
+              @change="route.update"
             >
               <AppCollection
                 class="service-collection"
