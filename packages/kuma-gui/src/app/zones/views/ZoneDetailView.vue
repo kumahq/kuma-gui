@@ -117,7 +117,7 @@
             v-if="props.data.zoneInsight.subscriptions.length > 0"
           >
             <template #title>
-              {{ t('zone-cps.detail.subscriptions') }}
+              <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
             </template>
 
             <AppCollection

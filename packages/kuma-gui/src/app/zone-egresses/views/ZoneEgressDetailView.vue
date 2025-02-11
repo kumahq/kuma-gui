@@ -226,7 +226,7 @@
           v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
         >
           <template #title>
-            {{ t('zone-egresses.routes.item.subscriptions.title') }}
+            <h2>{{ t('zone-egresses.routes.item.subscriptions.title') }}</h2>
           </template>
         
           <AppCollection

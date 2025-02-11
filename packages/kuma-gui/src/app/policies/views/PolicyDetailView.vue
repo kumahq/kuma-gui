@@ -100,11 +100,9 @@
         </DefinitionCard>
       </XAboutCard>
       
-      <XCard
-        class="mt-4"
-      >
+      <XCard>
         <template #title>
-          Affected Data Plane Proxies
+          <h3>Affected Data Plane Proxies</h3>
         </template>
           
         <DataLoader

@@ -257,7 +257,7 @@
         v-if="props.data.zoneIngressInsight.subscriptions.length > 0"
       >
         <template #title>
-          {{ t('zone-ingresses.routes.item.subscriptions.title') }}
+          <h2>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h2>
         </template>
         
         <AppCollection

@@ -57,7 +57,7 @@
 
           <XCard>
             <template #title>
-              {{ t('external-services.detail.config') }}
+              <h3>{{ t('external-services.detail.config') }}</h3>
             </template>
 
             <ResourceCodeBlock

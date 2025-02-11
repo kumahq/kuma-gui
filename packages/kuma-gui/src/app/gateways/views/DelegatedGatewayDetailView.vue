@@ -64,11 +64,9 @@
           </XAboutCard>
         </DataLoader>
 
-        <XCard
-          class="mt-4"
-        >
+        <XCard>
           <template #title>
-            {{ t('delegated-gateways.detail.data_plane_proxies') }}
+            <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
           </template>
 
           <search>

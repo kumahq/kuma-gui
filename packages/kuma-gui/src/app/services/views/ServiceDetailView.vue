@@ -72,11 +72,9 @@
           </XAboutCard>
         </DataLoader>
 
-        <XCard
-          class="mt-4"
-        >
+        <XCard>
           <template #title>
-            {{ t('services.detail.data_plane_proxies') }}
+            <h3>{{ t('services.detail.data_plane_proxies') }}</h3>
           </template>
 
           <search>

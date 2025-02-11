@@ -437,11 +437,9 @@
                 ]"
                 :key="mTLS"
               >
-                <XCard
-                  class="mt-4"
-                >
+                <XCard>
                   <template #title>
-                    {{ t('data-planes.routes.item.mtls.title') }}
+                    <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
                   </template>
 
                   <div class="columns">
@@ -512,7 +510,7 @@
           >
             <XCard>
               <template #title>
-                {{ t('data-planes.routes.item.subscriptions.title') }}
+                <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
               </template>
               
               <AppCollection
