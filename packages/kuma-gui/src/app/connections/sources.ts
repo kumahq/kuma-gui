@@ -157,11 +157,18 @@ export const sources = (source: Source, api: KumaApi) => {
       return res
     },
 
-    '/connections/xds/for/:proxyType/:name/outbound/:outbound/endpoints/:endpoints': async (params) => {
-      const { name, outbound, endpoints, proxyType } = params
+    '/connections/xds/for/:proxyType/:name/:mesh/outbound/:outbound/endpoints/:endpoints': async (params) => {
+      const { name, mesh, outbound, endpoints, proxyType } = params
 
       const res = await (() => {
         switch (proxyType) {
+          case 'dataplane':
+            return api.getDataplaneXds({
+              mesh,
+              dppName: name,
+            }, {
+              include_eds: endpoints,
+            })
           case 'zone-ingress':
             return api.getZoneIngressXds({
               name,
@@ -196,12 +203,19 @@ export const sources = (source: Source, api: KumaApi) => {
         return []
       })
     },
-    '/connections/xds/for/:proxyType/:name/inbound/:inbound': async (params) => {
-      const { name, inbound, proxyType } = params
+    '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound': async (params) => {
+      const { name, mesh, inbound, proxyType } = params
 
       // we don't ask for endpoints because we don't need them for inbound filtering
       const res = await (() => {
         switch (proxyType) {
+          case 'dataplane':
+            return api.getDataplaneXds({
+              mesh,
+              dppName: name,
+            }, {
+              include_eds: false,
+            })
           case 'zone-ingress':
             return api.getZoneIngressXds({
               name,
@@ -231,56 +245,5 @@ export const sources = (source: Source, api: KumaApi) => {
         return []
       })
     },
-
-    '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds': async (params) => {
-      const { mesh, dataplane, inbound } = params
-
-      // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await api.getDataplaneXds({
-        mesh,
-        dppName: dataplane,
-      }, {
-        include_eds: false,
-      })
-      return filter(res, (key: string, arr: unknown[]) => {
-        switch (key) {
-          case 'dynamic_listeners':
-            // dynamic_listeners[].name === 'inbound:<ignored>:0000'
-            return arr.filter((item = {}) => prop(item, 'name') && typeof item.name === 'string' && item.name.startsWith('inbound:') && item.name?.endsWith(`:${inbound}`))
-          case 'dynamic_active_clusters':
-            // dynamic_active_clusters[].cluster.name === '<ignored>:0000'
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && typeof item.cluster.name === 'string' && item.cluster?.name?.endsWith(`:${inbound}`))
-        }
-        return []
-      })
-    },
-    '/meshes/:mesh/dataplanes/:dataplane/outbound/:outbound/xds/:endpoints': async (params) => {
-      const { mesh, dataplane, outbound, endpoints } = params
-
-      // we don't ask for endpoints because we don't need them for inbound filtering
-      const res = await api.getDataplaneXds({
-        mesh,
-        dppName: dataplane,
-      }, {
-        include_eds: endpoints,
-      })
-      return filter(res, (key: string, arr: unknown[]) => {
-        switch (key) {
-          case 'dynamic_listeners':
-            // this one won't work yet see
-            // https://github.com/kumahq/kuma/issues/12093
-            // dynamic_listeners[].name === 'outbound:<outbound>'
-            return arr.filter(item => prop(item, 'name') && item.name === `outbound:${outbound}`)
-          case 'dynamic_active_clusters':
-            // dynamic_active_clusters[].cluster.name === outbound
-            return arr.filter(item => prop(item, 'cluster') && prop(item.cluster, 'name') && item.cluster?.name === outbound)
-          case 'dynamic_endpoint_configs':
-            // dynamic_endpoint_configs[].endpoint_config.cluster_name === outbound
-            return arr.filter(item => prop(item, 'endpoint_config') && prop(item.endpoint_config, 'cluster_name') && item.endpoint_config?.cluster_name === outbound)
-        }
-        return []
-      })
-    },
-
   })
 }

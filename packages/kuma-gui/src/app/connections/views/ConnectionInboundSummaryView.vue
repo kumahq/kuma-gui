@@ -3,15 +3,20 @@
     :name="props.routeName"
     :params="{
       inactive: Boolean,
+      proxyType: '',
       connection: '',
     }"
     v-slot="{ route, t }"
   >
     <!-- if its a built in gateway, just take the first one, all the data we use here is the same -->
     <!-- otherwise find the exact inbound -->
+    <!-- if its a dataplane/proxyType='' use the stats keyname -->
+    <!-- if its a proxyType=ingresses/egresses use the socketAddress -->
     <DataCollection
       :items="props.data"
-      :predicate="props.networking.type === 'gateway' ? (item) => true : (item) => item.name === route.params.connection"
+      :predicate="props.networking.type === 'gateway' ? (item) => true
+        : route.params.proxyType === '' ? (item) => `${item.name}` === route.params.connection
+          : item => `${item.socketAddress.replace(':', '_')}` === route.params.connection"
       :find="true"
       v-slot="{ items }"
     >
