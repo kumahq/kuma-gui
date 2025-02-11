@@ -51,16 +51,6 @@ export const sources = (api: KumaApi) => {
 
       return api.getZoneEgressData({ zoneEgressName: name, dataPath })
     },
-    '/zone-egresses/:name/xds/:endpoints': async (params) => {
-      const { name, endpoints } = params
-
-      return api.getZoneEgressData({
-        zoneEgressName: name,
-        dataPath: 'xds',
-      }, {
-        include_eds: endpoints,
-      })
-    },
 
     '/zone-egress-overviews': async (params) => {
       const { size } = params

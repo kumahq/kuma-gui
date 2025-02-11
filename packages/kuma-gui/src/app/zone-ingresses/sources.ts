@@ -62,16 +62,6 @@ export const sources = (source: Source, api: KumaApi) => {
       const dataPath = includes(['xds', 'clusters', 'stats'] as const, params.dataPath) ? params.dataPath : 'xds'
       return api.getZoneIngressData({ zoneIngressName: name, dataPath })
     },
-    '/zone-ingresses/:name/xds/:endpoints': async (params) => {
-      const { name, endpoints } = params
-
-      return api.getZoneIngressData({
-        zoneIngressName: name,
-        dataPath: 'xds',
-      }, {
-        include_eds: endpoints,
-      })
-    },
 
     '/zone-ingresses/:name/as/kubernetes': async (params) => {
       const { name } = params

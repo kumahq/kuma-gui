@@ -17,8 +17,9 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
+        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
           name: route.params.proxy,
+          mesh: '*',
           socketAddress: props.networking.inboundAddress,
           proxyType: route.params.proxyType === 'ingresses' ? 'zone-ingress' : 'zone-egress',
         })"

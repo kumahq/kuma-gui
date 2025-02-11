@@ -4,7 +4,7 @@
     :params="{
       subscription: '',
       proxy: '',
-      inactive: false,
+      inactive: Boolean,
     }"
     v-slot="{ t, me, route, uri }"
   >
@@ -86,8 +86,9 @@
         </DefinitionCard>
       </XAboutCard>
       <DataLoader
-        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
+        :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
           name: route.params.proxy,
+          mesh: '*',
           socketAddress: props.data.zoneIngress.socketAddress,
           proxyType: 'zone-ingress',
         })"

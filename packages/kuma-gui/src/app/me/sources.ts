@@ -22,6 +22,8 @@ export const sources = ({ get, set }: Storage) => {
             params: {
               size: 50,
               format: 'structured',
+              inactive: false,
+              includeEds: false,
             },
           },
           app,

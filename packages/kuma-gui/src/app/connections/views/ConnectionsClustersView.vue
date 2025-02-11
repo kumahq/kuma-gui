@@ -4,6 +4,7 @@
     :params="{
       mesh: '',
       proxy: '',
+      proxyType: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -17,9 +18,10 @@
       />
       <XCard>
         <DataLoader
-          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/clusters', {
-            mesh: route.params.mesh,
+          :src="uri(sources, `/connections/clusters/for/:proxyType/:name/:mesh`, {
+            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
             name: route.params.proxy,
+            mesh: route.params.mesh || '*',
           })"
           v-slot="{ data, refresh }"
         >

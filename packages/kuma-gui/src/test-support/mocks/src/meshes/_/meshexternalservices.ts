@@ -1,5 +1,5 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-import type { components } from '@/types/auto-generated.d'
+import type { components } from '@kumahq/kuma-http-api'
 type Entity = components['schemas']['MeshExternalServiceItem']
 
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {

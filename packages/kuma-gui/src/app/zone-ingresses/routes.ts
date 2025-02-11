@@ -1,4 +1,4 @@
-import { zones as connections } from '@/app/connections/routes'
+import { zones as connections, networking } from '@/app/connections/routes'
 import { routes as subscriptions } from '@/app/subscriptions/routes'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -25,21 +25,7 @@ export const routes = (prefix = 'ingresses') => {
             name: 'zone-ingress-services-view',
             component: () => import('@/app/zone-ingresses/views/ZoneIngressServicesView.vue'),
           },
-          {
-            path: 'xds-config',
-            name: 'zone-ingress-xds-config-view',
-            component: () => import('@/app/zone-ingresses/views/ZoneIngressXdsConfigView.vue'),
-          },
-          {
-            path: 'stats',
-            name: 'zone-ingress-stats-view',
-            component: () => import('@/app/zone-ingresses/views/ZoneIngressStatsView.vue'),
-          },
-          {
-            path: 'clusters',
-            name: 'zone-ingress-clusters-view',
-            component: () => import('@/app/zone-ingresses/views/ZoneIngressClustersView.vue'),
-          },
+          ...networking('zone-ingress'),
           {
             path: 'config',
             name: 'zone-ingress-config-view',

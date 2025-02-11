@@ -4,6 +4,7 @@
     :params="{
       mesh: '',
       proxy: '',
+      proxyType: '',
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
@@ -17,10 +18,11 @@
     <AppView>
       <XCard>
         <DataLoader
-          :src="uri(sources, '/meshes/:mesh/dataplanes/:name/stats/:address', {
-            mesh: route.params.mesh,
+          :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
+            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
             name: route.params.proxy,
-            address: props.networking.inboundAddress,
+            mesh: route.params.mesh || '*',
+            socketAddress: props.networking.inboundAddress,
           })"
           v-slot="{ data: statsData, refresh }"
         >

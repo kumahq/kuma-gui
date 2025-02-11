@@ -1,4 +1,4 @@
-import type { components } from '@/types/auto-generated.d'
+import type { components } from '@kumahq/kuma-http-api'
 type GeneratedMeshService = components['schemas']['MeshServiceItem']
 type GeneratedMeshServiceList = components['responses']['MeshServiceList']['content']['application/json']
 

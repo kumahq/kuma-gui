@@ -2,9 +2,9 @@
   <RouteView
     name="zone-egress-detail-view"
     :params="{
+      inactive: Boolean,
       subscription: '',
       proxy: '',
-      inactive: false,
     }"
     v-slot="{ t, route, me, uri }"
   >
@@ -61,8 +61,9 @@
         </XAboutCard>
 
         <DataLoader
-          :src="uri(sources, '/connections/stats/for/:proxyType/:name/:socketAddress', {
+          :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
             name: route.params.proxy,
+            mesh: '*',
             socketAddress: props.data.zoneEgress.socketAddress,
             proxyType: 'zone-egress',
           })"

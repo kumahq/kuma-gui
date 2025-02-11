@@ -3,7 +3,7 @@ import createClient from 'openapi-fetch'
 import { HostnameGenerator } from './data/HostnameGenerator'
 import { defineSources } from '../application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import { paths } from '@/types/auto-generated'
+import type { paths } from '@kumahq/kuma-http-api'
 
 export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
