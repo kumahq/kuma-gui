@@ -34,9 +34,6 @@ Feature: Dataplane details for built-in gateway
           mTLS:
             certificateExpirationTime: 2023-10-31T00:00:00Z
             lastCertificateRegeneration: 2023-10-01T00:00:00Z
-            certificateRegenerations: 5
-            issuedBackend: foo
-            supportedBackends: foobar
           subscriptions:
             - controlPlaneInstanceId: 'dpp-1-cp-instance-id'
               connectTime: 2021-02-17T07:33:36.412683Z
