@@ -15,7 +15,7 @@
     "@kong-ui-public/app-layout": "^4.3.8",
     "@kong-ui-public/i18n": "^2.2.10",
     "@kong/icons": "^1.21.1",
-    "@kong/kongponents": "^9.18.5",
+    "@kong/kongponents": "^9.21.1",
     "@vue/shared": "^3.5.13",
     "@vueuse/core": "^12.5.0",
     "brandi": "^5.0.0",
