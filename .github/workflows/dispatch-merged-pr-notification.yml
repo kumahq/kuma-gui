@@ -11,7 +11,7 @@ on:
       - master
       - release-[0-9]+.[0-9]+
 
-permissions: {}
+permissions: {} # disables permissions for all of the available permissions
 
 jobs:
   dispatch-merged-pr-notififcation:
