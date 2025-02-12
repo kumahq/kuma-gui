@@ -15,6 +15,8 @@ export const ZoneIngress = {
   fromObject: (item: PartialZoneIngress) => {
     return {
       ...item,
+      listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
+
       config: item,
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
@@ -39,6 +41,7 @@ const InternalZoneIngress = {
   fromObject: (item: PartialInternalZoneIngress) => {
     return {
       ...item,
+      listenerAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}_${item.networking.port}` : '',
       availableServices: Array.isArray(item.availableServices) ? item.availableServices : [],
       socketAddress: item.networking?.address && item.networking?.port ? `${item.networking.address}:${item.networking.port}` : '',
       advertisedSocketAddress: item.networking?.advertisedAddress && item.networking?.advertisedPort ? `${item.networking.advertisedAddress}:${item.networking.advertisedPort}` : '',

@@ -15,6 +15,7 @@ export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   state: NonNullable<PartialDataplaneInbound['state']>
   addressPort: string
   serviceAddressPort: string
+  socketAddress: string
   listenerAddress: string
   portName: string
 }
@@ -77,6 +78,7 @@ export const DataplaneNetworking = {
           // this will never get set seeing as a gateway proxy never has a service
           serviceAddressPort: '',
           // we never set this currently as we never need it for a gateway
+          socketAddress: '',
           listenerAddress: '',
           // not available for gateway
           portName: '',
@@ -90,6 +92,7 @@ export const DataplaneNetworking = {
             name: `localhost_${item.port}`,
             // the portName adds another way of referencing the port, usable with MeshService
             portName: item.name?.length ? item.name : '',
+            socketAddress: `${address}_${item.port}`,
             listenerAddress: `${address}_${item.port}`,
             // If a health property is unset the inbound is considered healthy
             state: typeof item.state !== 'undefined' ? item.state : 'Ready',
