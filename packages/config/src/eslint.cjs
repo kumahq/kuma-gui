@@ -8,9 +8,8 @@ const eslint = require('@eslint/js')
 const nounsanitized = require('eslint-plugin-no-unsanitized')
 const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
 const globals = require('globals')
+const escape = require('escape-string-regexp')
 const $config = dirname(require.resolve('@kumahq/config'))
-
-const escape = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d')
 
 const workspacePackage = JSON.parse(
   read(resolve($config, '../../../package.json'), 'utf-8'),
