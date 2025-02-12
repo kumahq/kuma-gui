@@ -20,54 +20,6 @@ export const networking = (prefix: string) => {
 
   ]
 }
-export const zones = (prefix: string): RouteRecordRaw[] => {
-  return [
-    {
-      path: 'inbound/:connection',
-      name: `${prefix}-connection-inbound-summary-view`,
-      component: () => import('@/app/connections/views/zones/ConnectionInboundSummaryView.vue'),
-      children: [
-        {
-          path: 'stats',
-          name: `${prefix}-connection-inbound-summary-stats-view`,
-          component: () => import('@/app/connections/views/zones/ConnectionInboundSummaryStatsView.vue'),
-        },
-        {
-          path: 'clusters',
-          name: `${prefix}-connection-inbound-summary-clusters-view`,
-          component: () => import('@/app/connections/views/zones/ConnectionInboundSummaryClustersView.vue'),
-        },
-        {
-          path: 'xds-config',
-          name: `${prefix}-connection-inbound-summary-xds-config-view`,
-          component: () => import('@/app/connections/views/zones/ConnectionInboundSummaryXdsConfigView.vue'),
-        },
-      ],
-    },
-    {
-      path: 'outbound/:connection',
-      name: `${prefix}-connection-outbound-summary-view`,
-      component: () => import('@/app/connections/views/zones/ConnectionOutboundSummaryView.vue'),
-      children: [
-        {
-          path: 'stats',
-          name: `${prefix}-connection-outbound-summary-stats-view`,
-          component: () => import('@/app/connections/views/zones/ConnectionOutboundSummaryStatsView.vue'),
-        },
-        {
-          path: 'clusters',
-          name: `${prefix}-connection-outbound-summary-clusters-view`,
-          component: () => import('@/app/connections/views/zones/ConnectionOutboundSummaryClustersView.vue'),
-        },
-        {
-          path: 'xds-config',
-          name: `${prefix}-connection-outbound-summary-xds-config-view`,
-          component: () => import('@/app/connections/views/zones/ConnectionOutboundSummaryXdsConfigView.vue'),
-        },
-      ],
-    },
-  ]
-}
 export const routes = (prefix: string): RouteRecordRaw[] => {
   return [
     {

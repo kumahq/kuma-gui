@@ -53,9 +53,11 @@
 
 <script lang="ts" setup>
 import type { DataplaneNetworking } from '@/app/data-planes/data/'
+import type { ZoneEgress } from '@/app/zone-egresses/data/'
+import type { ZoneIngress } from '@/app/zone-ingresses/data/'
 const props = defineProps<{
   data: Record<string, any>
-  networking: DataplaneNetworking
+  networking: DataplaneNetworking | ZoneIngress['networking'] | ZoneEgress['networking']
   routeName: string
 }>()
 </script>

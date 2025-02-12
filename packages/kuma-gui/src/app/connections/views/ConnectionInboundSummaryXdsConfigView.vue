@@ -4,6 +4,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      proxyType: '',
       mesh: '',
       proxy: '',
       connection: '',
@@ -17,10 +18,11 @@
     />
     <AppView>
       <DataLoader
-        :src="uri(sources, '/meshes/:mesh/dataplanes/:dataplane/inbound/:inbound/xds', {
-          mesh: route.params.mesh,
-          dataplane: route.params.proxy,
+        :src="uri(sources, '/connections/xds/for/:proxyType/:name/:mesh/inbound/:inbound', {
+          mesh: route.params.mesh || '*',
+          name: route.params.proxy,
           inbound: `${props.data.port}`,
+          proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
         })"
         v-slot="{ data: raw, refresh }"
       >
