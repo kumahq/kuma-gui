@@ -5,8 +5,11 @@
   "overrides": {
     "@cucumber/messages": "^27.0.2"
   },
+  "dependencies": {
+    "@kumahq/config": "*"
+  },
   "engines": {
-    "node": ">=20.9",
-    "npm": "^10.0.0"
+    "node": ">=20.18",
+    "npm": "^10.8.2"
   }
 }

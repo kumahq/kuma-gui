@@ -1,4 +1,5 @@
 NODE_VERSION?=v$(shell cat .nvmrc)
+NPM_VERSION?=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r '.engines.npm')
 
 .PHONY: check/node
 check/node:
@@ -6,6 +7,10 @@ check/node:
 		echo "Make sure node-$(NODE_VERSION) is installed (see .nvmrc)"; \
 		exit 1; \
 	)
+	@npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null && ( \
+		echo "Make sure npm@$(NPM_VERSION) is installed. Try npm install -g npm@$(NPM_VERSION)"; \
+		exit 1; \
+	) || (exit 0)
 
 .PHONY: .lint
 .lint: lint/js lint/ts lint/css lint/lock lint/gherkin

@@ -1,6 +1,12 @@
 {
   "type": "object",
   "definitions": {
+    "node": {
+      "type": "string"
+    },
+    "npm": {
+      "type": "string"
+    },
     "caretOnlyVersion": {
       "type": "string",
       "pattern": "^\\^"
@@ -20,7 +26,14 @@
   },
   "properties": {
     "engines": {
-      "not": {}
+      "patternProperties": {
+        "node": {
+          "$ref": "#/definitions/node"
+        },
+        "npm": {
+          "$ref": "#/definitions/npm"
+        }
+      }
     },
     "dependencies": {
       "type": "object",

@@ -8,9 +8,16 @@ const eslint = require('@eslint/js')
 const nounsanitized = require('eslint-plugin-no-unsanitized')
 const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
 const globals = require('globals')
+const escape = require('escape-string-regexp')
 const $config = dirname(require.resolve('@kumahq/config'))
 
-const packageSchema = JSON.parse(read(resolve(`${$config}/package.schema.json`)).toString())
+const workspacePackage = JSON.parse(
+  read(resolve($config, '../../../package.json'), 'utf-8'),
+)
+
+const packageSchema = JSON.parse(
+  read(resolve(`${$config}/package.schema.json`), 'utf-8'),
+)
 
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
@@ -63,21 +70,38 @@ function createEslintConfig(
     tsConfigPath = 'tsconfig.json',
     componentIgnorePatterns = [],
     versionIgnorePatterns = {},
+    workspaceRoot = false,
   } = {
     tsConfigPath: 'tsconfig.json',
     componentIgnorePatterns: [],
     versionIgnorePatterns: {},
+    workspaceRoot: false,
   },
 ) {
 
-  ((properties) => {
+  // amend our package.json schema depending on arguments
+  ((schema) => {
+    // 1. include any ignored version patterns
     ['dependencies', 'devDependencies', 'peerDependencies'].forEach((item) => {
-      properties[item].patternProperties = {
-        ...properties[item].patternProperties,
+      schema.properties[item].patternProperties = {
+        ...schema.properties[item].patternProperties,
         ...versionIgnorePatterns[item] ?? {},
       }
     })
-  })(packageSchema.properties)
+
+    // 2. Take engines from the root of kumahq/kuma-gui and make sure
+    // any other workspace root using this linter use the same engines
+    Object.entries(workspacePackage.engines).forEach(([key, value]) => {
+      schema.definitions[key].pattern = `^${escape(value)}$`
+    })
+
+    // 3. Any non-root package.json files shouldn't ever specify `engines`
+    if (!workspaceRoot) {
+      schema.properties.engines = {
+        not: {},
+      }
+    }
+  })(packageSchema)
 
   const vueTsConfig = defineConfig(
     ...vuePlugin.configs['flat/recommended'],
@@ -149,6 +173,12 @@ function createEslintConfig(
   }
 
   return [
+    // when linting workspaceRoots we want to ignore
+    // sub-packages which are linted separately
+    workspaceRoot ? {
+      ignores: workspacePackage.workspaces,
+    } : {},
+    //
     eslint.configs.recommended,
     nounsanitized.configs.recommended,
     ...vueTsConfig,

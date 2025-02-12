@@ -23,3 +23,6 @@ clean: .clean ## Dev: Remove all `node_modules` recursively
 
 .PHONY: install
 install: .install ## Dev: Install all dependencies
+
+.PHONY: lint
+lint: lint/js ## Dev: Run lint checks on the workspace root only. Note: individual sub projects have their own `make lint`
