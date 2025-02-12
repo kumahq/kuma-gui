@@ -9,7 +9,7 @@
     "@kumahq/config": "*"
   },
   "engines": {
-    "node": ">=20.9",
+    "node": ">=20.17",
     "npm": "^10.8.2"
   }
 }
