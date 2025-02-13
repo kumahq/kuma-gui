@@ -1,4 +1,7 @@
+import { TarWriter } from '@gera2ld/tarjs'
+
 import { ZoneIngressOverview, ZoneIngress } from './data'
+import { YAML } from '@/app/application'
 import type { DataSourceResponse, Source } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -68,6 +71,70 @@ export const sources = (source: Source, api: KumaApi) => {
 
       return await api.getZoneIngress({ name }, { format: 'kubernetes' })
     },
+
+    '/zone-ingresses/:name/as/tarball/:spec': async (params) => {
+      const { name } = params
+      const spec = JSON.parse(params.spec)
+      const requests = Object.entries(spec).filter(([_, value]) => {
+        return value
+      }).reduce((prev, [key]) => {
+        switch (key) {
+          case 'proxy':
+            prev.push(async () => {
+              return {
+                name: 'zone-ingress.yaml',
+                content: YAML.stringify(await api.getZoneIngress({ name })),
+              }
+            })
+            break
+          case 'xds':
+            prev.push(async () => {
+              return {
+                name: 'xds.json',
+                content: JSON.stringify(await api.getZoneIngressXds({
+                  name,
+                }, {
+                  include_eds: spec.eds,
+                }), null, 2),
+              }
+            })
+            break
+          case 'stats':
+            prev.push(async () => {
+              return {
+                name: 'stats.txt',
+                content: await api.getZoneIngressStats({
+                  name,
+                }),
+              }
+            })
+            break
+          case 'clusters':
+            prev.push(async () => {
+              return {
+                name: 'clusters.txt',
+                content: await api.getZoneIngressClusters({
+                  name,
+                }),
+              }
+            })
+            break
+        }
+        return prev
+      }, [] as (() => Promise<{ name: string, content: string }>)[])
+
+      const files = await Promise.all(requests.map(item => item()))
+      const tarball = new TarWriter()
+      const id = `${name}`
+      files.forEach(({ name, content }) => {
+        tarball.addFile(`${id}/${name}`, content)
+      })
+      return {
+        name: `${id}.tar`,
+        url: URL.createObjectURL(new Blob([await tarball.write()], { type: 'application/tar' })),
+      }
+    },
+
 
     '/zone-ingress-overviews': async (params) => {
       const { size } = params

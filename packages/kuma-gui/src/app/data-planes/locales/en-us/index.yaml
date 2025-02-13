@@ -59,7 +59,7 @@ data-planes:
         options:
           xds: XDS Configuration
           eds: Include EDS
-          dataplane: Dataplane Configuration
+          proxy: Dataplane Configuration
           policies: Policies
           clusters: Envoy Clusters
           stats: Envoy Stats

@@ -220,7 +220,7 @@ const specs = ref({
   xds: true,
   clusters: true,
   stats: true,
-  dataplane: true,
+  proxy: true,
   policies: true,
 })
 const downloadBundle = (close: () => void) => async (bundle: { name: string, url: string }) => {
