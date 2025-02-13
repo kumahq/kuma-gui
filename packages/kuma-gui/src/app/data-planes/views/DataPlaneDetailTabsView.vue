@@ -122,9 +122,9 @@
                       <XLayout
                         type="separated"
                       >
-                        <template
-                          v-for="bundle in [downloadBundle(toggle)]"
-                          :key="typeof bundle"
+                        <XDownload
+                          @start="toggle"
+                          v-slot="{ download: bundle }"
                         >
                           <DataLoader
                             variant="spinner"
@@ -153,7 +153,7 @@
                               </XAlert>
                             </template>
                           </DataLoader>
-                        </template>
+                        </XDownload>
                         <XAction
                           appearance="primary"
                           type="submit"
@@ -223,16 +223,6 @@ const specs = ref({
   dataplane: true,
   policies: true,
 })
-const downloadBundle = (close: () => void) => async (bundle: { name: string, url: string }) => {
-  const a = document.createElement('a')
-  a.download = bundle.name
-  a.href = bundle.url
-  setTimeout(() => { window.URL.revokeObjectURL(a.href) }, 60000)
-  await Promise.resolve()
-  a.click()
-  await Promise.resolve()
-  close()
-}
 </script>
 <style lang="scss" scoped>
   form {
