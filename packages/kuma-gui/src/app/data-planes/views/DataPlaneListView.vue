@@ -36,6 +36,7 @@
               ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
             }"
             @change="(e) => route.update({
+              page: 1,
               ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
             })"
           />
@@ -43,7 +44,7 @@
           <XSelect
             label="Type"
             :selected="route.params.dataplaneType"
-            @change="(value: string) => route.update({ dataplaneType: value })"
+            @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
           >
             <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
               <XIcon

@@ -237,6 +237,7 @@
                   tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
                 }"
                 @change="(e) => route.update({
+                  page: 1,
                   ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
                 })"
               />

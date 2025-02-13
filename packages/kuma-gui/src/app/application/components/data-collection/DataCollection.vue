@@ -73,8 +73,11 @@
               })
             }"
             @page-size-change="({ pageSize }: SizeChangeEvent) => {
+              // update page alongside new pageSize such that users can continue to watch on the same resource chunk
+              const offset = props.pageSize * Math.max(props.page - 1, 0)
+              const page = Math.floor(offset / pageSize) + 1
               change({
-                page: props.page,
+                page: page,
                 size: pageSize,
               })
             }"
