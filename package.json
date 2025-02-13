@@ -3,7 +3,8 @@
     "packages/*"
   ],
   "overrides": {
-    "@cucumber/messages": "^27.0.2"
+    "@cucumber/messages": "^27.0.2",
+    "esbuild": "^0.25.0"
   },
   "dependencies": {
     "@kumahq/config": "*"
