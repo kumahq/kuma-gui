@@ -1,6 +1,7 @@
 .PHONY: .install
 .install: check/node
-	@npm install
+	@cd $(NPM_WORKSPACE_ROOT) \
+		&& npm install
 
 .PHONY: .install/sync
 .install/sync:

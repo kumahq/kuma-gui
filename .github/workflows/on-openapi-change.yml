@@ -1,0 +1,97 @@
+name: 'On OpenAPI Change'
+
+# Ensures that only one workflow is run per branch at a time.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - rebuild_types
+  #
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read # for checking out the repository (e.g. actions/checkout)
+  # pull-requests: write # for reading, and creating pull requests (via peter-evans/create-pull-request)
+
+jobs:
+  rebuild-types:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    env:
+      REPO: kumahq/kuma
+    #   SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
+    #   BRANCH: master #${{ github.event.workflow_run.head_branch || inputs.branch }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        id: node-modules-cache
+        with:
+          path: |
+            **/node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - id: git-sha
+        run: |
+          printf "sha=" "$(make -C packages/kuma-http-api git/sha)" >> "$GITHUB_OUTPUT"
+      - id: git-last-tag
+        run: |
+          printf "tag=" "$(make -C packages/kuma-http-api git/last-tag)" >> "$GITHUB_OUTPUT"
+      - env:
+          SHA: ${{ steps.git-sha.outputs.sha }}
+          TAG: ${{ steps.git-tag.outputs.tag }}
+        run: |
+          echo $SHA
+          echo $TAG
+          echo ${{ env.SHA }}
+          echo ${{ env.TAG }}
+      - run: |
+          make -C packages/kuma-http-api build
+          make -C packages/kuma-gui lint/script
+
+      # - uses: actions/create-github-app-token@67e27a7eb7db372a1c61a7f9bdab8699e9ee57f7 # v1.11.3
+      #   id: github-app-token
+      #   with:
+      #     app-id: ${{ secrets.APP_ID }}
+      #     private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      #     # Access to kuma needs to be explicitly included here so that a pull request can be opened in that repository.
+      #     owner: ${{ github.repository_owner }}
+      #     repositories: "kuma-gui"
+
+      # - uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7.0.6
+      #   with:
+      #     # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t
+      #     # need to trigger workflows `on: push` or `on: pull_request`.
+      #     # However, we definitely need to trigger workflows (e.g. to run test
+      #     # workflows on the PR). Instead, we should use a personal access
+      #     # token (PAT). See
+      #     # https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs
+      #     # for a more detailed explanation.
+      #     token: ${{ steps.github-app-token.outputs.token }}
+      #     commit-message: |
+      #       chore(types): rebuild @kumahq/kuma-http-api from ${{ env.OLD_SHA }} to ${{ env.SHA }}
+      #
+      #       Rebuilds ${{ github.repository }}:@kumahq/kuma-http-api to:
+      #       [${{ env.BRANCH }}@${{ env.SHA }}](https://github.com/${{ env.SOURCE_REPOSITORY }}/tree/${{ env.SHA }})
+      #     committer: GitHub <noreply@github.com>
+      #     author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+      #     team-reviewers: kuma-maintainers
+      #     signoff: true
+      #     branch: chore/update-types-${{ env.BRANCH }}
+      #     delete-branch: true
+      #     title: 'chore(types): rebuild @kumahq/kuma-http-api from ${{ env.OLD_SHA }} to ${{ env.SHA }}'
+      #     labels: ci/skip-e2e-test,${{ env.BRANCH }}
+      #     body: |
+      #       Bumps ${{ github.repository }} to version [${{ env.BRANCH }}@${{ env.SHA }}](https://github.com/${{ github.repository }}/tree/${{ env.SHA }})
+      #     draft: false
+

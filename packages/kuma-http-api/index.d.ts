@@ -1357,7 +1357,7 @@ export interface components {
                 from?: {
                     /** @description Default is a configuration specific to the group of clients referenced in
                      *     'targetRef' */
-                    default?: {
+                    default: {
                         backends?: {
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
@@ -1375,8 +1375,8 @@ export interface components {
                                      *       }
                                      *     ] */
                                     json?: {
-                                        key?: string;
-                                        value?: string;
+                                        key: string;
+                                        value: string;
                                     }[];
                                     /** @default false */
                                     omitEmptyValues: boolean;
@@ -1404,8 +1404,8 @@ export interface components {
                                  *     ]
                                  */
                                 attributes?: {
-                                    key?: string;
-                                    value?: string;
+                                    key: string;
+                                    value: string;
                                 }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
@@ -1453,8 +1453,8 @@ export interface components {
                                      *       }
                                      *     ] */
                                     json?: {
-                                        key?: string;
-                                        value?: string;
+                                        key: string;
+                                        value: string;
                                     }[];
                                     /** @default false */
                                     omitEmptyValues: boolean;
@@ -1506,7 +1506,7 @@ export interface components {
                  *     selecting all inbound traffic, as L7 matching is not yet implemented. */
                 rules?: {
                     /** @description Default contains configuration of the inbound access logging */
-                    default?: {
+                    default: {
                         backends?: {
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
@@ -1524,8 +1524,8 @@ export interface components {
                                      *       }
                                      *     ] */
                                     json?: {
-                                        key?: string;
-                                        value?: string;
+                                        key: string;
+                                        value: string;
                                     }[];
                                     /** @default false */
                                     omitEmptyValues: boolean;
@@ -1553,8 +1553,8 @@ export interface components {
                                  *     ]
                                  */
                                 attributes?: {
-                                    key?: string;
-                                    value?: string;
+                                    key: string;
+                                    value: string;
                                 }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
@@ -1602,8 +1602,8 @@ export interface components {
                                      *       }
                                      *     ] */
                                     json?: {
-                                        key?: string;
-                                        value?: string;
+                                        key: string;
+                                        value: string;
                                     }[];
                                     /** @default false */
                                     omitEmptyValues: boolean;
@@ -1656,7 +1656,7 @@ export interface components {
                 to?: {
                     /** @description Default is a configuration specific to the group of destinations referenced in
                      *     'targetRef' */
-                    default?: {
+                    default: {
                         backends?: {
                             /** @description FileBackend defines configuration for file based access logs */
                             file?: {
@@ -1674,8 +1674,8 @@ export interface components {
                                      *       }
                                      *     ] */
                                     json?: {
-                                        key?: string;
-                                        value?: string;
+                                        key: string;
+                                        value: string;
                                     }[];
                                     /** @default false */
                                     omitEmptyValues: boolean;
@@ -1703,8 +1703,8 @@ export interface components {
                                  *     ]
                                  */
                                 attributes?: {
-                                    key?: string;
-                                    value?: string;
+                                    key: string;
+                                    value: string;
                                 }[];
                                 /**
                                  * @description Body is a raw string or an OTLP any value as described at
@@ -1752,8 +1752,8 @@ export interface components {
                                      *       }
                                      *     ] */
                                     json?: {
-                                        key?: string;
-                                        value?: string;
+                                        key: string;
+                                        value: string;
                                     }[];
                                     /** @default false */
                                     omitEmptyValues: boolean;
@@ -2082,6 +2082,217 @@ export interface components {
                          *     `MeshSubset` and `MeshServiceSubset` */
                         tags?: {
                             [key: string]: string;
+                        };
+                    };
+                }[];
+                /** @description Rules defines inbound circuit breaker configurations. Currently limited to
+                 *     selecting all inbound traffic, as L7 matching is not yet implemented. */
+                rules?: {
+                    /** @description Default contains configuration of the inbound circuit breaker */
+                    default?: {
+                        /** @description ConnectionLimits contains configuration of each circuit breaking limit,
+                         *     which when exceeded makes the circuit breaker to become open (no traffic
+                         *     is allowed like no current is allowed in the circuits when physical
+                         *     circuit breaker ir open) */
+                        connectionLimits?: {
+                            /**
+                             * Format: int32
+                             * @description The maximum number of connection pools per cluster that are concurrently
+                             *     supported at once. Set this for clusters which create a large number of
+                             *     connection pools.
+                             */
+                            maxConnectionPools?: number;
+                            /**
+                             * Format: int32
+                             * @description The maximum number of connections allowed to be made to the upstream
+                             *     cluster.
+                             */
+                            maxConnections?: number;
+                            /**
+                             * Format: int32
+                             * @description The maximum number of pending requests that are allowed to the upstream
+                             *     cluster. This limit is applied as a connection limit for non-HTTP
+                             *     traffic.
+                             */
+                            maxPendingRequests?: number;
+                            /**
+                             * Format: int32
+                             * @description The maximum number of parallel requests that are allowed to be made
+                             *     to the upstream cluster. This limit does not apply to non-HTTP traffic.
+                             */
+                            maxRequests?: number;
+                            /**
+                             * Format: int32
+                             * @description The maximum number of parallel retries that will be allowed to
+                             *     the upstream cluster.
+                             */
+                            maxRetries?: number;
+                        };
+                        /** @description OutlierDetection contains the configuration of the process of dynamically
+                         *     determining whether some number of hosts in an upstream cluster are
+                         *     performing unlike the others and removing them from the healthy load
+                         *     balancing set. Performance might be along different axes such as
+                         *     consecutive failures, temporal success rate, temporal latency, etc.
+                         *     Outlier detection is a form of passive health checking. */
+                        outlierDetection?: {
+                            /** @description The base time that a host is ejected for. The real time is equal to
+                             *     the base time multiplied by the number of times the host has been
+                             *     ejected. */
+                            baseEjectionTime?: string;
+                            /** @description Contains configuration for supported outlier detectors */
+                            detectors?: {
+                                /** @description Failure Percentage based outlier detection functions similarly to success
+                                 *     rate detection, in that it relies on success rate data from each host in
+                                 *     a cluster. However, rather than compare those values to the mean success
+                                 *     rate of the cluster as a whole, they are compared to a flat
+                                 *     user-configured threshold. This threshold is configured via the
+                                 *     outlierDetection.failurePercentageThreshold field.
+                                 *     The other configuration fields for failure percentage based detection are
+                                 *     similar to the fields for success rate detection. As with success rate
+                                 *     detection, detection will not be performed for a host if its request
+                                 *     volume over the aggregation interval is less than the
+                                 *     outlierDetection.detectors.failurePercentage.requestVolume value.
+                                 *     Detection also will not be performed for a cluster if the number of hosts
+                                 *     with the minimum required request volume in an interval is less than the
+                                 *     outlierDetection.detectors.failurePercentage.minimumHosts value. */
+                                failurePercentage?: {
+                                    /**
+                                     * Format: int32
+                                     * @description The minimum number of hosts in a cluster in order to perform failure
+                                     *     percentage-based ejection. If the total number of hosts in the cluster is
+                                     *     less than this value, failure percentage-based ejection will not be
+                                     *     performed.
+                                     */
+                                    minimumHosts?: number;
+                                    /**
+                                     * Format: int32
+                                     * @description The minimum number of total requests that must be collected in one
+                                     *     interval (as defined by the interval duration above) to perform failure
+                                     *     percentage-based ejection for this host. If the volume is lower than this
+                                     *     setting, failure percentage-based ejection will not be performed for this
+                                     *     host.
+                                     */
+                                    requestVolume?: number;
+                                    /**
+                                     * Format: int32
+                                     * @description The failure percentage to use when determining failure percentage-based
+                                     *     outlier detection. If the failure percentage of a given host is greater
+                                     *     than or equal to this value, it will be ejected.
+                                     */
+                                    threshold?: number;
+                                };
+                                /** @description In the default mode (outlierDetection.splitExternalLocalOriginErrors is
+                                 *     false) this detection type takes into account a subset of 5xx errors,
+                                 *     called "gateway errors" (502, 503 or 504 status code) and local origin
+                                 *     failures, such as timeout, TCP reset etc.
+                                 *     In split mode (outlierDetection.splitExternalLocalOriginErrors is true)
+                                 *     this detection type takes into account a subset of 5xx errors, called
+                                 *     "gateway errors" (502, 503 or 504 status code) and is supported only by
+                                 *     the http router. */
+                                gatewayFailures?: {
+                                    /**
+                                     * Format: int32
+                                     * @description The number of consecutive gateway failures (502, 503, 504 status codes)
+                                     *     before a consecutive gateway failure ejection occurs.
+                                     */
+                                    consecutive?: number;
+                                };
+                                /** @description This detection type is enabled only when
+                                 *     outlierDetection.splitExternalLocalOriginErrors is true and takes into
+                                 *     account only locally originated errors (timeout, reset, etc).
+                                 *     If Envoy repeatedly cannot connect to an upstream host or communication
+                                 *     with the upstream host is repeatedly interrupted, it will be ejected.
+                                 *     Various locally originated problems are detected: timeout, TCP reset,
+                                 *     ICMP errors, etc. This detection type is supported by http router and
+                                 *     tcp proxy. */
+                                localOriginFailures?: {
+                                    /**
+                                     * Format: int32
+                                     * @description The number of consecutive locally originated failures before ejection
+                                     *     occurs. Parameter takes effect only when splitExternalAndLocalErrors
+                                     *     is set to true.
+                                     */
+                                    consecutive?: number;
+                                };
+                                /** @description Success Rate based outlier detection aggregates success rate data from
+                                 *     every host in a cluster. Then at given intervals ejects hosts based on
+                                 *     statistical outlier detection. Success Rate outlier detection will not be
+                                 *     calculated for a host if its request volume over the aggregation interval
+                                 *     is less than the outlierDetection.detectors.successRate.requestVolume
+                                 *     value.
+                                 *     Moreover, detection will not be performed for a cluster if the number of
+                                 *     hosts with the minimum required request volume in an interval is less
+                                 *     than the outlierDetection.detectors.successRate.minimumHosts value.
+                                 *     In the default configuration mode
+                                 *     (outlierDetection.splitExternalLocalOriginErrors is false) this detection
+                                 *     type takes into account all types of errors: locally and externally
+                                 *     originated.
+                                 *     In split mode (outlierDetection.splitExternalLocalOriginErrors is true),
+                                 *     locally originated errors and externally originated (transaction) errors
+                                 *     are counted and treated separately. */
+                                successRate?: {
+                                    /**
+                                     * Format: int32
+                                     * @description The number of hosts in a cluster that must have enough request volume to
+                                     *     detect success rate outliers. If the number of hosts is less than this
+                                     *     setting, outlier detection via success rate statistics is not performed
+                                     *     for any host in the cluster.
+                                     */
+                                    minimumHosts?: number;
+                                    /**
+                                     * Format: int32
+                                     * @description The minimum number of total requests that must be collected in one
+                                     *     interval (as defined by the interval duration configured in
+                                     *     outlierDetection section) to include this host in success rate based
+                                     *     outlier detection. If the volume is lower than this setting, outlier
+                                     *     detection via success rate statistics is not performed for that host.
+                                     */
+                                    requestVolume?: number;
+                                    /** @description This factor is used to determine the ejection threshold for success rate
+                                     *     outlier ejection. The ejection threshold is the difference between
+                                     *     the mean success rate, and the product of this factor and the standard
+                                     *     deviation of the mean success rate: mean - (standard_deviation *
+                                     *     success_rate_standard_deviation_factor).
+                                     *     Either int or decimal represented as string. */
+                                    standardDeviationFactor?: number | string;
+                                };
+                                /** @description In the default mode (outlierDetection.splitExternalAndLocalErrors is
+                                 *     false) this detection type takes into account all generated errors:
+                                 *     locally originated and externally originated (transaction) errors.
+                                 *     In split mode (outlierDetection.splitExternalLocalOriginErrors is true)
+                                 *     this detection type takes into account only externally originated
+                                 *     (transaction) errors, ignoring locally originated errors.
+                                 *     If an upstream host is an HTTP-server, only 5xx types of error are taken
+                                 *     into account (see Consecutive Gateway Failure for exceptions).
+                                 *     Properly formatted responses, even when they carry an operational error
+                                 *     (like index not found, access denied) are not taken into account. */
+                                totalFailures?: {
+                                    /**
+                                     * Format: int32
+                                     * @description The number of consecutive server-side error responses (for HTTP traffic,
+                                     *     5xx responses; for TCP traffic, connection failures; for Redis, failure
+                                     *     to respond PONG; etc.) before a consecutive total failure ejection
+                                     *     occurs.
+                                     */
+                                    consecutive?: number;
+                                };
+                            };
+                            /** @description When set to true, outlierDetection configuration won't take any effect */
+                            disabled?: boolean;
+                            /** @description The time interval between ejection analysis sweeps. This can result in
+                             *     both new ejections and hosts being returned to service. */
+                            interval?: string;
+                            /**
+                             * Format: int32
+                             * @description The maximum % of an upstream cluster that can be ejected due to outlier
+                             *     detection. Defaults to 10% but will eject at least one host regardless of
+                             *     the value.
+                             */
+                            maxEjectionPercent?: number;
+                            /** @description Determines whether to distinguish local origin failures from external
+                             *     errors. If set to true the following configuration parameters are taken
+                             *     into account: detectors.localOriginFailures.consecutive */
+                            splitExternalAndLocalErrors?: boolean;
                         };
                     };
                 }[];
@@ -2898,7 +3109,7 @@ export interface components {
                     hostnames?: string[];
                     /** @description Rules contains the routing rules applies to a combination of top-level
                      *     targetRef and the targetRef in this entry. */
-                    rules?: {
+                    rules: {
                         /** @description Default holds routing rules that can be merged with rules from other
                          *     policies. */
                         default: {
@@ -3102,7 +3313,7 @@ export interface components {
                     }[];
                     /** @description TargetRef is a reference to the resource that represents a group of
                      *     request destinations. */
-                    targetRef?: {
+                    targetRef: {
                         /**
                          * @description Kind of the referenced resource
                          * @enum {string}
@@ -4791,7 +5002,7 @@ export interface components {
                 to?: {
                     /** @description Rules contains the routing rules applies to a combination of top-level
                      *     targetRef and the targetRef in this entry. */
-                    rules?: {
+                    rules: {
                         /** @description Default holds routing rules that can be merged with rules from other
                          *     policies. */
                         default: {
@@ -5219,6 +5430,35 @@ export interface components {
                          *     `MeshSubset` and `MeshServiceSubset` */
                         tags?: {
                             [key: string]: string;
+                        };
+                    };
+                }[];
+                /** @description Rules defines inbound tls configurations. Currently limited to
+                 *     selecting all inbound traffic, as L7 matching is not yet implemented. */
+                rules?: {
+                    /** @description Default contains configuration of the inbound tls */
+                    default?: {
+                        /**
+                         * @description Mode defines the behavior of inbound listeners with regard to traffic encryption.
+                         * @enum {string}
+                         */
+                        mode?: "Permissive" | "Strict";
+                        /** @description TlsCiphers section for providing ciphers specification. */
+                        tlsCiphers?: ("ECDHE-ECDSA-AES128-GCM-SHA256" | "ECDHE-ECDSA-AES256-GCM-SHA384" | "ECDHE-ECDSA-CHACHA20-POLY1305" | "ECDHE-RSA-AES128-GCM-SHA256" | "ECDHE-RSA-AES256-GCM-SHA384" | "ECDHE-RSA-CHACHA20-POLY1305")[];
+                        /** @description Version section for providing version specification. */
+                        tlsVersion?: {
+                            /**
+                             * @description Max defines maximum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
+                             * @default TLSAuto
+                             * @enum {string}
+                             */
+                            max: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
+                            /**
+                             * @description Min defines minimum supported version. One of `TLSAuto`, `TLS10`, `TLS11`, `TLS12`, `TLS13`.
+                             * @default TLSAuto
+                             * @enum {string}
+                             */
+                            min: "TLSAuto" | "TLS10" | "TLS11" | "TLS12" | "TLS13";
                         };
                     };
                 }[];
@@ -6360,9 +6600,10 @@ export interface components {
                 /**
                  * @description State of MeshService. Available if there is at least one healthy endpoint. Otherwise, Unavailable.
                  *     It's used for cross zone communication to check if we should send traffic to it, when MeshService is aggregated into MeshMultiZoneService.
+                 * @default Unavailable
                  * @enum {string}
                  */
-                state?: "Available" | "Unavailable";
+                state: "Available" | "Unavailable";
             };
             /**
              * Format: date-time
@@ -7314,7 +7555,18 @@ export interface operations {
     };
     getMeshAccessLogList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -7412,7 +7664,18 @@ export interface operations {
     };
     getMeshCircuitBreakerList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -7510,7 +7773,18 @@ export interface operations {
     };
     getMeshFaultInjectionList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -7608,7 +7882,18 @@ export interface operations {
     };
     getMeshHealthCheckList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -7706,7 +7991,18 @@ export interface operations {
     };
     getMeshHTTPRouteList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -7804,7 +8100,18 @@ export interface operations {
     };
     getMeshLoadBalancingStrategyList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -7902,7 +8209,18 @@ export interface operations {
     };
     getMeshMetricList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8000,7 +8318,18 @@ export interface operations {
     };
     getMeshPassthroughList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8098,7 +8427,18 @@ export interface operations {
     };
     getMeshProxyPatchList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8196,7 +8536,18 @@ export interface operations {
     };
     getMeshRateLimitList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8294,7 +8645,18 @@ export interface operations {
     };
     getMeshRetryList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8392,7 +8754,18 @@ export interface operations {
     };
     getMeshTCPRouteList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8490,7 +8863,18 @@ export interface operations {
     };
     getMeshTimeoutList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8588,7 +8972,18 @@ export interface operations {
     };
     getMeshTLSList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8686,7 +9081,18 @@ export interface operations {
     };
     getMeshTraceList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8784,7 +9190,18 @@ export interface operations {
     };
     getMeshTrafficPermissionList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -8876,7 +9293,18 @@ export interface operations {
     };
     getMeshList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -8971,7 +9399,18 @@ export interface operations {
     };
     getMeshGatewayList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -9063,7 +9502,18 @@ export interface operations {
     };
     getHostnameGeneratorList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -9158,7 +9608,18 @@ export interface operations {
     };
     getMeshExternalServiceList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -9256,7 +9717,18 @@ export interface operations {
     };
     getMeshMultiZoneServiceList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
@@ -9354,7 +9826,18 @@ export interface operations {
     };
     getMeshServiceList: {
         parameters: {
-            query?: never;
+            query?: {
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
             header?: never;
             path: {
                 /** @description name of the mesh */
