@@ -23,6 +23,9 @@ clean: .clean types/clean ## Dev: Remove all `node_modules` recursively and the 
 .PHONY: install
 install: .install ## Dev: Install all dependencies
 
+.PHONY: lint
+lint: lint/js ## Dev: Run lint checks
+
 ## When amending the specs also see `make generate/oas-for-ts` in the main kuma
 ## repository to regenerate the specs before running `make build`
 KUMAHQ_HTTP_API := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-http-api") | .key')

@@ -1,5 +1,5 @@
-# create-gui-pr.yaml is dependent on this name being "Tests"
-name: 'Tests'
+# release.yaml is dependant on this name being "main"
+name: 'main'
 
 # Ensures that only one workflow is run per branch at a time.
 concurrency:
@@ -8,9 +8,14 @@ concurrency:
 
 on:
   push:
-    branches: [master, 'release-[0-9]+.[0-9]+']
+    branches:
+      - master
+      - release-[0-9]+.[0-9]+
   pull_request:
-    types: [opened, reopened, synchronize]
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 permissions:
   contents: read # for checking out the repository (e.g. actions/checkout)
@@ -18,9 +23,6 @@ permissions:
 jobs:
   install-dependencies:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/kuma-gui
     outputs:
       spec_groups: ${{ steps.set-groups.outputs.result }}
     steps:
@@ -48,16 +50,19 @@ jobs:
             const json = {
               'kuma-gui': ci.getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
             }
-
-
             return json
 
   lint-tests:
-    needs: [install-dependencies]
+    needs:
+      - install-dependencies
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: ['kuma-gui', 'config']
+        package:
+          - ./
+          - ./packages/kuma-http-api
+          - ./packages/kuma-gui
+          - ./packages/config
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
@@ -70,14 +75,15 @@ jobs:
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          make -C ./packages/${{ matrix.package }} lint
+          make -C ${{ matrix.package }} lint
 
   cli-tests:
     needs: [install-dependencies]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/kuma-gui
+    strategy:
+      matrix:
+        package:
+          - ./packages/kuma-gui
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
@@ -90,10 +96,11 @@ jobs:
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          make test/unit
+          make -C ${{ matrix.package }} test/unit
 
   browser-tests:
-    needs: [install-dependencies]
+    needs:
+      - install-dependencies
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -102,7 +109,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ['kuma-gui']
+        package:
+          - kuma-gui
         container: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
