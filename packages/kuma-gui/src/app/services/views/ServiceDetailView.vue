@@ -89,6 +89,7 @@
                 ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
               }"
               @change="(e) => route.update({
+                page: 1,
                 ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
               })"
             />
