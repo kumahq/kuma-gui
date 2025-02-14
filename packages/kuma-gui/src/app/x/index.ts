@@ -11,6 +11,7 @@ import XCheckBox from './components/x-checkbox/XCheckbox.vue'
 import XCodeBlock from './components/x-code-block/XCodeBlock.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
 import XDisclosure from './components/x-disclosure/XDisclosure.vue'
+import XDownload from './components/x-download/XDownload.vue'
 import XEmptyState from './components/x-empty-state/XEmptyState.vue'
 import XI18n from './components/x-i18n/XI18n.vue'
 import XIcon from './components/x-icon/XIcon.vue'
@@ -63,6 +64,7 @@ declare module 'vue' {
     XTeleportSlot: typeof XTeleportSlot
     XTooltip: typeof XTooltip
     XDisclosure: typeof XDisclosure
+    XDownload: typeof XDownload
     XAboutCard: typeof XAboutCard
     XInputSwitch: typeof XInputSwitch
     XCheckbox: typeof XCheckBox
@@ -115,6 +117,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XTeleportSlot', XTeleportSlot],
           ['XTooltip', XTooltip],
           ['XDisclosure', XDisclosure],
+          ['XDownload', XDownload],
           ['XAboutCard', XAboutCard],
           ['XInputSwitch', XInputSwitch],
           ['XCheckbox', XCheckBox],
