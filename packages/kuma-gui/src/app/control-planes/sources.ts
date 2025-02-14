@@ -1,3 +1,6 @@
+import { paths } from '@kumahq/kuma-http-api'
+import createClient from 'openapi-fetch'
+
 import { ControlPlaneConfig, GlobalInsight } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
@@ -24,6 +27,11 @@ export const compare = (a: string, b: string) => {
   return 0
 }
 export const sources = (env: Env['var'], api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
+
   return defineSources({
     '/control-plane/addresses': async (): Promise<ControlPlaneAddresses> => {
       return {
@@ -81,7 +89,9 @@ export const sources = (env: Env['var'], api: KumaApi) => {
     },
 
     '/global-insight': async () => {
-      return GlobalInsight.fromObject(await api.getGlobalInsight())
+      const res = await http.GET('/global-insight')
+      
+      return GlobalInsight.fromObject(res.data!)
     },
   })
 }

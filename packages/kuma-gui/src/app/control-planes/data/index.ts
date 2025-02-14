@@ -1,9 +1,9 @@
+import { type paths } from '@kumahq/kuma-http-api'
+
 import type { Config as PartialControlPlaneConfig } from '@/types/config.d'
-import type { GlobalInsight as PartialGlobalInsight } from '@/types/index.d'
 
 export type ControlPlaneConfig = PartialControlPlaneConfig
-
-export type GlobalInsight = PartialGlobalInsight
+export type PartialGlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
 
 export const ControlPlaneConfig = {
   fromObject(partialControlPlaneConfig: PartialControlPlaneConfig): ControlPlaneConfig {
@@ -12,7 +12,19 @@ export const ControlPlaneConfig = {
 }
 
 export const GlobalInsight = {
-  fromObject(partialGlobalInsight: PartialGlobalInsight): GlobalInsight {
-    return partialGlobalInsight
+  fromObject(partialGlobalInsight: PartialGlobalInsight) {
+    return {
+      ...partialGlobalInsight,
+      services: {
+        ...partialGlobalInsight.services,
+        meshServicesGeneric: {
+          total: ['MeshService', 'MeshMultiZoneService', 'MeshExternalService']
+            .map((serviceType) => partialGlobalInsight.resources[serviceType]?.total ?? 0)
+            .reduce((acc, curr) => acc + curr, 0),
+        },
+      },
+    }
   },
 }
+
+export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject>

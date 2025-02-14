@@ -1,4 +1,9 @@
+import { paths } from '@kumahq/kuma-http-api'
+
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+
+type GlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
+
 export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const policyTotal = fake.number.int({ min: 1, max: 100 })
@@ -22,6 +27,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
     headers: {
     },
     body: {
+      createdAt: fake.kuma.nanodate(),
       dataplanes: {
         gatewayBuiltin: fake.kuma.partitionInto({
           online: Number,
@@ -63,6 +69,53 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
           online: zoneIngressOnline,
         },
       },
-    },
-  }
+      resources: {
+        Dataplane: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshAccessLog: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshCircuitBreaker: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshExternalService: {
+          total: fake.number.int({ max: 25 }),
+        },
+        MeshGateway: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshHTTPRoute: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshLoadBalancingStrategy: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshMetric: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshMultiZoneService: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshRetry: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshService: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshTimeout: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshTrace: {
+          total: fake.number.int({ max:25 }),
+        },
+        MeshTrafficPermission: {
+          total: fake.number.int({ max:25 }),
+        },
+        Secret: {
+          total: fake.number.int({ max:25 }),
+        },
+      },
+    } satisfies GlobalInsight,
+  } 
 }
