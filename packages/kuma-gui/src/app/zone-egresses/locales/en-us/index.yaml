@@ -13,6 +13,19 @@ zone-egresses:
         zone-egress-stats-view: 'Stats'
         zone-egress-clusters-view: 'Clusters'
         zone-egress-config-view: 'YAML'
+      download:
+        title: Download bundle
+        description: !!text/markdown |
+          Include the following:
+        error: !!text/markdown |
+          Unable to generate bundle, please try again.
+        action: Download
+        options:
+          xds: XDS Configuration
+          eds: Include EDS
+          proxy: Zone Egress Configuration
+          clusters: Envoy Clusters
+          stats: Envoy Stats
       overview: 'Overview'
       config: 'Configuration'
       subscriptions:

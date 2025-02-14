@@ -91,7 +91,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         return value
       }).reduce((prev, [key]) => {
         switch (key) {
-          case 'dataplane':
+          case 'proxy':
             prev.push(async () => {
               return {
                 name: 'dataplane.yaml',
