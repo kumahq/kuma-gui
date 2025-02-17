@@ -46,7 +46,7 @@
       </ResourceStatus>
 
       <ResourceStatus
-        :total="props.globalInsight.services.internal.total"
+        :total="props.globalInsight.services.meshServicesGeneric.total || props.globalInsight.services.internal.total"
         data-testid="services-status"
       >
         <template #icon>
@@ -58,7 +58,39 @@
         </template>
 
         <template #title>
-          {{ t('main-overview.detail.about.services') }}
+          <XI18n
+            :path="'main-overview.detail.about.services'"
+          />
+        </template>
+
+        <template
+          v-if="props.globalInsight.services.meshServicesGeneric.total && props.globalInsight.services.internal.total > 0"
+          #description
+        >
+          <XI18n
+            :path="'main-overview.detail.about.descriptions.mesh_services'"
+          />
+        </template>
+
+        <template
+          v-if="props.globalInsight.services.meshServicesGeneric.total && props.globalInsight.services.internal.total > 0"
+          #body
+        >
+          <ResourceStatus :total="props.globalInsight.services.internal.total">
+            <template #description>
+              <XI18n
+                :path="'main-overview.detail.about.descriptions.internal_services'"
+              />
+
+              <XIcon
+                name="info"
+              >
+                <XI18n
+                  :path="'main-overview.detail.about.infos.internal_services'"
+                />
+              </XIcon>
+            </template>
+          </ResourceStatus>
         </template>
       </ResourceStatus>
 
@@ -116,6 +148,7 @@ const props = defineProps<{
 .about-card {
   container-type: inline-size;
   container-name: about-card;
+  contain: layout;
 }
 
 .card-header {
