@@ -5,11 +5,13 @@
       zone: '',
       proxy: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <DataSource
-      :src="`/zone-ingress-overviews/${route.params.proxy}`"
-      v-slot="{ data, error }: ZoneIngressOverviewSource"
+      :src="uri(sources, `/zone-ingress-overviews/:name`, {
+        name: route.params.proxy,
+      })"
+      v-slot="{ data, error }"
     >
       <AppView
         :docs="t('zone-ingresses.href.docs')"
@@ -55,6 +57,124 @@
             </XCopyButton>
           </h1>
         </template>
+        <template
+          #actions
+        >
+          <XDisclosure
+            v-slot="{ expanded, toggle }"
+          >
+            <XAction
+              appearance="primary"
+              @click="toggle"
+            >
+              Download Bundle
+            </XAction>
+            <XTeleportTemplate
+              v-if="expanded"
+              :to="{ name: 'modal-layer' }"
+            >
+              <XDisclosure
+                v-slot="{ expanded: downloading, toggle: download }"
+              >
+                <form
+                  @submit.prevent="download"
+                >
+                  <XModal
+                    :title="t('zone-ingresses.routes.item.download.title')"
+                    @cancel="toggle"
+                  >
+                    <fieldset
+                      :disabled="downloading"
+                    >
+                      <XI18n
+                        path="zone-ingresses.routes.item.download.description"
+                      />
+                      <ul>
+                        <template
+                          v-for="(spec, key) in specs"
+                          :key="typeof spec"
+                        >
+                          <li
+                            v-if="key !== 'eds'"
+                          >
+                            <XCheckbox
+                              v-model="specs[key]"
+                              @change="(bool: boolean) => {
+                                if(key === 'xds' && !bool) {
+                                  specs.eds = false
+                                }
+                              }"
+                            >
+                              {{ t(`zone-ingresses.routes.item.download.options.${key}`) }}
+                            </XCheckbox>
+                            <ul
+                              v-if="key === 'xds'"
+                            >
+                              <li>
+                                <XCheckbox
+                                  v-model="specs.eds"
+                                  :disabled="!specs.xds"
+                                >
+                                  {{ t('zone-ingresses.routes.item.download.options.eds') }}
+                                </XCheckbox>
+                              </li>
+                            </ul>
+                          </li>
+                        </template>
+                      </ul>
+                    </fieldset>
+                    <template
+                      #footer-actions
+                    >
+                      <XLayout
+                        type="separated"
+                      >
+                        <template
+                          v-for="bundle in [downloadBundle(toggle)]"
+                          :key="typeof bundle"
+                        >
+                          <DataLoader
+                            variant="spinner"
+                            :src="downloading ? uri(sources, '/zone-ingresses/:name/as/tarball/:spec', {
+                              name: route.params.proxy,
+                              spec: JSON.stringify(
+                                specs,
+                              ),
+                            }, {
+                              cacheControl: 'no-cache',
+                            }) : ''"
+                            @change="bundle"
+                            @error="download"
+                          >
+                            <template
+                              #error
+                            >
+                              <XAlert
+                                appearance="warning"
+                                show-icon
+                              >
+                                <XI18n
+                                  t="zone-ingresses.routes.item.download.error"
+                                />
+                              </XAlert>
+                            </template>
+                          </DataLoader>
+                        </template>
+                        <XAction
+                          appearance="primary"
+                          type="submit"
+                          :disabled="downloading || Object.values(specs).every(bool => !bool)"
+                        >
+                          {{ t('zone-ingresses.routes.item.download.action') }}
+                        </XAction>
+                      </XLayout>
+                    </template>
+                  </XModal>
+                </form>
+              </XDisclosure>
+            </XTeleportTemplate>
+          </XDisclosure>
+        </template>
 
         <DataLoader
           :data="[data]"
@@ -91,5 +211,37 @@
 </template>
 
 <script lang="ts" setup>
-import type { ZoneIngressOverviewSource } from '../sources'
+import { ref } from 'vue'
+
+import { sources } from '../sources'
+const specs = ref({
+  eds: false,
+  xds: true,
+  clusters: true,
+  stats: true,
+  proxy: true,
+})
+const downloadBundle = (close: () => void) => async (bundle: { name: string, url: string }) => {
+  const a = document.createElement('a')
+  a.download = bundle.name
+  a.href = bundle.url
+  setTimeout(() => { window.URL.revokeObjectURL(a.href) }, 60000)
+  await Promise.resolve()
+  a.click()
+  await Promise.resolve()
+  close()
+}
+
 </script>
+<style lang="scss" scoped>
+  form {
+    :deep(p) {
+      margin-bottom: 1em !important;
+    }
+    ul {
+      margin: 0;
+      list-style-type: none;
+    }
+  }
+</style>
+
