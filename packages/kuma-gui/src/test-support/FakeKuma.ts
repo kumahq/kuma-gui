@@ -454,6 +454,27 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     ] as const
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
+
+  resourceNames() {
+    const items = [
+      'Dataplane',
+      'MeshAccessLog',
+      'MeshCircuitBreaker',
+      'MeshExternalService',
+      'MeshGateway',
+      'MeshHTTPRoute',
+      'MeshLoadBalancingStrategy',
+      'MeshMetric',
+      'MeshMultiZoneService',
+      'MeshRetry',
+      'MeshService',
+      'MeshTimeout',
+      'MeshTrace',
+      'MeshTrafficPermission',
+      'Secret',
+    ]
+    return this.faker.helpers.arrayElements(items, { min: 0, max: items.length })
+  }
 }
 
 export default class FakeKuma extends Faker {

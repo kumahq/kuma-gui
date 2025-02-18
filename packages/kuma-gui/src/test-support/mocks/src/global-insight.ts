@@ -70,51 +70,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
         },
       },
       resources: {
-        Dataplane: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshAccessLog: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshCircuitBreaker: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshExternalService: {
-          total: fake.number.int({ max: 25 }),
-        },
-        MeshGateway: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshHTTPRoute: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshLoadBalancingStrategy: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshMetric: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshMultiZoneService: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshRetry: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshService: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshTimeout: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshTrace: {
-          total: fake.number.int({ max:25 }),
-        },
-        MeshTrafficPermission: {
-          total: fake.number.int({ max:25 }),
-        },
-        Secret: {
-          total: fake.number.int({ max:25 }),
-        },
+        ...Object.fromEntries(fake.kuma.resourceNames().map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
       },
     } satisfies GlobalInsight,
   } 
