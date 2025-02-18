@@ -87,6 +87,7 @@ export const ZoneOverview = {
     } as const
     return {
       ...item,
+      id: item.name,
       zoneInsight: insight,
       zone,
       // first check see if the zone is disabled, if not look for the connectedSubscription

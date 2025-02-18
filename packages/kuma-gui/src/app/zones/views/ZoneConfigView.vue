@@ -19,29 +19,25 @@
       })"
       v-slot="{ data: version }"
     >
-      <AppView>
-        <template
-          v-if="props.data.warnings.length > 0"
-          #notifications
+      <AppView
+        :notifications="true"
+      >
+        <XNotification
+          v-for="warning in props.data.warnings"
+          :key="warning.kind"
+          :data-testid="`warning-${warning.kind}`"
+          :uri="`${warning.kind}.${props.data.id}`"
         >
-          <ul>
-            <li
-              v-for="warning in props.data.warnings"
-              :key="warning.kind"
-              :data-testid="`warning-${warning.kind}`"
-            >
-              <XI18n
-                :path="`common.warnings.${warning.kind}`"
-                :params="{
-                  zoneCpVersion: warning.payload.zoneCpVersion ?? '',
-                  ...(warning.kind === 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS' ? {
-                    globalCpVersion: version?.version ?? '',
-                  } : {}),
-                }"
-              />
-            </li>
-          </ul>
-        </template>
+          <XI18n
+            :path="`common.warnings.${warning.kind}`"
+            :params="{
+              zoneCpVersion: warning.payload.zoneCpVersion ?? '',
+              ...(warning.kind === 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS' ? {
+                globalCpVersion: version?.version ?? '',
+              } : {}),
+            }"
+          />
+        </XNotification>
 
         <XCard>
           <XCodeBlock
