@@ -15,12 +15,15 @@ export const GlobalInsight = {
   fromObject(partialGlobalInsight: PartialGlobalInsight) {
     return {
       ...partialGlobalInsight,
-      services: {
-        ...partialGlobalInsight.services,
-        meshServicesGeneric: {
-          total: ['MeshService', 'MeshMultiZoneService', 'MeshExternalService']
-            .map((serviceType) => partialGlobalInsight.resources[serviceType]?.total ?? 0)
-            .reduce((acc, curr) => acc + curr, 0),
+      resources: {
+        MeshService: {
+          total: partialGlobalInsight.resources.MeshService?.total ?? 0,
+        },
+        MeshMultiZoneService: {
+          total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
+        },
+        MeshExternalService: {
+          total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
         },
       },
     }
