@@ -16,10 +16,10 @@ main-overview:
       data_plane_proxies: 'Data Plane Proxies'
       policies: Policies
       descriptions:
-        mesh_services: Mesh*Services
+        mesh_services: MeshServices
         internal_services: Services
       infos:
-        internal_services: Some of the meshes are in a transition and therefore some of the services are not migrated to MeshService yet.
+        internal_services: Some of the meshes are in a transition and therefore some of the services are not migrated to MeshService yet. MeshServices may include all types of MeshServices, MeshExternalServices and MeshMultiZoneServices.
     zone_control_planes:
       title: 'Zones'
     meshes:
