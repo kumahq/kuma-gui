@@ -1,8 +1,4 @@
-import { paths } from '@kumahq/kuma-http-api'
-
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-
-type GlobalInsight = paths['/global-insight']['get']['responses']['200']['content']['application/json']
 
 export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
@@ -72,6 +68,6 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
       resources: {
         ...Object.fromEntries(fake.kuma.resourceNames().map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
       },
-    } satisfies GlobalInsight,
+    },
   } 
 }

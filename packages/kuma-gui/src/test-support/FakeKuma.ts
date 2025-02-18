@@ -245,7 +245,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ['offline', offline],
     ].filter(([_key, value]) => omitZeroValues ? value !== 0 : true)
 
-    return Object.fromEntries(values) as Required<DataPlaneProxyStatus>
+    return Object.fromEntries(values) as DataPlaneProxyStatus
   }
 
   globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {
