@@ -16,13 +16,17 @@ export const GlobalInsight = {
     return {
       ...partialGlobalInsight,
       resources: {
+        ...partialGlobalInsight.resources,
         MeshService: {
+          ...partialGlobalInsight.resources.MeshService,
           total: partialGlobalInsight.resources.MeshService?.total ?? 0,
         },
         MeshMultiZoneService: {
+          ...partialGlobalInsight.resources.MeshMultiZoneService,
           total: partialGlobalInsight.resources.MeshMultiZoneService?.total ?? 0,
         },
         MeshExternalService: {
+          ...partialGlobalInsight.resources.MeshExternalService,
           total: partialGlobalInsight.resources.MeshExternalService?.total ?? 0,
         },
       },
