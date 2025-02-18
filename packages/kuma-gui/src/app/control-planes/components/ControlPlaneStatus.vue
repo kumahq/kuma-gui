@@ -59,7 +59,7 @@
 
         <template #title>
           <XI18n
-            :path="'main-overview.detail.about.services'"
+            path="main-overview.detail.about.services"
           />
         </template>
 
@@ -68,7 +68,7 @@
           #description
         >
           <XI18n
-            :path="'main-overview.detail.about.descriptions.mesh_services'"
+            path="main-overview.detail.about.descriptions.mesh_services"
           />
         </template>
 
@@ -79,14 +79,14 @@
           <ResourceStatus :total="props.globalInsight.services.internal.total">
             <template #description>
               <XI18n
-                :path="'main-overview.detail.about.descriptions.internal_services'"
+                path="main-overview.detail.about.descriptions.internal_services"
               />
 
               <XIcon
                 name="info"
               >
                 <XI18n
-                  :path="'main-overview.detail.about.infos.internal_services'"
+                  path="main-overview.detail.about.infos.internal_services"
                 />
               </XIcon>
             </template>
