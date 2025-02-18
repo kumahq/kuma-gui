@@ -8,13 +8,21 @@ type Storage = {
 }
 export const sources = ({ get, set }: Storage) => {
   return defineSources({
+    // used for saving dismissed notification id's
+    '/me/~notifications': async () => {
+      return get('~notifications', [])
+    },
+    '/me/~notifications/:data': async (params) => {
+      const res = merge<object>(await get('~notifications', []), JSON.parse(params.data))
+      set('~notifications', res)
+      return
+    },
+    //
+
+    // used for global and per route preferences
     // retrieves both route and global app prefs and merges them
     // anything route specific overwriting anything global/app specific
     '/me/:route': async (params) => {
-      if(params.route.startsWith('~')) {
-        return get(params.route, [])
-
-      }
       const [app, route] = await Promise.all([
         get('/'),
         get(params.route),
@@ -36,17 +44,9 @@ export const sources = ({ get, set }: Storage) => {
       )
     },
     '/me/:route/:data': async (params) => {
-      const data = JSON.parse(params.data)
-      let targetRoute = params.route
-      let json = data
-      if(!Array.isArray(data)) {
-        const { $global, ..._json } = data
-        if($global) {
-          targetRoute = '/'
-        }
-        json = _json
-      }
-      const res = merge<object>(await get(targetRoute, []), json)
+      const { $global, ...json } = JSON.parse(params.data)
+      const targetRoute = $global ? '/' : params.route
+      const res = merge<object>(await get(targetRoute), json)
       set(targetRoute, res)
     },
   })

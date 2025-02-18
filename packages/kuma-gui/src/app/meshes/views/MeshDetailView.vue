@@ -28,7 +28,7 @@
           :notifications="true"
         >
           <XNotification
-            v-if="true || !props.mesh.mtlsBackend"
+            v-if="!props.mesh.mtlsBackend"
             :uri="`mtls-warning.${props.mesh.id}`"
           >
             <XI18n

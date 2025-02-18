@@ -9,7 +9,7 @@
       <component
         :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
         v-if="dismissed"
-        uri="props.name"
+        :uri="id"
         :dismissed="dismissed"
         v-slot="hub"
       >
@@ -136,6 +136,7 @@ import { provide, inject, watch, ref, onBeforeUnmount, nextTick } from 'vue'
 
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
+import { uniqueId } from '@/app/application'
 import type { BreadcrumbItem } from '@kong/kongponents'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
@@ -157,6 +158,7 @@ const props = withDefaults(defineProps<{
 })
 const slots = defineSlots()
 
+const id = uniqueId('app-view')
 const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
 
 const summary: string = inject('app-summary-view', '')

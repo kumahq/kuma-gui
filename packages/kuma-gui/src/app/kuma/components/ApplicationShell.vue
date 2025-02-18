@@ -54,16 +54,20 @@
                     data-testid="upgrade-check"
                     appearance="info"
                   >
-                    <p>
-                      {{ t('common.product.name') }} update available
-                    </p>
-
-                    <XAction
-                      appearance="primary"
-                      :href="t('common.product.href.install')"
+                    <XLayout
+                      type="separated"
                     >
-                      Update
-                    </XAction>
+                      <p>
+                        {{ t('common.product.name') }} update available
+                      </p>
+
+                      <XAction
+                        appearance="primary"
+                        :href="t('common.product.href.install')"
+                      >
+                        Update
+                      </XAction>
+                    </XLayout>
                   </XAlert>
                 </DataSource>
               </div>
@@ -374,12 +378,10 @@ nav :deep(.app-navigator) > a {
     font-size: $kui-font-size-30;
   }
 
-  .upgrade-alert,
-  :deep(.alert-message) {
+  .upgrade-alert {
     display: flex;
     align-items: center;
     gap: $kui-space-50;
-
   }
 }
 </style>
