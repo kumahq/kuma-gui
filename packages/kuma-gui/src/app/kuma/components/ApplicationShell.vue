@@ -175,7 +175,7 @@
                     type="stack"
                   >
                     <template
-                      v-for="[variant, value] in hub.notifications.entries()"
+                      v-for="[variant, value] in hub.notifications"
                       :key="variant"
                     >
                       <XAlert
@@ -192,8 +192,11 @@
                           <li
                             v-for="notification in value"
                             :key="notification"
+                            :data-testid="`notification-${notification}`"
                           >
-                            <XNotification :uri="notification" />
+                            <XNotification
+                              :uri="notification"
+                            />
                           </li>
                         </ul>
                       </XAlert>

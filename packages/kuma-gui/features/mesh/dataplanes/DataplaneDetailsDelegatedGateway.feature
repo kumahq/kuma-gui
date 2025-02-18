@@ -4,7 +4,7 @@ Feature: Dataplane details for delegated gateway
     Given the CSS selectors
       | Alias       | Selector                                    |
       | detail-view | [data-testid='data-plane-detail-tabs-view'] |
-      | warnings    | [data-testid='dataplane-warnings']          |
+      | warnings    | [data-testid^='notification-DPP_NO_MTLS']   |
       | details     | [data-testid='dataplane-details']           |
 
   Scenario: Overview tab has expected content
@@ -56,7 +56,7 @@ Feature: Dataplane details for delegated gateway
       |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |
-    And the "$warnings" element doesn't exists
+    And the "$warnings" element doesn't exist
 
   Scenario: Overview tab shows warning when no mTLS is set
     And the URL "/meshes/default/dataplanes/dataplane-gateway_delegated-1/_overview" responds with
