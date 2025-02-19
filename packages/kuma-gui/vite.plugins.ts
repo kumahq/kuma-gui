@@ -59,6 +59,10 @@ const server = (
           return prev
         }, {} as Record<string, string>)
 
+      // we create a totally new index.html from our template here
+      // so anything added by Vite that is not in our index.html template
+      // will be removed. Ideally we would take vites output and use that as the template
+      // but its not clear how to get vites output from within this middleware
       let body = interpolate(
         await read(template),
         {
