@@ -1,5 +1,5 @@
-import crypto from 'crypto'
 import { readFile, stat } from 'fs/promises'
+import crypto from 'node:crypto'
 import { dirname } from 'path'
 
 import type { KumaHtmlVars } from '@/app/application/services/env/Env'
