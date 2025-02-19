@@ -115,6 +115,8 @@ import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
 }
 
 .policy-type-list {
+  position: sticky;
+  top: calc(var(--AppHeaderHeight) + $kui-space-70);
   align-self: flex-start;
   max-width: 500px;
 }
