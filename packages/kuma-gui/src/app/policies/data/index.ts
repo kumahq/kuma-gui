@@ -1,10 +1,14 @@
+import { paths } from '@kumahq/kuma-http-api'
+
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   PolicyDataplane as PartialPolicyDataplane,
   PolicyEntity as PartialPolicy,
 } from '@/types/index.d'
 
-export type { PolicyType } from '@/types/index.d'
+export type PartialResourceTypes = paths['/_resources']['get']['responses']['200']['content']['application/json']
+export type PartialResourceType = PartialResourceTypes['resources'][number]
+export type PartialPolicyResourceType = PartialResourceType & Required<Pick<PartialResourceType, 'policy'>>
 
 export type PolicyDataplane = PartialPolicyDataplane & {
   id: string
@@ -62,3 +66,23 @@ export const Policy = {
   },
 }
 export type Policy = ReturnType<typeof Policy['fromObject']>
+
+export const PolicyResourceType = {
+  isPolicyType(o: PartialResourceType): o is PartialPolicyResourceType {
+    return typeof o.policy !== 'undefined'
+  },
+
+  fromObject(partialPolicyType: PartialPolicyResourceType) {
+    return {
+      ...partialPolicyType,
+    }
+  },
+
+  fromCollection(partialResourceTypes: PartialResourceTypes) {
+    return {
+      ...partialResourceTypes,
+      policyTypes: partialResourceTypes.resources.filter(PolicyResourceType.isPolicyType).map(PolicyResourceType.fromObject),
+    }
+  },
+}
+export type PolicyResourceType = ReturnType<typeof PolicyResourceType.fromObject>

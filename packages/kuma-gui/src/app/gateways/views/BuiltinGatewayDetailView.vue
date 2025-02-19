@@ -28,7 +28,7 @@
               <ListenerRoutes
                 :mesh-gateway="props.gateway"
                 :selected-listener-index="Number(route.params.listener)"
-                :policy-types-by-name="data.policies.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
+                :policy-types-by-name="data.policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})"
                 :inspect-rules="rules.rules"
               />
             </template>

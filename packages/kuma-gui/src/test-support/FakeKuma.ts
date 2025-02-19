@@ -119,7 +119,10 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
-  policyName() {
+  /**
+   * Returns a random subset of policy names in random order. Optionally returns all.
+   */
+  policyNames({ includeAll }: { includeAll?: boolean } = { includeAll: false }) {
     const items = [
       'MeshAccessLog',
       'MeshCircuitBreaker',
@@ -138,6 +141,12 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       'MeshTrace',
       'MeshTrafficPermission',
     ] as const
+
+    return this.faker.helpers.arrayElements<typeof items[number]>(items, { min: includeAll ? items.length : 0, max: items.length })
+  }
+
+  policyName() {
+    const items = this.policyNames({ includeAll: true })
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
@@ -455,25 +464,48 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
-  resourceNames() {
+  /**
+   * Returns a random subset of resource names in random order. Optionally returns all.
+   */
+  resourceNames({ includeAll }: { includeAll?: boolean } = { includeAll: false }) {
     const items = [
-      'Dataplane',
       'MeshAccessLog',
       'MeshCircuitBreaker',
-      'MeshExternalService',
-      'MeshGateway',
+      'MeshFaultInjection',
       'MeshHTTPRoute',
+      'MeshHealthCheck',
       'MeshLoadBalancingStrategy',
       'MeshMetric',
-      'MeshMultiZoneService',
+      'MeshPassthrough',
+      'MeshProxyPatch',
+      'MeshRateLimit',
       'MeshRetry',
-      'MeshService',
+      'MeshTCPRoute',
+      'MeshTLS',
       'MeshTimeout',
       'MeshTrace',
       'MeshTrafficPermission',
+      'Dataplane',
+      'MeshExternalService',
+      'MeshGateway',
+      'MeshMultiZoneService',
+      'MeshService',
       'Secret',
-    ]
-    return this.faker.helpers.arrayElements(items, { min: 0, max: items.length })
+      'CircuitBreaker',
+      'FaultInjection',
+      'HealthCheck',
+      'MeshGatewayRoute',
+      'ProxyTemplate',
+      'RateLimit',
+      'Retry',
+      'Timeout',
+      'TrafficLog',
+      'TrafficPermission',
+      'TrafficRoute',
+      'TrafficTrace',
+      'VirtualOutbound',
+    ] as const
+    return this.faker.helpers.arrayElements(items, { min: includeAll ? items.length : 0, max: items.length })
   }
 }
 

@@ -79,6 +79,7 @@ import _45 from './src/meshes/_/traffic-traces'
 import _46 from './src/meshes/_/traffic-traces/_'
 import _47 from './src/meshes/_/virtual-outbounds'
 import _2 from './src/policies'
+import _3 from './src/resources'
 import _126 from './src/zone-ingresses/_'
 import _48 from './src/zone-ingresses/_/_overview'
 import _9 from './src/zone-ingresses/_overview'
@@ -176,6 +177,8 @@ export const fs: FS = {
   '/meshes/:mesh/meshfaultinjections': _52,
   '/meshes/:mesh/meshfaultinjections/:name': _53,
   '/meshes/:mesh/meshfaultinjections/:name/_resources/dataplanes': _54,
+  // resources
+  '/_resources': _3,
   // legacy mesh
   '/meshes/:mesh/service-insights': _25,
   '/meshes/:mesh/service-insights/:name': _26,

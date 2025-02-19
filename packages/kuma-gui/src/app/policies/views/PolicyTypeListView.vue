@@ -6,7 +6,7 @@
       policyPath: '',
       policy: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ uri, route, t }"
   >
     <RouteTitle
       :render="false"
@@ -18,8 +18,8 @@
         v-slot="{ data: meshInsight }: MeshInsightSource"
       >
         <DataSource
-          :src="`/policy-types`"
-          v-slot="{ data, error }: PolicyTypeCollectionSource"
+          :src="uri(sources, '/policy-types', {})"
+          v-slot="{ data, error }"
         >
           <div
             class="policy-list-content"
@@ -34,15 +34,15 @@
                 :errors="[error]"
               >
                 <template
-                  v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? data!.policies : data!.policies.filter(item => {
+                  v-for="legacy in [typeof meshInsight?.policies === 'undefined' ? data!.policyTypes : data!.policyTypes.filter(item => {
                     // legacy policies are those that aren't targetRef and are also in use
-                    return !item.isTargetRefBased && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
+                    return !item.policy.isTargetRef && (meshInsight.policies?.[item.name]?.total ?? 0) > 0
                   })]"
                   :key="legacy"
                 >
                   <DataCollection
-                    :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.isTargetRefBased"
-                    :items="data!.policies"
+                    :predicate="typeof meshInsight?.policies === 'undefined' ? undefined : (item) => legacy.length > 0 || item.policy.isTargetRef"
+                    :items="data!.policyTypes"
                     v-slot="{ items }"
                   >
                     <template
@@ -85,7 +85,7 @@
               <RouterView v-slot="{ Component }">
                 <component
                   :is="Component"
-                  :policy-types="data?.policies"
+                  :policy-types="data?.policyTypes"
                 />
               </RouterView>
             </div>
@@ -98,7 +98,7 @@
 
 <script lang="ts" setup>
 import type { MeshInsightSource } from '@/app/meshes/sources'
-import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+import { sources } from '@/app/policies/sources'
 </script>
 <style lang="scss">
 .policy-type-link {

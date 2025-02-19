@@ -114,15 +114,15 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
+import type { PolicyResourceType } from '@/app/policies/data'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
 import XAction from '@/app/x/components/x-action/XAction.vue'
-import type { PolicyType } from '@/types/index.d'
 const { t } = useI18n()
 
 const props = defineProps<{
   rules: Rule[]
-  types: Partial<Record<string, PolicyType>>
+  types: Partial<Record<string, PolicyResourceType>>
 }>()
 
 </script>

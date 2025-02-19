@@ -131,11 +131,11 @@
 import type { MeshGatewayDataplane } from '../data'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import type { PolicyType } from '@/types/index.d'
+import type { PolicyResourceType } from '@/app/policies/data'
 
 const props = defineProps<{
   gatewayDataplane: MeshGatewayDataplane
-  types: Partial<Record<string, PolicyType>>
+  types: Partial<Record<string, PolicyResourceType>>
 }>()
 </script>
 
