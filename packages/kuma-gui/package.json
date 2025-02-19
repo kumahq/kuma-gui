@@ -52,7 +52,7 @@
     "cypress-fail-on-console-error": "^5.1.1",
     "cypress-terminal-report": "^7.1.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.20.0",
+    "eslint": "^9.20.1",
     "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
