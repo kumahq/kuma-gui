@@ -27,6 +27,12 @@ Feature: mesh / policies / index
       """
 
   Scenario: Visiting `/policies` redirects
+    Given the URL "/_resources" responds with
+      ```
+      body:
+        resources:
+          - name: CircuitBreaker
+      ```
     When I visit the "/meshes/default/policies" URL
     Then the URL contains "/meshes/default/policies/circuit-breakers"
 
