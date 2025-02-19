@@ -1,4 +1,5 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+
 export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const policyTotal = fake.number.int({ min: 1, max: 100 })
@@ -22,6 +23,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
     headers: {
     },
     body: {
+      createdAt: fake.kuma.nanodate(),
       dataplanes: {
         gatewayBuiltin: fake.kuma.partitionInto({
           online: Number,
@@ -63,6 +65,9 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
           online: zoneIngressOnline,
         },
       },
+      resources: {
+        ...Object.fromEntries(fake.kuma.resourceNames().map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
+      },
     },
-  }
+  } 
 }

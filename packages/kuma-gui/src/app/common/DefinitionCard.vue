@@ -5,7 +5,10 @@
       [`definition-card--${props.layout}`]: true,
     }"
   >
-    <div class="definition-card-title">
+    <div
+      v-if="slots.icon || slots.title"
+      class="definition-card-title"
+    >
       <slot name="icon" />
 
       <slot name="title" />
@@ -23,6 +26,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   layout: 'vertical',
 })
+const slots = defineSlots()
 </script>
 
 <style lang="scss" scoped>

@@ -72,12 +72,20 @@ Feature: Overview: Detail view content
             online: 1
         policies:
           total: 55
+        resources:
+          MeshService:
+            total: 1
+          MeshMultiZoneService:
+            total: 2
+          MeshExternalService:
+            total: 3
       """
     When I visit the "/" URL
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element doesn't exist
     And the "[data-testid='meshes-status']" element contains "3"
     And the "[data-testid='services-status']" element contains "15"
+    And the "[data-testid='services-status']" element contains "6"
     And the "[data-testid='data-plane-proxies-status']" element contains "9"
     And the "[data-testid='policies-status']" element contains "55"
     And the "$zone-control-planes-details" element doesn't exist
@@ -116,6 +124,13 @@ Feature: Overview: Detail view content
             online: 1
         policies:
           total: 55
+        resources:
+          MeshService:
+            total: 1
+          MeshMultiZoneService:
+            total: 2
+          MeshExternalService:
+            total: 3
       """
     And the URL "/zones/_overview" responds with
       """
@@ -148,6 +163,7 @@ Feature: Overview: Detail view content
     And the "[data-testid='zone-control-planes-status']" element contains "2"
     And the "[data-testid='meshes-status']" element contains "3"
     And the "[data-testid='services-status']" element contains "15"
+    And the "[data-testid='services-status']" element contains "6"
     And the "[data-testid='data-plane-proxies-status']" element contains "9"
     And the "[data-testid='policies-status']" element contains "55"
     And the "$zone-control-planes-details" element exists
