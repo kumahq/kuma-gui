@@ -14,9 +14,9 @@ meshes:
       }
 
   x-empty-state:
-    title: 'No data'
+    title: Create your first mesh
     body: !!text/markdown |
-      There are no Meshes present
+      Meshes are logical groupings of services that establish traffic management and security rules. They define the scope for routing, observability, and policy enforcement within a service mesh.
     action:
       <<: *meshes.docs
 

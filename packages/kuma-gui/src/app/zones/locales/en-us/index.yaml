@@ -14,9 +14,9 @@ zone-cps:
       }
 
   x-empty-state:
-    title: No Zones yet...
+    title: Create your first zone
     body: !!text/markdown |
-      There are no Zones present
+      Zones define network or infrastructure boundaries in a multi-zone deployment. Zone control planes handle policies and communication with the global control plane.
     action:
       <<: *zone-cps.docs
 

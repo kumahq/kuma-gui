@@ -18,52 +18,49 @@
         ]"
         :key="title"
       >
-        <KEmptyState
-          class="x-empty-state"
+        <EntityEmptyState
+          :title="title"
+          appearance="secondary"
           data-testid="empty-block"
+          :action-button-text="actionType === 'create' && href.length ? actionLabel : undefined"
+          :learn-more="actionType === 'docs' && href.length"
+          @click:learn-more="handleLearnMore(href)"
+          @click:create="handleCreateAction(href)"
         >
           <template
-            #icon
-          >
-            <slot name="icon" />
-          </template>
-          <template
-            #title
+            #default
           >
             <slot
-              name="title"
-            >
-              <template
-                v-if="title.length > 0"
-              >
-                <header>
-                  <h2>
-                    <XI18n
-                      :path="`${prefix}x-empty-state.title`"
-                      default-path="components.x-empty-state.title"
-                    />
-                  </h2>
-                </header>
-              </template>
-            </slot>
-          </template>
-
-          <template
-            v-if="slots.default"
-          >
-            <slot name="default" />
-          </template>
-          <template
-            v-else-if="body.length > 0"
-          >
-            <XI18n
-              :path="`${prefix}x-empty-state.body`"
-              default-path="components.x-empty-state.body"
+              v-if="slots.default"
+              name="default"
             />
+            <template
+              v-else-if="body.length > 0"
+            >
+              <XI18n
+                :path="`${prefix}x-empty-state.body`"
+                default-path="components.x-empty-state.body"
+              />
+            </template>
           </template>
-
+          <template #image>
+            <div class="empty-state-icon">
+              <slot
+                v-if="slots.icon"
+                name="icon"
+              />
+              <component
+                :is="iconMapping[type]"
+                v-else-if="type && iconMapping[type]"
+                :color="KUI_COLOR_TEXT_DECORATIVE_AQUA"
+                :size="KUI_ICON_SIZE_50"
+              />
+              <AnalyticsIcon v-else />
+            </div>
+          </template>
           <template
-            #action
+            v-if="href.length === 0"
+            #actions
           >
             <slot name="action">
               <XAction
@@ -79,18 +76,44 @@
               />
             </slot>
           </template>
-        </KEmptyState>
+        </EntityEmptyState>
       </template>
     </template>
   </XI18n>
 </template>
 
 <script lang="ts" setup>
-import { KEmptyState } from '@kong/kongponents'
+import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
+import { EntityEmptyState } from '@kong-ui-public/entities-shared'
+import '@kong-ui-public/entities-shared/dist/style.css'
+
 const props = withDefaults(defineProps<{
   type?: string
 }>(), {
   type: '',
 })
 const slots = defineSlots()
+
+const iconMapping: Record<string, unknown> = {
+  'zone-cps': LocationIcon,
+  'meshes':MeshIcon,
+}
+
+const handleLearnMore = (url: string): void => {
+  // open documentation in a new tab
+  window.open(url, '_blank')
+}
+
+const handleCreateAction = (url: string): void => {
+  // open create page
+  window.open(url, '_blank')
+}
 </script>
+<style lang="scss" scoped>
+.empty-state-icon {
+  background-color: $kui-method-color-background-patch;
+  border-radius: $kui-border-radius-20;
+  padding: $kui-space-40;
+}
+</style>
