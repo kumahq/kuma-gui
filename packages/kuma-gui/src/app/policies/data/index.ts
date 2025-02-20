@@ -68,10 +68,6 @@ export const Policy = {
 export type Policy = ReturnType<typeof Policy['fromObject']>
 
 export const PolicyResourceType = {
-  isPolicyType(o: PartialResourceType): o is PartialPolicyResourceType {
-    return typeof o.policy !== 'undefined'
-  },
-
   fromObject(partialPolicyType: PartialPolicyResourceType) {
     return {
       ...partialPolicyType,
@@ -79,9 +75,12 @@ export const PolicyResourceType = {
   },
 
   fromCollection(partialResourceTypes: PartialResourceTypes) {
+    const isPolicyType = (o: PartialResourceType): o is PartialPolicyResourceType => {
+      return typeof o.policy !== 'undefined'
+    }
     return {
       ...partialResourceTypes,
-      policyTypes: partialResourceTypes.resources.filter(PolicyResourceType.isPolicyType).map(PolicyResourceType.fromObject),
+      policyTypes: partialResourceTypes.resources.filter(isPolicyType).map(PolicyResourceType.fromObject),
     }
   },
 }
