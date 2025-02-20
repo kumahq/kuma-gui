@@ -2,37 +2,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
 
-  const legacyTypes = [
-    'CircuitBreaker',
-    'FaultInjection',
-    'HealthCheck',
-    'ProxyTemplate',
-    'RateLimit',
-    'Retry',
-    'Timeout',
-    'TrafficLog',
-    'TrafficPermission',
-    'TrafficRoute',
-    'TrafficTrace',
-    'VirtualOutbound',
-  ]
-  const policyTypes = [
-    'MeshAccessLog',
-    'MeshCircuitBreaker',
-    'MeshFaultInjection',
-    'MeshGatewayRoute',
-    'MeshHTTPRoute',
-    'MeshHealthCheck',
-    'MeshLoadBalancingStrategy',
-    'MeshMetric',
-    'MeshProxyPatch',
-    'MeshRateLimit',
-    'MeshRetry',
-    'MeshTCPRoute',
-    'MeshTimeout',
-    'MeshTrace',
-    'MeshTrafficPermission',
-  ].concat(legacyTypes)
+  const policyTypes = fake.kuma.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true })
 
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 

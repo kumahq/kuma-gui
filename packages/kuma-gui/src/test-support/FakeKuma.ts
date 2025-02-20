@@ -120,10 +120,44 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   /**
-   * Returns a random subset of policy names in random order. Optionally returns all.
+   * **NOTE: Most likely you want to use `policyNames` instead of this, which optionally includes legacy policies.**
+   * 
+   * Returns a random subset of legacy policy names in random order.
+   * Although these are deprecated and will be removed soon, this ensures we are tracking them in a single place.
+   * - Optionally specify count with min and max bounds.
    */
-  policyNames({ includeAll }: { includeAll?: boolean } = { includeAll: false }) {
-    const items = [
+  policyNamesLegacy(count: { min?: number, max?: number } = {}) {
+    const { min = 0, max = Number.MAX_VALUE } = count
+
+    const legacyPolicies = [
+      'CircuitBreaker',
+      'FaultInjection',
+      'HealthCheck',
+      'ProxyTemplate',
+      'RateLimit',
+      'Retry',
+      'Timeout',
+      'TrafficLog',
+      'TrafficPermission',
+      'TrafficRoute',
+      'TrafficTrace',
+      'VirtualOutbound',
+      'MeshGatewayRoute',
+    ] as const
+    
+    return this.faker.helpers.arrayElements(legacyPolicies, { min, max })
+  }
+
+  /**
+   * Returns a random subset of policy names in random order.
+   * - Optionally specify count with min and max bounds.
+   * - Optionally include names of legacy policies. (Default: true)
+   */
+  policyNames(count: { min?: number, max?: number } = {}, options: { includeLegacy?: boolean } = {}) {
+    const { min = 0, max = Number.MAX_VALUE } = count
+    const { includeLegacy = true } = options
+
+    const policies = [
       'MeshAccessLog',
       'MeshCircuitBreaker',
       'MeshFaultInjection',
@@ -142,11 +176,12 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       'MeshTrafficPermission',
     ] as const
 
-    return this.faker.helpers.arrayElements<typeof items[number]>(items, { min: includeAll ? items.length : 0, max: items.length })
+    const items = [...policies, ...(includeLegacy ? this.policyNamesLegacy({ min: Number.MAX_VALUE }) : [])]
+    return this.faker.helpers.arrayElements<typeof items[number]>(items, { min, max })
   }
 
   policyName() {
-    const items = this.policyNames({ includeAll: true })
+    const items = this.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true })
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
@@ -465,47 +500,23 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   /**
-   * Returns a random subset of resource names in random order. Optionally returns all.
+   * Returns a random subset of all types of resource names in random order. Optionally specify count with min and max bounds.
+   * - Optionally specify count with min and max bounds.
    */
-  resourceNames({ includeAll }: { includeAll?: boolean } = { includeAll: false }) {
-    const items = [
-      'MeshAccessLog',
-      'MeshCircuitBreaker',
-      'MeshFaultInjection',
-      'MeshHTTPRoute',
-      'MeshHealthCheck',
-      'MeshLoadBalancingStrategy',
-      'MeshMetric',
-      'MeshPassthrough',
-      'MeshProxyPatch',
-      'MeshRateLimit',
-      'MeshRetry',
-      'MeshTCPRoute',
-      'MeshTLS',
-      'MeshTimeout',
-      'MeshTrace',
-      'MeshTrafficPermission',
+  resourceNames(count: { min?: number, max?: number } = {}) {
+    const { min = 0, max = Number.MAX_VALUE } = count
+
+    const resources = [
       'Dataplane',
       'MeshExternalService',
       'MeshGateway',
       'MeshMultiZoneService',
       'MeshService',
       'Secret',
-      'CircuitBreaker',
-      'FaultInjection',
-      'HealthCheck',
-      'MeshGatewayRoute',
-      'ProxyTemplate',
-      'RateLimit',
-      'Retry',
-      'Timeout',
-      'TrafficLog',
-      'TrafficPermission',
-      'TrafficRoute',
-      'TrafficTrace',
-      'VirtualOutbound',
     ] as const
-    return this.faker.helpers.arrayElements(items, { min: includeAll ? items.length : 0, max: items.length })
+
+    const items = [...resources, ...this.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true })]
+    return this.faker.helpers.arrayElements(items, { min, max })
   }
 }
 
