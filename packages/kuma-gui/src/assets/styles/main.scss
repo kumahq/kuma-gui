@@ -1,10 +1,10 @@
-@use 'mixins';
-@use 'fonts';
-@use 'variables';
-@use 'base';
-@use 'components';
-@use 'utilities';
+@use "mixins";
+@use "fonts";
+@use "variables";
+@use "base";
+@use "components";
+@use "utilities";
 
-@import '@kong/kongponents/dist/style.css';
-@import '@kong-ui-public/app-layout/dist/style.css'
-
+@import "@kong/kongponents/dist/style.css";
+@import "@kong-ui-public/app-layout/dist/style.css";
+@import "@kong-ui-public/entities-shared/dist/style.css";
