@@ -260,11 +260,12 @@ import { matchesTags } from '../utilities'
 import { useI18n } from '@/app/application'
 import TagList from '@/app/common/TagList.vue'
 import TargetRef from '@/app/common/TargetRef.vue'
+import type { PolicyResourceType } from '@/app/policies/data'
 import RuleFilter from '@/app/rules/components/RuleFilter.vue'
 import RuleMatch from '@/app/rules/components/RuleMatch.vue'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
-import type { TargetRef as TarRef, PolicyType } from '@/types/index.d'
+import type { TargetRef as TarRef } from '@/types/index.d'
 
 const { t } = useI18n()
 type RouteRule = Rule & {
@@ -277,7 +278,7 @@ type RouteRule = Rule & {
 const props = defineProps<{
   meshGateway: MeshGateway
   selectedListenerIndex: number
-  policyTypesByName: Partial<Record<string, PolicyType>>
+  policyTypesByName: Partial<Record<string, PolicyResourceType>>
   inspectRules: Rule[]
 }>()
 

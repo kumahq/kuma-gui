@@ -327,35 +327,6 @@ export type DataplaneNetworking = {
   gateway?: DataplaneGateway
 }
 
-/**
- * A policy definition as returned via the `/policies` endpoint.
- */
-export type PolicyType = {
-  /**
-   * The policy type’s name (e.g. “CircuitBreaker”).
-   */
-  name: string
-
-  /**
-   * The associated API path for the policy. Used to look up all set-up policies and policies for specific meshes.
-   */
-  path: string
-
-  /**
-   * Controls whether to display a warning alert letting users know that this policy is experimental.
-   */
-  isExperimental: boolean
-
-  readOnly: boolean
-
-  /**
-   * Whether the policy type is based on target refs (e.g. its policies have a top-level target ref, etc.).
-   */
-  isTargetRefBased: boolean
-  isInbound: boolean
-  isOutbound: boolean
-}
-
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
 
 export type ZoneCompatibility = {

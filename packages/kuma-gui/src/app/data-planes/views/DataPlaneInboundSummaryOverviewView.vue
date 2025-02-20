@@ -159,11 +159,11 @@
 
                               <template #body>
                                 <DataSource
-                                  :src="`/policy-types`"
-                                  v-slot="{ data: policyTypes }: PolicyTypeCollectionSource"
+                                  :src="uri(policySources, '/policy-types', {})"
+                                  v-slot="{ data: policyTypesData }"
                                 >
                                   <template
-                                    v-for="types in [Object.groupBy((policyTypes?.policies ?? []), (item) => item.name)]"
+                                    v-for="types in [Object.groupBy((policyTypesData?.policyTypes ?? []), (item) => item.name)]"
                                     :key="types"
                                   >
                                     <ul>
@@ -232,7 +232,7 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
-import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+import { sources as policySources } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import { sources } from '@/app/rules/sources'
 

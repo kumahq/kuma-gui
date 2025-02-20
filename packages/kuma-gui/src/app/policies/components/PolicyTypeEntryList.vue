@@ -115,16 +115,17 @@
 
 <script lang="ts" setup>
 
+import type { PolicyResourceType } from '../data'
 import { YAML } from '@/app/application'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
-import type { PolicyType, PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
+import type { PolicyTypeEntry, PolicyTypeEntryConnection } from '@/types/index.d'
 
 const props = defineProps<{
   items: PolicyTypeEntry[]
-  types: Partial<Record<string, PolicyType>>
+  types: Partial<Record<string, PolicyResourceType>>
 }>()
 
 function getCellAttributes({ headerKey }: any): Record<string, string> {
