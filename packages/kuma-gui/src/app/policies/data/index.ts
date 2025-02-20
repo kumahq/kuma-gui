@@ -6,9 +6,9 @@ import type {
   PolicyEntity as PartialPolicy,
 } from '@/types/index.d'
 
-export type PartialResourceTypes = paths['/_resources']['get']['responses']['200']['content']['application/json']
-export type PartialResourceType = PartialResourceTypes['resources'][number]
-export type PartialPolicyResourceType = PartialResourceType & Required<Pick<PartialResourceType, 'policy'>>
+type PartialResourceTypes = paths['/_resources']['get']['responses']['200']['content']['application/json']
+type PartialResourceType = PartialResourceTypes['resources'][number]
+type PartialPolicyResourceType = PartialResourceType & Required<Pick<PartialResourceType, 'policy'>>
 
 export type PolicyDataplane = PartialPolicyDataplane & {
   id: string
