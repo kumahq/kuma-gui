@@ -123,12 +123,12 @@
 
 <script lang="ts" setup>
 import PolicySummary from '../components/PolicySummary.vue'
-import type { Policy, PolicyType } from '../data'
+import type { Policy, PolicyResourceType } from '../data'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   items: Policy[]
-  policyType: PolicyType
+  policyType: PolicyResourceType
 }>()
 </script>
 <style scoped>

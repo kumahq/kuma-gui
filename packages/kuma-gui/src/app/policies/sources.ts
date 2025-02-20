@@ -1,5 +1,7 @@
-import { Policy, PolicyDataplane } from './data'
-import type { PolicyType } from './data'
+import { paths } from '@kumahq/kuma-http-api'
+import createClient from 'openapi-fetch'
+
+import { Policy, PolicyDataplane, PolicyResourceType } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
@@ -7,7 +9,6 @@ import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api
 
 export type PolicyCollection = CollectionResponse<Policy>
 export type PolicySource = DataSourceResponse<Policy>
-export type PolicyTypeCollectionSource = DataSourceResponse<{ policies: PolicyType[] }>
 export type PolicyCollectionSource = DataSourceResponse<PolicyCollection>
 
 export type PolicyDataplaneCollection = CollectionResponse<PolicyDataplane>
@@ -15,9 +16,16 @@ export type PolicyDataplaneSource = DataSourceResponse<PolicyDataplane>
 export type PolicyDataplaneCollectionSource = DataSourceResponse<PolicyDataplaneCollection>
 
 export const sources = (api: KumaApi) => {
+  const http = createClient<paths>({
+    baseUrl: '',
+    fetch: api.client.fetch,
+  })
+
   return defineSources({
-    '/policy-types': () => {
-      return api.getPolicyTypes()
+    '/policy-types': async () => {
+      const res = await http.GET('/_resources')
+
+      return PolicyResourceType.fromCollection(res.data!)
     },
 
     '/meshes/:mesh/policy-path/:path': async (params) => {

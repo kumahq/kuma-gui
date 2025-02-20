@@ -23,7 +23,6 @@ import type {
   MeshExternalService,
   PolicyDataplane,
   PolicyEntity,
-  PolicyType,
   ServiceInsight,
   SidecarDataplane,
   Zone,
@@ -41,13 +40,6 @@ export default class KumaApi extends Api {
 
   getConfig(): Promise<Config> {
     return this.client.get('/config')
-  }
-
-  /**
-   * Retrieves a list of known policy definitions.
-   */
-  getPolicyTypes(): Promise<{ policies: PolicyType[] }> {
-    return this.client.get('/policies')
   }
 
   getGlobalInsight(): Promise<GlobalInsight> {

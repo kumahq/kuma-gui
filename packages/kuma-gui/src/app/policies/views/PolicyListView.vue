@@ -27,21 +27,14 @@
               <header>
                 <div>
                   <XBadge
-                    v-if="type.isExperimental"
-                    appearance="warning"
-                  >
-                    {{ t('policies.collection.beta') }}
-                  </XBadge>
-
-                  <XBadge
-                    v-if="type.isInbound"
+                    v-if="type.policy.hasFromTargetRef"
                     appearance="neutral"
                   >
                     {{ t('policies.collection.inbound') }}
                   </XBadge>
 
                   <XBadge
-                    v-if="type.isOutbound"
+                    v-if="type.policy.hasToTargetRef"
                     appearance="neutral"
                   >
                     {{ t('policies.collection.outbound') }}
@@ -142,8 +135,8 @@
                           { ...me.get('headers.role'), label: 'Role', key: 'role', hideLabel: true },
                           { ...me.get('headers.name'), label: 'Name', key: 'name' },
                           { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                          ...(can('use zones') && type.isTargetRefBased ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                          ...(type.isTargetRefBased ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
+                          ...(can('use zones') && type.policy.isTargetRef ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                          ...(type.policy.isTargetRef ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
                           { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
                         ]"
                         :items="data?.items"
@@ -281,13 +274,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { PolicyType } from '../data'
+import type { PolicyResourceType } from '../data'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 const props = defineProps<{
-  policyTypes?: PolicyType[]
+  policyTypes?: PolicyResourceType[]
 }>()
 </script>
 <style lang="scss" scoped>

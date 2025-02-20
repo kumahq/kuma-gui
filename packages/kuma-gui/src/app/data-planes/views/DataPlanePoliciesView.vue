@@ -5,7 +5,7 @@
       mesh: '',
       proxy: '',
     }"
-    v-slot="{ can, route, t, uri }"
+    v-slot="{ uri, can, route, t }"
   >
     <RouteTitle
       :render="false"
@@ -16,11 +16,11 @@
         <!-- we load in policyTypes for everything so we can use `path` for links/URLs/API requests -->
         <!-- we ask for the policyTypes here and always share the errors/data with all the DataLoaders below -->
         <DataSource
-          :src="`/policy-types`"
-          v-slot="{ data: policyTypesData, error: policyTypesError }: PolicyTypeCollectionSource"
+          :src="uri(policySources, '/policy-types', {})"
+          v-slot="{ data: policyTypesData, error: policyTypesError }"
         >
           <template
-            v-for="policyTypes in [(policyTypesData?.policies ?? []).reduce<Partial<Record<string, PolicyType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
+            v-for="policyTypes in [(policyTypesData?.policyTypes ?? []).reduce<Partial<Record<string, PolicyResourceType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
             :key="typeof policyTypes"
           >
             <!-- always try and load and show the rules for everything dataplane type -->
@@ -140,7 +140,7 @@
                     v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                   >
                     <DataCollection
-                      :predicate="(item) => policyTypes[item.type]?.isTargetRefBased === false"
+                      :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
                       :items="sidecarDataplaneData!.policyTypeEntries"
                       :empty="false"
                       v-slot="{ items }"
@@ -192,8 +192,8 @@ import type { DataplaneOverview } from '../data'
 import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
 import SummaryView from '@/app/common/SummaryView.vue'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
-import type { PolicyType } from '@/app/policies/data'
-import type { PolicyTypeCollectionSource } from '@/app/policies/sources'
+import type { PolicyResourceType } from '@/app/policies/data'
+import { sources as policySources } from '@/app/policies/sources'
 import RuleList from '@/app/rules/components/RuleList.vue'
 import { sources } from '@/app/rules/sources'
 
