@@ -24,9 +24,24 @@
           data-testid="empty-block"
           :action-button-text="actionType === 'create' && href.length ? actionLabel : undefined"
           :learn-more="actionType === 'docs' && href.length"
-          @click:learn-more="handleLearnMore(href)"
-          @click:create="handleCreateAction(href)"
+          @click:learn-more="openInNewTab(href)"
+          @click:create="openInNewTab(href)"
         >
+          <template #image>
+            <div class="empty-state-icon">
+              <slot
+                v-if="slots.icon"
+                name="icon"
+              />
+              <component
+                :is="iconMapping[type]"
+                v-else-if="type && iconMapping[type]"
+                :color="KUI_COLOR_TEXT_DECORATIVE_AQUA"
+                :size="KUI_ICON_SIZE_50"
+              />
+              <AnalyticsIcon v-else />
+            </div>
+          </template>
           <template
             #default
           >
@@ -42,21 +57,6 @@
                 default-path="components.x-empty-state.body"
               />
             </template>
-          </template>
-          <template #image>
-            <div class="empty-state-icon">
-              <slot
-                v-if="slots.icon"
-                name="icon"
-              />
-              <component
-                :is="iconMapping[type]"
-                v-else-if="type && iconMapping[type]"
-                :color="KUI_COLOR_TEXT_DECORATIVE_AQUA"
-                :size="KUI_ICON_SIZE_50"
-              />
-              <AnalyticsIcon v-else />
-            </div>
           </template>
           <template
             v-if="href.length === 0"
@@ -86,7 +86,6 @@
 import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
 import { EntityEmptyState } from '@kong-ui-public/entities-shared'
-import '@kong-ui-public/entities-shared/dist/style.css'
 
 const props = withDefaults(defineProps<{
   type?: string
@@ -97,16 +96,11 @@ const slots = defineSlots()
 
 const iconMapping: Record<string, unknown> = {
   'zone-cps': LocationIcon,
-  'meshes':MeshIcon,
+  'meshes': MeshIcon,
 }
 
-const handleLearnMore = (url: string): void => {
-  // open documentation in a new tab
-  window.open(url, '_blank')
-}
-
-const handleCreateAction = (url: string): void => {
-  // open create page
+const openInNewTab = (url: string): void => {
+  // open url in tab
   window.open(url, '_blank')
 }
 </script>
