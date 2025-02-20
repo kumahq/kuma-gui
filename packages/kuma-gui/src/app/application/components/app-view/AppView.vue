@@ -4,7 +4,7 @@
   >
     <DataSource
       :src="`/me/~notifications`"
-      v-slot="{ data: dismissed, refresh: _refresh }"
+      v-slot="{ data: dismissed }"
     >
       <component
         :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
@@ -71,7 +71,6 @@
             >
               <DataSink
                 :src="`/me/~notifications`"
-                v-slot="{ submit }"
               >
                 <XLayout
                   type="stack"
@@ -82,11 +81,6 @@
                   >
                     <XAlert
                       :variant="variant"
-                      @dismiss="async () => {
-                        submit(Array.from(value))
-                        await nextTick()
-                        _refresh()
-                      }"
                     >
                       <ul
                         class="notifications"
@@ -132,7 +126,7 @@
 
 <script lang="ts" setup>
 import { KongIcon } from '@kong/icons'
-import { provide, inject, watch, ref, onBeforeUnmount, nextTick } from 'vue'
+import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'

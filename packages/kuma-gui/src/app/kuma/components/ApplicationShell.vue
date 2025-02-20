@@ -7,7 +7,7 @@
     />
     <DataSource
       :src="`/me/~notifications`"
-      v-slot="{ data: dismissed, refresh }"
+      v-slot="{ data: dismissed }"
     >
       <XNotificationHub
         v-if="dismissed"
@@ -173,7 +173,6 @@
               >
                 <DataSink
                   :src="`/me/~notifications`"
-                  v-slot="{ submit }"
                 >
                   <XLayout
                     type="stack"
@@ -184,11 +183,6 @@
                     >
                       <XAlert
                         :variant="variant"
-                        @dismiss="async () => {
-                          submit(Array.from(value))
-                          await nextTick()
-                          refresh()
-                        }"
                       >
                         <ul
                           class="notifications"
@@ -219,7 +213,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { nextTick } from 'vue'
 import GithubButton from 'vue-github-button'
 
 import { useEnv, useI18n, useCan } from '@/app/application'
