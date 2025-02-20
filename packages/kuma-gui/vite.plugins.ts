@@ -1,4 +1,5 @@
 import { readFile, stat } from 'fs/promises'
+import crypto from 'node:crypto'
 import { dirname } from 'path'
 
 import type { KumaHtmlVars } from '@/app/application/services/env/Env'
@@ -38,7 +39,11 @@ export const kumaIndexHtmlVars = (): Plugin => {
     transformIndexHtml: (template) => interpolate(template, htmlVars),
   }
 }
-const server = (template: string = './index.html', vars: Partial<KumaHtmlVars> = {}) => async (server: PreviewServer | ViteDevServer) => {
+const server = (
+  template: string = './index.html',
+  vars: Partial<KumaHtmlVars> = {},
+  csp: boolean = true,
+) => async (server: PreviewServer | ViteDevServer) => {
   server.middlewares.use('/', async (req, res, next) => {
     const url = req.originalUrl || ''
     const baseGuiPath = vars.baseGuiPath || '/gui'
@@ -54,7 +59,11 @@ const server = (template: string = './index.html', vars: Partial<KumaHtmlVars> =
           return prev
         }, {} as Record<string, string>)
 
-      const body = interpolate(
+      // we create a totally new index.html from our template here
+      // so anything added by Vite that is not in our index.html template
+      // will be removed. Ideally we would take vites output and use that as the template
+      // but its not clear how to get vites output from within this middleware
+      let body = interpolate(
         await read(template),
         {
           ...htmlVars,
@@ -67,6 +76,25 @@ const server = (template: string = './index.html', vars: Partial<KumaHtmlVars> =
           }).filter(([_, value]) => typeof value !== 'undefined')),
         } satisfies KumaHtmlVars,
       )
+
+      if (csp) {
+        const nonce = crypto.randomBytes(16).toString('base64')
+        body = body.replace('<meta charset="utf-8" />', `<meta charset="utf-8" /><meta property="csp-nonce" nonce="${nonce}">`)
+        res.setHeader('Content-Security-Policy', [
+          "default-src 'self'",
+          "script-src 'self'",
+          "script-src-elem 'self'",
+          "img-src 'self' data: ",
+          // in a production environment the nonce is not required
+          // its only used for vite dev-time live reloading client
+          // the sha256 _will be_ required
+          // 'sha256-UtFm94bwcb1Z4CU0svC29YMU26pP5RoZDN8zoniSJhU=' 'sha256-qo7STIM1L/OgU9y0De47mqod1UZFLJfTn36bRC42rfA=' 'nonce-${nonce}'
+          "style-src 'unsafe-inline'",
+          // in production connect-src would use kuma's environment variable for
+          // setting the location of the HTTP API (or just use the default)
+          "connect-src 'self' localhost:5681 https://kuma.io",
+        ].join(';'))
+      }
       res.end(body)
     } else {
       next()
