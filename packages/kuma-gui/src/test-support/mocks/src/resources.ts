@@ -31,7 +31,8 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
           singularDisplayName: name,
           pluralDisplayName: `${name}s`,
           includeInFederation: fake.datatype.boolean(),
-          ...([...legacyPolicies, ...policies].find((policy) => policy.includes(name) /* includes legacy policies */) && { policy: {
+          // only for resources that are policy type ones, including legacy policy types
+          ...([...legacyPolicies, ...policies].find((policy) => policy.includes(name)) && { policy: {
             // legacy polices don't have targetRef
             isTargetRef: Boolean(policies.find((policy) => policy === name)),
             hasToTargetRef: fake.datatype.boolean(),
