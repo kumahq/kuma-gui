@@ -1,7 +1,7 @@
 meshes:
   docs: &meshes.docs
     type: docs
-    label: Documentation
+    label: Learn more
     href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
 
   common:

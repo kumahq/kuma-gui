@@ -24,22 +24,27 @@
           data-testid="empty-block"
         >
           <template #image>
-            <div class="empty-state-icon">
-              <slot
-                v-if="slots.icon"
-                name="icon"
-              />
+            <slot
+              v-if="slots.icon"
+              name="icon"
+            />
+            <div
+              v-else-if="type && iconMapping[type]"
+              class="empty-state-icon"
+            >
               <component
                 :is="iconMapping[type]"
-                v-else-if="type && iconMapping[type]"
                 :color="KUI_COLOR_TEXT_DECORATIVE_AQUA"
                 :size="KUI_ICON_SIZE_50"
               />
-              <AnalyticsIcon v-else />
             </div>
+            <AnalyticsIcon v-else />
           </template>
-          <template #title>
-            <header v-if="title.length">
+          <template
+            v-if="title.length"
+            #title
+          >
+            <header>
               <h2 class="x-empty-state-title">
                 <XI18n
                   :path="`${prefix}x-empty-state.title`"
@@ -68,6 +73,9 @@
             #actions
           >
             <slot name="action">
+              <XTeleportSlot
+                :name="`${props.type}-x-empty-state-actions`"
+              />
               <XAction
                 v-if="href.length > 0"
                 :action="(['docs', 'create'] as const).find((item) => item === actionType)"
@@ -81,10 +89,6 @@
                 />
                 {{ actionLabel }}
               </XAction>
-              <XTeleportSlot
-                v-else
-                :name="`${props.type}-x-empty-state-actions`"
-              />
             </slot>
           </template>
         </EntityEmptyState>
