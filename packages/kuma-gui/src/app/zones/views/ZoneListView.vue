@@ -8,24 +8,25 @@
     }"
     v-slot="{ route, t, can, uri, me }"
   >
-    <AppView
-      :docs="t('zones.href.docs.cta')"
+    <DataSource
+      :src="uri(zoneSources, '/zone-cps', {}, {
+        page: route.params.page,
+        size: route.params.size,
+      })"
+      v-slot="{ data, error, refresh }"
     >
-      <template #title>
-        <h1>
-          <RouteTitle
-            :title="t('zone-cps.routes.items.title')"
-          />
-        </h1>
-      </template>
-
-      <DataSource
-        :src="uri(zoneSources, '/zone-cps', {}, {
-          page: route.params.page,
-          size: route.params.size,
-        })"
-        v-slot="{ data, error, refresh }"
+      <AppView
+        :docs="data && data?.items?.length ? t('zones.href.docs.cta'): ''"
       >
+        <template #title>
+          <h1>
+            <RouteTitle
+              :title="t('zone-cps.routes.items.title')"
+            />
+          </h1>
+        </template>
+
+      
         <DataSource
           :src="`/zone-ingress-overviews?page=1&size=100`"
           @change="getIngresses"
@@ -251,8 +252,8 @@
             />
           </SummaryView>
         </RouterView>
-      </DataSource>
-    </AppView>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 

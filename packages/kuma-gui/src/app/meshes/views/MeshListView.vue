@@ -8,31 +8,31 @@
     }"
     v-slot="{ route, t, me, uri }"
   >
-    <AppView
-      :docs="t('meshes.href.docs')"
+    <DataLoader
+      variant="list"
+      :src="uri(sources, `/mesh-insights`, {}, {
+        page: route.params.page,
+        size: route.params.size,
+      })"
+      v-slot="{ data }"
     >
-      <template #title>
-        <h1>
-          <RouteTitle
-            :title="t('meshes.routes.items.title')"
-          />
-        </h1>
-      </template>
+      <AppView
+        :docs="data.items.length ? t('meshes.href.docs'):''"
+      >
+        <template #title>
+          <h1>
+            <RouteTitle
+              :title="t('meshes.routes.items.title')"
+            />
+          </h1>
+        </template>
 
-      <XI18n
-        path="meshes.routes.items.intro"
-        default-path="common.i18n.ignore-error"
-      />
+        <XI18n
+          path="meshes.routes.items.intro"
+          default-path="common.i18n.ignore-error"
+        />
 
-      <XCard>
-        <DataLoader
-          variant="list"
-          :src="uri(sources, `/mesh-insights`, {}, {
-            page: route.params.page,
-            size: route.params.size,
-          })"
-          v-slot="{ data }"
-        >
+        <XCard>
           <DataCollection
             type="meshes"
             :items="data.items"
@@ -104,9 +104,9 @@
               </template>
             </AppCollection>
           </DataCollection>
-        </DataLoader>
-      </XCard>
-    </AppView>
+        </XCard>
+      </AppView>
+    </DataLoader>
   </RouteView>
 </template>
 
