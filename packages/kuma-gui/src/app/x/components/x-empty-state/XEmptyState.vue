@@ -18,59 +18,67 @@
         ]"
         :key="title"
       >
-        <KEmptyState
-          class="x-empty-state"
+        <EntityEmptyState
+          :title="title"
+          appearance="secondary"
           data-testid="empty-block"
         >
-          <template
-            #icon
-          >
-            <slot name="icon" />
+          <template #image>
+            <div class="empty-state-icon">
+              <slot
+                v-if="slots.icon"
+                name="icon"
+              />
+              <component
+                :is="iconMapping[type]"
+                v-else-if="type && iconMapping[type]"
+                :color="KUI_COLOR_TEXT_DECORATIVE_AQUA"
+                :size="KUI_ICON_SIZE_50"
+              />
+              <AnalyticsIcon v-else />
+            </div>
+          </template>
+          <template #title>
+            <header v-if="title.length">
+              <h2 class="x-empty-state-title">
+                <XI18n
+                  :path="`${prefix}x-empty-state.title`"
+                  default-path="components.x-empty-state.title"
+                />
+              </h2>
+            </header>
           </template>
           <template
-            #title
+            #default
           >
             <slot
-              name="title"
-            >
-              <template
-                v-if="title.length > 0"
-              >
-                <header>
-                  <h2>
-                    <XI18n
-                      :path="`${prefix}x-empty-state.title`"
-                      default-path="components.x-empty-state.title"
-                    />
-                  </h2>
-                </header>
-              </template>
-            </slot>
-          </template>
-
-          <template
-            v-if="slots.default"
-          >
-            <slot name="default" />
-          </template>
-          <template
-            v-else-if="body.length > 0"
-          >
-            <XI18n
-              :path="`${prefix}x-empty-state.body`"
-              default-path="components.x-empty-state.body"
+              v-if="slots.default"
+              name="default"
             />
+            <template
+              v-else-if="body.length > 0"
+            >
+              <XI18n
+                :path="`${prefix}x-empty-state.body`"
+                default-path="components.x-empty-state.body"
+              />
+            </template>
           </template>
-
           <template
-            #action
+            #actions
           >
             <slot name="action">
               <XAction
                 v-if="href.length > 0"
                 :action="(['docs', 'create'] as const).find((item) => item === actionType)"
                 :href="href"
+                :appearance="actionType === 'docs' ? 'secondary': undefined"
               >
+                <XIcon
+                  v-if="actionType === 'docs'"
+                  name="docs"
+                  :size="KUI_ICON_SIZE_40"
+                />
                 {{ actionLabel }}
               </XAction>
               <XTeleportSlot
@@ -79,18 +87,37 @@
               />
             </slot>
           </template>
-        </KEmptyState>
+        </EntityEmptyState>
       </template>
     </template>
   </XI18n>
 </template>
 
 <script lang="ts" setup>
-import { KEmptyState } from '@kong/kongponents'
+import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_40, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
+import { EntityEmptyState } from '@kong-ui-public/entities-shared'
+
 const props = withDefaults(defineProps<{
   type?: string
 }>(), {
   type: '',
 })
 const slots = defineSlots()
+
+const iconMapping: Record<string, unknown> = {
+  'zone-cps': LocationIcon,
+  'meshes': MeshIcon,
+}
 </script>
+<style lang="scss" scoped>
+.empty-state-icon {
+  background-color: $kui-method-color-background-patch;
+  border-radius: $kui-border-radius-20;
+  padding: $kui-space-40;
+}
+
+.x-empty-state-title{
+  font-size: $kui-font-size-50;
+}
+</style>
