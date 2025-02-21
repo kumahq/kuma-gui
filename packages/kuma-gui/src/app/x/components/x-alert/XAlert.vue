@@ -32,6 +32,7 @@ const attrs = useAttrs()
 :deep(.k-button.primary) {
   color: $kui-color-text-inverse !important;
 }
+:deep(.x-action-appearance-anchor),
 :deep(a:not([class])) {
   text-decoration: underline !important;
 }
