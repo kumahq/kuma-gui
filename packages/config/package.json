@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^8.24.1",
     "@vue/eslint-config-typescript": "^14.3.0",
     "esbuild": "^0.25.0",
-    "escape-string-regexp": "^4.0.0",
+    "escape-string-regexp": "^5.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^3.8.3",
     "eslint-plugin-import": "^2.31.0",
