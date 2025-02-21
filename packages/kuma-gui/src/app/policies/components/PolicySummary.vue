@@ -67,6 +67,12 @@
           </template>
         </DefinitionCard>
       </div>
+
+      <ResourceCodeBlock
+        v-if="policy.spec"
+        :resource="{ spec: policy.spec }"
+        :show-k8s-copy-button="false"
+      />
     </template>
     <template v-else>
       <div>
@@ -83,6 +89,7 @@
 import type { Policy } from '../data'
 import { useI18n, useCan } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const { t } = useI18n()
 const can = useCan()
