@@ -10,7 +10,7 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ uri, route, t }"
   >
     <DataCollection
       :items="props.items"
@@ -55,65 +55,106 @@
                 </XAction>
               </h2>
             </template>
-
-            <PolicySummary
-              v-if="item"
-              :policy="item"
-              :format="route.params.format"
+            <DataLoader
+              :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
+                mesh: route.params.mesh,
+                path: route.params.policyPath,
+                name: route.params.policy,
+              })"
+              v-slot="{ data: k8sConfig }"
             >
-              <template #header>
-                <header>
-                  <XLayout
-                    type="separated"
-                    size="max"
-                  >
-                    <h3>
-                      {{ t('policies.routes.item.config') }}
-                    </h3>
-                    <div v-if="item.spec">
-                      <XSelect
-                        :label="t('policies.routes.item.format')"
-                        :selected="route.params.format"
-                        @change="(value) => {
-                          route.update({ format: value })
-                        }"
-                      >
-                        <template
-                          v-for="value in ['structured', 'yaml']"
-                          :key="value"
-                          #[`${value}-option`]
-                        >
-                          {{ t(`policies.routes.item.formats.${value}`) }}
-                        </template>
-                      </XSelect>
-                    </div>
-                  </XLayout>
-                </header>
-              </template>
-              
-              <ResourceCodeBlock
-                :resource="item.config"
-                is-searchable
-                :query="route.params.codeSearch"
-                :is-filter-mode="route.params.codeFilter"
-                :is-reg-exp-mode="route.params.codeRegExp"
-                @query-change="route.update({ codeSearch: $event })"
-                @filter-mode-change="route.update({ codeFilter: $event })"
-                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                v-slot="{ copy, copying }"
+              <PolicySummary
+                v-if="item"
+                :policy="item"
+                :format="route.params.format"
               >
-                <DataSource
-                  v-if="copying"
-                  :src="`/meshes/${route.params.mesh}/policy-path/${route.params.policyPath}/policy/${route.params.policy}/as/kubernetes?no-store`"
-                  @change="(data) => {
-                    copy((resolve) => resolve(data))
-                  }"
-                  @error="(e) => {
-                    copy((_resolve, reject) => reject(e))
-                  }"
-                />
-              </ResourceCodeBlock>
-            </PolicySummary>
+                <template #header>
+                  <header>
+                    <XLayout
+                      type="separated"
+                      size="max"
+                    >
+                      <h3>
+                        {{ t('policies.routes.item.config') }}
+                      </h3>
+                      <div v-if="item.spec">
+                        <XSelect
+                          :label="t('policies.routes.item.format')"
+                          :selected="route.params.format"
+                          @change="(value) => {
+                            route.update({ format: value })
+                          }"
+                        >
+                          <template
+                            v-for="value in ['structured', 'yaml-k8s', 'yaml-universal']"
+                            :key="value"
+                            #[`${value}-option`]
+                          >
+                            {{ t(`policies.routes.item.formats.${value}`) }}
+                          </template>
+                        </XSelect>
+                      </div>
+                    </XLayout>
+                  </header>
+                </template>
+
+                <template v-if="route.params.format === 'yaml-universal'">
+                  <ResourceCodeBlock
+                    data-testid="codeblock-yaml-universal"
+                    :resource="item.config"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                    v-slot="{ copy, copying }"
+                  >
+                    <template
+                      v-if="copying"
+                    >
+                      {{ copy((resolve) => resolve(k8sConfig)) }}
+                    </template>
+                  </ResourceCodeBlock>
+                </template>
+
+                <template v-else-if="route.params.format === 'yaml-k8s'">
+                  <ResourceCodeBlock
+                    data-testid="codeblock-yaml-k8s"
+                    :resource="k8sConfig"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    :show-k8s-copy-button="false"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                  />
+                </template>
+              
+                <template v-else>
+                  <ResourceCodeBlock
+                    :resource="item.config"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                    v-slot="{ copy, copying }"
+                  >
+                    <template
+                      v-if="copying"
+                    >
+                      {{ copy((resolve) => resolve(k8sConfig)) }}
+                    </template>
+                  </ResourceCodeBlock>
+                </template>
+              </PolicySummary>
+            </DataLoader>
           </AppView>
         </template>
       </template>
@@ -124,6 +165,7 @@
 <script lang="ts" setup>
 import PolicySummary from '../components/PolicySummary.vue'
 import type { Policy, PolicyResourceType } from '../data'
+import { sources } from '../sources'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{

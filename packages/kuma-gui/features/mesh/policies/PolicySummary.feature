@@ -41,20 +41,32 @@ Feature: Policy summary
     When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?page=2&size=50" URL
     Then the "$summary" element exists
 
-  Scenario: Switching to YAML format and back
-    Given the environment
-      """
-      KUMA_MESHFAULTINJECTION_COUNT: 1
-      """
-    When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1" URL
-    Then the "$select-preference" element exists
-    And the "$structured-view" element exists
-    When I click the "$select-preference" element
-    When I click the "[data-testid='select-item-yaml'] button" element
-    Then the URL contains "format=yaml"
-    And the "[data-testid='k-code-block']" element exists
-    And the "$structured-view" element doesn't exists
-    When I click the "$select-preference" element
-    When I click the "[data-testid='select-item-structured'] button" element
-    Then the URL contains "format=structured"
-    And the "$structured-view" element exists
+  Rule: Offering different view formats
+
+    Background:
+      Given the environment
+        """
+        KUMA_MESHFAULTINJECTION_COUNT: 1
+        """
+
+    Scenario: Switching to YAML format and back
+      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1" URL
+      Then the "$select-preference" element exists
+      And the "$structured-view" element exists
+      When I click the "$select-preference" element
+      When I click the "[data-testid='select-item-yaml-k8s'] button" element
+      Then the URL contains "format=yaml"
+      And the "[data-testid='k-code-block']" element exists
+      And the "$structured-view" element doesn't exists
+      When I click the "$select-preference" element
+      When I click the "[data-testid='select-item-structured'] button" element
+      Then the URL contains "format=structured"
+      And the "$structured-view" element exists
+
+    Scenario: The view for yaml-k8s format exists
+      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=yaml-k8s" URL
+      Then the "[data-testid='codeblock-yaml-k8s']" element exists
+
+    Scenario: The view for yaml-k8s format exists
+      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=yaml-universal" URL
+      Then the "[data-testid='codeblock-yaml-universal']" element exists
