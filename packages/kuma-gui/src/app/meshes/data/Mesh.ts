@@ -11,6 +11,7 @@ export const Mesh = {
 
     return {
       ...item,
+      id: item.name,
       config: item,
       meshServices: ((item = {}) => {
         return {

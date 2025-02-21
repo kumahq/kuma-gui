@@ -2,8 +2,8 @@ Feature: application / warnings
 
   Background:
     Given the CSS selectors
-      | Alias                     | Selector                                         |
-      | memory-store-type-warning | [data-testid='warning-GLOBAL_STORE_TYPE_MEMORY'] |
+      | Alias                     | Selector                                              |
+      | memory-store-type-warning | [data-testid='notification-global-store-type-memory'] |
 
   Scenario: Using the memory store type shows a warning
     Given the environment

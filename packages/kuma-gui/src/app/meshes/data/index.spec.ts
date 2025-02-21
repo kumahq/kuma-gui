@@ -65,6 +65,7 @@ describe('meshes data transformations', () => {
         }],
         expected: {
           name: 'protocol-4',
+          id: 'protocol-4',
           type: 'Mesh',
           creationTime: '2020-06-19T12:18:02.097986-04:00',
           modificationTime: '2020-06-19T12:18:02.097986-04:00',
