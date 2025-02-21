@@ -42,6 +42,16 @@
               <AnalyticsIcon v-else />
             </div>
           </template>
+          <template #title>
+            <header v-if="title.length">
+              <h2 class="x-empty-state-title">
+                <XI18n
+                  :path="`${prefix}x-empty-state.title`"
+                  default-path="components.x-empty-state.title"
+                />
+              </h2>
+            </header>
+          </template>
           <template
             #default
           >
@@ -59,7 +69,6 @@
             </template>
           </template>
           <template
-            v-if="href.length === 0"
             #actions
           >
             <slot name="action">
@@ -67,7 +76,13 @@
                 v-if="href.length > 0"
                 :action="(['docs', 'create'] as const).find((item) => item === actionType)"
                 :href="href"
+                :appearance="actionType === 'docs' ? 'secondary': undefined"
               >
+                <XIcon
+                  v-if="actionType === 'docs'"
+                  name="docs"
+                  :size="KUI_ICON_SIZE_40"
+                />
                 {{ actionLabel }}
               </XAction>
               <XTeleportSlot
@@ -83,7 +98,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+import { KUI_COLOR_TEXT_DECORATIVE_AQUA, KUI_ICON_SIZE_40, KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 import { LocationIcon, AnalyticsIcon, MeshIcon } from '@kong/icons'
 import { EntityEmptyState } from '@kong-ui-public/entities-shared'
 
@@ -109,5 +124,9 @@ const openInNewTab = (url: string): void => {
   background-color: $kui-method-color-background-patch;
   border-radius: $kui-border-radius-20;
   padding: $kui-space-40;
+}
+
+.x-empty-state-title{
+  font-size: $kui-font-size-50;
 }
 </style>
