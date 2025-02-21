@@ -22,10 +22,6 @@
           :title="title"
           appearance="secondary"
           data-testid="empty-block"
-          :action-button-text="actionType === 'create' && href.length ? actionLabel : undefined"
-          :learn-more="actionType === 'docs' && href.length"
-          @click:learn-more="openInNewTab(href)"
-          @click:create="openInNewTab(href)"
         >
           <template #image>
             <div class="empty-state-icon">
@@ -112,11 +108,6 @@ const slots = defineSlots()
 const iconMapping: Record<string, unknown> = {
   'zone-cps': LocationIcon,
   'meshes': MeshIcon,
-}
-
-const openInNewTab = (url: string): void => {
-  // open url in tab
-  window.open(url, '_blank')
 }
 </script>
 <style lang="scss" scoped>
