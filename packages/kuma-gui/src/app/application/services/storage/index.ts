@@ -1,7 +1,7 @@
 export default (prefix: string = 'kumahq-app', storage: Storage = window.localStorage) => {
-  const get = async (key: string): Promise<object> => {
+  const get = async (key: string, d = {}): Promise<object> => {
     try {
-      return JSON.parse(storage.getItem(`${prefix}:${key}`) ?? '{}')
+      return JSON.parse(storage.getItem(`${prefix}:${key}`) ?? JSON.stringify(d))
     } catch (e) {
       console.error(e)
     }

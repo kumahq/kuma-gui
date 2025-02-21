@@ -1,5 +1,6 @@
 <template>
   <KAlert
+    show-icon
     :appearance="props.variant"
     :dismissible="typeof attrs.onDismiss === 'function'"
   >
@@ -30,5 +31,8 @@ const attrs = useAttrs()
 <style lang="scss" scoped>
 :deep(.k-button.primary) {
   color: $kui-color-text-inverse !important;
+}
+:deep(a:not([class])) {
+  text-decoration: underline !important;
 }
 </style>

@@ -5,7 +5,7 @@ Feature: onboarding / index
       | Alias                   | Selector                                |
       | skip-button             | [data-testid='onboarding-skip-button']  |
       | environment-text        | [data-testid='kuma-environment']        |
-      | onboarding-notification | [data-testid='onboarding-notification'] |
+      | onboarding-notification | [data-testid='notification-onboarding'] |
 
   Scenario: Visiting the homepage with a fresh install shows the onboarding notification
     Given the environment
