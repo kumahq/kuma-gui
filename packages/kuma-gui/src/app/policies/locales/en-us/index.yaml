@@ -15,6 +15,7 @@ policies:
       navigation:
         policy-detail-view: Overview
         policy-detail-config-view: YAML
+      spec: Spec
     items:
       empty: "This policy type does not exist."
     types:
