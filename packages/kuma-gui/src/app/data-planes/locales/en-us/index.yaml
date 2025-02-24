@@ -2,9 +2,9 @@ data-planes:
   notifications:
     recommend-reachable-services: !!text/markdown |
       We've identified outbound services that would benefit from using
-      <a href="https://kuma.io/docs/2.9.x/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a>
+      <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a>
       and/or
-      <a href="https://kuma.io/docs/2.9.x/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a>
+      <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a>
       to dramatically improve performance.
   x-empty-state:
     title: There are no Dataplanes present
