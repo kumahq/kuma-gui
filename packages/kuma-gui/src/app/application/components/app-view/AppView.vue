@@ -2,72 +2,111 @@
   <div
     class="app-view"
   >
-    <nav
-      v-if="!hasParent && _breadcrumbs.length > 0"
-      aria-label="Breadcrumb"
+    <DataSource
+      :src="`/me/~notifications`"
+      v-slot="{ data: dismissed }"
     >
-      <XBreadcrumbs
-        :items="_breadcrumbs"
-      />
-    </nav>
-
-    <section
-      :class="{
-        'is-fullscreen': props.fullscreen,
-      }"
-    >
-      <header
-        v-if="slots.title || slots.actions"
-        class="app-view-title-bar"
+      <component
+        :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
+        v-if="dismissed"
+        :uri="id"
+        :dismissed="dismissed"
+        v-slot="hub"
       >
-        <KongIcon v-if="props.fullscreen" />
-
-        <template
-          v-if="summary.length > 0"
+        <nav
+          v-if="!hasParent && _breadcrumbs.length > 0"
+          aria-label="Breadcrumb"
         >
-          <XTeleportTemplate
-            :to="{ name: summary }"
-          >
-            <slot name="title" />
-          </XTeleportTemplate>
-        </template>
-        <template
-          v-else
-        >
-          <slot name="title" />
-        </template>
-
-        <div
-          class="actions"
-        >
-          <XTeleportSlot
-            v-if="slots.title"
-            name="app-view-docs"
+          <XBreadcrumbs
+            :items="_breadcrumbs"
           />
-          <slot name="actions">
-            <XTeleportSlot :name="`${routeView.name}-actions`" />
-          </slot>
-        </div>
-      </header>
+        </nav>
 
-      <aside
-        v-if="slots.notifications"
-      >
-        <XAlert
-          class="mb-4"
-          variant="warning"
+        <section
+          :class="{
+            'is-fullscreen': props.fullscreen,
+          }"
         >
-          <slot name="notifications" />
-        </XAlert>
-      </aside>
-      <XLayout
-        type="stack"
-      >
-        <slot
-          name="default"
-        />
-      </XLayout>
-    </section>
+          <header
+            v-if="slots.title || slots.actions"
+            class="app-view-title-bar"
+          >
+            <KongIcon v-if="props.fullscreen" />
+
+            <template
+              v-if="summary.length > 0"
+            >
+              <XTeleportTemplate
+                :to="{ name: summary }"
+              >
+                <slot name="title" />
+              </XTeleportTemplate>
+            </template>
+            <template
+              v-else
+            >
+              <slot name="title" />
+            </template>
+
+            <div
+              class="actions"
+            >
+              <XTeleportSlot
+                v-if="slots.title"
+                name="app-view-docs"
+              />
+              <slot name="actions">
+                <XTeleportSlot
+                  :name="`${routeView.name}-actions`"
+                />
+              </slot>
+            </div>
+          </header>
+
+          <XLayout
+            type="stack"
+          >
+            <aside
+              v-if="hub?.notifications?.size > 0"
+            >
+              <DataSink
+                :src="`/me/~notifications`"
+              >
+                <XLayout
+                  type="stack"
+                >
+                  <template
+                    v-for="[variant, value] in hub.notifications"
+                    :key="variant"
+                  >
+                    <XAlert
+                      :variant="variant"
+                    >
+                      <ul
+                        class="notifications"
+                      >
+                        <li
+                          v-for="notification in value"
+                          :key="notification"
+                          :data-testid="`notification-${notification}`"
+                        >
+                          <XNotification
+                            :uri="notification"
+                          />
+                        </li>
+                      </ul>
+                    </XAlert>
+                  </template>
+                </XLayout>
+              </DataSink>
+            </aside>
+            <slot
+              name="default"
+            />
+          </XLayout>
+        </section>
+      </component>
+    </DataSource>
   </div>
   <XTeleportTemplate
     v-if="props.docs.length > 0"
@@ -91,6 +130,7 @@ import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
+import { uniqueId } from '@/app/application'
 import type { BreadcrumbItem } from '@kong/kongponents'
 type AppView = {
   addBreadcrumbs: (items: BreadcrumbItem[], sym: symbol) => void
@@ -103,13 +143,16 @@ const props = withDefaults(defineProps<{
   breadcrumbs?: BreadcrumbItem[] | null
   fullscreen?: boolean
   docs?: string
+  notifications?: boolean
 }>(), {
   breadcrumbs: null,
   fullscreen: false,
   docs: '',
+  notifications: false,
 })
 const slots = defineSlots()
 
+const id = uniqueId('app-view')
 const routeView = inject<RouteView>(ROUTE_VIEW_PARENT)!
 
 const summary: string = inject('app-summary-view', '')
@@ -212,5 +255,15 @@ onBeforeUnmount(() => {
   justify-content: flex-end;
   align-items: center;
   gap: $kui-space-60;
+}
+.notifications {
+  padding: 0;
+}
+.notifications li {
+  margin-left: $kui-space-60;
+}
+.notifications li:only-child {
+  list-style-type: none;
+  padding: 0;
 }
 </style>

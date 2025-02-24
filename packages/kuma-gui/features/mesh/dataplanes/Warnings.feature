@@ -2,11 +2,11 @@ Feature: mesh / dataplanes / warnings
 
   Background:
     Given the CSS selectors
-      | Alias                     | Selector                                                          |
-      | expired-cert-warning      | [data-testid='warning-CERT_EXPIRED']                              |
-      | unsupported-kuma-warning  | [data-testid='warning-INCOMPATIBLE_UNSUPPORTED_KUMA_DP']          |
-      | unsupported-envoy-warning | [data-testid='warning-INCOMPATIBLE_UNSUPPORTED_ENVOY']            |
-      | unsupported-zone-warning  | [data-testid='warning-INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'] |
+      | Alias                     | Selector                                                                |
+      | expired-cert-warning      | [data-testid^='notification-CERT_EXPIRED']                              |
+      | unsupported-kuma-warning  | [data-testid^='notification-INCOMPATIBLE_UNSUPPORTED_KUMA_DP']          |
+      | unsupported-envoy-warning | [data-testid^='notification-INCOMPATIBLE_UNSUPPORTED_ENVOY']            |
+      | unsupported-zone-warning  | [data-testid^='notification-INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'] |
 
   Scenario: With an expired certificate a cert warning is shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with

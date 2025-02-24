@@ -51,6 +51,9 @@
     </KButton>
     <RouterLink
       v-else
+      :class="{
+        'x-action-appearance-anchor': true,
+      }"
       data-testid="x-action"
       v-bind="$attrs"
       :to="{
@@ -84,6 +87,7 @@
       v-bind="$attrs"
       :href="props.href"
       :class="{
+        'x-action-appearance-anchor': true,
         'action-docs': props.action === 'docs',
       }"
       target="_blank"
@@ -148,7 +152,7 @@
 
     <button
       v-else
-      :class="`appearance-${props.appearance}`"
+      :class="`x-action-appearance-${props.appearance}`"
       data-testid="x-action"
       v-bind="$attrs"
       @click="emit('click')"
@@ -244,14 +248,14 @@ watch(() => props.mount, (val) => {
 </script>
 <style lang="scss" scoped>
 /* taken from styles/_base.scss `a` */
-button.appearance-anchor,
-button.appearance-anchor span {
+button.x-action-appearance-anchor,
+button.x-action-appearance-anchor span {
   text-decoration: none;
   color: $kui-color-text-primary;
 }
 
-button.appearance-anchor:hover span,
-button.appearance-anchor:focus span {
+button.x-action-appearance-anchor:hover span,
+button.x-action-appearance-anchor:focus span {
   text-decoration: underline
 }
 .action-docs {

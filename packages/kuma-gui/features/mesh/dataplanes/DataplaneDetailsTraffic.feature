@@ -4,7 +4,7 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
     Given the CSS selectors
       | Alias           | Selector                                            |
       | detail-view     | [data-testid='data-plane-detail-tabs-view']         |
-      | loading-warning | [data-testid='warning-stats-loading']               |
+      | loading-warning | [data-testid^='notification-warning-stats-loading'] |
       | traffic         | [data-testid='dataplane-traffic']                   |
       | outbounds       | [data-testid='dataplane-outbounds']                 |
       | inactiveToggle  | [data-testid='dataplane-outbounds-inactive-toggle'] |
