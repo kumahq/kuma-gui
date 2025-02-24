@@ -21,18 +21,12 @@ export const sources = (api: KumaApi) => {
   return defineSources({
     '/zone-cps/:name/egresses': async (params) => {
       const { name, size, page } = params
+      const filter = name !== '*' ? {
+        [`labels.${'kuma.io/zone'}`]: name,
+      } : undefined
       const offset = size * (page - 1)
 
-      const res = await api.getAllZoneEgressOverviews({ size, offset })
-      if (name !== '*') {
-        // temporary frontend filtering until we have support for filtering
-        // 'gresses by zone in the backend. Until we have backend support its fine
-        // to assume we won't need to recreate paging for 'gresses
-        res.items = res.items.filter((item) => {
-          return item.zoneEgress.zone === name
-        })
-        res.total = res.items.length
-      }
+      const res = await api.getAllZoneEgressOverviews({ size, offset, filter })
       return ZoneEgressOverview.fromCollection(res)
     },
 

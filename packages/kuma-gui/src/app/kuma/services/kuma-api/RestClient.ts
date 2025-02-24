@@ -110,13 +110,18 @@ function normalizeParameters(options?: RequestInit & { params?: any }): RequestI
       if (value === undefined) {
         continue
       }
+      switch (true) {
+        case Array.isArray(value):
+          for (const singleValue of value) {
+            params.push([param, singleValue])
+          }
+          break
+        case value !== null && typeof value === 'object':
+          Object.entries(value).forEach(([key, value]) => params.push([`${param}[${key}]`, value]))
+          break
+        default:
+          params.push([param, value])
 
-      if (Array.isArray(value)) {
-        for (const singleValue of value) {
-          params.push([param, singleValue])
-        }
-      } else {
-        params.push([param, value])
       }
     }
 

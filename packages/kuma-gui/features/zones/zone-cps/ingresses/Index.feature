@@ -25,20 +25,10 @@ Feature: zones / ingresses / index
                   disconnectTime: 2020-07-28T16:18:09.743141Z
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: !!js/undefined
-      
+
           - name: zone-ingress-2
             zoneIngress:
               zone: zone-cp-1
-            zoneIngressInsight:
-              subscriptions:
-                - connectTime: 2020-07-28T16:18:09.743141Z
-                  disconnectTime: 2020-07-28T16:18:09.743141Z
-                - connectTime: 2020-07-28T16:18:09.743141Z
-                  disconnectTime: 2020-07-28T16:18:09.743141Z
-      
-          - name: zone-ingress-3-is-not-part-of-this-zone
-            zoneIngress:
-              zone: zone-cp-not-zone-cp-1
             zoneIngressInsight:
               subscriptions:
                 - connectTime: 2020-07-28T16:18:09.743141Z
