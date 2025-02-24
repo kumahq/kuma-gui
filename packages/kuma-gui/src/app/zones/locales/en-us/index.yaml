@@ -1,8 +1,12 @@
 zone-cps:
   docs: &zone-cps.docs
     type: docs
-    label: Learn more
+    label: Documentation
     href: &zone-cps.docs.href '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
+  growth-docs: &meshes.growth-docs
+    type: docs
+    label: Learn more
+    href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
 
   common:
     name: Name
@@ -14,11 +18,18 @@ zone-cps:
       }
 
   x-empty-state:
-    title: Create your first zone
+    title: No Zones yet...
     body: !!text/markdown |
-      Zones define network or infrastructure boundaries in a multi-zone deployment. Zone control planes handle policies and communication with the global control plane.
+      There are no Zones present
     action:
       <<: *zone-cps.docs
+  
+  x-growth-empty-state:
+      title: Create your first mesh
+      body: !!text/markdown |
+        Meshes are logical groupings of services that establish traffic management and security rules. They define the scope for routing, observability, and policy enforcement within a service mesh.
+      action:
+        <<: *meshes.growth-docs
 
   components:
     zone-control-planes-list:
