@@ -31,7 +31,7 @@ services:
         mesh-service-list-view:
           label: MeshService
           description: !!text/markdown |
-            A <a href="{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshService</a> represents a destination for traffic from elsewhere in the mesh and can define several networking details. The behaviour of this resource depends on the zone type. 
+            A <a href="{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshService</a> represents a destination for traffic from elsewhere in the mesh and can define several networking details. The behaviour of this resource depends on the zone type.
         mesh-multi-zone-service-list-view:
           label: MeshMultiZoneService
           description: !!text/markdown |

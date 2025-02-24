@@ -19,30 +19,26 @@
       })"
       v-slot="{ data: traffic, error, refresh }"
     >
-      <AppView>
-        <template
-          v-if="warnings.length > 0 || error"
-          #notifications
+      <AppView
+        :notifications="true"
+      >
+        <XNotification
+          v-for="warning in warnings"
+          :key="warning.kind"
+          :data-testid="`warning-${warning.kind}`"
+          :uri="`${warning.kind}.${props.data.id}`"
         >
-          <ul data-testid="dataplane-warnings">
-            <li
-              v-for="warning in warnings"
-              :key="warning.kind"
-              :data-testid="`warning-${warning.kind}`"
-            >
-              <XI18n
-                :path="`common.warnings.${warning.kind}`"
-                :params="warning.payload"
-              />
-            </li>
-            <li
-              v-if="error"
-              :data-testid="`warning-stats-loading`"
-            >
-              The below view is not enhanced with runtime stats (Error loading stats: <strong>{{ error.toString() }}</strong>)
-            </li>
-          </ul>
-        </template>
+          <XI18n
+            :path="`common.warnings.${warning.kind}`"
+            :params="warning.payload"
+          />
+        </XNotification>
+        <XNotification
+          v-if="error"
+          :uri="`warning-stats-loading.${props.data.id}`"
+        >
+          The below view is not enhanced with runtime stats (Error loading stats: <strong>{{ error.toString() }}</strong>)
+        </XNotification>
 
         <XLayout
           type="stack"
@@ -514,7 +510,7 @@
               <template #title>
                 <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
               </template>
-              
+
               <AppCollection
                 :headers="[
                   { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },

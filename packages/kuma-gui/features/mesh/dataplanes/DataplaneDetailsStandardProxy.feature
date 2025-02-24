@@ -5,7 +5,6 @@ Feature: Dataplane details for standard Data Plane Proxy
       | Alias         | Selector                                    |
       | detail-view   | [data-testid='data-plane-detail-tabs-view'] |
       | clusters-view | [data-testid='data-plane-clusters-view']    |
-      | warnings      | [data-testid='dataplane-warnings']          |
       | details       | [data-testid='dataplane-details']           |
 
   Scenario: Overview tab has expected content

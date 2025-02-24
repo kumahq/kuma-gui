@@ -4,7 +4,7 @@ Feature: zones / warnings
     Given the CSS selectors
       | Alias                    | Selector                                                                       |
       | warning-no-subscriptions | [data-testid='warning-no-subscriptions']                                       |
-      | warning-zone-memory      | [data-testid='warning-ZONE_STORE_TYPE_MEMORY']                                 |
+      | warning-zone-memory      | [data-testid^='notification-ZONE_STORE_TYPE_MEMORY']                           |
       | zone-cp-table-row        | [data-testid='zone-cp-collection'] tbody tr                                    |
       | warning-trigger          | $zone-cp-table-row:nth-child(1) [data-testid="warning"]                        |
       | warning-memory           | $zone-cp-table-row:nth-child(1) [data-testid="warning-ZONE_STORE_TYPE_MEMORY"] |

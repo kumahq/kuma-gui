@@ -25,28 +25,24 @@
       >
         <AppView
           :docs="t('meshes.href.docs')"
+          :notifications="true"
         >
-          <template
-            v-if="!props.mesh.mtlsBackend || missingTLSPolicy"
-            #notifications
+          <XNotification
+            v-if="!props.mesh.mtlsBackend"
+            :uri="`mtls-warning.${props.mesh.id}`"
           >
-            <ul>
-              <li
-                v-if="!props.mesh.mtlsBackend"
-              >
-                <XI18n
-                  path="meshes.routes.item.mtls-warning"
-                />
-              </li>
-              <li
-                v-if="props.mesh.mtlsBackend && missingTLSPolicy"
-              >
-                <XI18n
-                  path="meshes.routes.item.mtp-warning"
-                />
-              </li>
-            </ul>
-          </template>
+            <XI18n
+              path="meshes.routes.item.mtls-warning"
+            />
+          </XNotification>
+          <XNotification
+            v-if="props.mesh.mtlsBackend && missingTLSPolicy"
+            :uri="`mtp-warning.${props.mesh.id}`"
+          >
+            <XI18n
+              path="meshes.routes.item.mtp-warning"
+            />
+          </XNotification>
           <XLayout
             type="stack"
           >
@@ -152,7 +148,7 @@
 
             <XCard>
               <ResourceCodeBlock
-                :resource="mesh.config"
+                :resource="props.mesh.config"
                 v-slot="{ copy, copying }"
               >
                 <DataSource

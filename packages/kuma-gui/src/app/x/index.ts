@@ -19,6 +19,8 @@ import XInput from './components/x-input/XInput.vue'
 import XInputSwitch from './components/x-input-switch/XInputSwitch.vue'
 import XLayout from './components/x-layout/XLayout.vue'
 import XModal from './components/x-modal/XModal.vue'
+import XNotification from './components/x-notification/XNotification.vue'
+import XNotificationHub from './components/x-notification/XNotificationHub.vue'
 import XProgress from './components/x-progress/XProgress.vue'
 import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
@@ -55,6 +57,8 @@ declare module 'vue' {
     XEmptyState: typeof XEmptyState
     XLayout: typeof XLayout
     XModal: typeof XModal
+    XNotification: typeof XNotification
+    XNotificationHub: typeof XNotificationHub
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XProgress: typeof XProgress
@@ -108,6 +112,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XInput', XInput],
           ['XLayout', XLayout],
           ['XModal', XModal],
+          ['XNotification', XNotification],
+          ['XNotificationHub', XNotificationHub],
           ['XPrompt', XPrompt],
           ['XProvider', XProvider],
           ['XProgress', XProgress],
