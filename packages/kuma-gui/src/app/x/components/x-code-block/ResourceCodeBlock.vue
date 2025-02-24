@@ -1,50 +1,49 @@
 <template>
-  <div>
-    <XCodeBlock
-      language="yaml"
-      :code="yamlUniversal"
-      :is-searchable="props.isSearchable"
-      :code-max-height="props.codeMaxHeight"
-      :query="props.query"
-      :is-filter-mode="props.isFilterMode"
-      :is-reg-exp-mode="props.isRegExpMode"
-      @query-change="emit('query-change', $event)"
-      @filter-mode-change="emit('filter-mode-change', $event)"
-      @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
-    >
-      <template #secondary-actions>
-        <XDisclosure
-          v-slot="{ expanded, toggle }"
+  <XCodeBlock
+    language="yaml"
+    :code="yamlUniversal"
+    :is-searchable="props.isSearchable"
+    :code-max-height="props.codeMaxHeight"
+    :query="props.query"
+    :is-filter-mode="props.isFilterMode"
+    :is-reg-exp-mode="props.isRegExpMode"
+    @query-change="emit('query-change', $event)"
+    @filter-mode-change="emit('filter-mode-change', $event)"
+    @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
+  >
+    <template #secondary-actions>
+      <XDisclosure
+        v-slot="{ expanded, toggle }"
+      >
+        <KCodeBlockIconButton
+          v-if="props.showK8sCopyButton"
+          :copy-tooltip="t('common.copyKubernetesText')"
+          theme="dark"
+          @click="() => {
+            if (!expanded) {
+              toggle()
+            }
+          }"
         >
-          <KCodeBlockIconButton
-            :copy-tooltip="t('common.copyKubernetesText')"
-            theme="dark"
-            @click="() => {
-              if (!expanded) {
+          <XIcon name="copy" />{{ t('common.copyKubernetesShortText') }}
+        </KCodeBlockIconButton>
+        <XCopyButton
+          format="hidden"
+          v-slot="{ copy }"
+        >
+          <slot
+            :copy="(cb: CopyCallback) => {
+              if (expanded) {
                 toggle()
               }
+              cb((text: object) => copy(toYamlRepresentation(text)), onCopyReject)
             }"
-          >
-            <XIcon name="copy" />{{ t('common.copyKubernetesShortText') }}
-          </KCodeBlockIconButton>
-          <XCopyButton
-            format="hidden"
-            v-slot="{ copy }"
-          >
-            <slot
-              :copy="(cb: CopyCallback) => {
-                if (expanded) {
-                  toggle()
-                }
-                cb((text: object) => copy(toYamlRepresentation(text)), onCopyReject)
-              }"
-              :copying="expanded"
-            />
-          </XCopyButton>
-        </XDisclosure>
-      </template>
-    </XCodeBlock>
-  </div>
+            :copying="expanded"
+          />
+        </XCopyButton>
+      </XDisclosure>
+    </template>
+  </XCodeBlock>
 </template>
 
 <script lang="ts" setup>
@@ -64,12 +63,14 @@ const props = withDefaults(defineProps<{
   query?: string
   isFilterMode?: boolean
   isRegExpMode?: boolean
+  showK8sCopyButton?: boolean
 }>(), {
   codeMaxHeight: undefined,
   isSearchable: false,
   query: '',
   isFilterMode: false,
   isRegExpMode: false,
+  showK8sCopyButton: true,
 })
 
 const emit = defineEmits<{
