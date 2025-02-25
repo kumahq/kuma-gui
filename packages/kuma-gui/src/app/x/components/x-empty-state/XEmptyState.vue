@@ -79,9 +79,9 @@
               />
               <XAction
                 v-if="href.length > 0"
-                :action="(['docs', 'create'] as const).find((item) => item === actionType)"
+                :action="(['docs', 'create'] as const).find((item) => item === t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }))"
                 :href="href"
-                :appearance="actionType === 'docs' ? 'secondary': undefined"
+                :appearance="t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs' ? 'secondary': undefined"
               >
                 <XIcon
                   v-if="actionType === 'docs'"
@@ -179,6 +179,7 @@ const can = useCan()
 
 const iconMapping: Record<string, unknown> = {
   'zone-cps': LocationIcon,
+  'zone-crud': LocationIcon,
   'meshes': MeshIcon,
 }
 </script>
