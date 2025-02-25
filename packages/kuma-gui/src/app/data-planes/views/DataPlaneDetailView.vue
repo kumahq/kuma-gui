@@ -334,9 +334,18 @@
                       v-for="direction in ['upstream'] as const"
                       :key="direction"
                     >
+                      <XNotification
+                        v-if="Object.values(traffic.outbounds).find(item => (typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) ?? 0 > 0)"
+                        variant="info"
+                        :uri="`data-planes.notifications.recommend-reachable-services:${props.data.id}`"
+                      >
+                        <XI18n
+                          path="data-planes.notifications.recommend-reachable-services"
+                        />
+                      </XNotification>
                       <DataCollection
                         type="outbounds"
-                        :predicate="route.params.inactive ? undefined : ([key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) as (number | undefined) ?? 0) > 0"
+                        :predicate="route.params.inactive ? undefined : ([key, item]) => ((typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) ?? 0) > 0"
                         :items="Object.entries<any>(traffic.outbounds)"
                         v-slot="{ items: outbounds }"
                       >
