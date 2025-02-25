@@ -4,7 +4,7 @@ subscriptions:
       config: Configuration
       format: Format
       formats:
-        yaml: YAML
+        universal: YAML
         structured: Structured
       navigation:
         zone-cp-subscription-summary-overview-view: Overview

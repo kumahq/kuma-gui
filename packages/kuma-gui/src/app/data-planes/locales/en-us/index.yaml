@@ -69,7 +69,7 @@ data-planes:
       config: Configuration
       format: Format
       formats:
-        yaml: YAML
+        universal: YAML
         structured: Structured
       inbounds: 'Inbounds'
       inbound_name: '{service}'

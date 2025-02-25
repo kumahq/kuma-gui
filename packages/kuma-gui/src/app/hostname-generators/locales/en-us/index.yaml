@@ -21,7 +21,7 @@ hostname-generators:
       config: Configuration
       format: Format
       formats:
-        yaml: YAML
+        universal: YAML
         structured: Structured
       about:
         title: About this Hostname Generator

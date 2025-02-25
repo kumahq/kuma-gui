@@ -23,7 +23,7 @@ services:
       config: 'Configuration'
       format: Format
       formats:
-        yaml: YAML
+        universal: YAML
         structured: Structured
     items:
       title: Services

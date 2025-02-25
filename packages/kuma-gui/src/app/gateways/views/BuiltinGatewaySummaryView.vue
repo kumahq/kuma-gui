@@ -71,7 +71,7 @@
                       }"
                     >
                       <template
-                        v-for="value in ['structured', 'yaml']"
+                        v-for="value in ['structured', 'universal']"
                         :key="value"
                         #[`${value}-option`]
                       >
