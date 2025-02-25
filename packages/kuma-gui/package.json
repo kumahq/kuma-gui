@@ -60,7 +60,7 @@
     "lint-staged": "^15.4.3",
     "lockfile-lint": "^4.14.0",
     "markdown-it": "^14.1.0",
-    "msw": "^2.7.0",
+    "msw": "^2.7.3",
     "openapi-typescript": "^7.6.1",
     "postcss": "^8.5.3",
     "postcss-html": "^1.8.0",
