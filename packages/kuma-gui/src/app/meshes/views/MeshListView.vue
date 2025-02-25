@@ -8,105 +8,112 @@
     }"
     v-slot="{ route, t, me, uri }"
   >
-    <AppView
-      :docs="t('meshes.href.docs')"
+    <DataSource
+      :src="uri(sources, `/mesh-insights`, {}, {
+        page: route.params.page,
+        size: route.params.size,
+      })"
+      v-slot="{ data, error }"
     >
-      <template #title>
-        <h1>
-          <RouteTitle
-            :title="t('meshes.routes.items.title')"
-          />
-        </h1>
-      </template>
+      <AppView
+        :docs="data?.items.length ? t('meshes.href.docs'):''"
+      >
+        <template #title>
+          <h1>
+            <RouteTitle
+              :title="t('meshes.routes.items.title')"
+            />
+          </h1>
+        </template>
 
-      <XI18n
-        path="meshes.routes.items.intro"
-        default-path="common.i18n.ignore-error"
-      />
+        <XI18n
+          path="meshes.routes.items.intro"
+          default-path="common.i18n.ignore-error"
+        />
 
-      <XCard>
-        <DataLoader
-          variant="list"
-          :src="uri(sources, `/mesh-insights`, {}, {
-            page: route.params.page,
-            size: route.params.size,
-          })"
-          v-slot="{ data }"
-        >
-          <DataCollection
-            type="meshes"
-            :items="data.items"
-            :page="route.params.page"
-            :page-size="route.params.size"
-            :total="data.total"
-            @change="route.update"
-            v-slot="{ items }"
+        <XCard>
+          <DataLoader
+            :data="[data]"
+            :errors="[error]"
           >
-            <AppCollection
-              class="mesh-collection"
-              data-testid="mesh-collection"
-              :headers="[
-                { ...me.get('headers.name'), label: t('meshes.common.name'), key: 'name' },
-                { ...me.get('headers.services'), label: t('meshes.routes.items.collection.services'), key: 'services'},
-                { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
-                { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-              ]"
-              :items="items"
-              :is-selected-row="(row) => row.name === route.params.mesh"
-              @resize="me.set"
+            <template
+              #loadable
             >
-              <template
-                #name="{ row: item }"
+              <DataCollection
+                type="meshes"
+                :items="data?.items ?? [undefined]"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                :total="data?.total"
+                @change="route.update"
               >
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'mesh-detail-view',
-                    params: {
-                      mesh: item.name,
-                    },
-                    query: {
-                      page: route.params.page,
-                      size: route.params.size,
-                    },
-                  }"
+                <AppCollection
+                  class="mesh-collection"
+                  data-testid="mesh-collection"
+                  :headers="[
+                    { ...me.get('headers.name'), label: t('meshes.common.name'), key: 'name' },
+                    { ...me.get('headers.services'), label: t('meshes.routes.items.collection.services'), key: 'services'},
+                    { ...me.get('headers.dataplanes'), label: t('meshes.routes.items.collection.dataplanes'), key: 'dataplanes'},
+                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                  ]"
+                  :items="data?.items"
+                  :is-selected-row="(row) => row.name === route.params.mesh"
+                  @resize="me.set"
                 >
-                  {{ item.name }}
-                </XAction>
-              </template>
-
-              <template
-                #services="{ row: item }"
-              >
-                {{ item.services.internal }}
-              </template>
-
-              <template
-                #dataplanes="{ row: item }"
-              >
-                {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
-              </template>
-              <template
-                #actions="{ row: item }"
-              >
-                <XActionGroup>
-                  <XAction
-                    :to="{
-                      name: 'mesh-detail-view',
-                      params: {
-                        mesh: item.name,
-                      },
-                    }"
+                  <template
+                    #name="{ row: item }"
                   >
-                    {{ t('common.collection.actions.view') }}
-                  </XAction>
-                </XActionGroup>
-              </template>
-            </AppCollection>
-          </DataCollection>
-        </DataLoader>
-      </XCard>
-    </AppView>
+                    <XAction
+                      data-action
+                      :to="{
+                        name: 'mesh-detail-view',
+                        params: {
+                          mesh: item.name,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
+                        },
+                      }"
+                    >
+                      {{ item.name }}
+                    </XAction>
+                  </template>
+
+                  <template
+                    #services="{ row: item }"
+                  >
+                    {{ item.services.internal }}
+                  </template>
+
+                  <template
+                    #dataplanes="{ row: item }"
+                  >
+                    {{ item.dataplanesByType.standard.online }} / {{ item.dataplanesByType.standard.total }}
+                  </template>
+                  <template
+                    #actions="{ row: item }"
+                  >
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'mesh-detail-view',
+                          params: {
+                            mesh: item.name,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
+                  </template>
+                </AppCollection>
+              </DataCollection>
+            </template>
+          </DataLoader>
+        </XCard>
+      </AppView>
+    </DataSource>
   </RouteView>
 </template>
 
