@@ -6,9 +6,16 @@ function createStylelintConfig() {
       'stylelint-config-recommended-scss',
       'stylelint-config-recommended-vue/scss',
     ],
-    plugins: ['@kong/design-tokens/stylelint-plugin'],
-    ignoreFiles: ['dist/**/*'],
+    plugins: [
+      '@stylistic/stylelint-plugin',
+      '@kong/design-tokens/stylelint-plugin',
+    ],
+    ignoreFiles: [
+      'dist/**/*',
+    ],
     rules: {
+      '@stylistic/selector-combinator-space-before': 'always',
+      '@stylistic/selector-combinator-space-after': 'always',
       '@kong/design-tokens/use-proper-token': [
         true,
         {

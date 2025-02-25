@@ -25,7 +25,7 @@ Feature: zones / ingresses / index
                   disconnectTime: 2020-07-28T16:18:09.743141Z
                 - connectTime: 2020-07-28T16:18:09.743141Z
                   disconnectTime: !!js/undefined
-
+      
           - name: zone-ingress-2
             zoneIngress:
               zone: zone-cp-1
