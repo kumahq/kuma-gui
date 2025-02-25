@@ -80,6 +80,12 @@ export const ZoneOverview = {
         },
       })
     }
+    if ((insight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0) {
+      warnings.push({
+        kind: 'NACK_RESPONSE_ZONE_TO_GLOBAL',
+        payload: {},
+      })
+    }
     const state = {
       disabled: 'disabled',
       online: 'online',

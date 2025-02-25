@@ -8,6 +8,7 @@ Feature: zones / warnings
       | zone-cp-table-row        | [data-testid='zone-cp-collection'] tbody tr                                    |
       | warning-trigger          | $zone-cp-table-row:nth-child(1) [data-testid="warning"]                        |
       | warning-memory           | $zone-cp-table-row:nth-child(1) [data-testid="warning-ZONE_STORE_TYPE_MEMORY"] |
+      | notification-nack        | [data-testid^='notification-NACK_RESPONSE_ZONE_TO_GLOBAL']                     |
     And the environment
       """
       KUMA_ZONE_COUNT: 1
@@ -73,6 +74,30 @@ Feature: zones / warnings
       """
     When I visit the "<URL>" URL
     Then the "$warning-zone-memory" element doesn't exist
+
+    Examples:
+      | URL                       |
+      | /zones/zone-cp-1/overview |
+      | /zones/zone-cp-1/config   |
+
+  Scenario Outline: When the connected subscription has a NACK "<URL>" shows a notification
+    Given the environment
+      """
+      KUMA_SUBSCRIPTION_COUNT: 1
+      """
+    And the URL "/zones/zone-cp-1/_overview" responds with
+      """
+      body:
+        zoneInsight:
+          subscriptions:
+            - connectTime: 2020-07-28T16:18:09.743141Z
+              disconnectTime: !!js/undefined
+              status:
+                total:
+                  responsesRejected: 100
+      """
+    When I visit the "<URL>" URL
+    Then the "$notification-nack" element exists
 
     Examples:
       | URL                       |
