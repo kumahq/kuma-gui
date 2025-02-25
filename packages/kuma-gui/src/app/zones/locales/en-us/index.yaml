@@ -3,10 +3,10 @@ zone-cps:
     type: docs
     label: Documentation
     href: &zone-cps.docs.href '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
-  growth-docs: &meshes.growth-docs
+  growth-docs: &zones.growth-docs
     type: docs
     label: Learn more
-    href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
+    href: &zones.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
 
   common:
     name: Name
@@ -25,11 +25,11 @@ zone-cps:
       <<: *zone-cps.docs
   
   x-growth-empty-state:
-      title: Create your first mesh
+      title: Create your first zone
       body: !!text/markdown |
-        Meshes are logical groupings of services that establish traffic management and security rules. They define the scope for routing, observability, and policy enforcement within a service mesh.
+        Zones define network boundaries (e.g., clusters, VPCs) and connect to a global control plane that centrally manages and distributes configurations. 
       action:
-        <<: *meshes.growth-docs
+        <<: *zones.growth-docs
 
   components:
     zone-control-planes-list:
