@@ -3,6 +3,10 @@ zone-cps:
     type: docs
     label: Documentation
     href: &zone-cps.docs.href '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
+  growth-docs: &zones.growth-docs
+    type: docs
+    label: Learn more
+    href: &zones.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
 
   common:
     name: Name
@@ -19,6 +23,13 @@ zone-cps:
       There are no Zones present
     action:
       <<: *zone-cps.docs
+  
+  x-growth-empty-state:
+      title: Create your first zone
+      body: !!text/markdown |
+        Zones define network boundaries (e.g., clusters, VPCs) and connect to a global control plane that centrally manages and distributes configurations. 
+      action:
+        <<: *zones.growth-docs
 
   components:
     zone-control-planes-list:

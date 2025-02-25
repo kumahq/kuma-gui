@@ -3,6 +3,10 @@ meshes:
     type: docs
     label: Documentation
     href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
+  growth-docs: &meshes.growth-docs
+    type: docs
+    label: Learn more
+    href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
 
   common:
     name: Name
@@ -20,6 +24,12 @@ meshes:
     action:
       <<: *meshes.docs
 
+  x-growth-empty-state:
+      title: Create your first mesh
+      body: !!text/markdown |
+        Meshes are logical groupings of services that establish traffic management and security rules. They define the scope for routing, observability, and policy enforcement within a service mesh.
+      action:
+        <<: *meshes.growth-docs
 
   components:
     mesh-insights-list:
