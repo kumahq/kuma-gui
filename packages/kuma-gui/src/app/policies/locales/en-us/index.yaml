@@ -10,10 +10,9 @@ policies:
       config: 'Configuration'
       format: Format
       formats:
-        yaml: YAML
         structured: Structured
-        yaml-k8s: Kubernetes
-        yaml-universal: Universal
+        k8s: Kubernetes
+        universal: Universal
       navigation:
         policy-detail-view: Overview
         policy-detail-config-view: YAML

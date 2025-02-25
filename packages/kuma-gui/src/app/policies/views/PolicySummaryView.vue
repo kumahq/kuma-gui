@@ -86,7 +86,7 @@
                           }"
                         >
                           <template
-                            v-for="value in ['structured', 'yaml-k8s', 'yaml-universal']"
+                            v-for="value in ['structured', 'k8s', 'universal']"
                             :key="value"
                             #[`${value}-option`]
                           >
@@ -98,7 +98,7 @@
                   </header>
                 </template>
 
-                <template v-if="route.params.format === 'yaml-universal'">
+                <template v-if="route.params.format === 'universal'">
                   <ResourceCodeBlock
                     data-testid="codeblock-yaml-universal"
                     :resource="item.config"
@@ -119,7 +119,7 @@
                   </ResourceCodeBlock>
                 </template>
 
-                <template v-else-if="route.params.format === 'yaml-k8s'">
+                <template v-else-if="route.params.format === 'k8s'">
                   <ResourceCodeBlock
                     data-testid="codeblock-yaml-k8s"
                     :resource="k8sConfig"
