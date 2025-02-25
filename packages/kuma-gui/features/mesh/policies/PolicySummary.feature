@@ -49,13 +49,13 @@ Feature: Policy summary
         KUMA_MESHFAULTINJECTION_COUNT: 1
         """
 
-    Scenario: Switching to YAML format and back
+    Scenario: Switching to k8s format and back
       When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1" URL
       Then the "$select-preference" element exists
       And the "$structured-view" element exists
       When I click the "$select-preference" element
-      When I click the "[data-testid='select-item-yaml-k8s'] button" element
-      Then the URL contains "format=yaml"
+      When I click the "[data-testid='select-item-k8s'] button" element
+      Then the URL contains "format=k8s"
       And the "[data-testid='k-code-block']" element exists
       And the "$structured-view" element doesn't exists
       When I click the "$select-preference" element
@@ -64,9 +64,9 @@ Feature: Policy summary
       And the "$structured-view" element exists
 
     Scenario: The view for yaml-k8s format exists
-      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=yaml-k8s" URL
+      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=k8s" URL
       Then the "[data-testid='codeblock-yaml-k8s']" element exists
 
     Scenario: The view for yaml-k8s format exists
-      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=yaml-universal" URL
+      When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=universal" URL
       Then the "[data-testid='codeblock-yaml-universal']" element exists
