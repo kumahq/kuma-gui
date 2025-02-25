@@ -1,3 +1,4 @@
+import { semver } from '../../utilities'
 export type KumaHtmlVars = {
   baseGuiPath: string
   apiUrl: string
@@ -12,14 +13,12 @@ export type KumaHtmlVars = {
 
 export type EnvArgs = {
   KUMA_VERSION_URL: string
-  KUMA_DOCS_URL: string
   KUMA_MOCK_API_ENABLED: string
 }
 type EnvProps = {
   KUMA_VERSION: string
   KUMA_BASE_PATH: string
   KUMA_API_URL: string
-  KUMA_KDS_URL: string
   KUMA_MODE: string
   KUMA_ENVIRONMENT: string
   KUMA_STORE_TYPE: string
@@ -32,22 +31,15 @@ export default class Env {
   constructor(envArgs: EnvArgs) {
     const _env: EnvInternal = envArgs
     const env = (str: keyof EnvInternal, d: string = '') => this.var(str, _env?.[str] ?? d)
-
     const config = this.getConfig()
-    const mode = env('KUMA_MODE') || config.mode
-    const version = semver(env('KUMA_VERSION', config.version))
-
     this.env = {
       ..._env as EnvVars,
-      // TODO(jc): not totally sure we need to use a regex here, maybe just split and join if not
-      KUMA_DOCS_URL: `${env('KUMA_DOCS_URL')}/${version.patch === '0.0.0' ? 'dev' : version.patch.replace(/\.\d+$/, '.x')}`,
-      KUMA_VERSION: version.pre,
-      KUMA_API_URL: env('KUMA_API_URL') || config.apiUrl,
-      KUMA_BASE_PATH: env('KUMA_BASE_PATH') || config.baseGuiPath,
-      KUMA_MODE: mode,
+      KUMA_VERSION: semver(env('KUMA_VERSION', config.version)).pre,
+      KUMA_API_URL: env('KUMA_API_URL', config.apiUrl) || config.apiUrl,
+      KUMA_BASE_PATH: env('KUMA_BASE_PATH', config.baseGuiPath),
+      KUMA_MODE: env('KUMA_MODE') || config.mode,
       KUMA_ENVIRONMENT: env('KUMA_ENVIRONMENT') || config.environment,
       KUMA_STORE_TYPE: env('KUMA_STORE_TYPE') || config.storeType,
-      KUMA_KDS_URL: 'grpcs://<global-kds-address>:5685',
     }
   }
 
@@ -86,21 +78,3 @@ export function normalizeBaseUrl(url: string): string {
   return stripTrailingSlashes(url)
 }
 
-export function semver(version: string): { major: string, minor: string, patch: string, pre: string } {
-  const [major, minor, ...patchPre] = version.split('.')
-  if (isNaN(parseInt(major))) {
-    return {
-      major,
-      minor: major,
-      patch: major,
-      pre: major,
-    }
-  }
-  const [patch, pre] = patchPre.join('.').split('-')
-  return {
-    major,
-    minor: `${major}.${minor}`,
-    patch: `${major}.${minor}.${patch}`,
-    pre: `${major}.${minor}.${patch}${pre !== undefined ? `-${pre}` : ''}`,
-  }
-}
