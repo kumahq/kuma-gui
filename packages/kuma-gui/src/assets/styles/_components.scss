@@ -8,11 +8,11 @@ For stacking elements with consistent space between.
 Adapted from https://every-layout.dev/layouts/stack/.
 */
 
-.stack>*+* {
+.stack > * + * {
   margin-block-start: $kui-space-70;
 }
 
-.stack-small>*+* {
+.stack-small > * + * {
   margin-block-start: $kui-space-40;
 }
 
@@ -21,7 +21,7 @@ Adapted from https://every-layout.dev/layouts/stack/.
 
 Variant of .stack with a horizontal border in the center of the gap.
 */
-.stack-with-borders>*+* {
+.stack-with-borders > * + * {
   margin-block-start: $kui-space-40;
   border-block-start: $kui-border-width-10 solid $kui-color-border;
   padding-block-start: $kui-space-40;
@@ -43,7 +43,7 @@ Adapted from https://every-layout.dev/layouts/switcher/.
   gap: $kui-space-80;
 }
 
-.columns>* {
+.columns > * {
   flex-grow: 1;
   flex-basis: calc((var(--threshold) - 100%) * 999);
   min-inline-size: 0;
@@ -54,6 +54,6 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 
 Variant of .columns with a vertical border at the right side of each column (except the last).
 */
-.columns-with-borders>*:not(:last-child) {
+.columns-with-borders > *:not(:last-child) {
   border-right: $kui-border-width-10 solid $kui-color-border;
 }
