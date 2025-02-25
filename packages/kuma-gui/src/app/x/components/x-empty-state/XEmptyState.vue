@@ -78,7 +78,7 @@
                 :name="`${props.type}-x-empty-state-actions`"
               />
               <XAction
-                v-if="href.length > 0"
+                v-if="t(`${prefix}x-growth-empty-state.action.href`, undefined, { defaultMessage: '' }).length > 0"
                 :action="(['docs', 'create'] as const).find((item) => item === t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }))"
                 :href="href"
                 :appearance="t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs' ? 'secondary': undefined"
@@ -179,7 +179,7 @@ const can = useCan()
 
 const iconMapping: Record<string, unknown> = {
   'zone-cps': LocationIcon,
-  'zone-crud': LocationIcon,
+  'zones-crud': LocationIcon,
   'meshes': MeshIcon,
 }
 </script>
