@@ -3,6 +3,7 @@ zone-cps:
     type: docs
     label: Documentation
     href: &zone-cps.docs.href '{KUMA_DOCS_URL}/documentation/deployments?{KUMA_UTM_QUERY_PARAMS}'
+
   growth-docs: &zones.growth-docs
     type: docs
     label: Learn more
