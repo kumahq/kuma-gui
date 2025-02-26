@@ -633,8 +633,8 @@ export interface ZoneOverview extends MeshEntity {
 export interface ZoneIngressNetworking {
   address?: string
   advertisedAddress?: string
-  port?: string
-  advertisedPort?: string
+  port?: number
+  advertisedPort?: number
 }
 
 export interface AvailableService {
@@ -671,7 +671,7 @@ export interface ZoneIngressOverview extends MeshEntity {
 
 export interface ZoneEgressNetworking {
   address?: string
-  port?: string
+  port?: number
 }
 
 export interface ZoneEgress extends MeshEntity {

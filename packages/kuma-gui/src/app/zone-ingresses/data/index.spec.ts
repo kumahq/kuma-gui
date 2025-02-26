@@ -215,9 +215,9 @@ describe('ZoneIngressOverview', () => {
             item.zoneIngress.networking = {}
           }
           delete item.zoneIngress.networking?.address
-          item.zoneIngress.networking.port = '80'
+          item.zoneIngress.networking.port = 80
           delete item.zoneIngress.networking?.advertisedAddress
-          item.zoneIngress.networking.advertisedPort = '80'
+          item.zoneIngress.networking.advertisedPort = 80
           return item
         })
         expect(actual.zoneIngress.socketAddress).toStrictEqual('')
@@ -271,9 +271,9 @@ describe('ZoneIngressOverview', () => {
             item.zoneIngress.networking = {}
           }
           item.zoneIngress.networking.address = '127.0.0.1'
-          item.zoneIngress.networking.port = '80'
+          item.zoneIngress.networking.port = 80
           item.zoneIngress.networking.advertisedAddress = '127.0.0.2'
-          item.zoneIngress.networking.advertisedPort = '81'
+          item.zoneIngress.networking.advertisedPort = 81
           return item
         })
         expect(actual.zoneIngress.socketAddress).toStrictEqual('127.0.0.1:80')
@@ -302,8 +302,8 @@ describe('ZoneIngressOverview', () => {
         networking: {
           address: '486f:d1db:efde:c143:94a5:cb9f:271a:c1a7',
           advertisedAddress: '190.26.201.59',
-          advertisedPort: '58329',
-          port: '58936',
+          advertisedPort: 58329,
+          port: 58936,
         },
       }
       const actual = await fixture.setup((item) => {
