@@ -23,6 +23,7 @@ export interface PaginatedApiListResponse<ResourceType> extends ApiListResponse<
 export interface PaginationParameters {
   size?: number
   offset?: number
+  filter?: Record<string, string>
 }
 
 export interface SingleResourceParameters {

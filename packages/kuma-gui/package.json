@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
-    "@kong-ui-public/app-layout": "^4.3.10",
+    "@kong-ui-public/app-layout": "^4.3.11",
     "@kong-ui-public/i18n": "^2.2.10",
     "@kong/icons": "^1.21.1",
     "@kong/kongponents": "^9.21.6",
@@ -38,7 +38,7 @@
     "@kong/design-tokens": "^1.17.3",
     "@kumahq/config": "*",
     "@kumahq/kuma-http-api": "*",
-    "@modyfi/vite-plugin-yaml": "^1.1.0",
+    "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@types/glob": "^8.1.0",
     "@types/js-yaml": "^4.0.9",
     "@types/prismjs": "^1.26.5",
@@ -52,7 +52,7 @@
     "cypress-fail-on-console-error": "^5.1.1",
     "cypress-terminal-report": "^7.1.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.20.1",
+    "eslint": "^9.21.0",
     "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
@@ -60,7 +60,7 @@
     "lint-staged": "^15.4.3",
     "lockfile-lint": "^4.14.0",
     "markdown-it": "^14.1.0",
-    "msw": "^2.7.0",
+    "msw": "^2.7.3",
     "openapi-typescript": "^7.6.1",
     "postcss": "^8.5.3",
     "postcss-html": "^1.8.0",
@@ -72,8 +72,8 @@
     "vite": "^5.4.11",
     "vite-svg-loader": "^5.1.0",
     "vitepress": "^1.6.3",
-    "vitest": "^3.0.6",
-    "vue-tsc": "^2.2.0"
+    "vitest": "^3.0.7",
+    "vue-tsc": "^2.2.4"
   },
   "browserslist": [
     "> 1%",
