@@ -3,7 +3,7 @@ Feature: application / loading
   Background:
     Given the CSS selectors
       | Alias              | Selector                      |
-      | collection-loading | [data-testid='list-skeleton'] |
+      | collection-loading | [data-testid='table-skeleton'] |
 
   Scenario: Collections show a loading view
     Given the environment
