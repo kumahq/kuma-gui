@@ -271,6 +271,9 @@ Feature: Dataplane policies
       And the "$summary-slideout-container [data-testid='slideout-title']" element exists
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
 
+    Scenario: Policies tab has expected content (inbound rules & partial from rules)
+      Given the
+
   Rule: Standard proxy
 
     Background:
