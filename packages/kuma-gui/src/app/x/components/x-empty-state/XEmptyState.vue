@@ -80,11 +80,11 @@
               <XAction
                 v-if="t(`${prefix}x-growth-empty-state.action.href`, undefined, { defaultMessage: '' }).length > 0"
                 :action="(['docs', 'create'] as const).find((item) => item === t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }))"
-                :href="href"
+                :href="t(`${prefix}x-growth-empty-state.action.href`, undefined, { defaultMessage: '' })"
                 :appearance="t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs' ? 'secondary': undefined"
               >
                 <XIcon
-                  v-if="actionType === 'docs'"
+                  v-if="t(`${prefix}x-growth-empty-state.action.type`, undefined, { defaultMessage: '' }) === 'docs'"
                   name="docs"
                   :size="KUI_ICON_SIZE_40"
                 />
@@ -142,6 +142,9 @@
             #action
           >
             <slot name="action">
+              <XTeleportSlot
+                :name="`${props.type}-x-empty-state-actions`"
+              />
               <XAction
                 v-if="href.length > 0"
                 :action="(['docs', 'create'] as const).find((item) => item === actionType)"
@@ -149,10 +152,6 @@
               >
                 {{ actionLabel }}
               </XAction>
-              <XTeleportSlot
-                v-else
-                :name="`${props.type}-x-empty-state-actions`"
-              />
             </slot>
           </template>
         </KEmptyState>
