@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { InspectRulesForDataplane } from '@/types/index.d'
 
-export default (_deps: EndpointDependencies): MockResponder => (req) => {
+export default ({ fake: _fake }: EndpointDependencies): MockResponder => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
@@ -136,6 +136,41 @@ export default (_deps: EndpointDependencies): MockResponder => (req) => {
               ],
             },
           ],
+          // inboundsRules: [
+          //   {
+          //     inbound: {
+          //       tags: {
+          //         ...fake.kuma.tags({ protocol: fake.word.noun() }),
+          //       },
+          //       port: fake.internet.port(),
+          //     },
+          //     rules: [
+          //       {
+          //         conf: [
+          //           {
+          //             additionalProp1: {},
+          //           },
+          //         ],
+          //         origin: [
+          //           {
+          //             resourceMeta: {
+          //               type: 'Dataplane',
+          //               mesh: 'default',
+          //               name: 'my-resource',
+          //               labels: {
+          //                 'k8s.kuma.io/namespace': 'kuma-system',
+          //                 'kuma.io/display-name': 'mtp',
+          //                 'kuma.io/mesh': 'default',
+          //                 'kuma.io/origin': 'zone',
+          //               },
+          //             },
+          //             ruleIndex: 0,
+          //           },
+          //         ],
+          //       },
+          //     ],
+          //   },
+          // ],
           type: 'MeshTimeout',
           warnings: [],
         },

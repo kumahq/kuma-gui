@@ -65,8 +65,9 @@
                 </template>
 
                 <!-- otherwise, for from rules, group by inbound port and display if we have any -->
+                <!-- filter rules that are being represented as inboundRules (isFromAsRules) -->
                 <DataCollection
-                  :items="rulesData!.rules"
+                  :items="rulesData!.rules.filter((rule) => !Boolean(policyTypes[rule.type]?.policy.isFromAsRules) )"
                   :predicate="(item) => item.ruleType === 'from'"
                   :comparator="(a, b) => a.type.localeCompare(b.type)"
                   :empty="false"
@@ -91,6 +92,38 @@
                           :rules="rs!"
                           :types="policyTypes"
                           :data-testid="`from-rule-list-${index}`"
+                        />
+                      </div>
+                    </template>
+                  </XCard>
+                </DataCollection>
+
+                <DataCollection
+                  :items="rulesData!.rules"
+                  :predicate="(item) => item.ruleType === 'inbound'"
+                  :comparator="(a, b) => a.type.localeCompare(b.type)"
+                  :empty="false"
+                  v-slot="{ items }"
+                >
+                  <XCard>
+                    <h3 class="mb-2">
+                      {{ t('data-planes.routes.item.rules.inbound') }}
+                    </h3>
+                    <template
+                      v-for="inbounds in [Object.groupBy(items, (item) => item.inbound!.port)]"
+                      :key="inbounds"
+                    >
+                      <div
+                        v-for="([port, rs], index) in Object.entries(inbounds).sort(([a], [b]) => Number(b) - Number(a))"
+                        :key="index"
+                      >
+                        <h4>{{ t('data-planes.routes.item.port', { port }) }}</h4>
+
+                        <RuleList
+                          class="mt-2"
+                          :rules="rs!"
+                          :types="policyTypes"
+                          :data-testid="`inbound-rule-list-${index}`"
                         />
                       </div>
                     </template>

@@ -106,6 +106,7 @@ data-planes:
         proxy: Proxy rule
         to: To rules
         from: From rules
+        inbound: Inbound Rules
       legacy_policies: Legacy policies
       matches_everything: 'Matches everything'
     items:

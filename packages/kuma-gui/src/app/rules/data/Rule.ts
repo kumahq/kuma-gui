@@ -1,11 +1,30 @@
 import { ResourceRule } from './ResourceRule'
 import type { components } from '@kumahq/kuma-http-api'
+
 type Entity = components['schemas']['Rule']
+type InboundRule = components['schemas']['InboundRule']
 type InspectRules = components['schemas']['InspectRules']
+type PartialOrigin = Entity['origin'][number] | InboundRule['origin'][number]
+
+const Origin = {
+  fromObject(origin: PartialOrigin) {
+    const hasResourceMeta = (o: PartialOrigin): o is InboundRule['origin'][number] => 'resourceMeta' in o
+    const _origin = hasResourceMeta(origin) ? origin.resourceMeta : origin
+
+    return {
+      ...origin,
+      type: _origin?.type ?? '',
+      mesh: _origin?.mesh ?? '',
+      name: _origin?.name ?? '',
+      labels: _origin?.labels ?? {},
+    }
+  },
+}
+
 export const Rule = {
-  fromObject(item: Entity) {
-    const { conf = {}, origin, matchers, ...rest } = item
-    const rules = (Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
+  fromObject(item: Entity | InboundRule) {
+    const { conf = {}, origin, ...rest } = item
+    const rules = ('rules' in conf && Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
       const { backendRefs = [], filters = [] } = rule.default
 
       return {
@@ -25,11 +44,11 @@ export const Rule = {
       config: {
         ...conf,
         // An omitted or empty hostnames list implies the wildcard hostname (meaning any hostnames apply).
-        hostnames: Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
+        hostnames: 'hostnames' in conf && Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
         rules,
       },
-      origins: Array.isArray(origin) ? origin : [],
-      matchers: Array.isArray(matchers) ? matchers : [],
+      origins: Array.isArray(origin) ? origin.map((o) => Origin.fromObject(o)) : [],
+      matchers: 'matchers' in item && Array.isArray(item.matchers) ? item.matchers : [],
     }
   },
   fromCollection(item: InspectRules) {
@@ -61,6 +80,19 @@ export const Rule = {
           }, [] as Rule[])
           : []
 
+        // inbound rules we can need to flatten out with reduce
+        const inbound = Array.isArray(item.inboundRules)
+          ? item.inboundRules.reduce((prev, rule) => {
+            const { rules, ...rest } = rule
+            return prev.concat(rules.map((rule) => ({
+              ...rest,
+              ...Rule.fromObject(rule),
+              ruleType: 'inbound',
+              type: item.type,
+            })))
+          }, [] as Rule[])
+          : []
+
         // the proxyRule is only ever a single one, but we turn it into an array
         // with a single entry so it looks like to and from rules
         const proxy = typeof item.proxyRule !== 'undefined'
@@ -72,7 +104,7 @@ export const Rule = {
           : []
 
         // concat all the rules now thay all look the same
-        return prev.concat(to).concat(from).concat(proxy)
+        return prev.concat(to).concat(from).concat(proxy).concat(inbound)
       }, [] as Rule[])
       : []
 
