@@ -32,21 +32,27 @@
                 type="separated"
                 justify="end"
               >
-                <XSelect
-                  :label="t('subscriptions.routes.item.format')"
-                  :selected="route.params.format"
-                  @change="(value) => {
-                    route.update({ format: value })
-                  }"
+                <template
+                  v-for="options in [['structured', 'universal']]"
+                  :key="typeof options"
                 >
-                  <template
-                    v-for="value in ['structured', 'universal']"
-                    :key="value"
-                    #[`${value}-option`]
+                  <XSelect
+                    :label="t('subscriptions.routes.item.format')"
+                    :selected="route.params.format"
+                    @change="(value) => {
+                      route.update({ format: value })
+                    }"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
                   >
-                    {{ t(`subscriptions.routes.item.formats.${value}`) }}
-                  </template>
-                </XSelect>
+                    <template
+                      v-for="value in options"
+                      :key="value"
+                      #[`${value}-option`]
+                    >
+                      {{ t(`subscriptions.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </template>
               </XLayout>
             </header>
 
@@ -190,6 +196,7 @@
                 </div>
               </XLayout>
             </template>
+
             <template v-else>
               <XCodeBlock
                 language="yaml"

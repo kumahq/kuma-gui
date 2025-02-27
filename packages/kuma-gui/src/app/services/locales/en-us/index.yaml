@@ -23,7 +23,8 @@ services:
       config: 'Configuration'
       format: Format
       formats:
-        universal: YAML
+        universal: Universal
+        k8s: Kubernetes
         structured: Structured
     items:
       title: Services

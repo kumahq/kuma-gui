@@ -53,17 +53,20 @@
                   <h3>
                     {{ t('policies.routes.item.config') }}
                   </h3>
-                  <div>
+                  <div
+                    v-for="options in [[...(data.spec ? ['structured'] : []), 'universal', 'k8s']]"
+                    :key="typeof options"
+                  >
                     <XSelect
                       :label="t('policies.routes.item.format')"
-                      :selected="data.spec || ['universal', 'k8s'].includes(route.params.format) ? route.params.format : 'universal'"
+                      :selected="options.includes(route.params.format) ? route.params.format : options[0]"
                       @change="(value) => {
                         route.update({ format: value })
                       }"
-                      @vue:before-mount="!data.spec && $event?.props?.selected && ['universal', 'k8s'].includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                      @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
                     >
                       <template
-                        v-for="value in [...(data.spec ? ['structured'] : []), 'universal', 'k8s']"
+                        v-for="value in options"
                         :key="value"
                         #[`${value}-option`]
                       >
