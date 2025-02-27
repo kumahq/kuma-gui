@@ -62,5 +62,10 @@ test/e2e: .test/e2e ## Run browser-based e2e tests against a running GUI, you ma
 .PHONY: build ## Dev: build a production artifact in `./dist`
 build: .build
 
-.PHONY: release/prune
-release/prune: .release/prune
+.PHONY: prune
+prune:
+	@$(MAKE) .sbom/exclude EXCLUDE_PATH=$(KUMAHQ_CONFIG) ## CI: Removes any dependencies unnessary for building
+
+.PHONY: release
+release: .release ## CI: 'releases' a built artifact, depends on the build artifact from 'make build'
+

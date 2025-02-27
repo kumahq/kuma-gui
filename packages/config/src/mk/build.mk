@@ -1,12 +1,8 @@
 .PHONY: .build
-.build:
+.build: prune install
 	@npx vite \
 		-c ./vite.config.production.ts \
 		build
-
-.PHONY: .build/sync
-.build/sync:
-	@$(MAKE) build
 
 .PHONY: build/preview
 build/preview:
