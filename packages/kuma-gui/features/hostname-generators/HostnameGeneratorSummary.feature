@@ -7,7 +7,7 @@ Feature: HostnameGenerator summary
       | select-preference | $summary [data-testid='select-input']    |
       | structured-view   | $summary [data-testid='structured-view'] |
 
-  Scenario: Switching to YAML format and back
+  Scenario: Switching to universal format and back
     Given the URL "/hostnamegenerators" responds with
       """
       body:
@@ -18,8 +18,8 @@ Feature: HostnameGenerator summary
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element
-    When I click the "[data-testid='select-item-yaml'] button" element
-    Then the URL contains "format=yaml"
+    When I click the "[data-testid='select-item-universal'] button" element
+    Then the URL contains "format=universal"
     And the "[data-testid='k-code-block']" element exists
     And the "$structured-view" element doesn't exists
     When I click the "$select-preference" element

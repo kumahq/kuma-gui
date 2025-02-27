@@ -38,7 +38,8 @@ zone-ingresses:
       breadcrumbs: Ingresses
       format: Format
       formats:
-        yaml: YAML
+        universal: Universal
+        k8s: Kubernetes
         structured: Structured
       intro: !!text/markdown |
         A Zone Ingress is a specialized gateway that facilitates cross-zone communication by securely routing traffic between services in different zones.

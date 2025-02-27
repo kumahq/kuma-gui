@@ -18,7 +18,8 @@ gateways:
       config: Configuration
       format: Format
       formats:
-        yaml: YAML
+        universal: Universal
+        k8s: Kubernetes
         structured: Structured
 
 builtin-gateways:

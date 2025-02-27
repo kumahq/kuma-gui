@@ -74,6 +74,7 @@
         :show-k8s-copy-button="false"
       />
     </template>
+
     <template v-else>
       <div>
         <div class="mt-4">

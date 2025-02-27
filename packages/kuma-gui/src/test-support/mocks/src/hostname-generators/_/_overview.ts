@@ -10,6 +10,9 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
   const creationTime = fake.date.past()
 
   const body = {
+    ...(req.url.searchParams.get('format') === 'kubernetes' && {
+      apiVersion: 'kuma.io/v1alpha1',
+    }),
     type: 'HostnameGenerator',
     name,
     labels: k8s

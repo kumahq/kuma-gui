@@ -50,7 +50,7 @@ Feature: Dataplane summary
     When I visit the "/meshes/default/data-planes/test-data-plane-1?page=2&size=50" URL
     Then the "$summary" element exists
 
-  Scenario: Switching to YAML format and back
+  Scenario: Switching to universal format and back
     Given the environment
       """
       KUMA_DATAPLANE_COUNT: 1
@@ -59,8 +59,8 @@ Feature: Dataplane summary
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element
-    When I click the "[data-testid='select-item-yaml'] button" element
-    Then the URL contains "format=yaml"
+    When I click the "[data-testid='select-item-universal'] button" element
+    Then the URL contains "format=universal"
     And the "[data-testid='k-code-block']" element exists
     And the "$structured-view" element doesn't exists
     When I click the "$select-preference" element
