@@ -26,7 +26,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [app.EnvVars, {
       constant: {
         KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
-        KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
         KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
       } as EnvArgs,
     }],
