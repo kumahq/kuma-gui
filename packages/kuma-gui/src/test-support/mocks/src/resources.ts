@@ -1,12 +1,12 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
-  const policies = Array.from(fake.kuma.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true }))
-  const legacyPolicies = fake.kuma.policyNamesLegacy({ min: Number.MAX_VALUE })
-  
+  const policies = Array.from(fake.kuma.policyNames({ min: Number.MAX_SAFE_INTEGER }))
+  const legacyPolicies = fake.kuma.policyNamesLegacy({ min: Number.MAX_SAFE_INTEGER })
+
   return {
     headers: {},
     body: {
-      resources: fake.kuma.resourceNames({ min: Number.MAX_VALUE }).map((name) => {
+      resources: fake.kuma.resourceNames({ min: Number.MAX_SAFE_INTEGER }).map((name) => {
         const scope = fake.helpers.arrayElement(['Mesh', 'Global'])
 
         return {

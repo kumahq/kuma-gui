@@ -12,6 +12,13 @@ type Tags<T extends Record<string, string | undefined>> =
     ? { 'kuma.io/service': string, [key: string]: string }
     : { [key: string]: string }
 
+const minmax = (between: { min?: number, max: number }, count?: number | { min?: number, max?: number }) => {
+  if (typeof count === 'number') {
+    count = { min: between.min ?? 0, max: count }
+  }
+  return { min: Math.min(count?.min ?? between.min ?? 0, between.max), max: Math.min(count?.max ?? between.max, between.max) }
+}
+
 export class K8sModule {
   constructor(
     protected faker: Faker,
@@ -65,7 +72,7 @@ export class KumaModule {
     )
   }
 
-  // TODO(jc): Use `totalName: Number.MAX_VALUE` so we can set a 'total' property automatically
+  // TODO(jc): Use `totalName: Number.MAX_SAFE_INTEGER` so we can set a 'total' property automatically
   // TODO(jc): Would be good to make this work deeply `{cds: { responses: Number }}` etc
   /**
    * Returns an object with the specified properties with the values as a random 'partition' of `total`
@@ -119,78 +126,13 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return this.faker.helpers.arrayElement<typeof items[number]>(items)
   }
 
-  /**
-   * **NOTE: Most likely you want to use `policyNames` instead of this, which optionally includes legacy policies.**
-   * 
-   * Returns a random subset of legacy policy names in random order.
-   * Although these are deprecated and will be removed soon, this ensures we are tracking them in a single place.
-   * - Optionally specify count with min and max bounds.
-   */
-  policyNamesLegacy(count: { min?: number, max?: number } = {}) {
-    const { min = 0, max = Number.MAX_VALUE } = count
 
-    const legacyPolicies = [
-      'CircuitBreaker',
-      'FaultInjection',
-      'HealthCheck',
-      'ProxyTemplate',
-      'RateLimit',
-      'Retry',
-      'Timeout',
-      'TrafficLog',
-      'TrafficPermission',
-      'TrafficRoute',
-      'TrafficTrace',
-      'VirtualOutbound',
-      'MeshGatewayRoute',
-    ] as const
-    
-    return this.faker.helpers.arrayElements(legacyPolicies, { min, max })
-  }
-
-  /**
-   * Returns a random subset of policy names in random order.
-   * - Optionally specify count with min and max bounds.
-   * - Optionally include names of legacy policies. (Default: true)
-   */
-  policyNames(count: { min?: number, max?: number } = {}, options: { includeLegacy?: boolean } = {}) {
-    const { min = 0, max = Number.MAX_VALUE } = count
-    const { includeLegacy = true } = options
-
-    const policies = [
-      'MeshAccessLog',
-      'MeshCircuitBreaker',
-      'MeshFaultInjection',
-      'MeshHTTPRoute',
-      'MeshHealthCheck',
-      'MeshLoadBalancingStrategy',
-      'MeshMetric',
-      'MeshPassthrough',
-      'MeshProxyPatch',
-      'MeshRateLimit',
-      'MeshRetry',
-      'MeshTCPRoute',
-      'MeshTLS',
-      'MeshTimeout',
-      'MeshTrace',
-      'MeshTrafficPermission',
-    ] as const
-
-    const items = [...policies, ...(includeLegacy ? this.policyNamesLegacy({ min: Number.MAX_VALUE }) : [])]
-    return this.faker.helpers.arrayElements<typeof items[number]>(items, { min, max })
-  }
-
-  policyName() {
-    const items = this.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true })
-    return this.faker.helpers.arrayElement<typeof items[number]>(items)
+  version() {
+    return this.faker.helpers.arrayElement([this.faker.system.semver(), `${this.faker.system.semver()}-${this.faker.git.branch()}-${this.faker.git.commitSha({ length: 7 })}`])
   }
 
   serviceType({ serviceTypes = ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }: { serviceTypes?: Array<'internal' | 'external' | 'gateway_delegated' | 'gateway_builtin'> } = { serviceTypes: ['internal', 'external', 'gateway_delegated', 'gateway_builtin'] }) {
     return this.faker.helpers.arrayElement(serviceTypes)
-  }
-
-  version() {
-    return this.faker.helpers.arrayElement([this.faker.system.semver(), `${this.faker.system.semver()}-${this.faker.git.branch()}-${this.faker.git.commitSha({ length: 7 })}`])
   }
 
   serviceName(serviceType: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' = 'internal') {
@@ -500,11 +442,86 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   /**
+   * **NOTE: Most likely you want to use `policyNames` instead of this, which optionally includes legacy policies.**
+   *
+   * Returns a random subset of legacy policy names in random order.
+   * Although these are deprecated and will be removed soon, this ensures we are tracking them in a single place.
+   * - Optionally specify count with min and max bounds.
+   */
+  policyNamesLegacy(count?: number | { min?: number, max?: number }) {
+    const items = [
+      'CircuitBreaker',
+      'FaultInjection',
+      'HealthCheck',
+      'ProxyTemplate',
+      'RateLimit',
+      'Retry',
+      'Timeout',
+      'TrafficLog',
+      'TrafficPermission',
+      'TrafficRoute',
+      'TrafficTrace',
+      'VirtualOutbound',
+      'MeshGatewayRoute',
+    ] as const
+
+    return this.faker.helpers.arrayElements(items, minmax({ min: 1, max: items.length }, count))
+  }
+
+  /**
+   * Returns a random subset of policy names in random order.
+   * - Optionally specify count with min and max bounds.
+   * - Optionally include names of legacy policies. (Default: true)
+   */
+  policyNames(
+    count?: number | { min?: number, max?: number },
+    options?: { includeLegacy?: boolean },
+  ) {
+
+    const policies = [
+      'MeshAccessLog',
+      'MeshCircuitBreaker',
+      'MeshFaultInjection',
+      'MeshHTTPRoute',
+      'MeshHealthCheck',
+      'MeshLoadBalancingStrategy',
+      'MeshMetric',
+      'MeshPassthrough',
+      'MeshProxyPatch',
+      'MeshRateLimit',
+      'MeshRetry',
+      'MeshTCPRoute',
+      'MeshTLS',
+      'MeshTimeout',
+      'MeshTrace',
+      'MeshTrafficPermission',
+    ] as const
+
+    const { includeLegacy = true } = options ?? {}
+
+    const items = [
+      ...policies,
+      ...(includeLegacy
+        ? this.policyNamesLegacy({ min: Number.MAX_SAFE_INTEGER })
+        : []
+      ),
+    ]
+
+    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 1, max: items.length }, count))
+  }
+
+  policyName(options?: { includeLegacy?: boolean }) {
+    const items = this.policyNames(Number.MAX_SAFE_INTEGER, options)
+    return this.faker.helpers.arrayElement<typeof items[number]>(items)
+  }
+
+  /**
    * Returns a random subset of all types of resource names in random order. Optionally specify count with min and max bounds.
    * - Optionally specify count with min and max bounds.
    */
-  resourceNames(count: { min?: number, max?: number } = {}) {
-    const { min = 0, max = Number.MAX_VALUE } = count
+  resourceNames(
+    count?: number | { min?: number, max?: number },
+  ) {
 
     const resources = [
       'Dataplane',
@@ -514,9 +531,9 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       'MeshService',
       'Secret',
     ] as const
+    const items = [...resources, ...this.policyNames({ min: Number.MAX_SAFE_INTEGER })]
 
-    const items = [...resources, ...this.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true })]
-    return this.faker.helpers.arrayElements(items, { min, max })
+    return this.faker.helpers.arrayElements(items, minmax({ min: 1, max: items.length }, count))
   }
 }
 

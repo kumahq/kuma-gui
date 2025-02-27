@@ -2,7 +2,7 @@ Feature: application / loading
 
   Background:
     Given the CSS selectors
-      | Alias              | Selector                      |
+      | Alias              | Selector                       |
       | collection-loading | [data-testid='table-skeleton'] |
 
   Scenario: Collections show a loading view
