@@ -156,7 +156,7 @@ describe('ZoneEgressOverview', () => {
             item.zoneEgress.networking = {}
           }
           delete item.zoneEgress.networking?.address
-          item.zoneEgress.networking.port = '80'
+          item.zoneEgress.networking.port = 80
           return item
         })
         expect(actual.zoneEgress.socketAddress).toStrictEqual('')
@@ -202,7 +202,7 @@ describe('ZoneEgressOverview', () => {
             item.zoneEgress.networking = {}
           }
           item.zoneEgress.networking.address = '127.0.0.1'
-          item.zoneEgress.networking.port = '80'
+          item.zoneEgress.networking.port = 80
           return item
         })
         expect(actual.zoneEgress.socketAddress).toStrictEqual('127.0.0.1:80')
@@ -221,7 +221,7 @@ describe('ZoneEgressOverview', () => {
         modificationTime: '2021-07-13T08:40:59Z',
         networking: {
           address: '486f:d1db:efde:c143:94a5:cb9f:271a:c1a7',
-          port: '58936',
+          port: 58936,
         },
       }
       const actual = await fixture.setup((item) => {
