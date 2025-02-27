@@ -1,12 +1,8 @@
 .PHONY: .build
-.build:
+.build: $(if $(NOPRUNE),,prune) install
 	@npx vite \
 		-c ./vite.config.production.ts \
 		build
-
-.PHONY: .build/sync
-.build/sync:
-	@$(MAKE) build
 
 .PHONY: build/preview
 build/preview:
@@ -31,7 +27,7 @@ deploy/test:
 
 .PHONY: deploy/e2e
 deploy/e2e:
-	@$(MAKE) build
+	@$(MAKE) build NOPRUNE=1
 	@$(MAKE) deploy/test
 
 .PHONY: deploy/preview
