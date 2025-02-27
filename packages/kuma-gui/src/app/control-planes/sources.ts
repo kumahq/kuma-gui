@@ -9,7 +9,6 @@ import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
 export type ControlPlaneAddresses = {
   http: string
-  kds: string
 }
 
 export type ControlPlaneAddressesSource = DataSourceResponse<ControlPlaneAddresses>
@@ -36,7 +35,6 @@ export const sources = (env: Env['var'], api: KumaApi) => {
     '/control-plane/addresses': async (): Promise<ControlPlaneAddresses> => {
       return {
         http: env('KUMA_API_URL'),
-        kds: env('KUMA_KDS_URL'),
       }
     },
 
@@ -90,7 +88,7 @@ export const sources = (env: Env['var'], api: KumaApi) => {
 
     '/global-insight': async () => {
       const res = await http.GET('/global-insight')
-      
+
       return GlobalInsight.fromObject(res.data!)
     },
   })

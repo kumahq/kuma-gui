@@ -1,5 +1,6 @@
 import { createI18n } from '@kong-ui-public/i18n'
 
+import { semver } from '../../utilities'
 import { get } from '@/app/application'
 import type Env from '@/app/application/services/env/Env'
 
@@ -38,14 +39,19 @@ export default <T extends I18nRecord>(strs: T, env: Env['var']) => {
   })
   const globals = {
     KUMA_VERSION: env('KUMA_VERSION'),
-    KUMA_DOCS_URL: env('KUMA_DOCS_URL'),
+    KUMA_DOCS_URL: '',
     KUMA_UTM_QUERY_PARAMS: '',
     KUMA_PRODUCT_NAME: '',
   }
   try {
     globals.KUMA_UTM_QUERY_PARAMS = i18n.t('common.product.utm_query_params' as Parameters<typeof i18n['t']>[0])
     globals.KUMA_PRODUCT_NAME = i18n.t('common.product.name' as Parameters<typeof i18n['t']>[0])
-  } catch {
+    globals.KUMA_DOCS_URL = i18n.t(
+      'common.product.docs' as Parameters<typeof i18n['t']>[0],
+      semver(globals.KUMA_VERSION),
+    )
+  } catch (e) {
+    console.error(e)
     // passthrough
   }
   return {

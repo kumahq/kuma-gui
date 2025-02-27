@@ -1,17 +1,8 @@
 import { describe, expect, test } from 'vitest'
 
-import Env, { normalizeBaseUrl, semver } from './Env'
+import Env, { normalizeBaseUrl } from './Env'
 
 describe('env', () => {
-  test('semver', () => {
-    expect(semver('1.1.1').patch).toBe('1.1.1')
-    expect(semver('0.0.0-preview.1').patch).toBe('0.0.0')
-    expect(semver('0.0.1-rc.1').patch).toBe('0.0.1')
-    expect(semver('10.10.1').major).toBe('10')
-    expect(semver('0.9.1').minor).toBe('0.9')
-    expect(semver('0.9.1-rc.10').pre).toBe('0.9.1-rc.10')
-  })
-
   test('var', () => {
     class MockEnv extends Env {
       protected getConfig() {
@@ -30,11 +21,9 @@ describe('env', () => {
     const env = new MockEnv(
       {
         KUMA_VERSION_URL: 'http://version.fake',
-        KUMA_DOCS_URL: 'http://docs.fake',
         KUMA_MOCK_API_ENABLED: 'false',
       },
     )
-    expect(env.var('KUMA_DOCS_URL')).toBe('http://docs.fake/110.127.x')
     expect(env.var('KUMA_VERSION')).toBe('110.127.30')
     expect(env.var('KUMA_API_URL')).toBe('/somewhere/else')
     expect(env.var('KUMA_BASE_PATH')).toBe('/not/gui')
