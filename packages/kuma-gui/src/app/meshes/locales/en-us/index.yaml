@@ -8,6 +8,20 @@ meshes:
     label: Learn more
     href: &meshes.docs.href '{KUMA_DOCS_URL}/production/mesh?{KUMA_UTM_QUERY_PARAMS}'
 
+  notifications:
+    mtls-warning: !!text/markdown |
+      mTLS is not enabled on this mesh.
+      <a href="{KUMA_DOCS_URL}/policies/mutual-tls/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">
+        Consider enabling mTLS to get the most of out of {KUMA_PRODUCT_NAME}
+      </a>
+    mtp-warning: !!text/markdown |
+      mTLS is enabled but you do not have a
+      <a href="{KUMA_DOCS_URL}/policies/meshtrafficpermission/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">
+        MeshTrafficPermission policy
+      </a>
+      for this mesh.
+
+
   common:
     name: Name
     type: |
@@ -49,10 +63,6 @@ meshes:
         data-plane-list-view: Data Plane Proxies
         policy-list-index-view: Policies
       overview: 'Overview'
-      mtls-warning: !!text/markdown |
-        mTLS is not enabled on this mesh. <a href="{KUMA_DOCS_URL}/policies/mutual-tls/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Consider enabling mTLS to get the most of out of {KUMA_PRODUCT_NAME}</a>
-      mtp-warning: !!text/markdown |
-        mTLS is enabled but you do not have a <a href="{KUMA_DOCS_URL}/policies/meshtrafficpermission/?{KUMA_UTM_QUERY_PARAMS}">MeshTrafficPermission policy</a> for this mesh.
       about:
         title: About this Mesh
     items:

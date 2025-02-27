@@ -2,13 +2,12 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
 
-  const policyTypes = fake.kuma.policyNames({ min: Number.MAX_VALUE }, { includeLegacy: true })
-
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 
   const standard = fake.kuma.healthStatus()
   const gatewayBuiltin = fake.kuma.healthStatus()
   const gatewayDelegated = fake.kuma.healthStatus()
+
   const gateway = {
     total: (gatewayBuiltin.total ?? 0) + (gatewayDelegated.total ?? 0),
     online: (gatewayBuiltin.online ?? 0) + (gatewayDelegated.online ?? 0),
@@ -41,11 +40,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
         gatewayDelegated,
       },
       policies: {
-        ...policyTypes.reduce((prev: Record<string, { total: number }>, item) => {
-          if (fake.datatype.boolean()) {
-            prev[item] = {
-              total: fake.number.int(20),
-            }
+        ...fake.kuma.policyNames().reduce((prev: Record<string, { total: number }>, item) => {
+          prev[item] = {
+            total: fake.number.int(20),
           }
           return prev
         }, {}),
