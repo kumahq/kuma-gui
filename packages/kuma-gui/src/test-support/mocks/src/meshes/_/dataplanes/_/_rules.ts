@@ -22,6 +22,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
   const ruleCount = parseInt(env('KUMA_DATAPLANE_RULE_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const matcherCount = parseInt(env('KUMA_RULE_MATCHER_COUNT', `${fake.number.int({ min: 1, max: 5 })}`))
   const toRuleCount = parseInt(env('KUMA_DATAPLANE_TO_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
+  const inboundRuleCount = parseInt(env('KUMA_DATAPLANE_INBOUND_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   const fromRuleCount = parseInt(env('KUMA_DATAPLANE_FROM_RULE_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
   const toResourceRuleCount = fake.number.int({ min: 1, max: 3 })
   const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
@@ -178,6 +179,37 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 },
               }
             }),
+            inboundRules: Array.from({ length: inboundRuleCount }).map(() => ({
+              inbound: {
+                port: fake.internet.port(),
+                tags: fake.kuma.tags({ service: fake.word.noun() }),
+                ...(fake.datatype.boolean() && { name: `port-${fake.word.noun()}` }),
+              },
+              rules: Array.from({ length: fake.number.int({ min: 1, max: 5 })}).map(() => ({
+                conf: Array.from({ length: fake.number.int({ min: 1, max: 2 })}).map(() => ({
+                  // conf can include any `additionalProperty: {}`
+                  http: {
+                    ...(fake.datatype.boolean() && { requestTimeout: fake.helpers.arrayElement(['5s', '10s', '20s']) }),
+                    ...(fake.datatype.boolean() && { connectionTimeout: fake.helpers.arrayElement(['5s', '10s', '20s']) }),
+                    ...(fake.datatype.boolean() && { idleTimeout: fake.helpers.arrayElement(['5s', '10s', '20s']) }),
+                  },
+                })),
+                origin: Array.from({ length: fake.number.int({ min: 1, max: 2})}).map((_, index) => ({
+                  resourceMeta: {
+                    type: fake.kuma.policyName(),
+                    mesh,
+                    name,
+                    labels: {
+                      'kuma.io/display-name': displayName,
+                      'kuma.io/mesh': mesh,
+                      'kuma.io/origin': fake.kuma.origin(),
+                      ...(k8s && { 'k8s.kuma.io/namespace': nspace }),
+                    },
+                  },
+                  ruleIndex: index,
+                })),
+              })),
+            })),
           }
         }),
         ...(hasProxyRule
