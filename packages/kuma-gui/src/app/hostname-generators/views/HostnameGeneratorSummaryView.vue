@@ -8,7 +8,7 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t, can }"
+    v-slot="{ route, t, can, uri }"
   >
     <DataCollection
       :items="props.items"
@@ -47,16 +47,20 @@
                 <h3>
                   {{ t('hostname-generators.routes.item.config') }}
                 </h3>
-                <div>
+                <div
+                  v-for="options in [['structured', 'universal', 'k8s']]"
+                  :key="typeof options"
+                >
                   <XSelect
                     :label="t('hostname-generators.routes.item.format')"
                     :selected="route.params.format"
                     @change="(value) => {
                       route.update({ format: value })
                     }"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
                   >
                     <template
-                      v-for="value in ['structured', 'yaml']"
+                      v-for="value in options"
                       :key="value"
                       #[`${value}-option`]
                     >
@@ -66,6 +70,7 @@
                 </div>
               </XLayout>
             </header>
+            
             <template v-if="route.params.format === 'structured'">
               <div
                 class="stack-with-borders"
@@ -128,10 +133,35 @@
                 </DefinitionCard>
               </div>
             </template>
+
+            <template v-else-if="route.params.format === 'universal'">
+              <ResourceCodeBlock
+                data-testid="codeblock-yaml-universal"
+                language="yaml"
+                :resource="item.$raw"
+                :show-k8s-copy-button="false"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+              />
+            </template>
+
             <template v-else>
-              <div class="mt-4">
+              <DataLoader
+                :src="uri(sources, '/hostname-generators/:name/as/kubernetes', {
+                  name: route.params.name,
+                })"
+                v-slot="{ data: k8sConfig }"
+              >
                 <ResourceCodeBlock
-                  :resource="item.$raw"
+                  data-testid="codeblock-yaml-k8s"
+                  language="yaml"
+                  :resource="k8sConfig"
+                  :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
@@ -139,20 +169,8 @@
                   @query-change="route.update({ codeSearch: $event })"
                   @filter-mode-change="route.update({ codeFilter: $event })"
                   @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  v-slot="{ copy, copying }"
-                >
-                  <DataSource
-                    v-if="copying"
-                    :src="`/hostname-generators/${route.params.name}/as/kubernetes?no-store`"
-                    @change="(data) => {
-                      copy((resolve) => resolve(data))
-                    }"
-                    @error="(e) => {
-                      copy((_resolve, reject) => reject(e))
-                    }"
-                  />
-                </ResourceCodeBlock>
-              </div>
+                />
+              </DataLoader>
             </template>
           </XLayout>
         </AppView>
@@ -162,6 +180,7 @@
 </template>
 
 <script lang="ts" setup>
+import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
