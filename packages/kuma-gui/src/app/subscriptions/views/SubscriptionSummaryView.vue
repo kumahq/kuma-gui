@@ -6,7 +6,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      format: String,
+      output: String,
     }"
     v-slot="{ route, t }"
   >
@@ -33,16 +33,16 @@
                 justify="end"
               >
                 <template
-                  v-for="options in [['structured', 'universal']]"
+                  v-for="options in [['structured', 'yaml']]"
                   :key="typeof options"
                 >
                   <XSelect
                     :label="t('subscriptions.routes.item.format')"
-                    :selected="route.params.format"
+                    :selected="route.params.output"
                     @change="(value) => {
-                      route.update({ format: value })
+                      route.update({ output: value })
                     }"
-                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.output && route.update({ output: $event.props.selected })"
                   >
                     <template
                       v-for="value in options"
@@ -56,7 +56,7 @@
               </XLayout>
             </header>
 
-            <template v-if="route.params.format === 'structured'">
+            <template v-if="route.params.output === 'structured'">
               <XLayout
                 type="stack"
                 data-testid="structured-view"

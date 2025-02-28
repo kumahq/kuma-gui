@@ -36,6 +36,7 @@ export const sources = ({ get, set }: Storage) => {
               format: 'structured',
               inactive: false,
               includeEds: false,
+              output: 'structured',
             },
           },
           app,

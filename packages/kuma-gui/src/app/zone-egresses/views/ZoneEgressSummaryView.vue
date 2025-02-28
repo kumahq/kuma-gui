@@ -89,6 +89,7 @@
                   </div>
                 </XLayout>
               </header>
+
               <template v-if="route.params.format === 'structured'">
                 <XLayout
                   type="stack"
@@ -146,7 +147,23 @@
                 </XLayout>
               </template>
 
-              <template v-else-if="route.params.format === 'k8s'">
+              <template v-else-if="route.params.format === 'universal'">
+                <ResourceCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :resource="item.config"
+                  :show-k8s-copy-button="false"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </template>
+
+              <template v-else>
                 <DataLoader
                   :src="uri(sources, '/zone-egresses/:name/as/kubernetes', {
                     name: route.params.proxy,
@@ -155,46 +172,18 @@
                 >
                   <ResourceCodeBlock
                     data-testid="codeblock-yaml-k8s"
+                    language="yaml"
                     :resource="k8sConfig"
+                    :show-k8s-copy-button="false"
                     is-searchable
                     :query="route.params.codeSearch"
                     :is-filter-mode="route.params.codeFilter"
                     :is-reg-exp-mode="route.params.codeRegExp"
-                    :show-k8s-copy-button="false"
                     @query-change="route.update({ codeSearch: $event })"
                     @filter-mode-change="route.update({ codeFilter: $event })"
                     @reg-exp-mode-change="route.update({ codeRegExp: $event })"
                   />
                 </DataLoader>
-              </template>
-
-              <template v-else>
-                <div>
-                  <div class="mt-4">
-                    <ResourceCodeBlock
-                      :resource="item.config"
-                      is-searchable
-                      :query="route.params.codeSearch"
-                      :is-filter-mode="route.params.codeFilter"
-                      :is-reg-exp-mode="route.params.codeRegExp"
-                      @query-change="route.update({ codeSearch: $event })"
-                      @filter-mode-change="route.update({ codeFilter: $event })"
-                      @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                      v-slot="{ copy, copying }"
-                    >
-                      <DataSource
-                        v-if="copying"
-                        :src="`/zone-egresses/${route.params.proxy}/as/kubernetes?no-store`"
-                        @change="(data) => {
-                          copy((resolve) => resolve(data))
-                        }"
-                        @error="(e) => {
-                          copy((_resolve, reject) => reject(e))
-                        }"
-                      />
-                    </ResourceCodeBlock>
-                  </div>
-                </div>
               </template>
             </XLayout>
           </AppView>

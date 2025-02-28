@@ -106,7 +106,23 @@
                 </div>
               </template>
 
-              <template v-else-if="route.params.format === 'k8s'">
+              <template v-else-if="route.params.format === 'universal'">
+                <ResourceCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :resource="item.config"
+                  :show-k8s-copy-button="false"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </template>
+
+              <template v-else>
                 <DataLoader
                   :src="uri(sources, '/meshes/:mesh/mesh-gateways/:name/as/kubernetes', {
                     mesh: route.params.mesh,
@@ -116,44 +132,18 @@
                 >
                   <ResourceCodeBlock
                     data-testid="codeblock-yaml-k8s"
+                    language="yaml"
                     :resource="k8sConfig"
+                    :show-k8s-copy-button="false"
                     is-searchable
                     :query="route.params.codeSearch"
                     :is-filter-mode="route.params.codeFilter"
                     :is-reg-exp-mode="route.params.codeRegExp"
-                    :show-k8s-copy-button="false"
                     @query-change="route.update({ codeSearch: $event })"
                     @filter-mode-change="route.update({ codeFilter: $event })"
                     @reg-exp-mode-change="route.update({ codeRegExp: $event })"
                   />
                 </DataLoader>
-              </template>
-
-              <template v-else>
-                <div class="mt-4">
-                  <ResourceCodeBlock
-                    :resource="item.config"
-                    is-searchable
-                    :query="route.params.codeSearch"
-                    :is-filter-mode="route.params.codeFilter"
-                    :is-reg-exp-mode="route.params.codeRegExp"
-                    @query-change="route.update({ codeSearch: $event })"
-                    @filter-mode-change="route.update({ codeFilter: $event })"
-                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                    v-slot="{ copy, copying }"
-                  >
-                    <DataSource
-                      v-if="copying"
-                      :src="`/meshes/${route.params.mesh}/mesh-gateways/${route.params.gateway}/as/kubernetes?no-store`"
-                      @change="(data) => {
-                        copy((resolve) => resolve(data))
-                      }"
-                      @error="(e) => {
-                        copy((_resolve, reject) => reject(e))
-                      }"
-                    />
-                  </ResourceCodeBlock>
-                </div>
               </template>
             </XLayout>
           </AppView>

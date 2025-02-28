@@ -97,36 +97,20 @@
               <template v-if="route.params.format === 'universal'">
                 <ResourceCodeBlock
                   data-testid="codeblock-yaml-universal"
+                  language="yaml"
                   :resource="item.config"
                   is-searchable
+                  :show-k8s-copy-button="false"
                   :query="route.params.codeSearch"
                   :is-filter-mode="route.params.codeFilter"
                   :is-reg-exp-mode="route.params.codeRegExp"
                   @query-change="route.update({ codeSearch: $event })"
                   @filter-mode-change="route.update({ codeFilter: $event })"
                   @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  v-slot="{ copy, copying }"
-                >
-                  <DataSource
-                    v-if="copying"
-                    :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                      mesh: route.params.mesh,
-                      path: route.params.policyPath,
-                      name: route.params.policy,
-                    }, {
-                      cacheControl: 'no-store',
-                    })"
-                    @change="(data) => {
-                      copy((resolve) => resolve(data))
-                    }"
-                    @error="(e) => {
-                      copy((_resolve, reject) => reject(e))
-                    }"
-                  />
-                </ResourceCodeBlock>
+                />
               </template>
-
-              <template v-else-if="route.params.format === 'k8s'">
+              
+              <template v-else>
                 <DataLoader
                   :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
                     mesh: route.params.mesh,
@@ -137,48 +121,18 @@
                 >
                   <ResourceCodeBlock
                     data-testid="codeblock-yaml-k8s"
+                    language="yaml"
                     :resource="k8sConfig"
                     is-searchable
+                    :show-k8s-copy-button="false"
                     :query="route.params.codeSearch"
                     :is-filter-mode="route.params.codeFilter"
                     :is-reg-exp-mode="route.params.codeRegExp"
-                    :show-k8s-copy-button="false"
                     @query-change="route.update({ codeSearch: $event })"
                     @filter-mode-change="route.update({ codeFilter: $event })"
                     @reg-exp-mode-change="route.update({ codeRegExp: $event })"
                   />
                 </DataLoader>
-              </template>
-              
-              <template v-else>
-                <ResourceCodeBlock
-                  :resource="item.config"
-                  is-searchable
-                  :query="route.params.codeSearch"
-                  :is-filter-mode="route.params.codeFilter"
-                  :is-reg-exp-mode="route.params.codeRegExp"
-                  @query-change="route.update({ codeSearch: $event })"
-                  @filter-mode-change="route.update({ codeFilter: $event })"
-                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                  v-slot="{ copy, copying }"
-                >
-                  <DataSource
-                    v-if="copying"
-                    :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
-                      mesh: route.params.mesh,
-                      path: route.params.policyPath,
-                      name: route.params.policy,
-                    }, {
-                      cacheControl: 'no-store',
-                    })"
-                    @change="(data) => {
-                      copy((resolve) => resolve(data))
-                    }"
-                    @error="(e) => {
-                      copy((_resolve, reject) => reject(e))
-                    }"
-                  />
-                </ResourceCodeBlock>
               </template>
             </PolicySummary>
           </AppView>
