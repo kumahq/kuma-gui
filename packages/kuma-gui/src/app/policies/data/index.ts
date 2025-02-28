@@ -52,7 +52,6 @@ export const Policy = {
       zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
       role: labels['kuma.io/policy-role'] ?? '',
       config: item,
-
     }
   },
 

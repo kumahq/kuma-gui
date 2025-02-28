@@ -6,7 +6,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
-      format: String,
+      output: String,
     }"
     v-slot="{ route, t }"
   >
@@ -32,25 +32,30 @@
                 type="separated"
                 justify="end"
               >
-                <XSelect
-                  :label="t('subscriptions.routes.item.format')"
-                  :selected="route.params.format"
-                  @change="(value) => {
-                    route.update({ format: value })
-                  }"
+                <template
+                  v-for="options in [['structured', 'yaml']]"
+                  :key="typeof options"
                 >
-                  <template
-                    v-for="value in ['structured', 'yaml']"
-                    :key="value"
-                    #[`${value}-option`]
+                  <XSelect
+                    :label="t('subscriptions.routes.item.format')"
+                    :selected="route.params.output"
+                    @change="(value) => {
+                      route.update({ output: value })
+                    }"
                   >
-                    {{ t(`subscriptions.routes.item.formats.${value}`) }}
-                  </template>
-                </XSelect>
+                    <template
+                      v-for="value in options"
+                      :key="value"
+                      #[`${value}-option`]
+                    >
+                      {{ t(`subscriptions.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </template>
               </XLayout>
             </header>
 
-            <template v-if="route.params.format === 'structured'">
+            <template v-if="route.params.output === 'structured'">
               <XLayout
                 type="stack"
                 data-testid="structured-view"
@@ -190,6 +195,7 @@
                 </div>
               </XLayout>
             </template>
+
             <template v-else>
               <XCodeBlock
                 language="yaml"

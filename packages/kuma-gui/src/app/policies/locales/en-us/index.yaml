@@ -12,6 +12,8 @@ policies:
       formats:
         yaml: YAML
         structured: Structured
+        k8s: Kubernetes
+        universal: Universal
       navigation:
         policy-detail-view: Overview
         policy-detail-config-view: YAML

@@ -68,12 +68,13 @@
         </DefinitionCard>
       </div>
 
-      <ResourceCodeBlock
+      <XCodeBlock
         v-if="policy.spec"
-        :resource="{ spec: policy.spec }"
-        :show-k8s-copy-button="false"
+        language="yaml"
+        :code="YAML.stringify({ spec: policy.spec })"
       />
     </template>
+
     <template v-else>
       <div>
         <div class="mt-4">
@@ -87,9 +88,8 @@
 <script lang="ts" setup>
 
 import type { Policy } from '../data'
-import { useI18n, useCan } from '@/app/application'
+import { useI18n, useCan, YAML } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const { t } = useI18n()
 const can = useCan()

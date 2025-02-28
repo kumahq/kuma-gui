@@ -76,7 +76,8 @@ data-planes:
       config: Configuration
       format: Format
       formats:
-        yaml: YAML
+        universal: Universal
+        k8s: Kubernetes
         structured: Structured
       inbounds: 'Inbounds'
       inbound_name: '{service}'

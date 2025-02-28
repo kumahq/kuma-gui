@@ -37,7 +37,8 @@ zone-egresses:
       breadcrumbs: Egresses
       format: Format
       formats:
-        yaml: YAML
+        universal: Universal
+        k8s: Kubernetes
         structured: Structured
       intro: !!text/markdown |
         A Zone Egress is specialized gateway that manages and routes outbound traffic from services with a zone to external destinations outside the mesh.

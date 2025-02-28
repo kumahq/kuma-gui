@@ -51,7 +51,7 @@ Feature: Dataplane policy summary
     And the "$summary-content" element contains "kuma-system"
     And the "$select-preference" element exists
 
-  Scenario: Switching to YAML format and back
+  Scenario: Switching to k8s format and back
     Given the URL "/meshes/default/meshhttproutes/<PolicyName>" responds with
       """
       body:
@@ -70,8 +70,8 @@ Feature: Dataplane policy summary
     Then the "$select-preference" element exists
     And the "$structured-view" element exists
     When I click the "$select-preference" element
-    When I click the "[data-testid='select-item-yaml'] button" element
-    Then the URL contains "format=yaml"
+    When I click the "[data-testid='select-item-k8s'] button" element
+    Then the URL contains "format=k8s"
     And the "[data-testid='k-code-block']" element exists
     And the "$structured-view" element doesn't exists
     When I click the "$select-preference" element

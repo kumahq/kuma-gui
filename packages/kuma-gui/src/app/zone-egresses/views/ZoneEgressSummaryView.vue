@@ -8,7 +8,7 @@
       codeRegExp: false,
       format: String,
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <DataCollection
       :items="props.items"
@@ -66,25 +66,30 @@
                   <h3>
                     {{ t('zone-ingresses.routes.item.config') }}
                   </h3>
-                  <div>
+                  <div
+                    v-for="options in [['structured', 'universal', 'k8s']]"
+                    :key="typeof options"
+                  >
                     <XSelect
                       :label="t('zone-ingresses.routes.items.format')"
                       :selected="route.params.format"
                       @change="(value) => {
                         route.update({ format: value })
                       }"
+                      @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
                     >
                       <template
-                        v-for="value in ['structured', 'yaml']"
+                        v-for="value in options"
                         :key="value"
                         #[`${value}-option`]
                       >
-                        {{ t(`zone-ingresses.routes.items.formats.${value}`) }}
+                        {{ t(`zone-egresses.routes.items.formats.${value}`) }}
                       </template>
                     </XSelect>
                   </div>
                 </XLayout>
               </header>
+
               <template v-if="route.params.format === 'structured'">
                 <XLayout
                   type="stack"
@@ -141,33 +146,44 @@
                   </DefinitionCard>
                 </XLayout>
               </template>
+
+              <template v-else-if="route.params.format === 'universal'">
+                <ResourceCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :resource="item.config"
+                  :show-k8s-copy-button="false"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </template>
+
               <template v-else>
-                <div>
-                  <div class="mt-4">
-                    <ResourceCodeBlock
-                      :resource="item.config"
-                      is-searchable
-                      :query="route.params.codeSearch"
-                      :is-filter-mode="route.params.codeFilter"
-                      :is-reg-exp-mode="route.params.codeRegExp"
-                      @query-change="route.update({ codeSearch: $event })"
-                      @filter-mode-change="route.update({ codeFilter: $event })"
-                      @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-                      v-slot="{ copy, copying }"
-                    >
-                      <DataSource
-                        v-if="copying"
-                        :src="`/zone-egresses/${route.params.proxy}/as/kubernetes?no-store`"
-                        @change="(data) => {
-                          copy((resolve) => resolve(data))
-                        }"
-                        @error="(e) => {
-                          copy((_resolve, reject) => reject(e))
-                        }"
-                      />
-                    </ResourceCodeBlock>
-                  </div>
-                </div>
+                <DataLoader
+                  :src="uri(sources, '/zone-egresses/:name/as/kubernetes', {
+                    name: route.params.proxy,
+                  })"
+                  v-slot="{ data: k8sConfig }"
+                >
+                  <ResourceCodeBlock
+                    data-testid="codeblock-yaml-k8s"
+                    language="yaml"
+                    :resource="k8sConfig"
+                    :show-k8s-copy-button="false"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                  />
+                </DataLoader>
               </template>
             </XLayout>
           </AppView>
@@ -179,6 +195,7 @@
 
 <script lang="ts" setup>
 import type { ZoneEgressOverview } from '../data'
+import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
