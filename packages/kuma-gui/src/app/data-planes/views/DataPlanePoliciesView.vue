@@ -66,9 +66,6 @@
 
                 <!-- otherwise, for from rules, group by inbound port and display if we have any -->
                 <!-- filter rules that are being represented as inboundRules (isFromAsRules) -->
-                {{ rulesData!.rules.filter((rule) => {
-                  console.log(rule.type, policyTypes[rule.type]?.policy.isFromAsRules)
-                  return !Boolean(policyTypes[rule.type]?.policy.isFromAsRules)}) }}
                 <DataCollection
                   :items="rulesData!.rules.filter((rule) => !Boolean(policyTypes[rule.type]?.policy.isFromAsRules) )"
                   :predicate="(item) => item.ruleType === 'from'"
@@ -223,8 +220,6 @@
   </RouteView>
 </template>
 <script lang="ts" setup>
-import { rule } from 'postcss'
-
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import type { DataplaneOverview } from '../data'
 import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'

@@ -102,6 +102,7 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 3
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
         KUMA_DATAPLANE_INBOUND_RULE_COUNT: 0
+        KUMA_RESOURCE_COUNT: 1
         """
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
@@ -125,8 +126,37 @@ Feature: Dataplane policies
                         - mesh: default
                           name: default
                           type: MeshTimeout
+                      conf:
+                        connectionTimeout: 20s
+                        idleTimeout: 20s
+                        http:
+                          requestTimeout: 5s
+                    - matchers:
+                        - key: kuma.io/service
+                          not: false
+                          value: one
+                        - key: kuma.io/service
+                          not: true
+                          value: two
+                      origin:
                         - mesh: default
                           name: override
+                          type: MeshTimeout
+                      conf:
+                        connectionTimeout: 20s
+                        idleTimeout: 20s
+                        http:
+                          requestTimeout: 5s
+                    - matchers:
+                        - key: kuma.io/service
+                          not: false
+                          value: one
+                        - key: kuma.io/service
+                          not: true
+                          value: two
+                      origin:
+                        - mesh: default
+                          name: default
                           type: MeshTimeout
                       conf:
                         connectionTimeout: 20s
