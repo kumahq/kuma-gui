@@ -42,7 +42,6 @@
                     @change="(value) => {
                       route.update({ output: value })
                     }"
-                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.output && route.update({ output: $event.props.selected })"
                   >
                     <template
                       v-for="value in options"
