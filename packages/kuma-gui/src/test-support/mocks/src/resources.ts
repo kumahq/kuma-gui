@@ -3,14 +3,15 @@ import type { paths } from '@kumahq/kuma-http-api'
 
 type ResourcesApi = paths['/_resources']['get']['responses']['200']['content']['application/json']
 
-export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
+export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
   const policies = Array.from(fake.kuma.policyNames({ min: Number.MAX_SAFE_INTEGER }))
   const legacyPolicies = fake.kuma.policyNamesLegacy({ min: Number.MAX_SAFE_INTEGER })
+  const resourceCount = parseInt(env('KUMA_RESOURCE_COUNT', `${fake.number.int({ min: Number.MAX_SAFE_INTEGER })}`))
 
   return {
     headers: {},
     body: {
-      resources: fake.kuma.resourceNames({ min: Number.MAX_SAFE_INTEGER }).map((name) => {
+      resources: fake.kuma.resourceNames({ min: resourceCount, max: resourceCount }).map((name) => {
         const scope = fake.helpers.arrayElement(['Mesh', 'Global'])
 
         return {

@@ -75,6 +75,7 @@ export type MockEnvKeys = keyof {
   KUMA_STORE_TYPE: string
   KUMA_LATENCY: string
   KUMA_STATUS_CODE: string
+  KUMA_RESOURCE_COUNT: string
 }
 export type AppEnvKeys = Parameters<AEnv>[0]
 export type Env = (key: AppEnvKeys | MockEnvKeys, d: string) => string
