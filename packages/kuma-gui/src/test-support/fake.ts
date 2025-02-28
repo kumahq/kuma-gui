@@ -50,6 +50,7 @@ export type MockEnvKeys = keyof {
   KUMA_DATAPLANE_RULE_COUNT: string
   KUMA_DATAPLANE_TO_RULE_COUNT: string
   KUMA_DATAPLANE_FROM_RULE_COUNT: string
+  KUMA_DATAPLANE_INBOUND_RULE_COUNT: string
   KUMA_CIRCUITBREAKER_COUNT: string
   KUMA_FAULTINJECTION_COUNT: string
   KUMA_MESHFAULTINJECTION_COUNT: string
@@ -74,6 +75,7 @@ export type MockEnvKeys = keyof {
   KUMA_STORE_TYPE: string
   KUMA_LATENCY: string
   KUMA_STATUS_CODE: string
+  KUMA_RESOURCE_COUNT: string
 }
 export type AppEnvKeys = Parameters<AEnv>[0]
 export type Env = (key: AppEnvKeys | MockEnvKeys, d: string) => string
