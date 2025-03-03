@@ -1,7 +1,7 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 import type { InspectRulesForDataplane } from '@/types/index.d'
 
-export default ({ fake: _fake }: EndpointDependencies): MockResponder => (req) => {
+export default (_deps: EndpointDependencies): MockResponder => (req) => {
   const mesh = req.params.mesh as string
   const name = req.params.name as string
 
