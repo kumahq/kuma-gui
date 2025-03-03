@@ -12,11 +12,24 @@ type Tags<T extends Record<string, string | undefined>> =
     ? { 'kuma.io/service': string, [key: string]: string }
     : { [key: string]: string }
 
+/**
+ * Deprecated as soon as Math.clamp makes it into js 4realz.
+ */
+function clamp(number: number, minimum: number, maximum: number) {
+  return Math.min(Math.max(number, minimum), maximum)
+}
+
+/**
+ * Tries to match the implementation of `faker.helper.arrayElements`'s `count` argument (**Not**: `faker.number.int()`)
+ */
 const minmax = (between: { min?: number, max: number }, count?: number | { min?: number, max?: number }) => {
   if (typeof count === 'number') {
-    count = { min: between.min ?? 0, max: count }
+    count = { min: count, max: count }
   }
-  return { min: Math.min(count?.min ?? between.min ?? 0, between.max), max: Math.min(count?.max ?? between.max, between.max) }
+  return {
+    min: clamp(count?.min ?? between.min ?? 0, between.min ?? 0, between.max),
+    max: clamp(count?.max ?? between.max, between.min ?? 0, between.max),
+  }
 }
 
 export class K8sModule {
@@ -507,7 +520,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ),
     ]
 
-    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 1, max: items.length }, count))
+    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 1, max: items.length /* 20 */ }, count /* MAX_SAFE_INTEGER */))
   }
 
   policyName(options?: { includeLegacy?: boolean }) {

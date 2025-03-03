@@ -6,12 +6,12 @@ type ResourcesApi = paths['/_resources']['get']['responses']['200']['content']['
 export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
   const policies = Array.from(fake.kuma.policyNames({ min: Number.MAX_SAFE_INTEGER }))
   const legacyPolicies = fake.kuma.policyNamesLegacy({ min: Number.MAX_SAFE_INTEGER })
-  const resourceCount = parseInt(env('KUMA_RESOURCE_COUNT', `${fake.number.int({ min: Number.MAX_SAFE_INTEGER })}`))
+  const resourceCount = parseInt(env('KUMA_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
 
   return {
     headers: {},
     body: {
-      resources: fake.kuma.resourceNames({ min: resourceCount, max: resourceCount }).map((name) => {
+      resources: fake.kuma.resourceNames(resourceCount).map((name) => {
         const scope = fake.helpers.arrayElement(['Mesh', 'Global'])
 
         return {

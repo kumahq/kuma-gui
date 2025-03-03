@@ -67,8 +67,8 @@
                 <!-- otherwise, for from rules, group by inbound port and display if we have any -->
                 <!-- filter rules that are being represented as inboundRules (isFromAsRules) -->
                 <DataCollection
-                  :items="rulesData!.rules.filter((rule) => !Boolean(policyTypes[rule.type]?.policy.isFromAsRules) )"
-                  :predicate="(item) => item.ruleType === 'from'"
+                  :items="rulesData!.rules"
+                  :predicate="(item) => item.ruleType === 'from' && !Boolean(policyTypes[item.type]?.policy.isFromAsRules)"
                   :comparator="(a, b) => a.type.localeCompare(b.type)"
                   :empty="false"
                   v-slot="{ items }"

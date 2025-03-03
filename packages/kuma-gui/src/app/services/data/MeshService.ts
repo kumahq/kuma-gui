@@ -14,7 +14,7 @@ export const MeshService = {
       namespace,
       labels,
       zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
-      spec: ((item = { state: 'Unavailable' }) => {
+      spec: ((item) => {
         return {
           ...item,
           ports: Array.isArray(item.ports) ? item.ports : [],

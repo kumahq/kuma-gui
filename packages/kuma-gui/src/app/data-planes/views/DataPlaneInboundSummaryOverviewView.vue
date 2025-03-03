@@ -113,11 +113,11 @@
               :errors="[policyTypesError, rulesError]"
             >
               <template
-                v-for="policyTypes in [(policyTypesData?.policyTypes ?? []).reduce<Partial<Record<string, PolicyResourceType>>>((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})]"
-                :key="typeof policyTypes"
+                v-for="policyTypes in [Object.groupBy((policyTypesData?.policyTypes ?? []), ({ name }) => name)]"
+                :key="`${typeof policyTypes}`"
               >
                 <DataCollection
-                  :predicate="(item) => { return (item.ruleType === 'inbound' || (item.ruleType === 'from' && Boolean(policyTypes[item.type]?.policy.isFromAsRules))) && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])}"
+                  :predicate="(item) => { return (item.ruleType === 'inbound' || (item.ruleType === 'from' && Boolean(policyTypes[item.type]?.[0]?.policy.isFromAsRules))) && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])}"
                   :items="rulesData!.rules"
                   v-slot="{ items }"
                 >
@@ -169,36 +169,31 @@
                                     </template>
 
                                     <template #body>
-                                      <template
-                                        v-for="types in [Object.groupBy((policyTypesData?.policyTypes ?? []), (item) => item.name)]"
-                                        :key="types"
-                                      >
-                                        <ul>
-                                          <li
-                                            v-for="origin in item.origins"
-                                            :key="`${origin.mesh}-${origin.name}`"
+                                      <ul>
+                                        <li
+                                          v-for="origin in item.origins"
+                                          :key="`${origin.mesh}-${origin.name}`"
+                                        >
+                                          <XAction
+                                            v-if="policyTypes[origin.type]"
+                                            :to="{
+                                              name: 'policy-detail-view',
+                                              params: {
+                                                mesh: origin.mesh,
+                                                policyPath: policyTypes[origin.type]![0].path,
+                                                policy: origin.name,
+                                              },
+                                            }"
                                           >
-                                            <XAction
-                                              v-if="types[origin.type]"
-                                              :to="{
-                                                name: 'policy-detail-view',
-                                                params: {
-                                                  mesh: origin.mesh,
-                                                  policyPath: types[origin.type]![0].path,
-                                                  policy: origin.name,
-                                                },
-                                              }"
-                                            >
-                                              {{ origin.name }}
-                                            </XAction>
-                                            <template
-                                              v-else
-                                            >
-                                              {{ origin.name }}
-                                            </template>
-                                          </li>
-                                        </ul>
-                                      </template>
+                                            {{ origin.name }}
+                                          </XAction>
+                                          <template
+                                            v-else
+                                          >
+                                            {{ origin.name }}
+                                          </template>
+                                        </li>
+                                      </ul>
                                     </template>
                                   </DefinitionCard>
                                   <div>
@@ -241,7 +236,6 @@ import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'
 import type { DataplaneInbound } from '@/app/data-planes/data'
-import { PolicyResourceType } from '@/app/policies/data'
 import { sources as policySources } from '@/app/policies/sources'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import { sources } from '@/app/rules/sources'
