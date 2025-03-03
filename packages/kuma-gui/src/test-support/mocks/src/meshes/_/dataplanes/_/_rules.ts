@@ -181,7 +181,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             }),
             inboundRules: Array.from({ length: inboundRuleCount }).map(() => ({
               inbound: {
-                port: fake.internet.port(),
+                port: ports[fake.number.int({ min: 0, max: ports.length - 1 })].port,
                 tags: fake.kuma.tags({ service: fake.word.noun() }),
                 ...(fake.datatype.boolean() && { name: `port-${fake.word.noun()}` }),
               },
