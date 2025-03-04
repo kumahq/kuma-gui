@@ -99,8 +99,7 @@
                 </DataCollection>
 
                 <DataCollection
-                  :items="rulesData!.rules"
-                  :predicate="(item) => item.ruleType === 'inbound'"
+                  :items="rulesData!.inboundRules"
                   :comparator="(a, b) => a.type.localeCompare(b.type)"
                   :empty="false"
                   v-slot="{ items }"
