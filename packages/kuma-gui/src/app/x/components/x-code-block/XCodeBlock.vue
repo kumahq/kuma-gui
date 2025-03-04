@@ -41,6 +41,7 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
+import DOMPurify from 'dompurify'
 import { ref } from 'vue'
 
 import { highlightElement, type AvailableLanguages } from './highlightElement'
@@ -75,10 +76,12 @@ const emit = defineEmits<{
 
 const isProcessing = ref(false)
 
-async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
+async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
   isProcessing.value = true
 
-  highlightElement(preElement, codeElement, code, language as AvailableLanguages)
+  const highlighted = await highlightElement(code, language as AvailableLanguages)
+  // eslint-disable-next-line no-unsanitized/property
+  codeElement.innerHTML = DOMPurify.sanitize(highlighted)
 
   isProcessing.value = false
 }
@@ -102,5 +105,8 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
   border-radius: unset !important;
   box-shadow: unset !important;
   text-shadow: unset !important;
+}
+:deep(.shiki) {
+  background-color: unset !important;
 }
 </style>
