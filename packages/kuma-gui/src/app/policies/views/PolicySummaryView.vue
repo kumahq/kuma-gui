@@ -59,6 +59,7 @@
               v-if="item"
               :policy="item"
               :format="route.params.format"
+              :legacy="!props.policyType.policy?.isTargetRef"
             >
               <template #header>
                 <header>
@@ -109,7 +110,7 @@
                   @reg-exp-mode-change="route.update({ codeRegExp: $event })"
                 />
               </template>
-              
+
               <template v-else-if="route.params.format === 'k8s'">
                 <DataLoader
                   :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {

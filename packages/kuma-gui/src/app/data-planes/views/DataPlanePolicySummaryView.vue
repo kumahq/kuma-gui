@@ -43,6 +43,7 @@
             v-if="data"
             :policy="data"
             :format="route.params.format"
+            :legacy="!props.policyTypes.find(({ name }) => name === data?.type )?.policy.isTargetRef"
           >
             <template #header>
               <header>
@@ -127,8 +128,12 @@
 
 <script lang="ts" setup>
 import PolicySummary from '@/app/policies/components/PolicySummary.vue'
+import type { PolicyResourceType } from '@/app/policies/data'
 import { type PolicySource , sources } from '@/app/policies/sources'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
+const props = defineProps<{
+  policyTypes: PolicyResourceType[]
+}>()
 </script>
 
 <style scoped>

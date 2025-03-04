@@ -25,7 +25,7 @@
           </template>
         </DefinitionCard>
         <DefinitionCard
-          v-if="props.policy.spec"
+          v-if="!props.legacy"
           layout="horizontal"
         >
           <template #title>
@@ -34,7 +34,7 @@
 
           <template #body>
             <XBadge
-              v-if="props.policy.spec.targetRef"
+              v-if="props.policy.spec?.targetRef"
               appearance="neutral"
             >
               {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
@@ -86,9 +86,20 @@
       </div>
 
       <XCodeBlock
-        v-if="policy.spec"
         language="yaml"
-        :code="YAML.stringify({ spec: policy.spec })"
+        :code="YAML.stringify(policy.spec ?
+          { spec: policy.spec } :
+          {
+            ...('sources' in policy ? { sources: policy.sources } : {}),
+            ...('destinations' in policy ? { destinations: policy.destinations } : {}),
+            ...('selectors' in policy ? { selectors: policy.selectors } : {}),
+            ...('conf' in policy ? { conf: policy.conf } : {}),
+            ...('routing' in policy ? { routing: policy.routing } : {}),
+            ...('tracing' in policy ? { tracing: policy.tracing } : {}),
+            ...('metrics' in policy ? { metrics: policy.metrics } : {}),
+            ...('logging' in policy ? { logging: policy.logging } : {}),
+          },
+        )"
       />
     </template>
 
@@ -114,5 +125,6 @@ const can = useCan()
 const props = defineProps<{
   policy: Policy
   format: string
+  legacy: boolean
 }>()
 </script>
