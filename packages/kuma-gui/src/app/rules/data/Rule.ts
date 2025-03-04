@@ -1,5 +1,4 @@
 import { InboundRule } from './InboundRule'
-// import type { InboundRule } from './InboundRule'
 import { Origin } from './Origin'
 import { ResourceRule } from './ResourceRule'
 import type { components } from '@kumahq/kuma-http-api'
