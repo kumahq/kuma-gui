@@ -25,6 +25,7 @@
           </template>
         </DefinitionCard>
         <DefinitionCard
+          v-if="props.policy.spec"
           layout="horizontal"
         >
           <template #title>
@@ -33,7 +34,7 @@
 
           <template #body>
             <XBadge
-              v-if="props.policy.spec?.targetRef"
+              v-if="props.policy.spec.targetRef"
               appearance="neutral"
             >
               {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
