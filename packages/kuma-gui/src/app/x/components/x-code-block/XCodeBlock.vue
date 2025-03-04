@@ -41,7 +41,6 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
-import DOMPurify from 'dompurify'
 import { ref } from 'vue'
 
 import { highlightElement, type AvailableLanguages } from './highlightElement'
@@ -80,8 +79,10 @@ async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeB
   isProcessing.value = true
 
   const highlighted = await highlightElement(code, language as AvailableLanguages)
+
+  // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
-  codeElement.innerHTML = DOMPurify.sanitize(highlighted)
+  codeElement.innerHTML = highlighted
 
   isProcessing.value = false
 }
