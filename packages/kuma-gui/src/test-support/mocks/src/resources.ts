@@ -1,12 +1,17 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
+import type { paths } from '@kumahq/kuma-http-api'
+
+type ResourcesApi = paths['/_resources']['get']['responses']['200']['content']['application/json']
+
+export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
   const policies = Array.from(fake.kuma.policyNames({ min: Number.MAX_SAFE_INTEGER }))
   const legacyPolicies = fake.kuma.policyNamesLegacy({ min: Number.MAX_SAFE_INTEGER })
+  const resourceCount = parseInt(env('KUMA_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
 
   return {
     headers: {},
     body: {
-      resources: fake.kuma.resourceNames({ min: Number.MAX_SAFE_INTEGER }).map((name) => {
+      resources: fake.kuma.resourceNames(resourceCount).map((name) => {
         const scope = fake.helpers.arrayElement(['Mesh', 'Global'])
 
         return {
@@ -23,9 +28,10 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
             isTargetRef: !legacyPolicies.find((policy) => policy === name),
             hasToTargetRef: fake.datatype.boolean(),
             hasFromTargetRef: fake.datatype.boolean(),
+            isFromAsRules: fake.datatype.boolean(),
           }}),
         }
       }).sort((a, b) => new Intl.Collator('en').compare(a.name, b.name)), /* We have to sort to always return in the same order */
-    },
+    } satisfies ResourcesApi,
   }
 }

@@ -4,7 +4,7 @@
     multiple-open
   >
     <template
-      v-for="policies in [props.rules.reduce<Record<string, Rule[]>>((prev, item) => {
+      v-for="policies in [props.rules.reduce<Record<string, (Rule | InboundRule)[]>>((prev, item) => {
         if(typeof prev[item.type] === 'undefined') {
           prev[item.type] = []
         }
@@ -109,6 +109,7 @@
 </template>
 
 <script lang="ts" setup>
+import { type InboundRule } from '../data/InboundRule'
 import { useI18n, YAML } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -121,7 +122,7 @@ import XAction from '@/app/x/components/x-action/XAction.vue'
 const { t } = useI18n()
 
 const props = defineProps<{
-  rules: Rule[]
+  rules: (Rule | InboundRule)[]
   types: Partial<Record<string, PolicyResourceType>>
 }>()
 

@@ -2,23 +2,25 @@ Feature: Dataplane policies
 
   Background:
     Given the CSS selectors
-      | Alias                              | Selector                                                            |
-      | policies-view                      | [data-testid='data-plane-policies-view']                            |
-      | rules-based-policies               | [data-testid='rules-based-policies']                                |
-      | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']                          |
-      | legacy-sidecar-policies            | [data-testid='sidecar-dataplane-policies']                          |
-      | legacy-gateway-policies            | [data-testid='builtin-gateway-dataplane-policies']                  |
-      | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies']                  |
-      | proxy-rules                        | [data-testid='proxy-rule-list']                                     |
-      | proxy-rule-item                    | $proxy-rules .accordion-item                                        |
-      | proxy-rule-item-button             | $proxy-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
-      | to-rules                           | [data-testid='to-rule-list']                                        |
-      | to-rule-item                       | $to-rules .accordion-item                                           |
-      | to-rule-item-button                | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
-      | to-rule-item-content               | $to-rule-item:nth-child(1) [data-testid='accordion-item-content']   |
-      | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                    |
-      | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']  |
-      | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']          |
+      | Alias                              | Selector                                                              |
+      | policies-view                      | [data-testid='data-plane-policies-view']                              |
+      | rules-based-policies               | [data-testid='rules-based-policies']                                  |
+      | sidecar-dataplane-policies         | [data-testid='sidecar-dataplane-policies']                            |
+      | legacy-sidecar-policies            | [data-testid='sidecar-dataplane-policies']                            |
+      | legacy-gateway-policies            | [data-testid='builtin-gateway-dataplane-policies']                    |
+      | builtin-gateway-dataplane-policies | [data-testid='builtin-gateway-dataplane-policies']                    |
+      | proxy-rules                        | [data-testid='proxy-rule-list']                                       |
+      | proxy-rule-item                    | $proxy-rules .accordion-item                                          |
+      | proxy-rule-item-button             | $proxy-rule-item:nth-child(1) [data-testid='accordion-item-button']   |
+      | to-rules                           | [data-testid='to-rule-list']                                          |
+      | to-rule-item                       | $to-rules .accordion-item                                             |
+      | to-rule-item-button                | $to-rule-item:nth-child(1) [data-testid='accordion-item-button']      |
+      | to-rule-item-content               | $to-rule-item:nth-child(1) [data-testid='accordion-item-content']     |
+      | from-rule-item                     | [data-testid='from-rule-list-0'] .accordion-item                      |
+      | from-rule-item-button              | $from-rule-item:nth-child(1) [data-testid='accordion-item-button']    |
+      | inbound-rule-item                  | [data-testid='inbound-rule-list-0'] .accordion-item                   |
+      | inbound-rule-item-button           | $inbound-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
+      | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']            |
 
   Rule: Any networking type
 
@@ -99,6 +101,8 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_RULE_COUNT: 1
         KUMA_DATAPLANE_TO_RULE_COUNT: 3
         KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        KUMA_DATAPLANE_INBOUND_RULE_COUNT: 0
+        KUMA_RESOURCE_COUNT: 1
         """
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
@@ -122,8 +126,37 @@ Feature: Dataplane policies
                         - mesh: default
                           name: default
                           type: MeshTimeout
+                      conf:
+                        connectionTimeout: 20s
+                        idleTimeout: 20s
+                        http:
+                          requestTimeout: 5s
+                    - matchers:
+                        - key: kuma.io/service
+                          not: false
+                          value: one
+                        - key: kuma.io/service
+                          not: true
+                          value: two
+                      origin:
                         - mesh: default
                           name: override
+                          type: MeshTimeout
+                      conf:
+                        connectionTimeout: 20s
+                        idleTimeout: 20s
+                        http:
+                          requestTimeout: 5s
+                    - matchers:
+                        - key: kuma.io/service
+                          not: false
+                          value: one
+                        - key: kuma.io/service
+                          not: true
+                          value: two
+                      origin:
+                        - mesh: default
+                          name: default
                           type: MeshTimeout
                       conf:
                         connectionTimeout: 20s
@@ -179,6 +212,14 @@ Feature: Dataplane policies
                     idleTimeout: 20s
                     http:
                       requestTimeout: 10s
+        """
+      And the URL "/_resources" responds with
+        """
+        body:
+          resources:
+            - name: MeshTimeout
+              policy:
+                isFromAsRules: false
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$policies-view" element contains "MeshTimeout"
@@ -270,6 +311,44 @@ Feature: Dataplane policies
       Then the "$summary-slideout-container" element exists
       And the "$summary-slideout-container [data-testid='slideout-title']" element exists
       And the "$summary-slideout-container [data-testid='slideout-title'] h2 a" element contains "the-other-http-route"
+
+    Scenario: Policies tab has expected content (inbound rules & partial from rules)
+      Given the environment
+        """
+        KUMA_DATAPLANE_PROXY_RULE_ENABLED: false
+        KUMA_DATAPLANE_RULE_COUNT: 1
+        KUMA_DATAPLANE_TO_RULE_COUNT: 0
+        KUMA_DATAPLANE_INBOUND_RULE_COUNT: 1
+        KUMA_DATAPLANE_FROM_RULE_COUNT: 1
+        """
+      And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
+        """
+        body:
+          rules:
+            - type: MeshHTTPRoute
+              fromRules:
+                - inbound:
+                    port: 8080
+                    tags:
+                      kuma.io/service: foo
+              inboundRules:
+                - inbound:
+                    port: 8080
+                    tags:
+                      kuma.io/service: foo
+        """
+      And the URL "/_resources" responds with
+        """
+        body:
+          resources:
+            - name: MeshHTTPRoute
+              policy:
+                isFromAsRules: true
+        """
+      When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
+      Then the "$to-rule-item-content" element doesn't exist
+      And the "$from-rule-item" element doesn't exist
+      And the "$inbound-rule-item" element exists
 
   Rule: Standard proxy
 

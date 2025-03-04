@@ -1,10 +1,14 @@
+import { InboundRule } from './InboundRule'
+import { Origin } from './Origin'
 import { ResourceRule } from './ResourceRule'
 import type { components } from '@kumahq/kuma-http-api'
+
 type Entity = components['schemas']['Rule']
 type InspectRules = components['schemas']['InspectRules']
+
 export const Rule = {
   fromObject(item: Entity) {
-    const { conf = {}, origin, matchers, ...rest } = item
+    const { conf = {}, origin, ...rest } = item
     const rules = (Array.isArray(conf.rules) ? conf.rules : []).map((rule) => {
       const { backendRefs = [], filters = [] } = rule.default
 
@@ -28,8 +32,8 @@ export const Rule = {
         hostnames: Array.isArray(conf.hostnames) && conf.hostnames.length > 0 ? conf.hostnames : ['*'],
         rules,
       },
-      origins: Array.isArray(origin) ? origin : [],
-      matchers: Array.isArray(matchers) ? matchers : [],
+      origins: Array.isArray(origin) ? origin.map((o) => Origin.fromObject(o)) : [],
+      matchers: Array.isArray(item.matchers) ? item.matchers : [],
     }
   },
   fromCollection(item: InspectRules) {
@@ -76,6 +80,25 @@ export const Rule = {
       }, [] as Rule[])
       : []
 
+    const inboundRules = Array.isArray(item.rules)
+      ? item.rules.reduce((prev, item) => {
+        const inboundRules = Array.isArray(item.inboundRules)
+          ? item.inboundRules.map(inboundRule => {
+            return inboundRule.rules.map(rule => {
+              return {
+                ...InboundRule.fromObject({
+                  ...rule,
+                  ...inboundRule,
+                  type: item.type,
+                }),
+              }
+            })
+          }).flat()
+          : []
+        return prev.concat(inboundRules)
+      }, [] as InboundRule[])
+      : []
+
     const toResourceRules = Array.isArray(item.rules)
       ? item.rules.reduce((prev, item) => {
         const rules = Array.isArray(item.toResourceRules)
@@ -89,9 +112,11 @@ export const Rule = {
         return prev.concat(rules)
       }, [] as ResourceRule[])
       : []
+
     return {
       ...item,
       rules,
+      inboundRules,
       toResourceRules,
     }
   },
