@@ -1,10 +1,14 @@
 .PHONY: .install
 .install: check/node
-	@npm install
+	@cd $(NPM_WORKSPACE_ROOT) \
+		&& npm $(if $(CI),clean-install,install) \
+					--ignore-scripts
 
-.PHONY: .install/sync
-.install/sync:
-	npm clean-install
+.PHONY: .update
+.update: check/node
+	@cd $(NPM_WORKSPACE_ROOT) \
+		&& npm install \
+					--ignore-scripts
 
 .PHONY: .dedupe
 .dedupe:

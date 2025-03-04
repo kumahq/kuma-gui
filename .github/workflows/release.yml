@@ -1,6 +1,6 @@
-name: 'Build and release to kumahq/kuma'
+name: release
 run-name: |
-  Build and release to kumahq/kuma (branch: ${{ github.event.workflow_run.head_branch || inputs.branch }})
+  release (branch: ${{ github.event.workflow_run.head_branch || inputs.branch }})
 
 # **Note 1**: You can merge a pull request into a release branch of the form
 # “release-$MAJOR.$MINOR” (e.g. “release-2.1”) in order to create the GUI
@@ -25,6 +25,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || inputs.branch }}
 
 on:
+
   # Allows running the workflow manually.
   workflow_dispatch:
     inputs:
@@ -58,12 +59,18 @@ jobs:
     #
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/kuma-gui
+    strategy:
+      matrix:
+        package:
+          - name: "@kumahq/kuma-gui"
+            path: packages/kuma-gui
+            destination: kumahq/kuma
+    name: |
+      Releasing ${{ matrix.package.name }} to ${{ matrix.package.destination }}
     env:
       SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
       BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
+      APP_WORKSPACE: repository
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -73,16 +80,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-      # Syft, used to generate the SBOM, struggles with npm projects when:
-      # - Two packages, in the same repository, are separate npm workloads
-      #   which share a common `package-lock.json`.
-      # - One package (e.g., `packages/config`) defines peerDependencies and
-      #   is referenced as a devDependency in another package
-      #   (e.g., `packages/kuma-gui`).
-      # [...]
-      # More information in ./packages/kuma-gui/mk/release.mk
       - run: |
-          make release/prune
+          make -C ${{ matrix.package.path }} build
 
       - uses: Kong/public-shared-actions/security-actions/sca@0ccacffed804d85da3f938a1b78c12831935f992
         id: sbom
@@ -95,45 +94,44 @@ jobs:
           config: .syft.yaml
           fail_build: 'true' # Fail job if critical vulnerabilities are detected
 
-      - run: |
-          make install/sync
-          make build/sync
-
       - uses: actions/create-github-app-token@21cfef2b496dd8ef5b904c159339626a10ad380e # v1.11.6
         id: github-app-token
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-          # Access to kuma needs to be explicitly included here so that a pull request can be opened in that repository.
           owner: ${{ github.repository_owner }}
+          # Access to kuma needs to be explicitly included here so that a pull
+          # request can be opened in that repository.
           repositories: "kuma-gui,kuma"
+
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          # This needs to be a token that grants read access to `HOST_REPOSITORY`. If that repository is private, it needs general access to the `repo` scope which grants access to read private repositories. Otherwise, you will run into an error telling you that the checkout actions can’t determine the repository’s default branch. This is on account of a lack of access not because it can’t determine the default branch.
           token: ${{ steps.github-app-token.outputs.token }}
-          repository: ${{ vars.HOST_REPOSITORY }}
           ref: ${{ env.BRANCH }}
-          path: ./packages/kuma-gui/main-application
+          path: ${{ env.APP_WORKSPACE }}
+          repository: ${{ matrix.package.destination }}
 
       - run: |
-          cd main-application
+          make -C ${{ matrix.package.path }} release \
+            DESTINATION=${{github.workspace}}/${{ env.APP_WORKSPACE }}/app/kuma-ui/pkg/resources
 
-          echo 'Copying Grype and SBOM reports ...'
-          mkdir -p ${{ vars.HOST_REPORTS_DIRECTORY }}
-          rm -f ${{ vars.HOST_REPORTS_DIRECTORY }}/kuma-gui*.{json,sarif}
-          mv ../../../kuma-gui*.{json,sarif} ${{ vars.HOST_REPORTS_DIRECTORY }}
-
-          echo 'Replacing GUI dist files ...'
-          rm -rf ${{ vars.HOST_DIST_DIRECTORY }}
-          cp -r ../${{ vars.DIST_DIRECTORY }}/ ${{ vars.HOST_DIST_DIRECTORY }}
+      ## For testing if you've commented out the create-pull-request step
+      # - run: |
+      #     cd ${{ env.APP_WORKSPACE }} && git ls-files --exclude-standard --modified --deleted --others -t
 
       # https://github.com/peter-evans/create-pull-request
       - uses: peter-evans/create-pull-request@dd2324fc52d5d43c699a5636bcf19fceaa70c284 # v7.0.7
         with:
-          # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
+          # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t
+          # need to trigger workflows `on: push` or `on: pull_request`.
+          # However, we definitely need to trigger workflows (e.g. to run test
+          # workflows on the PR). Instead, we should use a personal access
+          # token (PAT). See
+          # https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs
+          # for a more detailed explanation.
           token: ${{ steps.github-app-token.outputs.token }}
-          path: ./packages/kuma-gui/main-application
+          path: ${{ env.APP_WORKSPACE }}
           base: ${{ env.BRANCH }}
           commit-message: |
             chore(deps): bump ${{ github.repository }} to ${{ env.SHA }}

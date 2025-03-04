@@ -1,3 +1,10 @@
+.PHONY: .sbom/check
+.sbom/check:
+	@hash syft &> /dev/null || ( \
+		echo "syft is not installed. Try \`brew install syft\` or similar" ; \
+		exit 1 ; \
+	)
+
 # Syft, used to generate the SBOM, struggles with npm projects when:
 # - Two packages, in the same repository, are separate npm workloads
 #   which share a common `package-lock.json`.
@@ -49,8 +56,27 @@
 	@node -e "console.log(require('$(KUMAHQ_CONFIG)/scripts/prune.cjs').depsToDevDeps('$(EXCLUDE_PATH)/package.json'))" > $(EXCLUDE_PATH)/package-pruned.json
 	@rm $(EXCLUDE_PATH)/package.json
 	@mv $(EXCLUDE_PATH)/package-pruned.json $(EXCLUDE_PATH)/package.json
+	@npm install --ignore-scripts --package-lock-only
 
-.PHONY: .release/prune
-.release/prune:
-	@$(MAKE) .sbom/exclude EXCLUDE_PATH=$(KUMAHQ_CONFIG)
-	@npm install --package-lock-only
+.PHONY: .sbom/report
+.sbom/report: .sbom/check clean prune
+	@syft scan \
+		dir:$(NPM_WORKSPACE_ROOT) \
+		-c $(NPM_WORKSPACE_ROOT)/.syft.yaml \
+		-o spdx-json \
+			| wc -c \
+			| numfmt --to=iec-i --suffix=B \
+			| xargs printf "===\nFinal size: %s\n"
+
+.PHONY: .release
+.release: SRC?=$(NPM_WORKSPACE_ROOT)/packages/kuma-gui/dist
+.release: DESTINATION?=$(NPM_WORKSPACE_ROOT)/repository/app/kuma-ui/pkg/resources
+.release:
+	echo 'Copying Grype and SBOM reports ...'
+	mkdir -p $(DESTINATION)
+	rm -f $(DESTINATION)/kuma-gui*.{json,sarif}
+	mv $(NPM_WORKSPACE_ROOT)/kuma-gui*.{json,sarif} $(DESTINATION)
+
+	echo 'Replacing GUI dist files ...'
+	rm -rf $(DESTINATION)/data
+	cp -r $(SRC) $(DESTINATION)/data
