@@ -1,4 +1,5 @@
 import { createHighlighter } from 'shiki'
+import { createJavaScriptRawEngine } from 'shiki/engine/javascript'
 
 export type AvailableLanguages = 'plaintext' | 'bash' | 'shell' | 'json' | 'yaml'
 
@@ -10,9 +11,12 @@ export async function highlightElement(code: string, language: AvailableLanguage
     console.warn(`Prism: the language “${language}” isn't enabled.`)
   }
 
+  const engine = createJavaScriptRawEngine()
+
   const highlighter = await createHighlighter({
     langs: ['plaintext', 'json', 'yaml', 'bash', 'shell'],
     themes: ['material-theme-palenight'],
+    engine,
   })
 
   return highlighter.codeToHtml(code, {

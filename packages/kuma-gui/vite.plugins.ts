@@ -82,7 +82,7 @@ const server = (
         body = body.replace('<meta charset="utf-8" />', `<meta charset="utf-8" /><meta property="csp-nonce" nonce="${nonce}">`)
         res.setHeader('Content-Security-Policy', [
           "default-src 'self'",
-          "script-src 'self' 'wasm-unsafe-eval'",
+          "script-src 'self'",
           "script-src-elem 'self'",
           "img-src 'self' data: ",
           // in a production environment the nonce is not required
