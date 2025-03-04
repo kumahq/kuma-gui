@@ -70,7 +70,7 @@
                       {{ t('policies.routes.item.config') }}
                     </h3>
                     <div
-                      v-for="options in [[...(item.spec ? ['structured'] : []), 'universal', 'k8s']]"
+                      v-for="options in [['structured', 'universal', 'k8s']]"
                       :key="typeof options"
                     >
                       <XSelect
@@ -110,7 +110,7 @@
                 />
               </template>
               
-              <template v-else>
+              <template v-else-if="route.params.format === 'k8s'">
                 <DataLoader
                   :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
                     mesh: route.params.mesh,

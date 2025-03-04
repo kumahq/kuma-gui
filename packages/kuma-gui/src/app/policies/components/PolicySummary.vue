@@ -3,11 +3,27 @@
     type="stack"
   >
     <slot name="header" />
-    <template v-if="props.policy.spec && props.format === 'structured'">
+    <template v-if="props.format === 'structured'">
       <div
         class="mt-4 stack-with-borders"
         data-testid="structured-view"
       >
+        <DefinitionCard
+          layout="horizontal"
+        >
+          <template #title>
+            {{ t('http.api.property.type') }}
+          </template>
+
+          <template #body>
+            <XBadge
+              v-if="props.policy.type"
+              appearance="neutral"
+            >
+              {{ props.policy.type }}
+            </XBadge>
+          </template>
+        </DefinitionCard>
         <DefinitionCard
           layout="horizontal"
         >
@@ -17,7 +33,7 @@
 
           <template #body>
             <XBadge
-              v-if="props.policy.spec.targetRef"
+              v-if="props.policy.spec?.targetRef"
               appearance="neutral"
             >
               {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
