@@ -13,6 +13,7 @@
       </XLayout>
     </template>
     <KCodeBlock
+      v-if="codeHighlighter"
       :id="id"
       :max-height="props.codeMaxHeight"
       :code="props.code"
@@ -41,6 +42,7 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
+import { computedAsync } from '@vueuse/core'
 import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
 import { ref } from 'vue'
 
@@ -74,14 +76,8 @@ const emit = defineEmits<{
 }>()
 
 const isProcessing = ref(false)
-
-async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
-  isProcessing.value = true
-
-  // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
-  const engine = createJavaScriptRegexEngine()
-
-  const highlighter = await createHighlighterCore({
+const createCodeHighlighter = async () => {
+  return createHighlighterCore({
     langs: [
       import('shiki/langs/json.mjs'),
       import('shiki/langs/yaml.mjs'),
@@ -90,8 +86,17 @@ async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeB
     themes: [
       import('shiki/themes/material-theme-palenight.mjs'),
     ],
-    engine,
+    // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
+    engine: createJavaScriptRegexEngine(),
   })
+}
+const codeHighlighter = computedAsync(createCodeHighlighter)
+
+async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
+  const { value: highlighter } = codeHighlighter
+  if(!highlighter) return
+
+  isProcessing.value = true
 
   const highlighted = highlighter.codeToHtml(code, {
     theme: 'material-theme-palenight',
