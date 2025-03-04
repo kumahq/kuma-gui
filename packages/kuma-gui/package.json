@@ -35,7 +35,7 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
     "@cucumber/gherkin-utils": "^9.2.0",
-    "@faker-js/faker": "^9.5.0",
+    "@faker-js/faker": "^9.5.1",
     "@kong/design-tokens": "^1.17.3",
     "@kumahq/config": "*",
     "@kumahq/kuma-http-api": "*",
@@ -65,7 +65,7 @@
     "openapi-typescript": "^7.6.1",
     "postcss": "^8.5.3",
     "postcss-html": "^1.8.0",
-    "sass": "^1.85.0",
+    "sass": "^1.85.1",
     "shiki": "^2.3.2",
     "stylelint": "^16.14.1",
     "typescript": "^5.7.3",
