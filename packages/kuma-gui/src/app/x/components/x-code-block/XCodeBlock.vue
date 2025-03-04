@@ -41,15 +41,15 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
+import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
 import { ref } from 'vue'
 
-import { highlightElement, type AvailableLanguages } from './highlightElement'
 import { uniqueId } from '@/app/application'
 
 const props = withDefaults(defineProps<{
   id?: string
   code: string
-  language: AvailableLanguages
+  language: 'json' | 'yaml' | 'bash'
   isSearchable?: boolean
   showCopyButton?: boolean
   codeMaxHeight?: string
@@ -78,7 +78,25 @@ const isProcessing = ref(false)
 async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
   isProcessing.value = true
 
-  const highlighted = await highlightElement(code, language as AvailableLanguages)
+  // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
+  const engine = createJavaScriptRegexEngine()
+
+  const highlighter = await createHighlighterCore({
+    langs: [
+      import('shiki/langs/json.mjs'),
+      import('shiki/langs/yaml.mjs'),
+      import('shiki/langs/bash.mjs'),
+    ],
+    themes: [
+      import('shiki/themes/material-theme-palenight.mjs'),
+    ],
+    engine,
+  })
+
+  const highlighted = highlighter.codeToHtml(code, {
+    theme: 'material-theme-palenight',
+    lang: language,
+  })
 
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
@@ -95,17 +113,6 @@ async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeB
   z-index: 4;
   top: var(--app-view-content-top, var(--AppHeaderHeight, 0));
   background-color: $kui-color-background-inverse;
-}
-// Reset some PrismJS styles that interfere with the display of the code block.
-:deep(pre[class*=language-]),
-:deep(code[class*=language-]) {
-  background: unset !important;
-  padding-top: unset !important;
-  padding-bottom: unset !important;
-  border: unset !important;
-  border-radius: unset !important;
-  box-shadow: unset !important;
-  text-shadow: unset !important;
 }
 :deep(.shiki) {
   background-color: unset !important;
