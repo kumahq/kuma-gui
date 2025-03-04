@@ -118,7 +118,6 @@ import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
 import RuleMatchers from '@/app/rules/components/RuleMatchers.vue'
 import type { Rule } from '@/app/rules/data'
-import XAction from '@/app/x/components/x-action/XAction.vue'
 const { t } = useI18n()
 
 const props = defineProps<{
