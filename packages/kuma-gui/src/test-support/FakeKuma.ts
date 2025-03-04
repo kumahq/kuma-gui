@@ -520,7 +520,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ),
     ]
 
-    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 1, max: items.length /* 20 */ }, count /* MAX_SAFE_INTEGER */))
+    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 1, max: items.length }, count))
   }
 
   policyName(options?: { includeLegacy?: boolean }) {
