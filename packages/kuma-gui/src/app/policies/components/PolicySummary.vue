@@ -3,7 +3,7 @@
     type="stack"
   >
     <slot name="header" />
-    <template v-if="props.policy.spec && props.format === 'structured'">
+    <template v-if="props.format === 'structured'">
       <div
         class="mt-4 stack-with-borders"
         data-testid="structured-view"
@@ -12,12 +12,29 @@
           layout="horizontal"
         >
           <template #title>
+            {{ t('http.api.property.type') }}
+          </template>
+
+          <template #body>
+            <XBadge
+              v-if="props.policy.type"
+              appearance="neutral"
+            >
+              {{ props.policy.type }}
+            </XBadge>
+          </template>
+        </DefinitionCard>
+        <DefinitionCard
+          v-if="!props.legacy"
+          layout="horizontal"
+        >
+          <template #title>
             {{ t('http.api.property.targetRef') }}
           </template>
 
           <template #body>
             <XBadge
-              v-if="props.policy.spec.targetRef"
+              v-if="props.policy.spec?.targetRef"
               appearance="neutral"
             >
               {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
@@ -69,9 +86,20 @@
       </div>
 
       <XCodeBlock
-        v-if="policy.spec"
         language="yaml"
-        :code="YAML.stringify({ spec: policy.spec })"
+        :code="YAML.stringify(policy.spec ?
+          { spec: policy.spec } :
+          {
+            ...('sources' in policy ? { sources: policy.sources } : {}),
+            ...('destinations' in policy ? { destinations: policy.destinations } : {}),
+            ...('selectors' in policy ? { selectors: policy.selectors } : {}),
+            ...('conf' in policy ? { conf: policy.conf } : {}),
+            ...('routing' in policy ? { routing: policy.routing } : {}),
+            ...('tracing' in policy ? { tracing: policy.tracing } : {}),
+            ...('metrics' in policy ? { metrics: policy.metrics } : {}),
+            ...('logging' in policy ? { logging: policy.logging } : {}),
+          },
+        )"
       />
     </template>
 
@@ -97,5 +125,6 @@ const can = useCan()
 const props = defineProps<{
   policy: Policy
   format: string
+  legacy: boolean
 }>()
 </script>

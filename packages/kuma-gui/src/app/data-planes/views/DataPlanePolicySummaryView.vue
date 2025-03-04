@@ -43,6 +43,7 @@
             v-if="data"
             :policy="data"
             :format="route.params.format"
+            :legacy="!props.policyTypes.find(({ name }) => name === data?.type )?.policy.isTargetRef"
           >
             <template #header>
               <header>
@@ -54,7 +55,7 @@
                     {{ t('policies.routes.item.config') }}
                   </h3>
                   <div
-                    v-for="options in [[...(data.spec ? ['structured'] : []), 'universal', 'k8s']]"
+                    v-for="options in [['structured', 'universal', 'k8s']]"
                     :key="typeof options"
                   >
                     <XSelect
@@ -94,7 +95,7 @@
               />
             </template>
 
-            <template v-else>
+            <template v-else-if="route.params.format === 'k8s'">
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
                   mesh: route.params.mesh,
@@ -127,8 +128,12 @@
 
 <script lang="ts" setup>
 import PolicySummary from '@/app/policies/components/PolicySummary.vue'
+import type { PolicyResourceType } from '@/app/policies/data'
 import { type PolicySource , sources } from '@/app/policies/sources'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
+const props = defineProps<{
+  policyTypes: PolicyResourceType[]
+}>()
 </script>
 
 <style scoped>

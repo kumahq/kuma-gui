@@ -59,6 +59,7 @@
               v-if="item"
               :policy="item"
               :format="route.params.format"
+              :legacy="!props.policyType.policy?.isTargetRef"
             >
               <template #header>
                 <header>
@@ -70,7 +71,7 @@
                       {{ t('policies.routes.item.config') }}
                     </h3>
                     <div
-                      v-for="options in [[...(item.spec ? ['structured'] : []), 'universal', 'k8s']]"
+                      v-for="options in [['structured', 'universal', 'k8s']]"
                       :key="typeof options"
                     >
                       <XSelect
@@ -109,8 +110,8 @@
                   @reg-exp-mode-change="route.update({ codeRegExp: $event })"
                 />
               </template>
-              
-              <template v-else>
+
+              <template v-else-if="route.params.format === 'k8s'">
                 <DataLoader
                   :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
                     mesh: route.params.mesh,

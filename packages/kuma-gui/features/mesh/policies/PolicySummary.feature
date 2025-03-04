@@ -63,10 +63,10 @@ Feature: Policy summary
       Then the URL contains "format=structured"
       And the "$structured-view" element exists
 
-    Scenario: The view for yaml-k8s format exists
+    Scenario: The view for k8s format exists
       When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=k8s" URL
       Then the "[data-testid='codeblock-yaml-k8s']" element exists
 
-    Scenario: The view for yaml-k8s format exists
+    Scenario: The view for universal format exists
       When I visit the "/meshes/default/policies/meshfaultinjections/mfi-1?format=universal" URL
       Then the "[data-testid='codeblock-yaml-universal']" element exists
