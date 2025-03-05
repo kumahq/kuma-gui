@@ -16,13 +16,17 @@ check/node:
 .lint: lint/js lint/ts lint/css lint/lock lint/gherkin
 
 .PHONY: .lint/script
-.lint/script: lint/js lint/ts  ## Dev: Run lint checks on both JS/TS
+.lint/script: ARGS=$(filter-out $@,$(MAKECMDGOALS))
+.lint/script:
+	@$(MAKE) lint/js $(ARGS)
+	@$(MAKE) lint/ts $(ARGS)
 
 .PHONY: lint/js
+lint/js: ARGS=$(filter-out $@,$(MAKECMDGOALS))
 lint/js:
 	@npx eslint \
 		$(if $(CI),,--fix) \
-		.
+		$(if $(ARGS),$(ARGS),.)
 
 .PHONY: lint/ts
 lint/ts:
