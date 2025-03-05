@@ -19,6 +19,7 @@
 .PHONY: .test/e2e
 .test/e2e: CYPRESS_SPEC?=**/*.feature
 .test/e2e:
+	@npx cypress install
 ifdef KUMA_TEST_BROWSER
 	@TZ=UTC \
 		npx cypress \
