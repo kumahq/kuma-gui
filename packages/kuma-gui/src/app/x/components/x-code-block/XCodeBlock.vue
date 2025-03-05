@@ -19,6 +19,7 @@
       :language="language"
       :initial-filter-mode="props.isFilterMode"
       :initial-reg-exp-mode="props.isRegExpMode"
+      :processing="processing"
       :searchable="isSearchable"
       :show-copy-button="showCopyButton"
       :query="props.query"
@@ -41,6 +42,7 @@
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
+import { ref } from 'vue'
 
 import { uniqueId } from '@/app/application'
 
@@ -71,6 +73,7 @@ const emit = defineEmits<{
   (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
+const processing = ref(false)
 const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterCore>>>((resolve) => {
   createHighlighterCore({
     langs: [
@@ -87,12 +90,14 @@ const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterC
 })
 
 async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
+  processing.value = true
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
   codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
     theme: 'material-theme-palenight',
     lang: language,
   })
+  processing.value = false
 }
 </script>
 
