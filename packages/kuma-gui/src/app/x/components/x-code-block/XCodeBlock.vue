@@ -13,14 +13,12 @@
       </XLayout>
     </template>
     <KCodeBlock
-      v-if="codeHighlighter"
       :id="id"
       :max-height="props.codeMaxHeight"
       :code="props.code"
       :language="language"
       :initial-filter-mode="props.isFilterMode"
       :initial-reg-exp-mode="props.isRegExpMode"
-      :processing="isProcessing"
       :searchable="isSearchable"
       :show-copy-button="showCopyButton"
       :query="props.query"
@@ -42,9 +40,7 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
-import { computedAsync } from '@vueuse/core'
 import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
-import { ref } from 'vue'
 
 import { uniqueId } from '@/app/application'
 
@@ -75,9 +71,8 @@ const emit = defineEmits<{
   (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
-const isProcessing = ref(false)
-const createCodeHighlighter = async () => {
-  return createHighlighterCore({
+const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterCore>>>((resolve) => {
+  createHighlighterCore({
     langs: [
       import('shiki/langs/json.mjs'),
       import('shiki/langs/yaml.mjs'),
@@ -88,26 +83,16 @@ const createCodeHighlighter = async () => {
     ],
     // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
     engine: createJavaScriptRegexEngine(),
-  })
-}
-const codeHighlighter = computedAsync(createCodeHighlighter)
+  }).then(resolve)
+})
 
 async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
-  const { value: highlighter } = codeHighlighter
-  if(!highlighter) return
-
-  isProcessing.value = true
-
-  const highlighted = highlighter.codeToHtml(code, {
+  // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
+  // eslint-disable-next-line no-unsanitized/property
+  codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
     theme: 'material-theme-palenight',
     lang: language,
   })
-
-  // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
-  // eslint-disable-next-line no-unsanitized/property
-  codeElement.innerHTML = highlighted
-
-  isProcessing.value = false
 }
 </script>
 
