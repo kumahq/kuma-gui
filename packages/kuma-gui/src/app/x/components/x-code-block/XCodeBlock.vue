@@ -19,7 +19,7 @@
       :language="language"
       :initial-filter-mode="props.isFilterMode"
       :initial-reg-exp-mode="props.isRegExpMode"
-      :processing="isProcessing"
+      :processing="processing"
       :searchable="isSearchable"
       :show-copy-button="showCopyButton"
       :query="props.query"
@@ -41,15 +41,15 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
+import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
 import { ref } from 'vue'
 
-import { highlightElement, type AvailableLanguages } from './highlightElement'
 import { uniqueId } from '@/app/application'
 
 const props = withDefaults(defineProps<{
   id?: string
   code: string
-  language: AvailableLanguages
+  language: 'json' | 'yaml' | 'bash'
   isSearchable?: boolean
   showCopyButton?: boolean
   codeMaxHeight?: string
@@ -73,14 +73,31 @@ const emit = defineEmits<{
   (event: 'reg-exp-mode-change', isRegExpMode: boolean): void
 }>()
 
-const isProcessing = ref(false)
+const processing = ref(false)
+const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterCore>>>((resolve) => {
+  createHighlighterCore({
+    langs: [
+      import('shiki/langs/json.mjs'),
+      import('shiki/langs/yaml.mjs'),
+      import('shiki/langs/bash.mjs'),
+    ],
+    themes: [
+      import('shiki/themes/material-theme-palenight.mjs'),
+    ],
+    // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
+    engine: createJavaScriptRegexEngine(),
+  }).then(resolve)
+})
 
-async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
-  isProcessing.value = true
-
-  highlightElement(preElement, codeElement, code, language as AvailableLanguages)
-
-  isProcessing.value = false
+async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeBlockEventData): Promise<void> {
+  processing.value = true
+  // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
+  // eslint-disable-next-line no-unsanitized/property
+  codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
+    theme: 'material-theme-palenight',
+    lang: language,
+  })
+  processing.value = false
 }
 </script>
 
@@ -92,15 +109,7 @@ async function handleCodeBlockRenderEvent({ preElement, codeElement, language, c
   top: var(--app-view-content-top, var(--AppHeaderHeight, 0));
   background-color: $kui-color-background-inverse;
 }
-// Reset some PrismJS styles that interfere with the display of the code block.
-:deep(pre[class*=language-]),
-:deep(code[class*=language-]) {
-  background: unset !important;
-  padding-top: unset !important;
-  padding-bottom: unset !important;
-  border: unset !important;
-  border-radius: unset !important;
-  box-shadow: unset !important;
-  text-shadow: unset !important;
+:deep(.shiki) {
+  background-color: unset !important;
 }
 </style>
