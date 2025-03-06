@@ -1,6 +1,6 @@
 {
   "name": "@kumahq/kuma-http-api",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "private": true,
   "description": "Kuma OpenAPI to typescript converter and generated typescript types",
   "types": "index.d.ts",
