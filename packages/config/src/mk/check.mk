@@ -15,14 +15,18 @@ check/node:
 .PHONY: .lint
 .lint: lint/js lint/ts lint/css lint/lock lint/gherkin
 
-.PHONY: .lint/script
-.lint/script: lint/js lint/ts  ## Dev: Run lint checks on both JS/TS
+.PHONY: .lint/script ## Dev: Run lint checks on both JS/TS
+.lint/script: ARGS=$(filter-out $@,$(MAKECMDGOALS))
+.lint/script: lint/ts
+	$(MAKE) lint/js $(ARGS)
 
 .PHONY: lint/js
+lint/js: ARGS=$(filter-out $@,$(MAKECMDGOALS))
+lint/js: STAGED?=false
 lint/js:
 	@npx eslint \
 		$(if $(CI),,--fix) \
-		.
+		$(if $(and $(filter true,$(STAGED)),$(ARGS)),$(ARGS),.)
 
 .PHONY: lint/ts
 lint/ts:
