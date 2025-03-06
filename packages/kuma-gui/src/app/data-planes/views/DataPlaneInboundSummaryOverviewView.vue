@@ -117,7 +117,9 @@
                 :key="`${typeof policyTypes}`"
               >
                 <DataCollection
-                  :predicate="(item) => { return (item.ruleType === 'inbound' || (item.ruleType === 'from' && Boolean(policyTypes[item.type]?.[0]?.policy.isFromAsRules))) && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])}"
+                  :predicate="(item) => {
+                    return (item.ruleType === 'inbound' || (item.ruleType === 'from' && !Boolean(policyTypes[item.type]?.[0]?.policy.isFromAsRules))) && Number(item.inbound!.port) === Number(route.params.connection.split('_')[1])
+                  }"
                   :items="[...rulesData!.rules, ...rulesData!.inboundRules]"
                   v-slot="{ items }"
                 >
