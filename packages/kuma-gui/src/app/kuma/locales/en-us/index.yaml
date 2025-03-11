@@ -55,8 +55,7 @@ common:
     INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: !!text/markdown |
       There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ globalCpVersion }**)
     NACK_RESPONSE_ZONE_TO_GLOBAL: !!text/markdown |
-      The Global Control Plane got NACK responses from the Zone Control Plane, check the Zone Control Plane logs for details.
-      To clear up the state, restart the Zone Control Plane.
+      The Global Control Plane got NACK responses from the Zone Control Plane. Refer to the Zone Control Plane logs for more details.
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
