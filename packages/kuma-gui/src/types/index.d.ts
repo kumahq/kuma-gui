@@ -730,7 +730,7 @@ export interface Mesh extends Entity {
     zoneEgress?: boolean
   }
   meshServices?: {
-    mode?: 'Disabled' | ' Everywhere' | 'ReachableBackends' | 'Exclusive'
+    mode?: 'Disabled' | 'Everywhere' | 'ReachableBackends' | 'Exclusive'
   }
 }
 

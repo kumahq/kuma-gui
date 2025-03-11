@@ -340,7 +340,8 @@
                         :uri="`data-planes.notifications.recommend-reachable-services:${props.data.id}`"
                       >
                         <XI18n
-                          path="data-planes.notifications.recommend-reachable-services"
+                          path="data-planes.notifications.recommend-reachable"
+                          :params="{ mode: props.mesh.meshServices.mode }"
                         />
                       </XNotification>
                       <DataCollection
