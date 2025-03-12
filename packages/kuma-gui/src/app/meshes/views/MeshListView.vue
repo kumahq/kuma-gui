@@ -27,7 +27,7 @@
         </template>
 
         <XI18n
-          v-if="can('view growth-new-empty-states') && data?.items.length === 0 ? false : true"
+          v-if="!can('view growth-new-empty-states') || data?.items.length"
           path="meshes.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />
