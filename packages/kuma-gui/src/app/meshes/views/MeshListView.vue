@@ -6,7 +6,7 @@
       size: Number,
       mesh: '',
     }"
-    v-slot="{ route, t, me, uri }"
+    v-slot="{ route, t, me, uri, can }"
   >
     <DataSource
       :src="uri(sources, `/mesh-insights`, {}, {
@@ -27,6 +27,7 @@
         </template>
 
         <XI18n
+          v-if="can('view growth-new-empty-states') && data?.items.length === 0 ? false : true"
           path="meshes.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />

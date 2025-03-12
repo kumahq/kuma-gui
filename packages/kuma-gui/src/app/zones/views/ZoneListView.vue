@@ -35,6 +35,7 @@
           @change="getEgresses"
         />
         <XI18n
+          v-if="can('view growth-new-empty-states') && data?.items.length === 0 ? false : true"
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />
