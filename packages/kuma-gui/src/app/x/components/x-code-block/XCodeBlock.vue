@@ -78,13 +78,13 @@ const processing = ref(false)
 const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterCore>>>((resolve) => {
   createHighlighterCore({
     langs: [
-      import('@shikijs/langs/json'),
-      import('@shikijs/langs/yaml'),
-      import('@shikijs/langs/bash'),
+      import('shiki/langs/json.mjs'),
+      import('shiki/langs/yaml.mjs'),
+      import('shiki/langs/bash.mjs'),
     ],
     themes: [
-      import('@shikijs/themes/catppuccin-latte'),
-      import('@shikijs/themes/catppuccin-mocha'),
+      import('shiki/themes/catppuccin-latte.mjs'),
+      import('shiki/themes/catppuccin-mocha.mjs'),
     ],
     // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
     engine: createJavaScriptRegexEngine(),
