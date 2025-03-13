@@ -1,5 +1,4 @@
 NPM_WORKSPACE_ROOT := $(shell npm prefix)
-NODE_VERSION := v$(shell cat $(NPM_WORKSPACE_ROOT)/.nvmrc)
 KUMAHQ_CONFIG := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/config") | .key')
 
 .PHONY: .help
