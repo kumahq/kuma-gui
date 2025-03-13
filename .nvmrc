@@ -1,1 +1,7 @@
-20.18
+# For installing nvm please see:
+# https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
+#
+# Or TLDR:
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+# then run `nvm install`
+22.14
