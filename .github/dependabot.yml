@@ -11,6 +11,10 @@ updates:
       typescript-eslint:
         patterns:
           - "@typescript-eslint/*"
+      shiki:
+        patterns:
+          - "shiki"
+          - "@shikijs/*"
 
   - package-ecosystem: "github-actions"
     open-pull-requests-limit: 50

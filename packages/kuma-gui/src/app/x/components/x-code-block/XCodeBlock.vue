@@ -41,7 +41,8 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
-import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
+import { createHighlighterCore } from 'shiki/core'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 import { ref } from 'vue'
 
 import { uniqueId } from '@/app/application'
@@ -77,12 +78,13 @@ const processing = ref(false)
 const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterCore>>>((resolve) => {
   createHighlighterCore({
     langs: [
-      import('shiki/langs/json.mjs'),
-      import('shiki/langs/yaml.mjs'),
-      import('shiki/langs/bash.mjs'),
+      import('@shikijs/langs/json'),
+      import('@shikijs/langs/yaml'),
+      import('@shikijs/langs/bash'),
     ],
     themes: [
-      import('shiki/themes/material-theme-palenight.mjs'),
+      // TODO: add catppuccin-latte as soon as we support light theme
+      import('@shikijs/themes/catppuccin-mocha'),
     ],
     // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
     engine: createJavaScriptRegexEngine(),
@@ -94,7 +96,7 @@ async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeB
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
   codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
-    theme: 'material-theme-palenight',
+    theme: 'catppuccin-mocha',
     lang: language,
   })
   processing.value = false
