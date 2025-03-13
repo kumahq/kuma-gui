@@ -83,7 +83,7 @@ const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterC
       import('@shikijs/langs/bash'),
     ],
     themes: [
-      // TODO: add catppuccin-latte as soon as we support light theme
+      import('@shikijs/themes/catppuccin-latte'),
       import('@shikijs/themes/catppuccin-mocha'),
     ],
     // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
@@ -96,12 +96,28 @@ async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeB
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
   codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
-    theme: 'catppuccin-mocha',
     lang: language,
+    themes: {
+      light: 'catppuccin-latte',
+      dark: 'catppuccin-mocha',
+    },
   })
   processing.value = false
 }
 </script>
+<style lang="scss">
+// Shiki code blocks; dark theme: https://shiki.style/guide/dual-themes#class-based-dark-mode
+html.dark,
+.theme-dark {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 // Makes code block actions sticky
