@@ -111,6 +111,7 @@ html.dark,
 .theme-dark {
   .shiki,
   .shiki span {
+    background-color: unset !important;
     color: var(--shiki-dark) !important;
     font-style: var(--shiki-dark-font-style) !important;
     font-weight: var(--shiki-dark-font-weight) !important;
@@ -127,7 +128,7 @@ html.dark,
   top: var(--app-view-content-top, var(--AppHeaderHeight, 0));
   background-color: $kui-color-background-inverse;
 }
-:deep(.shiki) {
-  background-color: unset !important;
+:deep(.highlighted-code-block) {
+  overflow: hidden !important;
 }
 </style>
