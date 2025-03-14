@@ -41,7 +41,8 @@
 
 <script lang="ts" setup>
 import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
-import { createHighlighterCore, createJavaScriptRegexEngine } from 'shiki'
+import { createHighlighterCore } from 'shiki/core'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 import { ref } from 'vue'
 
 import { uniqueId } from '@/app/application'
@@ -82,7 +83,8 @@ const codeHighlighter = new Promise<Awaited<ReturnType<typeof createHighlighterC
       import('shiki/langs/bash.mjs'),
     ],
     themes: [
-      import('shiki/themes/material-theme-palenight.mjs'),
+      import('shiki/themes/catppuccin-latte.mjs'),
+      import('shiki/themes/catppuccin-mocha.mjs'),
     ],
     // TODO(@schogges): use createJavascriptRawEngine for further optimization of bundle size (requires pre-compiled langs)
     engine: createJavaScriptRegexEngine(),
@@ -94,12 +96,28 @@ async function handleCodeBlockRenderEvent({ codeElement, language, code }: CodeB
   // we can ignore eslint no-unsanitized/property as all code content is stringified and shiki adds safe HTML for highlighting.
   // eslint-disable-next-line no-unsanitized/property
   codeElement.innerHTML = (await codeHighlighter).codeToHtml(code, {
-    theme: 'material-theme-palenight',
     lang: language,
+    themes: {
+      light: 'catppuccin-latte',
+      dark: 'catppuccin-mocha',
+    },
   })
   processing.value = false
 }
 </script>
+<style lang="scss">
+// Shiki code blocks; dark theme: https://shiki.style/guide/dual-themes#class-based-dark-mode
+html.dark,
+.theme-dark {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 // Makes code block actions sticky
