@@ -11,6 +11,10 @@ updates:
       typescript-eslint:
         patterns:
           - "@typescript-eslint/*"
+      eslint:
+        patterns:
+          - "eslint"
+          - "@eslint/js"
 
   - package-ecosystem: "github-actions"
     open-pull-requests-limit: 50
