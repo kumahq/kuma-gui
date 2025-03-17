@@ -14,10 +14,6 @@ Feature: docs / index
       KUMA_DATAPLANE_COUNT: 300
       """
 
-  Scenario: Screenshot onboarding
-    When I visit the "/onboarding/welcome" URL
-    And I wait for 500 ms
-    Then screenshot the ".background-image" element to "onboarding"
 # Don't remove this comment, uncomment for test.only.
 # @only
 

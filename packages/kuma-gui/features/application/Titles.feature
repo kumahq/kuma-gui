@@ -12,15 +12,6 @@ Feature: application / titles
       | URL                                                          | Title               |
       | /                                                            | Overview            |
       | /configuration                                               | Configuration       |
-      | /onboarding                                                  | Welcome to Kuma!    |
-      | /onboarding/deployment-types                                 | Deployment Types    |
-      | /onboarding/configuration-types                              | Configuration Types |
-      | /onboarding/multi-zone                                       | Multizone           |
-      | /onboarding/create-mesh                                      | Create the Mesh     |
-      | /onboarding/add-services                                     | Add new services    |
-      | /onboarding/add-services-code                                | Add new services    |
-      | /onboarding/dataplanes-overview                              | Data plane overview |
-      | /onboarding/completed                                        | Completed           |
       | /zones                                                       | Zone Control Planes |
       | /zones/zone-cp-name/overview                                 | zone-cp-name        |
       | /zones/zone-cp-name/ingresses                                | Ingresses           |
