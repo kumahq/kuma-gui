@@ -5,7 +5,12 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
 
-on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 permissions:
   pull-requests: write
@@ -15,7 +20,7 @@ jobs:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: dependabot/fetch-metadata@v2
+      - uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7 # v2.3.0
         id: metadata
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
