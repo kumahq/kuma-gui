@@ -34,7 +34,8 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
 import { getWhyframeSource } from '@whyframe/core/utils'
-import { getHighlighter } from 'shiki'
+import { createHighlighterCore } from 'shiki/core'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 
 const props = withDefaults(defineProps<{
@@ -44,12 +45,13 @@ const props = withDefaults(defineProps<{
 })
 const iframe = ref<HTMLIFrameElement | null>(null)
 const htmlSource = ref<string>('')
-const highlighter = ref<Awaited<ReturnType<typeof getHighlighter>> | undefined>()
+const highlighter = ref<Awaited<ReturnType<typeof createHighlighterCore>> | undefined>()
 
 ;(async () => {
-  highlighter.value = await getHighlighter({
-    themes: ['nord'],
-    langs: ['javascript']
+  highlighter.value = await createHighlighterCore({
+    themes: [import('shiki/themes/nord.mjs')],
+    langs: [import('shiki/langs/javascript.mjs')],
+    engine: createJavaScriptRegexEngine()
   })
 })()
 const vueSource = computed(() => {
