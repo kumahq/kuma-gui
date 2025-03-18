@@ -152,10 +152,10 @@ jobs:
     name: branch-protection
     #
     needs:
+      - lint-global
       - lint-tests
       - cli-tests
       - browser-tests
-      - lint-global
     runs-on: ubuntu-latest
     if: |
       always()
