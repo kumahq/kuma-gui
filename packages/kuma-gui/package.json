@@ -23,7 +23,7 @@
     "deepmerge": "^4.3.1",
     "js-yaml": "^4.1.0",
     "object.groupby": "^1.0.3",
-    "openapi-fetch": "^0.13.4",
+    "openapi-fetch": "^0.13.5",
     "path-to-regexp": "^8.2.0",
     "pretty-bytes": "^6.1.1",
     "set.prototype.difference": "^1.1.6",
