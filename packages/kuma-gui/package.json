@@ -65,7 +65,7 @@
     "openapi-typescript": "^7.6.1",
     "postcss": "^8.5.3",
     "postcss-html": "^1.8.0",
-    "sass": "^1.85.1",
+    "sass": "^1.86.0",
     "stylelint": "^16.16.0",
     "typescript": "^5.8.2",
     "urlpattern-polyfill": "^10.0.0",
