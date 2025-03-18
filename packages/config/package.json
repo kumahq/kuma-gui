@@ -34,9 +34,7 @@
     "globals": "^16.0.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-config-recommended-vue": "^1.6.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.5.0"
+    "stylelint-config-recommended-vue": "^1.6.0"
   },
   "peerDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^21.0.2",
@@ -44,6 +42,8 @@
     "cypress-fail-fast": "^7.1.1",
     "cypress-terminal-report": "^7.0.4",
     "eslint": "^9",
-    "stylelint": "^16.10.0"
+    "stylelint": "^16.10.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0"
   }
 }
