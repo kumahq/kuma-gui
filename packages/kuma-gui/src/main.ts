@@ -3,9 +3,7 @@ import './assets/styles/main.scss'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { services as configuration } from '@/app/configuration'
-import { TOKENS as CONTROL_PLANES_TOKENS } from '@/app/control-planes'
 import { TOKENS } from '@/app/kuma'
-import { services as onboarding } from '@/app/onboarding'
 import { services as serviceMesh } from '@/app/service-mesh'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { build } from '@/services/utils'
@@ -29,15 +27,11 @@ async function mountVueApplication() {
       ...$,
       routes: $.routesLabel,
     }),
-    onboarding({
-      ...$,
-      ControlPlaneStatus: CONTROL_PLANES_TOKENS.ControlPlaneStatus,
-      routes: $.routesLabel,
-    }),
     configuration({
       ...$,
       routes: $.routesLabel,
     }),
+
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
       ? await (async () => {
