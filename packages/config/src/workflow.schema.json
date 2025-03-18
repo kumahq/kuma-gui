@@ -2,12 +2,15 @@
   "type": "object",
   "definitions": {
     "shaOnlyVersion": {
-      "$comment": "matches '<uri-like>@<40 character git sha>'",
+      "$comment": "matches '<uri-like>@<40 character git sha>' or kumahq/*@main",
       "type": "string",
-      "pattern": "^[a-zA-Z0-9-_/]+@[a-z0-9]{40}"
+      "pattern": "(^kumahq/[a-zA-Z0-9-_/.]+@main)|(^[a-zA-Z0-9-_/.]+@[a-z0-9]{40})"
     },
     "job": {
       "properties": {
+        "uses": {
+          "$ref": "#/definitions/shaOnlyVersion"
+        },
         "steps": {
           "type": "array",
           "items": {
