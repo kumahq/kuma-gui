@@ -7,11 +7,6 @@
   --AppContentPadding: #{$kui-space-80};
   --AppDisplay: grid;
   --app-slideout-offset-top: var(--AppHeaderHeight);
-
-  // MISC
-  --TextGradientBackground: linear-gradient(90deg, #473cfb 0%, #a300bd 33.17%);
-  --StepBackground: #169fcc;
-  --WarningIconBackground: #ffa600;
 }
 
 :root.is-fullscreen {
