@@ -19,10 +19,6 @@ const packageSchema = JSON.parse(
   read(resolve(`${$config}/package.schema.json`), 'utf-8'),
 )
 
-// const workflowSchema = JSON.parse(
-//   read(resolve(`${$config}/workflow.schema.json`), 'utf-8'),
-// )
-
 // Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
 const INLINE_NON_VOID_ELEMENTS = [
   'a',
@@ -135,10 +131,6 @@ function createEslintConfig(
               // see ./package.schema.json patternProperties examples
               schema: packageSchema,
             },
-            // {
-            //   fileMatch: ['.github/**/*.{yaml,yml}'],
-            //   schema: workflowSchema,
-            // },
           ],
         }],
       },
