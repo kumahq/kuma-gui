@@ -13,7 +13,6 @@ Feature: docs / index
       KUMA_SERVICE_COUNT: 30
       KUMA_DATAPLANE_COUNT: 300
       """
-
 # Don't remove this comment, uncomment for test.only.
 # @only
 

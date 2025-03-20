@@ -1,12 +1,14 @@
 .PHONY: .build
 .build: $(if $(NOPRUNE),,prune) install
 	@npx vite \
+		--configLoader runner \
 		-c ./vite.config.production.ts \
 		build
 
 .PHONY: build/preview
 build/preview:
 	@npx vite \
+		--configLoader runner \
 		-c ./vite.config.development.ts \
 		--mode preview \
 		build

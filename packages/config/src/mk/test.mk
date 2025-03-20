@@ -5,6 +5,7 @@
 	@TZ=UTC \
 		FORCE_COLOR=1 \
 		npx vitest \
+			--configLoader runner \
 			-c vite.config.production.ts \
 			run
 
@@ -13,6 +14,7 @@
 	@TZ=UTC \
 		FORCE_COLOR=1 \
 		npx vitest \
+			--configLoader runner \
 			-c vite.config.production.ts \
 
 
