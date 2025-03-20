@@ -95,8 +95,8 @@ export type FS = Record<string, FakeEndpoint>
 export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
-export const dependencies: EndpointDependencies = {
+export const dependencies = {
   fake: new FakeKuma({ locale: en }),
   pager,
-  env: (_key, d = '') => d,
+  env: <T extends string>(_key: T, d = '') => d,
 }
