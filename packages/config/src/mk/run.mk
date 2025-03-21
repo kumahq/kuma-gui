@@ -1,9 +1,10 @@
 SCRIPT_RUNNER := npm run
 
+
 .PHONY: .run
 .run: install
-	@NODE_OPTIONS=--experimental-strip-types npx vite \
-		--configLoader runner \
+	@NODE_OPTIONS=--experimental-strip-types \
+		npx vite \
 		-c ./vite.config.development.ts
 
 .PHONY: .run/docs
@@ -15,6 +16,5 @@ SCRIPT_RUNNER := npm run
 .run/e2e:
 	@$(MAKE) deploy/e2e
 	@npx vite \
-		--configLoader runner \
 		-c ./vite.config.preview.ts \
 		preview
