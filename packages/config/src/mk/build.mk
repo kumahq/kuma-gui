@@ -1,15 +1,17 @@
 .PHONY: .build
 .build: $(if $(NOPRUNE),,prune) install
-	@npx vite \
-		-c ./vite.config.production.ts \
-		build
+	@NODE_OPTIONS=--experimental-strip-types \
+		npx vite \
+			-c ./vite.config.production.ts \
+			build
 
 .PHONY: build/preview
 build/preview:
-	@npx vite \
-		-c ./vite.config.development.ts \
-		--mode preview \
-		build
+	@NODE_OPTIONS=--experimental-strip-types \
+		npx vite \
+			-c ./vite.config.development.ts \
+			--mode preview \
+			build
 
 .PHONY: build/docs
 build/docs:

@@ -1,8 +1,10 @@
 SCRIPT_RUNNER := npm run
 
+
 .PHONY: .run
 .run: install
-	@npx vite \
+	@NODE_OPTIONS=--experimental-strip-types \
+		npx vite \
 		-c ./vite.config.development.ts
 
 .PHONY: .run/docs
@@ -16,4 +18,3 @@ SCRIPT_RUNNER := npm run
 	@npx vite \
 		-c ./vite.config.preview.ts \
 		preview
-
