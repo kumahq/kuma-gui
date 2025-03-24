@@ -13,11 +13,16 @@
     "./cypress": {
       "import": "./src/cypress.ts",
       "types": "./src/cypress.ts"
+    },
+    "./msw": {
+      "import": "./src/msw.ts",
+      "types": "./src/msw.ts"
     }
   },
   "dependencies": {
     "urlpattern-polyfill": "^10.0.0",
-    "deepmerge": "^4.3.1"
+    "deepmerge": "^4.3.1",
+    "msw": "^2.7.3"
   },
   "devDependencies": {
     "@kumahq/config": "*",

@@ -2,6 +2,7 @@ import { describe, expect, test as _test } from 'vitest'
 
 import { ExternalService, ServiceInsight } from './'
 import { plugin, server } from '@/test-support/data'
+import { dependencies } from '@/test-support/fake'
 import externalMock from '@/test-support/mocks/src/meshes/_/external-services'
 import insightMock from '@/test-support/mocks/src/meshes/_/service-insights'
 
@@ -12,7 +13,7 @@ describe('ExternalService', () => {
       params: {
         name: 'zone',
       },
-    }),
+    }, dependencies),
   ))
   //
   describe('externalService.config', () => {
@@ -36,7 +37,7 @@ describe('ServiceInsight', () => {
       params: {
         name: 'zone',
       },
-    }),
+    }, dependencies),
   ))
   //
   describe('service.serviceType', () => {

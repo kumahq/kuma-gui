@@ -2,6 +2,7 @@ import { describe, expect, test as _test } from 'vitest'
 
 import { Dataplane, DataplaneOverview } from './'
 import { plugin, server } from '@/test-support/data'
+import { dependencies } from '@/test-support/fake'
 import dataplaneMock from '@/test-support/mocks/src/meshes/_/dataplanes/_'
 import mock from '@/test-support/mocks/src/meshes/_/dataplanes/_/_overview'
 
@@ -13,7 +14,7 @@ describe('Dataplane', () => {
         mesh: 'default',
         name: 'dataplane',
       },
-    }),
+    }, dependencies),
   ))
 
   describe('dataplane.config', () => {
@@ -76,7 +77,7 @@ describe('DataplaneOverview', () => {
       params: {
         name: 'zone',
       },
-    }),
+    }, dependencies),
   ))
   describe('labels', () => {
     test(

@@ -1,5 +1,5 @@
 import { test as _test } from 'vitest'
-export { server } from '@/test-support'
+export { server } from '@kumahq/fake-api/msw'
 
 type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> }
 
