@@ -1,98 +1,7 @@
-import deepmerge from 'deepmerge'
-import { URLPattern } from 'urlpattern-polyfill'
-
-import type { ArrayMergeOptions } from 'deepmerge'
-
-export type Options = Record<string, string>
-export type Mocker = (route: string, opts: Options, cb: Callback) => void
-
-export type RestRequest = {
-  method: string
-  params: Record<string, string | readonly string[]>
-  body: Record<string, any>
-  url: {
-    searchParams: URLSearchParams
-  }
-}
-
-export type MockResponse = {
-  headers?: Record<string, string>
-  body: string | Record<string, unknown>
-} | undefined
-export type MockResponder = (req: RestRequest) => MockResponse
-
-export type Dependencies<TDependencies extends object = {}> = {
-  env: <T extends string>(key: T, d?: string) => string
-} & TDependencies
-export type MockEndpoint<TDependencies extends object = {}> = <TArgs extends Dependencies<TDependencies>>(args: TArgs) => MockResponder
-export type FS<TDependencies extends object = {}> = Record<string, MockEndpoint<TDependencies>>
-export type Merge = (obj: Partial<MockResponse>) => MockResponse
-export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
+import { createMerge, Router } from './lib/utils.js'
+import type { Callback, Dependencies, FS, Mocker } from './lib/utils.js'
 
 type Server = typeof cy
-
-class Router<T> {
-  routes: Map<URLPattern, T> = new Map()
-  constructor(routes: Record<string, T>) {
-    Object.entries(routes).forEach(([key, value]) => {
-      if (key.includes('://')) {
-        return
-      }
-      this.routes.set(new URLPattern({
-        pathname: key.replace('+', '\\+'),
-      }), value)
-    })
-  }
-
-  match(path: string) {
-    for (const [pattern, route] of this.routes) {
-      const _url = `data:${path}`
-      if (pattern.test(_url)) {
-        const args = pattern.exec(_url)
-        const params = args?.pathname.groups || {}
-        return {
-          route,
-          params: Object.entries(params).reduce((prev: Record<string, string>, [key, value]) => {
-            prev[key] = value || ''
-            return prev
-          }, {}),
-        }
-      }
-    }
-    throw new Error(`Matching route for '${path}' not found`)
-  }
-}
-
-// merges objects in array positions rather than replacing
-const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
-  const destination = target.slice()
-
-  source.forEach((item, index) => {
-    if (typeof destination[index] === 'undefined') {
-      destination[index] = options.cloneUnlessOtherwiseSpecified(item, options)
-    } else if (options.isMergeableObject(item)) {
-      destination[index] = deepmerge(target[index], item, options)
-    } else if (target.indexOf(item) === -1) {
-      destination.push(item)
-    }
-  })
-  return destination
-}
-
-
-export const undefinedSymbol = Symbol('undefined')
-export const createMerge = (response: MockResponse): Merge => (obj) => {
-  const merged = deepmerge(response, obj, { arrayMerge: combineMerge })
-  return JSON.parse(JSON.stringify(merged, (_key, value) => {
-    if (value === undefinedSymbol) {
-      return
-    }
-    return value
-  }))
-}
-
-const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
-const noop: Callback = (_merge, _req, response) => response
 
 type AppEnvKeys = string
 type MockEnvKeys = string
@@ -105,6 +14,9 @@ type HistoryEntry = {
   }
 }
 type Client = { request: (request: HistoryEntry ) => void }
+
+const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
+const noop: Callback = (_merge, _req, response) => response
 
 export const mocker = <TClient extends Client, TDependencies extends object = {}>(
   cy: Server,

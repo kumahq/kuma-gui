@@ -1,71 +1,18 @@
-import deepmerge from 'deepmerge'
 import { http, HttpResponse, passthrough } from 'msw'
 
-import type { ArrayMergeOptions } from 'deepmerge'
-
-export type RestRequest = {
-  method: string
-  params: Record<string, string | readonly string[]>
-  body: Record<string, any>
-  url: {
-    searchParams: URLSearchParams
-  }
-}
-
-export type MockResponse = {
-  headers?: Record<string, string>
-  body: string | Record<string, unknown>
-} | undefined
-export type MockResponder = (req: RestRequest) => MockResponse
-
-export type Dependencies<TDependencies extends object = {}, TFake extends object = {}> = {
-  env: <T extends string>(key: T, d?: string) => string
-  fake: { seed: (s: number) => void } & TFake
-} & TDependencies
-export type MockEndpoint<TDependencies extends object = {}> = <TArgs extends Dependencies<TDependencies>>(args: TArgs) => MockResponder
-export type FS<TDependencies extends object = {}> = Record<string, MockEndpoint<TDependencies>>
-
-export type Merge = (obj: Partial<MockResponse>) => MockResponse
-export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
-export type Options = Record<string, string>
+import { createMerge } from './lib/utils.js'
+import type { Callback, Dependencies, FS, MockEndpoint, MockResponse, Options, RestRequest } from './lib/utils.js'
 
 type AppEnvKeys = string
 type MockEnvKeys = string
 type Env = (key: AppEnvKeys, d?: string) => string
 type AEnv = (key: AppEnvKeys | MockEnvKeys, d?: string) => string
 
-export const undefinedSymbol = Symbol('undefined')
-
-export function escapeRoute(route: string): string {
+function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
 
-// merges objects in array positions rather than replacing
-const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
-  const destination = target.slice()
-
-  source.forEach((item, index) => {
-    if (typeof destination[index] === 'undefined') {
-      destination[index] = options.cloneUnlessOtherwiseSpecified(item, options)
-    } else if (options.isMergeableObject(item)) {
-      destination[index] = deepmerge(target[index], item, options)
-    } else if (target.indexOf(item) === -1) {
-      destination.push(item)
-    }
-  })
-  return destination
-}
-
 const noop: Callback = (_merge, _req, response) => response
-export const createMerge = (response: MockResponse): Merge => (obj) => {
-  const merged = deepmerge(response, obj, { arrayMerge: combineMerge })
-  return JSON.parse(JSON.stringify(merged, (_key, value) => {
-    if (value === undefinedSymbol) {
-      return
-    }
-    return value
-  }))
-}
 
 export const useResponder = <TDependencies extends object = {}>(fs: FS, env: AEnv, dependencies: Dependencies<TDependencies>) => {
   return (route: string, opts: Options = {}, cb: Callback = noop) => {
@@ -147,4 +94,3 @@ export const mswHandlers = <TDependencies extends object = {}>(env: AEnv, fs: FS
     return handlerFor(route)
   })
 }
-export type Mocker = (route: string, opts: Options, cb: Callback) => void
