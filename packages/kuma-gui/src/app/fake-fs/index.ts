@@ -23,7 +23,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => [
   [token('fake.msw.handlers'), {
     service: mswHandlers,
     arguments: [
-      app.env,
       $.fakeFS,
       $.dependencies,
     ],

@@ -1,11 +1,8 @@
-import { createMerge, Router } from './lib/utils.js'
-import type { Callback, Dependencies, FS, Mocker } from './lib/utils.js'
+import { createMerge, Router } from './lib/utils.ts'
+import type { Callback, Dependencies, FS, Mocker } from './lib/utils.ts'
 
 type Server = typeof cy
 
-type AppEnvKeys = string
-type MockEnvKeys = string
-type Env = (key: AppEnvKeys | MockEnvKeys, d: string) => string
 type HistoryEntry = {
   url: URL
   request: {
@@ -36,12 +33,12 @@ export const mocker = <TClient extends Client, TDependencies extends object = {}
       },
       (req) => {
         try {
-          const mockEnv: Env = (key, d = '') => {
-            if (typeof opts[key as MockEnvKeys] !== 'undefined') {
-              return opts[key as MockEnvKeys]
+          const mockEnv = (key: string, d = '') => {
+            if (typeof opts[key] !== 'undefined') {
+              return opts[key]
             }
             // return env(key as AppEnvKeys, d)
-            return dependencies.env(key as AppEnvKeys, d)
+            return dependencies.env(key, d)
           }
           const path = req.url.replace(baseUrl, '')
           const { route, params } = router.match(path)

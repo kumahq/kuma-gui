@@ -1,12 +1,7 @@
 import { http, HttpResponse, passthrough } from 'msw'
 
-import { createMerge } from './lib/utils.js'
-import type { Callback, Dependencies, FS, MockEndpoint, MockResponse, Options, RestRequest } from './lib/utils.js'
-
-type AppEnvKeys = string
-type MockEnvKeys = string
-type Env = (key: AppEnvKeys, d?: string) => string
-type AEnv = (key: AppEnvKeys | MockEnvKeys, d?: string) => string
+import { createMerge } from './lib/utils.ts'
+import type { Callback, Dependencies, FS, MockEndpoint, MockResponse, Options, RestRequest } from './lib/utils.ts'
 
 function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
@@ -14,9 +9,9 @@ function escapeRoute(route: string): string {
 
 const noop: Callback = (_merge, _req, response) => response
 
-export const useResponder = <TDependencies extends object = {}>(fs: FS, env: AEnv, dependencies: Dependencies<TDependencies>) => {
+export const useResponder = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
   return (route: string, opts: Options = {}, cb: Callback = noop) => {
-    const mockEnv: Env = (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d)
+    const mockEnv = (key: string, d = '') => (opts[key] ?? '') || dependencies.env(key, d)
     if (route !== '*') {
       dependencies.fake.seed(typeof opts.FAKE_SEED !== 'undefined' ? parseInt(typeof opts.FAKE_SEED) : 1)
     }
@@ -35,14 +30,17 @@ export const useResponder = <TDependencies extends object = {}>(fs: FS, env: AEn
     }
   }
 }
-export const server = <TDependencies extends object = {}>(mock: MockEndpoint<TDependencies>, options: {
-  env?: Record<AppEnvKeys, string>
+export const server = <TDependencies extends object = {}, TEnvKeys extends string = string>(mock: MockEndpoint<TDependencies>, options: {
+  env?: Record<TEnvKeys, string>
   params?: Record<string, string>
 }, dependencies: Dependencies<TDependencies>) => {
   return async (env: Record<string, string>) => {
     const responder = useResponder({
       _: mock,
-    },(key: AppEnvKeys, d = '') => env[key] ?? d, dependencies)
+    }, {
+      ...dependencies,
+      env: (key: keyof typeof env, d = '') => env[key] ?? d,
+    })
     const request = responder('_')
     return (await request(
       {
@@ -57,9 +55,9 @@ export const server = <TDependencies extends object = {}>(mock: MockEndpoint<TDe
   }
 }
 
-export const handler = <TDependencies extends object = {}>(fs: FS, env: AEnv, dependencies: Dependencies<TDependencies>) => {
-  const baseUrl = env('KUMA_API_URL')
-  const responder = useResponder(fs, env, dependencies)
+export const handler = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
+  const baseUrl = dependencies.env('KUMA_API_URL')
+  const responder = useResponder(fs, dependencies)
   return (route: string) => {
     const respond = responder(route)
     const base = route.includes('://') ? '' : baseUrl
@@ -88,8 +86,8 @@ export const handler = <TDependencies extends object = {}>(fs: FS, env: AEnv, de
     })
   }
 }
-export const mswHandlers = <TDependencies extends object = {}>(env: AEnv, fs: FS, dependencies: Dependencies<TDependencies>) => {
-  const handlerFor = handler(fs, env, dependencies)
+export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
+  const handlerFor = handler(fs, dependencies)
   return Object.keys(fs).map(route => {
     return handlerFor(route)
   })
