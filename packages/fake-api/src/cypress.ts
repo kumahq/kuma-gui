@@ -37,7 +37,6 @@ export const mocker = <TClient extends Client, TDependencies extends object = {}
             if (typeof opts[key] !== 'undefined') {
               return opts[key]
             }
-            // return env(key as AppEnvKeys, d)
             return dependencies.env(key, d)
           }
           const path = req.url.replace(baseUrl, '')
