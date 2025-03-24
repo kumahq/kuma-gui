@@ -1,4 +1,4 @@
-import fakeApi from '@kumahq/fake-api'
+import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
 import { DEFAULT_SCHEMA, Type } from 'js-yaml'
@@ -38,8 +38,8 @@ export const config: UserConfigFn = () => {
         },
       }),
       fakeApi({
-        mockEndpointArgs: dependencies,
-        mockEndpointsDictionary: fs,
+        dependencies,
+        fs,
       }),
       svgLoader(),
       yamlLoader(

@@ -17,11 +17,11 @@ export type MockResponse = {
 } | undefined
 export type MockResponder = (req: RestRequest) => MockResponse
 
-export type MockEndpointArgs<TMockEndpointArgs extends object = {}> = {
+export type Dependencies<TDependencies extends object = {}> = {
   env: <T extends string>(key: T, d?: string) => string
-} & TMockEndpointArgs
-export type MockEndpoint<TMockEndpointArgs extends object = {}> = <TArgs extends MockEndpointArgs<TMockEndpointArgs>>(args: TArgs) => MockResponder
-export type MockEndpointsDictionary<TMockEndpointArgs extends object = {}> = Record<string, MockEndpoint<TMockEndpointArgs>>
+} & TDependencies
+export type MockEndpoint<TDependencies extends object = {}> = <TArgs extends Dependencies<TDependencies>>(args: TArgs) => MockResponder
+export type FS<TDependencies extends object = {}> = Record<string, MockEndpoint<TDependencies>>
 
 class Router<T> {
   routes: Map<URLPattern, T> = new Map()
@@ -65,9 +65,9 @@ const strToEnv = (str: string): [string, string][] => {
     })
 }
 
-type PluginOptions<TMockEndpointArgs extends object = {}> = {
-  mockEndpointsDictionary: MockEndpointsDictionary<TMockEndpointArgs>
-  mockEndpointArgs: MockEndpointArgs<TMockEndpointArgs>
+type PluginOptions<TDependencies extends object = {}> = {
+  fs: FS<TDependencies>
+  dependencies: Dependencies<TDependencies>
 }
 type FetchOptions = {
   method?: string
@@ -75,9 +75,9 @@ type FetchOptions = {
   headers?: Record<string, string | string[] | undefined>
 }
 
-export default <TMockEndpointArgs extends object = {}>(opts: PluginOptions<TMockEndpointArgs>): Plugin => {
-  const { mockEndpointArgs } = opts
-  const router = new Router(opts.mockEndpointsDictionary)
+export default <TDependencies extends object = {}>(opts: PluginOptions<TDependencies>): Plugin => {
+  const { fs, dependencies } = opts
+  const router = new Router(fs)
   const fetch = async (url: string, options: FetchOptions) => {
     const cookies = strToEnv(String(options.headers?.cookie ?? '')).reduce((prev, [key, value]) => {
       prev[key] = value
@@ -87,10 +87,10 @@ export default <TMockEndpointArgs extends object = {}>(opts: PluginOptions<TMock
     const _url = new URL(url)
     const { route, params } = router.match(_url.pathname)
 
-    const env = <T extends Parameters<typeof mockEndpointArgs['env']>[0]>(key: T, d = '') => mockEndpointArgs.env(key, cookies[key] ?? d)
+    const env = <T extends Parameters<typeof dependencies['env']>[0]>(key: T, d = '') => dependencies.env(key, cookies[key] ?? d)
 
     const request = route({
-      ...mockEndpointArgs,
+      ...dependencies,
       env,
     })
     const response = request({
