@@ -9,10 +9,15 @@
     "./vite": {
       "import": "./src/vite.ts",
       "types": "./src/vite.ts"
+    },
+    "./cypress": {
+      "import": "./src/cypress.ts",
+      "types": "./src/cypress.ts"
     }
   },
   "dependencies": {
-    "urlpattern-polyfill": "^10.0.0"
+    "urlpattern-polyfill": "^10.0.0",
+    "deepmerge": "^4.3.1"
   },
   "devDependencies": {
     "@kumahq/config": "*",
@@ -20,6 +25,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "vite": "^6"
+    "vite": "^6",
+    "cypress": "^14"
   }
 }

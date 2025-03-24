@@ -4,7 +4,8 @@
     "module": "nodenext",
     "strict": true,
     "skipLibCheck": true,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": ["node", "cypress"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
