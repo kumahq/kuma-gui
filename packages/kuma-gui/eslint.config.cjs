@@ -3,7 +3,15 @@
 const { eslint } = require('@kumahq/config')
 
 const config = [
-  ...eslint({}),
+  ...eslint({
+    versionIgnorePatterns: {
+      dependencies: {
+        '@kong-ui-public/entities-shared': {
+          'type': 'string',
+        },
+      },
+    },
+  }),
   {
     ignores: [
       'public/mockServiceWorker.js',
