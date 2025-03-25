@@ -16,17 +16,15 @@ check/node:
 .lint: lint/js lint/ts lint/css lint/lock lint/gherkin
 
 .PHONY: .lint/script ## Dev: Run lint checks on both JS/TS
-.lint/script: ARGS=$(filter-out $@,$(MAKECMDGOALS))
-.lint/script: lint/ts
-	$(MAKE) lint/js $(ARGS)
+.lint/script: lint/ts lint/js
 
 .PHONY: lint/js
-lint/js: ARGS=$(filter-out $@,$(MAKECMDGOALS))
-lint/js: STAGED?=false
+lint/js: ARGS=$(filter %.vue %.ts %.js,$(MAKECMDGOALS))
 lint/js:
-	@npx eslint \
+	@echo "args: $(ARGS)"
+	@DEBUG=eslint:eslint npx eslint \
 		$(if $(CI),,--fix) \
-		$(if $(and $(filter true,$(STAGED)),$(ARGS)),$(ARGS),.)
+		$(if $(ARGS),$(ARGS),.)
 
 .PHONY: lint/ts
 lint/ts:
