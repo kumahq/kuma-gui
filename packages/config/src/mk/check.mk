@@ -21,8 +21,7 @@ check/node:
 .PHONY: lint/js
 lint/js: ARGS=$(filter %.vue %.ts %.js,$(MAKECMDGOALS))
 lint/js:
-	@echo "args: $(ARGS)"
-	@DEBUG=eslint:eslint npx eslint \
+	@npx eslint \
 		$(if $(CI),,--fix) \
 		$(if $(ARGS),$(ARGS),.)
 
