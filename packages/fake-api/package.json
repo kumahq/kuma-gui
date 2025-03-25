@@ -30,7 +30,7 @@
     "typescript": "^5.8.2"
   },
   "peerDependencies": {
-    "vite": "^6",
-    "cypress": "^14"
+    "vite": "^6.0.0",
+    "cypress": "^14.0.0"
   }
 }
