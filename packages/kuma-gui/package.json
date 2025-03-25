@@ -16,7 +16,7 @@
     "@kong-ui-public/entities-shared": "^3.19.3",
     "@kong-ui-public/i18n": "^2.2.10",
     "@kong/icons": "^1.21.2",
-    "@kong/kongponents": "^9.23.5",
+    "@kong/kongponents": "^9.25.0",
     "@vue/shared": "^3.5.13",
     "@vueuse/core": "^13.0.0",
     "brandi": "^5.0.0",
