@@ -129,13 +129,6 @@
                 >
                   Feedback
                 </XAction>
-                <XAction
-                  :to="{ name: 'onboarding-welcome-view' }"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Onboarding
-                </XAction>
               </XActionGroup>
             </slot>
           </div>

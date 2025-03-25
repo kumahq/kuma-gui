@@ -4,7 +4,7 @@
     "module": "esnext",
     "strict": true,
     "importHelpers": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
