@@ -2,9 +2,11 @@ import { mocker } from '@kumahq/fake-api/cypress'
 
 import type { EnvVars } from '@/app/application/services/env/Env'
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
-import type { Callback, EndpointDependencies, Options } from '@/test-support'
+import type { EndpointDependencies } from '@/test-support'
+import { dependencies } from '@/test-support'
 import getClient from '@/test-support/client'
-import { dependencies } from '@/test-support/fake'
+import type { Callback, Options } from '@kumahq/fake-api'
+
 
 // this needs to come from testing
 const env = (
