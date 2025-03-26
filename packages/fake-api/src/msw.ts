@@ -1,7 +1,7 @@
 import { http, HttpResponse, passthrough } from 'msw'
 
-import { createMerge } from './lib/utils.ts'
-import type { Callback, Dependencies, FS, MockEndpoint, MockResponse, Options, RestRequest } from './lib/utils.ts'
+import { createMerge } from './index.ts'
+import type { Callback, Dependencies, FS, MockEndpoint, MockResponse, Options, RestRequest } from './index.ts'
 
 function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')

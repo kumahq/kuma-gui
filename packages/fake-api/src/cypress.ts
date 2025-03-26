@@ -1,5 +1,5 @@
-import { createMerge, Router } from './lib/utils.ts'
-import type { Callback, Dependencies, FS, Mocker } from './lib/utils.ts'
+import { createMerge, Router } from './index.ts'
+import type { Callback, Dependencies, FS, Mocker } from './index.ts'
 
 type Server = typeof cy
 

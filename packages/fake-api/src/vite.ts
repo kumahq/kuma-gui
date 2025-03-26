@@ -1,7 +1,7 @@
 
 
-import { Router } from './lib/utils.ts'
-import type { Dependencies, FS } from './lib/utils.ts'
+import { Router } from './index.ts'
+import type { Dependencies, FS } from './index.ts'
 import type { Plugin } from 'vite'
 
 type PluginOptions<TDependencies extends object = {}> = {

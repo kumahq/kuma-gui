@@ -3,14 +3,10 @@ import { en } from '@faker-js/faker'
 import FakeKuma from './FakeKuma'
 import type AppEnv from '@/app/application/services/env/Env'
 import type { Alias } from '@/services/utils'
-export type RestRequest = {
-  method: string
-  params: Record<string, string | readonly string[]>
-  body: Record<string, any>
-  url: {
-    searchParams: URLSearchParams
-  }
-}
+import type { RestRequest, MockResponse, MockResponder, FS as FakeFS } from '@kumahq/fake-api'
+
+type FS = FakeFS<EndpointDependencies>
+export type { RestRequest, MockResponse, MockResponder, FS }
 
 type Pager = (total: string | number, req: RestRequest, self: string) => {
   next: string | null
@@ -84,14 +80,6 @@ export type EndpointDependencies = {
   pager: Pager
   env: Env
 }
-export type MockResponse = {
-  headers?: Record<string, string>
-  body: string | Record<string, unknown>
-} | undefined
-export type MockResponder = (req: RestRequest) => MockResponse
-export type FakeEndpoint = (deps: EndpointDependencies) => MockResponder
-
-export type FS = Record<string, FakeEndpoint>
 export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
