@@ -1,11 +1,7 @@
 import { http, HttpResponse, passthrough } from 'msw'
 
-import { createMerge } from './index.ts'
+import { createMerge, escapeRoute } from './index.ts'
 import type { Callback, Dependencies, FS, MockEndpoint, MockResponse, Options, RestRequest } from './index.ts'
-
-function escapeRoute(route: string): string {
-  return route.replaceAll('+', '\\+')
-}
 
 const noop: Callback = (_merge, _req, response) => response
 
@@ -30,6 +26,7 @@ export const useResponder = <TDependencies extends object = {}>(fs: FS, dependen
     }
   }
 }
+
 export const server = <TDependencies extends object = {}, TEnvKeys extends string = string>(mock: MockEndpoint<TDependencies>, options: {
   env?: Record<TEnvKeys, string>
   params?: Record<string, string>
@@ -86,6 +83,7 @@ export const handler = <TDependencies extends object = {}>(fs: FS, dependencies:
     })
   }
 }
+
 export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
   const handlerFor = handler(fs, dependencies)
   return Object.keys(fs).map(route => {

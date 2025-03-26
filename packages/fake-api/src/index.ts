@@ -19,7 +19,7 @@ export type MockResponse = {
 
 export type MockResponder = (req: RestRequest) => MockResponse
 
-export type Merge = (obj: Partial<MockResponse>) => MockResponse
+type Merge = (obj: Partial<MockResponse>) => MockResponse
 
 export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
 export type Options = Record<string, string>
@@ -32,9 +32,13 @@ export type Dependencies<TDependencies extends object = {}, TFake extends object
 export type MockEndpoint<TDependencies extends object = {}> = <TArgs extends Dependencies<TDependencies>>(args: TArgs) => MockResponder
 export type FS<TDependencies extends object = {}> = Record<string, MockEndpoint<TDependencies>>
 
-export const undefinedSymbol = Symbol('undefined')
+export function escapeRoute(route: string): string {
+  return route.replaceAll('+', '\\+')
+}
 
+// --begin
 // merges objects in array positions rather than replacing
+export const undefinedSymbol = Symbol('undefined')
 const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
   const destination = target.slice()
 
@@ -59,9 +63,9 @@ export const createMerge = (response: MockResponse): Merge => (obj) => {
     return value
   }))
 }
+// --end
 
-export 
-class Router<T> {
+export class Router<T> {
   routes: Map<URLPattern, T> = new Map()
   constructor(routes: Record<string, T>) {
     Object.entries(routes).forEach(([key, value]) => {
@@ -69,7 +73,7 @@ class Router<T> {
         return
       }
       this.routes.set(new URLPattern({
-        pathname: key.replace('+', '\\+'),
+        pathname: escapeRoute(key),
       }), value)
     })
   }
