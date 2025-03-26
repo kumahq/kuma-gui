@@ -1,6 +1,6 @@
 {
   "name": "@kumahq/fake-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Kong",
   "private": true,
   "description": "Serves plugins and utilities to add a server for serving mocks",
