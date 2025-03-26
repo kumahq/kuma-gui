@@ -2,7 +2,6 @@ import { describe, expect, test as _test } from 'vitest'
 
 import { HostnameGenerator } from './HostnameGenerator'
 import { plugin, server } from '@/test-support/data'
-import { dependencies } from '@/test-support/fake'
 import mock from '@/test-support/mocks/src/hostname-generators/_/_overview'
 
 describe('HostnameGenerator', () => {
@@ -12,7 +11,7 @@ describe('HostnameGenerator', () => {
       params: {
         name: 'local-mesh-external-service',
       },
-    }, dependencies),
+    }),
   ))
 
   describe('hostnameGenerator.$raw', () => {

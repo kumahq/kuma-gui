@@ -2,7 +2,6 @@ import { describe, expect, test as _test } from 'vitest'
 
 import { ZoneIngressOverview } from './'
 import { plugin, server } from '@/test-support/data'
-import { dependencies } from '@/test-support/fake'
 import mock from '@/test-support/mocks/src/zone-ingresses/_/_overview'
 
 // zoneIngress tests are very similar to zoneEgress tests
@@ -20,7 +19,7 @@ describe('ZoneIngressOverview', () => {
       params: {
         name: 'zone',
       },
-    }, dependencies),
+    }),
   ))
   //
   describe('labels', () => {
