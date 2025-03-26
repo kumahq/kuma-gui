@@ -19,7 +19,7 @@ check/node:
 .lint/script: lint/ts lint/js
 
 .PHONY: lint/js
-lint/js: ARGS=$(filter %.vue %.ts %.js,$(MAKECMDGOALS))
+lint/js: ARGS=$(filter %.vue %.ts %.js %.cjs,$(MAKECMDGOALS))
 lint/js:
 	@npx eslint \
 		$(if $(CI),,--fix) \
