@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
-    "@cucumber/gherkin-utils": "^9.2.0",
     "@faker-js/faker": "^9.6.0",
     "@kong/design-tokens": "^1.17.4",
     "@kumahq/config": "*",
@@ -50,9 +49,6 @@
     "@whyframe/core": "^0.1.13",
     "@whyframe/vue": "^0.1.8",
     "cypress": "^14.2.0",
-    "cypress-fail-fast": "^7.1.1",
-    "cypress-fail-on-console-error": "^5.1.1",
-    "cypress-terminal-report": "^7.1.0",
     "dotenv": "^16.4.7",
     "eslint": "^9.23.0",
     "glob": "^11.0.0",
