@@ -1,8 +1,8 @@
 import { When, Then, Before, Given, DataTable, After } from '@badeball/cypress-cucumber-preprocessor'
+import { undefinedSymbol } from '@kumahq/fake-api'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
 import { useServer, useMock, useClient } from '../../services'
-import { undefinedSymbol } from '@/test-support'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),

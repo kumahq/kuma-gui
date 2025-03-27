@@ -1,40 +1,19 @@
-import { URLPattern } from 'urlpattern-polyfill'
 
-import { dependencies } from './fake'
-import type { FS } from './fake'
+
+import { Router } from './index.ts'
+import type { Dependencies, FS } from './index.ts'
 import type { Plugin } from 'vite'
 
-class Router<T> {
-  routes: Map<URLPattern, T> = new Map()
-  constructor(routes: Record<string, T>) {
-    Object.entries(routes).forEach(([key, value]) => {
-      if (key.includes('://')) {
-        return
-      }
-      this.routes.set(new URLPattern({
-        pathname: key.replace('+', '\\+'),
-      }), value)
-    })
-  }
-
-  match(path: string) {
-    for (const [pattern, route] of this.routes) {
-      const _url = `data:${path}`
-      if (pattern.test(_url)) {
-        const args = pattern.exec(_url)
-        const params = args?.pathname.groups || {}
-        return {
-          route,
-          params: Object.entries(params).reduce((prev: Record<string, string>, [key, value]) => {
-            prev[key] = value || ''
-            return prev
-          }, {}),
-        }
-      }
-    }
-    throw new Error(`Matching route for '${path}' not found`)
-  }
+type PluginOptions<TDependencies extends object = {}> = {
+  fs: FS<TDependencies>
+  dependencies: Dependencies<TDependencies>
 }
+type FetchOptions = {
+  method?: string
+  body?: Record<string, string>
+  headers?: Record<string, string | string[] | undefined>
+}
+
 const strToEnv = (str: string): [string, string][] => {
   return str.split(';')
     .map((item) => item.trim())
@@ -45,18 +24,9 @@ const strToEnv = (str: string): [string, string][] => {
     })
 }
 
-type PluginOptions = {
-  fs: FS
-  env?: <T extends string>(key: T, d?: string) => string
-}
-type FetchOptions = {
-  method?: string
-  body?: Record<string, string>
-  headers?: Record<string, string | string[] | undefined>
-}
-
-export default (opts: PluginOptions): Plugin => {
-  const router = new Router(opts.fs)
+export default <TDependencies extends object = {}>(opts: PluginOptions<TDependencies>): Plugin => {
+  const { fs, dependencies } = opts
+  const router = new Router(fs)
   const fetch = async (url: string, options: FetchOptions) => {
     const cookies = strToEnv(String(options.headers?.cookie ?? '')).reduce((prev, [key, value]) => {
       prev[key] = value

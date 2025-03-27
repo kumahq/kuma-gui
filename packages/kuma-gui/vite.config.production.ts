@@ -1,3 +1,4 @@
+import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
 import { DEFAULT_SCHEMA, Type } from 'js-yaml'
@@ -7,8 +8,8 @@ import { defineConfig } from 'vite'
 import svgLoader from 'vite-svg-loader'
 
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
+import { dependencies } from './src/test-support'
 import { fs } from './src/test-support/mocks/fs'
-import fakeApi from './src/test-support/vite'
 import { replicateKumaServer } from './vite.plugins'
 import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
@@ -37,6 +38,7 @@ export const config: UserConfigFn = () => {
         },
       }),
       fakeApi({
+        dependencies,
         fs,
       }),
       svgLoader(),

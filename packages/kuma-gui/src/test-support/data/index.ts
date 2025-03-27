@@ -1,5 +1,10 @@
+import { server as fakeApi } from '@kumahq/fake-api/msw'
 import { test as _test } from 'vitest'
-export { server } from '@/test-support'
+
+import { dependencies } from '../'
+
+type FakeApiParameters = Parameters<typeof fakeApi<typeof dependencies>>
+export const server = (mock: FakeApiParameters[0], options: FakeApiParameters[1]) => fakeApi(mock, options, dependencies)
 
 type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> }
 
