@@ -20,39 +20,48 @@
       <XCard>
         <DataLoader
           :src="uri(sources, `/connections/xds/for/:proxyType/:name/:mesh/:endpoints`, {
-            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
+            proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress' })[route.params.proxyType] ?? 'dataplane',
             name: route.params.proxy,
             mesh: route.params.mesh || '*',
             endpoints: String(route.params.includeEds),
           })"
           v-slot="{ data, refresh }"
         >
-          <XCodeBlock
-            language="json"
-            :code="JSON.stringify(data, null, 2)"
-            is-searchable
-            :query="route.params.codeSearch"
-            :is-filter-mode="route.params.codeFilter"
-            :is-reg-exp-mode="route.params.codeRegExp"
-            @query-change="route.update({ codeSearch: $event })"
-            @filter-mode-change="route.update({ codeFilter: $event })"
-            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          <XWindow
+            :resize="true"
+            v-slot="{ resize }"
           >
-            <template #primary-actions>
-              <XCheckbox
-                :checked="route.params.includeEds"
-                label="Include Endpoints"
-                @change="(value) => route.update({ includeEds: value})"
-              />
-              <XAction
-                action="refresh"
-                appearance="primary"
-                @click="refresh"
+            <div
+              ref="$el"
+            >
+              <XCodeBlock
+                :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 146)}`"
+                language="json"
+                :code="JSON.stringify(data, null, 2)"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
               >
-                Refresh
-              </XAction>
-            </template>
-          </XCodeBlock>
+                <template #primary-actions>
+                  <XCheckbox
+                    :checked="route.params.includeEds"
+                    label="Include Endpoints"
+                    @change="(value) => route.update({ includeEds: value })"
+                  />
+                  <XAction
+                    action="refresh"
+                    appearance="primary"
+                    @click="refresh"
+                  >
+                    Refresh
+                  </XAction>
+                </template>
+              </XCodeBlock>
+            </div>
+          </XWindow>
         </DataLoader>
       </XCard>
     </AppView>
