@@ -1,8 +1,12 @@
+import { mocker } from '@kumahq/fake-api/cypress'
+
 import type { EnvVars } from '@/app/application/services/env/Env'
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
-import type { Callback, Options } from '@/test-support'
+import type { EndpointDependencies } from '@/test-support'
+import { dependencies } from '@/test-support'
 import getClient from '@/test-support/client'
-import { mocker } from '@/test-support/intercept'
+import type { Callback, Options } from '@kumahq/fake-api'
+
 
 // this needs to come from testing
 const env = (
@@ -22,6 +26,7 @@ const $ = {
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
   client: token<ReturnType<typeof getClient>>('client'),
+  dependencies: token<EndpointDependencies>('dependencies'),
 }
 type Token = ReturnType<typeof token>
 export const services = <T extends Record<string, Token>>(app: T): ServiceDefinition[] => [
@@ -33,6 +38,19 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
       KUMA_MOCK_API_ENABLED: Cypress.env('VITE_MOCK_API_ENABLED'),
     },
   }],
+
+  [$.dependencies, {
+    service: (env) => {
+      return {
+        ...dependencies,
+        env,
+      }
+    },
+    arguments: [
+      app.env,
+    ],
+  }],
+
   [app.cy, {
     constant: cy,
   }],
@@ -50,9 +68,10 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
   [app.mock, {
     service: mocker,
     arguments: [
-      app.env,
       app.cy,
       app.fakeFS,
+      $.client,
+      $.dependencies,
     ],
   }],
   // this will eventually come from testing

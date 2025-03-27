@@ -1,65 +1,43 @@
-import { URLPattern } from 'urlpattern-polyfill'
-
-import { TOKENS } from '../../cypress/services'
-import { get } from '@/services/utils'
-import { FS, Callback, createMerge, Mocker } from '@/test-support'
-import { dependencies, MockEnvKeys, AppEnvKeys, Env } from '@/test-support/fake'
+import { createMerge, Router } from './index.ts'
+import type { Callback, Dependencies, FS, Mocker } from './index.ts'
 
 type Server = typeof cy
 
-class Router<T> {
-  routes: Map<URLPattern, T> = new Map()
-  constructor(routes: Record<string, T>) {
-    Object.entries(routes).forEach(([key, value]) => {
-      if (key.includes('://')) {
-        return
-      }
-      this.routes.set(new URLPattern({
-        pathname: key.replace('+', '\\+'),
-      }), value)
-    })
-  }
-
-  match(path: string) {
-    for (const [pattern, route] of this.routes) {
-      const _url = `data:${path}`
-      if (pattern.test(_url)) {
-        const args = pattern.exec(_url)
-        const params = args?.pathname.groups || {}
-        return {
-          route,
-          params: Object.entries(params).reduce((prev: Record<string, string>, [key, value]) => {
-            prev[key] = value || ''
-            return prev
-          }, {}),
-        }
-      }
-    }
-    throw new Error(`Matching route for '${path}' not found`)
+type HistoryEntry = {
+  url: URL
+  request: {
+    method: string
+    body: Record<string, unknown>
   }
 }
+type Client = { request: (request: HistoryEntry ) => void }
 
 const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
 const noop: Callback = (_merge, _req, response) => response
-export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server, fs: FS): Mocker => {
+
+export const mocker = <TClient extends Client, TDependencies extends object = {}>(
+  cy: Server,
+  fs: FS,
+  client: TClient,
+  dependencies: Dependencies<TDependencies>,
+): Mocker => {
   const router = new Router(fs)
   return (path, opts = {}, cb = noop) => {
     // if path is `*` then that means mock everything, which currently means
     // changing to `/`
     path = path === '*' ? '/' : path
-    const baseUrl = env('KUMA_API_URL')
-    const client = get(TOKENS.client)
+    const baseUrl = dependencies.env('KUMA_API_URL')
     return cy.intercept(
       {
         url: new RegExp(`${baseUrl}${path.replace(reEscape, '\\$&')}`),
       },
       (req) => {
         try {
-          const mockEnv: Env = (key, d = '') => {
-            if (typeof opts[key as MockEnvKeys] !== 'undefined') {
-              return opts[key as MockEnvKeys]
+          const mockEnv = (key: string, d = '') => {
+            if (typeof opts[key] !== 'undefined') {
+              return opts[key]
             }
-            return env(key as AppEnvKeys, d)
+            return dependencies.env(key, d)
           }
           const path = req.url.replace(baseUrl, '')
           const { route, params } = router.match(path)

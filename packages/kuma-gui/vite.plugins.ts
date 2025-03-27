@@ -89,7 +89,7 @@ const server = (
           // its only used for vite dev-time live reloading client
           // the sha256 _will be_ required
           // 'sha256-UtFm94bwcb1Z4CU0svC29YMU26pP5RoZDN8zoniSJhU=' 'sha256-qo7STIM1L/OgU9y0De47mqod1UZFLJfTn36bRC42rfA=' 'nonce-${nonce}'
-          "style-src 'unsafe-inline'",
+          "style-src 'self' 'unsafe-inline'",
           // in production connect-src would use kuma's environment variable for
           // setting the location of the HTTP API (or just use the default)
           "connect-src 'self' localhost:5681 https://kuma.io",

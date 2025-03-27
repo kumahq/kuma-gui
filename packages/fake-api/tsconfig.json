@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "rootDir": "./src",
+    "types": ["node", "cypress"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

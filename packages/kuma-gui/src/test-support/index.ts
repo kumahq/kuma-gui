@@ -1,123 +1,83 @@
-import deepmerge from 'deepmerge'
-import { http, HttpResponse, passthrough } from 'msw'
+import { en } from '@faker-js/faker'
 
-import { dependencies, escapeRoute } from './fake'
-import type { FakeEndpoint, MockResponse, FS, AEnv, Env, AppEnvKeys, MockEnvKeys, RestRequest } from './fake'
-import type { ArrayMergeOptions } from 'deepmerge'
+import FakeKuma from './FakeKuma'
+import type Env from '@/app/application/services/env/Env'
+import type { RestRequest, MockResponder, FS as FakeFS } from '@kumahq/fake-api'
 
-export type { FS, EndpointDependencies, MockResponder } from './fake'
+export type { MockResponder }
+export type FS = FakeFS<EndpointDependencies>
 
-export type Merge = (obj: Partial<MockResponse>) => MockResponse
-export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
-export type Options = Record<string, string>
-
-export const undefinedSymbol = Symbol('undefined')
-
-// merges objects in array positions rather than replacing
-const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
-  const destination = target.slice()
-
-  source.forEach((item, index) => {
-    if (typeof destination[index] === 'undefined') {
-      destination[index] = options.cloneUnlessOtherwiseSpecified(item, options)
-    } else if (options.isMergeableObject(item)) {
-      destination[index] = deepmerge(target[index], item, options)
-    } else if (target.indexOf(item) === -1) {
-      destination.push(item)
-    }
-  })
-  return destination
+type Pager = (total: string | number, req: RestRequest, self: string) => {
+  next: string | null
+  pageTotal: number
+  total: number
+  offset: number
+  size: number
 }
+const pager: Pager = (_total: string | number, req: RestRequest, self) => {
+  const baseUrl = 'http://localhost:5681'
+  const total = parseInt(`${_total}`)
+  const query = req.url.searchParams
+  const size = parseInt(query.get('size') || '10')
+  const offset = parseInt(query.get('offset') || '0')
 
-const noop: Callback = (_merge, _req, response) => response
-export const createMerge = (response: MockResponse): Merge => (obj) => {
-  const merged = deepmerge(response, obj, { arrayMerge: combineMerge })
-  return JSON.parse(JSON.stringify(merged, (_key, value) => {
-    if (value === undefinedSymbol) {
-      return
-    }
-    return value
-  }))
-}
-
-export const useResponder = (fs: FS, env: AEnv) => {
-  return (route: string, opts: Options = {}, cb: Callback = noop) => {
-    const mockEnv: Env = (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d)
-    if (route !== '*') {
-      dependencies.fake.seed(typeof opts.FAKE_SEED !== 'undefined' ? parseInt(typeof opts.FAKE_SEED) : 1)
-    }
-    const endpoint = fs[route]
-    const fetch = endpoint({
-      ...dependencies,
-      env: mockEnv,
-    })
-    return async (req: RestRequest): Promise<MockResponse> => {
-      const _response = fetch(req)
-      const latency = parseInt(mockEnv('KUMA_LATENCY', '0'))
-      if (latency !== 0) {
-        await new Promise(resolve => setTimeout(resolve, latency))
-      }
-      return cb(createMerge(_response), req, _response)
-    }
-  }
-}
-export const server = (mock: FakeEndpoint, options: {
-  env?: Record<AppEnvKeys, string>
-  params?: Record<string, string>
-}) => {
-  return async (env: Record<string, string>) => {
-    const responder = useResponder({
-      _: mock,
-    }, (key: AppEnvKeys, d = '') => env[key] ?? d)
-    const request = responder('_')
-    return (await request(
-      {
-        method: 'GET',
-        body: {},
-        url: {
-          searchParams: new URLSearchParams(),
-        },
-        params: options.params ?? {},
-      },
-    ))?.body
+  const remaining = total - offset
+  const pageTotal = Math.min(size, remaining)
+  const next = remaining <= size ? null : `${baseUrl}${self}?size=${size}offset=${offset + size}`
+  return {
+    next,
+    pageTotal,
+    total,
+    offset,
+    size,
   }
 }
 
-export const handler = (fs: FS, env: AEnv) => {
-  const baseUrl = env('KUMA_API_URL')
-  const responder = useResponder(fs, env)
-  return (route: string) => {
-    const respond = responder(route)
-    const base = route.includes('://') ? '' : baseUrl
-    if (route.startsWith('://')) {
-      route = route.replace('://', '')
-    }
-    return http.all(`${base}${escapeRoute(route)}`, async ({ request, params }) => {
-      const response = await respond({
-        method: request.method,
-        url: new URL(request.url),
-        body: request.body ? JSON.parse(await new Response(request.body).text() || '{}') : {},
-        params: Object.fromEntries(
-          Object.entries(params).filter(
-            (entry): entry is [string, string | readonly string[]] => typeof entry[1] !== 'undefined',
-          ),
-        ),
-      })
-
-      if (typeof response === 'undefined') {
-        return passthrough()
-      }
-
-      return HttpResponse.json(response.body, {
-        status: parseInt(response.headers?.['Status-Code'] ?? '200'),
-      })
-    })
-  }
+export type MockEnvKeys = keyof {
+  FAKE_SEED: string
+  KUMA_RULE_MATCHER_COUNT: string
+  KUMA_DATAPLANE_COUNT: string
+  KUMA_DATAPLANE_TYPE: string
+  KUMA_DATAPLANEINBOUND_COUNT: string
+  KUMA_DATAPLANEOUTBOUND_COUNT: string
+  KUMA_DATAPLANE_PROXY_RULE_ENABLED: string
+  KUMA_DATAPLANE_RULE_COUNT: string
+  KUMA_DATAPLANE_TO_RULE_COUNT: string
+  KUMA_DATAPLANE_FROM_RULE_COUNT: string
+  KUMA_DATAPLANE_INBOUND_RULE_COUNT: string
+  KUMA_CIRCUITBREAKER_COUNT: string
+  KUMA_FAULTINJECTION_COUNT: string
+  KUMA_MESHFAULTINJECTION_COUNT: string
+  KUMA_MESHHTTPROUTES_COUNT: string
+  KUMA_MESHGATEWAY_COUNT: string
+  KUMA_MESHSERVICE_MODE: string
+  KUMA_LISTENER_COUNT: string
+  KUMA_RULE_MATCH_COUNT: string
+  KUMA_SERVICE_COUNT: string
+  KUMA_MULTIZONESERVICE_COUNT: string
+  KUMA_EXTERNALSERVICE_COUNT: string
+  KUMA_ZONEEGRESS_COUNT: string
+  KUMA_ZONEINGRESS_COUNT: string
+  KUMA_ZONE_COUNT: string
+  KUMA_ZONE_NAME: string
+  KUMA_CLUSTER_NAME: string
+  KUMA_MESH_COUNT: string
+  KUMA_SUBSCRIPTION_COUNT: string
+  KUMA_GLOBALSECRET_COUNT: string
+  KUMA_MODE: string
+  KUMA_MTLS_ENABLED: string
+  KUMA_STORE_TYPE: string
+  KUMA_LATENCY: string
+  KUMA_STATUS_CODE: string
+  KUMA_RESOURCE_COUNT: string
 }
-export const mswHandlers = (env: AEnv, fs: FS) => {
-  const handlerFor = handler(fs, env)
-  return Object.keys(fs).map(route => {
-    return handlerFor(route)
-  })
+export type EndpointDependencies = {
+  fake: FakeKuma
+  pager: Pager
+  env: (key: Parameters<Env['var']>[0] | MockEnvKeys, d: string) => string
 }
-export type Mocker = (route: string, opts: Options, cb: Callback) => void
+export const dependencies = {
+  fake: new FakeKuma({ locale: en }),
+  pager,
+  env: <T extends string = Parameters<Env['var']>[0] | MockEnvKeys>(_key: T, d = '') => d,
+}
