@@ -22,6 +22,7 @@ check/node:
 lint/js: ARGS=$(filter %.vue %.ts %.js %.cjs,$(MAKECMDGOALS))
 lint/js:
 	@npx eslint \
+		--cache \
 		$(if $(CI),,--fix) \
 		$(if $(ARGS),$(ARGS),.)
 
