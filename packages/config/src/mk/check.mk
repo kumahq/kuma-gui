@@ -20,7 +20,7 @@ check/node:
 
 .PHONY: lint/js
 lint/js:
-	@DEBUG=eslint:eslint npx eslint \
+	@npx eslint \
 		--cache \
 		$(if $(CI),,--fix) \
 		.
