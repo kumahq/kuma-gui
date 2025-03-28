@@ -87,6 +87,9 @@ Given('the localStorage', (yaml: string) => {
 
 Given('the URL {string} responds with', (url: string, yaml: string) => {
   const mock = useMock()
+  // mock is a call to cy.intercept
+  // the callback below gives the opportunity to mutate the mock response
+  // the respond function/argument is just a specifically configured deepmerge
   mock(url, env, (respond) => {
     const response = respond(
       (YAML.parse(yaml) || {}) as {
@@ -135,9 +138,9 @@ When('I visit the {string} URL', function (path: string) {
       })
       node.textContent = JSON.stringify(config)
     })
+    // currently use this to denote "the page has initially rendered"
+    cy.get('[data-testid-root="mesh-app"]').should('be.visible')
   })
-  // currently use this to denote "the page has initially rendered"
-  cy.get('[data-testid-root="mesh-app"]').should('be.visible')
 })
 
 When('I load the {string} URL', function (path: string) {
