@@ -9,6 +9,9 @@
   "dependencies": {
     "@kumahq/config": "*"
   },
+  "devDependencies": {
+    "eslint": "^9.23.0"
+  },
   "engines": {
     "node": ">=22.14",
     "npm": "^10.9.2"
