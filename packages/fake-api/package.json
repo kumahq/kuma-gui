@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "eslint": "^9.22.0",
     "typescript": "^5.8.2",
     "vite": "^6.0.0"
   }

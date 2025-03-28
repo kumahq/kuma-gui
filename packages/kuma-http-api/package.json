@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "@kumahq/config": "*",
-    "eslint": "^9.23.0",
     "openapi-typescript": "^7.6.1"
   }
 }
