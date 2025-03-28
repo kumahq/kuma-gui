@@ -14,7 +14,7 @@
     </template>
     <KCodeBlock
       :id="id"
-      :max-height="props.codeMaxHeight"
+      :max-height="props.maxHeight"
       :code="props.code"
       :language="language"
       :initial-filter-mode="props.isFilterMode"
@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<{
   language: 'json' | 'yaml' | 'bash'
   isSearchable?: boolean
   showCopyButton?: boolean
-  codeMaxHeight?: string
+  maxHeight?: string
   query?: string
   isFilterMode?: boolean
   isRegExpMode?: boolean
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<{
   id: () => uniqueId('code-block'),
   isSearchable: false,
   showCopyButton: true,
-  codeMaxHeight: undefined,
+  maxHeight: undefined,
   query: '',
   isFilterMode: false,
   isRegExpMode: false,
