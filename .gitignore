@@ -25,3 +25,6 @@ yarn-error.log*
 # Vite Test and Build/Release
 coverage
 dist
+
+# Caches
+.eslintcache
