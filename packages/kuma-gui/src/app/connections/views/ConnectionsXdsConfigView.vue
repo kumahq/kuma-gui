@@ -35,7 +35,7 @@
               ref="$el"
             >
               <XCodeBlock
-                :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 146)}`"
+                :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
                 language="json"
                 :code="JSON.stringify(data, null, 2)"
                 is-searchable
