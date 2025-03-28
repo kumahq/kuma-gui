@@ -42,6 +42,8 @@
     "cypress-fail-fast": "^7.1.1",
     "cypress-terminal-report": "^7.0.4",
     "eslint": "^9",
-    "stylelint": "^16.10.0"
+    "stylelint": "^16.10.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0"
   }
 }
