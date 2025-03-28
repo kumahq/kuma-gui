@@ -19,12 +19,11 @@ check/node:
 .lint/script: lint/ts lint/js
 
 .PHONY: lint/js
-lint/js: ARGS=$(filter %.vue %.ts %.js %.cjs,$(MAKECMDGOALS))
 lint/js:
-	@npx eslint \
+	@DEBUG=eslint:eslint npx eslint \
 		--cache \
 		$(if $(CI),,--fix) \
-		$(if $(ARGS),$(ARGS),.)
+		.
 
 .PHONY: lint/ts
 lint/ts:
