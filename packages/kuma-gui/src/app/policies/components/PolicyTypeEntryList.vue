@@ -152,29 +152,3 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   margin-top: $kui-space-20;
 }
 </style>
-
-<style lang="scss">
-.policy-type-table.policy-type-table td {
-  vertical-align: top;
-}
-
-.cell-sourceTags {
-  width: 15%;
-}
-
-.cell-destinationTags {
-  width: 20%;
-}
-
-.cell-name {
-  width: 15%;
-}
-
-.cell-config {
-  width: 35%;
-}
-
-.cell-origins {
-  width: 15%;
-}
-</style>
