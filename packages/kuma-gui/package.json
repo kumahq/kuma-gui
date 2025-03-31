@@ -13,7 +13,7 @@
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/app-layout": "^4.3.16",
-    "@kong-ui-public/entities-shared": "3.21.0",
+    "@kong-ui-public/entities-shared": "^3.21.0",
     "@kong-ui-public/i18n": "^2.2.10",
     "@kong/icons": "^1.21.2",
     "@kong/kongponents": "^9.25.0",
