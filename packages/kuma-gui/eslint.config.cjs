@@ -3,15 +3,17 @@
 const { eslint } = require('@kumahq/config')
 
 const config = [
-  ...eslint({
-    versionIgnorePatterns: {
-      dependencies: {
-        '@kong-ui-public/entities-shared': {
-          'type': 'string',
-        },
-      },
-    },
-  }),
+  // if necessary, how to allow an exact pin for a package
+  // ...eslint({
+  //   versionIgnorePatterns: {
+  //     dependencies: {
+  //       '@kong-ui-public/entities-shared': {
+  //         'type': 'string',
+  //       },
+  //     },
+  //   },
+  // }),
+  ...eslint(),
   {
     ignores: [
       'public/mockServiceWorker.js',
