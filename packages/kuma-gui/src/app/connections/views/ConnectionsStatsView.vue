@@ -26,27 +26,37 @@
           })"
           v-slot="{ data: statsData, refresh }"
         >
-          <XCodeBlock
-            language="json"
-            :code="statsData.raw"
-            is-searchable
-            :query="route.params.codeSearch"
-            :is-filter-mode="route.params.codeFilter"
-            :is-reg-exp-mode="route.params.codeRegExp"
-            @query-change="route.update({ codeSearch: $event })"
-            @filter-mode-change="route.update({ codeFilter: $event })"
-            @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+          <XWindow
+            :resize="true"
+            v-slot="{ resize }"
           >
-            <template #primary-actions>
-              <XAction
-                action="refresh"
-                appearance="primary"
-                @click="refresh"
+            <div
+              ref="$el"
+            >
+              <XCodeBlock
+                :max-height="`${(resize?.target?.innerHeight ?? 0) - ($el?.getBoundingClientRect().top + 200)}`"
+                language="json"
+                :code="statsData.raw"
+                is-searchable
+                :query="route.params.codeSearch"
+                :is-filter-mode="route.params.codeFilter"
+                :is-reg-exp-mode="route.params.codeRegExp"
+                @query-change="route.update({ codeSearch: $event })"
+                @filter-mode-change="route.update({ codeFilter: $event })"
+                @reg-exp-mode-change="route.update({ codeRegExp: $event })"
               >
-                Refresh
-              </XAction>
-            </template>
-          </XCodeBlock>
+                <template #primary-actions>
+                  <XAction
+                    action="refresh"
+                    appearance="primary"
+                    @click="refresh"
+                  >
+                    Refresh
+                  </XAction>
+                </template>
+              </XCodeBlock>
+            </div>
+          </XWindow>
         </DataLoader>
       </XCard>
     </AppView>
