@@ -29,6 +29,7 @@ import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
 import XTooltip from './components/x-tooltip/XTooltip.vue'
+import XWindow from './components/x-window/XWindow.vue'
 import vStyle from './directives/style'
 import locales from './locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
@@ -72,6 +73,7 @@ declare module 'vue' {
     XAboutCard: typeof XAboutCard
     XInputSwitch: typeof XInputSwitch
     XCheckbox: typeof XCheckBox
+    XWindow: typeof XWindow
   }
 }
 
@@ -127,6 +129,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XAboutCard', XAboutCard],
           ['XInputSwitch', XInputSwitch],
           ['XCheckbox', XCheckBox],
+          ['XWindow', XWindow],
         ]
       },
       labels: [
