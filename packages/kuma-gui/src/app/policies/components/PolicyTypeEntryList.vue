@@ -17,9 +17,9 @@
 
       <template #accordion-content>
         <div class="policy-list">
-          <KTable
+          <KTableView
             class="policy-type-table"
-            :fetcher="() => ({ data: policyTypeEntry.connections, total: policyTypeEntry.connections.length })"
+            :data="policyTypeEntry.connections"
             :headers="[
               { label: 'From', key: 'sourceTags' },
               { label: 'To', key: 'destinationTags' },
@@ -28,7 +28,7 @@
               { label: 'Origin policies', key: 'origins' },
             ]"
             :cell-attrs="getCellAttributes"
-            disable-pagination
+            hide-pagination
             is-clickable
           >
             <template #sourceTags="{ row }: { row: PolicyTypeEntryConnection }">
@@ -106,7 +106,7 @@
                 —
               </template>
             </template>
-          </KTable>
+          </KTableView>
         </div>
       </template>
     </AccordionItem>
@@ -114,6 +114,8 @@
 </template>
 
 <script lang="ts" setup>
+
+import { KTableView } from '@kong/kongponents'
 
 import type { PolicyResourceType } from '../data'
 import { YAML } from '@/app/application'
@@ -149,16 +151,4 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   display: flex;
   margin-top: $kui-space-20;
 }
-</style>
-
-<style lang="scss">
-.policy-type-table.policy-type-table td {
-  vertical-align: top;
-}
-
-.cell-sourceTags { width: 15%; }
-.cell-destinationTags { width: 20%; }
-.cell-name { width: 15%; }
-.cell-config { width: 35%; }
-.cell-origins { width: 15%; }
 </style>

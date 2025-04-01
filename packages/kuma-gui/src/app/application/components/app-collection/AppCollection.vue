@@ -1,22 +1,24 @@
 <template>
-  <KTable
+  <KTableView
+    ref="$ref"
     data-testid="app-collection"
     class="app-collection"
-    :headers="props.headers"
-    :fetcher-cache-key="String(cacheKey)"
-    :fetcher="() => {
-      return { data: props.items }
-    }"
-    :cell-attrs="({ headerKey }: CellAttrParams) => ({
+    :headers="props.headers.map((item) => {
+      if (item.key === 'actions') {
+        item.key = '_actions'
+      }
+      return item
+    })"
+    :data="typeof props.items === 'undefined' ? [] : props.items"
+    :cell-attrs="({ headerKey }) => ({
       class: `${headerKey}-column`,
     })"
     :row-attrs="getRowAttributes"
-    :disable-sorting="true"
-    :disable-pagination="true"
+    :hide-pagination="true"
     :resize-columns="true"
     :table-preferences="{
       columnWidths: props.headers.reduce<Record<string, number>>((prev, value) => {
-        if(typeof value.width !== 'undefined') {
+        if (typeof value.width !== 'undefined') {
           prev[value.key] = value.width
         }
         return prev
@@ -27,38 +29,34 @@
     @update:table-preferences="resize"
   >
     <template
-      v-for="key in Object.keys(slots)"
+      v-for="key in Object.keys(slots).map((item) => item === 'actions' ? '_actions' : item)"
       :key="key"
       #[key]="{ row }"
     >
       <slot
         v-if="(props.items ?? []).length > 0"
-        :name="key"
+        :name="key === '_actions' ? 'actions' : key"
         :row="row as Row"
       />
     </template>
-  </KTable>
+  </KTableView>
 </template>
 
 <script lang="ts" setup generic="Row extends {}">
-import { KTable } from '@kong/kongponents'
-import { ref, watch, Ref, inject } from 'vue'
+import { KTableView } from '@kong/kongponents'
+import { ref, inject, onMounted } from 'vue'
+
 
 import { runInDebug } from '../../'
-import type { TableHeader as KTableHeader, TablePreferences } from '@kong/kongponents'
-type CellAttrParams = {
-  headerKey: string
-  row: Row
-  rowIndex: number
-  colIndex: number
-}
+import type { TableViewHeader as KTableViewHeader, TablePreferences } from '@kong/kongponents'
 type ResizeValue = {
   headers: Record<string, { width: number }>
 }
 
-type TableHeader = KTableHeader & {
+type TableHeader = KTableViewHeader & {
   width?: number
 }
+
 
 // when we are inside of a DataLoader make sure its using the `variant="list"`
 // but only error in dev mode, if this fails in production we don't want things
@@ -90,9 +88,6 @@ const slots = defineSlots<{
   }) => any
 }>()
 
-const items = ref(props.items) as Ref<typeof props.items>
-const cacheKey = ref<number>(0)
-
 const resize = (args: TablePreferences) => {
   const headers = Object.entries(args.columnWidths ?? {}).reduce<Record<string, { width: number }>>((prev, [key, value]) => {
     prev[key] = {
@@ -106,21 +101,14 @@ const resize = (args: TablePreferences) => {
   })
 }
 
-watch(() => props.items, (newItems, oldItems) => {
-  if (newItems !== oldItems) {
-    cacheKey.value++
-    items.value = props.items
-  }
-})
-
-function getRowAttributes(row: Row): Record<string, string> {
+function getRowAttributes(row: Record<string, any>): Record<string, any> {
   if (!row) {
     return {}
   }
 
   const attributes: Record<string, string> = {}
 
-  if (typeof props.isSelectedRow !== 'undefined' && props.isSelectedRow(row)) {
+  if (typeof props.isSelectedRow !== 'undefined' && props.isSelectedRow(row as Row)) {
     attributes.class = 'is-selected'
   }
 
@@ -141,6 +129,18 @@ const click = (e: MouseEvent) => {
     }
   }
 }
+const $ref = ref<InstanceType<typeof KTableView> | null>(null)
+const rewrite = () => {
+  const $el = $ref.value?.$el
+  if (
+    ((el: any | HTMLElement): el is HTMLElement => el && typeof el.querySelectorAll === 'function')($el)
+  ) {
+    const $trs = $el.querySelectorAll('tr[tabindex="0"]')
+      ;['tabindex'].forEach(attr => Array.from($trs).forEach(item => item.removeAttribute(attr)))
+  }
+}
+onMounted(rewrite)
+
 </script>
 
 <style lang="scss" scoped>
@@ -149,20 +149,22 @@ const click = (e: MouseEvent) => {
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
 }
+
 .app-collection :deep(td:first-child li a) {
   color: $kui-color-text-primary;
   font-weight: $kui-font-weight-regular;
 }
+
 .app-collection :deep(td:first-child li a:hover) {
   text-decoration: underline;
 }
 </style>
 
 <style lang="scss">
-
-.app-collection .actions-column {
+.app-collection ._actions-column {
   width: 48px;
 }
+
 .app-collection .is-selected {
   background-color: $kui-color-background-neutral-weakest;
 }
