@@ -3,7 +3,7 @@
     language="yaml"
     :code="yamlUniversal"
     :is-searchable="props.isSearchable"
-    :code-max-height="props.codeMaxHeight"
+    :max-height="props.maxHeight"
     :query="props.query"
     :is-filter-mode="props.isFilterMode"
     :is-reg-exp-mode="props.isRegExpMode"
@@ -58,14 +58,14 @@ const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
   resource: object
-  codeMaxHeight?: string
+  maxHeight?: string
   isSearchable?: boolean
   query?: string
   isFilterMode?: boolean
   isRegExpMode?: boolean
   showK8sCopyButton?: boolean
 }>(), {
-  codeMaxHeight: undefined,
+  maxHeight: undefined,
   isSearchable: false,
   query: '',
   isFilterMode: false,

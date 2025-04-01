@@ -12,20 +12,28 @@
     ".": {
       "require": "./src/index.cjs",
       "import": "./src/index.ts"
+    },
+    "./cypress/e2e": {
+      "import": "./src/cypress/e2e.ts"
     }
   },
   "dependencies": {
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "@cucumber/gherkin-utils": "^9.2.0",
     "@eslint/js": "^9.23.0",
     "@stylistic/eslint-plugin": "^4.2.0",
     "@stylistic/stylelint-plugin": "^3.1.2",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
     "@vue/eslint-config-typescript": "^14.5.0",
+    "cypress-fail-fast": "^7.1.1",
+    "cypress-fail-on-console-error": "^5.1.1",
+    "cypress-terminal-report": "^7.1.0",
     "esbuild": "^0.25.0",
     "escape-string-regexp": "^4.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-import-resolver-typescript": "^4.2.2",
+    "eslint-import-resolver-typescript": "^4.3.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-json-schema-validator": "^5.3.1",
     "eslint-plugin-no-unsanitized": "^4.1.2",
@@ -35,13 +43,5 @@
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-config-recommended-vue": "^1.6.0"
-  },
-  "peerDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^22.0.0",
-    "cypress": "^14.0.0",
-    "cypress-fail-fast": "^7.1.1",
-    "cypress-terminal-report": "^7.0.4",
-    "eslint": "^9",
-    "stylelint": "^16.10.0"
   }
 }
