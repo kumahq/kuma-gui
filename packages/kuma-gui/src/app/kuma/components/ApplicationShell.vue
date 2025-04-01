@@ -17,10 +17,10 @@
       >
         <XNotification
           v-if="!can('use state')"
-          uri="global-store-type-memory"
+          uri="main-overview.notifications.store-memory"
         >
           <XI18n
-            path="common.warnings.GLOBAL_STORE_TYPE_MEMORY"
+            path="main-overview.notifications.store-memory"
           />
         </XNotification>
         <header

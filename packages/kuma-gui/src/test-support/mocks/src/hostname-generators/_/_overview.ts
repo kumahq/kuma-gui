@@ -1,5 +1,7 @@
-import type { HostnameGeneratorItem } from '@/app/hostname-generators/data'
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { components } from '@kumahq/kuma-http-api'
+
+type HostnameGenerator = components['responses']['HostnameGeneratorItem']['content']['application/json']
 
 export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => {
   const { params } = req
@@ -43,7 +45,7 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (req) => 
     },
     creationTime: creationTime.toISOString(),
     modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
-  } satisfies HostnameGeneratorItem
+  } satisfies HostnameGenerator
 
   return {
     headers: {},

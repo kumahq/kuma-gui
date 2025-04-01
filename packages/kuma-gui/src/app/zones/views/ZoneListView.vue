@@ -143,24 +143,40 @@
                     />
                   </template>
 
-                  <template #warnings="{ row: item }">
-                    <XIcon
-                      v-if="item.warnings.length > 0"
-                      name="warning"
-                      data-testid="warning"
+                  <template
+                    #warnings="{ row: item }"
+                  >
+                    <template
+                      v-for="warnings in [[
+                        {
+                          bool: item.zoneInsight.store === 'memory',
+                          key: 'store-memory',
+                        },
+                        {
+                          bool: !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                          key: 'global-cp-incompatible',
+                        },
+                      ].filter(({ bool }) => bool)]"
+                      :key="typeof warnings"
                     >
-                      <ul>
-                        <li
-                          v-for="warning in item.warnings"
-                          :key="warning.kind"
-                          :data-testid="`warning-${warning.kind}`"
-                        >
-                          {{ t(`zone-cps.list.${warning.kind}`) }}
-                        </li>
-                      </ul>
-                    </XIcon>
-                    <template v-else>
-                      {{ t('common.collection.none') }}
+                      <XIcon
+                        v-if="warnings.length > 0"
+                        name="warning"
+                        data-testid="warning"
+                      >
+                        <ul>
+                          <li
+                            v-for="{ key } in warnings"
+                            :key="key"
+                            :data-testid="`warning-${key}`"
+                          >
+                            {{ t(`zone-cps.list.warnings.${key}`) }}
+                          </li>
+                        </ul>
+                      </XIcon>
+                      <template v-else>
+                        {{ t('common.collection.none') }}
+                      </template>
                     </template>
                   </template>
 

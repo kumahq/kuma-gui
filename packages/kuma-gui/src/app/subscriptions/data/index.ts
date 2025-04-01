@@ -10,6 +10,7 @@ const acknowledgements = [
   'responsesAcknowledged',
   'responsesRejected',
 ] as const
+
 type Acknowledgements = {
   [key in (typeof acknowledgements)[number]]: number
 }
@@ -67,7 +68,6 @@ export const DiscoverySubscriptionCollection = {
     return SubscriptionCollection.fromArray(items)
   },
 }
-export type DiscoverySubscriptionCollection = ReturnType<typeof DiscoverySubscriptionCollection.fromArray>
 export const SubscriptionCollection = {
   fromArray: <T extends PartialSubscription>(items?: T[]) => {
     const subscriptions = Array.isArray(items) ? items.map(Subscription.fromObject<T>) : []
@@ -94,3 +94,4 @@ export const SubscriptionCollection = {
   },
 }
 export type SubscriptionCollection = ReturnType<typeof SubscriptionCollection.fromArray>
+export type DiscoverySubscriptionCollection = ReturnType<typeof DiscoverySubscriptionCollection.fromArray>

@@ -129,25 +129,38 @@
                       <StatusBadge :status="row.status" />
                     </template>
 
-                    <template #warnings="{ row }">
-                      <XIcon
-                        v-if="row.isCertExpired || row.warnings.length > 0"
-                        class="mr-1"
-                        name="warning"
+                    <template #warnings="{ row: item }">
+                      <template
+                        v-for="warnings in [[
+                          {
+                            bool: item.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false || item.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
+                            key: 'dp-cp-incompatible',
+                          },
+                          {
+                            bool: item.isCertExpired,
+                            key: 'certificate-expired',
+                          },
+                        ].filter(({ bool }) => bool)]"
+                        :key="typeof warnings"
                       >
-                        <ul>
-                          <template v-if="row.warnings.length > 0">
-                            <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
-                          </template>
-
-                          <template v-if="row.isCertExpired">
-                            <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
-                          </template>
-                        </ul>
-                      </XIcon>
-
-                      <template v-else>
-                        {{ t('common.collection.none') }}
+                        <XIcon
+                          v-if="warnings.length > 0"
+                          name="warning"
+                          data-testid="warning"
+                        >
+                          <ul>
+                            <li
+                              v-for="{ key } in warnings"
+                              :key="key"
+                              :data-testid="`warning-${key}`"
+                            >
+                              {{ t(`data-planes.routes.items.warnings.${key}`) }}
+                            </li>
+                          </ul>
+                        </XIcon>
+                        <template v-else>
+                          {{ t('common.collection.none') }}
+                        </template>
                       </template>
                     </template>
 
