@@ -4,14 +4,11 @@
 		&& npm $(if $(CI),clean-install,install) \
 					--ignore-scripts
 
-.PHONY: .update
-.update: check/node
+.PHONY: .sync
+.sync: check/node
 	@cd $(NPM_WORKSPACE_ROOT) \
 		&& npm install \
 					--ignore-scripts
-
-.PHONY: .dedupe
-.dedupe:
 	@npm dedupe
 
 .PHONY: .clean
