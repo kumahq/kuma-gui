@@ -10,7 +10,7 @@ data-planes:
       Unsupported version of Kuma DP (**{ kumaDp }**)
     envoy-dp-incompatible: !!text/markdown |
       Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
-    dp-zone-incompatible: !!text/markdown |
+    dp-zone-cp-incompatible: !!text/markdown |
       There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
     certificate-expired: !!text/markdown |
       The certificate for this dataplane has expired

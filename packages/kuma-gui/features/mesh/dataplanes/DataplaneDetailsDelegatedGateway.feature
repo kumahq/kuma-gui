@@ -2,10 +2,10 @@ Feature: Dataplane details for delegated gateway
 
   Background:
     Given the CSS selectors
-      | Alias       | Selector                                    |
-      | detail-view | [data-testid='data-plane-detail-tabs-view'] |
-      | warnings    | [data-testid^='notification-DPP_NO_MTLS']   |
-      | details     | [data-testid='dataplane-details']           |
+      | Alias       | Selector                                                        |
+      | detail-view | [data-testid='data-plane-detail-tabs-view']                     |
+      | warnings    | [data-testid^='notification-data-planes.notifications.no-mtls'] |
+      | details     | [data-testid='dataplane-details']                               |
 
   Scenario: Overview tab has expected content
     Given the environment

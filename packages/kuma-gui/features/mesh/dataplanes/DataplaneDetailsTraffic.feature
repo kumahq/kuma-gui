@@ -2,12 +2,12 @@ Feature: mesh / dataplanes / DataplaneDetailsTraffic
 
   Background:
     Given the CSS selectors
-      | Alias           | Selector                                            |
-      | detail-view     | [data-testid='data-plane-detail-tabs-view']         |
-      | loading-warning | [data-testid^='notification-warning-stats-loading'] |
-      | traffic         | [data-testid='dataplane-traffic']                   |
-      | outbounds       | [data-testid='dataplane-outbounds']                 |
-      | inactiveToggle  | [data-testid='dataplane-outbounds-inactive-toggle'] |
+      | Alias           | Selector                                                                   |
+      | detail-view     | [data-testid='data-plane-detail-tabs-view']                                |
+      | loading-warning | [data-testid^='notification-data-planes.notifications.stats-not-enhanced'] |
+      | traffic         | [data-testid='dataplane-traffic']                                          |
+      | outbounds       | [data-testid='dataplane-outbounds']                                        |
+      | inactiveToggle  | [data-testid='dataplane-outbounds-inactive-toggle']                        |
 
   Scenario: Standard sidecar proxy shows the traffic component
     Given the environment
