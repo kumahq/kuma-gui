@@ -264,6 +264,10 @@ function createEslintConfig(
           ],
           alphabetical: false,
         }],
+        'vue/first-attribute-linebreak': ['error', {
+          'singleline': 'below',
+          'multiline': 'below',
+        }],
         'vue/singleline-html-element-content-newline': ['error', {
           ignoreWhenNoAttributes: true,
           ignoreWhenEmpty: true,
