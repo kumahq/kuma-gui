@@ -10,7 +10,9 @@
       data-testid="accordion-item-button"
       @click="open"
     >
-      <slot name="accordion-header" />
+      <slot
+        name="accordion-header"
+      />
     </button>
 
     <transition
@@ -24,7 +26,9 @@
         class="accordion-item-content"
         data-testid="accordion-item-content"
       >
-        <slot name="accordion-content" />
+        <slot
+          name="accordion-content"
+        />
       </div>
     </transition>
   </li>

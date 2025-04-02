@@ -72,7 +72,9 @@
                           {{ policyType.name }}
                         </XAction>
 
-                        <div class="policy-count">
+                        <div
+                          class="policy-count"
+                        >
                           {{ meshInsight?.policies?.[policyType.name]?.total ?? 0 }}
                         </div>
                       </div>
@@ -81,8 +83,12 @@
                 </template>
               </DataLoader>
             </XCard>
-            <div class="policy-list">
-              <RouterView v-slot="{ Component }">
+            <div
+              class="policy-list"
+            >
+              <RouterView
+                v-slot="{ Component }"
+              >
                 <component
                   :is="Component"
                   :policy-types="data?.policyTypes"

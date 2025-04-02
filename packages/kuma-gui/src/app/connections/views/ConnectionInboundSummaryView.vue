@@ -21,7 +21,9 @@
       v-slot="{ items }"
     >
       <AppView>
-        <template #title>
+        <template
+          #title
+        >
           <h2>
             Inbound {{ route.params.connection.replace('localhost', '').replace('_', ':') }}
           </h2>
@@ -48,7 +50,9 @@
           </template>
         </XTabs>
 
-        <RouterView v-slot="child">
+        <RouterView
+          v-slot="child"
+        >
           <component
             :is="child.Component"
             :data="items[0]"

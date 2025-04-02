@@ -7,7 +7,9 @@
     v-slot="{ route, t }"
   >
     <AppView>
-      <template #title>
+      <template
+        #title
+      >
         <h1>
           <XCopyButton
             :text="route.params.mesh"

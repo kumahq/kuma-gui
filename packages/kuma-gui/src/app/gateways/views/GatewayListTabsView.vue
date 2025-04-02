@@ -10,9 +10,13 @@
       :render="false"
       :title="t(`${route.child()?.name === 'builtin-gateway-list-view' ? 'builtin' : 'delegated'}-gateways.routes.items.title`)"
     />
-    <div class="stack">
+    <div
+      class="stack"
+    >
       <AppView>
-        <template #actions>
+        <template
+          #actions
+        >
           <DataCollection
             :items="route.children"
             :empty="false"

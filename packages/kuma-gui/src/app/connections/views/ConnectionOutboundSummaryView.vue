@@ -8,13 +8,17 @@
     v-slot="{ route, t }"
   >
     <AppView>
-      <template #title>
+      <template
+        #title
+      >
         <h2>
           Outbound {{ route.params.connection }}
         </h2>
       </template>
 
-      <XTabs :selected="route.child()?.name">
+      <XTabs
+        :selected="route.child()?.name"
+      >
         <template
           v-for="item in route.children"
           :key="`${item.name}`"
@@ -33,7 +37,9 @@
           </XAction>
         </template>
       </XTabs>
-      <RouterView v-slot="{ Component }">
+      <RouterView
+        v-slot="{ Component }"
+      >
         <DataCollection
           :items="Object.entries(props.data)"
           :predicate="([key, _value]) => key === route.params.connection"

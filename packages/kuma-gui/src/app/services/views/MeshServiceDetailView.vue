@@ -15,18 +15,26 @@
     v-slot="{ can, route, t, uri, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout
+        type="stack"
+      >
         <XAboutCard
           :title="t('services.mesh-service.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
         >
-          <DefinitionCard layout="horizontal">
-            <template #title>
+          <DefinitionCard
+            layout="horizontal"
+          >
+            <template
+              #title
+            >
               {{ t('http.api.property.state') }}
             </template>
 
-            <template #body>
+            <template
+              #body
+            >
               <XBadge
                 :appearance="props.data.spec.state === 'Available' ? 'success' : 'danger'"
               >
@@ -38,12 +46,18 @@
             v-if="props.data.namespace.length > 0"
             layout="horizontal"
           >
-            <template #title>
+            <template
+              #title
+            >
               {{ t('http.api.property.namespace') }}
             </template>
 
-            <template #body>
-              <XBadge appearance="decorative">
+            <template
+              #body
+            >
+              <XBadge
+                appearance="decorative"
+              >
                 {{ props.data.namespace }}
               </XBadge>
             </template>
@@ -60,7 +74,9 @@
             <template
               #body
             >
-              <XBadge appearance="decorative">
+              <XBadge
+                appearance="decorative"
+              >
                 <XAction
                   :to="{
                     name: 'zone-cp-detail-view',
@@ -74,7 +90,9 @@
               </XBadge>
             </template>
           </DefinitionCard>
-          <DefinitionCard layout="horizontal">
+          <DefinitionCard
+            layout="horizontal"
+          >
             <template
               #title
             >
@@ -83,7 +101,9 @@
             <template
               #body
             >
-              <template v-if="props.data.spec.ports.length">
+              <template
+                v-if="props.data.spec.ports.length"
+              >
                 <KumaPort
                   v-for="connection in props.data.spec.ports"
                   :key="connection.port"
@@ -93,12 +113,16 @@
                   }"
                 />
               </template>
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ t('common.detail.none') }}
               </template>
             </template>
           </DefinitionCard>
-          <DefinitionCard layout="horizontal">
+          <DefinitionCard
+            layout="horizontal"
+          >
             <template
               #title
             >
@@ -107,7 +131,9 @@
             <template
               #body
             >
-              <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
+              <template
+                v-if="Object.keys(props.data.spec.selector.dataplaneTags).length"
+              >
                 <XBadge
                   v-for="(value, key) in props.data.spec.selector.dataplaneTags"
                   :key="`${key}:${value}`"
@@ -116,7 +142,9 @@
                   {{ key }}:{{ value }}
                 </XBadge>
               </template>
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ t('common.detail.none') }}
               </template>
             </template>
@@ -124,7 +152,9 @@
         </XAboutCard>
 
         <XCard>
-          <template #title>
+          <template
+            #title
+          >
             {{ t('services.detail.hostnames.title') }}
           </template>
 
@@ -135,7 +165,9 @@
               serviceName: route.params.service,
             })"
           >
-            <template #loadable="{ data: hostnames }">
+            <template
+              #loadable="{ data: hostnames }"
+            >
               <DataCollection
                 type="hostnames"
                 :items="hostnames?.items ?? [undefined]"
@@ -150,15 +182,21 @@
                   ]"
                   @resize="me.set"
                 >
-                  <template #hostname="{ row: item }">
+                  <template
+                    #hostname="{ row: item }"
+                  >
                     <b>
                       <XCopyButton
                         :text="item.hostname"
                       />
                     </b>
                   </template>
-                  <template #zones="{ row: item }">
-                    <XLayout type="separated">
+                  <template
+                    #zones="{ row: item }"
+                  >
+                    <XLayout
+                      type="separated"
+                    >
                       <XBadge
                         v-for="(zone, index) of item.zones"
                         :key="index"
@@ -184,7 +222,9 @@
         </XCard>
 
         <XCard>
-          <template #title>
+          <template
+            #title
+          >
             {{ t('services.detail.dpp-status.title') }}
           </template>
 
@@ -197,10 +237,16 @@
               :online="props.data.status.dataplaneProxies.connected"
               data-testid="connected-dpps"
             >
-              <template #icon>
-                <XIcon name="connected" />
+              <template
+                #icon
+              >
+                <XIcon
+                  name="connected"
+                />
               </template>
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('services.detail.dpp-status.connected') }}
               </template>
             </ResourceStatus>
@@ -209,10 +255,16 @@
               :total="props.data.status.dataplaneProxies.healthy"
               data-testid="healthy-dpps"
             >
-              <template #icon>
-                <XIcon name="health" />
+              <template
+                #icon
+              >
+                <XIcon
+                  name="health"
+                />
               </template>
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('services.detail.dpp-status.healthy') }}
               </template>
             </ResourceStatus>
@@ -223,7 +275,9 @@
           <XCard
             class="mt-4"
           >
-            <template #title>
+            <template
+              #title
+            >
               {{ t('services.detail.data_plane_proxies') }}
             </template>
             <search>
@@ -284,7 +338,9 @@
                     :is-selected-row="(row) => row.name === route.params.proxy"
                     @resize="me.set"
                   >
-                    <template #name="{ row: item }">
+                    <template
+                      #name="{ row: item }"
+                    >
                       <XAction
                         class="name-link"
                         :to="{
@@ -305,11 +361,15 @@
                       </XAction>
                     </template>
 
-                    <template #namespace="{ row: item }">
+                    <template
+                      #namespace="{ row: item }"
+                    >
                       {{ item.namespace }}
                     </template>
 
-                    <template #zone="{ row }">
+                    <template
+                      #zone="{ row }"
+                    >
                       <XAction
                         v-if="row.zone"
                         :to="{
@@ -322,48 +382,70 @@
                         {{ row.zone }}
                       </XAction>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('common.collection.none') }}
                       </template>
                     </template>
 
-                    <template #certificate="{ row }">
-                      <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                    <template
+                      #certificate="{ row }"
+                    >
+                      <template
+                        v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime"
+                      >
                         {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
                       </template>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('data-planes.components.data-plane-list.certificate.none') }}
                       </template>
                     </template>
 
-                    <template #status="{ row }">
-                      <StatusBadge :status="row.status" />
+                    <template
+                      #status="{ row }"
+                    >
+                      <StatusBadge
+                        :status="row.status"
+                      />
                     </template>
 
-                    <template #warnings="{ row }">
+                    <template
+                      #warnings="{ row }"
+                    >
                       <XIcon
                         v-if="row.isCertExpired || row.warnings.length > 0"
                         class="mr-1"
                         name="warning"
                       >
                         <ul>
-                          <template v-if="row.warnings.length > 0">
+                          <template
+                            v-if="row.warnings.length > 0"
+                          >
                             <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
                           </template>
 
-                          <template v-if="row.isCertExpired">
+                          <template
+                            v-if="row.isCertExpired"
+                          >
                             <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
                           </template>
                         </ul>
                       </XIcon>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('common.collection.none') }}
                       </template>
                     </template>
 
-                    <template #actions="{ row: item }">
+                    <template
+                      #actions="{ row: item }"
+                    >
                       <XActionGroup>
                         <XAction
                           :to="{

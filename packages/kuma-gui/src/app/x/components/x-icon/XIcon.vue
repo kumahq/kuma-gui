@@ -15,7 +15,9 @@
       :class="`x-icon-icon x-icon-${props.name}-icon`"
     />
 
-    <template #content>
+    <template
+      #content
+    >
       <div
         :id="id"
       >

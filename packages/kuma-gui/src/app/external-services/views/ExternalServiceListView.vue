@@ -46,8 +46,12 @@
                 :items="data?.items"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
-                  <XCopyButton :text="item.name">
+                <template
+                  #name="{ row: item }"
+                >
+                  <XCopyButton
+                    :text="item.name"
+                  >
                     <XAction
                       :to="{
                         name: 'external-service-detail-view',
@@ -66,18 +70,24 @@
                   </XCopyButton>
                 </template>
 
-                <template #address="{ row }">
+                <template
+                  #address="{ row }"
+                >
                   <XCopyButton
                     v-if="row.networking.address"
                     :text="row.networking.address"
                   />
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

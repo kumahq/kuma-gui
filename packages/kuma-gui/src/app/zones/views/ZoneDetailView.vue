@@ -42,13 +42,21 @@
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.status') }}
               </template>
 
-              <template #body>
-                <StatusBadge :status="props.data.state" />
+              <template
+                #body
+              >
+                <StatusBadge
+                  :status="props.data.state"
+                />
               </template>
             </DefinitionCard>
             <DefinitionCard
@@ -58,12 +66,18 @@
                 outdated: version?.outdated,
               }"
             >
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('zone-cps.routes.item.version') }}
               </template>
 
-              <template #body>
-                <XLayout type="separated">
+              <template
+                #body
+              >
+                <XLayout
+                  type="separated"
+                >
                   <XBadge
                     :appearance="version?.outdated === true ? 'warning' : 'decorative'"
                   >
@@ -83,25 +97,41 @@
                 </XLayout>
               </template>
             </DefinitionCard>
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.type') }}
               </template>
 
-              <template #body>
-                <XBadge appearance="decorative">
+              <template
+                #body
+              >
+                <XBadge
+                  appearance="decorative"
+                >
                   {{ t(`common.product.environment.${props.data.zoneInsight.environment || 'unknown'}`) }}
                 </XBadge>
               </template>
             </DefinitionCard>
 
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('zone-cps.routes.item.authentication_type') }}
               </template>
 
-              <template #body>
-                <XBadge appearance="decorative">
+              <template
+                #body
+              >
+                <XBadge
+                  appearance="decorative"
+                >
                   {{ props.data.zoneInsight.authenticationType || t('common.not_applicable') }}
                 </XBadge>
               </template>
@@ -111,7 +141,9 @@
           <XCard
             v-if="props.data.zoneInsight.subscriptions.length > 0"
           >
-            <template #title>
+            <template
+              #title
+            >
               <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
             </template>
 

@@ -39,7 +39,9 @@
           @filter-mode-change="route.update({ codeFilter: $event })"
           @reg-exp-mode-change="route.update({ codeRegExp: $event })"
         >
-          <template #primary-actions>
+          <template
+            #primary-actions
+          >
             <XCheckbox
               :checked="route.params.includeEds"
               :label="t('connections.include_endpoints')"

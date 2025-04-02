@@ -9,19 +9,29 @@
     v-slot="{ t, route, me, uri }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout
+        type="stack"
+      >
         <XAboutCard
           :title="t('zone-egresses.routes.item.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
         >
-          <DefinitionCard layout="horizontal">
-            <template #title>
+          <DefinitionCard
+            layout="horizontal"
+          >
+            <template
+              #title
+            >
               {{ t('http.api.property.status') }}
             </template>
 
-            <template #body>
-              <StatusBadge :status="props.data.state" />
+            <template
+              #body
+            >
+              <StatusBadge
+                :status="props.data.state"
+              />
             </template>
           </DefinitionCard>
 
@@ -29,23 +39,35 @@
             v-if="props.data.namespace.length > 0"
             layout="horizontal"
           >
-            <template #title>
+            <template
+              #title
+            >
               {{ t('http.api.property.namespace') }}
             </template>
 
-            <template #body>
-              <XBadge appearance="decorative">
+            <template
+              #body
+            >
+              <XBadge
+                appearance="decorative"
+              >
                 {{ props.data.namespace }}
               </XBadge>
             </template>
           </DefinitionCard>
 
-          <DefinitionCard layout="horizontal">
-            <template #title>
+          <DefinitionCard
+            layout="horizontal"
+          >
+            <template
+              #title
+            >
               {{ t('http.api.property.address') }}
             </template>
 
-            <template #body>
+            <template
+              #body
+            >
               <XCopyButton
                 v-if="props.data.zoneEgress.socketAddress.length > 0"
                 variant="badge"
@@ -53,7 +75,9 @@
                 :text="props.data.zoneEgress.socketAddress"
               />
 
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ t('common.detail.none') }}
               </template>
             </template>
@@ -119,7 +143,9 @@
                     data-testid="dataplane-outbounds-inactive-toggle"
                     @change="(value) => route.update({ inactive: value})"
                   >
-                    <template #label>
+                    <template
+                      #label
+                    >
                       Show inactive
                     </template>
                   </XInputSwitch>
@@ -226,7 +252,9 @@
         <XCard
           v-if="props.data.zoneEgressInsight.subscriptions.length > 0"
         >
-          <template #title>
+          <template
+            #title
+          >
             <h2>{{ t('zone-egresses.routes.item.subscriptions.title') }}</h2>
           </template>
         

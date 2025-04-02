@@ -49,16 +49,24 @@
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.status') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XLayout
                   type="separated"
                 >
-                  <StatusBadge :status="props.data.status" />
+                  <StatusBadge
+                    :status="props.data.status"
+                  />
                   <DataCollection
                     v-if="props.data.dataplaneType === 'standard'"
                     :items="props.data.dataplane.networking.inbounds"
@@ -95,7 +103,9 @@
               <template
                 #body
               >
-                <XBadge appearance="decorative">
+                <XBadge
+                  appearance="decorative"
+                >
                   <XAction
                     :to="{
                       name: 'zone-cp-detail-view',
@@ -109,13 +119,21 @@
                 </XBadge>
               </template>
             </DefinitionCard>
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.proptery.type') }}
               </template>
 
-              <template #body>
-                <XBadge appearance="decorative">
+              <template
+                #body
+              >
+                <XBadge
+                  appearance="decorative"
+                >
                   {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
                 </XBadge>
               </template>
@@ -125,23 +143,35 @@
               v-if="props.data.namespace.length > 0"
               layout="horizontal"
             >
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('http.api.property.namespace') }}
               </template>
 
-              <template #body>
-                <XBadge appearance="decorative">
+              <template
+                #body
+              >
+                <XBadge
+                  appearance="decorative"
+                >
                   {{ props.data.namespace }}
                 </XBadge>
               </template>
             </DefinitionCard>
 
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.address') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XCopyButton
                   variant="badge"
                   format="default"
@@ -153,13 +183,21 @@
             <template
               v-if="props.data.dataplane.networking.gateway"
             >
-              <DefinitionCard layout="horizontal">
-                <template #title>
+              <DefinitionCard
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
                   {{ t('http.api.property.tags') }}
                 </template>
 
-                <template #body>
-                  <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                <template
+                  #body
+                >
+                  <TagList
+                    :tags="props.data.dataplane.networking.gateway.tags"
+                  />
                 </template>
               </DefinitionCard>
             </template>
@@ -173,9 +211,15 @@
               type="columns"
             >
               <ConnectionTraffic>
-                <template #title>
-                  <XLayout type="separated">
-                    <XIcon name="inbound" />
+                <template
+                  #title
+                >
+                  <XLayout
+                    type="separated"
+                  >
+                    <XIcon
+                      name="inbound"
+                    />
                     <span>Inbounds</span>
                   </XLayout>
                 </template>
@@ -289,7 +333,9 @@
                     data-testid="dataplane-outbounds-inactive-toggle"
                     @change="(value) => route.update({ inactive: value})"
                   >
-                    <template #label>
+                    <template
+                      #label
+                    >
                       Show inactive
                     </template>
                   </XInputSwitch>
@@ -302,9 +348,15 @@
                     Refresh
                   </XAction>
                 </template>
-                <template #title>
-                  <XLayout type="separated">
-                    <XIcon name="outbound" />
+                <template
+                  #title
+                >
+                  <XLayout
+                    type="separated"
+                  >
+                    <XIcon
+                      name="outbound"
+                    />
                     <span>Outbounds</span>
                   </XLayout>
                 </template>
@@ -400,7 +452,9 @@
                     </template>
                   </template>
                 </template>
-                <template v-else>
+                <template
+                  v-else
+                >
                   <XEmptyState />
                 </template>
               </ConnectionTraffic>
@@ -435,7 +489,9 @@
             </SummaryView>
           </RouterView>
 
-          <div data-testid="dataplane-mtls">
+          <div
+            data-testid="dataplane-mtls"
+          >
             <template
               v-if="props.data.dataplaneInsight.mTLS"
             >
@@ -446,56 +502,80 @@
                 :key="mTLS"
               >
                 <XCard>
-                  <template #title>
+                  <template
+                    #title
+                  >
                     <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
                   </template>
 
-                  <div class="columns">
+                  <div
+                    class="columns"
+                  >
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
                       </template>
                     </DefinitionCard>
 
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.generation_time.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
                       </template>
                     </DefinitionCard>
 
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.regenerations.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
                       </template>
                     </DefinitionCard>
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ mTLS.issuedBackend }}
                       </template>
                     </DefinitionCard>
 
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         <ul>
                           <li
                             v-for="item in mTLS.supportedBackends"
@@ -517,7 +597,9 @@
             data-testid="dataplane-subscriptions"
           >
             <XCard>
-              <template #title>
+              <template
+                #title
+              >
                 <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
               </template>
 

@@ -75,7 +75,9 @@
                   :is-selected-row="(item) => item.name === route.params.service"
                   @resize="me.set"
                 >
-                  <template #name="{ row: item }">
+                  <template
+                    #name="{ row: item }"
+                  >
                     <XCopyButton
                       :text="item.name"
                     >
@@ -102,8 +104,12 @@
                   >
                     {{ item.namespace }}
                   </template>
-                  <template #zone="{ row: item }">
-                    <template v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']">
+                  <template
+                    #zone="{ row: item }"
+                  >
+                    <template
+                      v-if="item.labels && item.labels['kuma.io/origin'] === 'zone' && item.labels['kuma.io/zone']"
+                    >
                       <XAction
                         v-if="item.labels['kuma.io/zone']"
                         :to="{
@@ -117,7 +123,9 @@
                       </XAction>
                     </template>
 
-                    <template v-else>
+                    <template
+                      v-else
+                    >
                       {{ t('common.detail.none') }}
                     </template>
                   </template>
@@ -133,7 +141,9 @@
                     </template>
                   </template>
 
-                  <template #actions="{ row: item }">
+                  <template
+                    #actions="{ row: item }"
+                  >
                     <XActionGroup>
                       <XAction
                         :to="{

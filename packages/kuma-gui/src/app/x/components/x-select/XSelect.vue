@@ -19,8 +19,12 @@
         :name="`${item?.value}-option`"
       />
     </template>
-    <template #item-template="{ item }: any">
-      <slot :name="`${item.value}-option`" />
+    <template
+      #item-template="{ item }: any"
+    >
+      <slot
+        :name="`${item.value}-option`"
+      />
     </template>
   </KSelect>
 </template>

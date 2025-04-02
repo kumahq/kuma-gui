@@ -1,22 +1,34 @@
 <template>
-  <div class="filter">
-    <XBadge appearance="neutral">
+  <div
+    class="filter"
+  >
+    <XBadge
+      appearance="neutral"
+    >
       {{ props.filter.type }}
     </XBadge>
 
     <div>
-      <template v-if="props.filter.type === 'RequestHeaderModifier'">
-        <div class="list">
+      <template
+        v-if="props.filter.type === 'RequestHeaderModifier'"
+      >
+        <div
+          class="list"
+        >
           <template
             v-for="(value, key) in props.filter.requestHeaderModifier"
             :key="key"
           >
-            <template v-if="value">
+            <template
+              v-if="value"
+            >
               <span
                 v-for="(entry, index) in value"
                 :key="index"
               >
-                <span class="text-neutral">
+                <span
+                  class="text-neutral"
+                >
                   {{ key }}:
                 </span>
 
@@ -27,18 +39,26 @@
         </div>
       </template>
 
-      <template v-else-if="props.filter.type === 'ResponseHeaderModifier'">
-        <div class="list">
+      <template
+        v-else-if="props.filter.type === 'ResponseHeaderModifier'"
+      >
+        <div
+          class="list"
+        >
           <template
             v-for="(value, key) in props.filter.responseHeaderModifier"
             :key="key"
           >
-            <template v-if="value">
+            <template
+              v-if="value"
+            >
               <span
                 v-for="(entry, index) in value"
                 :key="index"
               >
-                <span class="text-neutral">
+                <span
+                  class="text-neutral"
+                >
                   {{ key }}:
                 </span>
 
@@ -49,32 +69,50 @@
         </div>
       </template>
 
-      <template v-else-if="props.filter.type === 'RequestMirror'">
-        <TargetRef :target-ref="props.filter.requestMirror.backendRef">
+      <template
+        v-else-if="props.filter.type === 'RequestMirror'"
+      >
+        <TargetRef
+          :target-ref="props.filter.requestMirror.backendRef"
+        >
           {{ props.filter.requestMirror.backendRef.name }}
         </TargetRef>
 
-        <template v-if="props.filter.requestMirror.percentage">
+        <template
+          v-if="props.filter.requestMirror.percentage"
+        >
           ({{ props.filter.requestMirror.percentage }}%)
         </template>
       </template>
 
-      <template v-else-if="props.filter.type === 'RequestRedirect'">
-        <div class="list">
+      <template
+        v-else-if="props.filter.type === 'RequestRedirect'"
+      >
+        <div
+          class="list"
+        >
           <div
             v-for="(value, key) in props.filter.requestRedirect"
             :key="key"
           >
-            <template v-if="value">
-              <span class="text-neutral">
+            <template
+              v-if="value"
+            >
+              <span
+                class="text-neutral"
+              >
                 {{ key }}:
               </span>
 
-              <template v-if="typeof value === 'object'">
+              <template
+                v-if="typeof value === 'object'"
+              >
                 {{ value.type === 'ReplaceFullPath' ? value.replaceFullPath : value.replacePrefixMatch }}
               </template>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ value }}
               </template>
             </template>
@@ -82,22 +120,34 @@
         </div>
       </template>
 
-      <template v-else>
-        <div class="list">
+      <template
+        v-else
+      >
+        <div
+          class="list"
+        >
           <div
             v-for="(value, key) in props.filter.urlRewrite"
             :key="key"
           >
-            <template v-if="value">
-              <span class="text-neutral">
+            <template
+              v-if="value"
+            >
+              <span
+                class="text-neutral"
+              >
                 {{ key }}:
               </span>
 
-              <template v-if="typeof value === 'object'">
+              <template
+                v-if="typeof value === 'object'"
+              >
                 {{ value.type === 'ReplaceFullPath' ? value.replaceFullPath : value.replacePrefixMatch }}
               </template>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ value }}
               </template>
             </template>

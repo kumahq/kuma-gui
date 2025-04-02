@@ -7,7 +7,9 @@
       :key="key"
       #[`${key}`]
     >
-      <slot :name="key" />
+      <slot
+        :name="key"
+      />
     </template>
   </KModal>
 </template>

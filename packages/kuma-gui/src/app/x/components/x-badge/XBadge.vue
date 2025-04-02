@@ -2,7 +2,9 @@
   <KBadge
     :max-width="props.maxWidth"
   >
-    <slot name="default" />
+    <slot
+      name="default"
+    />
   </KBadge>
 </template>
 

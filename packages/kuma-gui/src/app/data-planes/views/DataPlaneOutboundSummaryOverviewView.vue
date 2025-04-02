@@ -19,11 +19,15 @@
           <DefinitionCard
             layout="horizontal"
           >
-            <template #title>
+            <template
+              #title
+            >
               Protocol
             </template>
 
-            <template #body>
+            <template
+              #body
+            >
               <XBadge
                 appearance="info"
               >
@@ -87,11 +91,15 @@
                                     v-if="item.origins.length > 0"
                                     layout="horizontal"
                                   >
-                                    <template #title>
+                                    <template
+                                      #title
+                                    >
                                       Origin Policies
                                     </template>
 
-                                    <template #body>
+                                    <template
+                                      #body
+                                    >
                                       <DataCollection
                                         :predicate="(item) => {
                                           return typeof item.resourceMeta !== 'undefined'
@@ -152,7 +160,9 @@
 
                       v-slot="{ items }"
                     >
-                      <div class="mt-4">
+                      <div
+                        class="mt-4"
+                      >
                         <AccordionList
                           :initially-open="0"
                           multiple-open
@@ -164,14 +174,18 @@
                           >
                             <XCard>
                               <AccordionItem>
-                                <template #accordion-header>
+                                <template
+                                  #accordion-header
+                                >
                                   <PolicyTypeTag
                                     :policy-type="key"
                                   >
                                     {{ key }} ({{ rules!.length }})
                                   </PolicyTypeTag>
                                 </template>
-                                <template #accordion-content>
+                                <template
+                                  #accordion-content
+                                >
                                   <div
                                     class="stack-with-borders"
                                   >
@@ -183,23 +197,35 @@
                                         v-if="item.matchers.length > 0"
                                         layout="horizontal"
                                       >
-                                        <template #title>
+                                        <template
+                                          #title
+                                        >
                                           From
                                         </template>
 
-                                        <template #body>
-                                          <p><RuleMatchers :items="item.matchers" /></p>
+                                        <template
+                                          #body
+                                        >
+                                          <p>
+                                            <RuleMatchers
+                                              :items="item.matchers"
+                                            />
+                                          </p>
                                         </template>
                                       </DefinitionCard>
                                       <DefinitionCard
                                         v-if="item.origins.length > 0"
                                         layout="horizontal"
                                       >
-                                        <template #title>
+                                        <template
+                                          #title
+                                        >
                                           Origin Policies
                                         </template>
 
-                                        <template #body>
+                                        <template
+                                          #body
+                                        >
                                           <ul>
                                             <li
                                               v-for="origin in item.origins"
@@ -231,7 +257,9 @@
                                         <dt>
                                           Config
                                         </dt>
-                                        <dd class="mt-2">
+                                        <dd
+                                          class="mt-2"
+                                        >
                                           <div>
                                             <XCodeBlock
                                               :code="YAML.stringify(item.raw)"

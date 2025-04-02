@@ -3,12 +3,16 @@
     class="service-traffic-card"
     @click="click"
   >
-    <template #title>
+    <template
+      #title
+    >
       <TagList
         v-if="props.service.length > 0"
         :tags="[{label: 'kuma.io/service', value: props.service}]"
       />
-      <div class="title">
+      <div
+        class="title"
+      >
         <XBadge
           v-if="props.protocol !== ''"
           class="protocol"
@@ -22,11 +26,15 @@
             },
           ) }}
         </XBadge>
-        <slot name="default" />
+        <slot
+          name="default"
+        />
       </div>
     </template>
 
-    <template v-if="props.portName">
+    <template
+      v-if="props.portName"
+    >
       <dl>
         <div>
           <dt>Name</dt>
@@ -149,7 +157,9 @@
         </template>
       </dl>
     </template>
-    <template v-else>
+    <template
+      v-else
+    >
       <XProgress
         variant="line"
       />

@@ -17,20 +17,30 @@
         v-for="(items, type) in policies"
         :key="type"
       >
-        <template #accordion-header>
-          <h3 class="policy-type-heading">
-            <PolicyTypeTag :policy-type="type">
+        <template
+          #accordion-header
+        >
+          <h3
+            class="policy-type-heading"
+          >
+            <PolicyTypeTag
+              :policy-type="type"
+            >
               {{ type }}
             </PolicyTypeTag>
           </h3>
         </template>
 
-        <template #accordion-content>
+        <template
+          #accordion-content
+        >
           <template
             v-for="hasMatchers in [items.some((item) => item.matchers.length > 0)]"
             :key="hasMatchers"
           >
-            <div class="policy-list">
+            <div
+              class="policy-list"
+            >
               <AppCollection
                 class="policy-type-table"
                 :class="{
@@ -55,13 +65,19 @@
                     />
                   </span>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     <i>{{ t('data-planes.routes.item.matches_everything') }}</i>
                   </template>
                 </template>
 
-                <template #origins="{ row }">
-                  <ul v-if="row.origins.length > 0">
+                <template
+                  #origins="{ row }"
+                >
+                  <ul
+                    v-if="row.origins.length > 0"
+                  >
                     <li
                       v-for="(origin, originIndex) in row.origins"
                       :key="`${type}-${originIndex}`"
@@ -81,13 +97,19 @@
                     </li>
                   </ul>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #config="{ row }">
-                  <template v-if="Object.keys(row.raw).length > 0">
+                <template
+                  #config="{ row }"
+                >
+                  <template
+                    v-if="Object.keys(row.raw).length > 0"
+                  >
                     <XCodeBlock
                       :code="YAML.stringify(row.raw)"
                       language="yaml"
@@ -95,7 +117,9 @@
                     />
                   </template>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>

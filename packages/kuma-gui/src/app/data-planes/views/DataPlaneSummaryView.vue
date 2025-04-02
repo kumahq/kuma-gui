@@ -15,9 +15,13 @@
       :items="props.items"
       :predicate="item => item.id === route.params.proxy"
     >
-      <template #empty>
+      <template
+        #empty
+      >
         <XEmptyState>
-          <template #title>
+          <template
+            #title
+          >
             <h2>
               {{ t('common.collection.summary.empty_title', { type: 'Data Plane Proxy' }) }}
             </h2>
@@ -35,7 +39,9 @@
           :key="item.id"
         >
           <AppView>
-            <template #title>
+            <template
+              #title
+            >
               <h2
                 :class="`type-${item.dataplaneType}`"
               >
@@ -88,7 +94,9 @@
               </header>
             </XLayout>
 
-            <template v-if="route.params.format === 'structured'">
+            <template
+              v-if="route.params.format === 'structured'"
+            >
               <XLayout
                 type="stack"
                 data-testid="structured-view"
@@ -99,11 +107,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.status') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       <XLayout
                         type="separated"
                       >
@@ -139,11 +151,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       Type
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ t(`data-planes.type.${item.dataplaneType}`) }}
                     </template>
                   </DefinitionCard>
@@ -152,11 +168,15 @@
                     v-if="item.namespace.length > 0"
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('data-planes.routes.item.namespace') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ item.namespace }}
                     </template>
                   </DefinitionCard>
@@ -188,11 +208,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.modificationTime') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
                     </template>
                   </DefinitionCard>
@@ -210,11 +234,15 @@
                     <DefinitionCard
                       layout="horizontal"
                     >
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('http.api.property.tags') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         <TagList
                           alignment="right"
                           :tags="item.dataplane.networking.gateway.tags"
@@ -225,11 +253,15 @@
                     <DefinitionCard
                       layout="horizontal"
                     >
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('http.api.property.address') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         <XCopyButton
                           :text="`${item.dataplane.networking.address}`"
                         />
@@ -240,7 +272,9 @@
               </XLayout>
             </template>
 
-            <template v-else-if="route.params.format === 'universal'">
+            <template
+              v-else-if="route.params.format === 'universal'"
+            >
               <ResourceCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
@@ -256,7 +290,9 @@
               />
             </template>
 
-            <template v-else>
+            <template
+              v-else
+            >
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/dataplanes/:name/as/kubernetes', {
                   mesh: route.params.mesh,

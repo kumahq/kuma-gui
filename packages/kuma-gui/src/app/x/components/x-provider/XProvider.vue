@@ -1,5 +1,7 @@
 <template>
-  <slot name="default" />
+  <slot
+    name="default"
+  />
 </template>
 <script lang="ts" setup>
 import { provide } from 'vue'

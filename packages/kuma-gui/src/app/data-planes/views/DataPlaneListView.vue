@@ -46,7 +46,9 @@
             :selected="route.params.dataplaneType"
             @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
           >
-            <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+            <template
+              #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}"
+            >
               <XIcon
                 v-if="item !== 'all'"
                 :size="KUI_ICON_SIZE_40"
@@ -106,13 +108,19 @@
                 :is-selected-row="(row) => row.name === route.params.proxy"
                 @resize="me.set"
               >
-                <template #type="{ row: item }">
-                  <XIcon :name="item.dataplaneType">
+                <template
+                  #type="{ row: item }"
+                >
+                  <XIcon
+                    :name="item.dataplaneType"
+                  >
                     {{ t(`data-planes.type.${item.dataplaneType}`) }}
                   </XIcon>
                 </template>
 
-                <template #name="{ row: item }">
+                <template
+                  #name="{ row: item }"
+                >
                   <XAction
                     data-action
                     class="name-link"
@@ -135,11 +143,15 @@
                   </XAction>
                 </template>
 
-                <template #namespace="{ row: item }">
+                <template
+                  #namespace="{ row: item }"
+                >
                   {{ item.namespace }}
                 </template>
 
-                <template #services="{ row }">
+                <template
+                  #services="{ row }"
+                >
                   <XLayout
                     v-if="row.services.length > 0"
                     type="separated"
@@ -149,7 +161,9 @@
                       v-for="(service, index) in row.services"
                       :key="index"
                     >
-                      <XCopyButton :text="service">
+                      <XCopyButton
+                        :text="service"
+                      >
                         <XAction
                           v-if="row.dataplaneType === 'standard'"
                           :to="{
@@ -174,19 +188,25 @@
                           {{ service }}
                         </XAction>
 
-                        <template v-else>
+                        <template
+                          v-else
+                        >
                           {{ service }}
                         </template>
                       </XCopyButton>
                     </div>
                   </XLayout>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #zone="{ row }">
+                <template
+                  #zone="{ row }"
+                >
                   <XAction
                     v-if="row.zone"
                     :to="{
@@ -199,50 +219,70 @@
                     {{ row.zone }}
                   </XAction>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #certificate="{ row }">
-                  <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                <template
+                  #certificate="{ row }"
+                >
+                  <template
+                    v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime"
+                  >
                     {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
                   </template>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('data-planes.components.data-plane-list.certificate.none') }}
                   </template>
                 </template>
 
-                <template #status="{ row }">
+                <template
+                  #status="{ row }"
+                >
                   <StatusBadge
                     :status="row.status"
                   />
                 </template>
 
-                <template #warnings="{ row }">
+                <template
+                  #warnings="{ row }"
+                >
                   <XIcon
                     v-if="row.isCertExpired || row.warnings.length > 0"
                     class="mr-1"
                     name="warning"
                   >
                     <ul>
-                      <template v-if="row.warnings.length > 0">
+                      <template
+                        v-if="row.warnings.length > 0"
+                      >
                         <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
                       </template>
 
-                      <template v-if="row.isCertExpired">
+                      <template
+                        v-if="row.isCertExpired"
+                      >
                         <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
                       </template>
                     </ul>
                   </XIcon>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

@@ -33,7 +33,9 @@
             </XIcon>
           </template>
         </template>
-        <template #name="{ row: item }">
+        <template
+          #name="{ row: item }"
+        >
           <XAction
             data-action
             :to="{
@@ -47,7 +49,9 @@
           </XAction>
         </template>
 
-        <template #status="{ row: item }">
+        <template
+          #status="{ row: item }"
+        >
           <StatusBadge
             :status="item.state"
           />

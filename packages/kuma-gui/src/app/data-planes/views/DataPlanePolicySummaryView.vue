@@ -17,7 +17,9 @@
       v-slot="{ data, error }: PolicySource"
     >
       <AppView>
-        <template #title>
+        <template
+          #title
+        >
           <h2>
             <XAction
               :to="{
@@ -45,7 +47,9 @@
             :format="route.params.format"
             :legacy="!props.policyTypes.find(({ name }) => name === data?.type )?.policy.isTargetRef"
           >
-            <template #header>
+            <template
+              #header
+            >
               <header>
                 <XLayout
                   type="separated"
@@ -79,7 +83,9 @@
               </header>
             </template>
 
-            <template v-if="route.params.format === 'universal'">
+            <template
+              v-if="route.params.format === 'universal'"
+            >
               <ResourceCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
@@ -95,7 +101,9 @@
               />
             </template>
 
-            <template v-else-if="route.params.format === 'k8s'">
+            <template
+              v-else-if="route.params.format === 'k8s'"
+            >
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/policy-path/:path/policy/:name/as/kubernetes', {
                   mesh: route.params.mesh,

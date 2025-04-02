@@ -1,5 +1,7 @@
 <template>
-  <component :is="props.status === 'not_available' ? XTooltip : XAnonymous">
+  <component
+    :is="props.status === 'not_available' ? XTooltip : XAnonymous"
+  >
     <XBadge
       class="status-badge"
       :appearance="BADGE_APPEARANCE[props.status]"

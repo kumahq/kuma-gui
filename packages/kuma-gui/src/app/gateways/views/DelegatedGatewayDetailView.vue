@@ -12,7 +12,9 @@
     v-slot="{ can, route, t, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout
+        type="stack"
+      >
         <DataLoader
           :src="`/meshes/${route.params.mesh}/service-insights/${route.params.service}`"
           v-slot="{ data }: ServiceInsightSource"
@@ -23,22 +25,36 @@
             :created="data.creationTime"
             :modified="data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.status') }}
               </template>
 
-              <template #body>
-                <StatusBadge :status="data.status" />
+              <template
+                #body
+              >
+                <StatusBadge
+                  :status="data.status"
+                />
               </template>
             </DefinitionCard>
 
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.address') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XCopyButton
                   v-if="data.addressPort"
                   variant="badge"
@@ -46,7 +62,9 @@
                   :text="data.addressPort"
                 />
 
-                <template v-else>
+                <template
+                  v-else
+                >
                   {{ t('common.detail.none') }}
                 </template>
               </template>
@@ -57,7 +75,9 @@
               :online="data.dataplanes?.online ?? 0"
               :total="data.dataplanes?.total ?? 0"
             >
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('http.api.property.dataPlaneProxies') }}
               </template>
             </ResourceStatus>
@@ -65,7 +85,9 @@
         </DataLoader>
 
         <XCard>
-          <template #title>
+          <template
+            #title
+          >
             <h3>{{ t('delegated-gateways.detail.data_plane_proxies') }}</h3>
           </template>
 
@@ -116,7 +138,9 @@
                   :is-selected-row="(row) => row.name === route.params.proxy"
                   @resize="me.set"
                 >
-                  <template #name="{ row: item }">
+                  <template
+                    #name="{ row: item }"
+                  >
                     <XAction
                       data-action
                       class="name-link"
@@ -137,11 +161,15 @@
                     </XAction>
                   </template>
 
-                  <template #namespace="{ row: item }">
+                  <template
+                    #namespace="{ row: item }"
+                  >
                     {{ item.namespace }}
                   </template>
 
-                  <template #zone="{ row }">
+                  <template
+                    #zone="{ row }"
+                  >
                     <XAction
                       v-if="row.zone"
                       :to="{
@@ -154,48 +182,70 @@
                       {{ row.zone }}
                     </XAction>
 
-                    <template v-else>
+                    <template
+                      v-else
+                    >
                       {{ t('common.collection.none') }}
                     </template>
                   </template>
 
-                  <template #certificate="{ row }">
-                    <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                  <template
+                    #certificate="{ row }"
+                  >
+                    <template
+                      v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime"
+                    >
                       {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
                     </template>
 
-                    <template v-else>
+                    <template
+                      v-else
+                    >
                       {{ t('data-planes.components.data-plane-list.certificate.none') }}
                     </template>
                   </template>
 
-                  <template #status="{ row }">
-                    <StatusBadge :status="row.status" />
+                  <template
+                    #status="{ row }"
+                  >
+                    <StatusBadge
+                      :status="row.status"
+                    />
                   </template>
 
-                  <template #warnings="{ row }">
+                  <template
+                    #warnings="{ row }"
+                  >
                     <XIcon
                       v-if="row.isCertExpired || row.warnings.length > 0"
                       class="mr-1"
                       name="warning"
                     >
                       <ul>
-                        <template v-if="row.warnings.length > 0">
+                        <template
+                          v-if="row.warnings.length > 0"
+                        >
                           <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
                         </template>
 
-                        <template v-if="row.isCertExpired">
+                        <template
+                          v-if="row.isCertExpired"
+                        >
                           <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
                         </template>
                       </ul>
                     </XIcon>
 
-                    <template v-else>
+                    <template
+                      v-else
+                    >
                       {{ t('common.collection.none') }}
                     </template>
                   </template>
 
-                  <template #actions="{ row: item }">
+                  <template
+                    #actions="{ row: item }"
+                  >
                     <XActionGroup>
                       <XAction
                         :to="{

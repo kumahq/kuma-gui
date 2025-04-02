@@ -18,7 +18,9 @@
         },
       ]"
     >
-      <template #title>
+      <template
+        #title
+      >
         <h1>
           <RouteTitle
             :title="t('configuration.routes.item.title')"

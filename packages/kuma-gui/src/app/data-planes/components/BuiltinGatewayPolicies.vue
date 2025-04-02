@@ -1,11 +1,19 @@
 <template>
-  <div class="policies-list">
-    <div class="mesh-gateway-policy-list">
-      <h3 class="mb-2">
+  <div
+    class="policies-list"
+  >
+    <div
+      class="mesh-gateway-policy-list"
+    >
+      <h3
+        class="mb-2"
+      >
         Gateway policies
       </h3>
 
-      <ul v-if="gatewayDataplane.routePolicies.length > 0">
+      <ul
+        v-if="gatewayDataplane.routePolicies.length > 0"
+      >
         <li
           v-for="(policy, index) in gatewayDataplane.routePolicies"
           :key="index"
@@ -27,7 +35,9 @@
         </li>
       </ul>
 
-      <h3 class="mt-6 mb-2">
+      <h3
+        class="mt-6 mb-2"
+      >
         Listeners
       </h3>
 
@@ -41,8 +51,12 @@
               <b>Host</b>: {{ listenerEntry.hostName }}:{{ listenerEntry.port }} ({{ listenerEntry.protocol }})
             </div>
 
-            <template v-if="listenerEntry.routeEntries.length > 0">
-              <h4 class="mt-2 mb-2">
+            <template
+              v-if="listenerEntry.routeEntries.length > 0"
+            >
+              <h4
+                class="mt-2 mb-2"
+              >
                 Routes
               </h4>
 
@@ -54,8 +68,12 @@
                   v-for="(routeEntry, routeIndex) in listenerEntry.routeEntries"
                   :key="routeIndex"
                 >
-                  <template #accordion-header>
-                    <div class="dataplane-policy-header">
+                  <template
+                    #accordion-header
+                  >
+                    <div
+                      class="dataplane-policy-header"
+                    >
                       <div>
                         <div>
                           <b>Route</b>: <XAction
@@ -95,7 +113,9 @@
                     v-if="routeEntry.origins.length > 0"
                     #accordion-content
                   >
-                    <ul class="mt-1">
+                    <ul
+                      class="mt-1"
+                    >
                       <li
                         v-for="(policy, policyIndex) in routeEntry.origins"
                         :key="`${index}-${policyIndex}`"

@@ -3,12 +3,22 @@
     class="data-card"
   >
     <dl>
-      <div class="card">
-        <dt class="title">
-          <slot name="title" />
+      <div
+        class="card"
+      >
+        <dt
+          class="title"
+        >
+          <slot
+            name="title"
+          />
         </dt>
-        <dd class="body">
-          <slot name="default" />
+        <dd
+          class="body"
+        >
+          <slot
+            name="default"
+          />
         </dd>
       </div>
     </dl>

@@ -39,7 +39,9 @@
           },
         ]"
       >
-        <template #title>
+        <template
+          #title
+        >
           <h1
             v-if="data"
           >

@@ -16,9 +16,13 @@
       :predicate="item => item.id === route.params.gateway"
       :find="true"
     >
-      <template #empty>
+      <template
+        #empty
+      >
         <XEmptyState>
-          <template #title>
+          <template
+            #title
+          >
             <h2>
               {{ t('common.collection.summary.empty_title', { type: 'Gateway' }) }}
             </h2>
@@ -36,7 +40,9 @@
           :key="item.id"
         >
           <AppView>
-            <template #title>
+            <template
+              #title
+            >
               <h2>
                 <XAction
                   :to="{
@@ -53,7 +59,9 @@
                 </XAction>
               </h2>
             </template>
-            <XLayout type="stack">
+            <XLayout
+              type="stack"
+            >
               <header>
                 <XLayout
                   type="separated"
@@ -86,7 +94,9 @@
                 </XLayout>
               </header>
 
-              <template v-if="route.params.format === 'structured'">
+              <template
+                v-if="route.params.format === 'structured'"
+              >
                 <div
                   class="stack-with-borders"
                   data-testid="structured-view"
@@ -95,18 +105,24 @@
                     v-if="item.namespace.length > 0"
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('gateways.routes.item.namespace') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ item.namespace }}
                     </template>
                   </DefinitionCard>
                 </div>
               </template>
 
-              <template v-else-if="route.params.format === 'universal'">
+              <template
+                v-else-if="route.params.format === 'universal'"
+              >
                 <ResourceCodeBlock
                   data-testid="codeblock-yaml-universal"
                   language="yaml"
@@ -122,7 +138,9 @@
                 />
               </template>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 <DataLoader
                   :src="uri(sources, '/meshes/:mesh/mesh-gateways/:name/as/kubernetes', {
                     mesh: route.params.mesh,

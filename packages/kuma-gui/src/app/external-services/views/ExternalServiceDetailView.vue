@@ -27,12 +27,18 @@
             :created="data.creationTime"
             :modified="data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.address') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XCopyButton
                   variant="badge"
                   format="default"
@@ -45,18 +51,26 @@
               v-if="data.tags"
               layout="horizontal"
             >
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('http.api.property.tags') }}
               </template>
 
-              <template #body>
-                <TagList :tags="data.tags" />
+              <template
+                #body
+              >
+                <TagList
+                  :tags="data.tags"
+                />
               </template>
             </DefinitionCard>
           </XAboutCard>
 
           <XCard>
-            <template #title>
+            <template
+              #title
+            >
               <h3>{{ t('external-services.detail.config') }}</h3>
             </template>
 

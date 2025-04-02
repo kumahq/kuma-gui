@@ -4,7 +4,9 @@
     :error="error"
     :refresh="refresh"
   />
-  <span v-bind="attrs" />
+  <span
+    v-bind="attrs"
+  />
 </template>
 
 <script lang="ts" generic="T extends string | {

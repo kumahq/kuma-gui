@@ -18,7 +18,9 @@
         #item="{ item }"
       >
         <AppView>
-          <template #title>
+          <template
+            #title
+          >
             <h2>
               {{ item.zoneInstanceId ?? item.globalInstanceId ?? item.controlPlaneInstanceId }}
             </h2>
@@ -55,7 +57,9 @@
               </XLayout>
             </header>
 
-            <template v-if="route.params.output === 'structured'">
+            <template
+              v-if="route.params.output === 'structured'"
+            >
               <XLayout
                 type="stack"
                 data-testid="structured-view"
@@ -66,11 +70,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.version') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       <template
                         v-for="version in [item.version?.kumaCp?.version]"
                       >
@@ -81,11 +89,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.connectTime') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
                     </template>
                   </DefinitionCard>
@@ -93,22 +105,30 @@
                     v-if="item.disconnectTime"
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.disconnectTime') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
                     </template>
                   </DefinitionCard>
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('subscriptions.routes.item.headers.responses') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       <template
                         v-for="responses in [item.status?.total ?? {}]"
                       >
@@ -124,11 +144,15 @@
                       v-if="item[prop]"
                       layout="horizontal"
                     >
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t(`http.api.property.${prop}`) }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ item[prop] }}
                       </template>
                     </DefinitionCard>
@@ -136,11 +160,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.id') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ item.id }}
                     </template>
                   </DefinitionCard>
@@ -149,7 +177,9 @@
                   v-if="Object.keys(item.status.acknowledgements).length === 0"
                   variant="info"
                 >
-                  <template #icon>
+                  <template
+                    #icon
+                  >
                     <PortalIcon />
                   </template>
 
@@ -160,19 +190,25 @@
                   class="mt-8 stack-with-borders"
                 >
                   <div>
-                    <slot name="default" />
+                    <slot
+                      name="default"
+                    />
                   </div>
                   <DefinitionCard
                     class="mt-4"
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       <strong>
                         {{ t('subscriptions.routes.item.headers.type') }}
                       </strong>
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ t('subscriptions.routes.item.headers.stat') }}
                     </template>
                   </DefinitionCard>
@@ -183,11 +219,15 @@
                     <DefinitionCard
                       layout="horizontal"
                     >
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t(`http.api.property.${key}`) }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ _item.responsesSent }}/{{ _item.responsesAcknowledged }}
                       </template>
                     </DefinitionCard>
@@ -196,7 +236,9 @@
               </XLayout>
             </template>
 
-            <template v-else>
+            <template
+              v-else
+            >
               <XCodeBlock
                 language="yaml"
                 :code="YAML.stringify(item.$raw)"

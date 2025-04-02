@@ -1,19 +1,35 @@
 <template>
-  <div class="listener-routes-card">
-    <div class="listener-routes">
-      <div class="column">
-        <div class="header">
-          <h2 class="title">
+  <div
+    class="listener-routes-card"
+  >
+    <div
+      class="listener-routes"
+    >
+      <div
+        class="column"
+      >
+        <div
+          class="header"
+        >
+          <h2
+            class="title"
+          >
             {{ t('builtin-gateways.detail.listeners') }}
           </h2>
 
-          <p class="count">
+          <p
+            class="count"
+          >
             {{ meshGateway.conf.listeners.length }}
           </p>
         </div>
 
-        <div class="content">
-          <div class="listener-list">
+        <div
+          class="content"
+        >
+          <div
+            class="listener-list"
+          >
             <template
               v-for="(listener, index) in meshGateway.conf.listeners"
               :key="index"
@@ -26,7 +42,9 @@
                 data-testid="listener-card"
                 @click="triggerAction"
               >
-                <div class="listener-card-header">
+                <div
+                  class="listener-card-header"
+                >
                   <XBadge
                     appearance="info"
                   >
@@ -51,17 +69,27 @@
                   v-if="listener.tags || listener.tls"
                   class="definition-list definition-list--horizontal mt-2"
                 >
-                  <div v-if="listener.tags">
-                    <dt class="text-neutral">
+                  <div
+                    v-if="listener.tags"
+                  >
+                    <dt
+                      class="text-neutral"
+                    >
                       {{ t('builtin-gateways.detail.tags') }}:
                     </dt>
                     <dd>
-                      <TagList :tags="listener.tags" />
+                      <TagList
+                        :tags="listener.tags"
+                      />
                     </dd>
                   </div>
 
-                  <div v-if="listener.tls">
-                    <dt class="text-neutral">
+                  <div
+                    v-if="listener.tls"
+                  >
+                    <dt
+                      class="text-neutral"
+                    >
                       {{ t('http.api.property.tls') }}:
                     </dt>
                     <dd>{{ listener.tls.mode ?? 'TERMINATE' }}</dd>
@@ -73,26 +101,40 @@
         </div>
       </div>
 
-      <div class="column">
-        <div class="header">
-          <h2 class="title">
+      <div
+        class="column"
+      >
+        <div
+          class="header"
+        >
+          <h2
+            class="title"
+          >
             {{ t('builtin-gateways.detail.routes') }}
           </h2>
 
-          <p class="count">
+          <p
+            class="count"
+          >
             {{ toRules.length }}
           </p>
         </div>
 
-        <div class="content">
-          <div class="to-rule-list">
+        <div
+          class="content"
+        >
+          <div
+            class="to-rule-list"
+          >
             <XEmptyState
               v-if="toRules.length === 0"
             >
               {{ t('builtin-gateways.detail.no_rules', { listener: props.selectedListenerIndex + 1 }) }}
             </XEmptyState>
 
-            <template v-else>
+            <template
+              v-else
+            >
               <template
                 v-for="(toRule, index) in toRules"
                 :key="index"
@@ -101,10 +143,16 @@
                   class="card route-card"
                   data-testid="route-card"
                 >
-                  <div class="stack-with-borders">
-                    <dl class="definition-list definition-list--horizontal mt-2">
+                  <div
+                    class="stack-with-borders"
+                  >
+                    <dl
+                      class="definition-list definition-list--horizontal mt-2"
+                    >
                       <div>
-                        <dt class="text-neutral visually-hidden">
+                        <dt
+                          class="text-neutral visually-hidden"
+                        >
                           {{ t('builtin-gateways.detail.type') }}:
                         </dt>
                         <dd>
@@ -114,9 +162,13 @@
                         </dd>
                       </div>
 
-                      <template v-if="!toRule.config.hostnames.includes('*')">
+                      <template
+                        v-if="!toRule.config.hostnames.includes('*')"
+                      >
                         <div>
-                          <dt class="text-neutral">
+                          <dt
+                            class="text-neutral"
+                          >
                             {{ t('builtin-gateways.detail.hostnames') }}:
                           </dt>
                           <dd>{{ toRule.config.hostnames.join(', ') }}</dd>
@@ -124,7 +176,9 @@
                       </template>
 
                       <div>
-                        <dt class="text-neutral">
+                        <dt
+                          class="text-neutral"
+                        >
                           {{ t('builtin-gateways.detail.matchers') }}:
                         </dt>
                         <dd>
@@ -133,16 +187,22 @@
                             :items="toRule.matchers"
                           />
 
-                          <code v-else>*</code>
+                          <code
+                            v-else
+                          >*</code>
                         </dd>
                       </div>
 
                       <div>
-                        <dt class="text-neutral">
+                        <dt
+                          class="text-neutral"
+                        >
                           {{ t('builtin-gateways.detail.origins') }}:
                         </dt>
                         <dd>
-                          <div class="list">
+                          <div
+                            class="list"
+                          >
                             <XBadge
                               v-for="(origin, originIndex) in toRule.origins"
                               :key="originIndex"
@@ -165,10 +225,14 @@
                       </div>
                     </dl>
 
-                    <div v-if="toRule.config.rules.length > 0">
+                    <div
+                      v-if="toRule.config.rules.length > 0"
+                    >
                       <b>{{ t('builtin-gateways.detail.rules') }}</b>:
 
-                      <div class="stack-small mt-2">
+                      <div
+                        class="stack-small mt-2"
+                      >
                         <div
                           v-for="(rule, ruleIndex) in toRule.config.rules"
                           :key="ruleIndex"
@@ -177,7 +241,9 @@
                           <div>
                             {{ t('builtin-gateways.detail.matches') }}:
 
-                            <div class="stack-small mt-2">
+                            <div
+                              class="stack-small mt-2"
+                            >
                               <RuleMatch
                                 v-for="(match, matchIndex) in rule.matches"
                                 :key="matchIndex"
@@ -186,10 +252,14 @@
                             </div>
                           </div>
 
-                          <div v-if="rule.default.filters.length > 0">
+                          <div
+                            v-if="rule.default.filters.length > 0"
+                          >
                             {{ t('builtin-gateways.detail.filters') }}:
 
-                            <div class="stack-small mt-2">
+                            <div
+                              class="stack-small mt-2"
+                            >
                               <RuleFilter
                                 v-for="(filter, filterIndex) in rule.default.filters"
                                 :key="filterIndex"
@@ -198,15 +268,21 @@
                             </div>
                           </div>
 
-                          <div v-if="rule.default.backendRefs.length > 0">
+                          <div
+                            v-if="rule.default.backendRefs.length > 0"
+                          >
                             {{ t('builtin-gateways.detail.services') }}:
 
-                            <div class="stack-small mt-2">
+                            <div
+                              class="stack-small mt-2"
+                            >
                               <div
                                 v-for="(backendRef, backendRefIndex) in rule.default.backendRefs"
                                 :key="backendRefIndex"
                               >
-                                <TargetRef :target-ref="backendRef">
+                                <TargetRef
+                                  :target-ref="backendRef"
+                                >
                                   {{ backendRef.name }}
                                 </TargetRef>
                               </div>
@@ -216,23 +292,31 @@
                       </div>
                     </div>
 
-                    <div v-if="((item: Rule | RouteRule): item is RouteRule => 'default' in item.config)(toRule)">
+                    <div
+                      v-if="((item: Rule | RouteRule): item is RouteRule => 'default' in item.config)(toRule)"
+                    >
                       <b>{{ t('builtin-gateways.detail.default') }}</b>:
 
                       <div
                         v-if="toRule.config.default.backendRefs && toRule.config.default.backendRefs.length > 0"
                         class="stack-small mt-2"
                       >
-                        <div class="rule stack-small">
+                        <div
+                          class="rule stack-small"
+                        >
                           <div>
                             {{ t('builtin-gateways.detail.services') }}:
 
-                            <div class="stack-small mt-2">
+                            <div
+                              class="stack-small mt-2"
+                            >
                               <div
                                 v-for="(backendRef, backendRefIndex) in toRule.config.default.backendRefs"
                                 :key="backendRefIndex"
                               >
-                                <TargetRef :target-ref="backendRef">
+                                <TargetRef
+                                  :target-ref="backendRef"
+                                >
                                   {{ backendRef.name }}
                                 </TargetRef>
                               </div>

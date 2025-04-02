@@ -1,6 +1,8 @@
 <template>
   <XActionGroup>
-    <template #control>
+    <template
+      #control
+    >
       <XAction
         action="expand"
         appearance="primary"
@@ -8,11 +10,15 @@
         {{ t("main-overview.action_menu.toggle_button") }}
       </XAction>
     </template>
-    <XAction :to="{ name: 'hostname-generator-root-view' }">
+    <XAction
+      :to="{ name: 'hostname-generator-root-view' }"
+    >
       {{ t("main-overview.action_menu.items.hostname_generators") }}
     </XAction>
 
-    <slot name="actions" />
+    <slot
+      name="actions"
+    />
   </XActionGroup>
 </template>
 

@@ -11,7 +11,9 @@
     @filter-mode-change="emit('filter-mode-change', $event)"
     @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
   >
-    <template #secondary-actions>
+    <template
+      #secondary-actions
+    >
       <XDisclosure
         v-slot="{ expanded, toggle }"
       >
@@ -25,7 +27,9 @@
             }
           }"
         >
-          <XIcon name="copy" />{{ t('common.copyKubernetesShortText') }}
+          <XIcon
+            name="copy"
+          />{{ t('common.copyKubernetesShortText') }}
         </KCodeBlockIconButton>
         <XCopyButton
           format="hidden"

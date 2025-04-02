@@ -18,7 +18,9 @@
         :created="props.data.creationTime"
         :modified="props.data.modificationTime"
       >
-        <DefinitionCard layout="horizontal">
+        <DefinitionCard
+          layout="horizontal"
+        >
           <template
             #title
           >
@@ -27,7 +29,9 @@
           <template
             #body
           >
-            <XBadge appearance="decorative">
+            <XBadge
+              appearance="decorative"
+            >
               {{ props.data.type }}
             </XBadge>
           </template>
@@ -44,7 +48,9 @@
           <template
             #body
           >
-            <XBadge appearance="decorative">
+            <XBadge
+              appearance="decorative"
+            >
               {{ props.data.namespace }}
             </XBadge>
           </template>
@@ -61,7 +67,9 @@
           <template
             #body
           >
-            <XBadge appearance="decorative">
+            <XBadge
+              appearance="decorative"
+            >
               <XAction
                 :to="{
                   name: 'zone-cp-detail-view',
@@ -79,16 +87,22 @@
           v-if="props.data.spec"
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('http.api.property.targetRef') }}
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XBadge
               v-if="props.data.spec.targetRef"
               appearance="neutral"
             >
-              {{ props.data.spec.targetRef.kind }}<span v-if="props.data.spec.targetRef.name">:<b>{{ props.data.spec.targetRef.name }}</b></span>
+              {{ props.data.spec.targetRef.kind }}<span
+                v-if="props.data.spec.targetRef.name"
+              >:<b>{{ props.data.spec.targetRef.name }}</b></span>
             </XBadge>
             <XBadge
               v-else
@@ -101,7 +115,9 @@
       </XAboutCard>
       
       <XCard>
-        <template #title>
+        <template
+          #title
+        >
           <h3>Affected Data Plane Proxies</h3>
         </template>
           
@@ -137,7 +153,9 @@
                 :is-selected-row="(row) => row.id === route.params.proxy"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
+                <template
+                  #name="{ row: item }"
+                >
                   <XAction
                     data-action
                     :to="{
@@ -151,11 +169,15 @@
                   </XAction>
                 </template>
 
-                <template #namespace="{ row: item }">
+                <template
+                  #namespace="{ row: item }"
+                >
                   {{ item.namespace }}
                 </template>
 
-                <template #zone="{ row }">
+                <template
+                  #zone="{ row }"
+                >
                   <XAction
                     v-if="row.zone"
                     :to="{
@@ -168,12 +190,16 @@
                     {{ row.zone }}
                   </XAction>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

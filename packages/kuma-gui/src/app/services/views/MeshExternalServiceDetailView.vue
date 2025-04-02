@@ -11,7 +11,9 @@
     v-slot="{ route, can, t, uri, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout
+        type="stack"
+      >
         <XAboutCard
           :title="t('services.mesh-external-service.about.title')"
           :created="props.data.creationTime"
@@ -30,7 +32,9 @@
             <template
               #body
             >
-              <XBadge appearance="decorative">
+              <XBadge
+                appearance="decorative"
+              >
                 {{ props.data.namespace }}
               </XBadge>
             </template>
@@ -47,7 +51,9 @@
             <template
               #body
             >
-              <XBadge appearance="decorative">
+              <XBadge
+                appearance="decorative"
+              >
                 <XAction
                   :to="{
                     name: 'zone-cp-detail-view',
@@ -104,7 +110,9 @@
 
         
         <XCard>
-          <template #title>
+          <template
+            #title
+          >
             {{ t('services.detail.hostnames.title') }}
           </template>
 
@@ -115,7 +123,9 @@
               serviceName: route.params.service,
             })"
           >
-            <template #loadable="{ data: hostnames }">
+            <template
+              #loadable="{ data: hostnames }"
+            >
               <DataCollection
                 type="hostnames"
                 :items="hostnames?.items ?? [undefined]"
@@ -130,15 +140,21 @@
                   ]"
                   @resize="me.set"
                 >
-                  <template #hostname="{ row: item }">
+                  <template
+                    #hostname="{ row: item }"
+                  >
                     <b>
                       <XCopyButton
                         :text="item.hostname"
                       />
                     </b>
                   </template>
-                  <template #zones="{ row: item }">
-                    <XLayout type="separated">
+                  <template
+                    #zones="{ row: item }"
+                  >
+                    <XLayout
+                      type="separated"
+                    >
                       <XBadge
                         v-for="(zone, index) of item.zones"
                         :key="index"

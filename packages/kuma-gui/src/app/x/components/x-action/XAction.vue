@@ -16,7 +16,9 @@
       :danger="props.appearance === 'danger' ? true : false"
       @click="emit('click')"
     >
-      <slot name="default" />
+      <slot
+        name="default"
+      />
     </KDropdownItem>
   </template>
   <template
@@ -40,7 +42,9 @@
           :name="props.action as ('create' | 'refresh' | 'progress')"
         />
       </template>
-      <slot name="default" />
+      <slot
+        name="default"
+      />
       <template
         v-if="['expand'].includes(props.action)"
       >
@@ -61,7 +65,9 @@
         query,
       }"
     >
-      <slot name="default" />
+      <slot
+        name="default"
+      />
     </RouterLink>
   </template>
 
@@ -119,7 +125,9 @@
       v-bind="$attrs"
       :for="props.for"
     >
-      <slot name="default" />
+      <slot
+        name="default"
+      />
     </label>
   </template>
   <template
@@ -140,7 +148,9 @@
           :name="props.action as ('create' | 'refresh' | 'progress')"
         />
       </template>
-      <slot name="default" />
+      <slot
+        name="default"
+      />
       <template
         v-if="['expand'].includes(props.action)"
       >
@@ -165,7 +175,9 @@
           :size="KUI_ICON_SIZE_40"
         />
       </template>
-      <span><slot name="default" /></span>
+      <span><slot
+        name="default"
+      /></span>
     </button>
   </template>
 </template>

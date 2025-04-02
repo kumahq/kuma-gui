@@ -10,8 +10,12 @@
     data-testid="summary"
     @close="emit('close')"
   >
-    <template #title>
-      <XTeleportSlot :name="id" />
+    <template
+      #title
+    >
+      <XTeleportSlot
+        :name="id"
+      />
     </template>
     <slot />
   </KSlideout>

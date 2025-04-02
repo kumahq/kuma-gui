@@ -1,9 +1,17 @@
 <template>
-  <dl class="stack-small">
-    <template v-if="props.match.method">
-      <div class="match">
+  <dl
+    class="stack-small"
+  >
+    <template
+      v-if="props.match.method"
+    >
+      <div
+        class="match"
+      >
         <dt>
-          <XBadge appearance="neutral">
+          <XBadge
+            appearance="neutral"
+          >
             Method
           </XBadge>
         </dt>
@@ -14,36 +22,54 @@
       </div>
     </template>
 
-    <template v-if="props.match.path">
-      <div class="match">
+    <template
+      v-if="props.match.path"
+    >
+      <div
+        class="match"
+      >
         <dt>
-          <XBadge appearance="neutral">
+          <XBadge
+            appearance="neutral"
+          >
             Path
           </XBadge>
         </dt>
 
         <dd>
-          <span><span class="text-neutral">type:</span> {{ props.match.path.type }}</span>
+          <span><span
+            class="text-neutral"
+          >type:</span> {{ props.match.path.type }}</span>
           <code>{{ props.match.path.value }}</code>
         </dd>
       </div>
     </template>
 
-    <template v-if="props.match.queryParams && props.match.queryParams.length > 0">
+    <template
+      v-if="props.match.queryParams && props.match.queryParams.length > 0"
+    >
       <div
         v-for="(param, index) in props.match.queryParams"
         :key="index"
       >
-        <div class="match">
+        <div
+          class="match"
+        >
           <dt>
-            <XBadge appearance="neutral">
+            <XBadge
+              appearance="neutral"
+            >
               QueryParameter
             </XBadge>
           </dt>
 
           <dd>
-            <div class="list">
-              <span><span class="text-neutral">type:</span> {{ param.type }}</span>
+            <div
+              class="list"
+            >
+              <span><span
+                class="text-neutral"
+              >type:</span> {{ param.type }}</span>
               <span>{{ param.name }}:{{ param.value }}</span>
             </div>
           </dd>
@@ -51,22 +77,32 @@
       </div>
     </template>
 
-    <template v-if="props.match.headers && props.match.headers.length > 0">
+    <template
+      v-if="props.match.headers && props.match.headers.length > 0"
+    >
       <div
         v-for="(header, index) in props.match.headers"
         :key="index"
         class="match"
       >
         <dt>
-          <XBadge appearance="neutral">
+          <XBadge
+            appearance="neutral"
+          >
             Header
           </XBadge>
         </dt>
 
         <dd>
-          <div class="list">
-            <span><span class="text-neutral">type:</span> {{ header.type ?? 'Exact' }}</span>
-            <span>{{ header.name }}<span v-if="header.value">:{{ header.value }}</span></span>
+          <div
+            class="list"
+          >
+            <span><span
+              class="text-neutral"
+            >type:</span> {{ header.type ?? 'Exact' }}</span>
+            <span>{{ header.name }}<span
+              v-if="header.value"
+            >:{{ header.value }}</span></span>
           </div>
         </dd>
       </div>

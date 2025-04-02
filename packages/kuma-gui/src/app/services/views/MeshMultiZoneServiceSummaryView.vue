@@ -19,7 +19,9 @@
         #item="{ item }"
       >
         <AppView>
-          <template #title>
+          <template
+            #title
+          >
             <h2>
               <XAction
                 :to="{
@@ -72,7 +74,9 @@
                 </div>
               </XLayout>
             </header>
-            <template v-if="route.params.format === 'structured'">
+            <template
+              v-if="route.params.format === 'structured'"
+            >
               <div
                 class="stack-with-borders"
                 data-testid="structured-view"
@@ -131,7 +135,9 @@
               </div>
             </template>
 
-            <template v-else-if="route.params.format === 'universal'">
+            <template
+              v-else-if="route.params.format === 'universal'"
+            >
               <ResourceCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
@@ -147,7 +153,9 @@
               />
             </template>
 
-            <template v-else>
+            <template
+              v-else
+            >
               <DataLoader
                 :src="uri(sources, '/meshes/:mesh/mesh-service/:name/as/kubernetes', {
                   mesh: route.params.mesh,

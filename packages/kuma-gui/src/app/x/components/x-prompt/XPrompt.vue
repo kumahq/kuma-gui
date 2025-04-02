@@ -10,10 +10,14 @@
     <template
       #title
     >
-      <slot name="title" />
+      <slot
+        name="title"
+      />
     </template>
 
-    <slot name="default" />
+    <slot
+      name="default"
+    />
   </KPrompt>
 </template>
 <script lang="ts" setup>

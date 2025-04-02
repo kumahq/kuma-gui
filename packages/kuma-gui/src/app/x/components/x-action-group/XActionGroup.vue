@@ -15,7 +15,9 @@
         }"
         width="auto"
       >
-        <template #default>
+        <template
+          #default
+        >
           <slot
             v-if="slots.control"
             name="control"
@@ -27,15 +29,21 @@
             appearance="tertiary"
             size="small"
           >
-            <XIcon name="more" />
+            <XIcon
+              name="more"
+            />
           </XAction>
         </template>
-        <template #items>
+        <template
+          #items
+        >
           <XProvider
             name="x-action-group"
             :service="props"
           >
-            <slot name="default" />
+            <slot
+              name="default"
+            />
           </XProvider>
         </template>
       </KDropdown>

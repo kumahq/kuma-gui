@@ -31,7 +31,9 @@
             v-if="slots.title || slots.actions"
             class="app-view-title-bar"
           >
-            <KongIcon v-if="props.fullscreen" />
+            <KongIcon
+              v-if="props.fullscreen"
+            />
 
             <template
               v-if="summary.length > 0"
@@ -39,13 +41,17 @@
               <XTeleportTemplate
                 :to="{ name: summary }"
               >
-                <slot name="title" />
+                <slot
+                  name="title"
+                />
               </XTeleportTemplate>
             </template>
             <template
               v-else
             >
-              <slot name="title" />
+              <slot
+                name="title"
+              />
             </template>
 
             <div
@@ -55,7 +61,9 @@
                 v-if="slots.title"
                 name="app-view-docs"
               />
-              <slot name="actions">
+              <slot
+                name="actions"
+              >
                 <XTeleportSlot
                   :name="`${routeView.name}-actions`"
                 />

@@ -51,7 +51,9 @@
         />
       </slot>
     </template>
-    <template v-else>
+    <template
+      v-else
+    >
       <slot
         name="loadable"
         :data="srcData as TypeOf<T>"

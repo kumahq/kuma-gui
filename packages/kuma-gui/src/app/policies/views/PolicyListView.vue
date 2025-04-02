@@ -15,14 +15,20 @@
       :predicate="(policyType) => typeof policyType !== 'undefined' && policyType.path === route.params.policyPath"
       :items="props.policyTypes ?? []"
     >
-      <template #empty>
+      <template
+        #empty
+      >
         <XEmptyState>
           {{ t('policies.routes.items.empty') }}
         </XEmptyState>
       </template>
-      <template #item="{ item: type }">
+      <template
+        #item="{ item: type }"
+      >
         <AppView>
-          <div class="stack">
+          <div
+            class="stack"
+          >
             <XCard>
               <header>
                 <div>
@@ -45,7 +51,9 @@
                     :href="t('policies.href.docs', { name: type.name })"
                     data-testid="policy-documentation-link"
                   >
-                    <span class="visually-hidden">{{ t('common.documentation') }}</span>
+                    <span
+                      class="visually-hidden"
+                    >{{ t('common.documentation') }}</span>
                   </XAction>
                 </div>
                 <h3>
@@ -103,7 +111,9 @@
                       #empty
                     >
                       <XEmptyState>
-                        <template #title>
+                        <template
+                          #title
+                        >
                           <h3>
                             {{ t('policies.x-empty-state.title') }}
                           </h3>
@@ -162,7 +172,9 @@
                           </template>
                         </template>
 
-                        <template #name="{ row }">
+                        <template
+                          #name="{ row }"
+                        >
                           <XAction
                             data-action
                             :to="{
@@ -181,16 +193,22 @@
                             {{ row.name }}
                           </XAction>
                         </template>
-                        <template #namespace="{ row: item }">
+                        <template
+                          #namespace="{ row: item }"
+                        >
                           {{ item.namespace.length > 0 ? item.namespace : t('common.detail.none') }}
                         </template>
 
-                        <template #targetRef="{ row }">
+                        <template
+                          #targetRef="{ row }"
+                        >
                           <XBadge
                             v-if="typeof row.spec?.targetRef !== 'undefined'"
                             appearance="neutral"
                           >
-                            {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
+                            {{ row.spec.targetRef.kind }}<span
+                              v-if="row.spec.targetRef.name"
+                            >:<b>{{ row.spec.targetRef.name }}</b></span>
                           </XBadge>
                           <XBadge
                             v-else
@@ -200,8 +218,12 @@
                           </XBadge>
                         </template>
 
-                        <template #zone="{ row }">
-                          <template v-if="row.zone">
+                        <template
+                          #zone="{ row }"
+                        >
+                          <template
+                            v-if="row.zone"
+                          >
                             <XAction
                               :to="{
                                 name: 'zone-cp-detail-view',
@@ -214,12 +236,16 @@
                             </XAction>
                           </template>
 
-                          <template v-else>
+                          <template
+                            v-else
+                          >
                             {{ t('common.detail.none') }}
                           </template>
                         </template>
 
-                        <template #actions="{ row: item }">
+                        <template
+                          #actions="{ row: item }"
+                        >
                           <XActionGroup>
                             <XAction
                               :to="{

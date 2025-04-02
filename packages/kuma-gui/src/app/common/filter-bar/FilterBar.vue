@@ -15,9 +15,13 @@
         data-testid="filter-bar-focus-filter-input-button"
         @click="focusFilterInput"
       >
-        <span class="visually-hidden">Focus filter</span>
+        <span
+          class="visually-hidden"
+        >Focus filter</span>
 
-        <span class="filter-bar-icon">
+        <span
+          class="filter-bar-icon"
+        >
           <FilterIcon
             decorative
             data-testid="filter-bar-filter-icon"
@@ -61,7 +65,9 @@
         class="suggestion-box"
         data-testid="filter-bar-suggestion-box"
       >
-        <div class="suggestion-list">
+        <div
+          class="suggestion-list"
+        >
           <p
             v-if="tokenizerError !== null"
             class="filter-bar-error"
@@ -85,7 +91,9 @@
             class="suggestion-list-item"
             :class="{ 'suggestion-list-item-is-selected': selectedSuggestionItemIndex === index + 1 }"
           >
-            <b>{{ fieldEntry.fieldName }}</b><span v-if="fieldEntry.description !== ''">: {{ fieldEntry.description }}</span>
+            <b>{{ fieldEntry.fieldName }}</b><span
+              v-if="fieldEntry.description !== ''"
+            >: {{ fieldEntry.description }}</span>
 
             <button
               class="apply-suggestion-button"
@@ -95,7 +103,9 @@
               data-testid="filter-bar-apply-suggestion-button"
               @click="applySuggestion"
             >
-              <span class="visually-hidden">Add {{ fieldEntry.fieldName }}:</span>
+              <span
+                class="visually-hidden"
+              >Add {{ fieldEntry.fieldName }}:</span>
 
               <ChevronRightIcon
                 decorative

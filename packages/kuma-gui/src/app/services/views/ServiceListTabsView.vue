@@ -10,7 +10,9 @@
       class="stack"
     >
       <AppView>
-        <template #actions>
+        <template
+          #actions
+        >
           <XActionGroup
             :expanded="true"
           >

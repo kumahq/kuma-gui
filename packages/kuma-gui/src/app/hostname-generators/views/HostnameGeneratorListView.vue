@@ -11,7 +11,9 @@
     <AppView
       :docs="t('hostname-generators.href.docs')"
     >
-      <template #title>
+      <template
+        #title
+      >
         <h1>
           <RouteTitle
             :title="t('hostname-generators.routes.items.title')"
@@ -52,7 +54,9 @@
                 :is-selected-row="(item) => item.name === route.params.name"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
+                <template
+                  #name="{ row: item }"
+                >
                   <XCopyButton
                     :text="item.name"
                   >
@@ -74,7 +78,9 @@
                   </XCopyButton>
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

@@ -24,7 +24,9 @@
             :data="[data, rules]"
             :errors="[error, rulesError]"
           >
-            <template v-if="rules && data">
+            <template
+              v-if="rules && data"
+            >
               <ListenerRoutes
                 :mesh-gateway="props.gateway"
                 :selected-listener-index="Number(route.params.listener)"

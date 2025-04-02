@@ -2,8 +2,12 @@
   <XLayout
     type="stack"
   >
-    <slot name="header" />
-    <template v-if="props.format === 'structured'">
+    <slot
+      name="header"
+    />
+    <template
+      v-if="props.format === 'structured'"
+    >
       <div
         class="mt-4 stack-with-borders"
         data-testid="structured-view"
@@ -11,11 +15,15 @@
         <DefinitionCard
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('http.api.property.type') }}
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XBadge
               v-if="props.policy.type"
               appearance="neutral"
@@ -28,16 +36,22 @@
           v-if="!props.legacy"
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('http.api.property.targetRef') }}
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XBadge
               v-if="props.policy.spec?.targetRef"
               appearance="neutral"
             >
-              {{ props.policy.spec.targetRef.kind }}<span v-if="props.policy.spec.targetRef.name">:<b>{{ props.policy.spec.targetRef.name }}</b></span>
+              {{ props.policy.spec.targetRef.kind }}<span
+                v-if="props.policy.spec.targetRef.name"
+              >:<b>{{ props.policy.spec.targetRef.name }}</b></span>
             </XBadge>
             <XBadge
               v-else
@@ -51,11 +65,15 @@
           v-if="props.policy.namespace.length > 0"
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('data-planes.routes.item.namespace') }}
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             {{ props.policy.namespace }}
           </template>
         </DefinitionCard>
@@ -103,9 +121,13 @@
       />
     </template>
 
-    <template v-else>
+    <template
+      v-else
+    >
       <div>
-        <div class="mt-4">
+        <div
+          class="mt-4"
+        >
           <slot />
         </div>
       </div>

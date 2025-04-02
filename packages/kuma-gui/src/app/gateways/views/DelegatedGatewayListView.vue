@@ -45,8 +45,12 @@
                 :items="data?.items"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
-                  <XCopyButton :text="item.name">
+                <template
+                  #name="{ row: item }"
+                >
+                  <XCopyButton
+                    :text="item.name"
+                  >
                     <XAction
                       :to="{
                         name: 'delegated-gateway-detail-view',
@@ -65,32 +69,48 @@
                   </XCopyButton>
                 </template>
 
-                <template #addressPort="{ row }">
+                <template
+                  #addressPort="{ row }"
+                >
                   <XCopyButton
                     v-if="row.addressPort"
                     :text="row.addressPort"
                   />
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #dataplanes="{ row }">
-                  <template v-if="row.dataplanes">
+                <template
+                  #dataplanes="{ row }"
+                >
+                  <template
+                    v-if="row.dataplanes"
+                  >
                     {{ row.dataplanes.online || 0 }} / {{ row.dataplanes.total || 0 }}
                   </template>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #status="{ row }">
-                  <StatusBadge :status="row.status" />
+                <template
+                  #status="{ row }"
+                >
+                  <StatusBadge
+                    :status="row.status"
+                  />
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

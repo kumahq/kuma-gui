@@ -25,7 +25,9 @@
             ]"
             :items="props.data.zoneIngress.availableServices"
           >
-            <template #name="{ row: item }">
+            <template
+              #name="{ row: item }"
+            >
               <XAction
                 :to="{
                   name: 'service-detail-view',
@@ -39,7 +41,9 @@
               </XAction>
             </template>
 
-            <template #mesh="{ row: item }">
+            <template
+              #mesh="{ row: item }"
+            >
               <XAction
                 :to="{
                   name: 'mesh-detail-view',
@@ -52,15 +56,21 @@
               </XAction>
             </template>
 
-            <template #protocol="{ row: item }">
+            <template
+              #protocol="{ row: item }"
+            >
               {{ item.tags['kuma.io/protocol'] ?? t('common.collection.none') }}
             </template>
 
-            <template #instances="{ row: item }">
+            <template
+              #instances="{ row: item }"
+            >
               {{ item.instances }}
             </template>
 
-            <template #actions="{ row: item }">
+            <template
+              #actions="{ row: item }"
+            >
               <XActionGroup>
                 <XAction
                   :to="{

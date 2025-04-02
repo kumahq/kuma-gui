@@ -15,9 +15,13 @@
       :predicate="item => item.id === route.params.proxy"
       :find="true"
     >
-      <template #empty>
+      <template
+        #empty
+      >
         <XEmptyState>
-          <template #title>
+          <template
+            #title
+          >
             <h2>
               {{ t('common.collection.summary.empty_title', { type: 'ZoneIngress' }) }}
             </h2>
@@ -35,7 +39,9 @@
           :key="item.id"
         >
           <AppView>
-            <template #title>
+            <template
+              #title
+            >
               <h2>
                 <XAction
                   :to="{
@@ -88,7 +94,9 @@
                   </div>
                 </XLayout>
               </header>
-              <template v-if="route.params.format === 'structured'">
+              <template
+                v-if="route.params.format === 'structured'"
+              >
                 <div
                   class="stack-with-borders"
                   data-testid="structured-view"
@@ -96,11 +104,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.status') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       <StatusBadge
                         :status="item.state"
                       />
@@ -111,11 +123,15 @@
                     v-if="item.namespace.length > 0"
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('data-planes.routes.item.namespace') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       {{ item.namespace }}
                     </template>
                   </DefinitionCard>
@@ -123,11 +139,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.address') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       <template
                         v-if="item.zoneIngress.socketAddress.length > 0"
                       >
@@ -136,7 +156,9 @@
                         />
                       </template>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('common.detail.none') }}
                       </template>
                     </template>
@@ -145,11 +167,15 @@
                   <DefinitionCard
                     layout="horizontal"
                   >
-                    <template #title>
+                    <template
+                      #title
+                    >
                       {{ t('http.api.property.advertisedAddress') }}
                     </template>
 
-                    <template #body>
+                    <template
+                      #body
+                    >
                       <template
                         v-if="item.zoneIngress.advertisedSocketAddress.length > 0"
                       >
@@ -158,7 +184,9 @@
                         />
                       </template>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('common.detail.none') }}
                       </template>
                     </template>
@@ -166,7 +194,9 @@
                 </div>
               </template>
 
-              <template v-else-if="route.params.format === 'universal'">
+              <template
+                v-else-if="route.params.format === 'universal'"
+              >
                 <ResourceCodeBlock
                   data-testid="codeblock-yaml-universal"
                   language="yaml"
@@ -182,7 +212,9 @@
                 />
               </template>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 <DataLoader
                   :src="uri(sources, '/zone-ingresses/:name/as/kubernetes', {
                     name: route.params.proxy,

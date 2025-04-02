@@ -21,9 +21,13 @@
           },
         ]"
       >
-        <template #title>
+        <template
+          #title
+        >
           <h1>
-            <XCopyButton :text="route.params.zone">
+            <XCopyButton
+              :text="route.params.zone"
+            >
               <RouteTitle
                 :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
               />
@@ -112,7 +116,9 @@
           </template>
         </XTabs>
 
-        <RouterView v-slot="child">
+        <RouterView
+          v-slot="child"
+        >
           <component
             :is="child.Component"
             :data="data"

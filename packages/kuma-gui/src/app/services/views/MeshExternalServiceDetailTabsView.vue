@@ -37,11 +37,15 @@
           },
         ]"
       >
-        <template #title>
+        <template
+          #title
+        >
           <h1
             v-if="data"
           >
-            <XCopyButton :text="route.params.service">
+            <XCopyButton
+              :text="route.params.service"
+            >
               <RouteTitle
                 :title="t('services.routes.item.title', { name: data.name })"
               />

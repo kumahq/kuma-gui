@@ -4,37 +4,53 @@
       v-if="slots.icon"
       #icon
     >
-      <slot name="icon" />
+      <slot
+        name="icon"
+      />
     </template>
 
     <template
       v-if="slots.title"
       #title
     >
-      <slot name="title" />
+      <slot
+        name="title"
+      />
     </template>
 
-    <template #body>
+    <template
+      #body
+    >
       <XLayout
         type="separated"
       >
         <div>
-          <div class="status">
-            <template v-if="typeof props.online !== 'undefined'">
+          <div
+            class="status"
+          >
+            <template
+              v-if="typeof props.online !== 'undefined'"
+            >
               <span
                 :class="{ ['text-neutral']: props.online !== props.total }"
-              >{{ props.online }}</span><span class="status-separator">/</span>
+              >{{ props.online }}</span><span
+                class="status-separator"
+              >/</span>
             </template><span>{{ props.total }}</span>
           </div>
           <div
             v-if="slots.description"
             class="description"
           >
-            <slot name="description" />
+            <slot
+              name="description"
+            />
           </div>
         </div>
 
-        <slot name="body" />
+        <slot
+          name="body"
+        />
       </XLayout>
     </template>
   </DefinitionCard>

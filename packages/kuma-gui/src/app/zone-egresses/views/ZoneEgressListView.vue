@@ -64,7 +64,9 @@
               :is-selected-row="(row) => row.name === route.params.proxy"
               @resize="me.set"
             >
-              <template #name="{ row: item }">
+              <template
+                #name="{ row: item }"
+              >
                 <XAction
                   data-action
                   :to="{
@@ -83,23 +85,31 @@
                 </XAction>
               </template>
 
-              <template #socketAddress="{ row: item }">
+              <template
+                #socketAddress="{ row: item }"
+              >
                 <XCopyButton
                   v-if="item.zoneEgress.socketAddress.length > 0"
                   :text="item.zoneEgress.socketAddress"
                 />
-                <template v-else>
+                <template
+                  v-else
+                >
                   {{ t('common.collection.none') }}
                 </template>
               </template>
 
-              <template #status="{ row: item }">
+              <template
+                #status="{ row: item }"
+              >
                 <StatusBadge
                   :status="item.state"
                 />
               </template>
 
-              <template #actions="{ row: item }">
+              <template
+                #actions="{ row: item }"
+              >
                 <XActionGroup>
                   <XAction
                     :to="{

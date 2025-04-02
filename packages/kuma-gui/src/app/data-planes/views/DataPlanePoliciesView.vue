@@ -73,7 +73,9 @@
                 v-slot="{ items }"
               >
                 <XCard>
-                  <h3 class="mb-2">
+                  <h3
+                    class="mb-2"
+                  >
                     {{ t('data-planes.routes.item.rules.from') }}
                   </h3>
                   <template
@@ -104,7 +106,9 @@
                 v-slot="{ items }"
               >
                 <XCard>
-                  <h3 class="mb-2">
+                  <h3
+                    class="mb-2"
+                  >
                     {{ t('data-planes.routes.item.rules.inbound') }}
                   </h3>
                   <template
@@ -131,10 +135,14 @@
           </DataLoader>
 
           <!-- if we are in non-federated zone mode try and load/show legacy policies -->
-          <template v-if="!can('use zones')">
+          <template
+            v-if="!can('use zones')"
+          >
             <div>
               <!-- builtin gateways have different data/visuals than other types of dataplanes -->
-              <template v-if="props.data.dataplaneType === 'builtin'">
+              <template
+                v-if="props.data.dataplaneType === 'builtin'"
+              >
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
                   :data="[policyTypesData]"
@@ -163,7 +171,9 @@
               </template>
 
               <!-- anything but builtin gateways -->
-              <template v-else>
+              <template
+                v-else
+              >
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
                   :data="[policyTypesData]"

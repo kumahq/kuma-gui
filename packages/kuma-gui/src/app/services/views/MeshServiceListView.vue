@@ -51,7 +51,9 @@
                 :is-selected-row="(item) => item.name === route.params.service"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
+                <template
+                  #name="{ row: item }"
+                >
                   <XCopyButton
                     :text="item.name"
                   >
@@ -78,8 +80,12 @@
                 >
                   {{ item.namespace }}
                 </template>
-                <template #zone="{ row: item }">
-                  <template v-if="item.zone">
+                <template
+                  #zone="{ row: item }"
+                >
+                  <template
+                    v-if="item.zone"
+                  >
                     <XAction
                       :to="{
                         name: 'zone-cp-detail-view',
@@ -92,7 +98,9 @@
                     </XAction>
                   </template>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.detail.none') }}
                   </template>
                 </template>
@@ -127,7 +135,9 @@
                     />
                   </XLayout>
                 </template>
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

@@ -1,5 +1,7 @@
 <template>
-  <span class="target-ref">
+  <span
+    class="target-ref"
+  >
     <XAction
       v-if="routeTarget !== null"
       :to="routeTarget"
@@ -9,7 +11,9 @@
       </XBadge>
     </XAction>
 
-    <XBadge v-else>
+    <XBadge
+      v-else
+    >
       <slot />
     </XBadge>
 

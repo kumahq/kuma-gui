@@ -3,8 +3,12 @@
     class="service-traffic-group"
     :class="`type-${props.type}`"
   >
-    <div class="body">
-      <slot name="default" />
+    <div
+      class="body"
+    >
+      <slot
+        name="default"
+      />
     </div>
   </XCard>
 </template>

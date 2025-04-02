@@ -18,7 +18,11 @@
         :is="tag.route ? 'XAction' : 'span'"
         :to="tag.route"
       >
-        <span class="label">{{ tag.label }}</span>:<span class="value">{{ tag.value }}</span>
+        <span
+          class="label"
+        >{{ tag.label }}</span>:<span
+          class="value"
+        >{{ tag.value }}</span>
       </component>
     </XBadge>
   </component>

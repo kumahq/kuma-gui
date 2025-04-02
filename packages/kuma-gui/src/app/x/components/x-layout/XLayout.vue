@@ -3,7 +3,9 @@
     :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
     :class="['x-layout', props.type, props.size, props.justify]"
   >
-    <slot name="default" />
+    <slot
+      name="default"
+    />
   </component>
 </template>
 <script lang="ts" setup>

@@ -17,7 +17,9 @@
       <ApplicationShell
         class="kuma-application"
       >
-        <template #home>
+        <template
+          #home
+        >
           <img
             class="logo"
             src="@/assets/images/product-logo.png"
@@ -26,7 +28,9 @@
           >
         </template>
 
-        <template #navigation>
+        <template
+          #navigation
+        >
           <AppNavigator
             v-style="'--icon: var(--icon-home)'"
             data-testid="control-planes-navigator"
@@ -67,7 +71,9 @@
           />
         </template>
 
-        <template #bottomNavigation>
+        <template
+          #bottomNavigation
+        >
           <AppNavigator
             v-style="'--icon: var(--icon-configuration)'"
             :active="child.name === 'configuration-view'"

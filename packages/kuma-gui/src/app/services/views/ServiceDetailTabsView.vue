@@ -30,9 +30,13 @@
         },
       ]"
     >
-      <template #title>
+      <template
+        #title
+      >
         <h1>
-          <XCopyButton :text="route.params.service">
+          <XCopyButton
+            :text="route.params.service"
+          >
             <RouteTitle
               :title="t('services.routes.item.title', { name: route.params.service })"
             />

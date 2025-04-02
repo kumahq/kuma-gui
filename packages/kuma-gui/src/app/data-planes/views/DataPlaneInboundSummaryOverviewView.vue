@@ -12,12 +12,18 @@
       <div
         class="stack-with-borders"
       >
-        <DefinitionCard layout="horizontal">
-          <template #title>
+        <DefinitionCard
+          layout="horizontal"
+        >
+          <template
+            #title
+          >
             Tags
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <TagList
               :tags="props.data.tags"
               alignment="right"
@@ -27,11 +33,15 @@
         <DefinitionCard
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('http.api.property.state') }}
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XBadge
               :appearance="props.data.state === 'Ready' ? 'success' : 'danger'"
             >
@@ -39,12 +49,18 @@
             </XBadge>
           </template>
         </DefinitionCard>
-        <DefinitionCard layout="horizontal">
-          <template #title>
+        <DefinitionCard
+          layout="horizontal"
+        >
+          <template
+            #title
+          >
             Protocol
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XBadge
               appearance="info"
             >
@@ -52,12 +68,18 @@
             </XBadge>
           </template>
         </DefinitionCard>
-        <DefinitionCard layout="horizontal">
-          <template #title>
+        <DefinitionCard
+          layout="horizontal"
+        >
+          <template
+            #title
+          >
             Address
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XCopyButton
               :text="`${props.data.addressPort}`"
             />
@@ -67,11 +89,15 @@
           v-if="props.data.serviceAddressPort.length > 0"
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             Service Address
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XCopyButton
               :text="`${props.data.serviceAddressPort}`"
             />
@@ -81,11 +107,15 @@
           v-if="props.data.portName.length > 0"
           layout="horizontal"
         >
-          <template #title>
+          <template
+            #title
+          >
             Name
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XCopyButton
               :text="`${props.data.portName}`"
             />
@@ -123,7 +153,9 @@
                   :items="[...rulesData!.rules, ...rulesData!.inboundRules]"
                   v-slot="{ items }"
                 >
-                  <div class="mt-4">
+                  <div
+                    class="mt-4"
+                  >
                     <AccordionList
                       :initially-open="0"
                       multiple-open
@@ -135,14 +167,18 @@
                       >
                         <XCard>
                           <AccordionItem>
-                            <template #accordion-header>
+                            <template
+                              #accordion-header
+                            >
                               <PolicyTypeTag
                                 :policy-type="key"
                               >
                                 {{ key }} ({{ rules!.length }})
                               </PolicyTypeTag>
                             </template>
-                            <template #accordion-content>
+                            <template
+                              #accordion-content
+                            >
                               <div
                                 class="stack-with-borders"
                               >
@@ -154,23 +190,35 @@
                                     v-if="item.matchers.length > 0"
                                     layout="horizontal"
                                   >
-                                    <template #title>
+                                    <template
+                                      #title
+                                    >
                                       From
                                     </template>
 
-                                    <template #body>
-                                      <p><RuleMatchers :items="item.matchers" /></p>
+                                    <template
+                                      #body
+                                    >
+                                      <p>
+                                        <RuleMatchers
+                                          :items="item.matchers"
+                                        />
+                                      </p>
                                     </template>
                                   </DefinitionCard>
                                   <DefinitionCard
                                     v-if="item.origins.length > 0"
                                     layout="horizontal"
                                   >
-                                    <template #title>
+                                    <template
+                                      #title
+                                    >
                                       Origin Policies
                                     </template>
 
-                                    <template #body>
+                                    <template
+                                      #body
+                                    >
                                       <ul>
                                         <li
                                           v-for="origin in item.origins"
@@ -202,7 +250,9 @@
                                     <dt>
                                       Config
                                     </dt>
-                                    <dd class="mt-2">
+                                    <dd
+                                      class="mt-2"
+                                    >
                                       <div>
                                         <XCodeBlock
                                           :code="YAML.stringify(item.raw)"

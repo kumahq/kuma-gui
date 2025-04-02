@@ -71,11 +71,15 @@
                     :is-selected-row="(row) => row.name === route.params.proxy"
                     @resize="me.set"
                   >
-                    <template #namespace="{ row }">
+                    <template
+                      #namespace="{ row }"
+                    >
                       {{ row.namespace }}
                     </template>
 
-                    <template #name="{ row }">
+                    <template
+                      #name="{ row }"
+                    >
                       <XAction
                         data-action
                         class="name-link"
@@ -97,7 +101,9 @@
                       </XAction>
                     </template>
 
-                    <template #zone="{ row }">
+                    <template
+                      #zone="{ row }"
+                    >
                       <XAction
                         v-if="row.zone"
                         :to="{
@@ -110,48 +116,70 @@
                         {{ row.zone }}
                       </XAction>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('common.collection.none') }}
                       </template>
                     </template>
 
-                    <template #certificate="{ row }">
-                      <template v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime">
+                    <template
+                      #certificate="{ row }"
+                    >
+                      <template
+                        v-if="row.dataplaneInsight.mTLS?.certificateExpirationTime"
+                      >
                         {{ t('common.formats.datetime', { value: Date.parse(row.dataplaneInsight.mTLS.certificateExpirationTime) }) }}
                       </template>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('data-planes.components.data-plane-list.certificate.none') }}
                       </template>
                     </template>
 
-                    <template #status="{ row }">
-                      <StatusBadge :status="row.status" />
+                    <template
+                      #status="{ row }"
+                    >
+                      <StatusBadge
+                        :status="row.status"
+                      />
                     </template>
 
-                    <template #warnings="{ row }">
+                    <template
+                      #warnings="{ row }"
+                    >
                       <XIcon
                         v-if="row.isCertExpired || row.warnings.length > 0"
                         class="mr-1"
                         name="warning"
                       >
                         <ul>
-                          <template v-if="row.warnings.length > 0">
+                          <template
+                            v-if="row.warnings.length > 0"
+                          >
                             <li>{{ t('data-planes.components.data-plane-list.version_mismatch') }}</li>
                           </template>
 
-                          <template v-if="row.isCertExpired">
+                          <template
+                            v-if="row.isCertExpired"
+                          >
                             <li>{{ t('data-planes.components.data-plane-list.cert_expired') }}</li>
                           </template>
                         </ul>
                       </XIcon>
 
-                      <template v-else>
+                      <template
+                        v-else
+                      >
                         {{ t('common.collection.none') }}
                       </template>
                     </template>
 
-                    <template #actions="{ row: item }">
+                    <template
+                      #actions="{ row: item }"
+                    >
                       <XActionGroup>
                         <XAction
                           :to="{

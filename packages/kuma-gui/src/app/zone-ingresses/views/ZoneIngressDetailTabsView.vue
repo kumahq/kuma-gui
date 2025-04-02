@@ -197,7 +197,9 @@
             </template>
           </XTabs>
 
-          <RouterView v-slot="child">
+          <RouterView
+            v-slot="child"
+          >
             <component
               :is="child.Component"
               :networking="data?.zoneIngress.networking"

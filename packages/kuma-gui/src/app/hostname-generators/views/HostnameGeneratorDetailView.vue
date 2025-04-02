@@ -17,8 +17,12 @@
       })"
       v-slot="{ data }"
     >
-      <AppView :docs="t('hostname-generators.href.docs')">
-        <template #title>
+      <AppView
+        :docs="t('hostname-generators.href.docs')"
+      >
+        <template
+          #title
+        >
           <h1>
             <XCopyButton
               :text="data.name"
@@ -49,12 +53,18 @@
                 v-if="Object.keys(labels).length"
                 layout="horizontal"
               >
-                <template #title>
+                <template
+                  #title
+                >
                   {{ t('http.api.property.tags') }}
                 </template>
 
-                <template #body>
-                  <XLayout type="separated">
+                <template
+                  #body
+                >
+                  <XLayout
+                    type="separated"
+                  >
                     <template
                       v-for="(value, key) in labels"
                       :key="key"

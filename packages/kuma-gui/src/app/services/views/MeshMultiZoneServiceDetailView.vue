@@ -11,13 +11,17 @@
     v-slot="{ route, t, uri, me }"
   >
     <AppView>
-      <XLayout type="stack">
+      <XLayout
+        type="stack"
+      >
         <XAboutCard
           :title="t('services.mesh-multi-zone-service.about.title')"
           :created="props.data.creationTime"
           :modified="props.data.modificationTime"
         >
-          <DefinitionCard layout="horizontal">
+          <DefinitionCard
+            layout="horizontal"
+          >
             <template
               #title
             >
@@ -26,7 +30,9 @@
             <template
               #body
             >
-              <template v-if="props.data.spec.ports.length">
+              <template
+                v-if="props.data.spec.ports.length"
+              >
                 <KumaPort
                   v-for="connection in props.data.spec.ports"
                   :key="connection.port"
@@ -36,12 +42,16 @@
                   }"
                 />
               </template>
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ t('common.detail.none') }}
               </template>
             </template>
           </DefinitionCard>
-          <DefinitionCard layout="horizontal">
+          <DefinitionCard
+            layout="horizontal"
+          >
             <template
               #title
             >
@@ -50,7 +60,9 @@
             <template
               #body
             >
-              <template v-if="Object.keys(data.spec.selector.meshService.matchLabels).length">
+              <template
+                v-if="Object.keys(data.spec.selector.meshService.matchLabels).length"
+              >
                 <XBadge
                   v-for="(value, key) in data.spec.selector.meshService.matchLabels"
                   :key="`${key}:${value}`"
@@ -59,7 +71,9 @@
                   {{ key }}:{{ value }}
                 </XBadge>
               </template>
-              <template v-else>
+              <template
+                v-else
+              >
                 {{ t('common.detail.none') }}
               </template>
             </template>
@@ -67,7 +81,9 @@
         </XAboutCard>
         
         <XCard>
-          <template #title>
+          <template
+            #title
+          >
             {{ t('services.detail.hostnames.title') }}
           </template>
 
@@ -78,7 +94,9 @@
               serviceName: route.params.service,
             })"
           >
-            <template #loadable="{ data: hostnames }">
+            <template
+              #loadable="{ data: hostnames }"
+            >
               <DataCollection
                 type="hostnames"
                 :items="hostnames?.items ?? [undefined]"
@@ -93,15 +111,21 @@
                   ]"
                   @resize="me.set"
                 >
-                  <template #hostname="{ row: item }">
+                  <template
+                    #hostname="{ row: item }"
+                  >
                     <b>
                       <XCopyButton
                         :text="item.hostname"
                       />
                     </b>
                   </template>
-                  <template #zones="{ row: item }">
-                    <XLayout type="separated">
+                  <template
+                    #zones="{ row: item }"
+                  >
+                    <XLayout
+                      type="separated"
+                    >
                       <XBadge
                         v-for="(zone, index) of item.zones"
                         :key="index"

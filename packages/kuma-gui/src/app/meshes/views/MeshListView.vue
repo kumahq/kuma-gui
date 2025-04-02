@@ -18,7 +18,9 @@
       <AppView
         :docs="data?.items.length ? t('meshes.href.docs'):''"
       >
-        <template #title>
+        <template
+          #title
+        >
           <h1>
             <RouteTitle
               :title="t('meshes.routes.items.title')"

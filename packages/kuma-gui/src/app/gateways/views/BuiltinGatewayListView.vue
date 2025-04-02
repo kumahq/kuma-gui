@@ -43,7 +43,9 @@
                 :items="data?.items"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
+                <template
+                  #name="{ row: item }"
+                >
                   <XCopyButton
                     :text="item.name"
                   >
@@ -66,8 +68,12 @@
                   </XCopyButton>
                 </template>
 
-                <template #zone="{ row }">
-                  <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
+                <template
+                  #zone="{ row }"
+                >
+                  <template
+                    v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']"
+                  >
                     <XAction
                       :to="{
                         name: 'zone-cp-detail-view',
@@ -80,12 +86,16 @@
                     </XAction>
                   </template>
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.detail.none') }}
                   </template>
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

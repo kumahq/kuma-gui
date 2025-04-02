@@ -51,8 +51,12 @@
                 :is-selected-row="(row) => row.name === route.params.service"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
-                  <XCopyButton :text="item.name">
+                <template
+                  #name="{ row: item }"
+                >
+                  <XCopyButton
+                    :text="item.name"
+                  >
                     <XAction
                       data-action
                       :to="{
@@ -72,18 +76,24 @@
                   </XCopyButton>
                 </template>
 
-                <template #addressPort="{ row }">
+                <template
+                  #addressPort="{ row }"
+                >
                   <XCopyButton
                     v-if="row.addressPort"
                     :text="row.addressPort"
                   />
 
-                  <template v-else>
+                  <template
+                    v-else
+                  >
                     {{ t('common.collection.none') }}
                   </template>
                 </template>
 
-                <template #online="{ row: item }">
+                <template
+                  #online="{ row: item }"
+                >
                   <template
                     v-if="item.dataplanes"
                   >
@@ -96,11 +106,17 @@
                   </template>
                 </template>
 
-                <template #status="{ row: item }">
-                  <StatusBadge :status="item.status" />
+                <template
+                  #status="{ row: item }"
+                >
+                  <StatusBadge
+                    :status="item.status"
+                  />
                 </template>
 
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

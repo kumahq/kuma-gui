@@ -1,5 +1,7 @@
 <template>
-  <span class="policy-type-tag">
+  <span
+    class="policy-type-tag"
+  >
     <img
       v-if="POLICY_ICON[props.policyType]"
       class="policy-type-tag-icon"
@@ -7,7 +9,9 @@
       alt=""
     >
 
-    <BrainIcon v-else />
+    <BrainIcon
+      v-else
+    />
 
     <slot>
       {{ props.policyType }}

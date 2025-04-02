@@ -29,9 +29,15 @@
           <div
             class="horizontal-list"
           >
-            <slot name="header">
-              <XAction :to="{ name: 'home' }">
-                <slot name="home" />
+            <slot
+              name="header"
+            >
+              <XAction
+                :to="{ name: 'home' }"
+              >
+                <slot
+                  name="home"
+                />
               </XAction>
 
               <GithubButton
@@ -42,7 +48,9 @@
                 Star
               </GithubButton>
 
-              <div class="upgrade-check-wrapper">
+              <div
+                class="upgrade-check-wrapper"
+              >
                 <DataSource
                   :src="`/control-plane/version/latest`"
                   v-slot="{ data }"
@@ -76,7 +84,9 @@
           <div
             class="horizontal-list"
           >
-            <slot name="content-info">
+            <slot
+              name="content-info"
+            >
               <div
                 class="app-status app-status--mobile"
               >
@@ -89,7 +99,9 @@
                     Info
                   </XAction>
 
-                  <template #content>
+                  <template
+                    #content
+                  >
                     <p>
                       {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
                     </p>
@@ -97,7 +109,9 @@
                 </XPop>
               </div>
 
-              <p class="app-status app-status--desktop">
+              <p
+                class="app-status app-status--desktop"
+              >
                 {{ t('common.product.name') }} <b>{{ env('KUMA_VERSION') }}</b> on <b>{{ t(`common.product.environment.${env('KUMA_ENVIRONMENT')}`) }}</b> ({{ t(`common.product.mode.${env('KUMA_MODE')}`) }})
               </p>
 
@@ -136,12 +150,18 @@
         <div
           class="app-content-container"
         >
-          <div class="app-sidebar">
+          <div
+            class="app-sidebar"
+          >
             <nav
               aria-label="Main"
             >
-              <ul v-if="slots.navigation">
-                <slot name="navigation" />
+              <ul
+                v-if="slots.navigation"
+              >
+                <slot
+                  name="navigation"
+                />
               </ul>
 
               <div
@@ -150,8 +170,12 @@
                 class="navigation-separator"
               />
 
-              <ul v-if="slots.bottomNavigation">
-                <slot name="bottomNavigation" />
+              <ul
+                v-if="slots.bottomNavigation"
+              >
+                <slot
+                  name="bottomNavigation"
+                />
               </ul>
             </nav>
           </div>
@@ -196,7 +220,9 @@
                 </DataSink>
               </aside>
               <div>
-                <slot name="default" />
+                <slot
+                  name="default"
+                />
               </div>
             </XLayout>
           </main>

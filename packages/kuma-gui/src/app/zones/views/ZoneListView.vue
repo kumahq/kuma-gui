@@ -18,7 +18,9 @@
       <AppView
         :docs="data && data?.items?.length ? t('zones.href.docs.cta'): ''"
       >
-        <template #title>
+        <template
+          #title
+        >
           <h1>
             <RouteTitle
               :title="t('zone-cps.routes.items.title')"
@@ -99,7 +101,9 @@
                       </XIcon>
                     </template>
                   </template>
-                  <template #name="{ row: item }">
+                  <template
+                    #name="{ row: item }"
+                  >
                     <XAction
                       data-action
                       :to="{
@@ -117,11 +121,15 @@
                     </XAction>
                   </template>
 
-                  <template #zoneCpVersion="{ row: item }">
+                  <template
+                    #zoneCpVersion="{ row: item }"
+                  >
                     {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
                   </template>
 
-                  <template #ingress="{ row: item }">
+                  <template
+                    #ingress="{ row: item }"
+                  >
                     <template
                       v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
                     >
@@ -129,7 +137,9 @@
                     </template>
                   </template>
 
-                  <template #egress="{ row: item }">
+                  <template
+                    #egress="{ row: item }"
+                  >
                     <template
                       v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
                     >
@@ -137,13 +147,17 @@
                     </template>
                   </template>
 
-                  <template #state="{ row: item }">
+                  <template
+                    #state="{ row: item }"
+                  >
                     <StatusBadge
                       :status="item.state"
                     />
                   </template>
 
-                  <template #warnings="{ row: item }">
+                  <template
+                    #warnings="{ row: item }"
+                  >
                     <XIcon
                       v-if="item.warnings.length > 0"
                       name="warning"
@@ -159,7 +173,9 @@
                         </li>
                       </ul>
                     </XIcon>
-                    <template v-else>
+                    <template
+                      v-else
+                    >
                       {{ t('common.collection.none') }}
                     </template>
                   </template>

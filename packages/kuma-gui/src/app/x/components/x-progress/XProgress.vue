@@ -3,7 +3,9 @@
     v-if="props.variant === 'legacy'"
     data-testid="loading-block"
   >
-    <template #icon>
+    <template
+      #icon
+    >
       <XIcon
         class="mb-3"
         name="progress"
@@ -11,7 +13,9 @@
       />
     </template>
 
-    <template #title>
+    <template
+      #title
+    >
       Loading data …
     </template>
   </KEmptyState>

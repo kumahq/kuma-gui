@@ -30,10 +30,16 @@
         },
       ]"
     >
-      <template #title>
+      <template
+        #title
+      >
         <h1>
-          <XCopyButton :text="route.params.service">
-            <RouteTitle :title="t('delegated-gateways.routes.item.title', { name: route.params.service })" />
+          <XCopyButton
+            :text="route.params.service"
+          >
+            <RouteTitle
+              :title="t('delegated-gateways.routes.item.title', { name: route.params.service })"
+            />
           </XCopyButton>
         </h1>
       </template>

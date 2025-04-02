@@ -4,14 +4,18 @@
     v-slot="{ can, t, uri, me }"
   >
     <AppView>
-      <template #title>
+      <template
+        #title
+      >
         <h1>
           <RouteTitle
             :title="t('main-overview.routes.item.title')"
           />
         </h1>
       </template>
-      <template #actions>
+      <template
+        #actions
+      >
         <ControlPlaneActionGroup />
       </template>
 
@@ -28,7 +32,9 @@
           />
         </DataLoader>
 
-        <div class="columns">
+        <div
+          class="columns"
+        >
           <XCard
             v-if="can('use zones')"
           >
@@ -41,8 +47,12 @@
               <template
                 #loadable="{ data }"
               >
-                <div class="card-header">
-                  <div class="card-title">
+                <div
+                  class="card-header"
+                >
+                  <div
+                    class="card-title"
+                  >
                     <h2>
                       {{ t('main-overview.detail.zone_control_planes.title') }}
                     </h2>
@@ -56,7 +66,9 @@
                   <div
                     class="card-actions"
                   >
-                    <XTeleportSlot name="control-plane-detail-view-zone-actions" />
+                    <XTeleportSlot
+                      name="control-plane-detail-view-zone-actions"
+                    />
                   </div>
                 </div>
 
@@ -79,8 +91,12 @@
               <template
                 #loadable="{ data }"
               >
-                <div class="card-header">
-                  <div class="card-title">
+                <div
+                  class="card-header"
+                >
+                  <div
+                    class="card-title"
+                  >
                     <h2>
                       {{ t('main-overview.detail.meshes.title') }}
                     </h2>

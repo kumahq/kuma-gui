@@ -6,7 +6,9 @@
       v-if="slots.default"
       :to="{ name: `${provider.uri}-${props.uri}` }"
     >
-      <slot name="default" />
+      <slot
+        name="default"
+      />
     </XTeleportTemplate>
     <XTeleportSlot
       v-else

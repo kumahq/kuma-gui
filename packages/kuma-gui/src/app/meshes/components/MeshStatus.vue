@@ -1,12 +1,18 @@
 <template>
   <XCard>
-    <div class="stack">
-      <div class="columns">
+    <div
+      class="stack"
+    >
+      <div
+        class="columns"
+      >
         <ResourceStatus
           :total="props.meshInsight?.services.total ?? 0"
           data-testid="services-status"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('meshes.detail.services') }}
           </template>
         </ResourceStatus>
@@ -16,7 +22,9 @@
           :online="props.meshInsight?.dataplanesByType.standard.online ?? 0"
           data-testid="data-plane-proxies-status"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('meshes.detail.data_plane_proxies') }}
           </template>
         </ResourceStatus>
@@ -25,16 +33,22 @@
           :total="props.meshInsight?.totalPolicyCount ?? 0"
           data-testid="policies-status"
         >
-          <template #title>
+          <template
+            #title
+          >
             {{ t('meshes.detail.policies') }}
           </template>
         </ResourceStatus>
         <DefinitionCard>
-          <template #title>
+          <template
+            #title
+          >
             {{ t('http.api.property.mtls') }}
           </template>
 
-          <template #body>
+          <template
+            #body
+          >
             <XBadge
               v-if="!props.mesh.mtlsBackend"
               appearance="neutral"
@@ -42,7 +56,9 @@
               {{ t('meshes.detail.disabled') }}
             </XBadge>
 
-            <template v-else>
+            <template
+              v-else
+            >
               {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
             </template>
           </template>

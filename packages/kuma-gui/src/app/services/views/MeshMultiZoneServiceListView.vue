@@ -47,7 +47,9 @@
                 :is-selected-row="(item) => item.name === route.params.service"
                 @resize="me.set"
               >
-                <template #name="{ row: item }">
+                <template
+                  #name="{ row: item }"
+                >
                   <XCopyButton
                     :text="item.name"
                   >
@@ -102,7 +104,9 @@
                     </XBadge>
                   </XLayout>
                 </template>
-                <template #actions="{ row: item }">
+                <template
+                  #actions="{ row: item }"
+                >
                   <XActionGroup>
                     <XAction
                       :to="{

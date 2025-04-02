@@ -3,7 +3,9 @@
     v-for="({ key, value, not }, i) in props.items"
     :key="i"
   >
-    <span class="rule-matchers"><span
+    <span
+      class="rule-matchers"
+    ><span
       v-if="i > 0"
       class="and"
     > and<br></span><abbr

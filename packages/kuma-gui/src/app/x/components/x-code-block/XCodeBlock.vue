@@ -9,7 +9,9 @@
         type="separated"
         justify="end"
       >
-        <slot name="primary-actions" />
+        <slot
+          name="primary-actions"
+        />
       </XLayout>
     </template>
     <KCodeBlock
@@ -33,7 +35,9 @@
         v-if="slots['secondary-actions']"
         #secondary-actions
       >
-        <slot name="secondary-actions" />
+        <slot
+          name="secondary-actions"
+        />
       </template>
     </KCodeBlock>
   </XLayout>

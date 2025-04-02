@@ -9,13 +9,21 @@
       v-if="slots.icon || slots.title"
       class="definition-card-title"
     >
-      <slot name="icon" />
+      <slot
+        name="icon"
+      />
 
-      <slot name="title" />
+      <slot
+        name="title"
+      />
     </div>
 
-    <div class="definition-card-container">
-      <slot name="body" />
+    <div
+      class="definition-card-container"
+    >
+      <slot
+        name="body"
+      />
     </div>
   </div>
 </template>

@@ -1,18 +1,30 @@
 <template>
-  <div class="service-traffic">
-    <div class="actions">
-      <slot name="actions" />
+  <div
+    class="service-traffic"
+  >
+    <div
+      class="actions"
+    >
+      <slot
+        name="actions"
+      />
     </div>
 
     <DataCard
       class="header"
     >
-      <template #title>
-        <slot name="title" />
+      <template
+        #title
+      >
+        <slot
+          name="title"
+        />
       </template>
     <!-- <slot name="data" /> -->
     </DataCard>
-    <slot name="default" />
+    <slot
+      name="default"
+    />
   </div>
 </template>
 <script lang="ts" setup>

@@ -7,16 +7,26 @@
       v-for="(policyTypeEntry, index) in items"
       :key="index"
     >
-      <template #accordion-header>
-        <h3 class="policy-type-heading">
-          <PolicyTypeTag :policy-type="policyTypeEntry.type">
+      <template
+        #accordion-header
+      >
+        <h3
+          class="policy-type-heading"
+        >
+          <PolicyTypeTag
+            :policy-type="policyTypeEntry.type"
+          >
             {{ policyTypeEntry.type }} ({{ policyTypeEntry.connections.length }})
           </PolicyTypeTag>
         </h3>
       </template>
 
-      <template #accordion-content>
-        <div class="policy-list">
+      <template
+        #accordion-content
+      >
+        <div
+          class="policy-list"
+        >
           <KTableView
             class="policy-type-table"
             :data="policyTypeEntry.connections"
@@ -31,7 +41,9 @@
             hide-pagination
             is-clickable
           >
-            <template #sourceTags="{ row }: { row: PolicyTypeEntryConnection }">
+            <template
+              #sourceTags="{ row }: { row: PolicyTypeEntryConnection }"
+            >
               <TagList
                 v-if="row.sourceTags.length > 0"
                 class="tag-list"
@@ -39,12 +51,16 @@
                 :tags="row.sourceTags"
               />
 
-              <template v-else>
+              <template
+                v-else
+              >
                 —
               </template>
             </template>
 
-            <template #destinationTags="{ row }: { row: PolicyTypeEntryConnection }">
+            <template
+              #destinationTags="{ row }: { row: PolicyTypeEntryConnection }"
+            >
               <TagList
                 v-if="row.destinationTags.length > 0"
                 class="tag-list"
@@ -52,23 +68,35 @@
                 :tags="row.destinationTags"
               />
 
-              <template v-else>
+              <template
+                v-else
+              >
                 —
               </template>
             </template>
 
-            <template #name="{ row }: { row: PolicyTypeEntryConnection }">
-              <template v-if="row.name !== null">
+            <template
+              #name="{ row }: { row: PolicyTypeEntryConnection }"
+            >
+              <template
+                v-if="row.name !== null"
+              >
                 {{ row.name }}
               </template>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 —
               </template>
             </template>
 
-            <template #origins="{ row }: { row: PolicyTypeEntryConnection }">
-              <ul v-if="row.origins.length > 0">
+            <template
+              #origins="{ row }: { row: PolicyTypeEntryConnection }"
+            >
+              <ul
+                v-if="row.origins.length > 0"
+              >
                 <li
                   v-for="(origin, originIndex) in row.origins"
                   :key="`${index}-${originIndex}`"
@@ -88,13 +116,19 @@
                 </li>
               </ul>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 —
               </template>
             </template>
 
-            <template #config="{ row }: { row: PolicyTypeEntryConnection, rowKey: number }">
-              <template v-if="row.config">
+            <template
+              #config="{ row }: { row: PolicyTypeEntryConnection, rowKey: number }"
+            >
+              <template
+                v-if="row.config"
+              >
                 <XCodeBlock
                   :code="YAML.stringify(row.config)"
                   language="yaml"
@@ -102,7 +136,9 @@
                 />
               </template>
 
-              <template v-else>
+              <template
+                v-else
+              >
                 —
               </template>
             </template>

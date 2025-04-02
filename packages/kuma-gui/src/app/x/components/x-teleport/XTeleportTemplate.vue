@@ -3,7 +3,9 @@
     v-if="ready"
     :to="`[data-x-teleport-id='${props.to.name}']`"
   >
-    <slot name="default" />
+    <slot
+      name="default"
+    />
   </Teleport>
 </template>
 <script lang="ts" setup>

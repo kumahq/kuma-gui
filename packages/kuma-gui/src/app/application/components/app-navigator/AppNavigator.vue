@@ -2,7 +2,9 @@
   <li
     class="app-navigator"
   >
-    <slot name="default">
+    <slot
+      name="default"
+    >
       <XAction
         :class="{
           'is-active': props.active,

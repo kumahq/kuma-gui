@@ -56,7 +56,9 @@
                 <DefinitionCard
                   layout="horizontal"
                 >
-                  <template #title>
+                  <template
+                    #title
+                  >
                     <XAction
                       :to="{
                         name: 'policy-list-view',
@@ -70,7 +72,9 @@
                     </XAction>
                   </template>
 
-                  <template #body>
+                  <template
+                    #body
+                  >
                     <XBadge
                       :appearance="stats.total > 0 ? 'success' : 'neutral'"
                     >
@@ -81,12 +85,18 @@
               </template>
             </template>
 
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.mtls') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XBadge
                   v-if="!props.mesh.mtlsBackend"
                   appearance="neutral"
@@ -94,8 +104,12 @@
                   {{ t('meshes.detail.disabled') }}
                 </XBadge>
 
-                <template v-else>
-                  <XBadge appearance="info">
+                <template
+                  v-else
+                >
+                  <XBadge
+                    appearance="info"
+                  >
                     {{ props.mesh.mtlsBackend.type }} / {{ props.mesh.mtlsBackend.name }}
                   </XBadge>
                 </template>
@@ -115,7 +129,9 @@
                   :total="data?.services.total ?? 0"
                   data-testid="services-status"
                 >
-                  <template #title>
+                  <template
+                    #title
+                  >
                     {{ t('meshes.detail.services') }}
                   </template>
                 </ResourceStatus>
@@ -125,7 +141,9 @@
                   :online="data?.dataplanesByType.standard.online ?? 0"
                   data-testid="data-plane-proxies-status"
                 >
-                  <template #title>
+                  <template
+                    #title
+                  >
                     {{ t('meshes.detail.data_plane_proxies') }}
                   </template>
                 </ResourceStatus>
@@ -134,7 +152,9 @@
                   :total="data?.totalPolicyCount ?? 0"
                   data-testid="policies-status"
                 >
-                  <template #title>
+                  <template
+                    #title
+                  >
                     {{ t('meshes.detail.policies') }}
                   </template>
                 </ResourceStatus>

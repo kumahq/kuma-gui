@@ -24,7 +24,9 @@
           appearance="secondary"
           data-testid="empty-block"
         >
-          <template #image>
+          <template
+            #image
+          >
             <slot
               v-if="slots.icon"
               name="icon"
@@ -39,14 +41,18 @@
                 :size="KUI_ICON_SIZE_50"
               />
             </div>
-            <AnalyticsIcon v-else />
+            <AnalyticsIcon
+              v-else
+            />
           </template>
           <template
             v-if="title.length"
             #title
           >
             <header>
-              <h2 class="x-empty-state-title">
+              <h2
+                class="x-empty-state-title"
+              >
                 <XI18n
                   :path="`${prefix}x-growth-empty-state.title`"
                   default-path="components.x-empty-state.title"
@@ -73,7 +79,9 @@
           <template
             #actions
           >
-            <slot name="action">
+            <slot
+              name="action"
+            >
               <XTeleportSlot
                 :name="`${props.type}-x-empty-state-actions`"
               />
@@ -101,7 +109,9 @@
           <template
             #icon
           >
-            <slot name="icon" />
+            <slot
+              name="icon"
+            />
           </template>
           <template
             #title
@@ -127,7 +137,9 @@
           <template
             v-if="slots.default"
           >
-            <slot name="default" />
+            <slot
+              name="default"
+            />
           </template>
           <template
             v-else-if="body.length > 0"
@@ -141,7 +153,9 @@
           <template
             #action
           >
-            <slot name="action">
+            <slot
+              name="action"
+            >
               <XTeleportSlot
                 :name="`${props.type}-x-empty-state-actions`"
               />

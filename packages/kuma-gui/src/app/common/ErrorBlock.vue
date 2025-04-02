@@ -6,7 +6,9 @@
     <KEmptyState
       v-if="!prompt"
     >
-      <template #icon>
+      <template
+        #icon
+      >
         <DangerIcon
           v-if="props.appearance === 'danger'"
           :color="KUI_COLOR_TEXT_DANGER"
@@ -17,8 +19,12 @@
         />
       </template>
 
-      <template #title>
-        <slot name="title">
+      <template
+        #title
+      >
+        <slot
+          name="title"
+        >
           {{ error instanceof ApiError && error.detail ? error.detail : t('common.error_state.title') }}
         </slot>
       </template>
@@ -49,12 +55,18 @@
           data-testid="error-trace"
           max-width="auto"
         >
-          trace: <XCopyButton :text="error.instance" />
+          trace: <XCopyButton
+            :text="error.instance"
+          />
         </XBadge>
       </div>
 
-      <div class="error-block-message mt-4">
-        <slot v-if="slots.default" />
+      <div
+        class="error-block-message mt-4"
+      >
+        <slot
+          v-if="slots.default"
+        />
         <template
           v-else-if="props.error instanceof ApiError"
         >
@@ -73,7 +85,9 @@
             </li>
           </ul>
         </template>
-        <p v-else>
+        <p
+          v-else
+        >
           {{ props.error.message }}
         </p>
       </div>
@@ -87,7 +101,9 @@
         <div
           class="error-block-message"
         >
-          <slot v-if="slots.default" />
+          <slot
+            v-if="slots.default"
+          />
           <template
             v-else-if="props.error instanceof ApiError"
           >
@@ -106,7 +122,9 @@
               </li>
             </ul>
           </template>
-          <p v-else>
+          <p
+            v-else
+          >
             {{ error.message }}
           </p>
         </div>
