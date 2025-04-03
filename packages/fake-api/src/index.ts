@@ -7,9 +7,7 @@ export type RestRequest = {
   method: string
   params: Record<string, string | readonly string[]>
   body: Record<string, any>
-  url: {
-    searchParams: URLSearchParams
-  }
+  url: URL
 }
 
 export type MockResponse = {
@@ -21,9 +19,9 @@ export type MockResponder = (req: RestRequest) => MockResponse
 
 type Merge = (obj: Partial<MockResponse>) => MockResponse
 
-export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
+export type Middleware = (request: RestRequest, response: MockResponse, merge: Merge) => MockResponse
 export type Options = Record<string, string>
-export type Mocker = (route: string, opts: Options, cb: Callback) => void
+export type Mocker = (route: string, opts: Options, cb: Middleware) => void
 
 export type Dependencies<TDependencies extends object = {}, TFake extends object = {}> = {
   env: <T extends string>(key: T, d?: string) => string
@@ -96,3 +94,63 @@ export class Router<T> {
     throw new Error(`Matching route for '${path}' not found`)
   }
 }
+const strToEnv = (str: string): [string, string][] => {
+  return str.split(';')
+    .map((item) => item.trim())
+    .filter((item) => item !== '')
+    .map((item) => {
+      const [key, ...value] = item.split('=')
+      return [key, value.join('=')] as [string, string]
+    })
+}
+export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { dependencies: Dependencies<T>, fs: FS }) => {
+  const router = new Router(fs)
+  return (url: string, options: RequestInit & { body?: Record<string, string>, headers?: Record<string, string | string[] | undefined>}) => {
+
+    const _url = new URL(url)
+    // we currently only match on pathname
+    const { route, params } = router.match(_url.pathname)
+
+    const cookies = strToEnv(String(options.headers?.cookie ?? '')).reduce((prev, [key, value]) => {
+      prev[key] = value
+      return prev
+    }, {} as Record<string, string>)
+    const env = <T extends Parameters<typeof dependencies['env']>[0]>(key: T, d = '') => dependencies.env(key, cookies[key] ?? d)
+
+    const request = route({
+      ...dependencies,
+      env,
+    })
+    const response = request({
+      url: _url,
+      method: options.method ?? 'GET',
+      body: options.body ?? {},
+      params,
+    })
+    if (typeof response === 'undefined') {
+      throw new Error('not found')
+    }
+    return {
+      json: () => {
+        return response.body
+      },
+      text: () => {
+        return response.body.toString()
+      },
+      headers: new Map(Object.entries(response.headers ?? {})),
+    }
+  }
+}
+export const createFetchAsync = (...rest: Parameters<typeof createFetchSync>) => {
+  const fetch = createFetchSync(...rest)
+  return async (...rest: Parameters<typeof fetch>) => {
+    const { json, text, headers } = fetch(...rest)
+    return {
+      headers,
+      json: async (...rest: Parameters<typeof json>) => json(...rest),
+      text: async (...rest: Parameters<typeof text>) => text(...rest),
+    }
+  }
+}
+export const createFetch = createFetchAsync
+
