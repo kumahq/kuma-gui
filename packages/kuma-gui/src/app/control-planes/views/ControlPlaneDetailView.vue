@@ -27,7 +27,7 @@
             :global-insight="data"
           />
         </DataLoader>
-
+        <XFilterBar />
         <div class="columns">
           <XCard
             v-if="can('use zones')"
@@ -113,6 +113,7 @@ import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import { sources as MeshSources } from '@/app/meshes/sources'
+import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
 import { useZoneControlPlanesList } from '@/app/zones'
 import { sources as ZoneSources } from '@/app/zones/sources'
 

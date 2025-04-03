@@ -73,6 +73,7 @@ const icons = {
   mesh: MeshIcon,
   docs: BookIcon,
   search: FilterIcon,
+  filter: FilterIcon,
   copy: CopyIcon,
   more: MoreIcon,
   expand: ChevronDownIcon,
