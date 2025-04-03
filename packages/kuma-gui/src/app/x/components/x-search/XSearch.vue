@@ -1,58 +1,140 @@
 <template>
-  <div
-    v-style="`--width:${width}px`"
-    class="container"
-    data-testid="filter-bar"
-    @click.stop="inputRef?.focus()"
+  <KPop
+    ref="dropdownRef"
+    class="dropdown"
+    hide-close-icon
+    hide-caret
+    @open="() => isDropdownOpen = true"
+    @close="() => isDropdownOpen = false"
   >
-    <div class="icon-wrapper">
-      <XIcon
-        class="icon"
-        name="search"
-      />
-    </div>
     <div
-      ref="containerRef"
-      class="input-container"
+      v-style="`--width:${width}px`"
+      class="container"
+      data-testid="filter-bar"
+      @click="inputRef?.focus()"
     >
-      <div
-        ref="contentRef"
-        class="content-wrapper"
-      >
-        <template
-          v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
-          :key="chunk+index"
-        >
-          <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
-        </template>
+      <div class="icon-wrapper">
+        <XIcon
+          class="icon"
+          name="search"
+        />
       </div>
-      <div class="input-wrapper">
-        <input
-          ref="inputRef"
-          type="text"
-          :defaultValue="props.value"
-          :placeholder="props.placeholder"
-          data-testid="filter-bar-filter-input"
-          :name="props.name"
-          @input="onInput"
-          @change="emit('change', inputValue)"
+      <div
+        ref="containerRef"
+        class="input-container"
+      >
+        <div
+          ref="contentRef"
+          class="content-wrapper"
         >
+          <template
+            v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
+            :key="chunk+index"
+          >
+            <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
+          </template>
+        </div>
+        <div class="input-wrapper">
+          <input
+            ref="inputRef"
+            type="text"
+            :defaultValue="props.value"
+            :placeholder="props.placeholder ?? t('components.x-search.filterBy', { count: props.keys.length, keys: formatList(props.keys, { type: 'disjunction' }) })"
+            data-testid="filter-bar-filter-input"
+            :name="props.name"
+            @input="onInput"
+            @change="emit('change', inputValue)"
+            @keyup="onKeyEvent"
+          >
+        </div>
       </div>
     </div>
-  </div>
+    
+    <template #content>
+      <div class="dropdown-item">
+        <p
+          v-if="inputValue.length"
+          class="filter-block"
+        >
+          <template
+            v-for="(chunk, i) in inputValue.split(regex).filter(Boolean)"
+            :key="chunk+i"
+          >
+            <span v-if="regex.test(chunk)">
+              <template
+                v-for="([key, ...values], j) in [chunk.split(':')]"
+                :key="key+j"
+              >
+                <span v-if="!values.length">{{ props.defaultKey }}:<span class="text-important">{{ key }}</span></span>
+                <span v-else>{{ key }}:</span><span class="text-important">{{ values.join(':') }}</span>
+              </template>
+            </span>
+            <span v-else>
+              {{ chunk }}
+            </span>
+          </template>
+          <XBadge appearance="decorative">
+            <XI18n
+              tag="span"
+              path="components.x-search.submit"
+            />
+            <XIcon name="submit" />
+          </XBadge>
+        </p>
+        <XI18n
+          v-else
+          path="components.x-search.placeholder"
+        />
+      </div>
+      <div
+        v-if="props.keys.length"
+        class="dropdown-item bg-neutral-weakest"
+      >
+        <p class="logic-block">
+          <XI18n
+            tag="span"
+            class="text-important"
+            path="components.x-search.logic"
+          /> {{ props.keys.join(', ') }}
+        </p>
+      </div>
+    </template>
+  </KPop>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
+import { useI18n } from '@/app/application'
+const { t, formatList } = useI18n() 
+
 const props = withDefaults(defineProps<{
+  /**
+   * The placeholder of the input
+   */
   placeholder?: string
+  /**
+   * A previous filter query as defaultValue
+   */
   value?: string
+  /**
+   * Name of the field used in forms
+   */
   name?: string
+  /**
+   * Provides info about filterable keys
+   */
+  keys?: string[]
+  /**
+   * The default key, that is being used to filter for when there is no `key:value` pair but only a `value`
+   */
+  defaultKey?: string
 }>(), {
   placeholder: undefined,
   name: undefined,
   value: '',
+  keys: () => [],
+  defaultKey: 'name',
 })
 
 const emit = defineEmits<{
@@ -65,6 +147,18 @@ const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)
 const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
+const dropdownRef = ref<null | HTMLInputElement>(null)
+const isDropdownOpen = ref<boolean>(false)
+
+const onKeyEvent = ({ key }: KeyboardEvent) => {
+  switch(key) {
+    case 'Enter':
+    case 'Escape':
+      return isDropdownOpen.value && dropdownRef.value?.hidePopover()
+    default:
+      return !isDropdownOpen.value && dropdownRef.value?.showPopover()
+  }
+}
 
 const onInput = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
@@ -84,15 +178,15 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .container {
-  min-width: inherit;
-  width: 0;
+  width: 100%;
+  position: relative;
+  font-family: $kui-font-family-code;
   position: relative;
   display: inline-flex;
   vertical-align: middle;
   cursor: text;
   outline: none;
   align-items: center;
-  font-family: $kui-font-family-code;
   font-size: $kui-font-size-30;
   border-radius: $kui-border-radius-20;
   box-shadow: $kui-shadow-border;
@@ -181,5 +275,53 @@ input {
   outline: none;
   caret-color: $kui-color-text;
   line-height: $kui-font-size-70;
+}
+
+.dropdown {
+  position: relative;
+  min-width: inherit;
+  width: 0;
+}
+
+
+:deep(.popover) {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0;
+  width: 100%;
+
+  .popover-container {
+    width: 100% !important;
+    margin-top: unset !important;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .dropdown-item {
+    color: $kui-color-text-neutral;
+    font-family: $kui-font-family-code;
+    padding: $kui-space-50 $kui-space-60;
+    font-size: $kui-font-size-30;
+
+    &:not(:first-child) {
+      border-top: $kui-border-width-10 solid $kui-color-border;
+    }
+
+    p {
+      line-height: $kui-line-height-40;
+    }
+  }
+
+  .bg-neutral-weakest {
+    background-color: $kui-color-background-neutral-weakest;
+  }
+
+  .text-important {
+    color: $kui-color-text;
+  }
+}
+
+:deep(.k-badge) {
+  font-family: $kui-font-family-code;
 }
 </style>
