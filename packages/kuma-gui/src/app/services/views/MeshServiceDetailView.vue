@@ -84,7 +84,7 @@
               #body
             >
               <template v-if="props.data.spec.ports.length">
-                <KTruncate>
+                <XTruncate>
                   <KumaPort
                     v-for="connection in props.data.spec.ports"
                     :key="connection.port"
@@ -93,7 +93,7 @@
                       targetPort: undefined,
                     }"
                   />
-                </KTruncate>
+                </XTruncate>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}

@@ -25,7 +25,7 @@
             </template>
             <template #body>
               <template v-if="props.data.spec.ports.length">
-                <KTruncate>
+                <XTruncate>
                   <KumaPort
                     v-for="connection in props.data.spec.ports"
                     :key="connection.port"
@@ -34,7 +34,7 @@
                       targetPort: undefined,
                     }"
                   />
-                </KTruncate>
+                </XTruncate>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
@@ -51,7 +51,7 @@
               #body
             >
               <template v-if="Object.keys(data.spec.selector.meshService.matchLabels).length">
-                <KTruncate>
+                <XTruncate>
                   <XBadge
                     v-for="(value, key) in data.spec.selector.meshService.matchLabels"
                     :key="`${key}:${value}`"
@@ -59,7 +59,7 @@
                   >
                     {{ key }}:{{ value }}
                   </XBadge>
-                </KTruncate>
+                </XTruncate>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}

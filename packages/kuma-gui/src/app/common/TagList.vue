@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="shouldTruncate ? 'KTruncate' : 'div'"
+    :is="shouldTruncate ? 'XTruncate' : 'div'"
     :width="shouldTruncate ? 'auto' : undefined"
     :class="{
       'tag-list': !shouldTruncate,
