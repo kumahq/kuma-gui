@@ -2,7 +2,7 @@ import { When, Then, Before, Given, DataTable, After } from '@badeball/cypress-c
 import { undefinedSymbol } from '@kumahq/fake-api'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
-import { useServer, useMock, useClient } from '../../services'
+import { useMock, useClient } from '../../services'
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
@@ -26,12 +26,24 @@ let env = {}
 let selectors: Record<string, string> = {}
 let localStorage: Set<string>
 const client = useClient()
+const mock = useMock()
 Before(() => {
   client.reset()
   env = {}
   selectors = {}
   localStorage = new Set()
-  useServer()
+  // mock everything with no specific env vars
+  // record every request as a client.request
+  mock('*', {}, (req, response) => {
+    client.request({
+      url: req.url,
+      request: {
+        method: req.method,
+        body: req.body,
+      },
+    })
+    return response
+  })
 })
 After(() => {
   Array.from(localStorage).forEach((key) => {
@@ -86,18 +98,29 @@ Given('the localStorage', (yaml: string) => {
 })
 
 Given('the URL {string} responds with', (url: string, yaml: string) => {
-  const mock = useMock()
   // mock is a call to cy.intercept
-  // the callback below gives the opportunity to mutate the mock response
-  // the respond function/argument is just a specifically configured deepmerge
-  mock(url, env, (respond) => {
-    const response = respond(
+  // which mocks this specific url with the current env vars
+  // records every request as a client.request
+  // and merges any test case mock with the fake-fs mock
+  mock(url, env, (req, _response, mergeWithResponse) => {
+    // once the response has been rendered but not sent resolve any
+    // waiting request assertions this means that any mocking done after
+    // awaiting the request will happen on the subsequent request not this
+    // one
+    client.request({
+      url: req.url,
+      request: {
+        method: req.method,
+        body: req.body,
+      },
+    })
+
+    return mergeWithResponse(
       (YAML.parse(yaml) || {}) as {
         headers?: Record<string, string>
         body?: Record<string, unknown>
       },
     )
-    return response
   })
 })
 
