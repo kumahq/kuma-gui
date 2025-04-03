@@ -84,14 +84,16 @@
               #body
             >
               <template v-if="props.data.spec.ports.length">
-                <KumaPort
-                  v-for="connection in props.data.spec.ports"
-                  :key="connection.port"
-                  :port="{
-                    ...connection,
-                    targetPort: undefined,
-                  }"
-                />
+                <KTruncate>
+                  <KumaPort
+                    v-for="connection in props.data.spec.ports"
+                    :key="connection.port"
+                    :port="{
+                      ...connection,
+                      targetPort: undefined,
+                    }"
+                  />
+                </KTruncate>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
@@ -108,13 +110,10 @@
               #body
             >
               <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
-                <XBadge
-                  v-for="(value, key) in props.data.spec.selector.dataplaneTags"
-                  :key="`${key}:${value}`"
+                <TagList
                   appearance="info"
-                >
-                  {{ key }}:{{ value }}
-                </XBadge>
+                  :tags="props.data.spec.selector.dataplaneTags"
+                />
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
@@ -420,6 +419,7 @@ import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import TagList from '@/app/common/TagList.vue'
 import { sources } from '@/app/data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
 

@@ -23,18 +23,18 @@
             >
               {{ t('http.api.property.ports') }}
             </template>
-            <template
-              #body
-            >
+            <template #body>
               <template v-if="props.data.spec.ports.length">
-                <KumaPort
-                  v-for="connection in props.data.spec.ports"
-                  :key="connection.port"
-                  :port="{
-                    ...connection,
-                    targetPort: undefined,
-                  }"
-                />
+                <KTruncate>
+                  <KumaPort
+                    v-for="connection in props.data.spec.ports"
+                    :key="connection.port"
+                    :port="{
+                      ...connection,
+                      targetPort: undefined,
+                    }"
+                  />
+                </KTruncate>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
@@ -51,13 +51,15 @@
               #body
             >
               <template v-if="Object.keys(data.spec.selector.meshService.matchLabels).length">
-                <XBadge
-                  v-for="(value, key) in data.spec.selector.meshService.matchLabels"
-                  :key="`${key}:${value}`"
-                  appearance="info"
-                >
-                  {{ key }}:{{ value }}
-                </XBadge>
+                <KTruncate>
+                  <XBadge
+                    v-for="(value, key) in data.spec.selector.meshService.matchLabels"
+                    :key="`${key}:${value}`"
+                    appearance="info"
+                  >
+                    {{ key }}:{{ value }}
+                  </XBadge>
+                </KTruncate>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
