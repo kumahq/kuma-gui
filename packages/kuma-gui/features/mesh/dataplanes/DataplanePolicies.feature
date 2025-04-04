@@ -21,51 +21,10 @@ Feature: Dataplane policies
       | inbound-rule-item                  | [data-testid='inbound-rule-list-0'] .accordion-item                   |
       | inbound-rule-item-button           | $inbound-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
       | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']            |
-
-      And the URL "/_resources" responds with
-        """
-        body:
-          resources:
-            - name: MeshHTTPRoute
-              policy:
-                isFromAsRules: true
-            - name: MeshProxyPatch
-              path: meshproxypatches
-              singularDisplayName: Mesh Proxy Patch
-              pluralDisplayname: Mesh Proxy Patches
-              includeInFederation: true
-              readOnly: false
-              scope: Mesh
-              policy:
-                hasFromTargetRef: false
-                hasToTargetRef: false
-                isFromAsRules: false
-                isTargetRef: false
-            - name: MeshTimeout
-              path: meshtimeouts
-              singularDisplayName: Mesh Timeout
-              pluralDisplayname: Mesh Timeouts
-              includeInFederation: true
-              readOnly: false
-              scope: Mesh
-              policy:
-                hasFromTargetRef: true
-                hasToTargetRef: true
-                isFromAsRules: true
-                isTargetRef: true
-            - name: FaultInjection
-              path: fault-injections
-              singularDisplayName: Fault Injection
-              pluralDisplayname: Fault Injections
-              includeInFederation: true
-              readOnly: false
-              scope: Mesh
-              policy:
-                hasFromTargetRef: false
-                hasToTargetRef: false
-                isFromAsRules: false
-                isTargetRef: false
-        """
+      And the environment
+      """
+        KUMA_RESOURCE_COUNT: 100
+      """
   Rule: Any networking type
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
