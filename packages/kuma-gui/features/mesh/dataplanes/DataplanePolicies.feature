@@ -22,6 +22,38 @@ Feature: Dataplane policies
       | inbound-rule-item-button           | $inbound-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
       | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']            |
 
+      And the URL "/_resources" responds with
+        """
+        body:
+          resources:
+            - name: MeshHTTPRoute
+              policy:
+                isFromAsRules: true
+            - name: MeshProxyPatch
+              path: meshproxypatches
+              singularDisplayName: Mesh Proxy Patch
+              pluralDisplayname: Mesh Proxy Patches
+              includeInFederation: true
+              readOnly: false
+              scope: Mesh
+              policy:
+                hasFromTargetRef: false
+                hasToTargetRef: false
+                isFromAsRules: false
+                isTargetRef: false
+            - name: MeshTimeout
+              path: meshtimeouts
+              singularDisplayName: Mesh Timeout
+              pluralDisplayname: Mesh Timeouts
+              includeInFederation: true
+              readOnly: false
+              scope: Mesh
+              policy:
+                hasFromTargetRef: true
+                hasToTargetRef: true
+                isFromAsRules: true
+                isTargetRef: true
+        """
   Rule: Any networking type
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
@@ -238,35 +270,6 @@ Feature: Dataplane policies
         KUMA_DATAPLANE_TO_RULE_COUNT: 1
         KUMA_DATAPLANE_FROM_RULE_COUNT: 0
         """
-      And the URL "/_resources" responds with
-        """
-        body:
-          resources:
-            - name: MeshProxyPatch
-              path: meshproxypatches
-              singularDisplayName: Mesh Proxy Patch
-              pluralDisplayname: Mesh Proxy Patches
-              includeInFederation: true
-              readOnly: false
-              scope: Mesh
-              policy:
-                hasFromTargetRef: false
-                hasToTargetRef: false
-                isFromAsRules: false
-                isTargetRef: false
-            - name: MeshTimeout
-              path: meshtimeouts
-              singularDisplayName: Mesh Timeout
-              pluralDisplayname: Mesh Timeouts
-              includeInFederation: true
-              readOnly: false
-              scope: Mesh
-              policy:
-                hasFromTargetRef: true
-                hasToTargetRef: true
-                isFromAsRules: true
-                isTargetRef: true
-        """
       And the URL "/meshes/default/dataplanes/dataplane-1/_rules" responds with
         """
         body:
@@ -365,14 +368,6 @@ Feature: Dataplane policies
                     port: 8080
                     tags:
                       kuma.io/service: foo
-        """
-      And the URL "/_resources" responds with
-        """
-        body:
-          resources:
-            - name: MeshHTTPRoute
-              policy:
-                isFromAsRules: true
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$to-rule-item-content" element doesn't exist
