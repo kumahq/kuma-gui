@@ -8,7 +8,7 @@ export const mocker = <T extends object = {}>(
   dependencies: Dependencies<T>,
   fs: FS,
 ): Mocker => {
-  return (path, opts = {}, cb = noop) => {
+  return (path, opts = {}, middleware = noop) => {
     const env = dependencies.env
     dependencies.env = <T extends Parameters<typeof env>[0]>(key: T, d = '') => {
       return env(key, opts[key] ?? d)
@@ -35,23 +35,21 @@ export const mocker = <T extends object = {}>(
             return prev
           }, {} as Record<string, string>)
 
-          const unmerged = fetch(req.url, {
+          const resp = fetch(req.url, {
             method: req.method,
             headers,
           })
+          const type = resp.headers.get('Content-Type') ?? 'application/json'
 
-          const type = unmerged.headers.get('Content-Type') ?? 'application/json'
-          const resp = {
-            headers: Object.fromEntries(unmerged.headers.entries()),
-            body: type.endsWith('/json') ? unmerged.json() : unmerged.text(),
-          }
-
-          const response = cb({
+          const response = middleware({
             url: new URL(req.url),
             method: req.method,
             body: req.body,
             params: {},
-          }, resp)
+          }, {
+            headers: Object.fromEntries(resp.headers.entries()),
+            body: type.endsWith('/json') ? resp.json() : resp.text(),
+          })
 
           if (typeof response === 'undefined') {
             req.continue()
