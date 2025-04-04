@@ -53,10 +53,10 @@ Feature: Dataplane policies
                 hasToTargetRef: true
                 isFromAsRules: true
                 isTargetRef: true
-            - name: CircuitBreaker
-              path: circuit-breakers
-              singularDisplayName: Circuit Breaker
-              pluralDisplayname: Circuit Breakers
+            - name: FaultInjection
+              path: fault-injections
+              singularDisplayName: Fault Injection
+              pluralDisplayname: Fault Injections
               includeInFederation: true
               readOnly: false
               scope: Mesh
