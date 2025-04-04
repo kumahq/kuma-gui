@@ -176,6 +176,9 @@
                     :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
                     v-slot="{ items }"
                   >
+                    ==={{ policyTypes }}====<br>
+                    ===<br>
+                    ==={{ items }}====<br>
                     <h3>
                       {{ t('data-planes.routes.item.legacy_policies') }}
                     </h3>
