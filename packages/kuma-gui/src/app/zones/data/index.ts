@@ -65,27 +65,6 @@ export const ZoneOverview = {
   fromObject: (item: PartialZoneOverview) => {
     const insight = ZoneInsight.fromObject(item.zoneInsight)
     const zone = Zone.fromObject(item.zone)
-    const warnings = []
-    if (insight.store === 'memory') {
-      warnings.push({
-        kind: 'ZONE_STORE_TYPE_MEMORY',
-        payload: {},
-      })
-    }
-    if (!get(insight, 'version.kumaCp.kumaCpGlobalCompatible', true)) {
-      warnings.push({
-        kind: 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS',
-        payload: {
-          zoneCpVersion: get(insight, 'version.kumaCp.version', '-'),
-        },
-      })
-    }
-    if ((insight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0) {
-      warnings.push({
-        kind: 'NACK_RESPONSE_ZONE_TO_GLOBAL',
-        payload: {},
-      })
-    }
     const state = {
       disabled: 'disabled',
       online: 'online',
@@ -98,7 +77,6 @@ export const ZoneOverview = {
       zone,
       // first check see if the zone is disabled, if not look for the connectedSubscription
       state: !zone.enabled ? state.disabled : typeof insight.connectedSubscription !== 'undefined' ? state.online : state.offline,
-      warnings,
     }
   },
   fromCollection: (collection: CollectionResponse<PartialZoneOverview>) => {

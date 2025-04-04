@@ -5,7 +5,7 @@ Feature: Dataplane details for built-in gateway
       | Alias             | Selector                                                           |
       | detail-view       | [data-testid='data-plane-detail-tabs-view']                        |
       | policies-view     | [data-testid='data-plane-policies-view']                           |
-      | warnings          | [data-testid^='notification-DPP_NO_MTLS']                          |
+      | warnings          | [data-testid^='notification-data-planes.notifications.no-mtls']    |
       | details           | [data-testid='dataplane-details']                                  |
       | route-item        | [data-testid='builtin-gateway-dataplane-policies'] .accordion-item |
       | route-item-button | $route-item:nth-child(1) [data-testid='accordion-item-button']     |

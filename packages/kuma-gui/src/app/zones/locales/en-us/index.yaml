@@ -17,6 +17,14 @@ zone-cps:
         =1 { Zone }
         other { Zones }
       }
+  notifications:
+    store-memory: !!text/markdown |
+      This zone is using the `memory` store type. **Don't** use this store in production because the state isn't persisted.
+      <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
+    global-cp-incompatible: !!text/markdown |
+      There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ globalCpVersion }**)
+    global-nack-response: !!text/markdown |
+      The Global Control Plane got NACK responses from the Zone Control Plane. Refer to the Zone Control Plane logs for more details.
 
   x-empty-state:
     title: No Zones yet...
@@ -24,11 +32,11 @@ zone-cps:
       There are no Zones present
     action:
       <<: *zone-cps.docs
-  
+
   x-growth-empty-state:
       title: Create your first zone
       body: !!text/markdown |
-        Zones define network boundaries (e.g., clusters, VPCs) and connect to a global control plane that centrally manages and distributes configurations. 
+        Zones define network boundaries (e.g., clusters, VPCs) and connect to a global control plane that centrally manages and distributes configurations.
       action:
         <<: *zones.growth-docs
 
@@ -65,8 +73,9 @@ zone-cps:
         disconnected: Disconnected
         responses: Responses (sent/ack'ed)
   list:
-    INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: 'Version mismatch'
-    ZONE_STORE_TYPE_MEMORY: 'Uses memory store'
+    warnings:
+      store-memory: Uses memory store
+      global-cp-incompatible: Version mismatch
   detail:
     subscriptions: 'KDS Connections'
     configuration_title: 'Configuration'

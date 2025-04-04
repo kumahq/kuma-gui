@@ -1,5 +1,8 @@
-import type { HostnameGeneratorItem } from '@/app/hostname-generators/data'
 import type { EndpointDependencies, MockResponder } from '@/test-support'
+import type { components } from '@kumahq/kuma-http-api'
+
+type HostnameGenerator = components['responses']['HostnameGeneratorItem']['content']['application/json']
+
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
   const { offset, total, next, pageTotal } = pager(
     `${fake.number.int({ min: 1, max: 100 })}`,
@@ -13,7 +16,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     headers: {},
     body: {
       total,
-      items: Array.from({ length: pageTotal }).map((_, i): HostnameGeneratorItem => {
+      items: Array.from({ length: pageTotal }).map((_, i) => {
         const meshServiceTypeSelector = fake.kuma.meshServiceTypeSelector()
         const namespace = fake.word.noun()
         const displayName = `${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
@@ -50,7 +53,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           },
           creationTime: creationTime.toISOString(),
           modificationTime: fake.date.between({ from: creationTime, to: Date.now() }).toISOString(),
-        } satisfies HostnameGeneratorItem
+        } satisfies HostnameGenerator
       }),
       next,
     },

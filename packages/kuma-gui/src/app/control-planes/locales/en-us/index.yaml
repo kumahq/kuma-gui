@@ -1,4 +1,8 @@
 main-overview:
+  notifications:
+    store-memory: !!text/markdown |
+      This control plane is using the `memory` store type. **Don't** use this store in production because the state isn't persisted.
+      <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
   routes:
     item:
       title: Overview

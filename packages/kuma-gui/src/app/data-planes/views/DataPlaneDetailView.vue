@@ -12,7 +12,7 @@
   >
     <DataSource
       :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
-        proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',
+        proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress' })[route.params.proxyType] ?? 'dataplane',
         name: route.params.proxy,
         mesh: route.params.mesh || '*',
         socketAddress: props.data.dataplane.networking.inboundAddress,
@@ -22,23 +22,59 @@
       <AppView
         :notifications="true"
       >
-        <XNotification
-          v-for="warning in warnings"
-          :key="warning.kind"
-          :data-testid="`warning-${warning.kind}`"
-          :uri="`${warning.kind}.${props.data.id}`"
+        <template
+          v-for="{ bool, key, params } in [
+            {
+              bool: props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false,
+              key: 'dp-cp-incompatible',
+              params: {
+                kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
+              },
+            },
+            {
+              bool: props.data.dataplaneInsight.version?.envoy?.kumaDpCompatible === false,
+              key: 'envoy-dp-incompatible',
+              params: {
+                envoy: props.data.dataplaneInsight.version?.envoy.version ?? '',
+                kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
+              },
+            },
+            {
+              bool: can('use zones') && props.data.zone && props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false,
+              key: 'dp-zone-cp-incompatible',
+              params: {
+                kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
+              },
+            },
+            {
+              bool: props.data.isCertExpired,
+              key: 'certificate-expired',
+            },
+            {
+              bool: !props.data.dataplaneInsight.mTLS,
+              key: 'no-mtls',
+            },
+            {
+              bool: !!error,
+              key: 'stats-not-enhanced',
+              params: {
+                error: error?.toString() ?? '',
+              },
+            },
+          ]"
+          :key="key"
         >
-          <XI18n
-            :path="`common.warnings.${warning.kind}`"
-            :params="warning.payload"
-          />
-        </XNotification>
-        <XNotification
-          v-if="error"
-          :uri="`warning-stats-loading.${props.data.id}`"
-        >
-          The below view is not enhanced with runtime stats (Error loading stats: <strong>{{ error.toString() }}</strong>)
-        </XNotification>
+          <XNotification
+            v-if="bool"
+            :data-testid="`warning-${key}`"
+            :uri="`data-planes.notifications.${key}.${props.data.id}`"
+          >
+            <XI18n
+              :path="`data-planes.notifications.${key}`"
+              :params="Object.fromEntries(Object.entries(params ?? {}))"
+            />
+          </XNotification>
+        </template>
 
         <XLayout
           type="stack"
@@ -49,12 +85,18 @@
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
           >
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.status') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XLayout
                   type="separated"
                 >
@@ -64,11 +106,9 @@
                     :items="props.data.dataplane.networking.inbounds"
                     :predicate="item => item.state !== 'Ready'"
                     :empty="false"
-                    v-slot="{ items : unhealthyInbounds }"
+                    v-slot="{ items: unhealthyInbounds }"
                   >
-                    <XIcon
-                      name="info"
-                    >
+                    <XIcon name="info">
                       <ul>
                         <li
                           v-for="inbound in unhealthyInbounds"
@@ -110,11 +150,15 @@
               </template>
             </DefinitionCard>
             <DefinitionCard layout="horizontal">
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('http.api.proptery.type') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XBadge appearance="decorative">
                   {{ t(`data-planes.type.${props.data.dataplaneType}`) }}
                 </XBadge>
@@ -125,23 +169,35 @@
               v-if="props.data.namespace.length > 0"
               layout="horizontal"
             >
-              <template #title>
+              <template
+                #title
+              >
                 {{ t('http.api.property.namespace') }}
               </template>
 
-              <template #body>
-                <XBadge appearance="decorative">
+              <template
+                #body
+              >
+                <XBadge
+                  appearance="decorative"
+                >
                   {{ props.data.namespace }}
                 </XBadge>
               </template>
             </DefinitionCard>
 
-            <DefinitionCard layout="horizontal">
-              <template #title>
+            <DefinitionCard
+              layout="horizontal"
+            >
+              <template
+                #title
+              >
                 {{ t('http.api.property.address') }}
               </template>
 
-              <template #body>
+              <template
+                #body
+              >
                 <XCopyButton
                   variant="badge"
                   format="default"
@@ -153,13 +209,21 @@
             <template
               v-if="props.data.dataplane.networking.gateway"
             >
-              <DefinitionCard layout="horizontal">
-                <template #title>
+              <DefinitionCard
+                layout="horizontal"
+              >
+                <template
+                  #title
+                >
                   {{ t('http.api.property.tags') }}
                 </template>
 
-                <template #body>
-                  <TagList :tags="props.data.dataplane.networking.gateway.tags" />
+                <template
+                  #body
+                >
+                  <TagList
+                    :tags="props.data.dataplane.networking.gateway.tags"
+                  />
                 </template>
               </DefinitionCard>
             </template>
@@ -173,9 +237,15 @@
               type="columns"
             >
               <ConnectionTraffic>
-                <template #title>
-                  <XLayout type="separated">
-                    <XIcon name="inbound" />
+                <template
+                  #title
+                >
+                  <XLayout
+                    type="separated"
+                  >
+                    <XIcon
+                      name="inbound"
+                    />
                     <span>Inbounds</span>
                   </XLayout>
                 </template>
@@ -189,7 +259,7 @@
                     // the envoy admin inbound that is used for kumas /stats API. Ignore
                     // the envoy admin inbound when we find it
                     const port = key.split('_').at(-1)
-                    if(port === (props.data.dataplane.networking.admin?.port ?? '9901')) {
+                    if (port === (props.data.dataplane.networking.admin?.port ?? '9901')) {
                       return prev
                     }
                     return prev.concat([
@@ -220,7 +290,8 @@
                       >
                         <XEmptyState>
                           <p>
-                            This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any visibility into inbounds for this gateway.
+                            This proxy is a delegated gateway therefore {{ t('common.product.name') }} does not have any
+                            visibility into inbounds for this gateway.
                           </p>
                         </XEmptyState>
                       </template>
@@ -287,7 +358,7 @@
                   <XInputSwitch
                     :checked="route.params.inactive"
                     data-testid="dataplane-outbounds-inactive-toggle"
-                    @change="(value) => route.update({ inactive: value})"
+                    @change="(value) => route.update({ inactive: value })"
                   >
                     <template #label>
                       Show inactive
@@ -302,7 +373,9 @@
                     Refresh
                   </XAction>
                 </template>
-                <template #title>
+                <template
+                  #title
+                >
                   <XLayout type="separated">
                     <XIcon name="outbound" />
                     <span>Outbounds</span>
@@ -400,7 +473,9 @@
                     </template>
                   </template>
                 </template>
-                <template v-else>
+                <template
+                  v-else
+                >
                   <XEmptyState />
                 </template>
               </ConnectionTraffic>
@@ -435,7 +510,9 @@
             </SummaryView>
           </RouterView>
 
-          <div data-testid="dataplane-mtls">
+          <div
+            data-testid="dataplane-mtls"
+          >
             <template
               v-if="props.data.dataplaneInsight.mTLS"
             >
@@ -446,56 +523,80 @@
                 :key="mTLS"
               >
                 <XCard>
-                  <template #title>
+                  <template
+                    #title
+                  >
                     <h2>{{ t('data-planes.routes.item.mtls.title') }}</h2>
                   </template>
 
-                  <div class="columns">
+                  <div
+                    class="columns"
+                  >
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.expiration_time.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
                       </template>
                     </DefinitionCard>
 
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.generation_time.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
                       </template>
                     </DefinitionCard>
 
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.regenerations.title') }}
                       </template>
 
-                      <template #body>
-                        {{ t('common.formats.integer', {value: mTLS.certificateRegenerations}) }}
+                      <template
+                        #body
+                      >
+                        {{ t('common.formats.integer', { value: mTLS.certificateRegenerations }) }}
                       </template>
                     </DefinitionCard>
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         {{ mTLS.issuedBackend }}
                       </template>
                     </DefinitionCard>
 
                     <DefinitionCard>
-                      <template #title>
+                      <template
+                        #title
+                      >
                         {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
                       </template>
 
-                      <template #body>
+                      <template
+                        #body
+                      >
                         <ul>
                           <li
                             v-for="item in mTLS.supportedBackends"
@@ -517,7 +618,9 @@
             data-testid="dataplane-subscriptions"
           >
             <XCard>
-              <template #title>
+              <template
+                #title
+              >
                 <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
               </template>
 
@@ -586,8 +689,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 import type { DataplaneOverview, DataplaneInbound } from '../data'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
@@ -607,23 +708,18 @@ const props = defineProps<{
   data: DataplaneOverview
   mesh: Mesh
 }>()
-
-const warnings = computed(() =>
-  props.data.warnings.concat(
-    ...(props.data.isCertExpired ? [{ kind: 'CERT_EXPIRED' }] : []),
-    ...(!props.data.dataplaneInsight.mTLS ? [{ kind: 'DPP_NO_MTLS' }] : []),
-  ),
-)
 </script>
 
 <style lang="scss" scoped>
 .service-traffic-group:not(.type-passthrough) .service-traffic-card {
   cursor: pointer;
 }
+
 .traffic {
   padding: 0;
   container-type: inline-size;
   container-name: traffic;
+
   .columns {
     padding: $kui-space-40;
     background: linear-gradient(90deg, rgba(0, 0, 0, .1) 1px, transparent 1px);
@@ -632,9 +728,11 @@ const warnings = computed(() =>
     background-size: 50%;
   }
 }
+
 .traffic .tag-list {
   margin-left: auto;
 }
+
 @container traffic (max-width: 40.95rem) {
   .traffic .columns {
     background: none;

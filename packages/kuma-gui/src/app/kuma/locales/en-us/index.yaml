@@ -37,25 +37,6 @@ common:
   not_applicable: N/A
   matchingsearch: " matching that search"
   refresh: Refresh
-  warnings:
-    CERT_EXPIRED: !!text/markdown |
-      The certificate for this dataplane has expired
-    DPP_NO_MTLS: !!text/markdown |
-      This Data Plane Proxy does not have mTLS configured, yet  — <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
-    ZONE_STORE_TYPE_MEMORY: !!text/markdown |
-      This zone is using the `memory` store type. **Don't** use this store in production because the state isn't persisted. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
-    GLOBAL_STORE_TYPE_MEMORY: !!text/markdown |
-      This control plane is using the `memory` store type. **Don't** use this store in production because the state isn't persisted. <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
-    INCOMPATIBLE_UNSUPPORTED_ENVOY: !!text/markdown |
-      Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
-    INCOMPATIBLE_UNSUPPORTED_KUMA_DP: !!text/markdown |
-      Unsupported version of Kuma DP (**{ kumaDp }**)
-    INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS: !!text/markdown |
-      There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
-    INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS: !!text/markdown |
-      There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ globalCpVersion }**)
-    NACK_RESPONSE_ZONE_TO_GLOBAL: !!text/markdown |
-      The Global Control Plane got NACK responses from the Zone Control Plane. Refer to the Zone Control Plane logs for more details.
   copyText: 'Copy'
   copySuccessText: 'Copied!'
   copyKubernetesText: 'Copy as Kubernetes'
