@@ -53,6 +53,18 @@ Feature: Dataplane policies
                 hasToTargetRef: true
                 isFromAsRules: true
                 isTargetRef: true
+            - name: CircuitBreaker
+              path: circuit-breakers
+              singularDisplayName: Circuit Breaker
+              pluralDisplayname: Circuit Breakers
+              includeInFederation: true
+              readOnly: false
+              scope: Mesh
+              policy:
+                hasFromTargetRef: false
+                hasToTargetRef: false
+                isFromAsRules: false
+                isTargetRef: false
         """
   Rule: Any networking type
 

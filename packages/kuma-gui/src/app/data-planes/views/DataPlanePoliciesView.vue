@@ -164,7 +164,6 @@
 
               <!-- anything but builtin gateways -->
               <template v-else>
-                ==={{ props.data.dataplaneType }}====
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
                   :data="[policyTypesData]"
@@ -172,9 +171,9 @@
                   v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                 >
                   <DataCollection
-                    :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
-                    :items="sidecarDataplaneData!.policyTypeEntries"
                     :empty="false"
+                    :items="sidecarDataplaneData!.policyTypeEntries"
+                    :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
                     v-slot="{ items }"
                   >
                     <h3>
