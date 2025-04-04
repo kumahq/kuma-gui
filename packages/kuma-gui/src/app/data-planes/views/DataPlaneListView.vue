@@ -40,6 +40,9 @@
               ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
             })"
           />
+          <XFilterBar
+            @change="(e) => console.log(e)"
+          />
 
           <XSelect
             label="Type"
@@ -312,6 +315,7 @@ import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
+import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
 const props = defineProps<{
   mesh: Mesh
 }>()
