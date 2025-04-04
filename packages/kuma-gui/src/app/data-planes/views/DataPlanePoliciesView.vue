@@ -164,6 +164,7 @@
 
               <!-- anything but builtin gateways -->
               <template v-else>
+                ==={{ props.data.dataplaneType }}====
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
                   :data="[policyTypesData]"
