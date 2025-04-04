@@ -1,4 +1,4 @@
-import { createMerge, createFetchSync } from './index.ts'
+import { createFetchSync } from './index.ts'
 import type { Middleware, Dependencies, FS, Mocker } from './index.ts'
 
 const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
@@ -29,39 +29,40 @@ export const mocker = <T extends object = {}>(
         try {
           // headers can be string | string[], not string
           const headers = Object.entries(req.headers).reduce((prev, [key, item]) => {
-            if(typeof item !== 'undefined') {
+            if (typeof item !== 'undefined') {
               prev[key] = Array.isArray(item) ? item[0] : item
             }
             return prev
           }, {} as Record<string, string>)
 
-          const response = fetch(req.url, {
+          const unmerged = fetch(req.url, {
             method: req.method,
             headers,
           })
 
-          const type = response.headers.get('Content-Type') ?? 'application/json'
+          const type = unmerged.headers.get('Content-Type') ?? 'application/json'
           const resp = {
-            headers: Object.fromEntries(response.headers.entries()),
-            body: type.endsWith('/json') ? response.json() : response.text(),
+            headers: Object.fromEntries(unmerged.headers.entries()),
+            body: type.endsWith('/json') ? unmerged.json() : unmerged.text(),
           }
 
-          const merged = cb({
+          const response = cb({
             url: new URL(req.url),
             method: req.method,
             body: req.body,
             params: {},
-          }, resp, createMerge(resp))
-          if (typeof merged === 'undefined') {
+          }, resp)
+
+          if (typeof response === 'undefined') {
             req.continue()
             return
           }
 
           req.reply({
             contentType: type,
-            statusCode: parseInt(response.headers.get('Status-Code') ?? '200'),
+            statusCode: parseInt(response.headers?.['Status-Code'] ?? '200'),
             delay: parseInt(dependencies.env('KUMA_LATENCY', opts['KUMA_LATENCY'] ?? '0')),
-            body: merged.body,
+            body: response.body,
           })
         } catch (e) {
           console.error(e)

@@ -1,7 +1,4 @@
-import deepmerge from 'deepmerge'
 import { URLPattern } from 'urlpattern-polyfill'
-
-import type { ArrayMergeOptions } from 'deepmerge'
 
 export type RestRequest = {
   method: string
@@ -17,9 +14,7 @@ export type MockResponse = {
 
 export type MockResponder = (req: RestRequest) => MockResponse
 
-type Merge = (obj: Partial<MockResponse>) => MockResponse
-
-export type Middleware = (request: RestRequest, response: MockResponse, merge: Merge) => MockResponse
+export type Middleware = (request: RestRequest, response: MockResponse) => MockResponse
 export type Options = Record<string, string>
 export type Mocker = (route: string, opts: Options, cb: Middleware) => void
 
@@ -34,34 +29,6 @@ export function escapeRoute(route: string): string {
   return route.replaceAll('+', '\\+')
 }
 
-// --begin
-// merges objects in array positions rather than replacing
-export const undefinedSymbol = Symbol('undefined')
-const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
-  const destination = target.slice()
-
-  source.forEach((item, index) => {
-    if (typeof destination[index] === 'undefined') {
-      destination[index] = options.cloneUnlessOtherwiseSpecified(item, options)
-    } else if (options.isMergeableObject(item)) {
-      destination[index] = deepmerge(target[index], item, options)
-    } else if (target.indexOf(item) === -1) {
-      destination.push(item)
-    }
-  })
-  return destination
-}
-
-export const createMerge = (response: MockResponse): Merge => (obj) => {
-  const merged = deepmerge(response, obj, { arrayMerge: combineMerge })
-  return JSON.parse(JSON.stringify(merged, (_key, value) => {
-    if (value === undefinedSymbol) {
-      return
-    }
-    return value
-  }))
-}
-// --end
 
 export class Router<T> {
   routes: Map<URLPattern, T> = new Map()
