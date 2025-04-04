@@ -170,6 +170,7 @@
                   :errors="[policyTypesError]"
                   v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                 >
+                  ==={{ JSON.stringify(sidecarDataplaneData!.policyTypeEntries, null, 4) }}====
                   <DataCollection
                     :empty="false"
                     :items="sidecarDataplaneData!.policyTypeEntries"
