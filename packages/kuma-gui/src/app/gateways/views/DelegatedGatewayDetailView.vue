@@ -70,23 +70,10 @@
           </template>
 
           <search>
-            <FilterBar
-              class="data-plane-proxy-filter"
-              :placeholder="`tag: 'kuma.io/protocol: http'`"
-              :query="route.params.s"
-              :fields="{
-                name: { description: 'filter by name or parts of a name' },
-                protocol: { description: 'filter by “kuma.io/protocol” value' },
-                tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-              }"
-              @change="(e) => route.update({
-                page: 1,
-                ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-              })"
-            />
             <XFilterBar
+              class="data-plane-proxy-filter"
               :default-value="route.params.s"
+              placeholder="Filter by name protocol or tag..."
               @submit="({ raw, ...rest }) => route.update({
                 page: 1,
                 s: Object.entries(rest).map((v) => v.join(':')).join(' '),
@@ -266,7 +253,6 @@
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'

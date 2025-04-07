@@ -82,7 +82,9 @@ const submit = () => {
 .filter-bar {
   --word-spacing: $kui-space-40;
   position: relative;
-  width: 100%;
+  // width: 100%;
+  min-width: inherit;
+  width: 0;
   display: inline-flex;
   vertical-align: middle;
   cursor: text;
@@ -109,6 +111,9 @@ const submit = () => {
   position: absolute;
   left: $kui-space-50;
   color: $kui-color-background-primary;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 :deep(.icon) {
@@ -173,5 +178,6 @@ input {
   border: 0;
   outline: none;
   caret-color: $kui-color-text;
+  line-height: $kui-font-size-70;
 }
 </style>

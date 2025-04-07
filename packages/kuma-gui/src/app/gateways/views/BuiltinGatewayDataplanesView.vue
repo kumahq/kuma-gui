@@ -22,24 +22,10 @@
         >
           <XCard>
             <search>
-              <FilterBar
-                class="data-plane-proxy-filter"
-                :placeholder="`name:dataplane-name`"
-                :query="route.params.s"
-                :fields="{
-                  name: { description: 'filter by name or parts of a name' },
-                  protocol: { description: 'filter by “kuma.io/protocol” value' },
-                  service: { description: 'filter by “kuma.io/service” value' },
-                  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                  ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-                }"
-                @change="(e) => route.update({
-                  page: 1,
-                  ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-                })"
-              />
               <XFilterBar
+                class="data-plane-proxy-filter"
                 :default-value="route.params.s"
+                placeholder="Filter by name, protocol, service or tag..."
                 @submit="({ raw, ...rest }) => route.update({
                   page: 1,
                   s: Object.entries(rest).map((v) => v.join(':')).join(' '),
@@ -223,7 +209,6 @@
 <script lang="ts" setup>
 import type { MeshGatewaySource } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'

@@ -6,24 +6,11 @@
     <template
       v-if="[
         'search',
-        'filter',
       ].includes(props.appearance)"
       #before
     >
       <XIcon
         name="search"
-      />
-      <slot name="before" />
-    </template>
-
-    <template
-      v-for="(_, slotName) in Object.fromEntries(Object.entries(slots).filter(([key]) => !['before'].includes(key)))"
-      :key="slotName"
-      #[slotName]="slotProps"
-    >
-      <slot
-        :name="slotName"
-        v-bind="(slotProps)"
       />
     </template>
   </KInput>
@@ -31,11 +18,10 @@
 <script lang="ts" setup>
 import { useDebounceFn } from '@vueuse/core'
 import { computed } from 'vue'
-const slots = defineSlots()
 
 const props = withDefaults(defineProps<{
   value?: string
-  appearance?: '' | 'search' | 'filter'
+  appearance?: '' | 'search'
   debounce?: number
 }>(), {
   value: '',
