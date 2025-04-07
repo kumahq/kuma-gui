@@ -20,7 +20,10 @@
         class="container"
       >
         <div class="content-wrapper">
-          <div class="content">
+          <div
+            ref="contentRef"
+            class="content"
+          >
             <template
               v-for="(chunk, index) in inputValue.split(/([^:\s]+:[^:\s]+)/gi).filter(Boolean)"
               :key="chunk+index"
@@ -30,12 +33,6 @@
           </div>
         </div>
         <div class="wrapper">
-          <div
-            ref="sizerRef"
-            class="sizer"
-          >
-            {{ inputValue }}
-          </div>
           <input
             ref="inputRef"
             type="text"
@@ -62,8 +59,8 @@ const props = withDefaults(defineProps<{
 
 const inputValue = ref<string>(props.defaultValue)
 const width = ref<number | undefined>()
-const sizerRef = ref<null | HTMLElement>(null)
 const containerRef = ref<null | HTMLElement>(null)
+const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 
 const emit = defineEmits<{
@@ -78,9 +75,9 @@ const onChange = (event: Event): void => {
 onMounted(() => {
   const observer = new ResizeObserver(([e]) => {
     width.value = e?.contentRect?.width
-    containerRef.value?.scrollBy(width.value, 0)
+    containerRef.value?.scrollBy(inputRef.value?.scrollLeft ?? 0, 0)
   })
-  observer.observe(sizerRef.value as HTMLElement)
+  observer.observe(contentRef.value as HTMLElement)
 })
 
 const submit = () => {
