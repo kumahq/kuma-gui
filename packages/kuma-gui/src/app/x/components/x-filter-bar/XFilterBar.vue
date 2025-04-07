@@ -187,5 +187,6 @@ input {
   outline: none;
   caret-color: $kui-color-text;
   line-height: $kui-font-size-70;
+  direction: ltr;
 }
 </style>
