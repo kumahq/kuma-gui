@@ -95,7 +95,7 @@ Feature: mesh / dataplanes / index
       | dpp-2          |
       | No certificate |
       | offline        |
-  
+
   Scenario: Searching by tag doesn't overwrite the existing service tag
     When I visit the "/meshes/default/data-planes" URL
     Then the "$input-search" element isn't disabled

@@ -1,38 +1,41 @@
 <template>
-  <div
-    v-style="`--width:${width}px`"
-    class="filter-bar"
-    data-testid="filter-bar"
-    @click.stop="inputRef?.focus()"
+  <form
+    class="form"
+    @submit.prevent="submit"
   >
-    <div class="icon-wrapper">
-      <XIcon
-        class="icon"
-        name="filter"
-      />
-    </div>
     <div
-      ref="containerRef"
-      class="container"
+      v-style="`--width:${width}px`"
+      class="filter-bar"
+      data-testid="filter-bar"
+      @click.stop="inputRef?.focus()"
     >
-      <div class="content-wrapper">
-        <div class="content">
-          <template
-            v-for="(chunk, index) in inputValue.split(/([^:\s]+:[^:\s]+)/gi).filter(Boolean)"
-            :key="chunk+index"
-          >
-            <span :class="{ highlight: /([^:\s]+:[^:\s]+)/gi.test(chunk) }">{{ chunk }}</span>
-          </template>
-        </div>
+      <div class="icon-wrapper">
+        <XIcon
+          class="icon"
+          name="filter"
+        />
       </div>
-      <div class="wrapper">
-        <div
-          ref="sizerRef"
-          class="sizer"
-        >
-          {{ inputValue }}
+      <div
+        ref="containerRef"
+        class="container"
+      >
+        <div class="content-wrapper">
+          <div class="content">
+            <template
+              v-for="(chunk, index) in inputValue.split(/([^:\s]+:[^:\s]+)/gi).filter(Boolean)"
+              :key="chunk+index"
+            >
+              <span :class="{ highlight: /([^:\s]+:[^:\s]+)/gi.test(chunk) }">{{ chunk }}</span>
+            </template>
+          </div>
         </div>
-        <form @submit.prevent="submit">
+        <div class="wrapper">
+          <div
+            ref="sizerRef"
+            class="sizer"
+          >
+            {{ inputValue }}
+          </div>
           <input
             ref="inputRef"
             type="text"
@@ -41,10 +44,10 @@
             data-testid="filter-bar-filter-input"
             @input="onChange"
           >
-        </form>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -91,10 +94,13 @@ const submit = () => {
 </script>
 
 <style scoped lang="scss">
-.filter-bar {
-  position: relative;
+.form {
   min-width: inherit;
   width: 0;
+}
+.filter-bar {
+  position: relative;
+  width: 100%;
   display: inline-flex;
   vertical-align: middle;
   cursor: text;
