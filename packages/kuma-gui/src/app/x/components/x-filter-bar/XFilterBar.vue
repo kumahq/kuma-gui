@@ -145,7 +145,6 @@ const submit = () => {
   background: #f0f4f7;
   padding: $kui-space-10 0px;
   border-radius: $kui-border-radius-20;
-  word-spacing: $kui-space-40;
 }
 
 .wrapper {
@@ -161,7 +160,6 @@ const submit = () => {
   overflow: scroll;
   white-space: pre;
   visibility: hidden;
-  word-spacing: $kui-space-40;
 }
 
 input {
