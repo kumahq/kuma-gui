@@ -27,7 +27,7 @@
           ref="sizerRef"
           class="sizer"
         >
-          <span>{{ inputValue }}</span>
+          {{ inputValue }}
         </div>
         <form @submit.prevent="submit">
           <input
@@ -82,7 +82,6 @@ const submit = () => {
 
 <style scoped lang="scss">
 .filter-bar {
-  --word-spacing: $kui-space-40;
   position: relative;
   min-width: inherit;
   width: 0;
@@ -93,7 +92,6 @@ const submit = () => {
   align-items: center;
   font-family: $kui-font-family-code;
   font-size: $kui-font-size-30;
-  word-spacing: var(--word-spacing);
   border-radius: $kui-border-radius-20;
   box-shadow: $kui-shadow-border;
   transition: box-shadow $kui-animation-duration-20 ease-in-out;
@@ -147,7 +145,7 @@ const submit = () => {
   background: #f0f4f7;
   padding: $kui-space-10 0px;
   border-radius: $kui-border-radius-20;
-  word-spacing: var(--word-spacing);
+  word-spacing: $kui-space-40;
 }
 
 .wrapper {
@@ -163,6 +161,7 @@ const submit = () => {
   overflow: scroll;
   white-space: pre;
   visibility: hidden;
+  word-spacing: $kui-space-40;
 }
 
 input {
