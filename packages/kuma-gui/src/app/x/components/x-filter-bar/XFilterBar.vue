@@ -2,6 +2,7 @@
   <div
     v-style="`--width:${width}px`"
     class="filter-bar"
+    data-testid="filter-bar"
     @click.stop="inputRef?.focus()"
   >
     <div class="icon-wrapper">
@@ -34,6 +35,7 @@
             type="text"
             :defaultValue="props.defaultValue"
             :placeholder="props.placeholder"
+            data-testid="filter-bar-filter-input"
             @input="onChange"
           >
         </form>
