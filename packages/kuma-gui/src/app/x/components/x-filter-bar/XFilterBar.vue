@@ -15,10 +15,10 @@
       <div class="content-wrapper">
         <div class="content">
           <template
-            v-for="(chunk, index) in inputValue.split(/([\w-\.\/]+:[\w-\.\/]+)/gi).filter(Boolean)"
+            v-for="(chunk, index) in inputValue.split(/(\S+:\S+)/gi).filter(Boolean)"
             :key="chunk+index"
           >
-            <span :class="{ highlight: /([\w-\.\/]+:[\w-\.\/]+)/gi.test(chunk) }">{{ chunk }}</span>
+            <span :class="{ highlight: /(\S+:\S+)/gi.test(chunk) }">{{ chunk }}</span>
           </template>
         </div>
       </div>
