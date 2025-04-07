@@ -82,7 +82,6 @@ const submit = () => {
 .filter-bar {
   --word-spacing: $kui-space-40;
   position: relative;
-  // width: 100%;
   min-width: inherit;
   width: 0;
   display: inline-flex;
