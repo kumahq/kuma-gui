@@ -2,26 +2,37 @@
   <div class="filter-bar" :style="`--width:${width}px`">
     <div class="container">
       <div class="content-wrapper">
-        <div class="content"><div ref="contentRef" v-html="inputValue.replace(/([a-z0-9]*:[a-z0-9]+)/gi, `<span class='highlight'>$1</span>`)"></div></div>
+        <div class="content"><div ref="contentRef" v-html="inputValue.replace(/([\w-\.\/]+:[\w-\.\/]+)/gi, `<span class='highlight'>$1</span>`)"></div></div>
       </div>
       <div class="wrapper">
-        <div ref="sizerRef" class="sizer"><span>{{ inputValue }}</span><span></span></div>
-        <XInput :placeholder="props.placeholder" appearance="filter" @input="onChange" />
+        <div ref="sizerRef" class="sizer"><span>{{ inputValue }}</span></div>
+        <form @submit.prevent="submit">  
+          <XInput :value="props.defaultValue" :placeholder="props.placeholder" appearance="filter" @input="onChange" />
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-const inputValue = ref<string>("");
+// TODO: dropdown: on submit, the dropdown should close, but the input field should stay focused. when starting to type again, the dropdown should open again/11
+const props = withDefaults(defineProps<{
+  placeholder?: string
+  defaultValue?: string
+}>(), {
+  placeholder: undefined,
+  defaultValue: ""
+})
+
+const inputValue = ref<string>(props.defaultValue);
 const width = ref<number | undefined>();
 const sizerRef = ref<null | HTMLElement>(null)
 const contentRef = ref<null | HTMLElement>(null)
 
 const emit = defineEmits<{
-  (e: 'change', value: Record<string, string> & { raw: string }): void
+  (e: 'submit', value: Record<string, string> & { raw: string }): void
 }>()
 
 const onChange = (event: string) => {
@@ -32,26 +43,31 @@ const onChange = (event: string) => {
     // width.value = sizerWidth;
     console.log("🚀 ~ onChange ~ sizerWidth:", sizerWidth)
     console.log("🚀 ~ onChange ~ contentWidth:", contentWidth)
+    // console.log(inputValue.value.split(/([a-z0-9]*:[a-z0-9]+)/gi))
   }
   inputValue.value = event
+}
 
-  const values = Object.fromEntries(event.split(" ").map((v) => {
-    const [key,value] = v.split(":")
+const submit = () => {
+  const values = Object.fromEntries(inputValue.value.split(" ").map((v) => {
+    const [key, value] = v.split(":")
     if(!key || !value) return []
     return [key, value]
   }).filter((v) => v.length))
-  emit('change', { raw: inputValue.value, ...values })
+  emit('submit', { raw: inputValue.value, ...values })
 }
 
-const props = withDefaults(defineProps<{
-  placeholder?: string
-}>(), {
-  placeholder: undefined
+watch(() => props.defaultValue, () => {
+  inputValue.value = props.defaultValue
 })
 
 </script>
 
 <style scoped lang="scss">
+* {
+  box-sizing: border-box;
+}
+
 .filter-bar {
   --word-spacing: $kui-space-40;
 
@@ -77,20 +93,9 @@ const props = withDefaults(defineProps<{
   flex-basis: 0%;
   flex-grow: 1;
   flex-shrink: 1;
-}
-
-.wrapper {
-  position: relative;
-  display: flex;
+  align-self: stretch;
+  flex: 1;
   width: 100%;
-  flex-flow: column nowrap;
-}
-
-.sizer {
-  position: absolute;
-  visibility: hidden;
-  height: 0;
-  font-size: $kui-font-size-30;
 }
 
 .content-wrapper {
@@ -106,11 +111,8 @@ const props = withDefaults(defineProps<{
 
 .content {
   font-size: $kui-font-size-30;
-  position: sticky;
-  right: 0;
-  // flex-basis: 0%;
-  // flex-grow: 1;
-  // flex-shrink: 1;
+  // position: sticky;
+  // right: 0;
   overflow-wrap: break-word;
   position: absolute;
   text-wrap-mode: nowrap;
@@ -122,15 +124,45 @@ const props = withDefaults(defineProps<{
   color: $kui-color-text;
 }
 
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+}
+
+.sizer {
+  position: absolute;
+  visibility: hidden;
+  height: 5px;
+  font-size: $kui-font-size-30;
+}
+
+:deep(.k-input) {
+  max-width: 100%;
+}
+
+:deep(.input-element-wrapper) {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  width: 100%;
+  resize: none;
+  position: relative;
+}
+
 :deep(.input) {
   width: var(--width, 'max-content');
   min-width: 100%;
   max-width: 100%;
+  position: relative;
+  display: flex;
   background: transparent;
   color: transparent;
   font-size: $kui-font-size-30;
   caret-color: $kui-color-text;
   font-family: $kui-font-family-code;
   word-spacing: var(--word-spacing);
+  resize: none;
 }
 </style>

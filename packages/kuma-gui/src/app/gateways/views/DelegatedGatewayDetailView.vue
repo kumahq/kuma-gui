@@ -85,6 +85,13 @@
                 ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
               })"
             />
+            <XFilterBar
+              :defaultValue="route.params.s"
+              @submit="({ raw, ...rest }) => route.update({
+                page: 1,
+                s: Object.entries(rest).map((v) => v.join(':')).join(' '),
+              })"
+            />
           </search>
           <DataLoader
             :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
@@ -265,6 +272,7 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
+import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
 </script>
 
 <style lang="scss" scoped>
