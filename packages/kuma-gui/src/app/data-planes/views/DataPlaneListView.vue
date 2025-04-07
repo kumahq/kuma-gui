@@ -24,7 +24,6 @@
       />
       <XCard>
         <search>
-          <XLayout style="display:flex; justify-content:space-evenly; align-items: space-evenly">
           <FilterBar
             class="data-plane-proxy-filter"
             :placeholder="`service:backend`"
@@ -42,13 +41,12 @@
             })"
           />
           <XFilterBar
-            :defaultValue="route.params.s"
+            :default-value="route.params.s"
             @submit="({ raw, ...rest }) => route.update({
               page: 1,
               s: Object.entries(rest).map((v) => v.join(':')).join(' '),
             })"
           />
-        </XLayout>
 
           <XSelect
             label="Type"

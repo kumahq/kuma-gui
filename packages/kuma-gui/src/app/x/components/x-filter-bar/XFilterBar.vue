@@ -1,13 +1,41 @@
 <template>
-  <div class="filter-bar" :style="`--width:${width}px`">
+  <div
+    v-style="`--width:${width}px`"
+    class="filter-bar"
+    @click.stop="inputRef?.focus()"
+  >
+    <div class="icon-wrapper">
+      <XIcon
+        class="icon"
+        name="filter"
+      />
+    </div>
     <div class="container">
       <div class="content-wrapper">
-        <div class="content"><div ref="contentRef" v-html="inputValue.replace(/([\w-\.\/]+:[\w-\.\/]+)/gi, `<span class='highlight'>$1</span>`)"></div></div>
+        <div class="content">
+          <template
+            v-for="(chunk, index) in inputValue.split(/([\w-\.\/]+:[\w-\.\/]+)/gi).filter(Boolean)"
+            :key="chunk+index"
+          >
+            <span :class="{ highlight: /([\w-\.\/]+:[\w-\.\/]+)/gi.test(chunk) }">{{ chunk }}</span>
+          </template>
+        </div>
       </div>
       <div class="wrapper">
-        <div ref="sizerRef" class="sizer"><span>{{ inputValue }}</span></div>
-        <form @submit.prevent="submit">  
-          <XInput :value="props.defaultValue" :placeholder="props.placeholder" appearance="filter" @input="onChange" />
+        <div
+          ref="sizerRef"
+          class="sizer"
+        >
+          <span>{{ inputValue }}</span>
+        </div>
+        <form @submit.prevent="submit">
+          <input
+            ref="inputRef"
+            type="text"
+            :defaultValue="props.defaultValue"
+            :placeholder="props.placeholder"
+            @input="onChange"
+          >
         </form>
       </div>
     </div>
@@ -15,66 +43,97 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-
-// TODO: dropdown: on submit, the dropdown should close, but the input field should stay focused. when starting to type again, the dropdown should open again/11
+import { ref } from 'vue'
 const props = withDefaults(defineProps<{
   placeholder?: string
   defaultValue?: string
 }>(), {
   placeholder: undefined,
-  defaultValue: ""
+  defaultValue: '',
 })
 
-const inputValue = ref<string>(props.defaultValue);
-const width = ref<number | undefined>();
+const inputValue = ref<string>(props.defaultValue)
+const width = ref<number | undefined>()
 const sizerRef = ref<null | HTMLElement>(null)
-const contentRef = ref<null | HTMLElement>(null)
+const inputRef = ref<null | HTMLInputElement>(null)
 
 const emit = defineEmits<{
   (e: 'submit', value: Record<string, string> & { raw: string }): void
 }>()
 
-const onChange = (event: string) => {
-  if(sizerRef.value) {
-    const sizerWidth = sizerRef.value?.getBoundingClientRect().width
-    const contentWidth = contentRef.value?.getBoundingClientRect().width
-    width.value = contentWidth;
-    // width.value = sizerWidth;
-    console.log("🚀 ~ onChange ~ sizerWidth:", sizerWidth)
-    console.log("🚀 ~ onChange ~ contentWidth:", contentWidth)
-    // console.log(inputValue.value.split(/([a-z0-9]*:[a-z0-9]+)/gi))
-  }
-  inputValue.value = event
+const onChange = (event: Event): void => {
+  const value = (event.target as HTMLInputElement)?.value
+  const sizerWidth = sizerRef.value?.getBoundingClientRect().width
+  width.value = sizerWidth
+  inputValue.value = value
 }
 
 const submit = () => {
-  const values = Object.fromEntries(inputValue.value.split(" ").map((v) => {
-    const [key, value] = v.split(":")
+  const values = Object.fromEntries(inputValue.value.split(' ').map((v) => {
+    const [key, value] = v.split(':')
     if(!key || !value) return []
     return [key, value]
   }).filter((v) => v.length))
   emit('submit', { raw: inputValue.value, ...values })
 }
-
-watch(() => props.defaultValue, () => {
-  inputValue.value = props.defaultValue
-})
-
 </script>
 
 <style scoped lang="scss">
-* {
-  box-sizing: border-box;
-}
-
 .filter-bar {
   --word-spacing: $kui-space-40;
-
-  display: flex;
+  position: relative;
   width: 100%;
+  display: inline-flex;
+  vertical-align: middle;
+  cursor: text;
+  outline: none;
+  align-items: center;
   font-family: $kui-font-family-code;
+  font-size: $kui-font-size-30;
   word-spacing: var(--word-spacing);
+  border-radius: $kui-border-radius-20;
+  box-shadow: $kui-shadow-border;
+  transition: box-shadow $kui-animation-duration-20 ease-in-out;
+  padding: $kui-space-40 $kui-space-50 $kui-space-40 $kui-space-100;
+  color: $kui-color-text;
+
+  &:hover {
+    box-shadow: $kui-shadow-border-primary-weak;
+  }
+  &:focus-within {
+    box-shadow: $kui-shadow-border-primary, $kui-shadow-focus;
+  }
+}
+
+.icon-wrapper {
+  position: absolute;
+  left: $kui-space-50;
+  color: $kui-color-background-primary;
+}
+
+:deep(.icon) {
+  height: $kui-icon-size-40 !important;
+  width: $kui-icon-size-40 !important;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center;
+  scrollbar-width: none;
+  flex: 1;
+  align-self: stretch;
+}
+
+.content-wrapper {
+  position: absolute;
+  display: inline-flex;
+  padding: 0;
+  word-break: break-word;
+  white-space: pre;
+  flex: 1;
 }
 
 :deep(.highlight) {
@@ -85,84 +144,34 @@ watch(() => props.defaultValue, () => {
   word-spacing: var(--word-spacing);
 }
 
-.container {
-  position: relative;
-  display: flex;
-  width: 100%;
-  flex-flow: column nowrap;
-  flex-basis: 0%;
-  flex-grow: 1;
-  flex-shrink: 1;
-  align-self: stretch;
-  flex: 1;
-  width: 100%;
-}
-
-.content-wrapper {
-  position: absolute;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  left: $kui-space-100;
-  right: $kui-space-50;
-  overflow: hidden;
-  height: 100%;
-}
-
-.content {
-  font-size: $kui-font-size-30;
-  // position: sticky;
-  // right: 0;
-  overflow-wrap: break-word;
-  position: absolute;
-  text-wrap-mode: nowrap;
-  unicode-bidi: isolate;
-  user-select: none;
-  white-space-collapse: preserve;
-  word-break: break-word;
-  min-width: 100%;
-  color: $kui-color-text;
-}
-
 .wrapper {
-  position: relative;
-  display: flex;
   width: 100%;
-  flex-flow: column nowrap;
+  align-self: stretch;
 }
 
 .sizer {
   position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  overflow: scroll;
+  white-space: pre;
   visibility: hidden;
-  height: 5px;
-  font-size: $kui-font-size-30;
 }
 
-:deep(.k-input) {
-  max-width: 100%;
-}
-
-:deep(.input-element-wrapper) {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  width: 100%;
-  resize: none;
-  position: relative;
-}
-
-:deep(.input) {
-  width: var(--width, 'max-content');
-  min-width: 100%;
-  max-width: 100%;
+input {
+  width: var(--width, "max-content");
   position: relative;
   display: flex;
-  background: transparent;
-  color: transparent;
-  font-size: $kui-font-size-30;
-  caret-color: $kui-color-text;
-  font-family: $kui-font-family-code;
-  word-spacing: var(--word-spacing);
+  min-width: 100%;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
   resize: none;
+  color: transparent;
+  background: transparent;
+  border: 0;
+  outline: none;
+  caret-color: $kui-color-text;
 }
 </style>
