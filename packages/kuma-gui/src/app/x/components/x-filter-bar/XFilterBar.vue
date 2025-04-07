@@ -11,7 +11,10 @@
         name="filter"
       />
     </div>
-    <div class="container">
+    <div
+      ref="containerRef"
+      class="container"
+    >
       <div class="content-wrapper">
         <div class="content">
           <template
@@ -45,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const props = withDefaults(defineProps<{
   placeholder?: string
   defaultValue?: string
@@ -57,6 +60,7 @@ const props = withDefaults(defineProps<{
 const inputValue = ref<string>(props.defaultValue)
 const width = ref<number | undefined>()
 const sizerRef = ref<null | HTMLElement>(null)
+const containerRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 
 const emit = defineEmits<{
@@ -65,10 +69,16 @@ const emit = defineEmits<{
 
 const onChange = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
-  const sizerWidth = sizerRef.value?.getBoundingClientRect().width
-  width.value = sizerWidth
   inputValue.value = value
 }
+
+onMounted(() => {
+  const observer = new ResizeObserver(([e]) => {
+    width.value = e?.contentRect?.width
+    containerRef.value?.scrollBy(width.value, 0)
+  })
+  observer.observe(sizerRef.value as HTMLElement)
+})
 
 const submit = () => {
   const values = Object.fromEntries(inputValue.value.split(' ').map((v) => {
