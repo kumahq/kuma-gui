@@ -94,7 +94,7 @@
               })"
             />
             <XFilterBar
-              :defaultValue="route.params.s"
+              :default-value="route.params.s"
               @submit="({ raw, ...rest }) => route.update({
                 page: 1,
                 s: Object.entries(rest).map((v) => v.join(':')).join(' '),
