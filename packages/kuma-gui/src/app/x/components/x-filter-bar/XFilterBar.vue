@@ -1,11 +1,11 @@
 <template>
   <form
-    class="form"
+    class="filter-bar-form"
     @submit.prevent="submit"
   >
     <div
       v-style="`--width:${width}px`"
-      class="filter-bar"
+      class="filter-bar-container"
       data-testid="filter-bar"
       @click.stop="inputRef?.focus()"
     >
@@ -17,22 +17,20 @@
       </div>
       <div
         ref="containerRef"
-        class="container"
+        class="input-container"
       >
-        <div class="content-wrapper">
-          <div
-            ref="contentRef"
-            class="content"
+        <div
+          ref="contentRef"
+          class="content-wrapper"
+        >
+          <template
+            v-for="(chunk, index) in inputValue.split(/([^:\s]+:[^:\s]+)/gi).filter(Boolean)"
+            :key="chunk+index"
           >
-            <template
-              v-for="(chunk, index) in inputValue.split(/([^:\s]+:[^:\s]+)/gi).filter(Boolean)"
-              :key="chunk+index"
-            >
-              <span :class="{ highlight: /([^:\s]+:[^:\s]+)/gi.test(chunk) }">{{ chunk }}</span>
-            </template>
-          </div>
+            <span :class="{ highlight: /([^:\s]+:[^:\s]+)/gi.test(chunk) }">{{ chunk }}</span>
+          </template>
         </div>
-        <div class="wrapper">
+        <div class="input-wrapper">
           <input
             ref="inputRef"
             type="text"
@@ -75,13 +73,15 @@ const onChange = (event: Event): void => {
 onMounted(() => {
   const observer = new ResizeObserver(([e]) => {
     width.value = e?.contentRect?.width
+
+    // keep the cursor position in the view
     containerRef.value?.scrollBy(inputRef.value?.scrollLeft ?? 0, 0)
   })
   observer.observe(contentRef.value as HTMLElement)
 })
 
 const submit = () => {
-  const values = Object.fromEntries(inputValue.value.split(' ').map((v) => {
+  const values = Object.fromEntries(inputValue.value.split(/\s+/).map((v) => {
     const [key, value] = v.split(':')
     if(!key || !value) return []
     return [key, value]
@@ -91,11 +91,12 @@ const submit = () => {
 </script>
 
 <style scoped lang="scss">
-.form {
+.filter-bar-form {
   min-width: inherit;
   width: 0;
 }
-.filter-bar {
+
+.filter-bar-container {
   position: relative;
   width: 100%;
   display: inline-flex;
@@ -133,7 +134,7 @@ const submit = () => {
   width: $kui-icon-size-40 !important;
 }
 
-.container {
+.input-container {
   position: relative;
   display: flex;
   overflow-x: auto;
@@ -151,16 +152,18 @@ const submit = () => {
   word-break: break-word;
   white-space: pre;
   flex: 1;
+
+  span {
+    padding: $kui-space-10 0px;
+
+    &.highlight {
+      background: #f0f4f7;
+      border-radius: $kui-border-radius-20;
+    }
+  }
 }
 
-:deep(.highlight) {
-  // TODO: there is currently no token for this color
-  background: #f0f4f7;
-  padding: $kui-space-10 0px;
-  border-radius: $kui-border-radius-20;
-}
-
-.wrapper {
+.input-wrapper {
   width: 100%;
   align-self: stretch;
 }
