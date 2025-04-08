@@ -2,8 +2,9 @@
   <template
     v-if="props.path.length > 0"
   >
-    <!-- eslint-disable vue/no-v-html -->
-    <div
+    <!-- eslint-disable vue/no-v-html, vue/no-v-html-on-component, vue/no-v-text-v-html-on-component -->
+    <component
+      :is="props.tag ?? 'div'"
       class="x-i18n"
       data-testid="x-i18n"
       v-bind="attrs"
@@ -63,12 +64,14 @@ const props = withDefaults(defineProps<{
   path?: string
   params?: Record<string, string>
   defaultPath?: string
+  tag?: 'span'
 }>(), {
   strings: undefined,
   prefix: '',
   path: '',
   params: () => ({}),
   defaultPath: undefined,
+  tag: undefined,
 })
 const slots = defineSlots()
 

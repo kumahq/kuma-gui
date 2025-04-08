@@ -85,8 +85,8 @@
               <XSearch
                 class="search-field"
                 name="s"
-                placeholder="Filter by name, protocol or tag..."
                 :value="route.params.s"
+                :keys="['name', 'protocol', 'tag']"
               />
             </form>
           </search>
