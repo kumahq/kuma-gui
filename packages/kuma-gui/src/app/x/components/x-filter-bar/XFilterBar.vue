@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+
 const props = withDefaults(defineProps<{
   placeholder?: string
   defaultValue?: string
@@ -70,6 +71,15 @@ const onChange = (event: Event): void => {
   inputValue.value = value
 }
 
+const submit = () => {
+  const values = Object.fromEntries(inputValue.value.split(/\s+/).map((v) => {
+    const [key, value] = v.split(':')
+    if(!key || !value) return []
+    return [key, value]
+  }).filter((v) => v.length))
+  emit('submit', { raw: inputValue.value, ...values })
+}
+
 onMounted(() => {
   const observer = new ResizeObserver(([e]) => {
     width.value = e?.contentRect?.width
@@ -79,15 +89,6 @@ onMounted(() => {
   })
   observer.observe(contentRef.value as HTMLElement)
 })
-
-const submit = () => {
-  const values = Object.fromEntries(inputValue.value.split(/\s+/).map((v) => {
-    const [key, value] = v.split(':')
-    if(!key || !value) return []
-    return [key, value]
-  }).filter((v) => v.length))
-  emit('submit', { raw: inputValue.value, ...values })
-}
 </script>
 
 <style scoped lang="scss">
