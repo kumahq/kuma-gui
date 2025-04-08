@@ -12,7 +12,7 @@
       <div class="icon-wrapper">
         <XIcon
           class="icon"
-          name="filter"
+          name="search"
         />
       </div>
       <div
