@@ -24,10 +24,10 @@
           class="content-wrapper"
         >
           <template
-            v-for="(chunk, index) in inputValue.split(/([^:\s]+:[^:\s]+)/gi).filter(Boolean)"
+            v-for="(chunk, index) in inputValue.split(new RegExp(regex)).filter(Boolean)"
             :key="chunk+index"
           >
-            <span :class="{ highlight: /([^:\s]+:[^:\s]+)/gi.test(chunk) }">{{ chunk }}</span>
+            <span :class="{ highlight: new RegExp(regex).test(chunk) }">{{ chunk }}</span>
           </template>
         </div>
         <div class="input-wrapper">
@@ -56,6 +56,7 @@ const props = withDefaults(defineProps<{
   defaultValue: '',
 })
 
+const regex = /([^:\s]+:[^\s]+)/gi
 const inputValue = ref<string>(props.defaultValue)
 const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)
@@ -73,7 +74,8 @@ const onChange = (event: Event): void => {
 
 const submit = () => {
   const values = Object.fromEntries(inputValue.value.split(/\s+/).map((v) => {
-    const [key, value] = v.split(':')
+    const [key, ...values] = v.split(':')
+    const value = values.join(':')
     if(!key || !value) return []
     return [key, value]
   }).filter((v) => v.length))
