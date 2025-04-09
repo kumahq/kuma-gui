@@ -231,7 +231,7 @@
                 class="search-form"
                 @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
               >
-                <XFilterBar
+                <XSearch
                   class="search-field"
                   name="s"
                   placeholder="Filter by name protocol or tag..."
@@ -431,7 +431,7 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import { sources } from '@/app/data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
-import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
+import XSearch from '@/app/x/components/x-search/XSearch.vue'
 
 const props = defineProps<{
   data: MeshService
