@@ -24,15 +24,17 @@
       />
       <XCard>
         <search>
-          <XFilterBar
-            class="data-plane-proxy-filter"
-            :default-value="route.params.s"
-            placeholder="Filter by name, protocol, service or tag..."
-            @submit="({ raw, ...rest }) => route.update({
-              page: 1,
-              s: Object.entries(rest).map((v) => v.join(':')).join(' '),
-            })"
-          />
+          <form
+            class="search-form"
+            @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+          >
+            <XFilterBar
+              class="search-field"
+              name="s"
+              placeholder="Filter by name, protocol, service or tag..."
+              :default-value="route.params.s"
+            />
+          </form>
 
           <XSelect
             label="Type"
@@ -305,6 +307,9 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
 import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
+const onSearch = (e: Event) => {
+  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
+}
 const props = defineProps<{
   mesh: Mesh
 }>()
@@ -331,9 +336,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 310px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

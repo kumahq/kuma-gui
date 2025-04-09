@@ -1,48 +1,44 @@
 <template>
-  <form
-    class="filter-bar-form"
-    @submit.prevent="submit"
+  <div
+    v-style="`--width:${width}px`"
+    class="filter-bar-container"
+    data-testid="filter-bar"
+    @click.stop="inputRef?.focus()"
   >
+    <div class="icon-wrapper">
+      <XIcon
+        class="icon"
+        name="search"
+      />
+    </div>
     <div
-      v-style="`--width:${width}px`"
-      class="filter-bar-container"
-      data-testid="filter-bar"
-      @click.stop="inputRef?.focus()"
+      ref="containerRef"
+      class="input-container"
     >
-      <div class="icon-wrapper">
-        <XIcon
-          class="icon"
-          name="search"
-        />
-      </div>
       <div
-        ref="containerRef"
-        class="input-container"
+        ref="contentRef"
+        class="content-wrapper"
       >
-        <div
-          ref="contentRef"
-          class="content-wrapper"
+        <template
+          v-for="(chunk, index) in inputValue.split(new RegExp(regex)).filter(Boolean)"
+          :key="chunk+index"
         >
-          <template
-            v-for="(chunk, index) in inputValue.split(new RegExp(regex)).filter(Boolean)"
-            :key="chunk+index"
-          >
-            <span :class="{ highlight: new RegExp(regex).test(chunk) }">{{ chunk }}</span>
-          </template>
-        </div>
-        <div class="input-wrapper">
-          <input
-            ref="inputRef"
-            type="text"
-            :defaultValue="props.defaultValue"
-            :placeholder="props.placeholder"
-            data-testid="filter-bar-filter-input"
-            @input="onChange"
-          >
-        </div>
+          <span :class="{ highlight: new RegExp(regex).test(chunk) }">{{ chunk }}</span>
+        </template>
+      </div>
+      <div class="input-wrapper">
+        <input
+          ref="inputRef"
+          type="text"
+          :defaultValue="props.defaultValue"
+          :placeholder="props.placeholder"
+          data-testid="filter-bar-filter-input"
+          :name="props.name"
+          @input="onChange"
+        >
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -51,8 +47,10 @@ import { onMounted, ref } from 'vue'
 const props = withDefaults(defineProps<{
   placeholder?: string
   defaultValue?: string
+  name?: string
 }>(), {
   placeholder: undefined,
+  name: undefined,
   defaultValue: '',
 })
 
@@ -63,23 +61,9 @@ const containerRef = ref<null | HTMLElement>(null)
 const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 
-const emit = defineEmits<{
-  (e: 'submit', value: Record<string, string> & { raw: string }): void
-}>()
-
 const onChange = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
   inputValue.value = value
-}
-
-const submit = () => {
-  const values = Object.fromEntries(inputValue.value.split(/\s+/).map((v) => {
-    const [key, ...values] = v.split(':')
-    const value = values.join(':')
-    if(!key || !value) return []
-    return [key, value]
-  }).filter((v) => v.length))
-  emit('submit', { raw: inputValue.value, ...values })
 }
 
 onMounted(() => {
@@ -94,14 +78,10 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.filter-bar-form {
+.filter-bar-container {
   min-width: inherit;
   width: 0;
-}
-
-.filter-bar-container {
   position: relative;
-  width: 100%;
   display: inline-flex;
   vertical-align: middle;
   cursor: text;

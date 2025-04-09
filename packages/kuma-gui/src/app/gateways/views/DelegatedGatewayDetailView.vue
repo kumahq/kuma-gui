@@ -70,15 +70,17 @@
           </template>
 
           <search>
-            <XFilterBar
-              class="data-plane-proxy-filter"
-              :default-value="route.params.s"
-              placeholder="Filter by name protocol or tag..."
-              @submit="({ raw, ...rest }) => route.update({
-                page: 1,
-                s: Object.entries(rest).map((v) => v.join(':')).join(' '),
-              })"
-            />
+            <form
+              class="search-form"
+              @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+            >
+              <XFilterBar
+                class="search-field"
+                name="s"
+                placeholder="Filter by name protocol or tag..."
+                :default-value="route.params.s"
+              />
+            </form>
           </search>
           <DataLoader
             :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
@@ -259,6 +261,9 @@ import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
 import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
+const onSearch = (e: Event) => {
+  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
+}
 </script>
 
 <style lang="scss" scoped>
@@ -271,9 +276,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 350px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

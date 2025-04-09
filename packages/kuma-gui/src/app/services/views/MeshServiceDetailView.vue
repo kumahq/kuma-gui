@@ -227,15 +227,17 @@
               {{ t('services.detail.data_plane_proxies') }}
             </template>
             <search>
-              <XFilterBar
-                class="data-plane-proxy-filter"
-                :default-value="route.params.s"
-                placeholder="Filter by name protocol or tag..."
-                @submit="({ raw, ...rest }) => route.update({
-                  page: 1,
-                  s: Object.entries(rest).map((v) => v.join(':')).join(' '),
-                })"
-              />
+              <form
+                class="search-form"
+                @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+              >
+                <XFilterBar
+                  class="search-field"
+                  name="s"
+                  placeholder="Filter by name protocol or tag..."
+                  :default-value="route.params.s"
+                />
+              </form>
             </search>
             <DataLoader
               :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
@@ -434,6 +436,10 @@ import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
 const props = defineProps<{
   data: MeshService
 }>()
+
+const onSearch = (e: Event) => {
+  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
+}
 </script>
 
 <style lang="scss" scoped>
@@ -449,9 +455,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 350px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

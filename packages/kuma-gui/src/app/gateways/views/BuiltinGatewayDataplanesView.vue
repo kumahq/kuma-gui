@@ -22,15 +22,17 @@
         >
           <XCard>
             <search>
-              <XFilterBar
-                class="data-plane-proxy-filter"
-                :default-value="route.params.s"
-                placeholder="Filter by name, protocol, service or tag..."
-                @submit="({ raw, ...rest }) => route.update({
-                  page: 1,
-                  s: Object.entries(rest).map((v) => v.join(':')).join(' '),
-                })"
-              />
+              <form
+                class="search-form"
+                @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+              >
+                <XFilterBar
+                  class="search-field"
+                  name="s"
+                  placeholder="Filter by name, protocol, service or tag..."
+                  :default-value="route.params.s"
+                />
+              </form>
             </search>
             <DataLoader
               :src="meshGateway === undefined ? '' : `/meshes/${route.params.mesh}/dataplanes/for/service-insight/${meshGateway.selectors[0].match['kuma.io/service']}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
@@ -213,6 +215,9 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import XFilterBar from '@/app/x/components/x-filter-bar/XFilterBar.vue'
+const onSearch = (e: Event) => {
+  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
+}
 </script>
 
 <style lang="scss" scoped>
@@ -225,9 +230,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 350px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {
