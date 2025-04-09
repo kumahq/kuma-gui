@@ -34,33 +34,39 @@
               placeholder="Filter by name, protocol, service or tag..."
               :value="route.params.s"
             />
-          </form>
-
-          <XSelect
-            label="Type"
-            :selected="route.params.dataplaneType"
-            @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
-          >
-            <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
-              <XIcon
-                v-if="item !== 'all'"
-                :size="KUI_ICON_SIZE_40"
-                :name="item"
-              />
-              {{ t(`data-planes.type.${item}`) }}
-            </template>
-            <template
-              v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
-              :key="item"
-              #[`${item}-option`]
+            
+            <XSelect
+              label="Type"
+              name="dataplaneType"
+              :selected="route.params.dataplaneType"
+              @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
             >
-              <XIcon
-                v-if="item !== 'all'"
-                :name="item"
-              />
-              {{ t(`data-planes.type.${item}`) }}
-            </template>
-          </XSelect>
+              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+                <XIcon
+                  v-if="item !== 'all'"
+                  :size="KUI_ICON_SIZE_40"
+                  :name="item"
+                />
+                {{ t(`data-planes.type.${item}`) }}
+              </template>
+              <template
+                v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                :key="item"
+                #[`${item}-option`]
+              >
+                <XIcon
+                  v-if="item !== 'all'"
+                  :name="item"
+                />
+                {{ t(`data-planes.type.${item}`) }}
+              </template>
+            </XSelect>
+
+            <input
+              type="submit"
+              hidden
+            >
+          </form>
         </search>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type`, {
@@ -334,18 +340,18 @@ search {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
 
 .search-form {
   display: flex;
-  flex-basis: 310px;
-  flex-grow: 1;
+  width: 100%;
+  gap: $kui-space-70;
 }
 
 .search-field {
-  flex: 1;
+  flex-basis: 310px;
+  flex-grow: 1;
 }
 
 .name-link {
