@@ -1,7 +1,7 @@
 <template>
   <div
     v-style="`--width:${width}px`"
-    class="filter-bar-container"
+    class="container"
     data-testid="filter-bar"
     @click.stop="inputRef?.focus()"
   >
@@ -78,7 +78,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.filter-bar-container {
+.container {
   min-width: inherit;
   width: 0;
   position: relative;
