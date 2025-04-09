@@ -20,10 +20,10 @@
         class="content-wrapper"
       >
         <template
-          v-for="(chunk, index) in inputValue.split(new RegExp(regex)).filter(Boolean)"
+          v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
           :key="chunk+index"
         >
-          <span :class="{ highlight: new RegExp(regex).test(chunk) }">{{ chunk }}</span>
+          <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
         </template>
       </div>
       <div class="input-wrapper">
@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<{
   value: '',
 })
 
-const regex = /([^:\s]+:[^\s]+)/gi
+const regex = /([^:\s]+:[^\s]+)/i
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)
