@@ -30,7 +30,7 @@
         <input
           ref="inputRef"
           type="text"
-          :defaultValue="props.defaultValue"
+          :defaultValue="props.value"
           :placeholder="props.placeholder"
           data-testid="filter-bar-filter-input"
           :name="props.name"
@@ -46,16 +46,16 @@ import { onMounted, ref } from 'vue'
 
 const props = withDefaults(defineProps<{
   placeholder?: string
-  defaultValue?: string
+  value?: string
   name?: string
 }>(), {
   placeholder: undefined,
   name: undefined,
-  defaultValue: '',
+  value: '',
 })
 
 const regex = /([^:\s]+:[^\s]+)/gi
-const inputValue = ref<string>(props.defaultValue)
+const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)
 const contentRef = ref<null | HTMLElement>(null)

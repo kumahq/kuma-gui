@@ -30,7 +30,7 @@
                   class="search-field"
                   name="s"
                   placeholder="Filter by name, protocol, service or tag..."
-                  :default-value="route.params.s"
+                  :value="route.params.s"
                 />
               </form>
             </search>
@@ -214,7 +214,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
-import XSearch from '@/app/x/components/x-search/XSearch.vue'
+
 const onSearch = (e: Event) => {
   return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
 }

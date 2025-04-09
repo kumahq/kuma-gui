@@ -235,7 +235,7 @@
                   class="search-field"
                   name="s"
                   placeholder="Filter by name protocol or tag..."
-                  :default-value="route.params.s"
+                  :value="route.params.s"
                 />
               </form>
             </search>
@@ -431,7 +431,6 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import { sources } from '@/app/data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
-import XSearch from '@/app/x/components/x-search/XSearch.vue'
 
 const props = defineProps<{
   data: MeshService

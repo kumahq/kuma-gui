@@ -86,7 +86,7 @@
                 class="search-field"
                 name="s"
                 placeholder="Filter by name, protocol or tag..."
-                :default-value="route.params.s"
+                :value="route.params.s"
               />
             </form>
           </search>
@@ -276,7 +276,6 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import { sources as dataplaneSources } from '@/app/data-planes/sources'
-import XSearch from '@/app/x/components/x-search/XSearch.vue'
 
 const onSearch = (e: Event) => {
   return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
