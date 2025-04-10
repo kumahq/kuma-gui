@@ -1,10 +1,12 @@
-NODE_VERSION?=v$(shell cat .nvmrc)
+NODE_VERSION?=v$(shell grep -v -e "^#" -e "^$$" $(NPM_WORKSPACE_ROOT)/.nvmrc)
 NPM_VERSION?=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r '.engines.npm')
-
 .PHONY: check/node
+check/node: NPM_VERSION:=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r '.engines.npm')
+check/node: NODE_VERSION:=v$(shell grep -v -e "^#" -e "^$$" $(NPM_WORKSPACE_ROOT)/.nvmrc)
 check/node:
 	@node -v | grep $(NODE_VERSION) &> /dev/null || ( \
-		echo "Make sure node-$(NODE_VERSION) is installed (see .nvmrc)"; \
+		echo "Make sure node-$(NODE_VERSION) is installed (please see the root .nvmrc for nvm installation)"; \
+		echo "Once the correct version of node is installed,  re-run your make target"; \
 		exit 1; \
 	)
 	@npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null && ( \
