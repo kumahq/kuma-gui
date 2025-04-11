@@ -6,6 +6,21 @@ data-planes:
         ReachableBackends { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-backends" target="_blank">Reachable Backends</a> }
         other { <a href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#reachable-services" target="_blank">Reachable Services</a> }
       } to dramatically improve performance.
+    dp-cp-incompatible: !!text/markdown |
+      Unsupported version of Kuma DP (**{ kumaDp }**)
+    envoy-dp-incompatible: !!text/markdown |
+      Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
+    dp-zone-cp-incompatible: !!text/markdown |
+      There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
+    certificate-expired: !!text/markdown |
+      The certificate for this dataplane has expired
+    no-mtls: !!text/markdown |
+      This Data Plane Proxy does not have mTLS configured, yet —
+      <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
+    stats-not-enhanced: !!text/markdown |
+      The below view is not enhanced with runtime stats (Error loading stats: **{ error }**)
+
+
   x-empty-state:
     title: There are no Dataplanes present
   components:
@@ -114,6 +129,9 @@ data-planes:
       title: Data Plane Proxies
       intro: !!text/markdown |
         Data Plane Proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
+      warnings:
+        dp-cp-incompatible: Version mismatch
+        certificate-expired: Certificate expired
   href:
     docs:
       data_plane_proxy: '{KUMA_DOCS_URL}/production/dp-config/dpp?{KUMA_UTM_QUERY_PARAMS}'

@@ -1,8 +1,7 @@
-import type { components, paths } from '@kumahq/kuma-http-api'
+import type { components } from '@kumahq/kuma-http-api'
 
-export type HostnameGeneratorList = components['responses']['HostnameGeneratorList']['content']['application/json']
-export type HostnameGeneratorItem = components['responses']['HostnameGeneratorItem']['content']['application/json']
-export type HostnameGeneratorGetParams = paths['/hostnamegenerators/{name}']['get']['parameters']
+type HostnameGeneratorList = components['responses']['HostnameGeneratorList']['content']['application/json']
+type HostnameGeneratorItem = components['responses']['HostnameGeneratorItem']['content']['application/json']
 
 export const HostnameGenerator = {
   fromObject(item: HostnameGeneratorItem) {

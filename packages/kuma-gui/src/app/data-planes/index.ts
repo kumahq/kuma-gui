@@ -15,7 +15,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       arguments: [
         app.source,
         app.api,
-        app.can,
       ],
       labels: [
         app.sources,

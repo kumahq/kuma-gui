@@ -144,15 +144,13 @@ onMounted(rewrite)
 </script>
 
 <style lang="scss" scoped>
+.app-collection {
+  isolation: isolate;
+}
 .app-collection :deep(td:first-child a) {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
-}
-.app-collection :deep(thead) {
-  /* overwrite kongponents setting this to z-index:2 */
-  /* which causes overlay issues with other components */
-  z-index: auto !important;
 }
 
 .app-collection :deep(td:first-child li a) {

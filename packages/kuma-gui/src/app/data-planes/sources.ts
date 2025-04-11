@@ -7,7 +7,6 @@ import {
   MeshGatewayDataplane,
   SidecarDataplane,
 } from './data'
-import type { Can } from '../application/services/can'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
@@ -35,7 +34,7 @@ export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
 }
-export const sources = (source: Source, api: KumaApi, can: Can) => {
+export const sources = (source: Source, api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: '',
     fetch: api.client.fetch,
@@ -45,10 +44,9 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
     '/dataplanes/poll': (params) => {
       const { size, page } = params
       const offset = size * (page - 1)
-      const canUseZones = can('use zones')
 
       return source(async (source) => {
-        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }), canUseZones)
+        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }))
         if (res.total > 0 && res.items.every(item => item.status === 'online')) {
           source.close()
         }
@@ -60,9 +58,8 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
       const OfflineError = class extends Error { }
       const { size, page } = params
       const offset = size * (page - 1)
-      const canUseZones = can('use zones')
       return source(async () => {
-        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }), canUseZones)
+        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }))
         if (res.total > 0 && res.items.every((item) => item.status === 'online')) {
           return res
         } else {
@@ -179,7 +176,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
     },
 
     '/meshes/:mesh/dataplane-overviews/:name': async (params) => {
-      return DataplaneOverview.fromObject(await api.getDataplaneOverviewFromMesh(params), can('use zones'))
+      return DataplaneOverview.fromObject(await api.getDataplaneOverviewFromMesh(params))
     },
 
     '/meshes/:mesh/dataplanes/of/:type': async (params) => {
@@ -198,7 +195,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         ...gatewayParams,
         offset,
         size,
-      }), can('use zones'))
+      }))
     },
 
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
@@ -217,7 +214,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         ...filterParams,
         offset,
         size,
-      }), can('use zones'))
+      }))
     },
 
     '/meshes/:mesh/dataplanes/for/service-insight/:service': async (params) => {
@@ -236,7 +233,7 @@ export const sources = (source: Source, api: KumaApi, can: Can) => {
         ...filterParams,
         offset,
         size,
-      }), can('use zones'))
+      }))
     },
   })
 }

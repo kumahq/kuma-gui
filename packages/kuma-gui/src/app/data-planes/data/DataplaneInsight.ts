@@ -2,12 +2,13 @@ import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
 import type {
   DataPlaneInsight as PartialDataplaneInsight,
 } from '@/types/index.d'
-export type DataplaneInsight = PartialDataplaneInsight & DiscoverySubscriptionCollection & {}
+
 export const DataplaneInsight = {
-  fromObject(item: PartialDataplaneInsight | undefined): DataplaneInsight {
+  fromObject(item?: PartialDataplaneInsight) {
     return {
-      ...item,
+      ...(item ?? {}),
       ...DiscoverySubscriptionCollection.fromArray(item?.subscriptions),
     }
   },
 }
+export type DataplaneInsight = ReturnType<typeof DataplaneInsight.fromObject>

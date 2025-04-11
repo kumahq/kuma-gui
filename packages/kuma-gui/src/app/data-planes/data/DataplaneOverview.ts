@@ -4,7 +4,6 @@ import { DataplaneNetworking } from './DataplaneNetworking'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   DataPlaneOverview as PartialDataplaneOverview,
-  DataplaneWarning,
   LabelValue,
 } from '@/types/index.d'
 
@@ -58,13 +57,12 @@ export const DataplaneOverview = {
       })(prev, item)
     }, { tag: [] }) || {}
   },
-  fromObject(item: PartialDataplaneOverview, canUseZones: boolean) {
+  fromObject(item: PartialDataplaneOverview) {
     const dataplaneInsight = DataplaneInsight.fromObject(item.dataplaneInsight)
 
     const networking = DataplaneNetworking.fromObject(item.dataplane.networking)
 
     const tags = getTags(networking)
-    const warnings = getWarnings(dataplaneInsight, tags, canUseZones)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
     const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
@@ -109,7 +107,6 @@ export const DataplaneOverview = {
             return state
         }
       })(),
-      warnings,
       isCertExpired,
       services,
       zone,
@@ -117,11 +114,11 @@ export const DataplaneOverview = {
     }
   },
 
-  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>, canUseZones: boolean) {
+  fromCollection(partialDataplaneOverviews: PaginatedApiListResponse<PartialDataplaneOverview>) {
     return {
       ...partialDataplaneOverviews,
       items: Array.isArray(partialDataplaneOverviews.items)
-        ? partialDataplaneOverviews.items.map((partialDataplaneOverview) => DataplaneOverview.fromObject(partialDataplaneOverview, canUseZones))
+        ? partialDataplaneOverviews.items.map((partialDataplaneOverview) => DataplaneOverview.fromObject(partialDataplaneOverview))
         : [],
     }
   },
@@ -152,51 +149,6 @@ function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
 
 function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
   return mTLS ? Date.now() > new Date(mTLS.certificateExpirationTime).getTime() : false
-}
-
-function getWarnings({ version }: DataplaneInsight, tags: LabelValue[], canUseZones: boolean): DataplaneWarning[] {
-  if (typeof version === 'undefined') {
-    return []
-  }
-
-  const warnings: DataplaneWarning[] = []
-  if (version.kumaDp && version.envoy) {
-    const isKumaCpCompatible = version.kumaDp?.kumaCpCompatible ?? true
-    if (!isKumaCpCompatible) {
-      warnings.push({
-        kind: 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP',
-        payload: {
-          kumaDp: version.kumaDp.version,
-        },
-      })
-    }
-
-    const isKumaDpCompatible = version.envoy?.kumaDpCompatible ?? true
-    if (!isKumaDpCompatible) {
-      warnings.push({
-        kind: 'INCOMPATIBLE_UNSUPPORTED_ENVOY',
-        payload: {
-          envoy: version.envoy.version,
-          kumaDp: version.kumaDp.version,
-        },
-      })
-    }
-  }
-
-  if (canUseZones) {
-    const zoneTag = tags.find(tag => tag.label === 'kuma.io/zone')
-
-    if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
-      warnings.push({
-        kind: 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS',
-        payload: {
-          kumaDp: version.kumaDp.version,
-        },
-      })
-    }
-  }
-
-  return warnings
 }
 
 export type DataplaneOverview = ReturnType<typeof DataplaneOverview.fromObject>

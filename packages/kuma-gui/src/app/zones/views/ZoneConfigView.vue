@@ -22,22 +22,38 @@
       <AppView
         :notifications="true"
       >
-        <XNotification
-          v-for="warning in props.data.warnings"
-          :key="warning.kind"
-          :data-testid="`warning-${warning.kind}`"
-          :uri="`${warning.kind}.${props.data.id}`"
-        >
-          <XI18n
-            :path="`common.warnings.${warning.kind}`"
-            :params="{
-              zoneCpVersion: warning.payload.zoneCpVersion ?? '',
-              ...(warning.kind === 'INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS' ? {
+        <template
+          v-for="{ bool, key, params } in [
+            {
+              bool: props.data.zoneInsight.store === 'memory',
+              key: 'store-memory',
+            },
+            {
+              bool: !props.data.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+              key: 'global-cp-incompatible',
+              params: {
+                zoneCpVersion: props.data.zoneInsight.version?.kumaCp?.version ?? '-',
                 globalCpVersion: version?.version ?? '',
-              } : {}),
-            }"
-          />
-        </XNotification>
+              },
+            },
+            {
+              bool: (props.data.zoneInsight.connectedSubscription?.status.total.responsesRejected ?? 0) > 0,
+              key: 'global-nack-response',
+            },
+          ]"
+          :key="key"
+        >
+          <XNotification
+            v-if="bool"
+            :data-testid="`warning-${key}`"
+            :uri="`zone-cps.notifications.${key}.${props.data.id}`"
+          >
+            <XI18n
+              :path="`zone-cps.notifications.${key}`"
+              :params="Object.fromEntries(Object.entries(params ?? {}))"
+            />
+          </XNotification>
+        </template>
 
         <XCard>
           <XCodeBlock

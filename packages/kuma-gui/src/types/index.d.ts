@@ -216,11 +216,9 @@ export interface EnvoyVersion {
   kumaDpCompatible?: boolean
 }
 export interface Version {
+  envoy: EnvoyVersion
   kumaDp: KumaDpVersion
   kumaCp?: KumaCpVersion
-
-  envoy: EnvoyVersion
-
   dependencies: Record<string, string>
 }
 
@@ -286,14 +284,6 @@ export type DataplaneGateway = {
    * Type of the gateway. **Default**: `'DELEGATED'`
    */
   type?: 'BUILTIN' | 'DELEGATED'
-}
-
-export type DataplaneWarning = {
-  kind: string
-  payload?: {
-    kumaDp: string
-    envoy?: string
-  }
 }
 
 export type DataplaneInbound = {
