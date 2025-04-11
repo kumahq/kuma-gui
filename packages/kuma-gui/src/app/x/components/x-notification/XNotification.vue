@@ -3,7 +3,7 @@
     v-if="typeof provider !== 'undefined'"
   >
     <XTeleportTemplate
-      v-if="slots.default"
+      v-if="props.notify && slots.default"
       :to="{ name: `${provider.uri}-${props.uri}` }"
     >
       <slot name="default" />
@@ -15,7 +15,7 @@
   </template>
 </template>
 <script lang="ts" setup>
-import { inject, onBeforeUnmount, onMounted } from 'vue'
+import { inject, onBeforeUnmount, onMounted, watch } from 'vue'
 
 import type { AlertAppearance } from '@kong/kongponents'
 const provider = inject<{
@@ -27,21 +27,34 @@ const provider = inject<{
 const props = withDefaults(defineProps<{
   uri: string
   variant?: AlertAppearance
+  notify?: boolean
 }>(), {
   variant: 'warning',
+  notify: false,
 })
 
 const slots = defineSlots()
-if(slots.default) {
+watch(() => {
+  return !!(props.notify && slots.default)
+}, (bool) => {
+  if(typeof provider !== 'undefined') {
+    if(bool) {
+      provider.set(props.uri, props)
+    } else {
+      provider.delete(props.uri)
+    }
+  }
+})
+if(props.notify && slots.default) {
   onMounted(() => {
     if(typeof provider !== 'undefined') {
       provider.set(props.uri, props)
     }
   })
-  onBeforeUnmount(() => {
-    if(typeof provider !== 'undefined') {
-      provider.delete(props.uri)
-    }
-  })
 }
+onBeforeUnmount(() => {
+  if(typeof provider !== 'undefined') {
+    provider.delete(props.uri)
+  }
+})
 </script>

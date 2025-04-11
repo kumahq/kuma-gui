@@ -16,7 +16,7 @@
         v-slot="hub"
       >
         <XNotification
-          v-if="!can('use state')"
+          :notify="!can('use state')"
           uri="main-overview.notifications.store-memory"
         >
           <XI18n

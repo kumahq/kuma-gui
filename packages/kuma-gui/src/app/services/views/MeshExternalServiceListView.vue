@@ -27,7 +27,7 @@
         :notifications="true"
       >
         <XNotification
-          v-if="!props.mesh.mtlsBackend"
+          :notify="!props.mesh.mtlsBackend"
           :uri="`mes-mtls-warning.${props.mesh.id}`"
         >
           <XI18n
@@ -35,7 +35,7 @@
           />
         </XNotification>
         <XNotification
-          v-if="egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')"
+          :notify="egresses && !egresses.items.find((egress) => typeof egress.zoneEgressInsight.connectedSubscription !== 'undefined')"
           :uri="`mes-no-zone-ingress.${props.mesh.id}`"
         >
           <XI18n
