@@ -70,21 +70,17 @@
           </template>
 
           <search>
-            <FilterBar
-              class="data-plane-proxy-filter"
-              :placeholder="`tag: 'kuma.io/protocol: http'`"
-              :query="route.params.s"
-              :fields="{
-                name: { description: 'filter by name or parts of a name' },
-                protocol: { description: 'filter by “kuma.io/protocol” value' },
-                tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-              }"
-              @change="(e) => route.update({
-                page: 1,
-                ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-              })"
-            />
+            <form
+              class="search-form"
+              @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+            >
+              <XSearch
+                class="search-field"
+                name="s"
+                :value="route.params.s"
+                :keys="['name', 'protocol', 'tag']"
+              />
+            </form>
           </search>
           <DataLoader
             :src="`/meshes/${route.params.mesh}/dataplanes/for/service-insight/${route.params.service}?page=${route.params.page}&size=${route.params.size}&search=${route.params.s}`"
@@ -259,12 +255,15 @@
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
+
+const onSearch = (e: Event) => {
+  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
+}
 </script>
 
 <style lang="scss" scoped>
@@ -277,9 +276,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 350px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

@@ -9,5 +9,10 @@ components:
     action:
       label: ''
       href: ''
+  x-search:
+    placeholder: Type to filter...
+    filterBy: Filter by {keys}...
+    logic: 'Logic:'
+    submit: submit
 
 

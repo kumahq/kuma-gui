@@ -24,22 +24,17 @@
       />
       <XCard>
         <search>
-          <FilterBar
-            class="data-plane-proxy-filter"
-            :placeholder="`service:backend`"
-            :query="route.params.s"
-            :fields="{
-              name: { description: 'filter by name or parts of a name' },
-              protocol: { description: 'filter by “kuma.io/protocol” value' },
-              service: { description: 'filter by “kuma.io/service” value' },
-              tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-              ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-            }"
-            @change="(e) => route.update({
-              page: 1,
-              ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-            })"
-          />
+          <form
+            class="search-form"
+            @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+          >
+            <XSearch
+              class="search-field"
+              name="s"
+              :value="route.params.s"
+              :keys="['name', 'protocol', 'service', 'tag']"
+            />
+          </form>
 
           <XSelect
             label="Type"
@@ -308,10 +303,14 @@ import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
+
+const onSearch = (e: Event) => {
+  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
+}
+
 const props = defineProps<{
   mesh: Mesh
 }>()
@@ -338,9 +337,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 310px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

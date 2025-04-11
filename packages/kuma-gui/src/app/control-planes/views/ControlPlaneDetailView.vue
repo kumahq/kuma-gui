@@ -27,7 +27,6 @@
             :global-insight="data"
           />
         </DataLoader>
-
         <div class="columns">
           <XCard
             v-if="can('use zones')"
