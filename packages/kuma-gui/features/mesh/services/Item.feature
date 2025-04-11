@@ -60,7 +60,7 @@ Feature: mesh / services / item
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "tag:version" into the "$input-search" element
-      And I click the "$button-search" element
+      And I "type" "{enter}" into the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:
@@ -75,7 +75,7 @@ Feature: mesh / services / item
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "tag:kuma.io/service:panel-2" into the "$input-search" element
-      And I click the "$button-search" element
+      And I "type" "{enter}" into the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" wasn't requested with
         """
         searchParams:
@@ -106,7 +106,7 @@ Feature: mesh / services / item
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
       When I "type" "name:a-service protocol:tcp" into the "$input-search" element
-      And I click the "$button-search" element
+      And I "type" "{enter}" into the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """
         searchParams:

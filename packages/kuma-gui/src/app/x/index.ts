@@ -24,6 +24,7 @@ import XNotificationHub from './components/x-notification/XNotificationHub.vue'
 import XProgress from './components/x-progress/XProgress.vue'
 import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
+import XSearch from './components/x-search/XSearch.vue'
 import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
@@ -74,6 +75,7 @@ declare module 'vue' {
     XInputSwitch: typeof XInputSwitch
     XCheckbox: typeof XCheckBox
     XWindow: typeof XWindow
+    XSearch: typeof XSearch
   }
 }
 
@@ -130,6 +132,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XInputSwitch', XInputSwitch],
           ['XCheckbox', XCheckBox],
           ['XWindow', XWindow],
+          ['XSearch', XSearch],
         ]
       },
       labels: [
