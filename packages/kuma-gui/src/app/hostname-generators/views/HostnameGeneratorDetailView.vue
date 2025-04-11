@@ -54,16 +54,7 @@
                 </template>
 
                 <template #body>
-                  <XLayout type="separated">
-                    <template
-                      v-for="(value, key) in labels"
-                      :key="key"
-                    >
-                      <XBadge>
-                        {{ key }}:{{ value }}
-                      </XBadge>
-                    </template>
-                  </XLayout>
+                  <TagList :tags="labels" />
                 </template>
               </DefinitionCard>
             </template>
@@ -97,5 +88,6 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
+import TagList from '@/app/common/TagList.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>
