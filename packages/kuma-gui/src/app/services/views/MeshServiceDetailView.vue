@@ -234,7 +234,7 @@
                 <XSearch
                   class="search-field"
                   name="s"
-                  placeholder="Filter by name protocol or tag..."
+                  placeholder="Filter by name, label, zone or namespace..."
                   :value="route.params.s"
                 />
               </form>
