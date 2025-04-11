@@ -37,12 +37,10 @@ const slots = defineSlots()
 watch(() => {
   return !!(props.notify && slots.default)
 }, (bool) => {
-  if(bool) {
-    if(typeof provider !== 'undefined') {
+  if(typeof provider !== 'undefined') {
+    if(bool) {
       provider.set(props.uri, props)
-    }
-  } else {
-    if(typeof provider !== 'undefined') {
+    } else {
       provider.delete(props.uri)
     }
   }
@@ -53,10 +51,10 @@ if(props.notify && slots.default) {
       provider.set(props.uri, props)
     }
   })
-  onBeforeUnmount(() => {
-    if(typeof provider !== 'undefined') {
-      provider.delete(props.uri)
-    }
-  })
 }
+onBeforeUnmount(() => {
+  if(typeof provider !== 'undefined') {
+    provider.delete(props.uri)
+  }
+})
 </script>
