@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<{
   value: '',
 })
 
-const regex = /([^\s]+)/i
+const regex = /([^\s]+)/
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)
