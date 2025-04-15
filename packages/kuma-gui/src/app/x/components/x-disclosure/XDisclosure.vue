@@ -8,3 +8,6 @@
     />
   </KToggle>
 </template>
+<script lang="ts" setup>
+import { KToggle } from '@kong/kongponents'
+</script>
