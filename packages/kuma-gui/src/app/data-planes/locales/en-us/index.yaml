@@ -118,6 +118,7 @@ data-planes:
           title: Supported CAs
       subscriptions:
         title: XDS Connections
+        description: Connections between Control Plane Instances and Data Plane Proxies.
       rules:
         proxy: Proxy rule
         to: To rules

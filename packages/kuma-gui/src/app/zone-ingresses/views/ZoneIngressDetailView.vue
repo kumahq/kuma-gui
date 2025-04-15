@@ -259,10 +259,12 @@
       >
         <template #title>
           <h2>{{ t('zone-ingresses.routes.item.subscriptions.title') }}</h2>
+          <p>{{ t('zone-ingresses.routes.item.subscriptions.description') }}</p>
         </template>
         
         <AppCollection
           :headers="[
+            { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
             { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
             { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
             { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
@@ -273,6 +275,18 @@
           :items="props.data.zoneIngressInsight.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
           @resize="me.set"
         >
+          <template
+            #connection="{ row: item }"
+          >
+            <template
+              v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
+              :key="`${connection}`"
+            >
+              <XIcon :name="connection">
+                {{ t(`common.connection.${connection}`) }}
+              </XIcon>
+            </template>
+          </template>
           <template
             #instanceId="{ row: item }"
           >
@@ -342,5 +356,11 @@ const _route = useRoute()
 <style lang="scss" scoped>
 .service-traffic-card {
   cursor: pointer;
+}
+
+:deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
 }
 </style>

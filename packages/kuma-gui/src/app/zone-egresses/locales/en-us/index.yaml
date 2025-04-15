@@ -30,6 +30,7 @@ zone-egresses:
       config: 'Configuration'
       subscriptions:
         title: 'XDS Connections'
+        description: Connections between Control Plane Instances and Data Plane Proxies.
       about:
         title: About this Zone Egress
     items:

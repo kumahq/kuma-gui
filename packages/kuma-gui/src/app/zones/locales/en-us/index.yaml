@@ -77,7 +77,9 @@ zone-cps:
       store-memory: Uses memory store
       global-cp-incompatible: Version mismatch
   detail:
-    subscriptions: 'KDS Connections'
+    subscriptions:
+      title: 'KDS Connections'
+      description: Connections of Control Plane Instances and Data Plane Proxies for Kuma Service Detection (KDS).
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
     about:

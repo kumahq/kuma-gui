@@ -622,10 +622,13 @@
                 #title
               >
                 <h2>{{ t('data-planes.routes.item.subscriptions.title') }}</h2>
+                <p>{{ t('data-planes.routes.item.subscriptions.description') }}</p>
               </template>
+              
 
               <AppCollection
                 :headers="[
+                  { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
                   { ...me.get('headers.instanceId'), label: t('http.api.property.instanceId'), key: 'instanceId' },
                   { ...me.get('headers.version'), label: t('http.api.property.version'), key: 'version' },
                   { ...me.get('headers.connected'), label: t('http.api.property.connected'), key: 'connected' },
@@ -636,6 +639,18 @@
                 :items="props.data.dataplaneInsight.subscriptions.map((_, i, arr) => arr[arr.length - (i + 1)])"
                 @resize="me.set"
               >
+                <template
+                  #connection="{ row: item }"
+                >
+                  <template
+                    v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
+                    :key="`${connection}`"
+                  >
+                    <XIcon :name="connection">
+                      {{ t(`common.connection.${connection}`) }}
+                    </XIcon>
+                  </template>
+                </template>
                 <template
                   #instanceId="{ row: item }"
                 >
@@ -731,6 +746,12 @@ const props = defineProps<{
 
 .traffic .tag-list {
   margin-left: auto;
+}
+
+:deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
 }
 
 @container traffic (max-width: 40.95rem) {

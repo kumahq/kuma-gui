@@ -128,11 +128,13 @@
             v-if="props.data.zoneInsight.subscriptions.length > 0"
           >
             <template #title>
-              <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
+              <h2>{{ t('zone-cps.detail.subscriptions.title') }}</h2>
+              <p>{{ t('zone-cps.detail.subscriptions.description') }}</p>
             </template>
 
             <AppCollection
               :headers="[
+                { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
                 { ...me.get('headers.zoneInstanceId'), label: t('zone-cps.routes.items.headers.zoneInstanceId'), key: 'zoneInstanceId' },
                 { ...me.get('headers.version'), label: t('zone-cps.routes.items.headers.version'), key: 'version' },
                 { ...me.get('headers.connected'), label: t('zone-cps.routes.items.headers.connected'), key: 'connected' },
@@ -143,6 +145,18 @@
               :items="props.data.zoneInsight.subscriptions.map((item, i, arr) => arr[arr.length - (i + 1)])"
               @resize="me.set"
             >
+              <template
+                #connection="{ row: item }"
+              >
+                <template
+                  v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
+                  :key="`${connection}`"
+                >
+                  <XIcon :name="connection">
+                    {{ t(`common.connection.${connection}`) }}
+                  </XIcon>
+                </template>
+              </template>
               <template
                 #zoneInstanceId="{ row: item }"
               >
@@ -229,3 +243,10 @@ const props = defineProps<{
   data: ZoneOverview
 }>()
 </script>
+<style lang="scss" scoped>
+:deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
+}
+</style>
