@@ -97,9 +97,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         return [
           ['XAlert', XAlert],
+          ['XCard', KCard],
           ['XPop', KPop],
           ['XRadio', KRadio],
-          ['XCard', KCard],
           //
           ['XAction', XAction],
           ['XActionGroup', XActionGroup],
