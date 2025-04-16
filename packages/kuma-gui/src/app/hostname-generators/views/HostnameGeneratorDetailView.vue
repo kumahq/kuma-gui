@@ -54,7 +54,18 @@
                 </template>
 
                 <template #body>
-                  <TagList :tags="labels" />
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
+                    <XBadge
+                      v-for="([label, value], index) in Object.entries(labels)"
+                      :key="`${label}${value}${index}`"
+                      appearance="neutral"
+                    >
+                      <span class="label">{{ label }}:</span>{{ value }}
+                    </XBadge>
+                  </XLayout>
                 </template>
               </DefinitionCard>
             </template>
@@ -88,6 +99,10 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import TagList from '@/app/common/TagList.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>
+<style lang="scss" scoped>
+.label {
+  font-weight: $kui-font-weight-regular;
+}
+</style>

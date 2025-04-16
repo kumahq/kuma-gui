@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="shouldTruncate ? 'XTruncate' : 'div'"
+    :is="shouldTruncate ? 'KTruncate' : 'div'"
     :width="shouldTruncate ? 'auto' : undefined"
     :class="{
       'tag-list': !shouldTruncate,
@@ -10,11 +10,9 @@
     <XBadge
       v-for="(tag, index) in tagList"
       :key="index"
-      class="tag"
-      :class="{ kv: !props.appearance }"
+      class="tag kv"
       :data-kv-key="tag.label"
       :data-kv-owner="tag.label.split('/')[0]"
-      :appearance="props.appearance"
     >
       <component
         :is="tag.route ? 'XAction' : 'span'"
@@ -29,7 +27,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import XBadge from '../x/components/x-badge/XBadge.vue'
 import type { LabelValue, Tags } from '@/types/index.d'
 import type { RouteLocationNamedRaw } from 'vue-router'
 
@@ -41,11 +38,9 @@ const props = withDefaults(defineProps<{
   tags: LabelValue[] | Tags | null | undefined
   shouldTruncate?: boolean
   alignment?: 'left' | 'right'
-  appearance?: InstanceType<typeof XBadge>['$props']['appearance']
 }>(), {
-  shouldTruncate: true,
+  shouldTruncate: false,
   alignment: 'left',
-  appearance: 'neutral',
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {

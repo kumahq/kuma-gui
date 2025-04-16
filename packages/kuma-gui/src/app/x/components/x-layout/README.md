@@ -7,6 +7,9 @@ We have several layouts that we commonly use to help standardize margins and
 layout across the application. `XLayout` formalizes those into a component for
 usage inline instead of relying on global styles/class names.
 
+> [!NOTE]
+> For the `truncate` prop please refer to the `XTruncate` docs.
+
 <Story>
   <XLayout
     type="stack"
