@@ -110,10 +110,18 @@
               #body
             >
               <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
-                <TagList
-                  appearance="info"
-                  :tags="props.data.spec.selector.dataplaneTags"
-                />
+                <XLayout
+                  type="separated"
+                  truncate
+                >
+                  <XBadge
+                    v-for="(value, key) in props.data.spec.selector.dataplaneTags"
+                    :key="`${key}:${value}`"
+                    appearance="info"
+                  >
+                    {{ key }}:{{ value }}
+                  </XBadge>
+                </XLayout>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
@@ -432,7 +440,6 @@ import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import TagList from '@/app/common/TagList.vue'
 import { sources } from '@/app/data-planes/sources'
 import { sources as servicesSources } from '@/app/services/sources'
 
