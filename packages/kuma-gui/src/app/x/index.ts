@@ -1,4 +1,4 @@
-import Kongponents, { KPop, KRadio } from '@kong/kongponents'
+import Kongponents, { KCard, KPop, KRadio } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
@@ -7,7 +7,6 @@ import XAlert from './components/x-alert/XAlert.vue'
 import XAnonymous from './components/x-anonymous/XAnonymous.vue'
 import XBadge from './components/x-badge/XBadge.vue'
 import XBreadcrumbs from './components/x-breadcrumbs/XBreadcrumbs.vue'
-import XCard from './components/x-card/XCard.vue'
 import XCheckBox from './components/x-checkbox/XCheckbox.vue'
 import XCodeBlock from './components/x-code-block/XCodeBlock.vue'
 import XCopyButton from './components/x-copy-button/XCopyButton.vue'
@@ -41,7 +40,7 @@ type Token = ReturnType<typeof token>
 
 declare module 'vue' {
   export interface GlobalComponents {
-    XCard: typeof XCard
+    XCard: typeof KCard
     XPop: typeof KPop
     XRadio: typeof KRadio
     //
@@ -100,6 +99,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XAlert', XAlert],
           ['XPop', KPop],
           ['XRadio', KRadio],
+          ['XCard', KCard],
           //
           ['XAction', XAction],
           ['XActionGroup', XActionGroup],
@@ -130,7 +130,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XInputSwitch', XInputSwitch],
           ['XCheckbox', XCheckBox],
           ['XWindow', XWindow],
-          ['XCard', XCard],
         ]
       },
       labels: [
