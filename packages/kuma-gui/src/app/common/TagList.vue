@@ -25,6 +25,9 @@
 </template>
 
 <script lang="ts" setup>
+/**
+ * @deprecated Use XLayout (note `truncate` prop), XBadge and XTruncate instead
+ */
 import { computed } from 'vue'
 
 import type { LabelValue, Tags } from '@/types/index.d'
