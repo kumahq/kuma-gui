@@ -51,7 +51,10 @@
               #body
             >
               <template v-if="Object.keys(data.spec.selector.meshService.matchLabels).length">
-                <XTruncate>
+                <XLayout
+                  type="separated"
+                  truncate
+                >
                   <XBadge
                     v-for="(value, key) in data.spec.selector.meshService.matchLabels"
                     :key="`${key}:${value}`"
@@ -59,7 +62,7 @@
                   >
                     {{ key }}:{{ value }}
                   </XBadge>
-                </XTruncate>
+                </XLayout>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
