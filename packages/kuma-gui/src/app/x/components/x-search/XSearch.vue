@@ -34,7 +34,8 @@
           :placeholder="props.placeholder"
           data-testid="filter-bar-filter-input"
           :name="props.name"
-          @input="onChange"
+          @input="onInput"
+          @change="emit('change', inputValue)"
         >
       </div>
     </div>
@@ -54,6 +55,10 @@ const props = withDefaults(defineProps<{
   value: '',
 })
 
+const emit = defineEmits<{
+  (e: 'change', value: string): void
+}>()
+
 const regex = /([^\s]+)/
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
@@ -61,7 +66,7 @@ const containerRef = ref<null | HTMLElement>(null)
 const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 
-const onChange = (event: Event): void => {
+const onInput = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
   inputValue.value = value
 }

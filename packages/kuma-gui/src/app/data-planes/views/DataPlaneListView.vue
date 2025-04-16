@@ -26,13 +26,13 @@
         <search>
           <form
             class="search-form"
-            @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+            @submit.prevent
           >
             <XSearch
               class="search-field"
-              name="s"
               placeholder="Filter by name, label, zone or namespace..."
               :value="route.params.s"
+              @change="(s) => route.update({ page: 1, s })"
             />
             
             <XSelect
@@ -312,10 +312,6 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
-
-const onSearch = (e: Event) => {
-  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
-}
 
 const props = defineProps<{
   mesh: Mesh

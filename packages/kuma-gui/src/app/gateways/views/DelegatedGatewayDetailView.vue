@@ -72,13 +72,13 @@
           <search>
             <form
               class="search-form"
-              @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+              @submit.prevent
             >
               <XSearch
                 class="search-field"
-                name="s"
                 placeholder="Filter by name, label, zone or namespace..."
                 :value="route.params.s"
+                @change="(s) => route.update({ page: 1, s })"
               />
             </form>
           </search>
@@ -260,10 +260,6 @@ import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
 import type { ServiceInsightSource } from '@/app/services/sources'
-
-const onSearch = (e: Event) => {
-  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
-}
 </script>
 
 <style lang="scss" scoped>

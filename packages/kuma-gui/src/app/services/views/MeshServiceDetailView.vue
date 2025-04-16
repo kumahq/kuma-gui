@@ -229,13 +229,13 @@
             <search>
               <form
                 class="search-form"
-                @submit.prevent="(e) => route.update({ page: 1, ...onSearch(e) })"
+                @submit.prevent
               >
                 <XSearch
                   class="search-field"
-                  name="s"
                   placeholder="Filter by name, label, zone or namespace..."
                   :value="route.params.s"
+                  @change="(s) => route.update({ page: 1, s })"
                 />
               </form>
             </search>
@@ -435,10 +435,6 @@ import { sources as servicesSources } from '@/app/services/sources'
 const props = defineProps<{
   data: MeshService
 }>()
-
-const onSearch = (e: Event) => {
-  return Object.fromEntries(new FormData(e.target as HTMLFormElement).entries())
-}
 </script>
 
 <style lang="scss" scoped>
