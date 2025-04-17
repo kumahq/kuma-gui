@@ -2,17 +2,13 @@
   "workspaces": [
     "packages/*"
   ],
-  "overrides": {
-    "@cucumber/messages": "^27.0.2",
-    "esbuild": "^0.25.0"
-  },
   "dependencies": {
     "@kumahq/config": "*"
   },
   "devDependencies": {
     "eslint": "^9.24.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.0"
+    "lint-staged": "^15.5.1"
   },
   "engines": {
     "node": ">=22.14",
