@@ -79,7 +79,7 @@ zone-cps:
   detail:
     subscriptions:
       title: 'KDS Connections'
-      description: Connections of Control Plane Instances and Data Plane Proxies for Kuma Service Detection (KDS).
+      description: Communication channels used to synchronize configuration and policies between the global and zone control planes.
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
     about:
