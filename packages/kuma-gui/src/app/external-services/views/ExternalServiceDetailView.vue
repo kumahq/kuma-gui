@@ -50,7 +50,10 @@
               </template>
 
               <template #body>
-                <TagList :tags="data.tags" />
+                <TagList
+                  :tags="data.tags"
+                  should-truncate
+                />
               </template>
             </DefinitionCard>
           </XAboutCard>

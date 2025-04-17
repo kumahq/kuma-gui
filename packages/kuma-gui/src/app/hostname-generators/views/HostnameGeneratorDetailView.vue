@@ -54,15 +54,16 @@
                 </template>
 
                 <template #body>
-                  <XLayout type="separated">
-                    <template
-                      v-for="(value, key) in labels"
-                      :key="key"
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
+                    <XBadge
+                      v-for="([label, value], index) in Object.entries(labels)"
+                      :key="`${label}${value}${index}`"
                     >
-                      <XBadge>
-                        {{ key }}:{{ value }}
-                      </XBadge>
-                    </template>
+                      {{ label }}:{{ value }}
+                    </XBadge>
                   </XLayout>
                 </template>
               </DefinitionCard>

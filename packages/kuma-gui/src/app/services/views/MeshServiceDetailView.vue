@@ -84,14 +84,19 @@
               #body
             >
               <template v-if="props.data.spec.ports.length">
-                <KumaPort
-                  v-for="connection in props.data.spec.ports"
-                  :key="connection.port"
-                  :port="{
-                    ...connection,
-                    targetPort: undefined,
-                  }"
-                />
+                <XLayout
+                  type="separated"
+                  truncate
+                >
+                  <KumaPort
+                    v-for="connection in props.data.spec.ports"
+                    :key="connection.port"
+                    :port="{
+                      ...connection,
+                      targetPort: undefined,
+                    }"
+                  />
+                </XLayout>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
@@ -108,13 +113,18 @@
               #body
             >
               <template v-if="Object.keys(props.data.spec.selector.dataplaneTags).length">
-                <XBadge
-                  v-for="(value, key) in props.data.spec.selector.dataplaneTags"
-                  :key="`${key}:${value}`"
-                  appearance="info"
+                <XLayout
+                  type="separated"
+                  truncate
                 >
-                  {{ key }}:{{ value }}
-                </XBadge>
+                  <XBadge
+                    v-for="(value, key) in props.data.spec.selector.dataplaneTags"
+                    :key="`${key}:${value}`"
+                    appearance="info"
+                  >
+                    {{ key }}:{{ value }}
+                  </XBadge>
+                </XLayout>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}

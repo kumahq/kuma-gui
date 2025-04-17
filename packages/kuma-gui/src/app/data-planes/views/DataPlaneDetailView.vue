@@ -223,6 +223,7 @@
                 >
                   <TagList
                     :tags="props.data.dataplane.networking.gateway.tags"
+                    should-truncate
                   />
                 </template>
               </DefinitionCard>
