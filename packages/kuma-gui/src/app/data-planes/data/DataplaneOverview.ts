@@ -23,6 +23,7 @@ const searchShortcuts: Record<string, string> = {
   service: 'kuma.io/service',
   zone: 'kuma.io/zone',
   protocol: 'kuma.io/protocol',
+  namespace: 'k8s.kuma.io/namespace',
 }
 const states = {
   online: 'online',
