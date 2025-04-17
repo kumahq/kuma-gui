@@ -113,7 +113,7 @@ data-planes:
         regenerations:
           title: Generation
         issued_backend:
-          title: Certificate issued by
+          title: Issued by
         supported_backends:
           title: Supported CAs
       subscriptions:

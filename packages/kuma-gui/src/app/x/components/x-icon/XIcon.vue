@@ -51,6 +51,7 @@ import {
   PlugIcon,
   VitalsIcon,
   RemoveIcon,
+  CalIcon,
 } from '@kong/icons'
 import { useSlots, useAttrs } from 'vue'
 
@@ -88,6 +89,7 @@ const icons = {
   connected: PlugIcon,
   healthy: VitalsIcon,
   unhealthy: RemoveIcon,
+  calendar: CalIcon,
 } as const
 const id = uniqueId('-x-icon-tooltip')
 const slots = useSlots()

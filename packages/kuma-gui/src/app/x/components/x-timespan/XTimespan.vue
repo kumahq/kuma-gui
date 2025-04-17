@@ -4,28 +4,32 @@
     class="x-timespan"
     data-testid="x-timespan"
   >
-    <div
+    <template
       v-if="props.start.length > 0"
     >
-      <dt>{{ t('http.api.property.creationTime') }}</dt>
+      <dt>{{ props.labelStart ?? t('http.api.property.creationTime') }}</dt>
       <dd>{{ props.start }}</dd>
-    </div>
-    <div
+    </template>
+    <template
       v-if="props.end.length > 0"
     >
-      <dt>{{ t('http.api.property.modificationTime') }}</dt>
+      <dt>{{ props.labelEnd ?? t('http.api.property.modificationTime') }}</dt>
       <dd>{{ props.end }}</dd>
-    </div>
+    </template>
   </dl>
 </template>
 <script lang="ts" setup>
 import { useI18n } from '@/app/application'
 const { t } = useI18n()
 const props = withDefaults(defineProps<{
+  labelStart?: string
   start?: string
+  labelEnd?: string
   end?: string
 }>(), {
+  labelStart: undefined,
   start: '',
+  labelEnd: undefined,
   end: '',
 })
 </script>
@@ -38,9 +42,6 @@ dl,
 dl div {
   display: flex;
   flex-wrap: wrap;
-}
-dl {
-  justify-content: flex-end;
 }
 dd {
   white-space: nowrap;

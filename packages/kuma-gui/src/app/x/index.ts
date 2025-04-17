@@ -29,6 +29,7 @@ import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
 import XTeleportSlot from './components/x-teleport/XTeleportSlot.vue'
 import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
+import XTimespan from './components/x-timespan/XTimespan.vue'
 import XTooltip from './components/x-tooltip/XTooltip.vue'
 import XWindow from './components/x-window/XWindow.vue'
 import vStyle from './directives/style'
@@ -76,6 +77,7 @@ declare module 'vue' {
     XCheckbox: typeof XCheckBox
     XWindow: typeof XWindow
     XSearch: typeof XSearch
+    XTimespan: typeof XTimespan
   }
 }
 
@@ -133,6 +135,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
           ['XCheckbox', XCheckBox],
           ['XWindow', XWindow],
           ['XSearch', XSearch],
+          ['XTimespan', XTimespan],
         ]
       },
       labels: [
