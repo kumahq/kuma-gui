@@ -61,11 +61,6 @@
                 {{ t(`data-planes.type.${item}`) }}
               </template>
             </XSelect>
-
-            <input
-              type="submit"
-              hidden
-            >
           </form>
         </search>
         <DataLoader
