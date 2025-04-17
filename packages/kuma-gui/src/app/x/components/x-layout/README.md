@@ -32,3 +32,18 @@ usage inline instead of relying on global styles/class names.
     </XLayout>
   </XLayout>
 </Story>
+
+> [!NOTE]
+> `truncate`:
+> Use only in places where space is limited vertically, such as table rows and `XAboutCard`s.
+
+<Story height="200">
+  <div style="width: 200px;">
+    <XLayout
+      type="separated"
+      truncate
+    >
+      <XBadge v-for="tag in ['foo', 'bar', 'baz', 'qux', 'quux', 'quz', 'quuz']">{{ tag }}</XBadge>
+    </XLayout>
+  </div>
+</Story>

@@ -40,7 +40,7 @@
               },
             },
             {
-              bool: can('use zones') && props.data.zone && props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false,
+              bool: !!(can('use zones') && props.data.zone && props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false),
               key: 'dp-zone-cp-incompatible',
               params: {
                 kumaDp: props.data.dataplaneInsight.version?.kumaDp.version ?? '',
@@ -65,7 +65,7 @@
           :key="key"
         >
           <XNotification
-            v-if="bool"
+            :notify="bool"
             :data-testid="`warning-${key}`"
             :uri="`data-planes.notifications.${key}.${props.data.id}`"
           >
@@ -223,6 +223,7 @@
                 >
                   <TagList
                     :tags="props.data.dataplane.networking.gateway.tags"
+                    should-truncate
                   />
                 </template>
               </DefinitionCard>
@@ -408,7 +409,7 @@
                       :key="direction"
                     >
                       <XNotification
-                        v-if="Object.values(traffic.outbounds).find(item => (typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) ?? 0 > 0)"
+                        :notify="!!Object.values(traffic.outbounds).find(item => (typeof item.tcp !== 'undefined' ? item.tcp?.[`${direction}_cx_rx_bytes_total`] : item.http?.[`${direction}_rq_total`]) ?? 0 > 0)"
                         variant="info"
                         :uri="`data-planes.notifications.recommend-reachable-services:${props.data.id}`"
                       >
