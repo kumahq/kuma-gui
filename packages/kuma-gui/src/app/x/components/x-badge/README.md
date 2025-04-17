@@ -4,7 +4,7 @@ A KBadge that doesn't automatically truncate.
 
 The vast majority of the time we don't want these to truncate. We either use
 them for 'small thing' like ports, or we use them with tags/labels which we
-generally put within a `XTruncate` (and when we don't we don't want them
+generally put within a `KTruncate` (and when we don't we don't want them
 truncated!)
 
 XBadge doesn't truncate by default, but has all the same properties as a

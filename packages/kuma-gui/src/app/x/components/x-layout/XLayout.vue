@@ -1,13 +1,13 @@
 <template>
   <component
-    :is="props.type === 'separated' && props.truncate ? XTruncate : 'div'"
+    :is="props.type === 'separated' && props.truncate ? KTruncate : 'div'"
     :class="['x-layout', props.type, props.size, props.justify]"
   >
     <slot name="default" />
   </component>
 </template>
 <script lang="ts" setup>
-import XTruncate from '@/app/x/components/x-truncate/XTruncate.vue'
+import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'

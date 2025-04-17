@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 /**
- * @deprecated Use XLayout (note `truncate` prop), XBadge and XTruncate instead
+ * @deprecated Use XLayout (note `truncate` prop) and XBadge instead
  */
 import { computed } from 'vue'
 
