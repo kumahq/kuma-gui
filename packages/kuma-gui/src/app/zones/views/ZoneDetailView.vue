@@ -132,7 +132,7 @@
             </template>
             
             <XLayout>
-              <p>{{ t('zone-cps.detail.subscriptions.description') }}</p>
+              <XI18n path="zone-cps.detail.subscriptions.description" />
               <AppCollection
                 :headers="[
                   { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },

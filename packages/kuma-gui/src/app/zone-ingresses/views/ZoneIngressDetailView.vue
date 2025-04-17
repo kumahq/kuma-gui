@@ -262,7 +262,7 @@
         </template>
         
         <XLayout>
-          <p>{{ t('zone-ingresses.routes.item.subscriptions.description') }}</p>
+          <XI18n path="zone-ingresses.routes.item.subscriptions.description" />
           <AppCollection
             :headers="[
               { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },

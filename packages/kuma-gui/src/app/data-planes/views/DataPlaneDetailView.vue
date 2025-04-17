@@ -625,7 +625,7 @@
               </template>
 
               <XLayout>
-                <p>{{ t('data-planes.routes.item.subscriptions.description') }}</p>
+                <XI18n path="data-planes.routes.item.subscriptions.description" />
                 <AppCollection
                   :headers="[
                     { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },

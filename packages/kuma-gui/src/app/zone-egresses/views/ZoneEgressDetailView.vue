@@ -231,7 +231,7 @@
           </template>
           
           <XLayout>
-            <p>{{ t('zone-egresses.routes.item.subscriptions.description') }}</p>
+            <XI18n path="zone-egresses.routes.item.subscriptions.description" />
             <AppCollection
               :headers="[
                 { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
