@@ -63,7 +63,7 @@
                       :key="`${label}${value}${index}`"
                       appearance="neutral"
                     >
-                      <span class="label">{{ label }}:</span>{{ value }}
+                      {{ label }}:{{ value }}
                     </XBadge>
                   </XLayout>
                 </template>
@@ -101,8 +101,3 @@ import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>
-<style lang="scss" scoped>
-.label {
-  font-weight: $kui-font-weight-regular;
-}
-</style>
