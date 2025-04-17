@@ -25,7 +25,10 @@
             </template>
             <template #body>
               <template v-if="props.data.spec.ports.length">
-                <XTruncate>
+                <XLayout
+                  type="separated"
+                  truncate
+                >
                   <KumaPort
                     v-for="connection in props.data.spec.ports"
                     :key="connection.port"
@@ -34,7 +37,7 @@
                       targetPort: undefined,
                     }"
                   />
-                </XTruncate>
+                </XLayout>
               </template>
               <template v-else>
                 {{ t('common.detail.none') }}
