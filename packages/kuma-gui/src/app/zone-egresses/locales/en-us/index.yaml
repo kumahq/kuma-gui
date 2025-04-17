@@ -30,7 +30,8 @@ zone-egresses:
       config: 'Configuration'
       subscriptions:
         title: 'XDS Connections'
-        description: Communication channels used by the control plane to dynamically configure and manage data plane proxies.
+        description: !!text/markdown |
+          Communication channels used by the control plane to dynamically configure and manage data plane proxies.
       about:
         title: About this Zone Egress
     items:
