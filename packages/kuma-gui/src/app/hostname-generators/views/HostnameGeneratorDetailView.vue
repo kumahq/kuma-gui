@@ -61,7 +61,6 @@
                     <XBadge
                       v-for="([label, value], index) in Object.entries(labels)"
                       :key="`${label}${value}${index}`"
-                      appearance="neutral"
                     >
                       {{ label }}:{{ value }}
                     </XBadge>
