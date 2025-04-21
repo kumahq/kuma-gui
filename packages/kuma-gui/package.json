@@ -49,7 +49,7 @@
     "@vue/test-utils": "^2.4.6",
     "@whyframe/core": "^0.1.13",
     "@whyframe/vue": "^0.1.8",
-    "cypress": "^14.3.0",
+    "cypress": "^14.3.1",
     "dotenv": "^16.5.0",
     "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
