@@ -220,7 +220,7 @@
               data-testid="healthy-dpps"
             >
               <template #icon>
-                <XIcon name="health" />
+                <XIcon name="healthy" />
               </template>
               <template #title>
                 {{ t('services.detail.dpp-status.healthy') }}

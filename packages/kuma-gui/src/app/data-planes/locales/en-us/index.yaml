@@ -118,6 +118,8 @@ data-planes:
           title: Supported CAs
       subscriptions:
         title: XDS Connections
+        description: !!text/markdown |
+          Communication channels used by the control plane to dynamically configure and manage data plane proxies.
       rules:
         proxy: Proxy rule
         to: To rules

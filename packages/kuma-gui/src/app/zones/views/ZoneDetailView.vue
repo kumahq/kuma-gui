@@ -128,65 +128,81 @@
             v-if="props.data.zoneInsight.subscriptions.length > 0"
           >
             <template #title>
-              <h2>{{ t('zone-cps.detail.subscriptions') }}</h2>
+              <h2>{{ t('zone-cps.detail.subscriptions.title') }}</h2>
             </template>
-
-            <AppCollection
-              :headers="[
-                { ...me.get('headers.zoneInstanceId'), label: t('zone-cps.routes.items.headers.zoneInstanceId'), key: 'zoneInstanceId' },
-                { ...me.get('headers.version'), label: t('zone-cps.routes.items.headers.version'), key: 'version' },
-                { ...me.get('headers.connected'), label: t('zone-cps.routes.items.headers.connected'), key: 'connected' },
-                { ...me.get('headers.disconnected'), label: t('zone-cps.routes.items.headers.disconnected'), key: 'disconnected' },
-                { ...me.get('headers.responses'), label: t('zone-cps.routes.items.headers.responses'), key: 'responses' },
-              ]"
-              :is-selected-row="item => item.id === route.params.subscription"
-              :items="props.data.zoneInsight.subscriptions.map((item, i, arr) => arr[arr.length - (i + 1)])"
-              @resize="me.set"
-            >
-              <template
-                #zoneInstanceId="{ row: item }"
-              >
-                <XAction
-                  data-action
-                  :to="{
-                    name: 'zone-cp-subscription-summary-view',
-                    params: {
-                      subscription: item.id,
-                    },
-                  }"
-                >
-                  {{ item.zoneInstanceId }}
-                </XAction>
-              </template>
-              <template
-                #version="{ row: item }"
-              >
-                {{ item.version?.kumaCp?.version ?? '-' }}
-              </template>
-              <template
-                #connected="{ row: item }"
-              >
-                {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
-              </template>
-              <template
-                #disconnected="{ row: item }"
+            
+            <XLayout>
+              <XI18n path="zone-cps.detail.subscriptions.description" />
+              <AppCollection
+                :headers="[
+                  { ...me.get('headers.connection'), label: '&nbsp;', key: 'connection' },
+                  { ...me.get('headers.zoneInstanceId'), label: t('zone-cps.routes.items.headers.zoneInstanceId'), key: 'zoneInstanceId' },
+                  { ...me.get('headers.version'), label: t('zone-cps.routes.items.headers.version'), key: 'version' },
+                  { ...me.get('headers.connected'), label: t('zone-cps.routes.items.headers.connected'), key: 'connected' },
+                  { ...me.get('headers.disconnected'), label: t('zone-cps.routes.items.headers.disconnected'), key: 'disconnected' },
+                  { ...me.get('headers.responses'), label: t('zone-cps.routes.items.headers.responses'), key: 'responses' },
+                ]"
+                :is-selected-row="item => item.id === route.params.subscription"
+                :items="props.data.zoneInsight.subscriptions.map((item, i, arr) => arr[arr.length - (i + 1)])"
+                @resize="me.set"
               >
                 <template
-                  v-if="item.disconnectTime"
+                  #connection="{ row: item }"
                 >
-                  {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
+                  <template
+                    v-for="connection in [item.connectTime && !item.disconnectTime ? 'healthy' : 'unhealthy'] as const"
+                    :key="`${connection}`"
+                  >
+                    <XIcon :name="connection">
+                      {{ t(`common.connection.${connection}`) }}
+                    </XIcon>
+                  </template>
                 </template>
-              </template>
-              <template
-                #responses="{ row: item }"
-              >
                 <template
-                  v-for="responses in [item.status?.total ?? {}]"
+                  #zoneInstanceId="{ row: item }"
                 >
-                  {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                  <XAction
+                    data-action
+                    :to="{
+                      name: 'zone-cp-subscription-summary-view',
+                      params: {
+                        subscription: item.id,
+                      },
+                    }"
+                  >
+                    {{ item.zoneInstanceId }}
+                  </XAction>
                 </template>
-              </template>
-            </AppCollection>
+                <template
+                  #version="{ row: item }"
+                >
+                  {{ item.version?.kumaCp?.version ?? '-' }}
+                </template>
+                <template
+                  #connected="{ row: item }"
+                >
+                  {{ t('common.formats.datetime', { value: Date.parse(item.connectTime ?? '') }) }}
+                </template>
+                <template
+                  #disconnected="{ row: item }"
+                >
+                  <template
+                    v-if="item.disconnectTime"
+                  >
+                    {{ t('common.formats.datetime', { value: Date.parse(item.disconnectTime) }) }}
+                  </template>
+                </template>
+                <template
+                  #responses="{ row: item }"
+                >
+                  <template
+                    v-for="responses in [item.status?.total ?? {}]"
+                  >
+                    {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                  </template>
+                </template>
+              </AppCollection>
+            </XLayout>
             <RouterView
               v-slot="{ Component }"
             >
@@ -229,3 +245,10 @@ const props = defineProps<{
   data: ZoneOverview
 }>()
 </script>
+<style lang="scss" scoped>
+:deep(td:nth-child(2) a) {
+  color: inherit;
+  font-weight: $kui-font-weight-semibold;
+  text-decoration: none;
+}
+</style>

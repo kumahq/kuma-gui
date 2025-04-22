@@ -77,7 +77,10 @@ zone-cps:
       store-memory: Uses memory store
       global-cp-incompatible: Version mismatch
   detail:
-    subscriptions: 'KDS Connections'
+    subscriptions:
+      title: 'KDS Connections'
+      description: !!text/markdown
+        Communication channels used to synchronize configuration and policies between the global and zone control planes.
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
     about:
