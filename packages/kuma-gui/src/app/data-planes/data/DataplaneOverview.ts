@@ -49,7 +49,7 @@ export const DataplaneOverview = {
           prev.name = value.join(':').trim()
         } else if (!tag && value.length === 0) {
           prev.name = key.trim()
-        } else if (key === 'tag' || key === 'label') {
+        } else if (key === 'tag') {
           return parse(prev, value.join(':').trim(), true)
         } else {
           prev.tag.push(`${searchShortcuts[key] || key}${value.length > 0 ? ':' : ''}${value.join(':').trim()}`)

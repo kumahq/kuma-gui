@@ -84,7 +84,7 @@
             >
               <XSearch
                 class="search-field"
-                placeholder="Filter by name, label, zone or namespace..."
+                placeholder="Filter by name, tag, zone or namespace..."
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
               />
