@@ -3,18 +3,42 @@ import merge from 'deepmerge'
 import { defineSources } from '../application/services/data-source'
 
 type Storage = {
-  get: (key: string, d?: object) => Promise<object>
-  set: (key: string, value: object) => Promise<object>
+  get: (key: string, d?: object) => Promise<[]>
+  set: (key: string, value: object) => Promise<[]>
 }
+
+type Notification = {
+  timestamp: number
+  uri: string
+}
+const DAYS = 1000 * 60 * 24
 export const sources = ({ get, set }: Storage) => {
   return defineSources({
     // used for saving dismissed notification id's
     '/me/~notifications': async () => {
-      return get('~notifications', [])
+      const dismissed: Notification[] = await get('~notifications', [])
+      const current = dismissed.filter(item => {
+        return (item.timestamp + (7 * DAYS)) > Date.now()
+      })
+      if(dismissed.length !== current.length) {
+        await set('~notifications', current)
+      }
+      const res = current.map(item => item.uri)
+      return res
     },
-    '/me/~notifications/:data': async (params) => {
-      const res = merge<object>(await get('~notifications', []), JSON.parse(params.data))
-      set('~notifications', res)
+    '/me/~notifications/dismiss/:data': async (params) => {
+      const dismissed: string[] = JSON.parse(params.data)
+      const res = merge<object>(await get('~notifications', []), dismissed.map(item => ({
+        timestamp: Date.now(),
+        uri: item,
+      })))
+      await set('~notifications', res)
+      return
+    },
+    '/me/~notifications/reset/:data': async (params) => {
+      const reset = new Set<string>(JSON.parse(params.data))
+      const dismissed = new Set<string>(await get('~notifications', []))
+      await set('~notifications', Array.from(reset.difference(dismissed)))
       return
     },
     //

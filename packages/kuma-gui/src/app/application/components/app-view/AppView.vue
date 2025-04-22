@@ -4,73 +4,30 @@
   >
     <DataSource
       :src="`/me/~notifications`"
-      v-slot="{ data: dismissed }"
+      v-slot="{ data: dismissed, refresh }"
     >
-      <component
-        :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
-        v-if="dismissed"
-        :uri="id"
-        :dismissed="dismissed"
-        v-slot="hub"
+      <DataSink
+        :src="`/me/~notifications/reset`"
+        v-slot="{ submit: reset }"
       >
-        <nav
-          v-if="!hasParent && _breadcrumbs.length > 0"
-          aria-label="Breadcrumb"
+        <DataSink
+          :src="`/me/~notifications/dismiss`"
+          v-slot="{ submit: dismiss }"
         >
-          <XBreadcrumbs
-            :items="_breadcrumbs"
-          />
-        </nav>
-
-        <section
-          :class="{
-            'is-fullscreen': props.fullscreen,
-          }"
-        >
-          <header
-            v-if="slots.title || slots.actions"
-            class="app-view-title-bar"
+          <component
+            :is="props.notifications ? `XNotificationHub` : `XAnonymous`"
+            v-if="dismissed"
+            :uri="id"
+            :dismissed="dismissed"
+            @reset="(str: string) => reset([str])"
+            v-slot="hub"
           >
-            <KongIcon v-if="props.fullscreen" />
-
-            <template
-              v-if="summary.length > 0"
+            <XLayout
+              type="stack"
+              size="small"
             >
-              <XTeleportTemplate
-                :to="{ name: summary }"
-              >
-                <slot name="title" />
-              </XTeleportTemplate>
-            </template>
-            <template
-              v-else
-            >
-              <slot name="title" />
-            </template>
-
-            <div
-              class="actions"
-            >
-              <XTeleportSlot
-                v-if="slots.title"
-                name="app-view-docs"
-              />
-              <slot name="actions">
-                <XTeleportSlot
-                  :name="`${routeView.name}-actions`"
-                />
-              </slot>
-            </div>
-          </header>
-
-          <XLayout
-            type="stack"
-          >
-            <aside
-              v-if="hub?.notifications?.size > 0"
-            >
-              <DataSink
-                :src="`/me/~notifications`"
+              <aside
+                v-if="hub?.notifications?.size > 0"
               >
                 <XLayout
                   type="stack"
@@ -81,6 +38,11 @@
                   >
                     <XAlert
                       :variant="variant"
+                      @dismiss="async () => {
+                        dismiss(Array.from(value))
+                        await nextTick()
+                        refresh()
+                      }"
                     >
                       <ul
                         class="notifications"
@@ -98,14 +60,70 @@
                     </XAlert>
                   </template>
                 </XLayout>
-              </DataSink>
-            </aside>
-            <slot
-              name="default"
-            />
-          </XLayout>
-        </section>
-      </component>
+              </aside>
+
+              <nav
+                v-if="!hasParent && _breadcrumbs.length > 0"
+                aria-label="Breadcrumb"
+              >
+                <XBreadcrumbs
+                  :items="_breadcrumbs"
+                />
+              </nav>
+
+              <section
+                :class="{
+                  'is-fullscreen': props.fullscreen,
+                }"
+              >
+                <XLayout
+                  type="stack"
+                >
+                  <header
+                    v-if="slots.title || slots.actions"
+                    class="app-view-title-bar"
+                  >
+                    <KongIcon v-if="props.fullscreen" />
+
+                    <template
+                      v-if="summary.length > 0"
+                    >
+                      <XTeleportTemplate
+                        :to="{ name: summary }"
+                      >
+                        <slot name="title" />
+                      </XTeleportTemplate>
+                    </template>
+                    <template
+                      v-else
+                    >
+                      <slot name="title" />
+                    </template>
+
+                    <div
+                      class="actions"
+                    >
+                      <XTeleportSlot
+                        v-if="slots.title"
+                        name="app-view-docs"
+                      />
+                      <slot name="actions">
+                        <XTeleportSlot
+                          :name="`${routeView.name}-actions`"
+                        />
+                      </slot>
+                    </div>
+                  </header>
+
+                  <slot
+                    name="default"
+                  />
+                </XLayout>
+              </section>
+            </XLayout>
+          </component>
+        </DataSink>
+      </DataSink>
     </DataSource>
   </div>
   <XTeleportTemplate
@@ -126,7 +144,7 @@
 
 <script lang="ts" setup>
 import { KongIcon } from '@kong/icons'
-import { provide, inject, watch, ref, onBeforeUnmount } from 'vue'
+import { nextTick , provide, inject, watch, ref, onBeforeUnmount } from 'vue'
 
 import { ROUTE_VIEW_PARENT } from '../route-view/index'
 import type { RouteView } from '../route-view/RouteView.vue'
@@ -161,7 +179,7 @@ const map: Breadcrumbs = new Map()
 const _breadcrumbs = ref<BreadcrumbItem[]>([])
 const symbol = Symbol('app-view')
 
-const refresh = (map: Breadcrumbs) => {
+const refreshBreadcrumbs = (map: Breadcrumbs) => {
   const breadcrumbs = [...map.values()]
   if (!breadcrumbs.some(item => item.length === 0)) {
     _breadcrumbs.value = breadcrumbs.flat()
@@ -184,13 +202,13 @@ const appView: AppView = {
         }
       }
       map.set(sym, items)
-      refresh(map)
+      refreshBreadcrumbs(map)
     }
   },
   removeBreadcrumbs: (sym: symbol) => {
     if (map.has(sym)) {
       map.delete(sym)
-      refresh(map)
+      refreshBreadcrumbs(map)
     }
   },
 }
@@ -241,8 +259,6 @@ onBeforeUnmount(() => {
 .app-view-title-bar {
   display: flex;
   align-items: center;
-  margin-top: $kui-space-30;
-  margin-bottom: calc($kui-space-80 + 4px);
 
   h1, h2, h3, h4, h5, h6  {
     overflow: hidden;

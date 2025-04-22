@@ -14,6 +14,11 @@
 import { shallowRef, watch } from 'vue'
 
 import type { AlertAppearance } from '@kong/kongponents'
+
+const emit = defineEmits<{
+  (event: 'reset', value: string): void
+}>()
+
 const props = withDefaults(defineProps<{
   uri: string
   dismissed?: string[]
@@ -47,6 +52,10 @@ const hub = {
   },
   delete: (str: string) => {
     del([str])
+  },
+  reset: (str: string) => {
+    del([str])
+    emit('reset', str)
   },
   uri: `x-notification-hub-${props.uri}`,
 

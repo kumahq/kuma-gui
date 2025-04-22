@@ -79,7 +79,17 @@
           />
         </template>
 
-        <AppView>
+        <AppView
+          :notifications="true"
+        >
+          <XNotification
+            :notify="!can('use state')"
+            uri="main-overview.notifications.store-memory"
+          >
+            <XI18n
+              path="main-overview.notifications.store-memory"
+            />
+          </XNotification>
           <RouterView />
         </AppView>
       </ApplicationShell>

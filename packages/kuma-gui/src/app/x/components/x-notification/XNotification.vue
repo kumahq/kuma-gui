@@ -25,6 +25,7 @@ import type { AlertAppearance } from '@kong/kongponents'
 const provider = inject<{
   set(uri: string, obj: { variant: AlertAppearance } ): void
   delete(uri: string): void
+  reset(uri: string): void
   uri: string
 }>('x-notification-hub')
 
@@ -45,14 +46,18 @@ watch(() => {
     if(bool) {
       provider.set(props.uri, props)
     } else {
-      provider.delete(props.uri)
+      provider.reset(props.uri)
     }
   }
 })
-if(props.notify && slots.default) {
+if(slots.default) {
   onMounted(() => {
     if(typeof provider !== 'undefined') {
-      provider.set(props.uri, props)
+      if(props.notify) {
+        provider.set(props.uri, props)
+      } else {
+        provider.reset(props.uri)
+      }
     }
   })
 }
