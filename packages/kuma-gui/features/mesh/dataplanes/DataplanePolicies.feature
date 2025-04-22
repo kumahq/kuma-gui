@@ -21,10 +21,7 @@ Feature: Dataplane policies
       | inbound-rule-item                  | [data-testid='inbound-rule-list-0'] .accordion-item                   |
       | inbound-rule-item-button           | $inbound-rule-item:nth-child(1) [data-testid='accordion-item-button'] |
       | summary-slideout-container         | [data-testid='summary'] [data-testid='slideout-container']            |
-      And the environment
-      """
-        KUMA_RESOURCE_COUNT: 100
-      """
+
   Rule: Any networking type
 
     Scenario: Policies tab has expected content (MeshHTTPRoute with to rules)
@@ -339,6 +336,14 @@ Feature: Dataplane policies
                     port: 8080
                     tags:
                       kuma.io/service: foo
+        """
+      And the URL "/_resources" responds with
+        """
+        body:
+          resources:
+            - name: MeshHTTPRoute
+              policy:
+                isFromAsRules: true
         """
       When I visit the "/meshes/default/data-planes/dataplane-1/policies" URL
       Then the "$to-rule-item-content" element doesn't exist
