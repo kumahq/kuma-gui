@@ -5,7 +5,7 @@ import { token, ServiceDefinition, createInjections } from '@/services/utils'
 import type { EndpointDependencies } from '@/test-support'
 import { dependencies } from '@/test-support'
 import getClient from '@/test-support/client'
-import type { Middleware, Options } from '@kumahq/fake-api'
+import type { Callback, Options } from '@kumahq/fake-api'
 
 
 // this needs to come from testing
@@ -16,11 +16,13 @@ const env = (
 }
 type AEnv = ReturnType<typeof env>
 // temporary intercept returning Mocker
-type Mocker = (route: string, opts?: Options, cb?: Middleware) => ReturnType<typeof cy['intercept']>
+type Mocker = (route: string, opts?: Options, cb?: Callback) => ReturnType<typeof cy['intercept']>
 const $ = {
   EnvVars: token<EnvVars>('EnvVars'),
   env: token<AEnv>('env'),
 
+  cy: token<typeof cy>('cy'),
+  mockServer: token('mockServer'),
   mock: token<Mocker>('mocker'),
   Env: token('Env'),
   client: token<ReturnType<typeof getClient>>('client'),
@@ -49,14 +51,27 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
     ],
   }],
 
+  [app.cy, {
+    constant: cy,
+  }],
   [$.client, {
     service: getClient,
+  }],
+  [app.mockServer, {
+    service: (mock: Mocker) => {
+      mock('*')
+    },
+    arguments: [
+      app.mock,
+    ],
   }],
   [app.mock, {
     service: mocker,
     arguments: [
-      $.dependencies,
+      app.cy,
       app.fakeFS,
+      $.client,
+      $.dependencies,
     ],
   }],
   // this will eventually come from testing
@@ -71,5 +86,6 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
 export const TOKENS = $
 export const [
   useMock,
+  useServer,
   useClient,
-] = createInjections($.mock, $.client)
+] = createInjections($.mock, $.mockServer, $.client)

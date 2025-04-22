@@ -171,9 +171,9 @@
                   v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                 >
                   <DataCollection
-                    :empty="false"
-                    :items="sidecarDataplaneData!.policyTypeEntries"
                     :predicate="(item) => policyTypes[item.type]?.policy.isTargetRef === false"
+                    :items="sidecarDataplaneData!.policyTypeEntries"
+                    :empty="false"
                     v-slot="{ items }"
                   >
                     <h3>
