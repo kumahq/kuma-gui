@@ -1,8 +1,36 @@
 import { When, Then, Before, Given, DataTable, After } from '@badeball/cypress-cucumber-preprocessor'
-import { undefinedSymbol } from '@kumahq/fake-api'
+import deepmerge from 'deepmerge'
 import jsYaml, { DEFAULT_SCHEMA, Type } from 'js-yaml'
 
-import { useServer, useMock, useClient } from '../../services'
+import { useMock, useClient } from '../../services'
+import type { ArrayMergeOptions } from 'deepmerge'
+
+// merges objects in array positions rather than replacing
+const undefinedSymbol = Symbol('undefined')
+const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {
+  const destination = target.slice()
+
+  source.forEach((item, index) => {
+    if (typeof destination[index] === 'undefined') {
+      destination[index] = options.cloneUnlessOtherwiseSpecified(item, options)
+    } else if (options.isMergeableObject(item)) {
+      destination[index] = deepmerge(target[index], item, options)
+    } else if (target.indexOf(item) === -1) {
+      destination.push(item)
+    }
+  })
+  return destination
+}
+
+const merge = <T>(response: T, obj: Partial<T>): T => {
+  const merged = deepmerge<T>(response, obj, { arrayMerge: combineMerge })
+  return JSON.parse(JSON.stringify(merged, (_key, value) => {
+    if (value === undefinedSymbol) {
+      return
+    }
+    return value
+  }))
+}
 
 const console = {
   log: (message: unknown) => Cypress.log({ displayName: 'LOG', message: JSON.stringify(message) }),
@@ -26,12 +54,24 @@ let env = {}
 let selectors: Record<string, string> = {}
 let localStorage: Set<string>
 const client = useClient()
+const mock = useMock()
 Before(() => {
   client.reset()
   env = {}
   selectors = {}
   localStorage = new Set()
-  useServer()
+  // mock everything with no specific env vars
+  // record every request as a client.request
+  mock('*', {}, (req, response) => {
+    client.request({
+      url: req.url,
+      request: {
+        method: req.method,
+        body: req.body,
+      },
+    })
+    return response
+  })
 })
 After(() => {
   Array.from(localStorage).forEach((key) => {
@@ -86,18 +126,24 @@ Given('the localStorage', (yaml: string) => {
 })
 
 Given('the URL {string} responds with', (url: string, yaml: string) => {
-  const mock = useMock()
   // mock is a call to cy.intercept
-  // the callback below gives the opportunity to mutate the mock response
-  // the respond function/argument is just a specifically configured deepmerge
-  mock(url, env, (respond) => {
-    const response = respond(
-      (YAML.parse(yaml) || {}) as {
-        headers?: Record<string, string>
-        body?: Record<string, unknown>
+  // which mocks this specific url with the current env vars
+  // records every request as a client.request
+  // and merges any test case mock with the fake-fs mock
+  mock(url, env, (req, response) => {
+    // once the response has been rendered but not sent resolve any
+    // waiting request assertions this means that any mocking done after
+    // awaiting the request will happen on the subsequent request not this
+    // one
+    client.request({
+      url: req.url,
+      request: {
+        method: req.method,
+        body: req.body,
       },
-    )
-    return response
+    })
+    // merge test mock in with fake-api mock
+    return merge(response, YAML.parse(yaml) ?? {})
   })
 })
 
