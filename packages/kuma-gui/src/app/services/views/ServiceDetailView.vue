@@ -78,21 +78,17 @@
           </template>
 
           <search>
-            <FilterBar
-              class="data-plane-proxy-filter"
-              :placeholder="`name:dataplane-name`"
-              :query="route.params.s"
-              :fields="{
-                name: { description: 'filter by name or parts of a name' },
-                protocol: { description: 'filter by “kuma.io/protocol” value' },
-                tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-                ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-              }"
-              @change="(e) => route.update({
-                page: 1,
-                ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-              })"
-            />
+            <form
+              class="search-form"
+              @submit.prevent
+            >
+              <XSearch
+                class="search-field"
+                placeholder="Filter by name, tag, zone or namespace..."
+                :value="route.params.s"
+                @change="(s) => route.update({ page: 1, s })"
+              />
+            </form>
           </search>
           <DataLoader
             :src="uri(dataplaneSources, `/meshes/:mesh/dataplanes/for/service-insight/:service`, {
@@ -276,7 +272,6 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
@@ -293,9 +288,15 @@ search {
   gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
   flex-basis: 350px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

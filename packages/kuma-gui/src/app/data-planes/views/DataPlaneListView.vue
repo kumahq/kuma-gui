@@ -24,48 +24,44 @@
       />
       <XCard>
         <search>
-          <FilterBar
-            class="data-plane-proxy-filter"
-            :placeholder="`service:backend`"
-            :query="route.params.s"
-            :fields="{
-              name: { description: 'filter by name or parts of a name' },
-              protocol: { description: 'filter by “kuma.io/protocol” value' },
-              service: { description: 'filter by “kuma.io/service” value' },
-              tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
-              ...(can('use zones') && { zone: { description: 'filter by “kuma.io/zone” value' } }),
-            }"
-            @change="(e) => route.update({
-              page: 1,
-              ...Object.fromEntries(e.entries()) as Record<string, string | undefined>,
-            })"
-          />
-
-          <XSelect
-            label="Type"
-            :selected="route.params.dataplaneType"
-            @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
+          <form
+            class="search-form"
+            @submit.prevent
           >
-            <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
-              <XIcon
-                v-if="item !== 'all'"
-                :size="KUI_ICON_SIZE_40"
-                :name="item"
-              />
-              {{ t(`data-planes.type.${item}`) }}
-            </template>
-            <template
-              v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
-              :key="item"
-              #[`${item}-option`]
+            <XSearch
+              class="search-field"
+              placeholder="Filter by name, tag, zone or namespace..."
+              :value="route.params.s"
+              @change="(s) => route.update({ page: 1, s })"
+            />
+            
+            <XSelect
+              label="Type"
+              name="dataplaneType"
+              :selected="route.params.dataplaneType"
+              @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
             >
-              <XIcon
-                v-if="item !== 'all'"
-                :name="item"
-              />
-              {{ t(`data-planes.type.${item}`) }}
-            </template>
-          </XSelect>
+              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+                <XIcon
+                  v-if="item !== 'all'"
+                  :size="KUI_ICON_SIZE_40"
+                  :name="item"
+                />
+                {{ t(`data-planes.type.${item}`) }}
+              </template>
+              <template
+                v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                :key="item"
+                #[`${item}-option`]
+              >
+                <XIcon
+                  v-if="item !== 'all'"
+                  :name="item"
+                />
+                {{ t(`data-planes.type.${item}`) }}
+              </template>
+            </XSelect>
+          </form>
         </search>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type`, {
@@ -308,10 +304,10 @@ import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
 
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
-import FilterBar from '@/app/common/filter-bar/FilterBar.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
+
 const props = defineProps<{
   mesh: Mesh
 }>()
@@ -335,10 +331,16 @@ search {
   justify-content: flex-end;
   align-items: stretch;
   flex-wrap: wrap;
-  gap: $kui-space-70;
   margin-bottom: $kui-space-70;
 }
-.data-plane-proxy-filter {
+
+.search-form {
+  display: flex;
+  width: 100%;
+  gap: $kui-space-70;
+}
+
+.search-field {
   flex-basis: 310px;
   flex-grow: 1;
 }
