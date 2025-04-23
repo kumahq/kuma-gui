@@ -2,21 +2,23 @@ import merge from 'deepmerge'
 
 import { defineSources } from '../application/services/data-source'
 
-type Storage = {
-  get: (key: string, d?: object) => Promise<[]>
-  set: (key: string, value: object) => Promise<[]>
-}
-
 type Notification = {
   timestamp: number
   uri: string
 }
+type Storage = {
+  get(key: '~notifications', d?: Notification[]): Promise<Notification[]>
+  set(key: '~notifications', value: Notification[]): Promise<Notification[]>
+  get(key: string, d?: object): Promise<object>
+  set(key: string, value: object): Promise<object>
+}
+
 const DAYS = 1000 * 60 * 24
 export const sources = ({ get, set }: Storage) => {
   return defineSources({
     // used for saving dismissed notification id's
     '/me/~notifications': async () => {
-      const dismissed: Notification[] = await get('~notifications', [])
+      const dismissed = await get('~notifications', [])
       const current = dismissed.filter(item => {
         return (item.timestamp + (7 * DAYS)) > Date.now()
       })
@@ -28,7 +30,7 @@ export const sources = ({ get, set }: Storage) => {
     },
     '/me/~notifications/dismiss/:data': async (params) => {
       const dismissed: string[] = JSON.parse(params.data)
-      const res = merge<object>(await get('~notifications', []), dismissed.map(item => ({
+      const res = merge<Notification[]>(await get('~notifications', []), dismissed.map(item => ({
         timestamp: Date.now(),
         uri: item,
       })))
@@ -36,9 +38,13 @@ export const sources = ({ get, set }: Storage) => {
       return
     },
     '/me/~notifications/reset/:data': async (params) => {
-      const reset = new Set<string>(JSON.parse(params.data))
-      const dismissed = new Set<string>(await get('~notifications', []))
-      await set('~notifications', Array.from(reset.difference(dismissed)))
+      const reset: string[] = JSON.parse(params.data)
+      const dismissed = await get('~notifications', [])
+      const uris = Array.from(
+        new Set<string>(dismissed.map(item => item.uri))
+          .difference(new Set(reset)),
+      )
+      await set('~notifications', dismissed.filter(({ uri }) => uris.includes(uri)))
       return
     },
     //
