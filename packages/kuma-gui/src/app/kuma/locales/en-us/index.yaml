@@ -34,6 +34,9 @@ common:
         undefined { Invalid Date }
         other { { value, date, datetime } }
       }
+  connection:
+    healthy: Connected
+    unhealthy: Disconnected
   not_applicable: N/A
   matchingsearch: " matching that search"
   refresh: Refresh
