@@ -50,7 +50,7 @@ dt::after {
   content: ':';
   margin-right: $kui-space-20;
 }
-dl div:nth-child(2)::before {
+dl dt:nth-of-type(2)::before {
   content: '->';
   margin: 0 $kui-space-40;
 }
