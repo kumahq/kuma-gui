@@ -107,13 +107,13 @@ data-planes:
       mtls:
         title: 'TLS'
         expiration_time:
-          title: Certificate expiration time
+          title: Certificate expires at
         generation_time:
-          title: Certificate generation time
+          title: Certificate generated at
         regenerations:
-          title: Generation
+          title: Certificate generation
         issued_backend:
-          title: Issued by
+          title: Certificate issued by
         supported_backends:
           title: Supported CAs
       subscriptions:
