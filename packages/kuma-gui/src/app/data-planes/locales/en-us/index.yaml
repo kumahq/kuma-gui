@@ -135,6 +135,7 @@ data-planes:
         Data Plane Proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
       warnings:
         dp-cp-incompatible: Version mismatch
+        certificate-expires-soon: Certificate expires soon
         certificate-expired: Certificate expired
   href:
     docs:
