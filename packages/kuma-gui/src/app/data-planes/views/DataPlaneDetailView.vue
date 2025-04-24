@@ -47,6 +47,15 @@
               },
             },
             {
+              bool: ((expiryDate) => {
+                if(!expiryDate) return false
+                const expiryTime = new Date(expiryDate).getTime()
+                const weekBefore = expiryTime - 3_600_000 * 24 * 7
+                return Date.now() > weekBefore && Date.now() < expiryTime
+              })(props.data.dataplaneInsight.mTLS?.certificateExpirationTime),
+              key: 'certificate-expires-soon',
+            },
+            {
               bool: props.data.isCertExpired,
               key: 'certificate-expired',
             },
