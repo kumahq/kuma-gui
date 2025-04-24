@@ -22,7 +22,7 @@
             alt=""
           >
         </template>
-      
+
         <template #title>
           {{ t('main-overview.detail.about.zone_control_planes') }}
         </template>
@@ -115,9 +115,8 @@
           {{ t('main-overview.detail.about.data_plane_proxies') }}
         </template>
       </ResourceStatus>
-
       <ResourceStatus
-        :total="props.globalInsight.policies.total"
+        :total="policyTotal"
         data-testid="policies-status"
       >
         <template #icon>
@@ -137,16 +136,29 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 import { useI18n } from '@/app/application'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import type { GlobalInsight } from '@/app/control-planes/data'
+import type { ResourceCollection } from '@/app/policies/data'
 
 const { t } = useI18n()
 
 const props = defineProps<{
   globalInsight: GlobalInsight
+  resources?: ResourceCollection
   canUseZones: boolean
 }>()
+const policyTotal = computed(() => {
+  if(props.resources?.policyTypes) {
+    const policyTypes = props.resources?.policyTypes.map(item => item.name)
+    return Object.entries(props.globalInsight.resources).reduce((prev, [key, { total }]) => {
+      return policyTypes.includes(key) ? prev + total : prev
+    }, 0)
+  }
+  return 0
+})
 </script>
 
 <style lang="scss" scoped>

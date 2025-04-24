@@ -15,19 +15,27 @@
         <ControlPlaneActionGroup />
       </template>
 
-      <div
-        class="stack"
+      <XLayout
+        type="stack"
       >
-        <DataLoader
-          :src="uri(ControlPlaneSources, '/global-insight', {})"
-          v-slot="{ data }"
+        <DataSource
+          :src="uri(PolicySources, '/policy-types', {})"
+          v-slot="{ data: resources }"
         >
-          <ControlPlaneStatus
-            :can-use-zones="can('use zones')"
-            :global-insight="data"
-          />
-        </DataLoader>
-        <div class="columns">
+          <DataLoader
+            :src="uri(ControlPlaneSources, '/global-insight', {})"
+            v-slot="{ data }"
+          >
+            <ControlPlaneStatus
+              :can-use-zones="can('use zones')"
+              :global-insight="data"
+              :resources="resources"
+            />
+          </DataLoader>
+        </DataSource>
+        <XLayout
+          type="columns"
+        >
           <XCard
             v-if="can('use zones')"
           >
@@ -100,8 +108,8 @@
               </template>
             </DataLoader>
           </XCard>
-        </div>
-      </div>
+        </XLayout>
+      </XLayout>
     </AppView>
   </RouteView>
 </template>
@@ -112,6 +120,7 @@ import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
 import { sources as MeshSources } from '@/app/meshes/sources'
+import { sources as PolicySources } from '@/app/policies/sources'
 import { useZoneControlPlanesList } from '@/app/zones'
 import { sources as ZoneSources } from '@/app/zones/sources'
 
