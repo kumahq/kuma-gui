@@ -86,7 +86,6 @@
                 class="search-field"
                 :keys="['name', 'tag', 'zone', 'namespace']"
                 :value="route.params.s"
-                name="s"
                 @change="(s) => route.update({ page: 1, s })"
               />
             </form>
