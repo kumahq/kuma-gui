@@ -13,91 +13,90 @@
       data-testid="filter-bar"
       @click="inputRef?.focus()"
     >
-      <div class="icon-wrapper">
-        <XIcon
-          class="icon"
-          name="search"
-        />
-      </div>
-      <div
-        ref="containerRef"
-        class="input-container"
-      >
+      <XI18n v-slot="{ t }">
+        <div class="icon-wrapper">
+          <XIcon
+            class="icon"
+            name="search"
+          />
+        </div>
         <div
-          ref="contentRef"
-          class="content-wrapper"
+          ref="containerRef"
+          class="input-container"
         >
-          <template
-            v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
-            :key="chunk+index"
+          <div
+            ref="contentRef"
+            class="content-wrapper"
           >
-            <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
-          </template>
+            <template
+              v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
+              :key="chunk+index"
+            >
+              <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
+            </template>
+          </div>
+          <div class="input-wrapper">
+            <input
+              ref="inputRef"
+              type="text"
+              :defaultValue="props.value"
+              :placeholder="props.placeholder ?? t('components.x-search.filterBy', { count: props.keys.length, keys: formatList(props.keys, { type: 'disjunction' }) })"
+              data-testid="filter-bar-filter-input"
+              :name="props.name"
+              @input="onInput"
+              @change="emit('change', inputValue)"
+              @keyup="onKeyEvent"
+            >
+          </div>
         </div>
-        <div class="input-wrapper">
-          <input
-            ref="inputRef"
-            type="text"
-            :defaultValue="props.value"
-            :placeholder="props.placeholder ?? t('components.x-search.filterBy', { count: props.keys.length, keys: formatList(props.keys, { type: 'disjunction' }) })"
-            data-testid="filter-bar-filter-input"
-            :name="props.name"
-            @input="onInput"
-            @change="emit('change', inputValue)"
-            @keyup="onKeyEvent"
-          >
-        </div>
-      </div>
+      </XI18n>
     </div>
     
     <template #content>
-      <div class="dropdown-item">
-        <p
-          v-if="inputValue.length"
-          class="filter-block"
-        >
-          <template
-            v-for="(chunk, i) in inputValue.split(regex).filter(Boolean)"
-            :key="chunk+i"
+      <XI18n v-slot="{ t }">
+        <div class="dropdown-item">
+          <p
+            v-if="inputValue.length"
+            class="filter-block"
           >
-            <span v-if="regex.test(chunk)">
-              <template
-                v-for="([key, ...values], j) in [chunk.split(':')]"
-                :key="key+j"
-              >
-                <span v-if="!values.length">{{ props.defaultKey }}:<span class="text-important">{{ key }}</span></span>
-                <span v-else>{{ key }}:</span><span class="text-important">{{ values.join(':') }}</span>
-              </template>
-            </span>
-            <span v-else>
-              {{ chunk }}
-            </span>
-          </template>
-          <XBadge appearance="decorative">
-            <XI18n
-              tag="span"
-              path="components.x-search.submit"
-            />
-            <XIcon name="submit" />
-          </XBadge>
-        </p>
-        <XI18n
-          v-else
-          path="components.x-search.placeholder"
-        />
-      </div>
-      <div
-        v-if="props.keys.length"
-        class="dropdown-item bg-neutral-weakest"
-      >
-        <p class="logic-block">
+            <template
+              v-for="(chunk, i) in inputValue.split(regex).filter(Boolean)"
+              :key="chunk+i"
+            >
+              <span v-if="regex.test(chunk)">
+                <template
+                  v-for="([key, ...values], j) in [chunk.split(':')]"
+                  :key="key+j"
+                >
+                  <span v-if="!values.length">{{ props.defaultKey }}:<span class="text-important">{{ key }}</span></span>
+                  <span v-else>{{ key }}:</span><span class="text-important">{{ values.join(':') }}</span>
+                </template>
+              </span>
+              <span v-else>
+                {{ chunk }}
+              </span>
+            </template>
+            <XBadge appearance="decorative">
+              {{ t("components.x-search.submit") }}
+              <XIcon name="submit" />
+            </XBadge>
+          </p>
           <XI18n
-            tag="span"
-            class="text-important"
-            path="components.x-search.logic"
-          /> {{ props.keys.join(', ') }}
-        </p>
-      </div>
+            v-else
+            path="components.x-search.placeholder"
+          />
+        </div>
+        <div
+          v-if="props.keys.length"
+          class="dropdown-item bg-neutral-weakest"
+        >
+          <p class="logic-block">
+            <span class="text-important">
+              {{ t("components.x-search.logic") }}
+            </span> {{ props.keys.join(', ') }}
+          </p>
+        </div>
+      </XI18n>
     </template>
   </KPop>
 </template>
@@ -106,7 +105,7 @@
 import { onMounted, ref } from 'vue'
 
 import { useI18n } from '@/app/application'
-const { t, formatList } = useI18n() 
+const { formatList } = useI18n() 
 
 const props = withDefaults(defineProps<{
   /**
