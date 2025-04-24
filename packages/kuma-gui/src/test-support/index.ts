@@ -70,6 +70,7 @@ export type MockEnvKeys = keyof {
   KUMA_LATENCY: string
   KUMA_STATUS_CODE: string
   KUMA_RESOURCE_COUNT: string
+  KUMA_ACTIVE_RESOURCE_COUNT: string
 }
 export type EndpointDependencies = {
   fake: FakeKuma
