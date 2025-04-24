@@ -10,6 +10,7 @@ import { services as rules } from '@/app/rules'
 import { services as servicesModule } from '@/app/services'
 import type { ServiceDefinition } from '@/services/utils'
 import { token } from '@/services/utils'
+import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
 
@@ -30,13 +31,19 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     }],
     [token('meshes.routes'), {
       service: (r) => {
-        return routes(r[0], r[1], r[2], r[3])
+        return [
+          (item: RouteRecordRaw) => {
+            if (item.name === 'home') {
+              item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3]))
+            }
+          },
+        ]
       },
       arguments: [
         mesh.routes,
       ],
       labels: [
-        app.routes,
+        app.routeWalkers,
       ],
     }],
     [token('meshes.locales'), {

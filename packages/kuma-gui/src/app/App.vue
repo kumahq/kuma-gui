@@ -30,7 +30,7 @@
           <AppNavigator
             v-style="'--icon: var(--icon-home)'"
             data-testid="control-planes-navigator"
-            :active="child.name === 'home'"
+            :active="child.name === 'control-plane-detail-view'"
             label="Home"
             :to="{
               name: 'home',
@@ -100,7 +100,7 @@ type StringNamedRouteRecordRaw = RouteRecordRaw & {
   name: string
 }
 const router = useRouter()
-const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) => route.name === 'app')?.children.map(item => {
+const children: StringNamedRouteRecordRaw[] = (router.getRoutes().find((route) => route.name === 'home')?.children.map(item => {
   item.name = String(item.name)
   return item as StringNamedRouteRecordRaw
 }) ?? [])
