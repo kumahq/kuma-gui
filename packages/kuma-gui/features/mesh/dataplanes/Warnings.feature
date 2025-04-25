@@ -124,7 +124,7 @@ Feature: mesh / dataplanes / warnings
       body:
         dataplane:
           networking:
-            outbounds: !!js/undefined
+            outbound: !!js/undefined
             transparentProxying: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
