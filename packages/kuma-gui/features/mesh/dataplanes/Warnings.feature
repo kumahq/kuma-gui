@@ -2,11 +2,12 @@ Feature: mesh / dataplanes / warnings
 
   Background:
     Given the CSS selectors
-      | Alias                     | Selector                                                                        |
-      | expired-cert-warning      | [data-testid^='notification-data-planes.notifications.certificate-expired']     |
-      | unsupported-kuma-warning  | [data-testid^='notification-data-planes.notifications.dp-cp-incompatible']      |
-      | unsupported-envoy-warning | [data-testid^='notification-data-planes.notifications.envoy-dp-incompatible']   |
-      | unsupported-zone-warning  | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible'] |
+      | Alias                           | Selector                                                                                |
+      | expired-cert-warning            | [data-testid^='notification-data-planes.notifications.certificate-expired']             |
+      | unsupported-kuma-warning        | [data-testid^='notification-data-planes.notifications.dp-cp-incompatible']              |
+      | unsupported-envoy-warning       | [data-testid^='notification-data-planes.notifications.envoy-dp-incompatible']           |
+      | unsupported-zone-warning        | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible']         |
+      | networking-transparent-proxying | [data-testid^='notification-data-planes.notifications.networking-transparent-proxying'] |
 
   Scenario: With an expired certificate a cert warning is shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
@@ -102,3 +103,15 @@ Feature: mesh / dataplanes / warnings
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$unsupported-envoy-warning" element exists
+
+  Scenario: Incomplete networking configuration
+    And the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+      """
+      body:
+        dataplane:
+          networking:
+            outbounds: !!js/undefined
+            transparentProxying: !!js/undefined
+      """
+    When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    Then the "$networking-transparent-proxying" element exists

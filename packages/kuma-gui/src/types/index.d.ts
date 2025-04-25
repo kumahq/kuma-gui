@@ -301,6 +301,14 @@ export type DataplaneOutbound = {
   tags: ServiceTags
 }
 
+export type DataplaneNetworkingTransparentProxying = {
+  redirectPortInbound?: number
+  redirectPortOutbound?: number
+  directAccessServices?: string[]
+  reachable_services?: string[]
+  ipFamilyMode?: 'UnSpecified' | 'DualStack' | 'IPv4' | 'IPv6'
+}
+
 export type DataplaneNetworking = {
   address: string
   advertisedAddress?: string
@@ -315,6 +323,7 @@ export type DataplaneNetworking = {
    * The absence of the `gateway` field means the resource is a regular Data Plane Proxy.
    */
   gateway?: DataplaneGateway
+  transparentProxying?: DataplaneNetworkingTransparentProxying
 }
 
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'

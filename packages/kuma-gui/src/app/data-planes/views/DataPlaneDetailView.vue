@@ -23,7 +23,7 @@
         :notifications="true"
       >
         <template
-          v-for="{ bool, key, params } in [
+          v-for="{ bool, key, params, variant } in [
             {
               bool: props.data.dataplaneInsight.version?.kumaDp?.kumaCpCompatible === false,
               key: 'dp-cp-incompatible',
@@ -61,6 +61,11 @@
                 error: error?.toString() ?? '',
               },
             },
+            {
+              bool: !props.data.dataplane.networking.outbounds.length && !props.data.dataplane.networking.transparentProxying,
+              key: 'networking-transparent-proxying',
+              variant: 'info' as const,
+            },
           ]"
           :key="key"
         >
@@ -68,6 +73,7 @@
             :notify="bool"
             :data-testid="`warning-${key}`"
             :uri="`data-planes.notifications.${key}.${props.data.id}`"
+            :variant="variant"
           >
             <XI18n
               :path="`data-planes.notifications.${key}`"

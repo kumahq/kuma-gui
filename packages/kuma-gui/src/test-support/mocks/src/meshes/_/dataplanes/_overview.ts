@@ -76,6 +76,13 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               ...(fake.datatype.boolean() ? {
                 advertisedAddress: fake.internet.ip(),
               } : {}),
+              ...(fake.datatype.boolean() && {
+                transparentProxying: {
+                  redirectPortInbound: fake.internet.port(),
+                  redirectPortOutbound: fake.internet.port(),
+                  ipFamilyMode: fake.helpers.arrayElement(['UnSpecified', 'DualStack', 'IPv4', 'IPv6']),
+                },
+              }),
               ...(type === 'STANDARD' ? {
                 // normal proxies have inbound and outbound
                 inbound: Array.from({ length: inboundCount }).map((_) => {
