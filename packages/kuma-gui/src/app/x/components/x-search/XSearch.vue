@@ -74,9 +74,9 @@
                     </dd>
                   </template>
                   <template v-else>
-                    <dt>{{ key }}:</dt><dl class="text-important">
+                    <dt>{{ key }}:</dt><dd class="text-important">
                       {{ values.join(':') }}
-                    </dl>
+                    </dd>
                   </template>
                 </template>
               </dl>
