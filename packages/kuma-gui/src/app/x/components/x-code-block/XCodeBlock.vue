@@ -40,12 +40,13 @@
 </template>
 
 <script lang="ts" setup>
-import { type CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
+import { KCodeBlock } from '@kong/kongponents'
 import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 import { ref } from 'vue'
 
 import { uniqueId } from '@/app/application'
+import type { CodeBlockEventData } from '@kong/kongponents'
 
 const props = withDefaults(defineProps<{
   id?: string
