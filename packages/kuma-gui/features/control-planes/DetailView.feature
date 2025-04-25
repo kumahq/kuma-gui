@@ -119,6 +119,13 @@ Feature: control-planes / DetailView
           controlPlanes:
             total: 1
             online: 1
+        resources:
+          MeshService:
+            total: 1
+          MeshMultiZoneService:
+            total: 2
+          MeshExternalService:
+            total: 3
       """
     When I visit the "/" URL
     Then the page title contains "Overview"
@@ -154,6 +161,13 @@ Feature: control-planes / DetailView
           controlPlanes:
             total: 2
             online: 1
+        resources:
+          MeshService:
+            total: 1
+          MeshMultiZoneService:
+            total: 2
+          MeshExternalService:
+            total: 3
       """
     And the URL "/zones/_overview" responds with
       """
