@@ -81,6 +81,27 @@ common:
     none: '—'
     created: 'Created'
     modified: 'Modified'
+components:
+  status-badge:
+    tooltip:
+      not_available: |
+        The online or offline status of this entity is unknown
+  x-empty-state:
+    title: 'No data'
+    body: ''
+    action:
+      label: ''
+      href: ''
+  x-search:
+    placeholder: !!text/markdown |
+      Type to filter...
+    filterBy: |
+      { count, plural,
+        =0 {Type to filter...}
+        other {Filter by {keys}...}
+      }
+    logic: 'Logic:'
+    submit: submit
 
 http:
   api:

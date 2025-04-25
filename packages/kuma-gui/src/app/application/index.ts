@@ -21,12 +21,11 @@ import storage from './services/storage'
 import type { Source } from '@/app/application/services/data-source'
 import { create, destroy, getSource, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
-import { TOKENS as ME, services as me } from '@/app/me'
-import { services as x } from '@/app/x'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections, constant } from '@/services/utils'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
+
 export * from './services/can'
 export { runInDebug } from './utilities'
 export { defineSources } from './services/data-source'
@@ -68,7 +67,6 @@ declare module 'vue' {
 }
 
 const $ = {
-  ...ME,
   Env: token<Env>('application.Env'),
   env: token<Env['var']>('application.env'),
   EnvVars: token<EnvVars>('EnvVars'),
@@ -260,9 +258,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         app.sources,
       ],
     }],
-
-    ...me(app),
-    ...x(app),
     ...kuma(app),
   ]
 }

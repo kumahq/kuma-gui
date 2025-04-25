@@ -1,4 +1,4 @@
-import Kongponents, { KCard, KPop, KRadio } from '@kong/kongponents'
+import { KCard, KPop, KRadio } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
@@ -32,12 +32,50 @@ import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
 import XTooltip from './components/x-tooltip/XTooltip.vue'
 import XWindow from './components/x-window/XWindow.vue'
 import vStyle from './directives/style'
-import locales from './locales/en-us/index.yaml'
-import type { ServiceDefinition } from '@/services/utils'
-import { token } from '@/services/utils'
+import type { Plugin } from 'vue'
+export { default as XCopyButtonDebug } from './components/x-copy-button/XCopyButtonDebug.vue'
 
+const components = [
+  ['XAlert', XAlert],
+  ['XCard', KCard],
+  ['XPop', KPop],
+  ['XRadio', KRadio],
+  //
+  ['XAction', XAction],
+  ['XActionGroup', XActionGroup],
+  ['XAnonymous', XAnonymous],
+  ['XBadge', XBadge],
+  ['XBreadcrumbs', XBreadcrumbs],
+  ['XCopyButton', XCopyButton],
+  ['XCodeBlock', XCodeBlock],
+  ['XEmptyState', XEmptyState],
+  ['XIcon', XIcon],
+  ['XI18n', XI18n],
+  ['XInput', XInput],
+  ['XLayout', XLayout],
+  ['XModal', XModal],
+  ['XNotification', XNotification],
+  ['XNotificationHub', XNotificationHub],
+  ['XPrompt', XPrompt],
+  ['XProvider', XProvider],
+  ['XProgress', XProgress],
+  ['XSelect', XSelect],
+  ['XTabs', XTabs],
+  ['XTeleportTemplate', XTeleportTemplate],
+  ['XTeleportSlot', XTeleportSlot],
+  ['XTooltip', XTooltip],
+  ['XDisclosure', XDisclosure],
+  ['XDownload', XDownload],
+  ['XAboutCard', XAboutCard],
+  ['XInputSwitch', XInputSwitch],
+  ['XCheckbox', XCheckBox],
+  ['XWindow', XWindow],
+  ['XSearch', XSearch],
+] as const
 
-type Token = ReturnType<typeof token>
+const directives = [
+  ['style', vStyle()],
+] as const
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -78,83 +116,14 @@ declare module 'vue' {
     XSearch: typeof XSearch
   }
 }
-
-const $ = {
-  xVueComponents: token('x.vue.components'),
+const plugin: Plugin = {
+  install: (app, _options) => {
+    components.forEach(([name, item]) => {
+      app.component(name, item)
+    })
+    directives.forEach(([name, item]) => {
+      app.directive(name, item)
+    })
+  },
 }
-export const services = (app: Record<string, Token>): ServiceDefinition[] => {
-  return [
-    [token('kong.plugins'), {
-      service: () => {
-        return [
-          [Kongponents],
-        ]
-      },
-      labels: [
-        app.plugins,
-      ],
-    }],
-
-    [$.xVueComponents, {
-      service: () => {
-        return [
-          ['XAlert', XAlert],
-          ['XCard', KCard],
-          ['XPop', KPop],
-          ['XRadio', KRadio],
-          //
-          ['XAction', XAction],
-          ['XActionGroup', XActionGroup],
-          ['XAnonymous', XAnonymous],
-          ['XBadge', XBadge],
-          ['XBreadcrumbs', XBreadcrumbs],
-          ['XCopyButton', XCopyButton],
-          ['XCodeBlock', XCodeBlock],
-          ['XEmptyState', XEmptyState],
-          ['XIcon', XIcon],
-          ['XI18n', XI18n],
-          ['XInput', XInput],
-          ['XLayout', XLayout],
-          ['XModal', XModal],
-          ['XNotification', XNotification],
-          ['XNotificationHub', XNotificationHub],
-          ['XPrompt', XPrompt],
-          ['XProvider', XProvider],
-          ['XProgress', XProgress],
-          ['XSelect', XSelect],
-          ['XTabs', XTabs],
-          ['XTeleportTemplate', XTeleportTemplate],
-          ['XTeleportSlot', XTeleportSlot],
-          ['XTooltip', XTooltip],
-          ['XDisclosure', XDisclosure],
-          ['XDownload', XDownload],
-          ['XAboutCard', XAboutCard],
-          ['XInputSwitch', XInputSwitch],
-          ['XCheckbox', XCheckBox],
-          ['XWindow', XWindow],
-          ['XSearch', XSearch],
-        ]
-      },
-      labels: [
-        app.components,
-      ],
-    }],
-    [token('x.directives'), {
-      service: () => {
-        return [
-          ['style', vStyle()],
-        ]
-      },
-      labels: [
-        app.directives,
-      ],
-    }],
-    [token('x.locales'), {
-      service: () => locales,
-      labels: [
-        app.enUs,
-      ],
-    }],
-  ]
-}
-export const TOKENS = $
+export default plugin
