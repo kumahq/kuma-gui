@@ -30,7 +30,7 @@
           />
         </XNotification>
         <XNotification
-          :notify="!mesh.meshServices.mode || mesh.meshServices.mode === 'Disabled'"
+          :notify="mesh.meshServices.mode === 'Disabled'"
           :uri="`meshes.notifications.mesh-service-activation:${route.params.mesh}`"
           variant="info"
         >
