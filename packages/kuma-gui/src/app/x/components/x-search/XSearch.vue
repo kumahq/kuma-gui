@@ -13,7 +13,7 @@
       data-testid="filter-bar"
       @click="inputRef?.focus()"
     >
-      <XI18n v-slot="{ t }">
+      <XI18n v-slot="{ t, formatList }">
         <div class="icon-wrapper">
           <XIcon
             class="icon"
@@ -63,18 +63,23 @@
               v-for="(chunk, i) in inputValue.split(regex).filter(Boolean)"
               :key="chunk+i"
             >
-              <span v-if="regex.test(chunk)">
+              <dl v-if="regex.test(chunk)">
                 <template
                   v-for="([key, ...values], j) in [chunk.split(':')]"
                   :key="key+j"
                 >
-                  <span v-if="!values.length">{{ props.defaultKey }}:<span class="text-important">{{ key }}</span></span>
-                  <span v-else>{{ key }}:</span><span class="text-important">{{ values.join(':') }}</span>
+                  <template v-if="!values.length">
+                    <dt>{{ props.defaultKey }}:</dt><dd class="text-important">
+                      {{ key }}
+                    </dd>
+                  </template>
+                  <template v-else>
+                    <dt>{{ key }}:</dt><dl class="text-important">
+                      {{ values.join(':') }}
+                    </dl>
+                  </template>
                 </template>
-              </span>
-              <span v-else>
-                {{ chunk }}
-              </span>
+              </dl>
             </template>
             <XBadge appearance="decorative">
               {{ t("components.x-search.submit") }}
@@ -103,9 +108,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-
-import { useI18n } from '@/app/application'
-const { formatList } = useI18n() 
 
 const props = withDefaults(defineProps<{
   /**
@@ -282,7 +284,6 @@ input {
   width: 0;
 }
 
-
 :deep(.popover) {
   position: absolute !important;
   top: 100% !important;
@@ -306,8 +307,17 @@ input {
       border-top: $kui-border-width-10 solid $kui-color-border;
     }
 
+    .filter-block {
+      display: flex;
+      gap: $kui-space-40;
+    }
+
     p {
       line-height: $kui-line-height-40;
+    }
+
+    dl {
+      display: inline-flex;
     }
   }
 
