@@ -2,12 +2,16 @@
   <template
     v-if="typeof provider !== 'undefined'"
   >
-    <XTeleportTemplate
-      v-if="props.notify && slots.default"
-      :to="{ name: `${provider.uri}-${props.uri}` }"
+    <template
+      v-if="slots.default"
     >
-      <slot name="default" />
-    </XTeleportTemplate>
+      <XTeleportTemplate
+        v-if="props.notify"
+        :to="{ name: `${provider.uri}-${props.uri}` }"
+      >
+        <slot name="default" />
+      </XTeleportTemplate>
+    </template>
     <XTeleportSlot
       v-else
       :name="`${provider.uri}-${props.uri}`"
