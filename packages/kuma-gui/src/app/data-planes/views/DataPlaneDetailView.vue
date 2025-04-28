@@ -237,116 +237,115 @@
                 </template>
               </XLayout>
 
-              <template v-if="props.data.dataplaneInsight.mTLS">
-                <div class="separator" />
-                <XLayout
-                  data-testid="dataplane-mtls"
-                  size="small"
-                >
-                  <h3>{{ t('data-planes.routes.item.mtls.title') }}</h3>
-                  <XLayout size="small">
-                    <template
-                      v-for="mTLS in [
-                        props.data.dataplaneInsight.mTLS,
-                      ]"
-                      :key="mTLS"
-                    >
-                      <XLayout type="separated">
-                        <DefinitionCard layout="horizontal">
-                          <template #title>
-                            <XI18n
-                              path="data-planes.routes.item.mtls.generation_time.title"
-                            />
-                          </template>
+              <XLayout
+                v-if="props.data.dataplaneInsight.mTLS"
+                data-testid="dataplane-mtls"
+                class="dataplane-mtls"
+                size="small"
+              >
+                <h3>{{ t('data-planes.routes.item.mtls.title') }}</h3>
+                <XLayout size="small">
+                  <template
+                    v-for="mTLS in [
+                      props.data.dataplaneInsight.mTLS,
+                    ]"
+                    :key="mTLS"
+                  >
+                    <XLayout type="separated">
+                      <DefinitionCard layout="horizontal">
+                        <template #title>
+                          <XI18n
+                            path="data-planes.routes.item.mtls.generation_time.title"
+                          />
+                        </template>
 
-                          <template #body>
-                            <XBadge appearance="neutral">
-                              {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
-                            </XBadge>
-                          </template>
-                        </DefinitionCard>
-                        <DefinitionCard layout="horizontal">
-                          <template #title>
-                            <XI18n
-                              path="data-planes.routes.item.mtls.expiration_time.title"
-                            />
-                          </template>
+                        <template #body>
+                          <XBadge appearance="neutral">
+                            {{ t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) }) }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+                      <DefinitionCard layout="horizontal">
+                        <template #title>
+                          <XI18n
+                            path="data-planes.routes.item.mtls.expiration_time.title"
+                          />
+                        </template>
 
-                          <template #body>
-                            <XBadge appearance="neutral">
-                              {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
-                            </XBadge>
-                          </template>
-                        </DefinitionCard>
-                      </XLayout>
-                      <!-- <XTimespan
-                        label-start="TLS Certificate generation"
-                        :start="t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) })"
-                        label-end="Expiration"
-                        :end="t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) })"
-                      /> -->
-                      <XLayout type="separated">
-                        <DefinitionCard layout="horizontal">
-                          <template
-                            #title
+                        <template #body>
+                          <XBadge appearance="neutral">
+                            {{ t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) }) }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+                    </XLayout>
+                    <!-- <XTimespan
+                      label-start="TLS Certificate generation"
+                      :start="t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) })"
+                      label-end="Expiration"
+                      :end="t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) })"
+                    /> -->
+                    <XLayout type="separated">
+                      <DefinitionCard layout="horizontal">
+                        <template
+                          #title
+                        >
+                          {{ t('data-planes.routes.item.mtls.regenerations.title') }}
+                        </template>
+
+                        <template
+                          #body
+                        >
+                          <XBadge appearance="info">
+                            {{ t('common.formats.integer', { value: mTLS.certificateRegenerations }) }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+
+                      <DefinitionCard layout="horizontal">
+                        <template
+                          #title
+                        >
+                          {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
+                        </template>
+
+                        <template
+                          #body
+                        >
+                          <XBadge appearance="decorative">
+                            {{ mTLS.issuedBackend }}
+                          </XBadge>
+                        </template>
+                      </DefinitionCard>
+
+                      <DefinitionCard layout="horizontal">
+                        <template
+                          #title
+                        >
+                          {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
+                        </template>
+
+                        <template
+                          #body
+                        >
+                          <XLayout
+                            type="separated"
+                            truncate
                           >
-                            {{ t('data-planes.routes.item.mtls.regenerations.title') }}
-                          </template>
-
-                          <template
-                            #body
-                          >
-                            <XBadge appearance="info">
-                              {{ t('common.formats.integer', { value: mTLS.certificateRegenerations }) }}
-                            </XBadge>
-                          </template>
-                        </DefinitionCard>
-
-                        <DefinitionCard layout="horizontal">
-                          <template
-                            #title
-                          >
-                            {{ t('data-planes.routes.item.mtls.issued_backend.title') }}
-                          </template>
-
-                          <template
-                            #body
-                          >
-                            <XBadge appearance="decorative">
-                              {{ mTLS.issuedBackend }}
-                            </XBadge>
-                          </template>
-                        </DefinitionCard>
-
-                        <DefinitionCard layout="horizontal">
-                          <template
-                            #title
-                          >
-                            {{ t('data-planes.routes.item.mtls.supported_backends.title') }}
-                          </template>
-
-                          <template
-                            #body
-                          >
-                            <XLayout
-                              type="separated"
-                              truncate
+                            <XBadge
+                              v-for="item in mTLS.supportedBackends"
+                              :key="item"
+                              :appearance="item === mTLS.issuedBackend ? 'decorative' : 'info'"
                             >
-                              <XBadge
-                                v-for="item in mTLS.supportedBackends"
-                                :key="item"
-                                :appearance="item === mTLS.issuedBackend ? 'decorative' : 'info'"
-                              >
-                                {{ item }}
-                              </XBadge>
-                            </XLayout>
-                          </template>
-                        </DefinitionCard>
-                      </XLayout>
-                    </template>
-                  </XLayout>
+                              {{ item }}
+                            </XBadge>
+                          </XLayout>
+                        </template>
+                      </DefinitionCard>
+                    </XLayout>
+                  </template>
                 </XLayout>
-              </template>
+              </XLayout>
             </XLayout>
           </XAboutCard>
 
@@ -779,7 +778,12 @@ const props = defineProps<{
   }
 }
 
-.separator {
+.dataplane-mtls {
   border-top: $kui-border-width-10 solid $kui-color-border;
+  padding-top: $kui-space-70;
+
+  h3 {
+    color: $kui-color-text;
+  }
 }
 </style>
