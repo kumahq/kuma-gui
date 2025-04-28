@@ -84,6 +84,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/dataplanes/{name}/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDataplaneOverview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes/_overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getDataplaneOverviewList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{mesh}/dataplanes/{name}/_config": {
         parameters: {
             query?: never;
@@ -720,6 +752,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/meshes/{mesh}/dataplanes/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns Dataplane entity */
+        get: operations["getDataplane"];
+        /** Creates or Updates Dataplane entity */
+        put: operations["putDataplane"];
+        post?: never;
+        /** Deletes Dataplane entity */
+        delete: operations["deleteDataplane"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/meshes/{mesh}/dataplanes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Returns a list of Dataplane in the mesh. */
+        get: operations["getDataplaneList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meshes/{name}": {
         parameters: {
             query?: never;
@@ -976,6 +1044,7 @@ export interface components {
             next?: string;
             items: components["schemas"]["Meta"][];
         };
+        DataplaneOverviewWithMeta: components["schemas"]["Meta"] & components["schemas"]["DataplaneOverview"];
         /** DataplaneXDSConfig */
         DataplaneXDSConfig: {
             /** @description The raw XDS config as an inline JSON object */
@@ -1329,6 +1398,452 @@ export interface components {
             hash: string;
             match: Record<string, never>;
         };
+        PrometheusMetricsBackendConfig: {
+            /** @description Map with the configuration of applications which metrics are going to be
+             *     scrapped by kuma-dp. */
+            aggregate?: {
+                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
+                address?: string;
+                /** @description If false then the application won't be scrapped. If nil, then it is treated
+                 *     as true and kuma-dp scrapes metrics from the service. */
+                enabled?: boolean;
+                /** @description Name which identify given configuration. */
+                name?: string;
+                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
+                path?: string;
+                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
+                port?: number;
+            }[];
+            /** @description Configuration of Envoy's metrics. */
+            envoy?: {
+                /** @description FilterRegex value that is going to be passed to Envoy for filtering
+                 *     Envoy metrics. */
+                filterRegex?: string;
+                /** @description If true then return metrics that Envoy has updated (counters incremented
+                 *     at least once, gauges changed at least once, and histograms added to at
+                 *     least once). If nil, then it is treated as false. */
+                usedOnly?: boolean;
+            };
+            /** @description Path on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics. */
+            path?: string;
+            /** @description Port on which a dataplane should expose HTTP endpoint with Prometheus
+             *     metrics. */
+            port?: number;
+            /** @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
+             *     is enabled in Mesh. If nil, then it is treated as false. */
+            skipMTLS?: boolean;
+            /** @description Tags associated with an application this dataplane is deployed next to,
+             *     e.g. service=web, version=1.0.
+             *     `service` tag is mandatory. */
+            tags?: {
+                [key: string]: string;
+            };
+            /** @description Configuration of TLS for prometheus listener. */
+            tls?: {
+                /** @description mode defines how configured is the TLS for Prometheus.
+                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
+                 *     `activeMTLSBackend`. */
+                mode?: string | number;
+            };
+        };
+        DataplaneOverview: {
+            dataplane?: {
+                /** @description EnvoyConfiguration provides additional configuration for the Envoy sidecar. */
+                envoy?: {
+                    /** @description xDSTransportProtocol provides information about protocol used for
+                     *     configuration exchange between control-plane and Envoy sidecar. */
+                    xdsTransportProtocolVariant?: string | number;
+                };
+                /** @description Configuration for metrics that should be collected and exposed by the
+                 *     data plane proxy.
+                 *
+                 *     Settings defined here will override their respective defaults
+                 *     defined at a Mesh level. */
+                metrics?: {
+                    conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
+                    /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
+                    name?: string;
+                    /** @description Type of the backend (Kuma ships with 'prometheus') */
+                    type?: string;
+                };
+                /** @description Networking describes inbound and outbound interfaces of the data plane
+                 *     proxy. */
+                networking?: {
+                    /** @description IP on which the data plane proxy is accessible to the control plane and
+                     *     other data plane proxies in the same network. This can also be a
+                     *     hostname, in which case the control plane will periodically resolve it. */
+                    address?: string;
+                    /** @description Admin describes configuration related to Envoy Admin API.
+                     *     Due to security, all the Envoy Admin endpoints are exposed only on
+                     *     localhost. Additionally, Envoy will expose `/ready` endpoint on
+                     *     `networking.address` for health checking systems to be able to check the
+                     *     state of Envoy. The rest of the endpoints exposed on `networking.address`
+                     *     are always protected by mTLS and only meant to be consumed internally by
+                     *     the control plane. */
+                    admin?: {
+                        /** @description Port on which Envoy Admin API server will be listening */
+                        port?: number;
+                    };
+                    /** @description In some situations, a data plane proxy resides in a private network (e.g.
+                     *     Docker) and is not reachable via `address` to other data plane proxies.
+                     *     `advertisedAddress` is configured with a routable address for such data
+                     *     plane proxy so that other proxies in the mesh can connect to it over
+                     *     `advertisedAddress` and not via address.
+                     *
+                     *     Envoy still binds to the `address`, not `advertisedAddress`. */
+                    advertisedAddress?: string;
+                    /** @description Gateway describes a configuration of the gateway of the data plane proxy. */
+                    gateway?: {
+                        /** @description Tags associated with a gateway of this data plane to, e.g.
+                         *     `kuma.io/service=gateway`, `env=prod`. `kuma.io/service` tag is
+                         *     mandatory. */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                        /** @description Type of gateway this data plane proxy manages.
+                         *     There are two types: `DELEGATED` and `BUILTIN`. Defaults to
+                         *     `DELEGATED`.
+                         *
+                         *     A `DELEGATED` gateway is an independently deployed proxy (e.g., Kong,
+                         *     Contour, etc) that receives inbound traffic that is not proxied by
+                         *     Kuma, and it sends outbound traffic into the data plane proxy.
+                         *
+                         *     The `BUILTIN` gateway type causes the data plane proxy itself to be
+                         *     configured as a gateway.
+                         *
+                         *     See https://kuma.io/docs/latest/explore/gateway/ for more information. */
+                        type?: string | number;
+                    };
+                    /** @description Inbound describes a list of inbound interfaces of the data plane proxy.
+                     *
+                     *     Inbound describes a service implemented by the data plane proxy.
+                     *     All incoming traffic to a data plane proxy is going through inbound
+                     *     listeners. For every defined Inbound there is a corresponding Envoy
+                     *     Listener. */
+                    inbound?: {
+                        /** @description Address on which inbound listener will be exposed.
+                         *     Defaults to `networking.address`. */
+                        address?: string;
+                        /** @description Health describes the status of an inbound.
+                         *     If 'health' is nil we consider data plane proxy as healthy.
+                         *     Unhealthy data plane proxies are excluded from Endpoints Discovery
+                         *     Service (EDS). On Kubernetes, it is filled automatically by the control
+                         *     plane if Pod has readiness probe configured. On Universal, it can be
+                         *     set by the external health checking system, but the most common way is
+                         *     to use service probes.
+                         *
+                         *     See https://kuma.io/docs/latest/documentation/health for more
+                         *     information. */
+                        health?: {
+                            /** @description Ready indicates if the data plane proxy is ready to serve the
+                             *     traffic. */
+                            ready?: boolean;
+                        };
+                        /** @description Name adds another way of referencing this port, usable with MeshService */
+                        name?: string;
+                        /** @description Port of the inbound interface that will forward requests to the
+                         *     service.
+                         *
+                         *     When transparent proxying is used, it is a port on which the service is
+                         *     listening to. When transparent proxying is not used, Envoy will bind to
+                         *     this port. */
+                        port?: number;
+                        /** @description Address of the service that requests will be forwarded to.
+                         *     Defaults to 'inbound.address', since Kuma DP should be deployed next
+                         *     to the service. */
+                        serviceAddress?: string;
+                        /** @description Port of the service that requests will be forwarded to.
+                         *     Defaults to the same value as `port`. */
+                        servicePort?: number;
+                        /** @description ServiceProbe defines parameters for probing the service next to
+                         *     sidecar. When service probe is defined, Envoy will periodically health
+                         *     check the application next to it and report the status to the control
+                         *     plane. On Kubernetes, Kuma deployments rely on Kubernetes probes so
+                         *     this is not used.
+                         *
+                         *     See https://kuma.io/docs/latest/documentation/health for more
+                         *     information. */
+                        serviceProbe?: {
+                            /**
+                             * Format: uint32
+                             * @description Number of consecutive healthy checks before considering a host
+                             *     healthy.
+                             */
+                            healthyThreshold?: number;
+                            /** @description Interval between consecutive health checks. */
+                            interval?: {
+                                nanos?: number;
+                                seconds?: number;
+                            };
+                            /** @description Tcp checker tries to establish tcp connection with destination */
+                            tcp?: Record<string, never>;
+                            /** @description Maximum time to wait for a health check response. */
+                            timeout?: {
+                                nanos?: number;
+                                seconds?: number;
+                            };
+                            /**
+                             * Format: uint32
+                             * @description Number of consecutive unhealthy checks before considering a host
+                             *     unhealthy.
+                             */
+                            unhealthyThreshold?: number;
+                        };
+                        /** @description State describes the current state of the listener. */
+                        state?: string | number;
+                        /** @description Tags associated with an application this data plane proxy is deployed
+                         *     next to, e.g. `kuma.io/service=web`, `version=1.0`. You can then
+                         *     reference these tags in policies like MeshTrafficPermission.
+                         *     `kuma.io/service` tag is mandatory. */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                    /** @description Outbound describes a list of services consumed by the data plane proxy.
+                     *     For every defined Outbound, there is a corresponding Envoy Listener. */
+                    outbound?: {
+                        /** @description IP on which the consumed service will be available to this data plane
+                         *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
+                         *     Headless Service. Defaults to 127.0.0.1 */
+                        address?: string;
+                        /** @description BackendRef is a way to target MeshService.
+                         *     Experimental. Do not use on production yet. */
+                        backendRef?: {
+                            /** @description Kind is a type of the object to target. Allowed: MeshService */
+                            kind?: string;
+                            /** @description Labels to select a single object.
+                             *     If no object is selected then outbound is not created.
+                             *     If multiple objects are selected then the oldest one is used. */
+                            labels?: {
+                                [key: string]: string;
+                            };
+                            /** @description Name of the targeted object */
+                            name?: string;
+                            /** @description Port of the targeted object. Required when kind is MeshService. */
+                            port?: number;
+                        };
+                        /** @description Port on which the consumed service will be available to this data plane
+                         *     proxy. When transparent proxying is not used, Envoy will bind to this
+                         *     port. */
+                        port?: number;
+                        /** @description Tags of consumed data plane proxies.
+                         *     `kuma.io/service` tag is required.
+                         *     These tags can then be referenced in `destinations` section of policies
+                         *     like TrafficRoute or in `to` section in policies like MeshAccessLog. It
+                         *     is recommended to only use `kuma.io/service`. If you need to consume
+                         *     specific data plane proxy of a service (for example: `version=v2`) the
+                         *     better practice is to use TrafficRoute. */
+                        tags?: {
+                            [key: string]: string;
+                        };
+                    }[];
+                    /** @description TransparentProxying describes the configuration for transparent proxying.
+                     *     It is used by default on Kubernetes. */
+                    transparentProxying?: {
+                        /** @description List of services that will be accessed directly via IP:PORT
+                         *     Use `*` to indicate direct access to every service in the Mesh.
+                         *     Using `*` to directly access every service is a resource-intensive
+                         *     operation, use it only if needed. */
+                        directAccessServices?: string[];
+                        /** @description The IP family mode to enable for. Can be "IPv4" or "DualStack". */
+                        ipFamilyMode?: string | number;
+                        /** @description Reachable backend via transparent proxy when running with
+                         *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
+                         *     explicit list of refs can dramatically improve the performance of the
+                         *     mesh. If not specified, all services in the mesh are reachable. */
+                        reachableBackends?: {
+                            refs?: {
+                                /** @description Type of the backend: MeshService or MeshExternalService
+                                 *
+                                 *     	+required */
+                                kind?: string;
+                                /** @description Labels used to select backends
+                                 *
+                                 *     	+optional */
+                                labels?: {
+                                    [key: string]: string;
+                                };
+                                /** @description Name of the backend.
+                                 *
+                                 *     	+optional */
+                                name?: string;
+                                /** @description Namespace of the backend. Might be empty
+                                 *
+                                 *     	+optional */
+                                namespace?: string;
+                                /**
+                                 * Format: uint32
+                                 * @description Port of the backend.
+                                 *
+                                 *     	+optional
+                                 */
+                                port?: number;
+                            }[];
+                        };
+                        /** @description List of reachable services (represented by the value of
+                         *     `kuma.io/service`) via transparent proxying. Setting an explicit list
+                         *     can dramatically improve the performance of the mesh. If not specified,
+                         *     all services in the mesh are reachable. */
+                        reachableServices?: string[];
+                        /** @description Port on which all inbound traffic is being transparently redirected. */
+                        redirectPortInbound?: number;
+                        /** @description Port on which all outbound traffic is being transparently redirected. */
+                        redirectPortOutbound?: number;
+                    };
+                };
+                /** @description Probes describe a list of endpoints that will be exposed without mTLS.
+                 *     This is useful to expose the health endpoints of the application so the
+                 *     orchestration system (e.g. Kubernetes) can still health check the
+                 *     application.
+                 *
+                 *     See
+                 *     https://kuma.io/docs/latest/policies/service-health-probes/#virtual-probes
+                 *     for more information.
+                 *     Deprecated: this feature will be removed for Universal; on Kubernetes, it's
+                 *     not needed anymore. */
+                probes?: {
+                    /** @description List of endpoints to expose without mTLS. */
+                    endpoints?: {
+                        /** @description Inbound path is a path of the application from which we expose the
+                         *     endpoint. It is recommended to be as specific as possible. */
+                        inboundPath?: string;
+                        /** @description Inbound port is a port of the application from which we expose the
+                         *     endpoint. */
+                        inboundPort?: number;
+                        /** @description Path is a path on which we expose inbound path on the probes port. */
+                        path?: string;
+                    }[];
+                    /** @description Port on which the probe endpoints will be exposed. This cannot overlap
+                     *     with any other ports. */
+                    port?: number;
+                };
+            };
+            dataplaneInsight?: {
+                /** @description Insights about mTLS for Dataplane. */
+                mTLS?: {
+                    /** @description Expiration time of the last certificate that was generated for a
+                     *     Dataplane. */
+                    certificateExpirationTime?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Number of certificate regenerations for a Dataplane. */
+                    certificateRegenerations?: number;
+                    /** @description Backend that was used to generate current certificate */
+                    issuedBackend?: string;
+                    /** @description Time on which the last certificate was generated. */
+                    lastCertificateRegeneration?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Supported backends (CA). */
+                    supportedBackends?: string[];
+                };
+                /** @description List of ADS subscriptions created by a given Dataplane. */
+                subscriptions?: {
+                    /** @description Time when a given Dataplane connected to the Control Plane. */
+                    connectTime?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Control Plane instance that handled given subscription. */
+                    controlPlaneInstanceId?: string;
+                    /** @description Time when a given Dataplane disconnected from the Control Plane. */
+                    disconnectTime?: {
+                        nanos?: number;
+                        seconds?: number;
+                    };
+                    /** @description Generation is an integer number which is periodically increased by the
+                     *     status sink */
+                    generation?: number;
+                    /** @description Unique id per ADS subscription. */
+                    id?: string;
+                    /** @description Status of the ADS subscription. */
+                    status?: {
+                        /** @description CDS defines all CDS stats. */
+                        cds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description EDS defines all EDS stats. */
+                        eds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description Time when status of a given ADS subscription was most recently updated. */
+                        lastUpdateTime?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /** @description LDS defines all LDS stats. */
+                        lds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description RDS defines all RDS stats. */
+                        rds?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                        /** @description Total defines an aggregate over individual xDS stats. */
+                        total?: {
+                            /** @description Number of xDS responses ACKed by the Dataplane. */
+                            responsesAcknowledged?: number;
+                            /** @description Number of xDS responses NACKed by the Dataplane. */
+                            responsesRejected?: number;
+                            /** @description Number of xDS responses sent to the Dataplane. */
+                            responsesSent?: number;
+                        };
+                    };
+                    /** @description Version of Envoy and Kuma dataplane */
+                    version?: {
+                        /** @description Versions of other dependencies, i.e. CoreDNS */
+                        dependencies?: {
+                            [key: string]: string;
+                        };
+                        /** @description Version of Envoy */
+                        envoy?: {
+                            /** @description Full build tag of Envoy version */
+                            build?: string;
+                            /** @description True iff Envoy version is compatible with Kuma DP version */
+                            kumaDpCompatible?: boolean;
+                            /** @description Version number of Envoy */
+                            version?: string;
+                        };
+                        /** @description Version of Kuma Dataplane */
+                        kumaDp?: {
+                            /** @description Build date of Kuma Dataplane version */
+                            buildDate?: string;
+                            /** @description Git commit of Kuma Dataplane version */
+                            gitCommit?: string;
+                            /** @description Git tag of Kuma Dataplane version */
+                            gitTag?: string;
+                            /** @description True iff Kuma DP version is compatible with Kuma CP version */
+                            kumaCpCompatible?: boolean;
+                            /** @description Version number of Kuma Dataplane */
+                            version?: string;
+                        };
+                    };
+                }[];
+            };
+        };
         JsonPatchItem: {
             /**
              * @description Operation to be performed.
@@ -1493,7 +2008,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -1644,7 +2159,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -1792,7 +2307,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -2080,7 +2595,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -2330,7 +2845,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -2578,7 +3093,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -2692,7 +3207,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -2727,7 +3242,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -2800,7 +3315,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -2875,7 +3390,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -3025,7 +3540,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -3100,7 +3615,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -3144,7 +3659,7 @@ export interface components {
                                  * @description Kind of the referenced resource
                                  * @enum {string}
                                  */
-                                kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                                kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                                 /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                                  *     Name and Namespace can be used. */
                                 labels?: {
@@ -3199,7 +3714,7 @@ export interface components {
                                          * @description Kind of the referenced resource
                                          * @enum {string}
                                          */
-                                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                                          *     Name and Namespace can be used. */
                                         labels?: {
@@ -3344,7 +3859,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -3419,7 +3934,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -3661,7 +4176,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -3837,7 +4352,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -3942,7 +4457,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4268,7 +4783,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4404,7 +4919,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4503,7 +5018,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4599,7 +5114,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4674,7 +5189,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -4912,7 +5427,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -4987,7 +5502,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5027,7 +5542,7 @@ export interface components {
                                  * @description Kind of the referenced resource
                                  * @enum {string}
                                  */
-                                kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                                kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                                 /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                                  *     Name and Namespace can be used. */
                                 labels?: {
@@ -5069,7 +5584,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5179,7 +5694,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5251,7 +5766,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5320,7 +5835,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5422,7 +5937,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5486,7 +6001,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5665,7 +6180,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5749,7 +6264,7 @@ export interface components {
                          * @description Kind of the referenced resource
                          * @enum {string}
                          */
-                        kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                        kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                         /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                          *     Name and Namespace can be used. */
                         labels?: {
@@ -5784,7 +6299,7 @@ export interface components {
                      * @description Kind of the referenced resource
                      * @enum {string}
                      */
-                    kind?: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
+                    kind: "Mesh" | "MeshSubset" | "MeshGateway" | "MeshService" | "MeshExternalService" | "MeshMultiZoneService" | "MeshServiceSubset" | "MeshHTTPRoute" | "Dataplane";
                     /** @description Labels are used to select group of MeshServices that match labels. Either Labels or
                      *     Name and Namespace can be used. */
                     labels?: {
@@ -5833,9 +6348,9 @@ export interface components {
         MeshTrafficPermissionDeleteSuccessResponse: Record<string, never>;
         BuiltinCertificateAuthorityConfig: {
             caCert?: {
-                /** Format: uint32 */
-                RSAbits?: number;
                 expiration?: string;
+                /** Format: uint32 */
+                rsaBits?: number;
             };
         };
         DatadogTracingBackendConfig: {
@@ -5850,6 +6365,290 @@ export interface components {
              *     `backend_OUTBOUND_db2` in Datadog. Default: false */
             splitService?: boolean;
         };
+        DataplaneItem: {
+            /** @description EnvoyConfiguration provides additional configuration for the Envoy sidecar. */
+            envoy?: {
+                /** @description xDSTransportProtocol provides information about protocol used for
+                 *     configuration exchange between control-plane and Envoy sidecar. */
+                xdsTransportProtocolVariant?: string | number;
+            };
+            labels?: {
+                [key: string]: string;
+            };
+            mesh: string;
+            /** @description Configuration for metrics that should be collected and exposed by the
+             *     data plane proxy.
+             *
+             *     Settings defined here will override their respective defaults
+             *     defined at a Mesh level. */
+            metrics?: {
+                conf?: components["schemas"]["PrometheusMetricsBackendConfig"];
+                /** @description Name of the backend, can be then used in Mesh.metrics.enabledBackend */
+                name?: string;
+                /** @description Type of the backend (Kuma ships with 'prometheus') */
+                type?: string;
+            };
+            name: string;
+            /** @description Networking describes inbound and outbound interfaces of the data plane
+             *     proxy. */
+            networking?: {
+                /** @description IP on which the data plane proxy is accessible to the control plane and
+                 *     other data plane proxies in the same network. This can also be a
+                 *     hostname, in which case the control plane will periodically resolve it. */
+                address?: string;
+                /** @description Admin describes configuration related to Envoy Admin API.
+                 *     Due to security, all the Envoy Admin endpoints are exposed only on
+                 *     localhost. Additionally, Envoy will expose `/ready` endpoint on
+                 *     `networking.address` for health checking systems to be able to check the
+                 *     state of Envoy. The rest of the endpoints exposed on `networking.address`
+                 *     are always protected by mTLS and only meant to be consumed internally by
+                 *     the control plane. */
+                admin?: {
+                    /** @description Port on which Envoy Admin API server will be listening */
+                    port?: number;
+                };
+                /** @description In some situations, a data plane proxy resides in a private network (e.g.
+                 *     Docker) and is not reachable via `address` to other data plane proxies.
+                 *     `advertisedAddress` is configured with a routable address for such data
+                 *     plane proxy so that other proxies in the mesh can connect to it over
+                 *     `advertisedAddress` and not via address.
+                 *
+                 *     Envoy still binds to the `address`, not `advertisedAddress`. */
+                advertisedAddress?: string;
+                /** @description Gateway describes a configuration of the gateway of the data plane proxy. */
+                gateway?: {
+                    /** @description Tags associated with a gateway of this data plane to, e.g.
+                     *     `kuma.io/service=gateway`, `env=prod`. `kuma.io/service` tag is
+                     *     mandatory. */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                    /** @description Type of gateway this data plane proxy manages.
+                     *     There are two types: `DELEGATED` and `BUILTIN`. Defaults to
+                     *     `DELEGATED`.
+                     *
+                     *     A `DELEGATED` gateway is an independently deployed proxy (e.g., Kong,
+                     *     Contour, etc) that receives inbound traffic that is not proxied by
+                     *     Kuma, and it sends outbound traffic into the data plane proxy.
+                     *
+                     *     The `BUILTIN` gateway type causes the data plane proxy itself to be
+                     *     configured as a gateway.
+                     *
+                     *     See https://kuma.io/docs/latest/explore/gateway/ for more information. */
+                    type?: string | number;
+                };
+                /** @description Inbound describes a list of inbound interfaces of the data plane proxy.
+                 *
+                 *     Inbound describes a service implemented by the data plane proxy.
+                 *     All incoming traffic to a data plane proxy is going through inbound
+                 *     listeners. For every defined Inbound there is a corresponding Envoy
+                 *     Listener. */
+                inbound?: {
+                    /** @description Address on which inbound listener will be exposed.
+                     *     Defaults to `networking.address`. */
+                    address?: string;
+                    /** @description Health describes the status of an inbound.
+                     *     If 'health' is nil we consider data plane proxy as healthy.
+                     *     Unhealthy data plane proxies are excluded from Endpoints Discovery
+                     *     Service (EDS). On Kubernetes, it is filled automatically by the control
+                     *     plane if Pod has readiness probe configured. On Universal, it can be
+                     *     set by the external health checking system, but the most common way is
+                     *     to use service probes.
+                     *
+                     *     See https://kuma.io/docs/latest/documentation/health for more
+                     *     information. */
+                    health?: {
+                        /** @description Ready indicates if the data plane proxy is ready to serve the
+                         *     traffic. */
+                        ready?: boolean;
+                    };
+                    /** @description Name adds another way of referencing this port, usable with MeshService */
+                    name?: string;
+                    /** @description Port of the inbound interface that will forward requests to the
+                     *     service.
+                     *
+                     *     When transparent proxying is used, it is a port on which the service is
+                     *     listening to. When transparent proxying is not used, Envoy will bind to
+                     *     this port. */
+                    port?: number;
+                    /** @description Address of the service that requests will be forwarded to.
+                     *     Defaults to 'inbound.address', since Kuma DP should be deployed next
+                     *     to the service. */
+                    serviceAddress?: string;
+                    /** @description Port of the service that requests will be forwarded to.
+                     *     Defaults to the same value as `port`. */
+                    servicePort?: number;
+                    /** @description ServiceProbe defines parameters for probing the service next to
+                     *     sidecar. When service probe is defined, Envoy will periodically health
+                     *     check the application next to it and report the status to the control
+                     *     plane. On Kubernetes, Kuma deployments rely on Kubernetes probes so
+                     *     this is not used.
+                     *
+                     *     See https://kuma.io/docs/latest/documentation/health for more
+                     *     information. */
+                    serviceProbe?: {
+                        /**
+                         * Format: uint32
+                         * @description Number of consecutive healthy checks before considering a host
+                         *     healthy.
+                         */
+                        healthyThreshold?: number;
+                        /** @description Interval between consecutive health checks. */
+                        interval?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /** @description Tcp checker tries to establish tcp connection with destination */
+                        tcp?: Record<string, never>;
+                        /** @description Maximum time to wait for a health check response. */
+                        timeout?: {
+                            nanos?: number;
+                            seconds?: number;
+                        };
+                        /**
+                         * Format: uint32
+                         * @description Number of consecutive unhealthy checks before considering a host
+                         *     unhealthy.
+                         */
+                        unhealthyThreshold?: number;
+                    };
+                    /** @description State describes the current state of the listener. */
+                    state?: string | number;
+                    /** @description Tags associated with an application this data plane proxy is deployed
+                     *     next to, e.g. `kuma.io/service=web`, `version=1.0`. You can then
+                     *     reference these tags in policies like MeshTrafficPermission.
+                     *     `kuma.io/service` tag is mandatory. */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                }[];
+                /** @description Outbound describes a list of services consumed by the data plane proxy.
+                 *     For every defined Outbound, there is a corresponding Envoy Listener. */
+                outbound?: {
+                    /** @description IP on which the consumed service will be available to this data plane
+                     *     proxy. On Kubernetes, it's usually ClusterIP of a Service or PodIP of a
+                     *     Headless Service. Defaults to 127.0.0.1 */
+                    address?: string;
+                    /** @description BackendRef is a way to target MeshService.
+                     *     Experimental. Do not use on production yet. */
+                    backendRef?: {
+                        /** @description Kind is a type of the object to target. Allowed: MeshService */
+                        kind?: string;
+                        /** @description Labels to select a single object.
+                         *     If no object is selected then outbound is not created.
+                         *     If multiple objects are selected then the oldest one is used. */
+                        labels?: {
+                            [key: string]: string;
+                        };
+                        /** @description Name of the targeted object */
+                        name?: string;
+                        /** @description Port of the targeted object. Required when kind is MeshService. */
+                        port?: number;
+                    };
+                    /** @description Port on which the consumed service will be available to this data plane
+                     *     proxy. When transparent proxying is not used, Envoy will bind to this
+                     *     port. */
+                    port?: number;
+                    /** @description Tags of consumed data plane proxies.
+                     *     `kuma.io/service` tag is required.
+                     *     These tags can then be referenced in `destinations` section of policies
+                     *     like TrafficRoute or in `to` section in policies like MeshAccessLog. It
+                     *     is recommended to only use `kuma.io/service`. If you need to consume
+                     *     specific data plane proxy of a service (for example: `version=v2`) the
+                     *     better practice is to use TrafficRoute. */
+                    tags?: {
+                        [key: string]: string;
+                    };
+                }[];
+                /** @description TransparentProxying describes the configuration for transparent proxying.
+                 *     It is used by default on Kubernetes. */
+                transparentProxying?: {
+                    /** @description List of services that will be accessed directly via IP:PORT
+                     *     Use `*` to indicate direct access to every service in the Mesh.
+                     *     Using `*` to directly access every service is a resource-intensive
+                     *     operation, use it only if needed. */
+                    directAccessServices?: string[];
+                    /** @description The IP family mode to enable for. Can be "IPv4" or "DualStack". */
+                    ipFamilyMode?: string | number;
+                    /** @description Reachable backend via transparent proxy when running with
+                     *     MeshExternalService, MeshService and MeshMultiZoneService. Setting an
+                     *     explicit list of refs can dramatically improve the performance of the
+                     *     mesh. If not specified, all services in the mesh are reachable. */
+                    reachableBackends?: {
+                        refs?: {
+                            /** @description Type of the backend: MeshService or MeshExternalService
+                             *
+                             *     	+required */
+                            kind?: string;
+                            /** @description Labels used to select backends
+                             *
+                             *     	+optional */
+                            labels?: {
+                                [key: string]: string;
+                            };
+                            /** @description Name of the backend.
+                             *
+                             *     	+optional */
+                            name?: string;
+                            /** @description Namespace of the backend. Might be empty
+                             *
+                             *     	+optional */
+                            namespace?: string;
+                            /**
+                             * Format: uint32
+                             * @description Port of the backend.
+                             *
+                             *     	+optional
+                             */
+                            port?: number;
+                        }[];
+                    };
+                    /** @description List of reachable services (represented by the value of
+                     *     `kuma.io/service`) via transparent proxying. Setting an explicit list
+                     *     can dramatically improve the performance of the mesh. If not specified,
+                     *     all services in the mesh are reachable. */
+                    reachableServices?: string[];
+                    /** @description Port on which all inbound traffic is being transparently redirected. */
+                    redirectPortInbound?: number;
+                    /** @description Port on which all outbound traffic is being transparently redirected. */
+                    redirectPortOutbound?: number;
+                };
+            };
+            /** @description Probes describe a list of endpoints that will be exposed without mTLS.
+             *     This is useful to expose the health endpoints of the application so the
+             *     orchestration system (e.g. Kubernetes) can still health check the
+             *     application.
+             *
+             *     See
+             *     https://kuma.io/docs/latest/policies/service-health-probes/#virtual-probes
+             *     for more information.
+             *     Deprecated: this feature will be removed for Universal; on Kubernetes, it's
+             *     not needed anymore. */
+            probes?: {
+                /** @description List of endpoints to expose without mTLS. */
+                endpoints?: {
+                    /** @description Inbound path is a path of the application from which we expose the
+                     *     endpoint. It is recommended to be as specific as possible. */
+                    inboundPath?: string;
+                    /** @description Inbound port is a port of the application from which we expose the
+                     *     endpoint. */
+                    inboundPort?: number;
+                    /** @description Path is a path on which we expose inbound path on the probes port. */
+                    path?: string;
+                }[];
+                /** @description Port on which the probe endpoints will be exposed. This cannot overlap
+                 *     with any other ports. */
+                port?: number;
+            };
+            type: string;
+        };
+        DataplaneCreateOrUpdateSuccessResponse: {
+            /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
+             *     Warning messages describe a problem the client making the API request should correct or be aware of.
+             *      */
+            readonly warnings?: string[];
+        };
+        DataplaneDeleteSuccessResponse: Record<string, never>;
         FileLoggingBackendConfig: {
             /** @description Path to a file that logs will be written to */
             path?: string;
@@ -6022,55 +6821,6 @@ export interface components {
             /** @description Address to TCP service that will receive logs */
             address?: string;
         };
-        PrometheusMetricsBackendConfig: {
-            /** @description Map with the configuration of applications which metrics are going to be
-             *     scrapped by kuma-dp. */
-            aggregate?: {
-                /** @description Address on which a service expose HTTP endpoint with Prometheus metrics. */
-                address?: string;
-                /** @description If false then the application won't be scrapped. If nil, then it is treated
-                 *     as true and kuma-dp scrapes metrics from the service. */
-                enabled?: boolean;
-                /** @description Name which identify given configuration. */
-                name?: string;
-                /** @description Path on which a service expose HTTP endpoint with Prometheus metrics. */
-                path?: string;
-                /** @description Port on which a service expose HTTP endpoint with Prometheus metrics. */
-                port?: number;
-            }[];
-            /** @description Configuration of Envoy's metrics. */
-            envoy?: {
-                /** @description FilterRegex value that is going to be passed to Envoy for filtering
-                 *     Envoy metrics. */
-                filterRegex?: string;
-                /** @description If true then return metrics that Envoy has updated (counters incremented
-                 *     at least once, gauges changed at least once, and histograms added to at
-                 *     least once). If nil, then it is treated as false. */
-                usedOnly?: boolean;
-            };
-            /** @description Path on which a dataplane should expose HTTP endpoint with Prometheus
-             *     metrics. */
-            path?: string;
-            /** @description Port on which a dataplane should expose HTTP endpoint with Prometheus
-             *     metrics. */
-            port?: number;
-            /** @description If true then endpoints for scraping metrics won't require mTLS even if mTLS
-             *     is enabled in Mesh. If nil, then it is treated as false. */
-            skipMTLS?: boolean;
-            /** @description Tags associated with an application this dataplane is deployed next to,
-             *     e.g. service=web, version=1.0.
-             *     `service` tag is mandatory. */
-            tags?: {
-                [key: string]: string;
-            };
-            /** @description Configuration of TLS for prometheus listener. */
-            tls?: {
-                /** @description mode defines how configured is the TLS for Prometheus.
-                 *     Supported values, delegated, disabled, activeMTLSBackend. Default to
-                 *     `activeMTLSBackend`. */
-                mode?: string | number;
-            };
-        };
         ProvidedCertificateAuthorityConfig: {
             cert?: {
                 /** @description Types that are assignable to Type:
@@ -6126,7 +6876,7 @@ export interface components {
                     protocol?: string | number;
                     /** @description Resources is used to specify listener-specific resource settings. */
                     resources?: {
-                        connection_limit?: number;
+                        connectionLimit?: number;
                     };
                     /** @description Tags specifies a unique combination of tags that routes can use
                      *     to match themselves to this listener.
@@ -6732,6 +7482,29 @@ export interface components {
                 "application/json": components["schemas"]["DataplaneXDSConfig"];
             };
         };
+        /** @description A response containing the overview of a dataplane. */
+        GetDataplaneOverviewResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["DataplaneOverviewWithMeta"];
+            };
+        };
+        /** @description A response containing the overview of a dataplane. */
+        GetDataplaneOverviewListResponse: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @example 200 */
+                    total?: number;
+                    next?: string;
+                    items?: components["schemas"]["DataplaneOverviewWithMeta"][];
+                };
+            };
+        };
         /** @description A response containing policies that match a resource */
         InspectRulesResponse: {
             headers: {
@@ -7162,6 +7935,30 @@ export interface components {
             };
         };
         /** @description Successful response */
+        DataplaneItem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["DataplaneItem"];
+            };
+        };
+        /** @description List */
+        DataplaneList: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    items?: components["schemas"]["DataplaneItem"][];
+                    /** @description The total number of entities */
+                    total?: number;
+                    /** @description URL to the next page */
+                    next?: string;
+                };
+            };
+        };
+        /** @description Successful response */
         MeshItem: {
             headers: {
                 [name: string]: unknown;
@@ -7381,6 +8178,42 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["InspectRulesResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    getDataplaneOverview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the diff for. */
+                mesh: string;
+                /** @description The name of the DPP within the mesh to get the diff for. */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetDataplaneOverviewResponse"];
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["Internal"];
+        };
+    };
+    getDataplaneOverviewList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The mesh of the DPP to get the diff for. */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["GetDataplaneOverviewListResponse"];
             400: components["responses"]["BadRequest"];
             500: components["responses"]["Internal"];
         };
@@ -9334,6 +10167,122 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: components["responses"]["MeshTrafficPermissionList"];
+        };
+    };
+    getDataplane: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the Dataplane */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["DataplaneItem"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    putDataplane: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the Dataplane */
+                name: string;
+            };
+            cookie?: never;
+        };
+        /** @description Put request */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DataplaneItem"];
+            };
+        };
+        responses: {
+            /** @description Updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataplaneCreateOrUpdateSuccessResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataplaneCreateOrUpdateSuccessResponse"];
+                };
+            };
+        };
+    };
+    deleteDataplane: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+                /** @description name of the Dataplane */
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataplaneDeleteSuccessResponse"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    getDataplaneList: {
+        parameters: {
+            query?: {
+                /**
+                 * @description offset in the list of entities
+                 * @example 0
+                 */
+                offset?: number;
+                /** @description the number of items per page */
+                size?: number;
+                /**
+                 * @description filter by labels when multiple filters are present, they are ANDed
+                 * @example {
+                 *       "label.k8s.kuma.io/namespace": "my-ns"
+                 *     }
+                 */
+                filter?: {
+                    key?: string;
+                    value?: string;
+                };
+            };
+            header?: never;
+            path: {
+                /** @description name of the mesh */
+                mesh: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: components["responses"]["DataplaneList"];
         };
     };
     getMesh: {
