@@ -4,7 +4,7 @@ check/node: NODE_VERSION:=v$(shell head -n1 $(NPM_WORKSPACE_ROOT)/.nvmrc)
 check/node:
 	@node -v | grep $(NODE_VERSION) &> /dev/null || ( \
 		echo "Make sure node-$(NODE_VERSION) is installed (please see the root .nvmrc for nvm installation)"; \
-		echo "Once the correct version of node is installed,  re-run your make target"; \
+		echo "Once the correct version of node is installed, re-run your make target"; \
 		exit 1; \
 	)
 	@npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null && ( \
