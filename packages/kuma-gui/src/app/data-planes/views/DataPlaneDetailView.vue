@@ -89,7 +89,7 @@
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
           >
-            <XLayout>
+            <XLayout size="max">
               <XLayout
                 type="separated"
               >
