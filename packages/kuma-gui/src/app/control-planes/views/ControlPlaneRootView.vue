@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="home"
+    name="control-plane-root-view"
   >
     <AppView>
       <RouterView

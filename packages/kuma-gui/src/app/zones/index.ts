@@ -27,7 +27,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: (can) => {
         return [
           (item: RouteRecordRaw) => {
-            if (item.name === 'home') {
+            if (item.name === 'control-plane-root-view') {
               item.children = (item.children ?? []).concat(routes(can))
             }
           },

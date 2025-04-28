@@ -30,7 +30,7 @@
             class="horizontal-list"
           >
             <slot name="header">
-              <XAction :to="{ name: 'home' }">
+              <XAction :to="{ name: 'control-plane-root-view' }">
                 <slot name="home" />
               </XAction>
 

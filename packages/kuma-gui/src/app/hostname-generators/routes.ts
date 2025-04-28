@@ -9,7 +9,7 @@ export const routes = (
 ): RouteRecordRaw[] => {
   return [
     {
-      path: '/hostname-generators',
+      path: 'hostname-generators',
       name: 'hostname-generator-root-view',
       redirect: { name: 'hostname-generator-list-view' },
       component: () => import('@/app/hostname-generators/views/HostnameGeneratorRootView.vue'),

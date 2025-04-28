@@ -13,7 +13,7 @@ export const routes = (
 ): RouteRecordRaw[] => {
   return [
     {
-      path: '/meshes',
+      path: 'meshes',
       name: 'mesh-index-view',
       redirect: { name: 'mesh-list-view' },
       component: () => import('@/app/meshes/views/MeshRootView.vue'),

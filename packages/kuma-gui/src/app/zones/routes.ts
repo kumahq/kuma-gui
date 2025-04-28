@@ -7,7 +7,7 @@ import type { RouteRecordRaw } from 'vue-router'
 export const routes = (
   can: Can,
 ): RouteRecordRaw[] => {
-  const prefix = '/zones'
+  const prefix = 'zones'
   return [
     ...(can('use zones')
       ? [

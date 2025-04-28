@@ -33,7 +33,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: (r) => {
         return [
           (item: RouteRecordRaw) => {
-            if (item.name === 'home') {
+            if (item.name === 'control-plane-root-view') {
               item.children = (item.children ?? []).concat(routes(r[0], r[1], r[2], r[3]))
             }
           },
