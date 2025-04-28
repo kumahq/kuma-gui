@@ -1,33 +1,37 @@
 <template>
-  <AppAboutSection
-    :created="props.created ? t('common.formats.datetime', { value: Date.parse(props.created)}) : undefined"
-    :modified="props.modified ? t('common.formats.datetime', { value: Date.parse(props.modified)}) : undefined"
+  <XI18n
+    v-slot="{ t }"
   >
-    <template
-      v-for="(_, slotName) in slots"
-      :key="slotName"
-      #[slotName]="slotProps"
+    <AppAboutSection
+      v-bind="attrs"
+      :created="props.created ? t('common.formats.datetime', { value: Date.parse(props.created)}) : undefined"
+      :modified="props.modified ? t('common.formats.datetime', { value: Date.parse(props.modified)}) : undefined"
     >
-      <slot
-        :name="slotName"
-        v-bind="(slotProps)"
-      />
-    </template>
-  </AppAboutSection>
+      <template
+        v-for="(_, slotName) in slots"
+        :key="slotName"
+        #[slotName]="slotProps"
+      >
+        <slot
+          :name="slotName"
+          v-bind="(slotProps)"
+        />
+      </template>
+    </AppAboutSection>
+  </XI18n>
 </template>
 
 <script setup lang="ts">
 import { AppAboutSection } from '@kong-ui-public/app-layout'
-import { useI18n } from '@kong-ui-public/i18n'
-
+import { useAttrs } from 'vue'
 
 const props = defineProps<{
   created?: string
   modified?: string
 }>()
 const slots = defineSlots()
+const attrs = useAttrs()
 
-const { t } = useI18n()
 </script>
 
 <style lang="scss" scoped>
