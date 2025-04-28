@@ -279,12 +279,6 @@
                         </template>
                       </DefinitionCard>
                     </XLayout>
-                    <!-- <XTimespan
-                      label-start="TLS Certificate generation"
-                      :start="t('common.formats.datetime', { value: Date.parse(mTLS.lastCertificateRegeneration) })"
-                      label-end="Expiration"
-                      :end="t('common.formats.datetime', { value: Date.parse(mTLS.certificateExpirationTime) })"
-                    /> -->
                     <XLayout type="separated">
                       <DefinitionCard layout="horizontal">
                         <template
