@@ -22,6 +22,7 @@
         v-if="slotName === 'default'"
         :name="slotName"
         :t="t"
+        :format-list="i18n.formatList"
       />
       <XTeleportTemplate
         v-else
@@ -29,6 +30,7 @@
       >
         <slot
           :t="t"
+          :format-list="i18n.formatList"
           :name="slotName"
         />
       </XTeleportTemplate>
@@ -40,6 +42,7 @@
     <slot
       name="default"
       :t="t"
+      :format-list="i18n.formatList"
     />
   </template>
 </template>
