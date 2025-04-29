@@ -30,7 +30,7 @@
           >
             <XSearch
               class="search-field"
-              placeholder="Filter by name, tag, zone or namespace..."
+              :keys="['name', 'tag', 'zone', 'namespace']"
               :value="route.params.s"
               @change="(s) => route.update({ page: 1, s })"
             />
@@ -311,7 +311,6 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
-
 const props = defineProps<{
   mesh: Mesh
 }>()
@@ -347,6 +346,10 @@ search {
 .search-field {
   flex-basis: 310px;
   flex-grow: 1;
+}
+
+.search-field {
+  flex: 1;
 }
 
 .name-link {

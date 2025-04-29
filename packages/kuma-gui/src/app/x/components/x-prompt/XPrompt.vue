@@ -17,7 +17,9 @@
   </KPrompt>
 </template>
 <script lang="ts" setup>
+import { KPrompt } from '@kong/kongponents'
 import { onBeforeUnmount, provide } from 'vue'
+
 const emit = defineEmits<{
   (e: 'cancel'): void
   (e: 'submit'): void

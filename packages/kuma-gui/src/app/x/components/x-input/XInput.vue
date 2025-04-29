@@ -16,6 +16,7 @@
   </KInput>
 </template>
 <script lang="ts" setup>
+import { KInput } from '@kong/kongponents'
 import { useDebounceFn } from '@vueuse/core'
 import { computed } from 'vue'
 

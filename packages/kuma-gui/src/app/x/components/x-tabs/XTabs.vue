@@ -24,6 +24,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { KTabs } from '@kong/kongponents'
 import { useAttrs, computed, onMounted, ref, watch } from 'vue'
 
 import type { Tab } from '@kong/kongponents'
