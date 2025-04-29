@@ -171,10 +171,11 @@
 </template>
 <script lang="ts" setup>
 import { KUI_ICON_SIZE_40 } from '@kong/design-tokens'
-import { KDropdownItem, ButtonAppearance } from '@kong/kongponents'
+import { KDropdownItem, KButton } from '@kong/kongponents'
 import { computed, watch, inject } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 
+import type { ButtonAppearance } from '@kong/kongponents'
 import type { RouteLocationNamedRaw } from 'vue-router'
 type BooleanLocationQueryValue = string | number | undefined | boolean
 type BooleanLocationQueryRaw = Record<string | number, BooleanLocationQueryValue | BooleanLocationQueryValue[]>
