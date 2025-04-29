@@ -20,6 +20,8 @@ meshes:
         MeshTrafficPermission policy
       </a>
       for this mesh.
+    mesh-service-activation: !!text/markdown |
+      This Mesh has not enabled a mode for MeshServices yet. Consider a <a target="_blank" href="{KUMA_DOCS_URL}/networking/meshservice/#migration">migration to MeshServices</a> to get the most out of your Mesh.
 
 
   common:

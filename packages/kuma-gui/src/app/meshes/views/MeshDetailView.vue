@@ -29,6 +29,15 @@
             path="meshes.notifications.mtls-warning"
           />
         </XNotification>
+        <XNotification
+          :notify="mesh.meshServices.mode === 'Disabled'"
+          :uri="`meshes.notifications.mesh-service-activation:${route.params.mesh}`"
+          variant="info"
+        >
+          <XI18n
+            path="meshes.notifications.mesh-service-activation"
+          />
+        </XNotification>
         <XLayout
           type="stack"
         >
