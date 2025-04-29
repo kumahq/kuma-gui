@@ -67,8 +67,7 @@
     "vite": "^6.3.3",
     "vite-svg-loader": "^5.1.0",
     "vitepress": "^2.0.0-alpha.5",
-    "vitest": "^3.1.2",
-    "vue-tsc": "^2.2.10"
+    "vitest": "^3.1.2"
   },
   "browserslist": [
     "> 1%",
