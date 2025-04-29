@@ -9,14 +9,8 @@ MK := $(KUMAHQ_CONFIG)/src/mk
 
 ## make help: if you're aren't sure use `make help`
 .DEFAULT_GOAL := help
-include $(MK)/help.mk
 
-include $(MK)/run.mk
-include $(MK)/install.mk
-include $(MK)/check.mk
-include $(MK)/test.mk
-include $(MK)/build.mk
-include $(MK)/release.mk
+include $(MK)/index.mk
 
 ## These make targets are only used by CI and is therefore are not exposed in help
 .PHONY: build/sync
@@ -36,7 +30,7 @@ clean: .clean ## Dev: Delete all node_modules directories
 install: .install ## Dev: install all dependencies (runs before `make run`)
 
 .PHONY: lint
-lint: .lint ## Dev: Run lint checks on all languages
+lint: .lint/js .lint/ts .lint/css .lint/lock .lint/gherkin ## Dev: Run lint checks on all languages
 
 .PHONY: lint/script
 lint/script: .lint/script ## Dev: Run lint checks on both JS/TS

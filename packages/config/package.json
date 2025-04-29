@@ -44,6 +44,8 @@
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-config-recommended-vue": "^1.6.0",
+    "stylelint": "^16.19.1",
+    "typescript": "^5.8.3",
     "vue-tsc": "^2.2.10"
   }
 }

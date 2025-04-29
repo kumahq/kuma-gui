@@ -9,11 +9,7 @@ MK := $(KUMAHQ_CONFIG)/src/mk
 
 ## make help: if you're aren't sure use `make help`
 .DEFAULT_GOAL := help
-include $(MK)/help.mk
-
-include $(MK)/decorators.mk
-include $(MK)/install.mk
-include $(MK)/check.mk
+include $(MK)/index.mk
 
 .PHONY: help
 help: .help ## Display this help screen
@@ -25,4 +21,4 @@ clean: .clean ## Dev: Remove all `node_modules` recursively
 install: .install ## Dev: Install all dependencies
 
 .PHONY: lint
-lint: lint/js ## Dev: Run lint checks on the workspace root only. Note: individual sub projects have their own `make lint`
+lint: .lint/js .lint/lock ## Dev: Run lint checks on the workspace root only. Note: individual sub projects have their own `make lint`

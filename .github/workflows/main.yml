@@ -75,6 +75,8 @@ jobs:
             path: ./packages/kuma-gui
           - name: "@kumahq/config"
             path: ./packages/config
+          - name: "@kumahq/fake-api"
+            path: ./packages/fake-api
     name: |
       Linting ${{ matrix.package.name }}
     steps:

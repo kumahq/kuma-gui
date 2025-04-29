@@ -9,10 +9,8 @@ MK := $(KUMAHQ_CONFIG)/src/mk
 
 ## make help: if you're aren't sure use `make help`
 .DEFAULT_GOAL := help
-include $(MK)/help.mk
 
-include $(MK)/install.mk
-include $(MK)/check.mk
+include $(MK)/index.mk
 
 .PHONY: help
 help: .help ## Display this help screen
@@ -24,7 +22,7 @@ clean: .clean types/clean ## Dev: Remove all `node_modules` recursively and the 
 install: .install ## Dev: Install all dependencies
 
 .PHONY: lint
-lint: lint/js ## Dev: Run lint checks
+lint: .lint/js ## Dev: Run lint checks
 
 ## When amending the specs also see `make generate/oas-for-ts` in the main kuma
 ## repository to regenerate the specs before running `make build`
