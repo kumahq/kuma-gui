@@ -5,6 +5,7 @@
       page: 1,
       size: Number,
       mesh: '',
+      s: '',
     }"
     v-slot="{ route, t, me, uri }"
   >
@@ -16,12 +17,26 @@
       :docs="t('external-services.href.docs')"
     >
       <XCard>
+        <search>
+          <form
+            class="search-form"
+            @submit.prevent
+          >
+            <XSearch
+              class="search-field"
+              :keys="['name']"
+              :value="route.params.s"
+              @change="(s) => route.update({ page: 1, s })"
+            />
+          </form>
+        </search>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/external-services`, {
             mesh: route.params.mesh,
           }, {
             page: route.params.page,
             size: route.params.size,
+            search: route.params.s,
           })"
         >
           <template
@@ -105,3 +120,15 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 </script>
+<style lang="scss" scoped>
+search {
+  margin-bottom: $kui-space-70;
+}
+.search-form {
+  display: flex;
+}
+.search-field {
+  flex-basis: 310px;
+  flex: 1;
+}
+</style>
