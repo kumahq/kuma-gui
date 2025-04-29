@@ -6,6 +6,7 @@
       size: Number,
       mesh: '',
       service: '',
+      s: '',
     }"
     v-slot="{ route, t, uri, me }"
   >
@@ -17,6 +18,19 @@
       :docs="t('services.href.docs')"
     >
       <XCard>
+        <search>
+          <form
+            class="search-form"
+            @submit.prevent
+          >
+            <XSearch
+              class="search-field"
+              :keys="['name']"
+              :value="route.params.s"
+              @change="(s) => route.update({ page: 1, s })"
+            />
+          </form>
+        </search>
         <DataLoader
           :src="uri(sources, '/meshes/:mesh/service-insights/of/:serviceType', {
             mesh: route.params.mesh,
@@ -24,6 +38,7 @@
           },{
             page: route.params.page,
             size: route.params.size,
+            search: route.params.s,
           })"
         >
           <template
@@ -153,3 +168,15 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 </script>
+<style lang="scss" scoped>
+search {
+  margin-bottom: $kui-space-70;
+}
+.search-form {
+  display: flex;
+}
+.search-field {
+  flex-basis: 310px;
+  flex: 1;
+}
+</style>

@@ -188,12 +188,13 @@ export const sources = (api: KumaApi) => {
     },
 
     '/meshes/:mesh/service-insights/of/:serviceType': async (params) => {
-      const { mesh, size, serviceType } = params
+      const { mesh, size, serviceType, search } = params
       const offset = params.size * (params.page - 1)
 
       const filterParams: ServiceInsightsParameters = {
         size,
         offset,
+        ...ServiceInsight.search(search),
       }
 
       if (serviceType !== 'all') {
