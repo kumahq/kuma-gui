@@ -1,6 +1,6 @@
 <template>
   <RouteView
-    name="home"
+    name="control-plane-detail-view"
     v-slot="{ can, t, uri, me }"
   >
     <AppView>
