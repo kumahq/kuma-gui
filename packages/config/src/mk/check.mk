@@ -1,3 +1,8 @@
+
+resolve/bin:
+	@cd $(KUMAHQ_CONFIG) && \
+		node -e \
+			"const p = require.resolve('$(BIN)/package.json');const { dirname, resolve } = require('path'); console.log(resolve(dirname(p), require(p).bin['$(BIN)']))"
 .PHONY: check/node
 check/node: NPM_VERSION:=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r '.engines.npm')
 check/node: NODE_VERSION:=v$(shell head -n1 $(NPM_WORKSPACE_ROOT)/.nvmrc)
@@ -26,8 +31,9 @@ lint/js:
 		.
 
 .PHONY: lint/ts
+lint/ts: TSC ?= $(shell $(MAKE) resolve/bin BIN=vue-tsc)
 lint/ts:
-	@npx vue-tsc \
+	@$(TSC) \
 		--noEmit
 
 .PHONY: lint/css
@@ -43,8 +49,9 @@ lint/gherkin:
 		-exec npx gherkin-utils format '{}' +
 
 .PHONY: lint/lock
+lint/lock: LOCK_LINT ?= $(shell $(MAKE) resolve/bin BIN=lockfile-lint)
 lint/lock:
-	@npx lockfile-lint \
+	@$(LOCK_LINT) \
 		--path package-lock.json \
 		--allowed-hosts npm \
 		--validate-https

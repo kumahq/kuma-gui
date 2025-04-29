@@ -8,6 +8,7 @@ import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
 import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
+import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
 
@@ -22,14 +23,21 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         return ZoneControlPlanesList
       },
     }],
-
     [token('zones.routes'), {
-      service: routes,
+      service: (can) => {
+        return [
+          (item: RouteRecordRaw) => {
+            if (item.name === 'control-plane-root-view') {
+              item.children = (item.children ?? []).concat(routes(can))
+            }
+          },
+        ]
+      },
       arguments: [
         app.can,
       ],
       labels: [
-        app.routes,
+        app.routeWalkers,
       ],
     }],
     [token('zone.sources'), {

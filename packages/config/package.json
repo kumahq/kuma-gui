@@ -40,8 +40,10 @@
     "eslint-plugin-vue": "^10.0.0",
     "glob": "^11.0.2",
     "globals": "^16.0.0",
+    "lockfile-lint": "^4.14.1",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-config-recommended-vue": "^1.6.0"
+    "stylelint-config-recommended-vue": "^1.6.0",
+    "vue-tsc": "^2.2.10"
   }
 }
