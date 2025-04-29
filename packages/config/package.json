@@ -30,7 +30,7 @@
     "cypress-fail-fast": "^7.1.1",
     "cypress-fail-on-console-error": "^5.1.1",
     "cypress-terminal-report": "^7.1.0",
-    "esbuild": "^0.25.2",
+    "esbuild": "^0.25.3",
     "escape-string-regexp": "^4.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^4.3.4",
