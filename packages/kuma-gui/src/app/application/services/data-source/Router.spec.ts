@@ -40,6 +40,6 @@ describe('Router', () => {
       },
     })
 
-    expect(() => router.match('/kuma-not-found-view/')).toThrow(Error)
+    expect(() => router.match('/undefined-uri/')).toThrow(Error)
   })
 })

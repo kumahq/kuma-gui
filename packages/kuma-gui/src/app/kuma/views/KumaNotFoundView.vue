@@ -25,7 +25,7 @@
           <template #action>
             <XAction
               appearance="primary"
-              :to="{ name: 'home' }"
+              :to="{ name: 'control-plane-root-view' }"
             >
               Go Home
             </XAction>
