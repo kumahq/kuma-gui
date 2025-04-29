@@ -49,8 +49,9 @@ lint/gherkin:
 		-exec npx gherkin-utils format '{}' +
 
 .PHONY: lint/lock
+lint/lock: LOCK_LINT ?= $(shell $(MAKE) resolve/bin BIN=lockfile-lint)
 lint/lock:
-	@npx lockfile-lint \
+	@$(LOCK_LINT) \
 		--path package-lock.json \
 		--allowed-hosts npm \
 		--validate-https
