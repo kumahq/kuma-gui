@@ -38,7 +38,7 @@
     "eslint-plugin-json-schema-validator": "^5.4.0",
     "eslint-plugin-no-unsanitized": "^4.1.2",
     "eslint-plugin-vue": "^10.0.0",
-    "glob": "^11.0.1",
+    "glob": "^11.0.2",
     "globals": "^16.0.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-scss": "^14.1.0",
