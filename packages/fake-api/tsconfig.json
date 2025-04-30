@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "preserve",
     "allowImportingTsExtensions": true,
-    "moduleResolution": "bundler",
     "noEmit": true,
     "strict": true,
     "skipLibCheck": true,
