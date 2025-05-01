@@ -82,15 +82,13 @@
         <AppView
           :notifications="true"
         >
-          <XNotification
-            :notify="!can('use state')"
-            uri="main-overview.notifications.store-memory"
+          <RouterView
+            v-slot="{ Component }"
           >
-            <XI18n
-              path="main-overview.notifications.store-memory"
+            <component
+              :is="Component"
             />
-          </XNotification>
-          <RouterView />
+          </RouterView>
         </AppView>
       </ApplicationShell>
     </RouteView>
