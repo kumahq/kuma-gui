@@ -34,20 +34,14 @@ export class Router<T> {
   routes: Map<URLPattern, T> = new Map()
   constructor(routes: Record<string, T>) {
     Object.entries(routes).forEach(([key, value]) => {
-      if (key.includes('://')) {
-        return
-      }
-      this.routes.set(new URLPattern({
-        pathname: escapeRoute(key),
-      }), value)
+      this.routes.set(new URLPattern(key), value)
     })
   }
 
   match(path: string) {
     for (const [pattern, route] of this.routes) {
-      const _url = `data:${path}`
-      if (pattern.test(_url)) {
-        const args = pattern.exec(_url)
+      if (pattern.test(path)) {
+        const args = pattern.exec(path)
         const params = args?.pathname.groups || {}
         return {
           route,
@@ -75,8 +69,7 @@ export const createFetchSync = <T extends object = {}>({ dependencies, fs }: { d
   return (url: string, options: RequestInit & { body?: Record<string, string>, headers?: Record<string, string | string[] | undefined>}) => {
 
     const _url = new URL(url)
-    // we currently only match on pathname
-    const { route, params } = router.match(_url.pathname)
+    const { route, params } = router.match(_url.toString())
 
     const cookies = strToEnv(String(options.headers?.cookie ?? '')).reduce((prev, [key, value]) => {
       prev[key] = value

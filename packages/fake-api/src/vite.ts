@@ -8,16 +8,19 @@ type PluginOptions<TDependencies extends object = {}> = {
 }
 
 export default <TDependencies extends object = {}>(opts: PluginOptions<TDependencies>): Plugin => {
-  const { fs, dependencies } = opts
-
-  const fetch = createFetch({
-    dependencies,
-    fs,
-  })
 
   return {
     name: 'fake-api',
     configureServer: async (server) => {
+      const { fs, dependencies } = opts
+      const baseUrl = `http://${server.config.server.host}:${server.config.server.port}`
+      const _fs = Object.fromEntries(Object.entries(fs).map(([route, response]) => {
+        return [route.includes('://') ? route : `${baseUrl}${route}`, response]
+      }))
+      const fetch = createFetch({
+        dependencies,
+        fs: _fs,
+      })
       server.middlewares.use(async (req, res, next) => {
         try {
           // headers can be string | string[] | undefined, not string
