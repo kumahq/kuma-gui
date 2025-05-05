@@ -9,6 +9,7 @@ Feature: mesh / external-services / index
       | action-group             | $item [data-testid='x-action-group-control']                                 |
       | view                     | $item [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
       | action                   | $item [data-action]                                                          |
+      | input-search             | [data-testid='filter-bar-filter-input']                                      |
       | external-service-sub-tab | [data-testid='external-service-list-view-sub-tab']                           |
     Given the environment
       """
@@ -48,3 +49,16 @@ Feature: mesh / external-services / index
     And I click the "$view" element
     Then the URL contains "/services/external/service-1/overview"
     Then the "[data-testid='external-service-detail-view-tab'].active" element exists
+
+  Scenario: Searching by name
+    When I visit the "/meshes/default/services/external" URL
+    Then the "$input-search" element exists
+    When I "type" "foo" into the "$input-search" element
+    And I "type" "{enter}" into the "$input-search" element
+    Then the URL "/meshes/default/external-services" was requested with
+      """
+      searchParams:
+        name: foo
+        offset: 0
+        size: 50
+      """
