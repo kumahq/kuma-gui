@@ -2,7 +2,7 @@ import { ExternalService } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
-import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
+import type { PaginatedApiListResponse as CollectionResponse, ExternalServicesParameters } from '@/types/api.d'
 
 export type { ExternalService } from './data'
 
@@ -13,10 +13,16 @@ export type ExternalServiceCollectionSource = DataSourceResponse<ExternalService
 export const sources = (api: KumaApi) => {
   return defineSources({
     '/meshes/:mesh/external-services': async (params) => {
-      const { mesh, size } = params
-      const offset = params.size * (params.page - 1)
+      const { mesh, size, page, search } = params
+      const offset = size * (page - 1)
 
-      return ExternalService.fromCollection(await api.getAllExternalServicesFromMesh({ mesh }, { size, offset }))
+      const filterParams: ExternalServicesParameters = {
+        size,
+        offset,
+        ...ExternalService.search(search),
+      }
+
+      return ExternalService.fromCollection(await api.getAllExternalServicesFromMesh({ mesh }, filterParams))
     },
 
     '/meshes/:mesh/external-services/:name': async (params) => {

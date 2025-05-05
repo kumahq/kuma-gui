@@ -310,6 +310,7 @@ input {
     .filter-block {
       display: flex;
       gap: $kui-space-40;
+      flex-flow: row wrap;
     }
 
     p {

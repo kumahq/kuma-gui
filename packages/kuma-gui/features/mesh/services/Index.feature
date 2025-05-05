@@ -10,6 +10,7 @@ Feature: mesh / services / index
       | view            | $item:first-child [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
       | action          | $item:first-child [data-action]                                                          |
       | breadcrumbs     | .k-breadcrumbs                                                                           |
+      | input-search    | [data-testid='filter-bar-filter-input']                                                  |
       | service-sub-tab | [data-testid='service-list-view-sub-tab']                                                |
     And the environment
       """
@@ -51,3 +52,16 @@ Feature: mesh / services / index
     Then the "[data-testid='service-detail-view-tab'].active" element exists
     When I click the "$breadcrumbs > .breadcrumbs-item-container:nth-child(3) > a" element
     Then the "$item" element exists 1 times
+
+  Scenario: Searching by name
+    When I visit the "/meshes/default/services/internal" URL
+    Then the "$input-search" element exists
+    When I "type" "foo" into the "$input-search" element
+    And I "type" "{enter}" into the "$input-search" element
+    Then the URL "/meshes/default/service-insights" was requested with
+      """
+      searchParams:
+        name: foo
+        offset: 0
+        size: 50
+      """
