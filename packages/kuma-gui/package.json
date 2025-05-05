@@ -15,7 +15,7 @@
     "@kong-ui-public/app-layout": "^4.3.16",
     "@kong-ui-public/entities-shared": "^3.22.0",
     "@kong-ui-public/i18n": "^2.2.10",
-    "@kong/icons": "^1.25.0",
+    "@kong/icons": "^1.26.0",
     "@kong/kongponents": "^9.29.3",
     "@vue/shared": "^3.5.13",
     "@vueuse/core": "^13.1.0",
