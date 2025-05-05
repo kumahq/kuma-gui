@@ -88,8 +88,9 @@
             :title="t('data-planes.routes.item.about.title')"
             :created="props.data.creationTime"
             :modified="props.data.modificationTime"
+            class="about-section"
           >
-            <XLayout size="max">
+            <XLayout>
               <XLayout
                 type="separated"
               >
@@ -779,5 +780,9 @@ const props = defineProps<{
   h3 {
     color: $kui-color-text;
   }
+}
+
+:deep(.about-section .about-section-content) {
+  display: block !important;
 }
 </style>
