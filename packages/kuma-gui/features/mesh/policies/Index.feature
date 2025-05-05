@@ -13,6 +13,7 @@ Feature: mesh / policies / index
       | action           | $item:first-child [data-action]                                                          |
       | button-docs      | [data-testid='policy-documentation-link']                                                |
       | breadcrumbs      | .k-breadcrumbs                                                                           |
+      | input-search     | [data-testid='filter-bar-filter-input']                                                  |
     And the environment
       """
       KUMA_MODE: global
@@ -143,3 +144,18 @@ Feature: mesh / policies / index
     Then the "$items-header" element exists 4 times
     When I click the "[data-testid='policy-type-link-MeshFaultInjection']" element
     Then the "$items-header" element exists 6 times
+
+  Scenario: Sending filters
+    When I visit the "/meshes/default/policies/meshgateways" URL
+    Then the "$input-search" element exists
+    Then I "type" "foo namespace:bar zone:baz" into the "$input-search" element
+    And I "type" "{enter}" into the "$input-search" element
+    Then the URL "/meshes/default/meshgateways" was requested with
+      """
+      searchParams:
+        name: foo
+        filter[labels.k8s.kuma.io/namespace]: bar
+        filter[labels.kuma.io/zone]: baz
+        offset: 0
+        size: 50
+      """

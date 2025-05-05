@@ -1,5 +1,6 @@
 import { paths } from '@kumahq/kuma-http-api'
 
+import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   PolicyDataplane as PartialPolicyDataplane,
@@ -41,6 +42,10 @@ export const PolicyDataplane = {
 }
 
 export const Policy = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject(item: PartialPolicy) {
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
     return {

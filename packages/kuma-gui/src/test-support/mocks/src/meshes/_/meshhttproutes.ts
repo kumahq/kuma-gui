@@ -11,13 +11,18 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   )
   const ruleMatchCount = parseInt(env('KUMA_RULE_MATCH_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
+  const nameQuery = req.url.searchParams.get('name')
+  const namespaceQuery = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
+  const zoneQuery = req.url.searchParams.get('filter[labels.kuma.io/zone]')
+
   return {
     headers: {},
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}-${id}`
+        const name = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
+        const zone = zoneQuery ?? fake.word.noun()
 
         return {
           type: 'MeshHTTPRoute',
@@ -25,13 +30,13 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           name,
           creationTime: '2024-03-01T09:20:28Z',
           modificationTime: '2024-03-01T09:20:28Z',
-          ...(fake.datatype.boolean() && {
+          ...((namespaceQuery || fake.datatype.boolean()) && {
             labels: {
-              'k8s.kuma.io/namespace': 'kuma-system',
-              'kuma.io/display-name': 'demo-app',
+              'k8s.kuma.io/namespace': namespaceQuery ?? 'kuma-system',
+              'kuma.io/display-name': name,
               'kuma.io/mesh': 'default',
               'kuma.io/origin': 'zone',
-              'kuma.io/zone': fake.word.noun(),
+              'kuma.io/zone': zone,
             },
           }),
           spec: {

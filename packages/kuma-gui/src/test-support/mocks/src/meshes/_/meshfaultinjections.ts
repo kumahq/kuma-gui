@@ -9,16 +9,19 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     `/meshes/${mesh}/meshfaultinjections`,
   )
 
+  const queryName = req.url.searchParams.get('name')
+  const queryNamespace = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
+
   return {
     headers: {},
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}-${id}`
+        const name = `${queryName?.padEnd(queryName.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
 
         const displayName = `${name}${fake.kuma.dataplaneSuffix(k8s)}`
-        const nspace = fake.k8s.namespace()
+        const nspace = queryNamespace ?? fake.k8s.namespace()
         return {
           type: 'MeshFaultInjection',
           mesh,
