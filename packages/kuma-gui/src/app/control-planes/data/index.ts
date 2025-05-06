@@ -34,4 +34,6 @@ export const GlobalInsight = {
   },
 }
 
-export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject>
+export type GlobalInsight = ReturnType<typeof GlobalInsight.fromObject> & {
+  resources: PartialGlobalInsight['resources']
+}

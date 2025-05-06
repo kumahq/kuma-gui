@@ -478,7 +478,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       'MeshGatewayRoute',
     ] as const
 
-    return this.faker.helpers.arrayElements(items, minmax({ min: 1, max: items.length }, count))
+    return this.faker.helpers.arrayElements(items, minmax({ min: 0, max: items.length }, count))
   }
 
   /**
@@ -520,7 +520,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       ),
     ]
 
-    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 1, max: items.length }, count))
+    return this.faker.helpers.arrayElements<typeof items[number]>(items, minmax({ min: 0, max: items.length }, count))
   }
 
   policyName(options?: { includeLegacy?: boolean }) {
@@ -546,7 +546,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     ] as const
     const items = [...resources, ...this.policyNames({ min: Number.MAX_SAFE_INTEGER })]
 
-    return this.faker.helpers.arrayElements(items, minmax({ min: 1, max: items.length }, count))
+    return this.faker.helpers.arrayElements(items, minmax({ min: 0, max: items.length }, count))
   }
 }
 
