@@ -743,6 +743,7 @@ export interface MeshInsight extends Entity {
     gatewayDelegated: DataPlaneProxyStatus
   }
   policies?: Record<string, ResourceStat>
+  resources?: Record<string, ResourceStat>
   dpVersions: DpVersions
   mTLS: {
     issuedBackends?: Record<string, DataPlaneProxyStatus>

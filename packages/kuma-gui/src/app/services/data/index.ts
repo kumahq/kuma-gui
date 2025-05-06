@@ -2,7 +2,6 @@ import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   ExternalService as PartialExternalService,
   ServiceInsight as PartialServiceInsight,
-  ServiceStatus as ServiceTypeCount,
 } from '@/types/index.d'
 
 export * from './MeshService'
@@ -73,10 +72,3 @@ export const ServiceInsight = {
   },
 }
 
-export function getServiceTypeCount({ total = 0, internal = 0, external = 0 }: ServiceTypeCount): Required<ServiceTypeCount> {
-  return {
-    total,
-    internal,
-    external,
-  }
-}

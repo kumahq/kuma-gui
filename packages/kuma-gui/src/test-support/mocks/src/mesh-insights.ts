@@ -14,6 +14,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const name = id === 0 ? 'default' : `${fake.word.noun()}-${id}`
 
+        const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
         const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 
         // TODO(jc) refactor this to use the partitioning so we can say how many
@@ -66,6 +67,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
             TrafficTrace: fake.kuma.policyTypeStatus(),
             VirtualOutbound: fake.kuma.policyTypeStatus(),
             Secret: fake.kuma.policyTypeStatus(),
+          },
+          resources: {
+            ...Object.fromEntries(fake.kuma.resourceNames(resourceCount).map((name) => [name, { total: fake.number.int({ min: 0, max: 20 }) }])),
           },
           dpVersions: {
             kumaDp: {

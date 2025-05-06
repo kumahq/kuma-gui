@@ -1,5 +1,3 @@
-import { getDataplaneStatusCounts } from '@/app/data-planes/data'
-import { getServiceTypeCount } from '@/app/services/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   MeshInsight as PartialMeshInsight,
@@ -13,8 +11,47 @@ export type MeshInsight = PartialMeshInsight & {
     gatewayDelegated: Required<PartialMeshInsight['dataplanesByType']['gatewayDelegated']>
   }
   services: Required<PartialMeshInsight['services']>
-  totalPolicyCount: number
 }
+
+function getServiceTypeCount(
+  {
+    total = 0,
+    internal = 0,
+    external = 0,
+  }: {
+    total?: number
+    internal?: number
+    external?: number
+  },
+) {
+  return {
+    total,
+    internal,
+    external,
+  }
+}
+function getDataplaneStatusCounts(
+  {
+    total = 0,
+    online = 0,
+    partiallyDegraded = 0,
+    offline = 0,
+  }: {
+    total?: number
+    online?: number
+    partiallyDegraded?: number
+    offline?: number
+  },
+) {
+  return {
+    total,
+    online,
+    partiallyDegraded,
+    offline,
+  }
+}
+
+
 export const MeshInsight = {
   fromObject(partialMeshInsight: PartialMeshInsight): MeshInsight {
     const dataplanes = getDataplaneStatusCounts(partialMeshInsight.dataplanes)
@@ -25,14 +62,11 @@ export const MeshInsight = {
       gatewayDelegated: getDataplaneStatusCounts(partialMeshInsight.dataplanesByType.gatewayDelegated),
     }
     const services = getServiceTypeCount(partialMeshInsight.services)
-    const totalPolicyCount = Object.values(partialMeshInsight.policies ?? {}).reduce((total, stat) => total + stat.total, 0)
-
     return {
       ...partialMeshInsight,
       dataplanes,
       dataplanesByType,
       services,
-      totalPolicyCount,
     }
   },
 
