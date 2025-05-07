@@ -16,7 +16,8 @@ type SearchOptions = {
 const isShortFilter = (k: string): k is keyof typeof filters => k in filters
 
 export const searchRegex = /(\S+:\s*\S*)|(\S+)/
-const kvSeparatorRegex = /:(.*)/
+export const searchValidationRegex = /^[^:\s]+.*[^\s:]$/
+export const kvSeparatorRegex = /:(.*)/
 
 export const Resource = {
   search(query: string, options: SearchOptions = {}) {

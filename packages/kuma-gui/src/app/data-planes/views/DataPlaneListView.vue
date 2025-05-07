@@ -32,9 +32,33 @@
               class="search-field"
               :keys="['name', 'tag', 'zone', 'namespace']"
               :value="route.params.s"
+              :validate="(filter) => searchValidationRegex.test(filter)"
               @change="(s) => route.update({ page: 1, s })"
-            />
-            
+            >
+              <template
+                #warnings="{ invalidFilters }"
+              >
+                <XLayout type="separated">
+                  <XIcon name="warning" />
+                  {{ t('common.validation.invalid.filter.title') }}:
+                </XLayout>
+                <ul
+                  v-for="invalidFilter in invalidFilters"
+                  :key="invalidFilter"
+                >
+                  <li
+                    v-for="[key, value] in [invalidFilter.split(kvSeparatorRegex)]"
+                    :key="key"
+                  >
+                    <XI18n
+                      :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
+                      :params="{ key, value }"
+                    />
+                  </li>
+                </ul>
+              </template>
+            </XSearch>
+                  
             <XSelect
               label="Type"
               name="dataplaneType"
@@ -311,6 +335,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
+import { kvSeparatorRegex, searchValidationRegex } from '@/app/resources/data/Resource'
 const props = defineProps<{
   mesh: Mesh
 }>()
