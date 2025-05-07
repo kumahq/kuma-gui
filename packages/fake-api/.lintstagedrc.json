@@ -1,3 +1,4 @@
 {
   "*.{cjs,js,ts}": "make lint"
 }
+

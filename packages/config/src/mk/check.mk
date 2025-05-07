@@ -1,8 +1,10 @@
 
+
+resolve/bin: PACKAGE?=$(BIN)
 resolve/bin:
 	@cd $(KUMAHQ_CONFIG) && \
 		node -e \
-			"const p = require.resolve('$(BIN)/package.json');const { dirname, resolve } = require('path'); console.log(resolve(dirname(p), require(p).bin['$(BIN)']))"
+			"const p = require.resolve('$(PACKAGE)/package.json');const { dirname, resolve } = require('path'); const json = require(p); console.log(resolve(dirname(p), json.bin['$(BIN)'] ?? json.bin))"
 .PHONY: check/node
 check/node: NPM_VERSION:=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r '.engines.npm')
 check/node: NODE_VERSION:=v$(shell head -n1 $(NPM_WORKSPACE_ROOT)/.nvmrc)
@@ -18,40 +20,43 @@ check/node:
 	) || (exit 0)
 
 .PHONY: .lint
-.lint: lint/js lint/ts lint/css lint/lock lint/gherkin
+.lint: .lint/js .lint/ts .lint/css .lint/lock .lint/gherkin
 
 .PHONY: .lint/script
-.lint/script: lint/js lint/ts ## Dev: Run lint checks on both JS/TS
+.lint/script: .lint/js .lint/ts
 
-.PHONY: lint/js
-lint/js:
-	@npx eslint \
+.PHONY: .lint/js
+.lint/js: ESLINT ?= $(shell $(MAKE) resolve/bin BIN=eslint)
+.lint/js:
+	@$(ESLINT) \
 		--cache \
 		$(if $(CI),,--fix) \
 		.
 
-.PHONY: lint/ts
-lint/ts: TSC ?= $(shell $(MAKE) resolve/bin BIN=vue-tsc)
-lint/ts:
+.PHONY: .lint/ts
+.lint/ts: TSC ?= $(shell $(MAKE) resolve/bin BIN=vue-tsc)
+.lint/ts:
 	@$(TSC) \
 		--noEmit
 
-.PHONY: lint/css
-lint/css:
-	@npx stylelint \
+.PHONY: .lint/css
+.lint/css: STYLELINT ?= $(shell $(MAKE) resolve/bin BIN=stylelint)
+.lint/css:
+	@$(STYLELINT) \
 		$(if $(CI),,--fix) --allow-empty-input \
 		./src/**/*.{css,scss,vue}
 
 .PHONY: lint/gherkin
-lint/gherkin:
+.lint/gherkin: GHERKIN_UTILS ?= $(shell $(MAKE) resolve/bin BIN=@cucumber/gherkin-utils)
+.lint/gherkin:
 	@find ./features \
 		-name '*.feature' \
-		-exec npx gherkin-utils format '{}' +
+		-exec $(GHERKIN_UTILS) format '{}' +
 
 .PHONY: lint/lock
-lint/lock: LOCK_LINT ?= $(shell $(MAKE) resolve/bin BIN=lockfile-lint)
-lint/lock:
-	@$(LOCK_LINT) \
+.lint/lock: LOCKFILE_LINT ?= $(shell $(MAKE) resolve/bin BIN=lockfile-lint)
+.lint/lock:
+	@$(LOCKFILE_LINT) \
 		--path package-lock.json \
 		--allowed-hosts npm \
 		--validate-https
