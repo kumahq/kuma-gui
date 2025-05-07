@@ -81,6 +81,15 @@ common:
     none: '—'
     created: 'Created'
     modified: 'Modified'
+  validation:
+    invalid:
+      filter:
+        title: Invalid filters
+        missing-value: !!text/markdown |
+          Missing value for filter <strong>{key}</strong>.
+        invalid-key: !!text/markdown |
+          Invalid key <strong>{key}</strong> for <strong>{value}</strong>.
+
 components:
   status-badge:
     tooltip:

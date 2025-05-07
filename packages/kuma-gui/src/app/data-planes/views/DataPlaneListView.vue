@@ -23,46 +23,79 @@
         default-path="common.i18n.ignore-error"
       />
       <XCard>
-        <search>
-          <form
-            class="search-form"
-            @submit.prevent
-          >
-            <XSearch
-              class="search-field"
-              :keys="['name', 'tag', 'zone', 'namespace']"
-              :value="route.params.s"
-              @change="(s) => route.update({ page: 1, s })"
-            />
-            
-            <XSelect
-              label="Type"
-              name="dataplaneType"
-              :selected="route.params.dataplaneType"
-              @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
+        <DataSource
+          :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type/validate`, {
+            mesh: route.params.mesh,
+            type: route.params.dataplaneType,
+          }, {
+            search: route.params.s,
+          })"
+          v-slot="{ data }"
+        >
+          <search>
+            <form
+              class="search-form"
+              @submit.prevent
             >
-              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
-                <XIcon
-                  v-if="item !== 'all'"
-                  :size="KUI_ICON_SIZE_40"
-                  :name="item"
-                />
-                {{ t(`data-planes.type.${item}`) }}
-              </template>
-              <template
-                v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
-                :key="item"
-                #[`${item}-option`]
+              <XSearch
+                class="search-field"
+                :keys="data?.allowedFilters"
+                :value="route.params.s"
+                :validate="(chunk) => !!data?.invalidFilters.find((filter) => filter.raw === chunk)"
+                :open="!!data?.invalidFilters.length"
+                @change="(s) => route.update({ page: 1, s })"
               >
-                <XIcon
-                  v-if="item !== 'all'"
-                  :name="item"
-                />
-                {{ t(`data-planes.type.${item}`) }}
-              </template>
-            </XSelect>
-          </form>
-        </search>
+                <template
+                  v-if="data?.invalidFilters.length"
+                  #warnings
+                >
+                  <XLayout type="separated">
+                    <XIcon name="warning" />
+                    {{ t('common.validation.invalid.filter.title') }}:
+                  </XLayout>
+                  <ul
+                    v-for="invalidFilter in data?.invalidFilters"
+                    :key="invalidFilter.raw"
+                  >
+                    <li>
+                      <XI18n
+                        :path="`common.validation.invalid.${invalidFilter.message}`"
+                        :params="{ ...invalidFilter, filter: invalidFilter.raw }"
+                      />
+                    </li>
+                  </ul>
+                </template>
+              </XSearch>
+                  
+              <XSelect
+                label="Type"
+                name="dataplaneType"
+                :selected="route.params.dataplaneType"
+                @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
+              >
+                <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+                  <XIcon
+                    v-if="item !== 'all'"
+                    :size="KUI_ICON_SIZE_40"
+                    :name="item"
+                  />
+                  {{ t(`data-planes.type.${item}`) }}
+                </template>
+                <template
+                  v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                  :key="item"
+                  #[`${item}-option`]
+                >
+                  <XIcon
+                    v-if="item !== 'all'"
+                    :name="item"
+                  />
+                  {{ t(`data-planes.type.${item}`) }}
+                </template>
+              </XSelect>
+            </form>
+          </search>
+        </DataSource>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type`, {
             mesh: route.params.mesh,

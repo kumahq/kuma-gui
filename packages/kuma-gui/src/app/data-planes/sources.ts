@@ -7,6 +7,7 @@ import {
   MeshGatewayDataplane,
   SidecarDataplane,
 } from './data'
+import { Resource } from '../resources/data/Resource'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
@@ -196,6 +197,17 @@ export const sources = (source: Source, api: KumaApi) => {
         offset,
         size,
       }))
+    },
+
+    '/meshes/:mesh/dataplanes/of/:type/validate': async (params) => {
+      const { search } = params
+      const allowedFilters = ['name', 'tag', 'zone', 'namespace']
+      const invalidFilters = Resource.validateFilterQuery(search, { allowedFilters })
+
+      return {
+        allowedFilters,
+        invalidFilters,
+      }
     },
 
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
