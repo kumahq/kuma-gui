@@ -1,5 +1,3 @@
-
-
 import { Router } from './index.ts'
 import type { Dependencies, FS } from './index.ts'
 import type { Plugin } from 'vite'
