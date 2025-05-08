@@ -12,6 +12,10 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
   )
   const listenerCount = parseInt(env('KUMA_LISTENER_COUNT', `${fake.number.int({ min: 1, max: 3 })}`))
 
+  const queryName = req.url.searchParams.get('name')
+  const queryNamespace = req.url.searchParams.get('filter[labels.k8s.kuma.io/namespace]')
+  const queryZone = req.url.searchParams.get('filter[labels.kuma.io/zone]')
+
   return {
     headers: {},
     body: {
@@ -21,8 +25,9 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const name = `${fake.word.noun()}-${id}`
 
-        const displayName = `${name}${fake.kuma.dataplaneSuffix(k8s)}`
-        const nspace = fake.k8s.namespace()
+        const displayName = `${queryName?.padEnd(queryName.length + 1, '-') ?? ''}${name}${fake.kuma.dataplaneSuffix(k8s)}`
+        const nspace = queryNamespace ?? fake.k8s.namespace()
+        const zone = queryZone ?? fake.word.noun()
 
         return {
           type: 'MeshGateway',
@@ -33,7 +38,7 @@ export default ({ env, fake, pager }: EndpointDependencies): MockResponder => (r
           labels: {
             'kuma.io/display-name': displayName,
             'kuma.io/origin': fake.kuma.origin(),
-            'kuma.io/zone': fake.word.noun(),
+            'kuma.io/zone': zone,
             ...(k8s
               ? {
                 'k8s.kuma.io/namespace': nspace,

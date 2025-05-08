@@ -67,15 +67,11 @@
                 <form
                   @submit.prevent
                 >
-                  <XInput
-                    placeholder="Filter by name..."
-                    type="search"
-                    appearance="search"
+                  <XSearch
+                    class="search-field"
+                    :keys="['name', 'namespace', ...(can('use zones') && type.policy.isTargetRef ? ['zone'] : [])]"
                     :value="route.params.s"
-                    :debounce="1000"
-                    @change="(e) => route.update({
-                      s: e,
-                    })"
+                    @change="(s) => route.update({ s })"
                   />
                 </form>
               </search>
@@ -175,6 +171,7 @@
                               query: {
                                 page: route.params.page,
                                 size: route.params.size,
+                                s: route.params.s,
                               },
                             }"
                           >
@@ -252,6 +249,7 @@
                         query: {
                           page: route.params.page,
                           size: route.params.size,
+                          s: route.params.s,
                         },
                       })"
                     >
@@ -317,5 +315,8 @@ search form {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
+}
+.search-field {
+  flex: 1;
 }
 </style>

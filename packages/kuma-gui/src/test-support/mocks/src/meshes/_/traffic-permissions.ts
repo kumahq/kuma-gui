@@ -6,6 +6,8 @@ export default ({ fake, pager }: EndpointDependencies): MockResponder => (req) =
     `/meshes/${req.params.mesh}/traffic-permissions`,
   )
 
+  const nameQuery = req.url.searchParams.get('name')
+
   return {
     headers: {},
     body: {
@@ -13,7 +15,7 @@ export default ({ fake, pager }: EndpointDependencies): MockResponder => (req) =
       next,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}-${id}`
+        const name = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
 
         return {
           type: 'TrafficPermission',

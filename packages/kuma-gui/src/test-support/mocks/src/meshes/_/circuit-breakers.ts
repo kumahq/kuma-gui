@@ -7,6 +7,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     req,
     `/meshes/${params.mesh}/circuit-breakers`,
   )
+  
+  const queryName = req.url.searchParams.get('name')
 
   return {
     headers: {},
@@ -14,7 +16,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}-${id}`
+        const name = `${queryName?.padEnd(queryName.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
         return {
           type: 'CircuitBreaker',
           mesh: params.mesh,

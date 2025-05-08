@@ -27,14 +27,14 @@ export const sources = (api: KumaApi) => {
 
       return PolicyResourceType.fromCollection(res.data!)
     },
-
+    
     '/meshes/:mesh/policy-path/:path': async (params) => {
       const { mesh, path, size } = params
       const offset = params.size * (params.page - 1)
 
-      const name = params.search.length > 0 ? params.search : undefined
+      const search = Policy.search(params.search)
 
-      return Policy.fromCollection(await api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size, name }))
+      return Policy.fromCollection(await api.getAllPolicyEntitiesFromMesh({ mesh, path }, { offset, size, ...search }))
     },
 
     '/meshes/:mesh/policy-path/:path/policy/:name': async (params) => {

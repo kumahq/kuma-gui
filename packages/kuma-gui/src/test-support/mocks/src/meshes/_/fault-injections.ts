@@ -7,13 +7,15 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     `/meshes/${mesh}/fault-injections`,
   )
 
+  const queryName = req.url.searchParams.get('name')
+
   return {
     headers: {},
     body: {
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = `${fake.word.noun()}-${id}`
+        const name = `${queryName?.padEnd(queryName.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
 
         return {
           type: 'FaultInjection',
