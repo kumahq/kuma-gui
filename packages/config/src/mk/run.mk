@@ -1,20 +1,20 @@
-SCRIPT_RUNNER := npm run
-
-
 .PHONY: .run
+.run: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .run: install
 	@NODE_OPTIONS=--experimental-strip-types \
-		npx vite \
+		$(VITE) \
 		-c ./vite.config.development.ts
 
 .PHONY: .run/docs
+.run/docs: VITEPRESS ?= $(shell $(MAKE) resolve/bin BIN=vitepress)
 .run/docs: install
-	@npx vitepress \
+	@$(VITEPRESS) \
 		dev
 
 .PHONY: .run/e2e
+.run/e2e: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .run/e2e:
 	@$(MAKE) deploy/e2e
-	@npx vite \
+	$(VITE) \
 		-c ./vite.config.preview.ts \
 		preview
