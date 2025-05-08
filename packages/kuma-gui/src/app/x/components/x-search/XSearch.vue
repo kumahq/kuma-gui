@@ -137,7 +137,14 @@ const props = withDefaults(defineProps<{
    * The default key, that is being used to filter for when there is no `key:value` pair but only a `value`
    */
   defaultKey?: string
+  /**
+   * Validation callback on a per individual filter basis
+   */
   validate?: (chunk: string) => boolean
+  /**
+   * Provide some control about the open state of the dropdown.
+   * Useful during validation to keep the dropdown open in case of invalid filters.
+   */
   open?: boolean
 }>(), {
   placeholder: undefined,
@@ -146,7 +153,7 @@ const props = withDefaults(defineProps<{
   keys: () => [],
   defaultKey: 'name',
   validate: undefined,
-  open: false,
+  open: undefined,
 })
 
 const emit = defineEmits<{

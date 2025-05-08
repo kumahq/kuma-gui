@@ -48,12 +48,12 @@ export const Resource = {
 
   validateFilterQuery(query: string, options: ValidateFilterQueryOptions = {}) {
     const { allowedFilters = [] } = options
-    const chunks = query.split(/\s+/g)
+    const parts = query.trim().split(/\s+/)
     
-    return chunks.map((chunk) => {
-      const [key, value] = chunk.split(/:(.*)/)
+    return parts.map((part) => {
+      const [key, value] = part.split(/:(.*)/)
       const filter = {
-        raw: chunk,
+        raw: part,
         key,
         value,
       }
