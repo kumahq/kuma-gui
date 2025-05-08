@@ -30,4 +30,26 @@ confirm:
 		fi \
 	fi
 
+.PHONY: meta/packages
+meta/packages:
+	@(npm query ':root';npm query .workspace) | jq --slurp add | \
+		jq -r '. |map({name, path, slug: .name | sub("/";"-") | sub("@";"")})'
 
+.PHONY: meta/workspaces
+meta/workspaces:
+	@npm query .workspace | \
+		jq -r -c 'map({name, path, slug: .name | sub("/";"-") | sub("@";"")}) | .[]' | \
+	while read -r workspace; \
+	do (printf '{"e2e": %s, "unit": %s }' \
+		$$([[ $$(find $$(echo $$workspace | jq -r '.path') -name "*.feature") ]] && echo 'true' || echo 'false') \
+		$$([[ $$(find $$(echo $$workspace | jq -r '.path') -name "*.spec.ts") ]] && echo 'true' || echo 'false') \
+		; echo $$workspace) | jq --slurp add \
+	;done | jq --slurp
+
+.PHONY: meta/unit
+meta/unit:
+	@$(MAKE) -s meta/workspaces | jq -r 'map(select(.unit == true))'
+
+.PHONY: meta/e2e
+meta/e2e:
+	@$(MAKE) -s meta/workspaces | jq -r 'map(select(.e2e == true))'
