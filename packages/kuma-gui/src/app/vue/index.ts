@@ -14,7 +14,9 @@ type Token = ReturnType<typeof token>
 
 type VueApp = ReturnType<typeof createApp>
 export type PluginDefinition = Parameters<VueApp['use']>
-export type ComponentDefinition = [string, Component]
+export type ComponentDefinition = Parameters<VueApp['component']>
+export type ComponentWalkerDefinition = ((...args: ComponentDefinition) => ComponentDefinition)
+export type RouteWalkerDefinition = ((route: RouteRecordRaw) => void)
 export type DirectiveDefinition = [string, Directive]
 
 const $ = {
@@ -27,7 +29,8 @@ const $ = {
   routes: token<RouteRecordRaw[]>('vue.routes'),
   routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
   navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
-  routeWalkers: token<NavigationGuard[]>('vue.routes.walkers'),
+  routeWalkers: token<RouteWalkerDefinition[]>('vue.routes.walkers'),
+  componentWalkers: token<ComponentWalkerDefinition[]>('vue.components.walkers'),
 }
 
 type RouteWalker = (item: RouteRecordRaw, parent?: RouteRecordRaw) => void
@@ -45,19 +48,45 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [$.app, {
       service: (
+        plugins: PluginDefinition[],
         components: ComponentDefinition[],
         directives: DirectiveDefinition[],
-        plugins: PluginDefinition[],
+        componentWalkers: ComponentWalkerDefinition[],
       ) => {
         return async (App: Component) => {
           const app = createApp(App)
+          const app_component = app.component.bind(app)
 
-          plugins.forEach(([...args]) => {
-            app.use(...args)
+          const proxyApp = new Proxy(app, {
+            get(target, prop: keyof VueApp) {
+              switch(prop) {
+                case 'use':
+                  return (...[plugin, options]: PluginDefinition) => {
+                    if(typeof plugin.install === 'function') {
+                      plugin.install(proxyApp, options)
+                      return proxyApp
+                    }
+                  }
+                case 'component':
+                  return (...args: ComponentDefinition | [string]) => {
+                    if(args.length === 1) {
+                      return app_component(...args)
+                    }
+                    app_component(...componentWalkers.reduce((prev, item) => item(...prev), args))
+                    return proxyApp
+                  }
+                default:
+                  return target[prop]
+              }
+            },
           })
 
-          components.forEach(([name, item]) => {
-            app.component(name, item)
+          plugins.forEach(([...args]) => {
+            proxyApp.use(...args)
+          })
+
+          components.forEach(item => {
+            app_component(...componentWalkers.reduce((prev, item) => item(...prev), item))
           })
 
           directives.forEach(([name, item]) => {
@@ -68,9 +97,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         }
       },
       arguments: [
+        $.plugins,
         $.components,
         $.directives,
-        $.plugins,
+        $.componentWalkers,
       ],
     }],
     [$.router, {
@@ -146,6 +176,22 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
       labels: [
         $.navigationGuards,
+      ],
+    }],
+    [token('application.directives'), {
+      service: () => {
+        return []
+      },
+      labels: [
+        $.directives,
+      ],
+    }],
+    [token('application.componentWalkers'), {
+      service: () => {
+        return []
+      },
+      labels: [
+        $.componentWalkers,
       ],
     }],
   ]

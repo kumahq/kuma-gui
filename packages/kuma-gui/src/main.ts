@@ -35,10 +35,9 @@ async function mountVueApplication() {
     // any DEV-time only service container configuration
     import.meta.env.MODE !== 'production'
       ? await (async () => {
-        const [application, x, xdebug, kuma, msw, fakeFs] = await Promise.all([
+        const [application, serviceMeshDebug, kuma, msw, fakeFs] = await Promise.all([
           import('@/app/application/debug'),
-          import('@/app/x'),
-          import('@/app/x/debug'),
+          import('@/app/service-mesh/debug'),
           import('@/app/kuma/debug'),
           import('@/app/msw'),
           import('@/app/fake-fs'),
@@ -48,11 +47,10 @@ async function mountVueApplication() {
           ...$,
           ...msw.TOKENS,
           ...fakeFs.TOKENS,
-          ...x.TOKENS,
         }
         return [
           ...application.services(TOKENS),
-          ...xdebug.services(TOKENS),
+          ...serviceMeshDebug.services(TOKENS),
           ...kuma.services(TOKENS),
           ...msw.services(TOKENS),
           ...fakeFs.services(TOKENS),
