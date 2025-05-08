@@ -114,40 +114,48 @@
 
           <XCard>
             <XLayout
-              type="stack"
+              type="columns"
+              class="columns-with-borders"
             >
-              <XLayout
-                type="columns"
-                class="columns-with-borders"
+              <ResourceStatus
+                :total="data?.services.total ?? 0"
+                data-testid="services-status"
               >
-                <ResourceStatus
-                  :total="data?.services.total ?? 0"
-                  data-testid="services-status"
-                >
-                  <template #title>
-                    {{ t('meshes.detail.services') }}
-                  </template>
-                </ResourceStatus>
+                <template #title>
+                  {{ t('meshes.detail.services') }}
+                </template>
+              </ResourceStatus>
 
-                <ResourceStatus
-                  :total="data?.dataplanesByType.standard.total ?? 0"
-                  :online="data?.dataplanesByType.standard.online ?? 0"
-                  data-testid="data-plane-proxies-status"
-                >
-                  <template #title>
-                    {{ t('meshes.detail.data_plane_proxies') }}
-                  </template>
-                </ResourceStatus>
+              <ResourceStatus
+                :total="data?.dataplanesByType.standard.total ?? 0"
+                :online="data?.dataplanesByType.standard.online ?? 0"
+                data-testid="data-plane-proxies-status"
+              >
+                <template #title>
+                  {{ t('meshes.detail.data_plane_proxies') }}
+                </template>
+              </ResourceStatus>
 
-                <ResourceStatus
-                  :total="data?.totalPolicyCount ?? 0"
-                  data-testid="policies-status"
+              <DataSource
+                :src="uri(PolicySources, '/policy-types', {})"
+                v-slot="{ data: resources }"
+              >
+                <template
+                  v-for="policyTypes in [resources?.policyTypes.map(item => item.name)]"
+                  :key="typeof policyTypes"
                 >
-                  <template #title>
-                    {{ t('meshes.detail.policies') }}
-                  </template>
-                </ResourceStatus>
-              </XLayout>
+                  <ResourceStatus
+                    :total="Object.entries(data?.resources || {}).reduce((prev, [key, { total }]) => {
+                      return (policyTypes || []).includes(key) ? prev + total : prev
+                    }, 0)"
+                    data-testid="policies-status"
+                  >
+                    <template #title>
+                      {{ t('meshes.detail.policies') }}
+                    </template>
+                  </ResourceStatus>
+                </template>
+              </DataSource>
             </XLayout>
           </XCard>
 
@@ -183,6 +191,7 @@ import type { Mesh } from '../data'
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
+import { sources as PolicySources } from '@/app/policies/sources'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{

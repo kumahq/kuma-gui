@@ -2,6 +2,7 @@ import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
 
+  const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
 
   const standard = fake.kuma.healthStatus()
@@ -46,6 +47,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
           }
           return prev
         }, {}),
+      },
+      resources: {
+        ...Object.fromEntries(fake.kuma.resourceNames(resourceCount).map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
       },
       dpVersions: {
         kumaDp: {
