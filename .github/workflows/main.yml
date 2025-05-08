@@ -33,22 +33,29 @@ jobs:
   install-dependencies:
     runs-on: ubuntu-latest
     outputs:
+      checkout: ${{ steps.arguments.outputs.checkout }}
+      node: ${{ steps.arguments.outputs.node }}
+      cache: ${{ steps.arguments.outputs.cache }}
       spec_groups: ${{ steps.set-groups.outputs.result }}
       packages: ${{ steps.meta.outputs.packages }}
       unit: ${{ steps.meta.outputs.unit }}
       e2e: ${{ steps.meta.outputs.e2e }}
     steps:
+      - id: arguments
+        run: |
+          echo 'checkout={}' \
+            >> $GITHUB_OUTPUT
+          echo 'node={"node-version-file": ".nvmrc"}' \
+            >> $GITHUB_OUTPUT
+          echo 'cache={"path": "**/node_modules,/home/runner/.cache/Cypress", "key": "${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}"}' \
+            >> $GITHUB_OUTPUT
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with: ${{ fromJSON(steps.cache.outputs.checkout) }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
+        with: ${{ fromJSON(steps.cache.outputs.node) }}
       - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with: ${{ fromJSON(steps.cache.outputs.cache) }}
         id: node-modules-cache
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           make install
@@ -85,15 +92,11 @@ jobs:
       Linting ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with: ${{ fromJSON(steps.cache.outputs.checkout) }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
+        with: ${{ fromJSON(steps.cache.outputs.node) }}
       - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        with: ${{ fromJSON(steps.cache.outputs.cache) }}
       - run: |
           make -C ${{ matrix.package.path }} lint
 
@@ -108,15 +111,11 @@ jobs:
       Unit tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with: ${{ fromJSON(steps.cache.outputs.checkout) }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
+        with: ${{ fromJSON(steps.cache.outputs.node) }}
       - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        with: ${{ fromJSON(steps.cache.outputs.cache) }}
       - run: |
           make -C ${{ matrix.package.path }} test/unit
 
@@ -134,15 +133,11 @@ jobs:
       Browser tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with: ${{ fromJSON(steps.cache.outputs.checkout) }}
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
+        with: ${{ fromJSON(steps.cache.outputs.node) }}
       - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+        with: ${{ fromJSON(steps.cache.outputs.cache) }}
       - env:
           SPEC_GROUPS: ${{ needs.install-dependencies.outputs.spec_groups }}
         run: |
