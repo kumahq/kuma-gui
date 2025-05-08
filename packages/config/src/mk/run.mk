@@ -1,5 +1,5 @@
 .PHONY: .run
-.run/e2e: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
+.run: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .run: install
 	@NODE_OPTIONS=--experimental-strip-types \
 		$(VITE) \

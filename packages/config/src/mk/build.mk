@@ -7,10 +7,9 @@
 			build
 
 .PHONY: build/preview
-build/preview: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
-build/preview: install
+build/preview:
 	@NODE_OPTIONS=--experimental-strip-types \
-		$(VITE) \
+		npx vite \
 			-c ./vite.config.development.ts \
 			--mode preview \
 			build
