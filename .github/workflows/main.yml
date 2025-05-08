@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: zgosalvez/github-actions-ensure-sha-pinned-actions@4830be28ce81da52ec70d65c552a7403821d98d4 # v3.0.23
+      - uses: zgosalvez/github-actions-ensure-sha-pinned-actions@2d6823da4039243036c86d76f503c84e2ded2517 # v3.0.24
         with:
           allowList:
             kumahq/
@@ -57,10 +57,9 @@ jobs:
           script: |
             const ci = require('./packages/config/scripts/ci.cjs')
             const json = {
-              'kuma-gui': ci.getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
+              '@kumahq/kuma-gui': ci.getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
             }
             return json
-
   lint-tests:
     needs:
       - install-dependencies
@@ -68,10 +67,18 @@ jobs:
     strategy:
       matrix:
         package:
-          - ./
-          - ./packages/kuma-http-api
-          - ./packages/kuma-gui
-          - ./packages/config
+          - name: "@kumahq/kuma-gui-monorepo"
+            path: ./
+          - name: "@kumahq/kuma-http-api"
+            path: ./packages/kuma-http-api
+          - name: "@kumahq/kuma-gui"
+            path: ./packages/kuma-gui
+          - name: "@kumahq/config"
+            path: ./packages/config
+          - name: "@kumahq/fake-api"
+            path: ./packages/fake-api
+    name: |
+      Linting ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -84,15 +91,19 @@ jobs:
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          make -C ${{ matrix.package }} lint
+          make -C ${{ matrix.package.path }} lint
 
   cli-tests:
-    needs: [install-dependencies]
+    needs:
+      - install-dependencies
     runs-on: ubuntu-latest
     strategy:
       matrix:
         package:
-          - ./packages/kuma-gui
+          - name: "@kumahq/kuma-gui"
+            path: ./packages/kuma-gui
+    name: |
+      Unit tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -105,22 +116,22 @@ jobs:
             /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          make -C ${{ matrix.package }} test/unit
+          make -C ${{ matrix.package.path }} test/unit
 
   browser-tests:
+    timeout-minutes: 30
     needs:
       - install-dependencies
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./packages/kuma-gui
-    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         package:
-          - kuma-gui
+          - name: "@kumahq/kuma-gui"
+            path: ./packages/kuma-gui
         container: [0, 1, 2, 3]
+    name: |
+      Browser tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -135,16 +146,18 @@ jobs:
       - env:
           SPEC_GROUPS: ${{ needs.install-dependencies.outputs.spec_groups }}
         run: |
-          make run/e2e &
-          make CYPRESS_SPEC="$(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package }}"]' | jq -cMr '.[${{ matrix.container }}]')" test/e2e
+          make -C ${{ matrix.package.path }} run/e2e &
+          make -C ${{ matrix.package.path }} \
+            CYPRESS_SPEC="$(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package.name }}"]' | jq -cMr '.[${{ matrix.container }}]')" \
+            test/e2e
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: failure()
         with:
-          name: cypress-artifacts-${{ matrix.package }}-${{ matrix.container }}
+          name: cypress-artifacts-${{ matrix.package.name }}-${{ matrix.container }}
           retention-days: ${{ github.event_name == 'pull_request' && 3 || 30 }}
           path: |
-            ./packages/kuma-gui/cypress/screenshots
-            ./packages/kuma-gui/cypress/videos
+            ${{ matrix.package.path }}/cypress/screenshots
+            ${{ matrix.package.path }}/cypress/videos
 
   post-checks:
     # There is a branch protection rule on the repo that requires "branch-protection" to

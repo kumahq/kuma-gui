@@ -79,8 +79,16 @@
           />
         </template>
 
-        <AppView>
-          <RouterView />
+        <AppView
+          :notifications="true"
+        >
+          <RouterView
+            v-slot="{ Component }"
+          >
+            <component
+              :is="Component"
+            />
+          </RouterView>
         </AppView>
       </ApplicationShell>
     </RouteView>

@@ -1,4 +1,4 @@
-Feature: Overview: Detail view content
+Feature: control-planes / DetailView
 
   Background:
     Given the CSS selectors
@@ -40,11 +40,60 @@ Feature: Overview: Detail view content
                 partiallyDegraded: 0
                 offline: 0
       """
+  Scenario: Shows expected content
+    Given the environment
+      """
+      KUMA_MESH_COUNT: 3
+      KUMA_RESOURCE_COUNT: 100
+      KUMA_ACTIVE_RESOURCE_COUNT: 0
+      """
+    And the URL "/global-insight" responds with
+      """
+      body:
+        dataplanes:
+          standard:
+            total: 9
+            online: 7
+            partiallyDegraded: 1
+            offline: 1
+        meshes:
+          total: 3
+        services:
+          external:
+            total: 4
+          internal:
+            total: 15
+            online: 9
+            partiallyDegraded: 3
+            offline: 3
+        zones:
+          controlPlanes:
+            total: 1
+            online: 1
+        resources:
+          MeshService:
+            total: 1
+          MeshMultiZoneService:
+            total: 2
+          MeshExternalService:
+            total: 3
+          MeshHTTPRoute:
+            total: 1
+          MeshTCPRoute:
+            total: 1
+      """
+    When I visit the "/" URL
+
+    And the "[data-testid='meshes-status']" element contains "3"
+    And the "[data-testid='services-status']" element contains "15"
+    And the "[data-testid='services-status']" element contains "6"
+    And the "[data-testid='data-plane-proxies-status']" element contains "9"
+    And the "[data-testid='policies-status']" element contains "2"
+    And the "$meshes-details" element exists
 
   Scenario: Shows expected content in non-federated mode
     Given the environment
       """
-      KUMA_MESH_COUNT: 3
       KUMA_MODE: zone
       """
     And the URL "/global-insight" responds with
@@ -70,8 +119,6 @@ Feature: Overview: Detail view content
           controlPlanes:
             total: 1
             online: 1
-        policies:
-          total: 55
         resources:
           MeshService:
             total: 1
@@ -83,19 +130,11 @@ Feature: Overview: Detail view content
     When I visit the "/" URL
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element doesn't exist
-    And the "[data-testid='meshes-status']" element contains "3"
-    And the "[data-testid='services-status']" element contains "15"
-    And the "[data-testid='services-status']" element contains "6"
-    And the "[data-testid='data-plane-proxies-status']" element contains "9"
-    And the "[data-testid='policies-status']" element contains "55"
     And the "$zone-control-planes-details" element doesn't exist
-    And the "$meshes-details" element exists
 
   Scenario: Shows expected content in federated mode
     Given the environment
       """
-      KUMA_ZONE_COUNT: 2
-      KUMA_MESH_COUNT: 3
       KUMA_MODE: global
       KUMA_SUBSCRIPTION_COUNT: 2
       """
@@ -122,8 +161,6 @@ Feature: Overview: Detail view content
           controlPlanes:
             total: 2
             online: 1
-        policies:
-          total: 55
         resources:
           MeshService:
             total: 1
@@ -161,10 +198,4 @@ Feature: Overview: Detail view content
     When I visit the "/" URL
     Then the page title contains "Overview"
     And the "[data-testid='zone-control-planes-status']" element contains "2"
-    And the "[data-testid='meshes-status']" element contains "3"
-    And the "[data-testid='services-status']" element contains "15"
-    And the "[data-testid='services-status']" element contains "6"
-    And the "[data-testid='data-plane-proxies-status']" element contains "9"
-    And the "[data-testid='policies-status']" element contains "55"
     And the "$zone-control-planes-details" element exists
-    And the "$meshes-details" element exists

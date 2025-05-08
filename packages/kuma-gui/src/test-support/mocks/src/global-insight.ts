@@ -1,6 +1,8 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 
 export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) => {
+  const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
+
   const meshTotal = parseInt(env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 100 })}`))
   const policyTotal = fake.number.int({ min: 1, max: 100 })
 
@@ -66,8 +68,8 @@ export default ({ fake, env }: EndpointDependencies): MockResponder => (_req) =>
         },
       },
       resources: {
-        ...Object.fromEntries(fake.kuma.resourceNames().map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
+        ...Object.fromEntries(fake.kuma.resourceNames(resourceCount).map((name) => [name, { total: fake.number.int({ min: 0, max: 20 })}])),
       },
     },
-  } 
+  }
 }
