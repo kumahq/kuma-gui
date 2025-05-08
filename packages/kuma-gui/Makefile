@@ -35,6 +35,9 @@ lint: .lint/js .lint/ts .lint/css .lint/lock .lint/gherkin ## Dev: Run lint chec
 .PHONY: lint/script
 lint/script: .lint/script ## Dev: Run lint checks on both JS/TS
 
+.PHONY: lint/css
+lint/css: .lint/css ## Dev: Run lint checks on styles in .css, .scss and .vue files
+
 .PHONY: run
 run: .run ## Dev: run local development instance of the GUI. If you are working on the GUI then you are probably looking for this.
 
