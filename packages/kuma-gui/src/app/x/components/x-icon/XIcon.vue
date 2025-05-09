@@ -53,9 +53,8 @@ import {
   RemoveIcon,
   KeyboardReturnIcon,
 } from '@kong/icons'
-import { useSlots, useAttrs } from 'vue'
+import { useSlots, useAttrs, useId } from 'vue'
 
-import { uniqueId } from '@/app/application'
 import XAnonymous from '@/app/x/components/x-anonymous/XAnonymous.vue'
 import XTooltip from '@/app/x/components/x-tooltip/XTooltip.vue'
 
@@ -91,7 +90,7 @@ const icons = {
   unhealthy: RemoveIcon,
   submit: KeyboardReturnIcon,
 } as const
-const id = uniqueId('-x-icon-tooltip')
+const id = `-x-icon-tooltip-${useId()}`
 const slots = useSlots()
 
 const props = withDefaults(defineProps<{
