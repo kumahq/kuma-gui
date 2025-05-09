@@ -81,11 +81,6 @@ export const config: UserConfigFn = () => {
         },
       },
     },
-    build: {
-      modulePreload: {
-        resolveDependencies: () => [],
-      },
-    },
 
     test: {
       globals: false,
