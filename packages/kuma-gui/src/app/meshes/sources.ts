@@ -26,8 +26,9 @@ export const sources = (api: KumaApi) => {
     '/mesh-insights': async (params) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
+      const search = MeshInsight.search(params.search)
 
-      return MeshInsight.fromCollection(await api.getAllMeshInsights({ size, offset }))
+      return MeshInsight.fromCollection(await api.getAllMeshInsights({ size, offset, ...search }))
     },
 
     '/mesh-insights/:name': async (params) => {
