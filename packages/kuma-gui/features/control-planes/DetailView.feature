@@ -5,6 +5,10 @@ Feature: control-planes / DetailView
       | Alias                       | Selector                                    |
       | zone-control-planes-details | [data-testid='zone-control-planes-details'] |
       | meshes-details              | [data-testid='meshes-details']              |
+    And the environment
+      """
+      KUMA_MESH_COUNT: 3
+      """
     And the URL "/mesh-insights" responds with
       """
       body:
@@ -43,7 +47,6 @@ Feature: control-planes / DetailView
   Scenario: Shows expected content
     Given the environment
       """
-      KUMA_MESH_COUNT: 3
       KUMA_RESOURCE_COUNT: 100
       KUMA_ACTIVE_RESOURCE_COUNT: 0
       """
