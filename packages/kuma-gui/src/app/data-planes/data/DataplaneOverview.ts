@@ -65,6 +65,7 @@ export const DataplaneOverview = {
 
     const tags = getTags(networking)
     const isCertExpired = getIsCertExpired(dataplaneInsight)
+    const isCertExpiresSoon = getIsCertExpiresSoon(dataplaneInsight)
     const services = tags.filter((tag) => tag.label === 'kuma.io/service').map(({ value }) => value)
     const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
@@ -109,6 +110,7 @@ export const DataplaneOverview = {
         }
       })(),
       isCertExpired,
+      isCertExpiresSoon,
       services,
       zone,
       config,
@@ -150,6 +152,13 @@ function getTags({ gateway, inbounds }: DataplaneNetworking): LabelValue[] {
 
 function getIsCertExpired({ mTLS }: DataplaneInsight): boolean {
   return mTLS ? Date.now() > new Date(mTLS.certificateExpirationTime).getTime() : false
+}
+
+function getIsCertExpiresSoon({ mTLS }: DataplaneInsight): boolean {
+  if(!mTLS) return false
+  const expiryTime = new Date(mTLS.certificateExpirationTime).getTime()
+  const weekBefore = expiryTime - 3_600_000 * 24 * 7
+  return Date.now() > weekBefore && Date.now() < expiryTime
 }
 
 export type DataplaneOverview = ReturnType<typeof DataplaneOverview.fromObject>
