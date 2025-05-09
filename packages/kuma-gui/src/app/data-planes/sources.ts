@@ -11,6 +11,7 @@ import type { DataSourceResponse } from '@/app/application'
 import { YAML } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -196,6 +197,17 @@ export const sources = (source: Source, api: KumaApi) => {
         offset,
         size,
       }))
+    },
+
+    '/meshes/:mesh/dataplanes/of/:type/validate': async (params) => {
+      const { search } = params
+      const allowedFilters = ['name', 'tag', 'zone', 'namespace']
+      const invalidFilters = Resource.validateFilterQuery(search, { allowedFilters })
+
+      return {
+        allowedFilters,
+        invalidFilters,
+      }
     },
 
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {

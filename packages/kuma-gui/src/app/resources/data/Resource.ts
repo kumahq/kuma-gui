@@ -12,6 +12,10 @@ type SearchOptions = {
   defaultKey?: string
 }
 
+type ValidateFilterQueryOptions = {
+  allowedFilters?: string[]
+}
+
 const isShortFilter = (k: string): k is keyof typeof filters => k in filters
 
 export const Resource = {
@@ -40,5 +44,34 @@ export const Resource = {
           }
       }
     }, {} as Record<string, string>)
+  },
+
+  validateFilterQuery(query: string, options: ValidateFilterQueryOptions = {}) {
+    const { allowedFilters = [] } = options
+    const parts = query.trim().split(/\s+/)
+    
+    return parts.map((part) => {
+      const [key, value] = part.split(/:(.*)/)
+      const filter = {
+        raw: part,
+        key,
+        value,
+      }
+
+      switch(true) {
+        case key && !value?.length:
+          return {
+            ...filter,
+            message: 'filter.missing-value',
+          }
+        case key && value && !allowedFilters.includes(key):
+          return {
+            ...filter,
+            message: 'filter.invalid-key',
+          }
+        default:
+          return null
+      }
+    }).filter((filter) => !!filter)
   },
 }

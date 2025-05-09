@@ -32,7 +32,7 @@
               v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
               :key="chunk+index"
             >
-              <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
+              <span :class="{ highlight: regex.test(chunk), invalid: !!props.validate?.(chunk) }">{{ chunk }}</span>
             </template>
           </div>
           <div class="input-wrapper">
@@ -92,6 +92,13 @@
           />
         </div>
         <div
+          v-for="(_, key) in $slots"
+          :key="key"
+          class="dropdown-item"
+        >
+          <slot :name="key" />
+        </div>
+        <div
           v-if="props.keys.length"
           class="dropdown-item bg-neutral-weakest"
         >
@@ -130,12 +137,23 @@ const props = withDefaults(defineProps<{
    * The default key, that is being used to filter for when there is no `key:value` pair but only a `value`
    */
   defaultKey?: string
+  /**
+   * Validation callback on a per individual filter basis
+   */
+  validate?: (chunk: string) => boolean
+  /**
+   * Provide some control about the open state of the dropdown.
+   * Useful during validation to keep the dropdown open in case of invalid filters.
+   */
+  open?: boolean
 }>(), {
   placeholder: undefined,
   name: undefined,
   value: '',
   keys: () => [],
   defaultKey: 'name',
+  validate: undefined,
+  open: undefined,
 })
 
 const emit = defineEmits<{
@@ -155,7 +173,7 @@ const onKeyEvent = ({ key }: KeyboardEvent) => {
   switch(key) {
     case 'Enter':
     case 'Escape':
-      return isDropdownOpen.value && dropdownRef.value?.hidePopover()
+      return isDropdownOpen.value && !props.open && dropdownRef.value?.hidePopover()
     default:
       return !isDropdownOpen.value && dropdownRef.value?.showPopover()
   }
@@ -242,6 +260,9 @@ onMounted(() => {
     &.highlight {
       background: #f0f4f7;
       border-radius: $kui-border-radius-20;
+      &.invalid {
+        background: $kui-color-background-warning-weak;
+      }
     }
   }
 }
@@ -319,6 +340,10 @@ input {
 
     dl {
       display: inline-flex;
+    }
+
+    strong {
+      color: $kui-color-text;
     }
   }
 
