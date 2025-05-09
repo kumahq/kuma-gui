@@ -14,6 +14,8 @@ data-planes:
       There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
     certificate-expired: !!text/markdown |
       The certificate for this dataplane has expired
+    certificate-expires-soon: !!text/markdown |
+      The certificate for this dataplane will expire soon
     no-mtls: !!text/markdown |
       This Data Plane Proxy does not have mTLS configured, yet —
       <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
@@ -107,11 +109,11 @@ data-planes:
       mtls:
         title: 'TLS'
         expiration_time:
-          title: Certificate expiration time
+          title: Certificate expires at
         generation_time:
-          title: Certificate generation time
+          title: Certificate generated at
         regenerations:
-          title: Generation
+          title: Certificate generation
         issued_backend:
           title: Certificate issued by
         supported_backends:
@@ -133,6 +135,7 @@ data-planes:
         Data Plane Proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
       warnings:
         dp-cp-incompatible: Version mismatch
+        certificate-expires-soon: Certificate expires soon
         certificate-expired: Certificate expired
   href:
     docs:
