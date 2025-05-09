@@ -7,6 +7,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
 
   const mesh = req.params.mesh as string
   const _name = query.get('name') ?? ''
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
+  const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const { offset, total, next, pageTotal } = pager(
@@ -24,7 +26,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const id = offset + i
         const name = `${fake.word.noun()}`
         const displayName = `${_name || name}-${id}`
-        const nspace = fake.k8s.namespace()
+        const nspace = namespaceQuery ?? fake.k8s.namespace()
+        const zone = zoneQuery ?? fake.word.noun()
 
         return {
           type: 'MeshExternalService',
@@ -38,7 +41,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 'kuma.io/display-name': displayName,
                 'k8s.kuma.io/namespace': nspace,
                 'kuma.io/origin': 'zone',
-                'kuma.io/zone': fake.word.noun(),
+                'kuma.io/zone': zone,
               },
             }
             : {}),
