@@ -5,6 +5,7 @@
       page: 1,
       size: Number,
       zone: '',
+      s: '',
     }"
     v-slot="{ route, t, can, uri, me }"
   >
@@ -12,6 +13,7 @@
       :src="uri(zoneSources, '/zone-cps', {}, {
         page: route.params.page,
         size: route.params.size,
+        search: route.params.s,
       })"
       v-slot="{ data, error, refresh }"
     >
@@ -39,214 +41,227 @@
           path="zone-cps.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />
+        <XTeleportTemplate
+          v-if="can('create zones') && (data?.items ?? []).length > 0"
+          :to="{ name: 'zone-cp-list-view-actions'}"
+        >
+          <XAction
+            action="create"
+            appearance="primary"
+            :to="{ name: 'zone-create-view' }"
+            data-testid="create-zone-link"
+          >
+            {{ t('zones.index.create') }}
+          </XAction>
+        </XTeleportTemplate>
         <XCard>
-          <XTeleportTemplate
-            v-if="can('create zones') && (data?.items ?? []).length > 0"
-            :to="{ name: 'zone-cp-list-view-actions'}"
-          >
-            <XAction
-              action="create"
-              appearance="primary"
-              :to="{ name: 'zone-create-view' }"
-              data-testid="create-zone-link"
+          <XLayout>
+            <search>
+              <form @submit.prevent>
+                <XSearch
+                  class="search-field"
+                  :keys="['name']"
+                  :value="route.params.s"
+                  @change="(s) => route.update({ page: 1, s })"
+                />
+              </form>
+            </search>
+            <DataLoader
+              :data="[data]"
+              :errors="[error]"
             >
-              {{ t('zones.index.create') }}
-            </XAction>
-          </XTeleportTemplate>
-          <DataLoader
-            :data="[data]"
-            :errors="[error]"
-          >
-            <template
-              #loadable
-            >
-              <DataCollection
-                type="zone-cps"
-                :items="data?.items ?? [undefined]"
-                :page="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
-                @change="route.update"
+              <template
+                #loadable
               >
-                <AppCollection
-                  class="zone-cp-collection"
-                  data-testid="zone-cp-collection"
-                  :headers="[
-                    { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
-                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                    { ...me.get('headers.zoneCpVersion'), label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
-                    { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
-                    { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
-                    { ...me.get('headers.state'), label: 'Status', key: 'state' },
-                    { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
-                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                  ]"
-                  :items="data?.items"
-                  :is-selected-row="(row) => row.name === route.params.zone"
-                  @resize="me.set"
+                <DataCollection
+                  type="zone-cps"
+                  :items="data?.items ?? [undefined]"
+                  :page="route.params.page"
+                  :page-size="route.params.size"
+                  :total="data?.total"
+                  @change="route.update"
                 >
-                  <template
-                    #type="{ row: item }"
+                  <AppCollection
+                    class="zone-cp-collection"
+                    data-testid="zone-cp-collection"
+                    :headers="[
+                      { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
+                      { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                      { ...me.get('headers.zoneCpVersion'), label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
+                      { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
+                      { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
+                      { ...me.get('headers.state'), label: 'Status', key: 'state' },
+                      { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
+                      { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                    ]"
+                    :items="data?.items"
+                    :is-selected-row="(row) => row.name === route.params.zone"
+                    @resize="me.set"
                   >
                     <template
-                      v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === item.zoneInsight.environment) ?? 'kubernetes']"
-                      :key="env"
+                      #type="{ row: item }"
                     >
-                      <XIcon
-                        :name="env"
+                      <template
+                        v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === item.zoneInsight.environment) ?? 'kubernetes']"
+                        :key="env"
                       >
-                        {{ t(`common.product.environment.${env}`) }}
-                      </XIcon>
-                    </template>
-                  </template>
-                  <template #name="{ row: item }">
-                    <XAction
-                      data-action
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: item.name,
-                        },
-                        query: {
-                          page: route.params.page,
-                          size: route.params.size,
-                        },
-                      }"
-                    >
-                      {{ item.name }}
-                    </XAction>
-                  </template>
-
-                  <template #zoneCpVersion="{ row: item }">
-                    {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
-                  </template>
-
-                  <template #ingress="{ row: item }">
-                    <template
-                      v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
-                    >
-                      {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                    </template>
-                  </template>
-
-                  <template #egress="{ row: item }">
-                    <template
-                      v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
-                    >
-                      {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                    </template>
-                  </template>
-
-                  <template #state="{ row: item }">
-                    <StatusBadge
-                      :status="item.state"
-                    />
-                  </template>
-
-                  <template
-                    #warnings="{ row: item }"
-                  >
-                    <template
-                      v-for="warnings in [[
-                        {
-                          bool: item.zoneInsight.store === 'memory',
-                          key: 'store-memory',
-                        },
-                        {
-                          bool: !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
-                          key: 'global-cp-incompatible',
-                        },
-                      ].filter(({ bool }) => bool)]"
-                      :key="typeof warnings"
-                    >
-                      <XIcon
-                        v-if="warnings.length > 0"
-                        name="warning"
-                        data-testid="warning"
-                      >
-                        <ul>
-                          <li
-                            v-for="{ key } in warnings"
-                            :key="key"
-                            :data-testid="`warning-${key}`"
-                          >
-                            {{ t(`zone-cps.list.warnings.${key}`) }}
-                          </li>
-                        </ul>
-                      </XIcon>
-                      <template v-else>
-                        {{ t('common.collection.none') }}
+                        <XIcon
+                          :name="env"
+                        >
+                          {{ t(`common.product.environment.${env}`) }}
+                        </XIcon>
                       </template>
                     </template>
-                  </template>
-
-                  <template
-                    #actions="{ row }"
-                  >
-                    <XActionGroup>
-                      <XDisclosure
-                        v-slot="{ expanded, toggle }"
+                    <template #name="{ row: item }">
+                      <XAction
+                        data-action
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: item.name,
+                          },
+                          query: {
+                            page: route.params.page,
+                            size: route.params.size,
+                            s: route.params.s,
+                          },
+                        }"
                       >
-                        <XAction
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: row.name,
-                            },
-                          }"
+                        {{ item.name }}
+                      </XAction>
+                    </template>
+
+                    <template #zoneCpVersion="{ row: item }">
+                      {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
+                    </template>
+
+                    <template #ingress="{ row: item }">
+                      <template
+                        v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
+                      >
+                        {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                      </template>
+                    </template>
+
+                    <template #egress="{ row: item }">
+                      <template
+                        v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
+                      >
+                        {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                      </template>
+                    </template>
+
+                    <template #state="{ row: item }">
+                      <StatusBadge
+                        :status="item.state"
+                      />
+                    </template>
+
+                    <template
+                      #warnings="{ row: item }"
+                    >
+                      <template
+                        v-for="warnings in [[
+                          {
+                            bool: item.zoneInsight.store === 'memory',
+                            key: 'store-memory',
+                          },
+                          {
+                            bool: !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                            key: 'global-cp-incompatible',
+                          },
+                        ].filter(({ bool }) => bool)]"
+                        :key="typeof warnings"
+                      >
+                        <XIcon
+                          v-if="warnings.length > 0"
+                          name="warning"
+                          data-testid="warning"
                         >
-                          {{ t('common.collection.actions.view') }}
-                        </XAction>
-                        <XAction
-                          v-if="can('create zones')"
-                          appearance="danger"
-                          @click="toggle"
-                        >
-                          {{ t('common.collection.actions.delete') }}
-                        </XAction>
-                        <XTeleportTemplate
-                          :to="{ name: 'modal-layer' }"
-                        >
-                          <DataSink
-                            v-if="expanded"
-                            :src="`/zone-cps/${row.name}/delete`"
-                            @change="() => { toggle(); refresh() }"
-                            v-slot="{ submit, error: deleteError }"
-                          >
-                            <XPrompt
-                              :action="t('common.delete_modal.proceed_button')"
-                              :expected="row.name"
-                              data-testid="delete-zone-modal"
-                              @cancel="toggle"
-                              @submit="() => submit({})"
+                          <ul>
+                            <li
+                              v-for="{ key } in warnings"
+                              :key="key"
+                              :data-testid="`warning-${key}`"
                             >
-                              <template
-                                #title
+                              {{ t(`zone-cps.list.warnings.${key}`) }}
+                            </li>
+                          </ul>
+                        </XIcon>
+                        <template v-else>
+                          {{ t('common.collection.none') }}
+                        </template>
+                      </template>
+                    </template>
+
+                    <template
+                      #actions="{ row }"
+                    >
+                      <XActionGroup>
+                        <XDisclosure
+                          v-slot="{ expanded, toggle }"
+                        >
+                          <XAction
+                            :to="{
+                              name: 'zone-cp-detail-view',
+                              params: {
+                                zone: row.name,
+                              },
+                            }"
+                          >
+                            {{ t('common.collection.actions.view') }}
+                          </XAction>
+                          <XAction
+                            v-if="can('create zones')"
+                            appearance="danger"
+                            @click="toggle"
+                          >
+                            {{ t('common.collection.actions.delete') }}
+                          </XAction>
+                          <XTeleportTemplate
+                            :to="{ name: 'modal-layer' }"
+                          >
+                            <DataSink
+                              v-if="expanded"
+                              :src="`/zone-cps/${row.name}/delete`"
+                              @change="() => { toggle(); refresh() }"
+                              v-slot="{ submit, error: deleteError }"
+                            >
+                              <XPrompt
+                                :action="t('common.delete_modal.proceed_button')"
+                                :expected="row.name"
+                                data-testid="delete-zone-modal"
+                                @cancel="toggle"
+                                @submit="() => submit({})"
                               >
-                                {{ t('common.delete_modal.title', { type: 'Zone' }) }}
-                              </template>
-                              <XI18n
-                                path="common.delete_modal.text"
-                                :params="{
-                                  type: 'Zone',
-                                  name: row.name,
-                                }"
-                              />
-                              <DataLoader
-                                class="mt-4"
-                                :errors="[deleteError]"
-                                :loader="false"
-                              />
-                            </XPrompt>
-                          </DataSink>
-                        </XTeleportTemplate>
-                      </XDisclosure>
-                    </XActionGroup>
-                  </template>
-                </AppCollection>
-              </DataCollection>
-            </template>
-          </DataLoader>
+                                <template
+                                  #title
+                                >
+                                  {{ t('common.delete_modal.title', { type: 'Zone' }) }}
+                                </template>
+                                <XI18n
+                                  path="common.delete_modal.text"
+                                  :params="{
+                                    type: 'Zone',
+                                    name: row.name,
+                                  }"
+                                />
+                                <DataLoader
+                                  class="mt-4"
+                                  :errors="[deleteError]"
+                                  :loader="false"
+                                />
+                              </XPrompt>
+                            </DataSink>
+                          </XTeleportTemplate>
+                        </XDisclosure>
+                      </XActionGroup>
+                    </template>
+                  </AppCollection>
+                </DataCollection>
+              </template>
+            </DataLoader>
+          </XLayout>
         </XCard>
         <RouterView
           v-if="route.params.zone"
@@ -258,6 +273,7 @@
               query: {
                 page: route.params.page,
                 size: route.params.size,
+                s: route.params.s,
               },
             })"
           >
@@ -334,5 +350,8 @@ const getEgresses = (data: {items: ZoneEgressOverview[]}) => {
   color: inherit;
   font-weight: $kui-font-weight-semibold;
   text-decoration: none;
+}
+.search-field {
+  width: 100%;
 }
 </style>

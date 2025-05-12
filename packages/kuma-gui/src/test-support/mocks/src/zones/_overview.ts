@@ -1,10 +1,12 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const query = req.url.searchParams
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_ZONE_COUNT', `${fake.number.int({ min: 1, max: 1000 })}`),
     req,
     '/zones/_overview',
   )
+  const nameQuery = query.get('name')
 
   return {
     headers: {},
@@ -15,7 +17,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const shouldHaveZoneInsight = subscriptionCount !== 0 || fake.datatype.boolean()
 
         const id = offset + i
-        const name = i === 0 ? 'zone-0' : `${fake.word.noun()}-${id}`
+        const name = i === 0 ? 'zone-0' : `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
 
         return {
           type: 'ZoneOverview',
