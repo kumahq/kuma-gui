@@ -6,7 +6,7 @@ import {
 
 import type { ServiceDefinition } from '@/services/utils'
 import { token, createInjections } from '@/services/utils'
-import type { Component, Directive } from 'vue'
+import type { Directive } from 'vue'
 import type { Router, RouteRecordRaw, NavigationGuard } from 'vue-router'
 export { useRoute } from 'vue-router'
 
@@ -18,14 +18,16 @@ export type ComponentDefinition = Parameters<VueApp['component']>
 export type ComponentWalkerDefinition = ((...args: ComponentDefinition) => ComponentDefinition)
 export type RouteWalkerDefinition = ((route: RouteRecordRaw) => void)
 export type DirectiveDefinition = [string, Directive]
+export type GlobalDefinition = [string, unknown]
 
 const $ = {
-  app: token<(App: Component) => Promise<VueApp>>('vue.app'),
+  app: token<(App: VueApp) => Promise<VueApp>>('vue.app'),
   router: token<Router>('vue.router'),
 
   components: token('vue.components'),
   directives: token<DirectiveDefinition[]>('vue.directives'),
   plugins: token<PluginDefinition[]>('vue.plugins'),
+  globals: token<GlobalDefinition[]>('vue.globals'),
   routes: token<RouteRecordRaw[]>('vue.routes'),
   routesLabel: token<RouteRecordRaw[]>('vue.routes.label'),
   navigationGuards: token<NavigationGuard[]>('vue.routes.navigation.guards'),
@@ -51,10 +53,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         plugins: PluginDefinition[],
         components: ComponentDefinition[],
         directives: DirectiveDefinition[],
+        globals: GlobalDefinition[],
         componentWalkers: ComponentWalkerDefinition[],
       ) => {
-        return async (App: Component) => {
-          const app = createApp(App)
+        return async (app: VueApp) => {
           const app_component = app.component.bind(app)
 
           const proxyApp = new Proxy(app, {
@@ -93,6 +95,10 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
             app.directive(name, item)
           })
 
+          globals.forEach(([name, obj]) => {
+            app.config.globalProperties[name] = obj
+          })
+
           return app
         }
       },
@@ -100,6 +106,7 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
         $.plugins,
         $.components,
         $.directives,
+        $.globals,
         $.componentWalkers,
       ],
     }],
@@ -184,6 +191,14 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       },
       labels: [
         $.directives,
+      ],
+    }],
+    [token('application.globals'), {
+      service: () => {
+        return []
+      },
+      labels: [
+        $.globals,
       ],
     }],
     [token('application.componentWalkers'), {

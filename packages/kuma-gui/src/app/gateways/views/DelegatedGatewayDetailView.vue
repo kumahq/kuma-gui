@@ -177,6 +177,10 @@
                           key: 'dp-cp-incompatible',
                         },
                         {
+                          bool: item.isCertExpiresSoon,
+                          key: 'certificate-expires-soon',
+                        },
+                        {
                           bool: item.isCertExpired,
                           key: 'certificate-expired',
                         },
