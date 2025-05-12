@@ -28,8 +28,9 @@ lint: .lint/js ## Dev: Run lint checks
 ## repository to regenerate the specs before running `make build`
 KUMAHQ_HTTP_API := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-http-api") | .key')
 .PHONY: build
+build: OPENAPI_TS ?= $(shell $(MAKE) resolve/bin BIN=openapi-typescript)
 build: types/fetch install ## Regenerate the TS types from kumahq/kuma OpenAPI specs
-	@npx openapi-typescript \
+	@$(OPENAPI_TS) \
 		$(KUMAHQ_HTTP_API)/kuma/docs/generated/openapi.yaml \
 		-o $(KUMAHQ_HTTP_API)/index.d.ts
 

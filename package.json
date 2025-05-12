@@ -5,11 +5,8 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-    "@kumahq/config": "*"
-  },
   "devDependencies": {
-    "eslint": "^9.25.1",
+    "@kumahq/config": "*",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1"
   },
