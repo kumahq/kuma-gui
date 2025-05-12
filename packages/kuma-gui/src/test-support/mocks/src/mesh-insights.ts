@@ -1,10 +1,13 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const query = req.url.searchParams
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.number.int({ min: 1, max: 20 })}`),
     req,
     '/mesh-insights',
   )
+
+  const nameQuery = query.get('name')
 
   return {
     headers: {},
@@ -12,7 +15,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
-        const name = id === 0 ? 'default' : `${fake.word.noun()}-${id}`
+        const name = id === 0 ? 'default' : `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.word.noun()}-${id}`
 
         const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
         const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))

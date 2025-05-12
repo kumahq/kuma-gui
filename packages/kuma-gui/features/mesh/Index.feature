@@ -8,6 +8,7 @@ Feature: mesh / index
       | breadcrumbs    | .k-breadcrumbs                               |
       | button-refresh | [data-testid='data-overview-refresh-button'] |
       | navigation     | [data-testid='mesh-tabs'] ul >               |
+      | input-search   | [data-testid='filter-bar-filter-input']      |
     Given the environment
       """
       KUMA_MESH_COUNT: 2
@@ -38,3 +39,15 @@ Feature: mesh / index
       | Mesh         | Selector           |
       | another-mesh | $item:nth-child(2) |
       | default      | $item:nth-child(1) |
+
+  Scenario: Sending filters
+    Then the "$input-search" element exists
+    And I "type" "foo" into the "$input-search" element
+    And I "type" "{enter}" into the "$input-search" element
+    Then the URL "/mesh-insights" was requested with
+      """
+      searchParams:
+        name: foo
+        offset: 0
+        size: 50
+      """

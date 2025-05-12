@@ -44,6 +44,7 @@ Feature: control-planes / DetailView
                 partiallyDegraded: 0
                 offline: 0
       """
+
   Scenario: Shows expected content
     Given the environment
       """
@@ -86,7 +87,6 @@ Feature: control-planes / DetailView
             total: 1
       """
     When I visit the "/" URL
-
     And the "[data-testid='meshes-status']" element contains "3"
     And the "[data-testid='services-status']" element contains "15"
     And the "[data-testid='services-status']" element contains "6"
