@@ -107,7 +107,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
+import { ref } from 'vue'
 
 const props = withDefaults(defineProps<{
   /**
@@ -166,14 +167,11 @@ const onInput = (event: Event): void => {
   inputValue.value = value
 }
 
-onMounted(() => {
-  const observer = new ResizeObserver(([e]) => {
-    width.value = e?.contentRect?.width
+useResizeObserver(contentRef, ([entry]) => {
+  width.value = entry?.contentRect?.width
 
-    // keep the cursor position in the view
-    containerRef.value?.scrollBy(inputRef.value?.scrollLeft ?? 0, 0)
-  })
-  observer.observe(contentRef.value as HTMLElement)
+  // keep the cursor position in the view
+  containerRef.value?.scrollBy(inputRef.value?.scrollLeft ?? 0, 0)
 })
 </script>
 
