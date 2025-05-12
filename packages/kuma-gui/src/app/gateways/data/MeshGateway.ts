@@ -1,3 +1,4 @@
+import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   MeshGateway as PartialMeshGateway,
@@ -5,6 +6,10 @@ import type {
 type PartialMeshGatewayList = PaginatedApiListResponse<PartialMeshGateway>
 
 export const MeshGateway = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject(item: PartialMeshGateway) {
     const labels = typeof item.labels !== 'undefined' ? item.labels : {}
     return {

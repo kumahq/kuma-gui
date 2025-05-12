@@ -23,8 +23,9 @@ export const sources = (api: KumaApi) => {
     '/meshes/:mesh/mesh-gateways': async (params) => {
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
+      const search = MeshGateway.search(params.search)
 
-      return MeshGateway.fromCollection(await api.getAllMeshGatewaysFromMesh({ mesh }, { size, offset }))
+      return MeshGateway.fromCollection(await api.getAllMeshGatewaysFromMesh({ mesh }, { size, offset, ...search }))
     },
 
     '/meshes/:mesh/mesh-gateways/:name': async (params) => {
