@@ -1,4 +1,5 @@
 import { get } from '@/app/application'
+import { Resource } from '@/app/resources/data/Resource'
 import { SubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
@@ -62,6 +63,10 @@ export const ZoneInsight = {
 export type ZoneInsight = ReturnType<typeof ZoneInsight.fromObject>
 
 export const ZoneOverview = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject: (item: PartialZoneOverview) => {
     const insight = ZoneInsight.fromObject(item.zoneInsight)
     const zone = Zone.fromObject(item.zone)

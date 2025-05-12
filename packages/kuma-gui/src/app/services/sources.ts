@@ -37,6 +37,8 @@ export const sources = (api: KumaApi) => {
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
+      const search = MeshService.search(params.search)
+
       const res = await http.GET('/meshes/{mesh}/meshservices', {
         params: {
           path: {
@@ -46,6 +48,7 @@ export const sources = (api: KumaApi) => {
           query: {
             offset,
             size,
+            ...search,
           },
         },
       })
@@ -88,6 +91,8 @@ export const sources = (api: KumaApi) => {
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
+      const search = MeshMultiZoneService.search(params.search)
+
       const res = await http.GET('/meshes/{mesh}/meshmultizoneservices', {
         params: {
           path: {
@@ -97,6 +102,7 @@ export const sources = (api: KumaApi) => {
           query: {
             offset,
             size,
+            ...search,
           },
         },
       })
@@ -139,6 +145,8 @@ export const sources = (api: KumaApi) => {
       const { mesh, size } = params
       const offset = params.size * (params.page - 1)
 
+      const search = MeshExternalService.search(params.search)
+
       const res = await http.GET('/meshes/{mesh}/meshexternalservices', {
         params: {
           path: {
@@ -148,6 +156,7 @@ export const sources = (api: KumaApi) => {
           query: {
             offset,
             size,
+            ...search,
           },
         },
       })

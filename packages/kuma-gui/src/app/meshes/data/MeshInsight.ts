@@ -1,3 +1,4 @@
+import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
   MeshInsight as PartialMeshInsight,
@@ -53,6 +54,10 @@ function getDataplaneStatusCounts(
 
 
 export const MeshInsight = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject(partialMeshInsight: PartialMeshInsight): MeshInsight {
     const dataplanes = getDataplaneStatusCounts(partialMeshInsight.dataplanes)
     const dataplanesByType = {

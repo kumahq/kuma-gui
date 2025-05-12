@@ -1,8 +1,13 @@
+import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 type GeneratedMeshExternalService = components['schemas']['MeshExternalServiceItem']
 type GeneratedMeshExternalServiceList = components['responses']['MeshExternalServiceList']['content']['application/json']
 
 export const MeshExternalService = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject(item: GeneratedMeshExternalService) {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name

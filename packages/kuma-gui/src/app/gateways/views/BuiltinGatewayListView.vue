@@ -6,6 +6,7 @@
       size: Number,
       mesh: '',
       gateway: '',
+      s: '',
     }"
     v-slot="{ route, t, can, me, uri }"
   >
@@ -13,120 +14,138 @@
       :docs="t('builtin-gateways.href.docs')"
     >
       <XCard>
-        <DataLoader
-          :src="uri(sources, `/meshes/:mesh/mesh-gateways`, {
-            mesh: route.params.mesh,
-          }, {
-            page: route.params.page,
-            size: route.params.size,
-          })"
-        >
-          <template
-            #loadable="{ data }"
+        <XLayout>
+          <search>
+            <form
+              @submit.prevent
+            >
+              <XSearch
+                class="search-field"
+                :keys="['name', 'zone']"
+                :value="route.params.s"
+                @change="(s) => route.update({ page: 1, s })"
+              />
+            </form>
+          </search>
+
+          <DataLoader
+            :src="uri(sources, `/meshes/:mesh/mesh-gateways`, {
+              mesh: route.params.mesh,
+            }, {
+              page: route.params.page,
+              size: route.params.size,
+              search: route.params.s,
+            })"
           >
-            <DataCollection
-              type="gateways"
-              :items="data?.items ?? [undefined]"
-              :page="route.params.page"
-              :page-size="route.params.size"
-              :total="data?.total"
-              @change="route.update"
+            <template
+              #loadable="{ data }"
             >
-              <AppCollection
-                class="builtin-gateway-collection"
-                data-testid="builtin-gateway-collection"
-                :headers="[
-                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                ]"
-                :items="data?.items"
-                @resize="me.set"
+              <DataCollection
+                type="gateways"
+                :items="data?.items ?? [undefined]"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                :total="data?.total"
+                @change="route.update"
               >
-                <template #name="{ row: item }">
-                  <XCopyButton
-                    :text="item.name"
-                  >
-                    <XAction
-                      data-action
-                      :to="{
-                        name: 'builtin-gateway-summary-view',
-                        query: {
-                          size: route.params.size,
-                          page: route.params.page,
-                        },
-                        params: {
-                          mesh: item.mesh,
-                          gateway: item.id,
-                        },
-                      }"
+                <AppCollection
+                  class="builtin-gateway-collection"
+                  data-testid="builtin-gateway-collection"
+                  :headers="[
+                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                    ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                  ]"
+                  :items="data?.items"
+                  @resize="me.set"
+                >
+                  <template #name="{ row: item }">
+                    <XCopyButton
+                      :text="item.name"
                     >
-                      {{ item.name }}
-                    </XAction>
-                  </XCopyButton>
-                </template>
-
-                <template #zone="{ row }">
-                  <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
-                    <XAction
-                      :to="{
-                        name: 'zone-cp-detail-view',
-                        params: {
-                          zone: row.labels['kuma.io/zone'],
-                        },
-                      }"
-                    >
-                      {{ row.labels['kuma.io/zone'] }}
-                    </XAction>
+                      <XAction
+                        data-action
+                        :to="{
+                          name: 'builtin-gateway-summary-view',
+                          query: {
+                            size: route.params.size,
+                            page: route.params.page,
+                            s: route.params.s,
+                          },
+                          params: {
+                            mesh: item.mesh,
+                            gateway: item.id,
+                          },
+                        }"
+                      >
+                        {{ item.name }}
+                      </XAction>
+                    </XCopyButton>
                   </template>
 
-                  <template v-else>
-                    {{ t('common.detail.none') }}
-                  </template>
-                </template>
+                  <template #zone="{ row }">
+                    <template v-if="row.labels && row.labels['kuma.io/origin'] === 'zone' && row.labels['kuma.io/zone']">
+                      <XAction
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: row.labels['kuma.io/zone'],
+                          },
+                        }"
+                      >
+                        {{ row.labels['kuma.io/zone'] }}
+                      </XAction>
+                    </template>
 
-                <template #actions="{ row: item }">
-                  <XActionGroup>
-                    <XAction
-                      :to="{
-                        name: 'builtin-gateway-detail-view',
-                        params: {
-                          mesh: item.mesh,
-                          gateway: item.name,
-                        },
-                      }"
-                    >
-                      {{ t('common.collection.actions.view') }}
-                    </XAction>
-                  </XActionGroup>
-                </template>
-              </AppCollection>
-            </DataCollection>
-            <RouterView
-              v-if="route.child()"
-              v-slot="{ Component }"
-            >
-              <SummaryView
-                @close="route.replace({
-                  name: 'builtin-gateway-list-view',
-                  params: {
-                    mesh: route.params.mesh,
-                  },
-                  query: {
-                    page: route.params.page,
-                    size: route.params.size,
-                  },
-                })"
+                    <template v-else>
+                      {{ t('common.detail.none') }}
+                    </template>
+                  </template>
+
+                  <template #actions="{ row: item }">
+                    <XActionGroup>
+                      <XAction
+                        :to="{
+                          name: 'builtin-gateway-detail-view',
+                          params: {
+                            mesh: item.mesh,
+                            gateway: item.name,
+                          },
+                        }"
+                      >
+                        {{ t('common.collection.actions.view') }}
+                      </XAction>
+                    </XActionGroup>
+                  </template>
+                </AppCollection>
+              </DataCollection>
+              <RouterView
+                v-if="route.child()"
+                v-slot="{ Component }"
               >
-                <component
-                  :is="Component"
-                  v-if="typeof data !== 'undefined'"
-                  :items="data.items"
-                />
-              </SummaryView>
-            </RouterView>
-          </template>
-        </DataLoader>
+                <SummaryView
+                  @close="route.replace({
+                    name: 'builtin-gateway-list-view',
+                    params: {
+                      mesh: route.params.mesh,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                      s: route.params.s,
+                    },
+                  })"
+                >
+                  <component
+                    :is="Component"
+                    v-if="typeof data !== 'undefined'"
+                    :items="data.items"
+                  />
+                </SummaryView>
+              </RouterView>
+            </template>
+          </DataLoader>
+        </XLayout>
       </XCard>
     </AppView>
   </RouteView>
@@ -137,3 +156,8 @@ import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 </script>
+<style lang="scss" scoped>
+.search-field {
+  width: 100%;
+}
+</style>

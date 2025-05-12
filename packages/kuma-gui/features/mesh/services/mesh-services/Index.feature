@@ -10,6 +10,7 @@ Feature: mesh / services / mesh-services / index
       | action-group  | $item [data-testid='x-action-group-control']                                 |
       | view          | $item [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
       | action        | $item [data-action]                                                          |
+      | input-search  | [data-testid='filter-bar-filter-input']                                      |
     And the environment
       """
       KUMA_SERVICE_COUNT: 1
@@ -52,6 +53,25 @@ Feature: mesh / services / mesh-services / index
       Then I click the "$summary-title" element
       Then the URL contains "monitor-proxy-0.kuma-demo/overview"
       And the "[data-testid='mesh-service-detail-view']" element exists
+
+      Examples:
+        | URL                                    |
+        | /meshes/default/services/mesh-services |
+
+    Scenario Outline: sending filters to the API
+      When I visit the "<URL>" URL
+      Then the "$input-search" element exists
+      When I "type" "foo namespace:bar zone:baz" into the "$input-search" element
+      And I "type" "{enter}" into the "$input-search" element
+      Then the URL "/meshes/default/meshservices" was requested with
+        """
+        searchParams:
+          name: foo
+          filter[labels.k8s.kuma.io/namespace]: bar
+          filter[labels.kuma.io/zone]: baz
+          offset: 0
+          size: 50
+        """
 
       Examples:
         | URL                                    |
