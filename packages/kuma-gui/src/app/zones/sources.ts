@@ -21,7 +21,9 @@ export const sources = (source: Source, api: KumaApi) => {
     '/zone-cps': async (params) => {
       const { size } = params
       const offset = size * (params.page - 1)
-      return ZoneOverview.fromCollection(await api.getAllZoneOverviews({ size, offset }))
+      const search = ZoneOverview.search(params.search)
+
+      return ZoneOverview.fromCollection(await api.getAllZoneOverviews({ size, offset, ...search }))
     },
 
     // doesn't resolve until we have at least one zone and one zone is online
