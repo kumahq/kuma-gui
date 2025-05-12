@@ -2,11 +2,25 @@ Feature: mesh / dataplanes / warnings
 
   Background:
     Given the CSS selectors
-      | Alias                     | Selector                                                                        |
-      | expired-cert-warning      | [data-testid^='notification-data-planes.notifications.certificate-expired']     |
-      | unsupported-kuma-warning  | [data-testid^='notification-data-planes.notifications.dp-cp-incompatible']      |
-      | unsupported-envoy-warning | [data-testid^='notification-data-planes.notifications.envoy-dp-incompatible']   |
-      | unsupported-zone-warning  | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible'] |
+      | Alias                     | Selector                                                                         |
+      | expires-soon-cert-warning | [data-testid^='notification-data-planes.notifications.certificate-expires-soon'] |
+      | expired-cert-warning      | [data-testid^='notification-data-planes.notifications.certificate-expired']      |
+      | unsupported-kuma-warning  | [data-testid^='notification-data-planes.notifications.dp-cp-incompatible']       |
+      | unsupported-envoy-warning | [data-testid^='notification-data-planes.notifications.envoy-dp-incompatible']    |
+      | unsupported-zone-warning  | [data-testid^='notification-data-planes.notifications.dp-zone-cp-incompatible']  |
+
+  Scenario: With a certificate expires soon (at least 1 week before) a cert warning is shown
+    Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with
+      """
+      body:
+        dataplaneInsight:
+          mTLS:
+            certificateExpirationTime: 2022-10-03T12:40:13Z
+            lastCertificateRegeneration: 2021-10-03T12:40:13Z
+      """
+    When the date is "2022-10-02T12:40:13Z"
+    And I visit the "/meshes/default/data-planes/dpp-1/overview" URL
+    Then the "$expires-soon-cert-warning" element exists
 
   Scenario: With an expired certificate a cert warning is shown
     Given the URL "/meshes/default/dataplanes/dpp-1/_overview" responds with

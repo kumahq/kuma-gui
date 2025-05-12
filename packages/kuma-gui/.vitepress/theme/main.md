@@ -15,7 +15,6 @@ const $ = {
   ...VUE,
   ...APP,
   ...TOKENS,
-  globals: token('vue.globals'),
 }
 
 onMounted(async () => {
@@ -26,40 +25,6 @@ onMounted(async () => {
         application($),
         applicationDebug($),
         [
-          // temporary $.app replacement
-          [$.app, {
-            service: (
-              components,
-              directives,
-              plugins,
-              globals,
-            ) => {
-              return async (app) => {
-                components.forEach(([name, item]) => {
-                  app.component(name, item)
-                })
-                directives.forEach(([name, item]) => {
-                  app.directive(name, item)
-                })
-
-                plugins.forEach(([...args]) => {
-                  app.use(...args)
-                })
-
-                globals.forEach(([name, obj]) => {
-                  app.config.globalProperties[name] = obj
-                })
-
-                return app
-              }
-            },
-            arguments: [
-              $.components,
-              $.directives,
-              $.plugins,
-              $.globals,
-            ],
-          }],
           [token('docs.globals'), {
             service: (i18n) => {
               return [
