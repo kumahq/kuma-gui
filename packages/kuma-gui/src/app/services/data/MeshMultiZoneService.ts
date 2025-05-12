@@ -1,8 +1,13 @@
+import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 type Generated = components['schemas']['MeshMultiZoneServiceItem']
 type GeneratedCollection = components['responses']['MeshMultiZoneServiceList']['content']['application/json']
 
 const Entity = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject(item: Generated) {
     const labels = item.labels ?? {}
     const name = labels['kuma.io/display-name'] ?? item.name
