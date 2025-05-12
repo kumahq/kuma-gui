@@ -46,7 +46,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/markdown-it": "^14.1.2",
     "@types/semver": "^7.5.8",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/test-utils": "^2.4.6",
     "@whyframe/core": "^0.1.13",
     "@whyframe/vue": "^0.1.8",
