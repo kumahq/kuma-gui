@@ -1,5 +1,3 @@
-
-
 resolve/bin: PACKAGE?=$(BIN)
 resolve/bin:
 	@cd $(KUMAHQ_CONFIG) && \

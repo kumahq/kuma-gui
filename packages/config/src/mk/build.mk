@@ -1,21 +1,24 @@
 .PHONY: .build
+.build: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .build: $(if $(NOPRUNE),,prune) install
 	@NODE_OPTIONS=--experimental-strip-types \
-		npx vite \
+		$(VITE) \
 			-c ./vite.config.production.ts \
 			build
 
 .PHONY: build/preview
+build/preview: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 build/preview:
 	@NODE_OPTIONS=--experimental-strip-types \
-		npx vite \
+		$(VITE) \
 			-c ./vite.config.development.ts \
 			--mode preview \
 			build
 
 .PHONY: build/docs
+build/docs: VITEPRESS ?= $(shell $(MAKE) resolve/bin BIN=vitepress)
 build/docs:
-	@npx vitepress \
+	@$(VITEPRESS) \
 		build
 
 .PHONY: deploy/test

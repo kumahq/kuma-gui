@@ -1,6 +1,3 @@
-NPM_WORKSPACE_ROOT := $(shell npm prefix)
-KUMAHQ_CONFIG := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/config") | .key')
-
 .PHONY: .help
 .help: ## Display this help screen
 	@echo "The following targets can be used by running \`make <target>\` in this directory:"; echo "---"
