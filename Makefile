@@ -22,3 +22,18 @@ install: .install ## Dev: Install all dependencies
 
 .PHONY: lint
 lint: .lint/js .lint/lock ## Dev: Run lint checks on the workspace root only. Note: individual sub projects have their own `make lint`
+
+.PHONY: meta/workspaces
+meta/workspaces: .meta/workspaces
+
+.PHONY: meta/packages
+meta/packages: .meta/packages
+
+.PHONY: meta/unit
+meta/unit: .meta/unit
+
+.PHONY: meta/e2e
+meta/e2e: .meta/e2e
+
+.PHONY: meta/preview
+meta/preview: .meta/preview
