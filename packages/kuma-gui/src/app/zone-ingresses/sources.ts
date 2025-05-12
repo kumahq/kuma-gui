@@ -44,9 +44,10 @@ export const sources = (source: Source, api: KumaApi) => {
       const filter = {
         [`labels.${'kuma.io/zone'}`]: name,
       }
+      const search = ZoneIngressOverview.search(params.search)
       const offset = size * (page - 1)
 
-      const res = await api.getAllZoneIngressOverviews({ size, offset, filter })
+      const res = await api.getAllZoneIngressOverviews({ size, offset, filter, ...search })
       return ZoneIngressOverview.fromCollection(res)
     },
 

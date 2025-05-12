@@ -1,3 +1,4 @@
+import { Resource } from '@/app/resources/data/Resource'
 import { DiscoverySubscriptionCollection } from '@/app/subscriptions/data'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
 import type {
@@ -54,6 +55,10 @@ const InternalZoneIngress = {
 }
 
 export const ZoneIngressOverview = {
+  search(query: string) {
+    return Resource.search(query)
+  },
+
   fromObject: (item: PartialZoneIngressOverview) => {
     const zoneIngressInsight = ZoneIngressInsight.fromObject(item.zoneIngressInsight)
     const zoneIngress = InternalZoneIngress.fromObject(item.zoneIngress)

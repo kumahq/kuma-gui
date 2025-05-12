@@ -6,7 +6,11 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     req,
     '/zoneegresses/_overview',
   )
+  const query = req.url.searchParams
   const zoneName = env('KUMA_ZONE_NAME', req.url.searchParams.get('filter[labels.kuma.io/zone]') ?? 'zone-0')
+
+  const nameQuery = query.get('name')
+
   return {
     headers: {},
     body: {
@@ -14,7 +18,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const id = offset + i
 
-        const displayName = `${fake.word.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
+        const displayName = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.word.noun()}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
         const nspace = fake.k8s.namespace()
 
 
