@@ -12,36 +12,40 @@
     @reg-exp-mode-change="emit('reg-exp-mode-change', $event)"
   >
     <template #secondary-actions>
-      <XDisclosure
-        v-slot="{ expanded, toggle }"
+      <XI18n
+        v-slot="{ t }"
       >
-        <KCodeBlockIconButton
-          v-if="props.showK8sCopyButton"
-          :copy-tooltip="t('common.copyKubernetesText')"
-          theme="dark"
-          @click="() => {
-            if (!expanded) {
-              toggle()
-            }
-          }"
+        <XDisclosure
+          v-slot="{ expanded, toggle }"
         >
-          <XIcon name="copy" />{{ t('common.copyKubernetesShortText') }}
-        </KCodeBlockIconButton>
-        <XCopyButton
-          format="hidden"
-          v-slot="{ copy }"
-        >
-          <slot
-            :copy="(cb: CopyCallback) => {
-              if (expanded) {
+          <KCodeBlockIconButton
+            v-if="props.showK8sCopyButton"
+            :copy-tooltip="t('common.copyKubernetesText')"
+            theme="dark"
+            @click="() => {
+              if (!expanded) {
                 toggle()
               }
-              cb((text: object) => copy(toYamlRepresentation(text)), onCopyReject)
             }"
-            :copying="expanded"
-          />
-        </XCopyButton>
-      </XDisclosure>
+          >
+            <XIcon name="copy" />{{ t('common.copyKubernetesShortText') }}
+          </KCodeBlockIconButton>
+          <XCopyButton
+            format="hidden"
+            v-slot="{ copy }"
+          >
+            <slot
+              :copy="(cb: CopyCallback) => {
+                if (expanded) {
+                  toggle()
+                }
+                cb((text: object) => copy(toYamlRepresentation(text)), onCopyReject)
+              }"
+              :copying="expanded"
+            />
+          </XCopyButton>
+        </XDisclosure>
+      </XI18n>
     </template>
   </XCodeBlock>
 </template>
@@ -49,12 +53,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { useI18n, YAML } from '@/app/application'
+import { YAML } from '@/app/application'
 
 type Resolve = (data: object) => void
 type CopyCallback = (resolve: Resolve, reject: (e: unknown) => void) => void
-
-const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
   resource: object

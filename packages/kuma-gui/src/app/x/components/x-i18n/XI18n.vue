@@ -22,7 +22,7 @@
         v-if="slotName === 'default'"
         :name="slotName"
         :t="t"
-        :format-list="i18n.formatList"
+        :format-list="formatList"
       />
       <XTeleportTemplate
         v-else
@@ -30,7 +30,7 @@
       >
         <slot
           :t="t"
-          :format-list="i18n.formatList"
+          :format-list="formatList"
           :name="slotName"
         />
       </XTeleportTemplate>
@@ -42,19 +42,16 @@
     <slot
       name="default"
       :t="t"
-      :format-list="i18n.formatList"
+      :format-list="formatList"
     />
   </template>
 </template>
 <script lang="ts" setup>
 // eslint-disable-next-line vue/prefer-import-from-vue
 import { escapeHtml } from '@vue/shared'
-import { useAttrs } from 'vue'
+import { useAttrs, useId } from 'vue'
 
-import { useI18n, uniqueId, useEnv } from '@/app/application'
-import createI18n from '@/app/application/services/i18n/I18n'
-
-const id = uniqueId('x-i18n')
+import { useI18n } from '../../'
 
 const icuEscapeHtml = (str: string) => str.replace(/</g, "'<'")
   .replace(/%7B/g, '{')
@@ -74,10 +71,10 @@ const props = withDefaults(defineProps<{
   defaultPath: undefined,
 })
 const slots = defineSlots()
-
 const attrs = useAttrs()
-
-const i18n = typeof props.strings !== 'undefined' ? createI18n(typeof props.strings === 'function' ? props.strings(icuEscapeHtml) : props.strings, useEnv()) : useI18n()
+const i18n = useI18n()
+const formatList = (strs: string[], options: Intl.ListFormatOptions) => new Intl.ListFormat(i18n.locale, options).format(strs)
+const id = `x-i18n-${useId()}`
 
 type TFunction = typeof i18n['t']
 const t: TFunction = (key, ...rest) => {
