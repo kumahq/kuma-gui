@@ -2,7 +2,7 @@ import Router from './Router'
 import SharedPool from './SharedPool'
 
 type EventSource = {
-  configuration: {}
+  configuration: object
   open: () => void
   close: () => void
 } & EventTarget
@@ -43,7 +43,7 @@ export default class DataSourcePool {
         const cacheKey = `${getCacheKeyPrefix()}${src}`
         const dispatchCache = async (source: EventSource) => {
           // we check cache.has() at the call site
-          if (!('cacheControl' in source.configuration) || source.configuration.cacheControl !== 'no-cache') {
+          if (!('cacheControl' in source.configuration && source.configuration.cacheControl === 'no-cache')) {
             await Promise.resolve()
             source.dispatchEvent(
               new MessageEvent('message', { data: this._cache.get(cacheKey) }),
@@ -53,12 +53,19 @@ export default class DataSourcePool {
         switch (state) {
           case 'creating': {
             const source = create(src, requestRouter)
-            // CallableEventSources are opened upon creation
-            // but others maybe not
-            source.open()
+            if (!('cacheControl' in source.configuration && source.configuration.cacheControl === 'immutable')) {
+              source.open()
+            } else {
+              if(this._cache.has(cacheKey)) {
+                source.close()
+              } else {
+                source.open()
+              }
+            }
+
             const controller = new AbortController()
-            // always fill the cache on a successful response and `?no-store` isn't set
-            if (!('cacheControl' in source.configuration) || source.configuration.cacheControl !== 'no-store') {
+            // always fill the cache on a successful response and `?cacheControl=no-store` isn't set
+            if (!('cacheControl' in source.configuration && source.configuration.cacheControl === 'no-store')) {
               source.addEventListener('message', (e: Event) => this._cache.set(cacheKey, (e as MessageEvent).data), { signal: controller.signal })
             }
             source.addEventListener('error', error, { signal: controller.signal })
@@ -79,11 +86,14 @@ export default class DataSourcePool {
           case 'releasing':
             return connection
           case 'acquiring': {
+            const source = connection.source
             if (this._cache.has(cacheKey)) {
-              dispatchCache(connection.source)
+              dispatchCache(source)
             }
             // CallableEventSources need reopening but are guarded in CallableEventSource
-            connection.source.open()
+            if (!('cacheControl' in source.configuration && source.configuration.cacheControl === 'immutable')) {
+              source.open()
+            }
             return connection
           }
         }

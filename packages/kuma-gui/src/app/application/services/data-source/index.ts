@@ -1,6 +1,6 @@
 import { compile } from 'path-to-regexp'
 
-import CallableEventSource, { isClosed } from './CallableEventSource'
+import CallableEventSource from './CallableEventSource'
 import type { Creator, Destroyer } from './DataSourcePool'
 export { default as DataSourcePool } from './DataSourcePool'
 // reusable Type Utility for easy to use Types within Vue templates
@@ -26,7 +26,7 @@ type ExtractRouteParams<T extends PropertyKey> =
         : {}
 
 export type ExtractSources<T extends Record<PropertyKey, unknown>> = {
-  [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams) => T[Route]
+  [Route in keyof T]: (params: ExtractRouteParams<Route> & PaginationParams, controller: AbortController) => T[Route]
 }
 
 export const defineSources = <T extends Record<PropertyKey, unknown>>(sources: ExtractSources<T>) => {
@@ -37,6 +37,10 @@ type Sources = Record<PropertyKey, (...args: any[]) => any>
 type SourceFactory = (...args: any[]) => Sources
 export type TypeOf<T> = T extends { typeOf(): any } ? ReturnType<T['typeOf']> : any
 
+const AsyncGeneratorFunction = Object.getPrototypeOf(async function* () { }).constructor
+const isAsyncGeneratorFunction = (fn: unknown): fn is AsyncGeneratorFunction => {
+  return fn instanceof AsyncGeneratorFunction
+}
 class TypedString<T = unknown> {
   constructor(
     protected str: string,
@@ -51,6 +55,10 @@ class TypedString<T = unknown> {
   }
 }
 
+type AwaitedYieldType<T extends ((...args: any) => AsyncGenerator<any, any, any>) | ((...args: any) => Awaited<any>)> =
+  T extends (...args: any) => AsyncGenerator<infer R, any, any> ? R :
+    T extends (...args: any) => infer R ? Awaited<R> : never
+
 const cache = new Map()
 export const useUri = () => {
   return <T extends SourceFactory, K extends keyof ReturnType<T>>(_typeRef: T, src: K, params: ExtractRouteParams<K>, query: Partial<PaginationParams> = {}) => {
@@ -61,74 +69,10 @@ export const useUri = () => {
     const interpolate = cache.get(str)
     const q = Object.entries(query).reduce<string[]>((prev, [key, value]) => prev.concat(`${key}=${value}`), [])
     const uri = `${interpolate(params)}${q.length > 0 ? `?${q.join('&')}` : ''}`
-    return new TypedString<Awaited<ReturnType<ReturnType<T>[K]>>>(uri)
+    return new TypedString<AwaitedYieldType<ReturnType<T>[K]>>(uri)
   }
 }
-type Configuration = {
-  interval?: number
-  cacheControl?: string
-  retry?: (e: unknown) => Promise<void> | undefined
-}
-type RetryingEventSource = CallableEventSource<Configuration>
-type Hideable = EventTarget & { hidden: boolean }
 
-export const getSource = (doc: Hideable) => {
-  return (cb: (source: RetryingEventSource) => Promise<unknown>, config: Configuration = {}) => {
-    return new CallableEventSource<Configuration>(async function* (this: RetryingEventSource) {
-      // TODO: refactor and remove eslint-disable directive
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const self = this
-      let attempts = 0
-      let iterations = 0
-      while (!isClosed(self)) {
-        // if this isn't the first call then we should wait before calling again
-        if (iterations > 0) {
-          await new Promise((resolve) => setTimeout(resolve, self.configuration.interval ?? 1000))
-        }
-        if (attempts > 0 || iterations > 0) {
-          // if the document/browser tab is hidden then wait for it to regain
-          // focus but, for the first call (if we aren't erroring) we probably
-          // still want to send of the request, so then at least when you come
-          // back you immediately see data
-          if (doc.hidden) {
-            await new Promise((resolve) => {
-              doc.addEventListener('visibilitychange', resolve, { once: true })
-            })
-          }
-        }
-        let res
-        try {
-          res = await cb(self)
-          // if we aren't polling then immediately close after calling
-          if (typeof self.configuration.interval === 'undefined') {
-            self.close()
-          }
-          // only increase iterations if we didn't error
-          iterations++
-          // return the result
-          yield res
-        } catch (e) {
-          // if retry is configured await it before entering the loop again to
-          // try again
-          // TODO(jc): we should probably pass through attempts and maybe other
-          // things here
-          const retry = self.configuration?.retry?.(e)
-          if (typeof retry?.then === 'function') {
-            // make sure we never mistakenly retry sooner than 1s
-            await Promise.all([retry, new Promise(resolve => setTimeout(resolve, 1000))])
-            attempts++
-          } else {
-            throw e
-          }
-        }
-      }
-    }, config)
-  }
-}
-export type Source = ReturnType<typeof getSource>
-
-// its fine to not wait for an unfocussed tab for promise returning sources
-const source = getSource(new (class extends EventTarget { hidden = false })())
 
 export const create: Creator = (src, router) => {
   const [path, query] = src.split('?')
@@ -140,30 +84,55 @@ export const create: Creator = (src, router) => {
       size: parseInt(queryParams.get('size') || '0'),
       page: parseInt(queryParams.get('page') || '0'),
       search: queryParams.get('search') || '',
-      cacheControl: ['no-store', 'no-cache'].reduce((prev, item) => queryParams.has(item) ? item : prev, queryParams.get('cacheControl') ?? ''),
+      cacheControl: [
+        'no-store',
+        'no-cache',
+        'immutable',
+      ].reduce((prev, item) => queryParams.has(item) ? item : prev, queryParams.get('cacheControl') ?? ''),
     },
     ...route.params,
   }
-  try {
-    const init = route.route(params)
-    let inited = false
-    const eventSource = init instanceof CallableEventSource
-      ? init
-      : source(() => {
-        if (inited) {
-          return Promise.resolve(route.route(params))
-        } else {
-          inited = true
-          return Promise.resolve(init)
-        }
-      }, {
-        cacheControl: params.cacheControl.length > 0 ? params.cacheControl : undefined,
-      })
-    eventSource.url = src
-    return eventSource
-  } catch (e) {
-    return source(() => Promise.reject(e))
+
+  const waitForEvent = (target: EventTarget, event: string) => {
+    return new Promise((resolve) => {
+      const cb = () => resolve(cb)
+      target.addEventListener(event, cb, { once: true })
+    })
   }
+
+  return new CallableEventSource(async function* (controller: AbortController) {
+    let retry = 0
+    const maxRetry = 3
+    // @TODO: enable retries based on certain errors
+    const enableRetries = false
+    while (true) {
+      try {
+        if (isAsyncGeneratorFunction(route.route)) {
+          for await (const res of route.route(params, controller)) {
+            yield res
+            if (document && document.hidden) {
+              await waitForEvent(document, 'visibilityhidden')
+            }
+          }
+        } else {
+          yield Promise.resolve(route.route(params))
+        }
+        break
+      } catch (e) {
+        if (enableRetries) {
+          if (retry < maxRetry) {
+            await new Promise(resolve => setTimeout(resolve, 3000 * Math.pow(++retry, 1)))
+          } else {
+            throw e
+          }
+        } else {
+          throw e
+        }
+      }
+    }
+  }, {
+    cacheControl: params.cacheControl.length > 0 ? params.cacheControl : undefined,
+  })
 }
 export const destroy: Destroyer = (_src, source) => {
   if (source) {

@@ -9,7 +9,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('rules.sources'), {
       service: sources,
       arguments: [
-        app.source,
         app.api,
       ],
       labels: [

@@ -9,7 +9,7 @@ import {
 } from './data'
 import type { DataSourceResponse } from '@/app/application'
 import { YAML } from '@/app/application'
-import { defineSources, type Source } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
@@ -34,46 +34,12 @@ export type MeshGatewayDataplaneSource = DataSourceResponse<MeshGatewayDataplane
 const includes = <T extends readonly string[]>(arr: T, item: string): item is T[number] => {
   return arr.includes(item as T[number])
 }
-export const sources = (source: Source, api: KumaApi) => {
+export const sources = (api: KumaApi) => {
   const http = createClient<paths>({
     baseUrl: '',
     fetch: api.client.fetch,
   })
   return defineSources({
-    // always resolves and keeps polling until we have at least one dataplane and all dataplanes are online
-    '/dataplanes/poll': (params) => {
-      const { size, page } = params
-      const offset = size * (page - 1)
-
-      return source(async (source) => {
-        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }))
-        if (res.total > 0 && res.items.every(item => item.status === 'online')) {
-          source.close()
-        }
-        return res
-      }, { interval: 1000 })
-    },
-    // doesn't resolve until we have at least one dataplane and all dataplanes are online
-    '/dataplanes/online': (params) => {
-      const OfflineError = class extends Error { }
-      const { size, page } = params
-      const offset = size * (page - 1)
-      return source(async () => {
-        const res = DataplaneOverview.fromCollection(await api.getAllDataplaneOverviews({ size, offset }))
-        if (res.total > 0 && res.items.every((item) => item.status === 'online')) {
-          return res
-        } else {
-          throw new OfflineError()
-        }
-      }, {
-        retry: (e) => {
-          if (e instanceof OfflineError) {
-            return new Promise((resolve) => setTimeout(resolve, 1000))
-          }
-        },
-      })
-    },
-
     '/meshes/:mesh/dataplanes/:name': async (params) => {
       return Dataplane.fromObject(await api.getDataplaneFromMesh(params))
     },
