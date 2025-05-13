@@ -23,7 +23,12 @@ export const Resource = {
       const [key, value] = curr.split(/:(.*)/)
       
       switch(true) {
-        case Boolean(value): {
+        case key?.length && value?.length && !isShortFilter(key):
+          return {
+            ...acc,
+            [`filter[labels.${key}]`]: value,
+          }
+        case !!value?.length: {
           const _key = isShortFilter(key) ? filters[key] : key
           return {
             ...acc,

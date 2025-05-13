@@ -61,12 +61,13 @@ Feature: mesh / services / mesh-multi-zone-services / index
     Scenario Outline: sending filters to the API
       When I visit the "<URL>" URL
       Then the "$input-search" element exists
-      When I "type" "foo" into the "$input-search" element
+      When I "type" "foo kuma.io/service-name:bar" into the "$input-search" element
       And I "type" "{enter}" into the "$input-search" element
       Then the URL "/meshes/default/meshmultizoneservices" was requested with
         """
         searchParams:
           name: foo
+          filter[labels.kuma.io/service-name]: bar
           offset: 0
           size: 50
         """
