@@ -32,7 +32,7 @@
               v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
               :key="chunk+index"
             >
-              <span :class="{ highlight: regex.test(chunk), invalid: !!props.validate?.(chunk) }">{{ chunk }}</span>
+              <span :class="{ highlight: regex.test(chunk), invalid: invalidFilters.includes(chunk) }">{{ chunk }}</span>
             </template>
           </div>
           <div class="input-wrapper">
@@ -44,7 +44,7 @@
               data-testid="filter-bar-filter-input"
               :name="props.name"
               @input="onInput"
-              @change="emit('change', inputValue)"
+              @change="onChange"
               @keyup="onKeyEvent"
             >
           </div>
@@ -91,13 +91,15 @@
             path="components.x-search.placeholder"
           />
         </div>
-        <div
+        <template 
           v-for="(_, key) in $slots"
           :key="key"
-          class="dropdown-item"
         >
-          <slot :name="key" />
-        </div>
+          <slot
+            :name="key"
+            :invalid-filters="invalidFilters"
+          />
+        </template>
         <div
           v-if="props.keys.length"
           class="dropdown-item bg-neutral-weakest"
@@ -139,14 +141,9 @@ const props = withDefaults(defineProps<{
    */
   defaultKey?: string
   /**
-   * Validation callback on a per individual filter basis
+   * Validation callback on a per individual filter basis. Validation happens during `@change`
    */
   validate?: (chunk: string) => boolean
-  /**
-   * Provide some control about the open state of the dropdown.
-   * Useful during validation to keep the dropdown open in case of invalid filters.
-   */
-  open?: boolean
 }>(), {
   placeholder: undefined,
   name: undefined,
@@ -161,6 +158,11 @@ const emit = defineEmits<{
   (e: 'change', value: string): void
 }>()
 
+const getInvalidFilters = (query: string) => {
+  if(!props.validate) return []
+  return query.split(regex).filter((chunk) => !props.validate?.(chunk))
+}
+
 const regex = /([^\s]+)/
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
@@ -169,12 +171,13 @@ const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 const dropdownRef = ref<null | HTMLInputElement>(null)
 const isDropdownOpen = ref<boolean>(false)
+const invalidFilters = ref<string[]>(getInvalidFilters(props.value))
 
 const onKeyEvent = ({ key }: KeyboardEvent) => {
   switch(key) {
     case 'Enter':
     case 'Escape':
-      return isDropdownOpen.value && !props.open && dropdownRef.value?.hidePopover()
+      return isDropdownOpen.value && !invalidFilters.value.length && dropdownRef.value?.hidePopover()
     default:
       return !isDropdownOpen.value && dropdownRef.value?.showPopover()
   }
@@ -183,6 +186,11 @@ const onKeyEvent = ({ key }: KeyboardEvent) => {
 const onInput = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
   inputValue.value = value
+}
+
+const onChange = () => {
+  invalidFilters.value = getInvalidFilters(inputValue.value)
+  emit('change', inputValue.value)
 }
 
 useResizeObserver(contentRef, ([entry]) => {

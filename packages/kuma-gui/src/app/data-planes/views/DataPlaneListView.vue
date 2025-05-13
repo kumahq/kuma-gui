@@ -30,7 +30,6 @@
           }, {
             search: route.params.s,
           })"
-          v-slot="{ data }"
         >
           <search>
             <form
@@ -39,32 +38,34 @@
             >
               <XSearch
                 class="search-field"
-                :keys="data?.allowedFilters"
+                :keys="['name', 'tag', 'zone', 'namespace']"
                 :value="route.params.s"
-                :validate="(chunk) => !!data?.invalidFilters.find((filter) => filter.raw === chunk)"
-                :open="!!data?.invalidFilters.length"
+                :validate="(filter) => !filter.startsWith(':') && !filter.endsWith(':')"
                 @change="(s) => route.update({ page: 1, s })"
+                v-slot="{ invalidFilters }"
               >
-                <template
-                  v-if="data?.invalidFilters.length"
-                  #warnings
+                <div
+                  v-if="invalidFilters.length"
                 >
                   <XLayout type="separated">
                     <XIcon name="warning" />
                     {{ t('common.validation.invalid.filter.title') }}:
                   </XLayout>
                   <ul
-                    v-for="invalidFilter in data?.invalidFilters"
-                    :key="invalidFilter.raw"
+                    v-for="invalidFilter in invalidFilters"
+                    :key="invalidFilter"
                   >
-                    <li>
+                    <li
+                      v-for="[key, value] in [invalidFilter.split(/:(.*)/)]"
+                      :key="key"
+                    >
                       <XI18n
-                        :path="`common.validation.invalid.${invalidFilter.message}`"
-                        :params="{ ...invalidFilter, filter: invalidFilter.raw }"
+                        :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
+                        :params="{ key, value }"
                       />
                     </li>
                   </ul>
-                </template>
+                </div>
               </XSearch>
                   
               <XSelect
