@@ -53,12 +53,13 @@ Feature: mesh / external-services / index
   Scenario: Searching by name
     When I visit the "/meshes/default/services/external" URL
     Then the "$input-search" element exists
-    When I "type" "foo" into the "$input-search" element
+    When I "type" "foo kuma.io/service-name:bar" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
     Then the URL "/meshes/default/external-services" was requested with
       """
       searchParams:
         name: foo
+        filter[labels.kuma.io/service-name]: bar
         offset: 0
         size: 50
       """
