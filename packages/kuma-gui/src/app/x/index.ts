@@ -32,7 +32,7 @@ import XTeleportTemplate from './components/x-teleport/XTeleportTemplate.vue'
 import XTooltip from './components/x-tooltip/XTooltip.vue'
 import XWindow from './components/x-window/XWindow.vue'
 import vStyle from './directives/style'
-import type { Plugin } from 'vue'
+import type { Plugin, Component } from 'vue'
 export { default as XCopyButtonDebug } from './components/x-copy-button/XCopyButtonDebug.vue'
 
 const components = [
@@ -128,7 +128,8 @@ const plugin: Plugin = {
       deps.i18n = options.i18n
     }
     components.forEach(([name, item]) => {
-      app.component(name, item)
+      // @TODO: remove TS cast here once KRadio is fixed upstream
+      app.component(name, item as Component)
     })
     directives.forEach(([name, item]) => {
       app.directive(name, item)
