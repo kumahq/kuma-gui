@@ -125,7 +125,9 @@ Feature: mesh / dataplanes / warnings
         dataplane:
           networking:
             outbound: !!js/undefined
-            transparentProxying: !!js/undefined
+        dataplaneInsight:
+          metadata:
+            features: !!js/undefined
       """
     When I visit the "/meshes/default/data-planes/dpp-1/overview" URL
     Then the "$networking-transparent-proxying" element exists
