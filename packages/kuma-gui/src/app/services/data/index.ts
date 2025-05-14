@@ -1,3 +1,4 @@
+import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse } from '@/types/api.d'
 import type {
   ExternalService as PartialExternalService,
@@ -29,25 +30,7 @@ export const ExternalService = {
 
 export const ServiceInsight = {
   search(query: string) {
-    const parts = query.trim().split(/\s+/)
-    return parts.reduce((acc, curr) => {
-      const [key, value] = curr.split(/:(.*)/)
-      switch(true) {
-        case Boolean(value):
-          return {
-            ...acc,
-            [key]: value,
-          }
-        case curr.includes(':') || (!key && !value):
-          // at this point this would be an invalid query, i.e. `name:`
-          return acc
-        default:
-          return {
-            ...acc,
-            name: key,
-          }
-      }
-    }, {})
+    return Resource.search(query)
   },
   fromObject(partialServiceInsight: PartialServiceInsight): ServiceInsight {
     const serviceType = partialServiceInsight.serviceType ?? 'internal'

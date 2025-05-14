@@ -61,7 +61,7 @@ Feature: mesh / services / mesh-services / index
     Scenario Outline: sending filters to the API
       When I visit the "<URL>" URL
       Then the "$input-search" element exists
-      When I "type" "foo namespace:bar zone:baz" into the "$input-search" element
+      When I "type" "foo namespace:bar zone:baz kuma.io/service-name:qux" into the "$input-search" element
       And I "type" "{enter}" into the "$input-search" element
       Then the URL "/meshes/default/meshservices" was requested with
         """
@@ -69,6 +69,7 @@ Feature: mesh / services / mesh-services / index
           name: foo
           filter[labels.k8s.kuma.io/namespace]: bar
           filter[labels.kuma.io/zone]: baz
+          filter[labels.kuma.io/service-name]: qux
           offset: 0
           size: 50
         """

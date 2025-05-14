@@ -36,6 +36,7 @@ jobs:
       spec_groups: ${{ steps.set-groups.outputs.result }}
       packages: ${{ steps.meta.outputs.packages }}
       unit: ${{ steps.meta.outputs.unit }}
+      preview: ${{ steps.meta.outputs.preview }}
       e2e: ${{ steps.meta.outputs.e2e }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -59,6 +60,9 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
           echo "unit<<EOF" >> $GITHUB_OUTPUT
             make meta/unit >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "preview<<EOF" >> $GITHUB_OUTPUT
+            make meta/preview >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           echo "e2e<<EOF" >> $GITHUB_OUTPUT
             make meta/e2e >> $GITHUB_OUTPUT

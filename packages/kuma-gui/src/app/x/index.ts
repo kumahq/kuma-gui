@@ -116,8 +116,17 @@ declare module 'vue' {
     XSearch: typeof XSearch
   }
 }
+const deps = {
+  i18n: {
+    t: (str: string, _values?: Record<string, string>, _options?: Record<string, unknown>) => str,
+    locale: 'en-us',
+  },
+}
 const plugin: Plugin = {
-  install: (app, _options) => {
+  install: (app, options: Partial<typeof deps> = {}) => {
+    if(typeof options.i18n !== 'undefined') {
+      deps.i18n = options.i18n
+    }
     components.forEach(([name, item]) => {
       app.component(name, item)
     })
@@ -127,3 +136,4 @@ const plugin: Plugin = {
   },
 }
 export default plugin
+export const useI18n = () => deps.i18n

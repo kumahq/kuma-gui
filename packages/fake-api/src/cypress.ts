@@ -1,77 +1,71 @@
-import { createMerge, Router } from './index.ts'
-import type { Callback, Dependencies, FS, Mocker } from './index.ts'
-
-type Server = typeof cy
-
-type HistoryEntry = {
-  url: URL
-  request: {
-    method: string
-    body: Record<string, unknown>
-  }
-}
-type Client = { request: (request: HistoryEntry ) => void }
+import { createFetchSync } from './index.ts'
+import type { Middleware, Dependencies, FS, Mocker } from './index.ts'
 
 const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
-const noop: Callback = (_merge, _req, response) => response
+const noop: Middleware = (_req, response) => response
 
-export const mocker = <TClient extends Client, TDependencies extends object = {}>(
-  cy: Server,
+export const mocker = <T extends object = {}>(
+  dependencies: Dependencies<T>,
   fs: FS,
-  client: TClient,
-  dependencies: Dependencies<TDependencies>,
 ): Mocker => {
-  const router = new Router(fs)
-  return (path, opts = {}, cb = noop) => {
+
+
+  return (path, opts = {}, middleware = noop) => {
+    const env = dependencies.env
+    dependencies.env = <T extends Parameters<typeof env>[0]>(key: T, d = '') => {
+      return env(key, opts[key] ?? d)
+    }
+    const baseUrl = dependencies.env('KUMA_API_URL')
+    const _fs = Object.fromEntries(Object.entries(fs).map(([route, response]) => {
+      return [route.includes('://') ? route : `${baseUrl}${route}`, response]
+    }))
+    const fetch = createFetchSync({
+      dependencies,
+      fs: _fs,
+    })
     // if path is `*` then that means mock everything, which currently means
     // changing to `/`
     path = path === '*' ? '/' : path
-    const baseUrl = dependencies.env('KUMA_API_URL')
     return cy.intercept(
       {
         url: new RegExp(`${baseUrl}${path.replace(reEscape, '\\$&')}`),
       },
       (req) => {
         try {
-          const mockEnv = (key: string, d = '') => {
-            if (typeof opts[key] !== 'undefined') {
-              return opts[key]
+          // headers can be string | string[], not string
+          const headers = Object.entries(req.headers).reduce((prev, [key, item]) => {
+            if (typeof item !== 'undefined') {
+              prev[key] = Array.isArray(item) ? item[0] : item
             }
-            return dependencies.env(key, d)
-          }
-          const path = req.url.replace(baseUrl, '')
-          const { route, params } = router.match(path)
-          const endpoint = route
-          const fetch = endpoint({
-            ...dependencies,
-            env: mockEnv,
-          })
-          const url = new URL(req.url)
-          const body = req.body
+            return prev
+          }, {} as Record<string, string>)
 
-          const request = {
+          const resp = fetch(req.url, {
             method: req.method,
-            params,
-            body,
-            url,
-          }
-          const _response = fetch(request)
-          const response = cb(createMerge(_response), request, _response)
-          // once the response has been rendered but not sent resolve any
-          // waiting request assertions this means that any mocking done after
-          // awaiting the request will happen on the subsequent request not this
-          // one
-          client.request({
-            url,
-            request,
+            headers,
+            body: req.body,
           })
+          const type = resp.headers.get('Content-Type') ?? 'application/json'
+
+          const response = middleware({
+            url: new URL(req.url),
+            method: req.method,
+            body: req.body,
+            params: {},
+          }, {
+            headers: Object.fromEntries(resp.headers.entries()),
+            body: type.endsWith('/json') ? resp.json() : resp.text(),
+          })
+
           if (typeof response === 'undefined') {
             req.continue()
             return
           }
+
           req.reply({
+            contentType: type,
             statusCode: parseInt(response.headers?.['Status-Code'] ?? '200'),
-            delay: parseInt(mockEnv('KUMA_LATENCY', '0')),
+            delay: parseInt(dependencies.env('KUMA_LATENCY', opts['KUMA_LATENCY'] ?? '0')),
             body: response.body,
           })
         } catch (e) {
