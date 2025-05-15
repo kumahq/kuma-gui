@@ -32,7 +32,7 @@
               v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
               :key="chunk+index"
             >
-              <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
+              <span :class="{ highlight: regex.test(chunk), invalid: invalidFilters.includes(chunk) }">{{ chunk }}</span>
             </template>
           </div>
           <div class="input-wrapper">
@@ -44,7 +44,7 @@
               data-testid="filter-bar-filter-input"
               :name="props.name"
               @input="onInput"
-              @change="emit('change', inputValue)"
+              @change="onChange"
               @keyup="onKeyEvent"
             >
           </div>
@@ -91,6 +91,15 @@
             path="components.x-search.placeholder"
           />
         </div>
+        <div 
+          v-if="slots.warnings && invalidFilters.length"
+          class="dropdown-item"
+        >
+          <slot
+            name="warnings"
+            :invalid-filters="invalidFilters"
+          />
+        </div>
         <div
           v-if="props.keys.length"
           class="dropdown-item bg-neutral-weakest"
@@ -108,7 +117,7 @@
 
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, UnwrapRef } from 'vue'
 
 const props = withDefaults(defineProps<{
   /**
@@ -131,17 +140,28 @@ const props = withDefaults(defineProps<{
    * The default key, that is being used to filter for when there is no `key:value` pair but only a `value`
    */
   defaultKey?: string
+  /**
+   * Validation callback on a per individual filter basis. Validation happens during `@change`
+   */
+  validate?: (chunk: string) => boolean
 }>(), {
   placeholder: undefined,
   name: undefined,
   value: '',
   keys: () => [],
   defaultKey: 'name',
+  validate: undefined,
+  open: undefined,
 })
 
 const emit = defineEmits<{
   (e: 'change', value: string): void
 }>()
+
+const getInvalidFilters = (query: string) => {
+  if(!props.validate) return []
+  return query.split(regex).filter((chunk) => !props.validate?.(chunk))
+}
 
 const regex = /([^\s]+)/
 const inputValue = ref<string>(props.value)
@@ -151,12 +171,17 @@ const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 const dropdownRef = ref<null | HTMLInputElement>(null)
 const isDropdownOpen = ref<boolean>(false)
+const invalidFilters = ref<string[]>(getInvalidFilters(props.value))
+
+const slots = defineSlots<{ warnings?(props: {
+  invalidFilters: UnwrapRef<typeof invalidFilters>
+}): unknown}>()
 
 const onKeyEvent = ({ key }: KeyboardEvent) => {
   switch(key) {
     case 'Enter':
     case 'Escape':
-      return isDropdownOpen.value && dropdownRef.value?.hidePopover()
+      return isDropdownOpen.value && !invalidFilters.value.length && dropdownRef.value?.hidePopover()
     default:
       return !isDropdownOpen.value && dropdownRef.value?.showPopover()
   }
@@ -165,6 +190,11 @@ const onKeyEvent = ({ key }: KeyboardEvent) => {
 const onInput = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
   inputValue.value = value
+}
+
+const onChange = () => {
+  invalidFilters.value = getInvalidFilters(inputValue.value)
+  emit('change', inputValue.value)
 }
 
 useResizeObserver(contentRef, ([entry]) => {
@@ -240,6 +270,9 @@ useResizeObserver(contentRef, ([entry]) => {
     &.highlight {
       background: #f0f4f7;
       border-radius: $kui-border-radius-20;
+      &.invalid {
+        background: $kui-color-background-warning-weak;
+      }
     }
   }
 }
@@ -317,6 +350,10 @@ input {
 
     dl {
       display: inline-flex;
+    }
+
+    strong {
+      color: $kui-color-text;
     }
   }
 
