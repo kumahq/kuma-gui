@@ -1,8 +1,9 @@
+import { components } from '@kumahq/kuma-http-api'
+
 import type {
   DataplaneGateway as PartialDataplaneGateway,
   DataplaneInbound as PartialDataplaneInbound,
   DataplaneNetworking as PartialDataplaneNetworking,
-  DataplaneOutbound as PartialDataplaneOutbound,
 } from '@/types/index.d'
 
 type Connection = {
@@ -19,29 +20,38 @@ export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   listenerAddress: string
   portName: string
 }
-export type DataplaneOutbound = PartialDataplaneOutbound & Connection & {
-}
+type PartialDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['outbound']>[number]
 
 export type DataplaneGateway = PartialDataplaneGateway & {}
+
+const DataplaneOutbound = {
+  fromObject(item: PartialDataplaneOutbound) {
+    const address = item.address ?? '127.0.0.1'
+    const portStringified = item.port?.toString()
+    const tags = item.tags ?? {}
+    return {
+      ...item,
+      tags,
+      name: tags['kuma.io/service'],
+      service: tags['kuma.io/service'],
+      protocol: tags['kuma.io/protocol'] ?? 'tcp',
+      address,
+      addressPort: `${address}${portStringified?.padStart(portStringified.length + 1, ':')}`,
+    }
+  },
+  fromCollection(items: PartialDataplaneOutbound[]) {
+    return Array.isArray(items) ? items.map(item => DataplaneOutbound.fromObject(item)) : []
+  },
+}
+export type DataplaneOutbound = ReturnType<typeof DataplaneOutbound.fromObject>
+
 export type DataplaneNetworking = Omit<PartialDataplaneNetworking, 'inbound' | 'outbound'> & {
   inboundAddress: string
   inbounds: DataplaneInbound[]
   outbounds: DataplaneOutbound[]
   type: 'sidecar' | 'gateway'
 }
-const DataplaneOutbound = {
-  fromObject(item: PartialDataplaneOutbound): DataplaneOutbound {
-    return {
-      ...item,
-      name: item.tags['kuma.io/service'],
-      service: item.tags['kuma.io/service'],
-      protocol: item.tags['kuma.io/protocol'] ?? 'tcp',
-    }
-  },
-  fromCollection(items: PartialDataplaneOutbound[]): DataplaneOutbound[] {
-    return Array.isArray(items) ? items.map(item => DataplaneOutbound.fromObject(item)) : []
-  },
-}
+
 export const DataplaneNetworking = {
   fromObject(networking: PartialDataplaneNetworking): DataplaneNetworking {
     // remove singular inbound/outbound to be replaced with plural versions
