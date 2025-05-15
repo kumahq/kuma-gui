@@ -1449,12 +1449,6 @@ export interface components {
         };
         DataplaneOverview: {
             dataplane?: {
-                /** @description EnvoyConfiguration provides additional configuration for the Envoy sidecar. */
-                envoy?: {
-                    /** @description xDSTransportProtocol provides information about protocol used for
-                     *     configuration exchange between control-plane and Envoy sidecar. */
-                    xdsTransportProtocolVariant?: string | number;
-                };
                 /** @description Configuration for metrics that should be collected and exposed by the
                  *     data plane proxy.
                  *
@@ -1739,6 +1733,13 @@ export interface components {
                     };
                     /** @description Supported backends (CA). */
                     supportedBackends?: string[];
+                };
+                metadata?: {
+                    fields?: {
+                        [key: string]: {
+                            Kind: unknown;
+                        };
+                    };
                 };
                 /** @description List of ADS subscriptions created by a given Dataplane. */
                 subscriptions?: {
@@ -6366,12 +6367,6 @@ export interface components {
             splitService?: boolean;
         };
         DataplaneItem: {
-            /** @description EnvoyConfiguration provides additional configuration for the Envoy sidecar. */
-            envoy?: {
-                /** @description xDSTransportProtocol provides information about protocol used for
-                 *     configuration exchange between control-plane and Envoy sidecar. */
-                xdsTransportProtocolVariant?: string | number;
-            };
             labels?: {
                 [key: string]: string;
             };
