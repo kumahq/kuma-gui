@@ -42,7 +42,7 @@ Feature: mesh / index
 
   Scenario: Sending filters
     Then the "$input-search" element exists
-    And I "type" "foo" into the "$input-search" element
+    And I "type" "foo kuma.io/service-name:bar" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
     Then the URL "/mesh-insights" was requested with
       """

@@ -43,9 +43,8 @@
 import { KCodeBlock } from '@kong/kongponents'
 import { createHighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import { ref } from 'vue'
+import { ref, useId } from 'vue'
 
-import { uniqueId } from '@/app/application'
 import type { CodeBlockEventData } from '@kong/kongponents'
 
 const props = withDefaults(defineProps<{
@@ -59,7 +58,7 @@ const props = withDefaults(defineProps<{
   isFilterMode?: boolean
   isRegExpMode?: boolean
 }>(), {
-  id: () => uniqueId('code-block'),
+  id: () => `x-code-block-${useId()}`,
   isSearchable: false,
   showCopyButton: true,
   maxHeight: undefined,

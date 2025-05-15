@@ -8,6 +8,7 @@ Feature: hostname-generators / index
       | breadcrumbs                | .k-breadcrumbs                                             |
       | summary-slideout-container | [data-testid='summary'] [data-testid='slideout-container'] |
       | summary-title              | $summary-slideout-container [data-testid='slideout-title'] |
+      | input-search               | [data-testid='filter-bar-filter-input']                    |
 
   Scenario: Clicking a hostname generator action link and back again for <HostnameGenerator>
     Given the URL "/hostnamegenerators" responds with
@@ -45,3 +46,19 @@ Feature: hostname-generators / index
     Examples:
       | HostnameGenerator           | Selector           |
       | local-mesh-external-service | $item:nth-child(1) |
+
+  Scenario Outline: sending filters to the API
+    When I visit the "/hostname-generators" URL
+    Then the "$input-search" element exists
+    When I "type" "foo namespace:bar zone:baz kuma.io/service-name:qux" into the "$input-search" element
+    And I "type" "{enter}" into the "$input-search" element
+    Then the URL "/hostnamegenerators" was requested with
+      """
+      searchParams:
+        name: foo
+        filter[labels.k8s.kuma.io/namespace]: bar
+        filter[labels.kuma.io/zone]: baz
+        filter[labels.kuma.io/service-name]: qux
+        offset: 0
+        size: 50
+      """

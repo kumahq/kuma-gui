@@ -16,12 +16,14 @@ export const sources = (api: KumaApi) => {
       const { size } = params
       const offset = params.size * (params.page - 1)
 
+      const search = HostnameGenerator.search(params.search)
+
       const res = await http.GET('/hostnamegenerators', {
         params: {
-          // @ts-ignore TODO(schogges): remove ts-ignore once https://github.com/kumahq/kuma/issues/11339 is done
           query: {
             offset,
             size,
+            ...search,
           },
         },
       })

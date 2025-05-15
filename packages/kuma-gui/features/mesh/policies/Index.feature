@@ -148,7 +148,7 @@ Feature: mesh / policies / index
   Scenario: Sending filters
     When I visit the "/meshes/default/policies/meshgateways" URL
     Then the "$input-search" element exists
-    Then I "type" "foo namespace:bar zone:baz" into the "$input-search" element
+    Then I "type" "foo namespace:bar zone:baz kuma.io/service-name:qux" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
     Then the URL "/meshes/default/meshgateways" was requested with
       """
@@ -156,6 +156,7 @@ Feature: mesh / policies / index
         name: foo
         filter[labels.k8s.kuma.io/namespace]: bar
         filter[labels.kuma.io/zone]: baz
+        filter[labels.kuma.io/service-name]: qux
         offset: 0
         size: 50
       """
