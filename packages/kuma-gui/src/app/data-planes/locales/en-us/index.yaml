@@ -22,7 +22,7 @@ data-planes:
     stats-not-enhanced: !!text/markdown |
       The below view is not enhanced with runtime stats (Error loading stats: **{ error }**)
     networking-transparent-proxying: !!text/markdown |
-      The networking configuration of this Dataplane does not include transparent proxying.
+      This data plane runs without [transparent proxying]({KUMA_DOCS_URL}/production/dp-config/transparent-proxying). In order to communicate to other services in the mesh, make sure to define [outbounds]({KUMA_DOCS_URL}/production/dp-config/dpp-on-universal/)
       Consider to <a target="_blank" href="{KUMA_DOCS_URL}/production/dp-config/transparent-proxying/#configure-transparent-proxying">configure transparent proxying</a> to automatically benefit from its features.
       Read more about <a target="_blank" href="{KUMA_DOCS_URL}/networking/transparent-proxying/#transparent-proxying">transparent proxying</a>.
 
