@@ -35,7 +35,7 @@ confirm:
 	do (printf '{"e2e": %s, "unit": %s, "preview": %s }' \
 		$$([[ $$(find $$(echo $$workspace | jq -r '.path') -name "*.feature") ]] && echo 'true' || echo 'false') \
 		$$([[ $$(find $$(echo $$workspace | jq -r '.path') -name "*.spec.ts") ]] && echo 'true' || echo 'false') \
-		$$([[ $$(find $$(echo $$workspace | jq -r '.path') -depth 1 -name "index.html") ]] && echo 'true' || echo 'false') \
+		$$([[ $$(find $$(echo $$workspace | jq -r '.path') -maxdepth 1 -name "index.html") ]] && echo 'true' || echo 'false') \
 		; echo $$workspace) | jq --slurp add \
 	;done | jq --slurp
 

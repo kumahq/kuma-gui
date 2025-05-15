@@ -9,7 +9,6 @@
 	@cd $(NPM_WORKSPACE_ROOT) \
 		&& npm install \
 					--ignore-scripts
-	@npm dedupe
 
 .PHONY: .clean
 .clean:
