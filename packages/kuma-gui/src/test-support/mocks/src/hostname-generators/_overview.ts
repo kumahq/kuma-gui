@@ -9,8 +9,12 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
     req,
     '/hostname-generators/_overview',
   )
+  const query = req.url.searchParams
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
+  const nameQuery = query.get('name')
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
+  const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   return {
     headers: {},
@@ -18,9 +22,10 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
       total,
       items: Array.from({ length: pageTotal }).map((_, i) => {
         const meshServiceTypeSelector = fake.kuma.meshServiceTypeSelector()
-        const namespace = fake.word.noun()
-        const displayName = `${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
+        const namespace = namespaceQuery ?? fake.word.noun()
+        const displayName = `${nameQuery?.padEnd(nameQuery.length + 1, '-') ?? ''}${fake.science.chemicalElement().name.toLowerCase()}-${offset + i}-service`
         const creationTime = fake.date.past()
+        const zone = zoneQuery ?? fake.word.noun()
 
         return {
           type: 'HostnameGenerator',
@@ -31,8 +36,8 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               'k8s.kuma.io/namespace': namespace,
               'kuma.io/env': fake.kuma.env(),
               'kuma.io/mesh': 'default',
-              'kuma.io/origin': fake.kuma.origin(),
-              'kuma.io/zone': fake.word.noun(),
+              'kuma.io/origin': zoneQuery ? 'zone' : fake.kuma.origin(),
+              'kuma.io/zone': zone,
             }
             : {},
           spec: {
