@@ -2,7 +2,7 @@ import { TarWriter } from '@gera2ld/tarjs'
 
 import { ZoneIngressOverview, ZoneIngress } from './data'
 import { YAML } from '@/app/application'
-import type { DataSourceResponse, Source } from '@/app/application'
+import type { DataSourceResponse } from '@/app/application'
 import { defineSources } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
@@ -17,28 +17,8 @@ export type ZoneIngressOverviewCollectionSource = DataSourceResponse<ZoneIngress
 
 export type EnvoyDataSource = DataSourceResponse<object | string>
 
-export const sources = (source: Source, api: KumaApi) => {
+export const sources = (api: KumaApi) => {
   return defineSources({
-    // doesn't resolve until we have at least one ingress and one ingress is online
-    '/zone-ingress-overviews/~online': (params) => {
-      const { size } = params
-      const offset = size * (params.page - 1)
-      const OfflineError = class extends Error { }
-      return source(async () => {
-        const res = ZoneIngressOverview.fromCollection(await api.getAllZoneIngressOverviews({ size, offset }))
-        if (res.total > 0 && res.items.some((item) => item.state === 'online')) {
-          return res
-        } else {
-          throw new OfflineError()
-        }
-      }, {
-        retry: (e) => {
-          if (e instanceof OfflineError) {
-            return new Promise((resolve) => setTimeout(resolve, 2000))
-          }
-        },
-      })
-    },
     '/zone-cps/:name/ingresses': async (params) => {
       const { name, size, page } = params
       const filter = {

@@ -11,7 +11,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('connections.sources'), {
       service: sources,
       arguments: [
-        app.source,
         app.api,
       ],
       labels: [
