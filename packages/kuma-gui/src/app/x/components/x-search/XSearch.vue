@@ -91,15 +91,15 @@
             path="components.x-search.placeholder"
           />
         </div>
-        <template 
-          v-for="(_, key) in $slots"
-          :key="key"
+        <div 
+          v-if="slots.warnings && invalidFilters.length"
+          class="dropdown-item"
         >
           <slot
-            :name="key"
+            name="warnings"
             :invalid-filters="invalidFilters"
           />
-        </template>
+        </div>
         <div
           v-if="props.keys.length"
           class="dropdown-item bg-neutral-weakest"
@@ -117,7 +117,7 @@
 
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, UnwrapRef } from 'vue'
 
 const props = withDefaults(defineProps<{
   /**
@@ -172,6 +172,10 @@ const inputRef = ref<null | HTMLInputElement>(null)
 const dropdownRef = ref<null | HTMLInputElement>(null)
 const isDropdownOpen = ref<boolean>(false)
 const invalidFilters = ref<string[]>(getInvalidFilters(props.value))
+
+const slots = defineSlots<{ warnings?(props: {
+  invalidFilters: UnwrapRef<typeof invalidFilters>
+}): unknown}>()
 
 const onKeyEvent = ({ key }: KeyboardEvent) => {
   switch(key) {

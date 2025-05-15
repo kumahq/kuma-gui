@@ -23,80 +23,70 @@
         default-path="common.i18n.ignore-error"
       />
       <XCard>
-        <DataSource
-          :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type/validate`, {
-            mesh: route.params.mesh,
-            type: route.params.dataplaneType,
-          }, {
-            search: route.params.s,
-          })"
-        >
-          <search>
-            <form
-              class="search-form"
-              @submit.prevent
+        <search>
+          <form
+            class="search-form"
+            @submit.prevent
+          >
+            <XSearch
+              class="search-field"
+              :keys="['name', 'tag', 'zone', 'namespace']"
+              :value="route.params.s"
+              :validate="(filter) => !filter.startsWith(':') && !filter.endsWith(':')"
+              @change="(s) => route.update({ page: 1, s })"
             >
-              <XSearch
-                class="search-field"
-                :keys="['name', 'tag', 'zone', 'namespace']"
-                :value="route.params.s"
-                :validate="(filter) => !filter.startsWith(':') && !filter.endsWith(':')"
-                @change="(s) => route.update({ page: 1, s })"
-                v-slot="{ invalidFilters }"
+              <template
+                #warnings="{ invalidFilters }"
               >
-                <div
-                  v-if="invalidFilters.length"
+                <XLayout type="separated">
+                  <XIcon name="warning" />
+                  {{ t('common.validation.invalid.filter.title') }}:
+                </XLayout>
+                <ul
+                  v-for="invalidFilter in invalidFilters"
+                  :key="invalidFilter"
                 >
-                  <XLayout type="separated">
-                    <XIcon name="warning" />
-                    {{ t('common.validation.invalid.filter.title') }}:
-                  </XLayout>
-                  <ul
-                    v-for="invalidFilter in invalidFilters"
-                    :key="invalidFilter"
+                  <li
+                    v-for="[key, value] in [invalidFilter.split(/:(.*)/)]"
+                    :key="key"
                   >
-                    <li
-                      v-for="[key, value] in [invalidFilter.split(/:(.*)/)]"
-                      :key="key"
-                    >
-                      <XI18n
-                        :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
-                        :params="{ key, value }"
-                      />
-                    </li>
-                  </ul>
-                </div>
-              </XSearch>
+                    <XI18n
+                      :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
+                      :params="{ key, value }"
+                    />
+                  </li>
+                </ul>
+              </template>
+            </XSearch>
                   
-              <XSelect
-                label="Type"
-                name="dataplaneType"
-                :selected="route.params.dataplaneType"
-                @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
+            <XSelect
+              label="Type"
+              name="dataplaneType"
+              :selected="route.params.dataplaneType"
+              @change="(value: string) => route.update({ page: 1, dataplaneType: value })"
+            >
+              <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
+                <XIcon
+                  v-if="item !== 'all'"
+                  :size="KUI_ICON_SIZE_40"
+                  :name="item"
+                />
+                {{ t(`data-planes.type.${item}`) }}
+              </template>
+              <template
+                v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
+                :key="item"
+                #[`${item}-option`]
               >
-                <template #selected="{ item }: { item: 'all' | 'standard' | 'builtin' | 'delegated'}">
-                  <XIcon
-                    v-if="item !== 'all'"
-                    :size="KUI_ICON_SIZE_40"
-                    :name="item"
-                  />
-                  {{ t(`data-planes.type.${item}`) }}
-                </template>
-                <template
-                  v-for="item in (['all', 'standard', 'builtin', 'delegated'] as const)"
-                  :key="item"
-                  #[`${item}-option`]
-                >
-                  <XIcon
-                    v-if="item !== 'all'"
-                    :name="item"
-                  />
-                  {{ t(`data-planes.type.${item}`) }}
-                </template>
-              </XSelect>
-            </form>
-          </search>
-        </DataSource>
+                <XIcon
+                  v-if="item !== 'all'"
+                  :name="item"
+                />
+                {{ t(`data-planes.type.${item}`) }}
+              </template>
+            </XSelect>
+          </form>
+        </search>
         <DataLoader
           :src="uri(sources, `/meshes/:mesh/dataplanes/of/:type`, {
             mesh: route.params.mesh,
