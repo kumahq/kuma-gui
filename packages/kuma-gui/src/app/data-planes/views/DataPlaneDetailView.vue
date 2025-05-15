@@ -66,7 +66,7 @@
               },
             },
             {
-              bool: !props.data.dataplane.networking.outbounds.length && !('transparentProxying' in props.data.dataplane.networking) && !props.data.dataplaneInsight.metadata.features.includes('feature-transparent-proxy-in-dataplane-metadata'),
+              bool: !('transparentProxying' in props.data.dataplane.networking) && !props.data.dataplaneInsight.metadata.features.includes('feature-transparent-proxy-in-dataplane-metadata'),
               key: 'networking-transparent-proxying',
               variant: 'info' as const,
             },
