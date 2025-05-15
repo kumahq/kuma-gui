@@ -95,8 +95,7 @@ export const create: Creator = (src, router) => {
 
   const waitForEvent = (target: EventTarget, event: string) => {
     return new Promise((resolve) => {
-      const cb = () => resolve(cb)
-      target.addEventListener(event, cb, { once: true })
+      target.addEventListener(event, resolve, { once: true })
     })
   }
 
