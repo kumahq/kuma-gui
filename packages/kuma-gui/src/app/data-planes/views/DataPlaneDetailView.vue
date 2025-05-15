@@ -66,7 +66,7 @@
               },
             },
             {
-              bool: !('transparentProxying' in props.data.dataplane.networking) && !props.data.dataplaneInsight.metadata.features.includes('feature-transparent-proxy-in-dataplane-metadata'),
+              bool: !('transparentProxying' in props.data.dataplane.networking) && ![...new Set(props.data.dataplaneInsight.metadata.features).intersection(new Set(['feature-transparent-proxy-in-dataplane-metadata', 'bind-outbounds']))].length,
               key: 'networking-transparent-proxying',
               variant: 'info' as const,
             },
