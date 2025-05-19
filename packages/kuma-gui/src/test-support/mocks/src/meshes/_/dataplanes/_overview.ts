@@ -102,7 +102,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                   return {
                     port: fake.internet.port(),
                     tags: fake.kuma.tags({ service: fake.word.noun() }),
-                    address: fake.internet.ipv4(),
+                    ...(fake.datatype.boolean() && {
+                      address: fake.internet.ip(),
+                    }),
                   }
                 }),
               } : {
