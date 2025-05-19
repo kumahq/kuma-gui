@@ -15,6 +15,6 @@
 .run/e2e: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .run/e2e:
 	@$(MAKE) deploy/e2e
-	$(VITE) \
+	@$(VITE) \
 		-c ./vite.config.preview.ts \
 		preview
