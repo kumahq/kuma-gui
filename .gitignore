@@ -28,3 +28,6 @@ dist
 
 # Caches
 .eslintcache
+
+# Cypress
+cypress/downloads/*
