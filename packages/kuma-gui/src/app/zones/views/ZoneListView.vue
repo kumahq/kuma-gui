@@ -60,6 +60,7 @@
               <form @submit.prevent>
                 <XSearch
                   class="search-field"
+                  :search-regex="searchRegex"
                   :keys="['name']"
                   :value="route.params.s"
                   @change="(s) => route.update({ page: 1, s })"
@@ -297,6 +298,7 @@ import { get } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import { searchRegex } from '@/app/resources/data/Resource'
 import type { ZoneEgressOverview } from '@/app/zone-egresses/data'
 import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 

@@ -25,6 +25,7 @@
             >
               <XSearch
                 class="search-field"
+                :search-regex="searchRegex"
                 :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : [])]"
                 :value="route.params.s"
                 @change="(s) => route.update({ s })"
@@ -195,6 +196,7 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import { searchRegex } from '@/app/resources/data/Resource'
 </script>
 <style lang="scss" scoped>
 .search-field {

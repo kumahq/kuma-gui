@@ -29,10 +29,10 @@
             class="content-wrapper"
           >
             <template
-              v-for="(chunk, index) in inputValue.split(regex).filter(Boolean)"
+              v-for="(chunk, index) in inputValue.split(props.searchRegex).filter(Boolean)"
               :key="chunk+index"
             >
-              <span :class="{ highlight: regex.test(chunk) }">{{ chunk }}</span>
+              <span :class="{ highlight: props.searchRegex.test(chunk) }">{{ chunk }}</span>
             </template>
           </div>
           <div class="input-wrapper">
@@ -60,10 +60,10 @@
             class="filter-block"
           >
             <template
-              v-for="(chunk, i) in inputValue.split(regex).filter(Boolean)"
+              v-for="(chunk, i) in inputValue.split(props.searchRegex).filter(Boolean)"
               :key="chunk+i"
             >
-              <dl v-if="regex.test(chunk)">
+              <dl v-if="props.searchRegex.test(chunk)">
                 <template
                   v-for="([key, ...values], j) in [chunk.split(':')]"
                   :key="key+j"
@@ -131,6 +131,10 @@ const props = withDefaults(defineProps<{
    * The default key, that is being used to filter for when there is no `key:value` pair but only a `value`
    */
   defaultKey?: string
+  /**
+   * A regular expression that highlights different values and key:value pairs.
+   */
+  searchRegex: RegExp
 }>(), {
   placeholder: undefined,
   name: undefined,
@@ -143,7 +147,6 @@ const emit = defineEmits<{
   (e: 'change', value: string): void
 }>()
 
-const regex = /([^\s]+)/
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)

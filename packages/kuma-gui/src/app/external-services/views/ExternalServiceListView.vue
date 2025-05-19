@@ -22,6 +22,7 @@
             <form @submit.prevent>
               <XSearch
                 class="search-field"
+                :search-regex="searchRegex"
                 :keys="['name']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -118,6 +119,7 @@
 <script lang="ts" setup>
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+import { searchRegex } from '@/app/resources/data/Resource'
 </script>
 <style lang="scss" scoped>
 .search-field {

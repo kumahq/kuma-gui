@@ -7,6 +7,7 @@ The `XSearch` component is an input field that highlights `key:value` pairs and 
     <form>
       <XSearch
         name="search"
+        :search-regex="/\S+/"
         placeholder="Filter by name, protocol, service or tag..."
         :default-value="route.params.search"
         :keys="['name', 'protocol', 'service', 'tag']"

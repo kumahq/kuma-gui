@@ -30,6 +30,7 @@
           >
             <XSearch
               class="search-field"
+              :search-regex="searchRegex"
               :keys="['name', 'tag', 'zone', 'namespace']"
               :value="route.params.s"
               @change="(s) => route.update({ page: 1, s })"
@@ -311,6 +312,7 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { Mesh } from '@/app/meshes/data'
+import { searchRegex } from '@/app/resources/data/Resource'
 const props = defineProps<{
   mesh: Mesh
 }>()

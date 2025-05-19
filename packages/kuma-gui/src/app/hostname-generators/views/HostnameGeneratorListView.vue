@@ -31,6 +31,7 @@
             >
               <XSearch
                 class="search-field"
+                :search-regex="searchRegex"
                 :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : [])]"
                 :value="route.params.s"
                 @change="(s) => route.update({ s, page: 1 })"
@@ -142,6 +143,7 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
+import { searchRegex } from '@/app/resources/data/Resource'
 import XCopyButton from '@/app/x/components/x-copy-button/XCopyButton.vue'
 </script>
 <style lang="scss" scoped>
