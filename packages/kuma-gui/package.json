@@ -17,7 +17,7 @@
     "@kong-ui-public/i18n": "^2.2.10",
     "@kong/icons": "^1.25.0",
     "@kong/kongponents": "^9.31.7",
-    "@vue/shared": "^3.5.13",
+    "@vue/shared": "^3.5.14",
     "@vueuse/core": "^13.1.0",
     "brandi": "^5.0.0",
     "deepmerge": "^4.3.1",
