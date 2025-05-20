@@ -27,7 +27,6 @@ export type DataplaneGateway = PartialDataplaneGateway & {}
 const DataplaneOutbound = {
   fromObject(item: PartialDataplaneOutbound) {
     const address = item.address ?? '127.0.0.1'
-    const portStringified = item.port?.toString()
     const tags = item.tags ?? {}
     return {
       ...item,
@@ -36,7 +35,7 @@ const DataplaneOutbound = {
       service: tags['kuma.io/service'],
       protocol: tags['kuma.io/protocol'] ?? 'tcp',
       address,
-      addressPort: `${address}${portStringified?.padStart(portStringified.length + 1, ':')}`,
+      addressPort: `${address}${typeof item.port === 'number' ? `:${item.port}` : ''}`,
     }
   },
   fromCollection(items: PartialDataplaneOutbound[]) {
