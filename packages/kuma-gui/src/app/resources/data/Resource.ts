@@ -16,6 +16,7 @@ type SearchOptions = {
 const isShortFilter = (k: string): k is keyof typeof filters => k in filters
 
 export const searchRegex = /(\S+:\s*\S*)|(\S+)/
+const kvSeparatorRegex = /:(.*)/
 
 export const Resource = {
   search(query: string, options: SearchOptions = {}) {
@@ -23,7 +24,7 @@ export const Resource = {
     const parts = query.trim().split(searchRegex).map((part) => part?.trim().replace(/=/, ':')).filter(Boolean)
 
     return parts.reduce((acc, curr) => {
-      const [key, value] = curr.split(/:(.*)/).map((item) => item.trim())
+      const [key, value] = curr.split(kvSeparatorRegex).map((item) => item.trim())
       
       switch(true) {
         case curr.includes(':') && !value?.length:
@@ -34,7 +35,7 @@ export const Resource = {
             [defaultKey]: value?.length ? value : key,
           }
         case ['label', 'labels'].includes(key): {
-          const [k, v] = value.split(/:(.*)/)
+          const [k, v] = value.split(kvSeparatorRegex)
           return {
             ...acc,
             [`filter[labels.${k}]`]: v,
