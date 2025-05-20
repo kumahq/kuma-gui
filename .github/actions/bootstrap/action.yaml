@@ -12,38 +12,23 @@ runs:
     - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version-file: '.nvmrc'
-
     - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
       id: cache
       with:
-        lookup-only: true
         path: |
           **/node_modules
           /home/runner/.cache/Cypress
-        key: ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }}
+        # if you ever want to ignore or rebuild the cache you can temporarily
+        # remove the restore-keys related comments here also see
+        # https://github.com/actions/cache/blob/main/tips-and-workarounds.md#update-a-cache
+        key: ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }} #-${{ github.run_id }}
+        # restore-keys: |
+        #   ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }}
 
-    # only when we have an install command:
-    # if the ignore-cache label is set, or we didn't manage to lookup a cache
-    # then run the install command
-    - if: |
-        inputs.install-cmd != '' && (steps.cache.outputs.cache-hit != 'true' || contains(github.event.pull_request.labels.*.name, 'ci/cache-ignore'))
-      id: install
+      # actions/cache runs a post run step on successful job completion to save
+      # the contents of node_modules so the result of this command (if run)
+      # will be saved to the cache.
+    - if: steps.cache.outputs.cache-hit != 'true' && inputs.install-cmd != ''
       shell: bash
       run: ${{ inputs.install-cmd }}
 
-    # only save if we run the install command
-    - uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-      if: |
-        steps.install.outcome == 'success'
-      with:
-        path: |
-          **/node_modules
-          /home/runner/.cache/Cypress
-        key: ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }}
-
-    - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-      with:
-        path: |
-          **/node_modules
-          /home/runner/.cache/Cypress
-        key: ${{ runner.os }}-bootstrap-cache-${{ hashFiles('**/package-lock.json') }}
