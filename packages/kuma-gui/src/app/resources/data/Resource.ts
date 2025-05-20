@@ -20,10 +20,10 @@ export const searchRegex = /(\S+:\s*\S*)|(\S+)/
 export const Resource = {
   search(query: string, options: SearchOptions = {}) {
     const { defaultKey = 'name' } = options
-    const parts = query.trim().split(searchRegex).map((part) => part?.trim()).filter(Boolean)
+    const parts = query.trim().split(searchRegex).map((part) => part?.trim().replace(/=/, ':')).filter(Boolean)
 
     return parts.reduce((acc, curr) => {
-      const [key, value] = curr.split(/:(.*)/).map((item) => item.trim().replace(/=/, ':'))
+      const [key, value] = curr.split(/:(.*)/).map((item) => item.trim())
       
       switch(true) {
         case curr.includes(':') && !value?.length:
