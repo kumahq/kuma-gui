@@ -134,13 +134,14 @@ const props = withDefaults(defineProps<{
   /**
    * A regular expression that highlights different values and key:value pairs.
    */
-  highlight: RegExp
+  highlight?: RegExp
 }>(), {
   placeholder: undefined,
   name: undefined,
   value: '',
   keys: () => [],
   defaultKey: 'name',
+  highlight: () => /(\S+:\s*\S*)|(\S+)/,
 })
 
 const emit = defineEmits<{

@@ -76,7 +76,6 @@
             >
               <XSearch
                 class="search-field"
-                :highlight="searchRegex"
                 :keys="['name', 'tag', 'zone', 'namespace']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -264,7 +263,6 @@ import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
 import type { DataplaneOverviewCollectionSource } from '@/app/data-planes/sources'
-import { searchRegex } from '@/app/resources/data/Resource'
 import type { ServiceInsightSource } from '@/app/services/sources'
 </script>
 

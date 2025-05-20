@@ -21,7 +21,6 @@
             >
               <XSearch
                 class="search-field"
-                :highlight="searchRegex"
                 :keys="['name', 'zone']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -156,7 +155,6 @@
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import SummaryView from '@/app/common/SummaryView.vue'
-import { searchRegex } from '@/app/resources/data/Resource'
 </script>
 <style lang="scss" scoped>
 .search-field {

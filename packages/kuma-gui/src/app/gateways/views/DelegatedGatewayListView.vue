@@ -20,7 +20,6 @@
             >
               <XSearch
                 class="search-field"
-                :highlight="searchRegex"
                 :keys="['name']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
@@ -135,7 +134,6 @@
 <script lang="ts" setup>
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
-import { searchRegex } from '@/app/resources/data/Resource'
 import { sources } from '@/app/services/sources'
 </script>
 <style lang="scss" scoped>
