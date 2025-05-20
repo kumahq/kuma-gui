@@ -171,6 +171,9 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
             },
           }
         }),
+        metadata: {
+          features: fake.kuma.dataplaneFeatures(),
+        },
       },
     },
   }

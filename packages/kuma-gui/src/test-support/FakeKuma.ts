@@ -390,6 +390,15 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     }
   }
 
+  dataplaneFeatures() {
+    return this.faker.helpers.arrayElements([
+      'feature-tcp-accesslog-via-named-pipe',
+      'feature-transparent-proxy-in-dataplane-metadata',
+      // TODO: not implemented yet, uncomment when implemented
+      // 'bind-outbounds',
+    ])
+  }
+
   ruleMatch({ kind }: { kind?: 'path' | 'method' | 'headers' | 'queryParams' } = { kind: 'path' }): ToTargetRefRuleMatch {
     const _kind = kind ?? this.faker.helpers.arrayElement<'path' | 'method' | 'headers' | 'queryParams'>(['path', 'method', 'headers', 'queryParams'])
 

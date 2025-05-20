@@ -27,15 +27,14 @@ deploy/test:
 	@mkdir gui && \
 		mv dist/* gui && \
 		mv gui dist/gui && \
-		mv dist/gui/mockServiceWorker.js dist/ && \
-		cp ../../_redirects dist/_redirects
+		mv dist/gui/mockServiceWorker.js dist/
 
 .PHONY: deploy/e2e
 deploy/e2e:
 	@$(MAKE) build NOPRUNE=1
 	@$(MAKE) deploy/test
 
-.PHONY: deploy/preview
-deploy/preview:
+.PHONY: .deploy/preview
+.deploy/preview:
 	@$(MAKE) build/preview
 	@$(MAKE) deploy/test
