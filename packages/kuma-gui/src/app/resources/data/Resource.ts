@@ -6,6 +6,7 @@
 const filters = {
   namespace: 'filter[labels.k8s.kuma.io/namespace]',
   zone: 'filter[labels.kuma.io/zone]',
+  service: 'filter[labels.kuma.io/service]',
 }
 
 type SearchOptions = {
@@ -14,35 +15,46 @@ type SearchOptions = {
 
 const isShortFilter = (k: string): k is keyof typeof filters => k in filters
 
+export const searchRegex = /(\S+:\s*\S*)|(\S+)/
+const kvSeparatorRegex = /:(.*)/
+
 export const Resource = {
   search(query: string, options: SearchOptions = {}) {
     const { defaultKey = 'name' } = options
-    const parts = query.trim().split(/\s+/)
+    const parts = query.trim().split(searchRegex).map((part) => part?.trim().replace(/=/, ':')).filter(Boolean)
 
     return parts.reduce((acc, curr) => {
-      const [key, value] = curr.split(/:(.*)/)
+      const [key, value] = curr.split(kvSeparatorRegex).map((item) => item.trim())
       
       switch(true) {
-        case key?.length && value?.length && !isShortFilter(key):
+        case curr.includes(':') && !value?.length:
+          return acc
+        case key === defaultKey || !value?.length:
+          return {
+            ...acc,
+            [defaultKey]: value?.length ? value : key,
+          }
+        case ['label', 'labels'].includes(key): {
+          const [k, v] = value.split(kvSeparatorRegex)
+          return {
+            ...acc,
+            [`filter[labels.${k}]`]: v,
+          }
+        }
+        case key?.length && !isShortFilter(key):
           return {
             ...acc,
             [`filter[labels.${key}]`]: value,
           }
-        case !!value?.length: {
+        case !!key?.length: {
           const _key = isShortFilter(key) ? filters[key] : key
           return {
             ...acc,
             [_key]: value,
           }
         }
-        case curr.includes(':') || (!key && !value):
-          // at this point this would be an invalid query, i.e. `name:`
-          return acc
         default:
-          return {
-            ...acc,
-            [defaultKey]: key,
-          }
+          return acc
       }
     }, {} as Record<string, string>)
   },
