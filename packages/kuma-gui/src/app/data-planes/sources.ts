@@ -11,6 +11,7 @@ import type { DataSourceResponse } from '@/app/application'
 import { YAML } from '@/app/application'
 import { defineSources, type Source } from '@/app/application/services/data-source'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import { Resource } from '@/app/resources/data/Resource'
 import type { PaginatedApiListResponse as CollectionResponse, ApiKindListResponse as KindCollectionResponse } from '@/types/api.d'
 import type { PolicyTypeEntry } from '@/types/index.d'
 import type { paths } from '@kumahq/kuma-http-api'
@@ -183,7 +184,7 @@ export const sources = (source: Source, api: KumaApi) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const filterParams = DataplaneOverview.search(params.search)
+      const search = Resource.search(params.search)
 
       const type = params.type === 'standard' ? 'false' : params.type
       const gatewayParams = includes(['delegated', 'builtin', 'false'] as const, type)
@@ -191,7 +192,7 @@ export const sources = (source: Source, api: KumaApi) => {
         : {}
 
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
-        ...filterParams,
+        ...search,
         ...gatewayParams,
         offset,
         size,
@@ -201,17 +202,17 @@ export const sources = (source: Source, api: KumaApi) => {
     '/meshes/:mesh/dataplanes/for/mesh-service/:tags': async (params) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
-      const filterParams = DataplaneOverview.search(params.search)
+      const search = Resource.search(params.search)
 
-      if (typeof filterParams.tag === 'undefined') {
-        filterParams.tag = []
-      }
-      // MeshService dataplanes should always be filtered by the zone for the MeshService via dataplaneTags
-      filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/zone:'))
-      filterParams.tag = filterParams.tag.concat(Object.entries(JSON.parse(params.tags)).map(([key, value]) => `${key}:${value}`))
+      // MeshService dataplanes should always be filtered by the zone for the MeshService via `dataplaneTags`
+      // The zone tag is part of the search query `zone:<zone>`, but there might be more tags in `dataplaneTags`
+      const tagsParam = JSON.parse(params.tags ?? '{}')
+      const searchTags = Array.isArray(search.tag) ? search.tag : []
+      const tag = [...searchTags, ...Object.entries(tagsParam).map(([key, value]) => `${key}:${value}`)]
 
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
-        ...filterParams,
+        ...search,
+        tag,
         offset,
         size,
       }))
@@ -221,16 +222,14 @@ export const sources = (source: Source, api: KumaApi) => {
       const { mesh, size } = params
       const offset = size * (params.page - 1)
 
-      const filterParams = DataplaneOverview.search(params.search)
+      const search = Resource.search(params.search)
 
-      if (typeof filterParams.tag === 'undefined') {
-        filterParams.tag = []
-      }
-      filterParams.tag = filterParams.tag.filter((item) => !item.startsWith('kuma.io/service:'))
-      filterParams.tag.push(`kuma.io/service:${params.service}`)
+      // Service dataplanes should always be filtered by the service tag
+      const tag = [...(Array.isArray(search.tag) ? search.tag : []), `kuma.io/service:${params.service}`]
 
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
-        ...filterParams,
+        ...search,
+        tag,
         offset,
         size,
       }))

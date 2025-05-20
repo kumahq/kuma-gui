@@ -8,7 +8,7 @@
       service: '',
       s: '',
     }"
-    v-slot="{ route, t, uri, me }"
+    v-slot="{ can, route, t, uri, me }"
   >
     <RouteTitle
       :render="false"
@@ -25,7 +25,7 @@
             >
               <XSearch
                 class="search-field"
-                :keys="['name']"
+                :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : []), 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ s })"
               />
