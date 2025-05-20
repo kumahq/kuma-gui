@@ -21,7 +21,8 @@ permissions:
   contents: read # for checking out the repository (e.g. actions/checkout)
 
 jobs:
-  lint-global:
+  lint-actions:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -31,7 +32,10 @@ jobs:
             kumahq/
 
   install-dependencies:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
+    needs:
+      - lint-actions
     outputs:
       spec_groups: ${{ steps.set-groups.outputs.result }}
       packages: ${{ steps.meta.outputs.packages }}
@@ -40,19 +44,10 @@ jobs:
       e2e: ${{ steps.meta.outputs.e2e }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: ./.github/actions/bootstrap/
         with:
-          node-version-file: '.nvmrc'
-      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        id: node-modules-cache
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - if: steps.node-modules-cache.outputs.cache-hit != 'true'
-        run: |
-          make install
+          install-cmd: |
+            make install
       - id: meta
         run: |
           echo "packages<<EOF" >> $GITHUB_OUTPUT
@@ -79,6 +74,7 @@ jobs:
             }
             return json
   lint-tests:
+    timeout-minutes: 30
     needs:
       - install-dependencies
     runs-on: ubuntu-latest
@@ -89,19 +85,12 @@ jobs:
       Linting ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
-      - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} lint
 
   cli-tests:
+    timeout-minutes: 30
     needs:
       - install-dependencies
     runs-on: ubuntu-latest
@@ -112,15 +101,7 @@ jobs:
       Unit tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
-      - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - uses: ./.github/actions/bootstrap/
       - run: |
           make -C ${{ matrix.package.path }} test/unit
 
@@ -138,21 +119,11 @@ jobs:
       Browser tests: ${{ matrix.package.name }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: '.nvmrc'
-      - uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            **/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - env:
-          SPEC_GROUPS: ${{ needs.install-dependencies.outputs.spec_groups }}
-        run: |
+      - uses: ./.github/actions/bootstrap/
+      - run: |
           make -C ${{ matrix.package.path }} run/e2e &
           make -C ${{ matrix.package.path }} \
-            CYPRESS_SPEC="$(echo $SPEC_GROUPS | jq -cMr '.["${{ matrix.package.name }}"]' | jq -cMr '.[${{ matrix.container }}]')" \
+            CYPRESS_SPEC="$(echo '${{ needs.install-dependencies.outputs.spec_groups }}' | jq -cMr '.["${{ matrix.package.name }}"]' | jq -cMr '.[${{ matrix.container }}]')" \
             test/e2e
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: failure()
@@ -169,7 +140,6 @@ jobs:
     name: branch-protection
     #
     needs:
-      - lint-global
       - lint-tests
       - cli-tests
       - browser-tests
