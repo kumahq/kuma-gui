@@ -11,7 +11,7 @@ import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   // TODO(jc) :variant
   type?: 'stack' | 'separated' | 'columns'
-  size?: 'small' | 'normal' | 'max'
+  size?: 'small' | 'normal' | 'large' | 'max'
   justify?: 'start' | 'around' | 'between' | 'end'
   truncate?: boolean
 }>(), {
@@ -22,6 +22,9 @@ const props = withDefaults(defineProps<{
 })
 </script>
 <style lang="scss" scoped>
+.stack.large > * + * {
+  margin-block-start: $kui-space-100;
+}
 .stack.normal > * + * {
   margin-block-start: $kui-space-70;
 }
