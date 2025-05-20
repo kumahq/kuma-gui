@@ -59,9 +59,15 @@ test/e2e: .test/e2e ## Run browser-based e2e tests against a running GUI, you ma
 .PHONY: build ## Dev: build a production artifact in `./dist`
 build: .build
 
+# Called via netlify.toml
+.PHONY: deploy/preview
+deploy/preview: .deploy/preview
+	@$(MAKE) .deploy/preview && \
+		cp ../../_redirects dist/_redirects
+
 .PHONY: prune
 prune:
-	@$(MAKE) .sbom/exclude EXCLUDE_PATH=$(KUMAHQ_CONFIG) ## CI: Removes any dependencies unnessary for building
+	@$(MAKE) .sbom/exclude EXCLUDE_PATH=$(KUMAHQ_CONFIG) ## CI: Removes any dependencies unnecessary for building
 
 .PHONY: release
 release: KUMAHQ_KUMA_GUI=$(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-gui") | .key')
