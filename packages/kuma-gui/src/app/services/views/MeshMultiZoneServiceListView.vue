@@ -25,7 +25,7 @@
             >
               <XSearch
                 class="search-field"
-                :search-regex="searchRegex"
+                :highlight="searchRegex"
                 :keys="['name']"
                 :value="route.params.s"
                 @change="(s) => route.update({ s })"

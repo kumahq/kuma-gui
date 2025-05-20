@@ -31,7 +31,7 @@
             >
               <XSearch
                 class="search-field"
-                :search-regex="searchRegex"
+                :highlight="searchRegex"
                 :keys="['name', 'namespace', ...(can('use zones') ? ['zone'] : [])]"
                 :value="route.params.s"
                 @change="(s) => route.update({ s, page: 1 })"

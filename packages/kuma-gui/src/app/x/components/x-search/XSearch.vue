@@ -29,10 +29,10 @@
             class="content-wrapper"
           >
             <template
-              v-for="(chunk, index) in inputValue.split(props.searchRegex).filter(Boolean)"
+              v-for="(chunk, index) in inputValue.split(props.highlight).filter(Boolean)"
               :key="chunk+index"
             >
-              <span :class="{ highlight: props.searchRegex.test(chunk) }">{{ chunk }}</span>
+              <span :class="{ highlight: props.highlight.test(chunk) }">{{ chunk }}</span>
             </template>
           </div>
           <div class="input-wrapper">
@@ -60,10 +60,10 @@
             class="filter-block"
           >
             <template
-              v-for="(chunk, i) in inputValue.split(props.searchRegex).filter(Boolean)"
+              v-for="(chunk, i) in inputValue.split(props.highlight).filter(Boolean)"
               :key="chunk+i"
             >
-              <dl v-if="props.searchRegex.test(chunk)">
+              <dl v-if="props.highlight.test(chunk)">
                 <template
                   v-for="([key, ...values], j) in [chunk.split(':')]"
                   :key="key+j"
@@ -134,7 +134,7 @@ const props = withDefaults(defineProps<{
   /**
    * A regular expression that highlights different values and key:value pairs.
    */
-  searchRegex: RegExp
+  highlight: RegExp
 }>(), {
   placeholder: undefined,
   name: undefined,

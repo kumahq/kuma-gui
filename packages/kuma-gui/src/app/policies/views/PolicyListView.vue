@@ -69,7 +69,7 @@
                 >
                   <XSearch
                     class="search-field"
-                    :search-regex="searchRegex"
+                    :highlight="searchRegex"
                     :keys="['name', 'namespace', ...(can('use zones') && type.policy.isTargetRef ? ['zone'] : [])]"
                     :value="route.params.s"
                     @change="(s) => route.update({ s })"
