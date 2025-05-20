@@ -91,6 +91,7 @@
             <template v-if="route.params.format === 'structured'">
               <XLayout
                 type="stack"
+                size="large"
                 data-testid="structured-view"
               >
                 <div
@@ -237,6 +238,147 @@
                     </DefinitionCard>
                   </div>
                 </XLayout>
+
+                <DataCollection
+                  v-if="item.dataplaneType === 'standard'"
+                  :items="item.dataplane.networking.inbounds"
+                  v-slot="{ items : inbounds }"
+                >
+                  <XLayout
+                    data-testid="dataplane-inbounds"
+                  >
+                    <h3>{{ t('data-planes.routes.item.inbounds') }}</h3>
+
+                    <XLayout
+                      v-for="(inbound, index) in inbounds"
+                      :key="index"
+                      class="inbound"
+                    >
+                      <h4 v-if="inbound.tags['kuma.io/service']">
+                        <XCopyButton
+                          :text="inbound.tags['kuma.io/service']"
+                        >
+                          {{ t('data-planes.routes.item.inbound_name', { service: inbound.tags['kuma.io/service'] }) }}
+                        </XCopyButton>
+                      </h4>
+
+                      <XLayout
+                        class="stack-with-borders"
+                        size="small"
+                      >
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.state') }}
+                          </template>
+
+                          <template #body>
+                            <XBadge
+                              v-if="inbound.state === 'Ready'"
+                              appearance="success"
+                            >
+                              {{ t(`http.api.value.${inbound.state}`) }}
+                            </XBadge>
+
+                            <XBadge
+                              v-else
+                              appearance="danger"
+                            >
+                              {{ t(`http.api.value.${inbound.state}`) }}
+                            </XBadge>
+                          </template>
+                        </DefinitionCard>
+
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.tags') }}
+                          </template>
+
+                          <template #body>
+                            <TagList
+                              alignment="right"
+                              :tags="inbound.tags"
+                            />
+                          </template>
+                        </DefinitionCard>
+
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.address') }}
+                          </template>
+
+                          <template #body>
+                            <XCopyButton :text="inbound.addressPort" />
+                          </template>
+                        </DefinitionCard>
+                      </XLayout>
+                    </XLayout>
+                  </XLayout>
+                </DataCollection>
+
+                <DataCollection
+                  v-if="item.dataplaneType === 'standard'"
+                  :items="item.dataplane.networking.outbounds"
+                  v-slot="{ items: outbounds }"
+                >
+                  <XLayout
+                    data-testid="dataplane-outbounds"
+                  >
+                    <h3>{{ t('data-planes.routes.item.outbounds') }}</h3>
+                    <XLayout
+                      v-for="(outbound, index) in outbounds"
+                      :key="index"
+                      class="inbound"
+                      size="small"
+                    >
+                      <h4 v-if="outbound.tags['kuma.io/service']">
+                        <XCopyButton
+                          :text="outbound.tags['kuma.io/service']"
+                        >
+                          {{ t('data-planes.routes.item.inbound_name', { service: outbound.tags['kuma.io/service'] }) }}
+                        </XCopyButton>
+                      </h4>
+
+                      <XLayout
+                        class="stack-with-borders"
+                        size="small"
+                      >
+                        <DefinitionCard
+                          v-if="Object.keys(outbound.tags).length"
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.tags') }}
+                          </template>
+
+                          <template #body>
+                            <TagList
+                              alignment="right"
+                              :tags="outbound.tags"
+                            />
+                          </template>
+                        </DefinitionCard>
+
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t('http.api.property.address') }}
+                          </template>
+
+                          <template #body>
+                            <XCopyButton :text="outbound.addressPort" />
+                          </template>
+                        </DefinitionCard>
+                      </XLayout>
+                    </XLayout>
+                  </XLayout>
+                </DataCollection>
               </XLayout>
             </template>
 

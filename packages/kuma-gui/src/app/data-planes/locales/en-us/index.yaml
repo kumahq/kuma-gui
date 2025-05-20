@@ -100,7 +100,9 @@ data-planes:
         k8s: Kubernetes
         structured: Structured
       inbounds: 'Inbounds'
+      outbounds: Outbounds
       inbound_name: '{service}'
+      outbound_name: '{service}'
       port: ':{port}'
       namespace: 'Namespace'
       certificate_info: 'Certificate info'

@@ -2,12 +2,14 @@ Feature: Dataplane summary
 
   Background:
     Given the CSS selectors
-      | Alias                | Selector                                       |
-      | item                 | [data-testid='data-plane-collection'] tbody tr |
-      | summary              | [data-testid='summary']                        |
-      | close-summary-button | $summary [data-testid='slideout-close-icon']   |
-      | select-preference    | $summary [data-testid='select-input']          |
-      | structured-view      | $summary [data-testid='structured-view']       |
+      | Alias                | Selector                                             |
+      | item                 | [data-testid='data-plane-collection'] tbody tr       |
+      | summary              | [data-testid='summary']                              |
+      | close-summary-button | $summary [data-testid='slideout-close-icon']         |
+      | select-preference    | $summary [data-testid='select-input']                |
+      | structured-view      | $summary [data-testid='structured-view']             |
+      | inbounds             | $structured-view [data-testid='dataplane-inbounds']  |
+      | outbounds            | $structured-view [data-testid='dataplane-outbounds'] |
     And the environment
       """
       KUMA_SUBSCRIPTION_COUNT: 2
@@ -67,3 +69,30 @@ Feature: Dataplane summary
     When I click the "[data-testid='select-item-structured'] button" element
     Then the URL contains "format=structured"
     And the "$structured-view" element exists
+
+  Scenario: Structured shows inbounds and outbounds
+    Given the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
+      """
+    And the URL "/meshes/default/dataplanes/_overview" responds with
+      """
+      body:
+        items:
+          - name: test-data-plane-1
+            dataplane:
+              networking:
+                type: standard
+                gateway: !!js/undefined
+                outbound:
+                  - address: 127.0.0.1
+                    tags:
+                      kuma.io/service: foo
+                inbound:
+                  - address: 127.0.0.1
+                    tags:
+                      kuma.io/service: foo
+      """
+    When I visit the "/meshes/default/data-planes/test-data-plane-1?format=structured" URL
+    Then the "$inbounds" element exists
+    And the "$outbounds" element exists

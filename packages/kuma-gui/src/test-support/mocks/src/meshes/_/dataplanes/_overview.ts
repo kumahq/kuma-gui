@@ -108,7 +108,10 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 outbound: Array.from({ length: outboundCount }).map((_, _i) => {
                   return {
                     port: fake.internet.port(),
-                    tags: fake.kuma.tags({ service }),
+                    tags: fake.kuma.tags({ service: fake.word.noun() }),
+                    ...(fake.datatype.boolean() && {
+                      address: fake.internet.ip(),
+                    }),
                   }
                 }),
               } : {
