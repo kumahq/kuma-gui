@@ -43,7 +43,7 @@
                   {{ t('common.validation.invalid.filter.title') }}:
                 </XLayout>
                 <ul
-                  v-for="invalidFilter in invalidFilters"
+                  v-for="invalidFilter in [...new Set(invalidFilters)]"
                   :key="invalidFilter"
                 >
                   <li
@@ -51,6 +51,11 @@
                     :key="key"
                   >
                     <XI18n
+                      v-if="invalidFilter.length <= 1"
+                      path="common.validation.invalid.filter.missing-key-value"
+                    />
+                    <XI18n
+                      v-else
                       :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
                       :params="{ key, value }"
                     />
