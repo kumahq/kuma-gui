@@ -5,6 +5,7 @@
     "Kong/public-shared-renovate:github-actions"
   ],
   "dependencyDashboard": true,
+  "rangeStrategy": "bump",
   "labels": [
     "dependencies",
     "renovate-bot"
