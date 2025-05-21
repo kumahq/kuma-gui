@@ -12,6 +12,12 @@ describe('Resource.search', () => {
       },
     ],
     [
+      'name',
+      {
+        name: 'name',
+      },
+    ],
+    [
       'name:foo',
       {
         name: 'foo',
