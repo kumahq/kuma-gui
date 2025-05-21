@@ -43,7 +43,7 @@
                   {{ t('common.validation.invalid.filter.title') }}:
                 </XLayout>
                 <ul
-                  v-for="invalidFilter in [...new Set(invalidFilters)]"
+                  v-for="invalidFilter in invalidFilters"
                   :key="invalidFilter"
                 >
                   <li

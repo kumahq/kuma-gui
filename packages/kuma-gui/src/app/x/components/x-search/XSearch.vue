@@ -164,7 +164,8 @@ const emit = defineEmits<{
 
 const getInvalidFilters = (query: string) => {
   if(!props.validate) return []
-  return query.trim().split(props.highlight).map((part) => part?.trim()).filter((chunk) => !!chunk && !props.validate?.(chunk))
+  const invalids = query.trim().split(props.highlight).map((part) => part?.trim()).filter((chunk) => !!chunk && !props.validate?.(chunk))
+  return [...new Set(invalids)]
 }
 
 const inputValue = ref<string>(props.value)
