@@ -4,5 +4,6 @@
   ],
   "baseBranches": [
     "master"
-  ]
+  ],
+  "minimumReleaseAge": "5 days"
 }
