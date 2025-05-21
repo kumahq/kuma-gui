@@ -1,6 +1,16 @@
 {
-  "extends": [
-    "github>Kong/public-shared-renovate:kong-frontend-config"
+ "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "Kong/public-shared-renovate:github-actions"
+  ],
+  "dependencyDashboard": true,
+  "labels": [
+    "dependencies",
+    "renovate-bot"
+  ],
+  "schedule": [
+    "before 5am every weekday"
   ],
   "baseBranches": [
     "master"
