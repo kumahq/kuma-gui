@@ -1,7 +1,7 @@
 import type { Directive } from 'vue'
 
 type DirectiveValue = Record<string, boolean> | string
-type DirectiveModifiers = Partial<Record<'next', boolean | undefined>>
+type DirectiveModifiers = Partial<Record<'next', boolean>>
 const getDeclarations = (spec: DirectiveValue): string[] => {
   // allow string or { 'prop: value' : boolean }
   return Object.entries(typeof spec === 'string' ? { [spec]: true } : spec)
