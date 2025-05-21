@@ -108,7 +108,7 @@
 
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
   /**
@@ -176,6 +176,10 @@ useResizeObserver(contentRef, ([entry]) => {
 
   // keep the cursor position in the view
   containerRef.value?.scrollBy(inputRef.value?.scrollLeft ?? 0, 0)
+})
+
+watch(() => props.value, () => {
+  inputValue.value = props.value
 })
 </script>
 
