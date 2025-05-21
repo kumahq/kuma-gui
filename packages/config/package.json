@@ -18,7 +18,7 @@
     }
   },
   "dependencies": {
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
     "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
     "@cucumber/gherkin-utils": "^9.2.0",
     "@eslint/js": "^9.23.0",
