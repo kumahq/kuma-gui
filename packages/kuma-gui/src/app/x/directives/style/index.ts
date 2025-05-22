@@ -1,5 +1,7 @@
+import type { Directive } from 'vue'
+
 type DirectiveValue = Record<string, boolean> | string
-type DirectiveModifiers = Record<'next', boolean | undefined>
+type DirectiveModifiers = Partial<Record<'next', boolean>>
 const getDeclarations = (spec: DirectiveValue): string[] => {
   // allow string or { 'prop: value' : boolean }
   return Object.entries(typeof spec === 'string' ? { [spec]: true } : spec)
@@ -52,5 +54,5 @@ export default (map = new WeakMap<HTMLElement, Set<string>>()) => {
     unmounted: ($el: HTMLElement) => {
       map.delete($el)
     },
-  }
+  } satisfies Directive
 }
