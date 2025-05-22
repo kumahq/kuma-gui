@@ -100,7 +100,7 @@ Feature: mesh / dataplanes / index
     When I visit the "/meshes/default/data-planes" URL
     Then the "$input-search" element isn't disabled
     And I wait for 500 ms
-    When I "type" "service:system-1" into the "$input-search" element
+    When I "type" "tag:kuma.io/service:system-1" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
     Then the URL "/meshes/default/dataplanes/_overview" was requested with
       """

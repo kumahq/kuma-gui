@@ -225,7 +225,7 @@ export const sources = (source: Source, api: KumaApi) => {
       const search = Resource.search(params.search)
 
       // Service dataplanes should always be filtered by the service tag
-      const tag = [...(Array.isArray(search.tag) ? search.tag : []), `kuma.io/service:${params.service}`]
+      const tag = [...(Array.isArray(search.tag) ? search.tag.filter((item) => !item.startsWith('kuma.io/service')) : []), `kuma.io/service:${params.service}`]
 
       return DataplaneOverview.fromCollection(await api.getAllDataplaneOverviewsFromMesh({ mesh }, {
         ...search,
