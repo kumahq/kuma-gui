@@ -224,7 +224,9 @@ const onInput = (event: Event): void => {
 
 const onChange = () => {
   invalidFilters.value = getInvalidFilters(inputValue.value)
-  emit('change', inputValue.value)
+  if(!invalidFilters.value.length) {
+    emit('change', inputValue.value)
+  }
 }
 
 useResizeObserver(contentRef, ([entry]) => {
