@@ -111,8 +111,10 @@ components:
         =0 {Type to filter...}
         other {Filter by {keys}...}
       }
-    logic: 'Logic:'
     submit: submit
+    description: !!text/markdown |
+      <b>Help:</b> Filter by <strong>{defaultKey}</strong> (single value), <strong>key:value</strong> pairs (labels) or <strong>type:key:value</strong> combinations.
+      Multiple filters are <strong>AND</strong>ed.
 
 http:
   api:
