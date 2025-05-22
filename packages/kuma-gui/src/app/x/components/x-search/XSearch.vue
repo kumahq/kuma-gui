@@ -104,23 +104,25 @@
                 <XIcon name="warning" />
                 {{ t('common.validation.invalid.filter.title') }}:
               </XLayout>
-              <ul
-                v-for="invalidFilter in invalidFilters"
-                :key="invalidFilter"
-              >
+              <ul>
                 <li
-                  v-for="[key, v] in [invalidFilter.split(kvSeparatorRegex)]"
-                  :key="key"
+                  v-for="invalidFilter in invalidFilters"
+                  :key="invalidFilter"
                 >
-                  <XI18n
-                    v-if="!invalidFilter.replaceAll(':', '').length"
-                    path="common.validation.invalid.filter.missing-key-value"
-                  />
-                  <XI18n
-                    v-else
-                    :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
-                    :params="{ key, value: v }"
-                  />
+                  <template
+                    v-for="[key, val] in [invalidFilter.split(kvSeparatorRegex)]"
+                    :key="`${key}:${val}`"
+                  >
+                    <XI18n
+                      v-if="!key && !val"
+                      path="common.validation.invalid.filter.missing-key-value"
+                    />
+                    <XI18n
+                      v-else
+                      :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
+                      :params="{ key, value: val }"
+                    />
+                  </template>
                 </li>
               </ul>
             </div>
