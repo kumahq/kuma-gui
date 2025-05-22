@@ -91,14 +91,40 @@
             path="components.x-search.placeholder"
           />
         </div>
-        <div 
-          v-if="slots.warnings && invalidFilters.length"
+        <div
+          v-if="invalidFilters.length"
           class="dropdown-item"
         >
           <slot
             name="warnings"
             :invalid-filters="invalidFilters"
-          />
+          >
+            <div>
+              <XLayout type="separated">
+                <XIcon name="warning" />
+                {{ t('common.validation.invalid.filter.title') }}:
+              </XLayout>
+              <ul
+                v-for="invalidFilter in invalidFilters"
+                :key="invalidFilter"
+              >
+                <li
+                  v-for="[key, v] in [invalidFilter.split(kvSeparatorRegex)]"
+                  :key="key"
+                >
+                  <XI18n
+                    v-if="!invalidFilter.replaceAll(':', '').length"
+                    path="common.validation.invalid.filter.missing-key-value"
+                  />
+                  <XI18n
+                    v-else
+                    :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
+                    :params="{ key, value: v }"
+                  />
+                </li>
+              </ul>
+            </div>
+          </slot>
         </div>
         <div
           v-if="props.keys.length"
@@ -117,7 +143,7 @@
 
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import { ref, UnwrapRef, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
   /**
@@ -155,7 +181,7 @@ const props = withDefaults(defineProps<{
   keys: () => [],
   defaultKey: 'name',
   highlight: () => /(\S+:\s*\S*)|(\S+)/,
-  validate: undefined,
+  validate: (filter: string) => /^[^:\s]+.*[^\s:]$/.test(filter),
 })
 
 const emit = defineEmits<{
@@ -168,6 +194,8 @@ const getInvalidFilters = (query: string) => {
   return [...new Set(invalids)]
 }
 
+const kvSeparatorRegex = /:(.*)/
+
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
 const containerRef = ref<null | HTMLElement>(null)
@@ -176,10 +204,6 @@ const inputRef = ref<null | HTMLInputElement>(null)
 const dropdownRef = ref<null | HTMLInputElement>(null)
 const isDropdownOpen = ref<boolean>(false)
 const invalidFilters = ref<string[]>(getInvalidFilters(props.value))
-
-const slots = defineSlots<{ warnings?(props: {
-  invalidFilters: UnwrapRef<typeof invalidFilters>
-}): unknown}>()
 
 const onKeyEvent = ({ key }: KeyboardEvent) => {
   switch(key) {
