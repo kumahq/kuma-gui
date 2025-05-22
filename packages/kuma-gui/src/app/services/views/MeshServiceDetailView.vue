@@ -243,7 +243,7 @@
               >
                 <XSearch
                   class="search-field"
-                  :keys="['name', 'tag', 'zone', 'namespace']"
+                  :keys="['name', 'tag', 'label']"
                   :value="route.params.s"
                   @change="(s) => route.update({ page: 1, s })"
                 />
@@ -253,15 +253,12 @@
               :src="uri(sources, '/meshes/:mesh/dataplanes/for/mesh-service/:tags', {
                 mesh: route.params.mesh,
                 tags: JSON.stringify({
-                  ...(can('use zones') && props.data.zone ? {
-                    'kuma.io/zone': props.data.zone,
-                  } : {}),
                   ...props.data.spec.selector.dataplaneTags,
                 }),
               }, {
                 page: route.params.page,
                 size: route.params.size,
-                search: route.params.s,
+                search: `${route.params.s}${can('use zones') ? ` zone:${props.data.zone}`: ''}`,
               })"
             >
               <template

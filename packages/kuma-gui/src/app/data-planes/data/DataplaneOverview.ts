@@ -7,24 +7,6 @@ import type {
   LabelValue,
 } from '@/types/index.d'
 
-// any collection of non-spaces followed by a `:` or `: ` followed by a
-// collection of non-spaces
-// or
-// a collection of non-spaces
-//
-// Should match:
-// `kuma.io/service: name`
-// `kuma.io/service:name`
-// `version:1`
-// `dpp-name`
-const searchRe = /(\S+:\s*\S*)|(\S*)/g
-
-const searchShortcuts: Record<string, string> = {
-  service: 'kuma.io/service',
-  zone: 'kuma.io/zone',
-  protocol: 'kuma.io/protocol',
-  namespace: 'k8s.kuma.io/namespace',
-}
 const states = {
   online: 'online',
   offline: 'offline',
@@ -37,27 +19,6 @@ const dpTypes = {
 } as const
 
 export const DataplaneOverview = {
-  search(search: string) {
-    const terms = [...search.matchAll(searchRe)].filter(item => item[0].length > 0).map(item => item[0].trim())
-    return terms.reduce<{
-      tag: string[]
-      name?: string
-    }>((prev, item) => {
-      return (function parse(prev, item, tag = false) {
-        const [key, ...value] = item.split(':')
-        if (key === 'name') {
-          prev.name = value.join(':').trim()
-        } else if (!tag && value.length === 0) {
-          prev.name = key.trim()
-        } else if (key === 'tag') {
-          return parse(prev, value.join(':').trim(), true)
-        } else {
-          prev.tag.push(`${searchShortcuts[key] || key}${value.length > 0 ? ':' : ''}${value.join(':').trim()}`)
-        }
-        return prev
-      })(prev, item)
-    }, { tag: [] }) || {}
-  },
   fromObject(item: PartialDataplaneOverview) {
     const dataplaneInsight = DataplaneInsight.fromObject(item.dataplaneInsight)
 

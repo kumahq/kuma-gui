@@ -86,7 +86,7 @@ Feature: mesh / services / item
     Scenario: The clear search button sends a new request with no search params
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
-      When I "type" "name:a-service protocol:tcp" into the "$input-search" element
+      When I "type" "name:a-service tag:kuma.io/protocol:tcp" into the "$input-search" element
       And I clear the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" wasn't requested with
         """
@@ -105,7 +105,7 @@ Feature: mesh / services / item
     Scenario: The clear search button sends a new request with the correct service tag
       Then the "$input-search" element isn't disabled
       And I wait for 500 ms
-      When I "type" "name:a-service protocol:tcp" into the "$input-search" element
+      When I "type" "name:a-service tag:kuma.io/protocol:tcp" into the "$input-search" element
       And I "type" "{enter}" into the "$input-search" element
       Then the URL "/meshes/default/dataplanes/_overview" was requested with
         """

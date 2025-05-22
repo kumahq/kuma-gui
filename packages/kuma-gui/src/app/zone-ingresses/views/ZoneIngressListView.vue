@@ -29,7 +29,7 @@
             >
               <XSearch
                 class="search-field"
-                :keys="['name']"
+                :keys="['name', 'namespace', 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
               />

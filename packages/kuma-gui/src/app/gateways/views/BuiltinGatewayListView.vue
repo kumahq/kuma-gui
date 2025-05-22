@@ -21,7 +21,7 @@
             >
               <XSearch
                 class="search-field"
-                :keys="['name', 'zone']"
+                :keys="['name', ...(can('use zones') ? ['zone'] : []), 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
               />

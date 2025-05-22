@@ -6,6 +6,9 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const _gateway = query.get('gateway') ?? ''
   const _name = query.get('name') ?? ''
   const _tags = query.get('tag') ?? ''
+  const namespaceQuery = query.get('filter[labels.k8s.kuma.io/namespace]')
+  const serviceQuery = query.get('filter[labels.kuma.io/service]')
+  const zoneQuery = query.get('filter[labels.kuma.io/zone]')
 
   const k8s = env('KUMA_ENVIRONMENT', 'universal') === 'kubernetes'
   const defaultType = env('KUMA_DATAPLANE_TYPE', '')
@@ -58,9 +61,10 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         // we keep the type in the URL so the corresponding item mock knows the type
         const name = `${fake.word.noun()}-${type.toLowerCase()}`
         const displayName = `${_name || name}-${id}${fake.kuma.dataplaneSuffix(k8s)}`
-        const nspace = fake.k8s.namespace()
-        const service = tags['kuma.io/service']
+        const nspace = tags['k8s.kuma.io/namespace'] ? tags['k8s.kuma.io/namespace'] : namespaceQuery ?? fake.k8s.namespace()
+        const service = tags['kuma.io/service'] ?? serviceQuery
         const address = fake.internet.ip()
+        const zone = tags['kuma.io/zone'] ?? zoneQuery ?? fake.word.noun()
 
         return {
           type: 'DataplaneOverview',
@@ -98,7 +102,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     tags: fake.kuma.tags({
                       protocol: fake.kuma.protocol(),
                       service,
-                      zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                      zone: isMultizone && fake.datatype.boolean() ? zone : undefined,
                     }),
                     ...(fake.datatype.boolean() ? {
                       state: fake.kuma.inboundState(),
@@ -119,7 +123,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 gateway: {
                   tags: fake.kuma.tags({
                     service,
-                    zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                    zone: isMultizone && fake.datatype.boolean() ? zone : undefined,
                   }),
                   type,
                 },

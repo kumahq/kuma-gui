@@ -77,7 +77,7 @@ function getRoute(tag: LabelValue): RouteLocationNamedRaw | undefined {
       return {
         name: 'data-plane-list-view',
         query: {
-          s: `service:${tag.value}`,
+          s: `tag:kuma.io/service:${tag.value}`,
         },
       }
     }
