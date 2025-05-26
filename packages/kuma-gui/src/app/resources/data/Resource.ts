@@ -16,6 +16,7 @@ type SearchOptions = {
 const isShortFilter = (k: string): k is keyof typeof filters => k in filters
 
 export const searchRegex = /(\S+:\s*\S*)|(\S+)/
+
 const kvSeparatorRegex = /:(.*)/
 
 export const Resource = {
@@ -41,6 +42,12 @@ export const Resource = {
             [`filter[labels.${k}]`]: v,
           }
         }
+        case ['tag', 'tags'].includes(key): {
+          return {
+            ...acc,
+            tag: [...acc.tag ?? [], value],
+          }
+        }
         case key?.length && !isShortFilter(key):
           return {
             ...acc,
@@ -56,6 +63,6 @@ export const Resource = {
         default:
           return acc
       }
-    }, {} as Record<string, string>)
+    }, {} as Record<string, string | string[]>)
   },
 }
