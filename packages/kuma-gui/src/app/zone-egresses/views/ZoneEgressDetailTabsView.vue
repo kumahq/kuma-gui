@@ -47,15 +47,31 @@
         <template
           #title
         >
-          <h1
+          <XLayout
             v-if="data"
+            size="small"
           >
-            <XCopyButton :text="data.name">
-              <RouteTitle
-                :title="t('zone-egresses.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+            <h1>
+              <XCopyButton :text="data.name">
+                <RouteTitle
+                  :title="t('zone-egresses.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+            <template
+              v-for="appearance in [{ online: 'success', offline: 'danger', 'partially_degraded': 'warning', disabled: 'neutral' }]"
+              :key="typeof appearance"
+            >
+              <XBadge
+                class="status-badge"
+                :appearance="appearance[data.state] ?? 'neutral'"
+                max-width="auto"
+                data-testid="status-badge"
+              >
+                {{ t(`http.api.value.${data.state}`) }}
+              </XBadge>
+            </template>
+          </XLayout>
         </template>
 
         <template

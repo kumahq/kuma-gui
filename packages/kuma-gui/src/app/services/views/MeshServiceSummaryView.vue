@@ -22,22 +22,37 @@
           <template
             #title
           >
-            <h2>
-              <XAction
-                :to="{
-                  name: 'mesh-service-detail-view',
-                  params: {
-                    mesh: route.params.mesh,
-                    service: route.params.service,
-                  },
+            <XLayout size="small">
+              <h2>
+                <XAction
+                  :to="{
+                    name: 'mesh-service-detail-view',
+                    params: {
+                      mesh: route.params.mesh,
+                      service: route.params.service,
+                    },
 
-                }"
+                  }"
+                >
+                  <RouteTitle
+                    :title="t('services.routes.item.title', { name: item.name })"
+                  />
+                </XAction>
+              </h2>
+              <template
+                v-for="appearance in [{ Available: 'success', Unavailable: 'danger' }]"
+                :key="typeof appearance"
               >
-                <RouteTitle
-                  :title="t('services.routes.item.title', { name: item.name })"
-                />
-              </XAction>
-            </h2>
+                <XBadge
+                  class="status-badge"
+                  :appearance="appearance[item.spec.state] ?? 'neutral'"
+                  max-width="auto"
+                  data-testid="status-badge"
+                >
+                  {{ t(`http.api.value.${item.spec.state}`) }}
+                </XBadge>
+              </template>
+            </XLayout>
           </template>
 
           <XLayout

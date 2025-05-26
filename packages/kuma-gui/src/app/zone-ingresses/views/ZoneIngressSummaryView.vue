@@ -36,22 +36,37 @@
         >
           <AppView>
             <template #title>
-              <h2>
-                <XAction
-                  :to="{
-                    name: 'zone-ingress-detail-view',
-                    params: {
-                      zone: item.zoneIngress.zone,
-                      proxyType: 'ingresses',
-                      proxy: item.id,
-                    },
-                  }"
+              <XLayout size="small">
+                <h2>
+                  <XAction
+                    :to="{
+                      name: 'zone-ingress-detail-view',
+                      params: {
+                        zone: item.zoneIngress.zone,
+                        proxyType: 'ingresses',
+                        proxy: item.id,
+                      },
+                    }"
+                  >
+                    <RouteTitle
+                      :title="t('zone-ingresses.routes.item.title', { name: item.name })"
+                    />
+                  </XAction>
+                </h2>
+                <template
+                  v-for="appearance in [{ online: 'success', offline: 'danger', 'partially_degraded': 'warning', disabled: 'neutral' }]"
+                  :key="typeof appearance"
                 >
-                  <RouteTitle
-                    :title="t('zone-ingresses.routes.item.title', { name: item.name })"
-                  />
-                </XAction>
-              </h2>
+                  <XBadge
+                    class="status-badge"
+                    :appearance="appearance[item.state] ?? 'neutral'"
+                    max-width="auto"
+                    data-testid="status-badge"
+                  >
+                    {{ t(`http.api.value.${item.state}`) }}
+                  </XBadge>
+                </template>
+              </XLayout>
             </template>
 
             <XLayout

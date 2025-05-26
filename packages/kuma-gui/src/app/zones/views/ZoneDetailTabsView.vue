@@ -22,13 +22,28 @@
         ]"
       >
         <template #title>
-          <h1>
-            <XCopyButton :text="route.params.zone">
-              <RouteTitle
-                :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-              />
-            </XCopyButton>
-          </h1>
+          <XLayout size="small">
+            <h1>
+              <XCopyButton :text="route.params.zone">
+                <RouteTitle
+                  :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+                />
+              </XCopyButton>
+            </h1>
+            <template
+              v-for="appearance in [{ online: 'success', offline: 'danger', 'partially_degraded': 'warning', disabled: 'neutral' }]"
+              :key="typeof appearance"
+            >
+              <XBadge
+                class="status-badge"
+                :appearance="appearance[data.state] ?? 'neutral'"
+                max-width="auto"
+                data-testid="status-badge"
+              >
+                {{ t(`http.api.value.${data.state}`) }}
+              </XBadge>
+            </template>
+          </XLayout>
         </template>
 
         <template

@@ -38,15 +38,31 @@
         ]"
       >
         <template #title>
-          <h1
+          <XLayout
             v-if="data"
+            size="small"
           >
-            <XCopyButton :text="route.params.service">
-              <RouteTitle
-                :title="t('services.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+            <h1>
+              <XCopyButton :text="route.params.service">
+                <RouteTitle
+                  :title="t('services.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+            <template
+              v-for="appearance in [{ Available: 'success', Unavailable: 'danger' }]"
+              :key="typeof appearance"
+            >
+              <XBadge
+                class="status-badge"
+                :appearance="appearance[data.spec.state] ?? 'neutral'"
+                max-width="auto"
+                data-testid="status-badge"
+              >
+                {{ t(`http.api.value.${data.spec.state}`) }}
+              </XBadge>
+            </template>
+          </XLayout>
         </template>
 
         <DataLoader

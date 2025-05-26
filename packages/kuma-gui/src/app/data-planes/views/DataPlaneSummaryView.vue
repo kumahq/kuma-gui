@@ -36,22 +36,37 @@
         >
           <AppView>
             <template #title>
-              <h2
-                :class="`type-${item.dataplaneType}`"
-              >
-                <XAction
-                  :to="{
-                    name: 'data-plane-detail-view',
-                    params: {
-                      proxy: item.id,
-                    },
-                  }"
+              <XLayout size="small">
+                <h2
+                  :class="`type-${item.dataplaneType}`"
                 >
-                  <RouteTitle
-                    :title="t('data-planes.routes.item.title', { name: item.name })"
-                  />
-                </XAction>
-              </h2>
+                  <XAction
+                    :to="{
+                      name: 'data-plane-detail-view',
+                      params: {
+                        proxy: item.id,
+                      },
+                    }"
+                  >
+                    <RouteTitle
+                      :title="t('data-planes.routes.item.title', { name: item.name })"
+                    />
+                  </XAction>
+                </h2>
+                <template
+                  v-for="appearance in [{ online: 'success', offline: 'danger', 'partially_degraded': 'warning' }]"
+                  :key="typeof appearance"
+                >
+                  <XBadge
+                    class="status-badge"
+                    :appearance="appearance[item.status] ?? 'neutral'"
+                    max-width="auto"
+                    data-testid="status-badge"
+                  >
+                    {{ t(`http.api.value.${item.status}`) }}
+                  </XBadge>
+                </template>
+              </XLayout>
             </template>
 
             <XLayout>
