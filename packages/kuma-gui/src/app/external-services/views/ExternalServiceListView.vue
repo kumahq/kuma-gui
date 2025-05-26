@@ -22,7 +22,7 @@
             <form @submit.prevent>
               <XSearch
                 class="search-field"
-                :keys="['name']"
+                :keys="['name', 'label']"
                 :value="route.params.s"
                 @change="(s) => route.update({ page: 1, s })"
               />

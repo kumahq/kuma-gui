@@ -238,6 +238,9 @@ useResizeObserver(contentRef, ([entry]) => {
 
 watch(() => props.value, () => {
   inputValue.value = props.value
+  if(inputRef.value) {
+    inputRef.value.value = props.value
+  }
 })
 </script>
 
