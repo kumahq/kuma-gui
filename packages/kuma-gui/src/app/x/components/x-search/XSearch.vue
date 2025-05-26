@@ -32,7 +32,7 @@
               v-for="(chunk, index) in inputValue.split(props.highlight).filter(Boolean)"
               :key="chunk+index"
             >
-              <span :class="{ highlight: props.highlight.test(chunk) }">{{ chunk }}</span>
+              <span :class="{ highlight: props.highlight.test(chunk), invalid: invalidFilters.includes((chunk))}">{{ chunk }}</span>
             </template>
           </div>
           <div class="input-wrapper">
@@ -44,7 +44,7 @@
               data-testid="filter-bar-filter-input"
               :name="props.name"
               @input="onInput"
-              @change="emit('change', inputValue)"
+              @change="onChange"
               @keyup="onKeyEvent"
             >
           </div>
@@ -92,6 +92,43 @@
           />
         </div>
         <div
+          v-if="invalidFilters.length"
+          class="dropdown-item"
+        >
+          <slot
+            name="warnings"
+            :invalid-filters="invalidFilters"
+          >
+            <div>
+              <XLayout type="separated">
+                <XIcon name="warning" />
+                {{ t('common.validation.invalid.filter.title') }}:
+              </XLayout>
+              <ul>
+                <li
+                  v-for="invalidFilter in invalidFilters"
+                  :key="invalidFilter"
+                >
+                  <template
+                    v-for="[key, val] in [invalidFilter.split(kvSeparatorRegex)]"
+                    :key="`${key}:${val}`"
+                  >
+                    <XI18n
+                      v-if="!key && !val"
+                      path="common.validation.invalid.filter.missing-key-value"
+                    />
+                    <XI18n
+                      v-else
+                      :path="`common.validation.invalid.filter.${invalidFilter.startsWith(':') ? 'missing-key' : 'missing-value'}`"
+                      :params="{ key, value: val }"
+                    />
+                  </template>
+                </li>
+              </ul>
+            </div>
+          </slot>
+        </div>
+        <div
           v-if="props.keys.length"
           class="dropdown-item bg-neutral-weakest"
         >
@@ -135,6 +172,10 @@ const props = withDefaults(defineProps<{
    * A regular expression that highlights different values and key:value pairs.
    */
   highlight?: RegExp
+  /**
+   * Validation callback on a per individual filter basis
+   */
+  validate?: (chunk: string) => boolean
 }>(), {
   placeholder: undefined,
   name: undefined,
@@ -142,11 +183,20 @@ const props = withDefaults(defineProps<{
   keys: () => [],
   defaultKey: 'name',
   highlight: () => /(\S+:\s*\S*)|(\S+)/,
+  validate: (filter: string) => /^[^:\s]+.*[^\s:]$/.test(filter),
 })
 
 const emit = defineEmits<{
   (e: 'change', value: string): void
 }>()
+
+const getInvalidFilters = (query: string) => {
+  if(!props.validate) return []
+  const invalids = query.trim().split(props.highlight).map((part) => part?.trim()).filter((chunk) => !!chunk && !props.validate?.(chunk))
+  return [...new Set(invalids)]
+}
+
+const kvSeparatorRegex = /:(.*)/
 
 const inputValue = ref<string>(props.value)
 const width = ref<number | undefined>()
@@ -155,12 +205,13 @@ const contentRef = ref<null | HTMLElement>(null)
 const inputRef = ref<null | HTMLInputElement>(null)
 const dropdownRef = ref<null | HTMLInputElement>(null)
 const isDropdownOpen = ref<boolean>(false)
+const invalidFilters = ref<string[]>(getInvalidFilters(props.value))
 
 const onKeyEvent = ({ key }: KeyboardEvent) => {
   switch(key) {
     case 'Enter':
     case 'Escape':
-      return isDropdownOpen.value && dropdownRef.value?.hidePopover()
+      return isDropdownOpen.value && !invalidFilters.value.length && dropdownRef.value?.hidePopover()
     default:
       return !isDropdownOpen.value && dropdownRef.value?.showPopover()
   }
@@ -169,6 +220,13 @@ const onKeyEvent = ({ key }: KeyboardEvent) => {
 const onInput = (event: Event): void => {
   const value = (event.target as HTMLInputElement)?.value
   inputValue.value = value
+}
+
+const onChange = () => {
+  invalidFilters.value = getInvalidFilters(inputValue.value)
+  if(!invalidFilters.value.length) {
+    emit('change', inputValue.value)
+  }
 }
 
 useResizeObserver(contentRef, ([entry]) => {
@@ -251,6 +309,9 @@ watch(() => props.value, () => {
     &.highlight {
       background: #f0f4f7;
       border-radius: $kui-border-radius-20;
+      &.invalid {
+        background: $kui-color-background-warning-weak;
+      }
     }
   }
 }
@@ -328,6 +389,10 @@ input {
 
     dl {
       display: inline-flex;
+    }
+
+    strong {
+      color: $kui-color-text;
     }
   }
 
