@@ -49,10 +49,7 @@
               :key="typeof appearance"
             >
               <XBadge
-                class="status-badge"
                 :appearance="appearance[data.status] ?? 'neutral'"
-                max-width="auto"
-                data-testid="status-badge"
               >
                 {{ t(`http.api.value.${data.status}`) }}
               </XBadge>
