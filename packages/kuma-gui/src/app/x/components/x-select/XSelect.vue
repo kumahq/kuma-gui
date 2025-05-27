@@ -1,28 +1,53 @@
 <template>
-  <KSelect
-    v-model="selected"
-    :label="props.label"
-    :items="items"
-    @selected="emit('change', String($event.value))"
+  <template
+    v-if="expanded"
   >
-    <template
-      #selected-item-template="{ item }: any"
+    <XProvider
+      name="x-select"
+      :service="{ props, emit }"
     >
-      <slot
-        v-if="slots.selected"
-        :item="item.value as any"
-        name="selected"
-      />
-      <slot
-        v-else
-        :item="item.value as any"
-        :name="`${item?.value}-option`"
-      />
-    </template>
-    <template #item-template="{ item }: any">
-      <slot :name="`${item.value}-option`" />
-    </template>
-  </KSelect>
+      <XLayout
+        type="row"
+      >
+        <template
+          v-for="item in items"
+        >
+          <slot
+            :name="`${item.value}-option`"
+            :item="item.value as any"
+          />
+        </template>
+      </XLayout>
+    </XProvider>
+  </template>
+  <template
+    v-else
+  >
+    <KSelect
+      v-model="selected"
+      :label="props.label"
+      :items="items"
+      @selected="emit('change', String($event.value))"
+    >
+      <template
+        #selected-item-template="{ item }: any"
+      >
+        <slot
+          v-if="slots.selected"
+          :item="item.value as any"
+          name="selected"
+        />
+        <slot
+          v-else
+          :item="item.value as any"
+          :name="`${item?.value}-option`"
+        />
+      </template>
+      <template #item-template="{ item }: any">
+        <slot :name="`${item.value}-option`" />
+      </template>
+    </KSelect>
+  </template>
 </template>
 <script lang="ts" setup>
 import { KSelect } from '@kong/kongponents'
@@ -34,9 +59,11 @@ const emit = defineEmits<{
 const props = withDefaults(defineProps<{
   label?: string
   selected?: string
+  expanded?: boolean
 }>(), {
   label: '',
   selected: '',
+  expanded: false,
 })
 
 const slots = defineSlots()

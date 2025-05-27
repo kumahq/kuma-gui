@@ -10,7 +10,7 @@
 import { KTruncate } from '@kong/kongponents'
 const props = withDefaults(defineProps<{
   // TODO(jc) :variant
-  type?: 'stack' | 'separated' | 'columns'
+  type?: 'stack' | 'separated' | 'columns' | 'row'
   size?: 'small' | 'normal' | 'large' | 'max'
   justify?: 'start' | 'around' | 'between' | 'end'
   truncate?: boolean
@@ -22,6 +22,31 @@ const props = withDefaults(defineProps<{
 })
 </script>
 <style lang="scss" scoped>
+.row {
+  display: flex;
+  gap: $kui-space-40;
+  align-items: center;
+  width: 100%;
+
+  & > * {
+    align-self: start;
+  }
+
+  &.start {
+    justify-content: flex-start;
+  }
+  &.max,
+  &.between {
+    justify-content: space-between;
+  }
+  &.around {
+    justify-content: space-around;
+  }
+  &.end {
+    justify-content: flex-end;
+  }
+}
+
 .stack.large > * + * {
   margin-block-start: $kui-space-100;
 }

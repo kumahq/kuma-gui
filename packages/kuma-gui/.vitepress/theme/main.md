@@ -7,6 +7,7 @@ import { createApp } from 'whyframe:app'
 import { TOKENS as APP, services as application } from '@/app/application'
 import { services as applicationDebug } from '@/app/application/debug'
 import { TOKENS as VUE, services as vue } from '@/app/vue'
+import X from '@/app/x'
 import { TOKENS } from '@/app/kuma'
 import { build, token } from '@/services/utils'
 import '../../src/assets/styles/main.scss'
@@ -36,6 +37,19 @@ onMounted(async () => {
             ],
             labels: [
               $.globals,
+            ],
+          }],
+          [token('x'), {
+            service: (i18n) => {
+              return [
+                [X, { i18n }],
+              ]
+            },
+            arguments:[
+              $.i18n,
+            ],
+            labels: [
+              $.plugins,
             ],
           }],
         ],

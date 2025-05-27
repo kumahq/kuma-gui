@@ -1,4 +1,4 @@
-import { KCard, KPop, KRadio } from '@kong/kongponents'
+import { KCard, KPop, KLabel } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
@@ -24,6 +24,7 @@ import XNotificationHub from './components/x-notification/XNotificationHub.vue'
 import XProgress from './components/x-progress/XProgress.vue'
 import XPrompt from './components/x-prompt/XPrompt.vue'
 import XProvider from './components/x-provider/XProvider.vue'
+import XRadio from './components/x-radio/XRadio.vue'
 import XSearch from './components/x-search/XSearch.vue'
 import XSelect from './components/x-select/XSelect.vue'
 import XTabs from './components/x-tabs/XTabs.vue'
@@ -38,8 +39,8 @@ export { default as XCopyButtonDebug } from './components/x-copy-button/XCopyBut
 const components = [
   ['XAlert', XAlert],
   ['XCard', KCard],
+  ['XLabel', KLabel],
   ['XPop', KPop],
-  ['XRadio', KRadio],
   //
   ['XAction', XAction],
   ['XActionGroup', XActionGroup],
@@ -59,6 +60,7 @@ const components = [
   ['XPrompt', XPrompt],
   ['XProvider', XProvider],
   ['XProgress', XProgress],
+  ['XRadio', XRadio],
   ['XSelect', XSelect],
   ['XTabs', XTabs],
   ['XTeleportTemplate', XTeleportTemplate],
@@ -80,8 +82,8 @@ const directives = [
 declare module 'vue' {
   export interface GlobalComponents {
     XCard: typeof KCard
+    XLabel: typeof KLabel
     XPop: typeof KPop
-    XRadio: typeof KRadio
     //
     XAlert: typeof XAlert
     XAnonymous: typeof XAnonymous
@@ -102,6 +104,7 @@ declare module 'vue' {
     XPrompt: typeof XPrompt
     XProvider: typeof XProvider
     XProgress: typeof XProgress
+    XRadio: typeof XRadio
     XSelect: typeof XSelect
     XTabs: typeof XTabs
     XTeleportTemplate: typeof XTeleportTemplate

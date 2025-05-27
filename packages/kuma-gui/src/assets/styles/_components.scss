@@ -17,17 +17,6 @@ Adapted from https://every-layout.dev/layouts/stack/.
 }
 
 /*
-.stack-with-borders
-
-Variant of .stack with a horizontal border in the center of the gap.
-*/
-.stack-with-borders > * + * {
-  margin-block-start: $kui-space-40;
-  border-block-start: $kui-border-width-10 solid $kui-color-border;
-  padding-block-start: $kui-space-40;
-}
-
-/*
 .columns
 
 For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will **start** to wrap.
@@ -48,6 +37,20 @@ Adapted from https://every-layout.dev/layouts/switcher/.
   flex-basis: calc((var(--threshold) - 100%) * 999);
   min-inline-size: 0;
 }
+/*
+.stack-with-borders
+
+Variant of .stack with a horizontal border in the center of the gap.
+*/
+.stack-with-borders > * + * {
+  margin-block-start: $kui-space-40;
+  border-block-start: $kui-border-width-10 solid $kui-color-border;
+  padding-block-start: $kui-space-40;
+}
+.stack-with-borders.large > * + * {
+  padding-block-start: $kui-space-100;
+}
+
 
 /*
 .columns-with--borders
