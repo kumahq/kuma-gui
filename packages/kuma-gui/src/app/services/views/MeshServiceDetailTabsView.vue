@@ -49,16 +49,11 @@
                 />
               </XCopyButton>
             </h1>
-            <template
-              v-for="appearance in [{ Available: 'success', Unavailable: 'danger' }]"
-              :key="typeof appearance"
+            <XBadge
+              :appearance="t(`common.status.appearance.${data.spec.state}`, undefined, { defaultMessage: 'neutral' })"
             >
-              <XBadge
-                :appearance="appearance[data.spec.state] ?? 'neutral'"
-              >
-                {{ t(`http.api.value.${data.spec.state}`) }}
-              </XBadge>
-            </template>
+              {{ t(`http.api.value.${data.spec.state}`) }}
+            </XBadge>
           </XLayout>
         </template>
 

@@ -27,16 +27,11 @@
               Inbound {{ route.params.connection.replace('localhost', '').replace('_', ':') }}
             </h2>
             <template v-if="items[0]?.state">
-              <template
-                v-for="appearance in [{ Ready: 'success', NotReady: 'danger', Ignored: 'neutral' }]"
-                :key="typeof appearance"
+              <XBadge
+                :appearance="t(`common.status.appearance.${items[0].state}`, undefined, { defaultMessage: 'neutral' })"
               >
-                <XBadge
-                  :appearance="appearance[items[0].state] ?? 'neutral'"
-                >
-                  {{ t(`http.api.value.${items[0].state}`) }}
-                </XBadge>
-              </template>
+                {{ t(`http.api.value.${items[0].state}`) }}
+              </XBadge>
             </template>
           </XLayout>
         </template>

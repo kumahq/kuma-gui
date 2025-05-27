@@ -39,16 +39,11 @@
                   />
                 </XAction>
               </h2>
-              <template
-                v-for="appearance in [{ Available: 'success', Unavailable: 'danger' }]"
-                :key="typeof appearance"
+              <XBadge
+                :appearance="t(`common.status.appearance.${item.spec.state}`, undefined, { defaultMessage: 'neutral' })"
               >
-                <XBadge
-                  :appearance="appearance[item.spec.state] ?? 'neutral'"
-                >
-                  {{ t(`http.api.value.${item.spec.state}`) }}
-                </XBadge>
-              </template>
+                {{ t(`http.api.value.${item.spec.state}`) }}
+              </XBadge>
             </XLayout>
           </template>
 

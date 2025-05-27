@@ -58,16 +58,11 @@
                 />
               </XCopyButton>
             </h1>
-            <template
-              v-for="appearance in [{ online: 'success', offline: 'danger', 'partially_degraded': 'warning', disabled: 'neutral' }]"
-              :key="typeof appearance"
+            <XBadge
+              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
             >
-              <XBadge
-                :appearance="appearance[data.state] ?? 'neutral'"
-              >
-                {{ t(`http.api.value.${data.state}`) }}
-              </XBadge>
-            </template>
+              {{ t(`http.api.value.${data.state}`) }}
+            </XBadge>
           </XLayout>
         </template>
         <template

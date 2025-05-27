@@ -53,16 +53,11 @@
                     />
                   </XAction>
                 </h2>
-                <template
-                  v-for="appearance in [{ online: 'success', offline: 'danger', 'partially_degraded': 'warning' }]"
-                  :key="typeof appearance"
+                <XBadge
+                  :appearance="t(`common.status.appearance.${item.status}`, undefined, { defaultMessage: 'neutral' })"
                 >
-                  <XBadge
-                    :appearance="appearance[item.status] ?? 'neutral'"
-                  >
-                    {{ t(`http.api.value.${item.status}`) }}
-                  </XBadge>
-                </template>
+                  {{ t(`http.api.value.${item.status}`) }}
+                </XBadge>
               </XLayout>
             </template>
 
