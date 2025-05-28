@@ -1,3 +1,4 @@
+import MeshInsightsList from './components/MeshInsightsList.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import type { SplitRouteRecordRaw } from './routes'
@@ -9,10 +10,14 @@ import { services as policies } from '@/app/policies'
 import { services as rules } from '@/app/rules'
 import { services as servicesModule } from '@/app/services'
 import type { ServiceDefinition } from '@/services/utils'
-import { token } from '@/services/utils'
+import { token, createInjections } from '@/services/utils'
 import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>
+
+const $ = {
+  MeshInsightsList: token<typeof MeshInsightsList>('meshes.components.MeshInsightsList'),
+}
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   const mesh = {
@@ -20,6 +25,11 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     routes: token<SplitRouteRecordRaw[]>('meshes.routes.children'),
   }
   return [
+    [$.MeshInsightsList, {
+      service: () => {
+        return MeshInsightsList
+      },
+    }],
     [token('meshes.sources'), {
       service: sources,
       arguments: [
@@ -60,3 +70,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     ...rules(mesh),
   ]
 }
+export const TOKENS = $
+export const [
+  useMeshInsightsList,
+] = createInjections(
+  $.MeshInsightsList,
+)

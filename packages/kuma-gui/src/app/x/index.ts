@@ -1,4 +1,4 @@
-import { KCard, KPop, KRadio } from '@kong/kongponents'
+import { KCard, KPop, KRadio, KLabel } from '@kong/kongponents'
 
 import XAboutCard from './components/x-about-card/XAboutCard.vue'
 import XAction from './components/x-action/XAction.vue'
@@ -38,6 +38,7 @@ export { default as XCopyButtonDebug } from './components/x-copy-button/XCopyBut
 const components = [
   ['XAlert', XAlert],
   ['XCard', KCard],
+  ['XLabel', KLabel],
   ['XPop', KPop],
   ['XRadio', KRadio],
   //
@@ -80,6 +81,7 @@ const directives = [
 declare module 'vue' {
   export interface GlobalComponents {
     XCard: typeof KCard
+    XLabel: typeof KLabel
     XPop: typeof KPop
     XRadio: typeof KRadio
     //

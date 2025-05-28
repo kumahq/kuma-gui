@@ -51,6 +51,27 @@ describe('Resource.search', () => {
         ['filter[labels.kuma.io/zone]']: 'baz',
       },
     ],
+    [
+      'tag:namespace:foo tag:zone:bar tag:kuma.io/service:baz',
+      {
+        tag: ['k8s.kuma.io/namespace:foo', 'kuma.io/zone:bar', 'kuma.io/service:baz'],
+      },
+    ],
+    [
+      'label:namespace:foo label:zone:bar label:kuma.io/service:baz',
+      {
+        ['filter[labels.k8s.kuma.io/namespace]']: 'foo',
+        ['filter[labels.kuma.io/zone]']: 'bar',
+        ['filter[labels.kuma.io/service]']: 'baz',
+      },
+    ],
+    [
+      'label:namespace:foo tag:zone:bar',
+      {
+        ['filter[labels.k8s.kuma.io/namespace]']: 'foo',
+        tag: ['kuma.io/zone:bar'],
+      },
+    ],
 
     // Labels
     [

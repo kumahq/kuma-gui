@@ -132,11 +132,10 @@
           v-if="props.keys.length"
           class="dropdown-item bg-neutral-weakest"
         >
-          <p class="logic-block">
-            <span class="text-important">
-              {{ t("components.x-search.logic") }}
-            </span> {{ props.keys.join(', ') }}
-          </p>
+          <XI18n
+            path="components.x-search.description"
+            :params="{ defaultKey: props.defaultKey }"
+          />
         </div>
       </XI18n>
     </template>
@@ -390,8 +389,8 @@ input {
     dl {
       display: inline-flex;
     }
-
-    strong {
+    
+    strong, b {
       color: $kui-color-text;
     }
   }

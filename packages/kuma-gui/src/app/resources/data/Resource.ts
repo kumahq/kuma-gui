@@ -3,17 +3,18 @@
  * 
  * `filters` are the current defaults, but may not necessarily be used depending on the actual requirements of an API.
  */
-const filters = {
-  namespace: 'filter[labels.k8s.kuma.io/namespace]',
-  zone: 'filter[labels.kuma.io/zone]',
-  service: 'filter[labels.kuma.io/service]',
+const shortFilters = {
+  namespace: 'k8s.kuma.io/namespace',
+  zone: 'kuma.io/zone',
+  service: 'kuma.io/service',
+  protocol: 'kuma.io/protocol',
 }
 
 type SearchOptions = {
   defaultKey?: string
 }
 
-const isShortFilter = (k: string): k is keyof typeof filters => k in filters
+const isShortFilter = (k: string): k is keyof typeof shortFilters => k in shortFilters
 
 export const searchRegex = /(\S+:\s*\S*)|(\S+)/
 
@@ -28,8 +29,11 @@ export const Resource = {
       const [key, value] = curr.split(kvSeparatorRegex).map((item) => item.trim())
       
       switch(true) {
+        // Filter out invalids, such as: ":foo" or "bar:"
         case curr.includes(':') && !value?.length:
           return acc
+        
+        // Use defaultKey for single words, i.e. "foo" or "bar"
         case key === defaultKey || !value?.length:
           return {
             ...acc,
@@ -37,24 +41,22 @@ export const Resource = {
           }
         case ['label', 'labels'].includes(key): {
           const [k, v] = value.split(kvSeparatorRegex)
+          const _key = `filter[labels.${isShortFilter(k) ? shortFilters[k] : k}]`
           return {
             ...acc,
-            [`filter[labels.${k}]`]: v,
+            [_key]: v,
           }
         }
         case ['tag', 'tags'].includes(key): {
+          const [k, v] = value.split(kvSeparatorRegex)
+          const _value = isShortFilter(k) ? `${shortFilters[k]}:${v}` : value
           return {
             ...acc,
-            tag: [...acc.tag ?? [], value],
+            tag: [...acc.tag ?? [], _value],
           }
         }
-        case key?.length && !isShortFilter(key):
-          return {
-            ...acc,
-            [`filter[labels.${key}]`]: value,
-          }
         case !!key?.length: {
-          const _key = isShortFilter(key) ? filters[key] : key
+          const _key = `filter[labels.${isShortFilter(key) ? shortFilters[key] : key}]`
           return {
             ...acc,
             [_key]: value,

@@ -98,6 +98,11 @@
                       {{ t('main-overview.detail.about.view_all') }}
                     </XAction>
                   </div>
+                  <div
+                    class="card-actions"
+                  >
+                    <XTeleportSlot name="control-plane-detail-view-mesh-actions" />
+                  </div>
                 </div>
 
                 <MeshInsightsList
@@ -118,7 +123,7 @@
 
 import { sources as ControlPlaneSources } from '../sources'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
-import MeshInsightsList from '@/app/meshes/components/MeshInsightsList.vue'
+import { useMeshInsightsList } from '@/app/meshes'
 import { sources as MeshSources } from '@/app/meshes/sources'
 import { sources as PolicySources } from '@/app/policies/sources'
 import { useZoneControlPlanesList } from '@/app/zones'
@@ -127,6 +132,7 @@ import { sources as ZoneSources } from '@/app/zones/sources'
 const ControlPlaneStatus = useControlPlaneStatus()
 const ControlPlaneActionGroup = useControlPlaneActionGroup()
 const ZoneControlPlanesList = useZoneControlPlanesList()
+const MeshInsightsList = useMeshInsightsList()
 </script>
 
 <style lang="scss" scoped>
