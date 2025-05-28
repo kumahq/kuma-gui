@@ -36,22 +36,29 @@
         >
           <AppView>
             <template #title>
-              <h2
-                :class="`type-${item.dataplaneType}`"
-              >
-                <XAction
-                  :to="{
-                    name: 'data-plane-detail-view',
-                    params: {
-                      proxy: item.id,
-                    },
-                  }"
+              <XLayout size="small">
+                <h2
+                  :class="`type-${item.dataplaneType}`"
                 >
-                  <RouteTitle
-                    :title="t('data-planes.routes.item.title', { name: item.name })"
-                  />
-                </XAction>
-              </h2>
+                  <XAction
+                    :to="{
+                      name: 'data-plane-detail-view',
+                      params: {
+                        proxy: item.id,
+                      },
+                    }"
+                  >
+                    <RouteTitle
+                      :title="t('data-planes.routes.item.title', { name: item.name })"
+                    />
+                  </XAction>
+                </h2>
+                <XBadge
+                  :appearance="t(`common.status.appearance.${item.status}`, undefined, { defaultMessage: 'neutral' })"
+                >
+                  {{ t(`http.api.value.${item.status}`) }}
+                </XBadge>
+              </XLayout>
             </template>
 
             <XLayout>
@@ -97,46 +104,6 @@
                 <div
                   class="stack-with-borders"
                 >
-                  <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.status') }}
-                    </template>
-
-                    <template #body>
-                      <XLayout
-                        type="separated"
-                      >
-                        <StatusBadge
-                          :status="item.status"
-                        />
-
-                        <DataCollection
-                          v-if="item.dataplaneType === 'standard'"
-                          :items="item.dataplane.networking.inbounds"
-                          :predicate="item => item.state !== 'Ready'"
-                          :empty="false"
-                          v-slot="{ items : inbounds }"
-                        >
-                          <XIcon
-                            name="info"
-                            :color="KUI_COLOR_TEXT_NEUTRAL"
-                          >
-                            <ul>
-                              <li
-                                v-for="inbound in inbounds"
-                                :key="`${inbound.service}:${inbound.port}`"
-                              >
-                                {{ t('data-planes.routes.item.unhealthy_inbound', { service: inbound.service, port: inbound.port }) }}
-                              </li>
-                            </ul>
-                          </XIcon>
-                        </DataCollection>
-                      </XLayout>
-                    </template>
-                  </DefinitionCard>
-
                   <DefinitionCard
                     layout="horizontal"
                   >
@@ -429,12 +396,9 @@
 </template>
 
 <script lang="ts" setup>
-import { KUI_COLOR_TEXT_NEUTRAL } from '@kong/design-tokens'
-
 import { DataplaneOverview } from '../data'
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 

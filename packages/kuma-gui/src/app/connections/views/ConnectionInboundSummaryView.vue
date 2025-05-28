@@ -22,9 +22,18 @@
     >
       <AppView>
         <template #title>
-          <h2>
-            Inbound {{ route.params.connection.replace('localhost', '').replace('_', ':') }}
-          </h2>
+          <XLayout size="small">
+            <h2>
+              Inbound {{ route.params.connection.replace('localhost', '').replace('_', ':') }}
+            </h2>
+            <template v-if="items[0]?.state">
+              <XBadge
+                :appearance="t(`common.status.appearance.${items[0].state}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${items[0].state}`) }}
+              </XBadge>
+            </template>
+          </XLayout>
         </template>
 
         <XTabs
