@@ -4,7 +4,7 @@
     class="error-block"
   >
     <KEmptyState
-      v-if="!prompt"
+      v-if="!prompt && !modal"
     >
       <template #icon>
         <DangerIcon
@@ -134,6 +134,7 @@ const slots = defineSlots()
 
 const { t } = useI18n()
 const prompt = inject('x-prompt', undefined)
+const modal = inject('x-modal', undefined)
 </script>
 
 <style lang="scss" scoped>
