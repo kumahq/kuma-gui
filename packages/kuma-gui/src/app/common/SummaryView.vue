@@ -52,7 +52,7 @@ const emit = defineEmits<{
 .summary-slideout {
   --app-view-content-top: 0;
 }
-:deep(.slideout-title) {
+:deep(.slideout-header) {
   h1, h2, h4, h5, h6 {
     font-size: $kui-font-size-70;
   }
@@ -76,6 +76,9 @@ const emit = defineEmits<{
       height: 16px;
       margin-right: $kui-space-30;
     }
+  }
+  button.slideout-close-icon {
+    height: fit-content;
   }
 }
 </style>

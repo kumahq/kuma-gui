@@ -92,24 +92,6 @@
                   <template
                     #title
                   >
-                    State
-                  </template>
-                  <template
-                    #body
-                  >
-                    <XBadge
-                      :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
-                    >
-                      {{ item.spec.state }}
-                    </XBadge>
-                  </template>
-                </DefinitionCard>
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template
-                    #title
-                  >
                     Dataplane Proxies
                   </template>
                   <template

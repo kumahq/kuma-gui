@@ -24,21 +24,6 @@
             />
           </template>
         </DefinitionCard>
-        <DefinitionCard
-          layout="horizontal"
-        >
-          <template #title>
-            {{ t('http.api.property.state') }}
-          </template>
-
-          <template #body>
-            <XBadge
-              :appearance="props.data.state === 'Ready' ? 'success' : 'danger'"
-            >
-              {{ t(`http.api.value.${props.data.state}`) }}
-            </XBadge>
-          </template>
-        </DefinitionCard>
         <DefinitionCard layout="horizontal">
           <template #title>
             Protocol

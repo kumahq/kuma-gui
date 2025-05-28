@@ -101,20 +101,6 @@
                   data-testid="structured-view"
                 >
                   <DefinitionCard
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      {{ t('http.api.property.status') }}
-                    </template>
-
-                    <template #body>
-                      <StatusBadge
-                        :status="item.state"
-                      />
-                    </template>
-                  </DefinitionCard>
-
-                  <DefinitionCard
                     v-if="item.namespace.length > 0"
                     layout="horizontal"
                   >
@@ -223,7 +209,6 @@
 import type { ZoneIngressOverview } from '../data'
 import { sources } from '../sources'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
