@@ -17,6 +17,9 @@
 </template>
 <script lang="ts" setup>
 import { KModal } from '@kong/kongponents'
+import { provide } from 'vue'
+
+provide('x-modal', {})
 const slots = defineSlots<{
   default(props: {
     close: () => void
