@@ -71,6 +71,9 @@ export const config: UserConfigFn = () => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    build: {
+      modulePreload: false,
+    },
     css: {
       preprocessorOptions: {
         scss: {
