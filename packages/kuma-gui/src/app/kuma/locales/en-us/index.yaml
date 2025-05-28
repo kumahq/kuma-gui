@@ -81,6 +81,17 @@ common:
     none: '—'
     created: 'Created'
     modified: 'Modified'
+  validation:
+    invalid:
+      filter:
+        title: Invalid filters
+        missing-value: !!text/markdown |
+          Missing value for filter <strong>{key}</strong>.
+        missing-key: !!text/markdown |
+          Missing key for value <strong>{value}</strong>.
+        missing-key-value: !!text/markdown |
+          Filters must be either \<key\> or \<key\>:\<value\> pairs.
+
 components:
   status-badge:
     tooltip:
@@ -100,8 +111,10 @@ components:
         =0 {Type to filter...}
         other {Filter by {keys}...}
       }
-    logic: 'Logic:'
     submit: submit
+    description: !!text/markdown |
+      <b>Help:</b> Filter by <strong>{defaultKey}</strong> (single value), <strong>key:value</strong> pairs (labels) or <strong>type:key:value</strong> combinations.
+      Multiple filters are <strong>AND</strong>ed.
 
 http:
   api:

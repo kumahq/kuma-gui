@@ -34,7 +34,7 @@
               :value="route.params.s"
               @change="(s) => route.update({ page: 1, s })"
             />
-            
+
             <XSelect
               label="Type"
               name="dataplaneType"
