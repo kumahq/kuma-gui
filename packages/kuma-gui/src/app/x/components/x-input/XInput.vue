@@ -4,7 +4,17 @@
     @input="(e: string) => change(e)"
   >
     <template
-      v-if="[
+      v-for="(_, slotName) in slots"
+      :key="slotName"
+      #[slotName]="slotProps"
+    >
+      <slot
+        :name="slotName"
+        v-bind="(slotProps)"
+      />
+    </template>
+    <template
+      v-if="typeof slots.before === 'undefined' && [
         'search',
       ].includes(props.appearance)"
       #before
@@ -20,6 +30,7 @@ import { KInput } from '@kong/kongponents'
 import { useDebounceFn } from '@vueuse/core'
 import { computed } from 'vue'
 
+const slots = defineSlots()
 const props = withDefaults(defineProps<{
   value?: string
   appearance?: '' | 'search'
