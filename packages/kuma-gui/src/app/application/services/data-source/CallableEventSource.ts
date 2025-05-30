@@ -5,7 +5,7 @@ export const isClosed = (source: { readyState: number }) => source.readyState ==
 // CallableEventSource turns a Promise returning function into an EventTarget,
 // making it act like a standard EventSource.
 
-export default class CallableEventSource<T extends {} = {}> extends EventTarget {
+export default class CallableEventSource<T extends object = {}> extends EventTarget {
   url = ''
   withCredentials = false
   readonly CONNECTING = CONNECTING
@@ -17,36 +17,32 @@ export default class CallableEventSource<T extends {} = {}> extends EventTarget 
   onopen = null
   readyState = CLOSED
 
+  private controller = new AbortController()
   constructor(
-    protected source: () => AsyncGenerator,
+    protected source: (controller: AbortController) => AsyncGenerator,
     public configuration: T,
   ) {
     super()
-    this.open()
   }
-
-  protected _open() {
-    (async function (self) {
-      try {
-        self.readyState = CONNECTING
-        const source = self.source()
-        self.readyState = OPEN
-        for await (const res of source) {
-          self.dispatchEvent(new MessageEvent('message', {
-            data: res,
-          }))
-          if (self.readyState === CLOSED) {
-            break
-          }
-        }
-        self.readyState = CLOSED
-      } catch (e) {
-        self.close()
-        self.dispatchEvent(new ErrorEvent('error', {
-          error: e,
+  protected async _open() {
+    try {
+      this.readyState = CONNECTING
+      this.readyState = OPEN
+      for await (const res of this.source(this.controller)) {
+        this.dispatchEvent(new MessageEvent('message', {
+          data: res,
         }))
+        if (this.readyState === CLOSED) {
+          break
+        }
       }
-    })(this)
+      this.readyState = CLOSED
+    } catch (e) {
+      this.close()
+      this.dispatchEvent(new ErrorEvent('error', {
+        error: e,
+      }))
+    }
   }
 
   open(): void {
@@ -57,5 +53,6 @@ export default class CallableEventSource<T extends {} = {}> extends EventTarget 
 
   close(): void {
     this.readyState = CLOSED
+    this.controller.abort()
   }
 }

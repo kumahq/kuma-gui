@@ -18,11 +18,10 @@ import type { EnvVars } from './services/env/Env'
 import Env from './services/env/Env'
 import I18n from './services/i18n/I18n'
 import storage from './services/storage'
-import type { Source } from '@/app/application/services/data-source'
-import { create, destroy, getSource, DataSourcePool } from '@/app/application/services/data-source'
+import { create, destroy, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@/services/utils'
-import { token, createInjections, constant } from '@/services/utils'
+import { token, createInjections } from '@/services/utils'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -46,7 +45,7 @@ groupBy.shim()
 // TODO(jc): delete this once we get to 2026
 difference.shim()
 
-export type { DataSourceResponse, Source, TypeOf } from './services/data-source'
+export type { DataSourceResponse, TypeOf } from './services/data-source'
 type Sources = ConstructorParameters<typeof DataSourcePool>[0]
 
 type Token = ReturnType<typeof token>
@@ -78,7 +77,6 @@ const $ = {
   notFoundView: token<() => Promise<Component>>('application.not-found'),
   applicationComponents: token('application.components'),
 
-  source: token<Source>('data.source'),
   sources: token('data.sources'),
   dataSourcePool: token<DataSourcePool>('data.DataSourcePool'),
   getDataSourceCacheKeyPrefix: token<() => string>('data.getDataSourceCacheKeyPrefix'),
@@ -218,11 +216,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       arguments: [
         $.Env,
       ],
-    }],
-
-    [$.source, {
-      service: getSource,
-      arguments: [constant(document, { description: 'dom.document' })],
     }],
 
     [$.getDataSourceCacheKeyPrefix, {
