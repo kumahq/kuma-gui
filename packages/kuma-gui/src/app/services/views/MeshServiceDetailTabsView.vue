@@ -38,15 +38,23 @@
         ]"
       >
         <template #title>
-          <h1
+          <XLayout
             v-if="data"
+            size="small"
           >
-            <XCopyButton :text="route.params.service">
-              <RouteTitle
-                :title="t('services.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+            <h1>
+              <XCopyButton :text="route.params.service">
+                <RouteTitle
+                  :title="t('services.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+            <XBadge
+              :appearance="t(`common.status.appearance.${data.spec.state}`, undefined, { defaultMessage: 'neutral' })"
+            >
+              {{ t(`http.api.value.${data.spec.state}`) }}
+            </XBadge>
+          </XLayout>
         </template>
 
         <DataLoader

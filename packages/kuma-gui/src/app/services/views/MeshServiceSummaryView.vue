@@ -22,22 +22,29 @@
           <template
             #title
           >
-            <h2>
-              <XAction
-                :to="{
-                  name: 'mesh-service-detail-view',
-                  params: {
-                    mesh: route.params.mesh,
-                    service: route.params.service,
-                  },
+            <XLayout size="small">
+              <h2>
+                <XAction
+                  :to="{
+                    name: 'mesh-service-detail-view',
+                    params: {
+                      mesh: route.params.mesh,
+                      service: route.params.service,
+                    },
 
-                }"
+                  }"
+                >
+                  <RouteTitle
+                    :title="t('services.routes.item.title', { name: item.name })"
+                  />
+                </XAction>
+              </h2>
+              <XBadge
+                :appearance="t(`common.status.appearance.${item.spec.state}`, undefined, { defaultMessage: 'neutral' })"
               >
-                <RouteTitle
-                  :title="t('services.routes.item.title', { name: item.name })"
-                />
-              </XAction>
-            </h2>
+                {{ t(`http.api.value.${item.spec.state}`) }}
+              </XBadge>
+            </XLayout>
           </template>
 
           <XLayout
@@ -79,24 +86,6 @@
                 class="stack-with-borders"
                 data-testid="structured-view"
               >
-                <DefinitionCard
-                  layout="horizontal"
-                >
-                  <template
-                    #title
-                  >
-                    State
-                  </template>
-                  <template
-                    #body
-                  >
-                    <XBadge
-                      :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
-                    >
-                      {{ item.spec.state }}
-                    </XBadge>
-                  </template>
-                </DefinitionCard>
                 <DefinitionCard
                   layout="horizontal"
                 >

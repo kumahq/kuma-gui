@@ -40,15 +40,22 @@
           v-if="data"
           #title
         >
-          <h1>
-            <XCopyButton
-              :text="data.name"
+          <XLayout size="small">
+            <h1>
+              <XCopyButton
+                :text="data.name"
+              >
+                <RouteTitle
+                  :title="t('data-planes.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+            <XBadge
+              :appearance="t(`common.status.appearance.${data.status}`, undefined, { defaultMessage: 'neutral' })"
             >
-              <RouteTitle
-                :title="t('data-planes.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+              {{ t(`http.api.value.${data.status}`) }}
+            </XBadge>
+          </XLayout>
         </template>
         <template
           #actions

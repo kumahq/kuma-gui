@@ -45,17 +45,25 @@
         <template
           #title
         >
-          <h1
+          <XLayout
             v-if="data"
+            size="small"
           >
-            <XCopyButton
-              :text="data.name"
+            <h1>
+              <XCopyButton
+                :text="data.name"
+              >
+                <RouteTitle
+                  :title="t('zone-ingresses.routes.item.title', { name: data.name })"
+                />
+              </XCopyButton>
+            </h1>
+            <XBadge
+              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
             >
-              <RouteTitle
-                :title="t('zone-ingresses.routes.item.title', { name: data.name })"
-              />
-            </XCopyButton>
-          </h1>
+              {{ t(`http.api.value.${data.state}`) }}
+            </XBadge>
+          </XLayout>
         </template>
         <template
           #actions

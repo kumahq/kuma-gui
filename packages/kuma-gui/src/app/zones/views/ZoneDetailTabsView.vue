@@ -22,13 +22,20 @@
         ]"
       >
         <template #title>
-          <h1>
-            <XCopyButton :text="route.params.zone">
-              <RouteTitle
-                :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-              />
-            </XCopyButton>
-          </h1>
+          <XLayout size="small">
+            <h1>
+              <XCopyButton :text="route.params.zone">
+                <RouteTitle
+                  :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+                />
+              </XCopyButton>
+            </h1>
+            <XBadge
+              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
+            >
+              {{ t(`http.api.value.${data.state}`) }}
+            </XBadge>
+          </XLayout>
         </template>
 
         <template
