@@ -91,6 +91,16 @@ common:
           Missing key for value <strong>{value}</strong>.
         missing-key-value: !!text/markdown |
           Filters must be either \<key\> or \<key\>:\<value\> pairs.
+  status:
+    appearance:
+      online: success
+      Ready: success
+      Available: success
+      offline: danger
+      NotReady: danger
+      Unavailable: danger
+      partially_degraded: warning
+
 
 components:
   status-badge:
