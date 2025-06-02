@@ -15,6 +15,9 @@
     },
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
+    },
+    "./ci": {
+      "require": "./scripts/ci.cjs"
     }
   },
   "dependencies": {
