@@ -68,7 +68,7 @@ jobs:
           THREAD_COUNT: 4
         with:
           script: |
-            const ci = require('./packages/config/scripts/ci.cjs')
+            const ci = require('@kumahq/config/ci')
             const json = {
               '@kumahq/kuma-gui': ci.getPartitionedTestFiles(process.env.THREAD_COUNT, 'packages/kuma-gui/'),
             }
