@@ -44,7 +44,7 @@
 
 <script lang="ts" setup generic="Row extends {}">
 import { KTableView } from '@kong/kongponents'
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, ComponentPublicInstance } from 'vue'
 
 
 import { runInDebug } from '../../'
@@ -90,6 +90,7 @@ const slots = defineSlots<{
 
 const resize = (args: TablePreferences) => {
   const headers = Object.entries(args.columnWidths ?? {}).reduce<Record<string, { width: number }>>((prev, [key, value]) => {
+    if(!value) return prev
     prev[key] = {
       width: value,
     }
@@ -129,7 +130,8 @@ const click = (e: MouseEvent) => {
     }
   }
 }
-const $ref = ref<InstanceType<typeof KTableView> | null>(null)
+
+const $ref = ref<ComponentPublicInstance<typeof KTableView> | null>(null)
 const rewrite = () => {
   const $el = $ref.value?.$el
   if (
