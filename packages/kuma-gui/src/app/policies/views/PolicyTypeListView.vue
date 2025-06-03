@@ -14,8 +14,10 @@
     />
     <AppView>
       <DataSource
-        :src="`/mesh-insights/${route.params.mesh}`"
-        v-slot="{ data: meshInsight }: MeshInsightSource"
+        :src="uri(meshSources, '/mesh-insights/:name', {
+          name: route.params.mesh,
+        }, {})"
+        v-slot="{ data: meshInsight }"
       >
         <DataSource
           :src="uri(sources, '/policy-types', {})"
@@ -97,7 +99,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { MeshInsightSource } from '@/app/meshes/sources'
+import { sources as meshSources } from '@/app/meshes/sources'
 import { sources } from '@/app/policies/sources'
 </script>
 <style lang="scss">

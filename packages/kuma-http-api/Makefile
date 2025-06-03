@@ -29,9 +29,14 @@ lint: .lint/js ## Dev: Run lint checks
 KUMAHQ_HTTP_API := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-http-api") | .key')
 .PHONY: build
 build: OPENAPI_TS ?= $(shell $(MAKE) resolve/bin BIN=openapi-typescript)
+build: OPENAPI_OVERLAYS ?= $(shell $(MAKE) resolve/bin BIN=overlayjs PACKAGE=openapi-overlays-js)
 build: types/fetch install ## Regenerate the TS types from kumahq/kuma OpenAPI specs
+	@$(OPENAPI_OVERLAYS) \
+		--openapi $(KUMAHQ_HTTP_API)/kuma/docs/generated/openapi.yaml \
+		--overlay ./src/overlays/index.yaml > openapi.yaml
+
 	@$(OPENAPI_TS) \
-		$(KUMAHQ_HTTP_API)/kuma/docs/generated/openapi.yaml \
+		$(KUMAHQ_HTTP_API)/openapi.yaml \
 		-o $(KUMAHQ_HTTP_API)/index.d.ts
 
 types/fetch:

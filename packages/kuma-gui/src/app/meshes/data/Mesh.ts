@@ -1,14 +1,8 @@
-import type {
-  Backend,
-  MeshBackend,
-  Mesh as PartialMesh,
-} from '@/types/index.d'
+import type { components } from '@kumahq/kuma-http-api'
 
+type PartialMesh = components['schemas']['MeshItem']
 export const Mesh = {
   fromObject(item: PartialMesh) {
-    const mtlsBackend = getBackend(item.mtls)
-    const metricsBackend = getBackend(item.metrics)
-
     return {
       ...item,
       id: item.name,
@@ -19,8 +13,10 @@ export const Mesh = {
           mode: item.mode ?? 'Disabled',
         }
       })(item.meshServices),
-      mtlsBackend,
-      metricsBackend,
+      mtlsBackend: item.mtls?.enabledBackend && Array.isArray(item.mtls.backends) ?
+        item.mtls.backends.find(backend => backend.name === item.mtls?.enabledBackend) : undefined,
+      metricsBackend: item.metrics?.enabledBackend && Array.isArray(item.metrics.backends) ?
+        item.metrics.backends.find(backend => backend.name === item.metrics?.enabledBackend) : undefined,
       routing: ((item = {}) => {
         return {
           ...item,
@@ -30,12 +26,4 @@ export const Mesh = {
     }
   },
 }
-function getBackend(meshBackend?: MeshBackend): Backend | undefined {
-  if (meshBackend?.enabledBackend && Array.isArray(meshBackend.backends)) {
-    return meshBackend.backends.find((backend) => backend.name === meshBackend.enabledBackend)
-  }
-
-  return undefined
-}
-
-export type Mesh = ReturnType<typeof Mesh['fromObject']>
+export type Mesh = ReturnType<typeof Mesh.fromObject>

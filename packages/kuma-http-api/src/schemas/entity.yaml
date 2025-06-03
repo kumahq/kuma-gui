@@ -1,0 +1,34 @@
+openapi: 3.1.0
+components:
+  schemas:
+    PagedCollection:
+      type: object
+      properties:
+        total:
+          type: integer
+        items:
+          type: array
+          items:
+            type: object
+        next:
+          nullable: true
+          type: string
+      required:
+        - next
+        - total
+        - items
+
+    Entity: # top level Entity/Resource props
+      required:
+        - type
+        - name
+        - creationTime
+        - modificationTime
+      properties:
+        name:
+          type: string
+        creationTime:
+          type: string
+        modificationTime:
+          type: string
+

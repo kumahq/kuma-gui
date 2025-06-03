@@ -1,0 +1,75 @@
+openapi: 3.1.0
+components:
+  schemas:
+    MeshInsight:
+      allOf:
+        - $ref: 'entity.yaml#/components/schemas/Entity'
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: ['MeshInsight']
+            lastSync:
+              type: string
+            dataplanes:
+              $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+            dataplanesByType:
+              type: object
+              properties:
+                standard:
+                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                gateway:
+                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                gatewayBuiltin:
+                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                gatewayDelegated:
+                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+            policies:
+              additionalProperties:
+                type: object
+                properties:
+                  total:
+                    type: number
+            resources:
+              additionalProperties:
+                type: object
+                properties:
+                  total:
+                    type: number
+            dpVersions:
+              type: object
+              properties:
+                kumaDp:
+                  additionalProperties:
+                    $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                envoy:
+                  additionalProperties:
+                    $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+            mTLS:
+              type: object
+              properties:
+                issuedBackends:
+                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                supportedBackends:
+                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+            services:
+              type: object
+              properties:
+                total:
+                  type: number
+                internal:
+                  type: number
+                external:
+                  type: number
+
+    MeshInsightDataplaneStatistics:
+      type: object
+      properties:
+        total:
+          type: number
+        online:
+          type: number
+        offline:
+          type: number
+        partiallyDegraded:
+          type: number
