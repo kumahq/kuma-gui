@@ -9,11 +9,12 @@ const nounsanitized = require('eslint-plugin-no-unsanitized')
 const jsonSchemaValidatorPlugin = require('eslint-plugin-json-schema-validator')
 const globals = require('globals')
 const escape = require('escape-string-regexp')
+const { execSync } = require('node:child_process')
 const $config = dirname(require.resolve('@kumahq/config'))
 
-const workspacePackage = JSON.parse(
-  read(resolve($config, '../../../package.json'), 'utf-8'),
-)
+const workspace = JSON.parse(
+  execSync('npm query :root').toString(),
+).at(0)
 
 const packageSchema = JSON.parse(
   read(resolve(`${$config}/package.schema.json`), 'utf-8'),
@@ -95,7 +96,7 @@ function createEslintConfig(
 
     // 2. Take engines from the root of kumahq/kuma-gui and make sure
     // any other workspace root using this linter use the same engines
-    Object.entries(workspacePackage.engines).forEach(([key, value]) => {
+    Object.entries(workspace.engines).forEach(([key, value]) => {
       schema.definitions[key].pattern = `^${escape(value)}$`
     })
 
@@ -184,7 +185,7 @@ function createEslintConfig(
     // when linting workspaceRoots we want to ignore
     // sub-packages which are linted separately
     workspaceRoot ? {
-      ignores: workspacePackage.workspaces,
+      ignores: workspace.workspaces,
     } : {},
     //
     eslint.configs.recommended,
