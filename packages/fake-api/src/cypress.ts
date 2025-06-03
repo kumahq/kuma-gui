@@ -1,5 +1,5 @@
-import { createFetchSync } from './index.ts'
-import type { Middleware, Dependencies, FS, Mocker } from './index.ts'
+import { createFetchSync } from './index'
+import type { Middleware, Dependencies, FS, Mocker } from './index'
 
 const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
 const noop: Middleware = (_req, response) => response
