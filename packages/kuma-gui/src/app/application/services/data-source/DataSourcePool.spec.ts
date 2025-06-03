@@ -20,6 +20,7 @@ class EventSource extends EventTarget {
 }
 const spyableEventSource = () => {
   const add = vi.fn()
+  const open = vi.fn()
   class EventSourceProxy extends EventSource {
     addEventListener(...args: Parameters<EventTarget['addEventListener']>) {
       switch (args[0]) {
@@ -30,9 +31,13 @@ const spyableEventSource = () => {
       }
       return super.addEventListener(...args)
     }
+    open() {
+      open()
+    }
   }
   return {
     add,
+    open,
     EventSourceProxy,
   }
 }
@@ -188,10 +193,49 @@ describe('DataSourcePool', () => {
     data.destroy()
   })
   test('cacheControl: no-store', () => {
-    const { EventSourceProxy, add } = spyableEventSource()
+    const { EventSourceProxy, add, open } = spyableEventSource()
 
     const source = new EventSourceProxy({
       cacheControl: 'no-store',
+    })
+
+    const data = new DataSourcePoolWithExposedPool({
+      '/one': async () => {
+        return true
+      },
+    }, {
+      create: (_src: string) => {
+        return source
+      },
+    })
+    // acquire 10 times, they all use the same ref so they are exactly the same object
+    // and we only add one EventSource into the pool
+    const ref = Symbol('')
+
+    // open 10 times
+    Array.from({ length: 10 }).map(() => data.source('/one', ref))
+
+    // 10 + 1, open 11 times
+    const controller = data.pool.acquire('/one', ref).controller
+    const abort = vi.spyOn(controller, 'abort')
+
+    // close the source with one call as we only added one EventSource to the pool
+    data.close('/one', ref)
+
+    // open 11 times
+    expect(open).toHaveBeenCalledTimes(11)
+    expect(abort).toHaveBeenCalledTimes(1)
+    expect(add).toHaveBeenCalledTimes(1)
+    expect(add).not.toHaveBeenCalledWith('message', { signal: controller.signal })
+    expect(add).toHaveBeenCalledWith('error', { signal: controller.signal })
+
+    data.destroy()
+  })
+  test('cacheControl: immutable', () => {
+    const { EventSourceProxy, add, open } = spyableEventSource()
+
+    const source = new EventSourceProxy({
+      cacheControl: 'immutable',
     })
 
     const data = new DataSourcePoolWithExposedPool({
@@ -214,9 +258,11 @@ describe('DataSourcePool', () => {
     // close the source with one call as we only added one EventSource to the pool
     data.close('/one', ref)
 
+    // only open once all other open/create/acquires come from the cache
+    expect(open).toHaveBeenCalledTimes(1)
     expect(abort).toHaveBeenCalledTimes(1)
-    expect(add).toHaveBeenCalledTimes(1)
-    expect(add).not.toHaveBeenCalledWith('message', { signal: controller.signal })
+    expect(add).toHaveBeenCalledTimes(2)
+    expect(add).toHaveBeenCalledWith('message', { signal: controller.signal })
     expect(add).toHaveBeenCalledWith('error', { signal: controller.signal })
 
     data.destroy()

@@ -1,5 +1,5 @@
 import type { DataSourceResponse } from '@/app/application'
-import { defineSources, type Source } from '@/app/application/services/data-source'
+import { defineSources } from '@/app/application/services/data-source'
 import { Stat, ConnectionCollection } from '@/app/connections/data/'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 
@@ -41,7 +41,7 @@ const filter = (data: Record<string, unknown>, cb: (key: string, arr: unknown[])
     }, [] as typeof configs),
   }
 }
-export const sources = (source: Source, api: KumaApi) => {
+export const sources = (api: KumaApi) => {
   return defineSources({
     '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress': async (params) => {
       const { name, mesh, socketAddress, proxyType } = params

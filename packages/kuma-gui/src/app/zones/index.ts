@@ -43,7 +43,6 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
     [token('zone.sources'), {
       service: sources,
       arguments: [
-        app.source,
         app.api,
       ],
       labels: [
