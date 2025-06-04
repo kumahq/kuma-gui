@@ -66,8 +66,12 @@
                               policyPath: policyType.path,
                             },
                           }"
-                          :mount="route.params.policyPath.length === 0 && i === 0 ? route.replace : undefined"
                           :data-testid="`policy-type-link-${policyType.name}`"
+                          @vue:mounted="(vNode) => {
+                            if(route.params.policyPath.length === 0 && i === 0 && vNode.props?.to) {
+                              route.replace(vNode.props.to)
+                            }
+                          }"
                         >
                           {{ policyType.name }}
                         </XAction>

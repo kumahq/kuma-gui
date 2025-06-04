@@ -18,6 +18,7 @@ Feature: mesh / policies / index
       """
       KUMA_MODE: global
       KUMA_CIRCUITBREAKER_COUNT: 2
+      KUMA_RESOURCE_COUNT: 3
       """
     And the URL "/meshes/default/circuit-breakers" responds with
       """
@@ -26,15 +27,54 @@ Feature: mesh / policies / index
         - name: fake-cb-1
         - name: fake-cb-2
       """
-
-  Scenario: Visiting `/policies` redirects
-    Given the URL "/_resources" responds with
-      ```
+    And the URL "/mesh-insights/default" responds with
+      """
+      body:
+        policies:
+          CircuitBreaker:
+            total: 10
+          FaultInjection:
+            total: 10
+          MeshFaultInjection:
+            total: 10
+      """
+    And the URL "/_resources" responds with
+    ```
       body:
         resources:
           - name: CircuitBreaker
+            includeInFederation: true
+            path: circuit-breakers
+            pluralDisplayName: CircuitBreakers
+            policy:
+              hasFromTargetRef: false
+              hasToTargetRef: false
+              isFromAsRules: false
+              isTargetRef: false
+          - name: FaultInjection
+            includeInFederation: true
+            path: fault-injections
+            pluralDisplayName: FaultInjections
+            policy:
+              hasFromTargetRef: true
+              hasToTargetRef: false
+              isFromAsRules: false
+              isTargetRef: false
+          - name: MeshFaultInjection
+            includeInFederation: false
+            path: meshfaultinjections
+            pluralDisplayName: MeshFaultInjections
+            policy:
+              isTargetRef: true
+              hasToTargetRef: true
+              hasFromTargetRef: false
+              isFromAsRules: false
       ```
+  Scenario: Visiting `/policies` redirects
     When I visit the "/meshes/default/policies" URL
+    And the "$item:nth-child(1)" element contains
+      | Value     |
+      | fake-cb-1 |
     Then the URL contains "/meshes/default/policies/circuit-breakers"
 
   Scenario: Listing has expected content
@@ -146,11 +186,11 @@ Feature: mesh / policies / index
     Then the "$items-header" element exists 6 times
 
   Scenario: Sending filters
-    When I visit the "/meshes/default/policies/meshgateways" URL
+    When I visit the "/meshes/default/policies/meshfaultinjections" URL
     Then the "$input-search" element exists
     Then I "type" "foo namespace:bar zone:baz kuma.io/service-name:qux" into the "$input-search" element
     And I "type" "{enter}" into the "$input-search" element
-    Then the URL "/meshes/default/meshgateways" was requested with
+    Then the URL "/meshes/default/meshfaultinjections" was requested with
       """
       searchParams:
         name: foo

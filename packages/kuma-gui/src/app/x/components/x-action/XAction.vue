@@ -192,7 +192,6 @@ const props = withDefaults(defineProps<{
   href?: string
   to?: RouteLocationRawWithBooleanQuery
   for?: string
-  mount?: (to: RouteLocationNamedRaw) => void
 }>(), {
   href: '',
   appearance: 'anchor',
@@ -200,7 +199,6 @@ const props = withDefaults(defineProps<{
   action: 'default',
   to: () => ({}),
   for: '',
-  mount: () => {},
 })
 
 const group = inject<{
@@ -238,14 +236,6 @@ watch(() => props.to, (val) => {
   }
 }, { immediate: true })
 
-watch(() => props.mount, (val) => {
-  if (typeof val === 'function') {
-    val({
-      ...props.to,
-      query: query.value,
-    })
-  }
-}, { immediate: true })
 </script>
 <style lang="scss" scoped>
 /* taken from styles/_base.scss `a` */
