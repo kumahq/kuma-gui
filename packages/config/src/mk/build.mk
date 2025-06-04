@@ -1,16 +1,16 @@
 .PHONY: .build
 .build: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .build: $(if $(NOPRUNE),,prune) install
-	@NODE_OPTIONS=--experimental-strip-types \
-		$(VITE) \
+	@$(VITE) \
+			--configLoader runner \
 			-c ./vite.config.production.ts \
 			build
 
 .PHONY: build/preview
 build/preview: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 build/preview:
-	@NODE_OPTIONS=--experimental-strip-types \
-		$(VITE) \
+	@$(VITE) \
+			--configLoader runner \
 			-c ./vite.config.development.ts \
 			--mode preview \
 			build

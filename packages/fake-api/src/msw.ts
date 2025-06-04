@@ -1,7 +1,7 @@
 import { http, HttpResponse, passthrough } from 'msw'
 
-import { createFetch } from './index.ts'
-import type { Dependencies, FS, MockEndpoint } from './index.ts'
+import { createFetch } from './index'
+import type { Dependencies, FS, MockEndpoint } from './index'
 
 export const server = <TDependencies extends object = {}>(
   mock: MockEndpoint<TDependencies>,
