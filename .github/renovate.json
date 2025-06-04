@@ -1,8 +1,8 @@
 {
+ "$schema": "https://docs.renovatebot.com/renovate-schema.json",
  "extends": [
     "config:recommended",
-    ":semanticCommits",
-    "Kong/public-shared-renovate:github-actions"
+    ":semanticCommits"
   ],
   "dependencyDashboard": true,
   "rangeStrategy": "bump",
@@ -15,5 +15,11 @@
   ],
   "baseBranches": [
     "master"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Node and npm",
+      "matchPackageNames": ["node", "npm"]
+    }
   ]
 }
