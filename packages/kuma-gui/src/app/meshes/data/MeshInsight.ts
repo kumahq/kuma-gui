@@ -4,8 +4,8 @@ import type { components } from '@kumahq/kuma-http-api'
 type PartialMeshInsightCollection = components['responses']['MeshInsightCollection']['content']['application/json']
 type PartialMeshInsight = components['schemas']['MeshInsight']
 
-function getDataplaneStatusCounts(
-  {
+const MeshInsightDataplaneStatistics = {
+  fromObject({
     total = 0,
     online = 0,
     partiallyDegraded = 0,
@@ -15,16 +15,15 @@ function getDataplaneStatusCounts(
     online?: number
     partiallyDegraded?: number
     offline?: number
+  }) {
+    return {
+      total,
+      online,
+      partiallyDegraded,
+      offline,
+    }
   },
-) {
-  return {
-    total,
-    online,
-    partiallyDegraded,
-    offline,
-  }
 }
-
 
 export const MeshInsight = {
   search(query: string) {
@@ -34,14 +33,16 @@ export const MeshInsight = {
   fromObject(item: PartialMeshInsight) {
     return {
       ...item,
-      dataplanes: getDataplaneStatusCounts(item.dataplanes ?? {}),
+      dataplanes: MeshInsightDataplaneStatistics.fromObject(item.dataplanes ?? {}),
       dataplanesByType: {
-        standard: getDataplaneStatusCounts(item.dataplanesByType?.standard ?? {}),
-        gateway: getDataplaneStatusCounts(item.dataplanesByType?.gateway ?? {}),
-        gatewayBuiltin: getDataplaneStatusCounts(item.dataplanesByType?.gatewayBuiltin ?? {}),
-        gatewayDelegated: getDataplaneStatusCounts(item.dataplanesByType?.gatewayDelegated ?? {}),
+        ...item.dataplanesByType,
+        standard: MeshInsightDataplaneStatistics.fromObject(item.dataplanesByType?.standard ?? {}),
+        gateway: MeshInsightDataplaneStatistics.fromObject(item.dataplanesByType?.gateway ?? {}),
+        gatewayBuiltin: MeshInsightDataplaneStatistics.fromObject(item.dataplanesByType?.gatewayBuiltin ?? {}),
+        gatewayDelegated: MeshInsightDataplaneStatistics.fromObject(item.dataplanesByType?.gatewayDelegated ?? {}),
       },
       services: {
+        ...item.services,
         total: item.services?.total ?? 0,
         internal: item.services?.internal ?? 0,
         external: item.services?.external ?? 0,

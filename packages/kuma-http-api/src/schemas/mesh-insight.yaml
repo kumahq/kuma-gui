@@ -49,9 +49,11 @@ components:
               type: object
               properties:
                 issuedBackends:
-                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                  additionalProperties:
+                    $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
                 supportedBackends:
-                  $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
+                  additionalProperties:
+                    $ref: '#/components/schemas/MeshInsightDataplaneStatistics'
             services:
               type: object
               properties:
