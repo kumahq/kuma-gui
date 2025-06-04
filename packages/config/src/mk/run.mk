@@ -1,8 +1,8 @@
 .PHONY: .run
 .run: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 .run: install
-	@NODE_OPTIONS=--experimental-strip-types \
-		$(VITE) \
+	@$(VITE) \
+		--configLoader runner \
 		-c ./vite.config.development.ts
 
 .PHONY: .run/docs

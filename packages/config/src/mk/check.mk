@@ -8,12 +8,10 @@ check/node: NPM_VERSION:=$(shell cat $(NPM_WORKSPACE_ROOT)/package.json | jq -r 
 check/node: NODE_VERSION:=v$(shell head -n1 $(NPM_WORKSPACE_ROOT)/.nvmrc)
 check/node:
 	@node -v | grep $(NODE_VERSION) &> /dev/null || ( \
-		printf "\033[91m%-30s\033[0m %s" \
+		printf "\033[91m%-30s\033[0m %s\n" \
 			"Make sure node-$(NODE_VERSION) is installed!" && \
-		printf "\033[90m%-30s\033[0m %s\n" \
-			"(see root .nvmrc for nvm installation or use your chosen tool)" ; \
-		printf "\033[33m%-30s\033[0m %s\n" \
-			"Once the correct version of node is installed, re-run your make target" && \
+		echo "For installing node (we recommend with nvm) please see:" ; \
+		echo "https://nodejs.org/en/download" ; \
 		exit 1; \
 	)
 	@npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null && ( \

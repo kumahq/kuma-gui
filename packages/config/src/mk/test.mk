@@ -5,8 +5,8 @@
 .test/unit: install
 	@TZ=UTC \
 		FORCE_COLOR=1 \
-		NODE_OPTIONS=--experimental-strip-types \
 		$(VITEST) \
+			--configLoader runner \
 			-c vite.config.production.ts \
 			run
 
@@ -15,8 +15,8 @@
 .test/unit/watch: install
 	@TZ=UTC \
 		FORCE_COLOR=1 \
-		NODE_OPTIONS=--experimental-strip-types \
 		$(VITEST) \
+			--configLoader runner \
 			-c vite.config.production.ts \
 
 

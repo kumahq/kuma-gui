@@ -1,5 +1,5 @@
-import { createFetch } from './index.ts'
-import type { Dependencies, FS } from './index.ts'
+import { createFetch } from './index'
+import type { Dependencies, FS } from './index'
 import type { Plugin } from 'vite'
 
 type PluginOptions<TDependencies extends object = {}> = {
