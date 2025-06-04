@@ -1,36 +1,9 @@
 import { Resource } from '@/app/resources/data/Resource'
-import type { PaginatedApiListResponse as CollectionResponse } from '@/types/api.d'
-import type {
-  MeshInsight as PartialMeshInsight,
-} from '@/types/index.d'
-export type MeshInsight = PartialMeshInsight & {
-  dataplanes: Required<PartialMeshInsight['dataplanes']>
-  dataplanesByType: {
-    standard: Required<PartialMeshInsight['dataplanesByType']['standard']>
-    gateway: Required<PartialMeshInsight['dataplanesByType']['gateway']>
-    gatewayBuiltin: Required<PartialMeshInsight['dataplanesByType']['gatewayBuiltin']>
-    gatewayDelegated: Required<PartialMeshInsight['dataplanesByType']['gatewayDelegated']>
-  }
-  services: Required<PartialMeshInsight['services']>
-}
+import type { components } from '@kumahq/kuma-http-api'
 
-function getServiceTypeCount(
-  {
-    total = 0,
-    internal = 0,
-    external = 0,
-  }: {
-    total?: number
-    internal?: number
-    external?: number
-  },
-) {
-  return {
-    total,
-    internal,
-    external,
-  }
-}
+type PartialMeshInsightCollection = components['responses']['MeshInsightCollection']['content']['application/json']
+type PartialMeshInsight = components['schemas']['MeshInsight']
+
 function getDataplaneStatusCounts(
   {
     total = 0,
@@ -58,24 +31,31 @@ export const MeshInsight = {
     return Resource.search(query)
   },
 
-  fromObject(partialMeshInsight: PartialMeshInsight): MeshInsight {
-    const dataplanes = getDataplaneStatusCounts(partialMeshInsight.dataplanes)
-    const dataplanesByType = {
-      standard: getDataplaneStatusCounts(partialMeshInsight.dataplanesByType.standard),
-      gateway: getDataplaneStatusCounts(partialMeshInsight.dataplanesByType.gateway),
-      gatewayBuiltin: getDataplaneStatusCounts(partialMeshInsight.dataplanesByType.gatewayBuiltin),
-      gatewayDelegated: getDataplaneStatusCounts(partialMeshInsight.dataplanesByType.gatewayDelegated),
-    }
-    const services = getServiceTypeCount(partialMeshInsight.services)
+  fromObject(item: PartialMeshInsight) {
     return {
-      ...partialMeshInsight,
-      dataplanes,
-      dataplanesByType,
-      services,
+      ...item,
+      dataplanes: getDataplaneStatusCounts(item.dataplanes ?? {}),
+      dataplanesByType: {
+        standard: getDataplaneStatusCounts(item.dataplanesByType?.standard ?? {}),
+        gateway: getDataplaneStatusCounts(item.dataplanesByType?.gateway ?? {}),
+        gatewayBuiltin: getDataplaneStatusCounts(item.dataplanesByType?.gatewayBuiltin ?? {}),
+        gatewayDelegated: getDataplaneStatusCounts(item.dataplanesByType?.gatewayDelegated ?? {}),
+      },
+      services: {
+        total: item.services?.total ?? 0,
+        internal: item.services?.internal ?? 0,
+        external: item.services?.external ?? 0,
+      },
+      policies: Object.fromEntries(Object.entries(item?.policies ?? {}).map(([key, value]) => [key, {
+        total: value.total ?? 0,
+      }])),
+      resources: Object.fromEntries(Object.entries(item?.resources ?? {}).map(([key, value]) => [key, {
+        total: value.total ?? 0,
+      }])),
     }
   },
 
-  fromCollection(collection: CollectionResponse<PartialMeshInsight>): CollectionResponse<MeshInsight> {
+  fromCollection(collection: PartialMeshInsightCollection) {
     const items = Array.isArray(collection.items) ? collection.items.map(MeshInsight.fromObject) : []
     return {
       ...collection,
@@ -84,3 +64,4 @@ export const MeshInsight = {
     }
   },
 }
+export type MeshInsight = ReturnType<typeof MeshInsight.fromObject>

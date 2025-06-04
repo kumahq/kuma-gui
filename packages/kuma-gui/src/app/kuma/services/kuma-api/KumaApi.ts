@@ -15,10 +15,8 @@ import type {
   ExternalService,
   GlobalInsight,
   InspectRulesForDataplane,
-  Mesh,
   MeshGateway,
   MeshGatewayDataplane,
-  MeshInsight,
   MeshService,
   MeshExternalService,
   PolicyDataplane,
@@ -32,6 +30,12 @@ import type {
   ZoneIngressOverview,
   ZoneOverview,
 } from '@/types/index.d'
+import type { components } from '@kumahq/kuma-http-api'
+
+type Mesh = components['schemas']['MeshItem']
+type MeshInsight = components['schemas']['MeshInsight']
+type MeshInsightCollection = components['responses']['MeshInsightCollection']['content']['application/json']
+
 
 export default class KumaApi extends Api {
   async getLatestVersion(): Promise<string> {
@@ -145,7 +149,7 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${name}`, { params })
   }
 
-  getAllMeshInsights(params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshInsight>> {
+  getAllMeshInsights(params?: PaginationParameters): Promise<MeshInsightCollection> {
     return this.client.get('/mesh-insights', { params })
   }
 

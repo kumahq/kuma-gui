@@ -1004,6 +1004,76 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/mesh-insights": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    name?: components["parameters"]["name"];
+                    size?: components["parameters"]["size"];
+                    offset?: components["parameters"]["offset"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                0: components["responses"]["MeshInsightCollection"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mesh-insights/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    format?: components["parameters"]["format"];
+                };
+                header?: never;
+                path: {
+                    name: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1734,13 +1804,7 @@ export interface components {
                     /** @description Supported backends (CA). */
                     supportedBackends?: string[];
                 };
-                metadata?: {
-                    fields?: {
-                        [key: string]: {
-                            Kind: unknown;
-                        };
-                    };
-                };
+                metadata?: Record<string, never>;
                 /** @description List of ADS subscriptions created by a given Dataplane. */
                 subscriptions?: {
                     /** @description Time when a given Dataplane connected to the Control Plane. */
@@ -6700,7 +6764,8 @@ export interface components {
                 defaultBackend?: string;
             };
             meshServices?: {
-                mode?: string | number;
+                /** @enum {string} */
+                mode?: "Disabled" | "Everywhere" | "ReachableBackends" | "Exclusive";
             };
             /** @description Configuration for metrics collected and exposed by dataplanes.
              *
@@ -6804,6 +6869,8 @@ export interface components {
                 defaultBackend?: string;
             };
             type: string;
+            creationTime?: string;
+            modificationTime?: string;
         };
         MeshCreateOrUpdateSuccessResponse: {
             /** @description warnings is a list of warning messages to return to the requesting Kuma API clients.
@@ -6960,6 +7027,13 @@ export interface components {
             };
             /** @description Spec is the specification of the Kuma HostnameGenerator resource. */
             spec: {
+                /** @description Extension struct for a plugin configuration */
+                extension?: {
+                    /** @description Config freeform configuration for the extension. */
+                    config?: unknown;
+                    /** @description Type of the extension. */
+                    type: string;
+                };
                 selector?: {
                     meshExternalService?: {
                         matchLabels?: {
@@ -7430,6 +7504,61 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshServiceDeleteSuccessResponse: Record<string, never>;
+        MeshInsight: components["schemas"]["Entity"] & {
+            /** @enum {string} */
+            type?: "MeshInsight";
+            lastSync?: string;
+            dataplanes?: components["schemas"]["MeshInsightDataplaneStatistics"];
+            dataplanesByType?: {
+                standard?: components["schemas"]["MeshInsightDataplaneStatistics"];
+                gateway?: components["schemas"]["MeshInsightDataplaneStatistics"];
+                gatewayBuiltin?: components["schemas"]["MeshInsightDataplaneStatistics"];
+                gatewayDelegated?: components["schemas"]["MeshInsightDataplaneStatistics"];
+            };
+            policies?: {
+                [key: string]: {
+                    total?: number;
+                };
+            };
+            resources?: {
+                [key: string]: {
+                    total?: number;
+                };
+            };
+            dpVersions?: {
+                kumaDp?: {
+                    [key: string]: components["schemas"]["MeshInsightDataplaneStatistics"];
+                };
+                envoy?: {
+                    [key: string]: components["schemas"]["MeshInsightDataplaneStatistics"];
+                };
+            };
+            mTLS?: {
+                issuedBackends?: components["schemas"]["MeshInsightDataplaneStatistics"];
+                supportedBackends?: components["schemas"]["MeshInsightDataplaneStatistics"];
+            };
+            services?: {
+                total?: number;
+                internal?: number;
+                external?: number;
+            };
+        };
+        Entity: {
+            name: string;
+            creationTime: string;
+            modificationTime: string;
+        };
+        MeshInsightDataplaneStatistics: {
+            total?: number;
+            online?: number;
+            offline?: number;
+            partiallyDegraded?: number;
+        };
+        PagedCollection: {
+            total: number;
+            items: Record<string, never>[];
+            next: string | null;
+        };
     };
     responses: {
         /** @description A response for the index endpoint */
@@ -8097,8 +8226,23 @@ export interface components {
                 };
             };
         };
+        MeshInsightCollection: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["PagedCollection"] & {
+                    items?: components["schemas"]["MeshInsight"][];
+                };
+            };
+        };
     };
-    parameters: never;
+    parameters: {
+        name: string;
+        size: number;
+        offset: number;
+        format: string;
+    };
     requestBodies: never;
     headers: never;
     pathItems: never;

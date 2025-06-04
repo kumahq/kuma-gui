@@ -1,0 +1,63 @@
+overlay: 1.0.0
+info:
+  title: Overlay to customise API for Kuma
+  version: 0.1.0
+actions:
+  - target: '$.components.schemas.MeshItem.properties'
+    update:
+      creationTime:
+        type: string
+      modificationTime:
+        type: string
+  - target: '$.components.schemas.MeshItem.properties.meshServices.properties.mode.oneOf'
+    remove: true
+  - target: '$.components.schemas.MeshItem.properties.meshServices.properties.mode'
+    update:
+      type: string
+      enum:
+        - Disabled
+        - Everywhere
+        - ReachableBackends
+        - Exclusive
+  - target: '$.components.schemas'
+    update:
+      MeshInsight:
+        $ref: 'src/schemas/mesh-insight.yaml#/components/schemas/MeshInsight'
+  - target: '$.components.responses'
+    update:
+      MeshInsightCollection:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: 'src/schemas/entity.yaml#/components/schemas/PagedCollection'
+                - type: object
+                  properties:
+                    items:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/MeshInsight'
+  - target: '$.paths'
+    update:
+      /mesh-insights:
+        get:
+          parameters:
+            - $ref: 'src/schemas/parameters.yaml#/name'
+            - $ref: 'src/schemas/parameters.yaml#/size'
+            - $ref: 'src/schemas/parameters.yaml#/offset'
+          responses:
+            - $ref: '#/components/responses/MeshInsightCollection'
+      /mesh-insights/{name}:
+        get:
+          parameters:
+            - $ref: src/schemas/parameters.yaml#/format
+            - name: name
+              type: string
+              in: path
+              required: true
+          responses:
+            200:
+              description: '200'
+              content:
+                application/json:
+                  $ref: '#/components/schemas/MeshInsight'
