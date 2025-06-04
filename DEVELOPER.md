@@ -8,7 +8,7 @@ If you are considering to contribute and help create an awesome user experience,
 
 You will need to have the following tools and programs installed to run and work on the application.
 
-- [Node.js](https://nodejs.org) and `npm` (see [.nvmrc](https://github.com/kumahq/kuma-gui/blob/master/.nvmrc) for the required main version)
+- [Node.js](https://nodejs.org) and `npm` (see [.nvmrc](https://github.com/kumahq/kuma-gui/blob/master/.nvmrc) for the required main version and [nvm/installing](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) for installation instructions). With `nvm` installed run `nvm install` to install/change to the required version.
 - git
 - make
 
