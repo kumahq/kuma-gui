@@ -42,17 +42,10 @@
           default-path="common.i18n.ignore-error"
         />
         <XTeleportTemplate
-          v-if="can('create zones') && (data?.items ?? []).length > 0"
+          v-if="(data?.items ?? []).length > 0"
           :to="{ name: 'zone-cp-list-view-actions'}"
         >
-          <XAction
-            action="create"
-            appearance="primary"
-            :to="{ name: 'zone-create-view' }"
-            data-testid="create-zone-link"
-          >
-            {{ t('zones.index.create') }}
-          </XAction>
+          <ZoneActionGroup />
         </XTeleportTemplate>
         <XCard>
           <XLayout>
@@ -197,65 +190,21 @@
                     <template
                       #actions="{ row }"
                     >
-                      <XActionGroup>
-                        <XDisclosure
-                          v-slot="{ expanded, toggle }"
+                      <ZoneActionGroup
+                        :item="row"
+                        @change="refresh"
+                      >
+                        <XAction
+                          :to="{
+                            name: 'zone-cp-detail-view',
+                            params: {
+                              zone: row.name,
+                            },
+                          }"
                         >
-                          <XAction
-                            :to="{
-                              name: 'zone-cp-detail-view',
-                              params: {
-                                zone: row.name,
-                              },
-                            }"
-                          >
-                            {{ t('common.collection.actions.view') }}
-                          </XAction>
-                          <XAction
-                            v-if="can('create zones')"
-                            appearance="danger"
-                            @click="toggle"
-                          >
-                            {{ t('common.collection.actions.delete') }}
-                          </XAction>
-                          <XTeleportTemplate
-                            :to="{ name: 'modal-layer' }"
-                          >
-                            <DataSink
-                              v-if="expanded"
-                              :src="`/zone-cps/${row.name}/delete`"
-                              @change="() => { toggle(); refresh() }"
-                              v-slot="{ submit, error: deleteError }"
-                            >
-                              <XPrompt
-                                :action="t('common.delete_modal.proceed_button')"
-                                :expected="row.name"
-                                data-testid="delete-zone-modal"
-                                @cancel="toggle"
-                                @submit="() => submit({})"
-                              >
-                                <template
-                                  #title
-                                >
-                                  {{ t('common.delete_modal.title', { type: 'Zone' }) }}
-                                </template>
-                                <XI18n
-                                  path="common.delete_modal.text"
-                                  :params="{
-                                    type: 'Zone',
-                                    name: row.name,
-                                  }"
-                                />
-                                <DataLoader
-                                  class="mt-4"
-                                  :errors="[deleteError]"
-                                  :loader="false"
-                                />
-                              </XPrompt>
-                            </DataSink>
-                          </XTeleportTemplate>
-                        </XDisclosure>
-                      </XActionGroup>
+                          {{ t('common.collection.actions.view') }}
+                        </XAction>
+                      </ZoneActionGroup>
                     </template>
                   </AppCollection>
                 </DataCollection>
@@ -292,6 +241,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
+import { useZoneActionGroup } from '../'
 import { sources as zoneSources } from '../sources'
 import { get } from '@/app/application'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
@@ -303,6 +253,7 @@ import type { ZoneIngressOverview } from '@/app/zone-ingresses/data'
 type ZoneProxies<T> = Record<string, {online: T[], offline: T[]}>
 const ingresses = ref<ZoneProxies<ZoneIngressOverview>>({})
 const egresses = ref<ZoneProxies<ZoneEgressOverview>>({})
+const ZoneActionGroup = useZoneActionGroup()
 
 const getIngresses = (data: {items: ZoneIngressOverview[]}) => {
   const prop = 'zoneIngress'
