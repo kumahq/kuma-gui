@@ -7534,8 +7534,12 @@ export interface components {
                 };
             };
             mTLS?: {
-                issuedBackends?: components["schemas"]["MeshInsightDataplaneStatistics"];
-                supportedBackends?: components["schemas"]["MeshInsightDataplaneStatistics"];
+                issuedBackends?: {
+                    [key: string]: components["schemas"]["MeshInsightDataplaneStatistics"];
+                };
+                supportedBackends?: {
+                    [key: string]: components["schemas"]["MeshInsightDataplaneStatistics"];
+                };
             };
             services?: {
                 total?: number;
