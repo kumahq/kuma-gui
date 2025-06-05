@@ -11,7 +11,7 @@
     "renovate-bot"
   ],
   "schedule": [
-    "before 5am every weekday"
+    "before 4am on monday"
   ],
   "baseBranches": [
     "master"
