@@ -25,7 +25,7 @@
     "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
     "@cucumber/gherkin-utils": "^9.2.0",
     "@eslint/js": "^9.28.0",
-    "@stylistic/eslint-plugin": "^4.4.0",
+    "@stylistic/eslint-plugin": "^4.4.1",
     "@stylistic/stylelint-plugin": "^3.1.2",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
