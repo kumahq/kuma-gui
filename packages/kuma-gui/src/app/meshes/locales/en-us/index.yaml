@@ -86,3 +86,5 @@ meshes:
     policies: 'Policies'
     enabled: 'Enabled'
     disabled: 'Disabled'
+  action_menu:
+    toggle_button: 'Actions'

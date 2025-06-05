@@ -15,7 +15,7 @@
         size: route.params.size,
         search: route.params.s,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, error, refresh }"
     >
       <AppView
         :docs="data?.items.length ? t('meshes.href.docs'):''"
@@ -33,6 +33,12 @@
           path="meshes.routes.items.intro"
           default-path="common.i18n.ignore-error"
         />
+        <XTeleportTemplate
+          v-if="(data?.items ?? []).length > 0"
+          :to="{ name: 'mesh-list-view-actions'}"
+        >
+          <MeshActionGroup />
+        </XTeleportTemplate>
 
         <XCard>
           <XLayout>
@@ -108,7 +114,10 @@
                     <template
                       #actions="{ row: item }"
                     >
-                      <XActionGroup>
+                      <MeshActionGroup
+                        :item="item"
+                        @change="refresh"
+                      >
                         <XAction
                           :to="{
                             name: 'mesh-detail-view',
@@ -119,7 +128,7 @@
                         >
                           {{ t('common.collection.actions.view') }}
                         </XAction>
-                      </XActionGroup>
+                      </MeshActionGroup>
                     </template>
                   </AppCollection>
                 </DataCollection>
@@ -133,8 +142,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useMeshActionGroup } from '../'
 import { sources } from '../sources'
 import AppCollection from '@/app/application/components/app-collection/AppCollection.vue'
+const MeshActionGroup = useMeshActionGroup()
 </script>
 <style lang="scss" scoped>
 .search-field {
