@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="typeof slots.default !== 'undefined'"
     data-testid="x-action-group"
     :class="{
       'x-action-group': true,
@@ -35,7 +36,10 @@
             name="x-action-group"
             :service="props"
           >
-            <slot name="default" />
+            <slot
+              name="default"
+              :change="() => emit('change')"
+            />
           </XProvider>
         </template>
       </KDropdown>
@@ -54,6 +58,9 @@ const props = withDefaults(defineProps<{
 }>(), {
   expanded: false,
 })
+const emit = defineEmits<{
+  (event: 'change'): void
+}>()
 const slots = defineSlots()
 
 </script>

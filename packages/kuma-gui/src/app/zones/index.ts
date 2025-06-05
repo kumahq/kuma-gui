@@ -1,3 +1,4 @@
+import ZoneActionGroup from './components/ZoneActionGroup.vue'
 import ZoneControlPlanesList from './components/ZoneControlPlanesList.vue'
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
@@ -14,14 +15,16 @@ type Token = ReturnType<typeof token>
 
 const $ = {
   ZoneControlPlanesList: token<typeof ZoneControlPlanesList>('zones.components.ZoneControlPlanesList'),
+  ZoneActionGroup: token<typeof ZoneActionGroup>('zones.components.ZoneActionGroup'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [
     [$.ZoneControlPlanesList, {
-      service: () => {
-        return ZoneControlPlanesList
-      },
+      service: () => ZoneControlPlanesList,
+    }],
+    [$.ZoneActionGroup, {
+      service: () => ZoneActionGroup,
     }],
     [token('zones.routes'), {
       service: (can) => {
@@ -83,6 +86,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 export const TOKENS = $
 export const [
   useZoneControlPlanesList,
+  useZoneActionGroup,
 ] = createInjections(
   $.ZoneControlPlanesList,
+  $.ZoneActionGroup,
 )
