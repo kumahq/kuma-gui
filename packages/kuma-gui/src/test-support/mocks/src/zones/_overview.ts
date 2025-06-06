@@ -32,6 +32,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
               subscriptions: Array.from({ length: subscriptionCount }).map((item, i, arr) => {
                 return {
                   config: fake.kuma.subscriptionConfig({
+                    environment: fake.helpers.arrayElement(['universal', 'kubernetes']),
                     store: {
                       type: fake.helpers.arrayElement(['memory', 'postgres', 'kubernetes']),
                     },
