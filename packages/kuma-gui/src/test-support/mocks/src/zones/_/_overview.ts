@@ -44,7 +44,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                     kumaCpGlobalCompatible: fake.datatype.boolean(),
                   },
                 },
-                config: fake.kuma.subscriptionConfig(),
+                config: fake.kuma.subscriptionConfig({ environment: fake.helpers.arrayElement(['universal', 'kubernetes'])}),
                 ...fake.kuma.connection(item, i, arr),
                 status: (() => {
                   const xcks = fake.number.int({ min: 100, max: 500 })
