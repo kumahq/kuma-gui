@@ -1,3 +1,4 @@
+import MeshActionGroup from './components/MeshActionGroup.vue'
 import MeshInsightsList from './components/MeshInsightsList.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
@@ -17,6 +18,7 @@ type Token = ReturnType<typeof token>
 
 const $ = {
   MeshInsightsList: token<typeof MeshInsightsList>('meshes.components.MeshInsightsList'),
+  MeshActionGroup: token<typeof MeshActionGroup>('meshes.components.MeshActionGroup'),
 }
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
@@ -29,6 +31,9 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
       service: () => {
         return MeshInsightsList
       },
+    }],
+    [$.MeshActionGroup, {
+      service: () => MeshActionGroup,
     }],
     [token('meshes.sources'), {
       service: sources,
@@ -73,6 +78,8 @@ export const services = (app: Record<string, Token>): ServiceDefinition[] => {
 export const TOKENS = $
 export const [
   useMeshInsightsList,
+  useMeshActionGroup,
 ] = createInjections(
   $.MeshInsightsList,
+  $.MeshActionGroup,
 )
