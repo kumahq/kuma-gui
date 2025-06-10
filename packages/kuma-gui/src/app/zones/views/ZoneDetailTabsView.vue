@@ -30,6 +30,7 @@
               >
                 <XIcon
                   :name="env"
+                  :size="KUI_ICON_SIZE_50"
                 >
                   {{ t(`common.product.environment.${env}`) }}
                 </XIcon>
@@ -98,6 +99,8 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+
 import { useZoneActionGroup } from '../'
 import type { ZoneOverviewSource } from '../sources'
 const ZoneActionGroup = useZoneActionGroup()
