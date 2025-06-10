@@ -74,5 +74,3 @@ release: KUMAHQ_KUMA_GUI=$(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)
 release: SRC?=$(KUMAHQ_KUMA_GUI)/dist
 release: .release ## CI: 'releases' a built artifact, depends on the build artifact from 'make build'
 
-.PHONY: post-upgrade/msw
-post-upgrade/msw: .post-upgrade/msw
