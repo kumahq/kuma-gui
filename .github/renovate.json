@@ -20,6 +20,12 @@
     {
       "groupName": "Node and npm",
       "matchPackageNames": ["node", "npm"]
+    },
+    {
+      "matchPackageNames": ["msw"],
+      "postUpgradeTasks": {
+        "commands": ["make ws/post-upgrade/msw"]
+      }
     }
   ]
 }
