@@ -1,8 +1,8 @@
+import { replicateKumaServer, yamlSchema } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
-import { DEFAULT_SCHEMA, Type } from 'js-yaml'
-import markdown from 'markdown-it'
+import { readFile } from 'fs/promises'
 import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import svgLoader from 'vite-svg-loader'
@@ -10,23 +10,31 @@ import svgLoader from 'vite-svg-loader'
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
 import { dependencies } from './src/test-support'
 import { fs } from './src/test-support/mocks/fs'
-import { replicateKumaServer } from './vite.plugins'
 import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 
+const cwd = process.cwd()
+const read = async (path: string) => (await readFile(`${cwd}/${path}`)).toString()
+const version = JSON.parse((await read('./package.json'))).version
+
+const vars = {
+  version,
+  baseGuiPath: '/gui',
+  apiUrl: 'http://localhost:5681',
+  product: 'Kuma', // we no longer use this, it can be removed in the backend
+  mode: 'global',
+  environment: 'universal',
+  storeType: 'postgres',
+  apiReadOnly: false,
+}
 export const config: UserConfigFn = () => {
-  const md = markdown(
-    {
-      html: true,
-    },
-  )
   return {
     base: './',
     server: {
       port: 8080,
     },
     plugins: [
-      replicateKumaServer(),
+      replicateKumaServer(vars),
       vue({
         template: {
           compilerOptions: {
@@ -44,22 +52,7 @@ export const config: UserConfigFn = () => {
       svgLoader(),
       yamlLoader(
         {
-          schema: DEFAULT_SCHEMA.extend(
-            new Type('tag:yaml.org,2002:text/markdown', {
-              kind: 'scalar',
-              construct: (data) => {
-                // We only currently use !!text/markdown within yaml for out locales/i18n text
-                // for which we use FormatJS under the hood. FormatJS requires you to escape any XML/HTML looking
-                // things, plus ICU '{' and '}', hence this replace.
-                // If we ever need !!text/markdown for anything else we should do something like !!text/icu+markdown
-                const str = md.render(data)
-
-                return str.replace(/</g, "'<'")
-                  .replace(/%7B/g, '{')
-                  .replace(/%7D/g, '}')
-              },
-            }),
-          ),
+          schema: yamlSchema(),
         },
       ),
     ],
@@ -85,6 +78,9 @@ export const config: UserConfigFn = () => {
     test: {
       globals: false,
       environment: 'jsdom',
+      provide: {
+        vars,
+      },
       setupFiles: [
         './test-support/main.ts',
       ],

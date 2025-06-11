@@ -2,7 +2,7 @@
 // When running via vitest this file is added first using
 // vitest's `setupFiles` property, please see `/vite.config.production.ts`
 
-import { beforeEach, afterEach } from 'vitest'
+import { beforeEach, afterEach, inject } from 'vitest'
 
 import { services as testing } from './index'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
@@ -10,7 +10,9 @@ import { TOKENS } from '@/app/kuma'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 import { get, container, build } from '@/services/utils'
 
-(async () => {
+const vars = inject<object>('vars')
+
+;(async () => {
   const $ = {
     ...VUE,
     ...APPLICATION,
@@ -24,7 +26,7 @@ import { get, container, build } from '@/services/utils'
       routes: $.routesLabel,
     }),
 
-    testing($),
+    testing($, vars),
   )
   // initializes vue-test-utils with any global components and/or plugins etc
   get($.app)
