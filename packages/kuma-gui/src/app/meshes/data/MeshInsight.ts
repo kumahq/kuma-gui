@@ -1,7 +1,7 @@
 import { Resource } from '@/app/resources/data/Resource'
 import type { components } from '@kumahq/kuma-http-api'
 
-type PartialMeshInsightCollection = components['responses']['MeshInsightCollection']['content']['application/json']
+type PartialMeshInsightCollection = components['schemas']['MeshInsightCollection']
 type PartialMeshInsight = components['schemas']['MeshInsight']
 
 const MeshInsightDataplaneStatistics = {

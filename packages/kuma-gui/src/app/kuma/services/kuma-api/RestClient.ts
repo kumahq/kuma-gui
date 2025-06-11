@@ -2,14 +2,15 @@ import { makeRequest } from './makeRequest'
 import type Env from '@/app/application/services/env/Env'
 
 export const createFetch = (client: RestClient) => {
-  return async (req: Request) => {
+  return async (r: Request | string) => {
+    const req = typeof r === 'string' ? new Request(r) : r
     const url = new URL(req.url)
     const payload = ['GET', 'DELETE'].includes(req.method) ? undefined : req.body ? (await new Response(req.body).json()) : {}
     const options = {
       ...req,
       params: url.searchParams.size > 0 ? Object.fromEntries(url.searchParams.entries()) : undefined,
     }
-    const { response, data } = await client.raw(url.pathname, payload, options, req.method)
+    const { response, data } = await client.raw(typeof r === 'string' ? r : url.pathname, payload, options, req.method)
 
     // we've already accessed the response via .json from within client.raw
     // so we can't call it again later (which the new client does)

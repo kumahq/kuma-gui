@@ -1004,6 +1004,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ControlPlaneConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/mesh-insights": {
         parameters: {
             query?: never;
@@ -1017,6 +1052,7 @@ export interface paths {
                     name?: components["parameters"]["name"];
                     size?: components["parameters"]["size"];
                     offset?: components["parameters"]["offset"];
+                    filter?: components["parameters"]["filter"];
                 };
                 header?: never;
                 path?: never;
@@ -1024,7 +1060,15 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                0: components["responses"]["MeshInsightCollection"];
+                /** @description 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MeshInsightCollection"];
+                    };
+                };
             };
         };
         put?: never;
@@ -1061,7 +1105,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": unknown;
+                        "application/json": components["schemas"]["MeshInsight"];
                     };
                 };
             };
@@ -7504,6 +7548,7 @@ export interface components {
             readonly warnings?: string[];
         };
         MeshServiceDeleteSuccessResponse: Record<string, never>;
+        ControlPlaneConfig: unknown;
         MeshInsight: components["schemas"]["Entity"] & {
             /** @enum {string} */
             type?: "MeshInsight";
@@ -7547,6 +7592,14 @@ export interface components {
                 external?: number;
             };
         };
+        MeshInsightCollection: components["schemas"]["PagedCollection"] & {
+            items?: components["schemas"]["MeshInsight"][];
+        };
+        PagedCollection: {
+            total: number;
+            items: Record<string, never>[];
+            next: string | null;
+        };
         Entity: {
             name: string;
             creationTime: string;
@@ -7557,11 +7610,6 @@ export interface components {
             online?: number;
             offline?: number;
             partiallyDegraded?: number;
-        };
-        PagedCollection: {
-            total: number;
-            items: Record<string, never>[];
-            next: string | null;
         };
     };
     responses: {
@@ -8230,21 +8278,15 @@ export interface components {
                 };
             };
         };
-        MeshInsightCollection: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["PagedCollection"] & {
-                    items?: components["schemas"]["MeshInsight"][];
-                };
-            };
-        };
     };
     parameters: {
         name: string;
         size: number;
         offset: number;
+        filter: {
+            key?: string;
+            value?: string;
+        };
         format: string;
     };
     requestBodies: never;

@@ -1,7 +1,7 @@
 import { paths } from '@kumahq/kuma-http-api'
 import createClient from 'openapi-fetch'
 
-import { ControlPlaneConfig, GlobalInsight } from './data'
+import { GlobalInsight } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
 import type Env from '@/app/application/services/env/Env'
@@ -68,7 +68,7 @@ export const sources = (env: Env['var'], api: KumaApi) => {
       }
       const version = await (async () => {
         try {
-          return api.getLatestVersion()
+          return (await api.client.fetch(env('KUMA_VERSION_URL'))).json()
         } catch (e) {
           console.error(e)
           return ''
@@ -83,7 +83,7 @@ export const sources = (env: Env['var'], api: KumaApi) => {
     },
 
     '/config': async () => {
-      return ControlPlaneConfig.fromObject(await api.getConfig())
+      return (await http.GET('/config')).data!
     },
 
     '/global-insight': async () => {
