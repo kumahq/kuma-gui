@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   lifecycle:
-    uses: kumahq/.github/.github/workflows/wfc_lifecycle.yml@main
+    uses: kumahq/.github/.github/workflows/wfc_lifecycle.yml@5b383549bdfec06d58968986803f2f3e887a34d7
     permissions:
       issues: write # for editing issues (e.g. adding labels)
     with:
