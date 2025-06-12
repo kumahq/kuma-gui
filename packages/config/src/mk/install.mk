@@ -17,3 +17,8 @@
 	@if $(MAKE) -s confirm ; then \
 		find $(NPM_WORKSPACE_ROOT) -name 'node_modules' -type d -prune -exec rm -rf '{}' +; \
 	fi
+
+.PHONY: .post-upgrade/msw
+.post-upgrade/msw: MSW ?= $(shell $(MAKE) resolve/bin BIN=msw)
+.post-upgrade/msw:
+	@$(MSW) init

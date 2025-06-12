@@ -18,6 +18,25 @@
           </XCopyButton>
         </h1>
       </template>
+      <template
+        #actions
+      >
+        <MeshActionGroup
+          :item="props.mesh"
+          @change="() => route.replace({ name: 'mesh-list-view' })"
+        >
+          <template
+            #control
+          >
+            <XAction
+              action="expand"
+              appearance="primary"
+            >
+              {{ t('meshes.action_menu.toggle_button') }}
+            </XAction>
+          </template>
+        </MeshActionGroup>
+      </template>
 
       <XTabs
         :selected="route.child()?.name"
@@ -49,8 +68,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useMeshActionGroup } from '../'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh
 }>()
+const MeshActionGroup = useMeshActionGroup()
 </script>

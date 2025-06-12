@@ -4,11 +4,13 @@
     :params="{
       zone: '',
     }"
-    v-slot="{ route, t }"
+    v-slot="{ route, t, uri }"
   >
     <DataLoader
-      :src="`/zone-cps/${route.params.zone}`"
-      v-slot="{ data }: ZoneOverviewSource"
+      :src="uri(sources, `/zone-cps/:name`, {
+        name: route.params.zone,
+      })"
+      v-slot="{ data }"
     >
       <AppView
         v-if="data"
@@ -102,6 +104,6 @@
 import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 
 import { useZoneActionGroup } from '../'
-import type { ZoneOverviewSource } from '../sources'
+import { sources } from '../sources'
 const ZoneActionGroup = useZoneActionGroup()
 </script>
