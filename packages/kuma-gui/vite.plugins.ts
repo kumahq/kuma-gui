@@ -39,12 +39,13 @@ export const kumaIndexHtmlVars = (): Plugin => {
     transformIndexHtml: (template) => interpolate(template, htmlVars),
   }
 }
-type CspDirective = ['default-src', 'script-src', 'script-src-elem', 'img-src', 'style-src', 'connect-src'][number]
+type CspDirective = 'default-src' | 'script-src' | 'script-src-elem' | 'img-src' | 'style-src' | 'connect-src'
 const server = (
   template: string = './index.html',
   vars: Partial<KumaHtmlVars> = {},
-  csp: Partial<{ enabled: boolean } & Record<CspDirective, string>> = { enabled: true },
+  csp: Partial<{ enabled: boolean } & Record<CspDirective, string>> = {},
 ) => async (server: PreviewServer | ViteDevServer) => {
+  const { enabled: isCspEnabled = true } = csp
   server.middlewares.use('/', async (req, res, next) => {
     const url = req.originalUrl || ''
     const baseGuiPath = vars.baseGuiPath || '/gui'
@@ -78,7 +79,7 @@ const server = (
         } satisfies KumaHtmlVars,
       )
 
-      if (csp.enabled) {
+      if (isCspEnabled) {
         const nonce = crypto.randomBytes(16).toString('base64')
         body = body.replace('<meta charset="utf-8" />', `<meta charset="utf-8" /><meta property="csp-nonce" nonce="${nonce}">`)
         res.setHeader('Content-Security-Policy', [
