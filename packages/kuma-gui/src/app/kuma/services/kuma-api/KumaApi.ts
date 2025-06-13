@@ -8,17 +8,13 @@ import type {
   ServiceInsightsParameters,
   SingleResourceParameters,
 } from '@/types/api.d'
-import type { Config } from '@/types/config.d'
 import type {
   DataPlane,
   DataPlaneOverview,
   ExternalService,
-  GlobalInsight,
   InspectRulesForDataplane,
   MeshGateway,
   MeshGatewayDataplane,
-  MeshService,
-  MeshExternalService,
   PolicyDataplane,
   PolicyEntity,
   ServiceInsight,
@@ -30,24 +26,32 @@ import type {
   ZoneIngressOverview,
   ZoneOverview,
 } from '@/types/index.d'
-import type { components } from '@kumahq/kuma-http-api'
-
-type Mesh = components['schemas']['MeshItem']
-type MeshInsight = components['schemas']['MeshInsight']
-type MeshInsightCollection = components['responses']['MeshInsightCollection']['content']['application/json']
 
 
 export default class KumaApi extends Api {
-  async getLatestVersion(): Promise<string> {
-    return this.client.get(this.env('KUMA_VERSION_URL'))
+
+  getAllServiceInsights(params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
+    return this.client.get('/service-insights', { params })
   }
 
-  getConfig(): Promise<Config> {
-    return this.client.get('/config')
+  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
+    return this.client.get(`/meshes/${mesh}/service-insights`, { params })
   }
 
-  getGlobalInsight(): Promise<GlobalInsight> {
-    return this.client.get('/global-insight')
+  getServiceInsight({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ServiceInsight> {
+    return this.client.get(`/meshes/${mesh}/service-insights/${name}`, { params })
+  }
+
+  getAllExternalServices(params?: ExternalServicesParameters): Promise<PaginatedApiListResponse<ExternalService>> {
+    return this.client.get('/external-services', { params })
+  }
+
+  getAllExternalServicesFromMesh({ mesh }: { mesh: string }, params?: ExternalServicesParameters): Promise<PaginatedApiListResponse<ExternalService>> {
+    return this.client.get(`/meshes/${mesh}/external-services`, { params })
+  }
+
+  getExternalService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<ExternalService> {
+    return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
   getZones(params?: PaginationParameters): Promise<PaginatedApiListResponse<Zone>> {
@@ -56,18 +60,6 @@ export default class KumaApi extends Api {
 
   getZone({ name }: { name: string }, params?: SingleResourceParameters): Promise<Zone> {
     return this.client.get(`/zones/${name}`, { params })
-  }
-
-  createZone(zone: { name: string }): Promise<{ token: string }> {
-    return this.client.post('/provision-zone', zone)
-  }
-
-  updateZone(zone: Zone): Promise<Zone> {
-    return this.client.put(`/zones/${zone.name}`, zone)
-  }
-
-  deleteZone({ name }: { name: string }): Promise<void> {
-    return this.client.delete(`/zones/${name}`)
   }
 
   getAllZoneOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneOverview>> {
@@ -141,22 +133,6 @@ export default class KumaApi extends Api {
     return this.client.get(`/zoneegresses/${name}/_overview`, { params })
   }
 
-  getAllMeshes(params?: PaginationParameters): Promise<PaginatedApiListResponse<Mesh>> {
-    return this.client.get('/meshes', { params })
-  }
-
-  getMesh({ name }: { name: string }, params?: SingleResourceParameters): Promise<Mesh> {
-    return this.client.get(`/meshes/${name}`, { params })
-  }
-
-  getAllMeshInsights(params?: PaginationParameters): Promise<MeshInsightCollection> {
-    return this.client.get('/mesh-insights', { params })
-  }
-
-  getMeshInsights({ name }: { name: string }, params?: any): Promise<MeshInsight> {
-    return this.client.get(`/mesh-insights/${name}`, { params })
-  }
-
   getAllDataplanes(params?: PaginationParameters): Promise<PaginatedApiListResponse<DataPlane>> {
     return this.client.get('/dataplanes', { params })
   }
@@ -208,45 +184,9 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/clusters`, { params })
   }
 
-  getAllMeshServicesFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshService>> {
-    return this.client.get(`/meshes/${mesh}/meshservices`, { params })
-  }
 
-  getMeshService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshService> {
-    return this.client.get(`/meshes/${mesh}/meshservices/${name}`, { params })
-  }
 
-  getAllMeshExternalServicesFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshExternalService>> {
-    return this.client.get(`/meshes/${mesh}/meshexternalservices`, { params })
-  }
 
-  getMeshExternalService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<MeshExternalService> {
-    return this.client.get(`/meshes/${mesh}/meshexternalservices/${name}`, { params })
-  }
-
-  getAllServiceInsights(params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
-    return this.client.get('/service-insights', { params })
-  }
-
-  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: ServiceInsightsParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
-    return this.client.get(`/meshes/${mesh}/service-insights`, { params })
-  }
-
-  getServiceInsight({ mesh, name }: { mesh: string, name: string }, params?: any): Promise<ServiceInsight> {
-    return this.client.get(`/meshes/${mesh}/service-insights/${name}`, { params })
-  }
-
-  getAllExternalServices(params?: ExternalServicesParameters): Promise<PaginatedApiListResponse<ExternalService>> {
-    return this.client.get('/external-services', { params })
-  }
-
-  getAllExternalServicesFromMesh({ mesh }: { mesh: string }, params?: ExternalServicesParameters): Promise<PaginatedApiListResponse<ExternalService>> {
-    return this.client.get(`/meshes/${mesh}/external-services`, { params })
-  }
-
-  getExternalService({ mesh, name }: { mesh: string, name: string }, params?: SingleResourceParameters): Promise<ExternalService> {
-    return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
-  }
 
   getPolicyConnections({ mesh, path, name }: { mesh: string, path: string, name: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyDataplane>> {
     return this.client.get(`/meshes/${mesh}/${path}/${name}/_resources/dataplanes`, { params })

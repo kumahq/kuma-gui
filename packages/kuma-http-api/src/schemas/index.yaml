@@ -1,0 +1,58 @@
+openapi: 3.1.0
+info:
+  title: Kuma API
+  description: Kuma API
+  version: v1alpha1
+paths:
+  /config:
+    get:
+      responses:
+        200:
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ControlPlaneConfig'
+  /mesh-insights:
+    get:
+      parameters:
+        - $ref: 'parameters.yaml#/name'
+        - $ref: 'parameters.yaml#/size'
+        - $ref: 'parameters.yaml#/offset'
+        - $ref: 'parameters.yaml#/filter'
+      responses:
+        200:
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeshInsightCollection'
+  /mesh-insights/{name}:
+    get:
+      parameters:
+        - name: name
+          type: string
+          in: path
+          required: true
+        - $ref: parameters.yaml#/format
+      responses:
+        200:
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeshInsight'
+components:
+  schemas:
+    ControlPlaneConfig: {}
+    MeshInsight:
+      $ref: 'mesh-insight.yaml#/components/schemas/MeshInsight'
+    MeshInsightCollection:
+      allOf:
+        - $ref: 'entity.yaml#/components/schemas/PagedCollection'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/MeshInsight'

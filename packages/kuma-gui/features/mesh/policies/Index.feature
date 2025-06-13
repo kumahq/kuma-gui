@@ -39,37 +39,38 @@ Feature: mesh / policies / index
             total: 10
       """
     And the URL "/_resources" responds with
-    ```
-      body:
-        resources:
-          - name: CircuitBreaker
-            includeInFederation: true
-            path: circuit-breakers
-            pluralDisplayName: CircuitBreakers
-            policy:
-              hasFromTargetRef: false
-              hasToTargetRef: false
-              isFromAsRules: false
-              isTargetRef: false
-          - name: FaultInjection
-            includeInFederation: true
-            path: fault-injections
-            pluralDisplayName: FaultInjections
-            policy:
-              hasFromTargetRef: true
-              hasToTargetRef: false
-              isFromAsRules: false
-              isTargetRef: false
-          - name: MeshFaultInjection
-            includeInFederation: false
-            path: meshfaultinjections
-            pluralDisplayName: MeshFaultInjections
-            policy:
-              isTargetRef: true
-              hasToTargetRef: true
-              hasFromTargetRef: false
-              isFromAsRules: false
       ```
+        body:
+          resources:
+            - name: CircuitBreaker
+              includeInFederation: true
+              path: circuit-breakers
+              pluralDisplayName: CircuitBreakers
+              policy:
+                hasFromTargetRef: false
+                hasToTargetRef: false
+                isFromAsRules: false
+                isTargetRef: false
+            - name: FaultInjection
+              includeInFederation: true
+              path: fault-injections
+              pluralDisplayName: FaultInjections
+              policy:
+                hasFromTargetRef: true
+                hasToTargetRef: false
+                isFromAsRules: false
+                isTargetRef: false
+            - name: MeshFaultInjection
+              includeInFederation: false
+              path: meshfaultinjections
+              pluralDisplayName: MeshFaultInjections
+              policy:
+                isTargetRef: true
+                hasToTargetRef: true
+                hasFromTargetRef: false
+                isFromAsRules: false
+      ```
+
   Scenario: Visiting `/policies` redirects
     When I visit the "/meshes/default/policies" URL
     And the "$item:nth-child(1)" element contains

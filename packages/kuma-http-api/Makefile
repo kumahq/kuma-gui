@@ -28,11 +28,17 @@ lint: .lint/js ## Dev: Run lint checks
 ## repository to regenerate the specs before running `make build`
 KUMAHQ_HTTP_API := $(NPM_WORKSPACE_ROOT)/$(shell cat $(NPM_WORKSPACE_ROOT)/package-lock.json | jq -r '.packages | to_entries[] | select(.value.name == "@kumahq/kuma-http-api") | .key')
 .PHONY: build
+build: REDOCLY ?= $(shell $(MAKE) resolve/bin BIN=redocly PACKAGE=@redocly/cli)
 build: OPENAPI_TS ?= $(shell $(MAKE) resolve/bin BIN=openapi-typescript)
 build: OPENAPI_OVERLAYS ?= $(shell $(MAKE) resolve/bin BIN=overlayjs PACKAGE=openapi-overlays-js)
-build: types/fetch install ## Regenerate the TS types from kumahq/kuma OpenAPI specs
+build: ## Regenerate the TS types from kumahq/kuma OpenAPI specs
+	@$(REDOCLY) join \
+		./kuma/docs/generated/openapi.yaml \
+		./src/schemas/index.yaml \
+			-o ./src/openapi.yaml
+
 	@$(OPENAPI_OVERLAYS) \
-		--openapi $(KUMAHQ_HTTP_API)/kuma/docs/generated/openapi.yaml \
+		--openapi ./src/openapi.yaml \
 		--overlay ./src/overlays/index.yaml > openapi.yaml
 
 	@$(OPENAPI_TS) \
