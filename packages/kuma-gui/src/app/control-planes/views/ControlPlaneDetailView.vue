@@ -1,7 +1,7 @@
 <template>
   <RouteView
-    name="control-plane-detail-view"
-    v-slot="{ can, t, uri, me }"
+    :name="props.routeName"
+    v-slot="{ can, t, uri, me, route }"
   >
     <AppView>
       <template #title>
@@ -116,18 +116,37 @@
         </XLayout>
       </XLayout>
     </AppView>
+
+    <RouterView
+      v-slot="{ Component }"
+    >
+      <SummaryView
+        v-if="route.child()"
+        @close="route.replace({
+          name: route.name,
+        })"
+      >
+        <component
+          :is="Component"
+        />
+      </SummaryView>
+    </RouterView>
   </RouteView>
 </template>
 
 <script lang="ts" setup>
+import { defineProps } from 'vue'
 
 import { sources as ControlPlaneSources } from '../sources'
+import SummaryView from '@/app/common/SummaryView.vue'
 import { useControlPlaneStatus, useControlPlaneActionGroup } from '@/app/control-planes'
 import { useMeshInsightsList } from '@/app/meshes'
 import { sources as MeshSources } from '@/app/meshes/sources'
 import { sources as PolicySources } from '@/app/policies/sources'
 import { useZoneControlPlanesList } from '@/app/zones'
 import { sources as ZoneSources } from '@/app/zones/sources'
+
+const props = defineProps<{ routeName: string }>()
 
 const ControlPlaneStatus = useControlPlaneStatus()
 const ControlPlaneActionGroup = useControlPlaneActionGroup()
