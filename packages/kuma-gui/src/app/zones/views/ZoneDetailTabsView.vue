@@ -25,13 +25,26 @@
       >
         <template #title>
           <XLayout size="small">
-            <h1>
-              <XCopyButton :text="route.params.zone">
-                <RouteTitle
-                  :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-                />
-              </XCopyButton>
-            </h1>
+            <XLayout type="separated">
+              <template
+                v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
+                :key="env"
+              >
+                <XIcon
+                  :name="env"
+                  :size="KUI_ICON_SIZE_50"
+                >
+                  {{ t(`common.product.environment.${env}`) }}
+                </XIcon>
+              </template>
+              <h1>
+                <XCopyButton :text="route.params.zone">
+                  <RouteTitle
+                    :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+                  />
+                </XCopyButton>
+              </h1>
+            </XLayout>
             <XBadge
               :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
             >
@@ -88,6 +101,8 @@
 </template>
 
 <script lang="ts" setup>
+import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
+
 import { useZoneActionGroup } from '../'
 import { sources } from '../sources'
 const ZoneActionGroup = useZoneActionGroup()
