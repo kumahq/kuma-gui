@@ -39,11 +39,13 @@ export const kumaIndexHtmlVars = (): Plugin => {
     transformIndexHtml: (template) => interpolate(template, htmlVars),
   }
 }
+type CspDirective = 'default-src' | 'script-src' | 'script-src-elem' | 'img-src' | 'style-src' | 'connect-src'
 const server = (
   template: string = './index.html',
   vars: Partial<KumaHtmlVars> = {},
-  csp: boolean = true,
+  csp: Partial<{ enabled: boolean } & Record<CspDirective, string>> = {},
 ) => async (server: PreviewServer | ViteDevServer) => {
+  const { enabled: isCspEnabled = true } = csp
   server.middlewares.use('/', async (req, res, next) => {
     const url = req.originalUrl || ''
     const baseGuiPath = vars.baseGuiPath || '/gui'
@@ -77,22 +79,22 @@ const server = (
         } satisfies KumaHtmlVars,
       )
 
-      if (csp) {
+      if (isCspEnabled) {
         const nonce = crypto.randomBytes(16).toString('base64')
         body = body.replace('<meta charset="utf-8" />', `<meta charset="utf-8" /><meta property="csp-nonce" nonce="${nonce}">`)
         res.setHeader('Content-Security-Policy', [
-          "default-src 'self'",
-          "script-src 'self'",
-          "script-src-elem 'self'",
-          "img-src 'self' data: ",
+          `default-src 'self'${csp['default-src'] ? ` ${csp['default-src']}` : ''}`,
+          `script-src 'self'${csp['script-src'] ? ` ${csp['script-src']}` : ''}`,
+          `script-src-elem 'self'${csp['script-src-elem'] ? ` ${csp['script-src-elem']}` : ''}`,
+          `img-src 'self' data: ${csp['img-src'] ? ` ${csp['img-src']}` : ''}`,
           // in a production environment the nonce is not required
           // its only used for vite dev-time live reloading client
           // the sha256 _will be_ required
           // 'sha256-UtFm94bwcb1Z4CU0svC29YMU26pP5RoZDN8zoniSJhU=' 'sha256-qo7STIM1L/OgU9y0De47mqod1UZFLJfTn36bRC42rfA=' 'nonce-${nonce}'
-          "style-src 'self' 'unsafe-inline'",
+          `style-src 'self' 'unsafe-inline'${csp['style-src'] ? ` ${csp['style-src']}` : ''}`,
           // in production connect-src would use kuma's environment variable for
           // setting the location of the HTTP API (or just use the default)
-          "connect-src 'self' localhost:5681 https://kuma.io",
+          `connect-src 'self' localhost:5681 https://kuma.io${csp['connect-src'] ? ` ${csp['connect-src']}` : ''}`,
         ].join(';'))
       }
       res.end(body)
