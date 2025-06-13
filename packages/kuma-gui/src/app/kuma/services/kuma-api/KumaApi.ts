@@ -54,6 +54,14 @@ export default class KumaApi extends Api {
     return this.client.get(`/meshes/${mesh}/external-services/${name}`, { params })
   }
 
+  createZone(zone: { name: string }): Promise<{ token: string }> {
+    return this.client.post('/provision-zone', zone)
+  }
+
+  deleteZone({ name }: { name: string }): Promise<void> {
+    return this.client.delete(`/zones/${name}`)
+  }
+
   getZones(params?: PaginationParameters): Promise<PaginatedApiListResponse<Zone>> {
     return this.client.get('/zones', { params })
   }
