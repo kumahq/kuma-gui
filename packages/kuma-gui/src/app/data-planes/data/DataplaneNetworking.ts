@@ -19,6 +19,7 @@ export type DataplaneInbound = PartialDataplaneInbound & Connection & {
   socketAddress: string
   listenerAddress: string
   portName: string
+  clusterName: string
 }
 type PartialDataplaneOutbound = NonNullable<NonNullable<NonNullable<components['schemas']['DataplaneOverviewWithMeta']['dataplane']>['networking']>['outbound']>[number]
 
@@ -91,18 +92,21 @@ export const DataplaneNetworking = {
           listenerAddress: '',
           // not available for gateway
           portName: '',
+          clusterName: '',
         }]
         : inbounds.map((item) => {
           // inbound address, advertisedAddress, networkingAddress because externally accessible address
           const address = item.address ?? networking.advertisedAddress ?? networking.address
+          const name = `localhost_${item.port}`
           return {
             ...item,
             // the name can be used to lookup listener envoy stats
-            name: `localhost_${item.port}`,
+            name,
             // the portName adds another way of referencing the port, usable with MeshService
             portName: item.name?.length ? item.name : '',
             socketAddress: `${address}_${item.port}`,
             listenerAddress: `${address}_${item.port}`,
+            clusterName: item.servicePort && item.servicePort !== item.port ? `localhost_${item.servicePort}` : name,
             // If a health property is unset the inbound is considered healthy
             state: typeof item.state !== 'undefined' ? item.state : 'Ready',
             service: item.tags['kuma.io/service'],

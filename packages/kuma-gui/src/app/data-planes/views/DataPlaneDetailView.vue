@@ -429,7 +429,7 @@
                           >
                             <template
                               v-for="stats in [
-                                traffic?.inbounds[item.name],
+                                traffic?.inbounds[item.clusterName],
                               ]"
                               :key="stats"
                             >
