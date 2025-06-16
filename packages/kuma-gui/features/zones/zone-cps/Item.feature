@@ -37,7 +37,7 @@ Feature: zones / item
             - connectTime: 2020-07-28T16:18:09.743141Z
               disconnectTime: !!js/undefined
               config: |
-                { "environment": "universal", "store": {"type": "memory"}, "dpServer": { "auth": { "type": "dpToken" } } }
+                { "environment": "universal", "store": {"type": "memory"}, "dpServer": { "authn": { "type": "dpToken" } } }
               status:
                 stat:
                   CircuitBreaker:

@@ -32,7 +32,9 @@ const KDSSubscriptionCollection = {
     // if its valid JSON and is not null, turn it into an object
     const config: Record<string, unknown> = (() => {
       // just find the first that has a config
-      const withConfig = collection.subscriptions.find(item => typeof item.config !== 'undefined')
+      const withConfig = collection.connectedSubscription?.config ? 
+        collection.connectedSubscription :
+        collection.subscriptions.find(item => typeof item.config !== 'undefined')
       const str = typeof withConfig?.config !== 'undefined' ? withConfig.config : '{}'
       try {
         return JSON.parse(str)
@@ -43,6 +45,7 @@ const KDSSubscriptionCollection = {
     })()
     return {
       ...collection,
+      connectedConfig: JSON.parse(collection.connectedSubscription?.config ?? '{}'),
       config,
     }
   },
