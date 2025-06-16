@@ -1,15 +1,4 @@
 import { semver } from '../../utilities'
-export type KumaHtmlVars = {
-  baseGuiPath: string
-  apiUrl: string
-  version: string
-  product: string
-  mode: string
-  zone?: string
-  environment: string
-  storeType: string
-  apiReadOnly: boolean
-}
 
 export type EnvArgs = {
   KUMA_VERSION_URL: string
@@ -52,7 +41,7 @@ export default class Env {
    * tag that’s populated during server-side rendering of the Vue application’s
    * index.html file.
    */
-  protected getConfig(): KumaHtmlVars {
+  protected getConfig() {
     const pathConfigNode = document.querySelector('#kuma-config')
     if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       const config = JSON.parse(pathConfigNode.textContent.trim())
