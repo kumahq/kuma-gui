@@ -13,13 +13,43 @@
   "schedule": [
     "before 4am on monday"
   ],
+  "prHourlyLimit": 0,
   "baseBranches": [
     "master"
   ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "recreateWhen": "always",
+    "rebaseStalePrs": true
+  },
+  "postUpdateOptions": ["npmDedupe"],
   "packageRules": [
     {
       "groupName": "Node and npm",
       "matchPackageNames": ["node", "npm"]
+    },
+    {
+      "matchPackageNames": ["node", "npm"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchUpdateTypes": [
+        "lockFileMaintenance"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "groupName": "patch",
+      "matchUpdateTypes": ["patch"]
+    },
+    {
+      "groupName": "minor",
+      "matchUpdateTypes": ["minor"]
+    },
+    {
+      "groupName": "major",
+      "matchUpdateTypes": ["major"]
     }
   ]
 }
