@@ -45,7 +45,6 @@ const KDSSubscriptionCollection = {
     })()
     return {
       ...collection,
-      connectedConfig: JSON.parse(collection.connectedSubscription?.config ?? '{}'),
       config,
     }
   },
