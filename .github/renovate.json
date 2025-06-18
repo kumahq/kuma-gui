@@ -25,15 +25,6 @@
   "postUpdateOptions": ["npmDedupe"],
   "packageRules": [
     {
-      "groupName": "Node and npm",
-      "matchPackageNames": ["node", "npm"]
-    },
-    {
-      "matchPackageNames": ["node", "npm"],
-      "matchUpdateTypes": ["major"],
-      "dependencyDashboardApproval": true
-    },
-    {
       "matchUpdateTypes": [
         "lockFileMaintenance"
       ],
@@ -48,8 +39,14 @@
       "matchUpdateTypes": ["minor"]
     },
     {
-      "groupName": "major",
-      "matchUpdateTypes": ["major"]
+      "groupName": "Node and npm",
+      "matchPackageNames": ["node", "npm"],
+      "matchUpdateTypes": ["patch", "minor", "major"]
+    },
+    {
+      "matchPackageNames": ["node", "npm"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
     }
   ]
 }
