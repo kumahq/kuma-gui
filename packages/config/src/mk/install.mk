@@ -8,6 +8,8 @@
 .sync: check/node
 	@cd $(NPM_WORKSPACE_ROOT) \
 		&& npm install \
+					--package-lock-only \
+					--prefer-dedupe \
 					--ignore-scripts
 
 .PHONY: .clean
