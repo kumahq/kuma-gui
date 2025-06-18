@@ -1,6 +1,6 @@
 {
- "$schema": "https://docs.renovatebot.com/renovate-schema.json",
- "extends": [
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
     "config:recommended",
     ":semanticCommits"
   ],
@@ -20,9 +20,11 @@
   "lockFileMaintenance": {
     "enabled": true,
     "recreateWhen": "always",
-    "rebaseStalePrs": true
+    "rebaseWhen": "behind-base-branch"
   },
-  "postUpdateOptions": ["npmDedupe"],
+  "postUpdateOptions": [
+    "npmDedupe"
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -32,20 +34,36 @@
     },
     {
       "groupName": "patch",
-      "matchUpdateTypes": ["patch"]
+      "matchUpdateTypes": [
+        "patch"
+      ]
     },
     {
       "groupName": "minor",
-      "matchUpdateTypes": ["minor"]
+      "matchUpdateTypes": [
+        "minor"
+      ]
     },
     {
       "groupName": "Node and npm",
-      "matchPackageNames": ["node", "npm"],
-      "matchUpdateTypes": ["patch", "minor", "major"]
+      "matchPackageNames": [
+        "node",
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor",
+        "major"
+      ]
     },
     {
-      "matchPackageNames": ["node", "npm"],
-      "matchUpdateTypes": ["major"],
+      "matchPackageNames": [
+        "node",
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "dependencyDashboardApproval": true
     }
   ]
