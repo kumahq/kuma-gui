@@ -73,7 +73,7 @@
             </template>
           </DefinitionCard>
         </XAboutCard>
-        
+
         <XCard>
           <template #title>
             {{ t('services.detail.hostnames.title') }}
@@ -85,52 +85,52 @@
               serviceType: 'meshmultizoneservices',
               serviceName: route.params.service,
             })"
+            variant="list"
+            v-slot="{ data: hostnames }"
           >
-            <template #loadable="{ data: hostnames }">
-              <DataCollection
-                type="hostnames"
-                :items="hostnames?.items ?? [undefined]"
+            <DataCollection
+              type="hostnames"
+              :items="hostnames.items"
+            >
+              <AppCollection
+                type="hostnames-collection"
+                data-testid="hostnames-collection"
+                :items="hostnames.items"
+                :headers="[
+                  { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
+                  { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
+                ]"
+                @resize="me.set"
               >
-                <AppCollection
-                  type="hostnames-collection"
-                  data-testid="hostnames-collection"
-                  :items="hostnames?.items"
-                  :headers="[
-                    { ...me.get('headers.hostname'), label: t('services.detail.hostnames.hostname'), key: 'hostname' },
-                    { ...me.get('headers.zones'), label: t('services.detail.hostnames.zone'), key: 'zones' },
-                  ]"
-                  @resize="me.set"
-                >
-                  <template #hostname="{ row: item }">
-                    <b>
-                      <XCopyButton
-                        :text="item.hostname"
-                      />
-                    </b>
-                  </template>
-                  <template #zones="{ row: item }">
-                    <XLayout type="separated">
-                      <XBadge
-                        v-for="(zone, index) of item.zones"
-                        :key="index"
-                        appearance="decorative"
+                <template #hostname="{ row: item }">
+                  <b>
+                    <XCopyButton
+                      :text="item.hostname"
+                    />
+                  </b>
+                </template>
+                <template #zones="{ row: item }">
+                  <XLayout type="separated">
+                    <XBadge
+                      v-for="(zone, index) of item.zones"
+                      :key="index"
+                      appearance="decorative"
+                    >
+                      <XAction
+                        :to="{
+                          name: 'zone-cp-detail-view',
+                          params: {
+                            zone: zone.name,
+                          },
+                        }"
                       >
-                        <XAction
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: zone.name,
-                            },
-                          }"
-                        >
-                          {{ zone.name }}
-                        </XAction>
-                      </XBadge>
-                    </XLayout>
-                  </template>
-                </AppCollection>
-              </DataCollection>
-            </template>
+                        {{ zone.name }}
+                      </XAction>
+                    </XBadge>
+                  </XLayout>
+                </template>
+              </AppCollection>
+            </DataCollection>
           </DataLoader>
         </XCard>
 
