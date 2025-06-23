@@ -65,7 +65,7 @@ const dataLoader = inject<{ props: { variant: string } } | undefined>('data-load
 if (typeof dataLoader !== 'undefined') {
   if (dataLoader.props.variant !== 'list') {
     runInDebug(() => {
-      // throw new Error('Please use <DataLoader variant="list" />')
+      throw new Error('Please use <DataLoader variant="list" />')
     })
   }
 }
