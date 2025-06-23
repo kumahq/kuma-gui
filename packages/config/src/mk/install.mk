@@ -1,5 +1,7 @@
 .PHONY: .install
-.install: check/node
+.install: check/node $(NPM_WORKSPACE_ROOT)/node_modules
+
+$(NPM_WORKSPACE_ROOT)/node_modules: $(NPM_WORKSPACE_ROOT)/package-lock.json
 	@cd $(NPM_WORKSPACE_ROOT) \
 		&& npm $(if $(CI),clean-install,install) \
 					--ignore-scripts
