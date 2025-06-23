@@ -67,6 +67,11 @@ meshes:
       overview: 'Overview'
       about:
         title: About this Mesh
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes
+        structured: Structured
     items:
       title: Meshes
       breadcrumbs: Meshes

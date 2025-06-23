@@ -7,6 +7,10 @@ external-services:
         external-service-detail-view: 'Overview'
       overview: 'Overview'
       config: 'YAML'
+      format: Format
+      formats:
+        universal: Universal
+        k8s: Kubernetes
     items:
       title: External Services
   detail:

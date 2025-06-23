@@ -71,14 +71,14 @@
                   size="max"
                 >
                   <h3>
-                    {{ t('zone-ingresses.routes.item.config') }}
+                    {{ t('zone-egresses.routes.item.config') }}
                   </h3>
                   <div
                     v-for="options in [['structured', 'universal', 'k8s']]"
                     :key="typeof options"
                   >
                     <XSelect
-                      :label="t('zone-ingresses.routes.items.format')"
+                      :label="t('zone-egresses.routes.items.format')"
                       :selected="route.params.format"
                       @change="(value) => {
                         route.update({ format: value })
@@ -141,10 +141,10 @@
               </template>
 
               <template v-else-if="route.params.format === 'universal'">
-                <ResourceCodeBlock
+                <XCodeBlock
                   data-testid="codeblock-yaml-universal"
                   language="yaml"
-                  :resource="item.config"
+                  :code="YAML.stringify(item.config)"
                   :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
@@ -163,10 +163,10 @@
                   })"
                   v-slot="{ data: k8sConfig }"
                 >
-                  <ResourceCodeBlock
+                  <XCodeBlock
                     data-testid="codeblock-yaml-k8s"
                     language="yaml"
-                    :resource="k8sConfig"
+                    :code="YAML.stringify(k8sConfig)"
                     :show-k8s-copy-button="false"
                     is-searchable
                     :query="route.params.codeSearch"
@@ -189,8 +189,8 @@
 <script lang="ts" setup>
 import type { ZoneEgressOverview } from '../data'
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   items: ZoneEgressOverview[]

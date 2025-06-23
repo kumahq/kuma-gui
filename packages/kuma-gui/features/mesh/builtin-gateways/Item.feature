@@ -7,7 +7,7 @@ Feature: mesh / builtin-gateways / item
       | listener-card | [data-testid='listener-card']                    |
       | route-card    | [data-testid='route-card']                       |
       | dataplanes    | [data-testid='data-plane-collection']            |
-      | config        | [data-testid='config']                           |
+      | config        | [data-testid='codeblock-yaml-universal']         |
     Given the environment
       """
       KUMA_LISTENER_COUNT: 2
@@ -140,5 +140,5 @@ Feature: mesh / builtin-gateways / item
     Then the "$dataplanes" element exists
 
   Scenario: Config tab has expected content
-    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/config" URL
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/config?format=universal" URL
     Then the "$config" element exists

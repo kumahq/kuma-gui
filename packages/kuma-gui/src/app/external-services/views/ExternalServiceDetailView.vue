@@ -7,6 +7,7 @@
       codeSearch: '',
       codeFilter: false,
       codeRegExp: false,
+      format: String,
     }"
     v-slot="{ route, t, uri }"
   >
@@ -63,35 +64,72 @@
               <h3>{{ t('external-services.detail.config') }}</h3>
             </template>
 
-            <ResourceCodeBlock
-              class="mt-4"
-              data-testid="external-service-config"
-              :resource="data.config"
-              is-searchable
-              :query="route.params.codeSearch"
-              :is-filter-mode="route.params.codeFilter"
-              :is-reg-exp-mode="route.params.codeRegExp"
-              @query-change="route.update({ codeSearch: $event })"
-              @filter-mode-change="route.update({ codeFilter: $event })"
-              @reg-exp-mode-change="route.update({ codeRegExp: $event })"
-              v-slot="{ copy, copying }"
-            >
-              <DataSource
-                v-if="copying"
-                :src="uri(sources, `/meshes/:mesh/external-services/:name/as/kubernetes`, {
-                  mesh: route.params.mesh,
-                  name: route.params.service,
-                }, {
-                  cacheControl: 'no-store',
-                })"
-                @change="(data) => {
-                  copy((resolve) => resolve(data))
-                }"
-                @error="(error) => {
-                  copy((_resolve, reject) => reject(error))
-                }"
-              />
-            </ResourceCodeBlock>
+            <XLayout>
+              <XLayout
+                type="separated"
+                justify="end"
+              >
+                <div
+                  v-for="options in [['universal', 'k8s']]"
+                  :key="typeof options"
+                >
+                  <XSelect
+                    :label="t('external-services.routes.item.format')"
+                    :selected="route.params.format"
+                    @change="(value) => {
+                      route.update({ format: value })
+                    }"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                  >
+                    <template
+                      v-for="value in options"
+                      :key="value"
+                      #[`${value}-option`]
+                    >
+                      {{ t(`external-services.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </div>
+              </XLayout>
+
+              <template v-if="route.params.format === 'universal'">
+                <XCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :code="YAML.stringify(data.config)"
+                  is-searchable
+                  :query="route.params.codeSearch"
+                  :is-filter-mode="route.params.codeFilter"
+                  :is-reg-exp-mode="route.params.codeRegExp"
+                  @query-change="route.update({ codeSearch: $event })"
+                  @filter-mode-change="route.update({ codeFilter: $event })"
+                  @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                />
+              </template>
+
+              <template v-else>
+                <DataLoader
+                  :src="uri(sources, `/meshes/:mesh/external-services/:name/as/kubernetes`, {
+                    mesh: route.params.mesh,
+                    name: route.params.service,
+                  })"
+                  v-slot="{ data: k8sConfig }"
+                >
+                  <XCodeBlock
+                    data-testid="codeblock-yaml-k8s"
+                    language="yaml"
+                    :code="YAML.stringify(k8sConfig)"
+                    is-searchable
+                    :query="route.params.codeSearch"
+                    :is-filter-mode="route.params.codeFilter"
+                    :is-reg-exp-mode="route.params.codeRegExp"
+                    @query-change="route.update({ codeSearch: $event })"
+                    @filter-mode-change="route.update({ codeFilter: $event })"
+                    @reg-exp-mode-change="route.update({ codeRegExp: $event })"
+                  />
+                </DataLoader>
+              </template>
+            </XLayout>
           </XCard>
         </DataLoader>
       </div>
@@ -101,7 +139,7 @@
 
 <script lang="ts" setup>
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import TagList from '@/app/common/TagList.vue'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 </script>

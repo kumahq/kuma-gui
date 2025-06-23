@@ -135,10 +135,10 @@
             </template>
 
             <template v-else-if="route.params.format === 'universal'">
-              <ResourceCodeBlock
+              <XCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
-                :resource="item.$raw"
+                :code="YAML.stringify(item.$raw)"
                 :show-k8s-copy-button="false"
                 is-searchable
                 :query="route.params.codeSearch"
@@ -157,10 +157,10 @@
                 })"
                 v-slot="{ data: k8sConfig }"
               >
-                <ResourceCodeBlock
+                <XCodeBlock
                   data-testid="codeblock-yaml-k8s"
                   language="yaml"
-                  :resource="k8sConfig"
+                  :code="YAML.stringify(k8sConfig)"
                   :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
@@ -181,9 +181,9 @@
 
 <script lang="ts" setup>
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { HostnameGenerator } from '@/app/hostname-generators/data'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
   items: HostnameGenerator[]
 }>()

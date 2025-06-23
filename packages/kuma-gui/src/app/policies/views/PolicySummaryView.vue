@@ -96,10 +96,10 @@
               </template>
 
               <template v-if="route.params.format === 'universal'">
-                <ResourceCodeBlock
+                <XCodeBlock
                   data-testid="codeblock-yaml-universal"
                   language="yaml"
-                  :resource="item.config"
+                  :code="YAML.stringify(item.config)"
                   is-searchable
                   :show-k8s-copy-button="false"
                   :query="route.params.codeSearch"
@@ -120,10 +120,10 @@
                   })"
                   v-slot="{ data: k8sConfig }"
                 >
-                  <ResourceCodeBlock
+                  <XCodeBlock
                     data-testid="codeblock-yaml-k8s"
                     language="yaml"
-                    :resource="k8sConfig"
+                    :code="YAML.stringify(k8sConfig)"
                     is-searchable
                     :show-k8s-copy-button="false"
                     :query="route.params.codeSearch"
@@ -147,7 +147,7 @@
 import PolicySummary from '../components/PolicySummary.vue'
 import type { Policy, PolicyResourceType } from '../data'
 import { sources } from '../sources'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
+import { YAML } from '@/app/application'
 
 const props = defineProps<{
   items: Policy[]
