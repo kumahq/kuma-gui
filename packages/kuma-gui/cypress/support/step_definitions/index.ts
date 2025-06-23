@@ -1,8 +1,8 @@
-import { setupDefinitions } from '@kumahq/config/cypress/definitions'
+import { setupSteps } from '@kumahq/config/cypress/steps'
 
 import { useMock, useClient } from '../../services'
 
 const mock = useMock()
 const client = useClient()
 
-setupDefinitions({ mock, client })
+setupSteps({ mock, client })

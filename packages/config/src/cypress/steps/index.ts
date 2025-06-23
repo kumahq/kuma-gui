@@ -25,7 +25,7 @@ type Options<TMock extends BaseMock, TClient extends BaseClient> = {
   client: TClient
 }
 
-export async function setupDefinitions<TMock extends BaseMock, TClient extends BaseClient>({ mock, client }: Options<TMock, TClient>) {
+export async function setupSteps<TMock extends BaseMock, TClient extends BaseClient>({ mock, client }: Options<TMock, TClient>) {
   // merges objects in array positions rather than replacing
   const undefinedSymbol = Symbol('undefined')
   const combineMerge = (target: object[], source: object[], options: ArrayMergeOptions): object[] => {

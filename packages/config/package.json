@@ -16,8 +16,8 @@
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
     },
-    "./cypress/definitions": {
-      "import": "./src/cypress/definitions.ts"
+    "./cypress/steps": {
+      "import": "./src/cypress/steps/index.ts"
     },
     "./ci": {
       "require": "./scripts/ci.cjs"
