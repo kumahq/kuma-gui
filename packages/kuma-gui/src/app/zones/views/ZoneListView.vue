@@ -62,153 +62,150 @@
             <DataLoader
               :data="[data]"
               :errors="[error]"
+              variant="list"
             >
-              <template
-                #loadable
+              <DataCollection
+                type="zone-cps"
+                :items="data?.items ?? [undefined]"
+                :page="route.params.page"
+                :page-size="route.params.size"
+                :total="data?.total"
+                @change="route.update"
               >
-                <DataCollection
-                  type="zone-cps"
-                  :items="data?.items ?? [undefined]"
-                  :page="route.params.page"
-                  :page-size="route.params.size"
-                  :total="data?.total"
-                  @change="route.update"
+                <AppCollection
+                  class="zone-cp-collection"
+                  data-testid="zone-cp-collection"
+                  :headers="[
+                    { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
+                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                    { ...me.get('headers.zoneCpVersion'), label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
+                    { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
+                    { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
+                    { ...me.get('headers.state'), label: 'Status', key: 'state' },
+                    { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
+                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                  ]"
+                  :items="data?.items"
+                  :is-selected-row="(row) => row.name === route.params.zone"
+                  @resize="me.set"
                 >
-                  <AppCollection
-                    class="zone-cp-collection"
-                    data-testid="zone-cp-collection"
-                    :headers="[
-                      { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
-                      { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                      { ...me.get('headers.zoneCpVersion'), label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
-                      { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
-                      { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
-                      { ...me.get('headers.state'), label: 'Status', key: 'state' },
-                      { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
-                      { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                    ]"
-                    :items="data?.items"
-                    :is-selected-row="(row) => row.name === route.params.zone"
-                    @resize="me.set"
+                  <template
+                    #type="{ row: item }"
                   >
                     <template
-                      #type="{ row: item }"
+                      v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === item.zoneInsight.environment) ?? 'kubernetes']"
+                      :key="env"
                     >
-                      <template
-                        v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === item.zoneInsight.environment) ?? 'kubernetes']"
-                        :key="env"
+                      <XIcon
+                        :name="env"
                       >
-                        <XIcon
-                          :name="env"
-                        >
-                          {{ t(`common.product.environment.${env}`) }}
-                        </XIcon>
+                        {{ t(`common.product.environment.${env}`) }}
+                      </XIcon>
+                    </template>
+                  </template>
+                  <template #name="{ row: item }">
+                    <XAction
+                      data-action
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: item.name,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
+                          s: route.params.s,
+                        },
+                      }"
+                    >
+                      {{ item.name }}
+                    </XAction>
+                  </template>
+
+                  <template #zoneCpVersion="{ row: item }">
+                    {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
+                  </template>
+
+                  <template #ingress="{ row: item }">
+                    <template
+                      v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
+                    >
+                      {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                    </template>
+                  </template>
+
+                  <template #egress="{ row: item }">
+                    <template
+                      v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
+                    >
+                      {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
+                    </template>
+                  </template>
+
+                  <template #state="{ row: item }">
+                    <StatusBadge
+                      :status="item.state"
+                    />
+                  </template>
+
+                  <template
+                    #warnings="{ row: item }"
+                  >
+                    <template
+                      v-for="warnings in [[
+                        {
+                          bool: item.zoneInsight.store === 'memory',
+                          key: 'store-memory',
+                        },
+                        {
+                          bool: !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
+                          key: 'global-cp-incompatible',
+                        },
+                      ].filter(({ bool }) => bool)]"
+                      :key="typeof warnings"
+                    >
+                      <XIcon
+                        v-if="warnings.length > 0"
+                        name="warning"
+                        data-testid="warning"
+                      >
+                        <ul>
+                          <li
+                            v-for="{ key } in warnings"
+                            :key="key"
+                            :data-testid="`warning-${key}`"
+                          >
+                            {{ t(`zone-cps.list.warnings.${key}`) }}
+                          </li>
+                        </ul>
+                      </XIcon>
+                      <template v-else>
+                        {{ t('common.collection.none') }}
                       </template>
                     </template>
-                    <template #name="{ row: item }">
+                  </template>
+
+                  <template
+                    #actions="{ row }"
+                  >
+                    <ZoneActionGroup
+                      :item="row"
+                      @change="refresh"
+                    >
                       <XAction
-                        data-action
                         :to="{
                           name: 'zone-cp-detail-view',
                           params: {
-                            zone: item.name,
-                          },
-                          query: {
-                            page: route.params.page,
-                            size: route.params.size,
-                            s: route.params.s,
+                            zone: row.name,
                           },
                         }"
                       >
-                        {{ item.name }}
+                        {{ t('common.collection.actions.view') }}
                       </XAction>
-                    </template>
-
-                    <template #zoneCpVersion="{ row: item }">
-                      {{ get(item.zoneInsight, 'version.kumaCp.version', t('common.collection.none')) }}
-                    </template>
-
-                    <template #ingress="{ row: item }">
-                      <template
-                        v-for="proxies in [ingresses[item.name] || {online: [], offline: []}]"
-                      >
-                        {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                      </template>
-                    </template>
-
-                    <template #egress="{ row: item }">
-                      <template
-                        v-for="proxies in [egresses[item.name] || {online: [], offline: []}]"
-                      >
-                        {{ proxies.online.length }} / {{ proxies.online.length + proxies.offline.length }}
-                      </template>
-                    </template>
-
-                    <template #state="{ row: item }">
-                      <StatusBadge
-                        :status="item.state"
-                      />
-                    </template>
-
-                    <template
-                      #warnings="{ row: item }"
-                    >
-                      <template
-                        v-for="warnings in [[
-                          {
-                            bool: item.zoneInsight.store === 'memory',
-                            key: 'store-memory',
-                          },
-                          {
-                            bool: !item.zoneInsight.version?.kumaCp?.kumaCpGlobalCompatible,
-                            key: 'global-cp-incompatible',
-                          },
-                        ].filter(({ bool }) => bool)]"
-                        :key="typeof warnings"
-                      >
-                        <XIcon
-                          v-if="warnings.length > 0"
-                          name="warning"
-                          data-testid="warning"
-                        >
-                          <ul>
-                            <li
-                              v-for="{ key } in warnings"
-                              :key="key"
-                              :data-testid="`warning-${key}`"
-                            >
-                              {{ t(`zone-cps.list.warnings.${key}`) }}
-                            </li>
-                          </ul>
-                        </XIcon>
-                        <template v-else>
-                          {{ t('common.collection.none') }}
-                        </template>
-                      </template>
-                    </template>
-
-                    <template
-                      #actions="{ row }"
-                    >
-                      <ZoneActionGroup
-                        :item="row"
-                        @change="refresh"
-                      >
-                        <XAction
-                          :to="{
-                            name: 'zone-cp-detail-view',
-                            params: {
-                              zone: row.name,
-                            },
-                          }"
-                        >
-                          {{ t('common.collection.actions.view') }}
-                        </XAction>
-                      </ZoneActionGroup>
-                    </template>
-                  </AppCollection>
-                </DataCollection>
-              </template>
+                    </ZoneActionGroup>
+                  </template>
+                </AppCollection>
+              </DataCollection>
             </DataLoader>
           </XLayout>
         </XCard>

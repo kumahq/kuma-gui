@@ -39,151 +39,149 @@
               size: route.params.size,
               search: route.params.s,
             })"
+            variant="list"
+            v-slot="{ data }"
           >
-            <template
-              #loadable="{ data }"
+            <DataCollection
+              type="services"
+              :items="data.items"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="data.total"
+              @change="route.update"
             >
-              <DataCollection
-                type="services"
-                :items="data?.items ?? [undefined]"
-                :page="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
-                @change="route.update"
+              <AppCollection
+                data-testid="service-collection"
+                :headers="[
+                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                  { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                  ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                  { ...me.get('headers.state'), label: 'State', key: 'state' },
+                  { ...me.get('headers.status'), label: 'DP proxies (connected / healthy / total)', key: 'status' },
+                  { ...me.get('headers.ports'), label: 'Ports', key: 'ports' },
+                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :items="data.items"
+                :is-selected-row="(item) => item.name === route.params.service"
+                @resize="me.set"
               >
-                <AppCollection
-                  data-testid="service-collection"
-                  :headers="[
-                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                    { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                    ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                    { ...me.get('headers.state'), label: 'State', key: 'state' },
-                    { ...me.get('headers.status'), label: 'DP proxies (connected / healthy / total)', key: 'status' },
-                    { ...me.get('headers.ports'), label: 'Ports', key: 'ports' },
-                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                  ]"
-                  :items="data?.items"
-                  :is-selected-row="(item) => item.name === route.params.service"
-                  @resize="me.set"
-                >
-                  <template #name="{ row: item }">
-                    <XCopyButton
-                      :text="item.name"
-                    >
-                      <XAction
-                        data-action
-                        :to="{
-                          name: 'mesh-service-summary-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.id,
-                          },
-                          query: {
-                            page: route.params.page,
-                            size: route.params.size,
-                            s: route.params.s,
-                          },
-                        }"
-                      >
-                        {{ item.name }}
-                      </XAction>
-                    </XCopyButton>
-                  </template>
-                  <template
-                    #namespace="{ row: item }"
+                <template #name="{ row: item }">
+                  <XCopyButton
+                    :text="item.name"
                   >
-                    {{ item.namespace }}
+                    <XAction
+                      data-action
+                      :to="{
+                        name: 'mesh-service-summary-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.id,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
+                          s: route.params.s,
+                        },
+                      }"
+                    >
+                      {{ item.name }}
+                    </XAction>
+                  </XCopyButton>
+                </template>
+                <template
+                  #namespace="{ row: item }"
+                >
+                  {{ item.namespace }}
+                </template>
+                <template #zone="{ row: item }">
+                  <template v-if="item.zone">
+                    <XAction
+                      :to="{
+                        name: 'zone-cp-detail-view',
+                        params: {
+                          zone: item.zone,
+                        },
+                      }"
+                    >
+                      {{ item.zone }}
+                    </XAction>
                   </template>
-                  <template #zone="{ row: item }">
-                    <template v-if="item.zone">
-                      <XAction
-                        :to="{
-                          name: 'zone-cp-detail-view',
-                          params: {
-                            zone: item.zone,
-                          },
-                        }"
-                      >
-                        {{ item.zone }}
-                      </XAction>
-                    </template>
 
-                    <template v-else>
-                      {{ t('common.detail.none') }}
-                    </template>
+                  <template v-else>
+                    {{ t('common.detail.none') }}
                   </template>
-                  <template
-                    #state="{ row: item }"
-                  >
-                    <XBadge
-                      :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
-                    >
-                      {{ item.spec.state }}
-                    </XBadge>
-                  </template>
-                  <template
-                    #status="{ row: item }"
-                  >
-                    {{ item.status.dataplaneProxies?.connected }} / {{ item.status.dataplaneProxies?.healthy }} / {{ item.status.dataplaneProxies?.total }}
-                  </template>
-                  <template
-                    #ports="{ row: item }"
-                  >
-                    <XLayout
-                      type="separated"
-                      truncate
-                    >
-                      <KumaPort
-                        v-for="connection in item.spec.ports"
-                        :key="connection.port"
-                        :port="{
-                          ...connection,
-                          targetPort: undefined,
-                        }"
-                      />
-                    </XLayout>
-                  </template>
-                  <template #actions="{ row: item }">
-                    <XActionGroup>
-                      <XAction
-                        :to="{
-                          name: 'mesh-service-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.id,
-                          },
-                        }"
-                      >
-                        {{ t('common.collection.actions.view') }}
-                      </XAction>
-                    </XActionGroup>
-                  </template>
-                </AppCollection>
-                <RouterView
-                  v-if="data?.items && route.params.service"
-                  v-slot="child"
+                </template>
+                <template
+                  #state="{ row: item }"
                 >
-                  <SummaryView
-                    @close="route.replace({
-                      name: 'mesh-service-list-view',
-                      params: {
-                        mesh: route.params.mesh,
-                      },
-                      query: {
-                        page: route.params.page,
-                        size: route.params.size,
-                        s: route.params.s,
-                      },
-                    })"
+                  <XBadge
+                    :appearance="item.spec.state === 'Available' ? 'success' : 'danger'"
                   >
-                    <component
-                      :is="child.Component"
-                      :items="data?.items"
+                    {{ item.spec.state }}
+                  </XBadge>
+                </template>
+                <template
+                  #status="{ row: item }"
+                >
+                  {{ item.status.dataplaneProxies?.connected }} / {{ item.status.dataplaneProxies?.healthy }} / {{ item.status.dataplaneProxies?.total }}
+                </template>
+                <template
+                  #ports="{ row: item }"
+                >
+                  <XLayout
+                    type="separated"
+                    truncate
+                  >
+                    <KumaPort
+                      v-for="connection in item.spec.ports"
+                      :key="connection.port"
+                      :port="{
+                        ...connection,
+                        targetPort: undefined,
+                      }"
                     />
-                  </SummaryView>
-                </RouterView>
-              </DataCollection>
-            </template>
+                  </XLayout>
+                </template>
+                <template #actions="{ row: item }">
+                  <XActionGroup>
+                    <XAction
+                      :to="{
+                        name: 'mesh-service-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.id,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.actions.view') }}
+                    </XAction>
+                  </XActionGroup>
+                </template>
+              </AppCollection>
+              <RouterView
+                v-if="data.items && route.params.service"
+                v-slot="child"
+              >
+                <SummaryView
+                  @close="route.replace({
+                    name: 'mesh-service-list-view',
+                    params: {
+                      mesh: route.params.mesh,
+                    },
+                    query: {
+                      page: route.params.page,
+                      size: route.params.size,
+                      s: route.params.s,
+                    },
+                  })"
+                >
+                  <component
+                    :is="child.Component"
+                    :items="data.items"
+                  />
+                </SummaryView>
+              </RouterView>
+            </DataCollection>
           </DataLoader>
         </XLayout>
       </XCard>

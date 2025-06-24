@@ -1,7 +1,7 @@
 <template>
   <div>
     <DataCollection
-      :items="props.items ?? [undefined]"
+      :items="props.items"
       type="meshes"
     >
       <AppCollection
@@ -56,13 +56,12 @@ import AppCollection from '@/app/application/components/app-collection/AppCollec
 const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
-  items?: MeshInsight[]
+  items: MeshInsight[]
   storage?: {
     get: (uri: string) => {}
     set: (data: any) => void
   }
 }>(), {
-  items: undefined,
   storage: () => ({
     get: () => ({}),
     set: () => {},

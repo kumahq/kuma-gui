@@ -84,184 +84,182 @@
                   size: route.params.size,
                   search: route.params.s,
                 })"
+                variant="list"
+                v-slot="{ data }"
               >
-                <template
-                  #loadable="{ data }"
+                <DataCollection
+                  :items="data.items"
+                  :page="route.params.page"
+                  :page-size="route.params.size"
+                  :total="data.total"
+                  @change="route.update"
                 >
-                  <DataCollection
-                    :items="data?.items ?? [undefined]"
-                    :page="route.params.page"
-                    :page-size="route.params.size"
-                    :total="data?.total"
-                    @change="route.update"
+                  <template
+                    #empty
                   >
-                    <template
-                      #empty
-                    >
-                      <XEmptyState>
-                        <template #title>
-                          <h3>
-                            {{ t('policies.x-empty-state.title') }}
-                          </h3>
-                        </template>
-                        <XI18n
-                          path="policies.x-empty-state.body"
-                          :params="{
-                            type: type.name,
-                            suffix: route.params.s.length > 0 ? t('common.matchingsearch') : '',
-                          }"
-                        />
-                        <template
-                          #action
+                    <XEmptyState>
+                      <template #title>
+                        <h3>
+                          {{ t('policies.x-empty-state.title') }}
+                        </h3>
+                      </template>
+                      <XI18n
+                        path="policies.x-empty-state.body"
+                        :params="{
+                          type: type.name,
+                          suffix: route.params.s.length > 0 ? t('common.matchingsearch') : '',
+                        }"
+                      />
+                      <template
+                        #action
+                      >
+                        <XAction
+                          action="docs"
+                          :href="t('policies.href.docs', { name: type.name })"
                         >
-                          <XAction
-                            action="docs"
-                            :href="t('policies.href.docs', { name: type.name })"
-                          >
-                            {{ t('common.documentation') }}
-                          </XAction>
-                        </template>
-                      </XEmptyState>
-                    </template>
-                    <template
-                      #default
+                          {{ t('common.documentation') }}
+                        </XAction>
+                      </template>
+                    </XEmptyState>
+                  </template>
+                  <template
+                    #default
+                  >
+                    <AppCollection
+                      :headers="[
+                        { ...me.get('headers.role'), label: 'Role', key: 'role', hideLabel: true },
+                        { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                        { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
+                        ...(can('use zones') && type.policy.isTargetRef ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
+                        ...(type.policy.isTargetRef ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
+                        { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                      ]"
+                      :items="data.items"
+                      :is-selected-row="(row) => row.id === route.params.policy"
+                      @resize="me.set"
                     >
-                      <AppCollection
-                        :headers="[
-                          { ...me.get('headers.role'), label: 'Role', key: 'role', hideLabel: true },
-                          { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                          { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
-                          ...(can('use zones') && type.policy.isTargetRef ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                          ...(type.policy.isTargetRef ? [{ ...me.get('headers.targetRef'), label: 'Target ref', key: 'targetRef' }] : []),
-                          { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                        ]"
-                        :items="data?.items"
-                        :is-selected-row="(row) => row.id === route.params.policy"
-                        @resize="me.set"
+                      <template
+                        #role="{ row: item }"
                       >
                         <template
-                          #role="{ row: item }"
+                          v-if="item.role === 'producer'"
                         >
-                          <template
-                            v-if="item.role === 'producer'"
+                          <XIcon
+                            :name="`policy-role-${item.role}`"
                           >
-                            <XIcon
-                              :name="`policy-role-${item.role}`"
-                            >
-                              Role: {{ item.role }}
-                            </XIcon>
-                          </template>
-                          <template
-                            v-else
-                          >
-                            &nbsp;
-                          </template>
+                            Role: {{ item.role }}
+                          </XIcon>
                         </template>
+                        <template
+                          v-else
+                        >
+                            &nbsp;
+                        </template>
+                      </template>
 
-                        <template #name="{ row }">
+                      <template #name="{ row }">
+                        <XAction
+                          data-action
+                          :to="{
+                            name: 'policy-summary-view',
+                            params: {
+                              mesh: row.mesh,
+                              policyPath: type.path,
+                              policy: row.id,
+                            },
+                            query: {
+                              page: route.params.page,
+                              size: route.params.size,
+                              s: route.params.s,
+                            },
+                          }"
+                        >
+                          {{ row.name }}
+                        </XAction>
+                      </template>
+                      <template #namespace="{ row: item }">
+                        {{ item.namespace.length > 0 ? item.namespace : t('common.detail.none') }}
+                      </template>
+
+                      <template #targetRef="{ row }">
+                        <XBadge
+                          v-if="typeof row.spec?.targetRef !== 'undefined'"
+                          appearance="neutral"
+                        >
+                          {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
+                        </XBadge>
+                        <XBadge
+                          v-else
+                          appearance="neutral"
+                        >
+                          Mesh
+                        </XBadge>
+                      </template>
+
+                      <template #zone="{ row }">
+                        <template v-if="row.zone">
                           <XAction
-                            data-action
                             :to="{
-                              name: 'policy-summary-view',
+                              name: 'zone-cp-detail-view',
                               params: {
-                                mesh: row.mesh,
-                                policyPath: type.path,
-                                policy: row.id,
-                              },
-                              query: {
-                                page: route.params.page,
-                                size: route.params.size,
-                                s: route.params.s,
+                                zone: row.zone,
                               },
                             }"
                           >
-                            {{ row.name }}
+                            {{ row.zone }}
                           </XAction>
                         </template>
-                        <template #namespace="{ row: item }">
-                          {{ item.namespace.length > 0 ? item.namespace : t('common.detail.none') }}
-                        </template>
 
-                        <template #targetRef="{ row }">
-                          <XBadge
-                            v-if="typeof row.spec?.targetRef !== 'undefined'"
-                            appearance="neutral"
+                        <template v-else>
+                          {{ t('common.detail.none') }}
+                        </template>
+                      </template>
+
+                      <template #actions="{ row: item }">
+                        <XActionGroup>
+                          <XAction
+                            :to="{
+                              name: 'policy-detail-view',
+                              params: {
+                                mesh: item.mesh,
+                                policyPath: type.path,
+                                policy: item.id,
+                              },
+                            }"
                           >
-                            {{ row.spec.targetRef.kind }}<span v-if="row.spec.targetRef.name">:<b>{{ row.spec.targetRef.name }}</b></span>
-                          </XBadge>
-                          <XBadge
-                            v-else
-                            appearance="neutral"
-                          >
-                            Mesh
-                          </XBadge>
-                        </template>
-
-                        <template #zone="{ row }">
-                          <template v-if="row.zone">
-                            <XAction
-                              :to="{
-                                name: 'zone-cp-detail-view',
-                                params: {
-                                  zone: row.zone,
-                                },
-                              }"
-                            >
-                              {{ row.zone }}
-                            </XAction>
-                          </template>
-
-                          <template v-else>
-                            {{ t('common.detail.none') }}
-                          </template>
-                        </template>
-
-                        <template #actions="{ row: item }">
-                          <XActionGroup>
-                            <XAction
-                              :to="{
-                                name: 'policy-detail-view',
-                                params: {
-                                  mesh: item.mesh,
-                                  policyPath: type.path,
-                                  policy: item.id,
-                                },
-                              }"
-                            >
-                              {{ t('common.collection.actions.view') }}
-                            </XAction>
-                          </XActionGroup>
-                        </template>
-                      </AppCollection>
-                    </template>
-                  </DataCollection>
-                  <RouterView
-                    v-if="route.params.policy"
-                    v-slot="{ Component }"
+                            {{ t('common.collection.actions.view') }}
+                          </XAction>
+                        </XActionGroup>
+                      </template>
+                    </AppCollection>
+                  </template>
+                </DataCollection>
+                <RouterView
+                  v-if="route.params.policy"
+                  v-slot="{ Component }"
+                >
+                  <SummaryView
+                    @close="route.replace({
+                      name: 'policy-list-view',
+                      params: {
+                        mesh: route.params.mesh,
+                        policyPath: route.params.policyPath,
+                      },
+                      query: {
+                        page: route.params.page,
+                        size: route.params.size,
+                        s: route.params.s,
+                      },
+                    })"
                   >
-                    <SummaryView
-                      @close="route.replace({
-                        name: 'policy-list-view',
-                        params: {
-                          mesh: route.params.mesh,
-                          policyPath: route.params.policyPath,
-                        },
-                        query: {
-                          page: route.params.page,
-                          size: route.params.size,
-                          s: route.params.s,
-                        },
-                      })"
-                    >
-                      <component
-                        :is="Component"
-                        v-if="typeof data !== 'undefined'"
-                        :items="data.items"
-                        :policy-type="type"
-                      />
-                    </SummaryView>
-                  </RouterView>
-                </template>
+                    <component
+                      :is="Component"
+                      v-if="typeof data !== 'undefined'"
+                      :items="data.items"
+                      :policy-type="type"
+                    />
+                  </SummaryView>
+                </RouterView>
               </DataLoader>
             </XCard>
           </div>

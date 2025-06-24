@@ -44,35 +44,33 @@
                 page: 1,
                 size: 10,
               })"
+              variant="list"
+              v-slot="{ data }"
             >
-              <template
-                #loadable="{ data }"
-              >
-                <div class="card-header">
-                  <div class="card-title">
-                    <h2>
-                      {{ t('main-overview.detail.zone_control_planes.title') }}
-                    </h2>
+              <div class="card-header">
+                <div class="card-title">
+                  <h2>
+                    {{ t('main-overview.detail.zone_control_planes.title') }}
+                  </h2>
 
-                    <XAction
-                      :to="{ name: 'zone-cp-list-view' }"
-                    >
-                      {{ t('main-overview.detail.about.view_all') }}
-                    </XAction>
-                  </div>
-                  <div
-                    class="card-actions"
+                  <XAction
+                    :to="{ name: 'zone-cp-list-view' }"
                   >
-                    <XTeleportSlot name="control-plane-detail-view-zone-actions" />
-                  </div>
+                    {{ t('main-overview.detail.about.view_all') }}
+                  </XAction>
                 </div>
+                <div
+                  class="card-actions"
+                >
+                  <XTeleportSlot name="control-plane-detail-view-zone-actions" />
+                </div>
+              </div>
 
-                <ZoneControlPlanesList
-                  data-testid="zone-control-planes-details"
-                  :items="data?.items"
-                  :storage="me"
-                />
-              </template>
+              <ZoneControlPlanesList
+                data-testid="zone-control-planes-details"
+                :items="data.items"
+                :storage="me"
+              />
             </DataLoader>
           </XCard>
 
@@ -82,35 +80,33 @@
                 page: 1,
                 size: 10,
               })"
+              variant="list"
+              v-slot="{ data }"
             >
-              <template
-                #loadable="{ data }"
-              >
-                <div class="card-header">
-                  <div class="card-title">
-                    <h2>
-                      {{ t('main-overview.detail.meshes.title') }}
-                    </h2>
+              <div class="card-header">
+                <div class="card-title">
+                  <h2>
+                    {{ t('main-overview.detail.meshes.title') }}
+                  </h2>
 
-                    <XAction
-                      :to="{ name: 'mesh-list-view' }"
-                    >
-                      {{ t('main-overview.detail.about.view_all') }}
-                    </XAction>
-                  </div>
-                  <div
-                    class="card-actions"
+                  <XAction
+                    :to="{ name: 'mesh-list-view' }"
                   >
-                    <XTeleportSlot name="control-plane-detail-view-mesh-actions" />
-                  </div>
+                    {{ t('main-overview.detail.about.view_all') }}
+                  </XAction>
                 </div>
+                <div
+                  class="card-actions"
+                >
+                  <XTeleportSlot name="control-plane-detail-view-mesh-actions" />
+                </div>
+              </div>
 
-                <MeshInsightsList
-                  data-testid="meshes-details"
-                  :items="data?.items"
-                  :storage="me"
-                />
-              </template>
+              <MeshInsightsList
+                data-testid="meshes-details"
+                :items="data.items"
+                :storage="me"
+              />
             </DataLoader>
           </XCard>
         </XLayout>

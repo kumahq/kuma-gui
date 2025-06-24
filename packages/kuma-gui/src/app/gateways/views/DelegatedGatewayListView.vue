@@ -36,94 +36,92 @@
               size: route.params.size,
               search: route.params.s,
             })"
+            variant="list"
+            v-slot="{ data }"
           >
-            <template
-              #loadable="{ data }"
+            <DataCollection
+              type="gateways"
+              :items="data.items"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="data.total"
+              @change="route.update"
             >
-              <DataCollection
-                type="gateways"
-                :items="data?.items ?? [undefined]"
-                :page="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
-                @change="route.update"
+              <AppCollection
+                class="delegated-gateway-collection"
+                data-testid="delegated-gateway-collection"
+                :headers="[
+                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                  { ...me.get('headers.addressPort'), label: 'Address', key: 'addressPort' },
+                  { ...me.get('headers.dataplanes'), label: 'DP proxies (online / total)', key: 'dataplanes' },
+                  { ...me.get('headers.status'), label: 'Status', key: 'status' },
+                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :items="data.items"
+                @resize="me.set"
               >
-                <AppCollection
-                  class="delegated-gateway-collection"
-                  data-testid="delegated-gateway-collection"
-                  :headers="[
-                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                    { ...me.get('headers.addressPort'), label: 'Address', key: 'addressPort' },
-                    { ...me.get('headers.dataplanes'), label: 'DP proxies (online / total)', key: 'dataplanes' },
-                    { ...me.get('headers.status'), label: 'Status', key: 'status' },
-                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                  ]"
-                  :items="data?.items"
-                  @resize="me.set"
-                >
-                  <template #name="{ row: item }">
-                    <XCopyButton :text="item.name">
-                      <XAction
-                        :to="{
-                          name: 'delegated-gateway-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                          query: {
-                            page: route.params.page,
-                            size: route.params.size,
-                          },
-                        }"
-                      >
-                        {{ item.name }}
-                      </XAction>
-                    </XCopyButton>
+                <template #name="{ row: item }">
+                  <XCopyButton :text="item.name">
+                    <XAction
+                      :to="{
+                        name: 'delegated-gateway-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.name,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
+                        },
+                      }"
+                    >
+                      {{ item.name }}
+                    </XAction>
+                  </XCopyButton>
+                </template>
+
+                <template #addressPort="{ row }">
+                  <XCopyButton
+                    v-if="row.addressPort"
+                    :text="row.addressPort"
+                  />
+
+                  <template v-else>
+                    {{ t('common.collection.none') }}
+                  </template>
+                </template>
+
+                <template #dataplanes="{ row }">
+                  <template v-if="row.dataplanes">
+                    {{ row.dataplanes.online || 0 }} / {{ row.dataplanes.total || 0 }}
                   </template>
 
-                  <template #addressPort="{ row }">
-                    <XCopyButton
-                      v-if="row.addressPort"
-                      :text="row.addressPort"
-                    />
-
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
                   </template>
+                </template>
 
-                  <template #dataplanes="{ row }">
-                    <template v-if="row.dataplanes">
-                      {{ row.dataplanes.online || 0 }} / {{ row.dataplanes.total || 0 }}
-                    </template>
+                <template #status="{ row }">
+                  <StatusBadge :status="row.status" />
+                </template>
 
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
-                  </template>
-
-                  <template #status="{ row }">
-                    <StatusBadge :status="row.status" />
-                  </template>
-
-                  <template #actions="{ row: item }">
-                    <XActionGroup>
-                      <XAction
-                        :to="{
-                          name: 'delegated-gateway-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                        }"
-                      >
-                        {{ t('common.collection.actions.view') }}
-                      </XAction>
-                    </XActionGroup>
-                  </template>
-                </AppCollection>
-              </DataCollection>
-            </template>
+                <template #actions="{ row: item }">
+                  <XActionGroup>
+                    <XAction
+                      :to="{
+                        name: 'delegated-gateway-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.name,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.actions.view') }}
+                    </XAction>
+                  </XActionGroup>
+                </template>
+              </AppCollection>
+            </DataCollection>
           </DataLoader>
         </XLayout>
       </XCard>

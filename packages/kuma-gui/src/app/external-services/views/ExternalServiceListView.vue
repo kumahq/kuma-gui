@@ -36,78 +36,76 @@
               size: route.params.size,
               search: route.params.s,
             })"
+            variant="list"
+            v-slot="{ data }"
           >
-            <template
-              #loadable="{ data }"
+            <DataCollection
+              type="external-services"
+              :items="data.items"
+              :page="route.params.page"
+              :page-size="route.params.size"
+              :total="data.total"
+              @change="route.update"
             >
-              <DataCollection
-                type="external-services"
-                :items="data?.items ?? [undefined]"
-                :page="route.params.page"
-                :page-size="route.params.size"
-                :total="data?.total"
-                @change="route.update"
+              <AppCollection
+                class="external-service-collection"
+                data-testid="external-service-collection"
+                :headers="[
+                  { ...me.get('headers.name'), label: 'Name', key: 'name' },
+                  { ...me.get('headers.address'), label: 'Address', key: 'address' },
+                  { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
+                ]"
+                :items="data.items"
+                @resize="me.set"
               >
-                <AppCollection
-                  class="external-service-collection"
-                  data-testid="external-service-collection"
-                  :headers="[
-                    { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                    { ...me.get('headers.address'), label: 'Address', key: 'address' },
-                    { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },
-                  ]"
-                  :items="data?.items"
-                  @resize="me.set"
-                >
-                  <template #name="{ row: item }">
-                    <XCopyButton :text="item.name">
-                      <XAction
-                        :to="{
-                          name: 'external-service-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                          query: {
-                            page: route.params.page,
-                            size: route.params.size,
-                          },
-                        }"
-                      >
-                        {{ item.name }}
-                      </XAction>
-                    </XCopyButton>
-                  </template>
+                <template #name="{ row: item }">
+                  <XCopyButton :text="item.name">
+                    <XAction
+                      :to="{
+                        name: 'external-service-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.name,
+                        },
+                        query: {
+                          page: route.params.page,
+                          size: route.params.size,
+                        },
+                      }"
+                    >
+                      {{ item.name }}
+                    </XAction>
+                  </XCopyButton>
+                </template>
 
-                  <template #address="{ row }">
-                    <XCopyButton
-                      v-if="row.networking.address"
-                      :text="row.networking.address"
-                    />
+                <template #address="{ row }">
+                  <XCopyButton
+                    v-if="row.networking.address"
+                    :text="row.networking.address"
+                  />
 
-                    <template v-else>
-                      {{ t('common.collection.none') }}
-                    </template>
+                  <template v-else>
+                    {{ t('common.collection.none') }}
                   </template>
+                </template>
 
-                  <template #actions="{ row: item }">
-                    <XActionGroup>
-                      <XAction
-                        :to="{
-                          name: 'external-service-detail-view',
-                          params: {
-                            mesh: item.mesh,
-                            service: item.name,
-                          },
-                        }"
-                      >
-                        {{ t('common.collection.actions.view') }}
-                      </XAction>
-                    </XActionGroup>
-                  </template>
-                </AppCollection>
-              </DataCollection>
-            </template>
+                <template #actions="{ row: item }">
+                  <XActionGroup>
+                    <XAction
+                      :to="{
+                        name: 'external-service-detail-view',
+                        params: {
+                          mesh: item.mesh,
+                          service: item.name,
+                        },
+                      }"
+                    >
+                      {{ t('common.collection.actions.view') }}
+                    </XAction>
+                  </XActionGroup>
+                </template>
+              </AppCollection>
+            </DataCollection>
           </DataLoader>
         </XLayout>
       </XCard>
