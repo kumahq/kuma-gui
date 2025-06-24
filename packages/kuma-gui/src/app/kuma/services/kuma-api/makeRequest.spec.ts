@@ -89,7 +89,7 @@ describe('makeRequest', () => {
       function () {
         return Promise.reject(new Error('A most terrible error'))
       },
-      new Error('A most terrible error'),
+      /A most terrible error/,
     ],
     [
       function () {
