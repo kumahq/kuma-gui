@@ -45,6 +45,16 @@
       ]
     },
     {
+      "groupName": "@kong patches",
+      "matchPackageNames": ["@kong*"],
+      "matchUpdateTypes": ["patch"]
+    },
+    {
+      "groupName": "@kong minors",
+      "matchPackageNames": ["@kong*"],
+      "matchUpdateTypes": ["minor"]
+    },
+    {
       "groupName": "Node and npm",
       "matchPackageNames": [
         "node",
