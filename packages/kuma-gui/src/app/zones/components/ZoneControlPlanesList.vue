@@ -3,7 +3,7 @@
     v-bind="$attrs"
   >
     <DataCollection
-      :items="props.items ?? [undefined]"
+      :items="props.items"
       :type="can('create zones') ? `zones-crud` : `zone-cps`"
     >
       <AppCollection
@@ -67,13 +67,12 @@ const { t } = useI18n()
 const can = useCan()
 
 const props = withDefaults(defineProps<{
-  items?: ZoneOverview[]
+  items: ZoneOverview[]
   storage?: {
     get: (uri: string) => {}
     set: (data: any) => void
   }
 }>(), {
-  items: undefined,
   storage: () => ({
     get: () => ({}),
     set: () => {},

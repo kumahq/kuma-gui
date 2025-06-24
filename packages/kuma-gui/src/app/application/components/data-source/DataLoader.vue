@@ -6,38 +6,7 @@
     v-slot="{ refresh }"
   >
     <template
-      v-if="allData.length > 0 && allData.every(item => typeof item !== 'undefined')"
-    >
-      <!-- if the data is loaded and then we get an error -->
-      <!-- keep the old data visible but also show a disconnected slot -->
-      <template
-        v-if="allErrors.length > 0"
-      >
-        <slot
-          name="disconnected"
-          :data="srcData as NonNullable<TypeOf<T>>"
-          :error="allErrors[0]"
-          :refresh="props.src !== '' ? refresh : () => {}"
-        >
-          <!-- XAlert -->
-        </slot>
-      </template>
-      <slot
-        name="loadable"
-        :data="srcData as TypeOf<T>"
-        :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
-      />
-      <slot
-        name="default"
-        :data="srcData as NonNullable<TypeOf<T>>"
-        :error="srcError"
-        :refresh="props.src !== '' ? refresh : () => {}"
-      />
-    </template>
-
-    <template
-      v-else-if="allErrors.length > 0"
+      v-if="allErrors.length > 0"
     >
       <slot
         name="error"
@@ -51,22 +20,27 @@
         />
       </slot>
     </template>
-    <template v-else>
+    <template
+      v-else-if="allData.length > 0 && allData.every(item => typeof item !== 'undefined')"
+    >
       <slot
-        name="loadable"
-        :data="srcData as TypeOf<T>"
+        name="default"
+        :data="srcData as NonNullable<TypeOf<T>>"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       />
+    </template>
+
+    <template v-else>
       <slot
-        v-if="props.loader && typeof slots.loadable === 'undefined'"
+        v-if="props.loader"
         name="connecting"
         :data="undefined"
         :error="srcError"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
         <XProgress
-          v-if="props.src !== ''"
+          v-if="props.data.length > 0 || props.src !== ''"
           v-bind="$attrs"
           :variant="props.variant === 'default' ? 'legacy' : props.variant"
         />
@@ -103,7 +77,7 @@ const props = withDefaults(defineProps<{
   loader: true,
   variant: 'default',
 })
-const slots = defineSlots<{
+defineSlots<{
   default(props: {
     data: NonNullable<TypeOf<T>>
     error: Error | undefined
@@ -120,11 +94,6 @@ const slots = defineSlots<{
     refresh: () => void
   }): any
   disconnected(props: {
-    data: NonNullable<TypeOf<T>>
-    error: Error | undefined
-    refresh: () => void
-  }): any
-  loadable(props: {
     data: NonNullable<TypeOf<T>>
     error: Error | undefined
     refresh: () => void
