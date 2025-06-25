@@ -52,7 +52,7 @@
     "stylelint": "^16.21.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
-    "vitepress": "^2.0.0-alpha.6",
+    "vitepress": "^2.0.0-alpha.7",
     "vitest": "^3.2.4",
     "vue-tsc": "^2.2.10"
   }
