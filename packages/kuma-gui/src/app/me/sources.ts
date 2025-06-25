@@ -67,6 +67,7 @@ export const sources = ({ get, set }: Storage) => {
               inactive: false,
               includeEds: false,
               output: 'structured',
+              environment: 'universal',
             },
           },
           app,

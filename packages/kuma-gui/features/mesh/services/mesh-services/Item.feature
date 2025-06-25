@@ -2,9 +2,12 @@ Feature: mesh / mesh-services / item
 
   Background:
     Given the CSS selectors
-      | Alias      | Selector                                       |
-      | dataplanes | [data-testid='data-plane-collection'] tbody tr |
-      | hostnames  | [data-testid='hostnames-collection'] tbody tr  |
+      | Alias              | Selector                                       |
+      | dataplanes         | [data-testid='data-plane-collection'] tbody tr |
+      | hostnames          | [data-testid='hostnames-collection'] tbody tr  |
+      | config-universal   | [data-testid='codeblock-yaml-universal']       |
+      | config-k8s         | [data-testid='codeblock-yaml-k8s']             |
+      | select-environment | [data-testid='select-input']                   |
 
   Scenario: The dataplane table exists
     Given the environment
@@ -36,3 +39,12 @@ Feature: mesh / mesh-services / item
     When I visit the "/meshes/default/services/mesh-services/my-meshservice/overview" URL
     Then the "[data-testid='connected-dpps']" element contains "3/4"
     And the "[data-testid='healthy-dpps']" element contains "2"
+
+  Scenario: Shows config with format based on environment
+    When I visit the "/meshes/default/services/mesh-services/firewall-1/config" URL
+    Then the "$config-universal" element exists
+    And the URL contains "?environment=universal"
+    When I click the "$select-environment" element
+    When I click the "[data-testid='select-item-k8s'] button" element
+    Then the "$config-k8s" element exists
+    And the URL contains "?environment=k8s"

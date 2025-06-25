@@ -3,7 +3,7 @@
     name="mesh-detail-view"
     :params="{
       mesh: '',
-      format: String,
+      environment: String,
     }"
     v-slot="{ route, t, uri }"
   >
@@ -172,11 +172,11 @@
                 >
                   <XSelect
                     :label="t('meshes.routes.item.format')"
-                    :selected="route.params.format"
+                    :selected="route.params.environment"
                     @change="(value) => {
-                      route.update({ format: value })
+                      route.update({ environment: value })
                     }"
-                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.format && route.update({ format: $event.props.selected })"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
                   >
                     <template
                       v-for="value in options"
@@ -189,7 +189,7 @@
                 </div>
               </XLayout>
 
-              <template v-if="route.params.format === 'universal'">
+              <template v-if="route.params.environment === 'universal'">
                 <XCodeBlock
                   data-testid="codeblock-yaml-universal"
                   language="yaml"
@@ -205,7 +205,7 @@
                   v-slot="{ data: k8sConfig }"
                 >
                   <XCodeBlock
-                    data-testid="codeblock-yaml-universal"
+                    data-testid="codeblock-yaml-k8s"
                     language="yaml"
                     :code="YAML.stringify(k8sConfig)"
                   />

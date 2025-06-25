@@ -2,12 +2,15 @@ Feature: mesh / builtin-gateways / item
 
   Background:
     Given the CSS selectors
-      | Alias         | Selector                                         |
-      | tabs-view     | [data-testid='builtin-gateway-detail-tabs-view'] |
-      | listener-card | [data-testid='listener-card']                    |
-      | route-card    | [data-testid='route-card']                       |
-      | dataplanes    | [data-testid='data-plane-collection']            |
-      | config        | [data-testid='codeblock-yaml-universal']         |
+      | Alias              | Selector                                         |
+      | tabs-view          | [data-testid='builtin-gateway-detail-tabs-view'] |
+      | listener-card      | [data-testid='listener-card']                    |
+      | route-card         | [data-testid='route-card']                       |
+      | dataplanes         | [data-testid='data-plane-collection']            |
+      | config             | [data-testid='codeblock-yaml-universal']         |
+      | config-universal   | [data-testid='codeblock-yaml-universal']         |
+      | config-k8s         | [data-testid='codeblock-yaml-k8s']               |
+      | select-environment | [data-testid='select-input']                     |
     Given the environment
       """
       KUMA_LISTENER_COUNT: 2
@@ -139,6 +142,11 @@ Feature: mesh / builtin-gateways / item
     When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/dataplanes" URL
     Then the "$dataplanes" element exists
 
-  Scenario: Config tab has expected content
-    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/config?format=universal" URL
-    Then the "$config" element exists
+  Scenario: Shows config with format based on environment
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/config" URL
+    Then the "$config-universal" element exists
+    And the URL contains "?environment=universal"
+    When I click the "$select-environment" element
+    When I click the "[data-testid='select-item-k8s'] button" element
+    Then the "$config-k8s" element exists
+    And the URL contains "?environment=k8s"
