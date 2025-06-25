@@ -16,6 +16,9 @@
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
     },
+    "./cypress/steps": {
+      "import": "./src/cypress/steps/index.ts"
+    },
     "./ci": {
       "require": "./scripts/ci.cjs"
     }
@@ -54,6 +57,8 @@
     "vite": "^6.3.5",
     "vitepress": "^2.0.0-alpha.6",
     "vitest": "^3.2.4",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^2.2.10",
+    "deepmerge": "^4.3.1",
+    "js-yaml": "^4.1.0"
   }
 }
