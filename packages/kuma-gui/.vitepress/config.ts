@@ -58,6 +58,7 @@ const components = files.filter((item) => {
 export default defineConfig({
   title: 'kuma-gui',
   description: '',
+  // @ts-ignore vite + vitepress version/config mismatch issue, please look to remove me next time you see me
   vite: viteConfig({
     plugins: [
       {
