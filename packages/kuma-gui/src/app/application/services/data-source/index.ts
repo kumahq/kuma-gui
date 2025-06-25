@@ -125,6 +125,11 @@ export const create: Creator = (src, router) => {
             throw e
           }
         } else {
+          // non-blocking
+          (async () => {
+            await new Promise(resolve => setTimeout(resolve, 3000))
+            console.error(`DataSourceError: ${e}`)
+          })()
           throw e
         }
       }

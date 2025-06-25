@@ -33,7 +33,7 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
   try {
     response = await fetch(completeUrl, init)
   } catch (error) {
-    throw createNetworkError(error)
+    throw createNetworkError(error, completeUrl)
   }
 
   const contentType = response.headers.get('content-type')
@@ -47,8 +47,8 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
   }
 }
 
-function createNetworkError(error: unknown): Error {
-  const requestErrorMessage = error instanceof Error ? error.message : 'An unknown network error occurred.'
+function createNetworkError(error: unknown, url: string): Error {
+  const requestErrorMessage = error instanceof Error ? `${error.message}: ${url}` : 'An unknown network error occurred.'
 
   return new Error(requestErrorMessage)
 }
