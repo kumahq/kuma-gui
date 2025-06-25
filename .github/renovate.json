@@ -46,12 +46,12 @@
     },
     {
       "groupName": "@kong patches",
-      "matchPackageNames": ["@kong*"],
+      "matchPackageNames": ["@kong**/**"],
       "matchUpdateTypes": ["patch"]
     },
     {
       "groupName": "@kong minors",
-      "matchPackageNames": ["@kong*"],
+      "matchPackageNames": ["@kong**/**"],
       "matchUpdateTypes": ["minor"]
     },
     {
