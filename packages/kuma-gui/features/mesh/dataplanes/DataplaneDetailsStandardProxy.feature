@@ -2,10 +2,13 @@ Feature: Dataplane details for standard Data Plane Proxy
 
   Background:
     Given the CSS selectors
-      | Alias         | Selector                                    |
-      | detail-view   | [data-testid='data-plane-detail-tabs-view'] |
-      | clusters-view | [data-testid='data-plane-clusters-view']    |
-      | details       | [data-testid='dataplane-details']           |
+      | Alias              | Selector                                    |
+      | detail-view        | [data-testid='data-plane-detail-tabs-view'] |
+      | clusters-view      | [data-testid='data-plane-clusters-view']    |
+      | details            | [data-testid='dataplane-details']           |
+      | config-universal   | [data-testid='codeblock-yaml-universal']    |
+      | config-k8s         | [data-testid='codeblock-yaml-k8s']          |
+      | select-environment | [data-testid='select-input']                |
 
   Scenario: Overview tab has expected content
     Given the environment
@@ -48,3 +51,12 @@ Feature: Dataplane details for standard Data Plane Proxy
       """
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/clusters" URL
     Then the "$clusters-view" element contains "access_log_sink::observability_name::access_log_sink"
+
+  Scenario: Shows config with format based on environment
+    When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/config" URL
+    Then the "$config-universal" element exists
+    And the URL contains "?environment=universal"
+    When I click the "$select-environment" element
+    When I click the "[data-testid='select-item-k8s'] button" element
+    Then the "$config-k8s" element exists
+    And the URL contains "?environment=k8s"

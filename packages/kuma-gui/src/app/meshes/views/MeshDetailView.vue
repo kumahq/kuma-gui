@@ -3,6 +3,7 @@
     name="mesh-detail-view"
     :params="{
       mesh: '',
+      environment: String,
     }"
     v-slot="{ route, t, uri }"
   >
@@ -160,25 +161,57 @@
           </XCard>
 
           <XCard>
-            <ResourceCodeBlock
-              :resource="props.mesh.config"
-              v-slot="{ copy, copying }"
-            >
-              <DataSource
-                v-if="copying"
-                :src="uri(sources, '/meshes/:name/as/kubernetes', {
-                  name: route.params.mesh,
-                }, {
-                  cacheControl: 'no-store',
-                })"
-                @change="(data) => {
-                  copy((resolve) => resolve(data))
-                }"
-                @error="(e) => {
-                  copy((_resolve, reject) => reject(e))
-                }"
-              />
-            </ResourceCodeBlock>
+            <XLayout>
+              <XLayout
+                type="separated"
+                justify="end"
+              >
+                <div
+                  v-for="options in [['universal', 'k8s']]"
+                  :key="typeof options"
+                >
+                  <XSelect
+                    :label="t('meshes.routes.item.format')"
+                    :selected="route.params.environment"
+                    @change="(value) => {
+                      route.update({ environment: value })
+                    }"
+                    @vue:before-mount="$event?.props?.selected && options.includes($event.props.selected) && $event.props.selected !== route.params.environment && route.update({ environment: $event.props.selected })"
+                  >
+                    <template
+                      v-for="value in options"
+                      :key="value"
+                      #[`${value}-option`]
+                    >
+                      {{ t(`meshes.routes.item.formats.${value}`) }}
+                    </template>
+                  </XSelect>
+                </div>
+              </XLayout>
+
+              <template v-if="route.params.environment === 'universal'">
+                <XCodeBlock
+                  data-testid="codeblock-yaml-universal"
+                  language="yaml"
+                  :code="YAML.stringify(props.mesh.config)"
+                />
+              </template>
+
+              <template v-else>
+                <DataLoader
+                  :src="uri(sources, '/meshes/:name/as/kubernetes', {
+                    name: route.params.mesh,
+                  })"
+                  v-slot="{ data: k8sConfig }"
+                >
+                  <XCodeBlock
+                    data-testid="codeblock-yaml-k8s"
+                    language="yaml"
+                    :code="YAML.stringify(k8sConfig)"
+                  />
+                </DataLoader>
+              </template>
+            </XLayout>
           </XCard>
         </XLayout>
       </AppView>
@@ -189,10 +222,10 @@
 <script lang="ts" setup>
 import type { Mesh } from '../data'
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import ResourceStatus from '@/app/common/ResourceStatus.vue'
 import { sources as PolicySources } from '@/app/policies/sources'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 
 const props = defineProps<{
   mesh: Mesh

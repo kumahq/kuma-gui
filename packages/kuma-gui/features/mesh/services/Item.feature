@@ -4,7 +4,6 @@ Feature: mesh / services / item
     Given the CSS selectors
       | Alias         | Selector                                                                                  |
       | dataplanes    | [data-testid='data-plane-collection']                                                     |
-      | config        | [data-testid='external-service-config']                                                   |
       | item          | $dataplanes tbody tr                                                                      |
       | action-group  | $item:nth-child(1) [data-testid='x-action-group-control']                                 |
       | view          | $item:nth-child(1) [data-testid='x-action-group'] li:first-child [data-testid='x-action'] |
@@ -21,7 +20,6 @@ Feature: mesh / services / item
       """
     When I visit the "/meshes/default/services/internal/firewall-1/overview" URL
     Then the "$dataplanes" element exists
-    Then the "$config" element doesn't exist
 
     Examples:
       | ServiceType    |

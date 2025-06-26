@@ -150,10 +150,10 @@
             </template>
 
             <template v-else-if="route.params.format === 'universal'">
-              <ResourceCodeBlock
+              <XCodeBlock
                 data-testid="codeblock-yaml-universal"
                 language="yaml"
-                :resource="item.config"
+                :code="YAML.stringify(item.config)"
                 :show-k8s-copy-button="false"
                 is-searchable
                 :query="route.params.codeSearch"
@@ -167,16 +167,16 @@
 
             <template v-else>
               <DataLoader
-                :src="uri(sources, '/meshes/:mesh/mesh-service/:name/as/kubernetes', {
+                :src="uri(sources, '/meshes/:mesh/mesh-external-service/:name/as/kubernetes', {
                   mesh: route.params.mesh,
                   name: route.params.service,
                 })"
                 v-slot="{ data: k8sConfig }"
               >
-                <ResourceCodeBlock
+                <XCodeBlock
                   data-testid="codeblock-yaml-k8s"
                   language="yaml"
-                  :resource="k8sConfig"
+                  :code="YAML.stringify(k8sConfig)"
                   :show-k8s-copy-button="false"
                   is-searchable
                   :query="route.params.codeSearch"
@@ -197,9 +197,9 @@
 
 <script lang="ts" setup>
 import { sources } from '../sources'
+import { YAML } from '@/app/application'
 import DefinitionCard from '@/app/common/DefinitionCard.vue'
 import type { MeshExternalService } from '@/app/services/data'
-import ResourceCodeBlock from '@/app/x/components/x-code-block/ResourceCodeBlock.vue'
 const props = defineProps<{
   items: MeshExternalService[]
 }>()
