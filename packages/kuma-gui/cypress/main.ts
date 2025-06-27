@@ -1,3 +1,5 @@
+import { setupSteps } from '@kumahq/config/cypress/steps'
+
 import { TOKENS, services as e2e } from './services'
 import { services as application } from '@/app/application/debug'
 import { TOKENS as FAKE_FS, services as fakeFs } from '@/app/fake-fs'
@@ -10,10 +12,15 @@ import { build, token } from '@/services/utils'
     ...TOKENS,
     ...FAKE_FS,
   }
-  build(
+  const get = build(
     fakeFs($),
     e2e($),
     application($),
     kuma($),
   )
+
+  setupSteps({
+    mock: get($.mock),
+    client: get($.client),
+  })
 })()
