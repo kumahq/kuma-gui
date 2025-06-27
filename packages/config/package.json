@@ -13,6 +13,9 @@
       "require": "./src/index.cjs",
       "import": "./src/index.ts"
     },
+    "./vite": {
+      "import": "./src/vite/index.ts"
+    },
     "./cypress/e2e": {
       "import": "./src/cypress/e2e.ts"
     },
