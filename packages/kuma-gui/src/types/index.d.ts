@@ -759,6 +759,7 @@ export interface PolicyEntity extends MeshEntity {
     'kuma.io/mesh'?: string
     'kuma.io/origin'?: 'zone'
     'kuma.io/zone'?: string
+    'kuma.io/policy-role'?: 'producer' | 'consumer' | 'system' | 'workload-owner'
     [key: string]: string | undefined
   }
   spec?: {

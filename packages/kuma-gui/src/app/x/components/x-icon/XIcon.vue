@@ -68,6 +68,7 @@ const icons = {
   'policy-role-producer': 'span',
   'policy-role-consumer': 'span',
   'policy-role-system': 'span',
+  'policy-role-workload-owner': 'span',
   inbound: ForwardIcon,
   outbound: GatewayIcon,
   builtin: PortalIcon,
@@ -135,6 +136,7 @@ const props = withDefaults(defineProps<{
 }
 .x-icon-policy-role-producer-icon,
 .x-icon-policy-role-consumer-icon,
+.x-icon-policy-role-workload-owner-icon,
 .x-icon-policy-role-system-icon {
   &::before {
     color: var(--icon-before-color, currentColor);
@@ -156,6 +158,11 @@ const props = withDefaults(defineProps<{
   &.x-icon-policy-role-system-icon {
     &::before {
       content: 'S';
+    }
+  }
+  &.x-icon-policy-role-workload-owner-icon {
+    &::before {
+      content: 'W';
     }
   }
 }

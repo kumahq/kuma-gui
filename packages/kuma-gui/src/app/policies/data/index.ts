@@ -55,7 +55,7 @@ export const Policy = {
       name: labels['kuma.io/display-name'] ?? item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
       zone: labels['kuma.io/origin'] === 'zone' && labels['kuma.io/zone'] ? labels['kuma.io/zone'] : '',
-      role: labels['kuma.io/policy-role'] ?? '',
+      role: labels['kuma.io/policy-role'] ?? 'system',
       config: item,
     }
   },
