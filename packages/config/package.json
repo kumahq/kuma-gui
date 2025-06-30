@@ -22,8 +22,8 @@
     "./ci": {
       "require": "./scripts/ci.cjs"
     },
-    "./vite/plugins/*": {
-      "import": "./src/vite/plugins/*.ts"
+    "./vite": {
+      "import": "./src/vite/index.ts"
     }
   },
   "dependencies": {

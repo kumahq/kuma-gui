@@ -1,4 +1,4 @@
-import { replicateKumaServer } from '@kumahq/config/vite/plugins/server'
+import { replicateKumaServer } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'

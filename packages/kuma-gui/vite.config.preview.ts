@@ -1,4 +1,4 @@
-import { replicateKumaServer } from '@kumahq/config/vite/plugins/server'
+import { replicateKumaServer } from '@kumahq/config/vite'
 import { defineConfig } from 'vite'
 
 import type { UserConfigFn } from 'vite'

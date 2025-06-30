@@ -6,7 +6,7 @@ import { whyframeVue } from '@whyframe/vue'
 import { DEFAULT_SCHEMA, Type } from 'js-yaml'
 import { fileURLToPath, URL } from 'node:url'
 import { hoistUseStatements } from '../dev-utilities/hoistUseStatements'
-import { kumaIndexHtmlVars } from '../vite.plugins'
+import { kumaIndexHtmlVars } from "@kumahq/config/vite" 
 
 export default defineConfig({
   plugins: [
