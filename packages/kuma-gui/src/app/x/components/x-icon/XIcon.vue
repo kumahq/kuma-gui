@@ -66,6 +66,8 @@ const attrs = useAttrs()
 const icons = {
   standard: 'span',
   'policy-role-producer': 'span',
+  'policy-role-consumer': 'span',
+  'policy-role-system': 'span',
   inbound: ForwardIcon,
   outbound: GatewayIcon,
   builtin: PortalIcon,
@@ -131,14 +133,30 @@ const props = withDefaults(defineProps<{
     height: v-bind('props.size');
   }
 }
-.x-icon-policy-role-producer-icon {
+.x-icon-policy-role-producer-icon,
+.x-icon-policy-role-consumer-icon,
+.x-icon-policy-role-system-icon {
   &::before {
-    content: 'P';
     color: var(--icon-before-color, currentColor);
     display: inline-flex;
 
     width: v-bind('props.size');
     height: v-bind('props.size');
+  }
+  &.x-icon-policy-role-producer-icon {
+    &::before {
+      content: 'P';
+    }
+  }
+  &.x-icon-policy-role-consumer-icon {
+    &::before {
+      content: 'C';
+    }
+  }
+  &.x-icon-policy-role-system-icon {
+    &::before {
+      content: 'S';
+    }
   }
 }
 
