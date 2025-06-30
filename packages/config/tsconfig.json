@@ -4,6 +4,8 @@
     "noErrorTruncation": true,
     "baseUrl": ".",
     "module": "preserve",
+    "target": "esnext",
+    "skipLibCheck": true,
     "types": [
       "node",
       "cypress"

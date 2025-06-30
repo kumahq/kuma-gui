@@ -1,3 +1,4 @@
+import { replicateKumaServer } from '@kumahq/config/vite/plugins/server'
 import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
@@ -10,7 +11,6 @@ import svgLoader from 'vite-svg-loader'
 import { hoistUseStatements } from './dev-utilities/hoistUseStatements'
 import { dependencies } from './src/test-support'
 import { fs } from './src/test-support/mocks/fs'
-import { replicateKumaServer } from './vite.plugins'
 import type { UserConfigFn } from 'vite'
 // https://vitejs.dev/config/
 

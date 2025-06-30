@@ -1,5 +1,6 @@
+import { defaultKumaHtmlVars as htmlVars } from '@kumahq/config/vite/plugins/server'
+
 import Env from './Env'
-import { htmlVars } from '../../../../../vite.plugins'
 
 export default class CliEnv extends Env {
   protected getConfig() {
