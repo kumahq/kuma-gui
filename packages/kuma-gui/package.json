@@ -60,7 +60,7 @@
     "sass": "^1.89.2",
     "vite": "^6.3.5",
     "vite-svg-loader": "^5.1.0",
-    "vitepress": "^2.0.0-alpha.6",
+    "vitepress": "^2.0.0-alpha.7",
     "vitest": "^3.2.4"
   },
   "browserslist": [
