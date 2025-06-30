@@ -3,15 +3,11 @@
     "esModuleInterop": true,
     "noErrorTruncation": true,
     "baseUrl": ".",
+    "module": "preserve",
     "types": [
       "node",
       "cypress"
     ],
-    "paths": {
-      "@badeball/cypress-cucumber-preprocessor/*": [
-        "../../node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
-      ],
-    },
   },
   "include": [
     "**/*.ts"
