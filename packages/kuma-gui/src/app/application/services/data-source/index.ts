@@ -99,11 +99,10 @@ export const create: Creator = (src, router) => {
     })
   }
 
-  return new CallableEventSource(async function* (controller: AbortController) {
+  return new CallableEventSource(async function* (this: CallableEventSource, controller: AbortController) {
     let retry = 0
-    const maxRetry = 3
-    // @TODO: enable retries based on certain errors
-    const enableRetries = false
+    const maxRetry = 2
+    const pow = 2
     while (true) {
       try {
         if (isAsyncGeneratorFunction(route.route)) {
@@ -118,24 +117,25 @@ export const create: Creator = (src, router) => {
         }
         break
       } catch (e) {
-        if (enableRetries) {
-          if (retry < maxRetry) {
-            await new Promise(resolve => setTimeout(resolve, 3000 * Math.pow(++retry, 1)))
-          } else {
-            throw e
+        if ('retry' in this.configuration && this.configuration.retry) {
+          const delay = 2000 + (500 * Math.pow(++retry, pow))
+          switch(true) {
+            case (e instanceof TypeError) && `${e}`.includes('Failed to fetch') && retry <= maxRetry:
+              console.error(e)
+              await new Promise(resolve => setTimeout(resolve, delay))
+              console.error(`Recovering ${retry} time(s) from a 'Failed to fetch' error`)
+              break
+            default:
+              throw e
           }
         } else {
-          // non-blocking
-          (async () => {
-            await new Promise(resolve => setTimeout(resolve, 3000))
-            console.error(`DataSourceError: ${e}`)
-          })()
           throw e
         }
       }
     }
   }, {
     cacheControl: params.cacheControl.length > 0 ? params.cacheControl : undefined,
+    retry: (queryParams.get('retry') || '') === 'none' ? false : true,
   })
 }
 export const destroy: Destroyer = (_src, source) => {
