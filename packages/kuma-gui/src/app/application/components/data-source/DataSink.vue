@@ -4,7 +4,7 @@
   >
     <DataSource
       v-if="expanded"
-      :src="`${props.src}/${encodeURIComponent(JSON.stringify(payload))}?cacheControl=no-cache`"
+      :src="`${props.src}/${encodeURIComponent(JSON.stringify(payload))}?cacheControl=no-cache&retry=none`"
       @change="(d: TypeOf<T>) => {
         writing = false
         data = d;

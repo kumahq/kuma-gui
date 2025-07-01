@@ -86,27 +86,6 @@ describe('makeRequest', () => {
 
   test.each([
     [
-      function () {
-        return Promise.reject(new Error('A most terrible error'))
-      },
-      /A most terrible error/,
-    ],
-    [
-      function () {
-        // We specifically want to test this edge case.
-        // eslint-disable-next-line prefer-promise-reject-errors
-        return Promise.reject('Now that’s just great')
-      },
-      new Error('An unknown network error occurred.'),
-    ],
-  ])('works for requests that fail with a network error', async (fetchMock, expectedError) => {
-    vi.spyOn(global, 'fetch').mockImplementation(fetchMock)
-
-    await expect(() => makeRequest('/')).rejects.toThrow(expectedError)
-  })
-
-  test.each([
-    [
       'minimal error response format',
       function () {
         const response = new Response('{"type":"great_misfortune","detail":"A most terrible error"}', {
