@@ -30,6 +30,7 @@
             })"
             :data="[policyTypesData]"
             :errors="[policyTypesError]"
+            variant="list"
             v-slot="{ data: rulesData }"
           >
             <!-- show an empty state if we have no rules at all -->
@@ -101,6 +102,7 @@
                 :items="rulesData!.inboundRules"
                 :comparator="(a, b) => a.type.localeCompare(b.type)"
                 :empty="false"
+                variant="list"
                 v-slot="{ items }"
               >
                 <XCard>
@@ -134,11 +136,12 @@
           <template v-if="!can('use zones')">
             <div>
               <!-- builtin gateways have different data/visuals than other types of dataplanes -->
-              <template v-if="props.data.dataplaneType === 'builtin'">
+              <template v-if="props.source.data?.dataplaneType === 'builtin'">
                 <DataLoader
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/gateway-dataplane-policies`"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
+                  variant="list"
                   v-slot="{ data: gatewayDataplane }: MeshGatewayDataplaneSource"
                 >
                   <DataCollection
@@ -168,6 +171,7 @@
                   :src="`/meshes/${route.params.mesh}/dataplanes/${route.params.proxy}/sidecar-dataplane-policies`"
                   :data="[policyTypesData]"
                   :errors="[policyTypesError]"
+                  variant="list"
                   v-slot="{ data: sidecarDataplaneData }: SidecarDataplaneCollectionSource"
                 >
                   <DataCollection
@@ -221,6 +225,7 @@
 import BuiltinGatewayPolicies from '../components/BuiltinGatewayPolicies.vue'
 import type { DataplaneOverview } from '../data'
 import type { MeshGatewayDataplaneSource, SidecarDataplaneCollectionSource } from '../sources'
+import { DataSourceResponse } from '@/app/application'
 import SummaryView from '@/app/common/SummaryView.vue'
 import PolicyTypeEntryList from '@/app/policies/components/PolicyTypeEntryList.vue'
 import type { PolicyResourceType } from '@/app/policies/data'
@@ -229,6 +234,6 @@ import RuleList from '@/app/rules/components/RuleList.vue'
 import { sources } from '@/app/rules/sources'
 
 const props = defineProps<{
-  data: DataplaneOverview
+  source: DataSourceResponse<DataplaneOverview>
 }>()
 </script>

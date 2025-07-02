@@ -12,7 +12,7 @@
         mesh: route.params.mesh,
         name: route.params.proxy,
       })"
-      v-slot="{ data, error }"
+      v-slot="{ data, error, refresh }"
     >
       <AppView
         :breadcrumbs="[
@@ -177,37 +177,40 @@
           </XDisclosure>
         </template>
 
-        <DataLoader
-          :data="[data]"
-          :errors="[error]"
+        <template
+          v-if="error"
+          #error
         >
-          <XTabs
-            :selected="route.child()?.name"
+          <ErrorBlock :error="error" />
+        </template>
+          
+        <XTabs
+          :selected="route.child()?.name"
+        >
+          <template
+            v-for="{ name } in route.children"
+            :key="name"
+            #[`${name}-tab`]
           >
-            <template
-              v-for="{ name } in route.children"
-              :key="name"
-              #[`${name}-tab`]
+            <XAction
+              :to="{ name }"
             >
-              <XAction
-                :to="{ name }"
-              >
-                {{ t(`data-planes.routes.item.navigation.${name}`) }}
-              </XAction>
-            </template>
-          </XTabs>
+              {{ t(`data-planes.routes.item.navigation.${name}`) }}
+            </XAction>
+          </template>
+        </XTabs>
 
-          <RouterView
-            v-slot="{ Component }"
-          >
-            <component
-              :is="Component"
-              :data="data"
-              :networking="data?.dataplane.networking"
-              :mesh="props.mesh"
-            />
-          </RouterView>
-        </DataLoader>
+        <RouterView
+          v-slot="{ Component }"
+        >
+          <component
+            :is="Component"
+            :data="data"
+            :source="{ data, error, refresh }"
+            :networking="data?.dataplane.networking"
+            :mesh="props.mesh"
+          />
+        </RouterView>
       </AppView>
     </DataSource>
   </RouteView>
@@ -217,6 +220,7 @@
 import { ref } from 'vue'
 
 import { sources } from '../sources'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import type { Mesh } from '@/app/meshes/data'
 const props = defineProps<{
   mesh: Mesh

@@ -16,7 +16,7 @@
       :title="t('data-planes.routes.item.navigation.data-plane-stats-view')"
     />
     <AppView>
-      <XCard>
+      <XCard v-if="props.networking">
         <DataLoader
           :src="uri(sources, '/connections/stats/for/:proxyType/:name/:mesh/:socketAddress', {
             proxyType: ({ ingresses: 'zone-ingress', egresses: 'zone-egress'})[route.params.proxyType] ?? 'dataplane',

@@ -24,7 +24,8 @@ Feature: zones / warnings
           subscriptions: !!js/undefined
       """
     When I visit the "/zones/zone-cp-1/overview" URL
-    And I click the "[data-testid='zone-cp-config-view-tab'] a" element
+    Then I wait for 500 ms
+    Then I click the "[data-testid='zone-cp-config-view-tab'] a" element
     Then the "$warning-no-subscriptions" element exists
 
   Scenario: When zone store type is memory a warning is shown in listings

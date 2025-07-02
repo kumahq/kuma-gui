@@ -14,10 +14,12 @@
         :error="allErrors[0]"
         :refresh="props.src !== '' ? refresh : () => {}"
       >
-        <ErrorBlock
-          v-bind="$attrs"
-          :error="allErrors[0]"
-        />
+        <XCard>
+          <ErrorBlock
+            v-bind="$attrs"
+            :error="allErrors[0]"
+          />
+        </XCard>
       </slot>
     </template>
     <template

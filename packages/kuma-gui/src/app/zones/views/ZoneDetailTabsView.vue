@@ -6,14 +6,13 @@
     }"
     v-slot="{ route, t, uri }"
   >
-    <DataLoader
+    <DataSource
       :src="uri(sources, `/zone-cps/:name`, {
         name: route.params.zone,
       })"
-      v-slot="{ data }"
+      v-slot="{ data, error, refresh }"
     >
       <AppView
-        v-if="data"
         :breadcrumbs="[
           {
             to: {
@@ -24,33 +23,38 @@
         ]"
       >
         <template #title>
-          <XLayout size="small">
-            <XLayout type="separated">
-              <template
-                v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
-                :key="env"
-              >
-                <XIcon
-                  :name="env"
-                  :size="KUI_ICON_SIZE_50"
+          <template v-if="data">
+            <XLayout size="small">
+              <XLayout type="separated">
+                <template
+                  v-for="env in [(['kubernetes', 'universal'] as const).find(env => env === data.zoneInsight.environment) ?? 'kubernetes']"
+                  :key="env"
                 >
-                  {{ t(`common.product.environment.${env}`) }}
-                </XIcon>
-              </template>
-              <h1>
-                <XCopyButton :text="route.params.zone">
-                  <RouteTitle
-                    :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
-                  />
-                </XCopyButton>
-              </h1>
+                  <XIcon
+                    :name="env"
+                    :size="KUI_ICON_SIZE_50"
+                  >
+                    {{ t(`common.product.environment.${env}`) }}
+                  </XIcon>
+                </template>
+                <h1>
+                  <XCopyButton :text="route.params.zone">
+                    <RouteTitle
+                      :title="t('zone-cps.routes.item.title', { name: route.params.zone })"
+                    />
+                  </XCopyButton>
+                </h1>
+              </XLayout>
+              <XBadge
+                :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
+              >
+                {{ t(`http.api.value.${data.state}`) }}
+              </XBadge>
             </XLayout>
-            <XBadge
-              :appearance="t(`common.status.appearance.${data.state}`, undefined, { defaultMessage: 'neutral' })"
-            >
-              {{ t(`http.api.value.${data.state}`) }}
-            </XBadge>
-          </XLayout>
+          </template>
+          <template v-else>
+            <XProgress variant="line" />
+          </template>
         </template>
 
         <template
@@ -72,31 +76,44 @@
             </template>
           </ZoneActionGroup>
         </template>
-
-        <XTabs
-          :selected="route.child()?.name"
+        <DataLoader
+          :errors="[error]"
+          :loader="false"
         >
           <template
-            v-for="{ name } in route.children"
-            :key="name"
-            #[`${name}-tab`]
+            v-if="error"
+            #error
           >
-            <XAction
-              :to="{ name }"
-            >
-              {{ t(`zone-cps.routes.item.navigation.${name}`) }}
-            </XAction>
+            <XCard>
+              <ErrorBlock :error="error" />
+            </XCard>
           </template>
-        </XTabs>
+          <XTabs
+            :selected="route.child()?.name"
+          >
+            <template
+              v-for="{ name } in route.children"
+              :key="name"
+              #[`${name}-tab`]
+            >
+              <XAction
+                :to="{ name }"
+              >
+                {{ t(`zone-cps.routes.item.navigation.${name}`) }}
+              </XAction>
+            </template>
+          </XTabs>
 
-        <RouterView v-slot="child">
-          <component
-            :is="child.Component"
-            :data="data"
-          />
-        </RouterView>
+          <RouterView v-slot="child">
+            <component
+              :is="child.Component"
+              :data="data"
+              :source="{ data, error, refresh }"
+            />
+          </RouterView>
+        </DataLoader>
       </AppView>
-    </DataLoader>
+    </DataSource>
   </RouteView>
 </template>
 
@@ -105,5 +122,6 @@ import { KUI_ICON_SIZE_50 } from '@kong/design-tokens'
 
 import { useZoneActionGroup } from '../'
 import { sources } from '../sources'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
 const ZoneActionGroup = useZoneActionGroup()
 </script>
