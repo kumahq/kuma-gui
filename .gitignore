@@ -30,4 +30,4 @@ dist
 .eslintcache
 
 # Cypress
-cypress/downloads/*
+**/cypress/downloads/*
