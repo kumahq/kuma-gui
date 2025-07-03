@@ -108,12 +108,14 @@ export const create: Creator = (src, router) => {
         if (isAsyncGeneratorFunction(route.route)) {
           for await (const res of route.route(params, controller)) {
             yield res
+            retry = 0
             if (document && document.hidden) {
               await waitForEvent(document, 'visibilityhidden')
             }
           }
         } else {
           yield Promise.resolve(route.route(params))
+          retry = 0
         }
         break
       } catch (e) {
