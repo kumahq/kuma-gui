@@ -9,7 +9,7 @@
 .PHONY: .install
 .install: check/node $(NPM_WORKSPACE_ROOT)/node_modules
 
-$(NPM_WORKSPACE_ROOT)/node_modules: $(if $(CI),,$(NPM_WORKSPACE_ROOT)/package-lock.json)
+$(NPM_WORKSPACE_ROOT)/node_modules: $(if $(CI),,$(NPM_WORKSPACE_ROOT)/package-lock.json $(shell find $(NPM_WORKSPACE_ROOT) -maxdepth 5 -path "*/node_modules/*" -prune -o -name "package.json" -print))
 	@cd $(NPM_WORKSPACE_ROOT) \
 		&& npm $(if $(CI),clean-install,install) \
 					--ignore-scripts \
