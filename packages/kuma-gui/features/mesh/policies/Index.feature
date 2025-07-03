@@ -5,7 +5,7 @@ Feature: mesh / policies / index
       | Alias            | Selector                                                                                 |
       | policy-type-list | [data-testid='policy-type-list']                                                         |
       | items            | [data-testid='app-collection']                                                           |
-      | detail-view      | [data-testid='policy-detail-view']                                                       |
+      | detail-view      | [data-testid='policy-detail-tabs-view']                                                  |
       | items-header     | $items th                                                                                |
       | item             | $items tbody tr                                                                          |
       | action-group     | $item:first-child [data-testid='x-action-group-control']                                 |
