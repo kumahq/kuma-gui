@@ -24,7 +24,7 @@ zone-cps:
     global-cp-incompatible: !!text/markdown |
       There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ globalCpVersion }**)
     global-nack-response: !!text/markdown |
-      The Global Control Plane got NACK responses from the Zone Control Plane. Refer to the Zone Control Plane logs for more details.
+      The Global Control Plane got NACK responses from the Zone Control Plane. Refer to the {link} or logs for more details.
 
   x-empty-state:
     title: No Zones yet...
@@ -72,6 +72,9 @@ zone-cps:
         connected: Connected
         disconnected: Disconnected
         responses: Responses (sent/ack'ed)
+      rows:
+        nacked: !!text/markdown |
+          Got {nacked} NACK responses on the connected subscription
   list:
     warnings:
       store-memory: Uses memory store

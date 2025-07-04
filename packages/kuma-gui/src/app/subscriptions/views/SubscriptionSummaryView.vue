@@ -155,44 +155,103 @@
 
                   {{ t('common.detail.subscriptions.no_stats', { id: item.id }) }}
                 </XAlert>
-                <div
+                <template
                   v-else
-                  class="mt-8 stack-with-borders"
                 >
-                  <div>
+                  <div class="mt-8">
                     <slot name="default" />
                   </div>
-                  <DefinitionCard
-                    class="mt-4"
-                    layout="horizontal"
-                  >
-                    <template #title>
-                      <strong>
-                        {{ t('subscriptions.routes.item.headers.type') }}
-                      </strong>
-                    </template>
-
-                    <template #body>
-                      {{ t('subscriptions.routes.item.headers.stat') }}
-                    </template>
-                  </DefinitionCard>
                   <template
-                    v-for="[key, _item] in Object.entries(item.status.acknowledgements ?? {})"
-                    :key="key"
+                    v-for="stats in [Object.entries(item.status.acknowledgements ?? {})]"
+                    :key="typeof stats"
                   >
-                    <DefinitionCard
-                      layout="horizontal"
+                    <template
+                      v-for="rejected in [stats.filter(([key, item]) => item.responsesRejected > 0)]"
+                      :key="typeof rejected"
                     >
-                      <template #title>
-                        {{ t(`http.api.property.${key}`) }}
-                      </template>
+                      <template
+                        v-if="rejected.length > 0"
+                      >
+                        <XAlert
+                          :variant="!item.disconnectTime ? 'warning' : 'info'"
+                        >
+                          <XI18n
+                            path="subscriptions.notifications.with-nacks"
+                          />
+                        </XAlert>
+                        <div
+                          class="stack-with-borders"
+                        >
+                          <DefinitionCard
+                            class="mt-4"
+                            layout="horizontal"
+                          >
+                            <template #title>
+                              <strong>
+                                {{ t('subscriptions.routes.item.headers.type') }}
+                              </strong>
+                            </template>
 
-                      <template #body>
-                        {{ _item.responsesSent }}/{{ _item.responsesAcknowledged }}
+                            <template #body>
+                              {{ t('subscriptions.routes.item.headers.nacked') }}
+                            </template>
+                          </DefinitionCard>
+                          <template
+                            v-for="[key, _item] in rejected"
+                            :key="key"
+                          >
+                            <DefinitionCard
+                              layout="horizontal"
+                            >
+                              <template #title>
+                                {{ t(`http.api.property.${key}`) }}
+                              </template>
+
+                              <template #body>
+                                {{ _item.responsesRejected }}
+                              </template>
+                            </DefinitionCard>
+                          </template>
+                        </div>
                       </template>
-                    </DefinitionCard>
+                    </template>
+
+                    <div
+                      class="stack-with-borders"
+                    >
+                      <DefinitionCard
+                        class="mt-4"
+                        layout="horizontal"
+                      >
+                        <template #title>
+                          <strong>
+                            {{ t('subscriptions.routes.item.headers.type') }}
+                          </strong>
+                        </template>
+
+                        <template #body>
+                          {{ t('subscriptions.routes.item.headers.stat') }}
+                        </template>
+                      </DefinitionCard>
+                      <template
+                        v-for="[key, _item] in stats"
+                        :key="key"
+                      >
+                        <DefinitionCard
+                          layout="horizontal"
+                        >
+                          <template #title>
+                            {{ t(`http.api.property.${key}`) }}
+                          </template>
+
+                          <template #body>
+                            {{ _item.responsesSent }}/{{ _item.responsesAcknowledged }}
+                          </template>
+                        </DefinitionCard>
+                      </template>
+                    </div>
                   </template>
-                </div>
+                </template>
               </XLayout>
             </template>
 
