@@ -1,11 +1,6 @@
 name: |
   Issue Opened
 
-# Ensures that only one workflow is run per branch at a time.
-concurrency:
-  cancel-in-progress: true
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
-
 on:
   issues:
     types:
