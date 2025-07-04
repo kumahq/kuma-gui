@@ -142,7 +142,7 @@
                         #role="{ row: item }"
                       >
                         <template
-                          v-if="item.role === 'producer'"
+                          v-if="['producer', 'consumer', 'system', 'workload-owner'].includes(item.role)"
                         >
                           <XIcon
                             :name="`policy-role-${item.role}`"
