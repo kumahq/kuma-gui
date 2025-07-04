@@ -19,4 +19,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gh issue edit "${{ github.event.issue.number }}" \
+          --repo ${{ github.repository }} \
           --milestone "0.inbox"
