@@ -16,5 +16,6 @@
 .run/e2e:
 	@$(MAKE) deploy/e2e
 	@$(VITE) \
+		--configLoader runner \
 		-c ./vite.config.preview.ts \
 		preview

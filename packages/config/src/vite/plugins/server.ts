@@ -2,13 +2,31 @@ import { readFile, stat } from 'fs/promises'
 import crypto from 'node:crypto'
 import { dirname } from 'path'
 
-import type { KumaHtmlVars } from '@/app/application/services/env/Env'
 import type { Plugin, PreviewServer, ViteDevServer } from 'vite'
+
+export type KumaHtmlVars = {
+  baseGuiPath: string
+  apiUrl: string
+  version: string
+  product: string
+  mode: string
+  zone?: string
+  environment: string
+  storeType: string
+  apiReadOnly: boolean
+}
+type ServerOptions = {
+  template: string
+  vars: Partial<KumaHtmlVars>
+  csp: Partial<{ enabled: boolean } & Record<CspDirective, string>>
+}
+type CspDirective = 'default-src' | 'script-src' | 'script-src-elem' | 'img-src' | 'style-src' | 'connect-src'
 
 const cwd = process.cwd()
 const read = async (path: string) => (await readFile(`${cwd}/${path}`)).toString()
 const version = JSON.parse((await read('./package.json'))).version
-export const htmlVars = {
+
+export const defaultKumaHtmlVars = {
   baseGuiPath: '/gui',
   apiUrl: 'http://localhost:5681',
   version,
@@ -31,20 +49,20 @@ const interpolate = (template: string, vars: KumaHtmlVars) => {
     .replace('{{.BaseGuiPath}}', '/gui')
     .replace('{{.}}', JSON.stringify(vars))
 }
-export const kumaIndexHtmlVars = (): Plugin => {
+export const kumaIndexHtmlVars = (htmlVars: Partial<KumaHtmlVars> = {}): Plugin => {
   return {
     // replace the `{{.}}` with dev vars
     // reproducing what the kuma binary does
     name: 'kuma-index-html-vars',
-    transformIndexHtml: (template) => interpolate(template, htmlVars),
+    transformIndexHtml: (template) => interpolate(template, { ...defaultKumaHtmlVars, ...htmlVars}),
   }
 }
-type CspDirective = 'default-src' | 'script-src' | 'script-src-elem' | 'img-src' | 'style-src' | 'connect-src'
-const server = (
-  template: string = './index.html',
-  vars: Partial<KumaHtmlVars> = {},
-  csp: Partial<{ enabled: boolean } & Record<CspDirective, string>> = {},
-) => async (server: PreviewServer | ViteDevServer) => {
+
+const server = ({
+  template = './index.html',
+  vars = {},
+  csp = {},
+}: Partial<ServerOptions> = {}) => async (server: PreviewServer | ViteDevServer) => {
   const { enabled: isCspEnabled = true } = csp
   server.middlewares.use('/', async (req, res, next) => {
     const url = req.originalUrl || ''
@@ -68,7 +86,7 @@ const server = (
       let body = interpolate(
         await read(template),
         {
-          ...htmlVars,
+          ...defaultKumaHtmlVars,
           ...vars,
           ...Object.fromEntries(Object.entries({
             version: cookies.KUMA_VERSION,
@@ -104,20 +122,20 @@ const server = (
   })
 
 }
-export const replicateKumaServer = (...args: Parameters<typeof server>): Plugin => {
+export const replicateKumaServer = (options: Partial<ServerOptions> = {}): Plugin => {
   const plugin = {
     name: 'replicateKumaServer',
     config: (_: unknown, { mode }: { mode: string }) => {
       switch (mode) {
         case 'preview': {
-          const { name, ...rest } = kumaIndexHtmlVars()
+          const { name, ...rest } = kumaIndexHtmlVars(options.vars)
           Object.assign(plugin, rest)
           break
         }
       }
     },
-    configureServer: server(...args),
-    configurePreviewServer: server(...args),
+    configureServer: server(options),
+    configurePreviewServer: server(options),
   }
   return plugin
 }

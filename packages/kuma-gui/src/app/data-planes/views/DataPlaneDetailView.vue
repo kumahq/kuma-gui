@@ -429,7 +429,7 @@
                           >
                             <template
                               v-for="stats in [
-                                traffic?.inbounds[item.clusterName],
+                                traffic?.inbounds[item.clusterName || item.name], // check for both because clusterName is empty on gateway proxy types
                               ]"
                               :key="stats"
                             >
