@@ -1,0 +1,27 @@
+name: |
+  Issue Opened
+
+# Ensures that only one workflow is run per branch at a time.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions: {} # disables permissions for all of the available permissions
+
+jobs:
+  add-inbox-milestone:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+    - env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh issue edit "${{ github.event.issue.number }}" \
+          --milestone "0.inbox"
