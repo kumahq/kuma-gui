@@ -6,6 +6,7 @@
     "module": "preserve",
     "target": "esnext",
     "skipLibCheck": true,
+    "noEmit": true,
     "types": [
       "node",
       "cypress"
