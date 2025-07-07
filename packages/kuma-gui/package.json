@@ -42,7 +42,7 @@
     "@kumahq/fake-api": "*",
     "@kumahq/kuma-http-api": "*",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
-    "@types/glob": "^8.1.0",
+    "@types/glob": "^9.0.0",
     "@types/js-yaml": "^4.0.9",
     "@types/markdown-it": "^14.1.2",
     "@types/semver": "^7.7.0",
