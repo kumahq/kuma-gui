@@ -329,7 +329,7 @@ function createEslintConfig(
 
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': ['error', {
-          argsIgnorePattern: '^_',
+          args: 'none',
           varsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],
