@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
-    "@faker-js/faker": "^9.8.0",
+    "@faker-js/faker": "^9.9.0",
     "@kong/design-tokens": "^1.17.4",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
@@ -51,7 +51,7 @@
     "@whyframe/core": "^0.1.13",
     "@whyframe/vue": "^0.1.8",
     "cypress": "^14.5.1",
-    "dotenv": "^17.0.1",
+    "dotenv": "^17.1.0",
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "jsdom": "^26.1.0",
