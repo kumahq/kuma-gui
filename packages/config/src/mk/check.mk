@@ -14,10 +14,10 @@ check/node:
 		echo "https://nodejs.org/en/download" ; \
 		exit 1; \
 	)
-	@npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null && ( \
+	@if npm ls -g "npm@$(NPM_VERSION)" | grep "empty" > /dev/null; then \
 		echo "Make sure npm@$(NPM_VERSION) is installed. Try npm install -g npm@$(NPM_VERSION)"; \
 		exit 1; \
-	) || (exit 0)
+	fi
 
 .PHONY: .lint
 .lint: .lint/js .lint/ts .lint/css .lint/lock .lint/gherkin
