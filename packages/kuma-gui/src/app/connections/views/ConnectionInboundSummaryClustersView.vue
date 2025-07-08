@@ -26,7 +26,7 @@
         v-slot="{ data: connections, refresh }"
       >
         <template
-          v-for="prefix in [(props.data.clusterName === route.params.connection ? route.params.connection : props.data.clusterName).replace('_', ':')]"
+          v-for="prefix in [(!props.data.clusterName ? route.params.connection : props.data.clusterName).replace('_', ':')]"
           :key="typeof prefix"
         >
           <DataCollection
