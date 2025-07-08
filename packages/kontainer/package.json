@@ -1,0 +1,21 @@
+{
+  "name": "@kumahq/kontainer",
+  "version": "0.1.0",
+  "description": "Service container utilities",
+  "private": true,
+  "author": "Kong",
+  "type": "module",
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "help": "make help"
+  },
+  "dependencies": {
+    "brandi": "^5.0.0",
+    "deepmerge": "^4.3.1"
+  },
+  "devDependencies": {
+    "@kumahq/config": "*"
+  }
+}

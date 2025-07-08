@@ -1,4 +1,5 @@
 import Kongponents from '@kong/kongponents'
+import { token } from '@kumahq/kontainer'
 
 import { services as controlPlanes } from '@/app/control-planes'
 import { services as hostnameGenerators } from '@/app/hostname-generators'
@@ -6,8 +7,7 @@ import { services as me } from '@/app/me'
 import { services as meshes } from '@/app/meshes'
 import X from '@/app/x'
 import { services as zones } from '@/app/zones'
-import type { ServiceDefinition, Token } from '@/services/utils'
-import { token } from '@/services/utils'
+import type { ServiceDefinition, Token } from '@kumahq/kontainer'
 
 export const services = (app: Record<string, Token>): ServiceDefinition[] => {
   return [

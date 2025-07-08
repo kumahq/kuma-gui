@@ -1,6 +1,7 @@
-import type { ServiceDefinition, Token } from '@/services/utils'
-import { token } from '@/services/utils'
+import { token } from '@kumahq/kontainer'
+
 import { fs } from '@/test-support/mocks/fs'
+import type { ServiceDefinition, Token } from '@kumahq/kontainer'
 
 const $ = {
   kumaFS: token<typeof fs>('fake.fs.kuma'),

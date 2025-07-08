@@ -1,11 +1,12 @@
+import { token, createInjections } from '@kumahq/kontainer'
+
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
 import ControlPlaneActionGroup from '@/app/control-planes/components/ControlPlaneActionGroup.vue'
 import ControlPlaneStatus from '@/app/control-planes/components/ControlPlaneStatus.vue'
-import type { ServiceDefinition } from '@/services/utils'
-import { token, createInjections } from '@/services/utils'
+import type { ServiceDefinition } from '@kumahq/kontainer'
 
 type Token = ReturnType<typeof token>
 

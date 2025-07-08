@@ -1,6 +1,7 @@
+import { token } from '@kumahq/kontainer'
+
 import { sources } from './sources'
-import type { ServiceDefinition } from '@/services/utils'
-import { token } from '@/services/utils'
+import type { ServiceDefinition } from '@kumahq/kontainer'
 
 type Token = ReturnType<typeof token>
 

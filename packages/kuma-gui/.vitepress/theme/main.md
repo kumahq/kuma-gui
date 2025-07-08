@@ -10,7 +10,7 @@ import { services as applicationDebug } from '@/app/application/debug'
 import { TOKENS as VUE, services as vue } from '@/app/vue'
 import X from '@/app/x'
 import { TOKENS } from '@/app/kuma'
-import { build, token } from '@/services/utils'
+import { build, token } from '@kumahq/kontainer'
 import '../../src/assets/styles/main.scss'
 const el = ref()
 const $ = {

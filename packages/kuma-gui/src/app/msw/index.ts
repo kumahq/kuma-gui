@@ -1,7 +1,7 @@
+import { token } from '@kumahq/kontainer'
 import { setupWorker } from 'msw/browser'
 
-import { token } from '@/services/utils'
-import type { Token, ServiceDefinition } from '@/services/utils'
+import type { Token, ServiceDefinition } from '@kumahq/kontainer'
 import type { SetupWorker } from 'msw/browser'
 
 type Handler = Parameters<typeof setupWorker>[0]
