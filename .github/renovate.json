@@ -33,6 +33,12 @@
       "dependencyDashboardApproval": true
     },
     {
+      "matchPackageNames": [
+        "npm"
+      ],
+      "enabled": false
+    },
+    {
       "groupName": "patch",
       "matchUpdateTypes": [
         "patch"
@@ -55,21 +61,8 @@
       "matchUpdateTypes": ["minor"]
     },
     {
-      "groupName": "Node and npm",
       "matchPackageNames": [
-        "node",
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "patch",
-        "minor",
-        "major"
-      ]
-    },
-    {
-      "matchPackageNames": [
-        "node",
-        "npm"
+        "node"
       ],
       "matchUpdateTypes": [
         "major"
