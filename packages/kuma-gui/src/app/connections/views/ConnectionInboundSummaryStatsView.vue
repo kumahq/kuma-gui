@@ -28,17 +28,20 @@
       >
         <DataCollection
           :items="stats.raw.split('\n')"
-          :predicate="item => [
-            `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
-            `cluster.${props.data.name}.`,
-            `http.${props.data.name}.`,
-            `tcp.${props.data.name}.`,
-          ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`))"
+          :predicate="item => {
+            return [
+              `listener.${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}`,
+              `cluster.${props.data.name}.`,
+              `cluster.${props.data.clusterName}.`,
+              `http.${props.data.name}.`,
+              `http.${props.data.clusterName}.`,
+              `tcp.${props.data.name}.`,
+            ].some(prefix => item.startsWith(prefix)) && (!item.includes('.rds.') || item.includes(`_${props.data.port}`) || item.includes(`${props.data.servicePort}`))}"
           v-slot="{ items: lines }"
         >
           <XCodeBlock
             language="json"
-            :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '')).join('\n')"
+            :code="lines.map(item => item.replace(`${props.data.listenerAddress.length > 0 ? props.data.listenerAddress : route.params.connection}.`, '').replace(`${props.data.name}.`, '').replace(`${props.data.clusterName}.`, '')).join('\n')"
             is-searchable
             :query="route.params.codeSearch"
             :is-filter-mode="route.params.codeFilter"

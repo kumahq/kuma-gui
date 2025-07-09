@@ -387,6 +387,7 @@
                       {
                         ...props.data.dataplane.networking.inbounds[0],
                         name: key,
+                        clusterName: key,
                         port: Number(port),
                         protocol: ['http', 'tcp'].find(item => typeof value[item] !== 'undefined') ?? 'tcp',
                         addressPort: `${props.data.dataplane.networking.inbounds[0].address}:${port}`,
@@ -429,7 +430,7 @@
                           >
                             <template
                               v-for="stats in [
-                                traffic?.inbounds[item.name],
+                                traffic?.inbounds[item.clusterName],
                               ]"
                               :key="stats"
                             >

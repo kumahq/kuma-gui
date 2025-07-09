@@ -23,14 +23,14 @@
           name: route.params.proxy,
           mesh: route.params.mesh || '*',
         })"
-        v-slot="{ data , refresh }"
+        v-slot="{ data: connections, refresh }"
       >
         <template
-          v-for="prefix in [route.params.connection.replace('_', ':')]"
+          v-for="prefix in [(!props.data.clusterName ? route.params.connection : props.data.clusterName).replace('_', ':')]"
           :key="typeof prefix"
         >
           <DataCollection
-            :items="data.split('\n')"
+            :items="connections.split('\n')"
             :predicate="item => item.startsWith(`${prefix}::`)"
             v-slot="{ items: lines }"
           >
@@ -63,7 +63,9 @@
 </template>
 <script lang="ts" setup>
 import { sources } from '../sources'
+import { DataplaneInbound } from '@/app/data-planes/data'
 const props = defineProps<{
   routeName: string
+  data: DataplaneInbound
 }>()
 </script>
