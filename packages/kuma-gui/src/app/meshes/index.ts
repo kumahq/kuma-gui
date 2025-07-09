@@ -1,3 +1,5 @@
+import { token, createInjections } from '@kumahq/container'
+
 import MeshActionGroup from './components/MeshActionGroup.vue'
 import MeshInsightsList from './components/MeshInsightsList.vue'
 import locales from './locales/en-us/index.yaml'
@@ -10,8 +12,7 @@ import { services as gatewaysModule } from '@/app/gateways'
 import { services as policies } from '@/app/policies'
 import { services as rules } from '@/app/rules'
 import { services as servicesModule } from '@/app/services'
-import type { ServiceDefinition } from '@/services/utils'
-import { token, createInjections } from '@/services/utils'
+import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>

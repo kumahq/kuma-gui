@@ -1,6 +1,7 @@
+import { token } from '@kumahq/container'
+
 import locales from './locales/en-us/index.yaml'
-import type { ServiceDefinition } from '@/services/utils'
-import { token } from '@/services/utils'
+import type { ServiceDefinition } from '@kumahq/container'
 
 type Token = ReturnType<typeof token>
 
