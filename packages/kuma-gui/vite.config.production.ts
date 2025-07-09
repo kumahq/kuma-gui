@@ -1,4 +1,4 @@
-import { replicateKumaServer, defineConfig as defineBaseConfig, definePlugins } from '@kumahq/config/vite'
+import { replicateKumaServer, defineConfig as defineBaseConfig, yamlLoaderPluginConfig, vuePluginConfig } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
@@ -13,12 +13,10 @@ import type { UserConfig, UserConfigFn } from 'vite'
 export const config: UserConfigFn = () => {
   return {
     plugins: [
-      ...definePlugins({
-        vue,
-        yamlLoader,
-        svgLoader,
-        kumaServer: replicateKumaServer,
-      }),
+      vue(vuePluginConfig()),
+      yamlLoader(yamlLoaderPluginConfig()),
+      svgLoader(),
+      replicateKumaServer(),
       fakeApi({ dependencies, fs }),
     ],
   } satisfies UserConfig

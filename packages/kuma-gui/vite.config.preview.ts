@@ -1,4 +1,4 @@
-import { replicateKumaServer , defineConfig as defineBaseConfig, definePlugins } from '@kumahq/config/vite'
+import { replicateKumaServer , defineConfig as defineBaseConfig, yamlLoaderPluginConfig, vuePluginConfig } from '@kumahq/config/vite'
 import fakeApi from '@kumahq/fake-api/vite'
 import yamlLoader from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue'
@@ -15,18 +15,13 @@ export const config: UserConfigFn = () => {
       port: 5681,
     },
     plugins: [
-      ...definePlugins({
-        vue,
-        yamlLoader,
-        svgLoader,
-      }),
+      vue(vuePluginConfig()),
+      yamlLoader(yamlLoaderPluginConfig()),
+      svgLoader(),
       replicateKumaServer({
         template: './dist/gui/index.html',
       }),
-      fakeApi({
-        dependencies,
-        fs,
-      }),
+      fakeApi({ dependencies, fs }),
     ],
   }
 }
@@ -34,5 +29,6 @@ export const config: UserConfigFn = () => {
 export default defineConfig((env) => 
   mergeConfig(
     defineBaseConfig(env),
-    config(env)),
+    config(env),
+  ),
 )
