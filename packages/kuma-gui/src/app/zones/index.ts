@@ -1,4 +1,4 @@
-import { token, createInjections } from '@kumahq/kontainer'
+import { token, createInjections } from '@kumahq/container'
 
 import ZoneActionGroup from './components/ZoneActionGroup.vue'
 import ZoneControlPlanesList from './components/ZoneControlPlanesList.vue'
@@ -9,7 +9,7 @@ import { sources } from './sources'
 import { services as subscriptions } from '@/app/subscriptions'
 import egressLocales from '@/app/zone-egresses/locales/en-us/index.yaml'
 import ingressLocales from '@/app/zone-ingresses/locales/en-us/index.yaml'
-import type { ServiceDefinition } from '@kumahq/kontainer'
+import type { ServiceDefinition } from '@kumahq/container'
 import type { RouteRecordRaw } from 'vue-router'
 
 type Token = ReturnType<typeof token>

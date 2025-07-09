@@ -1,4 +1,4 @@
-import { ServiceConfigurator } from '@kumahq/kontainer'
+import { ServiceConfigurator } from '@kumahq/container'
 import { config } from '@vue/test-utils'
 
 import CliEnv from '@/app/application/services/env/CliEnv'

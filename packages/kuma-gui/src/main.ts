@@ -1,7 +1,7 @@
 // Importing styles here enforces a consistent stylesheet order between the Vite development server and the production build. See https://github.com/vitejs/vite/issues/4890.
 import './assets/styles/main.scss'
 
-import { build } from '@kumahq/kontainer'
+import { build } from '@kumahq/container'
 import { createApp } from 'vue'
 
 import { services as application, TOKENS as APPLICATION } from '@/app/application'

@@ -1,11 +1,11 @@
-import { token } from '@kumahq/kontainer'
+import { token } from '@kumahq/container'
 
 import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
 import type { Can } from '@/app/application'
-import type { ServiceDefinition } from '@kumahq/kontainer'
+import type { ServiceDefinition } from '@kumahq/container'
 
 type Token = ReturnType<typeof token>
 

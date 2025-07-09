@@ -1,4 +1,4 @@
-import { token, createInjections } from '@kumahq/kontainer'
+import { token, createInjections } from '@kumahq/container'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
 // @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
@@ -21,7 +21,7 @@ import I18n from './services/i18n/I18n'
 import storage from './services/storage'
 import { create, destroy, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
-import type { ServiceDefinition } from '@kumahq/kontainer'
+import type { ServiceDefinition } from '@kumahq/container'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 

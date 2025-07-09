@@ -1,11 +1,11 @@
-import { token, createInjections } from '@kumahq/kontainer'
+import { token, createInjections } from '@kumahq/container'
 import { createApp } from 'vue'
 import {
   createRouter,
   createWebHistory,
 } from 'vue-router'
 
-import type { ServiceDefinition } from '@kumahq/kontainer'
+import type { ServiceDefinition } from '@kumahq/container'
 import type { Directive } from 'vue'
 import type { Router, RouteRecordRaw, NavigationGuard } from 'vue-router'
 export { useRoute } from 'vue-router'

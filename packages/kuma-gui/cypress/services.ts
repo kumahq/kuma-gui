@@ -1,5 +1,5 @@
+import { token, ServiceDefinition, createInjections } from '@kumahq/container'
 import { mocker } from '@kumahq/fake-api/cypress'
-import { token, ServiceDefinition, createInjections } from '@kumahq/kontainer'
 
 import type { EnvVars } from '@/app/application/services/env/Env'
 import type { EndpointDependencies } from '@/test-support'

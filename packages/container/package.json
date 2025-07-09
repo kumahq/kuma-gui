@@ -1,5 +1,5 @@
 {
-  "name": "@kumahq/kontainer",
+  "name": "@kumahq/container",
   "version": "0.1.0",
   "description": "Service container utilities",
   "private": true,

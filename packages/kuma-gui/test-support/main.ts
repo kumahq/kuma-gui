@@ -2,7 +2,7 @@
 // When running via vitest this file is added first using
 // vitest's `setupFiles` property, please see `/vite.config.production.ts`
 
-import { get, container, build } from '@kumahq/kontainer'
+import { get, container, build } from '@kumahq/container'
 import { beforeEach, afterEach } from 'vitest'
 
 import { services as testing } from './index'

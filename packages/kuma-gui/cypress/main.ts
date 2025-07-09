@@ -1,5 +1,5 @@
 import { setupSteps } from '@kumahq/config/cypress/steps'
-import { build, token } from '@kumahq/kontainer'
+import { build, token } from '@kumahq/container'
 
 import { TOKENS, services as e2e } from './services'
 import { services as application } from '@/app/application/debug'
