@@ -20,4 +20,4 @@ Feature: dataplanes / no-subscriptions
       """
     When I visit the "/meshes/default/data-planes/backend/overview" URL
     And the "$detail-view" element contains "backend"
-    And the "$overview-content" element contains "offline"
+    And the "$overview-content" element contains "Offline"
