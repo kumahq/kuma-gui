@@ -51,7 +51,24 @@
             <XI18n
               :path="`zone-cps.notifications.${key}`"
               :params="Object.fromEntries(Object.entries(params ?? {}))"
-            />
+            >
+              <template
+                v-if="key === 'global-nack-response'"
+                #link
+              >
+                <XAction
+                  data-action
+                  :to="{
+                    name: 'zone-cp-subscription-summary-view',
+                    params: {
+                      subscription: props.data.zoneInsight.connectedSubscription?.id,
+                    },
+                  }"
+                >
+                  Zone Control Plane Summary
+                </XAction>
+              </template>
+            </XI18n>
           </XNotification>
         </template>
 

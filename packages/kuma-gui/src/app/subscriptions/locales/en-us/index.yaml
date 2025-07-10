@@ -1,4 +1,8 @@
 subscriptions:
+  notifications:
+    with-nacks: !!text/markdown |
+      The Global Control Plane got NACK responses during this subscription
+
   routes:
     item:
       config: Configuration
@@ -20,3 +24,4 @@ subscriptions:
         responses: Total Responses (sent/ack'ed)
         type: Type
         stat: Responses sent/ack'ed
+        nacked: Responses rejected / NACK'ed
