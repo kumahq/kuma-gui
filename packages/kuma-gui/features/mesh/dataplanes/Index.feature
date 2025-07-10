@@ -60,7 +60,7 @@ Feature: mesh / dataplanes / index
       | service-1            |
       | zone-1               |
       | Nov 3, 2023, 9:10 AM |
-      | online               |
+      | Online               |
 
   Scenario: The Data Plane Proxy list has the expected minimal content
     Given the environment
@@ -94,7 +94,7 @@ Feature: mesh / dataplanes / index
       | Value          |
       | dpp-2          |
       | No certificate |
-      | offline        |
+      | Offline        |
 
   Scenario: Searching by tag doesn't overwrite the existing service tag
     When I visit the "/meshes/default/data-planes" URL

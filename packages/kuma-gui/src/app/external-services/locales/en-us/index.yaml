@@ -2,7 +2,7 @@ external-services:
   routes:
     item:
       title: "{name}"
-      breadcrumbs: External Services
+      breadcrumbs: ExternalServices
       navigation:
         external-service-detail-view: 'Overview'
       overview: 'Overview'
@@ -12,10 +12,10 @@ external-services:
         universal: Universal
         k8s: Kubernetes
     items:
-      title: External Services
+      title: ExternalServices
   detail:
     about:
-      title: About this External Service
+      title: About this ExternalService
     config: YAML
   href:
     docs: '{KUMA_DOCS_URL}/policies/external-services?{KUMA_UTM_QUERY_PARAMS}'

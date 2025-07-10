@@ -8,12 +8,12 @@ main-overview:
       title: Overview
   detail:
     about:
-      title: 'Global Control Plane stats'
-      view_all: '(view all)'
+      title: 'Global control plane stats'
+      view_all: '(View all)'
       zone_control_planes: 'Zones'
       meshes: 'Meshes'
       services: 'Services'
-      data_plane_proxies: 'Data Plane Proxies'
+      data_plane_proxies: 'Data plane proxies'
       policies: Policies
       descriptions:
         mesh_services: MeshServices
@@ -27,4 +27,4 @@ main-overview:
   action_menu:
     toggle_button: 'Actions'
     items:
-      hostname_generators: Hostname Generators
+      hostname_generators: HostnameGenerators

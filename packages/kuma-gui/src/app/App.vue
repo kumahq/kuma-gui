@@ -51,7 +51,7 @@
             v-style="'--icon: var(--icon-zone-egresses)'"
             data-testid="zone-egresses-navigator"
             :active="child.name === 'zone-egress-index-view'"
-            label="Zone Egresses"
+            label="ZoneEgresses"
             :to="{
               name: 'zone-egress-list-view',
             }"
