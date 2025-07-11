@@ -21,7 +21,7 @@ meshes:
       </a>
       for this mesh.
     mesh-service-activation: !!text/markdown |
-      This Mesh has not enabled a mode for MeshServices yet. Consider a <a target="_blank" href="{KUMA_DOCS_URL}/networking/meshservice/#migration">migration to MeshServices</a> to get the most out of your Mesh.
+      This mesh has not enabled a mode for MeshServices yet. Consider a <a target="_blank" href="{KUMA_DOCS_URL}/networking/meshservice/#migration">migration to MeshServices</a> to get the most out of your mesh.
 
 
   common:
@@ -36,7 +36,7 @@ meshes:
   x-empty-state:
     title: 'No data'
     body: !!text/markdown |
-      There are no Meshes present
+      There are no meshes present
     action:
       <<: *meshes.docs
 
@@ -51,7 +51,7 @@ meshes:
     mesh-insights-list:
       name: 'Name'
       services: 'Services'
-      dataplanes: 'Data Plane Proxies (online/total)'
+      dataplanes: 'Data plane proxies (online/total)'
 
   routes:
     item:
@@ -62,11 +62,11 @@ meshes:
         mesh-detail-view: Overview
         service-list-tabs-view: Services
         gateway-list-tabs-view: Gateways
-        data-plane-list-view: Data Plane Proxies
+        data-plane-list-view: Data plane proxies
         policy-list-index-view: Policies
       overview: 'Overview'
       about:
-        title: About this Mesh
+        title: About this mesh
       format: Format
       formats:
         universal: Universal
@@ -79,7 +79,7 @@ meshes:
         Meshes are logical groupings of services that define the scope of traffic management and security.
       collection:
         services: 'Services'
-        dataplanes: 'Data Plane Proxies (online/total)'
+        dataplanes: 'Data plane proxies (online/total)'
 
     overview:
       title: Mesh overview
@@ -87,7 +87,7 @@ meshes:
     docs: *meshes.docs.href
   detail:
     services: 'Services'
-    data_plane_proxies: 'Data Plane Proxies'
+    data_plane_proxies: 'Data plane proxies'
     policies: 'Policies'
     enabled: 'Enabled'
     disabled: 'Disabled'

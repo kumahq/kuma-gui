@@ -11,13 +11,13 @@ data-planes:
     envoy-dp-incompatible: !!text/markdown |
       Envoy (**{ envoy }**) is unsupported by the current version of Kuma DP (**{ kumaDp }**)
     dp-zone-cp-incompatible: !!text/markdown |
-      There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the Zone Control Plane.
+      There is a mismatch between versions of Kuma DP (**{ kumaDp }**) and the zone control plane.
     certificate-expired: !!text/markdown |
       The certificate for this dataplane has expired
     certificate-expires-soon: !!text/markdown |
       The certificate for this dataplane will expire soon
     no-mtls: !!text/markdown |
-      This Data Plane Proxy does not have mTLS configured, yet —
+      This data plane proxy does not have mTLS configured, yet —
       <a href="{KUMA_DOCS_URL}/policies/mutual-tls?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Learn about certificates in {KUMA_PRODUCT_NAME}</a>
     stats-not-enhanced: !!text/markdown |
       The below view is not enhanced with runtime stats (Error loading stats: **{ error }**)
@@ -27,7 +27,7 @@ data-planes:
 
 
   x-empty-state:
-    title: There are no Dataplanes present
+    title: There are no data planes present
   components:
     service_traffic_card:
       1xx: 1xx
@@ -52,11 +52,11 @@ data-planes:
   routes:
     item:
       title: "{name}"
-      breadcrumbs: Data Plane Proxies
+      breadcrumbs: Data plane proxies
       navigation:
         data-plane-detail-view: 'Overview'
         data-plane-policies-view: 'Policies'
-        data-plane-xds-config-view: 'XDS Configuration'
+        data-plane-xds-config-view: 'XDS configuration'
         data-plane-stats-view: 'Stats'
         data-plane-clusters-view: 'Clusters'
         data-plane-config-view: 'YAML'
@@ -86,14 +86,14 @@ data-planes:
           Unable to generate bundle, please try again.
         action: Download
         options:
-          xds: XDS Configuration
+          xds: XDS configuration
           eds: Include EDS
-          proxy: Dataplane Configuration
+          proxy: Data plane configuration
           policies: Policies
-          clusters: Envoy Clusters
-          stats: Envoy Stats
+          clusters: Envoy clusters
+          stats: Envoy stats
       about:
-        title: About this Data Plane Proxy
+        title: About this data plane proxy
       gateway: 'Gateway'
       config: Configuration
       format: Format
@@ -110,8 +110,8 @@ data-planes:
       certificate_info: 'Certificate info'
       no_certificate: 'No certificate'
       health:
-        ready: 'healthy'
-        not_ready: 'unhealthy'
+        ready: 'Healthy'
+        not_ready: 'Unhealthy'
       unhealthy_inbound: 'Inbound on port {port} is not ready (kuma.io/service: {service})'
       mtls:
         title: 'TLS'
@@ -126,20 +126,20 @@ data-planes:
         supported_backends:
           title: Supported CAs
       subscriptions:
-        title: XDS Connections
+        title: XDS connections
         description: !!text/markdown |
           Communication channels used by the control plane to dynamically configure and manage data plane proxies.
       rules:
         proxy: Proxy rule
         to: To rules
         from: From rules
-        inbound: Inbound Rules
+        inbound: Inbound rules
       legacy_policies: Legacy policies
       matches_everything: 'Matches everything'
     items:
-      title: Data Plane Proxies
+      title: Data plane proxies
       intro: !!text/markdown |
-        Data Plane Proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
+        Data plane proxies are sidecar proxies deployed alongside each service instance, responsible for handling all traffic, enforcing policies and facilitating communication between services.
       warnings:
         dp-cp-incompatible: Version mismatch
         certificate-expires-soon: Certificate expires soon

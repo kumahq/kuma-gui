@@ -60,7 +60,7 @@
                     },
                   }"
                 >
-                  Zone Control Plane Summary
+                  zone control plane summary
                 </XAction>
               </template>
             </XI18n>

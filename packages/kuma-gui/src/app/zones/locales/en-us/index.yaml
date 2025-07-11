@@ -22,14 +22,14 @@ zone-cps:
       This zone is using the `memory` store type. **Don't** use this store in production because the state isn't persisted.
       <a target="_blank" href="{KUMA_DOCS_URL}/documentation/configuration/#store">Read more about store types</a>
     global-cp-incompatible: !!text/markdown |
-      There is mismatch between versions of Zone Control Plane (**{ zoneCpVersion }**) and the Global Control Plane (**{ globalCpVersion }**)
+      There is a mismatch between versions of zone control plane (**{ zoneCpVersion }**) and the global control plane (**{ globalCpVersion }**)
     global-nack-response: !!text/markdown |
-      The Global Control Plane got NACK responses from the Zone Control Plane. Refer to the {link} or logs for more details.
+      The global control plane got NACK responses from the zone control plane. Refer to the {link} or logs for more details.
 
   x-empty-state:
-    title: No Zones yet...
+    title: No zones yet...
     body: !!text/markdown |
-      There are no Zones present
+      There are no zones present
     action:
       <<: *zone-cps.docs
 
@@ -48,7 +48,7 @@ zone-cps:
   routes:
     item:
       title: '{name}'
-      breadcrumbs: Zone Control Planes
+      breadcrumbs: Zone control planes
       navigation:
         zone-cp-detail-view: Overview
         zone-cp-config-view: Config
@@ -58,16 +58,16 @@ zone-cps:
       overview: Overview
       version: Version
       version_warning: !!text/markdown |
-        This Zone Control Plane is using an older version than the Global Control Plane, please consider upgrading your ZoneCP.
+        This zone control plane is using an older version than the global control plane, please consider upgrading your zone CP.
       subscription_intro: !!text/markdown |
         Statistics indicate requests and responses between global and zone only
     items:
-      title: Zone Control Planes
-      breadcrumbs: Zone Control Planes
+      title: Zone control planes
+      breadcrumbs: Zone control planes
       intro: !!text/markdown |
-        Zones are a logical grouping that represents a distinct network or infrastructure boundary with a multi-zone deployment. Zone Control Planes are responsible for managing and coordinating the service mesh within a specific zone, handling policies and communication with the Global Control Plane.
+        Zones are a logical grouping that represents a distinct network or infrastructure boundary with a multi-zone deployment. Zone control planes are responsible for managing and coordinating the service mesh within a specific zone, handling policies and the communication with the global control plane.
       headers:
-        zoneInstanceId: Zone Leader Instance ID
+        zoneInstanceId: Zone leader instance ID
         version: Version
         connected: Connected
         disconnected: Disconnected
@@ -81,13 +81,13 @@ zone-cps:
       global-cp-incompatible: Version mismatch
   detail:
     subscriptions:
-      title: 'KDS Connections'
+      title: 'KDS connections'
       description: !!text/markdown
         Communication channels used to synchronize configuration and policies between the global and zone control planes.
     configuration_title: 'Configuration'
     no_subscriptions: 'This zone has no subscriptions'
     about:
-      title: About this Zone Control Plane
+      title: About this zone control plane
 
 zones:
   href:
@@ -95,15 +95,15 @@ zones:
       cta: *zone-cps.docs.href
   routes:
     create:
-      title: 'Create & connect Zone'
+      title: 'Create & connect zone'
     items:
       title: Zones
       navigation:
-        zone-cp-list-view: Zone Control Planes
+        zone-cp-list-view: Zone control planes
         zone-ingress-list-view: Ingresses
         zone-egress-list-view: Egresses
   index:
-    create: 'Create Zone'
+    create: 'Create zone'
   action_menu:
     toggle_button: 'Actions'
     delete_button: 'Delete'

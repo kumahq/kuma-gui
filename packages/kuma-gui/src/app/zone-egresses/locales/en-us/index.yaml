@@ -1,15 +1,15 @@
 zone-egresses:
   x-empty-state:
-    title: No Data
+    title: No data
     body: !!text/markdown |
-      There are no Zone Egresses present
+      There are no ZoneEgresses present
   routes:
     item:
       title: '{name}'
       breadcrumbs: Egresses
       navigation:
         zone-egress-detail-view: 'Overview'
-        zone-egress-xds-config-view: 'XDS Configuration'
+        zone-egress-xds-config-view: 'XDS configuration'
         zone-egress-stats-view: 'Stats'
         zone-egress-clusters-view: 'Clusters'
         zone-egress-config-view: 'YAML'
@@ -21,19 +21,19 @@ zone-egresses:
           Unable to generate bundle, please try again.
         action: Download
         options:
-          xds: XDS Configuration
+          xds: XDS configuration
           eds: Include EDS
-          proxy: Zone Egress Configuration
-          clusters: Envoy Clusters
-          stats: Envoy Stats
+          proxy: ZoneEgress configuration
+          clusters: Envoy clusters
+          stats: Envoy stats
       overview: 'Overview'
       config: 'Configuration'
       subscriptions:
-        title: 'XDS Connections'
+        title: 'XDS connections'
         description: !!text/markdown |
           Communication channels used by the control plane to dynamically configure and manage data plane proxies.
       about:
-        title: About this Zone Egress
+        title: About this ZoneEgress
     items:
       title: Egresses
       breadcrumbs: Egresses
@@ -43,6 +43,6 @@ zone-egresses:
         k8s: Kubernetes
         structured: Structured
       intro: !!text/markdown |
-        A Zone Egress is specialized gateway that manages and routes outbound traffic from services with a zone to external destinations outside the mesh.
+        A `ZoneEgress` is specialized gateway that manages and routes outbound traffic from services with a zone to external destinations outside the mesh.
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zoneegress?{KUMA_UTM_QUERY_PARAMS}'

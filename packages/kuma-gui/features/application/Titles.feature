@@ -12,7 +12,7 @@ Feature: application / titles
       | URL                                                          | Title               |
       | /                                                            | Overview            |
       | /configuration                                               | Configuration       |
-      | /zones                                                       | Zone Control Planes |
+      | /zones                                                       | Zone control planes |
       | /zones/zone-cp-name/overview                                 | zone-cp-name        |
       | /zones/zone-cp-name/ingresses                                | Ingresses           |
       | /zones/zone-cp-name/ingresses/zone-ingress-name/overview     | zone-ingress-name   |
@@ -22,14 +22,14 @@ Feature: application / titles
       | /meshes/default/overview                                     | Mesh overview       |
       | /meshes/default/services/internal                            | Services            |
       | /meshes/default/services/internal/service-name/overview      | service-name        |
-      | /meshes/default/services/external                            | External Services   |
+      | /meshes/default/services/external                            | ExternalServices   |
       | /meshes/default/services/external/service-name/overview      | service-name        |
-      | /meshes/default/services/mesh-services                       | Mesh Services       |
-      | /meshes/default/gateways/builtin                             | Built-in Gateways   |
+      | /meshes/default/services/mesh-services                       | MeshServices       |
+      | /meshes/default/gateways/builtin                             | Built-in gateways   |
       | /meshes/default/gateways/builtin/gateway.namespace/overview  | gateway             |
-      | /meshes/default/gateways/delegated                           | Delegated Gateways  |
+      | /meshes/default/gateways/delegated                           | Delegated gateways  |
       | /meshes/default/gateways/delegated/gateway/overview          | gateway             |
-      | /meshes/default/data-planes                                  | Data Plane Proxies  |
+      | /meshes/default/data-planes                                  | Data plane proxies  |
       | /meshes/default/data-planes/data-plane-name/overview         | data-plane-name     |
       | /meshes/default/policies/circuit-breakers                    | Policies            |
       | /meshes/default/policies/circuit-breakers/program-0/overview | program-0           |

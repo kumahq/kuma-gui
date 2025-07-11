@@ -1,8 +1,8 @@
 zone-ingresses:
   x-empty-state:
-    title: No Data
+    title: No data
     body: !!text/markdown |
-      There are no Zone Ingresses present
+      There are no ZoneIngresses present
   routes:
     item:
       title: '{name}'
@@ -10,7 +10,7 @@ zone-ingresses:
       navigation:
         zone-ingress-detail-view: 'Overview'
         zone-ingress-services-view: 'Services'
-        zone-ingress-xds-config-view: 'XDS Configuration'
+        zone-ingress-xds-config-view: 'XDS configuration'
         zone-ingress-stats-view: 'Stats'
         zone-ingress-clusters-view: 'Clusters'
         zone-ingress-config-view: 'YAML'
@@ -22,19 +22,19 @@ zone-ingresses:
           Unable to generate bundle, please try again.
         action: Download
         options:
-          xds: XDS Configuration
+          xds: XDS configuration
           eds: Include EDS
-          proxy: Zone Ingress Configuration
-          clusters: Envoy Clusters
-          stats: Envoy Stats
+          proxy: ZoneIngress configuration
+          clusters: Envoy clusters
+          stats: Envoy stats
       overview: 'Overview'
       config: Configuration
       subscriptions:
-        title: 'XDS Connections'
+        title: 'XDS connections'
         description: !!text/markdown |
           Communication channels used by the control plane to dynamically configure and manage data plane proxies.
       about:
-        title: About this Zone Ingress
+        title: About this ZoneIngress
     items:
       title: Ingresses
       breadcrumbs: Ingresses
@@ -44,6 +44,6 @@ zone-ingresses:
         k8s: Kubernetes
         structured: Structured
       intro: !!text/markdown |
-        A Zone Ingress is a specialized gateway that facilitates cross-zone communication by securely routing traffic between services in different zones.
+        A `ZoneIngress` is a specialized gateway that facilitates cross-zone communication by securely routing traffic between services in different zones.
   href:
     docs: '{KUMA_DOCS_URL}/production/cp-deployment/zone-ingress?{KUMA_UTM_QUERY_PARAMS}'

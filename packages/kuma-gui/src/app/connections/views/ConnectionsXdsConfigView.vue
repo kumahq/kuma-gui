@@ -48,7 +48,7 @@
                 <template #primary-actions>
                   <XCheckbox
                     :checked="route.params.includeEds"
-                    label="Include Endpoints"
+                    label="Include endpoints"
                     @change="(value) => route.update({ includeEds: value })"
                   />
                   <XAction
