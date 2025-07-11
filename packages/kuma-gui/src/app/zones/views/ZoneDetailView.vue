@@ -46,7 +46,24 @@
             <XI18n
               :path="`zone-cps.notifications.${key}`"
               :params="Object.fromEntries(Object.entries(params ?? {}))"
-            />
+            >
+              <template
+                v-if="key === 'global-nack-response'"
+                #link
+              >
+                <XAction
+                  data-action
+                  :to="{
+                    name: 'zone-cp-subscription-summary-view',
+                    params: {
+                      subscription: props.data.zoneInsight.connectedSubscription?.id,
+                    },
+                  }"
+                >
+                  Zone Control Plane Summary
+                </XAction>
+              </template>
+            </XI18n>
           </XNotification>
         </template>
         <XLayout
@@ -130,7 +147,7 @@
             <template #title>
               <h2>{{ t('zone-cps.detail.subscriptions.title') }}</h2>
             </template>
-            
+
             <XLayout>
               <XI18n path="zone-cps.detail.subscriptions.description" />
               <AppCollection
@@ -197,8 +214,25 @@
                 >
                   <template
                     v-for="responses in [item.status?.total ?? {}]"
+                    :key="typeof responses"
                   >
-                    {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                    <XLayout
+                      type="separated"
+                    >
+                      {{ responses.responsesSent }}/{{ responses.responsesAcknowledged }}
+                      <XIcon
+                        v-if="!item.disconnectTime && item.status.total.responsesRejected > 0"
+                        name="warning"
+                        data-testid="warning"
+                      >
+                        <XI18n
+                          path="zone-cps.routes.items.rows.nacked"
+                          :params="{
+                            nacked: String(item.status.total.responsesRejected),
+                          }"
+                        />
+                      </XIcon>
+                    </XLayout>
                   </template>
                 </template>
               </AppCollection>
@@ -222,7 +256,9 @@
                   :is="Component"
                   :data="props.data.zoneInsight.subscriptions"
                 >
-                  <p>{{ t('zone-cps.routes.item.subscription_intro') }}</p>
+                  <XI18n
+                    path="zone-cps.routes.item.subscription_intro"
+                  />
                 </component>
               </SummaryView>
             </RouterView>

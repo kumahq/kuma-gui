@@ -1,8 +1,9 @@
+import { token, get } from '@kumahq/container'
+
 import cookied from './services/env/CookiedEnv'
 import type Env from './services/env/Env'
 import debugI18n from './services/i18n/DebugI18n'
-import type { ServiceDefinition, Token } from '@/services/utils'
-import { token, get } from '@/services/utils'
+import type { ServiceDefinition, Token } from '@kumahq/container'
 
 type I18n = ReturnType<typeof debugI18n>
 

@@ -1,9 +1,9 @@
+import { token } from '@kumahq/container'
 import { mswHandlers } from '@kumahq/fake-api/msw'
 
-import type { ServiceDefinition, Token } from '@/services/utils'
-import { token } from '@/services/utils'
 import type { EndpointDependencies, FS } from '@/test-support'
 import { dependencies } from '@/test-support'
+import type { ServiceDefinition, Token } from '@kumahq/container'
 
 const $ = {
   fakeFS: token<FS>('fake.fs'),
