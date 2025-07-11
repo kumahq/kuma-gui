@@ -10,7 +10,7 @@ import { services as application, TOKENS as APPLICATION } from '@/app/applicatio
 import { TOKENS } from '@/app/kuma'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
 
-(async () => {
+;(async () => {
   const $ = {
     ...VUE,
     ...APPLICATION,

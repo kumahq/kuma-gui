@@ -11,7 +11,7 @@ build/preview: VITE ?= $(shell $(MAKE) resolve/bin BIN=vite)
 build/preview:
 	@$(VITE) \
 			--configLoader runner \
-			-c ./vite.config.development.ts \
+			-c ./vite.config.production.ts \
 			--mode preview \
 			build
 
