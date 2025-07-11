@@ -122,7 +122,7 @@ export const create: Creator = (src, router) => {
         if ('retry' in this.configuration && this.configuration.retry) {
           const delay = 2000 + (500 * Math.pow(++retry, pow))
           switch(true) {
-            case (e instanceof TypeError) && `${e}`.includes('Failed to fetch') && retry <= maxRetry:
+            case (e instanceof TypeError) && ['failed to fetch', 'load failed'].some(str => `${e}`.toLowerCase().includes(str)) && retry <= maxRetry:
               console.error(e)
               await new Promise(resolve => setTimeout(resolve, delay))
               console.error(`Recovering ${retry} time(s) from a 'Failed to fetch' error`)
