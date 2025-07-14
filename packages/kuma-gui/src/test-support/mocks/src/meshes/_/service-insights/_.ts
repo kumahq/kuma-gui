@@ -9,7 +9,6 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const serviceType = paramType ?? (fake.datatype.boolean() ? fake.kuma.serviceType() : undefined)
   const addressPort = serviceType !== 'external' ? `${name}.mesh:${fake.internet.port()}` : undefined
   const status = serviceType !== 'external' ? fake.kuma.serviceStatusKeyword() : undefined
-  const dataplanes = serviceType !== 'external' ? fake.kuma.healthStatus() : undefined
 
   return {
     headers: {},
@@ -22,7 +21,15 @@ export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
       ...(serviceType && { serviceType }),
       ...(addressPort && { addressPort }),
       ...(status && { status }),
-      ...(dataplanes && { dataplanes }),
+      ...(serviceType !== 'external' && { dataplanes: (() => {
+        const total = fake.number.int({ min: 1, max: 10 })
+        return fake.kuma.partitionInto({
+          total,
+          online: Number,
+          partiallyDegraded: Number,
+          offline: Number,
+        }, total)
+      })()}),
     } satisfies ServiceInsight,
   }
 }
