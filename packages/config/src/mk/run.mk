@@ -3,7 +3,7 @@
 .run: install
 	@$(VITE) \
 		--configLoader runner \
-		-c ./vite.config.development.ts
+		-c ./vite.config.production.ts
 
 .PHONY: .run/docs
 .run/docs: VITEPRESS ?= $(shell $(MAKE) resolve/bin BIN=vitepress)
