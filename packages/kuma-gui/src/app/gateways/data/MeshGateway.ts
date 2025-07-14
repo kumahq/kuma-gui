@@ -17,6 +17,7 @@ export const MeshGateway = {
       labels,
       id: item.name,
       zone: labels['kuma.io/zone'] ?? '',
+      origin: labels['kuma.io/origin'] ?? '',
       name: labels['kuma.io/display-name'] ?? item.name,
       namespace: labels['k8s.kuma.io/namespace'] ?? '',
       config: item,

@@ -102,7 +102,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                     tags: fake.kuma.tags({
                       protocol: fake.kuma.protocol(),
                       service,
-                      zone: isMultizone && fake.datatype.boolean() ? zone : undefined,
+                      zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
                     }),
                     ...(fake.datatype.boolean() ? {
                       state: fake.kuma.inboundState(),
@@ -123,7 +123,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
                 gateway: {
                   tags: fake.kuma.tags({
                     service,
-                    zone: isMultizone && fake.datatype.boolean() ? zone : undefined,
+                    zone: zoneQuery || (isMultizone && fake.datatype.boolean()) ? zone : undefined,
                   }),
                   type,
                 },

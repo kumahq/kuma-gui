@@ -142,6 +142,22 @@ Feature: mesh / builtin-gateways / item
     When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/dataplanes" URL
     Then the "$dataplanes" element exists
 
+  Scenario: Dataplanes are filtered by zone
+    Given the environment
+      """
+      KUMA_DATAPLANE_COUNT: 1
+      """
+    Given the URL "/meshes/default/meshgateways/gateway-1.kuma-system" responds with
+      """
+      body:
+        labels:
+          kuma.io/origin: zone
+          kuma.io/zone: foo
+      """
+    When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/dataplanes" URL
+    Then the "$dataplanes tbody tr" element exists 1 time
+    And the "$dataplanes tbody tr" element contains "foo"
+
   Scenario: Shows config with format based on environment
     When I visit the "/meshes/default/gateways/builtin/gateway-1.kuma-system/config" URL
     Then the "$config-universal" element exists
