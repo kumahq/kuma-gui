@@ -245,7 +245,8 @@ const routeUpdate = (params: Partial<PrimitiveParams>): void => {
   // avoid causing any re-renders due to the refreshed DataSource
   // TODO: ideally we wouldn't have locally stored state like this, and we
   // would instead use a single source of truth which in this case would be
-  // localStorage
+  // localStorage.
+  // For more information please refer to https://github.com/kumahq/kuma-gui/issues/3494#issuecomment-3057398708
   local = Object.entries(params).reduce((prev, [key, value]) => {
     if([Number, String, Boolean].some(item => props.params[key] === item)) {
       prev[key] = value
