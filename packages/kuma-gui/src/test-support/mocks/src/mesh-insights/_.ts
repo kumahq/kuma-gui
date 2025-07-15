@@ -4,23 +4,29 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
 
   const resourceCount = parseInt(env('KUMA_ACTIVE_RESOURCE_COUNT', `${Number.MAX_SAFE_INTEGER}`))
   const serviceTotal = parseInt(env('KUMA_SERVICE_COUNT', `${fake.number.int({ min: 1, max: 30 })}`))
+  const max = env('KUMA_DATAPLANE_COUNT', '30') === '0' ? 0 : 30
 
-  const standard = fake.kuma.healthStatus()
-  const gatewayBuiltin = fake.kuma.healthStatus()
-  const gatewayDelegated = fake.kuma.healthStatus()
+  const { standard, gatewayBuiltin, gatewayDelegated } = fake.kuma.partitionInto({
+    standard: Number,
+    gatewayBuiltin: Number,
+    gatewayDelegated: Number,
+  }, max)
 
-  const gateway = {
-    total: (gatewayBuiltin.total ?? 0) + (gatewayDelegated.total ?? 0),
-    online: (gatewayBuiltin.online ?? 0) + (gatewayDelegated.online ?? 0),
-    partiallyDegraded: (gatewayBuiltin.partiallyDegraded ?? 0) + (gatewayDelegated.partiallyDegraded ?? 0),
-    offline: (gatewayBuiltin.offline ?? 0) + (gatewayDelegated.offline ?? 0),
-  }
-  const dataplanes = {
-    total: (standard.total ?? 0) + (gateway.total ?? 0),
-    online: (standard.online ?? 0) + (gateway.online ?? 0),
-    partiallyDegraded: (standard.partiallyDegraded ?? 0) + (gateway.partiallyDegraded ?? 0),
-    offline: (standard.offline ?? 0) + (gateway.offline ?? 0),
-  }
+  const gatewaysTotal = gatewayBuiltin + gatewayDelegated
+  const gateway = fake.kuma.partitionInto({
+    total: gatewaysTotal,
+    online: Number,
+    partiallyDegraded: Number,
+    offline: Number,
+  }, gatewaysTotal)
+
+  const dataplanesTotal = standard + gateway.total
+  const dataplanes = fake.kuma.partitionInto({
+    total: dataplanesTotal,
+    online: Number,
+    partiallyDegraded: Number,
+    offline: Number,
+  }, dataplanesTotal)
 
   const dpTotal = dataplanes.online + dataplanes.partiallyDegraded
   const totalVersions = fake.kuma.partition(1, dpTotal, 5, dpTotal)

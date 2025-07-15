@@ -1,12 +1,6 @@
 import { Faker } from '@faker-js/faker'
 import deepmerge from 'deepmerge'
 
-import type {
-  DataplaneNetworking,
-  DataPlaneProxyStatus,
-  ToTargetRefRuleMatch,
-} from '@/types/index.d'
-
 type Tags<T extends Record<string, string | undefined>> =
   T extends { service: string }
     ? { 'kuma.io/service': string, [key: string]: string }
@@ -227,26 +221,6 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     return JSON.stringify(deepmerge(subscriptionConfig(), config), null, 4)
   }
 
-  /**
-   * Returns a random DPP (or gateway) status object with self-consistent values (i.e. total = online + partiallyDegraded + offline).
-   * @deprecated - please use partitionInto
-   */
-  healthStatus({ min = 0, max = 30, omitZeroValues = true }: { min?: number, max?: number, omitZeroValues?: boolean } = {}) {
-    const total = this.faker.number.int({ min, max })
-    const online = this.faker.number.int({ min: 0, max: total })
-    const partiallyDegraded = this.faker.number.int({ min: 0, max: total - online })
-    const offline = total - online - partiallyDegraded
-
-    const values = [
-      ['total', total],
-      ['online', online],
-      ['partiallyDegraded', partiallyDegraded],
-      ['offline', offline],
-    ].filter(([_key, value]) => omitZeroValues ? value !== 0 : true)
-
-    return Object.fromEntries(values) as DataPlaneProxyStatus
-  }
-
   globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {
     const total = this.faker.number.int({ min, max })
 
@@ -259,9 +233,24 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
       external: {
         total: externalTotal,
       },
-      gatewayBuiltin: this.healthStatus({ max: gatewayBuiltinTotal, omitZeroValues: false }),
-      gatewayDelegated: this.healthStatus({ max: gatewayDelegatedTotal, omitZeroValues: false }),
-      internal: this.healthStatus({ max: internalTotal, omitZeroValues: false }),
+      gatewayBuiltin: this.partitionInto({
+        total: gatewayBuiltinTotal,
+        online: Number,
+        offline: Number,
+        partiallyDegraded: Number,
+      }, gatewayBuiltinTotal),
+      gatewayDelegated: this.partitionInto({
+        total: gatewayDelegatedTotal,
+        online: Number,
+        offline: Number,
+        partiallyDegraded: Number,
+      }, gatewayDelegatedTotal),
+      internal: this.partitionInto({
+        total: internalTotal,
+        online: Number,
+        offline: Number,
+        partiallyDegraded: Number,
+      }, internalTotal),
     }
   }
 
@@ -303,80 +292,6 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     }
   }
 
-  /**
-   * @deprecated - please inline networking property instead
-   */
-  dataplaneNetworking(
-    {
-      type = 'proxy',
-      inbounds = 0,
-      isMultizone = false,
-      service,
-    }: {
-      type?: 'gateway_builtin' | 'gateway_delegated' | 'proxy'
-      inbounds?: number
-      isMultizone?: boolean
-      service?: string
-    } = {},
-  ): DataplaneNetworking {
-    const address = this.faker.internet.ipv4()
-    const advertisedAddress = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
-    const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
-
-    return {
-      address,
-      ...(advertisedAddress && { advertisedAddress }),
-      ...(type !== 'proxy'
-        ? {
-          gateway: {
-            tags: this.tags({
-              service: service ?? this.serviceName(type),
-              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.word.noun() : undefined,
-            }),
-            ...(dataplaneType && { type: dataplaneType }),
-          },
-        }
-        : {}),
-      ...(type === 'proxy'
-        ? {
-          inbound: Array.from({ length: inbounds }).map(() => {
-            const address = this.faker.datatype.boolean({ probability: 0.25 }) ? this.faker.internet.ipv4() : undefined
-            const port = this.faker.internet.port()
-            const hasServiceAddress = this.faker.datatype.boolean({ probability: 0.25 })
-            const serviceAddress = hasServiceAddress ? this.faker.internet.ipv4() : undefined
-            const servicePort = hasServiceAddress ? this.faker.internet.port() : undefined
-            const tags = this.tags({
-              protocol: this.protocol(),
-              service: service ?? this.serviceName(),
-              zone: isMultizone && this.faker.datatype.boolean() ? this.faker.word.noun() : undefined,
-            })
-
-            return {
-              port,
-              tags,
-              ...(this.faker.datatype.boolean()
-                ? {
-                  health: {
-                    ready: this.faker.datatype.boolean(),
-                  },
-                }
-                : {}),
-              ...(address && { address }),
-              ...(serviceAddress && { serviceAddress }),
-              ...(servicePort && { servicePort }),
-            }
-          }),
-        }
-        : {}),
-      outbound: [
-        {
-          port: this.faker.internet.port(),
-          tags: this.tags({ service: service ?? this.serviceName() }),
-        },
-      ],
-    }
-  }
-
   dataplaneMtls() {
     const issuedBackend = this.faker.word.noun()
     const supportedBackends = [issuedBackend].concat(this.faker.helpers.multiple(() => this.faker.word.noun()))
@@ -399,14 +314,14 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
     ])
   }
 
-  ruleMatch({ kind }: { kind?: 'path' | 'method' | 'headers' | 'queryParams' } = { kind: 'path' }): ToTargetRefRuleMatch {
+  ruleMatch({ kind }: { kind?: 'path' | 'method' | 'headers' | 'queryParams' } = { kind: 'path' }) {
     const _kind = kind ?? this.faker.helpers.arrayElement<'path' | 'method' | 'headers' | 'queryParams'>(['path', 'method', 'headers', 'queryParams'])
 
     return {
       ...(_kind === 'path' && {
         path: {
           value: '/api',
-          type: 'PathPrefix',
+          type: 'PathPrefix' as const,
         },
       }),
       ...(_kind === 'method' && {
@@ -416,7 +331,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
         queryParams: [
           {
             name: 'size',
-            type: 'Exact',
+            type: 'Exact' as const,
             value: '1',
           },
         ],

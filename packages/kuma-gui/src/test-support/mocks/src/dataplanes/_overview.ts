@@ -61,7 +61,64 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           creationTime: '2021-02-17T08:33:36.442044+01:00',
           modificationTime: '2021-02-17T08:33:36.442044+01:00',
           dataplane: {
-            networking: fake.kuma.dataplaneNetworking({ type, inbounds, isMultizone, service }),
+            networking: (() => {
+              const address = fake.internet.ipv4()
+              const advertisedAddress = fake.datatype.boolean({ probability: 0.25 }) ? fake.internet.ipv4() : undefined
+              const dataplaneType = type === 'gateway_builtin' ? 'BUILTIN' : type === 'gateway_delegated' ? 'DELEGATED' : undefined
+
+              return {
+                address,
+                ...(advertisedAddress && { advertisedAddress }),
+                ...(type !== 'proxy'
+                  ? {
+                    gateway: {
+                      tags: fake.kuma.tags({
+                        service: service ?? fake.kuma.serviceName(type),
+                        zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                      }),
+                      ...(dataplaneType && { type: dataplaneType }),
+                    },
+                  }
+                  : {}),
+                ...(type === 'proxy'
+                  ? {
+                    inbound: Array.from({ length: inbounds }).map(() => {
+                      const address = fake.datatype.boolean({ probability: 0.25 }) ? fake.internet.ipv4() : undefined
+                      const port = fake.internet.port()
+                      const hasServiceAddress = fake.datatype.boolean({ probability: 0.25 })
+                      const serviceAddress = hasServiceAddress ? fake.internet.ipv4() : undefined
+                      const servicePort = hasServiceAddress ? fake.internet.port() : undefined
+                      const tags = fake.kuma.tags({
+                        protocol: fake.kuma.protocol(),
+                        service: service ?? fake.kuma.serviceName(),
+                        zone: isMultizone && fake.datatype.boolean() ? fake.word.noun() : undefined,
+                      })
+
+                      return {
+                        port,
+                        tags,
+                        ...(fake.datatype.boolean()
+                          ? {
+                            health: {
+                              ready: fake.datatype.boolean(),
+                            },
+                          }
+                          : {}),
+                        ...(address && { address }),
+                        ...(serviceAddress && { serviceAddress }),
+                        ...(servicePort && { servicePort }),
+                      }
+                    }),
+                  }
+                  : {}),
+                outbound: [
+                  {
+                    port: fake.internet.port(),
+                    tags: fake.kuma.tags({ service: service ?? fake.kuma.serviceName() }),
+                  },
+                ],
+              }
+            })(),
           },
           ...(k8s
             ? {
