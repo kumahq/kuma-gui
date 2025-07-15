@@ -1,4 +1,4 @@
-import { Faker } from '@faker-js/faker'
+import { faker, Faker } from '@faker-js/faker'
 import deepmerge from 'deepmerge'
 
 import type {
@@ -611,7 +611,34 @@ function subscriptionConfig() {
     },
     dpServer: {
       authn: {
-        type: 'dpToken',
+        ...(faker.helpers.arrayElement([
+          {
+            dpProxy: {
+              type: faker.helpers.arrayElement(['serviceAccountToken', 'dpToken', 'none']),
+              dpToken: {
+                enableIssuer: faker.datatype.boolean(),
+                validator: {
+                  useSecrets: faker.datatype.boolean(),
+                  publicKeys: [faker.word.noun()],
+                },
+              },
+            },
+            
+          },
+          {
+            zoneProxy: {
+              type: faker.helpers.arrayElement(['serviceAccountToken', 'zoneToken', 'none']),
+              zoneToken: {
+                enableIssuer: faker.datatype.boolean(),
+                validator: {
+                  useSecrets: faker.datatype.boolean(),
+                  publicKeys: [faker.word.noun()],
+                },
+              },
+            },
+          },
+        ])),
+        enableReloadableTokens: faker.datatype.boolean(),
       },
       hds: {
         checkDefaults: {

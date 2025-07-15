@@ -76,9 +76,35 @@ export interface DnsServer {
   serviceVipEnabled: boolean
 }
 
-export interface Auth2 {
-  type: string
+export interface AuthnToken {
+  enableIssuer: boolean
+  validator: {
+    useSecrets: boolean
+    publicKeys: string[]
+  }
 }
+
+export interface AuthnDpProxy {
+  dpProxy: {
+    type: 'serviceAccountToken' | 'dpToken' | 'none'
+    dpToken: AuthnToken
+  }
+}
+
+export interface AuthnZoneProxy {
+  zoneProxy: {
+    type: 'serviceAccountToken' | 'zoneToken' | 'none'
+    zoneToken: AuthnToken
+  }
+}
+
+export interface DpServerAuthn {
+  enableReloadableTokens: boolean
+}
+
+export interface AuthnDp extends DpServerAuthn, AuthnDpProxy {}
+
+export interface AuthnZone extends DpServerAuthn, AuthnZoneProxy {}
 
 export interface CheckDefaults {
   healthyThreshold: number
@@ -96,7 +122,7 @@ export interface Hds {
 }
 
 export interface DpServer {
-  auth: Auth2
+  authn: AuthnDp | AuthnZone
   hds: Hds
   port: number
   tlsCertFile: string
