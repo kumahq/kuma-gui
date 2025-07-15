@@ -36,12 +36,12 @@ export const server = <TDependencies extends object = {}>(
   }
 }
 
-export const handler = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
+export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
   const fetch = createFetch({
     dependencies,
     fs,
   })
-  return (route: string) => {
+  return Object.keys(fs).map(route => {
     return http.all(`${route}`, async ({ request: req }) => {
       // headers can be string | string[] | undefined, not string
       const headers = Object.entries(req.headers).reduce((prev, [key, item]) => {
@@ -66,16 +66,5 @@ export const handler = <TDependencies extends object = {}>(fs: FS, dependencies:
         status: parseInt(response.headers?.get('Status-Code') ?? '200'),
       })
     })
-  }
-}
-
-export const mswHandlers = <TDependencies extends object = {}>(fs: FS, dependencies: Dependencies<TDependencies>) => {
-  const baseUrl = dependencies.env('KUMA_API_URL')
-  const _fs = Object.fromEntries(Object.entries(fs).map(([route, response]) => {
-    return [route.includes('://') ? route : `${baseUrl}${route}`, response]
-  }))
-  const handlerFor = handler(_fs, dependencies)
-  return Object.keys(_fs).map(route => {
-    return handlerFor(route)
   })
 }
