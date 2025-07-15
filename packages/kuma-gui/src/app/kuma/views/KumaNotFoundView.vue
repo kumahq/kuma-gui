@@ -15,7 +15,7 @@
           <template #title>
             <h1>
               <RouteTitle
-                title="Page Not Found"
+                title="Page not found"
               />
             </h1>
           </template>
@@ -27,7 +27,7 @@
               appearance="primary"
               :to="{ name: 'control-plane-root-view' }"
             >
-              Go Home
+              Go home
             </XAction>
           </template>
         </XEmptyState>

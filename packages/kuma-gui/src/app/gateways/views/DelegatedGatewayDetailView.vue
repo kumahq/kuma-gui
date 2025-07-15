@@ -108,7 +108,7 @@
                   { ...me.get('headers.name'), label: 'Name', key: 'name' },
                   { ...me.get('headers.namespace'), label: 'Namespace', key: 'namespace' },
                   ...(can('use zones') ? [{ ...me.get('headers.zone'), label: 'Zone', key: 'zone' }] : []),
-                  { ...me.get('headers.certificate'), label: 'Certificate Info', key: 'certificate' },
+                  { ...me.get('headers.certificate'), label: 'Certificate info', key: 'certificate' },
                   { ...me.get('headers.status'), label: 'Status', key: 'status' },
                   { ...me.get('headers.warnings'), label: 'Warnings', key: 'warnings', hideLabel: true },
                   { ...me.get('headers.actions'), label: 'Actions', key: 'actions', hideLabel: true },

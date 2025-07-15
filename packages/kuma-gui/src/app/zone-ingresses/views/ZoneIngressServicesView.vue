@@ -20,7 +20,7 @@
               { label: 'Name', key: 'name' },
               { label: 'Mesh', key: 'mesh' },
               { label: 'Protocol', key: 'protocol' },
-              { label: 'No. Instances', key: 'instances' },
+              { label: 'No. instances', key: 'instances' },
               { label: 'Actions', key: 'actions', hideLabel: true },
             ]"
             :items="props.data.zoneIngress.availableServices"

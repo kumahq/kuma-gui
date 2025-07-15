@@ -92,7 +92,7 @@
                   <template
                     #title
                   >
-                    Dataplane Proxies
+                    Data plane proxies
                   </template>
                   <template
                     #body
