@@ -34,7 +34,8 @@
     },
     {
       "matchPackageNames": [
-        "npm"
+        "npm",
+        "escape-string-regexp"
       ],
       "enabled": false
     },
