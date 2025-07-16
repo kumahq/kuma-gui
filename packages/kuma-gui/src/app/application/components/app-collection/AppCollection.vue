@@ -44,10 +44,9 @@
 
 <script lang="ts" setup generic="Row extends {}">
 import { KTableView } from '@kong/kongponents'
-import { ref, inject, onMounted, ComponentPublicInstance } from 'vue'
+import { ref, onMounted, ComponentPublicInstance } from 'vue'
 
 
-import { runInDebug } from '../../'
 import type { TableViewHeader as KTableViewHeader, TablePreferences } from '@kong/kongponents'
 type ResizeValue = {
   headers: Record<string, { width: number }>
@@ -58,18 +57,6 @@ type TableHeader = KTableViewHeader & {
 }
 
 
-// when we are inside of a DataLoader make sure its using the `variant="list"`
-// but only error in dev mode, if this fails in production we don't want things
-// to blow up
-const dataLoader = inject<{ props: { variant: string } } | undefined>('data-loader')
-if (typeof dataLoader !== 'undefined') {
-  if (dataLoader.props.variant !== 'list') {
-    runInDebug(() => {
-      console.error('Please use <DataLoader variant="list" />')
-      // throw new Error('Please use <DataLoader variant="list" />')
-    })
-  }
-}
 //
 const props = withDefaults(defineProps<{
   isSelectedRow?: ((row: Row) => boolean)
