@@ -24,7 +24,6 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
         const name = `${serviceName ? `${serviceName}-` : ''}${fake.word.noun()}-${id}-${serviceType}`
         const addressPort = serviceType !== 'external' ? `${name}.mesh:${fake.internet.port()}` : undefined
         const status = serviceType !== 'external' ? fake.kuma.serviceStatusKeyword() : undefined
-        const dataplanes = serviceType !== 'external' ? fake.kuma.healthStatus() : undefined
 
         return {
           type: 'ServiceInsight',
@@ -35,7 +34,15 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
           ...(serviceType && { serviceType }),
           ...(addressPort && { addressPort }),
           ...(status && { status }),
-          ...(dataplanes && { dataplanes }),
+          ...(serviceType !== 'external' && { dataplanes: (() => {
+            const total = fake.number.int({ min: 1, max: 10 })
+            return fake.kuma.partitionInto({
+              total,
+              online: Number,
+              partiallyDegraded: Number,
+              offline: Number,
+            }, total)
+          })()}),
         } satisfies ServiceInsight
       }),
     },
