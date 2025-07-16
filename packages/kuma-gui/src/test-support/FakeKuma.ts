@@ -218,7 +218,7 @@ gbXR5RnEs0hDxugaIknJMKk1b0g=
   }
 
   subscriptionConfig(config: any = {}) {
-    return JSON.stringify(deepmerge(subscriptionConfig(), config), null, 4)
+    return JSON.stringify(deepmerge(subscriptionConfig({ faker: this.faker }), config), null, 4)
   }
 
   globalInsightServices({ min = 0, max = 30 }: { min?: number, max?: number } = {}) {
@@ -479,7 +479,7 @@ export default class FakeKuma extends Faker {
   kuma = new KumaModule(this, this.k8s)
 }
 
-function subscriptionConfig() {
+function subscriptionConfig({ faker }: { faker: Faker }) {
   return {
     apiServer: {
       auth: {
@@ -526,7 +526,34 @@ function subscriptionConfig() {
     },
     dpServer: {
       authn: {
-        type: 'dpToken',
+        ...(faker.helpers.arrayElement([
+          {
+            dpProxy: {
+              type: faker.helpers.arrayElement(['serviceAccountToken', 'dpToken', 'none']),
+              dpToken: {
+                enableIssuer: faker.datatype.boolean(),
+                validator: {
+                  useSecrets: faker.datatype.boolean(),
+                  publicKeys: [faker.word.noun()],
+                },
+              },
+            },
+            
+          },
+          {
+            zoneProxy: {
+              type: faker.helpers.arrayElement(['serviceAccountToken', 'zoneToken', 'none']),
+              zoneToken: {
+                enableIssuer: faker.datatype.boolean(),
+                validator: {
+                  useSecrets: faker.datatype.boolean(),
+                  publicKeys: [faker.word.noun()],
+                },
+              },
+            },
+          },
+        ])),
+        enableReloadableTokens: faker.datatype.boolean(),
       },
       hds: {
         checkDefaults: {
