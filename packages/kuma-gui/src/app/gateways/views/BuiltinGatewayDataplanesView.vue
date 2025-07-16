@@ -37,7 +37,10 @@
             }, {
               page: route.params.page,
               size: route.params.size,
-              search: route.params.s,
+              search: [
+                route.params.s,
+                ...(props.gateway.origin === 'zone' && props.gateway.zone.length ? [ `zone:${props.gateway.zone}` ] : []),
+              ].join(' '),
             })"
             variant="list"
             v-slot="{ data: dataplanesData }"
