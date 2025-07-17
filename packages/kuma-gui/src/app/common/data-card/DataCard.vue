@@ -28,7 +28,7 @@
 .card,
 .body,
 .body > :deep(dl),
-.body > :deep(dl) > div {
+.body > :deep(dl) div {
   display: flex;
   flex-wrap: wrap;
   gap: $kui-space-40;
@@ -48,13 +48,13 @@
 }
 .body > :deep(dl) > div {
   column-gap: $kui-space-20;
-  > dt {
+  dt {
     color: $kui-color-text-disabled;
   }
-  > dd  {
+  dd  {
     color: $kui-color-text;
   }
-  > dt::after {
+  dt::after {
     display: inline;
     /*[lang="en"]*/
     content: ': ';

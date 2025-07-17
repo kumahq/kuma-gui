@@ -85,21 +85,20 @@
             <dd>{{ t('common.formats.integer', { value: props.traffic.grpc?.failure }) }}</dd>
           </div>
           <template
-            v-for="mtls in [Object.values(props.traffic.http?.rbac ?? {}).reduce<number>((prev, item) => prev + (item as number), 0)]"
-            :key="typeof mtls"
+            v-if="props.direction === 'downstream'"
           >
-            <div
-              data-testid="rq-mtls"
+            <template
+              v-for="nonMtls in [(props.traffic.http?.rq_total ?? 0) - Object.values(props.traffic.http?.rbac ?? {}).reduce<number>((prev, item) => prev + (item as number), 0)]"
+              :key="typeof nonMtls"
             >
-              <dt>{{ t('data-planes.components.service_traffic_card.mtls') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: mtls }) }}</dd>
-            </div>
-            <div
-              data-testid="rq-no-mtls"
-            >
-              <dt>{{ t('data-planes.components.service_traffic_card.no-mtls') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: (props.traffic.http?.rq_total ?? 0) - mtls }) }}</dd>
-            </div>
+              <div
+                v-if="nonMtls !== 0"
+                class="rq-no-mtls"
+              >
+                <dt>{{ t('data-planes.components.service_traffic_card.no-mtls.title') }}</dt>
+                <dd>{{ t('common.formats.integer', { value: nonMtls}) }}</dd>
+              </div>
+            </template>
           </template>
         </template>
         <template
@@ -140,21 +139,20 @@
             <dd>{{ t('common.formats.integer', { value: props.traffic.http?.[`${props.direction}_rq_5xx`] }) }}</dd>
           </div>
           <template
-            v-for="mtls in [Object.values(props.traffic.http?.rbac ?? {}).reduce<number>((prev, item) => prev + (item as number), 0)]"
-            :key="typeof mtls"
+            v-if="props.direction === 'downstream'"
           >
-            <div
-              data-testid="rq-mtls"
+            <template
+              v-for="nonMtls in [(props.traffic.http?.rq_total ?? 0) - Object.values(props.traffic.http?.rbac ?? {}).reduce<number>((prev, item) => prev + (item as number), 0)]"
+              :key="typeof nonMtls"
             >
-              <dt>{{ t('data-planes.components.service_traffic_card.mtls') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: mtls }) }}</dd>
-            </div>
-            <div
-              data-testid="rq-no-mtls"
-            >
-              <dt>{{ t('data-planes.components.service_traffic_card.no-mtls') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: (props.traffic.http?.rq_total ?? 0) - mtls }) }}</dd>
-            </div>
+              <div
+                v-if="nonMtls !== 0"
+                class="rq-no-mtls"
+              >
+                <dt>{{ t('data-planes.components.service_traffic_card.no-mtls.title') }}</dt>
+                <dd>{{ t('common.formats.integer', { value: nonMtls}) }}</dd>
+              </div>
+            </template>
           </template>
         </template>
         <template
@@ -181,21 +179,20 @@
             <dd>{{ formatBytes(props.traffic.tcp?.[`${props.direction}_cx_rx_bytes_total`]) }}</dd>
           </div>
           <template
-            v-for="mtls in [Object.values(props.traffic.tcp?.rbac ?? {}).reduce<number>((prev, item) => prev + (item as number), 0)]"
-            :key="typeof mtls"
+            v-if="props.direction === 'downstream'"
           >
-            <div
-              data-testid="rq-mtls"
+            <template
+              v-for="nonMtls in [(props.traffic.tcp?.rq_total ?? 0) - Object.values(props.traffic.tcp?.rbac ?? {}).reduce<number>((prev, item) => prev + (item as number), 0)]"
+              :key="typeof nonMtls"
             >
-              <dt>{{ t('data-planes.components.service_traffic_card.mtls') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: mtls }) }}</dd>
-            </div>
-            <div
-              data-testid="rq-no-mtls"
-            >
-              <dt>{{ t('data-planes.components.service_traffic_card.no-mtls') }}</dt>
-              <dd>{{ t('common.formats.integer', { value: (props.traffic.tcp?.[`${props.direction}_cx_total`] ?? 0) - mtls }) }}</dd>
-            </div>
+              <div
+                v-if="nonMtls !== 0"
+                class="rq-no-mtls"
+              >
+                <dt>{{ t('data-planes.components.service_traffic_card.no-mtls.title') }}</dt>
+                <dd>{{ t('common.formats.integer', { value: nonMtls}) }}</dd>
+              </div>
+            </template>
           </template>
         </template>
       </dl>
@@ -260,4 +257,9 @@ const click = (e: MouseEvent) => {
   text-decoration: none;
   color: inherit;
 }
+.rq-no-mtls dt,
+.rq-no-mtls dd {
+  color: $kui-color-text-warning !important
+}
+
 </style>

@@ -35,8 +35,10 @@ data-planes:
       3xx: 3xx
       4xx: 4xx
       5xx: 5xx
-      mtls: mTLS enabled
-      no-mtls: mTLS disabled
+      no-mtls:
+        title: non-mTLS requests
+        tooltip: !!text/markdown |
+          When using permissive mTLS this is the number of requests received that did not have a client certificate. Before switching to strict mTLS this count should not increase otherwise some clients will fail request
       cx: Total connections
       tx: Bytes sent
       rx: Bytes received
