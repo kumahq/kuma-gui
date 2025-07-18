@@ -13,8 +13,8 @@
   "dependencies": {
     "@gera2ld/tarjs": "^0.3.1",
     "@kong-ui-public/app-layout": "^4.4.8",
-    "@kong-ui-public/entities-shared": "^3.25.2",
-    "@kong-ui-public/i18n": "^2.3.1",
+    "@kong-ui-public/entities-shared": "^3.25.4",
+    "@kong-ui-public/i18n": "^2.3.2",
     "@kong/icons": "^1.31.0",
     "@kong/kongponents": "^9.35.8",
     "@kumahq/container": "*",
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
     "@faker-js/faker": "^9.9.0",
-    "@kong/design-tokens": "^1.17.4",
+    "@kong/design-tokens": "^1.17.5",
     "@kumahq/config": "*",
     "@kumahq/fake-api": "*",
     "@kumahq/kuma-http-api": "*",
