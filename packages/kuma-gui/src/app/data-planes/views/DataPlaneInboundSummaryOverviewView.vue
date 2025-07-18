@@ -53,7 +53,7 @@
           layout="horizontal"
         >
           <template #title>
-            Service Address
+            Service address
           </template>
 
           <template #body>
@@ -152,7 +152,7 @@
                                     layout="horizontal"
                                   >
                                     <template #title>
-                                      Origin Policies
+                                      Origin policies
                                     </template>
 
                                     <template #body>

@@ -5329,7 +5329,7 @@ export interface components {
                     /** @description Default is a configuration specific to the group of destinations referenced in
                      *     'targetRef' */
                     default?: {
-                        /** @description GRPC defines a configuration of retries for GRPC traffic */
+                        /** @description gRPC defines a configuration of retries for gRPC traffic */
                         grpc?: {
                             /** @description BackOff is a configuration of durations which will be used in an exponential
                              *     backoff strategy between retries. */

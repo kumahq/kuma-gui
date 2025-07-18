@@ -17,7 +17,7 @@ hostname-generators:
     item:
       title: "{name}"
       subtitle: "{name} HostnameGenerator"
-      breadcrumbs: Hostname Generators
+      breadcrumbs: HostnameGenerators
       config: Configuration
       format: Format
       formats:
@@ -25,10 +25,10 @@ hostname-generators:
         k8s: Kubernetes
         structured: Structured
       about:
-        title: About this Hostname Generator
+        title: About this HostnameGenerator
     items:
-      title: Hostname Generators
-      breadcrumbs: Hostname Generators
+      title: HostnameGenerators
+      breadcrumbs: HostnameGenerators
       intro: !!text/markdown |
         `HostnameGenerator`s provide templates to generate hostnames from properties of different `MeshService` types.
   href:

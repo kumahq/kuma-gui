@@ -38,7 +38,7 @@ Feature: Dataplane details for standard Data Plane Proxy
     When I visit the "/meshes/default/data-planes/dpp-1-name-of-dataplane/overview" URL
     Then the page title contains "dpp-1-name-of-dataplane"
     And the "$detail-view" element contains "dpp-1-name-of-dataplane"
-    And the "$details" element contains "online"
+    And the "$details" element contains "Online"
 
   Scenario: Clusters tab has expected content
     Given the URL "/meshes/default/dataplanes/dpp-1-name-of-dataplane/clusters" responds with

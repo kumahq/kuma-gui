@@ -75,7 +75,7 @@
               appearance="primary"
               @click="toggle"
             >
-              Download Bundle
+              Download bundle
             </XAction>
             <XTeleportTemplate
               v-if="expanded"

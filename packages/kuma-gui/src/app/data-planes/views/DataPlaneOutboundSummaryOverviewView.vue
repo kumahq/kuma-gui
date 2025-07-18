@@ -88,7 +88,7 @@
                                     layout="horizontal"
                                   >
                                     <template #title>
-                                      Origin Policies
+                                      Origin policies
                                     </template>
 
                                     <template #body>
@@ -196,7 +196,7 @@
                                         layout="horizontal"
                                       >
                                         <template #title>
-                                          Origin Policies
+                                          Origin policies
                                         </template>
 
                                         <template #body>

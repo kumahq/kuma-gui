@@ -58,12 +58,12 @@ Feature: zones / index
                   disconnectTime: 2020-07-28T16:18:09.743141Z
       """
     When I visit the "/zones" URL
-    Then the page title contains "Zone Control Planes"
-    Then the "$zone-cp-table-row:nth-child(1) .state-column" element contains "online"
+    Then the page title contains "Zone control planes"
+    Then the "$zone-cp-table-row:nth-child(1) .state-column" element contains "Online"
     Then the "$zone-cp-table-row:nth-child(1) .name-column" element contains "zone-cp-1"
     Then the "$zone-cp-table-row:nth-child(1) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
-    Then the "$zone-cp-table-row:nth-child(2) .state-column" element contains "offline"
+    Then the "$zone-cp-table-row:nth-child(2) .state-column" element contains "Offline"
     Then the "$zone-cp-table-row:nth-child(2) .name-column" element contains "zone-cp-2"
     Then the "$zone-cp-table-row:nth-child(2) .zoneCpVersion-column" element contains "1.0.0-rc2-211-g823fe8ce"
-    Then the "$zone-cp-table-row:nth-child(3) .state-column" element contains "disabled"
+    Then the "$zone-cp-table-row:nth-child(3) .state-column" element contains "Disabled"
     Then the "$zone-cp-table-row:nth-child(3) .name-column" element contains "zone-cp-3"

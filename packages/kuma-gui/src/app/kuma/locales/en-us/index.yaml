@@ -20,7 +20,7 @@ common:
       unknown: '—'
     mode:
       standalone: Standalone
-      global: Multi-Zone
+      global: Multi-zone
       zone: Zone
   formats:
     integer: |
@@ -30,8 +30,8 @@ common:
       }
     datetime: |
       { value, select,
-        0 { Invalid Date }
-        undefined { Invalid Date }
+        0 { Invalid date }
+        undefined { Invalid date }
         other { { value, date, datetime } }
       }
   connection:
@@ -42,7 +42,7 @@ common:
   refresh: Refresh
   copyText: 'Copy'
   copySuccessText: 'Copied!'
-  copyKubernetesText: 'Copy as Kubernetes'
+  copyKubernetesText: 'Copy as kubernetes'
   copyKubernetesShortText: 'as k8s'
   documentation: 'Documentation'
   error_state:
@@ -121,7 +121,7 @@ components:
         =0 {Type to filter...}
         other {Filter by {keys}...}
       }
-    submit: submit
+    submit: Submit
     description: !!text/markdown |
       <b>Help:</b> Filter by <strong>{defaultKey}</strong> (single value), <strong>key:value</strong> pairs (labels) or <strong>type:key:value</strong> combinations.
       Multiple filters are <strong>AND</strong>ed.
@@ -137,7 +137,7 @@ http:
       id: ID
       globalInstanceId: Global instance ID
       controlPlaneInstanceId: CP instance ID
-      zoneInstanceId: Zone Leader Instance ID
+      zoneInstanceId: Zone leader instance ID
       connectTime: Connected
       disconnectTime: Disconnected
       version: Version
@@ -153,13 +153,13 @@ http:
       certificateRegenerations: Regenerations
       authenticationType: 'Authentication type'
     value:
-      online: 'online'
-      offline: 'offline'
-      partiallyDegraded: 'partially degraded'
-      partially_degraded: 'partially degraded'
-      notAvailable: 'information not available'
-      not_available: 'information not available'
-      disabled: 'disabled'
+      online: 'Online'
+      offline: 'Offline'
+      partiallyDegraded: 'Partially degraded'
+      partially_degraded: 'Partially degraded'
+      notAvailable: 'Information not available'
+      not_available: 'Information not available'
+      disabled: 'Disabled'
       grpc: gRPC
       http2: HTTP2
       http: HTTP
