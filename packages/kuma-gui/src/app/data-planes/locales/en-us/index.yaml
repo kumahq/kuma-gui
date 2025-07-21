@@ -35,8 +35,6 @@ data-planes:
       3xx: 3xx
       4xx: 4xx
       5xx: 5xx
-      mtls: mTLS enabled
-      no-mtls: mTLS disabled
       cx: Total connections
       tx: Bytes sent
       rx: Bytes received
