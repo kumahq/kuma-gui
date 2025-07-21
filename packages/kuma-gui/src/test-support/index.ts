@@ -1,8 +1,8 @@
 import { en } from '@faker-js/faker'
 
 import FakeKuma from './FakeKuma'
-import type Env from '@/app/application/services/env/Env'
 import type { RestRequest, MockResponder, FS as FakeFS } from '@kumahq/fake-api'
+import type { Env } from '@kumahq/settings/env'
 
 export type { MockResponder }
 export type FS = FakeFS<EndpointDependencies>

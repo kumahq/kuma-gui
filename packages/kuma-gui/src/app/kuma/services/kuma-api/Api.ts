@@ -1,5 +1,5 @@
 import { RestClient } from './RestClient'
-import type Env from '@/app/application/services/env/Env'
+import type { Env } from '@kumahq/settings/env'
 
 export class Api {
   constructor(

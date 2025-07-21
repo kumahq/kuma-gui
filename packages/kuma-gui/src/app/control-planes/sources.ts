@@ -4,8 +4,8 @@ import createClient from 'openapi-fetch'
 import { GlobalInsight } from './data'
 import { defineSources } from '../application/services/data-source'
 import type { DataSourceResponse } from '@/app/application'
-import type Env from '@/app/application/services/env/Env'
 import type KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
+import type { Env } from '@kumahq/settings/env'
 
 export type ControlPlaneAddresses = {
   http: string

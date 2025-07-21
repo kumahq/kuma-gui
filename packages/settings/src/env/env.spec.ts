@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import Env, { normalizeBaseUrl } from './Env'
+import { Env, normalizeBaseUrl } from './Env'
 
 describe('env', () => {
   test('var', () => {
