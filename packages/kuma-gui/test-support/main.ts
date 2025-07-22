@@ -5,7 +5,7 @@
 import { get, container, build } from '@kumahq/container'
 import { beforeEach, afterEach } from 'vitest'
 
-import { services as testing, TOKENS as TESTING } from './index'
+import { services as testing } from './index'
 import { services as application, TOKENS as APPLICATION } from '@/app/application'
 import { TOKENS } from '@/app/kuma'
 import { services as vue, TOKENS as VUE } from '@/app/vue'
@@ -15,7 +15,6 @@ import { services as vue, TOKENS as VUE } from '@/app/vue'
     ...VUE,
     ...APPLICATION,
     ...TOKENS,
-    ...TESTING,
   }
   build(
     vue($),

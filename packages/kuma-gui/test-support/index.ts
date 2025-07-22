@@ -1,15 +1,9 @@
-import { KumaHtmlVars } from '@kumahq/config/vite'
-import { ServiceConfigurator, token } from '@kumahq/container'
+import { ServiceConfigurator } from '@kumahq/container'
 import { CliEnv } from '@kumahq/settings/cli-env'
 import { config } from '@vue/test-utils'
 
 import type { PluginDefinition, ComponentDefinition } from '@/app/vue'
 import type { Component } from 'vue'
-
-const $ = {
-  htmlVars: token<KumaHtmlVars>('htmlVars'),
-}
-export const TOKENS = $
 
 export const services: ServiceConfigurator = (app) => [
   [app.app, {
