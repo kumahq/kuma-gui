@@ -3,16 +3,16 @@ gateways:
     items:
       title: Gateways
       intro: !!text/markdown |
-        Gateways are specialized proxies that manage incoming and outgoing traffic between the service mesh and external clients or other networks, enabling secure and controlled access to services with the mesh.
+        Gateways are specialized proxies that manage incoming and outgoing traffic between the service mesh and external clients or other networks, enabling secure and controlled access to services within the mesh.
       navigation:
         builtin-gateway-list-view:
           label: Built-in
           description: !!text/markdown |
-            With a <a href="{KUMA_DOCS_URL}/guides/gateway-builtin/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Built-in Gateway</a> it is possible to route external traffic into the service mesh (North/South). Further <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">configuration</a> enables secure and controlled access to the mesh internal services.
+            With a <a href="{KUMA_DOCS_URL}/guides/gateway-builtin/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">built-in gateway</a> it is possible to route external traffic into the Service Mesh (north/south). Further <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">configuration</a> enables secure and controlled access to the mesh internal services.
         delegated-gateway-list-view:
           label: Delegated
           description: !!text/markdown |
-            A <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Delegated Gateway</a> allows the integration of existing API gateway solutions into the mesh by adding an Envoy sidecar proxy to an existing Gateway. It then manages the traffic between the services inside the mesh and external clients (North/South).
+            A <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">delegated gateway</a> allows the integration of existing API gateway solutions into the mesh by adding an Envoy sidecar proxy to an existing gateway. It then manages the traffic between the services inside the Mesh and external clients (north/south).
     item:
       namespace: Namespace
       config: Configuration
@@ -26,20 +26,20 @@ builtin-gateways:
   routes:
     item:
       title: '{name}'
-      breadcrumbs: Built-in Gateways
+      breadcrumbs: Built-in gateways
       navigation:
         builtin-gateway-overview-view: Overview
         builtin-gateway-detail-view: Overview
-        builtin-gateway-dataplanes-view: Data Plane Proxies
+        builtin-gateway-dataplanes-view: Data plane proxies
         builtin-gateway-config-view: YAML
     items:
-      title: Built-in Gateways
+      title: Built-in gateways
   href:
     docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/builtin?{KUMA_UTM_QUERY_PARAMS}'
   detail:
     listeners: Listeners
     tags: Tags
-    routes: Routes and Services
+    routes: Routes and services
     type: Type
     hostnames: Hostnames
     matchers: Matchers
@@ -55,14 +55,14 @@ delegated-gateways:
   routes:
     item:
       title: '{name}'
-      breadcrumbs: Delegated Gateways
+      breadcrumbs: Delegated gateways
       navigation:
         delegated-gateway-detail-view: Overview
     items:
-      title: Delegated Gateways
+      title: Delegated gateways
   detail:
-    data_plane_proxies: Data Plane Proxies
+    data_plane_proxies: Data plane proxies
     about:
-      title: About this Delegated Gateway
+      title: About this delegated gateway
   href:
     docs: '{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated?{KUMA_UTM_QUERY_PARAMS}'

@@ -25,4 +25,4 @@ Feature: mesh / delegated-gateways / item
       | Value              |
       |       1.2.3.4:8000 |
       |              1 / 2 |
-      | partially degraded |
+      | Partially degraded |

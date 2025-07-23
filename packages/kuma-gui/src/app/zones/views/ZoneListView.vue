@@ -78,7 +78,7 @@
                   :headers="[
                     { ...me.get('headers.type'), label: '&nbsp;', key: 'type' },
                     { ...me.get('headers.name'), label: 'Name', key: 'name' },
-                    { ...me.get('headers.zoneCpVersion'), label: 'Zone Leader CP Version', key: 'zoneCpVersion' },
+                    { ...me.get('headers.zoneCpVersion'), label: 'Zone leader CP version', key: 'zoneCpVersion' },
                     { ...me.get('headers.ingress'), label: 'Ingresses (online / total)', key: 'ingress' },
                     { ...me.get('headers.egress'), label: 'Egresses (online / total)', key: 'egress' },
                     { ...me.get('headers.state'), label: 'Status', key: 'state' },

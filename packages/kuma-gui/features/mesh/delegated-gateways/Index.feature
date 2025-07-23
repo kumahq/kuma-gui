@@ -51,7 +51,7 @@ Feature: mesh / delegated-gateways / index
       | gateway-1          |
       |       1.2.3.4:8000 |
       |              1 / 2 |
-      | partially degraded |
+      | Partially degraded |
 
   Scenario: Clicking View details goes to the detail page and back again
     When I visit the "/meshes/default/gateways/delegated" URL
