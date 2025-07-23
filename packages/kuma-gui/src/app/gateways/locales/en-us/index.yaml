@@ -15,8 +15,15 @@ gateways:
             A <a href="{KUMA_DOCS_URL}/using-mesh/managing-ingress-traffic/delegated/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">Delegated Gateway</a> allows the integration of existing API gateway solutions into the mesh by adding an Envoy sidecar proxy to an existing Gateway. It then manages the traffic between the services inside the mesh and external clients (North/South).
     item:
       namespace: Namespace
+      labels: Labels
+      zone: Zone
+      created: Created
+      modified: Modified
       config: Configuration
+      mesh: Mesh
+      type: Type
       format: Format
+      selectors: Selectors
       formats:
         universal: Universal
         k8s: Kubernetes
