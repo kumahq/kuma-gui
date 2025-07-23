@@ -19,6 +19,11 @@ export const config: UserConfigFn = () => {
       replicateKumaServer(),
       fakeApi({ dependencies, fs }),
     ],
+    test: {
+      setupFiles: [
+        './test-support/main.ts',
+      ],
+    },
   } satisfies UserConfig
 }
 
