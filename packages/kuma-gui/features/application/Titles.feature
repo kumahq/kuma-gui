@@ -22,9 +22,9 @@ Feature: application / titles
       | /meshes/default/overview                                     | Mesh overview       |
       | /meshes/default/services/internal                            | Services            |
       | /meshes/default/services/internal/service-name/overview      | service-name        |
-      | /meshes/default/services/external                            | ExternalServices   |
+      | /meshes/default/services/external                            | ExternalServices    |
       | /meshes/default/services/external/service-name/overview      | service-name        |
-      | /meshes/default/services/mesh-services                       | MeshServices       |
+      | /meshes/default/services/mesh-services                       | MeshServices        |
       | /meshes/default/gateways/builtin                             | Built-in gateways   |
       | /meshes/default/gateways/builtin/gateway.namespace/overview  | gateway             |
       | /meshes/default/gateways/delegated                           | Delegated gateways  |
