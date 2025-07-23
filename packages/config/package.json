@@ -24,6 +24,9 @@
     },
     "./vite": {
       "import": "./src/vite/index.ts"
+    },
+    "./utils": {
+      "import": "./src/utils/index.ts"
     }
   },
   "dependencies": {

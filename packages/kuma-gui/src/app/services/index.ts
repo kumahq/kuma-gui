@@ -4,8 +4,8 @@ import { features } from './features'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
 import { sources } from './sources'
-import type { Can } from '@/app/application'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Can } from '@kumahq/settings/can'
 
 type Token = ReturnType<typeof token>
 

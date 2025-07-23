@@ -1,4 +1,4 @@
-import { semver } from '../../utilities'
+import { semver } from '@kumahq/config/utils'
 
 export type EnvArgs = {
   KUMA_VERSION_URL: string
@@ -15,7 +15,7 @@ type EnvProps = {
 export type EnvVars = EnvArgs & EnvProps
 
 type EnvInternal = EnvArgs & Partial<EnvProps>
-export default class Env {
+export class Env {
   protected env: EnvVars | undefined
   constructor(envArgs: EnvArgs) {
     const _env: EnvInternal = envArgs

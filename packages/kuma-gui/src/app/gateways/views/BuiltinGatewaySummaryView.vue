@@ -92,6 +92,18 @@
                   data-testid="structured-view"
                 >
                   <DefinitionCard
+                    v-if="item.type.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.type') }}
+                    </template>
+
+                    <template #body>
+                      {{ item.type }}
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard
                     v-if="item.namespace.length > 0"
                     layout="horizontal"
                   >
@@ -103,7 +115,124 @@
                       {{ item.namespace }}
                     </template>
                   </DefinitionCard>
+                  <DefinitionCard
+                    v-if="item.mesh.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.mesh') }}
+                    </template>
+
+                    <template #body>
+                      {{ item.mesh }}
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard
+                    v-if="item.zone.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.zone') }}
+                    </template>
+
+                    <template #body>
+                      {{ item.zone }}
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard
+                    v-if="item.creationTime.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.created') }}
+                    </template>
+
+                    <template #body>
+                      {{ t('common.formats.datetime', { value: Date.parse(item.creationTime) }) }}
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard
+                    v-if="item.modificationTime.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.modified') }}
+                    </template>
+
+                    <template #body>
+                      {{ t('common.formats.datetime', { value: Date.parse(item.modificationTime) }) }}
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard
+                    v-if="Object.keys(item.labels).length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.labels') }}
+                    </template>
+                    <template #body>
+                      <XLayout
+                        type="separated"
+                        justify="end"
+                      >
+                        <template
+                          v-for="([key, value]) in Object.entries(item.labels)"
+                          :key="`${key}:${value}`"
+                        >
+                          <XBadge
+                            appearance="info"
+                            class="label"
+                          >
+                            <template v-if="key.includes('kuma.io/zone')">
+                              <XAction
+                                :to="{
+                                  name: 'builtin-gateway-list-view',
+                                  query: {
+                                    s: `zone:${value}`,
+                                  },
+                                }"
+                              >
+                                {{ key }}:{{ value }}
+                              </XAction>
+                            </template>
+                            <template v-else>
+                              {{ key }}:{{ value }}
+                            </template>
+                          </XBadge>
+                        </template>
+                      </XLayout>
+                    </template>
+                  </DefinitionCard>
+                  <DefinitionCard
+                    v-if="item.selectors.length > 0"
+                    layout="horizontal"
+                  >
+                    <template #title>
+                      {{ t('gateways.routes.item.selectors') }}
+                    </template>
+                    <template #body>
+                      <XLayout
+                        type="separated"
+                        justify="end"
+                      >
+                        <XBadge
+                          v-for="([key, value]) in Object.entries(item.selectors[0].match)"
+                          :key="`${key}:${value}`"
+                          appearance="info"
+                        >
+                          {{ key }}:{{ value }}
+                        </XBadge>
+                      </XLayout>
+                    </template>
+                  </DefinitionCard>
                 </div>
+
+                <XCodeBlock
+                  data-testid="codeblock-yaml-structured-conf"
+                  language="yaml"
+                  :code="YAML.stringify(item.conf)"
+                  :show-k8s-copy-button="false"
+                />
               </template>
 
               <template v-else-if="route.params.format === 'universal'">
@@ -168,5 +297,8 @@ const props = defineProps<{
 <style scoped>
 h2 {
   --icon-before: url('@/assets/images/gateway.svg?inline') !important;
+}
+.label :deep(a):hover {
+  text-decoration: underline;
 }
 </style>

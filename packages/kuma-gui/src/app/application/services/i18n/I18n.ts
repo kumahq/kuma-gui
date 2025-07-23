@@ -1,8 +1,8 @@
 import { createI18n } from '@kong-ui-public/i18n'
+import { semver } from '@kumahq/config/utils'
 
-import { semver } from '../../utilities'
 import { get } from '@/app/application'
-import type Env from '@/app/application/services/env/Env'
+import type { Env } from '@kumahq/settings/env'
 
 declare module 'intl-messageformat' {
   interface Options {

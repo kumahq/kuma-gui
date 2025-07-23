@@ -1,5 +1,5 @@
-import type { Can, Features } from '@/app/application/services/can'
-import type Env from '@/app/application/services/env/Env'
+import type { Can, Features } from '@kumahq/settings/can'
+import type { Env } from '@kumahq/settings/env'
 export const features = (env: Env['var']): Features => {
   return {
     'use kubernetes': (_can: Can) => {

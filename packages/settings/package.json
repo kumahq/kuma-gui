@@ -1,0 +1,24 @@
+{
+  "name": "@kumahq/settings",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Everything about environment and feature flags",
+  "author": "Kong",
+  "type": "module",
+  "exports": {
+    "./env": {
+      "import": "./src/env/index.ts"
+    },
+    "./cli-env": {
+      "import": "./src/env/CliEnv.ts"
+    },
+    "./can": {
+      "import": "./src/can/index.ts"
+    }
+  },
+  "devDependencies": {
+    "@kumahq/config": "*",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  }
+}

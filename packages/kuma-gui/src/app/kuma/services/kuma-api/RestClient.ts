@@ -1,5 +1,5 @@
 import { makeRequest } from './makeRequest'
-import type Env from '@/app/application/services/env/Env'
+import type { Env } from '@kumahq/settings/env'
 
 export const createFetch = (client: RestClient) => {
   return async (r: Request | string) => {

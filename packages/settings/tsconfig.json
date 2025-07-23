@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "noErrorTruncation": true,
+    "baseUrl": ".",
+    "module": "preserve",
+    "target": "esnext",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": [
+      "node"
+    ],
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}
