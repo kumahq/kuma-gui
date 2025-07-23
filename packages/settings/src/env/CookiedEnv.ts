@@ -11,7 +11,7 @@ const strToEnv = (str: string): [string, string][] => {
     .filter(([key, _value]) => key.startsWith('KUMA_'))
 }
 
-export default (
+export const cookied = (
   env: (str: keyof EnvVars, d?: string) => string,
   doc: {
     cookie: string

@@ -1,6 +1,6 @@
-import type { Features } from '@/app/application'
 import { runInDebug } from '@/app/application'
 import { Mesh } from '@/app/meshes/data'
+import type { Features } from '@kumahq/settings/can'
 export const features = (): Features => {
   return {
     'use service-insights': (_can, mesh: Mesh) => {

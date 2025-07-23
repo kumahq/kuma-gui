@@ -1,12 +1,12 @@
 import { token, createInjections } from '@kumahq/container'
 
 import locales from './locales/en-us/index.yaml'
-import type { EnvArgs } from '@/app/application/services/env/Env'
 import KumaPort from '@/app/kuma/components/kuma-port/KumaPort.vue'
 import { ApiError } from '@/app/kuma/services/kuma-api/ApiError'
 import KumaApi from '@/app/kuma/services/kuma-api/KumaApi'
 import { RestClient } from '@/app/kuma/services/kuma-api/RestClient'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { EnvArgs } from '@kumahq/settings/env'
 
 type Token = ReturnType<typeof token>
 

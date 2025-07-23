@@ -1,8 +1,8 @@
 import { token } from '@kumahq/container'
 
-import type Env from '@/app/application/services/env/Env'
 import { fs } from '@/test-support/mocks/fs'
 import type { ServiceDefinition, Token } from '@kumahq/container'
+import type { Env } from '@kumahq/settings/env'
 
 
 const $ = {

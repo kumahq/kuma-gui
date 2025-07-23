@@ -32,9 +32,6 @@ export const defineConfig: UserConfigFn = () => ({
   test: {
     globals: false,
     environment: 'jsdom',
-    setupFiles: [
-      path.resolve(process.cwd(), './test-support/main.ts'),
-    ],
     deps: {
       optimizer: {
         web: {

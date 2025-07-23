@@ -1,4 +1,6 @@
 import { token, createInjections } from '@kumahq/container'
+import can from '@kumahq/settings/can'
+import { Env } from '@kumahq/settings/env'
 // @ts-ignore TS comes with a Object.groupBy declaration but not a polyfill
 import groupBy from 'object.groupby'
 // @ts-ignore TS comes with a set.prototype.difference declaration but not a polyfill
@@ -13,19 +15,16 @@ import RouteTitle from './components/route-view/RouteTitle.vue'
 import RouteView from './components/route-view/RouteView.vue'
 import locales from './locales/en-us/index.yaml'
 import { routes } from './routes'
-import can from './services/can'
-import type { Can } from './services/can'
-import type { EnvVars } from './services/env/Env'
-import Env from './services/env/Env'
 import I18n from './services/i18n/I18n'
 import storage from './services/storage'
 import { create, destroy, DataSourcePool } from '@/app/application/services/data-source'
 import { services as kuma } from '@/app/kuma'
 import type { ServiceDefinition } from '@kumahq/container'
+import type { Can } from '@kumahq/settings/can'
+import type { EnvVars } from '@kumahq/settings/env'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
-export * from './services/can'
 export { runInDebug } from './utilities'
 export { defineSources } from './services/data-source'
 

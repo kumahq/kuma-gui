@@ -18,6 +18,7 @@
     "@kong/icons": "^1.33.1",
     "@kong/kongponents": "^9.36.2",
     "@kumahq/container": "*",
+    "@kumahq/settings": "*",
     "@vue/shared": "^3.5.17",
     "@vueuse/core": "^13.5.0",
     "deepmerge": "^4.3.1",
