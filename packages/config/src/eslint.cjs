@@ -155,8 +155,8 @@ function createEslintConfig(
       indent: 'off',
       '@stylistic/indent': ['error', 2],
 
-      'func-call-spacing': 'off',
-      '@stylistic/func-call-spacing': 'error',
+      'function-call-spacing': 'off',
+      '@stylistic/function-call-spacing': 'error',
 
       '@stylistic/type-annotation-spacing': ['error', {
         before: false,
