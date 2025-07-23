@@ -1,5 +1,5 @@
 components:
   route-view:
-    title: "{name} Manager"
+    title: "{name} manager"
     route-announcer: "Navigated to {title}"
 

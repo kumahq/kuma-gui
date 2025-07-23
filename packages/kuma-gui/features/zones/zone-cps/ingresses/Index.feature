@@ -39,7 +39,7 @@ Feature: zones / ingresses / index
     When I visit the "/zones/zone-cp-1/ingresses" URL
     Then the page title contains "Ingresses"
     And the "$item" element exists 2 times
-    Then the "$item:nth-child(1) .status-column" element contains "online"
+    Then the "$item:nth-child(1) .status-column" element contains "Online"
     Then the "$item:nth-child(1) .name-column" element contains "zone-ingress-1"
-    Then the "$item:nth-child(2) .status-column" element contains "offline"
+    Then the "$item:nth-child(2) .status-column" element contains "Offline"
     Then the "$item:nth-child(2) .name-column" element contains "zone-ingress-2"

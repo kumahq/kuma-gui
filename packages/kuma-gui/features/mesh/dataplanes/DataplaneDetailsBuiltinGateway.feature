@@ -55,7 +55,7 @@ Feature: Dataplane details for built-in gateway
     And the "$detail-view" element contains "dataplane-gateway_builtin-1"
     And the "$details" element contains
       | Value                 |
-      | online                |
+      | Online                |
       |       193.107.134.106 |
       | kuma.io/protocol:http |
       | kuma.io/zone:zone-1   |

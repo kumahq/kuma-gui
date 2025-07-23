@@ -102,7 +102,7 @@
 
       <XCard>
         <template #title>
-          <h3>Affected Data Plane Proxies</h3>
+          <h3>{{ t('policies.detail.data-planes.title') }}</h3>
         </template>
 
         <DataLoader
