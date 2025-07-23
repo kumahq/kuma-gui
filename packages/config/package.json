@@ -58,7 +58,7 @@
     "vite": "^6.3.5",
     "vitepress": "^2.0.0-alpha.8",
     "vitest": "^3.2.4",
-    "vue-tsc": "^2.2.12",
+    "vue-tsc": "^3.0.3",
     "@types/markdown-it": "^14.1.2",
     "deepmerge": "^4.3.1",
     "js-yaml": "^4.1.0"
