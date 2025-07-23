@@ -1,7 +1,7 @@
 subscriptions:
   notifications:
     with-nacks: !!text/markdown |
-      The Global Control Plane got NACK responses during this subscription
+      The global control plane got NACK responses during this subscription
 
   routes:
     item:
@@ -21,7 +21,7 @@ subscriptions:
         data-plane-subscription-summary-config-view: YAML
       headers:
         config: Config
-        responses: Total Responses (sent/ack'ed)
+        responses: Total responses (sent/ack'ed)
         type: Type
         stat: Responses sent/ack'ed
         nacked: Responses rejected / NACK'ed

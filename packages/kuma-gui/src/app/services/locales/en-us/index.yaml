@@ -1,13 +1,13 @@
 services:
   x-empty-state:
-    title: There are no Services present
+    title: There are no services present
   routes:
     mesh-service-list-view:
-      title: Mesh Services
+      title: MeshServices
     mesh-multi-zone-service-list-view:
-      title: Mesh MultiZone Services
+      title: MeshMultiZoneServices
     mesh-external-service-list-view:
-      title: Mesh External Services
+      title: MeshExternalServices
     item:
       title: "{name}"
       breadcrumbs: Services
@@ -36,7 +36,7 @@ services:
         mesh-multi-zone-service-list-view:
           label: MeshMultiZoneService
           description: !!text/markdown |
-            A <a href="{KUMA_DOCS_URL}/networking/meshmultizoneservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshMultiZoneService</a> represents a group of `MeshService` resources in a loadbalanced multizone deployment. `MeshService` resources that are deployed across several clusters can be grouped by a `MeshMultiZoneService`.
+            A <a href="{KUMA_DOCS_URL}/networking/meshmultizoneservice/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">MeshMultiZoneService</a> represents a group of `MeshService` resources in a load-balanced multizone deployment. `MeshService` resources that are deployed across several clusters can be grouped by a `MeshMultiZoneService`.
         mesh-external-service-list-view:
           label: MeshExternalService
           description: !!text/markdown |
@@ -44,18 +44,18 @@ services:
         service-list-view:
           label: Internal
           description: !!text/markdown |
-            An `Internal` Service represents an application or microservice that is defined and registered with the mesh by using the `DataPlane` tag `kuma.io/service` and can be managed, monitored and secured through the mesh's policies.
+            An internal service represents an application or microservice that is defined and registered with the mesh by using the `Dataplane` tag `kuma.io/service` and can be managed, monitored and secured through the policies of the mesh.
         external-service-list-view:
           label: External
           description: !!text/markdown |
             An <a href="{KUMA_DOCS_URL}/policies/external-services/?{KUMA_UTM_QUERY_PARAMS}" target="_blank">ExternalService</a> is a policy that allows an application or microservice to interact with other services that are not part of the mesh.
   detail:
     config: YAML
-    data_plane_proxies: Data Plane Proxies
+    data_plane_proxies: Data plane proxies
     no_matching_external_service: 'No matching ExternalService was found for service {name}'
     empty: None
     dpp-status:
-      title: Status of Data Plane Proxies
+      title: Status of data plane proxies
       connected: Connected
       healthy: Healthy
     hostnames:
@@ -66,7 +66,7 @@ services:
     docs: '{KUMA_DOCS_URL}/introduction/architecture/?{KUMA_UTM_QUERY_PARAMS}#services-and-pods'
   internal-service:
     about:
-      title: About this Internal Service
+      title: About this internal service
   mesh-service:
     about:
       title: About this MeshService
@@ -74,12 +74,12 @@ services:
       docs: '{KUMA_DOCS_URL}/networking/meshservice/?{KUMA_UTM_QUERY_PARAMS}'
   mesh-multi-zone-service:
     about:
-      title: About this Mesh MultiZone Service
+      title: About this MeshMultiZoneService
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshmultizoneservice/?{KUMA_UTM_QUERY_PARAMS}'
   mesh-external-service:
     about:
-      title: About this Mesh External Service
+      title: About this MeshExternalService
     href:
       docs: '{KUMA_DOCS_URL}/networking/meshexternalservice/?{KUMA_UTM_QUERY_PARAMS}'
     notifications:

@@ -168,7 +168,7 @@ export default ({ env, fake }: EndpointDependencies): MockResponder => (req) => 
                 resource_api_version: 'V3',
               },
               ads_config: {
-                api_type: 'GRPC',
+                api_type: 'gRPC',
                 grpc_services: [
                   {
                     google_grpc: {

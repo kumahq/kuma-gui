@@ -8,11 +8,11 @@ activeOutbounds:
   x-empty-state:
     title: No active outbounds
 connections:
-  include_endpoints: Include Endpoints
+  include_endpoints: Include endpoints
   routes:
     item:
       navigation:
         overview: 'Overview'
-        xds: 'XDS Configuration'
+        xds: 'XDS configuration'
         stats: 'Stats'
         clusters: 'Clusters'

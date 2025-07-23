@@ -42,7 +42,7 @@ Feature: application / MainNavigation
     Examples:
       | Selector            | Title               |
       | $control-planes-nav | Overview            |
-      | $zones-nav          | Zone Control Planes |
+      | $zones-nav          | Zone control planes |
       | $configuration-nav  | Configuration       |
 
   Scenario: Pagination deeplinking
